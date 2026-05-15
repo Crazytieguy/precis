@@ -1,0 +1,5556 @@
+fixture = "chronos-forecasting"
+budget = 10000
+cumulative_tokens = 9978
+batch_count = 196
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting" })'
+descriptor = "listing of '.'"
+cost_tokens = 50
+cum_tokens = 50
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting"
+entries = [".gitattributes", ".github", ".gitignore", "CITATION.cff", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "LICENSE", "NOTICE", "README.md", "ci", "notebooks", "pyproject.toml", "scripts", "src", "test"]
+
+[[batches]]
+position = 2
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 4
+cum_tokens = 54
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src"
+entries = ["chronos"]
+
+[[batches]]
+position = 3
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 17
+cum_tokens = 71
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/notebooks" })'
+descriptor = "listing of 'notebooks'"
+cost_tokens = 27
+cum_tokens = 98
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/notebooks"
+entries = ["chronos-2-quickstart.ipynb", "deploy-chronos-to-amazon-sagemaker.ipynb"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos" })'
+descriptor = "listing of 'src/chronos'"
+cost_tokens = 47
+cum_tokens = 145
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos"
+entries = ["__about__.py", "__init__.py", "base.py", "boto_utils.py", "chronos.py", "chronos2", "chronos_bolt.py", "df_utils.py", "utils.py"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2" })'
+descriptor = "listing of 'src/chronos/chronos2'"
+cost_tokens = 30
+cum_tokens = 175
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2"
+entries = ["__init__.py", "config.py", "dataset.py", "layers.py", "model.py", "pipeline.py", "trainer.py"]
+
+[[batches]]
+position = 7
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/__init__.py" })'
+descriptor = "python imports in src/chronos/chronos2/__init__.py"
+cost_tokens = 101
+cum_tokens = 276
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/__init__.py"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/__init__.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/pyproject.toml" })'
+descriptor = "[package] in pyproject.toml"
+cost_tokens = 38
+cum_tokens = 314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/pyproject.toml"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/pyproject.toml"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md" })'
+descriptor = "headings outline in README.md"
+cost_tokens = 99
+cum_tokens = 413
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 12 })'
+descriptor = "README.md section #12"
+cost_tokens = 17
+cum_tokens = 430
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 11 })'
+descriptor = "README.md section #11"
+cost_tokens = 27
+cum_tokens = 457
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/base.py"
+cost_tokens = 40
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 27 })'
+descriptor = "python decl at src/chronos/base.py:27"
+cost_tokens = 0
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 32 })'
+descriptor = "python decl at src/chronos/base.py:32"
+cost_tokens = 0
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 44 })'
+descriptor = "python decl at src/chronos/base.py:44"
+cost_tokens = 0
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 32 })'
+descriptor = "python class body at src/chronos/base.py:32"
+cost_tokens = 15
+cum_tokens = 512
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 27 })'
+descriptor = "python class body at src/chronos/base.py:27"
+cost_tokens = 22
+cum_tokens = 534
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 28
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 44 })'
+descriptor = "python class body at src/chronos/base.py:44"
+cost_tokens = 35
+cum_tokens = 569
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 45
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 16
+cum_tokens = 585
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/scripts"
+entries = ["README.md", "evaluation", "kernel-synth.py", "training"]
+
+[[batches]]
+position = 20
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/__init__.py" })'
+descriptor = "python imports in src/chronos/__init__.py"
+cost_tokens = 289
+cum_tokens = 874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/__init__.py"
+start = 4
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/__init__.py"
+start = 16
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/chronos/base.py"
+cost_tokens = 166
+cum_tokens = 1040
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 252
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 336
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 253
+end = 253
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 22
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 35 })'
+descriptor = "python method at src/chronos/base.py:35"
+cost_tokens = 0
+cum_tokens = 1040
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 48 })'
+descriptor = "python method at src/chronos/base.py:48"
+cost_tokens = 0
+cum_tokens = 1040
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 66 })'
+descriptor = "python method at src/chronos/base.py:66"
+cost_tokens = 0
+cum_tokens = 1040
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 76 })'
+descriptor = "python method at src/chronos/base.py:76"
+cost_tokens = 0
+cum_tokens = 1040
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 58 })'
+descriptor = "python method at src/chronos/base.py:58"
+cost_tokens = 12
+cum_tokens = 1052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 58
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 62 })'
+descriptor = "python method at src/chronos/base.py:62"
+cost_tokens = 12
+cum_tokens = 1064
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 62
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 252 })'
+descriptor = "python method at src/chronos/base.py:252"
+cost_tokens = 39
+cum_tokens = 1103
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 252
+end = 254
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 336 })'
+descriptor = "python method at src/chronos/base.py:336"
+cost_tokens = 65
+cum_tokens = 1168
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 336
+end = 343
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 58, body_start_line: 60 })'
+descriptor = "python method body at src/chronos/base.py:58 body 60"
+cost_tokens = 10
+cum_tokens = 1178
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 62, body_start_line: 64 })'
+descriptor = "python method body at src/chronos/base.py:62 body 64"
+cost_tokens = 10
+cum_tokens = 1188
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 76, body_start_line: 98 })'
+descriptor = "python method body at src/chronos/base.py:76 body 98"
+cost_tokens = 10
+cum_tokens = 1198
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 35 })'
+descriptor = "python method doc at src/chronos/base.py:35"
+cost_tokens = 16
+cum_tokens = 1214
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/__about__.py" })'
+descriptor = "python imports in src/chronos/__about__.py"
+cost_tokens = 15
+cum_tokens = 1229
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/__about__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 465
+cum_tokens = 1694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 5
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/chronos2/config.py"
+cost_tokens = 27
+cum_tokens = 1721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 37
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 12 })'
+descriptor = "python decl at src/chronos/chronos2/config.py:12"
+cost_tokens = 0
+cum_tokens = 1721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 102 })'
+descriptor = "python decl at src/chronos/chronos2/config.py:102"
+cost_tokens = 10
+cum_tokens = 1731
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 102
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/chronos/chronos2/config.py"
+cost_tokens = 21
+cum_tokens = 1752
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 40
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 114 })'
+descriptor = "python method at src/chronos/chronos2/config.py:114"
+cost_tokens = 12
+cum_tokens = 1764
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 114
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/chronos2/pipeline.py"
+cost_tokens = 28
+cum_tokens = 1792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 39 })'
+descriptor = "python decl at src/chronos/chronos2/pipeline.py:39"
+cost_tokens = 0
+cum_tokens = 1792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 39 })'
+descriptor = "python class body at src/chronos/chronos2/pipeline.py:39"
+cost_tokens = 31
+cum_tokens = 1823
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 40
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 100 })'
+descriptor = "python method at src/chronos/base.py:100"
+cost_tokens = 118
+cum_tokens = 1941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 100
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 100, body_start_line: 133 })'
+descriptor = "python method body at src/chronos/base.py:100 body 133"
+cost_tokens = 10
+cum_tokens = 1951
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 9 })'
+descriptor = "README.md section #9"
+cost_tokens = 33
+cum_tokens = 1984
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py" })'
+descriptor = "python imports in src/chronos/utils.py"
+cost_tokens = 26
+cum_tokens = 2010
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/ci" })'
+descriptor = "listing of 'ci'"
+cost_tokens = 3
+cum_tokens = 2013
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/ci"
+entries = ["evaluate"]
+
+[[batches]]
+position = 49
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/scripts/README.md" })'
+descriptor = "README headline in scripts/README.md"
+cost_tokens = 8
+cum_tokens = 2021
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/scripts/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 78
+cum_tokens = 2099
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/test"
+entries = ["__init__.py", "dummy-chronos-bolt-model", "dummy-chronos-model", "dummy-chronos2-lora", "dummy-chronos2-model", "test_chronos.py", "test_chronos2.py", "test_chronos_bolt.py", "test_df_utils.py", "test_utils.py", "util.py"]
+
+[[batches]]
+position = 51
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 114, body_start_line: 119 })'
+descriptor = "python method body at src/chronos/chronos2/config.py:114 body 119"
+cost_tokens = 16
+cum_tokens = 2115
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 5 })'
+descriptor = "README.md section #5"
+cost_tokens = 39
+cum_tokens = 2154
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/chronos2/trainer.py"
+cost_tokens = 45
+cum_tokens = 2199
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 17 })'
+descriptor = "python decl at src/chronos/chronos2/trainer.py:17"
+cost_tokens = 0
+cum_tokens = 2199
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 30 })'
+descriptor = "python decl at src/chronos/chronos2/trainer.py:30"
+cost_tokens = 0
+cum_tokens = 2199
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 40 })'
+descriptor = "python decl at src/chronos/chronos2/trainer.py:40"
+cost_tokens = 0
+cum_tokens = 2199
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 30 })'
+descriptor = "python decl doc at src/chronos/chronos2/trainer.py:30"
+cost_tokens = 16
+cum_tokens = 2215
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/chronos/chronos2/trainer.py"
+cost_tokens = 69
+cum_tokens = 2284
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 59
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 33 })'
+descriptor = "python method at src/chronos/chronos2/trainer.py:33"
+cost_tokens = 0
+cum_tokens = 2284
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 46 })'
+descriptor = "python method at src/chronos/chronos2/trainer.py:46"
+cost_tokens = 0
+cum_tokens = 2284
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 77 })'
+descriptor = "python method at src/chronos/chronos2/trainer.py:77"
+cost_tokens = 0
+cum_tokens = 2284
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 40 })'
+descriptor = "python decl doc at src/chronos/chronos2/trainer.py:40"
+cost_tokens = 56
+cum_tokens = 2340
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 41
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 114 })'
+descriptor = "python method doc at src/chronos/chronos2/config.py:114"
+cost_tokens = 28
+cum_tokens = 2368
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 116
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 135 })'
+descriptor = "python method at src/chronos/base.py:135"
+cost_tokens = 181
+cum_tokens = 2549
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 135
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 12 })'
+descriptor = "python class body at src/chronos/chronos2/config.py:12"
+cost_tokens = 82
+cum_tokens = 2631
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 46
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py" })'
+descriptor = "python imports in src/chronos/df_utils.py"
+cost_tokens = 46
+cum_tokens = 2677
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 48 })'
+descriptor = "python method doc at src/chronos/base.py:48"
+cost_tokens = 59
+cum_tokens = 2736
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 49
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 336 })'
+descriptor = "python method doc at src/chronos/base.py:336"
+cost_tokens = 64
+cum_tokens = 2800
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 344
+end = 347
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 102 })'
+descriptor = "python class body at src/chronos/chronos2/config.py:102"
+cost_tokens = 112
+cum_tokens = 2912
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 104
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py" })'
+descriptor = "python imports in src/chronos/chronos2/config.py"
+cost_tokens = 35
+cum_tokens = 2947
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/chronos2/model.py"
+cost_tokens = 76
+cum_tokens = 3023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 190
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 199
+end = 199
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 72
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 38 })'
+descriptor = "python decl at src/chronos/chronos2/model.py:38"
+cost_tokens = 0
+cum_tokens = 3023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 89 })'
+descriptor = "python decl at src/chronos/chronos2/model.py:89"
+cost_tokens = 0
+cum_tokens = 3023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 198 })'
+descriptor = "python decl at src/chronos/chronos2/model.py:198"
+cost_tokens = 0
+cum_tokens = 3023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 190 })'
+descriptor = "python decl at src/chronos/chronos2/model.py:190"
+cost_tokens = 10
+cum_tokens = 3033
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 190
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 82 })'
+descriptor = "python decl at src/chronos/chronos2/model.py:82"
+cost_tokens = 11
+cum_tokens = 3044
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 82
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 31 })'
+descriptor = "python decl at src/chronos/chronos2/model.py:31"
+cost_tokens = 12
+cum_tokens = 3056
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 31 })'
+descriptor = "python class body at src/chronos/chronos2/model.py:31"
+cost_tokens = 51
+cum_tokens = 3107
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 33
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 82 })'
+descriptor = "python class body at src/chronos/chronos2/model.py:82"
+cost_tokens = 64
+cum_tokens = 3171
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 84
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 198 })'
+descriptor = "python class body at src/chronos/chronos2/model.py:198"
+cost_tokens = 64
+cum_tokens = 3235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 199
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 190 })'
+descriptor = "python class body at src/chronos/chronos2/model.py:190"
+cost_tokens = 78
+cum_tokens = 3313
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 192
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/.github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 7
+cum_tokens = 3320
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/.github"
+entries = ["ISSUE_TEMPLATE", "workflows"]
+
+[[batches]]
+position = 83
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/.github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 17
+cum_tokens = 3337
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/.github/workflows"
+entries = ["ci.yml", "eval-model.yml", "publish-to-pypi.yml"]
+
+[[batches]]
+position = 84
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 3 })'
+descriptor = "README.md section #3"
+cost_tokens = 67
+cum_tokens = 3404
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/chronos/chronos2/model.py"
+cost_tokens = 186
+cum_tokens = 3590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 266
+end = 266
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 315
+end = 315
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 425
+end = 425
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 499
+end = 499
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 550
+end = 550
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 618
+end = 618
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 267
+end = 267
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 316
+end = 316
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 426
+end = 426
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 500
+end = 500
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 551
+end = 551
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 619
+end = 619
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 86
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 39 })'
+descriptor = "python method at src/chronos/chronos2/model.py:39"
+cost_tokens = 0
+cum_tokens = 3590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 90 })'
+descriptor = "python method at src/chronos/chronos2/model.py:90"
+cost_tokens = 0
+cum_tokens = 3590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 204 })'
+descriptor = "python method at src/chronos/chronos2/model.py:204"
+cost_tokens = 0
+cum_tokens = 3590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 266 })'
+descriptor = "python method at src/chronos/chronos2/model.py:266"
+cost_tokens = 0
+cum_tokens = 3590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 266
+end = 266
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 134 })'
+descriptor = "python method at src/chronos/chronos2/model.py:134"
+cost_tokens = 90
+cum_tokens = 3680
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 134
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 75
+cum_tokens = 3755
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 48 })'
+descriptor = "python method at src/chronos/chronos2/model.py:48"
+cost_tokens = 93
+cum_tokens = 3848
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 48
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/df_utils.py"
+cost_tokens = 42
+cum_tokens = 3890
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 199
+end = 199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 94
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 98 })'
+descriptor = "python method at src/chronos/chronos2/model.py:98"
+cost_tokens = 40
+cum_tokens = 3930
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 98
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 373 })'
+descriptor = "python method at src/chronos/chronos2/model.py:373"
+cost_tokens = 43
+cum_tokens = 3973
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 373
+end = 375
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/boto_utils.py" })'
+descriptor = "python imports in src/chronos/boto_utils.py"
+cost_tokens = 98
+cum_tokens = 4071
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/boto_utils.py"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/boto_utils.py"
+start = 12
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/utils.py"
+cost_tokens = 48
+cum_tokens = 4119
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 98
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py", start_line: 11 })'
+descriptor = "python decl at src/chronos/utils.py:11"
+cost_tokens = 0
+cum_tokens = 4119
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py", start_line: 135 })'
+descriptor = "python decl at src/chronos/utils.py:135"
+cost_tokens = 45
+cum_tokens = 4164
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 135
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py", start_line: 22 })'
+descriptor = "python decl at src/chronos/utils.py:22"
+cost_tokens = 52
+cum_tokens = 4216
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 22
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/chronos2/layers.py"
+cost_tokens = 125
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 317
+end = 317
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 343
+end = 343
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 369
+end = 369
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 318
+end = 318
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 344
+end = 344
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 370
+end = 370
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 18 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:18"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 86 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:86"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 110 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:110"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 126 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:126"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 148 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:148"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 294 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:294"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 317 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:317"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 317
+end = 317
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 343 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:343"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 343
+end = 343
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 369 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:369"
+cost_tokens = 0
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 369
+end = 369
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 142 })'
+descriptor = "python decl at src/chronos/chronos2/layers.py:142"
+cost_tokens = 8
+cum_tokens = 4349
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 142
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 148 })'
+descriptor = "python decl doc at src/chronos/chronos2/layers.py:148"
+cost_tokens = 9
+cum_tokens = 4358
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 343 })'
+descriptor = "python decl doc at src/chronos/chronos2/layers.py:343"
+cost_tokens = 19
+cum_tokens = 4377
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 344
+end = 344
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 369 })'
+descriptor = "python decl doc at src/chronos/chronos2/layers.py:369"
+cost_tokens = 19
+cum_tokens = 4396
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 370
+end = 370
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 142 })'
+descriptor = "python class body at src/chronos/chronos2/layers.py:142"
+cost_tokens = 31
+cum_tokens = 4427
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 144
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 18 })'
+descriptor = "python decl doc at src/chronos/chronos2/layers.py:18"
+cost_tokens = 85
+cum_tokens = 4512
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 21
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 48, body_start_line: 56 })'
+descriptor = "python method body at src/chronos/base.py:48 body 56"
+cost_tokens = 12
+cum_tokens = 4524
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 4 })'
+descriptor = "README.md section #4"
+cost_tokens = 96
+cum_tokens = 4620
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py", start_line: 11, body_start_line: 12 })'
+descriptor = "python decl body at src/chronos/utils.py:11 body 12"
+cost_tokens = 114
+cum_tokens = 4734
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 12
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/chronos/chronos2/pipeline.py"
+cost_tokens = 281
+cum_tokens = 5015
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 372
+end = 372
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 407
+end = 407
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 455
+end = 455
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 656
+end = 656
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 720
+end = 720
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 749
+end = 749
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 763
+end = 763
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 821
+end = 821
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 957
+end = 957
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1027
+end = 1027
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1105
+end = 1105
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1185
+end = 1185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1224
+end = 1224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 408
+end = 408
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 456
+end = 456
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 657
+end = 657
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 721
+end = 721
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 750
+end = 750
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 764
+end = 764
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 822
+end = 822
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 958
+end = 958
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1028
+end = 1028
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1106
+end = 1106
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1186
+end = 1186
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1225
+end = 1225
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 121
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 43 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:43"
+cost_tokens = 0
+cum_tokens = 5015
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 1224 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:1224"
+cost_tokens = 0
+cum_tokens = 5015
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1224
+end = 1224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 76 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:76"
+cost_tokens = 12
+cum_tokens = 5027
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 76
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 84 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:84"
+cost_tokens = 12
+cum_tokens = 5039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 84
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 80 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:80"
+cost_tokens = 13
+cum_tokens = 5052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 80
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 88 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:88"
+cost_tokens = 13
+cum_tokens = 5065
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 88
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 92 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:92"
+cost_tokens = 13
+cum_tokens = 5078
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 92
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 1185 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:1185"
+cost_tokens = 22
+cum_tokens = 5100
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1185
+end = 1186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 76, body_start_line: 78 })'
+descriptor = "python method body at src/chronos/chronos2/pipeline.py:76 body 78"
+cost_tokens = 15
+cum_tokens = 5115
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 88, body_start_line: 90 })'
+descriptor = "python method body at src/chronos/chronos2/pipeline.py:88 body 90"
+cost_tokens = 15
+cum_tokens = 5130
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 80, body_start_line: 82 })'
+descriptor = "python method body at src/chronos/chronos2/pipeline.py:80 body 82"
+cost_tokens = 16
+cum_tokens = 5146
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 92, body_start_line: 94 })'
+descriptor = "python method body at src/chronos/chronos2/pipeline.py:92 body 94"
+cost_tokens = 17
+cum_tokens = 5163
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 1224 })'
+descriptor = "python method doc at src/chronos/chronos2/pipeline.py:1224"
+cost_tokens = 33
+cum_tokens = 5196
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1225
+end = 1227
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 1224, body_start_line: 1228 })'
+descriptor = "python method body at src/chronos/chronos2/pipeline.py:1224 body 1228"
+cost_tokens = 20
+cum_tokens = 5216
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1228
+end = 1228
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 47 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:47"
+cost_tokens = 24
+cum_tokens = 5240
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 47
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 43, body_start_line: 44 })'
+descriptor = "python method body at src/chronos/chronos2/pipeline.py:43 body 44"
+cost_tokens = 21
+cum_tokens = 5261
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 44
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 1105 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:1105"
+cost_tokens = 69
+cum_tokens = 5330
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1105
+end = 1108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 84, body_start_line: 86 })'
+descriptor = "python method body at src/chronos/chronos2/pipeline.py:84 body 86"
+cost_tokens = 27
+cum_tokens = 5357
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 1027 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:1027"
+cost_tokens = 90
+cum_tokens = 5447
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1027
+end = 1034
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 1185 })'
+descriptor = "python method doc at src/chronos/chronos2/pipeline.py:1185"
+cost_tokens = 67
+cum_tokens = 5514
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 1187
+end = 1190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py" })'
+descriptor = "python imports in src/chronos/base.py"
+cost_tokens = 127
+cum_tokens = 5641
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 17
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 17, body_start_line: 18 })'
+descriptor = "python decl body at src/chronos/chronos2/trainer.py:17 body 18"
+cost_tokens = 85
+cum_tokens = 5726
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 20
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 23
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py", start_line: 33, body_start_line: 34 })'
+descriptor = "python method body at src/chronos/chronos2/trainer.py:33 body 34"
+cost_tokens = 46
+cum_tokens = 5772
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 34
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py", start_line: 59 })'
+descriptor = "python decl at src/chronos/df_utils.py:59"
+cost_tokens = 100
+cum_tokens = 5872
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/df_utils.py"
+start = 59
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py" })'
+descriptor = "python imports in src/chronos/chronos2/trainer.py"
+cost_tokens = 86
+cum_tokens = 5958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/trainer.py"
+start = 13
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 115
+cum_tokens = 6073
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 252 })'
+descriptor = "python method doc at src/chronos/base.py:252"
+cost_tokens = 176
+cum_tokens = 6249
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 255
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 258
+end = 265
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 267
+end = 273
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 550 })'
+descriptor = "python method at src/chronos/chronos2/model.py:550"
+cost_tokens = 145
+cum_tokens = 6394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 550
+end = 561
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 455 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:455"
+cost_tokens = 145
+cum_tokens = 6539
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 455
+end = 467
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py", start_line: 22 })'
+descriptor = "python decl doc at src/chronos/utils.py:22"
+cost_tokens = 323
+cum_tokens = 6862
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 27
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 32
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 43
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/chronos/chronos2/layers.py"
+cost_tokens = 362
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 227
+end = 227
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 301
+end = 301
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 318
+end = 318
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 346
+end = 346
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 353
+end = 353
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 372
+end = 372
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 393
+end = 393
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 228
+end = 228
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 296
+end = 296
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 302
+end = 302
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 319
+end = 319
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 325
+end = 325
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 347
+end = 347
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 354
+end = 354
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 394
+end = 394
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 25 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:25"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 87 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:87"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 95 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:95"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 111 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:111"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 118 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:118"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 127 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:127"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 135 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:135"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 151 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:151"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 295 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:295"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 318 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:318"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 318
+end = 318
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 346 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:346"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 346
+end = 346
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 393 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:393"
+cost_tokens = 0
+cum_tokens = 7224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 393
+end = 393
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 51 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:51"
+cost_tokens = 8
+cum_tokens = 7232
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 51
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 51 })'
+descriptor = "python method doc at src/chronos/chronos2/layers.py:51"
+cost_tokens = 16
+cum_tokens = 7248
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 34 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:34"
+cost_tokens = 48
+cum_tokens = 7296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 34
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 353 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:353"
+cost_tokens = 54
+cum_tokens = 7350
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 353
+end = 356
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 87 })'
+descriptor = "python method doc at src/chronos/chronos2/layers.py:87"
+cost_tokens = 34
+cum_tokens = 7384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 88
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 58 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:58"
+cost_tokens = 59
+cum_tokens = 7443
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 58
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 301 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:301"
+cost_tokens = 61
+cum_tokens = 7504
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 301
+end = 307
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 324 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:324"
+cost_tokens = 61
+cum_tokens = 7565
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 324
+end = 330
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 227 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:227"
+cost_tokens = 79
+cum_tokens = 7644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 227
+end = 234
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 372 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:372"
+cost_tokens = 83
+cum_tokens = 7727
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 372
+end = 380
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 48, body_start_line: 55 })'
+descriptor = "python method body at src/chronos/base.py:48 body 55"
+cost_tokens = 16
+cum_tokens = 7743
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py", start_line: 135 })'
+descriptor = "python decl doc at src/chronos/utils.py:135"
+cost_tokens = 329
+cum_tokens = 8072
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 140
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 145
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py"
+start = 156
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py", start_line: 618 })'
+descriptor = "python method at src/chronos/chronos2/model.py:618"
+cost_tokens = 151
+cum_tokens = 8223
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/model.py"
+start = 618
+end = 629
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 763 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:763"
+cost_tokens = 151
+cum_tokens = 8374
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 763
+end = 771
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py" })'
+descriptor = "python imports in src/chronos/chronos2/layers.py"
+cost_tokens = 95
+cum_tokens = 8469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 8
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 197 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:197"
+cost_tokens = 62
+cum_tokens = 8531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 197
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 169 })'
+descriptor = "python method at src/chronos/chronos2/layers.py:169"
+cost_tokens = 63
+cum_tokens = 8594
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 169
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 720 })'
+descriptor = "python method at src/chronos/chronos2/pipeline.py:720"
+cost_tokens = 63
+cum_tokens = 8657
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py"
+start = 720
+end = 726
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py" })'
+descriptor = "python imports in src/chronos/chronos.py"
+cost_tokens = 162
+cum_tokens = 8819
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 10
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 20
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/chronos/chronos.py"
+cost_tokens = 77
+cum_tokens = 8896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 243
+end = 243
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 355
+end = 355
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 244
+end = 244
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 356
+end = 356
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 184
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 59 })'
+descriptor = "python decl at src/chronos/chronos.py:59"
+cost_tokens = 0
+cum_tokens = 8896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 154 })'
+descriptor = "python decl at src/chronos/chronos.py:154"
+cost_tokens = 0
+cum_tokens = 8896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 243 })'
+descriptor = "python decl at src/chronos/chronos.py:243"
+cost_tokens = 0
+cum_tokens = 8896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 243
+end = 243
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 355 })'
+descriptor = "python decl at src/chronos/chronos.py:355"
+cost_tokens = 0
+cum_tokens = 8896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 355
+end = 355
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 27 })'
+descriptor = "python decl at src/chronos/chronos.py:27"
+cost_tokens = 7
+cum_tokens = 8903
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 27
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 27 })'
+descriptor = "python decl doc at src/chronos/chronos.py:27"
+cost_tokens = 46
+cum_tokens = 8949
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 29
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 59 })'
+descriptor = "python decl doc at src/chronos/chronos.py:59"
+cost_tokens = 71
+cum_tokens = 9020
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 60
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 64
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 243 })'
+descriptor = "python decl doc at src/chronos/chronos.py:243"
+cost_tokens = 101
+cum_tokens = 9121
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 244
+end = 246
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 248
+end = 254
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 355 })'
+descriptor = "python decl doc at src/chronos/chronos.py:355"
+cost_tokens = 121
+cum_tokens = 9242
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 356
+end = 358
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 360
+end = 361
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 363
+end = 369
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py", start_line: 355 })'
+descriptor = "python class body at src/chronos/chronos.py:355"
+cost_tokens = 38
+cum_tokens = 9280
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos.py"
+start = 371
+end = 373
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py", start_line: 135, body_start_line: 136 })'
+descriptor = "python method body at src/chronos/chronos2/layers.py:135 body 136"
+cost_tokens = 55
+cum_tokens = 9335
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/layers.py"
+start = 136
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos_bolt.py" })'
+descriptor = "python imports in src/chronos/chronos_bolt.py"
+cost_tokens = 170
+cum_tokens = 9505
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos_bolt.py"
+start = 8
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos_bolt.py"
+start = 14
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos_bolt.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 10 })'
+descriptor = "README.md section #10"
+cost_tokens = 473
+cum_tokens = 9978
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 134
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md"
+start = 144
+end = 151
+
+[batches.content.spans.render]
+kind = "full"

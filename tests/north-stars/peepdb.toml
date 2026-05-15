@@ -1,0 +1,761 @@
+fixture = "peepdb"
+revision_pin = "929064dd"
+summary = """
+peepDB is a small Python CLI tool + library for quickly inspecting tables in
+eight databases (MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, Firebase, MSSQL,
+OracleDB) without writing SQL. Architecture: a thin Click-based CLI
+(`peepdb/cli.py`) calls `core.peep_db`, which dispatches `db_type` strings to
+one of eight `BaseDatabase` subclasses under `peepdb/db/` (each implementing
+`connect` / `disconnect` / `fetch_tables` / `fetch_data`). Connection details
+are persisted Fernet-encrypted in `~/.peepdb/config.json`; the symmetric key is
+held in the OS keyring or derived from an interactive password via PBKDF2
+(`peepdb/config.py`).
+
+The ranking is breadth-first across the eight DB adapters (the dominant axis of
+variation — agents are very likely to be asked "how does the X adapter work" or
+"add a new adapter"), then depth into the persistence/encryption layer, the
+CLI/output formatting, and finally the test + CI surface. Special early
+attention goes to the public surface of the `db/` package, the
+`connect_to_database` dispatch in core, and the abstract method set on
+`BaseDatabase`, because those three together let an agent place new behavior
+with one or two follow-up reads.
+"""
+
+# =====================================================================
+# Tier 1: Existence — top-level layout and the central source directory.
+# Cheap location batches that orient an agent before any reading.
+# =====================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Repository root listing"
+justification = """
+First-call orientation: what kind of project this is (Python package +
+docs/ + images/ + setup.py + project.toml). Fixes the catastrophic-omission
+risk that an agent assumes some standard top-level file (e.g. a tests/ dir
+or Makefile) exists when it does not — tests live inside the package.
+"""
+content = { kind = "fs", groups = [
+    { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Python package layout"
+justification = """
+Reveals the four-module shape of the package (cli/core/config/exceptions
++ __init__.py + __main__.py) and the existence of the `db/` subpackage
+and a `tests/` subpackage. Agents tasked with adding a feature need to
+know where each concern lives before they can frame a query.
+"""
+content = { kind = "fs", groups = [
+    { parent = "peepdb", entries = "all" },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "DB adapter package listing"
+justification = """
+The eight-database fan-out is the dominant axis of variation in this
+codebase; many plausible queries are "how does the X adapter work" or
+"add adapter Y". Without this listing the agent would have to grep to
+discover which adapters exist. Listing as a unit avoids the partial-class
+trap (agent inferring the unlisted ones don't exist).
+"""
+content = { kind = "fs", groups = [
+    { parent = "peepdb/db", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "Test suite listing"
+justification = """
+Tells the agent the six test modules at a glance — `test_cli`,
+`test_peepdb` (top-level integration), `test_connection`, `test_sqlite`,
+`test_data_types`, `test_mongodb_uri`. Useful for "where is X tested?"
+questions and for picking the right test fn to extend.
+"""
+content = { kind = "fs", groups = [
+    { parent = "peepdb/tests", entries = "all" },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "Docs and CI directory listings"
+justification = """
+Confirms that `docs/` is a Jekyll site (`_config.yml`, `Gemfile`,
+`CNAME`, page .md files) — important so agents don't treat it as the
+authoritative spec — and that `.github/workflows/` carries pages + test
+workflows. Bundled together because each listing is tiny.
+"""
+content = { kind = "fs", groups = [
+    { parent = "docs", entries = "all" },
+    { parent = ".github/workflows", entries = "all" },
+] }
+
+# =====================================================================
+# Tier 2: Project identity in tiny chunks — README headline, empty
+# package init, the only exception, and the CLI entry-point wiring.
+# =====================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "README — title + one-paragraph lede"
+justification = """
+The README's first paragraph is the canonical one-shot description.
+Stopped at line 3 to keep the first prose batch small enough to fit
+the growth envelope; the feature bullets come in 2.4.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Package __init__, __main__, exceptions"
+justification = """
+Three tiny files in one batch. `peepdb/__init__.py` is empty (no
+re-exports — `from peepdb import X` fails for any X). `__main__.py`
+gives the `python -m peepdb` entry. `exceptions.py` defines only
+`InvalidPassword(Exception)`, referenced from cli + config.
+Avoids the catastrophic-omission trap of revealing a partial set of
+top-level package files.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/__init__.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "peepdb/__main__.py", start = 1, end = 4, render = { kind = "full" } },
+    { path = "peepdb/exceptions.py", start = 1, end = 2, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "setup.py — name/version + console_scripts entry"
+justification = """
+The two facts most likely to be asked about a packaged CLI: the
+distribution name (`peepdb`, version 0.1.4) and the
+`peepdb=peepdb.cli:main` console_scripts wiring. Skips the dependency
+list (deferred to 3.x where it's lower priority).
+"""
+content = { kind = "lines", spans = [
+    { path = "setup.py", start = 6, end = 15, render = { kind = "full" } },
+    { path = "setup.py", start = 48, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "README — feature bullets"
+justification = """
+Enumerates the supported DBs and headline capabilities (encryption,
+pagination, JSON/table output, Click CLI). Lower than the lede because
+the same DB list shows up in the dispatcher and adapter listing.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 5, end = 13, render = { kind = "full" } },
+] }
+
+# =====================================================================
+# Tier 3: Architectural keystone — adapter contract, dispatcher
+# locations, CLI command list. Names/signatures first, bodies later.
+# =====================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "db/__init__.py re-exports (full)"
+justification = """
+The public surface of the `peepdb.db` subpackage in 21 lines:
+which classes exist, their canonical import paths, and the `__all__`
+list. Listing all eight together avoids the partial-class trap.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/__init__.py", start = 1, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "BaseDatabase — class line + four abstract method signatures"
+justification = """
+Location batch: just the class def line and the four `@abstractmethod`
+def lines (`connect`, `disconnect`, `fetch_tables`, `fetch_data`) —
+revealing the contract every adapter must implement, *as a complete
+set*. Critical catastrophic-omission hedge: any adapter-modifying
+query must see all four methods at once.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/base.py", start = 5, end = 5, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 17, end = 18, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 21, end = 22, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 25, end = 26, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 29, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "core.peep_db signature"
+justification = """
+The library entry point — the eleven-parameter `peep_db` function the
+CLI calls and that tests import directly. Knowing the kwargs (table,
+format='table', page=1, page_size=100, scientific=False,
+trusted=False) answers most "how do I call this programmatically"
+queries with zero follow-up.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/core.py", start = 56, end = 66, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "cli.py — Click command def lines"
+justification = """
+Location batch: just the five `def` lines for `save`, `list`,
+`remove`, `remove_all`, `view`. Tells the agent the full CLI verb
+surface at a glance. Bodies and option decorators are deferred to
+later batches.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/cli.py", start = 27, end = 27, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 65, end = 65, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 87, end = 87, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 100, end = 100, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 115, end = 115, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 133, end = 133, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 181, end = 182, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "BaseDatabase — constructor + context-manager (full body)"
+predecessor = "3.2"
+justification = """
+Refines 3.2 with the rest of the class: the shared `__init__`
+signature (host/user/password/database/port + **kwargs, plus
+`self.connection`/`self.cursor`/`self.extra_params`/`self.logger`)
+and the `__enter__`/`__exit__` context-manager methods. Together with
+3.2 this is the entire 38-line file.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/base.py", start = 1, end = 4, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 6, end = 16, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 19, end = 20, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 23, end = 24, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 27, end = 28, render = { kind = "full" } },
+    { path = "peepdb/db/base.py", start = 31, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "connect_to_database dispatcher (full if/elif chain)"
+justification = """
+The full ten-arm if/elif/else mapping every `db_type` string
+(`mysql`/`postgres`/`mariadb`/`mongodb`/`sqlite`/`firebase`/`mssql`/
+`oracle`) to its adapter class, including the quirks: Firebase is
+constructed with only `host` (the service-account path), MSSQL keeps
+`trusted`, all others have `trusted` popped from kwargs. Most
+adapter-aware changes (new DB, new dispatch quirk) start here.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/core.py", start = 27, end = 53, render = { kind = "full" } },
+] }
+
+# =====================================================================
+# Tier 4: Adapter fan-out (locations) + the CLI's two heaviest verbs.
+# Catastrophic-omission mitigation for the eight-DB axis: every
+# adapter's class line + method signatures together, so an agent never
+# infers a partial set.
+# =====================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "MySQL + PostgreSQL + MariaDB + SQLite adapters — class + method locations"
+predecessor = "3.2"
+justification = """
+Location batch covering the four SQL-style adapters: each adapter's
+class def line and its four method def lines (connect, disconnect,
+fetch_tables, fetch_data). Lets the agent see at a glance where each
+method lives in each file — the "where is X" question is one read away
+after this. Bundled into one batch because each adapter contributes
+only five short lines and the catastrophic-omission risk is *partial*
+adapter inclusion.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/mysql.py", start = 5, end = 6, render = { kind = "full" } },
+    { path = "peepdb/db/mysql.py", start = 22, end = 22, render = { kind = "full" } },
+    { path = "peepdb/db/mysql.py", start = 29, end = 29, render = { kind = "full" } },
+    { path = "peepdb/db/mysql.py", start = 33, end = 33, render = { kind = "full" } },
+    { path = "peepdb/db/postgresql.py", start = 6, end = 7, render = { kind = "full" } },
+    { path = "peepdb/db/postgresql.py", start = 23, end = 23, render = { kind = "full" } },
+    { path = "peepdb/db/postgresql.py", start = 30, end = 30, render = { kind = "full" } },
+    { path = "peepdb/db/postgresql.py", start = 34, end = 34, render = { kind = "full" } },
+    { path = "peepdb/db/mariadb.py", start = 5, end = 6, render = { kind = "full" } },
+    { path = "peepdb/db/mariadb.py", start = 23, end = 23, render = { kind = "full" } },
+    { path = "peepdb/db/mariadb.py", start = 30, end = 30, render = { kind = "full" } },
+    { path = "peepdb/db/mariadb.py", start = 34, end = 34, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 6, end = 7, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 22, end = 22, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 29, end = 29, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 43, end = 43, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "MongoDB + Firebase + MSSQL + Oracle adapters — class + method locations"
+predecessor = "3.2"
+justification = """
+Companion to 4.1 for the four non-SQL or quirk-bearing adapters.
+MongoDB shows `t.List`/`t.Dict` style; Firebase has its own `__init__`
+overriding the base signature (only `service_account_path`); MSSQL
+adds `trusted: bool` and a different port default; Oracle uses
+`service_name` instead of `database`. Bundled to keep the eight-adapter
+class as a single visible set.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/mongodb.py", start = 8, end = 9, render = { kind = "full" } },
+    { path = "peepdb/db/mongodb.py", start = 32, end = 32, render = { kind = "full" } },
+    { path = "peepdb/db/mongodb.py", start = 39, end = 39, render = { kind = "full" } },
+    { path = "peepdb/db/mongodb.py", start = 42, end = 47, render = { kind = "full" } },
+    { path = "peepdb/db/firebase.py", start = 9, end = 10, render = { kind = "full" } },
+    { path = "peepdb/db/firebase.py", start = 15, end = 15, render = { kind = "full" } },
+    { path = "peepdb/db/firebase.py", start = 26, end = 26, render = { kind = "full" } },
+    { path = "peepdb/db/firebase.py", start = 30, end = 30, render = { kind = "full" } },
+    { path = "peepdb/db/firebase.py", start = 39, end = 39, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 6, end = 7, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 28, end = 28, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 35, end = 35, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 45, end = 45, render = { kind = "full" } },
+    { path = "peepdb/db/oracle.py", start = 7, end = 8, render = { kind = "full" } },
+    { path = "peepdb/db/oracle.py", start = 25, end = 25, render = { kind = "full" } },
+    { path = "peepdb/db/oracle.py", start = 32, end = 32, render = { kind = "full" } },
+    { path = "peepdb/db/oracle.py", start = 36, end = 37, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "config.py — top-level function signature locations"
+justification = """
+Location batch for `peepdb/config.py`: every public function
+(generate_key_from_password, fetch_key_from_keyring,
+get_key_security_config, get_key, encrypt, decrypt, save_connection,
+get_connection, list_connections, remove_connection,
+remove_all_connections, add_key_security) shown as a single def line
+each. Catastrophic-omission hedge for the persistence surface: the
+agent gets a complete inventory before reading any body.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/config.py", start = 30, end = 30, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 42, end = 42, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 49, end = 49, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 60, end = 60, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 70, end = 70, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 73, end = 73, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 76, end = 76, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 112, end = 112, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 144, end = 144, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 161, end = 161, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 178, end = 178, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 196, end = 196, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "cli.view — decorators + signature + dispatch into peep_db"
+predecessor = "3.4"
+justification = """
+First half of the busiest CLI command body. Shows all the `@click.option`
+decorators that define the user-facing flags (--table, --format,
+--page, --page-size, --scientific), the function signature, and the
+get_connection / 5-vs-6-tuple unpacking quirk (whether the saved
+connection carries the MSSQL `trusted` flag) feeding straight into
+the `peep_db(...)` call. Predecessor 3.4 already owns the def line.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/cli.py", start = 126, end = 168, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "cli.view — table vs JSON output handling + main()"
+predecessor = "4.4"
+justification = """
+Tail of the view command: the per-format output branch (tabulate-style
+echo plus pagination Navigation hints, vs json.dumps with the
+CustomEncoder) and the bottom-of-file `main` wrapper. Useful for
+"how is JSON output formatted" / "how does the next/previous page
+hint get rendered" queries.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/cli.py", start = 169, end = 180, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 184, end = 186, render = { kind = "full" } },
+] }
+
+# =====================================================================
+# Tier 5: Persistence & encryption depth + adapter `connect` bodies.
+# The save/get connection pair is where the encryption story lives;
+# the connect bodies carry every adapter's default port + driver quirk.
+# =====================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "config.py — module-level constants + KeySecurity"
+justification = """
+The persistence layer's constants: CONFIG_DIR (`~/.peepdb`),
+CONFIG_FILE (`config.json`), SECURITY_CONFIG_FILE
+(`security_config.json`), KEYRING_USERNAME/SERVICE_NAME, and the
+`KeySecurity` dataclass enumerating `KEYRING` vs `PASSWORD` storage
+modes. Most "where is X stored" / "what's the keyring entry called"
+questions resolve directly here.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/config.py", start = 1, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "save_connection — full body (sqlite/firebase shortcut + encrypt)"
+predecessor = "4.3"
+justification = """
+The single most informative function in `config.py`: it shows the
+SQLite/Firebase shortcut (stored plaintext: db_type/host/database
+only — no port, user, password, or trusted), versus the full encrypted
+record (host/user/password/database via `encrypt(...)`, plus port and
+trusted in plaintext). Pairs with `connect_to_database` to explain the
+end-to-end save→load→connect path.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/config.py", start = 77, end = 110, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "get_connection — full body (decrypt + InvalidPassword)"
+predecessor = "4.3"
+justification = """
+The mirror of save_connection: returns a tuple whose *length* depends
+on whether the saved record has a `trusted` flag (5 elements for
+sqlite/firebase, 6 elements for others). This shape directly drives
+the unpacking quirk in `cli.view` (see 4.4). Also: catches Fernet's
+`InvalidToken` and re-raises as `InvalidPassword`.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/config.py", start = 113, end = 142, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "MySQL adapter — full body"
+predecessor = "4.1"
+justification = """
+The canonical SQL-driver shape: `mysql.connector.connect(...)` with
+default port 3306, `cursor(dictionary=True)`, `SHOW TABLES`-based
+fetch_tables with the `Tables_in_{db}` key, and parameterless
+LIMIT/OFFSET pagination. Used as the reference body all four
+SQL-style adapters resemble — including in tests where MySQL is the
+default mock target.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/mysql.py", start = 1, end = 46, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "cli.save — full body (Click options + Windows-auth branch)"
+predecessor = "3.4"
+justification = """
+The `save` verb's options surface (--db-type choice list, --host,
+--port, --user, --password, --database, --trusted) plus the
+Windows-Authentication branch where `trusted=True` blanks
+user/password, and the interactive prompt fallback for missing
+credentials on non-sqlite/firebase backends. The most-asked save-time
+question is "what arguments does this take?" — fully answered here.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/cli.py", start = 53, end = 64, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 66, end = 83, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "PostgreSQL adapter — distinctive lines (psycopg2 + RealDictCursor, public schema)"
+predecessor = "4.1"
+justification = """
+psycopg2 + `RealDictCursor` for dict rows, default port 5432, and the
+information_schema-based fetch_tables (filtered to schema = 'public').
+Otherwise identical to MySQL — useful for spotting the *delta* between
+SQL drivers when adding a new one.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/postgresql.py", start = 1, end = 4, render = { kind = "full" } },
+    { path = "peepdb/db/postgresql.py", start = 8, end = 17, render = { kind = "full" } },
+    { path = "peepdb/db/postgresql.py", start = 30, end = 32, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "MongoDB adapter — full body (URI construction, replicaSet, skip/limit)"
+predecessor = "4.2"
+justification = """
+MongoDB is structurally different from the SQL adapters: builds a
+`mongodb://user:pwd@host:port/db?extra=...` URI by URL-encoding via
+`quote_plus`, default port 27017, holds onto `self.db` rather than
+a cursor, uses collection.find().skip().limit() for pagination, and
+counts via count_documents. Comes with its own URI test
+(`test_mongodb_uri.py`). High value because URI bugs are a common
+support question.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/mongodb.py", start = 1, end = 64, render = { kind = "full" } },
+] }
+
+# =====================================================================
+# Tier 6: Critical remaining bodies + the persistence helper depth.
+# Order is value-per-token: cheap CLI verbs and config helpers before
+# the bigger distinctive-adapter bodies (SQLite, MSSQL, Firebase).
+# =====================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "cli.list + cli.remove + cli.remove_all — full bodies"
+predecessor = "3.4"
+justification = """
+The three administrative verbs in one batch: `list` (thin wrapper
+around config.list_connections), `remove` (confirmation-option
+prompted, echoes result), and `remove_all` (confirmation-option
+prompted, echoes count). Tiny but high-value: completes the
+zero-follow-up surface for every CLI verb.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/cli.py", start = 86, end = 86, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 88, end = 94, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 97, end = 99, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 101, end = 110, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 113, end = 114, render = { kind = "full" } },
+    { path = "peepdb/cli.py", start = 116, end = 123, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "core.peep_db function body + format_as_table helper"
+predecessor = "3.3"
+justification = """
+Refines `peep_db`'s signature with its body: the table-vs-all-tables
+branch, the connect/try/finally/disconnect lifecycle, the per-row
+type coercion for JSON (isoformat for date/time/datetime, float for
+Decimal), and the call into `format_value` / `format_as_table` for
+table output. Plus `format_as_table` itself (tabulate `grid` style,
+page footer). Note: the logger configured at module top is unused
+inside `peep_db` — it uses `print()` for debug output, a quirk that
+matters for test stdout capture.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/core.py", start = 67, end = 115, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "format_value — big-number, scientific, date/Decimal formatting"
+predecessor = "3.3"
+justification = """
+The numeric/date display logic referenced from `peep_db`: dates/times
+to isoformat, Decimal to float, scientific notation as `:.6e` when
+`scientific=True`, large-int comma-separated formatting (>= 1e6),
+unchanged otherwise. This is the answer to "why does the output
+look like X" and "where do I tweak number formatting" questions.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/core.py", start = 118, end = 140, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "config.py — encrypt/decrypt helpers + get_key dispatch"
+predecessor = "4.3"
+justification = """
+The thin part of the crypto layer: `get_key_security_config`
+(reads or initializes `security_config.json`, choosing KEYRING vs
+PASSWORD), `get_key` (dispatches to keyring or password derivation),
+and the one-line `encrypt` / `decrypt` wrappers over
+`Fernet(get_key())`. Catastrophic-omission hedge: the encrypt/decrypt
+pair is what `save_connection` / `get_connection` actually call.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/config.py", start = 49, end = 74, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "config.py — PBKDF2 derivation + keyring fetch + add_key_security"
+predecessor = "4.3"
+justification = """
+The two key-acquisition paths: `generate_key_from_password` (PBKDF2-
+HMAC SHA-256, 480000 iterations, TTLCache-cached for 10 min, prompts
+interactively) and `fetch_key_from_keyring` (Fernet.generate_key on
+first run). Plus `add_key_security` which writes the initial choice
+into security_config.json with a base64-encoded 16-byte salt for the
+PASSWORD path. The "what is the key derivation" question is one read
+away after this batch.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/config.py", start = 29, end = 47, render = { kind = "full" } },
+    { path = "peepdb/config.py", start = 196, end = 208, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "config.py — remove_connection + remove_all_connections bodies"
+predecessor = "4.3"
+justification = """
+The two cli.remove/remove_all verb backers: `remove_connection`
+(deletes one entry from CONFIG_FILE) and `remove_all_connections`
+(counts + deletes the file, tolerant of FileNotFoundError /
+JSONDecodeError). `list_connections` is short and trivial — its
+location is in 4.3, no body needed.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/config.py", start = 162, end = 194, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "SQLite adapter — distinctive lines (file path, sqlite3.Row, sqlite_master, quoted-identifier)"
+predecessor = "4.1"
+justification = """
+SQLite is structurally distinct from the SQL siblings: uses
+`self.host` as a filesystem path (resolved via `os.path.abspath`),
+no port, `row_factory = sqlite3.Row`, sqlite_master-based table
+discovery, and the only adapter that emits `print()` instead of
+`self.logger.*`. The quoted-identifier (`'{table}'`) handling on
+COUNT/SELECT is also distinctive.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/sqlite.py", start = 1, end = 4, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 8, end = 8, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 12, end = 16, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 18, end = 20, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 23, end = 27, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 30, end = 30, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 35, end = 41, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 44, end = 45, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 47, end = 47, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 51, end = 51, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 52, end = 52, render = { kind = "full" } },
+    { path = "peepdb/db/sqlite.py", start = 55, end = 63, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.8"
+descriptor = "MSSQL adapter — distinctive lines (ODBC connection string, schema.table, OFFSET FETCH)"
+predecessor = "4.2"
+justification = """
+pyodbc-based. Distinct features: an `__init__` that adds `trusted:
+bool` plus default port 1433, a hand-built ODBC connection string
+(`DRIVER={ODBC Driver 17 for SQL Server};SERVER={host,port};...;
+Trusted_Connection=yes` for Windows Auth), `fetch_tables` that
+returns `"schema.tableName"` rather than plain table names, and
+`OFFSET ... ROWS FETCH NEXT ... ROWS ONLY` pagination with the
+unusual `ORDER BY (SELECT NULL)` workaround.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/mssql.py", start = 1, end = 4, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 8, end = 10, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 13, end = 19, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 36, end = 43, render = { kind = "full" } },
+    { path = "peepdb/db/mssql.py", start = 46, end = 57, render = { kind = "full" } },
+] }
+
+# =====================================================================
+# Tier 7: Final-mile coverage — Firebase / Oracle quirks, test surface.
+# Tight budget; each batch is intentionally tiny.
+# =====================================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "Firebase adapter — distinctive __init__ override + Firestore client setup"
+predecessor = "4.2"
+justification = """
+The specific lines that make Firebase divergent: the `__init__` body
+that drops the base signature and only stores `service_account_path`
++ kwargs + `self.db = None`, plus the `connect` body initializing
+firebase_admin with `credentials.Certificate(...)` and creating a
+Firestore client.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/firebase.py", start = 1, end = 2, render = { kind = "full" } },
+    { path = "peepdb/db/firebase.py", start = 11, end = 13, render = { kind = "full" } },
+    { path = "peepdb/db/firebase.py", start = 18, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "Oracle adapter — service_name kwarg on connect"
+predecessor = "4.2"
+justification = """
+The single most-asked Oracle-specific quirk: oracledb.connect is
+passed `service_name=self.database` rather than `database=`, and port
+defaults to 1521. Tiny batch covering only those lines.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/db/oracle.py", start = 10, end = 15, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "test_cli — every test fn def line (truncated)"
+justification = """
+Location batch over `peepdb/tests/test_cli.py`: the nine
+`def test_*_command*` entries showing what CLI behavior the Click
+testing fixture exercises (pagination, json format, scientific
+notation, invalid connection, invalid password, save/list/remove/
+remove_all). Truncated at the `(` to drop the mock-arg list. Single
+batch so partial inclusion can't imply un-tested verbs.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/tests/test_cli.py", start = 29, end = 29, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_cli.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_cli.py", start = 70, end = 70, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_cli.py", start = 94, end = 94, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_cli.py", start = 104, end = 104, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_cli.py", start = 114, end = 114, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_cli.py", start = 147, end = 147, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_cli.py", start = 157, end = 157, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_cli.py", start = 168, end = 168, render = { kind = "truncated", pattern = "^def [^(]+" } },
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "test_peepdb + test_data_types + test_mongodb_uri + test_sqlite — class/fn locations"
+justification = """
+Location batch over the remaining test modules: `test_peepdb`
+(test_peep_db + test_config_functions, the project's two-fn
+integration test), `test_data_types.test_peep_db_with_data_types`,
+`test_mongodb_uri.test_mongodb_connection_uri_generation`, and the
+`TestSQLiteDatabase` class. Catastrophic-omission hedge for the test
+surface — partial inclusion would let an agent infer un-tested
+behavior.
+"""
+content = { kind = "lines", spans = [
+    { path = "peepdb/tests/test_peepdb.py", start = 15, end = 15, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_peepdb.py", start = 140, end = 140, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_data_types.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "peepdb/tests/test_mongodb_uri.py", start = 6, end = 6, render = { kind = "full" } },
+    { path = "peepdb/tests/test_sqlite.py", start = 6, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.5"
+descriptor = "README — all H2 section headings (location-only)"
+justification = """
+The README's section structure: Features (already shown), Action,
+stills, Installation, Usage, Security, Contributing, License,
+Documentation. Lets an agent navigate the README without reading its
+full body, and catches partial-class risk for "what sections does
+the README have?".
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 15, end = 15, render = { kind = "full" } },
+    { path = "README.md", start = 21, end = 21, render = { kind = "full" } },
+    { path = "README.md", start = 27, end = 27, render = { kind = "full" } },
+    { path = "README.md", start = 35, end = 35, render = { kind = "full" } },
+    { path = "README.md", start = 154, end = 154, render = { kind = "full" } },
+    { path = "README.md", start = 162, end = 162, render = { kind = "full" } },
+    { path = "README.md", start = 166, end = 166, render = { kind = "full" } },
+    { path = "README.md", start = 170, end = 170, render = { kind = "full" } },
+] }

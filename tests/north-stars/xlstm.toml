@@ -1,0 +1,951 @@
+fixture = "xlstm"
+revision_pin = "032a6fb8"
+summary = """
+The `xlstm` Python package implements the xLSTM architecture — an LSTM
+successor with exponential gating and matrix memory — in two parallel
+implementations sharing the top-level package:
+
+1. The NeurIPS-paper code under `xlstm/` (composable
+   `xLSTMBlockStack` + `xLSTMLMModel`, alternating mLSTM/sLSTM blocks,
+   sLSTM with a CUDA backend under `xlstm/blocks/slstm/src/cuda/` and
+   a vanilla PyTorch fallback under `xlstm/blocks/slstm/src/vanilla/`).
+2. The "xLSTM Large 7B" rewrite under `xlstm/xlstm_large/` — a
+   single-file `model.py` that delegates to the external
+   `mlstm_kernels` package, with HuggingFace `from_pretrained`,
+   token generation, RMSNorm, and a single→fused weight converter.
+
+The query distribution this NS serves is dominated by:
+- Orientation ("what does this repo do? where's the entry point?").
+- Modeling/architecture questions: how are blocks wired, what config
+  fields exist, where the mLSTM vs sLSTM math lives, how the CUDA
+  extension is loaded, what kernels are available.
+- Integration: how to instantiate, train, generate, load checkpoints,
+  convert single↔fused weights.
+- Debugging: shape conventions, gate init, dtype handling, autograd
+  Function wiring, why a kernel is failing to compile.
+
+Catastrophic-omission hedges that drive the ranking:
+- Both implementations (legacy NeurIPS + xLSTM Large) must be visible
+  early; omitting either misleads the agent badly.
+- The CUDA source tree must be cataloged (locations) because it is
+  large and load-bearing for the sLSTM "cuda" backend.
+- mLSTM and sLSTM are *parallel* — config/cell/layer/block files
+  exist for both; show the matched pair together.
+- Public symbol surface in `xlstm/__init__.py` is tiny but defines
+  what end-users import; include it verbatim early.
+"""
+
+# =============================================================================
+# Tier 1 — orientation: what is this repo, where do you start, what's exported
+# =============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Repository root listing"
+justification = """
+The agent's first need is "what kind of project is this and what
+top-level artifacts are here?" — a full root listing gives that
+without committing many tokens. Includes README, pyproject, env
+files, the `xlstm/` package, the `experiments/`, `tests/`, and
+`notebooks/` siblings, and the `res/` figures. Listed at root only
+(deeper dirs are expanded in later tiers).
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README H1 — project name"
+justification = """
+The H1 (`# xLSTM: Extended Long Short-Term Memory`) is the single
+most informative line about the repo. Cheap (one line) and answers
+"what is this called?" instantly when paired with the listing.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 3, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "xlstm/ package directory listing"
+justification = """
+Maps the legacy implementation's layout: `blocks/` (mlstm + slstm),
+`components/` (conv, ln, init, …), `xlstm_large/` (the 7B rewrite,
+visibly a sibling, not nested in `blocks`), plus the top-level
+`xlstm_block_stack.py` / `xlstm_lm_model.py` / `utils.py` entry
+modules. Cheap structural pointer that enables precise follow-up
+file reads.
+"""
+content = { kind = "fs", groups = [
+  { parent = "xlstm", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "Top-level __init__ — re-export names only"
+justification = """
+The bulk of `xlstm/__init__.py` is `from .x import …` lines naming
+the public classes the user imports. Truncating each line at the
+`import` keyword keeps the names visible without redundant source
+prefixes. Identifies every config + module class exposed by
+`from xlstm import …`. The `__version__` literal line shows in
+full as a single-line span.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/__init__.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "xlstm/__init__.py", start = 3, end = 9, render = { kind = "truncated", pattern = "^from [^ ]+ import" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README — About paragraph"
+justification = """
+The README's About paragraph (lines 19-27) is the canonical
+one-paragraph answer to "what is xLSTM and what's special about
+it" — Exponential Gating, Matrix Memory, the 7B model existence.
+Zero-follow-up for the most common orientation query.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 19, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "Top-level __init__ — full content (refines 1.4)"
+predecessor = "1.4"
+justification = """
+Promote the truncated import lines from 1.4 to full source. Now the
+agent knows not just *what* names are exported but *where they come
+from* inside the package — `mLSTMBlock` from `blocks.mlstm.block`,
+`xLSTMBlockStack` from the top-level module, etc. The from-paths
+double as a structural map of the legacy code.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/__init__.py", start = 3, end = 9, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "README — xLSTM Large signpost"
+justification = """
+The xLSTM Large 7B H1 and the single-file-implementation pointer to
+`xlstm/xlstm_large/model.py`. This is the half of the two-impl story
+that's easiest to miss — `xlstm_large/` is a sibling under the same
+package, not a separate package. Without this signpost the agent
+goes looking for the 7B code in the wrong place.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 61, end = 61, render = { kind = "full" } },
+  { path = "README.md", start = 75, end = 76, render = { kind = "full" } },
+  { path = "README.md", start = 82, end = 83, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "README — NeurIPS-paper-models signpost"
+justification = """
+The other half: the H1 + intro of the "Models from the xLSTM
+NeurIPS Paper" section, which introduces `xLSTMBlockStack` (alt
+backbone) and `xLSTMLMModel` (LM wrapper). Tells the agent which
+classes to reach for when implementing custom models with the
+legacy code path.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 138, end = 144, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 2 — package structure: subpackage listings + headline class signatures
+# =============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "xlstm/blocks/ directory listing"
+justification = """
+`blocks/` is the heart of the legacy implementation. Lists the
+`mlstm/` and `slstm/` siblings (parallel subpackages) plus the
+shared `xlstm_block.py` base. Critical catastrophic-omission hedge
+before showing only-some files from either sub-block.
+"""
+content = { kind = "fs", groups = [
+  { parent = "xlstm/blocks", entries = "all" },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "xlstm/components/ directory listing"
+justification = """
+Lists `conv.py` (CausalConv1d), `ln.py` (LayerNorm /
+MultiHeadLayerNorm), `init.py` (weight init helpers),
+`linear_headwise.py` (LinearHeadwiseExpand), `feedforward.py`
+(GatedFeedForward), `util.py` (ParameterProxy, decorators).
+Catalog of shared building blocks used by mLSTM and sLSTM.
+"""
+content = { kind = "fs", groups = [
+  { parent = "xlstm/components", entries = "all" },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "xlstm/xlstm_large/ directory listing"
+justification = """
+Catalogs the 7B rewrite: `model.py` (single-file model), `components.py`
+(RMSNorm, soft_cap, LayerNorm variants), `generate.py` (token sampling
+loop), `from_pretrained.py` (HF checkpoint loader), `utils.py`
+(weight conversion). Anchors the second implementation as a fully
+self-contained sibling.
+"""
+content = { kind = "fs", groups = [
+  { parent = "xlstm/xlstm_large", entries = "all" },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "xlstm/blocks/mlstm/ + slstm/ listings"
+justification = """
+Both block sub-packages, paired so the symmetric layout is obvious
+at a glance: `block.py` (`mLSTMBlock` / `sLSTMBlock`), `layer.py`
+(layer wrapper around the cell), `cell.py` (the core math),
+`backends.py` (mLSTM only — parallel / recurrent / chunkwise),
+plus the `slstm/src/` subdir which holds the CUDA + vanilla
+backends (expanded in later batches).
+"""
+content = { kind = "fs", groups = [
+  { parent = "xlstm/blocks/mlstm", entries = "all" },
+  { parent = "xlstm/blocks/slstm", entries = "all" },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "xLSTMBlockStackConfig field list"
+justification = """
+The dataclass header + every field declaration of
+`xLSTMBlockStackConfig` (legacy code) — `mlstm_block`,
+`slstm_block`, `context_length`, `num_blocks`, `embedding_dim`,
+`add_post_blocks_norm`, `bias`, `dropout`, `slstm_at`, `_block_map`.
+Zero-follow-up answer to "what knobs does the BlockStack take?".
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_block_stack.py", start = 15, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "xLSTMLMModelConfig — LM-specific fields"
+justification = """
+The 4 fields `xLSTMLMModelConfig` adds on top of `xLSTMBlockStackConfig`
+(vocab_size, tie_weights, weight_decay_on_embedding,
+add_embedding_dropout). Plus the class header for `xLSTMLMModel`
+itself — `WeightDecayOptimGroupMixin, nn.Module`. Together: the full
+shape of the LM wrapper class.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_lm_model.py", start = 14, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "xLSTMLargeConfig — required + key fields"
+justification = """
+The 7B model's config dataclass is large (lines 30-110). This
+batch shows the dataclass header, the 4 required fields
+(embedding_dim, num_heads, num_blocks, vocab_size), the kernel
+selectors (chunkwise_kernel, sequence_kernel, step_kernel, mode),
+and `weight_mode`. These are the parameters every caller must
+provide. Field decl lines rendered Full to keep the type annotations.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_large/model.py", start = 30, end = 32, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 33, end = 33, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 34, end = 34, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 38, end = 38, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 56, end = 56, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 61, end = 61, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 65, end = 65, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 69, end = 69, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 104, end = 104, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "xlstm/blocks/slstm/src/ directory listings"
+justification = """
+The sLSTM source tree has three sub-dirs: `src/` itself
+(holds `cuda_init.py`, the Python loader), `src/cuda/` (the C++/CUDA
+backend), `src/util/` (CUDA header utilities), `src/vanilla/` (pure
+PyTorch fallback). Listed together — the parallel cuda/vanilla
+layout is critical for "where's the kernel?" / "what's the fallback?"
+queries. Without this listing the agent doesn't know the vanilla
+backend exists.
+"""
+content = { kind = "fs", groups = [
+  { parent = "xlstm/blocks/slstm/src", entries = "all" },
+  { parent = "xlstm/blocks/slstm/src/cuda", entries = "all" },
+  { parent = "xlstm/blocks/slstm/src/util", entries = "all" },
+  { parent = "xlstm/blocks/slstm/src/vanilla", entries = "all" },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "experiments/ + tests/ + notebooks/ listings"
+justification = """
+The non-library tree: `experiments/main.py` plus the formal-language
+data pipeline, `tests/` (test files visible) and `notebooks/`
+(`xlstm_large/demo.ipynb`, paper-related notebooks). Tells the agent
+where to look for usage examples and existing test patterns.
+"""
+content = { kind = "fs", groups = [
+  { parent = "experiments", entries = "all" },
+  { parent = "experiments/data", entries = "all" },
+  { parent = "experiments/data/formal_language", entries = "all" },
+  { parent = "experiments/data/formal_language/tasks", entries = "all" },
+  { parent = "tests", entries = "all" },
+  { parent = "notebooks", entries = "all" },
+  { parent = "notebooks/xlstm", entries = "all" },
+  { parent = "notebooks/xlstm_large", entries = "all" },
+] }
+
+# =============================================================================
+# Tier 3 — public class/function signatures for the legacy NeurIPS code
+# =============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "xLSTMBlockStack — class headers + fn signatures"
+justification = """
+Class+method skeleton for the central legacy backbone:
+`xLSTMBlockStack(nn.Module)` and its `__init__` / `_create_blocks`
+/ `reset_parameters` / `forward` / `step` (the step signature is
+multi-line, returns `(x, state)`). Tells the agent the stack
+supports both a fused `forward` and a per-step `step` API.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_block_stack.py", start = 77, end = 77, render = { kind = "full" } },
+  { path = "xlstm/xlstm_block_stack.py", start = 80, end = 80, render = { kind = "full" } },
+  { path = "xlstm/xlstm_block_stack.py", start = 90, end = 90, render = { kind = "full" } },
+  { path = "xlstm/xlstm_block_stack.py", start = 111, end = 111, render = { kind = "full" } },
+  { path = "xlstm/xlstm_block_stack.py", start = 117, end = 117, render = { kind = "full" } },
+  { path = "xlstm/xlstm_block_stack.py", start = 126, end = 128, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "xLSTMLMModel — class header + fn signatures"
+justification = """
+Companion to 3.1: `xLSTMLMModel` adds `__init__` /
+`reset_parameters` / `forward` / `step` / `_create_weight_decay_optim_groups`
+on top of the BlockStack — token embedding + lm_head + optim-group
+override. Shape of the LM wrapper that callers actually instantiate.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_lm_model.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "xlstm/xlstm_lm_model.py", start = 41, end = 41, render = { kind = "full" } },
+  { path = "xlstm/xlstm_lm_model.py", start = 49, end = 49, render = { kind = "full" } },
+  { path = "xlstm/xlstm_lm_model.py", start = 56, end = 58, render = { kind = "full" } },
+  { path = "xlstm/xlstm_lm_model.py", start = 65, end = 65, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "xLSTMBlockConfig + xLSTMBlock — the shared parent block"
+justification = """
+`xlstm/blocks/xlstm_block.py` defines the *common* parent block
+(pre-LN + skip-connection wrapper) that both mLSTMBlock and
+sLSTMBlock subclass. Shows the config dataclass header + the field
+list + the critical assert-pair in `__post_init__` ("exactly one
+of mlstm/slstm"), the `xLSTMBlock` class header + docstring, and
+method signatures.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/xlstm_block.py", start = 16, end = 17, render = { kind = "full" } },
+  { path = "xlstm/blocks/xlstm_block.py", start = 18, end = 21, render = { kind = "full" } },
+  { path = "xlstm/blocks/xlstm_block.py", start = 23, end = 25, render = { kind = "full" } },
+  { path = "xlstm/blocks/xlstm_block.py", start = 28, end = 29, render = { kind = "full" } },
+  { path = "xlstm/blocks/xlstm_block.py", start = 43, end = 44, render = { kind = "full" } },
+  { path = "xlstm/blocks/xlstm_block.py", start = 51, end = 51, render = { kind = "full" } },
+  { path = "xlstm/blocks/xlstm_block.py", start = 76, end = 76, render = { kind = "full" } },
+  { path = "xlstm/blocks/xlstm_block.py", start = 82, end = 82, render = { kind = "full" } },
+  { path = "xlstm/blocks/xlstm_block.py", start = 89, end = 89, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "mLSTMBlock + sLSTMBlock — thin subclass shells"
+justification = """
+The two subclass files are tiny (~40 lines each). The salient bit
+is the config dataclass + class header pair for each — they show
+how the block sets up its `__post_init__` cascade
+(slstm has `feedforward`, mlstm doesn't). Together they make the
+mlstm/slstm symmetry concrete.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/mlstm/block.py", start = 9, end = 16, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/block.py", start = 22, end = 22, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/block.py", start = 12, end = 20, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/block.py", start = 29, end = 29, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "mLSTMLayerConfig — field declarations"
+justification = """
+Field-level view of `mLSTMLayerConfig` (subclasses UpProjConfigMixin):
+`conv1d_kernel_size`, `qkv_proj_blocksize`, `num_heads`, `proj_factor`,
+plus the toplevel-injected `embedding_dim`/`bias`/`dropout`/
+`context_length` and `_inner_embedding_dim`. Plus `__post_init__`
+showing the inner-dim derivation. Full render preserves defaults.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/mlstm/layer.py", start = 18, end = 23, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/layer.py", start = 26, end = 32, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/layer.py", start = 34, end = 36, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "mLSTMLayer — class header + fn signatures"
+justification = """
+`mLSTMLayer(nn.Module)` and its `__init__` / `forward` / `step`
+/ `reset_parameters` signatures. The `step` signature reveals the
+state tuple `(mlstm_state, conv_state)` — a recurring shape across
+both implementations.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/mlstm/layer.py", start = 39, end = 39, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/layer.py", start = 42, end = 42, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/layer.py", start = 101, end = 101, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/layer.py", start = 127, end = 132, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/layer.py", start = 158, end = 158, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "mLSTMCell + mLSTMCellConfig"
+justification = """
+The cell's config (3 fields) plus class header and method
+signatures: `__init__` / `forward(q,k,v)` / `step` (with the
+three-tensor `mlstm_state` shape comment) / `reset_parameters`.
+Plus the `parallel_stabilized_simple` / `recurrent_step_stabilized_simple`
+backend hookup lines. Maps the call chain from cell into backends.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/mlstm/cell.py", start = 13, end = 17, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/cell.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/cell.py", start = 23, end = 23, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/cell.py", start = 27, end = 28, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/cell.py", start = 43, end = 43, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/cell.py", start = 75, end = 78, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/cell.py", start = 133, end = 133, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "mlstm/backends.py — all three backend fn signatures"
+justification = """
+mLSTM's three computation forms: `parallel_stabilized_simple`,
+`recurrent_step_stabilized_simple`, `chunkwise_simple`. Showing all
+three signatures together (with their shape-annotated parameters)
+gives the agent the full menu of mLSTM-side mathematical kernels in
+the legacy code — no per-fn follow-up needed to know what's there.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/mlstm/backends.py", start = 9, end = 15, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/backends.py", start = 93, end = 102, render = { kind = "full" } },
+  { path = "xlstm/blocks/mlstm/backends.py", start = 149, end = 160, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "sLSTMLayerConfig + sLSTMLayer — config fields + method signatures"
+justification = """
+Tiny config (extends sLSTMCellConfig with embedding_dim, num_heads,
+conv1d_kernel_size, group_norm_weight, dropout). Class header for
+`sLSTMLayer(nn.Module)` plus its `__init__` / `reset_parameters`
+/ `step` / `forward` signatures (showing `return_last_state`,
+`conv_state`, `slstm_state` parameters).
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/slstm/layer.py", start = 18, end = 26, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/layer.py", start = 33, end = 33, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/layer.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/layer.py", start = 84, end = 84, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/layer.py", start = 92, end = 97, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/layer.py", start = 123, end = 129, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "sLSTMCellConfig — full field declarations"
+justification = """
+The sLSTM cell's config is unusually large. Show every field
+declaration in full (lines 61-119): `hidden_size`, `num_heads`,
+`num_states`, `backend` ∈ {vanilla, cuda}, `function` ∈
+{slstm, lstm}, `bias_init` literal choices, `recurrent_weight_init`,
+`_block_idx` / `_num_blocks`, `num_gates`, `gradient_recurrent_cut`,
+`gradient_recurrent_clipval`, `forward_clipval`, `batch_size`,
+input_shape / internal_input_shape / output_shape literal types,
+`constants`, all the dtype fields (b, r, w, g, s, a),
+`enable_automatic_mixed_precision`, `initial_val`. Comments on each
+line carry domain meaning.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/slstm/cell.py", start = 61, end = 63, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 67, end = 68, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 70, end = 70, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 74, end = 74, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 83, end = 83, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 85, end = 85, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 87, end = 87, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 89, end = 89, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 92, end = 92, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 94, end = 94, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 96, end = 96, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 104, end = 104, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 107, end = 107, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 109, end = 109, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 110, end = 115, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 118, end = 119, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "sLSTMCellConfig — derived properties + defines"
+predecessor = "3.10"
+justification = """
+The config's derived properties: `head_dim`, `input_dim` (= 4*hidden,
+the i/f/z/o-gate concat), `torch_dtype` / `torch_dtype_b/_r/_w/_s`
+properties, the `__post_init__` propagation, and the `defines`
+property that emits the `-DSLSTM_*` macros consumed by the CUDA
+compile step (catastrophic-omission hedge — these are the macros
+the CUDA code reads).
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/slstm/cell.py", start = 121, end = 122, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 125, end = 126, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 129, end = 148, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 172, end = 174, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.12"
+descriptor = "sLSTMCell classes — locations of all 4 + dispatcher"
+justification = """
+`xlstm/blocks/slstm/cell.py` defines `sLSTMCellBase`, `sLSTMCellCUDA`
+(instance cache), `sLSTMCell_vanilla`, `sLSTMCell_cuda`, and the
+`sLSTMCell` dispatcher (`__new__` picks backend). Plus the
+`sLSTMCellFuncGenerator` that builds the `torch.autograd.Function`.
+Listing them together is the catastrophic-omission hedge — agent
+must know all the pieces of the sLSTM dispatch graph.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/slstm/cell.py", start = 30, end = 35, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 43, end = 51, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 53, end = 58, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 214, end = 214, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 509, end = 509, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 537, end = 537, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 543, end = 543, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 591, end = 591, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 681, end = 681, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/cell.py", start = 777, end = 780, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.13"
+descriptor = "components/feedforward.py — config + class + factory"
+justification = """
+`FeedForwardConfig` dataclass + the `_act_fn_registry` dict (full —
+shows available activations: gelu, relu, relu^2, sigmoid, swish,
+selu). `GatedFeedForward` class header + fn signatures. And the
+`create_feedforward` factory — `ff_type` dispatch (only 'ffn_gated'
+currently). Used by sLSTM blocks (mLSTM blocks don't take an FFN).
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/components/feedforward.py", start = 12, end = 19, render = { kind = "full" } },
+  { path = "xlstm/components/feedforward.py", start = 22, end = 22, render = { kind = "full" } },
+  { path = "xlstm/components/feedforward.py", start = 31, end = 38, render = { kind = "full" } },
+  { path = "xlstm/components/feedforward.py", start = 49, end = 49, render = { kind = "full" } },
+  { path = "xlstm/components/feedforward.py", start = 72, end = 72, render = { kind = "full" } },
+  { path = "xlstm/components/feedforward.py", start = 90, end = 90, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.14"
+descriptor = "components/conv.py — CausalConv1d config + class + step"
+justification = """
+`CausalConv1dConfig` fields, the standalone `conv1d_step` fn
+signature (used by the per-step API), and the `CausalConv1d`
+class header + `__init__` / `forward` / `step` signatures.
+Used by both mLSTM and sLSTM layers.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/components/conv.py", start = 12, end = 18, render = { kind = "full" } },
+  { path = "xlstm/components/conv.py", start = 24, end = 29, render = { kind = "full" } },
+  { path = "xlstm/components/conv.py", start = 55, end = 55, render = { kind = "full" } },
+  { path = "xlstm/components/conv.py", start = 110, end = 115, render = { kind = "full" } },
+  { path = "xlstm/components/conv.py", start = 131, end = 135, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.15"
+descriptor = "components/ln.py + linear_headwise.py — class signatures"
+justification = """
+LayerNorm and MultiHeadLayerNorm (legacy) class headers + key
+signatures; `LinearHeadwiseExpand` config + class signature.
+These are the per-component primitives that mLSTM/sLSTM layers
+compose.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/components/ln.py", start = 8, end = 8, render = { kind = "full" } },
+  { path = "xlstm/components/ln.py", start = 11, end = 18, render = { kind = "full" } },
+  { path = "xlstm/components/ln.py", start = 51, end = 51, render = { kind = "full" } },
+  { path = "xlstm/components/ln.py", start = 53, end = 53, render = { kind = "full" } },
+  { path = "xlstm/components/linear_headwise.py", start = 12, end = 15, render = { kind = "full" } },
+  { path = "xlstm/components/linear_headwise.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "xlstm/components/linear_headwise.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "xlstm/components/linear_headwise.py", start = 27, end = 29, render = { kind = "full" } },
+  { path = "xlstm/components/linear_headwise.py", start = 42, end = 42, render = { kind = "full" } },
+  { path = "xlstm/components/linear_headwise.py", start = 49, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.16"
+descriptor = "components/init.py — full file (weight init helpers)"
+justification = """
+Tiny file (32 lines), three weight-init helpers used everywhere:
+`bias_linspace_init_`, `small_init_init_` (small-init from
+'Transformers without Tears'), `wang_init_`. Full file is cheap
+and very useful — these names show up in every block's
+`reset_parameters` call.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/components/init.py", start = 8, end = 8, render = { kind = "full" } },
+  { path = "xlstm/components/init.py", start = 18, end = 18, render = { kind = "full" } },
+  { path = "xlstm/components/init.py", start = 28, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.17"
+descriptor = "components/util.py — ParameterProxy + helpers"
+justification = """
+`round_to_multiple`, `conditional_decorator`, and the
+`ParameterProxy` class (used by `sLSTMCellBase` to keep the
+internal/external recurrent_kernel and bias shapes in sync).
+Critical for understanding why the sLSTM cell has both
+`_recurrent_kernel_` (internal storage) and `recurrent_kernel`
+(proxy) attributes.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/components/util.py", start = 7, end = 8, render = { kind = "full" } },
+  { path = "xlstm/components/util.py", start = 11, end = 12, render = { kind = "full" } },
+  { path = "xlstm/components/util.py", start = 26, end = 33, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.18"
+descriptor = "xlstm/utils.py — config mixin + optim-group mixin"
+justification = """
+`UpProjConfigMixin` (subclassed by `mLSTMLayerConfig` and
+`FeedForwardConfig` — gives the `_set_proj_up_dim` method that
+rounds the up-projection dimension) and `WeightDecayOptimGroupMixin`
+(used by `xLSTMLMModel` — splits parameters into decay/no-decay
+groups based on name).
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/utils.py", start = 11, end = 20, render = { kind = "full" } },
+  { path = "xlstm/utils.py", start = 32, end = 32, render = { kind = "full" } },
+  { path = "xlstm/utils.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "xlstm/utils.py", start = 61, end = 61, render = { kind = "full" } },
+  { path = "xlstm/utils.py", start = 77, end = 77, render = { kind = "full" } },
+  { path = "xlstm/utils.py", start = 97, end = 99, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 4 — xLSTM Large 7B implementation + experiments + CUDA bindings + tests
+# =============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "xLSTMLargeConfig — all remaining fields (refines 2.7)"
+predecessor = "2.7"
+justification = """
+Promotes 2.7 to the full xLSTMLargeConfig dataclass — adds the
+norm config (use_bias, norm_eps, norm_reduction_force_float32,
+add_out_norm), qk_dim_factor / v_dim_factor, chunk_size,
+return_last_states, autocast_kernel_dtype, eps,
+inference_state_dtype, ffn_proj_factor, ffn_round_up_to_multiple_of,
+gate_soft_cap, output_logit_soft_cap. Each field's docstring is
+on the following line, which we omit by using a series of single-
+line Full spans on just the decls.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_large/model.py", start = 40, end = 40, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 42, end = 42, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 44, end = 44, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 46, end = 46, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 50, end = 50, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 52, end = 52, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 76, end = 76, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 80, end = 80, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 84, end = 84, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 90, end = 90, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 93, end = 93, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 101, end = 101, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "xlstm_large/model.py — class skeleton (4 classes)"
+justification = """
+The 4 module classes in the single-file 7B model:
+`xLSTMLarge` (top-level: embedding + backbone + lm_head, plus
+`forward` and `generate`), `xLSTMLargeBlockStack` (the
+`ModuleList` of blocks + post-norm), `FeedForward` (single + fused
+weight modes), `mLSTMLayer` (xLSTM Large's mLSTM layer — note this
+is the *xLSTM Large mLSTMLayer*, distinct from the legacy
+`xlstm/blocks/mlstm/layer.py:mLSTMLayer`), and `mLSTMBlock` (block
+wrapper). Each class header on its own line; key fn signatures.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_large/model.py", start = 112, end = 112, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 115, end = 115, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 126, end = 128, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 155, end = 156, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 187, end = 187, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 209, end = 211, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 232, end = 233, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 268, end = 268, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 310, end = 311, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 379, end = 381, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 455, end = 456, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 499, end = 501, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "xlstm_large/model.py — mLSTMLayerConfig fields"
+justification = """
+The 7B version of `mLSTMLayerConfig` (separate from the legacy
+config of the same name). Fields: embedding_dim, num_heads, use_bias,
+norm_eps, norm_reduction_force_float32, qk_dim_factor, v_dim_factor,
+gate_soft_cap, mlstm_backend (a `mLSTMBackendConfig` from the external
+`mlstm_kernels` package), weight_mode. Hands the agent the exact
+layer-config knobs without recursing into `mlstm_kernels`.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_large/model.py", start = 280, end = 282, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 284, end = 284, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 286, end = 286, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 288, end = 288, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 290, end = 290, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 293, end = 293, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 295, end = 295, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 297, end = 297, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 300, end = 300, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/model.py", start = 303, end = 303, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "xlstm_large/components.py — soft_cap + Norm classes"
+justification = """
+`soft_cap(values, cap_value)` (tanh-based logit cap, applied to
+gates + output logits); `NormLayer` abstract base; `RMSNorm`,
+`MultiHeadRMSNorm`, `LayerNorm`, `MultiHeadLayerNorm` class headers
++ `forward` signatures. These are the norms wired into the 7B
+mLSTMBlock/mLSTMLayer; distinct from the legacy `components/ln.py`
+norms.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_large/components.py", start = 5, end = 5, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/components.py", start = 24, end = 24, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/components.py", start = 35, end = 36, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/components.py", start = 65, end = 67, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/components.py", start = 70, end = 70, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/components.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/components.py", start = 155, end = 155, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/components.py", start = 188, end = 188, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "xlstm_large/from_pretrained.py — HF checkpoint loader"
+justification = """
+`load_from_pretrained` signature + key body lines: takes a
+checkpoint dir with `model.safetensors` (or sharded
+`model_<n>.safetensors`) + `config.yaml`, builds
+`xLSTMLargeConfig`, applies the per-call kernel/mode overrides,
+forces `weight_mode = "single"`, then loads the state dict. The
+one-stop answer to "how do I load the 7B from HuggingFace?".
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_large/from_pretrained.py", start = 9, end = 17, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/from_pretrained.py", start = 34, end = 36, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/from_pretrained.py", start = 46, end = 48, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/from_pretrained.py", start = 51, end = 51, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/from_pretrained.py", start = 65, end = 67, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "xlstm_large/generate.py — generate_tokens + sampling registry"
+justification = """
+`greedy_sampling`, the `_sampling_fn_registry` dict (only `greedy`
+currently — agent should know that's the entire menu),
+`get_sampling_fn` lookup, and the `generate_tokens` signature
+showing all params (prefill_tokens, max_length, token_sample_fn,
+bos_token_id, state, batch_size_no_prefill, generated_tokens,
+device). The decorator `@torch.no_grad` is also load-bearing.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_large/generate.py", start = 13, end = 24, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/generate.py", start = 27, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "xlstm_large/utils.py — single→fused weight conversion"
+justification = """
+`round_up_to_next_multiple_of` (used to size the FFN proj-up
+dim) and `convert_single_weights_to_fused_weights` (the top-level
+fn the README + tests use to switch between weight modes).
+Comments inside describe what gets fused: qkv+ogate → qkv_opreact,
+igate+fgate → ifgate, proj_up_gate+proj_up → proj_up_gate_z.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/xlstm_large/utils.py", start = 5, end = 7, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/utils.py", start = 10, end = 12, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/utils.py", start = 44, end = 56, render = { kind = "full" } },
+  { path = "xlstm/xlstm_large/utils.py", start = 66, end = 71, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.8"
+descriptor = "experiments/main.py — training entry point"
+justification = """
+The training loop: argparse on `--config` (yaml file path), config
+load via `OmegaConf`, `from_dict` dacite-based construction of
+`xLSTMLMModelConfig`, optimizer with weight-decay split, the
+`LinearWarmupCosineAnnealing` scheduler, the train/val step
+structure. The README references this as the canonical way to run
+the parity experiments.
+"""
+content = { kind = "lines", spans = [
+  { path = "experiments/main.py", start = 9, end = 14, render = { kind = "full" } },
+  { path = "experiments/main.py", start = 19, end = 19, render = { kind = "full" } },
+  { path = "experiments/main.py", start = 37, end = 37, render = { kind = "full" } },
+  { path = "experiments/main.py", start = 51, end = 54, render = { kind = "full" } },
+  { path = "experiments/main.py", start = 60, end = 67, render = { kind = "full" } },
+  { path = "experiments/main.py", start = 144, end = 155, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.9"
+descriptor = "CUDA bindings — slstm.cc PYBIND11 + sLSTMFunc class"
+justification = """
+The C++ entry point bound into Python by `torch.utils.cpp_extension.load`:
+`sLSTMFunc` class with `forward(training, x, s0, recurrent_kernel, bias)`
+/ `backward(...)` / `backward_cut(...)`, and the `PYBIND11_MODULE`
+that exposes them. This is exactly what `sLSTMCellCUDA.instance(...)`
+loads and what `sLSTMCellFuncGenerator` wraps in `torch.autograd.Function`.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/slstm/src/cuda/slstm.cc", start = 40, end = 48, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/cuda/slstm.cc", start = 53, end = 54, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/cuda/slstm.cc", start = 137, end = 138, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/cuda/slstm.cc", start = 223, end = 225, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/cuda/slstm.cc", start = 305, end = 311, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.10"
+descriptor = "cuda_init.py — torch.utils.cpp_extension.load wrapper"
+justification = """
+The `load(name, sources, extra_cflags, extra_cuda_cflags, **kwargs)`
+function builds a cache-key suffix from the cflags, appends standard
+`-U__CUDA_NO_HALF*` flags + the `XLSTM_EXTRA_INCLUDE_PATHS`
+env-injection, hard-codes `compute_80` arch + `--use_fast_math` /
+`-O3` / `--extra-device-vectorization` cuda_cflags, then calls
+`torch.utils.cpp_extension.load`. Critical for "why won't this
+extension build?" / "where do include paths come from?".
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/slstm/src/cuda_init.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/cuda_init.py", start = 42, end = 44, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/cuda_init.py", start = 60, end = 60, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/cuda_init.py", start = 89, end = 92, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/cuda_init.py", start = 95, end = 106, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.11"
+descriptor = "vanilla sLSTM/LSTM pointwise + slstm_forward driver"
+justification = """
+`slstm_pointwise_function_registry` (the {'slstm', 'lstm'} dict —
+catastrophic-omission hedge: agent must know both functions exist),
+plus the per-function `slstm_forward_pointwise` signature for sLSTM
+(lines 8-17) and the standalone `slstm_forward` / `slstm_forward_step`
+drivers that iterate the pointwise fn over the sequence. The
+vanilla-backend reference implementation of the CUDA kernel.
+"""
+content = { kind = "lines", spans = [
+  { path = "xlstm/blocks/slstm/src/vanilla/__init__.py", start = 11, end = 14, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/vanilla/__init__.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/vanilla/__init__.py", start = 77, end = 77, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/vanilla/slstm.py", start = 8, end = 13, render = { kind = "full" } },
+  { path = "xlstm/blocks/slstm/src/vanilla/lstm.py", start = 7, end = 12, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.12"
+descriptor = "tests/ — test fn locations only"
+justification = """
+Locations for every test fn across the four `test_*.py` files:
+test_chunkwise_vs_recurrent (parametrized native + triton),
+test_generation (no_prefill / prefill / compile / model_generate),
+test_slstm_cell_vanilla_vs_cuda (with / fp16), test_weight_conversion
+(single_weights_to_fused). The conftest skips all tests when CUDA
+is unavailable — note that fact. Tells the agent where to add
+analogous tests.
+"""
+content = { kind = "lines", spans = [
+  { path = "tests/conftest.py", start = 1, end = 4, render = { kind = "full" } },
+  { path = "tests/test_chunkwise_vs_recurrent.py", start = 6, end = 6, render = { kind = "full" } },
+  { path = "tests/test_chunkwise_vs_recurrent.py", start = 33, end = 33, render = { kind = "full" } },
+  { path = "tests/test_generation.py", start = 93, end = 93, render = { kind = "full" } },
+  { path = "tests/test_generation.py", start = 123, end = 123, render = { kind = "full" } },
+  { path = "tests/test_generation.py", start = 166, end = 166, render = { kind = "full" } },
+  { path = "tests/test_generation.py", start = 195, end = 195, render = { kind = "full" } },
+  { path = "tests/test_slstm_cell_vanilla_vs_cuda.py", start = 27, end = 27, render = { kind = "full" } },
+  { path = "tests/test_slstm_cell_vanilla_vs_cuda.py", start = 43, end = 43, render = { kind = "full" } },
+  { path = "tests/test_weight_conversion.py", start = 9, end = 9, render = { kind = "full" } },
+  { path = "tests/template_chunkwise_vs_recurrent.py", start = 6, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.13"
+descriptor = "experiments support — task fns + dataset/scheduler entry points"
+justification = """
+Locations for the synthetic-language task fns (parity,
+cycle_navigation, even_pairs, modular_arithmetic — all share a
+`def task(*, batch_size, vocab_size, ..., seed)` signature),
+plus `formal_language_dataset.py`'s `FormLangDatasetConfig` /
+`FormLangDataset` / `FormLangDatasetGenerator` classes, the
+`OnlineTaskGenerateMaskedSeparate` wrapper, `SequenceAccuracy`,
+and `LinearWarmupCosineAnnealing`. Catalog of the experiment plumbing.
+"""
+content = { kind = "lines", spans = [
+  { path = "experiments/data/formal_language/tasks/parity.py", start = 9, end = 9, render = { kind = "full" } },
+  { path = "experiments/data/formal_language/tasks/cycle_navigation.py", start = 8, end = 8, render = { kind = "full" } },
+  { path = "experiments/data/formal_language/tasks/even_pairs.py", start = 8, end = 8, render = { kind = "full" } },
+  { path = "experiments/data/formal_language/tasks/modular_arithmetic.py", start = 8, end = 8, render = { kind = "full" } },
+  { path = "experiments/data/formal_language/generate.py", start = 12, end = 17, render = { kind = "full" } },
+  { path = "experiments/data/formal_language/formal_language_dataset.py", start = 165, end = 165, render = { kind = "full" } },
+  { path = "experiments/data/formal_language/online_generate.py", start = 41, end = 41, render = { kind = "full" } },
+  { path = "experiments/metrics.py", start = 9, end = 9, render = { kind = "full" } },
+  { path = "experiments/lr_scheduler.py", start = 24, end = 24, render = { kind = "full" } },
+] }

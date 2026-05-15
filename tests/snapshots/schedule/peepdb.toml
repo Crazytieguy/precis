@@ -1,0 +1,7112 @@
+fixture = "peepdb"
+budget = 10000
+cumulative_tokens = 9942
+batch_count = 250
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/peepdb" })'
+descriptor = "listing of '.'"
+cost_tokens = 38
+cum_tokens = 38
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/peepdb"
+entries = [".github", ".gitignore", "CONTRIBUTING.md", "LICENSE", "MANIFEST.in", "README.md", "docs", "images", "peepdb", "project.toml", "requirements.txt", "setup.py"]
+
+[[batches]]
+position = 2
+key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/project.toml" })'
+descriptor = "[package] in project.toml"
+cost_tokens = 33
+cum_tokens = 71
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/project.toml"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/project.toml"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 90
+cum_tokens = 161
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb" })'
+descriptor = "listing of 'peepdb'"
+cost_tokens = 34
+cum_tokens = 195
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb"
+entries = ["__init__.py", "__main__.py", "cli.py", "config.py", "core.py", "db", "exceptions.py", "tests"]
+
+[[batches]]
+position = 5
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/exceptions.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/exceptions.py"
+cost_tokens = 11
+cum_tokens = 206
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/exceptions.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/exceptions.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 6
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/exceptions.py", start_line: 1 })'
+descriptor = "python decl at peepdb/exceptions.py:1"
+cost_tokens = 0
+cum_tokens = 206
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/exceptions.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/exceptions.py", start_line: 1 })'
+descriptor = "python class body at peepdb/exceptions.py:1"
+cost_tokens = 5
+cum_tokens = 211
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/exceptions.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/peepdb/images" })'
+descriptor = "listing of 'images'"
+cost_tokens = 28
+cum_tokens = 239
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/peepdb/images"
+entries = ["demo.gif", "peepdb_example1.png", "peepdb_example2.png", "peepdb_screenshot.png"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db" })'
+descriptor = "listing of 'peepdb/db'"
+cost_tokens = 45
+cum_tokens = 284
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db"
+entries = ["__init__.py", "base.py", "firebase.py", "mariadb.py", "mongodb.py", "mssql.py", "mysql.py", "oracle.py", "postgresql.py", "sqlite.py"]
+
+[[batches]]
+position = 10
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/base.py"
+cost_tokens = 12
+cum_tokens = 296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 5 })'
+descriptor = "python decl at peepdb/db/base.py:5"
+cost_tokens = 0
+cum_tokens = 296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/__main__.py" })'
+descriptor = "python imports in peepdb/__main__.py"
+cost_tokens = 10
+cum_tokens = 306
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/__main__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/setup.py" })'
+descriptor = "python imports in setup.py"
+cost_tokens = 12
+cum_tokens = 318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/setup.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 41
+cum_tokens = 359
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs"
+entries = ["CNAME", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "_config.yml", "contributing.md", "index.md", "installation.md", "usage.md"]
+
+[[batches]]
+position = 15
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md" })'
+descriptor = "README headline in docs/README.md"
+cost_tokens = 35
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md" })'
+descriptor = "headings outline in docs/installation.md"
+cost_tokens = 52
+cum_tokens = 446
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md" })'
+descriptor = "headings outline in docs/index.md"
+cost_tokens = 54
+cum_tokens = 500
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 18
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/__init__.py" })'
+descriptor = "python imports in peepdb/db/__init__.py"
+cost_tokens = 210
+cum_tokens = 710
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/__init__.py"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/__init__.py"
+start = 11
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md" })'
+descriptor = "headings outline in README.md"
+cost_tokens = 195
+cum_tokens = 905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 8 })'
+descriptor = "README.md section #8"
+cost_tokens = 27
+cum_tokens = 932
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 11 })'
+descriptor = "README.md section #11"
+cost_tokens = 27
+cum_tokens = 959
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 30 })'
+descriptor = "README.md section #30"
+cost_tokens = 25
+cum_tokens = 984
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 5 })'
+descriptor = "README.md section #5"
+cost_tokens = 17
+cum_tokens = 1001
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 29 })'
+descriptor = "README.md section #29"
+cost_tokens = 27
+cum_tokens = 1028
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 10 })'
+descriptor = "README.md section #10"
+cost_tokens = 38
+cum_tokens = 1066
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 31
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 28 })'
+descriptor = "README.md section #28"
+cost_tokens = 32
+cum_tokens = 1098
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 3 })'
+descriptor = "README.md section #3"
+cost_tokens = 21
+cum_tokens = 1119
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 7 })'
+descriptor = "README.md section #7"
+cost_tokens = 21
+cum_tokens = 1140
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md" })'
+descriptor = "headings outline in docs/usage.md"
+cost_tokens = 95
+cum_tokens = 1235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 30
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 6 })'
+descriptor = "README.md section #6"
+cost_tokens = 22
+cum_tokens = 1257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 9 })'
+descriptor = "README.md section #9"
+cost_tokens = 48
+cum_tokens = 1305
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 23
+cum_tokens = 1328
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 4 })'
+descriptor = "README.md section #4"
+cost_tokens = 24
+cum_tokens = 1352
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md", section_index: 0 })'
+descriptor = "docs/usage.md section #0"
+cost_tokens = 29
+cum_tokens = 1381
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/base.py"
+cost_tokens = 115
+cum_tokens = 1496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 36
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 6 })'
+descriptor = "python method at peepdb/db/base.py:6"
+cost_tokens = 0
+cum_tokens = 1496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 33 })'
+descriptor = "python method at peepdb/db/base.py:33"
+cost_tokens = 0
+cum_tokens = 1496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 37 })'
+descriptor = "python method at peepdb/db/base.py:37"
+cost_tokens = 0
+cum_tokens = 1496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 17 })'
+descriptor = "python method at peepdb/db/base.py:17"
+cost_tokens = 10
+cum_tokens = 1506
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 21 })'
+descriptor = "python method at peepdb/db/base.py:21"
+cost_tokens = 10
+cum_tokens = 1516
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 21
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 25 })'
+descriptor = "python method at peepdb/db/base.py:25"
+cost_tokens = 12
+cum_tokens = 1528
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 25
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 29 })'
+descriptor = "python method at peepdb/db/base.py:29"
+cost_tokens = 33
+cum_tokens = 1561
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 29
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 37, body_start_line: 38 })'
+descriptor = "python method body at peepdb/db/base.py:37 body 38"
+cost_tokens = 6
+cum_tokens = 1567
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 17, body_start_line: 19 })'
+descriptor = "python method body at peepdb/db/base.py:17 body 19"
+cost_tokens = 7
+cum_tokens = 1574
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 21, body_start_line: 23 })'
+descriptor = "python method body at peepdb/db/base.py:21 body 23"
+cost_tokens = 7
+cum_tokens = 1581
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 25, body_start_line: 27 })'
+descriptor = "python method body at peepdb/db/base.py:25 body 27"
+cost_tokens = 7
+cum_tokens = 1588
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 29, body_start_line: 31 })'
+descriptor = "python method body at peepdb/db/base.py:29 body 31"
+cost_tokens = 7
+cum_tokens = 1595
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md" })'
+descriptor = "headings outline in docs/README.md"
+cost_tokens = 154
+cum_tokens = 1749
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 2 })'
+descriptor = "docs/README.md section #2"
+cost_tokens = 17
+cum_tokens = 1766
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 8 })'
+descriptor = "docs/README.md section #8"
+cost_tokens = 15
+cum_tokens = 1781
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 1 })'
+descriptor = "docs/README.md section #1"
+cost_tokens = 50
+cum_tokens = 1831
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 27
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 37
+cum_tokens = 1868
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/cli.py"
+cost_tokens = 82
+cum_tokens = 1950
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 16 })'
+descriptor = "python decl at peepdb/cli.py:16"
+cost_tokens = 0
+cum_tokens = 1950
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 181 })'
+descriptor = "python decl at peepdb/cli.py:181"
+cost_tokens = 0
+cum_tokens = 1950
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 86 })'
+descriptor = "python decl at peepdb/cli.py:86"
+cost_tokens = 5
+cum_tokens = 1955
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 86
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 181, body_start_line: 182 })'
+descriptor = "python decl body at peepdb/cli.py:181 body 182"
+cost_tokens = 5
+cum_tokens = 1960
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 25 })'
+descriptor = "python decl at peepdb/cli.py:25"
+cost_tokens = 14
+cum_tokens = 1974
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 25
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/cli.py"
+cost_tokens = 11
+cum_tokens = 1985
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 60
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 17 })'
+descriptor = "python method at peepdb/cli.py:17"
+cost_tokens = 0
+cum_tokens = 1985
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 25, body_start_line: 50 })'
+descriptor = "python decl body at peepdb/cli.py:25 body 50"
+cost_tokens = 7
+cum_tokens = 1992
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 86, body_start_line: 94 })'
+descriptor = "python decl body at peepdb/cli.py:86 body 94"
+cost_tokens = 8
+cum_tokens = 2000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 113 })'
+descriptor = "python decl at peepdb/cli.py:113"
+cost_tokens = 29
+cum_tokens = 2029
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 113
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 97 })'
+descriptor = "python decl at peepdb/cli.py:97"
+cost_tokens = 40
+cum_tokens = 2069
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 97
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 86 })'
+descriptor = "python decl doc at peepdb/cli.py:86"
+cost_tokens = 38
+cum_tokens = 2107
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 88
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 91
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 113 })'
+descriptor = "python decl doc at peepdb/cli.py:113"
+cost_tokens = 40
+cum_tokens = 2147
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 116
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 119
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 97 })'
+descriptor = "python decl doc at peepdb/cli.py:97"
+cost_tokens = 42
+cum_tokens = 2189
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 101
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 104
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 16 })'
+descriptor = "README.md section #16"
+cost_tokens = 23
+cum_tokens = 2212
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 0 })'
+descriptor = "docs/README.md section #0"
+cost_tokens = 241
+cum_tokens = 2453
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 5
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md", section_index: 1 })'
+descriptor = "docs/installation.md section #1"
+cost_tokens = 24
+cum_tokens = 2477
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 18
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md", section_index: 0 })'
+descriptor = "docs/installation.md section #0"
+cost_tokens = 60
+cum_tokens = 2537
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 10
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py", start_line: 33, body_start_line: 34 })'
+descriptor = "python method body at peepdb/db/base.py:33 body 34"
+cost_tokens = 14
+cum_tokens = 2551
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 34
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 9 })'
+descriptor = "docs/README.md section #9"
+cost_tokens = 43
+cum_tokens = 2594
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 0 })'
+descriptor = "docs/index.md section #0"
+cost_tokens = 69
+cum_tokens = 2663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/core.py"
+cost_tokens = 112
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 76
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", start_line: 27 })'
+descriptor = "python decl at peepdb/core.py:27"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", start_line: 101 })'
+descriptor = "python decl at peepdb/core.py:101"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", start_line: 118 })'
+descriptor = "python decl at peepdb/core.py:118"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", start_line: 56 })'
+descriptor = "python decl at peepdb/core.py:56"
+cost_tokens = 107
+cum_tokens = 2882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 56
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 113, body_start_line: 122 })'
+descriptor = "python decl body at peepdb/cli.py:113 body 122"
+cost_tokens = 11
+cum_tokens = 2893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/oracle.py"
+cost_tokens = 12
+cum_tokens = 2905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 82
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", start_line: 7 })'
+descriptor = "python decl at peepdb/db/oracle.py:7"
+cost_tokens = 0
+cum_tokens = 2905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/sqlite.py"
+cost_tokens = 12
+cum_tokens = 2917
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 84
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py", start_line: 6 })'
+descriptor = "python decl at peepdb/db/sqlite.py:6"
+cost_tokens = 0
+cum_tokens = 2917
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 97, body_start_line: 107 })'
+descriptor = "python decl body at peepdb/cli.py:97 body 107"
+cost_tokens = 53
+cum_tokens = 2970
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 107
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 18 })'
+descriptor = "README.md section #18"
+cost_tokens = 33
+cum_tokens = 3003
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 76
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/mariadb.py"
+cost_tokens = 13
+cum_tokens = 3016
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 88
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", start_line: 5 })'
+descriptor = "python decl at peepdb/db/mariadb.py:5"
+cost_tokens = 0
+cum_tokens = 3016
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/mongodb.py"
+cost_tokens = 13
+cum_tokens = 3029
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 90
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", start_line: 8 })'
+descriptor = "python decl at peepdb/db/mongodb.py:8"
+cost_tokens = 0
+cum_tokens = 3029
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/mssql.py"
+cost_tokens = 13
+cum_tokens = 3042
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 92
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", start_line: 6 })'
+descriptor = "python decl at peepdb/db/mssql.py:6"
+cost_tokens = 0
+cum_tokens = 3042
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/mysql.py"
+cost_tokens = 13
+cum_tokens = 3055
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 94
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", start_line: 5 })'
+descriptor = "python decl at peepdb/db/mysql.py:5"
+cost_tokens = 0
+cum_tokens = 3055
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/postgresql.py"
+cost_tokens = 13
+cum_tokens = 3068
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 96
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", start_line: 6 })'
+descriptor = "python decl at peepdb/db/postgresql.py:6"
+cost_tokens = 0
+cum_tokens = 3068
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 20 })'
+descriptor = "README.md section #20"
+cost_tokens = 34
+cum_tokens = 3102
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 86
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md", section_index: 4 })'
+descriptor = "docs/installation.md section #4"
+cost_tokens = 33
+cum_tokens = 3135
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md", section_index: 2 })'
+descriptor = "docs/usage.md section #2"
+cost_tokens = 33
+cum_tokens = 3168
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 24
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/peepdb/.github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 3
+cum_tokens = 3171
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/peepdb/.github"
+entries = ["workflows"]
+
+[[batches]]
+position = 101
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/peepdb/.github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 8
+cum_tokens = 3179
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/peepdb/.github/workflows"
+entries = ["pages.yml", "test.yml"]
+
+[[batches]]
+position = 102
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 24 })'
+descriptor = "README.md section #24"
+cost_tokens = 37
+cum_tokens = 3216
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 122
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 126 })'
+descriptor = "python decl at peepdb/cli.py:126"
+cost_tokens = 152
+cum_tokens = 3368
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 126
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 126 })'
+descriptor = "python decl doc at peepdb/cli.py:126"
+cost_tokens = 47
+cum_tokens = 3415
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 134
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 137
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 23 })'
+descriptor = "README.md section #23"
+cost_tokens = 39
+cum_tokens = 3454
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 117
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 27 })'
+descriptor = "README.md section #27"
+cost_tokens = 116
+cum_tokens = 3570
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 158
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 19 })'
+descriptor = "README.md section #19"
+cost_tokens = 40
+cum_tokens = 3610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 81
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py" })'
+descriptor = "python imports in peepdb/db/base.py"
+cost_tokens = 32
+cum_tokens = 3642
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/base.py"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py" })'
+descriptor = "python imports in peepdb/db/mariadb.py"
+cost_tokens = 32
+cum_tokens = 3674
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py" })'
+descriptor = "python imports in peepdb/db/mysql.py"
+cost_tokens = 32
+cum_tokens = 3706
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/tests" })'
+descriptor = "listing of 'peepdb/tests'"
+cost_tokens = 42
+cum_tokens = 3748
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/tests"
+entries = ["__init__.py", "test_cli.py", "test_connection.py", "test_data_types.py", "test_mongodb_uri.py", "test_peepdb.py", "test_sqlite.py"]
+
+[[batches]]
+position = 112
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py" })'
+descriptor = "python imports in peepdb/db/sqlite.py"
+cost_tokens = 39
+cum_tokens = 3787
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 12 })'
+descriptor = "README.md section #12"
+cost_tokens = 47
+cum_tokens = 3834
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 41
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py" })'
+descriptor = "python imports in peepdb/db/mssql.py"
+cost_tokens = 40
+cum_tokens = 3874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", start_line: 101, body_start_line: 102 })'
+descriptor = "python decl body at peepdb/core.py:101 body 102"
+cost_tokens = 7
+cum_tokens = 3881
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py" })'
+descriptor = "python imports in peepdb/db/oracle.py"
+cost_tokens = 41
+cum_tokens = 3922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 10 })'
+descriptor = "docs/index.md section #10"
+cost_tokens = 47
+cum_tokens = 3969
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md", section_index: 7 })'
+descriptor = "docs/usage.md section #7"
+cost_tokens = 47
+cum_tokens = 4016
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 78
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 15 })'
+descriptor = "README.md section #15"
+cost_tokens = 50
+cum_tokens = 4066
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 54
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 113, body_start_line: 123 })'
+descriptor = "python decl body at peepdb/cli.py:113 body 123"
+cost_tokens = 18
+cum_tokens = 4084
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", chunk_index: 1 })'
+descriptor = "python decl names surface #1 in peepdb/config.py"
+cost_tokens = 95
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 196
+end = 196
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 122
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 73 })'
+descriptor = "python decl at peepdb/config.py:73"
+cost_tokens = 0
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 76 })'
+descriptor = "python decl at peepdb/config.py:76"
+cost_tokens = 0
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 112 })'
+descriptor = "python decl at peepdb/config.py:112"
+cost_tokens = 0
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 144 })'
+descriptor = "python decl at peepdb/config.py:144"
+cost_tokens = 0
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 161 })'
+descriptor = "python decl at peepdb/config.py:161"
+cost_tokens = 0
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 178 })'
+descriptor = "python decl at peepdb/config.py:178"
+cost_tokens = 0
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 196 })'
+descriptor = "python decl at peepdb/config.py:196"
+cost_tokens = 0
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 196
+end = 196
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 73, body_start_line: 74 })'
+descriptor = "python decl body at peepdb/config.py:73 body 74"
+cost_tokens = 15
+cum_tokens = 4194
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/firebase.py"
+cost_tokens = 24
+cum_tokens = 4218
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 131
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 9 })'
+descriptor = "python decl at peepdb/db/firebase.py:9"
+cost_tokens = 0
+cum_tokens = 4218
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py" })'
+descriptor = "python imports in peepdb/db/mongodb.py"
+cost_tokens = 48
+cum_tokens = 4266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 5 })'
+descriptor = "docs/index.md section #5"
+cost_tokens = 17
+cum_tokens = 4283
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 12 })'
+descriptor = "docs/README.md section #12"
+cost_tokens = 27
+cum_tokens = 4310
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py" })'
+descriptor = "python imports in peepdb/db/postgresql.py"
+cost_tokens = 50
+cum_tokens = 4360
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 7 })'
+descriptor = "docs/README.md section #7"
+cost_tokens = 99
+cum_tokens = 4459
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/config.py"
+cost_tokens = 188
+cum_tokens = 4647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 20
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 138
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 49 })'
+descriptor = "python decl at peepdb/config.py:49"
+cost_tokens = 0
+cum_tokens = 4647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 60 })'
+descriptor = "python decl at peepdb/config.py:60"
+cost_tokens = 0
+cum_tokens = 4647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 70 })'
+descriptor = "python decl at peepdb/config.py:70"
+cost_tokens = 0
+cum_tokens = 4647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 15 })'
+descriptor = "python decl at peepdb/config.py:15"
+cost_tokens = 6
+cum_tokens = 4653
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 41 })'
+descriptor = "python decl at peepdb/config.py:41"
+cost_tokens = 9
+cum_tokens = 4662
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 41
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 29 })'
+descriptor = "python decl at peepdb/config.py:29"
+cost_tokens = 10
+cum_tokens = 4672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 29
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 15 })'
+descriptor = "python class body at peepdb/config.py:15"
+cost_tokens = 24
+cum_tokens = 4696
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 70, body_start_line: 71 })'
+descriptor = "python decl body at peepdb/config.py:70 body 71"
+cost_tokens = 15
+cum_tokens = 4711
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 41, body_start_line: 43 })'
+descriptor = "python decl body at peepdb/config.py:41 body 43"
+cost_tokens = 79
+cum_tokens = 4790
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 43
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py" })'
+descriptor = "python imports in peepdb/db/firebase.py"
+cost_tokens = 51
+cum_tokens = 4841
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md", section_index: 4 })'
+descriptor = "docs/usage.md section #4"
+cost_tokens = 56
+cum_tokens = 4897
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 46
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md", section_index: 5 })'
+descriptor = "docs/usage.md section #5"
+cost_tokens = 56
+cum_tokens = 4953
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 54
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 49, body_start_line: 50 })'
+descriptor = "python decl body at peepdb/config.py:49 body 50"
+cost_tokens = 98
+cum_tokens = 5051
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 50
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 55
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 17, body_start_line: 18 })'
+descriptor = "python method body at peepdb/cli.py:17 body 18"
+cost_tokens = 54
+cum_tokens = 5105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 18
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md", section_index: 2 })'
+descriptor = "docs/installation.md section #2"
+cost_tokens = 59
+cum_tokens = 5164
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 25
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 53 })'
+descriptor = "python decl at peepdb/cli.py:53"
+cost_tokens = 246
+cum_tokens = 5410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 53
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 53 })'
+descriptor = "python decl doc at peepdb/cli.py:53"
+cost_tokens = 61
+cum_tokens = 5471
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 66
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 69
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", start_line: 118, body_start_line: 119 })'
+descriptor = "python decl body at peepdb/core.py:118 body 119"
+cost_tokens = 9
+cum_tokens = 5480
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 60, body_start_line: 61 })'
+descriptor = "python decl body at peepdb/config.py:60 body 61"
+cost_tokens = 105
+cum_tokens = 5585
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 61
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/oracle.py"
+cost_tokens = 53
+cum_tokens = 5638
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 158
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", start_line: 8 })'
+descriptor = "python method at peepdb/db/oracle.py:8"
+cost_tokens = 0
+cum_tokens = 5638
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", start_line: 25 })'
+descriptor = "python method at peepdb/db/oracle.py:25"
+cost_tokens = 0
+cum_tokens = 5638
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", start_line: 32 })'
+descriptor = "python method at peepdb/db/oracle.py:32"
+cost_tokens = 0
+cum_tokens = 5638
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", start_line: 32, body_start_line: 33 })'
+descriptor = "python method body at peepdb/db/oracle.py:32 body 33"
+cost_tokens = 32
+cum_tokens = 5670
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 33
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 10 })'
+descriptor = "docs/README.md section #10"
+cost_tokens = 96
+cum_tokens = 5766
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/mongodb.py"
+cost_tokens = 54
+cum_tokens = 5820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", start_line: 9 })'
+descriptor = "python method at peepdb/db/mongodb.py:9"
+cost_tokens = 0
+cum_tokens = 5820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", start_line: 32 })'
+descriptor = "python method at peepdb/db/mongodb.py:32"
+cost_tokens = 0
+cum_tokens = 5820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", start_line: 39 })'
+descriptor = "python method at peepdb/db/mongodb.py:39"
+cost_tokens = 0
+cum_tokens = 5820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", start_line: 39, body_start_line: 40 })'
+descriptor = "python method body at peepdb/db/mongodb.py:39 body 40"
+cost_tokens = 10
+cum_tokens = 5830
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 161, body_start_line: 162 })'
+descriptor = "python decl body at peepdb/config.py:161 body 162"
+cost_tokens = 109
+cum_tokens = 5939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 162
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 165
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 168
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 173
+end = 174
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 14 })'
+descriptor = "README.md section #14"
+cost_tokens = 66
+cum_tokens = 6005
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 51
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 5 })'
+descriptor = "docs/README.md section #5"
+cost_tokens = 21
+cum_tokens = 6026
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 25 })'
+descriptor = "python decl doc at peepdb/cli.py:25"
+cost_tokens = 244
+cum_tokens = 6270
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 28
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 36
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 39
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 42
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 45
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 48
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 3 })'
+descriptor = "docs/index.md section #3"
+cost_tokens = 21
+cum_tokens = 6291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 7 })'
+descriptor = "docs/index.md section #7"
+cost_tokens = 21
+cum_tokens = 6312
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", start_line: 36 })'
+descriptor = "python method at peepdb/db/oracle.py:36"
+cost_tokens = 36
+cum_tokens = 6348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 36
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 13 })'
+descriptor = "README.md section #13"
+cost_tokens = 69
+cum_tokens = 6417
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 46
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py" })'
+descriptor = "python imports in peepdb/cli.py"
+cost_tokens = 117
+cum_tokens = 6534
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 1
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 6 })'
+descriptor = "docs/index.md section #6"
+cost_tokens = 22
+cum_tokens = 6556
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 2 })'
+descriptor = "docs/index.md section #2"
+cost_tokens = 23
+cum_tokens = 6579
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py" })'
+descriptor = "python imports in peepdb/core.py"
+cost_tokens = 134
+cum_tokens = 6713
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 7
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 4 })'
+descriptor = "docs/index.md section #4"
+cost_tokens = 24
+cum_tokens = 6737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py" })'
+descriptor = "python imports in peepdb/config.py"
+cost_tokens = 137
+cum_tokens = 6874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 7
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/.gitignore" })'
+descriptor = "plaintext config .gitignore"
+cost_tokens = 133
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/.gitignore"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/.gitignore"
+start = 5
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/.gitignore"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/.gitignore"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/.gitignore"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/.gitignore"
+start = 20
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 29, body_start_line: 31 })'
+descriptor = "python decl body at peepdb/config.py:29 body 31"
+cost_tokens = 132
+cum_tokens = 7139
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 31
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md", section_index: 3 })'
+descriptor = "docs/usage.md section #3"
+cost_tokens = 78
+cum_tokens = 7217
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 32
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 38
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 8 })'
+descriptor = "docs/index.md section #8"
+cost_tokens = 80
+cum_tokens = 7297
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 24
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 144, body_start_line: 145 })'
+descriptor = "python decl body at peepdb/config.py:144 body 145"
+cost_tokens = 139
+cum_tokens = 7436
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 145
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 149
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 152
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 156
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", start_line: 32, body_start_line: 33 })'
+descriptor = "python method body at peepdb/db/mongodb.py:32 body 33"
+cost_tokens = 48
+cum_tokens = 7484
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 33
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/mariadb.py"
+cost_tokens = 79
+cum_tokens = 7563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 189
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", start_line: 6 })'
+descriptor = "python method at peepdb/db/mariadb.py:6"
+cost_tokens = 0
+cum_tokens = 7563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", start_line: 23 })'
+descriptor = "python method at peepdb/db/mariadb.py:23"
+cost_tokens = 0
+cum_tokens = 7563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", start_line: 30 })'
+descriptor = "python method at peepdb/db/mariadb.py:30"
+cost_tokens = 0
+cum_tokens = 7563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", start_line: 34 })'
+descriptor = "python method at peepdb/db/mariadb.py:34"
+cost_tokens = 0
+cum_tokens = 7563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", start_line: 30, body_start_line: 31 })'
+descriptor = "python method body at peepdb/db/mariadb.py:30 body 31"
+cost_tokens = 31
+cum_tokens = 7594
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/mysql.py"
+cost_tokens = 79
+cum_tokens = 7673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 195
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", start_line: 6 })'
+descriptor = "python method at peepdb/db/mysql.py:6"
+cost_tokens = 0
+cum_tokens = 7673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", start_line: 22 })'
+descriptor = "python method at peepdb/db/mysql.py:22"
+cost_tokens = 0
+cum_tokens = 7673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", start_line: 29 })'
+descriptor = "python method at peepdb/db/mysql.py:29"
+cost_tokens = 0
+cum_tokens = 7673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 198
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", start_line: 33 })'
+descriptor = "python method at peepdb/db/mysql.py:33"
+cost_tokens = 0
+cum_tokens = 7673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 199
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", start_line: 29, body_start_line: 30 })'
+descriptor = "python method body at peepdb/db/mysql.py:29 body 30"
+cost_tokens = 34
+cum_tokens = 7707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 200
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/postgresql.py"
+cost_tokens = 79
+cum_tokens = 7786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 201
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", start_line: 7 })'
+descriptor = "python method at peepdb/db/postgresql.py:7"
+cost_tokens = 0
+cum_tokens = 7786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 202
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", start_line: 23 })'
+descriptor = "python method at peepdb/db/postgresql.py:23"
+cost_tokens = 0
+cum_tokens = 7786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", start_line: 30 })'
+descriptor = "python method at peepdb/db/postgresql.py:30"
+cost_tokens = 0
+cum_tokens = 7786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", start_line: 34 })'
+descriptor = "python method at peepdb/db/postgresql.py:34"
+cost_tokens = 0
+cum_tokens = 7786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 205
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", start_line: 30, body_start_line: 31 })'
+descriptor = "python method body at peepdb/db/postgresql.py:30 body 31"
+cost_tokens = 40
+cum_tokens = 7826
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/sqlite.py"
+cost_tokens = 79
+cum_tokens = 7905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 207
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py", start_line: 7 })'
+descriptor = "python method at peepdb/db/sqlite.py:7"
+cost_tokens = 0
+cum_tokens = 7905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py", start_line: 22 })'
+descriptor = "python method at peepdb/db/sqlite.py:22"
+cost_tokens = 0
+cum_tokens = 7905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 209
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py", start_line: 29 })'
+descriptor = "python method at peepdb/db/sqlite.py:29"
+cost_tokens = 0
+cum_tokens = 7905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py", start_line: 43 })'
+descriptor = "python method at peepdb/db/sqlite.py:43"
+cost_tokens = 0
+cum_tokens = 7905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md", section_index: 1 })'
+descriptor = "docs/usage.md section #1"
+cost_tokens = 87
+cum_tokens = 7992
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 212
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 3 })'
+descriptor = "docs/README.md section #3"
+cost_tokens = 190
+cum_tokens = 8182
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 42
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 48
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 213
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py", start_line: 22, body_start_line: 23 })'
+descriptor = "python method body at peepdb/db/sqlite.py:22 body 23"
+cost_tokens = 52
+cum_tokens = 8234
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/sqlite.py"
+start = 23
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 214
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md", section_index: 6 })'
+descriptor = "docs/usage.md section #6"
+cost_tokens = 91
+cum_tokens = 8325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 62
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 68
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/usage.md"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 215
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py", start_line: 25, body_start_line: 26 })'
+descriptor = "python method body at peepdb/db/oracle.py:25 body 26"
+cost_tokens = 53
+cum_tokens = 8378
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/oracle.py"
+start = 26
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 216
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py", start_line: 23, body_start_line: 24 })'
+descriptor = "python method body at peepdb/db/mariadb.py:23 body 24"
+cost_tokens = 54
+cum_tokens = 8432
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mariadb.py"
+start = 24
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 217
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py", start_line: 22, body_start_line: 23 })'
+descriptor = "python method body at peepdb/db/mysql.py:22 body 23"
+cost_tokens = 54
+cum_tokens = 8486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mysql.py"
+start = 23
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 218
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py", start_line: 23, body_start_line: 24 })'
+descriptor = "python method body at peepdb/db/postgresql.py:23 body 24"
+cost_tokens = 54
+cum_tokens = 8540
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/postgresql.py"
+start = 24
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 219
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md", section_index: 11 })'
+descriptor = "docs/README.md section #11"
+cost_tokens = 48
+cum_tokens = 8588
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/README.md"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 220
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", start_line: 42 })'
+descriptor = "python method at peepdb/db/mongodb.py:42"
+cost_tokens = 53
+cum_tokens = 8641
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 42
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 221
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py", start_line: 42 })'
+descriptor = "python method doc at peepdb/db/mongodb.py:42"
+cost_tokens = 26
+cum_tokens = 8667
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mongodb.py"
+start = 48
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 222
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/firebase.py"
+cost_tokens = 96
+cum_tokens = 8763
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 223
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 10 })'
+descriptor = "python method at peepdb/db/firebase.py:10"
+cost_tokens = 0
+cum_tokens = 8763
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 224
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 15 })'
+descriptor = "python method at peepdb/db/firebase.py:15"
+cost_tokens = 0
+cum_tokens = 8763
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 225
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 30 })'
+descriptor = "python method at peepdb/db/firebase.py:30"
+cost_tokens = 0
+cum_tokens = 8763
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 39 })'
+descriptor = "python method at peepdb/db/firebase.py:39"
+cost_tokens = 0
+cum_tokens = 8763
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 26 })'
+descriptor = "python method at peepdb/db/firebase.py:26"
+cost_tokens = 14
+cum_tokens = 8777
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 228
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 26, body_start_line: 28 })'
+descriptor = "python method body at peepdb/db/firebase.py:26 body 28"
+cost_tokens = 7
+cum_tokens = 8784
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 229
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 10, body_start_line: 11 })'
+descriptor = "python method body at peepdb/db/firebase.py:10 body 11"
+cost_tokens = 33
+cum_tokens = 8817
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 11
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 230
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 178, body_start_line: 194 })'
+descriptor = "python decl body at peepdb/config.py:178 body 194"
+cost_tokens = 8
+cum_tokens = 8825
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 231
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", start_line: 56, body_start_line: 69 })'
+descriptor = "python decl body at peepdb/core.py:56 body 69"
+cost_tokens = 8
+cum_tokens = 8833
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 232
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 196, body_start_line: 197 })'
+descriptor = "python decl body at peepdb/config.py:196 body 197"
+cost_tokens = 181
+cum_tokens = 9014
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 197
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 233
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py", start_line: 101, body_start_line: 115 })'
+descriptor = "python decl body at peepdb/core.py:101 body 115"
+cost_tokens = 16
+cum_tokens = 9030
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/core.py"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 234
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md", section_index: 3 })'
+descriptor = "docs/installation.md section #3"
+cost_tokens = 110
+cum_tokens = 9140
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 34
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/installation.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py", start_line: 53, body_start_line: 83 })'
+descriptor = "python decl body at peepdb/cli.py:53 body 83"
+cost_tokens = 17
+cum_tokens = 9157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/cli.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md", section_index: 1 })'
+descriptor = "docs/index.md section #1"
+cost_tokens = 37
+cum_tokens = 9194
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/docs/index.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 26 })'
+descriptor = "README.md section #26"
+cost_tokens = 65
+cum_tokens = 9259
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 144
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 149
+end = 152
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", chunk_index: 0 })'
+descriptor = "python method sigs in peepdb/db/mssql.py"
+cost_tokens = 125
+cum_tokens = 9384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 239
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", start_line: 7 })'
+descriptor = "python method at peepdb/db/mssql.py:7"
+cost_tokens = 0
+cum_tokens = 9384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", start_line: 12 })'
+descriptor = "python method at peepdb/db/mssql.py:12"
+cost_tokens = 0
+cum_tokens = 9384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", start_line: 28 })'
+descriptor = "python method at peepdb/db/mssql.py:28"
+cost_tokens = 0
+cum_tokens = 9384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", start_line: 45 })'
+descriptor = "python method at peepdb/db/mssql.py:45"
+cost_tokens = 0
+cum_tokens = 9384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", start_line: 35 })'
+descriptor = "python method at peepdb/db/mssql.py:35"
+cost_tokens = 11
+cum_tokens = 9395
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 35
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 244
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", start_line: 7, body_start_line: 8 })'
+descriptor = "python method body at peepdb/db/mssql.py:7 body 8"
+cost_tokens = 45
+cum_tokens = 9440
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 245
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py", start_line: 28, body_start_line: 29 })'
+descriptor = "python method body at peepdb/db/mssql.py:28 body 29"
+cost_tokens = 54
+cum_tokens = 9494
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/mssql.py"
+start = 29
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 17 })'
+descriptor = "README.md section #17"
+cost_tokens = 69
+cum_tokens = 9563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 63
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 67
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 247
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py", start_line: 178, body_start_line: 182 })'
+descriptor = "python decl body at peepdb/config.py:178 body 182"
+cost_tokens = 10
+cum_tokens = 9573
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/config.py"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 248
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 21 })'
+descriptor = "README.md section #21"
+cost_tokens = 134
+cum_tokens = 9707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 91
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py", start_line: 30, body_start_line: 31 })'
+descriptor = "python method body at peepdb/db/firebase.py:30 body 31"
+cost_tokens = 81
+cum_tokens = 9788
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/peepdb/db/firebase.py"
+start = 31
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 250
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md", section_index: 25 })'
+descriptor = "README.md section #25"
+cost_tokens = 154
+cum_tokens = 9942
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/peepdb/README.md"
+start = 127
+end = 140
+
+[batches.content.spans.render]
+kind = "full"

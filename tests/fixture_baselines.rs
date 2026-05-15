@@ -86,6 +86,15 @@ per_fixture_tests!(mcphost);
 per_fixture_tests!(krep);
 per_fixture_tests!(microbootstrap);
 per_fixture_tests!(semver);
+per_fixture_tests!(nano_vllm, "nano-vllm");
+per_fixture_tests!(chronos_forecasting, "chronos-forecasting");
+per_fixture_tests!(py3xui);
+per_fixture_tests!(swarm);
+per_fixture_tests!(neco);
+per_fixture_tests!(xlstm);
+per_fixture_tests!(peepdb);
+per_fixture_tests!(soluna);
+per_fixture_tests!(sqlite_vec, "sqlite-vec");
 
 // ---- paths -------------------------------------------------------------
 

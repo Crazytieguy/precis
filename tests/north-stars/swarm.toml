@@ -1,0 +1,728 @@
+fixture = "swarm"
+revision_pin = "0c82d7d8"
+summary = """
+Swarm is OpenAI's educational, lightweight Python multi-agent
+orchestration framework. The whole library lives in `swarm/`
+(core.py, types.py, util.py, repl/repl.py) and exposes two
+primitives — `Agent` (instructions + functions) and **handoffs**
+(returning an `Agent` from a function transfers control). `Swarm.run()`
+runs a stateless loop: get a Chat-Completions completion, execute tool
+calls, swap the active agent if a function returned an `Agent`, repeat
+until no tool calls or `max_turns`. The README is the user-facing spec
+and is long and prescriptive.
+
+The corpus is dominated by `examples/` — six tiny demos for the public
+API plus three full multi-agent apps (`airline`, `support_bot`,
+`personal_shopper`) and one outlier (`customer_service_streaming`)
+that re-implements a parallel Swarm-like engine on top of the
+OpenAI Assistants/Chat APIs (not the library — its own thing). Two
+sibling dirs `customer_service/` and `customer_service_lite/` are
+*logs-only* (no code). Many directories hold dozens of OpenAI help-
+center article JSONs and historical session logs; those are bulk noise
+the agent rarely needs to read.
+
+The ranking serves the full task distribution: explaining the
+framework, adding a new example, debugging the run loop, writing
+agents/handoffs/context_variables, modifying eval scripts, or working
+inside the streaming sub-project. Early batches anchor the
+README + public API + `Swarm.run` loop so most "how does X work"
+queries land with zero follow-up. Mid-rank batches expose the function
+inventories of every example so "where is X defined" needs at most
+one read. Late batches add bodies and the streaming sub-project's
+internals on demand.
+"""
+
+# ============================================================
+# Tier 1 — Root orientation: what is this repo, what's in it
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level repo listing"
+justification = "First glance — names every top-level file/dir so the agent knows about README, swarm/ package, tests/, examples/, logs/, assets/, pyproject.toml, setup.cfg, SECURITY, LICENSE, pre-commit, gitignore. Cheapest possible breadth anchor."
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "README title and Python-version line"
+justification = "Just the H1 + the 'Requires Python 3.10+' install hint. Tiny but tells the agent this is a Python project and pins the version floor."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 3, end = 3, render = { kind = "full" } },
+  { path = "README.md", start = 12, end = 12, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "swarm/ package + repl subdir listings"
+justification = "The entire library is five source files. Naming them tells the agent core.py is the engine, types.py the data model, util.py the helpers, repl/ the demo loop — every later batch is grounded by this map."
+content.kind = "fs"
+content.groups = [
+  { parent = "swarm", entries = "all" },
+  { parent = "swarm/repl", entries = "all" },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "swarm/__init__.py — public re-exports"
+justification = "Four lines that pin down what `from swarm import …` gives you: Swarm, Agent, Response."
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/__init__.py", start = 1, end = 4, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Swarm replaced-by-Agents-SDK notice (README)"
+justification = "Critical project-state context: Swarm is now superseded by the OpenAI Agents SDK. Affects how any agent should answer 'should I use this in prod?' or 'is this maintained?' questions."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 5, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "README Overview lede (Agent + handoff primitives)"
+justification = "The single sentence that defines the framework: coordination/execution lightweight + Agents-plus-handoffs primitive. Cheapest semantic anchor."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 74, end = 76, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "examples/ directory listing"
+justification = "Examples are ~half the corpus and the main learning surface. Listing them tells the agent which patterns are demonstrated (basic, triage, weather, airline, support_bot, personal_shopper, customer_service_streaming, and the logs-only customer_service/customer_service_lite siblings)."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples", entries = "all" },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "Stateless-via-Chat-Completions note"
+justification = "Critical clarification: Swarm Agents are unrelated to the Assistants API; Swarm is stateless and Chat-Completions-only. Short, high-value disambiguator."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 80, end = 81, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "README examples roster (prose)"
+justification = "The README's own one-line description for each example — gives semantic context the bare directory listing can't. Synergizes with 1.7."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 89, end = 99, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "Agent and Response Pydantic models"
+justification = "These two Pydantic models are the *core* public data vocabulary. Field types + defaults answer most 'what fields does Agent have' questions zero-follow-up."
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/types.py", start = 14, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "README minimal usage snippet"
+justification = "Canonical 'Hello world' showing the public API surface — Swarm() client, Agent(name=, instructions=, functions=[]), client.run(agent, messages), response.messages[-1]['content'], and a transfer_to_agent function as handoff."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 26, end = 52, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.12"
+descriptor = "Swarm.run loop semantics (numbered list)"
+justification = "The numbered list spelling out exactly what client.run() does: completion → tool calls → maybe swap agent → maybe update context → repeat. Highest-leverage chunk of the README."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 116, end = 125, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.13"
+descriptor = "Result Pydantic model + AgentFunction alias"
+justification = "Result is the rich return type a function uses to combine value+agent+context_variables. AgentFunction names the callable signature."
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/types.py", start = 11, end = 11, render = { kind = "full" } },
+  { path = "swarm/types.py", start = 29, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.14"
+descriptor = "Swarm.run() arguments table (README)"
+justification = "Authoritative reference for every kwarg of client.run() — agent, messages, context_variables, max_turns, model_override, execute_tools, stream, debug. High zero-follow-up density."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 126, end = 137, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.15"
+descriptor = "Response fields table (README)"
+justification = "Companion to 1.14 — what Swarm.run() returns: messages (with `sender` field), agent (last to handle), context_variables (updated)."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 141, end = 147, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.16"
+descriptor = "Agent fields table (README)"
+justification = "Authoritative table of every Agent field + type + default (name, model='gpt-4o', instructions, functions, tool_choice). Pairs with the Pydantic class in 1.10."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 156, end = 164, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 2 — Library function/method inventory + key signatures
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "swarm/core.py — imports header"
+justification = "Pins the openai-Python type dependencies (ChatCompletionMessage, ChatCompletionMessageToolCall, Function) re-exported via swarm.types, plus the local helper imports. These names appear in mocks and signatures throughout the codebase."
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/core.py", start = 1, end = 21, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "swarm/core.py — Swarm class + method def-lines"
+justification = "Every method of `class Swarm` named at its def-line. Lets the agent locate __init__, get_chat_completion, handle_function_result, handle_tool_calls, run_and_stream, run without reading bodies. Catastrophic-omission hedge: shows ALL methods together so the agent doesn't assume an unlisted one is missing."
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/core.py", start = 23, end = 23, render = { kind = "full" } },
+  { path = "swarm/core.py", start = 26, end = 27, render = { kind = "full" } },
+  { path = "swarm/core.py", start = 32, end = 32, render = { kind = "full" } },
+  { path = "swarm/core.py", start = 71, end = 71, render = { kind = "full" } },
+  { path = "swarm/core.py", start = 89, end = 89, render = { kind = "full" } },
+  { path = "swarm/core.py", start = 139, end = 139, render = { kind = "full" } },
+  { path = "swarm/core.py", start = 231, end = 231, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "Swarm.run() full signature"
+justification = "The public entry point. Full keyword args + types + defaults make 'what does run() take' a zero-follow-up question and pair with the README arguments table at 1.14."
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/core.py", start = 231, end = 241, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Swarm.run_and_stream() full signature"
+justification = "Streaming sibling of run(). Shows that stream-mode is a separate generator method with the same arg surface minus `stream`."
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/core.py", start = 139, end = 148, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "swarm/util.py — public helper def-lines"
+justification = "Four top-level helpers — debug_print, merge_fields, merge_chunk, function_to_json — at their def-lines. Catastrophic-omission hedge: listing them all together prevents agent from assuming util.py is empty or only has one of them."
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/util.py", start = 5, end = 5, render = { kind = "full" } },
+  { path = "swarm/util.py", start = 13, end = 13, render = { kind = "full" } },
+  { path = "swarm/util.py", start = 21, end = 21, render = { kind = "full" } },
+  { path = "swarm/util.py", start = 31, end = 31, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "swarm/repl/repl.py — public helper def-lines"
+justification = "Three top-level functions — process_and_print_streaming_response, pretty_print_messages, run_demo_loop. The last is the README-advertised utility for an interactive Swarm session."
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/repl/repl.py", start = 6, end = 6, render = { kind = "full" } },
+  { path = "swarm/repl/repl.py", start = 37, end = 37, render = { kind = "full" } },
+  { path = "swarm/repl/repl.py", start = 60, end = 62, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "function_to_json signature + docstring"
+justification = "Most-cited helper outside Swarm itself — turns a Python fn into the OpenAI tools-JSON schema. README spends ~40 lines explaining this transformation; readers want the actual implementation surface."
+predecessor = "2.5"
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/util.py", start = 31, end = 51, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "tests/ directory listing"
+justification = "Three test files: test_core.py, test_util.py, mock_client.py (plus an empty __init__.py). Tiny but completes the picture of what testing infrastructure exists."
+content.kind = "fs"
+content.groups = [
+  { parent = "tests", entries = "all" },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "tests/test_core.py — fixture + test fn names"
+justification = "Names every test function and the mock_openai_client fixture. Catastrophic-omission hedge: the suite has exactly these four behaviour tests (simple_message, tool_call, execute_tools_false, handoff)."
+content.kind = "lines"
+content.spans = [
+  { path = "tests/test_core.py", start = 10, end = 11, render = { kind = "full" } },
+  { path = "tests/test_core.py", start = 19, end = 19, render = { kind = "full" } },
+  { path = "tests/test_core.py", start = 31, end = 31, render = { kind = "full" } },
+  { path = "tests/test_core.py", start = 70, end = 70, render = { kind = "full" } },
+  { path = "tests/test_core.py", start = 118, end = 118, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "tests/test_util.py — fn names"
+justification = "Two tests for function_to_json: basic_function and complex_function_with_types_and_descriptions. Tiny but completes the test inventory."
+content.kind = "lines"
+content.spans = [
+  { path = "tests/test_util.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "tests/test_util.py", start = 4, end = 4, render = { kind = "full" } },
+  { path = "tests/test_util.py", start = 26, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "tests/mock_client.py — public surface"
+justification = "create_mock_response factory + MockOpenAIClient class + its methods (set_response, set_sequential_responses, assert_create_called_with). Lets test authors find the existing mock plumbing."
+content.kind = "lines"
+content.spans = [
+  { path = "tests/mock_client.py", start = 1, end = 6, render = { kind = "full" } },
+  { path = "tests/mock_client.py", start = 8, end = 8, render = { kind = "full" } },
+  { path = "tests/mock_client.py", start = 44, end = 47, render = { kind = "full" } },
+  { path = "tests/mock_client.py", start = 49, end = 49, render = { kind = "full" } },
+  { path = "tests/mock_client.py", start = 56, end = 56, render = { kind = "full" } },
+  { path = "tests/mock_client.py", start = 63, end = 63, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 3 — Examples: locations and small snippets
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "examples/basic/ directory listing"
+justification = "Five tiny scripts demonstrating fundamentals: agent_handoff, bare_minimum, context_variables, function_calling, simple_loop_no_helpers. Names alone tell the agent which pattern lives where."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/basic", entries = "all" },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "examples/basic/bare_minimum.py — full file"
+justification = "13 lines that *are* the minimal Swarm program. Zero-follow-up answer for 'simplest Swarm example'."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/basic/bare_minimum.py", start = 1, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "examples/basic/agent_handoff.py — full file"
+justification = "26 lines showing the canonical handoff pattern: english_agent.functions.append(transfer_to_spanish_agent), where transfer_to_spanish_agent returns the other Agent. Zero-follow-up for 'how do handoffs work'."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/basic/agent_handoff.py", start = 1, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "examples/basic/function_calling.py — full file"
+justification = "19 lines showing the canonical 'agent with a Python function' pattern. Get_weather + Agent(functions=[get_weather])."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/basic/function_calling.py", start = 1, end = 19, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "examples/basic/context_variables.py — full file"
+justification = "Demonstrates two important patterns: instructions as a callable taking context_variables, and a tool function that reads context_variables. Critical for understanding the context-variables thread through the run loop."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/basic/context_variables.py", start = 1, end = 38, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "examples/basic/simple_loop_no_helpers.py — full file"
+justification = "Hand-rolled REPL loop without run_demo_loop. Shows how to thread response.messages/response.agent back into the next client.run() call — the canonical multi-turn pattern."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/basic/simple_loop_no_helpers.py", start = 1, end = 27, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "examples/triage_agent/ listing + agents.py fn names"
+justification = "Names triage_agent.py files (agents, run, evals, evals_util, README) plus every fn/agent in agents.py: process_refund, apply_discount, triage_agent, sales_agent, refunds_agent, transfer_back_to_triage, transfer_to_sales, transfer_to_refunds. Catastrophic-omission hedge: agent sees the full agent set."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/triage_agent", entries = "all" },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "examples/triage_agent/agents.py — fn + agent def-lines"
+justification = "Names every tool function and every Agent() definition in the triage example. Standard catastrophic-omission hedge for an examples dir."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/triage_agent/agents.py", start = 4, end = 4, render = { kind = "full" } },
+  { path = "examples/triage_agent/agents.py", start = 10, end = 10, render = { kind = "full" } },
+  { path = "examples/triage_agent/agents.py", start = 16, end = 16, render = { kind = "full" } },
+  { path = "examples/triage_agent/agents.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "examples/triage_agent/agents.py", start = 24, end = 24, render = { kind = "full" } },
+  { path = "examples/triage_agent/agents.py", start = 31, end = 31, render = { kind = "full" } },
+  { path = "examples/triage_agent/agents.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "examples/triage_agent/agents.py", start = 40, end = 40, render = { kind = "full" } },
+  { path = "examples/triage_agent/agents.py", start = 44, end = 46, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "examples/weather_agent/ listing + agents.py full"
+justification = "Tiny agents.py (23 lines) + locations of run.py and evals.py. The full file is small enough to include verbatim — get_weather, send_email, weather_agent."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/weather_agent", entries = "all" },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "examples/weather_agent/agents.py — full file"
+justification = "23 lines: get_weather, send_email, weather_agent definition. Pairs naturally with the eval suite (which tests get_weather is called for weather queries and not called otherwise)."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/weather_agent/agents.py", start = 1, end = 23, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "examples/airline/ + airline/configs/ listings"
+justification = "Multi-agent airline example structure: main.py + configs/{agents.py,tools.py} + data/routines/ subtree + evals/. Listings only — orients the agent."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/airline", entries = "all" },
+  { parent = "examples/airline/configs", entries = "all" },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "examples/airline/configs/agents.py — Agent + transfer def-lines"
+justification = "Names every transfer_* fn (transfer_to_flight_modification, _flight_cancel, _flight_change, _lost_baggage, _triage), triage_instructions, and every Agent (triage_agent, flight_modification, flight_cancel, flight_change, lost_baggage). Catastrophic-omission hedge for the agent topology."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/airline/configs/agents.py", start = 1, end = 6, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 9, end = 9, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 13, end = 13, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 21, end = 21, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 32, end = 32, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 43, end = 47, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 49, end = 49, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 59, end = 59, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 71, end = 71, render = { kind = "full" } },
+  { path = "examples/airline/configs/agents.py", start = 83, end = 83, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "examples/airline/configs/tools.py — full file"
+justification = "Whole file is 28 lines of stub tool functions: escalate_to_agent, valid_to_change_flight, change_flight, initiate_refund, initiate_flight_credits, case_resolved, initiate_baggage_search. These names are referenced by every airline Agent. Zero-follow-up complete."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/airline/configs/tools.py", start = 1, end = 28, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "examples/airline/data/routines/ listing + prompts.py"
+justification = "Names the routines subtree (baggage/policies.py, flight_modification/policies.py, prompts.py). The prompts.py file at 24 lines holds STARTER_PROMPT and TRIAGE_SYSTEM_PROMPT — central instructions shared across agents."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/airline/data", entries = "all" },
+  { parent = "examples/airline/data/routines", entries = "all" },
+  { parent = "examples/airline/data/routines/baggage", entries = "all" },
+  { parent = "examples/airline/data/routines/flight_modification", entries = "all" },
+]
+
+# ============================================================
+# Tier 4 — Remaining examples + streaming sub-project topology
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "examples/airline/data/routines/prompts.py — STARTER_PROMPT signature"
+justification = "STARTER_PROMPT is referenced by every airline agent's instructions. Names and triple-quoted opener tell the agent where the prompt string lives. Includes TRIAGE_SYSTEM_PROMPT name too."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/airline/data/routines/prompts.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "examples/airline/data/routines/prompts.py", start = 18, end = 18, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "examples/airline/data/routines/baggage/policies.py — LOST_BAGGAGE_POLICY body"
+justification = "The numbered policy steps the lost_baggage agent follows (initiate_baggage_search, escalate_to_agent, case_resolved). Concrete and short."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/airline/data/routines/baggage/policies.py", start = 21, end = 30, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "examples/airline/data/routines/flight_modification/policies.py — policy bodies"
+justification = "FLIGHT_CANCELLATION_POLICY and FLIGHT_CHANGE_POLICY: the numbered steps each agent follows. Shows the tool-call patterns (initiate_refund, change_flight, valid_to_change_flight, case_resolved)."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/airline/data/routines/flight_modification/policies.py", start = 19, end = 45, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "examples/airline/main.py — full file"
+justification = "19 lines: the entrypoint. Wires context_variables (customer_context + flight_context) into run_demo_loop(triage_agent, ...). Shows the production pattern."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/airline/main.py", start = 1, end = 19, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "examples/airline/evals/ listing + function names"
+justification = "Names eval_utils.py + function_evals.py + eval_cases/ + eval_results/. Tells the agent the test-cases-driven harness exists for airline."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/airline/evals", entries = "all" },
+  { parent = "examples/airline/evals/eval_cases", entries = "all" },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "examples/airline/evals/eval_utils.py — def-lines"
+justification = "Two top-level fns: run_function_evals (the harness) and extract_response_info. Lets agent find the eval-runner without reading 100 lines."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/airline/evals/eval_utils.py", start = 8, end = 8, render = { kind = "full" } },
+  { path = "examples/airline/evals/eval_utils.py", start = 98, end = 98, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "examples/support_bot/ listing + customer_service.py def-lines"
+justification = "Names every file in support_bot (Makefile, requirements.txt, docker-compose.yaml, main.py, customer_service.py, prep_data.py, README) and every top-level fn/agent in customer_service.py: query_qdrant, query_docs, send_email, submit_ticket, transfer_to_help_center, user_interface_agent, help_center_agent."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/support_bot", entries = "all" },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "examples/support_bot/customer_service.py — fn + agent def-lines"
+justification = "Catastrophic-omission hedge for support_bot tools and agents. EMBEDDING_MODEL, collection_name, query_qdrant, query_docs, send_email, submit_ticket, transfer_to_help_center, user_interface_agent, help_center_agent."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/support_bot/customer_service.py", start = 14, end = 17, render = { kind = "full" } },
+  { path = "examples/support_bot/customer_service.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "examples/support_bot/customer_service.py", start = 40, end = 41, render = { kind = "full" } },
+  { path = "examples/support_bot/customer_service.py", start = 66, end = 68, render = { kind = "full" } },
+  { path = "examples/support_bot/customer_service.py", start = 72, end = 74, render = { kind = "full" } },
+  { path = "examples/support_bot/customer_service.py", start = 77, end = 79, render = { kind = "full" } },
+  { path = "examples/support_bot/customer_service.py", start = 82, end = 86, render = { kind = "full" } },
+  { path = "examples/support_bot/customer_service.py", start = 88, end = 92, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "examples/personal_shopper/ listing + main.py top-level fns"
+justification = "Names personal_shopper layout (main.py, database.py, README, __init__) and the three tool functions (refund_item, notify_customer, order_item) + three Agents (refunds_agent, sales_agent, triage_agent)."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/personal_shopper", entries = "all" },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "examples/personal_shopper/main.py — fn + agent def-lines"
+justification = "Catastrophic-omission hedge. Note this file imports from a non-existent swarm.agents.create_triage_agent — agent should know it's incomplete code."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/personal_shopper/main.py", start = 1, end = 8, render = { kind = "full" } },
+  { path = "examples/personal_shopper/main.py", start = 10, end = 11, render = { kind = "full" } },
+  { path = "examples/personal_shopper/main.py", start = 32, end = 34, render = { kind = "full" } },
+  { path = "examples/personal_shopper/main.py", start = 58, end = 60, render = { kind = "full" } },
+  { path = "examples/personal_shopper/main.py", start = 95, end = 95, render = { kind = "full" } },
+  { path = "examples/personal_shopper/main.py", start = 104, end = 104, render = { kind = "full" } },
+  { path = "examples/personal_shopper/main.py", start = 115, end = 115, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.11"
+descriptor = "examples/personal_shopper/database.py — def-lines"
+justification = "SQLite scaffolding fns: get_connection, create_database, add_user, add_purchase, add_product, close_connection, preview_table, initialize_database. Catastrophic-omission hedge for DB helpers."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/personal_shopper/database.py", start = 7, end = 7, render = { kind = "full" } },
+  { path = "examples/personal_shopper/database.py", start = 14, end = 14, render = { kind = "full" } },
+  { path = "examples/personal_shopper/database.py", start = 61, end = 61, render = { kind = "full" } },
+  { path = "examples/personal_shopper/database.py", start = 84, end = 84, render = { kind = "full" } },
+  { path = "examples/personal_shopper/database.py", start = 114, end = 114, render = { kind = "full" } },
+  { path = "examples/personal_shopper/database.py", start = 132, end = 132, render = { kind = "full" } },
+  { path = "examples/personal_shopper/database.py", start = 139, end = 139, render = { kind = "full" } },
+  { path = "examples/personal_shopper/database.py", start = 154, end = 154, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "examples/customer_service_streaming/ listing"
+justification = "The outlier sub-project. Listing names main.py, prep_data.py, docker-compose.yaml, configs/, src/, tests/, data/, logs/. Note this is a *separate* engine (not the library) on top of OpenAI Assistants/Chat APIs."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/customer_service_streaming", entries = "all" },
+]
+
+[[batches]]
+id = "4.13"
+descriptor = "customer_service_streaming/src/ + configs/ tree"
+justification = "Inner topology: configs/{general,prompts,tools/*,assistants/*}, src/{arg_parser,utils,validator,swarm/*,tasks,runs,evals}. Catastrophic-omission hedge for the sub-project's own swarm framework."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/customer_service_streaming/src", entries = "all" },
+  { parent = "examples/customer_service_streaming/src/swarm", entries = "all" },
+  { parent = "examples/customer_service_streaming/src/swarm/engines", entries = "all" },
+  { parent = "examples/customer_service_streaming/src/tasks", entries = "all" },
+  { parent = "examples/customer_service_streaming/src/runs", entries = "all" },
+  { parent = "examples/customer_service_streaming/src/evals", entries = "all" },
+  { parent = "examples/customer_service_streaming/configs", entries = "all" },
+  { parent = "examples/customer_service_streaming/configs/tools", entries = "all" },
+  { parent = "examples/customer_service_streaming/configs/assistants", entries = "all" },
+]
+
+# ============================================================
+# Tier 5 — Implementation bodies for the hot paths
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "Swarm.run() body — the non-streaming main loop"
+justification = "The 40-line synchronous run loop. Pairs with the README numbered list at 1.12; this is the actual implementation: get_chat_completion → if tool_calls execute → handle_tool_calls → update history+context_variables → maybe switch active_agent. Highest-value implementation chunk in the repo."
+predecessor = "2.3"
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/core.py", start = 242, end = 292, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "Swarm.handle_tool_calls() body"
+justification = "How tools are looked up by name, how context_variables is injected via __code__.co_varnames, how missing tools become error messages, how results turn into Result/Agent/string via handle_function_result. Pairs with the README Functions section."
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/core.py", start = 89, end = 137, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "Swarm.get_chat_completion() body"
+justification = "Shows how tools are converted via function_to_json, how context_variables is hidden from the model, and how create_params is assembled. The contract between Swarm and the openai client."
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/core.py", start = 32, end = 69, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "Swarm.handle_function_result() body"
+justification = "Match statement that normalises tool-fn returns into Result objects. Shows how returning an Agent gets wrapped in Result(value=json.dumps({...}), agent=…)."
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+  { path = "swarm/core.py", start = 71, end = 87, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 6 — Streaming sub-project surfaces + remaining loose ends
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "customer_service_streaming Swarm + Engine class def-lines"
+justification = "Names the parallel-Swarm class + both engines: src/swarm/swarm.py Swarm, src/swarm/engines/local_engine.py LocalEngine, src/swarm/engines/assistants_engine.py AssistantsEngine, src/swarm/assistants.py Assistant, src/swarm/conversation.py Conversation, src/swarm/tool.py Tool. Catastrophic-omission hedge for the sub-project's framework."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/customer_service_streaming/src/swarm/swarm.py", start = 11, end = 11, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/swarm.py", start = 12, end = 12, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/swarm.py", start = 18, end = 18, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/swarm.py", start = 34, end = 34, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/swarm.py", start = 45, end = 45, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 14, end = 14, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/assistants_engine.py", start = 13, end = 13, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/assistants.py", start = 10, end = 10, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/conversation.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/tool.py", start = 23, end = 23, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "customer_service_streaming/src/swarm/tool.py — full file"
+justification = "26 lines: Pydantic types for Tool/FunctionTool/FunctionParameters/Parameter. The sub-project's JSON-schema-on-disk format for tools."
+predecessor = "6.1"
+content.kind = "lines"
+content.spans = [
+  { path = "examples/customer_service_streaming/src/swarm/tool.py", start = 1, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "customer_service_streaming LocalEngine method def-lines"
+justification = "Names every method of LocalEngine: load_tools, load_all_assistants, initialize_and_display_assistants, get_assistant, triage_request, determine_appropriate_assistant, initiate_run, handle_tool_call, run_task, run_tests, deploy, load_test_tasks, store_context_globally, initialize_global_history. Catastrophic-omission hedge."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 15, end = 15, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 24, end = 24, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 41, end = 41, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 69, end = 69, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 85, end = 85, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 93, end = 93, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 130, end = 130, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 143, end = 143, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 206, end = 206, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 233, end = 233, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 291, end = 291, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 353, end = 353, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 381, end = 381, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 398, end = 398, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/engines/local_engine.py", start = 401, end = 401, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "customer_service_streaming Task + EvaluationTask + Run + Assistant fields"
+justification = "Task constructor (description, iterate, evaluate, assistant), EvaluationTask extra fields, Run constructor, Assistant Pydantic fields. The data vocabulary of the sub-project."
+predecessor = "6.1"
+content.kind = "lines"
+content.spans = [
+  { path = "examples/customer_service_streaming/src/tasks/task.py", start = 1, end = 18, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/runs/run.py", start = 5, end = 12, render = { kind = "full" } },
+  { path = "examples/customer_service_streaming/src/swarm/assistants.py", start = 10, end = 19, render = { kind = "full" } },
+]

@@ -1,0 +1,602 @@
+fixture = "soluna"
+revision_pin = "be822052"
+summary = """
+Soluna is a 2D game framework written in Lua, built on top of sokol (graphics)
+and ltask (an actor/multithreaded framework). It runs on Windows / Linux /
+macOS / WebAssembly. A game is a Lua entry script that returns a callback
+table (frame/mouse/key/resize/…); `bin/soluna.exe` boots a Lua state, registers
+~30 embedded C modules under `soluna.*` and `ltask.*`, brings up render /
+loader / settings / log / gamepad ltask services, and dispatches sokol-app
+events into Lua.
+
+The most load-bearing inputs for an agent:
+
+-   `docs/*.lua` — LuaCATS @meta API reference. Tiny, signature-first.
+-   `src/luamods.c` — master registry of every embedded Lua module.
+-   `src/lualib/*.lua` — userspace Lua framework (`require 'soluna'`, layout,
+    font/text/icon, package + zipfile loader).
+-   `src/service/*.lua` — ltask services (render frame loop, asset loader,
+    settings, app boot in `start.lua`).
+-   `src/*.c` — Lua/C bindings, with `entry.c` holding sokol_main +
+    `soluna.app`, `render.c` wrapping sokol_gfx, `spritemgr.c` doing atlas
+    packing + the SOLUNA_BATCH metatable used in every frame callback.
+-   `test/*.lua` + `*.game` — runnable examples.
+
+The ranking is location-heavy: directory listings + per-file function-signature
+locations are seeded early so follow-up greps land precisely. Full bodies are
+reserved for the densest small files: the LuaCATS API reference under `docs/`,
+`src/lualib/soluna.lua`'s tricky gamedir() body, `src/data/settingdefault.dl`,
+the minimal-entry examples in `test/`.
+"""
+
+# ---------------------------------------------------------------------------
+# Tier 1 — anchors: README lede, top-level layout, smallest example.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "README tagline"
+justification = """
+The 'Sokol + Lua = Soluna' tagline alone. Grounds the agent on the
+language and engine identity in <30 tokens.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 3, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Repo top-level listing"
+justification = """
+Every top-level dir + file. Source in src/, examples in test/, API
+docs in docs/, build entrypoints make.lua + Makefile, vendored libs
+under 3rd/ and clibs/, plus a web/ Hugo site.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "README one-line description"
+justification = """
+The one-paragraph description of what Soluna is — 2D games in Lua
+with multithreading, runs on Windows / Linux / macOS / WebAssembly.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 13, end = 15, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "test/hello.lua + hello.game — smallest viable entry"
+justification = """
+The 1-line `print 'Hello World'` entry + its 3-line `.game` config.
+Demonstrates the runtime contract: `.game` is key:value, `entry`
+points at the Lua script.
+"""
+content = { kind = "lines", spans = [
+  { path = "test/hello.lua", start = 1, end = 1, render = { kind = "full" } },
+  { path = "test/hello.game", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 2 — directory listings, split fine to respect the growth envelope.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "src/lualib/ + src/service/ listings"
+justification = """
+src/lualib/ is the embedded userspace Lua: soluna, main, layout, text,
+icon, fontmgr, spritebundle, packageloader, coroutine, util, initsetting,
+print_r. src/service/ is the ltask service set: start, render, loader,
+settings, gamepad, log.
+"""
+content = { kind = "fs", groups = [
+  { parent = "src/lualib", entries = "all" },
+  { parent = "src/service", entries = "all" },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "docs/ listing"
+justification = """
+docs/ has one .lua per public Lua module — soluna, app, args,
+callback, image, file, font, font_system, layout, lfs, text,
+datalist, crypt, zip, url, coroutine, material_{quad,mask,text,
+perspective_quad}. Names alone are a navigation index.
+"""
+content = { kind = "fs", groups = [
+  { parent = "docs", entries = "all" },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "test/ listing"
+justification = """
+Every example .lua + the .game companion configs (window.game,
+hello.game, mtex.game). Sample names are self-documenting (window,
+sprite, image, text, layout, mask, ime, icon, intersect, mtex,
+perspective_quad, …).
+"""
+content = { kind = "fs", groups = [
+  { parent = "test", entries = "all" },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "src/luamods.c — module table (top half: soluna.app … soluna.material.blit)"
+justification = """
+First 17 entries of the require()-table: ltask.* (root, bootstrap,
+mqueue), soluna.app, soluna.embedsource, soluna.log, soluna.image,
+soluna.render, soluna.spritemgr, soluna.drawmgr, the five soluna.material.*
+flavors, plus the blit material. Truncated to drop the C function name
+(derivable by `luaopen_<name>` convention).
+"""
+content = { kind = "lines", spans = [
+  { path = "src/luamods.c", start = 39, end = 54, render = { kind = "truncated", pattern = "^\\s*\\{ \"[^\"]+\"," } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "src/luamods.c — module table (bottom half: soluna.datalist … soluna.zip)"
+justification = """
+Remaining entries: soluna.datalist, soluna.file, soluna.font (+ font.
+truetype / manager / system), soluna.gamepad (+ gamepad.device),
+soluna.lfs, soluna.image.sdf, soluna.layout.yoga, soluna.url,
+soluna.crypt, soluna.zip. Together with 2.4 covers every embedded
+C-side module.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/luamods.c", start = 55, end = 69, render = { kind = "truncated", pattern = "^\\s*\\{ \"[^\"]+\"," } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "src/ listing"
+justification = """
+Every immediate child of src/: ~35 C sources (entry, render, spritemgr,
+image, font, font_manager, font_system, lfs, lcrypt, luayoga, luazip,
+sdfimage, openurl, writelog, gamepad, material_*, embedlua, openlibs,
+luamods, file, batch, transform, drawmgr, srbuffer, truetype, …),
+headers, shaders (*.glsl), plus the lualib/, service/, platform/,
+data/ subdirs.
+"""
+content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 3 — docs/*.lua full bodies. Smallest-first to respect growth envelope.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "docs/url.lua — soluna.url.open"
+justification = """
+The smallest doc module. url.open(link) opens a URL in the system
+browser. Used by web links in samples.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/url.lua", start = 1, end = 16, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "docs/font_system.lua — OS-installed font lookup"
+justification = """
+soluna.font.system.ttfdata(name) returns the raw TTF bytes for a
+named OS-installed font (Windows / macOS / Linux). Used by every
+text-rendering sample's font-fallback chain.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/font_system.lua", start = 1, end = 17, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2b"
+descriptor = "docs/zip.lua — zip.open r/w"
+justification = """
+soluna.zip.open(filename, 'r'|'w') returns a userdata handle for
+reading existing or creating new ZIP archives. The asset-bundle
+format used in WASM deployments.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/zip.lua", start = 1, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "docs/material_mask.lua — sprite recolor"
+justification = """
+matmask.mask(sprite, color) — sprite recolor. ARGB convention
+(0xAARRGGBB; alpha 0 → forced 0xFF).
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/material_mask.lua", start = 1, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3b"
+descriptor = "docs/material_quad.lua — colored rect"
+justification = """
+matquad.quad(width, height, color) draws an ARGB-tinted rectangle.
+Used by almost every UI example (test/layout.lua, test/text.lua,
+test/ime.lua).
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/material_quad.lua", start = 1, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "docs/lfs.lua — local filesystem"
+justification = """
+lfs.attributes + lfs.dir. Local filesystem (not zip-aware — see
+docs/file.lua for the zip-aware wrapper).
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/lfs.lua", start = 1, end = 24, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4b"
+descriptor = "docs/datalist.lua — .dl text format"
+justification = """
+datalist.parse + datalist.quote — parser for the .dl text format
+used by settings (settingdefault.dl), sprite bundles, layout DSL.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/datalist.lua", start = 1, end = 24, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "docs/crypt.lua — hexencode / sha1"
+justification = """
+crypt.hexencode (lowercase hex) + crypt.sha1 (binary 20-byte digest).
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/crypt.lua", start = 1, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5b"
+descriptor = "docs/font.lua — TTF import / name lookup"
+justification = """
+font.import (raw TTF bytes), font.name (family-name → integer id),
+font.cobj (the C-side font-system handle text materials need).
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/font.lua", start = 1, end = 29, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "docs/layout.lua — Yoga-backed flexbox"
+justification = """
+layout.load(filename_or_list, scripts?) loads a .dl layout definition
+into a document object; layout.calc(document) runs Yoga and returns
+the elements with x/y/w/h set.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/layout.lua", start = 1, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6b"
+descriptor = "docs/material_perspective_quad.lua — projective quads"
+justification = """
+matproj.sprite(sprite, options) returns a packed perspective-quad
+command stream. Options struct: quad (4 corner coords), q (per-corner
+perspective factors), scale_x/y, shear_x/y, color tint.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/material_perspective_quad.lua", start = 1, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "docs/image.lua — image.load / image.resize"
+justification = """
+image.load(data) returns external string + width + height. image.resize
+handles RGBA (4 channels) or grayscale (1 channel) with size validation.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/image.lua", start = 1, end = 35, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7b"
+descriptor = "docs/material_text.lua — text block + cursor"
+justification = """
+mattext.block(fontcobj, fontid, size?, color?, alignment?) returns two
+fns: block(text, w, h) creates a renderable sprite, cursor(text, pos,
+w, h) returns (x, y, w, h, actual_pos, descent). Alignment codes
+(case-insensitive, combinable): L/C/R horizontal, T/V/B vertical.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/material_text.lua", start = 1, end = 33, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "docs/text.lua — text tag mini-DSL"
+justification = """
+text.init(bundle_file) loads an icon sprite bundle. text.convert is a
+weak-keyed table that rewrites `[red]` / `[FF0000]` / `[c808080]` /
+`[icon_name]` / `[[escape]]` tags in input strings.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/text.lua", start = 1, end = 36, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8b"
+descriptor = "docs/app.lua — quit + IME hooks"
+justification = """
+app.quit() signals exit. app.set_ime_font(name, size) and
+app.set_ime_rect(rect|nil) drive the per-platform IME via fields
+{x, y, width|w, height|h, text_color|color}.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/app.lua", start = 1, end = 37, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "docs/args.lua — batch:add / batch:layer + Args"
+justification = """
+The batch object every frame callback uses, plus the
+{width, height, batch} Args table. Documents the layer-overload set
+(no-arg close, rotation only, x/y only, scale+x/y, scale+rotation+x/y) —
+non-obvious, easy to misuse.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/args.lua", start = 1, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "docs/file.lua — file.load / exist / dir / attributes"
+justification = """
+soluna.file is zip-aware; file.load / file.exist / file.dir /
+file.attributes look in mounted zip patches first, fall back to
+filesystem. file.local_load / .local_exist skip the zip layer.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/file.lua", start = 1, end = 52, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.12"
+descriptor = "docs/callback.lua — frame/key/mouse/resize hooks"
+justification = """
+The 54-line LuaCATS contract for the callback table every entry
+script returns: frame(count), key(keycode, state — 0 release, 1
+press, 2 repeat), char(char), mouse_button (0 left/1 right/2 middle,
+0 release / 1 press), mouse_move, mouse_scroll, window_resize. The
+'how do I handle clicks' answer.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/callback.lua", start = 1, end = 54, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.13"
+descriptor = "docs/soluna.lua — `require 'soluna'` API"
+justification = """
+The LuaCATS reference for the top-level soluna module: platform
+('windows'|'macos'|'linux'|'wasm'), version, version_api, settings,
+set_window_title, set_icon, gamedir, load_sprites + the Sprite /
+SpriteBundle alias types.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/soluna.lua", start = 1, end = 68, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 4 — minimal entry scripts + settingdefault. After tier 3 + 4 the
+# agent has the entire public-API picture plus a working program template.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "test/window.lua — minimal entry skeleton"
+justification = """
+The 14-line skeleton: shebang-equivalent run-this-with comments,
+require 'soluna', set_window_title, define callback.frame, return
+the table. Canonical 'how to write a soluna program'.
+"""
+content = { kind = "lines", spans = [
+  { path = "test/window.lua", start = 1, end = 14, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "src/data/settingdefault.dl — default game settings"
+justification = """
+The default key:value game configuration: sprite_max 0x40000,
+texture_size 2048, srbuffer_size 0x10000, batch_size 65536,
+draw_instance 65536, entry main.lua, project soluna, service_path
+'./?.lua', width 1024 / height 768, high_dpi false, window_title
+soluna, background 0x4080c0, tmpbuffer_size 0x20000.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/data/settingdefault.dl", start = 1, end = 14, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "Tiny .game + setting + version + asset/sprites.dl"
+justification = """
+Five micro-files. setting.lua / version.lua are 2-3 line tracers;
+window.game / mtex.game are the .game settings examples
+(`entry : window.lua`, `texture_size : 64`); asset/sprites.dl is the
+canonical sprite-bundle .dl with two avatar variants.
+"""
+content = { kind = "lines", spans = [
+  { path = "test/setting.lua", start = 1, end = 3, render = { kind = "full" } },
+  { path = "test/version.lua", start = 1, end = 2, render = { kind = "full" } },
+  { path = "test/window.game", start = 1, end = 1, render = { kind = "full" } },
+  { path = "test/mtex.game", start = 1, end = 3, render = { kind = "full" } },
+  { path = "asset/sprites.dl", start = 1, end = 11, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 5 — C binding location index + the soluna.lua implementation indices.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "src/lualib/soluna.lua — function signature locations"
+justification = """
+The function-declaration lines of the runtime soluna module:
+soluna.gamepad_init, settings, set_window_title, set_icon, gamedir,
+load_sprites, preload + the local recursion_mkdir / version helpers.
+Pairs with docs/soluna.lua (3.13).
+"""
+content = { kind = "lines", spans = [
+  { path = "src/lualib/soluna.lua", start = 11, end = 11, render = { kind = "full" } },
+  { path = "src/lualib/soluna.lua", start = 28, end = 28, render = { kind = "full" } },
+  { path = "src/lualib/soluna.lua", start = 36, end = 36, render = { kind = "full" } },
+  { path = "src/lualib/soluna.lua", start = 40, end = 40, render = { kind = "full" } },
+  { path = "src/lualib/soluna.lua", start = 44, end = 44, render = { kind = "full" } },
+  { path = "src/lualib/soluna.lua", start = 53, end = 53, render = { kind = "full" } },
+  { path = "src/lualib/soluna.lua", start = 73, end = 73, render = { kind = "full" } },
+  { path = "src/lualib/soluna.lua", start = 79, end = 79, render = { kind = "full" } },
+  { path = "src/lualib/soluna.lua", start = 93, end = 93, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "src/lualib/soluna.lua — gamedir() body (per-platform path)"
+justification = """
+The 19-line gamedir(name) body — the only non-obvious soluna method.
+Hardcodes per-platform game-data path: `My Games/` (windows),
+`.local/share/` (macos / linux), `persistent/games/` (wasm).
+Predecessor 5.1.
+"""
+predecessor = "5.1"
+content = { kind = "lines", spans = [
+  { path = "src/lualib/soluna.lua", start = 44, end = 71, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "src/entry.c — soluna.app luaL_Reg"
+justification = """
+The function table soluna.app exposes: mqueue, unpackmessage,
+sendmessage, unpackevent, set_window_title, set_icon, set_ime_rect,
+set_ime_font, quit, close_window, platform, version, init_desc.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/entry.c", start = 545, end = 560, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "src/render.c — soluna.render luaL_Reg"
+justification = """
+soluna.render exposes pass, submit, image, buffer, sampler, draw,
+srbuffer, buffer_size, bindings, view, uniform, tmp_buffer — the
+sokol_gfx façade that service/render.lua wraps.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/render.c", start = 658, end = 672, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "src/spritemgr.c — SOLUNA_BATCH metatable"
+justification = """
+The vtable behind args.batch: reset, add, ptr, release, layer,
+point. Every frame callback hits these methods.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/spritemgr.c", start = 480, end = 510, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 6 — service-layer + lualib signature index. Lots of breadth.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "src/service/start.lua — dispatch fn locations + event-name list"
+justification = """
+Locations of every dispatch fn in start.lua: app.cleanup, app.frame,
+prehook.window_resize, S.external, init, S.quit. Plus the `messages`
+array (lines 137-140) listing every dispatchable event name (mouse_*,
+touch_*, window_resize, char, key) — the complete callback contract.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/service/start.lua", start = 22, end = 22, render = { kind = "full" } },
+  { path = "src/service/start.lua", start = 31, end = 31, render = { kind = "full" } },
+  { path = "src/service/start.lua", start = 48, end = 48, render = { kind = "full" } },
+  { path = "src/service/start.lua", start = 59, end = 59, render = { kind = "full" } },
+  { path = "src/service/start.lua", start = 78, end = 78, render = { kind = "full" } },
+  { path = "src/service/start.lua", start = 136, end = 140, render = { kind = "full" } },
+  { path = "src/service/start.lua", start = 176, end = 176, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "src/service/render.lua + main.lua — fn signatures + material ids"
+justification = """
+render.lua's material-id constants (DEFAULT/TEXT/QUAD/MASK/
+PERSPECTIVE_QUAD_MAT) + S.* dispatch locations (S.app, S.frame,
+S.quit, S.load_sprites, S.init, S.resize). main.lua's three
+entry-points (start, api.start, api.init).
+"""
+content = { kind = "lines", spans = [
+  { path = "src/service/render.lua", start = 17, end = 21, render = { kind = "full" } },
+  { path = "src/service/render.lua", start = 145, end = 145, render = { kind = "full" } },
+  { path = "src/service/render.lua", start = 215, end = 215, render = { kind = "full" } },
+  { path = "src/service/render.lua", start = 252, end = 252, render = { kind = "full" } },
+  { path = "src/service/render.lua", start = 454, end = 454, render = { kind = "full" } },
+  { path = "src/service/render.lua", start = 458, end = 458, render = { kind = "full" } },
+  { path = "src/lualib/main.lua", start = 50, end = 50, render = { kind = "full" } },
+  { path = "src/lualib/main.lua", start = 159, end = 159, render = { kind = "full" } },
+  { path = "src/lualib/main.lua", start = 183, end = 183, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "Lualib signature locations: spritebundle + layout + packageloader + coroutine + fontmgr + initsetting + text"
+justification = """
+Function-declaration lines across non-trivial lualib modules.
+spritebundle's load_bundle / crop / load_list / M.load / M.loadimage.
+layout's document/element metamethods + layout.load + layout.calc.
+packageloader's load_zips + file overrides + fileload + search_file.
+coroutine.create / resume / yield / wrap / close. fontmgr's import /
+fetch_name / fetch_id. initsetting's patch + settings_filename + S.init.
+text.init.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/lualib/spritebundle.lua", start = 9, end = 9, render = { kind = "full" } },
+  { path = "src/lualib/spritebundle.lua", start = 49, end = 49, render = { kind = "full" } },
+  { path = "src/lualib/spritebundle.lua", start = 105, end = 105, render = { kind = "full" } },
+  { path = "src/lualib/spritebundle.lua", start = 117, end = 117, render = { kind = "full" } },
+  { path = "src/lualib/layout.lua", start = 13, end = 13, render = { kind = "full" } },
+  { path = "src/lualib/layout.lua", start = 47, end = 47, render = { kind = "full" } },
+  { path = "src/lualib/layout.lua", start = 128, end = 128, render = { kind = "full" } },
+  { path = "src/lualib/layout.lua", start = 151, end = 151, render = { kind = "full" } },
+  { path = "src/lualib/packageloader.lua", start = 14, end = 14, render = { kind = "full" } },
+  { path = "src/lualib/packageloader.lua", start = 75, end = 75, render = { kind = "full" } },
+  { path = "src/lualib/packageloader.lua", start = 109, end = 109, render = { kind = "full" } },
+  { path = "src/lualib/packageloader.lua", start = 130, end = 130, render = { kind = "full" } },
+  { path = "src/lualib/packageloader.lua", start = 143, end = 143, render = { kind = "full" } },
+  { path = "src/lualib/coroutine.lua", start = 19, end = 19, render = { kind = "full" } },
+  { path = "src/lualib/coroutine.lua", start = 51, end = 51, render = { kind = "full" } },
+  { path = "src/lualib/coroutine.lua", start = 82, end = 82, render = { kind = "full" } },
+  { path = "src/lualib/coroutine.lua", start = 96, end = 96, render = { kind = "full" } },
+  { path = "src/lualib/fontmgr.lua", start = 214, end = 214, render = { kind = "full" } },
+  { path = "src/lualib/fontmgr.lua", start = 264, end = 264, render = { kind = "full" } },
+  { path = "src/lualib/initsetting.lua", start = 10, end = 10, render = { kind = "full" } },
+  { path = "src/lualib/initsetting.lua", start = 44, end = 44, render = { kind = "full" } },
+  { path = "src/lualib/initsetting.lua", start = 62, end = 62, render = { kind = "full" } },
+  { path = "src/lualib/text.lua", start = 9, end = 9, render = { kind = "full" } },
+] }
+

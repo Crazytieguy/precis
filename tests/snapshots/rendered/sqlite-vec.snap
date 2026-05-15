@@ -1,0 +1,343 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+.gitignore
+ARCHITECTURE.md
+    1→# `sqlite-vec` Architecture
+    …
+    3→Internal documentation for how `sqlite-vec` works under-the-hood. Not meant for
+    4→users of the `sqlite-vec` project, consult
+    5→[the official `sqlite-vec` documentation](https://alexgarcia.xyz/sqlite-vec) for
+    6→how-to-guides. Rather, this is for people interested in how `sqlite-vec` works
+    7→and some guidelines to any future contributors.
+    9→Very much a WIP.
+    11→## `vec0`
+    …
+    13→### Shadow Tables
+    …
+    49→### idxStr
+    …
+LICENSE-APACHE
+LICENSE-MIT
+Makefile
+README.md
+    1→# `sqlite-vec`
+    5→An extremely small, "fast enough" vector search SQLite extension that runs
+    6→anywhere! A successor to [`sqlite-vss`](https://github.com/asg017/sqlite-vss)
+    8→<!-- deno-fmt-ignore-start -->
+    10→> [!IMPORTANT]
+    11→> _`sqlite-vec` is a pre-v1, so expect breaking changes!_
+    13→<!-- deno-fmt-ignore-end -->
+    15→- Store and query float, int8, and binary vectors in `vec0` virtual tables
+    16→- Written in pure C, no dependencies, runs anywhere SQLite runs
+    17→  (Linux/MacOS/Windows, in the browser with WASM, Raspberry Pis, etc.)
+    18→- Store non-vector data in metadata, auxiliary, or partition key columns
+    20→<p align="center">
+    21→  <a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">
+    22→  <picture>
+    23→    <source media="(prefers-color-scheme: dark)" srcset="./.github/logos/mozilla.dark.svg">
+    24→    <source media="(prefers-color-scheme: light)" srcset="./.github/logos/mozilla.svg">
+    25→    <img alt="Mozilla Builders logo" width=400>
+    26→  </picture>
+    27→  </a>
+    28→</p>
+    30→<p align="center">
+    31→<i>
+    32→<code>sqlite-vec</code> is a
+    33→<a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">Mozilla Builders project</a>,
+    34→with additional sponsorship from
+    35→<a href="https://fly.io/"><img width=14px src="./.github/logos/flyio.small.ico"/> Fly.io </a>,
+    36→<a href="https://tur.so/sqlite-vec"><img width=14px src="./.github/logos/turso.small.ico"/> Turso</a>,
+    37→<a href="https://sqlitecloud.io/"><img width=14px src="./.github/logos/sqlitecloud.small.svg"/> SQLite Cloud</a>, and
+    38→<a href="https://shinkai.com/"><img width=14px src="./.github/logos/shinkai.small.svg"/> Shinkai</a>.
+    39→See <a href="#sponsors">the Sponsors section</a> for more details.
+    40→</i>
+    41→</p>
+    43→## Installing
+    …
+    61→## Sample usage
+    …
+    97→## Sponsors
+    …
+    152→## See Also
+    …
+SECURITY.md
+TODO
+VERSION
+benchmarks/
+    README.md
+    exhaustive-memory/
+    micro/
+        .gitignore
+        Cargo.lock
+        Cargo.toml
+        benches/
+        build.rs
+        src/
+    profiling/
+    self-params/
+bindings/
+    go/
+        ncruces/
+    python/
+        extra_init.py
+            6→def serialize_float32(vector: List[float]) -> bytes:
+            7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
+            8→    return pack("%sf" % len(vector), *vector)
+            11→def serialize_int8(vector: List[int]) -> bytes:
+            12→    """Serializes a list of integers into the "raw bytes" format sqlite-vec expects"""
+            13→    return pack("%sb" % len(vector), *vector)
+    rust/
+        .gitignore
+        Cargo.lock
+        Cargo.toml.tmpl
+        Makefile
+        build.rs
+        src/
+            lib.rs
+                7→mod tests {
+                …
+examples/
+reference.yaml
+scripts/
+site/
+    .gitignore
+        1→node_modules
+        2→.vitepress/cache
+    .vitepress/
+        config.mts
+        theme/
+            HeroImg.vue
+            Sponsors.vue
+            index.ts
+                2→import { h } from "vue";
+                3→import type { Theme } from "vitepress";
+                4→import DefaultTheme from "vitepress/theme";
+                5→import "./style.css";
+                6→import Sponsors from "./Sponsors.vue";
+                7→import HeroImg from "./HeroImg.vue";
+                9→export default {
+                10→  extends: DefaultTheme,
+                11→  Layout: () => {
+                12→    return h(DefaultTheme.Layout, null, {
+                13→      // https://vitepress.dev/guide/extending-default-theme#layout-slots
+                14→      "layout-top": () =>
+                15→        h("marquee", { class: "banner", scrollamount: "10" }, [
+                16→          "🚧🚧🚧 This documentation is a work-in-progress! 🚧🚧🚧",
+                17→        ]),
+                18→      //"home-hero-image": () => h(HeroImg),
+                19→      "aside-ads-before": () => h(Sponsors),
+                20→    });
+                21→  },
+                22→  enhanceApp({ app, router, siteData }) {
+                23→    // ...
+                24→  },
+                25→} satisfies Theme;
+            style.css
+    api-reference.md
+    build-ref.mjs
+    compiling.md
+        5→# Compiling `sqlite-vec`
+        …
+        7→`sqlite-vec` is is easy to compile yourself! It's a single C file with no dependencies, so the process should be straightforward.
+        9→## From Source
+        …
+        25→## From the amalgamation build
+        …
+        54→## Compile-time options
+        …
+    features/
+        knn.md
+            1→# KNN queries
+            …
+            14→## `vec0` virtual tables
+            …
+            87→## Manually with SQL scalar functions
+            …
+        vec0.md
+            1→# `vec0` Virtual Table
+            …
+            3→## Metadata in `vec0` Virtual Tables {#vec0_metadata}
+            …
+            33→### Metadata Columns {#metadata}
+            …
+            110→### Partition Key Columns {#partition-keys}
+            …
+            187→### Auxiliary Columns {#aux}
+            …
+    getting-started/
+        installation.md
+            1→# Installing
+            …
+            6→## With popular package managers
+            …
+            51→## Pre-compiled extensions
+            …
+            74→## Compiling
+            …
+        introduction.md
+            1→# Introduction to `sqlite-vec`
+            …
+            3→## Intro to Vector Databases
+            …
+            5→## Vector Search in SQLite with `sqlite-vec`
+            …
+            7→## Getting help
+    guides/
+        arithmetic.md
+            1→# Vector Arithmetic
+            3→- `vec_add()`
+            4→- `vec_sub()`
+            5→- `vec_mean()`
+        binary-quant.md
+            1→# Binary Quantization
+            …
+            36→## Binary Quantization `sqlite-vec`
+            …
+            54→## Demo
+            …
+            80→### Re-scoring
+            …
+            112→# Benchmarks
+            …
+            114→## Model support
+            …
+        classifiers.md
+        hybrid-search.md
+        matryoshka.md
+            1→# Matryoshka (Adaptive-Length) Embeddings
+            …
+            21→## Matryoshka Embeddings with `sqlite-vec`
+            …
+            37→## Benchmarks
+            …
+            39→## Suppported Models
+            …
+        performance.md
+        rag.md
+            1→# Retrival Augmented Generation (RAG)
+            3→- "memories"?
+            4→- chunking
+        scalar-quant.md
+            1→# Scalar Quantization (SQ)
+            …
+            27→## Benchmarks
+        semantic-search.md
+    index.md
+    package-lock.json
+    package.json
+        2→  "scripts": {
+        3→    "ref": "node build-ref.mjs",
+        4→    "dev": "vitepress dev",
+        5→    "build": "vitepress build",
+        6→    "preview": "vitepress preview"
+        7→  },
+    project.data.ts
+        12→export default {
+        13→  load() {
+        14→    return {
+        15→      PROJECT,
+        16→      VERSION,
+        17→    };
+        18→  },
+        19→};
+    public/
+        flyio.svg
+        fonts/
+            ZillaSlab-SemiBold.otf
+            ZillaSlab-SemiBold.ttf
+            ZillaSlab-SemiBold.woff
+            ZillaSlab-SemiBold.woff2
+        logo.dark.svg
+        logo.light.svg
+        mozilla.svg
+        shinkai.dark.svg
+        shinkai.svg
+        sqlitecloud.svg
+        turso.svg
+    sqlite.tmlanguage.json
+    using/
+        android-ios.md
+        c.md
+        datasette.md
+        go.md
+            1→# Using `sqlite-vec` in Go
+            …
+            11→## Option 1: CGO {#cgo}
+            …
+            57→## Option 2: WASM based with `ncruces/go-sqlite3` {#ncruces}
+            …
+            102→## Working with vectors in Go
+            …
+        js.md
+            1→# Using `sqlite-vec` in Node.js, Deno, and Bun
+            …
+            49→## Working with vectors in JavaScript
+            …
+            63→## Node.js
+            …
+            112→## Deno
+            …
+            147→## Bun
+            …
+        python.md
+            5→# Using `sqlite-vec` in Python
+            …
+            37→## Working with Vectors
+            …
+            39→### Lists
+            …
+            54→### NumPy Arrays
+            …
+            71→## Using an up-to-date version of SQLite {#updated-sqlite}
+            …
+            89→### Compile your own SQLite version
+            …
+            101→### Use `pysqlite3`
+            …
+            109→### Upgrading your Python version
+            …
+            117→## MacOS blocks SQLite extensions by default
+            …
+        rqlite.md
+        ruby.md
+            1→# Using `sqlite-vec` in Ruby
+            …
+            32→## Working with vectors in Ruby
+            …
+        rust.md
+            1→# Using `sqlite-vec` in Rust
+            …
+            57→## Working with vectors in Rust
+            …
+        sqlite-utils.md
+        wasm.md
+            1→# `sqlite-vec` in the Browser with WebAssembly
+            …
+            25→## The `sqlite-vec-wasm-demo` NPM package
+            …
+    versioning.md
+sqlite-dist.toml
+    1→[package]
+    2→name = "sqlite-vec"
+    3→license = "MIT OR Apache"
+    4→homepage = "https://alexgarcia.xyz/sqlite-vec"
+    5→repo = "https://github.com/asg017/sqlite-vec"
+    6→description = "A vector search SQLite extension."
+    7→authors = ["Alex Garcia"]
+    8→git_tag_format = "v$VERSION"
+sqlite-vec.c
+sqlite-vec.h.tmpl
+test.sql
+tests/
+tmp-static.py
+    1→import sqlite3
+    2→import numpy as np
+    4→db = sqlite3.connect(":memory:")
+    11→x = np.array([[0.1, 0.2, 0.3, 0.4], [0.9, 0.8, 0.7, 0.6]], dtype=np.float32)
+    12→y = np.array([[0.2, 0.3], [0.9, 0.8], [0.6, 0.5]], dtype=np.float32)
+    13→z = np.array(
+    25→def register_np(array, name):
+    …

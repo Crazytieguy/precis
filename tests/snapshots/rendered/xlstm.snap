@@ -1,0 +1,290 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+.gitignore
+AUTHORS
+LICENSE
+README.md
+    3→# xLSTM: Extended Long Short-Term Memory
+    19→## About
+    …
+    29→## Minimal Installation
+    …
+    49→## Requirements
+    …
+    61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
+    …
+    80→## How to use the xLSTM Large 7B and its architecture
+    …
+    115→## Recommendation for other hardware
+    …
+    138→# Models from the xLSTM NeurIPS Paper
+    …
+    142→## How to use the xLSTM architecture from our NeurIPS paper
+    …
+    146→### Using the sLSTM CUDA kernels
+    …
+    168→### xLSTM Block Stack
+    …
+    255→### xLSTM Language Model
+    …
+    297→## Experiments
+    …
+    312→## Citation
+    …
+__init__.py
+environment_pt220cu121.yaml
+environment_pt240cu124.yaml
+environment_pt260cu126.yaml
+experiments/
+    __init__.py
+    data/
+        __init__.py
+        formal_language/
+            __init__.py
+            formal_language_dataset.py
+            generate.py
+            online_generate.py
+            tasks/
+                __init__.py
+                cycle_navigation.py
+                even_pairs.py
+                    8→def even_pairs(
+                    …
+                modular_arithmetic.py
+                parity.py
+                    9→def parity(
+                    …
+        utils.py
+    lr_scheduler.py
+        3→import math
+        4→from abc import abstractmethod
+        6→from torch.optim import lr_scheduler
+        9→class BaseLRScheduler(lr_scheduler._LRScheduler):
+        10→    def __init__(self, optimizer, last_epoch=-1):
+        11→        super().__init__(optimizer, last_epoch)
+        13→    @abstractmethod
+        14→    def get_lr(self) -> list[float]:
+        15→        """Returns the current learning rate for each parameter group."""
+        16→        raise NotImplementedError
+        18→    @abstractmethod
+        19→    def reinitialize(self, **kwargs) -> None:
+        20→        """Reinitializes the learning rate scheduler."""
+        21→        raise NotImplementedError
+        24→class LinearWarmupCosineAnnealing(BaseLRScheduler):
+        25→    def __init__(self, optimizer, warmup_steps, decay_until_step, max_lr, min_lr, last_epoch=-1):
+        …
+        33→    @staticmethod
+        34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
+        47→    def get_lr(self) -> list[float]:
+        48→        """Returns the current learning rate for each parameter group."""
+    main.py
+        21→dataset_registry: dict[str, Type[DataGen]] = {
+        22→    "form_language": FormLangDatasetGenerator
+        23→}
+        25→torch_dtype_map: dict[str, torch.dtype] = {
+        26→    "float32": torch.float32,
+        27→    "bfloat16": torch.bfloat16,
+        28→    "float16": torch.float16,
+        29→}
+        32→def load_dataset(name, kwargs):
+        33→    cls = dataset_registry[name]
+        34→    return cls(from_dict(cls.config_class, OmegaConf.to_container(kwargs)))
+        37→def main(cfg: DictConfig):
+        …
+    metrics.py
+        9→class SequenceAccuracy(Metric):
+        10→    is_differentiable: Optional[bool] = False
+        11→    higher_is_better: Optional[bool] = True
+        13→    def __init__(self, **kwargs):
+        14→        super().__init__()
+        15→        self._acc = torchmetrics.Accuracy(**kwargs)
+        17→    def update(self, preds: torch.Tensor, target: torch.Tensor):
+        …
+        22→    def compute(self):
+        23→        return self._acc.compute()
+        25→    def reset(self, *args, **kwargs):
+        26→        super().reset(*args, **kwargs)
+        27→        self._acc.reset()
+    parity_xlstm01.yaml
+    parity_xlstm10.yaml
+    parity_xlstm11.yaml
+notebooks/
+    xlstm/
+        mLSTM_test_notebook.ipynb
+        xLSTM_readme_example.ipynb
+        xLSTM_test_notebook.ipynb
+    xlstm_large/
+pyproject.toml
+pytest.ini
+res/
+    desc_xlstm_overview.pdf
+    desc_xlstm_overview.svg
+    xlstm_7b_poster.svg
+setup.cfg
+tests/
+xlstm/
+    __init__.py
+        1→__version__ = "2.0.5"
+        3→from .blocks.mlstm.block import mLSTMBlock, mLSTMBlockConfig
+        4→from .blocks.mlstm.layer import mLSTMLayer, mLSTMLayerConfig
+        5→from .blocks.slstm.block import sLSTMBlock, sLSTMBlockConfig
+        6→from .blocks.slstm.layer import sLSTMLayer, sLSTMLayerConfig
+        7→from .components.feedforward import FeedForwardConfig, GatedFeedForward
+        8→from .xlstm_block_stack import xLSTMBlockStack, xLSTMBlockStackConfig
+        9→from .xlstm_lm_model import xLSTMLMModel, xLSTMLMModelConfig
+    blocks/
+        __init__.py
+        mlstm/
+            __init__.py
+            backends.py
+            block.py
+            cell.py
+                13→@dataclass
+                14→class mLSTMCellConfig:
+                20→class mLSTMCell(nn.Module):
+                21→    config_class = mLSTMCellConfig
+            layer.py
+        slstm/
+            __init__.py
+            block.py
+            cell.py
+            layer.py
+            src/
+                __init__.py
+                cuda/
+                cuda_init.py
+                util/
+                vanilla/
+                    __init__.py
+                        4→from typing import Callable
+                        5→import torch
+                        7→from .slstm import slstm_forward_pointwise as slstm_forward_pointwise_slstm
+                        8→from .lstm import slstm_forward_pointwise as slstm_forward_pointwise_lstm
+                        11→slstm_pointwise_function_registry: dict[str, Callable] = {
+                        12→    "slstm": slstm_forward_pointwise_slstm,
+                        13→    "lstm": slstm_forward_pointwise_lstm,
+                        14→}
+                        17→def slstm_forward(
+                        18→    x: torch.Tensor,  # [S, B, G*I]
+                        19→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
+                        20→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
+                        21→    b: torch.Tensor,  # [T*H]
+                        22→    pointwise_forward: Callable[
+                        23→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
+                        24→        tuple[torch.Tensor, torch.Tensor],
+                        25→    ],
+                        26→    constants: dict[str, float] = {},
+                        27→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+                        77→def slstm_forward_step(
+                        78→    x: torch.Tensor,  # [B, G*I]
+                        79→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
+                        80→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
+                        81→    b: torch.Tensor,  # [T*H]
+                        82→    pointwise_forward: Callable[
+                        83→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
+                        84→        tuple[torch.Tensor, torch.Tensor],
+                        85→    ],
+                        86→    constants: dict[str, float] = {},
+                        87→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+                    lstm.py
+                    slstm.py
+        xlstm_block.py
+            16→@dataclass
+            17→class xLSTMBlockConfig:
+            43→class xLSTMBlock(nn.Module):
+            44→    """An xLSTM block can be either an sLSTM Block or an mLSTM Block.
+            46→    It contains the pre-LayerNorms and the skip connections.
+            47→    """
+            49→    config_class = xLSTMBlockConfig
+    components/
+        __init__.py
+        conv.py
+            12→@dataclass
+            13→class CausalConv1dConfig:
+            24→def conv1d_step(
+            25→    x: torch.Tensor,
+            26→    conv_state: torch.Tensor,
+            27→    conv1d_weight: torch.Tensor,
+            28→    conv1d_bias: torch.Tensor = None,
+            29→) -> tuple[torch.Tensor, torch.Tensor]:
+            55→class CausalConv1d(nn.Module):
+            …
+        feedforward.py
+        init.py
+            3→import math
+            5→import torch
+        linear_headwise.py
+            12→@dataclass
+            13→class LinearHeadwiseExpandConfig:
+            42→class LinearHeadwiseExpand(nn.Module):
+            …
+            47→    config_class = LinearHeadwiseExpandConfig
+        ln.py
+            8→class LayerNorm(nn.Module):
+            9→    """LayerNorm but with an optional bias. PyTorch doesn't support simply bias=False."""
+            11→    def __init__(
+            …
+            27→    @property
+            28→    def weight_proxy(self) -> torch.Tensor:
+            36→    def forward(self, input: torch.Tensor) -> torch.Tensor:
+            …
+            41→    def reset_parameters(self):
+            …
+            51→class MultiHeadLayerNorm(LayerNorm):
+            …
+            53→    def forward(self, input: torch.Tensor) -> torch.Tensor:
+            …
+        util.py
+            3→import torch
+            4→from typing import Callable
+    utils.py
+        11→@dataclass
+        12→class UpProjConfigMixin:
+        13→    proj_factor: float = None  # will be overridden by subclasses
+        14→    round_proj_up_dim_up: bool = True
+        15→    round_proj_up_to_multiple_of: int = 64
+        17→    # internal
+        18→    _proj_up_dim: int = None  # will be computed from embedding_dim and proj_factor
+        32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
+        …
+    xlstm_block_stack.py
+        15→@dataclass
+        16→class xLSTMBlockStackConfig:
+        77→class xLSTMBlockStack(nn.Module):
+        78→    config_class = xLSTMBlockStackConfig
+    xlstm_large/
+        __init__.py
+            1→from .model import xLSTMLarge, xLSTMLargeConfig
+            2→from .model import mLSTMLayer, mLSTMLayerConfig
+        components.py
+        from_pretrained.py
+            9→def load_from_pretrained(
+            …
+        generate.py
+        model.py
+        utils.py
+            1→import torch
+            2→import re
+    xlstm_lm_model.py
+        14→@dataclass
+        15→class xLSTMLMModelConfig(xLSTMBlockStackConfig):
+        16→    vocab_size: int = -1
+        17→    tie_weights: bool = False
+        18→    weight_decay_on_embedding: bool = False
+        19→    add_embedding_dropout: bool = False
+        22→class xLSTMLMModel(WeightDecayOptimGroupMixin, nn.Module):
+        23→    config_class = xLSTMLMModelConfig
+        25→    def __init__(self, config: xLSTMLMModelConfig, **kwargs):
+        …
+        41→    def reset_parameters(self):
+        …
+        49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
+        …
+        56→    def step(
+        57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
+        58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
+        65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
+        …

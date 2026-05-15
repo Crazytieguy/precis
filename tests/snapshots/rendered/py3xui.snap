@@ -1,0 +1,330 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.flake8
+.github/
+.gitignore
+.pylintrc
+.vscode/
+    launch.json
+    settings.json
+    tasks.json
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+LICENSE.md
+README.md
+    4→⚠️ The secret token feature was removed in the 3x-UI 2.6.0. ⚠️     
+    5→The corresponding `token` parameter in the Api and AsyncApi constructors was removed in py3xui 0.5.0. This changed the order of constructor arguments, so please be aware of this change when updating the SDK.
+    29→## Overview
+    30→This SDK is designed to interact with the [3x-ui](https://github.com/MHSanaei/3x-ui) app in a more object-oriented way. It provides both synchronous and asynchronous methods to interact with the app. The SDK is designed to be as simple as possible to use, while still providing a lot of flexibility and uses `Pydantic` models to validate the data.<br>
+    31→Used dependencies:
+    32→- `requests` for synchronous API
+    33→- `httpx` for asynchronous API
+    34→- `pydantic` for models
+    36→Supported Python versions:
+    37→- 3.11
+    38→- 3.12
+    40→Since the 3x-ui app is under development, the SDK may not be compatible with all versions of the app. The developer of SDK is not related to the 3x-ui app, therefore the latest versions of the software are not guaranteed to be compatible with the SDK. <br>
+    41→The SDK does not support versions of the 3x-ui older than `2.3.7`.
+    43→## Quick Start
+    …
+    48→### Installation
+    …
+    53→### Create a new instance of the API
+    …
+    89→### Using TLS and custom certificates
+    …
+    111→### Login
+    …
+    140→## Examples
+    …
+    149→### Set the traffic limit for the client
+    …
+    199→### Generate Reality keys
+    …
+    213→### Create a connection string and QR code
+    …
+    274→### Get inbounds list
+    …
+    283→### Add a new inbound
+    …
+    313→### Get a client by email
+    …
+    323→### Add a new client
+    …
+    336→## Bugs and Feature Requests
+    337→If you find a bug or have a feature request, please open an issue on the GitHub repository.<br>
+    338→You're also welcome to contribute to the project by opening a pull request.
+SECURITY.md
+demo.py
+    1→from py3xui import Api
+    63→from py3xui import Inbound
+    98→import os
+    100→import qrcode
+dev/
+    clean_trash.sh
+    create_venv.sh
+    push.sh
+    pydoc.sh
+    requirements.txt
+py3xui/
+    __init__.py
+        2→from py3xui.api.api import Api
+        3→from py3xui.async_api.async_api import AsyncApi
+        4→from py3xui.client.client import Client
+        5→from py3xui.inbound.inbound import Inbound
+        6→from py3xui.server.server import RealityKeyPair, Server
+    api/
+        README.md
+            1→<a id="api.api_database"></a>
+            3→# api.api\_database
+            5→This module contains the DatabaseApi class, which is responsible handling database operations
+            6→in the XUI API.
+            10→## DatabaseApi Objects
+            …
+            67→# api.api\_inbound
+            …
+            73→## InboundApi Objects
+            …
+            345→# api.api
+            …
+            351→## Api Objects
+            …
+            549→# api.api\_server
+            …
+            555→## ServerApi Objects
+            …
+            674→# api.api\_client
+            …
+            681→## ClientApi Objects
+            …
+            1042→# api.api\_base
+            …
+            1048→## ApiFields Objects
+            …
+            1058→## BaseApi Objects
+            …
+        __init__.py
+            2→from py3xui.api.api_client import ClientApi
+            3→from py3xui.api.api_database import DatabaseApi
+            4→from py3xui.api.api_inbound import InboundApi
+            5→from py3xui.api.api_server import ServerApi
+        api.py
+            13→class Api:
+            …
+        api_base.py
+            15→class ApiFields:
+            16→    """Stores the fields returned by the XUI API for parsing."""
+            28→class BaseApi:
+            …
+        api_client.py
+            13→class ClientApi(BaseApi):
+            …
+        api_database.py
+            7→class DatabaseApi(BaseApi):
+            …
+            32→    def export(self) -> None:
+            …
+        api_inbound.py
+            9→class InboundApi(BaseApi):
+            …
+        api_server.py
+            7→class ServerApi(BaseApi):
+            …
+            35→    def get_db(self, save_path: str) -> None:
+            …
+            67→    def get_status(self) -> Server:
+            …
+            97→    def generate_reality_keys(self) -> RealityKeyPair:
+            …
+    async_api/
+        README.md
+            1→<a id="async_api.async_api_inbound"></a>
+            3→# async\_api.async\_api\_inbound
+            5→This module contains the InboundApi class which provides methods to interact with the
+            6→clients in the XUI API asynchronously.
+        __init__.py
+            2→from py3xui.async_api.async_api_client import AsyncClientApi
+            3→from py3xui.async_api.async_api_database import AsyncDatabaseApi
+            4→from py3xui.async_api.async_api_inbound import AsyncInboundApi
+            5→from py3xui.async_api.async_api_server import AsyncServerApi
+        async_api.py
+            18→class AsyncApi:
+            …
+        async_api_base.py
+            16→class AsyncBaseApi:
+            …
+        async_api_client.py
+            12→class AsyncClientApi(AsyncBaseApi):
+            …
+        async_api_database.py
+            7→class AsyncDatabaseApi(AsyncBaseApi):
+            …
+            32→    async def export(self) -> None:
+            …
+        async_api_inbound.py
+            11→class AsyncInboundApi(AsyncBaseApi):
+            …
+        async_api_server.py
+            8→class AsyncServerApi(AsyncBaseApi):
+            …
+            43→    # pylint: disable=R0801
+            44→    async def get_db(self, save_path: str) -> None:
+            …
+            76→    async def get_status(self) -> Server:
+            …
+            105→    async def generate_reality_keys(self) -> RealityKeyPair:
+            …
+    client/
+        README.md
+            1→<a id="client.client"></a>
+            3→# client.client
+            5→This module contains the Client class which represents a client in the XUI API.
+            7→<a id="client.client.ClientFields"></a>
+            9→## ClientFields Objects
+            …
+            11→```python
+            12→class ClientFields()
+            13→```
+            15→Stores the fields returned by the XUI API for parsing.
+            17→<a id="client.client.Client"></a>
+            19→## Client Objects
+            …
+        __init__.py
+            2→from py3xui.client.client import Client
+        client.py
+            7→class ClientFields:
+            8→    """Stores the fields returned by the XUI API for parsing."""
+            36→class Client(BaseModel):
+            …
+    inbound/
+        README.md
+            1→<a id="inbound.settings"></a>
+            3→# inbound.settings
+            5→This module contains the Settings class, which is used to parse the JSON response
+            6→from the XUI API.
+            10→## SettingsFields Objects
+            …
+            20→## Settings Objects
+            …
+            36→# inbound.inbound
+            …
+            42→## InboundFields Objects
+            …
+            52→## Inbound Objects
+            …
+            124→# inbound.stream\_settings
+            …
+            130→## StreamSettingsFields Objects
+            …
+            140→## StreamSettings Objects
+            …
+            167→# inbound.bases
+            …
+            173→## JsonStringModel Objects
+            …
+            203→# inbound.sniffing
+            …
+            209→## SniffingFields Objects
+            …
+            219→## Sniffing Objects
+            …
+        __init__.py
+            2→from py3xui.inbound.inbound import Inbound
+            3→from py3xui.inbound.settings import Settings
+            4→from py3xui.inbound.sniffing import Sniffing
+            5→from py3xui.inbound.stream_settings import StreamSettings
+        bases.py
+            9→class JsonStringModel(BaseModel):
+            10→    """Base class for models that have a JSON string as a field."""
+            12→    @model_validator(mode="before")
+            13→    def model_validate(
+            14→        cls,
+            15→        values,
+            16→    ):  # pylint: disable=no-self-argument, arguments-differ
+        inbound.py
+            15→class InboundFields:
+            16→    """Stores the fields returned by the XUI API for parsing."""
+            38→class Inbound(BaseModel):
+            …
+            88→    @field_validator("stream_settings")
+            89→    def validate_stream_settings(  # pylint: disable=no-self-argument
+            90→        cls, value: StreamSettings | str
+            91→    ) -> StreamSettings | str:
+            114→    def to_json(self) -> dict[str, Any]:
+            …
+        settings.py
+            9→class SettingsFields:
+            10→    """Stores the fields returned by the XUI API for parsing."""
+            12→    CLIENTS = "clients"
+            13→    DECRYPTION = "decryption"
+            14→    FALLBACKS = "fallbacks"
+            17→class Settings(JsonStringModel):
+            …
+            26→    clients: list[Client] = []
+            27→    decryption: str = ""
+            28→    fallbacks: list = []
+        sniffing.py
+            9→class SniffingFields:
+            10→    """Stores the fields returned by the XUI API for parsing."""
+            12→    ENABLED = "enabled"
+            14→    DEST_OVERRIDE = "destOverride"
+            16→    METADATA_ONLY = "metadataOnly"
+            17→    ROUTE_ONLY = "routeOnly"
+            20→class Sniffing(JsonStringModel):
+            …
+        stream_settings.py
+            9→class StreamSettingsFields:
+            10→    """Stores the fields returned by the XUI API for parsing."""
+            25→class StreamSettings(JsonStringModel):
+            …
+    server/
+        README.md
+            1→<a id="server.server"></a>
+            3→# server.server
+            5→This module contains the Server class which represents server information in XUI API.
+            7→<a id="server.server.ServerFields"></a>
+            9→## ServerFields Objects
+            …
+            11→```python
+            12→class ServerFields()
+            13→```
+            15→Stores fields returned by XUI API for parsing.
+            17→<a id="server.server.MemoryInfo"></a>
+            19→## MemoryInfo Objects
+            …
+            34→## XRayInfo Objects
+            …
+            56→## NetworkIO Objects
+            …
+            71→## NetworkTraffic Objects
+            …
+            86→## PublicIP Objects
+            …
+            101→## AppStats Objects
+            …
+            117→## RealityKeyPair Objects
+            …
+            132→## Server Objects
+            …
+        __init__.py
+            2→from py3xui.server.server import RealityKeyPair, Server
+        server.py
+    utils/
+        README.md
+            1→<a id="utils.env"></a>
+            3→# utils.env
+            5→This module contains utility functions for parsing environment variables.
+            7→<a id="utils.env.parse_env"></a>
+        __init__.py
+            2→from py3xui.utils import env
+            4→COOKIE_NAMES = ["3x-ui", "session"]
+        env.py
+pyproject.toml
+tests/
+    __init__.py
+    responses/
+    test_api.py
+    test_async_api.py
+    test_env.py

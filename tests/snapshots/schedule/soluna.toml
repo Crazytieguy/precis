@@ -1,0 +1,8250 @@
+fixture = "soluna"
+budget = 10000
+cumulative_tokens = 9821
+batch_count = 271
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna" })'
+descriptor = "listing of '.'"
+cost_tokens = 50
+cum_tokens = 50
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna"
+entries = [".editorconfig", ".github", ".gitignore", ".gitmodules", "3rd", "LICENSE", "Makefile", "README.md", "README.zh-CN.md", "asset", "bin", "build", "clibs", "docs", "make.lua", "script", "src", "test", "web"]
+
+[[batches]]
+position = 2
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 34
+cum_tokens = 84
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/bin" })'
+descriptor = "listing of 'bin'"
+cost_tokens = 11
+cum_tokens = 95
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/bin"
+entries = ["readme.txt", "sokol-tools-bin"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/asset" })'
+descriptor = "listing of 'asset'"
+cost_tokens = 14
+cum_tokens = 109
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/asset"
+entries = ["avatar.png", "lua-logo.png", "sprites.dl"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web" })'
+descriptor = "listing of 'web'"
+cost_tokens = 17
+cum_tokens = 126
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web"
+entries = ["assets", "config.toml", "content", "layouts", "static"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs" })'
+descriptor = "listing of 'clibs'"
+cost_tokens = 21
+cum_tokens = 147
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs"
+entries = ["datalist", "ltask", "lua", "soluna", "yoga", "zip"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/script" })'
+descriptor = "listing of 'script'"
+cost_tokens = 23
+cum_tokens = 170
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/script"
+entries = ["build_web.lua", "datalist2c.lua", "hashversion.lua", "lua2c.lua"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/3rd" })'
+descriptor = "listing of '3rd'"
+cost_tokens = 25
+cum_tokens = 195
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/3rd"
+entries = ["datalist", "ltask", "lua", "sokol", "stb", "yoga", "zlib"]
+
+[[batches]]
+position = 9
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md" })'
+descriptor = "headings outline in README.md"
+cost_tokens = 69
+cum_tokens = 264
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/content" })'
+descriptor = "listing of 'web/content'"
+cost_tokens = 16
+cum_tokens = 280
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/content"
+entries = ["_index.md", "docs", "examples", "playframe.md"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/assets" })'
+descriptor = "listing of 'web/assets'"
+cost_tokens = 19
+cum_tokens = 299
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/assets"
+entries = ["htmx.js", "play.js", "playframe.js", "site.css"]
+
+[[batches]]
+position = 12
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md", section_index: 5 })'
+descriptor = "README.md section #5"
+cost_tokens = 23
+cum_tokens = 322
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 42
+cum_tokens = 364
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 21
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 124
+cum_tokens = 488
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md", section_index: 4 })'
+descriptor = "README.md section #4"
+cost_tokens = 28
+cum_tokens = 516
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 37
+cum_tokens = 553
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/README.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/soluna" })'
+descriptor = "listing of 'clibs/soluna'"
+cost_tokens = 26
+cum_tokens = 579
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/soluna"
+entries = ["compile_lua.lua", "compile_shader.lua", "make.lua", "runlua.lua", "shader2c.lua"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts" })'
+descriptor = "listing of 'web/layouts'"
+cost_tokens = 26
+cum_tokens = 605
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts"
+entries = ["_default", "docs", "examples", "index.html", "partials", "playframe", "shortcodes"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/_default" })'
+descriptor = "listing of 'web/layouts/_default'"
+cost_tokens = 17
+cum_tokens = 622
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/_default"
+entries = ["baseof.html", "single.html", "term.html", "terms.html"]
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/datalist" })'
+descriptor = "listing of 'clibs/datalist'"
+cost_tokens = 4
+cum_tokens = 626
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/datalist"
+entries = ["make.lua"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/ltask" })'
+descriptor = "listing of 'clibs/ltask'"
+cost_tokens = 4
+cum_tokens = 630
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/ltask"
+entries = ["make.lua"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/lua" })'
+descriptor = "listing of 'clibs/lua'"
+cost_tokens = 4
+cum_tokens = 634
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/lua"
+entries = ["make.lua"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/yoga" })'
+descriptor = "listing of 'clibs/yoga'"
+cost_tokens = 4
+cum_tokens = 638
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/yoga"
+entries = ["make.lua"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/zip" })'
+descriptor = "listing of 'clibs/zip'"
+cost_tokens = 4
+cum_tokens = 642
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/clibs/zip"
+entries = ["make.lua"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 91
+cum_tokens = 733
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/docs"
+entries = ["app.lua", "args.lua", "callback.lua", "coroutine.lua", "crypt.lua", "datalist.lua", "file.lua", "font.lua", "font_system.lua", "image.lua", "layout.lua", "lfs.lua", "material_mask.lua", "material_perspective_quad.lua", "material_quad.lua", "material_text.lua", "soluna.lua", "text.lua", "url.lua", "zip.lua"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/shortcodes" })'
+descriptor = "listing of 'web/layouts/shortcodes'"
+cost_tokens = 35
+cum_tokens = 768
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/shortcodes"
+entries = ["heading.html", "hero.html", "menubar.html", "plain_list.html", "pre.html", "relurl.html", "section.html", "small.html"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/docs" })'
+descriptor = "listing of 'web/layouts/docs'"
+cost_tokens = 4
+cum_tokens = 772
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/docs"
+entries = ["list.html"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/playframe" })'
+descriptor = "listing of 'web/layouts/playframe'"
+cost_tokens = 4
+cum_tokens = 776
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/playframe"
+entries = ["single.html"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/content/docs" })'
+descriptor = "listing of 'web/content/docs'"
+cost_tokens = 5
+cum_tokens = 781
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/content/docs"
+entries = ["_index.md"]
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 322
+cum_tokens = 1103
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/src"
+entries = ["appevent.h", "batch.c", "batch.h", "blit.glsl", "colorquad.glsl", "data", "drawmgr.c", "embedlua.c", "entry.c", "file.c", "font.c", "font_define.h", "font_manager.c", "font_manager.h", "font_system.c", "gamepad.c", "image.c", "ime_char_filter.h", "ime_state.h", "lcrypt.c", "lfs.c", "loginfo.h", "lsha1.c", "luabuffer.h", "lualib", "luamods.c", "luayoga.c", "luazip.c", "maskquad.glsl", "material_blit.c", "material_default.c", "material_mask.c", "material_perspective_quad.c", "material_quad.c", "material_text.c", "material_util.c", "material_util.h", "mutex.h", "openlibs.c", "openurl.c", "perspective_quad.glsl", "platform", "render.c", "render_bindings.c", "render_bindings.h", "render_uniform.c", "sdfimage.c", "sdftext.glsl", "service", "sprite_submit.h", "spritemgr.c", "spritemgr.h", "srbuffer.c", "srbuffer.h", "texquad.glsl", "tmpbuffer.h", "transform.c", "transform.h", "truetype.c", "truetype.h", "version.h", "winfile.c", "writelog.c", "yogaone.cpp"]
+
+[[batches]]
+position = 31
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/mutex.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/mutex.h"
+cost_tokens = 13
+cum_tokens = 1116
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/mutex.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/mutex.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 32
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/loginfo.h"
+cost_tokens = 24
+cum_tokens = 1140
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 33
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/luabuffer.h"
+cost_tokens = 28
+cum_tokens = 1168
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 34
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/version.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/version.h"
+cost_tokens = 28
+cum_tokens = 1196
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/version.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/version.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/version.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/version.h"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 35
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/ime_state.h"
+cost_tokens = 35
+cum_tokens = 1231
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 36
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h", start_line: 8 })'
+descriptor = "c decl at src/luabuffer.h:8"
+cost_tokens = 19
+cum_tokens = 1250
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 37
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/spritemgr.h"
+cost_tokens = 51
+cum_tokens = 1301
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/render_bindings.h"
+cost_tokens = 55
+cum_tokens = 1356
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 39
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h", start_line: 6 })'
+descriptor = "c decl at src/render_bindings.h:6"
+cost_tokens = 20
+cum_tokens = 1376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/ime_char_filter.h"
+cost_tokens = 65
+cum_tokens = 1441
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 41
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 41 })'
+descriptor = "c decl at src/ime_char_filter.h:41"
+cost_tokens = 22
+cum_tokens = 1463
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 41
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 27 })'
+descriptor = "c decl at src/ime_char_filter.h:27"
+cost_tokens = 28
+cum_tokens = 1491
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 27
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 43
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 47 })'
+descriptor = "c decl at src/ime_char_filter.h:47"
+cost_tokens = 28
+cum_tokens = 1519
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 47
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 44
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 52 })'
+descriptor = "c decl at src/ime_char_filter.h:52"
+cost_tokens = 28
+cum_tokens = 1547
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 52
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 45
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h" })'
+descriptor = "c includes in src/batch.h"
+cost_tokens = 10
+cum_tokens = 1557
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h" })'
+descriptor = "c includes in src/font_define.h"
+cost_tokens = 10
+cum_tokens = 1567
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h" })'
+descriptor = "c includes in src/loginfo.h"
+cost_tokens = 10
+cum_tokens = 1577
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h" })'
+descriptor = "c includes in src/transform.h"
+cost_tokens = 10
+cum_tokens = 1587
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_system.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/font_system.c"
+cost_tokens = 8
+cum_tokens = 1595
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_system.c"
+start = 287
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_system.c"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 50
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lfs.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/lfs.c"
+cost_tokens = 8
+cum_tokens = 1603
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lfs.c"
+start = 825
+end = 825
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lfs.c"
+start = 826
+end = 826
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 51
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openurl.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/openurl.c"
+cost_tokens = 8
+cum_tokens = 1611
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openurl.c"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openurl.c"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 52
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/truetype.c"
+cost_tokens = 8
+cum_tokens = 1619
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.c"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.c"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 53
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/writelog.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/writelog.c"
+cost_tokens = 8
+cum_tokens = 1627
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/writelog.c"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/writelog.c"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 16 })'
+descriptor = "c decl at src/ime_char_filter.h:16"
+cost_tokens = 30
+cum_tokens = 1657
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/tmpbuffer.h"
+cost_tokens = 78
+cum_tokens = 1735
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 56
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h", start_line: 7 })'
+descriptor = "c decl at src/tmpbuffer.h:7"
+cost_tokens = 19
+cum_tokens = 1754
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 7
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h", start_line: 15 })'
+descriptor = "c decl at src/tmpbuffer.h:15"
+cost_tokens = 28
+cum_tokens = 1782
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 58
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/appevent.h"
+cost_tokens = 84
+cum_tokens = 1866
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 59
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", start_line: 11 })'
+descriptor = "c decl at src/appevent.h:11"
+cost_tokens = 19
+cum_tokens = 1885
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 60
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", start_line: 33 })'
+descriptor = "c decl at src/appevent.h:33"
+cost_tokens = 19
+cum_tokens = 1904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 33
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 61
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", start_line: 58 })'
+descriptor = "c decl at src/appevent.h:58"
+cost_tokens = 19
+cum_tokens = 1923
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 58
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 62
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", start_line: 84 })'
+descriptor = "c decl at src/appevent.h:84"
+cost_tokens = 19
+cum_tokens = 1942
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 84
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 63
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", start_line: 99 })'
+descriptor = "c decl at src/appevent.h:99"
+cost_tokens = 19
+cum_tokens = 1961
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 99
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 64
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", start_line: 115 })'
+descriptor = "c decl at src/appevent.h:115"
+cost_tokens = 20
+cum_tokens = 1981
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 115
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 65
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", start_line: 4 })'
+descriptor = "c decl at src/appevent.h:4"
+cost_tokens = 37
+cum_tokens = 2018
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 4
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h", start_line: 16 })'
+descriptor = "c decl at src/spritemgr.h:16"
+cost_tokens = 44
+cum_tokens = 2062
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 16
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/batch.h"
+cost_tokens = 91
+cum_tokens = 2153
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 19
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 68
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h", start_line: 13 })'
+descriptor = "c decl at src/batch.h:13"
+cost_tokens = 10
+cum_tokens = 2163
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 13
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h" })'
+descriptor = "c includes in src/render_bindings.h"
+cost_tokens = 15
+cum_tokens = 2178
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/srbuffer.h"
+cost_tokens = 103
+cum_tokens = 2281
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 23
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 71
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h", start_line: 7 })'
+descriptor = "c decl at src/srbuffer.h:7"
+cost_tokens = 12
+cum_tokens = 2293
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h", start_line: 7 })'
+descriptor = "c decl at src/ime_state.h:7"
+cost_tokens = 54
+cum_tokens = 2347
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h"
+start = 7
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 8 })'
+descriptor = "c decl at src/ime_char_filter.h:8"
+cost_tokens = 55
+cum_tokens = 2402
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 8
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/sprite_submit.h"
+cost_tokens = 118
+cum_tokens = 2520
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 75
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 27 })'
+descriptor = "c decl at src/sprite_submit.h:27"
+cost_tokens = 11
+cum_tokens = 2531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 27
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 76
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 56 })'
+descriptor = "c decl at src/sprite_submit.h:56"
+cost_tokens = 11
+cum_tokens = 2542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 56
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 77
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 9 })'
+descriptor = "c decl at src/sprite_submit.h:9"
+cost_tokens = 12
+cum_tokens = 2554
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 78
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 43 })'
+descriptor = "c decl at src/sprite_submit.h:43"
+cost_tokens = 15
+cum_tokens = 2569
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 43
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 79
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 66 })'
+descriptor = "c decl at src/sprite_submit.h:66"
+cost_tokens = 18
+cum_tokens = 2587
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 66
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 80
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 71 })'
+descriptor = "c decl at src/sprite_submit.h:71"
+cost_tokens = 18
+cum_tokens = 2605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 71
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 81
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 15 })'
+descriptor = "c decl at src/sprite_submit.h:15"
+cost_tokens = 21
+cum_tokens = 2626
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 82
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 21 })'
+descriptor = "c decl at src/sprite_submit.h:21"
+cost_tokens = 21
+cum_tokens = 2647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 21
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 83
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 76 })'
+descriptor = "c decl at src/sprite_submit.h:76"
+cost_tokens = 21
+cum_tokens = 2668
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 76
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 84
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 81 })'
+descriptor = "c decl at src/sprite_submit.h:81"
+cost_tokens = 22
+cum_tokens = 2690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 81
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 85
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 71 })'
+descriptor = "c decl body at src/sprite_submit.h:71"
+cost_tokens = 11
+cum_tokens = 2701
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 66 })'
+descriptor = "c decl body at src/sprite_submit.h:66"
+cost_tokens = 15
+cum_tokens = 2716
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 9 })'
+descriptor = "c decl body at src/sprite_submit.h:9"
+cost_tokens = 16
+cum_tokens = 2732
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/platform" })'
+descriptor = "listing of 'src/platform'"
+cost_tokens = 13
+cum_tokens = 2745
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/platform"
+entries = ["linux", "macos", "wasm", "windows"]
+
+[[batches]]
+position = 89
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/transform.h"
+cost_tokens = 121
+cum_tokens = 2866
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 24
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 90
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h", start_line: 16 })'
+descriptor = "c decl at src/transform.h:16"
+cost_tokens = 13
+cum_tokens = 2879
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 91
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h" })'
+descriptor = "c includes in src/ime_state.h"
+cost_tokens = 20
+cum_tokens = 2899
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h" })'
+descriptor = "c includes in src/spritemgr.h"
+cost_tokens = 20
+cum_tokens = 2919
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h" })'
+descriptor = "c includes in src/srbuffer.h"
+cost_tokens = 20
+cum_tokens = 2939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h", start_line: 6 })'
+descriptor = "c decl at src/loginfo.h:6"
+cost_tokens = 61
+cum_tokens = 3000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h"
+start = 6
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 76 })'
+descriptor = "c decl body at src/sprite_submit.h:76"
+cost_tokens = 20
+cum_tokens = 3020
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h" })'
+descriptor = "c includes in src/tmpbuffer.h"
+cost_tokens = 22
+cum_tokens = 3042
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h", start_line: 6 })'
+descriptor = "c decl at src/batch.h:6"
+cost_tokens = 67
+cum_tokens = 3109
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h"
+start = 6
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/material_blit.c"
+cost_tokens = 19
+cum_tokens = 3128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 99
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 47 })'
+descriptor = "c decl body at src/ime_char_filter.h:47"
+cost_tokens = 23
+cum_tokens = 3151
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/font_define.h"
+cost_tokens = 163
+cum_tokens = 3314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 22
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 101
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 31 })'
+descriptor = "c decl at src/font_define.h:31"
+cost_tokens = 10
+cum_tokens = 3324
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 26 })'
+descriptor = "c decl at src/font_define.h:26"
+cost_tokens = 15
+cum_tokens = 3339
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 103
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 31 })'
+descriptor = "c decl body at src/font_define.h:31"
+cost_tokens = 16
+cum_tokens = 3355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 26 })'
+descriptor = "c decl body at src/font_define.h:26"
+cost_tokens = 17
+cum_tokens = 3372
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 41 })'
+descriptor = "c decl body at src/ime_char_filter.h:41"
+cost_tokens = 24
+cum_tokens = 3396
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 43
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 11 })'
+descriptor = "c decl at src/font_define.h:11"
+cost_tokens = 79
+cum_tokens = 3475
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h"
+start = 11
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 15 })'
+descriptor = "c decl body at src/sprite_submit.h:15"
+cost_tokens = 26
+cum_tokens = 3501
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 21 })'
+descriptor = "c decl body at src/sprite_submit.h:21"
+cost_tokens = 26
+cum_tokens = 3527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 23
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h", start_line: 9 })'
+descriptor = "c decl at src/spritemgr.h:9"
+cost_tokens = 81
+cum_tokens = 3608
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h"
+start = 9
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h", start_line: 6 })'
+descriptor = "c decl at src/transform.h:6"
+cost_tokens = 81
+cum_tokens = 3689
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 6
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h" })'
+descriptor = "c includes in src/ime_char_filter.h"
+cost_tokens = 30
+cum_tokens = 3719
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h", start_line: 11 })'
+descriptor = "c decl at src/srbuffer.h:11"
+cost_tokens = 84
+cum_tokens = 3803
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h"
+start = 11
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/material_util.c"
+cost_tokens = 25
+cum_tokens = 3828
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 114
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h" })'
+descriptor = "c includes in src/luabuffer.h"
+cost_tokens = 32
+cum_tokens = 3860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luabuffer.h"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/material_util.h"
+cost_tokens = 214
+cum_tokens = 4074
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 18
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 116
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/truetype.h"
+cost_tokens = 220
+cum_tokens = 4294
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 11
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 117
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 147 })'
+descriptor = "c decl at src/truetype.h:147"
+cost_tokens = 12
+cum_tokens = 4306
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 147
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 118
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 23 })'
+descriptor = "c decl at src/truetype.h:23"
+cost_tokens = 14
+cum_tokens = 4320
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 23
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 119
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 34 })'
+descriptor = "c decl at src/truetype.h:34"
+cost_tokens = 14
+cum_tokens = 4334
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 34
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 120
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 83 })'
+descriptor = "c decl at src/truetype.h:83"
+cost_tokens = 14
+cum_tokens = 4348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 83
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 121
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 111 })'
+descriptor = "c decl at src/truetype.h:111"
+cost_tokens = 14
+cum_tokens = 4362
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 111
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 122
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 44 })'
+descriptor = "c decl at src/truetype.h:44"
+cost_tokens = 15
+cum_tokens = 4377
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 44
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 123
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 94 })'
+descriptor = "c decl at src/truetype.h:94"
+cost_tokens = 18
+cum_tokens = 4395
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 94
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 124
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 160 })'
+descriptor = "c decl at src/truetype.h:160"
+cost_tokens = 22
+cum_tokens = 4417
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 160
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 125
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 17 })'
+descriptor = "c decl at src/truetype.h:17"
+cost_tokens = 27
+cum_tokens = 4444
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 17
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 123 })'
+descriptor = "c decl at src/truetype.h:123"
+cost_tokens = 23
+cum_tokens = 4467
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 123
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 52 })'
+descriptor = "c decl at src/truetype.h:52"
+cost_tokens = 25
+cum_tokens = 4492
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 52
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 128
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 52 })'
+descriptor = "c decl doc at src/truetype.h:52"
+cost_tokens = 11
+cum_tokens = 4503
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 94 })'
+descriptor = "c decl doc at src/truetype.h:94"
+cost_tokens = 11
+cum_tokens = 4514
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 23 })'
+descriptor = "c decl doc at src/truetype.h:23"
+cost_tokens = 12
+cum_tokens = 4526
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h" })'
+descriptor = "c includes in src/material_util.h"
+cost_tokens = 35
+cum_tokens = 4561
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.h"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/service" })'
+descriptor = "listing of 'src/service'"
+cost_tokens = 25
+cum_tokens = 4586
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/service"
+entries = ["gamepad.lua", "loader.lua", "log.lua", "render.lua", "settings.lua", "start.lua"]
+
+[[batches]]
+position = 133
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/drawmgr.c"
+cost_tokens = 28
+cum_tokens = 4614
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 134
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/material_default.c"
+cost_tokens = 28
+cum_tokens = 4642
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 135
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openurl.c", start_line: 88 })'
+descriptor = "c decl at src/openurl.c:88"
+cost_tokens = 13
+cum_tokens = 4655
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openurl.c"
+start = 88
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openurl.c"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 136
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/file.c"
+cost_tokens = 29
+cum_tokens = 4684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 137
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h" })'
+descriptor = "c includes in src/sprite_submit.h"
+cost_tokens = 40
+cum_tokens = 4724
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c", start_line: 171 })'
+descriptor = "c decl at src/drawmgr.c:171"
+cost_tokens = 14
+cum_tokens = 4738
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 171
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 139
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_system.c", start_line: 287 })'
+descriptor = "c decl at src/font_system.c:287"
+cost_tokens = 14
+cum_tokens = 4752
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_system.c"
+start = 287
+end = 288
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_system.c"
+start = 289
+end = 289
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 140
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lfs.c", start_line: 825 })'
+descriptor = "c decl at src/lfs.c:825"
+cost_tokens = 14
+cum_tokens = 4766
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lfs.c"
+start = 825
+end = 826
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lfs.c"
+start = 827
+end = 827
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 141
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c", start_line: 150 })'
+descriptor = "c decl at src/material_default.c:150"
+cost_tokens = 14
+cum_tokens = 4780
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 150
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 142
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/transform.c"
+cost_tokens = 32
+cum_tokens = 4812
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 143
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c", start_line: 9 })'
+descriptor = "c decl at src/transform.c:9"
+cost_tokens = 9
+cum_tokens = 4821
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 144
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 44 })'
+descriptor = "c decl body at src/truetype.h:44"
+cost_tokens = 34
+cum_tokens = 4855
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 46
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/srbuffer.c"
+cost_tokens = 33
+cum_tokens = 4888
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 146
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c", start_line: 14 })'
+descriptor = "c decl at src/srbuffer.c:14"
+cost_tokens = 11
+cum_tokens = 4899
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 147
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c", start_line: 53 })'
+descriptor = "c decl at src/file.c:53"
+cost_tokens = 15
+cum_tokens = 4914
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c"
+start = 53
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 148
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c", start_line: 53 })'
+descriptor = "c decl at src/material_blit.c:53"
+cost_tokens = 15
+cum_tokens = 4929
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c"
+start = 53
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 149
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/writelog.c", start_line: 76 })'
+descriptor = "c decl at src/writelog.c:76"
+cost_tokens = 15
+cum_tokens = 4944
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/writelog.c"
+start = 76
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/writelog.c"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 150
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/openlibs.c"
+cost_tokens = 35
+cum_tokens = 4979
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 151
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c", start_line: 11 })'
+descriptor = "c decl at src/openlibs.c:11"
+cost_tokens = 14
+cum_tokens = 4993
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/embedlua.c"
+cost_tokens = 36
+cum_tokens = 5029
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 153
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c", start_line: 55 })'
+descriptor = "c decl at src/embedlua.c:55"
+cost_tokens = 14
+cum_tokens = 5043
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c"
+start = 55
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/embedlua.c"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_uniform.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/render_uniform.c"
+cost_tokens = 36
+cum_tokens = 5079
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_uniform.c"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_uniform.c"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_uniform.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_uniform.c"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 155
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_uniform.c", start_line: 184 })'
+descriptor = "c decl at src/render_uniform.c:184"
+cost_tokens = 13
+cum_tokens = 5092
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_uniform.c"
+start = 184
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_uniform.c"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 156
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h" })'
+descriptor = "c includes in src/font_manager.h"
+cost_tokens = 47
+cum_tokens = 5139
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.c", start_line: 127 })'
+descriptor = "c decl at src/truetype.c:127"
+cost_tokens = 16
+cum_tokens = 5155
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.c"
+start = 127
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.c"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 158
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c", start_line: 25 })'
+descriptor = "c decl at src/srbuffer.c:25"
+cost_tokens = 17
+cum_tokens = 5172
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 25
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 159
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/winfile.c" })'
+descriptor = "c includes in src/winfile.c"
+cost_tokens = 10
+cum_tokens = 5182
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/winfile.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c", start_line: 122 })'
+descriptor = "c decl at src/srbuffer.c:122"
+cost_tokens = 18
+cum_tokens = 5200
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 122
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 161
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h" })'
+descriptor = "c includes in src/truetype.h"
+cost_tokens = 58
+cum_tokens = 5258
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/font.c"
+cost_tokens = 46
+cum_tokens = 5304
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 248
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 249
+end = 249
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 163
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c", start_line: 159 })'
+descriptor = "c decl at src/font.c:159"
+cost_tokens = 13
+cum_tokens = 5317
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 159
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c", start_line: 248 })'
+descriptor = "c decl at src/font.c:248"
+cost_tokens = 14
+cum_tokens = 5331
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 248
+end = 249
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font.c"
+start = 250
+end = 250
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 165
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h", start_line: 16 })'
+descriptor = "c decl body at src/transform.h:16"
+cost_tokens = 45
+cum_tokens = 5376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 18
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c", start_line: 50 })'
+descriptor = "c decl at src/srbuffer.c:50"
+cost_tokens = 19
+cum_tokens = 5395
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 50
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 167
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/font_manager.h"
+cost_tokens = 391
+cum_tokens = 5786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 11
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 16
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 22
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 168
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h", start_line: 22 })'
+descriptor = "c decl at src/font_manager.h:22"
+cost_tokens = 0
+cum_tokens = 5786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h", start_line: 31 })'
+descriptor = "c decl at src/font_manager.h:31"
+cost_tokens = 0
+cum_tokens = 5786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h", start_line: 31 })'
+descriptor = "c decl doc at src/font_manager.h:31"
+cost_tokens = 8
+cum_tokens = 5794
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h", start_line: 22 })'
+descriptor = "c decl doc at src/font_manager.h:22"
+cost_tokens = 63
+cum_tokens = 5857
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.h"
+start = 20
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c", start_line: 31 })'
+descriptor = "c decl at src/transform.c:31"
+cost_tokens = 20
+cum_tokens = 5877
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 173
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/batch.c"
+cost_tokens = 53
+cum_tokens = 5930
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 174
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c", start_line: 13 })'
+descriptor = "c decl at src/batch.c:13"
+cost_tokens = 10
+cum_tokens = 5940
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 13
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 175
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c", start_line: 29 })'
+descriptor = "c decl at src/batch.c:29"
+cost_tokens = 13
+cum_tokens = 5953
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 29
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 176
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c", start_line: 37 })'
+descriptor = "c decl at src/batch.c:37"
+cost_tokens = 17
+cum_tokens = 5970
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 37
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 177
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c", start_line: 8 })'
+descriptor = "c decl at src/batch.c:8"
+cost_tokens = 21
+cum_tokens = 5991
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c", start_line: 9 })'
+descriptor = "c decl at src/material_blit.c:9"
+cost_tokens = 25
+cum_tokens = 6016
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c", start_line: 76 })'
+descriptor = "c decl at src/transform.c:76"
+cost_tokens = 22
+cum_tokens = 6038
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 76
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 180
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/material_mask.c"
+cost_tokens = 57
+cum_tokens = 6095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 181
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c", start_line: 15 })'
+descriptor = "c decl at src/material_mask.c:15"
+cost_tokens = 13
+cum_tokens = 6108
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 15
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c", start_line: 193 })'
+descriptor = "c decl at src/material_mask.c:193"
+cost_tokens = 14
+cum_tokens = 6122
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 193
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 183
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c", start_line: 28 })'
+descriptor = "c decl at src/material_mask.c:28"
+cost_tokens = 22
+cum_tokens = 6144
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 28
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/material_quad.c"
+cost_tokens = 57
+cum_tokens = 6201
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 185
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c", start_line: 15 })'
+descriptor = "c decl at src/material_quad.c:15"
+cost_tokens = 13
+cum_tokens = 6214
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 15
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c", start_line: 182 })'
+descriptor = "c decl at src/material_quad.c:182"
+cost_tokens = 14
+cum_tokens = 6228
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 182
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 187
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lualib" })'
+descriptor = "listing of 'src/lualib'"
+cost_tokens = 56
+cum_tokens = 6284
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lualib"
+entries = ["coroutine.lua", "fontmgr.lua", "icon.lua", "initsetting.lua", "layout.lua", "main.lua", "packageloader.lua", "print_r.lua", "soluna.lua", "spritebundle.lua", "text.lua", "util.lua"]
+
+[[batches]]
+position = 188
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/data" })'
+descriptor = "listing of 'src/data'"
+cost_tokens = 6
+cum_tokens = 6290
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/data"
+entries = ["settingdefault.dl"]
+
+[[batches]]
+position = 189
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c", start_line: 66 })'
+descriptor = "c decl at src/transform.c:66"
+cost_tokens = 25
+cum_tokens = 6315
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 66
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 190
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c", start_line: 24 })'
+descriptor = "c decl at src/material_util.c:24"
+cost_tokens = 26
+cum_tokens = 6341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 24
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 191
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c", start_line: 76 })'
+descriptor = "c decl doc at src/transform.c:76"
+cost_tokens = 18
+cum_tokens = 6359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/luazip.c"
+cost_tokens = 73
+cum_tokens = 6432
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 684
+end = 684
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 285
+end = 285
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 685
+end = 685
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 193
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c", start_line: 151 })'
+descriptor = "c decl at src/luazip.c:151"
+cost_tokens = 12
+cum_tokens = 6444
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 151
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c", start_line: 284 })'
+descriptor = "c decl at src/luazip.c:284"
+cost_tokens = 12
+cum_tokens = 6456
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 284
+end = 286
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c", start_line: 684 })'
+descriptor = "c decl at src/luazip.c:684"
+cost_tokens = 13
+cum_tokens = 6469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 684
+end = 685
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 686
+end = 686
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 196
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c", start_line: 155 })'
+descriptor = "c decl at src/luazip.c:155"
+cost_tokens = 17
+cum_tokens = 6486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luazip.c"
+start = 155
+end = 158
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/gamepad.c"
+cost_tokens = 75
+cum_tokens = 6561
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 265
+end = 265
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 274
+end = 274
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 390
+end = 390
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 449
+end = 449
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 266
+end = 266
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 275
+end = 275
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 450
+end = 450
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 198
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c", start_line: 390 })'
+descriptor = "c decl at src/gamepad.c:390"
+cost_tokens = 14
+cum_tokens = 6575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 390
+end = 391
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 392
+end = 392
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 199
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c", start_line: 449 })'
+descriptor = "c decl at src/gamepad.c:449"
+cost_tokens = 15
+cum_tokens = 6590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 449
+end = 450
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 451
+end = 451
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 200
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c", start_line: 274 })'
+descriptor = "c decl at src/gamepad.c:274"
+cost_tokens = 20
+cum_tokens = 6610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/gamepad.c"
+start = 274
+end = 277
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 201
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/spritemgr.c"
+cost_tokens = 78
+cum_tokens = 6688
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 190
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 501
+end = 501
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 502
+end = 502
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 202
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c", start_line: 501 })'
+descriptor = "c decl at src/spritemgr.c:501"
+cost_tokens = 16
+cum_tokens = 6704
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 501
+end = 502
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 503
+end = 503
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 203
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c", start_line: 190 })'
+descriptor = "c decl at src/spritemgr.c:190"
+cost_tokens = 31
+cum_tokens = 6735
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 190
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c", start_line: 43 })'
+descriptor = "c decl at src/material_util.c:43"
+cost_tokens = 29
+cum_tokens = 6764
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 43
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 205
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c", start_line: 8 })'
+descriptor = "c decl at src/drawmgr.c:8"
+cost_tokens = 35
+cum_tokens = 6799
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 8
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in src/font_manager.c"
+cost_tokens = 33
+cum_tokens = 6832
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 574
+end = 574
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 579
+end = 579
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 587
+end = 587
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 620
+end = 620
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 575
+end = 575
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 580
+end = 580
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 588
+end = 588
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 621
+end = 621
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 207
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c", start_line: 574 })'
+descriptor = "c decl at src/font_manager.c:574"
+cost_tokens = 10
+cum_tokens = 6842
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 574
+end = 575
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 576
+end = 576
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 208
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c", start_line: 620 })'
+descriptor = "c decl at src/font_manager.c:620"
+cost_tokens = 14
+cum_tokens = 6856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 620
+end = 621
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 622
+end = 622
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 209
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c", start_line: 574 })'
+descriptor = "c decl body at src/font_manager.c:574"
+cost_tokens = 8
+cum_tokens = 6864
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 576
+end = 576
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c", start_line: 587 })'
+descriptor = "c decl at src/font_manager.c:587"
+cost_tokens = 18
+cum_tokens = 6882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 587
+end = 588
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 589
+end = 589
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 211
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c", start_line: 579 })'
+descriptor = "c decl at src/font_manager.c:579"
+cost_tokens = 22
+cum_tokens = 6904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 579
+end = 580
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_manager.c"
+start = 581
+end = 581
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 212
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/sdfimage.c"
+cost_tokens = 85
+cum_tokens = 6989
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 18
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 229
+end = 229
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 213
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c", start_line: 23 })'
+descriptor = "c decl at src/sdfimage.c:23"
+cost_tokens = 0
+cum_tokens = 6989
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 214
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c", start_line: 229 })'
+descriptor = "c decl at src/sdfimage.c:229"
+cost_tokens = 15
+cum_tokens = 7004
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 229
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 215
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c", start_line: 23 })'
+descriptor = "c decl doc at src/sdfimage.c:23"
+cost_tokens = 10
+cum_tokens = 7014
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 216
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/image.c"
+cost_tokens = 86
+cum_tokens = 7100
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 30
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 321
+end = 321
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 577
+end = 577
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 322
+end = 322
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 578
+end = 578
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 217
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c", start_line: 577 })'
+descriptor = "c decl at src/image.c:577"
+cost_tokens = 13
+cum_tokens = 7113
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 577
+end = 578
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 579
+end = 579
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 218
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c", start_line: 321 })'
+descriptor = "c decl at src/image.c:321"
+cost_tokens = 32
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 321
+end = 326
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 219
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c", start_line: 128 })'
+descriptor = "c decl at src/image.c:128"
+cost_tokens = 35
+cum_tokens = 7180
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/image.c"
+start = 128
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 220
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c", start_line: 19 })'
+descriptor = "c decl at src/material_quad.c:19"
+cost_tokens = 36
+cum_tokens = 7216
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 19
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 221
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c", start_line: 26 })'
+descriptor = "c decl at src/material_quad.c:26"
+cost_tokens = 37
+cum_tokens = 7253
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 26
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 222
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/render_bindings.c"
+cost_tokens = 91
+cum_tokens = 7344
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 97
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 221
+end = 221
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 223
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c", start_line: 148 })'
+descriptor = "c decl at src/render_bindings.c:148"
+cost_tokens = 13
+cum_tokens = 7357
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 148
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 224
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c", start_line: 221 })'
+descriptor = "c decl at src/render_bindings.c:221"
+cost_tokens = 13
+cum_tokens = 7370
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 221
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 225
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c", start_line: 61 })'
+descriptor = "c decl at src/render_bindings.c:61"
+cost_tokens = 19
+cum_tokens = 7389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 61
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luamods.c" })'
+descriptor = "c includes in src/luamods.c"
+cost_tokens = 22
+cum_tokens = 7411
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/luamods.c"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openurl.c" })'
+descriptor = "c includes in src/openurl.c"
+cost_tokens = 22
+cum_tokens = 7433
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openurl.c"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 228
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 56 })'
+descriptor = "c decl body at src/sprite_submit.h:56"
+cost_tokens = 78
+cum_tokens = 7511
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 58
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 229
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 34 })'
+descriptor = "c decl body at src/truetype.h:34"
+cost_tokens = 83
+cum_tokens = 7594
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 36
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 230
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c", start_line: 77 })'
+descriptor = "c decl at src/sdfimage.c:77"
+cost_tokens = 41
+cum_tokens = 7635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sdfimage.c"
+start = 77
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 231
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c", start_line: 6 })'
+descriptor = "c decl at src/material_util.c:6"
+cost_tokens = 35
+cum_tokens = 7670
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 232
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 83 })'
+descriptor = "c decl body at src/truetype.h:83"
+cost_tokens = 85
+cum_tokens = 7755
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 85
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 233
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/static" })'
+descriptor = "listing of 'web/static'"
+cost_tokens = 10
+cum_tokens = 7765
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/static"
+entries = ["coi-serviceworker.min.js", "fonts"]
+
+[[batches]]
+position = 234
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 16 })'
+descriptor = "c decl body at src/ime_char_filter.h:16"
+cost_tokens = 88
+cum_tokens = 7853
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 18
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c", start_line: 15 })'
+descriptor = "c decl at src/drawmgr.c:15"
+cost_tokens = 46
+cum_tokens = 7899
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/drawmgr.c"
+start = 15
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c", start_line: 15 })'
+descriptor = "c decl at src/material_default.c:15"
+cost_tokens = 47
+cum_tokens = 7946
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_default.c"
+start = 15
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c", start_line: 166 })'
+descriptor = "c decl at src/material_mask.c:166"
+cost_tokens = 47
+cum_tokens = 7993
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 166
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c", start_line: 153 })'
+descriptor = "c decl at src/material_quad.c:153"
+cost_tokens = 47
+cum_tokens = 8040
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 153
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 239
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 23 })'
+descriptor = "c decl body at src/truetype.h:23"
+cost_tokens = 98
+cum_tokens = 8138
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 25
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c", start_line: 95 })'
+descriptor = "c decl at src/spritemgr.c:95"
+cost_tokens = 48
+cum_tokens = 8186
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 95
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/platform/wasm" })'
+descriptor = "listing of 'src/platform/wasm'"
+cost_tokens = 23
+cum_tokens = 8209
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/platform/wasm"
+entries = ["soluna_ime.js", "soluna_openurl.js", "soluna_wasm_ime.h"]
+
+[[batches]]
+position = 242
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c" })'
+descriptor = "c includes in src/srbuffer.c"
+cost_tokens = 31
+cum_tokens = 8240
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.c"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 111 })'
+descriptor = "c decl body at src/truetype.h:111"
+cost_tokens = 101
+cum_tokens = 8341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 113
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 244
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 160 })'
+descriptor = "c decl body at src/truetype.h:160"
+cost_tokens = 103
+cum_tokens = 8444
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 162
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 245
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_system.c" })'
+descriptor = "c includes in src/font_system.c"
+cost_tokens = 32
+cum_tokens = 8476
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_system.c"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lfs.c" })'
+descriptor = "c includes in src/lfs.c"
+cost_tokens = 32
+cum_tokens = 8508
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/lfs.c"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 247
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c" })'
+descriptor = "c includes in src/material_util.c"
+cost_tokens = 33
+cum_tokens = 8541
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_util.c"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 248
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c", start_line: 197 })'
+descriptor = "c decl at src/spritemgr.c:197"
+cost_tokens = 52
+cum_tokens = 8593
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.c"
+start = 197
+end = 204
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/render.c"
+cost_tokens = 143
+cum_tokens = 8736
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 482
+end = 482
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 615
+end = 615
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 620
+end = 620
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 651
+end = 653
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 655
+end = 655
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 224
+end = 224
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 483
+end = 483
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 616
+end = 616
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 621
+end = 621
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 654
+end = 654
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 656
+end = 656
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 250
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 28 })'
+descriptor = "c decl at src/render.c:28"
+cost_tokens = 12
+cum_tokens = 8748
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 28
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 251
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 655 })'
+descriptor = "c decl at src/render.c:655"
+cost_tokens = 13
+cum_tokens = 8761
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 655
+end = 656
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 657
+end = 657
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 252
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 23 })'
+descriptor = "c decl at src/render.c:23"
+cost_tokens = 19
+cum_tokens = 8780
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 23
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 253
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 482 })'
+descriptor = "c decl at src/render.c:482"
+cost_tokens = 19
+cum_tokens = 8799
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 482
+end = 485
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 254
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 223 })'
+descriptor = "c decl at src/render.c:223"
+cost_tokens = 20
+cum_tokens = 8819
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 223
+end = 226
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 255
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 223 })'
+descriptor = "c decl doc at src/render.c:223"
+cost_tokens = 11
+cum_tokens = 8830
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 256
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 615 })'
+descriptor = "c decl at src/render.c:615"
+cost_tokens = 20
+cum_tokens = 8850
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 615
+end = 618
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 257
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 18 })'
+descriptor = "c decl at src/render.c:18"
+cost_tokens = 22
+cum_tokens = 8872
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 18
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 258
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c", start_line: 620 })'
+descriptor = "c decl at src/render.c:620"
+cost_tokens = 30
+cum_tokens = 8902
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render.c"
+start = 620
+end = 624
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 259
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c", start_line: 19 })'
+descriptor = "c decl at src/material_mask.c:19"
+cost_tokens = 56
+cum_tokens = 8958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_mask.c"
+start = 19
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 260
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 43 })'
+descriptor = "c decl body at src/sprite_submit.h:43"
+cost_tokens = 115
+cum_tokens = 9073
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h"
+start = 45
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 261
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h", start_line: 147 })'
+descriptor = "c decl body at src/truetype.h:147"
+cost_tokens = 116
+cum_tokens = 9189
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/truetype.h"
+start = 149
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 262
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/partials" })'
+descriptor = "listing of 'web/layouts/partials'"
+cost_tokens = 8
+cum_tokens = 9197
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/web/layouts/partials"
+entries = ["footer.html", "nav.html"]
+
+[[batches]]
+position = 263
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h", start_line: 84 })'
+descriptor = "c decl body at src/appevent.h:84"
+cost_tokens = 118
+cum_tokens = 9315
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/appevent.h"
+start = 86
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 264
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c" })'
+descriptor = "c includes in src/batch.c"
+cost_tokens = 41
+cum_tokens = 9356
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.c"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 265
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c" })'
+descriptor = "c includes in src/transform.c"
+cost_tokens = 41
+cum_tokens = 9397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.c"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 266
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c" })'
+descriptor = "c includes in src/file.c"
+cost_tokens = 42
+cum_tokens = 9439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/file.c"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 267
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 27 })'
+descriptor = "c decl body at src/ime_char_filter.h:27"
+cost_tokens = 129
+cum_tokens = 9568
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
+start = 29
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 268
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c" })'
+descriptor = "c includes in src/openlibs.c"
+cost_tokens = 44
+cum_tokens = 9612
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/openlibs.c"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 269
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c" })'
+descriptor = "c includes in src/render_bindings.c"
+cost_tokens = 44
+cum_tokens = 9656
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/render_bindings.c"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 270
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c", start_line: 33 })'
+descriptor = "c decl at src/material_quad.c:33"
+cost_tokens = 65
+cum_tokens = 9721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_quad.c"
+start = 33
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 271
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/.editorconfig" })'
+descriptor = "plaintext config .editorconfig"
+cost_tokens = 100
+cum_tokens = 9821
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/.editorconfig"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/.editorconfig"
+start = 4
+end = 10
+
+[batches.content.spans.render]
+kind = "full"

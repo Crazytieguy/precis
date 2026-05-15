@@ -1,0 +1,4484 @@
+fixture = "swarm"
+budget = 10000
+cumulative_tokens = 9024
+batch_count = 178
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm" })'
+descriptor = "listing of '.'"
+cost_tokens = 37
+cum_tokens = 37
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm"
+entries = [".gitignore", ".pre-commit-config.yaml", "LICENSE", "README.md", "SECURITY.md", "assets", "examples", "logs", "pyproject.toml", "setup.cfg", "swarm", "tests"]
+
+[[batches]]
+position = 2
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 12
+cum_tokens = 49
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm" })'
+descriptor = "listing of 'swarm'"
+cost_tokens = 21
+cum_tokens = 70
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm"
+entries = ["__init__.py", "core.py", "repl", "types.py", "util.py"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl" })'
+descriptor = "listing of 'swarm/repl'"
+cost_tokens = 10
+cum_tokens = 80
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl"
+entries = ["__init__.py", "repl.py"]
+
+[[batches]]
+position = 5
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/__init__.py" })'
+descriptor = "python imports in swarm/repl/__init__.py"
+cost_tokens = 13
+cum_tokens = 93
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/__init__.py" })'
+descriptor = "python imports in swarm/__init__.py"
+cost_tokens = 41
+cum_tokens = 134
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/__init__.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/assets" })'
+descriptor = "listing of 'assets'"
+cost_tokens = 14
+cum_tokens = 148
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/assets"
+entries = ["diagram.png", "logo.png", "swarm_diagram.png"]
+
+[[batches]]
+position = 8
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", chunk_index: 0 })'
+descriptor = "python decl names surface in swarm/core.py"
+cost_tokens = 10
+cum_tokens = 158
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 26 })'
+descriptor = "python decl at swarm/core.py:26"
+cost_tokens = 0
+cum_tokens = 158
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md" })'
+descriptor = "headings outline in README.md"
+cost_tokens = 193
+cum_tokens = 351
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 229
+end = 229
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 281
+end = 281
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 321
+end = 321
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 336
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 340
+end = 340
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 350
+end = 350
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 282
+end = 282
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 322
+end = 322
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 341
+end = 341
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 351
+end = 351
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py" })'
+descriptor = "python imports in swarm/util.py"
+cost_tokens = 16
+cum_tokens = 367
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py", chunk_index: 0 })'
+descriptor = "python decl names surface in swarm/types.py"
+cost_tokens = 51
+cum_tokens = 418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py", start_line: 14 })'
+descriptor = "python decl at swarm/types.py:14"
+cost_tokens = 0
+cum_tokens = 418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py", start_line: 23 })'
+descriptor = "python decl at swarm/types.py:23"
+cost_tokens = 0
+cum_tokens = 418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py", start_line: 29 })'
+descriptor = "python decl at swarm/types.py:29"
+cost_tokens = 0
+cum_tokens = 418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py", start_line: 23 })'
+descriptor = "python class body at swarm/types.py:23"
+cost_tokens = 33
+cum_tokens = 451
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 24
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py", start_line: 29 })'
+descriptor = "python class body at swarm/types.py:29"
+cost_tokens = 35
+cum_tokens = 486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 39
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 25
+cum_tokens = 511
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests"
+entries = ["__init__.py", "mock_client.py", "test_core.py", "test_runs", "test_util.py"]
+
+[[batches]]
+position = 19
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", chunk_index: 0 })'
+descriptor = "python method sigs in swarm/core.py"
+cost_tokens = 80
+cum_tokens = 591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 140
+end = 140
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 232
+end = 232
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 27 })'
+descriptor = "python method at swarm/core.py:27"
+cost_tokens = 0
+cum_tokens = 591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 71 })'
+descriptor = "python method at swarm/core.py:71"
+cost_tokens = 0
+cum_tokens = 591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", chunk_index: 0 })'
+descriptor = "python decl names surface in swarm/util.py"
+cost_tokens = 70
+cum_tokens = 661
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 23
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 5 })'
+descriptor = "python decl at swarm/util.py:5"
+cost_tokens = 0
+cum_tokens = 661
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 13 })'
+descriptor = "python decl at swarm/util.py:13"
+cost_tokens = 0
+cum_tokens = 661
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 21 })'
+descriptor = "python decl at swarm/util.py:21"
+cost_tokens = 0
+cum_tokens = 661
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 31 })'
+descriptor = "python decl at swarm/util.py:31"
+cost_tokens = 0
+cum_tokens = 661
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py", start_line: 14 })'
+descriptor = "python class body at swarm/types.py:14"
+cost_tokens = 88
+cum_tokens = 749
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 15
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md", section_index: 4 })'
+descriptor = "README.md section #4"
+cost_tokens = 72
+cum_tokens = 821
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 336
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 338
+end = 338
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 89 })'
+descriptor = "python method at swarm/core.py:89"
+cost_tokens = 61
+cum_tokens = 882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 89
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 520
+cum_tokens = 1402
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 5
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 20
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 35
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 41
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 46
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 51
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 54
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 62
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py" })'
+descriptor = "python imports in swarm/repl/repl.py"
+cost_tokens = 17
+cum_tokens = 1419
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py", start_line: 29 })'
+descriptor = "python decl doc at swarm/types.py:29"
+cost_tokens = 82
+cum_tokens = 1501
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 33
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md", section_index: 5 })'
+descriptor = "README.md section #5"
+cost_tokens = 74
+cum_tokens = 1575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 340
+end = 340
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 342
+end = 342
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 344
+end = 348
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 46
+cum_tokens = 1621
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples"
+entries = ["__init__.py", "airline", "basic", "customer_service", "customer_service_lite", "customer_service_streaming", "personal_shopper", "support_bot", "triage_agent", "weather_agent"]
+
+[[batches]]
+position = 35
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent" })'
+descriptor = "listing of 'examples/weather_agent'"
+cost_tokens = 17
+cum_tokens = 1638
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent"
+entries = ["README.md", "agents.py", "evals.py", "run.py"]
+
+[[batches]]
+position = 36
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper" })'
+descriptor = "listing of 'examples/personal_shopper'"
+cost_tokens = 18
+cum_tokens = 1656
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper"
+entries = ["README.md", "__init__.py", "database.py", "main.py"]
+
+[[batches]]
+position = 37
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", chunk_index: 0 })'
+descriptor = "python decl names surface in swarm/repl/repl.py"
+cost_tokens = 41
+cum_tokens = 1697
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 6 })'
+descriptor = "python decl at swarm/repl/repl.py:6"
+cost_tokens = 0
+cum_tokens = 1697
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 37 })'
+descriptor = "python decl at swarm/repl/repl.py:37"
+cost_tokens = 0
+cum_tokens = 1697
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 60 })'
+descriptor = "python decl at swarm/repl/repl.py:60"
+cost_tokens = 24
+cum_tokens = 1721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 60
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent" })'
+descriptor = "listing of 'examples/triage_agent'"
+cost_tokens = 23
+cum_tokens = 1744
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent"
+entries = ["README.md", "agents.py", "evals.py", "evals_util.py", "run.py"]
+
+[[batches]]
+position = 42
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 32 })'
+descriptor = "python method at swarm/core.py:32"
+cost_tokens = 72
+cum_tokens = 1816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 32
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline" })'
+descriptor = "listing of 'examples/airline'"
+cost_tokens = 24
+cum_tokens = 1840
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline"
+entries = ["README.md", "__init__.py", "configs", "data", "evals", "main.py"]
+
+[[batches]]
+position = 44
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/configs" })'
+descriptor = "listing of 'examples/airline/configs'"
+cost_tokens = 14
+cum_tokens = 1854
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/configs"
+entries = ["__init__.py", "agents.py", "tools.py"]
+
+[[batches]]
+position = 45
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 27, body_start_line: 28 })'
+descriptor = "python method body at swarm/core.py:27 body 28"
+cost_tokens = 27
+cum_tokens = 1881
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 28
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 31 })'
+descriptor = "python decl doc at swarm/util.py:31"
+cost_tokens = 96
+cum_tokens = 1977
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 32
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 37
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 40
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/data" })'
+descriptor = "listing of 'examples/airline/data'"
+cost_tokens = 3
+cum_tokens = 1980
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/data"
+entries = ["routines"]
+
+[[batches]]
+position = 48
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 139 })'
+descriptor = "python method at swarm/core.py:139"
+cost_tokens = 90
+cum_tokens = 2070
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 139
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/data/routines" })'
+descriptor = "listing of 'examples/airline/data/routines'"
+cost_tokens = 12
+cum_tokens = 2082
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/data/routines"
+entries = ["baggage", "flight_modification", "prompts.py"]
+
+[[batches]]
+position = 50
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 13, body_start_line: 14 })'
+descriptor = "python decl body at swarm/util.py:13 body 14"
+cost_tokens = 61
+cum_tokens = 2143
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 14
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic" })'
+descriptor = "listing of 'examples/basic'"
+cost_tokens = 34
+cum_tokens = 2177
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic"
+entries = ["README.md", "agent_handoff.py", "bare_minimum.py", "context_variables.py", "function_calling.py", "simple_loop_no_helpers.py"]
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming" })'
+descriptor = "listing of 'examples/customer_service_streaming'"
+cost_tokens = 34
+cum_tokens = 2211
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming"
+entries = [".gitignore", "configs", "data", "docker-compose.yaml", "logs", "main.py", "prep_data.py", "src", "tests"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/configs" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs'"
+cost_tokens = 25
+cum_tokens = 2236
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/configs"
+entries = ["__init__.py", "assistants", "general.py", "prompts.py", "swarm_tasks.json", "tools"]
+
+[[batches]]
+position = 54
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src" })'
+descriptor = "listing of 'examples/customer_service_streaming/src'"
+cost_tokens = 32
+cum_tokens = 2268
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src"
+entries = ["__init__.py", "arg_parser.py", "evals", "runs", "swarm", "tasks", "utils.py", "validator.py"]
+
+[[batches]]
+position = 55
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm" })'
+descriptor = "listing of 'examples/customer_service_streaming/src/swarm'"
+cost_tokens = 19
+cum_tokens = 2287
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm"
+entries = ["assistants.py", "conversation.py", "engines", "swarm.py", "tool.py"]
+
+[[batches]]
+position = 56
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/configs/tools" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs/tools'"
+cost_tokens = 12
+cum_tokens = 2299
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/configs/tools"
+entries = ["query_docs", "send_email", "submit_ticket"]
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs" })'
+descriptor = "listing of 'logs'"
+cost_tokens = 341
+cum_tokens = 2640
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs"
+entries = ["session_20240402-112114.json", "session_20240402-112443.json", "session_20240402-112456.json", "session_20240402-112501.json", "session_20240402-113222.json", "session_20240402-113415.json", "session_20240425-135655.json", "session_20240425-135657.json", "session_20240425-135728.json", "session_20240425-140427.json", "session_20240425-140502.json", "session_20240425-140516.json", "session_20240425-140553.json", "session_20240425-141416.json", "session_20240425-141509.json", "session_20240425-141709.json", "session_20240425-145129.json", "session_20240425-145324.json", "session_20240425-145907.json", "session_20240425-145930.json", "session_20240425-150004.json", "session_20240425-150040.json", "session_20240425-155814.json", "session_20240425-172809.json", "session_20240425-211732.json", "session_20240425-211813.json", "session_20240425-211942.json", "session_20240425-212341.json", "session_20240425-212431.json", "session_20240425-212748.json", "session_20240425-213023.json"]
+
+[[batches]]
+position = 58
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 231 })'
+descriptor = "python method at swarm/core.py:231"
+cost_tokens = 104
+cum_tokens = 2744
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 231
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines" })'
+descriptor = "listing of 'examples/customer_service_streaming/src/swarm/engines'"
+cost_tokens = 14
+cum_tokens = 2758
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines"
+entries = ["assistants_engine.py", "engine.py", "local_engine.py"]
+
+[[batches]]
+position = 60
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot" })'
+descriptor = "listing of 'examples/support_bot'"
+cost_tokens = 40
+cum_tokens = 2798
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot"
+entries = ["Makefile", "README.md", "__init__.py", "customer_service.py", "data", "docker-compose.yaml", "main.py", "prep_data.py", "requirements.txt"]
+
+[[batches]]
+position = 61
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py" })'
+descriptor = "python imports in swarm/types.py"
+cost_tokens = 80
+cum_tokens = 2878
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/types.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 194
+cum_tokens = 3072
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 93
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md", section_index: 6 })'
+descriptor = "README.md section #6"
+cost_tokens = 149
+cum_tokens = 3221
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 350
+end = 350
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 352
+end = 357
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 21, body_start_line: 22 })'
+descriptor = "python decl body at swarm/util.py:21 body 22"
+cost_tokens = 89
+cum_tokens = 3310
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 22
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 25
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 5, body_start_line: 6 })'
+descriptor = "python decl body at swarm/util.py:5 body 6"
+cost_tokens = 90
+cum_tokens = 3400
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 6, body_start_line: 7 })'
+descriptor = "python decl body at swarm/repl/repl.py:6 body 7"
+cost_tokens = 6
+cum_tokens = 3406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 304
+cum_tokens = 3710
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 80
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/README.md"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py" })'
+descriptor = "python imports in swarm/core.py"
+cost_tokens = 150
+cum_tokens = 3860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 12
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-135655.json" })'
+descriptor = "json config logs/session_20240425-135655.json"
+cost_tokens = 95
+cum_tokens = 3955
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-135655.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 6, body_start_line: 8 })'
+descriptor = "python decl body at swarm/repl/repl.py:6 body 8"
+cost_tokens = 9
+cum_tokens = 3964
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-112456.json" })'
+descriptor = "json config logs/session_20240402-112456.json"
+cost_tokens = 97
+cum_tokens = 4061
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-112456.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-135657.json" })'
+descriptor = "json config logs/session_20240425-135657.json"
+cost_tokens = 97
+cum_tokens = 4158
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-135657.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-140516.json" })'
+descriptor = "json config logs/session_20240425-140516.json"
+cost_tokens = 99
+cum_tokens = 4257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-140516.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-145907.json" })'
+descriptor = "json config logs/session_20240425-145907.json"
+cost_tokens = 99
+cum_tokens = 4356
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-145907.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-211732.json" })'
+descriptor = "json config logs/session_20240425-211732.json"
+cost_tokens = 99
+cum_tokens = 4455
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-211732.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-112443.json" })'
+descriptor = "json config logs/session_20240402-112443.json"
+cost_tokens = 101
+cum_tokens = 4556
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-112443.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-112501.json" })'
+descriptor = "json config logs/session_20240402-112501.json"
+cost_tokens = 101
+cum_tokens = 4657
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-112501.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-140502.json" })'
+descriptor = "json config logs/session_20240425-140502.json"
+cost_tokens = 101
+cum_tokens = 4758
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-140502.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-141509.json" })'
+descriptor = "json config logs/session_20240425-141509.json"
+cost_tokens = 101
+cum_tokens = 4859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-141509.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-211942.json" })'
+descriptor = "json config logs/session_20240425-211942.json"
+cost_tokens = 101
+cum_tokens = 4960
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-211942.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-113222.json" })'
+descriptor = "json config logs/session_20240402-113222.json"
+cost_tokens = 102
+cum_tokens = 5062
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-113222.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-135728.json" })'
+descriptor = "json config logs/session_20240425-135728.json"
+cost_tokens = 103
+cum_tokens = 5165
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-135728.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-141709.json" })'
+descriptor = "json config logs/session_20240425-141709.json"
+cost_tokens = 103
+cum_tokens = 5268
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-141709.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-145129.json" })'
+descriptor = "json config logs/session_20240425-145129.json"
+cost_tokens = 103
+cum_tokens = 5371
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-145129.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-145930.json" })'
+descriptor = "json config logs/session_20240425-145930.json"
+cost_tokens = 103
+cum_tokens = 5474
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-145930.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-212431.json" })'
+descriptor = "json config logs/session_20240425-212431.json"
+cost_tokens = 103
+cum_tokens = 5577
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-212431.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-212748.json" })'
+descriptor = "json config logs/session_20240425-212748.json"
+cost_tokens = 105
+cum_tokens = 5682
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-212748.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-213023.json" })'
+descriptor = "json config logs/session_20240425-213023.json"
+cost_tokens = 105
+cum_tokens = 5787
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-213023.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-145324.json" })'
+descriptor = "json config logs/session_20240425-145324.json"
+cost_tokens = 107
+cum_tokens = 5894
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-145324.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-212341.json" })'
+descriptor = "json config logs/session_20240425-212341.json"
+cost_tokens = 107
+cum_tokens = 6001
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-212341.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-140427.json" })'
+descriptor = "json config logs/session_20240425-140427.json"
+cost_tokens = 111
+cum_tokens = 6112
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-140427.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-155814.json" })'
+descriptor = "json config logs/session_20240425-155814.json"
+cost_tokens = 112
+cum_tokens = 6224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-155814.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-112114.json" })'
+descriptor = "json config logs/session_20240402-112114.json"
+cost_tokens = 114
+cum_tokens = 6338
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-112114.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-150004.json" })'
+descriptor = "json config logs/session_20240425-150004.json"
+cost_tokens = 115
+cum_tokens = 6453
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-150004.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-211813.json" })'
+descriptor = "json config logs/session_20240425-211813.json"
+cost_tokens = 117
+cum_tokens = 6570
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-211813.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-140553.json" })'
+descriptor = "json config logs/session_20240425-140553.json"
+cost_tokens = 118
+cum_tokens = 6688
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-140553.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-172809.json" })'
+descriptor = "json config logs/session_20240425-172809.json"
+cost_tokens = 118
+cum_tokens = 6806
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-172809.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-141416.json" })'
+descriptor = "json config logs/session_20240425-141416.json"
+cost_tokens = 120
+cum_tokens = 6926
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-141416.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-150040.json" })'
+descriptor = "json config logs/session_20240425-150040.json"
+cost_tokens = 121
+cum_tokens = 7047
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240425-150040.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-113415.json" })'
+descriptor = "json config logs/session_20240402-113415.json"
+cost_tokens = 171
+cum_tokens = 7218
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/logs/session_20240402-113415.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 71, body_start_line: 72 })'
+descriptor = "python method body at swarm/core.py:71 body 72"
+cost_tokens = 170
+cum_tokens = 7388
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 72
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 76
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 102
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md" })'
+descriptor = "README headline in examples/weather_agent/README.md"
+cost_tokens = 44
+cum_tokens = 7432
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md" })'
+descriptor = "headings outline in examples/weather_agent/README.md"
+cost_tokens = 19
+cum_tokens = 7451
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 104
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 89, body_start_line: 137 })'
+descriptor = "python method body at swarm/core.py:89 body 137"
+cost_tokens = 9
+cum_tokens = 7460
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 137
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 37, body_start_line: 38 })'
+descriptor = "python decl body at swarm/repl/repl.py:37 body 38"
+cost_tokens = 239
+cum_tokens = 7699
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 38
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 42
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 45
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 49
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md" })'
+descriptor = "README headline in examples/triage_agent/README.md"
+cost_tokens = 54
+cum_tokens = 7753
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md" })'
+descriptor = "headings outline in examples/triage_agent/README.md"
+cost_tokens = 19
+cum_tokens = 7772
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 108
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/main.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/airline/main.py"
+cost_tokens = 8
+cum_tokens = 7780
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/main.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py", start_line: 31, body_start_line: 60 })'
+descriptor = "python decl body at swarm/util.py:31 body 60"
+cost_tokens = 8
+cum_tokens = 7788
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/util.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot/README.md" })'
+descriptor = "README headline in examples/support_bot/README.md"
+cost_tokens = 60
+cum_tokens = 7848
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot/README.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot/README.md" })'
+descriptor = "headings outline in examples/support_bot/README.md"
+cost_tokens = 18
+cum_tokens = 7866
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/support_bot/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 60, body_start_line: 66 })'
+descriptor = "python decl body at swarm/repl/repl.py:60 body 66"
+cost_tokens = 8
+cum_tokens = 7874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/main.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/main.py"
+cost_tokens = 9
+cum_tokens = 7883
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/main.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/main.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 114
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/main.py", start_line: 10 })'
+descriptor = "python decl at examples/customer_service_streaming/main.py:10"
+cost_tokens = 0
+cum_tokens = 7883
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/main.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/README.md" })'
+descriptor = "README headline in examples/basic/README.md"
+cost_tokens = 66
+cum_tokens = 7949
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/README.md" })'
+descriptor = "headings outline in examples/basic/README.md"
+cost_tokens = 20
+cum_tokens = 7969
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/README.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 117
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md" })'
+descriptor = "README headline in examples/airline/README.md"
+cost_tokens = 80
+cum_tokens = 8049
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md" })'
+descriptor = "headings outline in examples/airline/README.md"
+cost_tokens = 28
+cum_tokens = 8077
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/README.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 119
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/README.md" })'
+descriptor = "README headline in examples/personal_shopper/README.md"
+cost_tokens = 80
+cum_tokens = 8157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/README.md"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/README.md" })'
+descriptor = "headings outline in examples/personal_shopper/README.md"
+cost_tokens = 18
+cum_tokens = 8175
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/README.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 121
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 60, body_start_line: 63 })'
+descriptor = "python decl body at swarm/repl/repl.py:60 body 63"
+cost_tokens = 10
+cum_tokens = 8185
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 60, body_start_line: 67 })'
+descriptor = "python decl body at swarm/repl/repl.py:60 body 67"
+cost_tokens = 10
+cum_tokens = 8195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service" })'
+descriptor = "listing of 'examples/customer_service'"
+cost_tokens = 3
+cum_tokens = 8198
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service"
+entries = ["logs"]
+
+[[batches]]
+position = 124
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_lite" })'
+descriptor = "listing of 'examples/customer_service_lite'"
+cost_tokens = 3
+cum_tokens = 8201
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_lite"
+entries = ["logs"]
+
+[[batches]]
+position = 125
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/evals" })'
+descriptor = "listing of 'examples/airline/evals'"
+cost_tokens = 19
+cum_tokens = 8220
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/airline/evals"
+entries = ["eval_cases", "eval_results", "eval_utils.py", "function_evals.py"]
+
+[[batches]]
+position = 126
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/arg_parser.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/src/arg_parser.py"
+cost_tokens = 10
+cum_tokens = 8230
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/arg_parser.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/arg_parser.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/arg_parser.py", start_line: 3 })'
+descriptor = "python decl at examples/customer_service_streaming/src/arg_parser.py:3"
+cost_tokens = 0
+cum_tokens = 8230
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/arg_parser.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 89, body_start_line: 96 })'
+descriptor = "python method body at swarm/core.py:89 body 96"
+cost_tokens = 19
+cum_tokens = 8249
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/database.py" })'
+descriptor = "python imports in examples/personal_shopper/database.py"
+cost_tokens = 8
+cum_tokens = 8257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/personal_shopper/database.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py", start_line: 60, body_start_line: 64 })'
+descriptor = "python decl body at swarm/repl/repl.py:60 body 64"
+cost_tokens = 15
+cum_tokens = 8272
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/repl/repl.py"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/agents.py" })'
+descriptor = "python imports in examples/triage_agent/agents.py"
+cost_tokens = 9
+cum_tokens = 8281
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/agents.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/conversation.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/src/swarm/conversation.py"
+cost_tokens = 9
+cum_tokens = 8290
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/conversation.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/conversation.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/conversation.py", start_line: 1 })'
+descriptor = "python decl at examples/customer_service_streaming/src/swarm/conversation.py:1"
+cost_tokens = 0
+cum_tokens = 8290
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/conversation.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 89, body_start_line: 97 })'
+descriptor = "python method body at swarm/core.py:89 body 97"
+cost_tokens = 24
+cum_tokens = 8314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 97
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 139, body_start_line: 149 })'
+descriptor = "python method body at swarm/core.py:139 body 149"
+cost_tokens = 10
+cum_tokens = 8324
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/swarm.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/src/swarm/swarm.py"
+cost_tokens = 10
+cum_tokens = 8334
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/swarm.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/swarm.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 137
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/swarm.py", start_line: 11 })'
+descriptor = "python decl at examples/customer_service_streaming/src/swarm/swarm.py:11"
+cost_tokens = 0
+cum_tokens = 8334
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/swarm.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/arg_parser.py" })'
+descriptor = "python imports in examples/customer_service_streaming/src/arg_parser.py"
+cost_tokens = 7
+cum_tokens = 8341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/arg_parser.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/agent_handoff.py" })'
+descriptor = "python imports in examples/basic/agent_handoff.py"
+cost_tokens = 12
+cum_tokens = 8353
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/agent_handoff.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/bare_minimum.py" })'
+descriptor = "python imports in examples/basic/bare_minimum.py"
+cost_tokens = 12
+cum_tokens = 8365
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/bare_minimum.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/context_variables.py" })'
+descriptor = "python imports in examples/basic/context_variables.py"
+cost_tokens = 12
+cum_tokens = 8377
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/context_variables.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/function_calling.py" })'
+descriptor = "python imports in examples/basic/function_calling.py"
+cost_tokens = 12
+cum_tokens = 8389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/function_calling.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/simple_loop_no_helpers.py" })'
+descriptor = "python imports in examples/basic/simple_loop_no_helpers.py"
+cost_tokens = 12
+cum_tokens = 8401
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/basic/simple_loop_no_helpers.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 139, body_start_line: 151 })'
+descriptor = "python method body at swarm/core.py:139 body 151"
+cost_tokens = 11
+cum_tokens = 8412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 139, body_start_line: 152 })'
+descriptor = "python method body at swarm/core.py:139 body 152"
+cost_tokens = 11
+cum_tokens = 8423
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/assistants.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/src/swarm/assistants.py"
+cost_tokens = 11
+cum_tokens = 8434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/assistants.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/assistants.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 147
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/assistants.py", start_line: 10 })'
+descriptor = "python decl at examples/customer_service_streaming/src/swarm/assistants.py:10"
+cost_tokens = 0
+cum_tokens = 8434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/assistants.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", chunk_index: 0 })'
+descriptor = "python decl names surface in tests/mock_client.py"
+cost_tokens = 74
+cum_tokens = 8508
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 149
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 8 })'
+descriptor = "python decl at tests/mock_client.py:8"
+cost_tokens = 0
+cum_tokens = 8508
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 44 })'
+descriptor = "python decl at tests/mock_client.py:44"
+cost_tokens = 0
+cum_tokens = 8508
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", chunk_index: 0 })'
+descriptor = "python method sigs in tests/mock_client.py"
+cost_tokens = 67
+cum_tokens = 8575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 45 })'
+descriptor = "python method at tests/mock_client.py:45"
+cost_tokens = 0
+cum_tokens = 8575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 49 })'
+descriptor = "python method at tests/mock_client.py:49"
+cost_tokens = 0
+cum_tokens = 8575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 56 })'
+descriptor = "python method at tests/mock_client.py:56"
+cost_tokens = 0
+cum_tokens = 8575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 63 })'
+descriptor = "python method at tests/mock_client.py:63"
+cost_tokens = 0
+cum_tokens = 8575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 63, body_start_line: 64 })'
+descriptor = "python method body at tests/mock_client.py:63 body 64"
+cost_tokens = 15
+cum_tokens = 8590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 49, body_start_line: 54 })'
+descriptor = "python method body at tests/mock_client.py:49 body 54"
+cost_tokens = 16
+cum_tokens = 8606
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py", start_line: 56, body_start_line: 61 })'
+descriptor = "python method body at tests/mock_client.py:56 body 61"
+cost_tokens = 16
+cum_tokens = 8622
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/mock_client.py"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/src/swarm/engines/engine.py"
+cost_tokens = 9
+cum_tokens = 8631
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 160
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py", start_line: 2 })'
+descriptor = "python decl at examples/customer_service_streaming/src/swarm/engines/engine.py:2"
+cost_tokens = 0
+cum_tokens = 8631
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py", chunk_index: 0 })'
+descriptor = "python method sigs in examples/customer_service_streaming/src/swarm/engines/engine.py"
+cost_tokens = 15
+cum_tokens = 8646
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 162
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py", start_line: 3 })'
+descriptor = "python method at examples/customer_service_streaming/src/swarm/engines/engine.py:3"
+cost_tokens = 0
+cum_tokens = 8646
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/engine.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Python(TestNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/test_util.py" })'
+descriptor = "python test names surface in tests/test_util.py"
+cost_tokens = 22
+cum_tokens = 8668
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/test_util.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/test_util.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/test_util.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/tests/test_util.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 139, body_start_line: 150 })'
+descriptor = "python method body at swarm/core.py:139 body 150"
+cost_tokens = 13
+cum_tokens = 8681
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md", section_index: 1 })'
+descriptor = "examples/weather_agent/README.md section #1"
+cost_tokens = 42
+cum_tokens = 8723
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/README.md"
+start = 11
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_lite/logs" })'
+descriptor = "listing of 'examples/customer_service_lite/logs'"
+cost_tokens = 44
+cum_tokens = 8767
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_lite/logs"
+entries = ["session_20240425-175026.json", "session_20240425-175112.json", "session_20240425-175154.json", "session_20240425-175210.json"]
+
+[[batches]]
+position = 167
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md", section_index: 1 })'
+descriptor = "examples/triage_agent/README.md section #1"
+cost_tokens = 43
+cum_tokens = 8810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/triage_agent/README.md"
+start = 12
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/local_engine.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/src/swarm/engines/local_engine.py"
+cost_tokens = 10
+cum_tokens = 8820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/local_engine.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/local_engine.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 169
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/local_engine.py", start_line: 14 })'
+descriptor = "python decl at examples/customer_service_streaming/src/swarm/engines/local_engine.py:14"
+cost_tokens = 0
+cum_tokens = 8820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/local_engine.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/agents.py" })'
+descriptor = "python imports in examples/weather_agent/agents.py"
+cost_tokens = 16
+cum_tokens = 8836
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/agents.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/weather_agent/agents.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py", start_line: 231, body_start_line: 252 })'
+descriptor = "python method body at swarm/core.py:231 body 252"
+cost_tokens = 10
+cum_tokens = 8846
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/swarm/core.py"
+start = 252
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/logs" })'
+descriptor = "listing of 'examples/customer_service_streaming/logs'"
+cost_tokens = 5
+cum_tokens = 8851
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/logs"
+entries = [".gitkeep"]
+
+[[batches]]
+position = 173
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/SECURITY.md", section_index: 0 })'
+descriptor = "SECURITY.md section #0"
+cost_tokens = 126
+cum_tokens = 8977
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/SECURITY.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/SECURITY.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/SECURITY.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/src/utils.py"
+cost_tokens = 23
+cum_tokens = 9000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 175
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py", start_line: 39 })'
+descriptor = "python decl at examples/customer_service_streaming/src/utils.py:39"
+cost_tokens = 0
+cum_tokens = 9000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py", start_line: 39, body_start_line: 40 })'
+descriptor = "python decl body at examples/customer_service_streaming/src/utils.py:39 body 40"
+cost_tokens = 13
+cum_tokens = 9013
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/utils.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/assistants_engine.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/customer_service_streaming/src/swarm/engines/assistants_engine.py"
+cost_tokens = 11
+cum_tokens = 9024
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/assistants_engine.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/assistants_engine.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 178
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/assistants_engine.py", start_line: 13 })'
+descriptor = "python decl at examples/customer_service_streaming/src/swarm/engines/assistants_engine.py:13"
+cost_tokens = 0
+cum_tokens = 9024
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/swarm/examples/customer_service_streaming/src/swarm/engines/assistants_engine.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"

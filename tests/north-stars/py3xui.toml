@@ -1,0 +1,801 @@
+fixture = "py3xui"
+revision_pin = "6004c163"
+summary = """
+py3xui is an object-oriented Python SDK over the 3x-UI panel HTTP API.
+The crate is a thin twin pair of facades — `Api` (sync, `requests`) and
+`AsyncApi` (async, `httpx`) — each owning four sub-clients (`client`,
+`inbound`, `database`, `server`) that subclass a shared `BaseApi` for
+session/login/retry/TLS handling. Domain payloads are Pydantic v2
+models (`Client`, `Inbound` + `Settings`/`Sniffing`/`StreamSettings`,
+`Server` + its breakdowns, `RealityKeyPair`).
+
+The ranking serves the full agent-task distribution against this
+shape. Top batches orient: project blurb, dependency surface, exported
+names, the sync/async mirror, and the four-sub-API split. Mid batches
+catalog every public method on every sub-API (sync names first, then
+async, then the data models) — this is the load-bearing breadth that
+makes "where is X" land in one hop. Later batches surface the
+load/login/retry plumbing (TLS verify branch, `_check_response`,
+`ApiFields`), the Pydantic alias conventions (`JsonStringModel`
+JSON-string preprocessing, `populate_by_name`), and the
+environment-variable + cookie-name conventions. Examples, tests, and
+the demo land last and refine call-site patterns.
+"""
+
+# =============================================================================
+# Tier 1 — Project identity, top-level layout, exported names.
+# =============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README lede — one-line domain statement"
+justification = "The single line that says what py3xui is. Highest signal per token for any 'what is this crate' query."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level package layout"
+justification = "Names every immediate child of the fixture root and of the python package — bounds the whole repo and the six sub-packages so the agent never assumes a module is missing."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+  { parent = "py3xui", entries = "all" },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "Public re-exports from py3xui/__init__.py"
+justification = "The user-facing names (`Api`, `AsyncApi`, `Client`, `Inbound`, `RealityKeyPair`, `Server`) and which module each lives in — answers most 'where is X imported from' queries without a follow-up."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/__init__.py", start = 1, end = 6, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "pyproject.toml — name, version, description"
+justification = "Package identity line — names py3xui and its one-line description, fixes the version on this revision."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 6, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "pyproject.toml — runtime dependencies"
+justification = "Pins the three runtime deps that explain the sync/async split: `requests`, `httpx`, `pydantic`. Bounds the dependency surface."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 19, end = 23, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "Sync sub-API exports"
+justification = "Names the four sync sub-API classes (ClientApi/DatabaseApi/InboundApi/ServerApi) and which file each lives in."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/__init__.py", start = 1, end = 5, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "Async sub-API exports"
+justification = "Mirror of 1.6 — names the four async sub-API classes. Pairing these batches makes the sync/async symmetry obvious without spending the tokens on the bigger inner-package fs listing yet."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/__init__.py", start = 1, end = 5, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "Inner-package directory listings"
+justification = "Lists the six files under py3xui/api and py3xui/async_api plus the four inbound model files. Without this the agent can't tell that inbound has separate settings.py / sniffing.py / stream_settings.py / bases.py modules, or that server/client are single-file packages."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "py3xui/api", entries = "all" },
+  { parent = "py3xui/async_api", entries = "all" },
+  { parent = "py3xui/inbound", entries = "all" },
+  { parent = "py3xui/client", entries = "all" },
+  { parent = "py3xui/server", entries = "all" },
+  { parent = "py3xui/utils", entries = "all" },
+]
+
+# =============================================================================
+# Tier 2 — Top-level facade class skeletons (Api/AsyncApi).
+# =============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "Api class signature + lede"
+justification = "First-class entry point. Names the sync facade and its high-level role; the next two batches add the constructor and the four owned sub-clients."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api.py", start = 13, end = 15, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "AsyncApi class signature + lede"
+justification = "Mirror of 2.1 — establishes that AsyncApi is the same shape with async methods. Cheap and high-signal."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api.py", start = 18, end = 20, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "Api constructor signature"
+justification = "The full __init__ argument list for the sync facade — host/username/password plus the three TLS-related and logger kwargs. Lands the agent on the exact line that's most asked-about for setup queries."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api.py", start = 67, end = 75, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "AsyncApi constructor signature"
+justification = "Mirror of 2.3."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api.py", start = 72, end = 80, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Api sub-client wiring (client/inbound/database/server attrs)"
+justification = "Shows how the four sub-APIs are constructed and attached as instance attributes — answers 'where do I access x via the facade' definitively."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api.py", start = 76, end = 91, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "AsyncApi sub-client wiring"
+justification = "Mirror of 2.5. Confirms the same four attrs (client/inbound/database/server) exist on the async facade."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api.py", start = 81, end = 97, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Facade public methods (Api.from_env, Api.login)"
+justification = "Signatures of the two public methods on the facade — `from_env` (alt constructor) and `login` (called before any request). Plus the session/cookie_name property names, to bound the public surface."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api.py", start = 93, end = 93, render = { kind = "full" } },
+  { path = "py3xui/api/api.py", start = 102, end = 103, render = { kind = "full" } },
+  { path = "py3xui/api/api.py", start = 115, end = 115, render = { kind = "full" } },
+  { path = "py3xui/api/api.py", start = 124, end = 125, render = { kind = "full" } },
+  { path = "py3xui/api/api.py", start = 139, end = 145, render = { kind = "full" } },
+  { path = "py3xui/api/api.py", start = 189, end = 189, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "AsyncApi public methods"
+justification = "Mirror of 2.7 — same shape, but `login` is async. Confirms the symmetry isn't broken anywhere on the public surface."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api.py", start = 98, end = 98, render = { kind = "full" } },
+  { path = "py3xui/async_api/async_api.py", start = 107, end = 108, render = { kind = "full" } },
+  { path = "py3xui/async_api/async_api.py", start = 120, end = 120, render = { kind = "full" } },
+  { path = "py3xui/async_api/async_api.py", start = 129, end = 130, render = { kind = "full" } },
+  { path = "py3xui/async_api/async_api.py", start = 144, end = 150, render = { kind = "full" } },
+  { path = "py3xui/async_api/async_api.py", start = 194, end = 194, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 3 — Public-method inventories (where to land for any sub-API call).
+# Sync names first, then async mirrors; each sub-API gets a name-only locator
+# batch followed by full signatures for richer cases.
+# =============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "ClientApi method roster (sync, names only)"
+justification = "Locator listing every public method on the sync ClientApi (10 methods). Each line is truncated to `def name` so the agent gets exact line numbers without spending tokens on argument lists. Catastrophic-omission hedge: shows the full method roster as a class — agent won't assume a missing operation."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_client.py", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 189, end = 189, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 248, end = 248, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 280, end = 280, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 312, end = 312, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_client.py", start = 342, end = 342, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "InboundApi method roster (sync, names only)"
+justification = "Locator for the seven public methods on sync InboundApi. Same hedge as 3.1 against partial-inclusion class inference."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_inbound.py", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_inbound.py", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_inbound.py", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_inbound.py", start = 159, end = 159, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_inbound.py", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_inbound.py", start = 223, end = 223, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_inbound.py", start = 247, end = 247, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "ServerApi method roster (sync, names only)"
+justification = "Three methods (get_db / get_status / generate_reality_keys). Locator with line numbers for each."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_server.py", start = 35, end = 35, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_server.py", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/api/api_server.py", start = 97, end = 97, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "DatabaseApi method roster (sync, names only)"
+justification = "Single public method (`export`) — but the locator confirms there is exactly one, mitigating catastrophic omission ('is there an import method?')."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_database.py", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "AsyncClientApi method roster (async, names only)"
+justification = "Locator mirror of 3.1 — same 10 methods, but `async def`. Confirms there is no async-only / sync-only asymmetry on this sub-API."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api_client.py", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 158, end = 158, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 219, end = 219, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 250, end = 250, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 282, end = 282, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 315, end = 315, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_client.py", start = 345, end = 345, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "AsyncInboundApi method roster (async, names only)"
+justification = "Locator mirror of 3.2."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api_inbound.py", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_inbound.py", start = 72, end = 72, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_inbound.py", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_inbound.py", start = 158, end = 158, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_inbound.py", start = 189, end = 189, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_inbound.py", start = 222, end = 222, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_inbound.py", start = 246, end = 246, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "AsyncServerApi + AsyncDatabaseApi method roster"
+justification = "Locator mirror of 3.3 and 3.4 combined — both are short rosters."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api_server.py", start = 44, end = 44, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_server.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_server.py", start = 105, end = 105, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "py3xui/async_api/async_api_database.py", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "ClientApi full signatures (sync)"
+justification = "Adds arg lists + return types for the 10 ClientApi methods — refines 3.1 from locator to full signature. Highest-impact for any 'how do I call get_by_email / add / update' style query — zero follow-ups for most client-side calls."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_client.py", start = 52, end = 52, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 89, end = 89, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 121, end = 121, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 157, end = 157, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 189, end = 189, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 217, end = 217, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 248, end = 248, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 280, end = 280, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 312, end = 312, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 342, end = 342, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "InboundApi full signatures (sync)"
+justification = "Adds arg lists + return types for the 7 InboundApi methods — refines 3.2."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_inbound.py", start = 40, end = 40, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 71, end = 71, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 111, end = 111, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 159, end = 159, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 190, end = 190, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 223, end = 223, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 247, end = 247, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "ServerApi full signatures (sync)"
+justification = "Adds arg lists + return types for the three server methods — refines 3.3."
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_server.py", start = 35, end = 35, render = { kind = "full" } },
+  { path = "py3xui/api/api_server.py", start = 67, end = 67, render = { kind = "full" } },
+  { path = "py3xui/api/api_server.py", start = 97, end = 97, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "DatabaseApi full signature (sync)"
+justification = "Full sig for the single export method on DatabaseApi — refines 3.4."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_database.py", start = 32, end = 32, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 4 — Pydantic data models (Client, Inbound, Server, etc.). These are
+# the payloads returned by every API call; their field set + aliases drives
+# any "what attributes are on X" question.
+# =============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "Client model — fields list (field names only)"
+justification = "Names every Pydantic field on `Client` — 15 fields ranging from required (`email`, `enable`) to optional traffic/identity fields. Locator batch: agent can map any client query to the right line."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/client/client.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "py3xui/client/client.py", start = 59, end = 62, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/client/client.py", start = 64, end = 64, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/client/client.py", start = 66, end = 67, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/client/client.py", start = 69, end = 69, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/client/client.py", start = 71, end = 72, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/client/client.py", start = 74, end = 81, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Inbound model — fields list"
+justification = "Names every field on `Inbound` — the nested sub-models (`settings`, `stream_settings`, `sniffing`) and the flat traffic/metadata fields. Establishes that Inbound has `client_stats` (list[Client]) and `to_json()` for serialization."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/inbound/inbound.py", start = 38, end = 38, render = { kind = "full" } },
+  { path = "py3xui/inbound/inbound.py", start = 59, end = 63, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/inbound/inbound.py", start = 66, end = 66, render = { kind = "full" } },
+  { path = "py3xui/inbound/inbound.py", start = 68, end = 70, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/inbound/inbound.py", start = 72, end = 73, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/inbound/inbound.py", start = 75, end = 75, render = { kind = "full" } },
+  { path = "py3xui/inbound/inbound.py", start = 77, end = 78, render = { kind = "truncated", pattern = "^    [a-z_]+" } },
+  { path = "py3xui/inbound/inbound.py", start = 82, end = 82, render = { kind = "full" } },
+  { path = "py3xui/inbound/inbound.py", start = 114, end = 114, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "Server, MemoryInfo, XRayInfo, NetworkIO, NetworkTraffic, PublicIP, AppStats, RealityKeyPair class headers"
+justification = "Names all eight Pydantic model classes in server.py — the top-level Server plus its seven nested/sibling models. Catastrophic-omission hedge for 'what data structures does the server endpoint return'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/server/server.py", start = 43, end = 43, render = { kind = "full" } },
+  { path = "py3xui/server/server.py", start = 54, end = 54, render = { kind = "full" } },
+  { path = "py3xui/server/server.py", start = 67, end = 67, render = { kind = "full" } },
+  { path = "py3xui/server/server.py", start = 78, end = 78, render = { kind = "full" } },
+  { path = "py3xui/server/server.py", start = 89, end = 89, render = { kind = "full" } },
+  { path = "py3xui/server/server.py", start = 100, end = 100, render = { kind = "full" } },
+  { path = "py3xui/server/server.py", start = 113, end = 113, render = { kind = "full" } },
+  { path = "py3xui/server/server.py", start = 125, end = 125, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "Settings, Sniffing, StreamSettings, JsonStringModel class headers"
+justification = "Names the four inbound-side models. Pairs with 4.2 — together they fully bound the inbound-domain data surface."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/inbound/settings.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "py3xui/inbound/sniffing.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "py3xui/inbound/stream_settings.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "py3xui/inbound/bases.py", start = 9, end = 9, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "StreamSettings full field list (network/security/tcp/kcp/reality/xtls/tls/xhttp)"
+justification = "Eight optional sub-config blocks (`reality_settings`, `xtls_settings`, etc.) — exhaustively naming them prevents the agent from assuming a missing protocol slot. This is the model with the most fields and the one users most often dig into when creating inbounds."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/inbound/stream_settings.py", start = 39, end = 61, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "Server full field list"
+justification = "Every field on the Server model with its alias — answers every 'what's available in server status' query in zero hops."
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/server/server.py", start = 147, end = 162, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "Settings + Sniffing full field lists"
+justification = "Three Settings fields (clients/decryption/fallbacks) and four Sniffing fields (enabled/dest_override/metadata_only/route_only). Cheap exhaustive coverage of the two smallest inbound sub-models."
+predecessor = "4.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/inbound/settings.py", start = 26, end = 28, render = { kind = "full" } },
+  { path = "py3xui/inbound/sniffing.py", start = 31, end = 36, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "JsonStringModel preprocessing validator"
+justification = "Shows the JSON-string-to-dict mode='before' validator that lets Settings/Sniffing/StreamSettings accept JSON strings from the API. Explains 'why does my dict get parsed' confusion and the API's stringified-JSON quirk."
+predecessor = "4.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/inbound/bases.py", start = 12, end = 30, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "RealityKeyPair full body"
+justification = "Tiny model — the two fields (`private_key`, `public_key`) with `privateKey`/`publicKey` aliases. Returned by `generate_reality_keys()`."
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/server/server.py", start = 113, end = 122, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 5 — BaseApi internals: ApiFields constants, login/cookies, retry +
+# TLS verify branch, _check_response. These power every API call.
+# =============================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "ApiFields constants (response keys + HTTP methods)"
+justification = "The string constants used everywhere to index into XUI JSON responses (`success`, `msg`, `obj`, `clientStats`, etc.) plus the HTTP method tags used by AsyncBaseApi. Knowing these by name short-circuits 'where does response parsing happen' queries."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 15, end = 25, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "BaseApi class signature + summary"
+justification = "Establishes that BaseApi is the shared sync HTTP plumbing. Every sub-API inherits this — so 'login' / 'session' / `_get` / `_post` live here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 28, end = 29, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "AsyncBaseApi class signature"
+justification = "Mirror of 5.2. Tiny but confirms the parallel base lives in the async package."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api_base.py", start = 16, end = 17, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "BaseApi __init__ field set"
+justification = "Names the seven private attributes set on every base: `_host` (with rstrip), `_username`, `_password`, `_use_tls_verify`, `_custom_certificate_path`, `_max_retries=3`, `_session`, `_cookie_name`, `logger`. Plus the default `max_retries=3`."
+predecessor = "5.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 70, end = 78, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "BaseApi property names roster (host/username/password/use_tls_verify/custom_certificate_path/max_retries/session/cookie_name/cookies)"
+justification = "Names every property on BaseApi. Catastrophic-omission hedge: keeps the agent from assuming, say, `cookies` doesn't exist or that there's a public `_session` accessor."
+predecessor = "5.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 81, end = 81, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 89, end = 89, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 97, end = 97, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 105, end = 105, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 113, end = 113, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 121, end = 121, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 137, end = 137, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 153, end = 153, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 211, end = 211, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "BaseApi method roster (login, _get_cookie, _check_response, _url, _request_with_retry, _post, _get)"
+justification = "Names every method (public + private) on BaseApi with line numbers. The private `_request_with_retry` / `_post` / `_get` triple is the hot path every sub-API call goes through."
+predecessor = "5.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 168, end = 168, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 194, end = 194, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 220, end = 220, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 236, end = 236, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 246, end = 251, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 313, end = 315, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 333, end = 333, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "COOKIE_NAMES and cookies property"
+justification = "The two cookie names the SDK accepts (`3x-ui`, `session`) and how `cookies` assembles the dict from `session`/`cookie_name`. Answers 'how does authentication actually attach to requests'."
+predecessor = "5.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/utils/__init__.py", start = 4, end = 4, render = { kind = "full" } },
+  { path = "py3xui/api/api_base.py", start = 210, end = 218, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.8"
+descriptor = "BaseApi.login body — sends credentials, captures cookie"
+justification = "Body of `login()` — endpoint = 'login', POSTs username/password (+ optional twoFactorCode), captures the session cookie via `_get_cookie`. Plus `_get_cookie` body iterating COOKIE_NAMES. Lands the agent on the exact auth flow without follow-ups."
+predecessor = "5.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 168, end = 208, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.9"
+descriptor = "_request_with_retry — TLS verify branch + retry/backoff body (sync)"
+justification = "The single most load-bearing method in the SDK: applies the three TLS verify modes (False / custom CA path / True), retries on ConnectionError/Timeout up to max_retries with linear-ish backoff, raises immediately on other RequestExceptions. Most 'why is my TLS / retry behaving X way' questions land here."
+predecessor = "5.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 246, end = 311, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.10"
+descriptor = "_post and _get bodies — login gate + delegation to retry"
+justification = "Shows the 'must call login() first' ValueError gate and the JSON-vs-no-body branching between POST and GET. Tiny but high-value for understanding API call ordering."
+predecessor = "5.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 313, end = 348, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.11"
+descriptor = "_check_response — success-field validation"
+justification = "How responses are validated: parses JSON, reads `success` (ApiFields.SUCCESS) and `msg` (ApiFields.MSG), raises ValueError on falsy success. Every non-skip_check call routes through this."
+predecessor = "5.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_base.py", start = 220, end = 234, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.12"
+descriptor = "AsyncBaseApi _request_with_retry — httpx version"
+justification = "Async mirror of 5.9. Same TLS branch but uses `httpx.AsyncClient` with `follow_redirects=True`, `asyncio.sleep` instead of `time.sleep`, raises `ConnectionError` rather than `RetryError`. Worth a dedicated batch because the differences (httpx semantics, redirect handling) bite differently from sync."
+predecessor = "5.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/async_api/async_api_base.py", start = 166, end = 237, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 6 — Auxiliary: env-var lookup, Inbound serialization quirks,
+# tests / demo, fields/aliases roster.
+# =============================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "utils/env public functions"
+justification = "Locator for the five env-var helpers: `parse_env`, `xui_host`, `xui_username`, `xui_password`, `tls_verify`, `tls_cert_path`. Surfaces the exact env-var names (XUI_HOST/USERNAME/PASSWORD/TLS_VERIFY/TLS_CERT_PATH) consumed by `from_env`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/utils/env.py", start = 7, end = 9, render = { kind = "full" } },
+  { path = "py3xui/utils/env.py", start = 33, end = 33, render = { kind = "full" } },
+  { path = "py3xui/utils/env.py", start = 49, end = 49, render = { kind = "full" } },
+  { path = "py3xui/utils/env.py", start = 65, end = 65, render = { kind = "full" } },
+  { path = "py3xui/utils/env.py", start = 81, end = 81, render = { kind = "full" } },
+  { path = "py3xui/utils/env.py", start = 95, end = 95, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "Api.from_env body — env var precedence + TLS defaults"
+justification = "Shows the actual constructor sequence: read XUI_HOST/USERNAME/PASSWORD as required, default `use_tls_verify` to True when neither arg nor env, fold in TLS_CERT_PATH. Matches how every README example bootstraps the SDK."
+predecessor = "2.7"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api.py", start = 175, end = 187, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "Api.login body — propagates session+cookie_name to sub-APIs"
+justification = "After delegating to `self.client.login(...)`, Api.login fans out `session` and `cookie_name` to all four sub-APIs. Explains why every sub-API can make authenticated calls after the facade-level login."
+predecessor = "2.7"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api.py", start = 189, end = 209, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "Inbound.validate_stream_settings — dict/str/JSON handling"
+justification = "The field validator that accepts StreamSettings as either a dict, a JSON string, or an empty string. This is where the XUI API's stringified-JSON quirk gets normalized. Explains the `StreamSettings | str` union on the field."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/inbound/inbound.py", start = 88, end = 111, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.6"
+descriptor = "Inbound.to_json — XUI API submit format"
+justification = "Custom serializer that XUI expects: most fields go through `model_dump(by_alias=True)`, but `settings`/`sniffing`/`stream_settings` are re-serialized to JSON strings. Required reading for anyone calling `inbound.add` or `inbound.update`."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/inbound/inbound.py", start = 113, end = 147, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.7"
+descriptor = "ClientFields constants roster — JSON-key alias mapping"
+justification = "Names the 14 string constants that map Pydantic field names to XUI's camelCase JSON keys (`inboundId`, `expiryTime`, `limitIp`, `subId`, `tgId`, `totalGB`). Surfaces the alias vocabulary used across `Client(...alias=...)` declarations."
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/client/client.py", start = 7, end = 33, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.9"
+descriptor = "SettingsFields, SniffingFields, StreamSettingsFields rosters"
+justification = "The three smaller alias roster classes — completes the catastrophic-omission hedge for 'where is the JSON-key map for X model'."
+predecessor = "4.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/inbound/settings.py", start = 9, end = 15, render = { kind = "full" } },
+  { path = "py3xui/inbound/sniffing.py", start = 9, end = 17, render = { kind = "full" } },
+  { path = "py3xui/inbound/stream_settings.py", start = 9, end = 22, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.10"
+descriptor = "Test file roster + tests/responses fixtures"
+justification = "Lists the three test files and the five JSON response fixtures under tests/responses. Surfaces that there are mocked-API integration tests for both sync (`requests_mock`) and async (`pytest_httpx`) paths."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "tests", entries = "all" },
+  { parent = "tests/responses", entries = "all" },
+]
+
+
+[[batches]]
+id = "6.11"
+descriptor = "Sync API endpoint URLs — catalog grouped by sub-API"
+justification = "Direct catalog of every XUI HTTP endpoint the SDK hits (one `endpoint = \"…\"` line per public method). The most-asked artifact when working with a third-party API SDK — 'what's the endpoint for clearing client IPs?' is one hop away once this batch lands."
+predecessor = "3.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "py3xui/api/api_client.py", start = 75, end = 75, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 110, end = 110, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 142, end = 142, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 178, end = 178, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 207, end = 207, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 238, end = 238, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 270, end = 270, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 302, end = 302, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 331, end = 331, render = { kind = "full" } },
+  { path = "py3xui/api/api_client.py", start = 365, end = 365, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 59, end = 59, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 149, end = 149, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 180, end = 180, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 213, end = 213, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 237, end = 237, render = { kind = "full" } },
+  { path = "py3xui/api/api_inbound.py", start = 268, end = 268, render = { kind = "full" } },
+  { path = "py3xui/api/api_server.py", start = 52, end = 52, render = { kind = "full" } },
+  { path = "py3xui/api/api_server.py", start = 85, end = 85, render = { kind = "full" } },
+  { path = "py3xui/api/api_server.py", start = 103, end = 103, render = { kind = "full" } },
+  { path = "py3xui/api/api_database.py", start = 49, end = 49, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "6.12"
+descriptor = "README quickstart — env vars + sync/async construction"
+justification = "User-facing prose showing the two constructor paths (`Api.from_env()` vs direct credentials) for both sync and async — the canonical setup snippet. Lands the agent on the exact recommended bootstrap shape."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 53, end = 83, render = { kind = "full" } },
+]
