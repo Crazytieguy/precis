@@ -138,6 +138,16 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         return;
     };
     let pairs = top_level_pairs(&tree, &source);
+    // Workspace shells named `*-monorepo` are pure orchestration: the
+    // root package's name/scripts/deps describe the monorepo as a
+    // build target, not any project's API. Damp every batch so the
+    // per-member packages and primary-language anchors win the budget.
+    let shell_factor =
+        if file.parent() == Some(ctx.root()) && package_json_name_ends_with(&source, "-monorepo") {
+            0.2
+        } else {
+            1.0
+        };
     let mut prev: Option<BatchKey> = None;
     let mut push = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
         let Some(content) = section_content(file, &source, &pairs, name_match) else {
@@ -148,7 +158,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
             key: key.into(),
             predecessor: prev.clone(),
             content,
-            value,
+            value: value * shell_factor,
         });
         prev = Some(emitted);
     };
@@ -183,6 +193,29 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         dependencies_value(file, ctx),
         is_dependencies_key,
     );
+}
+
+/// Look up the `"name"` field's string value in a parsed package.json
+/// source and check whether it ends with the given suffix. Cheap
+/// inline parsing — sufficient for well-formed JSON.
+fn package_json_name_ends_with(source: &str, suffix: &str) -> bool {
+    let Some(idx) = source.find("\"name\"") else {
+        return false;
+    };
+    let rest = &source[idx + "\"name\"".len()..];
+    let Some(colon) = rest.find(':') else {
+        return false;
+    };
+    let after = &rest[colon + 1..];
+    let Some(qs) = after.find('"') else {
+        return false;
+    };
+    let value_start = qs + 1;
+    let Some(qe) = after[value_start..].find('"') else {
+        return false;
+    };
+    let value = &after[value_start..value_start + qe];
+    value.ends_with(suffix)
 }
 
 fn section_content(

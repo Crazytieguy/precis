@@ -17,6 +17,8 @@ README.md
     …
     51→## Key Features
     …
+    53→- **Incremental Processing**: Efficiently process changes to input data without recomputing everything
+    71→- **Type Safety**: Full TypeScript type safety and inference through the pipeline API
     73→## Quick Start
     …
     75→### Installation
@@ -57,19 +59,6 @@ examples/
     join.ts
     min_max.ts
 package.json
-    2→  "name": "d2ts-monorepo",
-    3→  "private": true,
-    4→  "license": "Apache-2.0",
-    5→  "scripts": {
-    6→    "build": "pnpm -r build",
-    7→    "test": "pnpm -r test",
-    8→    "lint": "pnpm -r lint",
-    9→    "typecheck": "pnpm -r typecheck",
-    10→    "bench": "pnpm --filter d2ts-benchmark bench",
-    11→    "changeset": "changeset",
-    12→    "version": "changeset version",
-    13→    "release": "changeset publish"
-    14→  },
 packages/
     d2mini/
         CHANGELOG.md
@@ -119,6 +108,8 @@ packages/
         README.md
             1→# D2QL
             3→**This is an experimental package**
+            5→D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2TS pipeline. It provides a declarative way to express data transformations using familiar SQL-like syntax.
+            7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
         eslint.config.mjs
         package.json
         src/
@@ -268,7 +259,14 @@ packages/
                 12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
                 …
                 14→export type Message<T> =
-                …
+                15→  | {
+                16→      type: typeof MessageType.DATA
+                17→      data: DataMessage<T>
+                18→    }
+                19→  | {
+                20→      type: typeof MessageType.FRONTIER
+                21→      data: FrontierMessage
+                22→    }
                 24→export type DataMessage<T> = {
                 25→  version: Version
                 26→  collection: MultiSet<T>
