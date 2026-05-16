@@ -15,6 +15,7 @@ with_fixtures! {
     ("toasty",              "https://github.com/tokio-rs/toasty.git",             "0fb6be95"),
     ("sps",                 "https://github.com/alexykn/sps.git",                 "5a10e7f4"),
     ("otree",               "https://github.com/fioncat/otree.git",               "a02bdf44"),
+    ("hyperfine",           "https://github.com/sharkdp/hyperfine.git",           "f12f3d9f"),
     // Go
     ("go-multierror",       "https://github.com/hashicorp/go-multierror.git",     "edef97ed"),
     ("xxhash",              "https://github.com/cespare/xxhash.git",              "ab37246c"),
@@ -39,6 +40,8 @@ with_fixtures! {
     ("d2ts",                "https://github.com/electric-sql/d2ts.git",           "418591d5"),
     ("p-queue",             "https://github.com/sindresorhus/p-queue.git",        "fc4b7369"),
     ("linkwarden",          "https://github.com/linkwarden/linkwarden.git",       "22723575"),
+    ("vite",                "https://github.com/vitejs/vite.git",                 "b3132dac"),
+    ("monaco-editor",       "https://github.com/microsoft/monaco-editor.git",     "6c8488c6"),
     // JavaScript
     ("commander",           "https://github.com/tj/commander.js.git",             "82473649"),
     ("semver",              "https://github.com/npm/node-semver.git",             "5993c2e4"),
@@ -79,6 +82,8 @@ with_fixtures! {
     ("soluna",              "https://github.com/cloudwu/soluna.git",              "be822052"),
     ("htop",                "https://github.com/htop-dev/htop.git",               "b7f9df97"),
     ("jq",                  "https://github.com/jqlang/jq.git",                   "f58787c4"),
+    ("tinyusb",             "https://github.com/hathach/tinyusb.git",             "7f146c9f"),
+    ("chibicc",             "https://github.com/rui314/chibicc.git",              "90d1f7f1"),
     // Lua
     ("middleclass",         "https://github.com/kikito/middleclass.git",          "359f0e27"),
 

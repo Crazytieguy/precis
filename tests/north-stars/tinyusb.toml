@@ -1,0 +1,618 @@
+fixture = "tinyusb"
+revision_pin = "7f146c9f"
+summary = """
+TinyUSB is a cross-platform USB Host/Device stack for embedded
+MCUs. The repo is organized around a portable core
+(`src/device/usbd.c`, `src/host/usbh.c`) plus per-class drivers
+under `src/class/<class>/` (CDC, HID, MSC, Audio, MIDI, DFU, Net,
+Video, BTH, MTP, Printer, USBTMC, Vendor), per-MCU controller
+drivers under `src/portable/<vendor>/<usbip>/`, an RTOS abstraction
+under `src/osal/`, and ~80 board ports under `hw/bsp/<family>/`.
+Public APIs are namespaced `tud_*` (device), `tuh_*` (host), `tu_*`
+(util), with private `usbd_*`/`usbh_*`/`dcd_*`/`hcd_*` layers
+beneath. Memory-safe (no `malloc`) and thread-safe via deferred ISR
+— interrupts queue events, `tud_task()`/`tuh_task()` drain them in
+task context and invoke application callbacks (`tud_mount_cb`,
+`tud_cdc_rx_cb`, ...).
+
+Plausible agent tasks span: explaining the architecture / naming /
+event flow, adding or modifying a class driver, porting to a new
+MCU, debugging enumeration / descriptor / transfer issues, tuning
+`tusb_config.h`, integrating the stack into an external project,
+adding tests, navigating the descriptor-template DSL.
+
+Ranking prioritizes (1) layout + naming + entrypoints, (2) public
+tud_/tuh_ API surface + descriptor DSL, (3) internal driver-table
++ DCD/HCD-event dispatch, (4) configuration/integration/porting,
+(5) breadth across classes / portable drivers / BSPs / examples.
+"""
+
+# ============================================================
+# Tier 1 — Identity, layout, naming, entrypoints
+# ============================================================
+# Smallest, cheapest batches come first so any budget gets a
+# usable slice. Order is tuned against the growth envelope:
+# cost_i ≤ 100 + 0.3·cumulative_before.
+
+[[batches]]
+id = "1.1"
+descriptor = "src/ directory listing — core stack subdirs"
+justification = """
+Cheapest high-value batch. Names the seven core src buckets
+(class, common, device, host, osal, portable, typec) plus the
+three top-level files (tusb.c, tusb.h, tusb_option.h). Anchors all
+later src-relative pointers. Catastrophic-omission hedge over src.
+"""
+content = { kind = "fs", groups = [{ parent = "src", entries = "all" }] }
+
+[[batches]]
+id = "1.2"
+descriptor = "tusb.h init/task/deinit public entrypoints"
+justification = """
+The five top-level fns the application calls: tusb_rhport_init,
+tusb_init (macro), tusb_inited, tusb_int_handler, tusb_deinit.
+Catches 'where is the init API' in one cheap batch with exact
+lines (sigs only).
+"""
+content = { kind = "lines", spans = [
+  { path = "src/tusb.h", start = 147, end = 147, render = { kind = "full" } },
+  { path = "src/tusb.h", start = 161, end = 161, render = { kind = "full" } },
+  { path = "src/tusb.h", start = 164, end = 164, render = { kind = "full" } },
+  { path = "src/tusb.h", start = 167, end = 167, render = { kind = "full" } },
+  { path = "src/tusb.h", start = 170, end = 170, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "Top-level filesystem layout"
+justification = """
+The canonical bucket-per-directory map: docs/, examples/, hw/,
+lib/, src/, test/, tools/ plus the README/AGENTS/CLAUDE/LICENSE
+files. Listing partial implies the rest don't exist — single batch.
+Ranked after 1.1 so cumulative covers the growth-envelope floor.
+"""
+content = { kind = "fs", groups = [{ parent = ".", entries = "all" }] }
+
+[[batches]]
+id = "1.4"
+descriptor = "TinyUSB API naming conventions"
+justification = """
+The four prefix glossary — tusb_/tud_/tuh_/tu_ — is the single most
+load-bearing micro-fact: every search ('where is X') hinges on
+which prefix to use. Cheap and very high value.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/reference/usb_concepts.rst", start = 9, end = 16, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README lede + key-features"
+justification = """
+One-shot 'what is TinyUSB' for the most common 'explain this repo'
+query — cross-platform host/device stack, no dynamic alloc, ISRs
+deferred to task, 50+ MCU families, CDC/HID/MSC/Audio/Host
+coverage, RTOS-friendly.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.rst", start = 31, end = 42, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "AGENTS.md ground-rules: layout + naming + safety"
+justification = """
+TinyUSB's own agent-onboarding doc. The Ground Rules block is the
+single highest-density 'how is code organized + what conventions
+apply' answer: C99/2-space/snake_case/UPPER_CASE, tud_/tuh_/TU_
+prefixes, no malloc, defer ISR work, TU_ASSERT, layout sketch
+(src, hw/{mcu,bsp}, examples/{device,host,dual}, test, docs,
+tools). Predecessor for everything downstream.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 3, end = 3, render = { kind = "full" } },
+  { path = "AGENTS.md", start = 18, end = 20, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 2 — Public API surface
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "src/device + src/host + src/class listings"
+justification = """
+Names of device-core (dcd.h, usbd_pvt.h, usbd.c, usbd.h), host-core
+(hcd.h, hub.{c,h}, usbh_pvt.h, usbh.{c,h}), and all 13 class subdirs
+(audio, bth, cdc, dfu, hid, midi, msc, mtp, net, printer, usbtmc,
+vendor, video). Single breadth shot over the core source layout.
+"""
+content = { kind = "fs", groups = [
+  { parent = "src/device", entries = "all" },
+  { parent = "src/host", entries = "all" },
+  { parent = "src/class", entries = "all" },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "tusb.h host class-include map"
+justification = """
+tusb.h's host-side conditional include tree (CFG_TUH_HID/MSC/CDC/
+MIDI/VENDOR). Tells the agent which host classes ship and the
+CFG_TUH_* gate they sit behind.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/tusb.h", start = 47, end = 73, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "tusb.h device class-include map (part 1)"
+justification = """
+First half of tusb.h's device-side include block: HID, CDC, MSC,
+PRINTER, MTP, AUDIO, VIDEO. Split from 2.4 to satisfy the growth
+envelope. Together with 2.4 lists every CFG_TUD_* class gate the
+stack offers.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/tusb.h", start = 76, end = 106, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "tusb.h device class-include map (part 2)"
+justification = """
+Second half: MIDI, VENDOR, USBTMC, DFU_RUNTIME, DFU, ECM_RNDIS|NCM,
+BTH. Pair with 2.3 to enumerate all CFG_TUD_* device-class gates.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/tusb.h", start = 107, end = 133, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Public tud_* API signatures (location-only)"
+justification = """
+The full device-stack public API: configure/init/deinit/task,
+state queries (connected/mounted/suspended/ready), connect/
+disconnect/remote_wakeup, control transfer, descriptor callbacks,
+mount/umount/suspend/resume/sof callbacks. Truncated at `(` —
+agent gets every function name + exact line for the full sig.
+Catastrophic-omission hedge over the device API surface.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/device/usbd.h", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 91, end = 91, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 110, end = 110, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 120, end = 120, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 124, end = 124, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 147, end = 147, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 150, end = 150, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 158, end = 158, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 162, end = 162, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 166, end = 166, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 176, end = 176, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 181, end = 181, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 184, end = 184, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 187, end = 187, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 191, end = 191, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 194, end = 194, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 197, end = 197, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 200, end = 200, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 203, end = 203, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Public tuh_* API signatures (location-only)"
+justification = """
+Full host-stack public API: configure/init/deinit/task, rhport +
+per-daddr queries (vid_pid_get, mounted, connected, speed_get,
+bus_info_get), transfer (control_xfer/edpt_xfer/edpt_open/close/
+abort, address/configuration/interface_set), and descriptor_get
+family (device/configuration/string/hid_report/manufacturer/
+product/serial). Catastrophic-omission hedge over host surface.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/host/usbh.h", start = 128, end = 128, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 136, end = 136, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 155, end = 155, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 159, end = 159, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 175, end = 175, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 179, end = 179, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 184, end = 184, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 187, end = 187, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 192, end = 192, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 207, end = 207, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 210, end = 210, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 220, end = 220, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 223, end = 223, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 226, end = 226, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 230, end = 230, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 233, end = 233, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 240, end = 240, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 245, end = 245, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 264, end = 264, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 269, end = 269, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 272, end = 272, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 275, end = 275, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 279, end = 279, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 282, end = 282, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 289, end = 289, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 295, end = 295, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 304, end = 304, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 309, end = 309, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 314, end = 314, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 319, end = 319, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 325, end = 325, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 337, end = 337, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 342, end = 342, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 347, end = 347, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "TUD_*_DESCRIPTOR template macros — names only"
+justification = """
+The descriptor-template DSL: TUD_BOS / BOS_PLATFORM / BOS_WEBUSB /
+BOS_MS_OS_20 / CONFIG / CDC / MSC / PRINTER / MTP / HID /
+HID_INOUT / MIDI / USBTMC_IF / USBTMC_BULK / USBTMC_INT / VENDOR
+descriptor macros. Tells agents 'is there a prebuilt template for
+class X' for the usb_descriptors.c authoring task. Truncated at `(`.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/device/usbd.h", start = 212, end = 212, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 216, end = 216, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 225, end = 225, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 236, end = 236, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 250, end = 250, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 262, end = 262, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 292, end = 292, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 306, end = 306, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 322, end = 322, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 342, end = 342, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 355, end = 355, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 419, end = 419, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 788, end = 788, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 816, end = 816, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "tuh_xfer_t — the host transfer object"
+justification = """
+Every async/sync tuh_* transfer takes a tuh_xfer_t*. Showing the
+struct (daddr, ep_addr, result, actual_len, setup/buflen union,
+buffer, complete_cb, user_data) is the zero-follow-up answer to
+'how do I do a host transfer'.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/host/usbh.h", start = 47, end = 73, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 3 — Internal architecture: event flow + drivers
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Architecture doc — layer overview"
+justification = """
+Single highest-density paragraph for the 'how does this work'
+query: named components (App / Class / USBD/USBH / OSAL / DCD/HCD)
+plus per-stack core-components (Device Stack: DCD / USBD / Class
+drivers; Host Stack: HCD / USBH / Hub).
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/reference/architecture.rst", start = 54, end = 88, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Event processing — ISR → queue → task → callback"
+justification = """
+The five-step deferred-interrupt sequence (Interrupt → ISR → Event
+Queue → tud_task() → Class Callbacks → Application) plus the
+control/data-transfer flow diagrams. Wraps up the 'when does my
+callback fire' question.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/reference/architecture.rst", start = 89, end = 122, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "usbd_class_driver_t — the class-driver vtable"
+justification = """
+The single struct every class driver implements: init/deinit/reset/
+open/control_xfer_cb/xfer_cb/xfer_isr/sof + the
+usbd_app_driver_get_cb application-extension hook. Read this before
+reading any class driver.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/device/usbd_pvt.h", start = 49, end = 67, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "DCD event types — what queues from ISR to task"
+justification = """
+dcd_eventid_t (BUS_RESET, UNPLUGGED, SOF, SUSPEND, RESUME,
+SETUP_RECEIVED, XFER_COMPLETE, USBD_EVENT_FUNC_CALL) and the
+dcd_event_t union are the ISR→task contract that tud_task_ext
+switches on.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/device/dcd.h", start = 42, end = 86, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Concurrency doc — ISR vs task rules"
+justification = """
+The rules every contributor must obey: class drivers never called
+from ISR; usbd_* may be; class drivers may call usbd_* but not
+dcd_*; `in_isr` params flag ISR-callable fns. High value for any
+event-path change.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/reference/concurrency.rst", start = 13, end = 32, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "usbd.c section-header locations"
+justification = """
+usbd.c is 1738 lines, organized as ~12 banner-commented sections.
+Listing them turns 'where is bus-reset / set-config / control
+parser / class registration' into a one-hop file-read.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/device/usbd.c", start = 39, end = 39, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 116, end = 116, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 163, end = 163, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 395, end = 395, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 423, end = 423, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 477, end = 477, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 656, end = 656, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 810, end = 810, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 938, end = 938, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 1371, end = 1371, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 1469, end = 1469, render = { kind = "full" } },
+  { path = "src/device/usbd.c", start = 1521, end = 1521, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "usbh.c section-header locations"
+justification = """
+Mirror of 3.6 for host side. usbh.c is 2050 lines — banners
+(Configuration, Weak stubs, Data Structure, Class Driver, Function
+Inline & Prototypes, Device API, PUBLIC API) are the navigation
+index.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/host/usbh.c", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/host/usbh.c", start = 52, end = 52, render = { kind = "full" } },
+  { path = "src/host/usbh.c", start = 105, end = 105, render = { kind = "full" } },
+  { path = "src/host/usbh.c", start = 224, end = 224, render = { kind = "full" } },
+  { path = "src/host/usbh.c", start = 331, end = 331, render = { kind = "full" } },
+  { path = "src/host/usbh.c", start = 401, end = 401, render = { kind = "full" } },
+  { path = "src/host/usbh.c", start = 463, end = 463, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 4 — Configuration, integration, porting
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "cdc_msc example main() init — canonical reference"
+justification = """
+cdc_msc is the recommended entry per README. The init block shows
+the canonical sequence: board_init → tusb_rhport_init_t{.role=
+DEVICE,.speed=AUTO} → tusb_init(rhport, &dev_init) →
+board_init_after_tusb → while(1){tud_task; cdc_task;
+led_blinking_task}.
+"""
+content = { kind = "lines", spans = [
+  { path = "examples/device/cdc_msc/src/main.c", start = 50, end = 66, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "cdc_msc example — required device callbacks"
+justification = """
+Companion to 4.1: the four mount/umount/suspend/resume callbacks
+the application is expected to implement, showing the callback
+contract (tud_mount_cb(void), tud_umount_cb(void),
+tud_suspend_cb(bool), tud_resume_cb(void)) and a typical body.
+"""
+content = { kind = "lines", spans = [
+  { path = "examples/device/cdc_msc/src/main.c", start = 72, end = 93, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "tusb_config.h example — config knob schema"
+justification = """
+cdc_msc's tusb_config.h shows the full schema: required CFG_TUSB_MCU,
+CFG_TUSB_OS, CFG_TUSB_DEBUG, CFG_TUD_ENABLED + MAX_SPEED,
+CFG_TUD_ENDPOINT0_SIZE, then per-class enable flags + buffer-size
+knobs. The shape of every user's tusb_config.h.
+"""
+content = { kind = "lines", spans = [
+  { path = "examples/device/cdc_msc/src/tusb_config.h", start = 52, end = 113, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "tusb_option.h — version + OPT_OS_* enum"
+justification = """
+Version macros plus the full OPT_OS_* enum (NONE/FREERTOS/MYNEWT/
+CUSTOM/PICO/RTTHREAD/RTX4/ZEPHYR/THREADX) — the set of RTOS
+backends. Marks src/tusb_option.h as the canonical CFG_TUSB_MCU
+enum home as well.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/tusb_option.h", start = 31, end = 37, render = { kind = "full" } },
+  { path = "src/tusb_option.h", start = 232, end = 240, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "Integration steps — 9-step recipe"
+justification = """
+Canonical 'how to wire TinyUSB into my project': get the code, add
+.c files, create tusb_config.h, configure include paths, implement
+descriptor callbacks, call tusb_init, hook USB IRQ →
+tusb_int_handler, call tud_task/tuh_task in main loop, implement
+class callbacks. Zero-follow-up for integration tasks.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/integration.rst", start = 9, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "Porting overview"
+justification = """
+TinyUSB ships the high-level protocol; porting = adding a low-level
+controller driver under src/portable/<vendor>/<chip_family>/dcd_<
+chip_family>.c. Plus the register-defs + BSP step. Targeted at
+agents adding new-MCU support.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/porting.rst", start = 6, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "FAQ — most-asked debug pitfalls"
+justification = """
+Compact debug-question coverage: tusb_config.h not found,
+pico-sdk overrides settings, multiple dcd_ definitions, device not
+recognized, Windows descriptor-request-failed. Saves multi-hop
+searches when debugging.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/faq.rst", start = 43, end = 73, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 5 — Breadth: examples, portable, BSPs
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "examples/{device,host,dual} listings"
+justification = """
+~34 device examples (cdc_msc, hid_*, audio_*, dfu, msc_dual_lun,
+mtp, net_lwip_webserver, uac2_*, video_capture, webusb_serial, ...),
+9 host examples, 3 dual examples. Names alone answer 'is there a
+template for X' for almost every class + composite combo.
+"""
+content = { kind = "fs", groups = [
+  { parent = "examples/device", entries = "all" },
+  { parent = "examples/host", entries = "all" },
+  { parent = "examples/dual", entries = "all" },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "src/portable/ — MCU-vendor coverage"
+justification = """
+22 vendor subdirs (analog, bridgetek, chipidea, dialog, ehci,
+mentor, microchip, mindmotion, nordic, nuvoton, nxp, ohci,
+raspberrypi, renesas, sony, st, sunxi, synopsys, template, ti,
+valentyusb, wch). Tells the agent 'is X supported / where to start
+a new port'.
+"""
+content = { kind = "fs", groups = [{ parent = "src/portable", entries = "all" }] }
+
+[[batches]]
+id = "5.3"
+descriptor = "hw/bsp/ board-family listing"
+justification = """
+~80 board-family subdirs (at32*, broadcom_*, ch32*, espressif,
+imxrt, kinetis_*, lpc*, mcx, nrf, rp2040, samd*, same7x, samg,
+stm32*, tm4c, xmc4000, ...) plus shared files (board_api.h, board.c,
+family_*.cmake/mk, BoardPresets.json). Authoritative answer to 'is
+BOARD=X supported?'.
+"""
+content = { kind = "fs", groups = [{ parent = "hw/bsp", entries = "all" }] }
+
+[[batches]]
+id = "5.4"
+descriptor = "src/common + src/osal + src/typec listings"
+justification = """
+common/ headers (tusb_common, tusb_compiler, tusb_debug,
+tusb_fifo.{c,h}, tusb_mcu, tusb_private, tusb_types, tusb_verify),
+OSAL backends (osal.h + 8 osal_<rtos>.h files), and the TypeC stack
+(pd_types.h, tcd.h, usbc.{c,h}). Closes the breadth picture on src.
+"""
+content = { kind = "fs", groups = [
+  { parent = "src/common", entries = "all" },
+  { parent = "src/osal", entries = "all" },
+  { parent = "src/typec", entries = "all" },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "test/ + tools/ + docs/reference/ listings"
+justification = """
+test/{fuzz,hil,unit-test}, the tools/ family (build.py, get_deps,
+metrics_compare_base, make_release, gen_*, iar_*, pcapng_to_corpus,
+usb_drivers), and docs/reference/ (architecture, boards,
+concurrency, dependencies, glossary, usb_concepts). Auxiliary-
+machinery picture.
+"""
+content = { kind = "fs", groups = [
+  { parent = "test", entries = "all" },
+  { parent = "tools", entries = "all" },
+  { parent = "docs/reference", entries = "all" },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "USB transfer types — TinyUSB-context mapping"
+justification = """
+Per-transfer-type (Control/Bulk/Interrupt) brief with the
+'TinyUSB Context' pointers naming the actual files (src/device/
+usbd.c, src/class/msc/, src/class/cdc/, src/class/hid/) and the
+CFG_TUD_* knobs. Bridges 'what is USB' and 'where in TinyUSB'.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/reference/usb_concepts.rst", start = 53, end = 81, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "AGENTS.md build + test recipe pointers"
+justification = """
+Compact pointer to the bootstrap, build (single-example via cmake/
+make), and unit-test (ceedling test:all) recipe blocks agents need
+to validate changes locally. Full doc is much longer but these two
+slices cover ~80% of practical use.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 25, end = 40, render = { kind = "full" } },
+] }

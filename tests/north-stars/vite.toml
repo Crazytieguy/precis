@@ -1,0 +1,892 @@
+fixture = "vite"
+revision_pin = "b3132dac"
+summary = """
+Vite is a frontend dev/build tool: an unbundled-during-dev ES-module server
+with HMR for development, and a Rolldown-backed bundler for production. The
+fixture is the full pnpm monorepo. Three published packages live under
+`packages/`: `vite` (the core CLI + JS API + plugins + dev server, ~31k
+lines across `src/node/`, plus `src/client/` browser-side HMR, a
+`src/module-runner/` SSR runner library, and a `src/shared/` cross-target
+slice), `create-vite` (the scaffolding CLI, single-file `src/index.ts`),
+and `plugin-legacy` (the legacy-browser polyfill plugin, also single-file
+`src/index.ts`). Documentation lives under `docs/` (VitePress site:
+`guide/`, `config/`, `blog/`) and E2E tests live as ~80 mini-projects
+under `playground/`.
+
+The query distribution skews heavily toward `packages/vite` core: what
+the `Plugin` interface looks like, what user-config fields exist
+(`UserConfig`, `BuildEnvironmentOptions`, `ServerOptions`, HMR options),
+how the CLI dispatches `dev` / `build` / `preview` / `optimize`, how the
+dev server is constructed and how requests flow through middlewares +
+plugin container + module graph, how HMR payloads + the module-runner
+work. Ranking front-loads orientation (lede + monorepo layout + vite/src
+layout + public-API map), then the major surface types (Plugin,
+UserConfig, ViteDevServer, build/HMR payloads), then CLI dispatch +
+dev-server assembly, then plugin pipeline + module graph + transform
+pipeline, then the leaf plugin/optimizer/SSR modules, then sibling
+packages, then docs and tests.
+"""
+
+# ────────────────────────────────────────────────────────────────────
+# TIER 1 — orientation: one-line lede, top-level layout, vite/src map
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo README — title only"
+justification = """
+Two lines: the H1 (`# Vite ⚡`) and the tagline (`> Next Generation
+Frontend Tooling`). Cheapest possible orientation.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 24, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Fixture-root listing"
+justification = """
+Names every top-level file/dir — `packages/`, `docs/`, `playground/`,
+`scripts/`, `patches/`, the workspace + lint + vitest configs, top-level
+docs. Catastrophic-omission hedge: agent must see *all* top-level dirs
+together.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = ".", entries = "all" }]
+
+[[batches]]
+id = "1.3"
+descriptor = "packages/ listing"
+justification = """
+Three-entry directory: `vite`, `create-vite`, `plugin-legacy`.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "packages", entries = "all" }]
+
+[[batches]]
+id = "1.4"
+descriptor = "README lede — definition sentence"
+justification = """
+The canonical one-sentence definition: "Vite is a build tool…
+faster and leaner development experience…". Predecessor 1.1
+grounded the name; this fills in semantics.
+"""
+predecessor = "1.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 35, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "packages/vite/src/ layout"
+justification = """
+src/ splits into five subdirs: `node/` (server+plugin code), `client/`
+(browser HMR), `module-runner/` (SSR runner), `shared/` (cross-target
+helpers), `types/` (.d.ts shims). Most queries land somewhere under
+`src/node/`.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "packages/vite/src", entries = "all" }]
+
+[[batches]]
+id = "1.6"
+descriptor = "packages/vite/ top-level listing"
+justification = """
+The vite core's top-level files: bin/, src/, types/, scripts/, misc/,
+package.json, rolldown.config.ts, rolldown.dts.config.ts, client.d.ts,
+tsconfig.json. Types are split between `types/` (published .d.ts) and
+`src/types/` (internal-only shims).
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "packages/vite", entries = "all" }]
+
+[[batches]]
+id = "1.7"
+descriptor = "packages/vite/src/node/ listing"
+justification = """
+The biggest single directory — names every node-side file (build.ts,
+cli.ts, config.ts, environment.ts, http.ts, logger.ts, plugin.ts,
+optimizer/, plugins/, server/, ssr/, utils.ts, watch.ts). Listing only
+some would be catastrophic omission: each is the canonical home of a
+concept.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "packages/vite/src/node", entries = "all" }]
+
+[[batches]]
+id = "1.8"
+descriptor = "Vite public API — node/index.ts value re-exports"
+justification = """
+The public-API map. Names the most important value exports:
+`defineConfig`, `resolveConfig`, `createServer`, `preview`, `build`,
+`createBuilder`, `optimizeDeps`, `createIdResolver`,
+`transformWithEsbuild`, `transformWithOxc`, `buildErrorMessage`, the
+dev-environment factories.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/index.ts", start = 29, end = 47, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# TIER 2 — Plugin / UserConfig / ViteDevServer skeletons
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "2.1"
+descriptor = "node/index.ts — more value exports + key utils"
+justification = """
+Next value exports: `createServerModuleRunner`,
+`createServerHotChannel`, `moduleRunnerTransform`, plus
+`VERSION`/conditions/main-fields re-exports from constants, plus
+utility re-exports `normalizePath`, `mergeConfig`, `createFilter`,
+`isCSSRequest`, `send`, `createLogger`, `searchForWorkspaceRoot`,
+`isFileServingAllowed`, `loadEnv`.
+"""
+predecessor = "1.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/index.ts", start = 65, end = 76, render = { kind = "full" } },
+  { path = "packages/vite/src/node/index.ts", start = 88, end = 100, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "Plugin interface header + 2-paragraph doc"
+justification = """
+The two-paragraph doc above the interface — Vite plugins extend
+Rollup plugins; run during both serve and build; can be apply-gated.
+Plus the `Plugin<A>` declaration line. Anchors any plugin-authoring
+follow-up.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/plugin.ts", start = 36, end = 49, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 101, end = 101, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "Plugin interface — every hook field name"
+justification = """
+One declaration line per hook on Plugin: `hotUpdate`, `resolveId`,
+`load`, `transform`, `sharedDuringBuild`,
+`perEnvironmentStartEndDuringDev`, `perEnvironmentWatchChangeDuringDev`,
+`enforce`, `apply`, `applyToEnvironment`, `config`,
+`configEnvironment`, `configResolved`, `configureServer`,
+`configurePreviewServer`, `transformIndexHtml`, `buildApp`,
+`handleHotUpdate`, `shouldTransformCachedModule`. Plus `PluginOption`.
+Catastrophic-omission hedge over plugin hooks.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/plugin.ts", start = 117, end = 117, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 130, end = 130, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 148, end = 148, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 158, end = 158, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 184, end = 184, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 192, end = 192, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 200, end = 200, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 214, end = 214, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 218, end = 221, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 227, end = 229, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 238, end = 238, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 259, end = 259, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 280, end = 280, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 295, end = 295, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 305, end = 305, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 326, end = 326, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 332, end = 332, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 348, end = 348, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 360, end = 360, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 375, end = 377, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugin.ts", start = 383, end = 384, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "UserConfig top-level field declarations"
+justification = """
+Every top-level UserConfig field declaration line. Covers `root`,
+`base`, `publicDir`, `cacheDir`, `mode`, `plugins`, `html`, `css`,
+`json`, `esbuild`, `oxc`, `assetsInclude`, `builder`, `server`,
+`preview`, `experimental`, `future`, `legacy`, `logLevel`,
+`customLogger`, `clearScreen`, `envDir`, `envPrefix`, `worker`,
+`optimizeDeps`, `ssr`, `environments`, `appType`, `devtools`.
+Catastrophic-omission hedge.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/config.ts", start = 353, end = 353, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 359, end = 359, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 364, end = 364, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 373, end = 373, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 383, end = 383, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 388, end = 388, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 392, end = 392, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 396, end = 396, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 400, end = 400, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 404, end = 404, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 411, end = 411, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 416, end = 416, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 420, end = 420, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 425, end = 425, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 429, end = 429, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 433, end = 433, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 441, end = 441, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 445, end = 445, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 452, end = 452, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 457, end = 457, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 461, end = 461, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 465, end = 465, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 471, end = 471, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 476, end = 476, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 480, end = 480, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 511, end = 511, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 517, end = 517, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 521, end = 521, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 528, end = 528, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 535, end = 535, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "ViteDevServer interface — header + property/method names"
+justification = """
+What `createServer()` returns. Declaration + one line per public
+property/method: `config`, `middlewares`, `httpServer`, `watcher`,
+`ws`, `hot`, `pluginContainer`, `environments`, `moduleGraph`,
+`resolvedUrls`, `transformRequest`, `warmupRequest`,
+`transformIndexHtml`, `ssrTransform`, `ssrLoadModule`,
+`ssrRewriteStacktrace`, `ssrFixStacktrace`, `reloadModule`, `listen`,
+`close`, `printUrls`, `bindCLIShortcuts`, `restart`, `openBrowser`,
+`waitForRequestsIdle`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/server/index.ts", start = 299, end = 299, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 303, end = 303, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 312, end = 312, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 317, end = 317, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 323, end = 323, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 327, end = 327, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 332, end = 332, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 336, end = 336, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 340, end = 340, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 345, end = 345, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 350, end = 350, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 355, end = 358, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 364, end = 364, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 368, end = 372, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 376, end = 381, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 385, end = 388, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 392, end = 392, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 396, end = 396, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 401, end = 401, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 405, end = 405, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 409, end = 409, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 413, end = 413, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 417, end = 417, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 423, end = 423, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 427, end = 427, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 434, end = 434, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/index.ts", start = 465, end = 468, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "defineConfig + ConfigEnv types"
+justification = """
+The `defineConfig` overloads + the `ConfigEnv` interface that
+function-form configs receive. First lines of any vite.config.ts.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/config.ts", start = 140, end = 149, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 160, end = 162, render = { kind = "full" } },
+  { path = "packages/vite/src/node/config.ts", start = 176, end = 184, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# TIER 3 — CLI dispatch, HMR payload, key option groups
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "3.1"
+descriptor = "HMR payload types — every HotPayload variant"
+justification = """
+The wire-format between Vite server, browser HMR client, and
+module-runner. Variants: ConnectedPayload, PingPayload, UpdatePayload
+(with `Update[]`), FullReloadPayload, CustomPayload, ErrorPayload,
+PrunePayload. Whole file is 80 lines.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/types/hmrPayload.d.ts", start = 1, end = 80, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "CLI command dispatch — command headers"
+justification = """
+The four commands and their import-targets: dev → `createServer`,
+build → `createBuilder`, optimize → `optimizeDeps`, preview →
+`preview`. Plus the cac instance creation and `cli.help()`/`version`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/cli.ts", start = 35, end = 36, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 190, end = 193, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 215, end = 215, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 307, end = 307, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 349, end = 349, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 386, end = 389, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 398, end = 398, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 424, end = 424, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 442, end = 442, render = { kind = "full" } },
+  { path = "packages/vite/src/node/cli.ts", start = 477, end = 478, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "CLI global option registrations"
+justification = """
+The cluster of `.option(...)` lines that register the global CLI
+flags: -c/--config, --base, -l/--logLevel, --clearScreen,
+--configLoader, -d/--debug, -f/--filter, -m/--mode.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/cli.ts", start = 174, end = 187, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "BuildEnvironmentOptions — every public field"
+justification = """
+Names every top-level build option as a single declaration line:
+target, modulePreload, outDir, assetsDir, assetsInlineLimit,
+cssCodeSplit, cssTarget, cssMinify, sourcemap, minify, terserOptions,
+rolldownOptions, dynamicImportVarsOptions, write, emptyOutDir,
+copyPublicDir, license, manifest, lib, ssr, ssrManifest,
+ssrEmitAssets, emitAssets, reportCompressedSize,
+chunkSizeWarningLimit, watch, createEnvironment.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/build.ts", start = 92, end = 92, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 109, end = 109, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 122, end = 122, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 128, end = 128, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 134, end = 134, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 143, end = 145, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 152, end = 152, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 162, end = 162, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 168, end = 168, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 176, end = 176, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 182, end = 182, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 190, end = 190, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 200, end = 200, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 209, end = 209, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 214, end = 214, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 219, end = 219, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 224, end = 224, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 230, end = 230, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 250, end = 250, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 257, end = 257, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 263, end = 263, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 269, end = 269, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 274, end = 274, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 279, end = 279, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 285, end = 285, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 290, end = 290, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 296, end = 296, render = { kind = "full" } },
+  { path = "packages/vite/src/node/build.ts", start = 300, end = 300, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "HotChannel / HmrOptions / HmrContext / HotUpdateOptions"
+justification = """
+The plugin-facing HMR types: HmrOptions (protocol/host/port),
+HotUpdateOptions (the `hotUpdate` plugin hook context), HmrContext
+(legacy `handleHotUpdate` context), HotChannel / HotChannelClient /
+HotChannelListener for custom transports.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/server/hmr.ts", start = 48, end = 89, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/hmr.ts", start = 91, end = 91, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/hmr.ts", start = 96, end = 96, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/hmr.ts", start = 100, end = 100, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/hmr.ts", start = 104, end = 105, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/hmr.ts", start = 109, end = 109, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/hmr.ts", start = 113, end = 113, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/hmr.ts", start = 117, end = 120, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# TIER 4 — plugin pipeline, module graph, dev-server internals
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "4.1"
+descriptor = "vite/src/node/plugins/ listing"
+justification = """
+Every built-in plugin source file: asset, css, define,
+dynamicImportVars, esbuild, html, importAnalysis, importAnalysisBuild,
+importMetaGlob, json, license, manifest, modulePreloadPolyfill,
+optimizedDeps, oxc, pluginFilter, preAlias, prepareOutDir, reporter,
+resolve, terser, wasm, worker, workerImportMetaUrl.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "packages/vite/src/node/plugins", entries = "all" }]
+
+[[batches]]
+id = "4.2"
+descriptor = "vite/src/node/server/ + middlewares/ + environments/"
+justification = """
+Server-side subdirs: environment.ts, hmr.ts, index.ts,
+mixedModuleGraph.ts, moduleGraph.ts, openBrowser.ts, pluginContainer.ts,
+searchRoot.ts, send.ts, sourcemap.ts, transformRequest.ts, warmup.ts,
+ws.ts; the 13 middlewares (base, error, hostCheck, htmlFallback,
+indexHtml, memoryFiles, notFound, proxy, rejectInvalidRequest, static,
+time, transform, triggerLazyBundling); the three environment factories
+(runnableEnvironment, fullBundleEnvironment, fetchableEnvironments).
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/vite/src/node/server", entries = "all" },
+  { parent = "packages/vite/src/node/server/middlewares", entries = "all" },
+  { parent = "packages/vite/src/node/server/environments", entries = "all" },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "resolvePlugins signature + final plugin chain"
+justification = """
+resolvePlugins is the single point that orders every built-in plugin
+around the user's pre/normal/post plugins. We show the signature and
+the tail of the plugin array (worker / asset / forwardConsole /
+nativeWasmFallback / definePlugin / cssPostPlugin / buildHtmlPlugin /
+workerImportMetaUrl / assetImportMetaUrl / dynamicImportVars /
+importGlob / clientInjections / cssAnalysis / importAnalysis), where
+the most load-bearing ordering happens.
+"""
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/plugins/index.ts", start = 43, end = 48, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugins/index.ts", start = 128, end = 136, render = { kind = "full" } },
+  { path = "packages/vite/src/node/plugins/index.ts", start = 138, end = 158, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "createServer entry"
+justification = """
+`createServer(inlineConfig)` is the dev-server entry point. Its
+`_createServer` internal accepts the restart-related options.
+"""
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/server/index.ts", start = 470, end = 485, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "EnvironmentModuleNode — class + key fields"
+justification = """
+Per-module HMR state, fields-only (skip doc comments): url, id, file,
+type (js/css/asset), info, meta, importers, importedModules,
+acceptedHmrDeps, acceptedHmrExports, importedBindings,
+isSelfAccepting, transformResult, lastHMRTimestamp,
+lastHMRInvalidationReceived, lastInvalidationTimestamp,
+invalidationState, staticImportedUrls.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 14, end = 15, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 19, end = 19, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 23, end = 28, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 32, end = 36, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 43, end = 43, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 50, end = 51, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 62, end = 62, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 69, end = 69, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 74, end = 74, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "EnvironmentModuleGraph + ResolvedUrl"
+justification = """
+Class header + four index maps (urlToModuleMap, idToModuleMap,
+etagToModuleMap, fileToModulesMap). Plus the ResolvedUrl tuple type.
+"""
+predecessor = "4.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 84, end = 97, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/moduleGraph.ts", start = 110, end = 110, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "TransformResult / TransformOptions / transformRequest sig"
+justification = """
+What the transform pipeline returns and how it's invoked.
+TransformResult: code, map, ssr, etag, deps, dynamicDeps. Plus the
+ERR_LOAD_URL / ERR_LOAD_PUBLIC_URL / ERR_DENIED_ID error tags.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/server/transformRequest.ts", start = 40, end = 42, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/transformRequest.ts", start = 48, end = 62, render = { kind = "full" } },
+  { path = "packages/vite/src/node/server/transformRequest.ts", start = 78, end = 82, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "DevEnvironment class header"
+justification = """
+The per-environment object whose `transformRequest` / `moduleGraph` /
+`pluginContainer` users access via `server.environments.client` etc.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/server/environment.ts", start = 40, end = 58, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# TIER 5 — module-runner, client, ssr, shared, optimizer
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "5.1"
+descriptor = "module-runner/index.ts re-exports"
+justification = """
+The `vite/module-runner` subpath entry. Names: ModuleRunner,
+EvaluatedModules, ESModulesEvaluator, createDefaultImportMeta,
+createNodeImportMeta, createWebSocketModuleRunnerTransport, plus the
+type aliases.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/module-runner/index.ts", start = 1, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "ModuleRunner class — header + public methods"
+justification = """
+Constructor takes ModuleRunnerOptions (transport, hmr,
+sourcemapInterceptor). Public methods: `import`, `clearCache`,
+`close`, `isClosed`.
+"""
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/module-runner/runner.ts", start = 38, end = 41, render = { kind = "full" } },
+  { path = "packages/vite/src/module-runner/runner.ts", start = 53, end = 57, render = { kind = "full" } },
+  { path = "packages/vite/src/module-runner/runner.ts", start = 87, end = 90, render = { kind = "full" } },
+  { path = "packages/vite/src/module-runner/runner.ts", start = 96, end = 98, render = { kind = "full" } },
+  { path = "packages/vite/src/module-runner/runner.ts", start = 103, end = 107, render = { kind = "full" } },
+  { path = "packages/vite/src/module-runner/runner.ts", start = 116, end = 118, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "vite/src/shared/ + client/ + module-runner/"
+justification = """
+shared/ (constants, builtin, forwardConsole, hmr, hmrHandler,
+invokeMethods, moduleRunnerTransport, ssrTransform, utils) is
+consumed from both client.ts and module-runner. client/ has
+client.ts, env.ts, overlay.ts. module-runner/ has the full
+ModuleRunner / EvaluatedModules / ESModulesEvaluator implementation.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/vite/src/shared", entries = "all" },
+  { parent = "packages/vite/src/client", entries = "all" },
+  { parent = "packages/vite/src/module-runner", entries = "all" },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "vite/src/node/ssr/ + optimizer/ listings"
+justification = """
+SSR helpers (fetchModule, index, runnerImport, runtime/,
+ssrManifestPlugin, ssrModuleLoader, ssrStacktrace, ssrTransform) and
+the optimizer (index, optimizer, pluginConverter, resolve,
+rolldownDepPlugin, scan).
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/vite/src/node/ssr", entries = "all" },
+  { parent = "packages/vite/src/node/optimizer", entries = "all" },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# TIER 6 — utils, constants, sibling packages
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "6.1"
+descriptor = "Key default constants — ports + paths + regexes"
+justification = """
+The most-grep-referenced defaults: DEFAULT_DEV_PORT = 5173,
+DEFAULT_PREVIEW_PORT = 4173, DEFAULT_ASSETS_INLINE_LIMIT = 4096,
+DEFAULT_CONFIG_FILES list, FS_PREFIX, CLIENT_PUBLIC_PATH,
+ENV_PUBLIC_PATH, JS_TYPES_RE / CSS_LANGS_RE / OPTIMIZABLE_ENTRY_RE /
+SPECIAL_QUERY_RE.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/constants.ts", start = 98, end = 114, render = { kind = "full" } },
+  { path = "packages/vite/src/node/constants.ts", start = 119, end = 122, render = { kind = "full" } },
+  { path = "packages/vite/src/node/constants.ts", start = 207, end = 211, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "ROLLUP_HOOKS list"
+justification = """
+The list of Rollup hook names Vite forwards to Rolldown (`options`,
+`buildStart`, `buildEnd`, `renderStart`, `renderChunk`, `writeBundle`,
+`generateBundle`, `banner`, `footer`, `outputOptions`, `intro`,
+`outro`, `closeBundle`, `closeWatcher`, `load`, `moduleParsed`,
+`watchChange`, `resolveDynamicImport`, `resolveId`, `transform`,
+`onLog`). Answers "which Rollup hooks does Vite call".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/constants.ts", start = 10, end = 38, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "utils.ts — top-asked function locations"
+justification = """
+Location pointers into the biggest helper file (1835 lines): the
+most-asked-about ones — createFilter, isInNodeModules,
+createDebugger, normalizePath, fsPathFromId, fsPathFromUrl,
+isExternalUrl, isCSSRequest, lookupFile, generateCodeFrame, emptyDir.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/src/node/utils.ts", start = 61, end = 61, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 140, end = 140, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 187, end = 187, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 232, end = 232, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 236, end = 236, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 243, end = 243, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 281, end = 281, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 305, end = 305, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 412, end = 412, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 492, end = 492, render = { kind = "full" } },
+  { path = "packages/vite/src/node/utils.ts", start = 593, end = 593, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "create-vite + plugin-legacy package layouts"
+justification = """
+create-vite has src/index.ts + many `template-<framework>` dirs +
+tsdown.config + tests. plugin-legacy has src/{index,snippets,types}.ts
++ tsdown.config + tests.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/create-vite", entries = "all" },
+  { parent = "packages/plugin-legacy", entries = "all" },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "create-vite — helpMessage + init() signature"
+justification = """
+CLI help text listing every template (vanilla-ts, vue-ts, react-ts,
+react-compiler-ts, preact-ts, lit-ts, svelte-ts, solid-ts, qwik-ts)
+and every flag (-t/--template, -i/--immediate, --overwrite,
+--interactive, -h/--help). Plus the `init()` entry.
+"""
+predecessor = "6.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/create-vite/src/index.ts", start = 39, end = 50, render = { kind = "full" } },
+  { path = "packages/create-vite/src/index.ts", start = 437, end = 437, render = { kind = "full" } },
+  { path = "packages/create-vite/src/index.ts", start = 937, end = 937, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.6"
+descriptor = "plugin-legacy — exports + key helpers"
+justification = """
+viteLegacyPlugin default export, detectPolyfills /
+modulePreloadLinkRE / cspHashes named exports, plus polyfillsPlugin
+header. Catastrophic-omission hedge over a 1080-line single-file
+package.
+"""
+predecessor = "6.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/plugin-legacy/src/index.ts", start = 128, end = 128, render = { kind = "full" } },
+  { path = "packages/plugin-legacy/src/index.ts", start = 149, end = 149, render = { kind = "full" } },
+  { path = "packages/plugin-legacy/src/index.ts", start = 794, end = 794, render = { kind = "full" } },
+  { path = "packages/plugin-legacy/src/index.ts", start = 940, end = 940, render = { kind = "full" } },
+  { path = "packages/plugin-legacy/src/index.ts", start = 1057, end = 1057, render = { kind = "full" } },
+  { path = "packages/plugin-legacy/src/index.ts", start = 1064, end = 1066, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# TIER 7 — docs + playground + repo configs
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "7.1"
+descriptor = "docs/guide/ + docs/config/ listings"
+justification = """
+Guide pages: api-environment-*, api-hmr, api-javascript, api-plugin,
+assets, backend-integration, build, cli, dep-pre-bundling,
+env-and-mode, features, migration, performance, philosophy, ssr,
+static-deploy, troubleshooting, using-plugins, why. Config pages:
+build-options, dep-optimization-options, preview-options,
+server-options, shared-options, ssr-options, worker-options — these
+mirror the same fields in src/node/config.ts and build.ts.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "docs/guide", entries = "all" },
+  { parent = "docs/config", entries = "all" },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "vite package.json — exports map + runtime deps"
+justification = """
+The exports map (`./`, `./client`, `./module-runner`, `./internal`,
+`./dist/client/*`, `./types/*`) and the small runtime `dependencies`
+list (lightningcss, picomatch, postcss, rolldown, tinyglobby). Most
+of Vite's deps are devDeps because they get bundled into dist.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vite/package.json", start = 19, end = 32, render = { kind = "full" } },
+  { path = "packages/vite/package.json", start = 75, end = 81, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "playground/ E2E fixture directory listing"
+justification = """
+~80 mini-projects, one per feature (alias, assets, css, hmr, ssr,
+ssr-pug, tailwind, worker, optimize-deps, define, env, glob-import,
+…). One-line ls answers "is there an integration test for X".
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "playground", entries = "all" }]
+
+[[batches]]
+id = "7.4"
+descriptor = "docs/guide/features.md — H2 headings"
+justification = """
+H2 TOC of Vite's user-facing capabilities: npm Dep Resolving and
+Pre-Bundling, HMR, TypeScript, HTML, Frameworks, JSX, CSS, Static
+Assets, JSON, Glob Import, Dynamic Import, WebAssembly, Web Workers,
+CSP, License, Build Optimizations.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/guide/features.md", start = 5, end = 5, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 23, end = 23, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 29, end = 29, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 180, end = 180, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 224, end = 224, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 270, end = 270, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 363, end = 363, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 408, end = 408, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 421, end = 421, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 632, end = 632, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 650, end = 650, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 714, end = 714, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 766, end = 766, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 788, end = 788, render = { kind = "full" } },
+  { path = "docs/guide/features.md", start = 824, end = 824, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.5"
+descriptor = "docs/guide/api-plugin.md — H2 headings"
+justification = """
+Plugin-author doc TOC: Authoring, Conventions, Plugins Config, Simple
+Examples, Virtual Modules Convention, Universal Hooks, Vite Specific
+Hooks, Plugin Context Meta, Output Bundle Metadata, Plugin Ordering,
+Conditional Application, Rolldown Plugin Compatibility, Path
+Normalization, Filtering, Client-server Communication.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/guide/api-plugin.md", start = 7, end = 7, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 18, end = 18, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 41, end = 41, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 77, end = 77, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 111, end = 111, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 152, end = 152, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 180, end = 180, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 480, end = 480, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 507, end = 507, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 545, end = 545, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 581, end = 581, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 610, end = 610, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 623, end = 623, render = { kind = "full" } },
+  { path = "docs/guide/api-plugin.md", start = 662, end = 662, render = { kind = "full" } },
+]

@@ -1,0 +1,336 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.editorconfig
+.git-blame-ignore-revs
+.gitattributes
+.github/
+.gitignore
+.oxfmtrc.json
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+LICENSE
+README.md
+    24→# Vite ⚡
+    26→> Next Generation Frontend Tooling
+    28→- 💡 Instant Server Start
+    29→- ⚡️ Lightning Fast HMR
+    30→- 🛠️ Rich Features
+    31→- 📦 Optimized Build
+    32→- 🔩 Universal Plugin Interface
+    33→- 🔑 Fully Typed APIs
+    35→Vite (French word for "quick", pronounced [`/viːt/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
+    37→- A dev server that provides [rich feature enhancements](https://vite.dev/guide/features) over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), for example extremely fast [Hot Module Replacement (HMR)](https://vite.dev/guide/features#hot-module-replacement).
+    39→- A build command that bundles your code with [Rolldown](https://rolldown.rs), pre-configured to output highly optimized static assets for production.
+    41→In addition, Vite is highly extensible via its [Plugin API](https://vite.dev/guide/api-plugin.html) and [JavaScript API](https://vite.dev/guide/api-javascript.html) with full typing support.
+    43→[Read the Docs to Learn More](https://vite.dev).
+    45→## Packages
+    …
+    53→## Contribution
+    …
+    55→See [Contributing Guide](CONTRIBUTING.md).
+    57→## License
+    …
+    59→[MIT](LICENSE).
+    61→## Sponsors
+    …
+    63→<p align="center">
+    64→  <a target="_blank" href="https://github.com/sponsors/vite">
+    65→    <img alt="sponsors" src="https://sponsors.vite.dev/sponsors.svg">
+    66→  </a>
+    67→</p>
+docs/
+eslint.config.js
+netlify.toml
+package.json
+packages/
+    create-vite/
+    plugin-legacy/
+        CHANGELOG.md
+        LICENSE
+        README.md
+            1→# @vitejs/plugin-legacy…
+            3→Vite's minimum browser support target is [native ESM dynamic import](https://caniuse.com/es6-module-dynamic-import), and [`import.meta`](https://caniuse.com/mdn-javascript_operators_import_meta). This plugin provides support for legacy browsers that do not support those features when building for production.
+        package.json
+        src/
+            __tests__/
+            index.ts
+                128→export const modulePreloadLinkRE: RegExp =
+                129→  /<link(?![\w-])[^>]*?\srel=(['"])modulepreload\1[^>]*>/g
+                794→export async function detectPolyfills(
+                795→  code: string,
+                796→  targets: any,
+                797→  assumptions: Record<string, boolean>,
+                798→  list: Set<string>,
+                799→): Promise<void> {
+                800→  const babel = await loadBabel()
+                801→  const result = babel.transform(code, {
+                802→    ast: true,
+                803→    code: false,
+                804→    babelrc: false,
+                805→    configFile: false,
+                806→    compact: false,
+                807→    targets,
+                808→    assumptions,
+                809→    browserslistConfigFile: false,
+                810→    plugins: [
+                811→      [
+                812→        (await import('babel-plugin-polyfill-corejs3')).default,
+                813→        {
+                814→          method: 'usage-global',
+                815→          version: _require('core-js/package.json').version,
+                816→          shippedProposals: true,
+                817→        },
+                818→      ],
+                819→      [
+                820→        (await import('babel-plugin-polyfill-regenerator')).default,
+                821→        {
+                822→          method: 'usage-global',
+                823→        },
+                824→      ],
+                825→    ],
+                826→  })
+                827→  for (const node of result!.ast!.program.body) {
+                828→    if (node.type === 'ImportDeclaration') {
+                829→      const source = node.source.value
+                830→      if (
+                831→        source.startsWith('core-js/') ||
+                832→        source.startsWith('regenerator-runtime/')
+                833→      ) {
+                834→        list.add(source)
+                835→      }
+                836→    }
+                837→  }
+                1057→export const cspHashes: string[] = [
+                1058→  safari10NoModuleFix,
+                1059→  systemJSInlineCode,
+                1060→  detectModernBrowserCode,
+                1061→  dynamicFallbackInlineCode,
+                1062→].map((i) => crypto.hash('sha256', i, 'base64'))
+                1064→export type { Options }
+                …
+                1066→export default viteLegacyPlugin
+                …
+                1078→export { viteLegacyPluginCjs as 'module.exports' }
+            shims.d.ts
+            snippets.ts
+            types.ts
+        tsconfig.json
+        tsdown.config.ts
+    vite/
+        CHANGELOG.md
+        LICENSE.md
+        README.md
+            1→# Vite ⚡
+            3→> Next Generation Frontend Tooling
+            5→- 💡 Instant Server Start
+            6→- ⚡️ Lightning Fast HMR
+            7→- 🛠️ Rich Features
+            8→- 📦 Optimized Build
+            9→- 🔩 Universal Plugin Interface
+            10→- 🔑 Fully Typed APIs
+            12→Vite (French word for "quick", pronounced [`/viːt/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
+        bin/
+        client.d.ts
+        misc/
+            false.d.ts
+            false.js
+            true.d.ts
+            true.js
+        package.json
+        rolldown.config.ts
+            161→export default defineConfig([
+            …
+        rolldown.dts.config.ts
+            35→export default defineConfig({
+            …
+        rollupLicensePlugin.ts
+            7→export default function licensePlugin(
+            …
+        scripts/
+        src/
+            client/
+                client.ts
+                env.ts
+                overlay.ts
+                tsconfig.json
+            module-runner/
+                __tests_dts__/
+                constants.ts
+                createImportMeta.ts
+                    14→export function createDefaultImportMeta(
+                    15→  modulePath: string,
+                    16→): ModuleRunnerImportMeta {
+                    …
+                    41→export function createNodeImportMeta(
+                    42→  modulePath: string,
+                    43→): ModuleRunnerImportMeta {
+                    …
+                esmEvaluator.ts
+                    15→export class ESModulesEvaluator implements ModuleEvaluator {
+                    …
+                evaluatedModules.ts
+                hmrHandler.ts
+                hmrLogger.ts
+                importMetaResolver.ts
+                index.ts
+                    3→export {
+                    4→  EvaluatedModules,
+                    5→  normalizeModuleId,
+                    6→  type EvaluatedModuleNode,
+                    7→} from './evaluatedModules'
+                    8→export { ModuleRunner } from './runner'
+                    9→export { ESModulesEvaluator } from './esmEvaluator'
+                runner.ts
+                    38→export class ModuleRunner {
+                    …
+                sourcemap/
+                tsconfig.json
+                types.ts
+                utils.ts
+            node/
+                __tests__/
+                __tests_dts__/
+                assetSource.ts
+                baseEnvironment.ts
+                build.ts
+                cli.ts
+                config.ts
+                constants.ts
+                deprecations.ts
+                env.ts
+                    12→export function getEnvFilesForMode(
+                    13→  mode: string,
+                    14→  envDir: string | false,
+                    15→): string[] {
+                    …
+                    28→export function loadEnv(
+                    29→  mode: string,
+                    30→  envDir: string | false,
+                    31→  prefixes: string | string[] = 'VITE_',
+                    32→): Record<string, string> {
+                    …
+                    98→export function resolveEnvPrefix({
+                    99→  envPrefix = 'VITE_',
+                    100→}: UserConfig): string[] {
+                    …
+                environment.ts
+                    7→export type Environment =
+                    8→  | DevEnvironment
+                    9→  | BuildEnvironment
+                    10→  | /** @internal */ ScanEnvironment
+                    11→  | UnknownEnvironment
+                    20→export function perEnvironmentState<State>(
+                    21→  initial: (environment: Environment) => State,
+                    22→): (context: PluginContext) => State {
+                    …
+                external.ts
+                http.ts
+                idResolver.ts
+                index.ts
+                    1→import type * as Rolldown from 'rolldown'
+                    2→import {
+                    3→  parseAst as _parseAst,
+                    4→  parseAstAsync as _parseAstAsync,
+                    5→} from 'rolldown/parseAst'
+                    6→import type * as Rollup from '#types/internal/rollupTypeCompat'
+                    8→export type { Rollup, Rolldown }
+                    …
+                    24→/** @deprecated - use `parse` instead */
+                    25→export const parseAst: typeof _parseAst = _parseAst
+                    26→/** @deprecated - use `parseAsync` instead */
+                    27→export const parseAstAsync: typeof _parseAstAsync = _parseAstAsync
+                    …
+                    87→export const esbuildVersion = '0.25.0'
+                    …
+                internalIndex.ts
+                logger.ts
+                nodeResolve.ts
+                optimizer/
+                packages.ts
+                plugin.ts
+                    62→export interface PluginContextExtension {
+                    63→  /**
+                    64→   * Vite-specific environment instance
+                    65→   */
+                    66→  environment: Environment
+                    67→}
+                    69→export interface PluginContextMetaExtension {
+                    70→  viteVersion: string
+                    71→}
+                    73→export interface ConfigPluginContext extends Omit<
+                    74→  MinimalPluginContext,
+                    75→  'meta' | 'environment'
+                    76→> {
+                    77→  meta: Omit<PluginContextMeta, 'watchMode'>
+                    78→}
+                    80→export interface MinimalPluginContextWithoutEnvironment extends Omit<
+                    81→  MinimalPluginContext,
+                    82→  'environment'
+                    83→> {}
+                    101→export interface Plugin<A = any> extends RolldownPlugin<A> {
+                    …
+                    373→export type HookHandler<T> = T extends ObjectHook<infer H> ? H : T
+                    …
+                    375→export type PluginWithRequiredHook<K extends keyof Plugin> = Plugin & {
+                    376→  [P in K]: NonNullable<Plugin[P]>
+                    377→}
+                    381→export type FalsyPlugin = false | null | undefined
+                    …
+                    383→export type PluginOption = Thenable<
+                    384→  | Plugin
+                    385→  | { name: string } // for rollup plugin compatibility
+                    386→  | FalsyPlugin
+                    387→  | PluginOption[]
+                    388→>
+                    390→export async function resolveEnvironmentPlugins(
+                    391→  environment: PartialEnvironment,
+                    392→): Promise<Plugin[]> {
+                    …
+                    417→export function perEnvironmentPlugin(
+                    418→  name: string,
+                    419→  applyToEnvironment: (
+                    420→    environment: PartialEnvironment,
+                    421→  ) => boolean | Promise<boolean> | PluginOption,
+                    422→): Plugin {
+                    423→  return {
+                    424→    name,
+                    425→    applyToEnvironment,
+                    426→  }
+                plugins/
+                preview.ts
+                publicDir.ts
+                server/
+                shortcuts.ts
+                ssr/
+                tsconfig.json
+                typeUtils.ts
+                utils.ts
+                watch.ts
+            shared/
+            types/
+        tsconfig.base.json
+        tsconfig.check.json
+        tsconfig.json
+        types/
+patches/
+    chokidar@3.6.0.patch
+    dotenv-expand@13.0.0.patch
+    sirv@3.0.2.patch
+playground/
+pnpm-lock.yaml
+pnpm-workspace.yaml
+scripts/
+    docs-check.sh
+    mergeChangelog.ts
+    publishCI.ts
+    release.ts
+    releaseUtils.ts
+    tsconfig.json
+vitest.config.e2e.ts
+    8→export default defineConfig({
+    …
+vitest.config.ts
+    7→export default defineConfig({
+    …

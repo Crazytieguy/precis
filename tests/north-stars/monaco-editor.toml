@@ -1,0 +1,751 @@
+fixture = "monaco-editor"
+revision_pin = "6c8488c6"
+summary = """
+Monaco Editor — the browser-based code editor that powers VS Code,
+packaged as the `monaco-editor` npm library. It enhances the upstream
+`monaco-editor-core` (compiled from VS Code) with a large catalog of
+basic-language Monarch tokenizers (~85 languages under
+`src/languages/definitions/`), rich language services for CSS/HTML/
+JSON/TypeScript backed by web workers (`src/languages/features/`),
+~63 editor contrib features that side-effect-register on import
+(`src/features/`), an experimental LSP client subpackage
+(`monaco-lsp-client/`), a community webpack plugin (`webpack-plugin/`),
+the public playground/docs website (`website/`), integration samples
+(`samples/`) and Playwright smoke tests (`test/`). The ranking
+optimizes for the wide query distribution this repo attracts: "how do
+I integrate / bundle / configure?" (samples + docs + webpack-plugin),
+"add a new language", "find a feature's source", debugging the build
+pipeline (ESM/AMD rollup/vite), worker plumbing, and one-off API
+questions on the language-service configuration surfaces.
+
+Breadth dominates depth: most files are short shims or per-language
+contributions, so the snapshot prioritizes exposing the directory
+shape (locations of every feature, every language, every adapter)
+over deep dives into any single file. The TypeScript language service
+in `src/languages/features/typescript/` is by far the most semantically
+dense and gets disproportionate depth.
+"""
+
+# -----------------------------------------------------------------------------
+# Tier 1 — Repo-shape orientation (~1k tokens)
+#
+# A user with a 100-token budget should learn (a) what this repo is and (b)
+# the names of the subpackages. Each subsequent small batch is a step toward
+# "I know where to look for X" before any source detail.
+# -----------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "README lede"
+justification = """
+Identifies the repo at line zero: Monaco Editor = VS Code's editor as
+a library. The single most load-bearing sentence in the snapshot;
+costs almost nothing.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 8, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level directory listing"
+justification = """
+A single `ls` of the repo root names every subpackage and every key
+top-level file: src/, monaco-lsp-client/, webpack-plugin/, website/,
+samples/, test/, build/, docs/, scripts/, plus all the dotfiles and
+docs (README/CHANGELOG/CONTRIBUTING/MAINTAINING/SECURITY/LICENSE,
+package.json, .nvmrc, gulpfile.js, ThirdPartyNotices.txt,
+editor.code-workspace, ...). For "where would I look for X?" this is
+the single cheapest most-load-bearing batch in the whole NS: it tells
+the agent which subtree to descend into for any query about
+integration, build, language, plugin, docs, etc. Catastrophic-
+omission mitigation: listing some subpackages without others would
+mislead.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "src/ subdirectory listing"
+justification = """
+The source tree splits into editor.ts/index.ts plus four subtrees:
+deprecated/, features/, internal/, languages/. The agent shouldn't
+have to guess at this — it's a one-call disambiguation between "is X
+a contrib feature or a language?" and "is X new or deprecated?".
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src", entries = "all" },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "package.json — name/version/vscodeRef"
+justification = """
+Three lines that establish (a) the npm package name, (b) the current
+version (0.55.1), and (c) the `vscodeRef` SHA pinning which VS Code
+commit `monaco-editor-core` is built from. Load-bearing for any
+"what version is this against?" / "what features are we shipping
+with?" question.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 2, end = 4, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "src/editor.ts (re-export of monaco-editor-core)"
+justification = """
+One line, but it concretizes the architectural claim: this repo's
+`editor` namespace *is* monaco-editor-core's editor API verbatim.
+Means anyone asking "where is `editor.create` defined?" knows to look
+in `monaco-editor-core` (out of tree), not here.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/editor.ts", start = 1, end = 1, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "src/languages/ + src/internal/common/ subdir listings"
+justification = """
+Disambiguates languages/ (definitions/ for Monarch tokenizers,
+features/ for rich language services, register.all.ts at the top) and
+exposes internal/common/ (only two files: initialize.ts and
+workers.ts, the worker bootstrap shim). Both very cheap.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src/languages", entries = "all" },
+  { parent = "src/internal/common", entries = "all" },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "src/index.ts (package main)"
+justification = """
+9 lines that are the package's actual main entry. Pulls in
+css/html/json/typescript from `./languages/register.all`, registers
+every contrib feature side-effect-wise via `./features/register.all`,
+eagerly imports `monaco-editor-core` (so that core features load
+too), and re-exports `./editor` plus the language namespaces and
+`lsp`. Zero follow-up needed for "what does `import monaco from
+'monaco-editor'` give you?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/index.ts", start = 1, end = 9, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "monaco-lsp-client/ and webpack-plugin/ subdirectory listings"
+justification = """
+Two cheap fs listings that expose the layout of the other publishable
+subpackages: monaco-lsp-client (LSP-over-jsonrpc client adapter, alpha
+per its README) and webpack-plugin (community plugin to slice the
+editor at build time). Pair them because they're the "everything else
+that ships from this repo" beyond src/.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "monaco-lsp-client", entries = "all" },
+  { parent = "webpack-plugin", entries = "all" },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "README — Models concept"
+justification = """
+The single highest-value piece of conceptual grounding in the repo:
+models hold content, determine language, track edit history; a model
+need not correspond to a real file. Grounds every "how do I do X with
+my text?" question.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 44, end = 46, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "README — URIs concept"
+justification = """
+URIs identify models, can't collide, default to inmemory://model/N,
+can use any scheme (file:/// is recommended for virtual filesystems).
+Crucial because URI shape feeds into provider behaviour (e.g. TS
+import resolution).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 48, end = 50, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "README — Editors concept"
+justification = """
+An editor is the view layer attached to the DOM. Concretizes the
+model-vs-editor split that downstream API questions assume.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 52, end = 54, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.12"
+descriptor = "README — Providers and Disposables concepts"
+justification = """
+Providers ≈ LSP features (completion, hover, ...) and work on models;
+file URIs matter for some of them (TS imports, JSON schema mapping).
+.dispose() is the universal cleanup contract; failing to dispose
+leaks listeners and reserves the URI. Both are frequently the source
+of bug-report queries.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 56, end = 65, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.13"
+descriptor = "package.json — entry points (typings/main/module/exports)"
+justification = """
+Subresolver-facing metadata: tells the agent the ESM-vs-min layout
+(`./esm/vs/...` for module/import, `./min/vs/...` for require) and
+that the public types are at `./esm/vs/editor/editor.main.d.ts`.
+Without this, "where does `import 'monaco-editor/foo'` resolve?"
+becomes a guessing game.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 37, end = 48, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.14"
+descriptor = "package.json — build / test / smoketest scripts"
+justification = """
+The most-asked-about script names with their underlying commands:
+build / build-lsp / build-monaco-editor (the entry into the ESM+AMD
+pipeline), test / test:grammars (the two test entry points), and the
+smoketest variants. Without these, "how do I build?" → grep.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 22, end = 27, render = { kind = "full" } },
+  { path = "package.json", start = 32, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.15"
+descriptor = "package.json — import / prettier / simpleserver / smoketest packagers"
+justification = """
+Half the remaining scripts: import-typescript, postinstall (husky),
+prettier and pretty-quick, simpleserver, and the
+package-for-smoketest-{,webpack,webpack-cross-origin,esbuild,vite}
+variants. The smoketest packager scripts each point at a
+test/smoke/package-*.ts file, which doubles as a navigation hint to
+those entry points.
+"""
+predecessor = "1.14"
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 10, end = 21, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.16"
+descriptor = "package.json — deps-all / update-actions / watch scripts"
+justification = """
+The leftover utility scripts: deps-all-remove / deps-all-install (run
+build/npm/{installAll,removeAll}.ts), update-actions (pin-github-action
+on the website workflow), and watch (tsc -w -p ./src). Completes the
+scripts catalog so the agent never infers a partial list.
+"""
+predecessor = "1.15"
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 28, end = 31, render = { kind = "full" } },
+]
+
+# -----------------------------------------------------------------------------
+# Tier 2 — Breadth: directory shape across all major subtrees (~6.8k cumulative)
+#
+# After tier 1 the agent knows the subpackages. Tier 2 enumerates the contents
+# of each so that "where is the find feature?" / "is rust supported?" / "what
+# samples ship?" become one-look questions. These are mostly fs listings (very
+# cheap per byte of catastrophic-omission mitigation) plus the few "register
+# everything" files whose entire contents *are* the catalog.
+# -----------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "src/features/ listing (all 63 contrib features)"
+justification = """
+Every editor "contrib" lives here as its own folder with a register.{ts,js}
+inside. Listing them by name (anchorSelect, bracketMatching, find, format,
+gotoSymbol, hover, suggest, ...) means questions like "where is the find
+widget patch?" or "is there a sticky-scroll feature?" become a single
+follow-up grep. Catastrophic omission: a partial listing would falsely
+suggest some features don't exist; this is the canonical case for "list
+all of a class".
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src/features", entries = "all" },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "docs/ + samples/ + test/ subdirectory listings"
+justification = """
+docs/ has integrate-esm.md plus a few SVG/GIF assets. samples/ names every
+shipped integration recipe (browser-esm-{esbuild,parcel,vite,vite-react,
+webpack,webpack-monaco-plugin,webpack-small,webpack-typescript,
+webpack-typescript-react}, electron-esm-webpack, legacy, nwjs-amd{,v2}).
+test/ splits into manual/ and smoke/ plus test-setup.mjs. One cheap batch
+that wires the agent to every "how do I use X?" question.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "samples", entries = "all" },
+  { parent = "test", entries = "all" },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "src/languages/features/{typescript,css,html,json,common} listings"
+justification = """
+The rich-language-service subtree. Each of css/html/json/typescript follows
+the same shape: register.ts (defaults + onLanguage hooks), {lang}Mode.ts
+(provider wiring), {lang}Worker.ts (the worker class), workerManager.ts
+(the host-side client), {short}.worker.ts (the worker entry). typescript/
+additionally has languageFeatures.ts and a lib/ subdir with the vendored
+TS compiler. common/ has just lspLanguageFeatures.ts (shared adapter
+classes used by css/html/json). This listing alone answers "where does
+the JSON worker live?" / "where is the TS worker manager?".
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src/languages/features/typescript", entries = "all" },
+  { parent = "src/languages/features/typescript/lib", entries = "all" },
+  { parent = "src/languages/features/css", entries = "all" },
+  { parent = "src/languages/features/html", entries = "all" },
+  { parent = "src/languages/features/json", entries = "all" },
+  { parent = "src/languages/features/common", entries = "all" },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "src/languages/definitions/ listing (all ~85 Monarch languages)"
+justification = """
+The complete basic-languages catalog: abap, apex, azcli, bat, bicep,
+cameligo, clojure, coffee, cpp, csharp, csp, css, cypher, dart, ...,
+rust, sb, scala, scheme, ..., yaml. Plus the meta-files
+_.contribution.ts, register.all.ts, and test/ (the test runner).
+"Is X supported?" answered in one shot.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src/languages/definitions", entries = "all" },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "src/deprecated/ subtree listing"
+justification = """
+The legacy import paths that still ship: deprecated/basic-languages/
+monaco.contribution.ts (re-exports the new definitions/register.all),
+deprecated/editor/{editor.main,editor.worker}.ts (legacy entry points),
+deprecated/language/{css,html,json,typescript}/ each with a
+monaco.contribution.ts and a *.worker.ts. Anyone hitting an import path
+under `monaco-editor/esm/vs/language/...` lands here.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src/deprecated", entries = "all" },
+  { parent = "src/deprecated/basic-languages", entries = "all" },
+  { parent = "src/deprecated/editor", entries = "all" },
+  { parent = "src/deprecated/language", entries = "all" },
+  { parent = "src/deprecated/language/css", entries = "all" },
+  { parent = "src/deprecated/language/html", entries = "all" },
+  { parent = "src/deprecated/language/json", entries = "all" },
+  { parent = "src/deprecated/language/typescript", entries = "all" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "build/ subtree listing"
+justification = """
+The build pipeline is split into top-level scripts (build-monaco-editor,
+check-samples, fs/utils, importTypescript, postinstall, releaseMetadata,
+shared.mjs, simpleserver) plus amd/ and esm/ subtrees each with a
+build.script.ts + rollup configs, plus npm/ for dep-management scripts.
+This is the map for any "how does the build work?" / "where do I add a
+build step?" question.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "build", entries = "all" },
+  { parent = "build/amd", entries = "all" },
+  { parent = "build/amd/src", entries = "all" },
+  { parent = "build/esm", entries = "all" },
+  { parent = "build/npm", entries = "all" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "src/languages/register.all.ts (top-level languages export)"
+justification = """
+Two lines: re-exports from definitions/register.all and features/
+register.all. Trivial but it's the linchpin connecting "register a
+basic language" with "register a rich language service".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/register.all.ts", start = 1, end = 2, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "src/features/register.all.ts (all 63 imports)"
+justification = """
+The full list of feature-register side-effect imports. This *is* the
+authoritative catalog (the fs listing tells you the folders, this tells
+you each folder is wired in). One follow-up grep on the feature folder
+name takes the agent straight to its source.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/features/register.all.ts", start = 1, end = 65, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "src/languages/definitions/register.all.ts (all ~85 imports)"
+justification = """
+Same shape as features: every language's register.ts is imported by
+name here. The combination of the fs listing + this is bulletproof
+catastrophic-omission coverage for "what languages exist?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/definitions/register.all.ts", start = 1, end = 87, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "CONTRIBUTING.md — recipe for adding a new tokenizer"
+justification = """
+Five-step recipe (create three files under definitions/{lang}/, edit
+register.all, create a website sample) plus a code stub. This is a
+zero-follow-up answer to one of the most common contributions. (Note:
+the recipe lists the legacy `basic-languages/` path; reality is
+`definitions/`, but the structural pattern is identical.)
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "CONTRIBUTING.md", start = 16, end = 28, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "docs/integrate-esm.md — section TOC + bundler section headers"
+justification = """
+The integration doc's TOC names every supported bundler (webpack with
+plugin or plain, parcel, vite) plus the section headers themselves so
+the agent can navigate inline. For "how do I bundle monaco with vite?"
+this is one navigation hop away.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/integrate-esm.md", start = 1, end = 13, render = { kind = "full" } },
+  { path = "docs/integrate-esm.md", start = 17, end = 19, render = { kind = "full" } },
+  { path = "docs/integrate-esm.md", start = 62, end = 64, render = { kind = "full" } },
+  { path = "docs/integrate-esm.md", start = 135, end = 139, render = { kind = "full" } },
+  { path = "docs/integrate-esm.md", start = 189, end = 191, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.12"
+descriptor = "MonacoEnvironment worker map (canonical sample — index.js)"
+justification = """
+The exact code every consumer writes to wire monaco workers: a
+`getWorkerUrl` switch on label ('json' / 'css'/'scss'/'less' /
+'html'/'handlebars'/'razor' / 'typescript'/'javascript' / fallback to
+editor.worker). Plus a `monaco.editor.create(...)` call. Direct
+zero-follow-up to "why does my worker not load?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "samples/browser-esm-webpack/index.js", start = 1, end = 24, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.13"
+descriptor = "Webpack entry-points config for monaco workers"
+justification = """
+The webpack-side counterpart to the worker map: the entry-points block
+that bundles each worker (editor.worker, json.worker, css.worker,
+html.worker, ts.worker) from the monaco-editor ESM tree, plus the css
++ ttf loader rules. Pair with 2.12 (predecessor) to make the worker
+wiring story complete.
+"""
+predecessor = "2.12"
+content.kind = "lines"
+content.spans = [
+  { path = "samples/browser-esm-webpack/webpack.config.js", start = 1, end = 30, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.14"
+descriptor = "Representative language register (rust register.ts)"
+justification = """
+A canonical language entry: registerLanguage call with id, extensions,
+aliases, and a lazy `loader: () => import('./rust')`. The shape every
+new tokenizer follows.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/definitions/rust/register.ts", start = 6, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.15"
+descriptor = "Representative language module header (rust.ts conf + Monarch keywords)"
+justification = """
+The first ~40 lines of the lazy-loaded language module: the
+LanguageConfiguration (`comments`, `brackets`, `autoClosingPairs`,
+`surroundingPairs`, `folding.markers`) plus the start of the
+IMonarchLanguage `language` object (tokenPostfix, defaultToken,
+keywords). Grounds "how do I write a Monarch tokenizer for X?" without
+the agent having to read the full ~360-line file.
+"""
+predecessor = "2.14"
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/definitions/rust/rust.ts", start = 6, end = 42, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.16"
+descriptor = "Representative feature register (find/register.js) — top half"
+justification = """
+A realistic feature shim: imports a monaco-editor-core contrib widget,
+patches its tabbable state via prototype-replacement (_reveal/_hide).
+Concrete pattern for "how does monaco-editor enhance core widgets?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/features/find/register.js", start = 1, end = 42, render = { kind = "full" } },
+]
+
+# -----------------------------------------------------------------------------
+# Tier 3 — Architecture and key APIs (~10k cumulative cap)
+#
+# With the directory shape locked in, this tier exposes the names and
+# signatures that turn "find that file" into "use that thing". TypeScript
+# language service gets most of the budget because it's the semantically
+# richest. Every public-facing class/interface gets at least a one-line
+# breadcrumb. With the cap at 10k, several "nice-to-have" depth batches
+# (full workerManager, full lspLanguageFeatures class list, full LspClient,
+# webpack-plugin internals) are deliberately punted to follow-up reads.
+# -----------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "registerLanguage / loadLanguage signatures"
+justification = """
+The two functions every contribution chain calls into. registerLanguage
+stores the ILang def, registers it with `languages.register`, and wires
+a lazy tokens-provider factory + an onLanguageEncountered hook for the
+language config. loadLanguage forces eager load via `editor.createModel`
+trick. Without these signatures the agent has to read the whole file to
+write a register.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/definitions/_.contribution.ts", start = 8, end = 18, render = { kind = "full" } },
+  { path = "src/languages/definitions/_.contribution.ts", start = 55, end = 56, render = { kind = "full" } },
+  { path = "src/languages/definitions/_.contribution.ts", start = 63, end = 65, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "internal/common/initialize.ts (worker bootstrap)"
+justification = """
+Tiny file: initialize(callback) and isWorkerInitialized helpers, the
+shim every language worker entry point (json.worker.ts, css.worker.ts,
+...) calls on its self.onmessage handler. Concrete answer to "how does
+a custom worker plug in?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/internal/common/initialize.ts", start = 1, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "TS register.ts — exported instances + onLanguage wiring"
+justification = """
+The actually-exported objects consumers see: typescriptDefaults,
+javascriptDefaults, typescriptVersion, getTypeScriptWorker,
+getJavaScriptWorker. Plus the onLanguage hooks that wire each. Knowing
+*these are the exports* concretely answers "how do I tweak TypeScript
+settings?" — call `monaco.typescript.typescriptDefaults.setCompilerOptions(...)`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/features/typescript/register.ts", start = 757, end = 779, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 787, end = 792, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "TS register.ts — top-level interface/enum locations"
+justification = """
+Catalog batch for everything else in this 793-line module: full first
+lines of every public enum (ModuleKind, JsxEmit, NewLineKind,
+ScriptTarget, ModuleResolutionKind) and every public interface
+(CompilerOptions, DiagnosticsOptions, WorkerOptions, IExtraLibs,
+Diagnostic, DiagnosticRelatedInformation, EmitOutput, ModeConfiguration,
+LanguageServiceDefaults, TypeScriptWorker). The agent jumps right to
+the line they want.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/features/typescript/register.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 22, end = 22, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 31, end = 31, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 36, end = 36, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 50, end = 50, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 70, end = 70, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 154, end = 154, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 166, end = 166, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 186, end = 186, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 201, end = 201, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 208, end = 208, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 219, end = 219, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 230, end = 230, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 297, end = 297, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/register.ts", start = 389, end = 389, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "TS tsMode.ts — setup functions + setupMode body"
+justification = """
+setupTypeScript / setupJavaScript / getTypeScriptWorker /
+getJavaScriptWorker — public entry points called from register.ts.
+Plus setupMode showing how the WorkerManager + LibFiles + each
+provider get wired conditionally on ModeConfiguration. Direct answer
+to "how does a TS-language model start its worker?" and "how do
+provider toggles work?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/features/typescript/tsMode.ts", start = 6, end = 16, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsMode.ts", start = 19, end = 22, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsMode.ts", start = 43, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "TS tsWorker.ts — class header + ICreateData + create() factory"
+justification = """
+TypeScriptWorker class implements ts.LanguageServiceHost +
+ITypeScriptWorker, takes an ICreateData (compilerOptions, extraLibs,
+customWorkerPath, inlayHintsOptions). The standalone create() at the
+end wires a CustomTSWorkerFactory override. Without this batch the
+agent has no idea what gets passed across the worker boundary.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 35, end = 49, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 478, end = 497, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 499, end = 521, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "TS tsWorker.ts — method-header locations"
+justification = """
+Locations of every public method on TypeScriptWorker: getCompilation
+Settings, getLanguageService, getExtraLibs, getScriptFileNames,
+getScriptVersion, getScriptText, getScriptSnapshot, getScriptKind,
+getCurrentDirectory, getDefaultLibFileName, isDefaultLibFileName,
+readFile, fileExists, getLibFiles, plus all async getXxx methods
+(diagnostics, completions, signatureHelp, quickInfo, highlights,
+definitions, references, navigationTree, formattingEdits*,
+findRenameLocations, getRenameInfo, getEmitOutput, getCodeFixesAtPosition,
+updateExtraLibs, provideInlayHints). Catastrophic-omission mitigation:
+without these the agent might think monaco's TS surface is smaller than
+it is.
+"""
+predecessor = "3.6"
+content.kind = "lines"
+content.spans = [
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 53, end = 53, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 57, end = 57, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 61, end = 61, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 65, end = 65, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 82, end = 82, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 95, end = 95, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 120, end = 120, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 133, end = 133, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 149, end = 149, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 153, end = 153, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 182, end = 182, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 186, end = 186, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 190, end = 190, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 194, end = 194, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 224, end = 224, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 232, end = 232, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 240, end = 240, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 248, end = 248, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 256, end = 256, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 266, end = 266, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 282, end = 282, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 293, end = 293, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 303, end = 303, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 314, end = 314, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 324, end = 324, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 334, end = 334, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 341, end = 341, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 351, end = 351, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 363, end = 363, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 375, end = 375, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 394, end = 394, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 405, end = 405, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 427, end = 427, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 452, end = 452, render = { kind = "full" } },
+  { path = "src/languages/features/typescript/tsWorker.ts", start = 456, end = 456, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "monaco-lsp-client/src/adapters/LspClient.ts — feature catalog"
+justification = """
+MonacoLspClient ctor + createFeatures(): the exhaustive list of 22 LSP
+feature classes (Completion, Hover, SignatureHelp, Definition,
+Declaration, TypeDefinition, Implementation, References, DocumentHighlight,
+DocumentSymbol, Rename, CodeAction, CodeLens, DocumentLink, Formatting,
+RangeFormatting, OnTypeFormatting, FoldingRange, SelectionRange,
+InlayHints, SemanticTokens, Diagnostics). The agent now knows every
+class in monaco-lsp-client/src/adapters/languageFeatures/ from one
+read.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "monaco-lsp-client/src/adapters/LspClient.ts", start = 30, end = 90, render = { kind = "full" } },
+]

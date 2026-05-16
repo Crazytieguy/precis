@@ -1,0 +1,5501 @@
+fixture = "vite"
+budget = 10000
+cumulative_tokens = 9855
+batch_count = 210
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite" })'
+descriptor = "listing of '.'"
+cost_tokens = 91
+cum_tokens = 91
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite"
+entries = [".editorconfig", ".git-blame-ignore-revs", ".gitattributes", ".github", ".gitignore", ".oxfmtrc.json", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "LICENSE", "README.md", "docs", "eslint.config.js", "netlify.toml", "package.json", "packages", "patches", "playground", "pnpm-lock.yaml", "pnpm-workspace.yaml", "scripts", "vitest.config.e2e.ts", "vitest.config.ts"]
+
+[[batches]]
+position = 2
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages" })'
+descriptor = "listing of 'packages'"
+cost_tokens = 13
+cum_tokens = 104
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages"
+entries = ["create-vite", "plugin-legacy", "vite"]
+
+[[batches]]
+position = 3
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 166
+cum_tokens = 270
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 28
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/README.md" })'
+descriptor = "headings outline in README.md"
+cost_tokens = 36
+cum_tokens = 306
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 5
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/README.md", section_index: 3 })'
+descriptor = "README.md section #3"
+cost_tokens = 9
+cum_tokens = 315
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 16
+cum_tokens = 331
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/vitest.config.e2e.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in vitest.config.e2e.ts"
+cost_tokens = 11
+cum_tokens = 342
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/vitest.config.e2e.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/vitest.config.e2e.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 8
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/vitest.config.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in vitest.config.ts"
+cost_tokens = 11
+cum_tokens = 353
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/vitest.config.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/vitest.config.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/patches" })'
+descriptor = "listing of 'patches'"
+cost_tokens = 33
+cum_tokens = 386
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/patches"
+entries = ["chokidar@3.6.0.patch", "dotenv-expand@13.0.0.patch", "sirv@3.0.2.patch"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy" })'
+descriptor = "listing of 'packages/plugin-legacy'"
+cost_tokens = 30
+cum_tokens = 416
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy"
+entries = ["CHANGELOG.md", "LICENSE", "README.md", "package.json", "src", "tsconfig.json", "tsdown.config.ts"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src" })'
+descriptor = "listing of 'packages/plugin-legacy/src'"
+cost_tokens = 23
+cum_tokens = 439
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src"
+entries = ["__tests__", "index.ts", "shims.d.ts", "snippets.ts", "types.ts"]
+
+[[batches]]
+position = 12
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md" })'
+descriptor = "README headline in packages/plugin-legacy/README.md"
+cost_tokens = 82
+cum_tokens = 521
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '\# @vitejs/plugin\-legacy'
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 177
+cum_tokens = 698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts", chunk_index: 0, export_count: 6, type_only_export_count: 1 })'
+descriptor = "export names surface in packages/plugin-legacy/src/index.ts"
+cost_tokens = 90
+cum_tokens = 788
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 794
+end = 794
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 1057
+end = 1057
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 1064
+end = 1064
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 1066
+end = 1066
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 1078
+end = 1078
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 795
+end = 795
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 1058
+end = 1058
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 1065
+end = 1065
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 1067
+end = 1067
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 15
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts", start_line: 128 })'
+descriptor = "export at packages/plugin-legacy/src/index.ts:128"
+cost_tokens = 32
+cum_tokens = 820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 128
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts", start_line: 794 })'
+descriptor = "export at packages/plugin-legacy/src/index.ts:794"
+cost_tokens = 49
+cum_tokens = 869
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 794
+end = 799
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 800
+end = 800
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts", start_line: 1057 })'
+descriptor = "export at packages/plugin-legacy/src/index.ts:1057"
+cost_tokens = 66
+cum_tokens = 935
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 1057
+end = 1062
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts", start_line: 794, body_start_line: 800 })'
+descriptor = "export body at packages/plugin-legacy/src/index.ts:794 body 800"
+cost_tokens = 364
+cum_tokens = 1299
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/src/index.ts"
+start = 800
+end = 837
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 30
+cum_tokens = 1329
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/scripts"
+entries = ["docs-check.sh", "mergeChangelog.ts", "publishCI.ts", "release.ts", "releaseUtils.ts", "tsconfig.json"]
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/README.md", section_index: 4 })'
+descriptor = "README.md section #4"
+cost_tokens = 72
+cum_tokens = 1401
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/README.md"
+start = 63
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite" })'
+descriptor = "listing of 'packages/vite'"
+cost_tokens = 77
+cum_tokens = 1478
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite"
+entries = ["CHANGELOG.md", "LICENSE.md", "README.md", "bin", "client.d.ts", "misc", "package.json", "rolldown.config.ts", "rolldown.dts.config.ts", "rollupLicensePlugin.ts", "scripts", "src", "tsconfig.base.json", "tsconfig.check.json", "tsconfig.json", "types"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src" })'
+descriptor = "listing of 'packages/vite/src'"
+cost_tokens = 17
+cum_tokens = 1495
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src"
+entries = ["client", "module-runner", "node", "shared", "types"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner" })'
+descriptor = "listing of 'packages/vite/src/module-runner'"
+cost_tokens = 71
+cum_tokens = 1566
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner"
+entries = ["__tests_dts__", "constants.ts", "createImportMeta.ts", "esmEvaluator.ts", "evaluatedModules.ts", "hmrHandler.ts", "hmrLogger.ts", "importMetaResolver.ts", "index.ts", "runner.ts", "sourcemap", "tsconfig.json", "types.ts", "utils.ts"]
+
+[[batches]]
+position = 24
+key = 'Typescript(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts", chunk_index: 1 })'
+descriptor = "imports #1 in packages/vite/src/module-runner/index.ts"
+cost_tokens = 13
+cum_tokens = 1579
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node" })'
+descriptor = "listing of 'packages/vite/src/node'"
+cost_tokens = 135
+cum_tokens = 1714
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node"
+entries = ["__tests__", "__tests_dts__", "assetSource.ts", "baseEnvironment.ts", "build.ts", "cli.ts", "config.ts", "constants.ts", "deprecations.ts", "env.ts", "environment.ts", "external.ts", "http.ts", "idResolver.ts", "index.ts", "internalIndex.ts", "logger.ts", "nodeResolve.ts", "optimizer", "packages.ts", "plugin.ts", "plugins", "preview.ts", "publicDir.ts", "server", "shortcuts.ts", "ssr", "tsconfig.json", "typeUtils.ts", "utils.ts", "watch.ts"]
+
+[[batches]]
+position = 26
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts", chunk_index: 0, export_count: 4, type_only_export_count: 1 })'
+descriptor = "export names surface in packages/vite/src/node/index.ts"
+cost_tokens = 78
+cum_tokens = 1792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 27
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts", start_line: 25 })'
+descriptor = "export at packages/vite/src/node/index.ts:25"
+cost_tokens = 0
+cum_tokens = 1792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts", start_line: 27 })'
+descriptor = "export at packages/vite/src/node/index.ts:27"
+cost_tokens = 0
+cum_tokens = 1792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts", start_line: 27 })'
+descriptor = "export doc at packages/vite/src/node/index.ts:27"
+cost_tokens = 13
+cum_tokens = 1805
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts", start_line: 25 })'
+descriptor = "export doc at packages/vite/src/node/index.ts:25"
+cost_tokens = 14
+cum_tokens = 1819
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Typescript(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts", chunk_index: 2 })'
+descriptor = "imports #2 in packages/vite/src/module-runner/index.ts"
+cost_tokens = 15
+cum_tokens = 1834
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/misc" })'
+descriptor = "listing of 'packages/vite/misc'"
+cost_tokens = 18
+cum_tokens = 1852
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/misc"
+entries = ["false.d.ts", "false.js", "true.d.ts", "true.js"]
+
+[[batches]]
+position = 33
+key = 'Typescript(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts", chunk_index: 0 })'
+descriptor = "imports in packages/vite/src/module-runner/index.ts"
+cost_tokens = 46
+cum_tokens = 1898
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts"
+start = 3
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/runner.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/vite/src/module-runner/runner.ts"
+cost_tokens = 11
+cum_tokens = 1909
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/runner.ts"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/runner.ts"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 35
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/vite/src/module-runner/esmEvaluator.ts"
+cost_tokens = 15
+cum_tokens = 1924
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 36
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts" })'
+descriptor = "imports in packages/vite/src/node/index.ts"
+cost_tokens = 83
+cum_tokens = 2007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/index.ts"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
+descriptor = "export names surface in packages/vite/src/node/environment.ts"
+cost_tokens = 23
+cum_tokens = 2030
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts", start_line: 20 })'
+descriptor = "export at packages/vite/src/node/environment.ts:20"
+cost_tokens = 29
+cum_tokens = 2059
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts"
+start = 20
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 39
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts", start_line: 7 })'
+descriptor = "export at packages/vite/src/node/environment.ts:7"
+cost_tokens = 38
+cum_tokens = 2097
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/environment.ts"
+start = 7
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", chunk_index: 0, export_count: 11, type_only_export_count: 9 })'
+descriptor = "export names surface in packages/vite/src/node/plugin.ts"
+cost_tokens = 182
+cum_tokens = 2279
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 375
+end = 375
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 381
+end = 381
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 383
+end = 383
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 390
+end = 390
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 417
+end = 417
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 376
+end = 376
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 382
+end = 382
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 384
+end = 384
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 418
+end = 418
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 41
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 69 })'
+descriptor = "export at packages/vite/src/node/plugin.ts:69"
+cost_tokens = 13
+cum_tokens = 2292
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 69
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 80 })'
+descriptor = "export at packages/vite/src/node/plugin.ts:80"
+cost_tokens = 21
+cum_tokens = 2313
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 80
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 375 })'
+descriptor = "export at packages/vite/src/node/plugin.ts:375"
+cost_tokens = 19
+cum_tokens = 2332
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 375
+end = 377
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 390 })'
+descriptor = "export at packages/vite/src/node/plugin.ts:390"
+cost_tokens = 20
+cum_tokens = 2352
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 390
+end = 392
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 393
+end = 393
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 45
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 62 })'
+descriptor = "export at packages/vite/src/node/plugin.ts:62"
+cost_tokens = 36
+cum_tokens = 2388
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 62
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 73 })'
+descriptor = "export at packages/vite/src/node/plugin.ts:73"
+cost_tokens = 48
+cum_tokens = 2436
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 73
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/vite/src/module-runner/createImportMeta.ts"
+cost_tokens = 26
+cum_tokens = 2462
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 48
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts", start_line: 14 })'
+descriptor = "export at packages/vite/src/module-runner/createImportMeta.ts:14"
+cost_tokens = 20
+cum_tokens = 2482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts", start_line: 41 })'
+descriptor = "export at packages/vite/src/module-runner/createImportMeta.ts:41"
+cost_tokens = 20
+cum_tokens = 2502
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts"
+start = 41
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/createImportMeta.ts"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 50
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/client" })'
+descriptor = "listing of 'packages/vite/src/client'"
+cost_tokens = 17
+cum_tokens = 2519
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/client"
+entries = ["client.ts", "env.ts", "overlay.ts", "tsconfig.json"]
+
+[[batches]]
+position = 51
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 383 })'
+descriptor = "export at packages/vite/src/node/plugin.ts:383"
+cost_tokens = 48
+cum_tokens = 2567
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 383
+end = 388
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md" })'
+descriptor = "README headline in packages/vite/README.md"
+cost_tokens = 166
+cum_tokens = 2733
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md"
+start = 5
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rolldown.config.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/vite/rolldown.config.ts"
+cost_tokens = 11
+cum_tokens = 2744
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rolldown.config.ts"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rolldown.config.ts"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rolldown.dts.config.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/vite/rolldown.dts.config.ts"
+cost_tokens = 11
+cum_tokens = 2755
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rolldown.dts.config.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rolldown.dts.config.ts"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rollupLicensePlugin.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/vite/rollupLicensePlugin.ts"
+cost_tokens = 12
+cum_tokens = 2767
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rollupLicensePlugin.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rollupLicensePlugin.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 56
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 417 })'
+descriptor = "export at packages/vite/src/node/plugin.ts:417"
+cost_tokens = 52
+cum_tokens = 2819
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 417
+end = 422
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 423
+end = 423
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 57
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 417, body_start_line: 423 })'
+descriptor = "export body at packages/vite/src/node/plugin.ts:417 body 423"
+cost_tokens = 27
+cum_tokens = 2846
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 423
+end = 426
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts", chunk_index: 0, export_count: 3, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/vite/src/node/env.ts"
+cost_tokens = 37
+cum_tokens = 2883
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 59
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts", start_line: 98 })'
+descriptor = "export at packages/vite/src/node/env.ts:98"
+cost_tokens = 24
+cum_tokens = 2907
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 98
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 60
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts", start_line: 12 })'
+descriptor = "export at packages/vite/src/node/env.ts:12"
+cost_tokens = 29
+cum_tokens = 2936
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 12
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 61
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts", start_line: 28 })'
+descriptor = "export at packages/vite/src/node/env.ts:28"
+cost_tokens = 49
+cum_tokens = 2985
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 28
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/env.ts"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 62
+key = 'Typescript(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts", chunk_index: 4 })'
+descriptor = "imports #4 in packages/vite/src/module-runner/index.ts"
+cost_tokens = 20
+cum_tokens = 3005
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
+descriptor = "export names surface in packages/vite/src/node/idResolver.ts"
+cost_tokens = 39
+cum_tokens = 3044
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 64
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts", start_line: 23 })'
+descriptor = "export at packages/vite/src/node/idResolver.ts:23"
+cost_tokens = 33
+cum_tokens = 3077
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 23
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 65
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts", start_line: 42 })'
+descriptor = "export at packages/vite/src/node/idResolver.ts:42"
+cost_tokens = 33
+cum_tokens = 3110
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 42
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 66
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts", start_line: 11 })'
+descriptor = "export at packages/vite/src/node/idResolver.ts:11"
+cost_tokens = 47
+cum_tokens = 3157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/idResolver.ts"
+start = 11
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rolldown.config.ts", start_line: 161 })'
+descriptor = "export at packages/vite/rolldown.config.ts:161"
+cost_tokens = 36
+cum_tokens = 3193
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rolldown.config.ts"
+start = 161
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts", chunk_index: 0, export_count: 3, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/vite/src/module-runner/evaluatedModules.ts"
+cost_tokens = 42
+cum_tokens = 3235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 69
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts", start_line: 147 })'
+descriptor = "export at packages/vite/src/module-runner/evaluatedModules.ts:147"
+cost_tokens = 0
+cum_tokens = 3235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/evaluatedModules.ts"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 70
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/types" })'
+descriptor = "listing of 'packages/vite/types'"
+cost_tokens = 44
+cum_tokens = 3279
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/types"
+entries = ["customEvent.d.ts", "hmrPayload.d.ts", "hot.d.ts", "import-meta.d.ts", "importGlob.d.ts", "importMeta.d.ts", "internal", "metadata.d.ts"]
+
+[[batches]]
+position = 71
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts", start_line: 15 })'
+descriptor = "export at packages/vite/src/module-runner/esmEvaluator.ts:15"
+cost_tokens = 84
+cum_tokens = 3363
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts"
+start = 15
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts"
+start = 19
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/esmEvaluator.ts"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 72
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/.github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 41
+cum_tokens = 3404
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/.github"
+entries = ["ISSUE_TEMPLATE", "PULL_REQUEST_TEMPLATE.md", "SECURITY.md", "commit-convention.md", "copilot-instructions.md", "renovate.json5", "workflows", "zizmor.yml"]
+
+[[batches]]
+position = 73
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/.github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 79
+cum_tokens = 3483
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/.github/workflows"
+entries = ["ci.yml", "copilot-setup-steps.yml", "ecosystem-ci-trigger.yml", "issue-close-require.yml", "issue-labeled.yml", "issue-template-check.yml", "lock-closed-issues.yml", "preview-release.yml", "publish.yml", "pull-request-template-check.yml", "release-tag.yml", "semantic-pull-request.yml", "zizmor.yml"]
+
+[[batches]]
+position = 74
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/__tests_dts__" })'
+descriptor = "listing of 'packages/vite/src/node/__tests_dts__'"
+cost_tokens = 22
+cum_tokens = 3505
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/__tests_dts__"
+entries = ["config.ts", "plugin.ts", "tsconfig.json", "typeOptions.ts", "utils.ts"]
+
+[[batches]]
+position = 75
+key = 'Typescript(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts", chunk_index: 3 })'
+descriptor = "imports #3 in packages/vite/src/module-runner/index.ts"
+cost_tokens = 37
+cum_tokens = 3542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts"
+start = 10
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rollupLicensePlugin.ts", start_line: 7 })'
+descriptor = "export at packages/vite/rollupLicensePlugin.ts:7"
+cost_tokens = 48
+cum_tokens = 3590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rollupLicensePlugin.ts"
+start = 7
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/rollupLicensePlugin.ts"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 77
+key = 'Typescript(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts", chunk_index: 5 })'
+descriptor = "imports #5 in packages/vite/src/module-runner/index.ts"
+cost_tokens = 21
+cum_tokens = 3611
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/module-runner/index.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/types/internal" })'
+descriptor = "listing of 'packages/vite/types/internal'"
+cost_tokens = 37
+cum_tokens = 3648
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/types/internal"
+entries = ["cssPreprocessorOptions.d.ts", "esbuildOptions.d.ts", "lightningcssOptions.d.ts", "rollupTypeCompat.d.ts", "terserOptions.d.ts"]
+
+[[batches]]
+position = 79
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md", section_index: 0 })'
+descriptor = "packages/vite/README.md section #0"
+cost_tokens = 177
+cum_tokens = 3825
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/README.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts", start_line: 417 })'
+descriptor = "export doc at packages/vite/src/node/plugin.ts:417"
+cost_tokens = 18
+cum_tokens = 3843
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/plugin.ts"
+start = 414
+end = 416
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite" })'
+descriptor = "listing of 'packages/create-vite'"
+cost_tokens = 123
+cum_tokens = 3966
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite"
+entries = ["CHANGELOG.md", "LICENSE", "README.md", "__tests__", "index.js", "package.json", "src", "template-lit", "template-lit-ts", "template-preact", "template-preact-ts", "template-qwik", "template-qwik-ts", "template-react", "template-react-ts", "template-solid", "template-solid-ts", "template-svelte", "template-svelte-ts", "template-vanilla", "template-vanilla-ts", "template-vue", "template-vue-ts", "tsconfig.json", "tsdown.config.ts"]
+
+[[batches]]
+position = 82
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/README.md" })'
+descriptor = "README headline in packages/create-vite/README.md"
+cost_tokens = 44
+cum_tokens = 4010
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/README.md" })'
+descriptor = "headings outline in packages/create-vite/README.md"
+cost_tokens = 26
+cum_tokens = 4036
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/README.md"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/README.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/README.md"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 84
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit" })'
+descriptor = "listing of 'packages/create-vite/template-lit'"
+cost_tokens = 19
+cum_tokens = 4055
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit"
+entries = ["_gitignore", "index.html", "package.json", "public", "src"]
+
+[[batches]]
+position = 85
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit/package.json" })'
+descriptor = "package identity in packages/create-vite/template-lit/package.json"
+cost_tokens = 50
+cum_tokens = 4105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla" })'
+descriptor = "listing of 'packages/create-vite/template-vanilla'"
+cost_tokens = 19
+cum_tokens = 4124
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla"
+entries = ["_gitignore", "index.html", "package.json", "public", "src"]
+
+[[batches]]
+position = 87
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla/package.json" })'
+descriptor = "package identity in packages/create-vite/template-vanilla/package.json"
+cost_tokens = 49
+cum_tokens = 4173
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla/src" })'
+descriptor = "listing of 'packages/create-vite/template-vanilla/src'"
+cost_tokens = 15
+cum_tokens = 4188
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla/src"
+entries = ["assets", "counter.js", "main.js", "style.css"]
+
+[[batches]]
+position = 89
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit-ts" })'
+descriptor = "listing of 'packages/create-vite/template-lit-ts'"
+cost_tokens = 24
+cum_tokens = 4212
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit-ts"
+entries = ["_gitignore", "index.html", "package.json", "public", "src", "tsconfig.json"]
+
+[[batches]]
+position = 90
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit-ts/package.json" })'
+descriptor = "package identity in packages/create-vite/template-lit-ts/package.json"
+cost_tokens = 51
+cum_tokens = 4263
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit-ts/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact" })'
+descriptor = "listing of 'packages/create-vite/template-preact'"
+cost_tokens = 24
+cum_tokens = 4287
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact"
+entries = ["_gitignore", "index.html", "package.json", "public", "src", "vite.config.js"]
+
+[[batches]]
+position = 92
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact/package.json" })'
+descriptor = "package identity in packages/create-vite/template-preact/package.json"
+cost_tokens = 51
+cum_tokens = 4338
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact/src" })'
+descriptor = "listing of 'packages/create-vite/template-preact/src'"
+cost_tokens = 19
+cum_tokens = 4357
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact/src"
+entries = ["app.css", "app.jsx", "assets", "index.css", "main.jsx"]
+
+[[batches]]
+position = 94
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts" })'
+descriptor = "listing of 'packages/create-vite/template-vanilla-ts'"
+cost_tokens = 24
+cum_tokens = 4381
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts"
+entries = ["_gitignore", "index.html", "package.json", "public", "src", "tsconfig.json"]
+
+[[batches]]
+position = 95
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts/package.json" })'
+descriptor = "package identity in packages/create-vite/template-vanilla-ts/package.json"
+cost_tokens = 51
+cum_tokens = 4432
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts/src" })'
+descriptor = "listing of 'packages/create-vite/template-vanilla-ts/src'"
+cost_tokens = 15
+cum_tokens = 4447
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts/src"
+entries = ["assets", "counter.ts", "main.ts", "style.css"]
+
+[[batches]]
+position = 97
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/src" })'
+descriptor = "listing of 'packages/create-vite/src'"
+cost_tokens = 4
+cum_tokens = 4451
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/src"
+entries = ["index.ts"]
+
+[[batches]]
+position = 98
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik" })'
+descriptor = "listing of 'packages/create-vite/template-qwik'"
+cost_tokens = 28
+cum_tokens = 4479
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik"
+entries = ["README.md", "_gitignore", "index.html", "package.json", "public", "src", "vite.config.js"]
+
+[[batches]]
+position = 99
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md" })'
+descriptor = "README headline in packages/create-vite/template-qwik/README.md"
+cost_tokens = 11
+cum_tokens = 4490
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/package.json" })'
+descriptor = "package identity in packages/create-vite/template-qwik/package.json"
+cost_tokens = 49
+cum_tokens = 4539
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/src" })'
+descriptor = "listing of 'packages/create-vite/template-qwik/src'"
+cost_tokens = 19
+cum_tokens = 4558
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/src"
+entries = ["app.css", "app.jsx", "assets", "index.css", "main.jsx"]
+
+[[batches]]
+position = 102
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid" })'
+descriptor = "listing of 'packages/create-vite/template-solid'"
+cost_tokens = 28
+cum_tokens = 4586
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid"
+entries = ["README.md", "_gitignore", "index.html", "package.json", "public", "src", "vite.config.js"]
+
+[[batches]]
+position = 103
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md" })'
+descriptor = "README headline in packages/create-vite/template-solid/README.md"
+cost_tokens = 36
+cum_tokens = 4622
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/package.json" })'
+descriptor = "package identity in packages/create-vite/template-solid/package.json"
+cost_tokens = 50
+cum_tokens = 4672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/src" })'
+descriptor = "listing of 'packages/create-vite/template-solid/src'"
+cost_tokens = 19
+cum_tokens = 4691
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/src"
+entries = ["App.css", "App.jsx", "assets", "index.css", "index.jsx"]
+
+[[batches]]
+position = 106
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react" })'
+descriptor = "listing of 'packages/create-vite/template-react'"
+cost_tokens = 33
+cum_tokens = 4724
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react"
+entries = ["README.md", "_gitignore", "eslint.config.js", "index.html", "package.json", "public", "src", "vite.config.js"]
+
+[[batches]]
+position = 107
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md" })'
+descriptor = "README headline in packages/create-vite/template-react/README.md"
+cost_tokens = 36
+cum_tokens = 4760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/package.json" })'
+descriptor = "package identity in packages/create-vite/template-react/package.json"
+cost_tokens = 50
+cum_tokens = 4810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md" })'
+descriptor = "headings outline in packages/create-vite/template-react/README.md"
+cost_tokens = 24
+cum_tokens = 4834
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 110
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/src" })'
+descriptor = "listing of 'packages/create-vite/template-react/src'"
+cost_tokens = 19
+cum_tokens = 4853
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/src"
+entries = ["App.css", "App.jsx", "assets", "index.css", "main.jsx"]
+
+[[batches]]
+position = 111
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue" })'
+descriptor = "listing of 'packages/create-vite/template-vue'"
+cost_tokens = 33
+cum_tokens = 4886
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue"
+entries = [".vscode", "README.md", "_gitignore", "index.html", "package.json", "public", "src", "vite.config.js"]
+
+[[batches]]
+position = 112
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/package.json" })'
+descriptor = "package identity in packages/create-vite/template-vue/package.json"
+cost_tokens = 51
+cum_tokens = 4937
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/src" })'
+descriptor = "listing of 'packages/create-vite/template-vue/src'"
+cost_tokens = 18
+cum_tokens = 4955
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/src"
+entries = ["App.vue", "assets", "components", "main.js", "style.css"]
+
+[[batches]]
+position = 114
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/README.md" })'
+descriptor = "README headline in packages/create-vite/template-vue/README.md"
+cost_tokens = 79
+cum_tokens = 5034
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/README.md", section_index: 0 })'
+descriptor = "packages/create-vite/template-vue/README.md section #0"
+cost_tokens = 37
+cum_tokens = 5071
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit/src" })'
+descriptor = "listing of 'packages/create-vite/template-lit/src'"
+cost_tokens = 12
+cum_tokens = 5083
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit/src"
+entries = ["assets", "index.css", "my-element.js"]
+
+[[batches]]
+position = 117
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit-ts/src" })'
+descriptor = "listing of 'packages/create-vite/template-lit-ts/src'"
+cost_tokens = 12
+cum_tokens = 5095
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit-ts/src"
+entries = ["assets", "index.css", "my-element.ts"]
+
+[[batches]]
+position = 118
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md" })'
+descriptor = "headings outline in packages/create-vite/template-qwik/README.md"
+cost_tokens = 56
+cum_tokens = 5151
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/README.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 119
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts" })'
+descriptor = "listing of 'packages/create-vite/template-preact-ts'"
+cost_tokens = 41
+cum_tokens = 5192
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts"
+entries = ["_gitignore", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
+
+[[batches]]
+position = 120
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts/package.json" })'
+descriptor = "package identity in packages/create-vite/template-preact-ts/package.json"
+cost_tokens = 52
+cum_tokens = 5244
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts/src" })'
+descriptor = "listing of 'packages/create-vite/template-preact-ts/src'"
+cost_tokens = 21
+cum_tokens = 5265
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts/src"
+entries = ["app.css", "app.tsx", "assets", "index.css", "main.tsx"]
+
+[[batches]]
+position = 122
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts/src/main.tsx" })'
+descriptor = "imports in packages/create-vite/template-preact-ts/src/main.tsx"
+cost_tokens = 36
+cum_tokens = 5301
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts/src/main.tsx"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/src/main.js" })'
+descriptor = "imports in packages/create-vite/template-vue/src/main.js"
+cost_tokens = 33
+cum_tokens = 5334
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/src/main.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte" })'
+descriptor = "listing of 'packages/create-vite/template-svelte'"
+cost_tokens = 44
+cum_tokens = 5378
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte"
+entries = [".vscode", "README.md", "_gitignore", "index.html", "jsconfig.json", "package.json", "public", "src", "svelte.config.js", "vite.config.js"]
+
+[[batches]]
+position = 125
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md" })'
+descriptor = "README headline in packages/create-vite/template-svelte/README.md"
+cost_tokens = 30
+cum_tokens = 5408
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/package.json" })'
+descriptor = "package identity in packages/create-vite/template-svelte/package.json"
+cost_tokens = 51
+cum_tokens = 5459
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/src" })'
+descriptor = "listing of 'packages/create-vite/template-svelte/src'"
+cost_tokens = 19
+cum_tokens = 5478
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/src"
+entries = ["App.svelte", "app.css", "assets", "lib", "main.js"]
+
+[[batches]]
+position = 128
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/src/main.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/create-vite/template-svelte/src/main.js"
+cost_tokens = 8
+cum_tokens = 5486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/src/main.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/src/main.js", start_line: 5 })'
+descriptor = "module item at packages/create-vite/template-svelte/src/main.js:5"
+cost_tokens = 31
+cum_tokens = 5517
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/src/main.js"
+start = 5
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md" })'
+descriptor = "headings outline in packages/create-vite/template-svelte/README.md"
+cost_tokens = 35
+cum_tokens = 5552
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 131
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/src/main.js" })'
+descriptor = "imports in packages/create-vite/template-svelte/src/main.js"
+cost_tokens = 34
+cum_tokens = 5586
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/src/main.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts" })'
+descriptor = "listing of 'packages/create-vite/template-qwik-ts'"
+cost_tokens = 45
+cum_tokens = 5631
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts"
+entries = ["README.md", "_gitignore", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
+
+[[batches]]
+position = 133
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md" })'
+descriptor = "README headline in packages/create-vite/template-qwik-ts/README.md"
+cost_tokens = 11
+cum_tokens = 5642
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/package.json" })'
+descriptor = "package identity in packages/create-vite/template-qwik-ts/package.json"
+cost_tokens = 49
+cum_tokens = 5691
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/src" })'
+descriptor = "listing of 'packages/create-vite/template-qwik-ts/src'"
+cost_tokens = 21
+cum_tokens = 5712
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/src"
+entries = ["app.css", "app.tsx", "assets", "index.css", "main.tsx"]
+
+[[batches]]
+position = 136
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md" })'
+descriptor = "headings outline in packages/create-vite/template-qwik-ts/README.md"
+cost_tokens = 56
+cum_tokens = 5768
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/README.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 137
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/src/main.tsx" })'
+descriptor = "imports in packages/create-vite/template-qwik-ts/src/main.tsx"
+cost_tokens = 53
+cum_tokens = 5821
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/src/main.tsx"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/src/main.tsx"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts" })'
+descriptor = "listing of 'packages/create-vite/template-solid-ts'"
+cost_tokens = 45
+cum_tokens = 5866
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts"
+entries = ["README.md", "_gitignore", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
+
+[[batches]]
+position = 139
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md" })'
+descriptor = "README headline in packages/create-vite/template-solid-ts/README.md"
+cost_tokens = 36
+cum_tokens = 5902
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/package.json" })'
+descriptor = "package identity in packages/create-vite/template-solid-ts/package.json"
+cost_tokens = 52
+cum_tokens = 5954
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/src" })'
+descriptor = "listing of 'packages/create-vite/template-solid-ts/src'"
+cost_tokens = 21
+cum_tokens = 5975
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/src"
+entries = ["App.css", "App.tsx", "assets", "index.css", "index.tsx"]
+
+[[batches]]
+position = 142
+key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/src/index.tsx", start_line: 6 })'
+descriptor = "module item at packages/create-vite/template-solid-ts/src/index.tsx:6"
+cost_tokens = 15
+cum_tokens = 5990
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/src/index.tsx"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/src/index.tsx" })'
+descriptor = "imports in packages/create-vite/template-solid-ts/src/index.tsx"
+cost_tokens = 35
+cum_tokens = 6025
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/src/index.tsx"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/__tests__" })'
+descriptor = "listing of 'packages/create-vite/__tests__'"
+cost_tokens = 5
+cum_tokens = 6030
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/__tests__"
+entries = ["cli.spec.ts"]
+
+[[batches]]
+position = 145
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts" })'
+descriptor = "listing of 'packages/create-vite/template-react-ts'"
+cost_tokens = 50
+cum_tokens = 6080
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts"
+entries = ["README.md", "_gitignore", "eslint.config.js", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
+
+[[batches]]
+position = 146
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/package.json" })'
+descriptor = "package identity in packages/create-vite/template-react-ts/package.json"
+cost_tokens = 52
+cum_tokens = 6132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md" })'
+descriptor = "README headline in packages/create-vite/template-react-ts/README.md"
+cost_tokens = 39
+cum_tokens = 6171
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md" })'
+descriptor = "headings outline in packages/create-vite/template-react-ts/README.md"
+cost_tokens = 24
+cum_tokens = 6195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 149
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/src" })'
+descriptor = "listing of 'packages/create-vite/template-react-ts/src'"
+cost_tokens = 21
+cum_tokens = 6216
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/src"
+entries = ["App.css", "App.tsx", "assets", "index.css", "main.tsx"]
+
+[[batches]]
+position = 150
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/src/main.tsx" })'
+descriptor = "imports in packages/create-vite/template-react-ts/src/main.tsx"
+cost_tokens = 49
+cum_tokens = 6265
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/src/main.tsx"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts" })'
+descriptor = "listing of 'packages/create-vite/template-vue-ts'"
+cost_tokens = 50
+cum_tokens = 6315
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts"
+entries = [".vscode", "README.md", "_gitignore", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
+
+[[batches]]
+position = 152
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/package.json" })'
+descriptor = "package identity in packages/create-vite/template-vue-ts/package.json"
+cost_tokens = 53
+cum_tokens = 6368
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/src" })'
+descriptor = "listing of 'packages/create-vite/template-vue-ts/src'"
+cost_tokens = 18
+cum_tokens = 6386
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/src"
+entries = ["App.vue", "assets", "components", "main.ts", "style.css"]
+
+[[batches]]
+position = 154
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/README.md" })'
+descriptor = "README headline in packages/create-vite/template-vue-ts/README.md"
+cost_tokens = 85
+cum_tokens = 6471
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/README.md", section_index: 0 })'
+descriptor = "packages/create-vite/template-vue-ts/README.md section #0"
+cost_tokens = 40
+cum_tokens = 6511
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/src/main.ts" })'
+descriptor = "imports in packages/create-vite/template-vue-ts/src/main.ts"
+cost_tokens = 33
+cum_tokens = 6544
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/src/main.ts"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts/src/main.ts" })'
+descriptor = "imports in packages/create-vite/template-vanilla-ts/src/main.ts"
+cost_tokens = 66
+cum_tokens = 6610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts/src/main.ts"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-lit/package.json"
+cost_tokens = 50
+cum_tokens = 6660
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-preact/package.json"
+cost_tokens = 50
+cum_tokens = 6710
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-qwik/package.json"
+cost_tokens = 50
+cum_tokens = 6760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-solid/package.json"
+cost_tokens = 50
+cum_tokens = 6810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-svelte/package.json"
+cost_tokens = 50
+cum_tokens = 6860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-vanilla/package.json"
+cost_tokens = 50
+cum_tokens = 6910
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-vue/package.json"
+cost_tokens = 50
+cum_tokens = 6960
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md" })'
+descriptor = "headings outline in packages/create-vite/template-solid/README.md"
+cost_tokens = 84
+cum_tokens = 7044
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 166
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md", section_index: 0 })'
+descriptor = "packages/create-vite/template-solid/README.md section #0"
+cost_tokens = 0
+cum_tokens = 7044
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md" })'
+descriptor = "headings outline in packages/create-vite/template-solid-ts/README.md"
+cost_tokens = 84
+cum_tokens = 7128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 168
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md", section_index: 0 })'
+descriptor = "packages/create-vite/template-solid-ts/README.md section #0"
+cost_tokens = 0
+cum_tokens = 7128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts" })'
+descriptor = "listing of 'packages/create-vite/template-svelte-ts'"
+cost_tokens = 56
+cum_tokens = 7184
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts"
+entries = [".vscode", "README.md", "_gitignore", "index.html", "package.json", "public", "src", "svelte.config.js", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
+
+[[batches]]
+position = 170
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md" })'
+descriptor = "README headline in packages/create-vite/template-svelte-ts/README.md"
+cost_tokens = 35
+cum_tokens = 7219
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/package.json" })'
+descriptor = "package identity in packages/create-vite/template-svelte-ts/package.json"
+cost_tokens = 52
+cum_tokens = 7271
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/src" })'
+descriptor = "listing of 'packages/create-vite/template-svelte-ts/src'"
+cost_tokens = 19
+cum_tokens = 7290
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/src"
+entries = ["App.svelte", "app.css", "assets", "lib", "main.ts"]
+
+[[batches]]
+position = 173
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/src/main.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/create-vite/template-svelte-ts/src/main.ts"
+cost_tokens = 8
+cum_tokens = 7298
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/src/main.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md" })'
+descriptor = "headings outline in packages/create-vite/template-svelte-ts/README.md"
+cost_tokens = 35
+cum_tokens = 7333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 175
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/src/main.ts" })'
+descriptor = "imports in packages/create-vite/template-svelte-ts/src/main.ts"
+cost_tokens = 34
+cum_tokens = 7367
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/src/main.ts"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md", section_index: 0 })'
+descriptor = "packages/create-vite/template-react/README.md section #0"
+cost_tokens = 96
+cum_tokens = 7463
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/README.md"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md", section_index: 0 })'
+descriptor = "packages/create-vite/template-react-ts/README.md section #0"
+cost_tokens = 96
+cum_tokens = 7559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/README.md"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit-ts/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-lit-ts/package.json"
+cost_tokens = 53
+cum_tokens = 7612
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-lit-ts/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-vanilla-ts/package.json"
+cost_tokens = 53
+cum_tokens = 7665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vanilla-ts/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-preact-ts/package.json"
+cost_tokens = 55
+cum_tokens = 7720
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-preact-ts/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-qwik-ts/package.json"
+cost_tokens = 55
+cum_tokens = 7775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-qwik-ts/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-solid-ts/package.json"
+cost_tokens = 55
+cum_tokens = 7830
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-vue-ts/package.json"
+cost_tokens = 56
+cum_tokens = 7886
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-vue-ts/package.json"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md", section_index: 1 })'
+descriptor = "packages/create-vite/template-svelte/README.md section #1"
+cost_tokens = 38
+cum_tokens = 7924
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md", section_index: 1 })'
+descriptor = "packages/create-vite/template-svelte-ts/README.md section #1"
+cost_tokens = 38
+cum_tokens = 7962
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-svelte-ts/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md", section_index: 2 })'
+descriptor = "packages/create-vite/template-solid/README.md section #2"
+cost_tokens = 27
+cum_tokens = 7989
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid/README.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md", section_index: 2 })'
+descriptor = "packages/create-vite/template-solid-ts/README.md section #2"
+cost_tokens = 27
+cum_tokens = 8016
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-solid-ts/README.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-react/package.json"
+cost_tokens = 62
+cum_tokens = 8078
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react/package.json"
+start = 6
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md" })'
+descriptor = "headings outline in packages/plugin-legacy/README.md"
+cost_tokens = 178
+cum_tokens = 8256
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 137
+end = 137
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 190
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md", section_index: 12 })'
+descriptor = "packages/plugin-legacy/README.md section #12"
+cost_tokens = 11
+cum_tokens = 8267
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md", section_index: 15 })'
+descriptor = "packages/plugin-legacy/README.md section #15"
+cost_tokens = 11
+cum_tokens = 8278
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md", section_index: 4 })'
+descriptor = "packages/plugin-legacy/README.md section #4"
+cost_tokens = 14
+cum_tokens = 8292
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md", section_index: 6 })'
+descriptor = "packages/plugin-legacy/README.md section #6"
+cost_tokens = 14
+cum_tokens = 8306
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md", section_index: 10 })'
+descriptor = "packages/plugin-legacy/README.md section #10"
+cost_tokens = 14
+cum_tokens = 8320
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md", section_index: 0 })'
+descriptor = "packages/plugin-legacy/README.md section #0"
+cost_tokens = 185
+cum_tokens = 8505
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/plugin-legacy/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/package.json" })'
+descriptor = "package scripts in packages/create-vite/template-react-ts/package.json"
+cost_tokens = 67
+cum_tokens = 8572
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/create-vite/template-react-ts/package.json"
+start = 6
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer" })'
+descriptor = "listing of 'packages/vite/src/node/optimizer'"
+cost_tokens = 29
+cum_tokens = 8601
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer"
+entries = ["index.ts", "optimizer.ts", "pluginConverter.ts", "resolve.ts", "rolldownDepPlugin.ts", "scan.ts"]
+
+[[batches]]
+position = 198
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", chunk_index: 0, export_count: 28, type_only_export_count: 7 })'
+descriptor = "export names surface in packages/vite/src/node/optimizer/index.ts"
+cost_tokens = 157
+cum_tokens = 8758
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 216
+end = 216
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 236
+end = 236
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 283
+end = 283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 366
+end = 366
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 196
+end = 196
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 206
+end = 206
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 217
+end = 217
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 237
+end = 237
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 325
+end = 325
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 350
+end = 350
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 367
+end = 367
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 199
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 195 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:195"
+cost_tokens = 19
+cum_tokens = 8777
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 195
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 200
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 324 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:324"
+cost_tokens = 21
+cum_tokens = 8798
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 324
+end = 326
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 327
+end = 327
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 201
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 349 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:349"
+cost_tokens = 27
+cum_tokens = 8825
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 349
+end = 352
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 353
+end = 353
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 202
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 283 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:283"
+cost_tokens = 49
+cum_tokens = 8874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 283
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 203
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 366 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:366"
+cost_tokens = 53
+cum_tokens = 8927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 366
+end = 370
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 371
+end = 371
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 204
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 49 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:49"
+cost_tokens = 74
+cum_tokens = 9001
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 49
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 205
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 205 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:205"
+cost_tokens = 103
+cum_tokens = 9104
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 205
+end = 214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 195, body_start_line: 198 })'
+descriptor = "export body at packages/vite/src/node/optimizer/index.ts:195 body 198"
+cost_tokens = 55
+cum_tokens = 9159
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 198
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 207
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 57 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:57"
+cost_tokens = 156
+cum_tokens = 9315
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 57
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 60
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 65
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 71
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 216 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:216"
+cost_tokens = 198
+cum_tokens = 9513
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 216
+end = 234
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 209
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 349, body_start_line: 353 })'
+descriptor = "export body at packages/vite/src/node/optimizer/index.ts:349 body 353"
+cost_tokens = 109
+cum_tokens = 9622
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 353
+end = 363
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts", start_line: 176 })'
+descriptor = "export at packages/vite/src/node/optimizer/index.ts:176"
+cost_tokens = 233
+cum_tokens = 9855
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vite/packages/vite/src/node/optimizer/index.ts"
+start = 176
+end = 193
+
+[batches.content.spans.render]
+kind = "full"

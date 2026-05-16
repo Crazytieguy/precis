@@ -1,0 +1,339 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.azure-pipelines/
+.devcontainer/
+.gitattributes
+.github/
+.gitignore
+.husky/
+.mocharc.json
+.nvmrc
+.prettierignore
+.prettierrc
+.vscode/
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE.txt
+MAINTAINING.md
+    1→# Maintaining
+    …
+    9→## Publishing a stable build monaco-editor build
+    …
+    50→## Updating TypeScript
+    …
+README.md
+    1→# Monaco Editor
+    8→The Monaco Editor is the fully featured code editor from [VS Code](https://github.com/microsoft/vscode). Check out the [VS Code docs](https://code.visualstudio.com/docs/editor/editingevolved) to see some of the supported features.
+    10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
+    12→## Try it out
+    …
+    18→## Installing
+    …
+    31→## Localization
+    …
+    40→## Concepts
+    …
+    42→Monaco editor is best known for being the text editor that powers VS Code. However, it's a bit more nuanced. Some basic understanding about the underlying concepts is needed to use Monaco editor effectively.
+    44→### Models
+    …
+    48→### URIs
+    …
+    52→### Editors
+    …
+    56→### Providers
+    …
+    62→### Disposables
+    …
+    66→## Documentation
+    …
+    76→## Issues
+    …
+    80→## FAQ
+    …
+    112→## Contributing / Local Development
+    …
+    117→## Code of Conduct
+    …
+    121→## License
+    …
+    123→Licensed under the [MIT](https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt) License.
+SECURITY.md
+ThirdPartyNotices.txt
+build/
+docs/
+    code-structure.dio.svg
+    debugging-core.gif
+    debugging-languages.gif
+    integrate-esm.md
+        1→## Integrating the ESM version of the Monaco Editor
+        …
+        9→### Using webpack
+        …
+        17→### Option 1: Using the Monaco Editor WebPack Plugin
+        …
+        62→### Option 2: Using plain webpack
+        …
+        135→### Using parcel
+        …
+        189→### Using Vite
+        …
+    launch config.png
+    out-folders.dio.svg
+editor.code-workspace
+gulpfile.js
+monaco-lsp-client/
+    README.md
+        1→# Monaco LSP Client
+        3→Provides a Language Server Protocol (LSP) client for the Monaco Editor.
+        5→This package is in alpha stage and might contain many bugs.
+    generator/
+        index.ts
+            1→import * as fs from 'fs';
+            2→import * as path from 'path';
+            4→/**
+            5→ * Utility class for writing formatted code with proper indentation
+            6→ */
+            7→class LineWriter {
+            8→	private lines: string[] = [];
+            9→	private indentLevel: number = 0;
+            10→	private indentStr: string = '    '; // 4 spaces
+            15→	writeLine(line: string = ''): void {
+            16→		if (line.trim() === '') {
+            17→			this.lines.push('');
+            18→		} else {
+            19→			this.lines.push(this.indentStr.repeat(this.indentLevel) + line);
+            20→		}
+            26→	write(text: string): void {
+            27→		if (this.lines.length === 0) {
+            28→			this.lines.push('');
+            29→		}
+            30→		const lastIndex = this.lines.length - 1;
+            31→		if (this.lines[lastIndex] === '') {
+            32→			this.lines[lastIndex] = this.indentStr.repeat(this.indentLevel) + text;
+            33→		} else {
+            34→			this.lines[lastIndex] += text;
+            35→		}
+            41→	indent(): void {
+            42→		this.indentLevel++;
+            48→	outdent(): void {
+            49→		if (this.indentLevel > 0) {
+            50→			this.indentLevel--;
+            51→		}
+            57→	toString(): string {
+            58→		return this.lines.join('\n');
+            64→	clear(): void {
+            65→		this.lines = [];
+            66→		this.indentLevel = 0;
+            256→/**
+            257→ * TypeScript types generator for LSP client
+            258→ */
+            259→class LSPTypesGenerator {
+            260→	private writer = new LineWriter();
+            265→	private loadMetaModel(): MetaModel {
+            …
+            274→	private typeToTypeScript(type: Type): string {
+            …
+            325→	private structureLiteralToTypeScript(literal: StructureLiteral): string {
+            …
+            336→	private generateStructure(structure: Structure): void {
+            …
+            357→		this.writer.indent();
+            359→		// Add properties
+            372→		this.writer.outdent();
+            373→		this.writer.writeLine('}');
+            374→		this.writer.writeLine('');
+            380→	private generateEnumeration(enumeration: Enumeration): void {
+            …
+            388→		this.writer.indent();
+            406→		this.writer.outdent();
+            407→		this.writer.writeLine('}');
+            408→		this.writer.writeLine('');
+            414→	private generateTypeAlias(typeAlias: TypeAlias): void {
+            …
+            430→	private generateCapabilityClass(): void {
+            …
+            447→	private generateCapabilitiesMap(metaModel: MetaModel): void {
+            448→		this.writer.writeLine('/**');
+            452→		this.writer.indent();
+            475→		// Generate capability entries
+            487→		this.writer.outdent();
+            489→		this.writer.writeLine('');
+            495→	private methodToIdentifier(method: string): string {
+            …
+            514→	private generateApiContract(metaModel: MetaModel): void {
+            515→		this.writer.writeLine('/**');
+            520→		this.writer.indent();
+            557→		// Server section
+            559→		this.writer.indent();
+            578→		this.writer.outdent();
+            581→		// Client section
+            583→		this.writer.indent();
+            602→		this.writer.outdent();
+            603→		this.writer.writeLine('}');
+            605→		this.writer.outdent();
+            607→		this.writer.writeLine('');
+            613→	private getParamsType(params?: Type | Type[]): string {
+            …
+            628→	generate(): void {
+            …
+            631→		this.writer.clear();
+            635→		this.writer.writeLine('');
+            639→		this.writer.indent();
+            644→		this.writer.outdent();
+            646→		this.writer.writeLine('');
+            648→		// Generate enumerations
+            653→		// Generate type aliases
+            658→		// Generate structures
+            663→		// Generate Capability class
+            664→		this.generateCapabilityClass();
+    package-lock.json
+    package.json
+        2→	"name": "@vscode/monaco-lsp-client",
+        3→	"description": "description",
+        4→	"authors": "vscode",
+        5→	"version": "0.1.0",
+        6→	"main": "out/index.js",
+        7→	"types": "out/index.d.ts",
+    rolldown.config.mjs
+    src/
+        adapters/
+        index.ts
+            1→import { MonacoLspClient } from './adapters/LspClient';
+            2→import { WebSocketTransport } from '@hediet/json-rpc-websocket';
+            3→import { createTransportToWorker, createTransportToIFrame } from '@hediet/json-rpc-browser';
+            5→export { MonacoLspClient, WebSocketTransport, createTransportToWorker, createTransportToIFrame };
+        types.ts
+        utils.ts
+package-lock.json
+package.json
+    2→	"name": "monaco-editor",
+    3→	"version": "0.55.1",
+    5→	"private": true,
+    6→	"description": "A browser based code editor",
+    7→	"homepage": "https://github.com/microsoft/monaco-editor",
+    8→	"author": "Microsoft Corporation",
+    9→	"license": "MIT",
+    49→	"repository": {
+    50→		"type": "git",
+    51→		"url": "https://github.com/microsoft/monaco-editor"
+    52→	},
+samples/
+scripts/
+    ci/
+    lib/
+src/
+    deprecated/
+        basic-languages/
+        editor/
+        language/
+            css/
+            html/
+            json/
+            typescript/
+    editor.ts
+        1→export * from 'monaco-editor-core/esm/vs/editor/editor.api';
+    features/
+    index.ts
+        1→import * as lsp from '@vscode/monaco-lsp-client';
+        2→import { css, html, json, typescript } from './languages/register.all';
+        3→import './features/register.all';
+        6→import 'monaco-editor-core';
+        8→export * from './editor';
+        9→export { css, html, json, typescript, lsp };
+    internal/
+        common/
+    languages/
+        definitions/
+        features/
+            common/
+            css/
+            html/
+            json/
+            register.all.ts
+                6→export { css, html, json, typescript };
+            typescript/
+        register.all.ts
+    tsconfig.json
+test/
+    manual/
+    smoke/
+    test-setup.mjs
+test-results/
+    .last-run.json
+webpack-plugin/
+    .npmignore
+    LICENSE
+    README.md
+        1→# Monaco Editor Webpack Loader Plugin
+        3→A plugin to simplify loading the [Monaco Editor](https://github.com/microsoft/monaco-editor) with [webpack](https://webpack.js.org/).
+        5→## Installing
+        …
+        7→```sh
+        8→npm install monaco-editor-webpack-plugin
+        9→```
+        11→## Using
+        …
+        63→## Options
+        …
+        90→## Version Matrix
+        …
+        104→## Contributing
+        …
+    package-lock.json
+    package.json
+        2→	"name": "monaco-editor-webpack-plugin",
+        3→	"version": "7.1.1",
+        4→	"description": "A webpack plugin for the Monaco Editor",
+        23→	"license": "MIT",
+    src/
+        index.ts
+            159→class MonacoEditorWebpackPlugin implements webpack.WebpackPluginInstance {
+            160→	private readonly options: IInternalMonacoEditorWebpackPluginOpts;
+            162→	constructor(options: MonacoEditorWebpackPlugin.IMonacoEditorWebpackPluginOpts = {}) {
+            163→		const monacoEditorPath = options.monacoEditorPath;
+            164→		const metadata = getEditorMetadata(monacoEditorPath);
+            165→		const languages = resolveDesiredLanguages(metadata, options.languages, options.customLanguages);
+            166→		const features = resolveDesiredFeatures(metadata, options.features);
+            167→		this.options = {
+            168→			languages,
+            169→			features,
+            170→			filename: options.filename || '[name].worker.js',
+            171→			monacoEditorPath,
+            172→			publicPath: options.publicPath || '',
+            173→			globalAPI: options.globalAPI || false
+            174→		};
+            177→	apply(compiler: webpack.Compiler): void {
+            178→		const { languages, features, filename, monacoEditorPath, publicPath, globalAPI } = this.options;
+            179→		const compilationPublicPath = getCompilationPublicPath(compiler);
+            180→		const modules = [EDITOR_MODULE].concat(languages).concat(features);
+            181→		const workers: ILabeledWorkerDefinition[] = [];
+            182→		modules.forEach((module) => {
+            183→			if (module.worker) {
+            184→				workers.push({
+            185→					label: module.label,
+            186→					id: module.worker.id,
+            187→					entry: module.worker.entry
+            188→				});
+            189→			}
+            190→		});
+            191→		const rules = createLoaderRules(
+            192→			languages,
+            193→			features,
+            194→			workers,
+            195→			filename,
+            196→			monacoEditorPath,
+            197→			publicPath,
+            198→			compilationPublicPath,
+            199→			globalAPI
+            200→		);
+            201→		const plugins = createPlugins(compiler, workers, filename, monacoEditorPath);
+            202→		addCompilerRules(compiler, rules);
+            203→		addCompilerPlugins(compiler, plugins);
+        loader-utils.d.ts
+        loaders/
+        plugins/
+        types.ts
+    tsconfig.json
+website/
