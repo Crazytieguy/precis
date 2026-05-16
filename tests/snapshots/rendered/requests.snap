@@ -120,6 +120,12 @@ ext/
     requests-logo.png
     requests-logo.svg
 pyproject.toml
+    18→dependencies = [
+    19→    "charset_normalizer>=2,<4",
+    20→    "idna>=2.5,<4",
+    21→    "urllib3>=1.26,<3",
+    22→    "certifi>=2023.5.7"
+    23→]
 requirements-dev.txt
 setup.py
     1→import sys
@@ -245,16 +251,11 @@ src/
         compat.py
         cookies.py
             571→@overload
-            572→def cookiejar_from_dict(
-            573→    cookie_dict: dict[str, str] | None,
-            574→    cookiejar: _CookieJarT,
-            575→    overwrite: bool = True,
-            576→) -> _CookieJarT: ...
+            …
             579→def cookiejar_from_dict(
             …
             604→def merge_cookies(
-            605→    cookiejar: CookieJar, cookies: dict[str, str] | CookieJar | None
-            606→) -> CookieJar:
+            …
         exceptions.py
             161→class RequestsDependencyWarning(RequestsWarning):
             162→    """An imported dependency doesn't match the expected version range."""

@@ -52,6 +52,16 @@ pyproject.toml
     1→[project]
     2→name = "chronos-forecasting"
     12→description = "Chronos: Pretrained models for time series forecasting"
+    13→readme = "README.md"
+    15→requires-python = ">=3.10"
+    16→dependencies = [
+    17→  "torch>=2.2,<3",
+    18→  "transformers>=4.41,<5",
+    19→  "accelerate>=0.34,<2",
+    20→  "numpy>=1.21,<3",
+    21→  "einops>=0.7.0,<1",
+    22→  "scikit-learn>=1.6.0,<2",
+    23→]
 scripts/
     README.md
         1→# Usage Examples
@@ -164,9 +174,6 @@ src/
                 9→from .dataset import Chronos2Dataset
                 11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
             config.py
-                6→from dataclasses import dataclass
-                7→from typing import List, Literal
-                9→from transformers.configuration_utils import PretrainedConfig
                 12→class Chronos2CoreConfig(PretrainedConfig):
                 …
                 46→    model_type = "t5"
@@ -180,15 +187,6 @@ src/
                 …
                 102→@dataclass
                 103→class Chronos2ForecastingConfig:
-                104→    context_length: int
-                105→    output_patch_size: int
-                106→    input_patch_size: int
-                107→    input_patch_stride: int
-                108→    quantiles: List[float]
-                109→    use_reg_token: bool = False
-                110→    use_arcsinh: bool = False
-                111→    max_output_patches: int = 1
-                112→    time_encoding_scale: int | None = None
                 114→    @classmethod
                 115→    def editable_fields(cls) -> list[str]:
                 116→        """

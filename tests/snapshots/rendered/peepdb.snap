@@ -204,7 +204,6 @@ peepdb/
         119→    Example:
         120→    peepdb remove-all
         121→    """
-        122→    count = remove_all_connections()
         126→@cli.command()
         …
         181→def main():
@@ -216,16 +215,7 @@ peepdb/
         27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
         …
         56→def peep_db(db_type: str,
-        57→            host: str,
-        58→            user: str,
-        59→            password: str,
-        60→            database: str,
-        61→            table: str = None,
-        62→            format: str = 'table',
-        63→            page: int = 1,
-        64→            page_size: int = 100,
-        65→            scientific: bool = False,
-        66→            trusted: bool = False) -> Any:
+        …
         101→def format_as_table(data: Dict[str, Any]) -> str:
         …
         118→def format_value(value, scientific: bool, output_format: str):
@@ -279,12 +269,8 @@ peepdb/
         mssql.py
         mysql.py
         oracle.py
-            7→class OracleDatabase(BaseDatabase):
-            …
         postgresql.py
         sqlite.py
-            6→class SQLiteDatabase(BaseDatabase):
-            …
     exceptions.py
         1→class InvalidPassword(Exception):
         2→    pass
@@ -297,9 +283,15 @@ peepdb/
         test_peepdb.py
         test_sqlite.py
 project.toml
-    5→[project]
-    6→name = "peepdb"
-    8→description = "CLI tool to view database tables fast"
+    25→dependencies = [
+    26→    "mysql-connector-python>=9.0.0",
+    27→    "psycopg2-binary>=2.9.9",
+    28→    "pymysql>=1.1.1",
+    29→    "mariadb",
+    30→    "cryptography>=43.0.0",
+    31→    "tabulate>=0.8.9",
+    32→    "click>=8.0.0",
+    33→]
 requirements.txt
 setup.py
     1→from setuptools import setup, find_packages

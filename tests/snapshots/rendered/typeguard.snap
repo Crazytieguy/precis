@@ -43,6 +43,10 @@ docs/
     userguide.rst
     versionhistory.rst
 pyproject.toml
+    27→dependencies = [
+    28→    "importlib_metadata >= 3.6; python_version < '3.10'",
+    29→    "typing_extensions >= 4.14.0",
+    30→]
 src/
     typeguard/
         __init__.py
@@ -174,8 +178,7 @@ src/
             56→    @staticmethod
             …
             99→    def exec_module(self, module: ModuleType) -> None:
-            100→        # Use a custom optimization marker – the import lock should make this monkey
-            101→        # patch safe
+            …
             109→class TypeguardFinder(MetaPathFinder):
             …
             120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
@@ -189,13 +192,13 @@ src/
             158→    A handle that can be used to uninstall the Typeguard import hook.
             159→    """
             161→    def __init__(self, hook: MetaPathFinder):
-            162→        self.hook = hook
+            …
             164→    def __enter__(self) -> None:
-            165→        pass
+            …
             167→    def __exit__(
             …
             175→    def uninstall(self) -> None:
-            176→        """Uninstall the import hook."""
+            …
             183→def install_import_hook(
             184→    packages: Iterable[str] | None = None,
             185→    *,

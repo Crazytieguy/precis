@@ -58,15 +58,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: features_value(&file, ctx),
             });
         }
-        if let Some(content) = build_section_content(&file, ctx, |n| {
-            matches!(
-                n,
-                "dependencies"
-                    | "dev-dependencies"
-                    | "build-dependencies"
-                    | "workspace.dependencies"
-            )
-        }) {
+        if let Some(content) = build_dependencies_content(&file, ctx) {
             out.push(Batch {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
                 predecessor: None,
@@ -76,6 +68,38 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
     }
     out
+}
+
+/// Cargo: top-level `[dependencies]` / `[dev-dependencies]` / etc. tables.
+/// pyproject: `[project].dependencies` is a multi-line array (no separate
+/// dependencies *table*), so it never matched the table-name path — fold
+/// it in here so Python projects get a Dependencies batch covering their
+/// runtime deps the same way Cargo crates do.
+fn build_dependencies_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+    let (source, tree) = parse_toml(ctx, file)?;
+    let sections = collect_sections(&tree, &source);
+    let mut line_numbers: Vec<usize> = Vec::new();
+    for (name, start_line, end_line) in sections {
+        match name.as_str() {
+            "dependencies" | "dev-dependencies" | "build-dependencies"
+            | "workspace.dependencies" => {
+                line_numbers.extend(start_line..=end_line);
+            }
+            "project" => {
+                line_numbers.extend(project_array_member_lines(
+                    &source,
+                    start_line,
+                    end_line,
+                    "dependencies",
+                ));
+            }
+            _ => {}
+        }
+    }
+    if line_numbers.is_empty() {
+        return None;
+    }
+    single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
 fn build_section_content(
@@ -120,12 +144,87 @@ fn is_project_scalar_pair_line(line: &str) -> bool {
         return false;
     };
     let key = key.trim();
-    matches!(key, "name" | "description")
-        && value
-            .trim_start()
-            .chars()
-            .next()
-            .is_some_and(|ch| ch != '[')
+    matches!(
+        key,
+        "name" | "version" | "description" | "requires-python" | "license" | "readme"
+    ) && value
+        .trim_start()
+        .chars()
+        .next()
+        .is_some_and(|ch| ch != '[' && ch != '{')
+}
+
+/// Return the 1-based line numbers spanning `<member> = [...]` inside the
+/// `[project]` section delimited by `start_line..=end_line`. The match is
+/// at depth 0 of square brackets — handles multi-line arrays with nested
+/// brackets in string values. Returns an empty vec when the member is
+/// absent or its value isn't an array.
+fn project_array_member_lines(
+    source: &str,
+    start_line: usize,
+    end_line: usize,
+    member: &str,
+) -> Vec<usize> {
+    let lines: Vec<&str> = source.lines().collect();
+    let mut out = Vec::new();
+    let mut depth: i32 = 0;
+    let mut started = false;
+    let scan_start = start_line.saturating_sub(1);
+    let scan_end = end_line.min(lines.len());
+    for (idx, line) in lines.iter().enumerate().take(scan_end).skip(scan_start) {
+        let line = *line;
+        let line_no = idx + 1;
+        if !started {
+            let Some((key, value)) = line.trim_start().split_once('=') else {
+                continue;
+            };
+            if key.trim() != member {
+                continue;
+            }
+            if !value.trim_start().starts_with('[') {
+                continue;
+            }
+            started = true;
+            out.push(line_no);
+            depth += count_bracket_depth(value);
+            if depth == 0 {
+                return out;
+            }
+        } else {
+            out.push(line_no);
+            depth += count_bracket_depth(line);
+            if depth == 0 {
+                return out;
+            }
+        }
+    }
+    if depth == 0 { out } else { Vec::new() }
+}
+
+/// Net `[` minus `]` count on a line, ignoring brackets inside `"..."`
+/// or `'...'` string literals.
+fn count_bracket_depth(line: &str) -> i32 {
+    let mut depth = 0;
+    let mut in_str: Option<char> = None;
+    let mut prev = '\0';
+    for ch in line.chars() {
+        match in_str {
+            Some(quote) => {
+                if ch == quote && prev != '\\' {
+                    in_str = None;
+                }
+            }
+            None => match ch {
+                '"' | '\'' => in_str = Some(ch),
+                '#' => break,
+                '[' => depth += 1,
+                ']' => depth -= 1,
+                _ => {}
+            },
+        }
+        prev = ch;
+    }
+    depth
 }
 
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -139,21 +238,19 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(m, 0.7 * m, 0.85 * m, path_depth_factor(file, ctx))
 }
 
-fn is_pyproject_manifest(file: &Path) -> bool {
-    file.file_name().and_then(|name| name.to_str()) == Some("pyproject.toml")
-}
-
 fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
-    if !is_pyproject_manifest(file) {
+    // Pyproject *shape* — any TOML file with a `[project]` table follows
+    // the PEP 621 layout convention regardless of filename. Catches
+    // alternatives like peepdb's `project.toml` alongside the standard
+    // `pyproject.toml`. Cargo.toml never matches (it uses `[package]`).
+    let (source, tree) = parse_toml(ctx, file)?;
+    let sections = collect_sections(&tree, &source);
+    if !sections.iter().any(|(name, _, _)| name == "project") {
         return None;
     }
-    let project_is_lede = parse_toml(ctx, file)
-        .map(|(source, tree)| {
-            collect_sections(&tree, &source)
-                .first()
-                .is_some_and(|(name, _, _)| name == "project")
-        })
-        .unwrap_or(false);
+    let project_is_lede = sections
+        .first()
+        .is_some_and(|(name, _, _)| name == "project");
     if !project_is_lede {
         return Some(PYPROJECT_NON_LEDE_IDENTITY_FACTOR);
     }

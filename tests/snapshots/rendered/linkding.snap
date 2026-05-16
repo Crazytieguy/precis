@@ -40,9 +40,6 @@ README.md
     …
     47→## Documentation
     …
-    49→The full documentation is now available at [linkding.link](https://linkding.link/).
-    51→If you want to contribute to the documentation, you can find the source files in the `docs` folder.
-    53→If you want to contribute a community project, feel free to [submit a PR](https://github.com/sissbruecker/linkding/edit/master/docs/src/content/docs/community.md).
     55→## Contributing
     …
     57→Small improvements, bugfixes and documentation improvements are always welcome. If you want to contribute a larger feature, consider opening an issue first to discuss it. I may choose to ignore PRs for features that don't align with the project's goals or that I don't want to maintain.
@@ -153,10 +150,6 @@ bookmarks/
             import_netscape.py
                 7→class Command(BaseCommand):
                 8→    help = "Import Netscape HTML bookmark file"
-                10→    def add_arguments(self, parser):
-                …
-                16→    def handle(self, *args, **kwargs):
-                …
             migrate_tasks.py
                 9→class Command(BaseCommand):
                 10→    help = "Migrate tasks from django-background-tasks to Huey"
@@ -182,8 +175,6 @@ bookmarks/
         bookmarks.py
         bundles.py
         exporter.py
-            1→import html
-            3→from bookmarks.models import Bookmark
         favicon_loader.py
         importer.py
         monolith.py
@@ -198,8 +189,6 @@ bookmarks/
         tags.py
         tasks.py
         wayback.py
-            1→import datetime
-            3→from django.utils import timezone
             6→def generate_fallback_webarchive_url(
             7→    url: str, timestamp: datetime.datetime
             8→) -> str | None:
@@ -237,7 +226,6 @@ bookmarks/
         3→import bookmarks.services.tasks  # noqa: F401
     templates/
         admin/
-            background_tasks.html
         bookmarks/
         bundles/
             edit.html
@@ -308,13 +296,6 @@ bookmarks/
         access.py
         assets.py
         auth.py
-            7→class LinkdingLoginView(auth_views.LoginView):
-            8→    """
-            9→    Custom login view to lazily add additional context data
-            10→    Allows to override settings in tests
-            11→    """
-            36→class LinkdingPasswordChangeView(auth_views.PasswordChangeView):
-            …
         bookmarks.py
         bundles.py
         contexts.py
@@ -377,7 +358,24 @@ postcss.config.js
 pyproject.toml
     1→[project]
     2→name = "linkding"
+    3→version = "1.45.0"
     4→description = "Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up using Docker."
+    5→readme = "README.md"
+    6→requires-python = ">=3.13"
+    7→dependencies = [
+    8→    "beautifulsoup4>=4.14.3",
+    9→    "bleach>=6.3.0",
+    10→    "bleach-allowlist>=1.0.3",
+    11→    "django>=6.0",
+    12→    "djangorestframework>=3.16.1",
+    13→    "huey>=2.5.5",
+    14→    "markdown>=3.10",
+    15→    "mozilla-django-oidc>=5.0.2",
+    16→    "requests>=2.32.5",
+    17→    "supervisor>=4.3.0",
+    18→    "uwsgi>=2.0.31",
+    19→    "waybackpy>=3.0.6",
+    20→]
 pytest.ini
 rollup.config.mjs
 scripts/

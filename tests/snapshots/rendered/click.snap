@@ -274,7 +274,14 @@ examples/
 pyproject.toml
     1→[project]
     2→name = "click"
+    3→version = "8.3.3"
     4→description = "Composable command line interface toolkit"
+    5→readme = "README.md"
+    6→license = "BSD-3-Clause"
+    16→requires-python = ">=3.10"
+    17→dependencies = [
+    18→    "colorama; platform_system == 'Windows'",
+    19→]
 src/
     click/
         __init__.py
@@ -322,10 +329,6 @@ src/
         _compat.py
         _termui_impl.py
         _textwrap.py
-            1→from __future__ import annotations
-            3→import collections.abc as cabc
-            4→import textwrap
-            5→from contextlib import contextmanager
             8→class TextWrapper(textwrap.TextWrapper):
             9→    def _handle_long_word(
             …

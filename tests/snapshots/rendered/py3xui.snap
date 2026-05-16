@@ -319,6 +319,11 @@ py3xui/
             4→COOKIE_NAMES = ["3x-ui", "session"]
         env.py
 pyproject.toml
+    19→dependencies = [
+    20→    "pydantic>=2.0.0",
+    21→    "requests>=2.0.0",
+    22→    "httpx>=0.20.0",
+    23→]
 tests/
     __init__.py
     responses/

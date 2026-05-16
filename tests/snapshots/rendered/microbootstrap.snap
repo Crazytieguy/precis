@@ -263,9 +263,7 @@ microbootstrap/
         28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
         …
         32→    def configure_instruments(
-        33→        self,
-        34→        *instrument_configs: InstrumentConfigT,
-        35→    ) -> typing_extensions.Self:
+        …
         40→    @classmethod
         …
         51→    def setup(self) -> None:
@@ -294,6 +292,9 @@ pyproject.toml
     1→[project]
     2→name = "microbootstrap"
     3→description = "Package for bootstrapping new micro-services"
+    4→readme = "README.md"
+    5→requires-python = ">=3.10,<4"
+    59→version = "0"
 tests/
     __init__.py
     bootstrappers/

@@ -99,8 +99,7 @@ experiments/
         10→    is_differentiable: Optional[bool] = False
         11→    higher_is_better: Optional[bool] = True
         13→    def __init__(self, **kwargs):
-        14→        super().__init__()
-        15→        self._acc = torchmetrics.Accuracy(**kwargs)
+        …
         17→    def update(self, preds: torch.Tensor, target: torch.Tensor):
         …
         22→    def compute(self):
@@ -118,6 +117,26 @@ notebooks/
         xLSTM_test_notebook.ipynb
     xlstm_large/
 pyproject.toml
+    22→dependencies = [
+    23→    "torch",
+    24→    "einops",
+    25→    "numpy",
+    26→    "opt_einsum", 
+    27→    "omegaconf",
+    28→    "transformers",
+    29→    "reportlab",
+    30→    "joypy",
+    31→    "ipykernel",
+    32→    "dacite",
+    33→    "ftfy", 
+    34→    "ninja",
+    35→    "huggingface-hub",
+    36→    "rich",
+    37→    "tokenizers",
+    38→    "tqdm",
+    39→    "seaborn",
+    40→    "mlstm_kernels",
+    41→]
 pytest.ini
 res/
     desc_xlstm_overview.pdf
@@ -202,9 +221,7 @@ xlstm/
             16→@dataclass
             17→class xLSTMBlockConfig:
             43→class xLSTMBlock(nn.Module):
-            44→    """An xLSTM block can be either an sLSTM Block or an mLSTM Block.
-            46→    It contains the pre-LayerNorms and the skip connections.
-            47→    """
+            …
             49→    config_class = xLSTMBlockConfig
     components/
         __init__.py
@@ -232,17 +249,7 @@ xlstm/
         ln.py
             8→class LayerNorm(nn.Module):
             9→    """LayerNorm but with an optional bias. PyTorch doesn't support simply bias=False."""
-            11→    def __init__(
-            …
-            27→    @property
-            28→    def weight_proxy(self) -> torch.Tensor:
-            36→    def forward(self, input: torch.Tensor) -> torch.Tensor:
-            …
-            41→    def reset_parameters(self):
-            …
             51→class MultiHeadLayerNorm(LayerNorm):
-            …
-            53→    def forward(self, input: torch.Tensor) -> torch.Tensor:
             …
         util.py
             3→import torch

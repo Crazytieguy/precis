@@ -96,9 +96,6 @@ docs/
             3→    options:
             4→        show_root_heading: true
         i18n.md
-            1→# ::: htmy.i18n
-            3→    options:
-            4→        show_root_heading: true
         md.md
             1→# ::: htmy.md.core
             …
@@ -300,6 +297,14 @@ pyproject.toml
     1→[project]
     2→name = "htmy"
     4→description = "Async, pure-Python server-side rendering engine."
+    6→license = "MIT"
+    7→readme = "README.md"
+    8→requires-python = ">=3.10"
+    9→dependencies = [
+    10→    "anyio>=4.7.0,<5",
+    11→    "async-lru>=2.0.5,<3",
+    12→    "markdown>=3.8,<4",
+    13→]
 tests/
     __init__.py
     conftest.py

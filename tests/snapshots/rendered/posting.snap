@@ -97,7 +97,10 @@ mkdocs.yml
 pyproject.toml
     1→[project]
     2→name = "posting"
+    3→version = "2.10.0"
     4→description = "The modern API client that lives in your terminal."
+    25→readme = "README.md"
+    26→requires-python = ">= 3.11"
 src/
     posting/
         __init__.py
@@ -252,7 +255,7 @@ src/
             29→    def __init__(self, ids_to_keys: Mapping[str, str], screen: Screen[Any]) -> None:
             …
             34→    def get_overlays(self) -> dict[Offset, JumpInfo]:
-            35→        """Return a dictionary of all the jump targets"""
+            …
         locations.py
         messages.py
             6→@dataclass

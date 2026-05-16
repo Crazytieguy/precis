@@ -303,3 +303,10 @@ nanovllm/
             12→def load_model(model: nn.Module, path: str):
             …
 pyproject.toml
+    14→dependencies = [
+    15→    "torch>=2.4.0",
+    16→    "triton>=3.0.0",
+    17→    "transformers>=4.51.0",
+    18→    "flash-attn",
+    19→    "xxhash",
+    20→]
