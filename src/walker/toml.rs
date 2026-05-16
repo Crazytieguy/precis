@@ -77,29 +77,86 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 /// runtime deps the same way Cargo crates do.
 fn build_dependencies_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
     let (source, tree) = parse_toml(ctx, file)?;
-    let sections = collect_sections(&tree, &source);
     let mut line_numbers: Vec<usize> = Vec::new();
-    for (name, start_line, end_line) in sections {
-        match name.as_str() {
-            "dependencies" | "dev-dependencies" | "build-dependencies"
-            | "workspace.dependencies" => {
-                line_numbers.extend(start_line..=end_line);
-            }
-            "project" => {
-                line_numbers.extend(project_array_member_lines(
-                    &source,
-                    start_line,
-                    end_line,
-                    "dependencies",
-                ));
-            }
-            _ => {}
+    for (name, start, end) in collect_sections(&tree, &source) {
+        if matches!(
+            name.as_str(),
+            "dependencies" | "dev-dependencies" | "build-dependencies" | "workspace.dependencies"
+        ) {
+            line_numbers.extend(start..=end);
         }
+    }
+    if is_pyproject_filename(file)
+        && let Some((start, end)) = project_pair_array_rows(&tree, &source, "dependencies")
+    {
+        line_numbers.extend(start..=end);
     }
     if line_numbers.is_empty() {
         return None;
     }
     single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
+}
+
+/// 1-based row span of a `<key> = [...]` array inside the `[project]`
+/// table. `None` when there's no `[project]` table, no matching key, or
+/// the matched value isn't an array. Tree-sitter resolves multi-line
+/// arrays, in-string brackets, comments, and escapes natively.
+fn project_pair_array_rows(tree: &Tree, source: &str, key: &str) -> Option<(usize, usize)> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "table" {
+            continue;
+        }
+        let Some(name) = extract_table_name(child, source) else {
+            continue;
+        };
+        if name != "project" {
+            continue;
+        }
+        let mut pair_cursor = child.walk();
+        for pair in child.children(&mut pair_cursor) {
+            if pair.kind() != "pair" {
+                continue;
+            }
+            if pair_key_matches(pair, source, key) {
+                let value_node = pair_value_node(pair)?;
+                if value_node.kind() != "array" {
+                    return None;
+                }
+                return Some((
+                    pair.start_position().row + 1,
+                    value_node.end_position().row + 1,
+                ));
+            }
+        }
+    }
+    None
+}
+
+fn pair_key_matches(pair: Node, source: &str, key: &str) -> bool {
+    let mut cursor = pair.walk();
+    for child in pair.children(&mut cursor) {
+        if matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key") {
+            return source[child.start_byte()..child.end_byte()].trim() == key;
+        }
+    }
+    false
+}
+
+fn pair_value_node(pair: Node) -> Option<Node> {
+    let mut cursor = pair.walk();
+    let mut seen_key = false;
+    for child in pair.children(&mut cursor) {
+        if matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key") {
+            seen_key = true;
+            continue;
+        }
+        if seen_key && !matches!(child.kind(), "=" | "comment") {
+            return Some(child);
+        }
+    }
+    None
 }
 
 fn build_section_content(
@@ -109,11 +166,14 @@ fn build_section_content(
 ) -> Option<crate::content::BatchContent> {
     let (source, tree) = parse_toml(ctx, file)?;
     let sections = collect_sections(&tree, &source);
+    let pyproject = is_pyproject_filename(file);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start_line, end_line) in sections {
         if name_match(&name) {
             if name == "project" {
-                line_numbers.extend(project_identity_lines(&source, start_line, end_line));
+                line_numbers.extend(project_identity_lines(
+                    &source, start_line, end_line, pyproject,
+                ));
             } else {
                 line_numbers.extend(start_line..=end_line);
             }
@@ -125,106 +185,55 @@ fn build_section_content(
     single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
-fn project_identity_lines(source: &str, start_line: usize, end_line: usize) -> Vec<usize> {
+fn is_pyproject_filename(file: &Path) -> bool {
+    file.file_name().and_then(|n| n.to_str()) == Some("pyproject.toml")
+}
+
+fn project_identity_lines(
+    source: &str,
+    start_line: usize,
+    end_line: usize,
+    broad_scalars: bool,
+) -> Vec<usize> {
     let mut out = vec![start_line];
     for (idx, line) in source.lines().enumerate() {
         let line_no = idx + 1;
         if line_no <= start_line || line_no > end_line {
             continue;
         }
-        if is_project_scalar_pair_line(line) {
+        if is_project_scalar_pair_line(line, broad_scalars) {
             out.push(line_no);
         }
     }
     out
 }
 
-fn is_project_scalar_pair_line(line: &str) -> bool {
+/// `broad_scalars` widens the captured key set from the original
+/// name+description core to the full PEP 621 lede (adds version,
+/// requires-python, license, readme). Only literal `pyproject.toml`
+/// files use the broad set — alternative-named TOMLs that happen to
+/// carry a `[project]` table (peepdb's `project.toml`) stay narrow,
+/// where the wider capture displaces NS-anchored content the author
+/// did not place in the [project] table.
+fn is_project_scalar_pair_line(line: &str, broad_scalars: bool) -> bool {
     let Some((key, value)) = line.trim_start().split_once('=') else {
         return false;
     };
     let key = key.trim();
-    matches!(
-        key,
-        "name" | "version" | "description" | "requires-python" | "license" | "readme"
-    ) && value
-        .trim_start()
-        .chars()
-        .next()
-        .is_some_and(|ch| ch != '[' && ch != '{')
-}
-
-/// Return the 1-based line numbers spanning `<member> = [...]` inside the
-/// `[project]` section delimited by `start_line..=end_line`. The match is
-/// at depth 0 of square brackets — handles multi-line arrays with nested
-/// brackets in string values. Returns an empty vec when the member is
-/// absent or its value isn't an array.
-fn project_array_member_lines(
-    source: &str,
-    start_line: usize,
-    end_line: usize,
-    member: &str,
-) -> Vec<usize> {
-    let lines: Vec<&str> = source.lines().collect();
-    let mut out = Vec::new();
-    let mut depth: i32 = 0;
-    let mut started = false;
-    let scan_start = start_line.saturating_sub(1);
-    let scan_end = end_line.min(lines.len());
-    for (idx, line) in lines.iter().enumerate().take(scan_end).skip(scan_start) {
-        let line = *line;
-        let line_no = idx + 1;
-        if !started {
-            let Some((key, value)) = line.trim_start().split_once('=') else {
-                continue;
-            };
-            if key.trim() != member {
-                continue;
-            }
-            if !value.trim_start().starts_with('[') {
-                continue;
-            }
-            started = true;
-            out.push(line_no);
-            depth += count_bracket_depth(value);
-            if depth == 0 {
-                return out;
-            }
-        } else {
-            out.push(line_no);
-            depth += count_bracket_depth(line);
-            if depth == 0 {
-                return out;
-            }
-        }
-    }
-    if depth == 0 { out } else { Vec::new() }
-}
-
-/// Net `[` minus `]` count on a line, ignoring brackets inside `"..."`
-/// or `'...'` string literals.
-fn count_bracket_depth(line: &str) -> i32 {
-    let mut depth = 0;
-    let mut in_str: Option<char> = None;
-    let mut prev = '\0';
-    for ch in line.chars() {
-        match in_str {
-            Some(quote) => {
-                if ch == quote && prev != '\\' {
-                    in_str = None;
-                }
-            }
-            None => match ch {
-                '"' | '\'' => in_str = Some(ch),
-                '#' => break,
-                '[' => depth += 1,
-                ']' => depth -= 1,
-                _ => {}
-            },
-        }
-        prev = ch;
-    }
-    depth
+    let in_set = if broad_scalars {
+        matches!(
+            key,
+            "name" | "version" | "description" | "requires-python" | "license" | "readme"
+        )
+    } else {
+        matches!(key, "name" | "description")
+    };
+    in_set
+        && value
+            .trim_start()
+            .chars()
+            .next()
+            .is_some_and(|ch| ch != '[' && ch != '{')
 }
 
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -472,8 +481,17 @@ requires-python = ">=3.10"
 Homepage = "https://example.com"
 "#;
 
-        let lines = project_identity_lines(source, 1, 9);
-        assert_eq!(lines, vec![1, 2, 4]);
+        let broad = project_identity_lines(source, 1, 9, true);
+        // Broad set (pyproject.toml): name, version (dynamic stays here only
+        // because it isn't in the narrow set; description, requires-python).
+        // dynamic = ["version"] excluded by the `!= '['` value check.
+        // authors / classifiers are array-valued — excluded. requires-python
+        // is a scalar in the broad set.
+        assert_eq!(broad, vec![1, 2, 4, 7]);
+
+        let narrow = project_identity_lines(source, 1, 9, false);
+        // Narrow set: name + description only.
+        assert_eq!(narrow, vec![1, 2, 4]);
     }
 
     /// mdbook fixture: explicit `crates/*` glob, three literal entries
