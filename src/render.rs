@@ -129,10 +129,30 @@ impl RenderedTree {
     }
 
     /// Marginal cost of applying `content` against the current state.
+    /// Exact tokens via `tiktoken_rs`. Also feeds the optional
+    /// `[calib]` recorder when `--features timing` is on.
     pub fn marginal_cost(&self, content: &BatchContent) -> Cost {
         let mut total = Cost::default();
-        self.visit_atom_costs(content, |c| total = total + c);
+        self.visit_atom_costs(
+            content,
+            |text| {
+                let t = tokenizer::count(text);
+                #[cfg(feature = "timing")]
+                crate::timing::record_render_row(text.len(), t);
+                t
+            },
+            |c| total = total + c,
+        );
         total
+    }
+
+    /// Approximate token count — `bytes / k` per row. Used by the
+    /// scheduler's approx-ranking pass; the exact `marginal_cost` runs
+    /// on the small contender pool that survives ranking.
+    pub fn marginal_cost_approx(&self, content: &BatchContent) -> usize {
+        let mut tokens: usize = 0;
+        self.visit_atom_costs(content, tokenizer::approx_count, |c| tokens += c.tokens);
+        tokens
     }
 
     /// Marginal cost broken down per atom — one entry per atom in the
@@ -145,19 +165,22 @@ impl RenderedTree {
     /// same batch but differ ~10× in token weight.
     pub fn marginal_cost_per_atom(&self, content: &BatchContent) -> Vec<Cost> {
         let mut out = Vec::new();
-        self.visit_atom_costs(content, |c| out.push(c));
+        self.visit_atom_costs(content, tokenizer::count, |c| out.push(c));
         out
     }
 
     /// Internal visitor: invokes `visit(cost)` once per atom in iteration
-    /// order. Single source of truth for the per-atom cost formula —
-    /// `marginal_cost` sums into a scalar without allocating, and
-    /// `marginal_cost_per_atom` collects into a `Vec<Cost>` for callers
-    /// that need per-atom granularity.
-    fn visit_atom_costs<F: FnMut(Cost)>(&self, content: &BatchContent, mut visit: F) {
+    /// order. Single source of truth for the per-atom cost formula. The
+    /// `tokens` closure decides exact vs approximate counting; everything
+    /// else (FS zeroing, span delta) is identical across counters.
+    fn visit_atom_costs<F, T>(&self, content: &BatchContent, tokens: T, mut visit: F)
+    where
+        F: FnMut(Cost),
+        T: Fn(&str) -> usize,
+    {
         match content {
-            BatchContent::Fs { groups } => self.visit_fs_atom_costs(groups, &mut visit),
-            BatchContent::Lines { spans } => self.visit_span_atom_costs(spans, &mut visit),
+            BatchContent::Fs { groups } => self.visit_fs_atom_costs(groups, &tokens, &mut visit),
+            BatchContent::Lines { spans } => self.visit_span_atom_costs(spans, &tokens, &mut visit),
         }
     }
 
@@ -206,7 +229,11 @@ impl RenderedTree {
             .unwrap_or(0)
     }
 
-    fn visit_fs_atom_costs<F: FnMut(Cost)>(&self, groups: &[FsGroup], visit: &mut F) {
+    fn visit_fs_atom_costs<F, T>(&self, groups: &[FsGroup], tokens: &T, visit: &mut F)
+    where
+        F: FnMut(Cost),
+        T: Fn(&str) -> usize,
+    {
         for group in groups {
             let FsEntries::Listed(paths) = &group.entries else {
                 debug_assert!(
@@ -233,7 +260,7 @@ impl RenderedTree {
                     let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
                     let row = format_entry_row(name, kind, indent_depth);
                     Cost {
-                        tokens: tokenizer::count(&row),
+                        tokens: tokens(&row),
                         bytes: row.len(),
                     }
                 };
@@ -242,7 +269,11 @@ impl RenderedTree {
         }
     }
 
-    fn visit_span_atom_costs<F: FnMut(Cost)>(&self, spans: &[Span], visit: &mut F) {
+    fn visit_span_atom_costs<F, T>(&self, spans: &[Span], tokens: &T, visit: &mut F)
+    where
+        F: FnMut(Cost),
+        T: Fn(&str) -> usize,
+    {
         let resolved = explode_spans(spans);
         // explode_spans yields `(path, line)` in lex order; grouping by
         // path lets source + indent + existing-content lookups happen
@@ -278,14 +309,14 @@ impl RenderedTree {
                 );
                 let source_line = src_lines.get(line_num - 1).copied().unwrap_or("");
                 let new_row = format_line_row(line_num, render, source_line, indent_depth);
-                let new_tokens = tokenizer::count(&new_row);
+                let new_tokens = tokens(&new_row);
                 let new_bytes = new_row.len();
                 let cost = if let Some(existing) = existing
                     && let Some(old) = existing.get(&line_num)
                 {
                     let old_row = format_line_row(line_num, &old.render, source_line, indent_depth);
                     Cost {
-                        tokens: new_tokens.saturating_sub(tokenizer::count(&old_row)),
+                        tokens: new_tokens.saturating_sub(tokens(&old_row)),
                         bytes: new_bytes.saturating_sub(old_row.len()),
                     }
                 } else {
@@ -481,4 +512,92 @@ fn format_line_row(
     }
     s.push('\n');
     s
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const STUB_DIR: &str = "/stub";
+
+    fn stub_dir() -> PathBuf {
+        PathBuf::from(STUB_DIR)
+    }
+
+    fn listing(entries: &[&str]) -> BatchContent {
+        BatchContent::Fs {
+            groups: vec![FsGroup {
+                parent: stub_dir(),
+                entries: FsEntries::Listed(entries.iter().map(PathBuf::from).collect()),
+            }],
+        }
+    }
+
+    fn one_span(path: PathBuf, line: usize, render: Render) -> BatchContent {
+        BatchContent::Lines {
+            spans: vec![Span {
+                path,
+                start: line,
+                end: line,
+                render,
+            }],
+        }
+    }
+
+    #[test]
+    fn render_two_tier_already_listed_fs_zero_under_both_counters() {
+        let cache = SourceCache::new();
+        let mut tree = RenderedTree::new(stub_dir(), cache);
+        tree.apply(&listing(&["a.rs", "b.rs"]), BatchId::new(0), |_| true);
+
+        let overlap = listing(&["a.rs"]);
+        let exact = tree.marginal_cost(&overlap);
+        let approx_tokens = tree.marginal_cost_approx(&overlap);
+        assert_eq!(exact.tokens, 0);
+        assert_eq!(exact.bytes, 0);
+        assert_eq!(approx_tokens, 0);
+    }
+
+    #[test]
+    fn render_two_tier_span_refinement_is_delta_under_both_counters() {
+        let cache = SourceCache::new();
+        let path = PathBuf::from(format!("{STUB_DIR}/syn.rs"));
+        cache.insert(
+            path.clone(),
+            Arc::from("pub fn long_function_name_here() -> Result<()> {}\n"),
+        );
+        let mut tree = RenderedTree::new(stub_dir(), cache);
+        tree.apply(&listing(&["syn.rs"]), BatchId::new(0), |_| true);
+        tree.apply(
+            &one_span(
+                path.clone(),
+                1,
+                Render::Truncated {
+                    pattern: r"^pub fn \w+".into(),
+                },
+            ),
+            BatchId::new(1),
+            |_| true,
+        );
+
+        let full = one_span(path.clone(), 1, Render::Full);
+        let delta_exact = tree.marginal_cost(&full);
+        let delta_approx = tree.marginal_cost_approx(&full);
+
+        let cache_fresh = SourceCache::new();
+        cache_fresh.insert(
+            path.clone(),
+            Arc::from("pub fn long_function_name_here() -> Result<()> {}\n"),
+        );
+        let mut tree_fresh = RenderedTree::new(stub_dir(), cache_fresh);
+        tree_fresh.apply(&listing(&["syn.rs"]), BatchId::new(0), |_| true);
+        let fresh_exact = tree_fresh.marginal_cost(&full);
+        let fresh_approx = tree_fresh.marginal_cost_approx(&full);
+
+        assert!(delta_exact.bytes > 0);
+        assert!(delta_exact.tokens > 0);
+        assert!(delta_approx > 0);
+        assert!(delta_exact.bytes < fresh_exact.bytes);
+        assert!(delta_approx < fresh_approx);
+    }
 }

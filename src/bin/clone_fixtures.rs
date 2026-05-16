@@ -15,7 +15,10 @@ macro_rules! with_fixtures {
 include!("../../tests/data/fixtures.rs");
 
 fn main() {
-    let fixtures_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
+    let fixtures_dir = match std::env::var_os("PRECIS_FIXTURE_DIR") {
+        Some(p) => std::path::PathBuf::from(p),
+        None => Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures"),
+    };
     let mut cloned = 0;
     let mut skipped = 0;
 

@@ -46,6 +46,71 @@ const GATED_DESCENDANT_DEPTH_DECAY: f64 = 0.5;
 
 type ChildrenByParent = HashMap<BatchId, Vec<BatchId>>;
 
+/// How `best_exact` narrows the eligible pool before exact
+/// tokenization. Production picks one variant at compile time
+/// (`DEFAULT_CONTENDER_POOL`); the env-var override exists only under
+/// `--features timing` for calibration sweeps, so release builds have
+/// no environment dependency that could undermine the zero-drift
+/// baseline gate.
+#[derive(Debug, Clone, Copy)]
+enum ContenderPool {
+    /// Top-K by approx score.
+    AbsoluteK(usize),
+    /// Every candidate whose approx score is ≥ `top * ratio`. A peaky
+    /// score distribution admits few; a flat one admits more.
+    #[cfg_attr(not(feature = "timing"), allow(dead_code))]
+    RelativeRatio(f64),
+}
+
+/// Corpus boundary is K=66 (htop); 2× margin for off-corpus inputs.
+const DEFAULT_CONTENDER_POOL: ContenderPool = ContenderPool::AbsoluteK(128);
+
+#[cfg(feature = "timing")]
+#[derive(Default)]
+struct ExactMissAccumulator {
+    iterations: u64,
+    sum: u64,
+}
+
+#[cfg(feature = "timing")]
+impl ExactMissAccumulator {
+    fn note(&mut self, before: usize, after: usize) {
+        self.iterations += 1;
+        self.sum += (after - before) as u64;
+    }
+    fn dump(&self) {
+        if self.iterations == 0 {
+            return;
+        }
+        let mean = self.sum as f64 / self.iterations as f64;
+        eprintln!(
+            "[timing] pool_stats: iterations={}, exact_misses_total={}, exact_misses_mean_per_iter={mean:.2}",
+            self.iterations, self.sum
+        );
+    }
+}
+
+fn contender_pool() -> ContenderPool {
+    #[cfg(feature = "timing")]
+    {
+        use std::sync::OnceLock;
+        static OVERRIDE: OnceLock<Option<ContenderPool>> = OnceLock::new();
+        if let Some(p) = OVERRIDE.get_or_init(|| {
+            let raw = std::env::var("PRECIS_CONTENDER_POOL").ok()?;
+            if let Some(rest) = raw.strip_prefix("absolute:") {
+                rest.parse().ok().map(ContenderPool::AbsoluteK)
+            } else if let Some(rest) = raw.strip_prefix("relative:") {
+                rest.parse().ok().map(ContenderPool::RelativeRatio)
+            } else {
+                None
+            }
+        }) {
+            return *p;
+        }
+    }
+    DEFAULT_CONTENDER_POOL
+}
+
 /// A single scheduled batch, captured in order for downstream consumers
 /// (schedule snapshots, divergence metric). Generic over the walker's
 /// key type; callers that don't want to carry the generic can post-process
@@ -86,11 +151,15 @@ pub struct Scheduler<W: Walker> {
     scheduled: HashSet<BatchId>,
     /// Ordered log of scheduled batch ids + costs for the final report.
     scheduled_log: Vec<(BatchId, Cost)>,
-    /// Cached marginal cost per emitted batch. Populated lazily by
-    /// `best_exact` on cache miss. Walker invariants keep cached costs
-    /// stable: non-ancestor line overlap is rejected during apply, and
-    /// debug builds reject overlapping FS atoms at absorb time.
+    /// Cached exact marginal cost per emitted batch. Walker invariants
+    /// keep cached costs stable: non-ancestor line overlap is rejected
+    /// during apply, and debug builds reject overlapping FS atoms at
+    /// absorb time.
     cost_cache: HashMap<BatchId, Cost>,
+    /// Cached approximate token count (`bytes / k`) per emitted batch,
+    /// used by the approx ranking pass. Same stability story as
+    /// `cost_cache`.
+    approx_cost_cache: HashMap<BatchId, usize>,
     /// Parent → unscheduled children index, maintained incrementally at
     /// `absorb`/`schedule`. `best_exact` rebuilt this from scratch on
     /// every iteration before; that rebuild was the dominant O(N²) cost
@@ -149,6 +218,7 @@ impl<W: Walker> Scheduler<W> {
             scheduled: HashSet::new(),
             scheduled_log: Vec::new(),
             cost_cache: HashMap::new(),
+            approx_cost_cache: HashMap::new(),
             children_index: HashMap::new(),
             pending_children: HashMap::new(),
             #[cfg(debug_assertions)]
@@ -189,18 +259,26 @@ impl<W: Walker> Scheduler<W> {
         // `value / cost^k` and pick the best-fit; if the top-ranked
         // exact doesn't fit, stop (no fallback to smaller batches). This
         // makes the schedule at `T_small` a true prefix of `T_large`'s.
+        #[cfg(feature = "timing")]
+        let mut exact_misses = ExactMissAccumulator::default();
         {
             crate::time_span!("scheduler_loop");
             loop {
+                #[cfg(feature = "timing")]
+                let before = self.cost_cache.len();
                 let Some((id, _, cost)) = self.best_exact() else {
                     break;
                 };
+                #[cfg(feature = "timing")]
+                exact_misses.note(before, self.cost_cache.len());
                 if !self.fits(cost) {
                     break;
                 }
                 self.schedule(id, cost);
             }
         }
+        #[cfg(feature = "timing")]
+        exact_misses.dump();
 
         if cfg!(debug_assertions) {
             let total_tokens = self.tree.total_tokens();
@@ -341,25 +419,16 @@ impl<W: Walker> Scheduler<W> {
     /// (`scheduled`/`scheduled_log`/`tree.apply`) belong here.
     fn best_exact(&mut self) -> Option<(BatchId, f64, Cost)> {
         crate::time_counter!(best_exact);
-        // Two passes so we can mutate `cost_cache` without holding a
-        // borrow into `entries`: first compute any missing costs, then
-        // rank using the now-populated cache.
-        {
-            crate::time_counter!(best_exact_cost_pass);
-            for idx in 0..self.entries.len() {
-                let id = BatchId::new(idx);
-                if self.scheduled.contains(&id) {
-                    continue;
-                }
-                let entry = &self.entries[idx];
-                if !self.eligible(entry.predecessor.as_ref()) {
-                    continue;
-                }
-                if !self.cost_cache.contains_key(&id) {
-                    let fresh = self.tree.marginal_cost(&entry.content);
-                    self.cost_cache.insert(id, fresh);
-                }
-            }
+
+        let eligible: Vec<BatchId> = (0..self.entries.len())
+            .map(BatchId::new)
+            .filter(|id| {
+                !self.scheduled.contains(id)
+                    && self.eligible(self.entries[id.index()].predecessor.as_ref())
+            })
+            .collect();
+        if eligible.is_empty() {
+            return None;
         }
 
         #[cfg(debug_assertions)]
@@ -370,30 +439,115 @@ impl<W: Walker> Scheduler<W> {
                 "children_index out of sync with rebuild"
             );
         }
-        let children_by_parent = &self.children_index;
-        crate::time_counter!(best_exact_rank_pass);
+
+        // Shared across the approx and exact passes — `effective_value`
+        // depends only on (id, children_index, scheduled), all stable
+        // within a single `best_exact` call.
         let mut descendant_value_cache = HashMap::new();
-        let mut best: Option<(f64, BatchId, &W::Key, Cost)> = None;
-        for (idx, entry) in self.entries.iter().enumerate() {
-            let id = BatchId::new(idx);
-            if self.scheduled.contains(&id) {
-                continue;
+        let pool = self.select_contender_pool(&eligible, &mut descendant_value_cache);
+
+        crate::time_counter!(best_exact_rank_pass);
+        let mut best: Option<(f64, BatchId, Cost)> = None;
+        for &id in &pool {
+            if !self.cost_cache.contains_key(&id) {
+                let content = &self.entries[id.index()].content;
+                let c = self.tree.marginal_cost(content);
+                self.cost_cache.insert(id, c);
             }
-            if !self.eligible(entry.predecessor.as_ref()) {
-                continue;
-            }
-            let cost = self.cost_cache[&id];
+            let exact_cost = self.cost_cache[&id];
+            let entry = &self.entries[id.index()];
             let effective_value =
-                self.effective_value(id, children_by_parent, &mut descendant_value_cache);
-            let ratio = score_ratio(effective_value, cost.tokens, entry.key.concavity_exponent());
-            let better = best
-                .as_ref()
-                .is_none_or(|(br, _, bk, _)| ratio > *br || (ratio == *br && &entry.key < bk));
+                self.effective_value(id, &self.children_index, &mut descendant_value_cache);
+            let ratio = score_ratio(
+                effective_value,
+                exact_cost.tokens,
+                entry.key.concavity_exponent(),
+            );
+            let better = best.as_ref().is_none_or(|(br, b_id, _)| {
+                ratio > *br
+                    || (ratio == *br
+                        && self.entries[id.index()].key < self.entries[b_id.index()].key)
+            });
             if better {
-                best = Some((ratio, id, &entry.key, cost));
+                best = Some((ratio, id, exact_cost));
             }
         }
-        best.map(|(ratio, id, _, cost)| (id, ratio, cost))
+        best.map(|(ratio, id, cost)| (id, ratio, cost))
+    }
+
+    /// Narrow `eligible` to the small contender pool the exact pass
+    /// will rerank. When the strategy already admits everyone (fixed-K
+    /// and `eligible.len() <= k`), short-circuits to skip the approx
+    /// pass — doubling up tokenization is pure overhead without a long
+    /// tail to prune.
+    fn select_contender_pool(
+        &mut self,
+        eligible: &[BatchId],
+        descendant_value_cache: &mut HashMap<BatchId, f64>,
+    ) -> Vec<BatchId> {
+        let strategy = contender_pool();
+        if matches!(strategy, ContenderPool::AbsoluteK(k) if eligible.len() <= k) {
+            return eligible.to_vec();
+        }
+
+        {
+            crate::time_counter!(best_exact_cost_pass);
+            for &id in eligible {
+                if !self.approx_cost_cache.contains_key(&id) {
+                    let content = &self.entries[id.index()].content;
+                    let tokens = self.tree.marginal_cost_approx(content);
+                    self.approx_cost_cache.insert(id, tokens);
+                }
+            }
+        }
+
+        let mut candidates: Vec<(f64, BatchId)> = Vec::with_capacity(eligible.len());
+        for &id in eligible {
+            let approx_tokens = self.approx_cost_cache[&id];
+            let entry = &self.entries[id.index()];
+            let effective_value =
+                self.effective_value(id, &self.children_index, descendant_value_cache);
+            let ratio = score_ratio(
+                effective_value,
+                approx_tokens,
+                entry.key.concavity_exponent(),
+            );
+            candidates.push((ratio, id));
+        }
+
+        match strategy {
+            ContenderPool::AbsoluteK(k) => {
+                let k = k.min(candidates.len()).max(1);
+                let pivot = candidates.len() - k;
+                // Partition so positions [pivot, len) hold the k largest
+                // (in arbitrary order — the exact pass re-ranks).
+                let entries = &self.entries;
+                candidates.select_nth_unstable_by(pivot, |a, b| {
+                    a.0.partial_cmp(&b.0)
+                        .unwrap_or(std::cmp::Ordering::Equal)
+                        .then_with(|| entries[b.1.index()].key.cmp(&entries[a.1.index()].key))
+                });
+                candidates[pivot..].iter().map(|(_, id)| *id).collect()
+            }
+            ContenderPool::RelativeRatio(r) => {
+                let top = candidates
+                    .iter()
+                    .map(|(ratio, _)| *ratio)
+                    .fold(f64::NEG_INFINITY, f64::max);
+                if !top.is_finite() {
+                    return candidates.into_iter().map(|(_, id)| id).collect();
+                }
+                let threshold = top * r;
+                let pool: Vec<BatchId> = candidates
+                    .iter()
+                    .filter(|(ratio, _)| *ratio >= threshold)
+                    .map(|(_, id)| *id)
+                    .collect();
+                // Finite top ⇒ leader is ≥ threshold ⇒ pool non-empty.
+                debug_assert!(!pool.is_empty());
+                pool
+            }
+        }
     }
 
     fn effective_value(

@@ -3,7 +3,22 @@
 //! call sites' cfg-gated blocks expand to nothing.
 
 use std::cell::RefCell;
+use std::sync::OnceLock;
 use std::time::{Duration, Instant};
+
+/// One-shot env-var probe: when `PRECIS_CALIBRATE` is set, render rows
+/// emit `[calib] bytes=X tokens=Y` on stderr for downstream
+/// `bytes / tokens` calibration.
+fn calibrate_on() -> bool {
+    static ON: OnceLock<bool> = OnceLock::new();
+    *ON.get_or_init(|| std::env::var_os("PRECIS_CALIBRATE").is_some())
+}
+
+pub fn record_render_row(bytes: usize, tokens: usize) {
+    if calibrate_on() {
+        eprintln!("[calib] bytes={bytes} tokens={tokens}");
+    }
+}
 
 pub struct PhaseTimer {
     name: &'static str,
