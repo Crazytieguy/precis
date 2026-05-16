@@ -101,7 +101,7 @@
 use std::collections::BTreeMap;
 use std::path::Path;
 
-use anyhow::Result;
+use anyhow::{Context, Result};
 
 use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, explode_spans};
@@ -352,6 +352,16 @@ struct WalkerRow<'a> {
 
 impl<'a> BuildCtx<'a> {
     fn new(ns: &'a NorthStar, schedule: &'a Schedule, fixture_root: &Path) -> Result<Self> {
+        // Walker atom paths come from `schedule.batches`, which were
+        // built against `Schedule::root` (canonicalized by
+        // `render_schedule`). NS atoms get keyed by `fixture_root` here.
+        // Canonicalize so the two sets land in the same path namespace —
+        // otherwise an Atom keyed by `<symlinked>/…` never matches an
+        // Atom keyed by `<real>/…` and every row scores 0.
+        let fixture_root = fixture_root
+            .canonicalize()
+            .with_context(|| format!("canonicalize fixture_root {}", fixture_root.display()))?;
+        let fixture_root = fixture_root.as_path();
         let source_cache = SourceCache::new();
         let mut tree = RenderedTree::new(fixture_root.to_path_buf(), source_cache.clone());
 
