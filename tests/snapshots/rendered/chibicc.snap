@@ -1,0 +1,272 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.gitignore
+LICENSE
+Makefile
+README.md
+    1→# chibicc: A Small C Compiler
+    3→(The old master has moved to
+    4→[historical/old](https://github.com/rui314/chibicc/tree/historical/old)
+    5→branch. This is a new one uploaded in September 2020.)
+    55→## Status
+    …
+    93→## Internals
+    …
+    110→## Contributing
+    …
+    128→## Design principles
+    …
+    180→## About the Author
+    …
+    188→## References
+    …
+chibicc.h
+    1→#define _POSIX_C_SOURCE 200809L
+    21→#define MAX(x, y) ((x) < (y) ? (y) : (x))
+    22→#define MIN(x, y) ((x) < (y) ? (x) : (y))
+    …
+    28→typedef struct Type Type;
+    29→typedef struct Node Node;
+    30→typedef struct Member Member;
+    31→typedef struct Relocation Relocation;
+    32→typedef struct Hideset Hideset;
+    …
+    38→typedef struct {
+    39→  char **data;
+    40→  int capacity;
+    41→  int len;
+    42→} StringArray;
+    44→void strarray_push(StringArray *arr, char *s);
+    45→char *format(char *fmt, ...) __attribute__((format(printf, 1, 2)));
+    …
+    51→// Token
+    52→typedef enum {
+    53→  TK_IDENT,   // Identifiers
+    54→  TK_PUNCT,   // Punctuators
+    55→  TK_KEYWORD, // Keywords
+    56→  TK_STR,     // String literals
+    57→  TK_NUM,     // Numeric literals
+    58→  TK_PP_NUM,  // Preprocessing numbers
+    59→  TK_EOF,     // End-of-file markers
+    60→} TokenKind;
+    62→typedef struct {
+    63→  char *name;
+    64→  int file_no;
+    65→  char *contents;
+    67→  // For #line directive
+    68→  char *display_name;
+    69→  int line_delta;
+    70→} File;
+    72→// Token type
+    73→typedef struct Token Token;
+    74→struct Token {
+    …
+    94→noreturn void error(char *fmt, ...) __attribute__((format(printf, 1, 2)));
+    95→noreturn void error_at(char *loc, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+    96→noreturn void error_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+    97→void warn_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+    98→bool equal(Token *tok, char *op);
+    99→Token *skip(Token *tok, char *op);
+    100→bool consume(Token **rest, Token *tok, char *str);
+    101→void convert_pp_tokens(Token *tok);
+    102→File **get_input_files(void);
+    103→File *new_file(char *name, int file_no, char *contents);
+    104→Token *tokenize_string_literal(Token *tok, Type *basety);
+    105→Token *tokenize(File *file);
+    106→Token *tokenize_file(char *filename);
+    …
+    108→#define unreachable() \
+    109→  error("internal error at %s:%d", __FILE__, __LINE__)
+    115→char *search_include_paths(char *filename);
+    116→void init_macros(void);
+    117→void define_macro(char *name, char *buf);
+    118→void undef_macro(char *name);
+    119→Token *preprocess(Token *tok);
+    …
+    125→// Variable or function
+    126→typedef struct Obj Obj;
+    127→struct Obj {
+    …
+    164→// Global variable can be initialized either by a constant expression
+    165→// or a pointer to another global variable. This struct represents the
+    166→// latter.
+    167→typedef struct Relocation Relocation;
+    168→struct Relocation {
+    169→  Relocation *next;
+    170→  int offset;
+    171→  char **label;
+    172→  long addend;
+    173→};
+    176→typedef enum {
+    …
+    228→struct Node {
+    …
+    293→Node *new_cast(Node *expr, Type *ty);
+    294→int64_t const_expr(Token **rest, Token *tok);
+    295→Obj *parse(Token *tok);
+    …
+    301→typedef enum {
+    …
+    320→struct Type {
+    …
+    361→// Struct member
+    362→struct Member {
+    363→  Member *next;
+    364→  Type *ty;
+    365→  Token *tok; // for error message
+    366→  Token *name;
+    367→  int idx;
+    368→  int align;
+    369→  int offset;
+    371→  // Bitfield
+    372→  bool is_bitfield;
+    373→  int bit_offset;
+    374→  int bit_width;
+    375→};
+    377→extern Type *ty_void;
+    378→extern Type *ty_bool;
+    …
+codegen.c
+hashmap.c
+include/
+    float.h
+        4→#define DECIMAL_DIG 21
+        5→#define FLT_EVAL_METHOD 0 // C11 5.2.4.2.2p9
+        6→#define FLT_RADIX 2
+        7→#define FLT_ROUNDS 1      // C11 5.2.4.2.2p8: to nearest
+        …
+        9→#define FLT_DIG 6
+        10→#define FLT_EPSILON 0x1p-23
+        11→#define FLT_MANT_DIG 24
+        12→#define FLT_MAX 0x1.fffffep+127
+        13→#define FLT_MAX_10_EXP 38
+        14→#define FLT_MAX_EXP 128
+        15→#define FLT_MIN 0x1p-126
+        16→#define FLT_MIN_10_EXP -37
+        17→#define FLT_MIN_EXP -125
+        18→#define FLT_TRUE_MIN 0x1p-149
+        …
+        20→#define DBL_DIG 15
+        21→#define DBL_EPSILON 0x1p-52
+        22→#define DBL_MANT_DIG 53
+        23→#define DBL_MAX 0x1.fffffffffffffp+1023
+        24→#define DBL_MAX_10_EXP 308
+        25→#define DBL_MAX_EXP 1024
+        26→#define DBL_MIN 0x1p-1022
+        27→#define DBL_MIN_10_EXP -307
+        28→#define DBL_MIN_EXP -1021
+        29→#define DBL_TRUE_MIN 0x0.0000000000001p-1022
+        …
+        31→#define LDBL_DIG 15
+        32→#define LDBL_EPSILON 0x1p-52
+        33→#define LDBL_MANT_DIG 53
+        34→#define LDBL_MAX 0x1.fffffffffffffp+1023
+        35→#define LDBL_MAX_10_EXP 308
+        36→#define LDBL_MAX_EXP 1024
+        37→#define LDBL_MIN 0x1p-1022
+        38→#define LDBL_MIN_10_EXP -307
+        39→#define LDBL_MIN_EXP -1021
+        40→#define LDBL_TRUE_MIN 0x0.0000000000001p-1022
+        …
+    stdalign.h
+        4→#define alignas _Alignas
+        5→#define alignof _Alignof
+        6→#define __alignas_is_defined 1
+        7→#define __alignof_is_defined 1
+        …
+    stdarg.h
+        4→typedef struct {
+        5→  unsigned int gp_offset;
+        6→  unsigned int fp_offset;
+        7→  void *overflow_arg_area;
+        8→  void *reg_save_area;
+        9→} __va_elem;
+        11→typedef __va_elem va_list[1];
+        …
+        13→#define va_start(ap, last) \
+        14→  do { *(ap) = *(__va_elem *)__va_area__; } while (0)
+        16→#define va_end(ap)
+        …
+        44→#define va_arg(ap, ty)                                                  \
+        45→  ({                                                                    \
+        46→    int klass = __builtin_reg_class(ty);                                \
+        47→    *(ty *)(klass == 0 ? __va_arg_gp(ap, sizeof(ty), _Alignof(ty)) :    \
+        48→            klass == 1 ? __va_arg_fp(ap, sizeof(ty), _Alignof(ty)) :    \
+        49→            __va_arg_mem(ap, sizeof(ty), _Alignof(ty)));                \
+        50→  })
+        52→#define va_copy(dest, src) ((dest)[0] = (src)[0])
+        …
+        54→#define __GNUC_VA_LIST 1
+        55→typedef va_list __gnuc_va_list;
+        …
+    stdatomic.h
+        4→#define ATOMIC_BOOL_LOCK_FREE 1
+        5→#define ATOMIC_CHAR_LOCK_FREE 1
+        6→#define ATOMIC_CHAR16_T_LOCK_FREE 1
+        7→#define ATOMIC_CHAR32_T_LOCK_FREE 1
+        8→#define ATOMIC_WCHAR_T_LOCK_FREE 1
+        9→#define ATOMIC_SHORT_LOCK_FREE 1
+        10→#define ATOMIC_INT_LOCK_FREE 1
+        11→#define ATOMIC_LONG_LOCK_FREE 1
+        12→#define ATOMIC_LLONG_LOCK_FREE 1
+        13→#define ATOMIC_POINTER_LOCK_FREE 1
+        …
+        15→typedef enum {
+        16→  memory_order_relaxed,
+        17→  memory_order_consume,
+        18→  memory_order_acquire,
+        19→  memory_order_release,
+        20→  memory_order_acq_rel,
+        21→  memory_order_seq_cst,
+        22→} memory_order;
+        24→#define ATOMIC_FLAG_INIT(x) (x)
+        25→#define atomic_init(addr, val) (*(addr) = (val))
+        26→#define kill_dependency(x) (x)
+        27→#define atomic_thread_fence(order)
+        28→#define atomic_signal_fence(order)
+        29→#define atomic_is_lock_free(x) 1
+        …
+        31→#define atomic_load(addr) (*(addr))
+        32→#define atomic_store(addr, val) (*(addr) = (val))
+        …
+        34→#define atomic_load_explicit(addr, order) (*(addr))
+        35→#define atomic_store_explicit(addr, val, order) (*(addr) = (val))
+        …
+        37→#define atomic_fetch_add(obj, val) (*(obj) += (val))
+        38→#define atomic_fetch_sub(obj, val) (*(obj) -= (val))
+        39→#define atomic_fetch_or(obj, val) (*(obj) |= (val))
+        96→typedef _Atomic unsigned long atomic_uintptr_t;
+        97→typedef _Atomic unsigned long atomic_size_t;
+        98→typedef _Atomic long atomic_ptrdiff_t;
+        99→typedef _Atomic long atomic_intmax_t;
+        100→typedef _Atomic unsigned long atomic_uintmax_t;
+        …
+    stdbool.h
+        4→#define bool _Bool
+        5→#define true 1
+        6→#define false 0
+        7→#define __bool_true_false_are_defined 1
+        …
+    stddef.h
+        4→#define NULL ((void *)0)
+        …
+        6→typedef unsigned long size_t;
+        7→typedef long ptrdiff_t;
+        8→typedef unsigned int wchar_t;
+        9→typedef long max_align_t;
+        …
+        11→#define offsetof(type, member) ((size_t)&(((type *)0)->member))
+        …
+    stdnoreturn.h
+        4→#define noreturn _Noreturn
+        …
+main.c
+parse.c
+preprocess.c
+strings.c
+test/
+tokenize.c
+type.c
+unicode.c

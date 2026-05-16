@@ -45,7 +45,6 @@ DateTimeMeter.c
 DateTimeMeter.h
 Debug.h
     2→#define HEADER_Debug
-    …
 DiskIOMeter.c
 DiskIOMeter.h
 DisplayOptionsPanel.c
@@ -61,7 +60,6 @@ EnvScreen.h
 FileDescriptorMeter.c
 FileDescriptorMeter.h
     2→#define HEADER_FileDescriptorMeter
-    …
     13→extern const MeterClass FileDescriptorMeter_class;
     …
 FunctionBar.c
@@ -80,7 +78,6 @@ History.h
 HostnameMeter.c
 HostnameMeter.h
     2→#define HEADER_HostnameMeter
-    …
     13→extern const MeterClass HostnameMeter_class;
     …
 IncSet.c
@@ -104,7 +101,6 @@ MemoryMeter.h
 MemorySwapMeter.c
 MemorySwapMeter.h
     2→#define HEADER_MemorySwapMeter
-    …
     13→extern const MeterClass MemorySwapMeter_class;
     …
 Meter.c
@@ -131,10 +127,8 @@ ProcessTable.c
 ProcessTable.h
 ProvideCurses.h
     2→#define HEADER_ProvideCurses
-    …
 ProvideTerm.h
     2→#define HEADER_ProvideTerm
-    …
 README
 README.md
     1→# [![htop logo](htop-logo.png)](https://htop.dev)
@@ -146,7 +140,6 @@ RowField.h
 Scheduling.c
 Scheduling.h
     2→#define HEADER_Scheduling
-    …
 ScreenManager.c
 ScreenManager.h
 ScreenTabsPanel.c
@@ -162,7 +155,6 @@ SwapMeter.h
 SysArchMeter.c
 SysArchMeter.h
     2→#define HEADER_SysArchMeter
-    …
     12→extern const MeterClass SysArchMeter_class;
     …
 TESTPLAN
@@ -171,7 +163,6 @@ Table.h
 TasksMeter.c
 TasksMeter.h
     2→#define HEADER_TasksMeter
-    …
     13→extern const MeterClass TasksMeter_class;
     …
 TraceScreen.c
@@ -191,7 +182,6 @@ darwin/
     DarwinMachine.c
     DarwinMachine.h
         2→#define HEADER_DarwinMachine
-        …
         18→typedef struct DarwinMachine_ {
         …
     DarwinProcess.c
@@ -199,7 +189,6 @@ darwin/
     DarwinProcessTable.c
     DarwinProcessTable.h
         2→#define HEADER_DarwinProcessTable
-        …
         16→typedef struct DarwinProcessTable_ {
         17→   ProcessTable super;
         19→   uint64_t global_diff;
@@ -212,7 +201,6 @@ darwin/
     PlatformHelpers.h
     ProcessField.h
         2→#define HEADER_DarwinProcessField
-        …
         11→#define PLATFORM_PROCESS_FIELDS  \
         …
 docs/
@@ -234,7 +222,6 @@ freebsd/
     FreeBSDMachine.c
     FreeBSDMachine.h
         2→#define HEADER_FreeBSDMachine
-        …
         20→typedef struct CPUData_ {
         21→   double userPercent;
         22→   double nicePercent;
@@ -249,7 +236,6 @@ freebsd/
     FreeBSDProcess.c
     FreeBSDProcess.h
         2→#define HEADER_FreeBSDProcess
-        …
         16→typedef enum {
         17→   SCHEDCLASS_UNKNOWN = 0,
         19→   SCHEDCLASS_INTR_THREAD, /* interrupt thread */
@@ -276,7 +262,6 @@ freebsd/
     FreeBSDProcessTable.c
     FreeBSDProcessTable.h
         2→#define HEADER_FreeBSDProcessTable
-        …
         17→typedef struct FreeBSDProcessTable_ {
         18→   ProcessTable super;
         20→   int osreldate;
@@ -285,7 +270,6 @@ freebsd/
     Platform.h
     ProcessField.h
         2→#define HEADER_FreeBSDProcessField
-        …
         11→#define PLATFORM_PROCESS_FIELDS  \
         …
 generic/
@@ -310,7 +294,6 @@ openbsd/
     OpenBSDMachine.c
     OpenBSDMachine.h
         2→#define HEADER_OpenBSDMachine
-        …
         18→typedef struct CPUData_ {
         …
         40→typedef struct OpenBSDMachine_ {
@@ -318,7 +301,6 @@ openbsd/
     OpenBSDProcess.c
     OpenBSDProcess.h
         2→#define HEADER_OpenBSDProcess
-        …
         18→typedef struct OpenBSDProcess_ {
         19→   Process super;
         21→   /* 'Kernel virtual addr of u-area' to detect main threads */
@@ -335,7 +317,6 @@ openbsd/
     OpenBSDProcessTable.c
     OpenBSDProcessTable.h
         2→#define HEADER_OpenBSDProcessTable
-        …
         11→#include <stdbool.h>
         12→#include <sys/types.h>
         14→#include "ProcessTable.h"
@@ -346,7 +327,6 @@ openbsd/
     Platform.h
     ProcessField.h
         2→#define HEADER_OpenBSDProcessField
-        …
 pcp/
 pcp-htop.5.in
 pcp-htop.c
@@ -356,13 +336,11 @@ solaris/
     Platform.h
     ProcessField.h
         2→#define HEADER_SolarisProcessField
-        …
         11→#define PLATFORM_PROCESS_FIELDS  \
         …
     SolarisMachine.c
     SolarisMachine.h
         2→#define HEADER_SolarisMachine
-        …
         29→#define ZONE_ERRMSGLEN 1024
         30→extern char zone_errmsg[ZONE_ERRMSGLEN];
         …
@@ -381,7 +359,6 @@ solaris/
     SolarisProcess.c
     SolarisProcess.h
         2→#define HEADER_SolarisProcess
-        …
         20→#define ERR (-1)
         …
         26→typedef struct SolarisProcess_ {
@@ -397,7 +374,6 @@ solaris/
     SolarisProcessTable.c
     SolarisProcessTable.h
         2→#define HEADER_SolarisProcessTable
-        …
         27→typedef struct SolarisProcessTable_ {
         28→   ProcessTable super;
         29→} SolarisProcessTable;
@@ -407,11 +383,9 @@ unsupported/
     Platform.h
     ProcessField.h
         2→#define HEADER_UnsupportedProcessField
-        …
     UnsupportedMachine.c
     UnsupportedMachine.h
         2→#define HEADER_UnsupportedMachine
-        …
         10→#include "Machine.h"
         13→typedef struct UnsupportedMachine_ {
         14→   Machine super;
@@ -421,7 +395,6 @@ unsupported/
     UnsupportedProcess.c
     UnsupportedProcess.h
         2→#define HEADER_UnsupportedProcess
-        …
         10→#include "Machine.h"
         11→#include "Process.h"
         14→typedef struct UnsupportedProcess_ {
@@ -439,7 +412,6 @@ unsupported/
     UnsupportedProcessTable.c
     UnsupportedProcessTable.h
         2→#define HEADER_UnsupportedProcessTable
-        …
         10→#include "ProcessTable.h"
         13→typedef struct UnsupportedProcessTable_ {
         14→   ProcessTable super;
@@ -448,7 +420,6 @@ zfs/
     ZfsArcMeter.c
     ZfsArcMeter.h
         2→#define HEADER_ZfsArcMeter
-        …
         10→#include "zfs/ZfsArcStats.h"
         12→#include "Meter.h"
         15→void ZfsArcMeter_readStats(Meter* this, const ZfsArcStats* stats);
@@ -457,13 +428,11 @@ zfs/
         …
     ZfsArcStats.h
         2→#define HEADER_ZfsArcStats
-        …
         10→typedef struct ZfsArcStats_ {
         …
     ZfsCompressedArcMeter.c
     ZfsCompressedArcMeter.h
         2→#define HEADER_ZfsCompressedArcMeter
-        …
         10→#include "zfs/ZfsArcStats.h"
         12→#include "Meter.h"
         15→void ZfsCompressedArcMeter_readStats(Meter* this, const ZfsArcStats* stats);

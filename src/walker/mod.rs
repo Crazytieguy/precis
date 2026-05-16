@@ -683,7 +683,29 @@ pub(crate) fn signature_end_row(node: Node) -> usize {
 /// `comment` nodes touching `node` (no blank-line gap between any pair).
 /// Shared across C / Go / Lua walkers, each of which treats top-level
 /// `comment` nodes as the AST shape for documentation.
+///
+/// End-of-line comments on a *previous* sibling's line (e.g. C's
+/// `int foo(); //-V2586 …` followed by `int bar();`) are tree-sitter
+/// `comment` siblings of the next decl but visually belong to the
+/// previous decl's line. Treating them as doc comments would let the
+/// resulting `DeclDoc` claim a row already owned by the prior `Decl`
+/// and trip the scheduler's non-ancestor-overlap guard. Skip any
+/// comment that isn't the first non-whitespace token on its line.
 pub(crate) fn collect_doc_comments_above(node: Node, source: &str) -> FileLines {
+    collect_doc_comments_above_bounded(node, source, None)
+}
+
+/// [`collect_doc_comments_above`] with an explicit lower row boundary.
+/// Walks back through prev siblings the same way, but stops as soon as
+/// the next comment starts at or below `boundary_row` (0-based) —
+/// callers use this to keep `DeclDoc` from grabbing comments owned by
+/// the file's [`HeaderBanner`](crate::batch::CKey::HeaderBanner) batch
+/// when banner and first decl are not separated by a blank line.
+pub(crate) fn collect_doc_comments_above_bounded(
+    node: Node,
+    source: &str,
+    boundary_row: Option<usize>,
+) -> FileLines {
     let mut out = Vec::new();
     let mut cur = node.prev_sibling();
     let mut next_start = node.start_position().row;
@@ -694,11 +716,26 @@ pub(crate) fn collect_doc_comments_above(node: Node, source: &str) -> FileLines 
         if next_start.saturating_sub(prev.end_position().row) > 1 {
             break;
         }
+        if !comment_starts_at_line_start(prev, source) {
+            break;
+        }
+        if boundary_row.is_some_and(|b| prev.start_position().row <= b) {
+            break;
+        }
         extend_span(&mut out, prev, source);
         next_start = prev.start_position().row;
         cur = prev.prev_sibling();
     }
     FileLines::new(dedup_sorted(out))
+}
+
+/// True iff `node` is the first non-whitespace token on its source line
+/// (i.e., a standalone full-line comment rather than an end-of-line
+/// trailer after some other token).
+pub(crate) fn comment_starts_at_line_start(node: Node, source: &str) -> bool {
+    let start = node.start_byte();
+    let line_start = source[..start].rfind('\n').map_or(0, |n| n + 1);
+    source[line_start..start].trim().is_empty()
 }
 
 /// Largest 0-based row `e ∈ [start_row, end_row]` such that no row

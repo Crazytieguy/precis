@@ -171,34 +171,34 @@ Score(3000)=0.604 I=0.727 C=0.502 ns_rows≤3K=18/40 (reached=6 partial=6 missin
 | walker |  | 8425 | 11 | c decl body at src/sprite_submit.h:71 |  |  | 0.678 |
 | walker |  | 8440 | 15 | c decl body at src/sprite_submit.h:66 |  |  | 0.678 |
 | walker |  | 8456 | 16 | c decl body at src/sprite_submit.h:9 |  |  | 0.678 |
-| walker |  | 8469 | 13 | listing of 'src/platform' |  |  | 0.678 |
-| walker |  | 8590 | 121 | c decl names surface in src/transform.h |  |  | 0.678 |
-| walker |  | 8603 | 13 | c decl at src/transform.h:16 |  |  | 0.678 |
-| walker |  | 8623 | 20 | c includes in src/ime_state.h |  |  | 0.678 |
-| walker |  | 8643 | 20 | c includes in src/spritemgr.h |  |  | 0.678 |
+| walker |  | 8575 | 119 | c decl names surface in src/transform.h |  |  | 0.678 |
+| walker |  | 8588 | 13 | c decl at src/transform.h:16 |  |  | 0.678 |
+| walker |  | 8601 | 13 | listing of 'src/platform' |  |  | 0.678 |
+| walker |  | 8621 | 20 | c includes in src/ime_state.h |  |  | 0.678 |
+| walker |  | 8641 | 20 | c includes in src/spritemgr.h |  |  | 0.678 |
+| walker |  | 8661 | 20 | c includes in src/srbuffer.h |  |  | 0.678 |
 | ns | 8662 |  | 305 | src/lualib/soluna.lua — gamedir() body (per-platform path) | 5.2 | 5.1 | 0.666 |
-| walker |  | 8663 | 20 | c includes in src/srbuffer.h |  |  | 0.666 |
-| walker |  | 8724 | 61 | c decl at src/loginfo.h:6 |  |  | 0.666 |
-| walker |  | 8744 | 20 | c decl body at src/sprite_submit.h:76 |  |  | 0.666 |
-| walker |  | 8766 | 22 | c includes in src/tmpbuffer.h |  |  | 0.666 |
-| walker |  | 8833 | 67 | c decl at src/batch.h:6 |  |  | 0.666 |
-| walker |  | 8852 | 19 | c decl names surface in src/material_blit.c |  |  | 0.666 |
-| walker |  | 8875 | 23 | c decl body at src/ime_char_filter.h:47 |  |  | 0.666 |
+| walker |  | 8722 | 61 | c decl at src/loginfo.h:6 |  |  | 0.666 |
+| walker |  | 8742 | 20 | c decl body at src/sprite_submit.h:76 |  |  | 0.666 |
+| walker |  | 8764 | 22 | c includes in src/tmpbuffer.h |  |  | 0.666 |
+| walker |  | 8831 | 67 | c decl at src/batch.h:6 |  |  | 0.666 |
+| walker |  | 8850 | 19 | c decl names surface in src/material_blit.c |  |  | 0.666 |
+| walker |  | 8873 | 23 | c decl body at src/ime_char_filter.h:47 |  |  | 0.666 |
 | ns | 8890 |  | 228 | src/entry.c — soluna.app luaL_Reg | 5.3 |  | 0.659 |
-| walker |  | 9038 | 163 | c decl names surface in src/font_define.h |  |  | 0.659 |
-| walker |  | 9048 | 10 | c decl at src/font_define.h:31 |  |  | 0.659 |
-| walker |  | 9063 | 15 | c decl at src/font_define.h:26 |  |  | 0.659 |
-| walker |  | 9079 | 16 | c decl body at src/font_define.h:31 |  |  | 0.659 |
+| walker |  | 9036 | 163 | c decl names surface in src/font_define.h |  |  | 0.659 |
+| walker |  | 9046 | 10 | c decl at src/font_define.h:31 |  |  | 0.659 |
+| walker |  | 9061 | 15 | c decl at src/font_define.h:26 |  |  | 0.659 |
+| walker |  | 9077 | 16 | c decl body at src/font_define.h:31 |  |  | 0.659 |
 | ns | 9086 |  | 196 | src/render.c — soluna.render luaL_Reg | 5.4 |  | 0.653 |
-| walker |  | 9096 | 17 | c decl body at src/font_define.h:26 |  |  | 0.653 |
-| walker |  | 9120 | 24 | c decl body at src/ime_char_filter.h:41 |  |  | 0.653 |
-| walker |  | 9199 | 79 | c decl at src/font_define.h:11 |  |  | 0.653 |
-| walker |  | 9225 | 26 | c decl body at src/sprite_submit.h:15 |  |  | 0.653 |
-| walker |  | 9251 | 26 | c decl body at src/sprite_submit.h:21 |  |  | 0.653 |
-| walker |  | 9332 | 81 | c decl at src/spritemgr.h:9 |  |  | 0.653 |
-| walker |  | 9413 | 81 | c decl at src/transform.h:6 |  |  | 0.653 |
+| walker |  | 9094 | 17 | c decl body at src/font_define.h:26 |  |  | 0.653 |
+| walker |  | 9118 | 24 | c decl body at src/ime_char_filter.h:41 |  |  | 0.653 |
+| walker |  | 9197 | 79 | c decl at src/font_define.h:11 |  |  | 0.653 |
+| walker |  | 9223 | 26 | c decl body at src/sprite_submit.h:15 |  |  | 0.653 |
+| walker |  | 9249 | 26 | c decl body at src/sprite_submit.h:21 |  |  | 0.653 |
+| walker |  | 9330 | 81 | c decl at src/spritemgr.h:9 |  |  | 0.653 |
+| walker |  | 9360 | 30 | c includes in src/ime_char_filter.h |  |  | 0.653 |
 | ns | 9436 |  | 350 | src/spritemgr.c — SOLUNA_BATCH metatable | 5.5 |  | 0.641 |
-| walker |  | 9443 | 30 | c includes in src/ime_char_filter.h |  |  | 0.641 |
+| walker |  | 9443 | 83 | c decl at src/transform.h:6 |  |  | 0.641 |
 | walker |  | 9527 | 84 | c decl at src/srbuffer.h:11 |  |  | 0.641 |
 | walker |  | 9552 | 25 | c decl names surface in src/material_util.c |  |  | 0.641 |
 | ns | 9570 |  | 134 | src/service/start.lua — dispatch fn locations + event-name list | 6.1 |  | 0.637 |

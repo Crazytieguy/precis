@@ -1,7 +1,7 @@
 fixture = "htop"
 budget = 10000
-cumulative_tokens = 9991
-batch_count = 252
+cumulative_tokens = 9987
+batch_count = 249
 
 [[batches]]
 position = 1
@@ -67,8 +67,8 @@ entries = ["htop.imp", "run_iwyu.sh"]
 position = 5
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/Debug.h", chunk_index: 0 })'
 descriptor = "c decl names surface in Debug.h"
-cost_tokens = 11
-cum_tokens = 767
+cost_tokens = 9
+cum_tokens = 765
 
 [batches.content]
 kind = "lines"
@@ -80,21 +80,13 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/Debug.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 6
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/Scheduling.h", chunk_index: 0 })'
 descriptor = "c decl names surface in Scheduling.h"
-cost_tokens = 12
-cum_tokens = 779
+cost_tokens = 10
+cum_tokens = 775
 
 [batches.content]
 kind = "lines"
@@ -106,21 +98,13 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/Scheduling.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 7
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/ProvideTerm.h", chunk_index: 0 })'
 descriptor = "c decl names surface in ProvideTerm.h"
-cost_tokens = 13
-cum_tokens = 792
+cost_tokens = 11
+cum_tokens = 786
 
 [batches.content]
 kind = "lines"
@@ -132,21 +116,13 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/ProvideTerm.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 8
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/ProvideCurses.h", chunk_index: 0 })'
 descriptor = "c decl names surface in ProvideCurses.h"
-cost_tokens = 14
-cum_tokens = 806
+cost_tokens = 12
+cum_tokens = 798
 
 [batches.content]
 kind = "lines"
@@ -158,21 +134,13 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/ProvideCurses.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 9
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 24
-cum_tokens = 830
+cum_tokens = 822
 
 [batches.content]
 kind = "fs"
@@ -186,7 +154,7 @@ position = 10
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c", chunk_index: 0 })'
 descriptor = "c decl names surface in htop.c"
 cost_tokens = 29
-cum_tokens = 859
+cum_tokens = 851
 
 [batches.content]
 kind = "lines"
@@ -228,7 +196,7 @@ position = 11
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c", start_line: 16 })'
 descriptor = "c decl at htop.c:16"
 cost_tokens = 0
-cum_tokens = 859
+cum_tokens = 851
 
 [batches.content]
 kind = "lines"
@@ -254,7 +222,7 @@ position = 12
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs" })'
 descriptor = "listing of 'zfs'"
 cost_tokens = 37
-cum_tokens = 896
+cum_tokens = 888
 
 [batches.content]
 kind = "fs"
@@ -267,8 +235,8 @@ entries = ["ZfsArcMeter.c", "ZfsArcMeter.h", "ZfsArcStats.h", "ZfsCompressedArcM
 position = 13
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcStats.h", chunk_index: 0 })'
 descriptor = "c decl names surface in zfs/ZfsArcStats.h"
-cost_tokens = 28
-cum_tokens = 924
+cost_tokens = 26
+cum_tokens = 914
 
 [batches.content]
 kind = "lines"
@@ -291,14 +259,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcStats.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcStats.h"
 start = 11
 end = 11
 
@@ -309,8 +269,8 @@ kind = "ellipsis"
 position = 14
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in zfs/ZfsArcMeter.h"
-cost_tokens = 56
-cum_tokens = 980
+cost_tokens = 54
+cum_tokens = 968
 
 [batches.content]
 kind = "lines"
@@ -338,14 +298,6 @@ end = 17
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcMeter.h"
@@ -367,8 +319,8 @@ kind = "ellipsis"
 position = 15
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsCompressedArcMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in zfs/ZfsCompressedArcMeter.h"
-cost_tokens = 59
-cum_tokens = 1039
+cost_tokens = 57
+cum_tokens = 1025
 
 [batches.content]
 kind = "lines"
@@ -396,14 +348,6 @@ end = 17
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsCompressedArcMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsCompressedArcMeter.h"
@@ -426,7 +370,7 @@ position = 16
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcMeter.h" })'
 descriptor = "c includes in zfs/ZfsArcMeter.h"
 cost_tokens = 25
-cum_tokens = 1064
+cum_tokens = 1050
 
 [batches.content]
 kind = "lines"
@@ -452,7 +396,7 @@ position = 17
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsCompressedArcMeter.h" })'
 descriptor = "c includes in zfs/ZfsCompressedArcMeter.h"
 cost_tokens = 25
-cum_tokens = 1089
+cum_tokens = 1075
 
 [batches.content]
 kind = "lines"
@@ -478,7 +422,7 @@ position = 18
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htop/docs/understanding-htop-versions.md" })'
 descriptor = "headings outline in docs/understanding-htop-versions.md"
 cost_tokens = 48
-cum_tokens = 1137
+cum_tokens = 1123
 
 [batches.content]
 kind = "lines"
@@ -535,8 +479,8 @@ kind = "ellipsis"
 position = 19
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in TasksMeter.h"
-cost_tokens = 27
-cum_tokens = 1164
+cost_tokens = 25
+cum_tokens = 1148
 
 [batches.content]
 kind = "lines"
@@ -559,14 +503,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.h"
 start = 14
 end = 14
 
@@ -575,10 +511,146 @@ kind = "ellipsis"
 
 [[batches]]
 position = 20
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in FileDescriptorMeter.h"
+cost_tokens = 26
+cum_tokens = 1174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 21
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in HostnameMeter.h"
+cost_tokens = 27
+cum_tokens = 1201
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 22
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in MemorySwapMeter.h"
+cost_tokens = 27
+cum_tokens = 1228
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 23
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in SysArchMeter.h"
+cost_tokens = 27
+cum_tokens = 1255
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 24
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris" })'
 descriptor = "listing of 'solaris'"
 cost_tokens = 45
-cum_tokens = 1209
+cum_tokens = 1300
 
 [batches.content]
 kind = "fs"
@@ -588,11 +660,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris"
 entries = ["Platform.c", "Platform.h", "ProcessField.h", "SolarisMachine.c", "SolarisMachine.h", "SolarisProcess.c", "SolarisProcess.h", "SolarisProcessTable.c", "SolarisProcessTable.h"]
 
 [[batches]]
-position = 21
+position = 25
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/ProcessField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in solaris/ProcessField.h"
-cost_tokens = 28
-cum_tokens = 1237
+cost_tokens = 26
+cum_tokens = 1326
 
 [batches.content]
 kind = "lines"
@@ -615,14 +687,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/ProcessField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/ProcessField.h"
 start = 12
 end = 12
 
@@ -630,11 +694,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 26
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcessTable.h", chunk_index: 0 })'
 descriptor = "c decl names surface in solaris/SolarisProcessTable.h"
-cost_tokens = 28
-cum_tokens = 1265
+cost_tokens = 26
+cum_tokens = 1352
 
 [batches.content]
 kind = "lines"
@@ -657,14 +721,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcessTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcessTable.h"
 start = 28
 end = 28
 
@@ -672,11 +728,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 23
+position = 27
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcessTable.h", start_line: 27 })'
 descriptor = "c decl at solaris/SolarisProcessTable.h:27"
 cost_tokens = 16
-cum_tokens = 1281
+cum_tokens = 1368
 
 [batches.content]
 kind = "lines"
@@ -690,11 +746,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 24
+position = 28
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisMachine.h", chunk_index: 0 })'
 descriptor = "c decl names surface in solaris/SolarisMachine.h"
-cost_tokens = 72
-cum_tokens = 1353
+cost_tokens = 70
+cum_tokens = 1438
 
 [batches.content]
 kind = "lines"
@@ -733,14 +789,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisMachine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisMachine.h"
 start = 31
 end = 31
 
@@ -764,11 +812,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 29
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcess.h", chunk_index: 0 })'
 descriptor = "c decl names surface in solaris/SolarisProcess.h"
-cost_tokens = 99
-cum_tokens = 1452
+cost_tokens = 97
+cum_tokens = 1535
 
 [batches.content]
 kind = "lines"
@@ -831,14 +879,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcess.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcess.h"
 start = 21
 end = 21
 
@@ -886,11 +926,11 @@ end = 47
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 30
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported" })'
 descriptor = "listing of 'unsupported'"
 cost_tokens = 45
-cum_tokens = 1497
+cum_tokens = 1580
 
 [batches.content]
 kind = "fs"
@@ -900,11 +940,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported"
 entries = ["Platform.c", "Platform.h", "ProcessField.h", "UnsupportedMachine.c", "UnsupportedMachine.h", "UnsupportedProcess.c", "UnsupportedProcess.h", "UnsupportedProcessTable.c", "UnsupportedProcessTable.h"]
 
 [[batches]]
-position = 27
+position = 31
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/ProcessField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in unsupported/ProcessField.h"
-cost_tokens = 14
-cum_tokens = 1511
+cost_tokens = 12
+cum_tokens = 1592
 
 [batches.content]
 kind = "lines"
@@ -917,20 +957,12 @@ end = 2
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/ProcessField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
-position = 28
+position = 32
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedMachine.h", chunk_index: 0 })'
 descriptor = "c decl names surface in unsupported/UnsupportedMachine.h"
-cost_tokens = 25
-cum_tokens = 1536
+cost_tokens = 23
+cum_tokens = 1615
 
 [batches.content]
 kind = "lines"
@@ -953,14 +985,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedMachine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedMachine.h"
 start = 14
 end = 14
 
@@ -968,11 +992,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 33
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.h", chunk_index: 0 })'
 descriptor = "c decl names surface in unsupported/UnsupportedProcessTable.h"
-cost_tokens = 27
-cum_tokens = 1563
+cost_tokens = 25
+cum_tokens = 1640
 
 [batches.content]
 kind = "lines"
@@ -995,14 +1019,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.h"
 start = 14
 end = 14
 
@@ -1010,11 +1026,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 34
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.h", start_line: 13 })'
 descriptor = "c decl at unsupported/UnsupportedProcessTable.h:13"
 cost_tokens = 16
-cum_tokens = 1579
+cum_tokens = 1656
 
 [batches.content]
 kind = "lines"
@@ -1028,11 +1044,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 31
+position = 35
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedMachine.h", start_line: 13 })'
 descriptor = "c decl at unsupported/UnsupportedMachine.h:13"
 cost_tokens = 34
-cum_tokens = 1613
+cum_tokens = 1690
 
 [batches.content]
 kind = "lines"
@@ -1046,11 +1062,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 32
+position = 36
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedMachine.h" })'
 descriptor = "c includes in unsupported/UnsupportedMachine.h"
 cost_tokens = 10
-cum_tokens = 1623
+cum_tokens = 1700
 
 [batches.content]
 kind = "lines"
@@ -1064,11 +1080,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 33
+position = 37
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.h" })'
 descriptor = "c includes in unsupported/UnsupportedProcessTable.h"
 cost_tokens = 11
-cum_tokens = 1634
+cum_tokens = 1711
 
 [batches.content]
 kind = "lines"
@@ -1082,11 +1098,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 34
+position = 38
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcess.h", chunk_index: 0 })'
 descriptor = "c decl names surface in unsupported/UnsupportedProcess.h"
-cost_tokens = 86
-cum_tokens = 1720
+cost_tokens = 84
+cum_tokens = 1795
 
 [batches.content]
 kind = "lines"
@@ -1141,14 +1157,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcess.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcess.h"
 start = 15
 end = 15
 
@@ -1188,11 +1196,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 39
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcess.h", start_line: 14 })'
 descriptor = "c decl at unsupported/UnsupportedProcess.h:14"
 cost_tokens = 25
-cum_tokens = 1745
+cum_tokens = 1820
 
 [batches.content]
 kind = "lines"
@@ -1214,11 +1222,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 36
+position = 40
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcess.h" })'
 descriptor = "c includes in unsupported/UnsupportedProcess.h"
 cost_tokens = 20
-cum_tokens = 1765
+cum_tokens = 1840
 
 [batches.content]
 kind = "lines"
@@ -1232,179 +1240,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 37
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in FileDescriptorMeter.h"
-cost_tokens = 28
-cum_tokens = 1793
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 38
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in HostnameMeter.h"
-cost_tokens = 29
-cum_tokens = 1822
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 39
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in MemorySwapMeter.h"
-cost_tokens = 29
-cum_tokens = 1851
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 40
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in SysArchMeter.h"
-cost_tokens = 29
-cum_tokens = 1880
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 41
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisMachine.h", start_line: 47 })'
 descriptor = "c decl at solaris/SolarisMachine.h:47"
 cost_tokens = 90
-cum_tokens = 1970
+cum_tokens = 1930
 
 [batches.content]
 kind = "lines"
@@ -1454,7 +1294,7 @@ position = 42
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd" })'
 descriptor = "listing of 'freebsd'"
 cost_tokens = 51
-cum_tokens = 2021
+cum_tokens = 1981
 
 [batches.content]
 kind = "fs"
@@ -1467,8 +1307,8 @@ entries = ["FreeBSDMachine.c", "FreeBSDMachine.h", "FreeBSDProcess.c", "FreeBSDP
 position = 43
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/ProcessField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in freebsd/ProcessField.h"
-cost_tokens = 27
-cum_tokens = 2048
+cost_tokens = 25
+cum_tokens = 2006
 
 [batches.content]
 kind = "lines"
@@ -1491,14 +1331,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/ProcessField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/ProcessField.h"
 start = 12
 end = 12
 
@@ -1509,8 +1341,8 @@ kind = "ellipsis"
 position = 44
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.h", chunk_index: 0 })'
 descriptor = "c decl names surface in freebsd/FreeBSDProcessTable.h"
-cost_tokens = 28
-cum_tokens = 2076
+cost_tokens = 26
+cum_tokens = 2032
 
 [batches.content]
 kind = "lines"
@@ -1533,14 +1365,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.h"
 start = 18
 end = 18
 
@@ -1551,8 +1375,8 @@ kind = "ellipsis"
 position = 45
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDMachine.h", chunk_index: 0 })'
 descriptor = "c decl names surface in freebsd/FreeBSDMachine.h"
-cost_tokens = 38
-cum_tokens = 2114
+cost_tokens = 36
+cum_tokens = 2068
 
 [batches.content]
 kind = "lines"
@@ -1583,14 +1407,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDMachine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDMachine.h"
 start = 21
 end = 21
 
@@ -1610,7 +1426,7 @@ position = 46
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.h", start_line: 17 })'
 descriptor = "c decl at freebsd/FreeBSDProcessTable.h:17"
 cost_tokens = 27
-cum_tokens = 2141
+cum_tokens = 2095
 
 [batches.content]
 kind = "lines"
@@ -1635,8 +1451,8 @@ kind = "full"
 position = 47
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcess.h", chunk_index: 0 })'
 descriptor = "c decl names surface in freebsd/FreeBSDProcess.h"
-cost_tokens = 98
-cum_tokens = 2239
+cost_tokens = 96
+cum_tokens = 2191
 
 [batches.content]
 kind = "lines"
@@ -1699,14 +1515,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcess.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcess.h"
 start = 17
 end = 17
 
@@ -1758,7 +1566,7 @@ position = 48
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcess.h", start_line: 27 })'
 descriptor = "c decl at freebsd/FreeBSDProcess.h:27"
 cost_tokens = 57
-cum_tokens = 2296
+cum_tokens = 2248
 
 [batches.content]
 kind = "lines"
@@ -1776,7 +1584,7 @@ position = 49
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDMachine.h", start_line: 20 })'
 descriptor = "c decl at freebsd/FreeBSDMachine.h:20"
 cost_tokens = 68
-cum_tokens = 2364
+cum_tokens = 2316
 
 [batches.content]
 kind = "lines"
@@ -1802,7 +1610,7 @@ position = 50
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcess.h", start_line: 16 })'
 descriptor = "c decl at freebsd/FreeBSDProcess.h:16"
 cost_tokens = 84
-cum_tokens = 2448
+cum_tokens = 2400
 
 [batches.content]
 kind = "lines"
@@ -1836,7 +1644,7 @@ position = 51
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd" })'
 descriptor = "listing of 'openbsd'"
 cost_tokens = 51
-cum_tokens = 2499
+cum_tokens = 2451
 
 [batches.content]
 kind = "fs"
@@ -1849,8 +1657,8 @@ entries = ["OpenBSDMachine.c", "OpenBSDMachine.h", "OpenBSDProcess.c", "OpenBSDP
 position = 52
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/ProcessField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in openbsd/ProcessField.h"
-cost_tokens = 14
-cum_tokens = 2513
+cost_tokens = 12
+cum_tokens = 2463
 
 [batches.content]
 kind = "lines"
@@ -1863,20 +1671,12 @@ end = 2
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/ProcessField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
 position = 53
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.h", chunk_index: 0 })'
 descriptor = "c decl names surface in openbsd/OpenBSDProcessTable.h"
-cost_tokens = 28
-cum_tokens = 2541
+cost_tokens = 26
+cum_tokens = 2489
 
 [batches.content]
 kind = "lines"
@@ -1899,14 +1699,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.h"
 start = 18
 end = 18
 
@@ -1918,7 +1710,7 @@ position = 54
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.h", start_line: 17 })'
 descriptor = "c decl at openbsd/OpenBSDProcessTable.h:17"
 cost_tokens = 17
-cum_tokens = 2558
+cum_tokens = 2506
 
 [batches.content]
 kind = "lines"
@@ -1935,8 +1727,8 @@ kind = "full"
 position = 55
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDMachine.h", chunk_index: 0 })'
 descriptor = "c decl names surface in openbsd/OpenBSDMachine.h"
-cost_tokens = 38
-cum_tokens = 2596
+cost_tokens = 36
+cum_tokens = 2542
 
 [batches.content]
 kind = "lines"
@@ -1967,14 +1759,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDMachine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDMachine.h"
 start = 19
 end = 19
 
@@ -1993,8 +1777,8 @@ kind = "ellipsis"
 position = 56
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcess.h", chunk_index: 0 })'
 descriptor = "c decl names surface in openbsd/OpenBSDProcess.h"
-cost_tokens = 89
-cum_tokens = 2685
+cost_tokens = 87
+cum_tokens = 2629
 
 [batches.content]
 kind = "lines"
@@ -2049,14 +1833,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcess.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcess.h"
 start = 19
 end = 19
 
@@ -2100,7 +1876,7 @@ position = 57
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcess.h", start_line: 18 })'
 descriptor = "c decl at openbsd/OpenBSDProcess.h:18"
 cost_tokens = 44
-cum_tokens = 2729
+cum_tokens = 2673
 
 [batches.content]
 kind = "lines"
@@ -2126,7 +1902,7 @@ position = 58
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.h" })'
 descriptor = "c includes in openbsd/OpenBSDProcessTable.h"
 cost_tokens = 32
-cum_tokens = 2761
+cum_tokens = 2705
 
 [batches.content]
 kind = "lines"
@@ -2152,7 +1928,7 @@ position = 59
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c", start_line: 16 })'
 descriptor = "c decl body at htop.c:16"
 cost_tokens = 11
-cum_tokens = 2772
+cum_tokens = 2716
 
 [batches.content]
 kind = "lines"
@@ -2170,7 +1946,7 @@ position = 60
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin" })'
 descriptor = "listing of 'darwin'"
 cost_tokens = 55
-cum_tokens = 2827
+cum_tokens = 2771
 
 [batches.content]
 kind = "fs"
@@ -2183,8 +1959,8 @@ entries = ["DarwinMachine.c", "DarwinMachine.h", "DarwinProcess.c", "DarwinProce
 position = 61
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinMachine.h", chunk_index: 0 })'
 descriptor = "c decl names surface in darwin/DarwinMachine.h"
-cost_tokens = 26
-cum_tokens = 2853
+cost_tokens = 24
+cum_tokens = 2795
 
 [batches.content]
 kind = "lines"
@@ -2207,14 +1983,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinMachine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinMachine.h"
 start = 19
 end = 19
 
@@ -2225,8 +1993,8 @@ kind = "ellipsis"
 position = 62
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.h", chunk_index: 0 })'
 descriptor = "c decl names surface in darwin/DarwinProcessTable.h"
-cost_tokens = 28
-cum_tokens = 2881
+cost_tokens = 26
+cum_tokens = 2821
 
 [batches.content]
 kind = "lines"
@@ -2249,14 +2017,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.h"
 start = 17
 end = 17
 
@@ -2267,8 +2027,8 @@ kind = "ellipsis"
 position = 63
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/ProcessField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in darwin/ProcessField.h"
-cost_tokens = 28
-cum_tokens = 2909
+cost_tokens = 26
+cum_tokens = 2847
 
 [batches.content]
 kind = "lines"
@@ -2291,14 +2051,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/ProcessField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/ProcessField.h"
 start = 12
 end = 12
 
@@ -2310,7 +2062,7 @@ position = 64
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.h", start_line: 16 })'
 descriptor = "c decl at darwin/DarwinProcessTable.h:16"
 cost_tokens = 27
-cum_tokens = 2936
+cum_tokens = 2874
 
 [batches.content]
 kind = "lines"
@@ -2336,7 +2088,7 @@ position = 65
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/Platform.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in darwin/Platform.h"
 cost_tokens = 22
-cum_tokens = 2958
+cum_tokens = 2896
 
 [batches.content]
 kind = "lines"
@@ -2361,8 +2113,8 @@ kind = "ellipsis"
 position = 66
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h", chunk_index: 0 })'
 descriptor = "c decl names surface in darwin/PlatformHelpers.h"
-cost_tokens = 120
-cum_tokens = 3078
+cost_tokens = 118
+cum_tokens = 3014
 
 [batches.content]
 kind = "lines"
@@ -2425,14 +2177,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h"
 start = 15
 end = 15
 
@@ -2484,7 +2228,7 @@ position = 67
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h", start_line: 27 })'
 descriptor = "c decl at darwin/PlatformHelpers.h:27"
 cost_tokens = 0
-cum_tokens = 3078
+cum_tokens = 3014
 
 [batches.content]
 kind = "lines"
@@ -2502,7 +2246,7 @@ position = 68
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h", start_line: 30 })'
 descriptor = "c decl at darwin/PlatformHelpers.h:30"
 cost_tokens = 0
-cum_tokens = 3078
+cum_tokens = 3014
 
 [batches.content]
 kind = "lines"
@@ -2520,7 +2264,7 @@ position = 69
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h", start_line: 14 })'
 descriptor = "c decl at darwin/PlatformHelpers.h:14"
 cost_tokens = 33
-cum_tokens = 3111
+cum_tokens = 3047
 
 [batches.content]
 kind = "lines"
@@ -2538,7 +2282,7 @@ position = 70
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h", start_line: 30 })'
 descriptor = "c decl doc at darwin/PlatformHelpers.h:30"
 cost_tokens = 14
-cum_tokens = 3125
+cum_tokens = 3061
 
 [batches.content]
 kind = "lines"
@@ -2556,7 +2300,7 @@ position = 71
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h" })'
 descriptor = "c includes in darwin/PlatformHelpers.h"
 cost_tokens = 21
-cum_tokens = 3146
+cum_tokens = 3082
 
 [batches.content]
 kind = "lines"
@@ -2574,7 +2318,7 @@ position = 72
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/ProcessField.h", start_line: 11 })'
 descriptor = "c decl at darwin/ProcessField.h:11"
 cost_tokens = 44
-cum_tokens = 3190
+cum_tokens = 3126
 
 [batches.content]
 kind = "lines"
@@ -2591,8 +2335,8 @@ kind = "full"
 position = 73
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcess.h", chunk_index: 0 })'
 descriptor = "c decl names surface in darwin/DarwinProcess.h"
-cost_tokens = 194
-cum_tokens = 3384
+cost_tokens = 192
+cum_tokens = 3318
 
 [batches.content]
 kind = "lines"
@@ -2676,14 +2420,6 @@ end = 44
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcess.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcess.h"
@@ -2762,7 +2498,7 @@ position = 74
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcess.h", start_line: 44 })'
 descriptor = "c decl at darwin/DarwinProcess.h:44"
 cost_tokens = 0
-cum_tokens = 3384
+cum_tokens = 3318
 
 [batches.content]
 kind = "lines"
@@ -2780,7 +2516,7 @@ position = 75
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcess.h", start_line: 18 })'
 descriptor = "c decl at darwin/DarwinProcess.h:18"
 cost_tokens = 53
-cum_tokens = 3437
+cum_tokens = 3371
 
 [batches.content]
 kind = "lines"
@@ -2806,7 +2542,7 @@ position = 76
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinMachine.h", start_line: 18 })'
 descriptor = "c decl at darwin/DarwinMachine.h:18"
 cost_tokens = 89
-cum_tokens = 3526
+cum_tokens = 3460
 
 [batches.content]
 kind = "lines"
@@ -2848,7 +2584,7 @@ position = 77
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.h" })'
 descriptor = "c includes in darwin/DarwinProcessTable.h"
 cost_tokens = 36
-cum_tokens = 3562
+cum_tokens = 3496
 
 [batches.content]
 kind = "lines"
@@ -2874,7 +2610,7 @@ position = 78
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd" })'
 descriptor = "listing of 'netbsd'"
 cost_tokens = 55
-cum_tokens = 3617
+cum_tokens = 3551
 
 [batches.content]
 kind = "fs"
@@ -2887,8 +2623,8 @@ entries = ["NetBSDMachine.c", "NetBSDMachine.h", "NetBSDProcess.c", "NetBSDProce
 position = 79
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/ProcessField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in netbsd/ProcessField.h"
-cost_tokens = 15
-cum_tokens = 3632
+cost_tokens = 13
+cum_tokens = 3564
 
 [batches.content]
 kind = "lines"
@@ -2901,20 +2637,12 @@ end = 2
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/ProcessField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
 position = 80
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.h", chunk_index: 0 })'
 descriptor = "c decl names surface in netbsd/NetBSDProcessTable.h"
-cost_tokens = 29
-cum_tokens = 3661
+cost_tokens = 27
+cum_tokens = 3591
 
 [batches.content]
 kind = "lines"
@@ -2937,14 +2665,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.h"
 start = 21
 end = 21
 
@@ -2956,7 +2676,7 @@ position = 81
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.h", start_line: 20 })'
 descriptor = "c decl at netbsd/NetBSDProcessTable.h:20"
 cost_tokens = 17
-cum_tokens = 3678
+cum_tokens = 3608
 
 [batches.content]
 kind = "lines"
@@ -2973,8 +2693,8 @@ kind = "full"
 position = 82
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDMachine.h", chunk_index: 0 })'
 descriptor = "c decl names surface in netbsd/NetBSDMachine.h"
-cost_tokens = 39
-cum_tokens = 3717
+cost_tokens = 37
+cum_tokens = 3645
 
 [batches.content]
 kind = "lines"
@@ -3005,14 +2725,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDMachine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDMachine.h"
 start = 22
 end = 22
 
@@ -3031,8 +2743,8 @@ kind = "ellipsis"
 position = 83
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcess.h", chunk_index: 0 })'
 descriptor = "c decl names surface in netbsd/NetBSDProcess.h"
-cost_tokens = 90
-cum_tokens = 3807
+cost_tokens = 88
+cum_tokens = 3733
 
 [batches.content]
 kind = "lines"
@@ -3087,14 +2799,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcess.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcess.h"
 start = 21
 end = 21
 
@@ -3138,7 +2842,7 @@ position = 84
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcess.h", start_line: 20 })'
 descriptor = "c decl at netbsd/NetBSDProcess.h:20"
 cost_tokens = 15
-cum_tokens = 3822
+cum_tokens = 3748
 
 [batches.content]
 kind = "lines"
@@ -3156,7 +2860,7 @@ position = 85
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/README.md" })'
 descriptor = "README headline in netbsd/README.md"
 cost_tokens = 60
-cum_tokens = 3882
+cum_tokens = 3808
 
 [batches.content]
 kind = "lines"
@@ -3182,7 +2886,7 @@ position = 86
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/README.md" })'
 descriptor = "headings outline in netbsd/README.md"
 cost_tokens = 32
-cum_tokens = 3914
+cum_tokens = 3840
 
 [batches.content]
 kind = "lines"
@@ -3224,7 +2928,7 @@ position = 87
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htop/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 139
-cum_tokens = 4053
+cum_tokens = 3979
 
 [batches.content]
 kind = "lines"
@@ -3458,7 +3162,7 @@ position = 88
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htop/README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 29
-cum_tokens = 4082
+cum_tokens = 4008
 
 [batches.content]
 kind = "lines"
@@ -3481,10 +3185,60 @@ kind = "full"
 
 [[batches]]
 position = 89
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in SwapMeter.h"
+cost_tokens = 34
+cum_tokens = 4042
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 90
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd" })'
 descriptor = "listing of 'dragonflybsd'"
 cost_tokens = 57
-cum_tokens = 4139
+cum_tokens = 4099
 
 [batches.content]
 kind = "fs"
@@ -3494,11 +3248,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd"
 entries = ["DragonFlyBSDMachine.c", "DragonFlyBSDMachine.h", "DragonFlyBSDProcess.c", "DragonFlyBSDProcess.h", "DragonFlyBSDProcessTable.c", "DragonFlyBSDProcessTable.h", "Platform.c", "Platform.h", "ProcessField.h"]
 
 [[batches]]
-position = 90
+position = 91
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/ProcessField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in dragonflybsd/ProcessField.h"
-cost_tokens = 30
-cum_tokens = 4169
+cost_tokens = 28
+cum_tokens = 4127
 
 [batches.content]
 kind = "lines"
@@ -3521,14 +3275,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/ProcessField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/ProcessField.h"
 start = 12
 end = 12
 
@@ -3536,11 +3282,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 92
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.h", chunk_index: 0 })'
 descriptor = "c decl names surface in dragonflybsd/DragonFlyBSDProcessTable.h"
-cost_tokens = 32
-cum_tokens = 4201
+cost_tokens = 30
+cum_tokens = 4157
 
 [batches.content]
 kind = "lines"
@@ -3563,14 +3309,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.h"
 start = 18
 end = 18
 
@@ -3578,11 +3316,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 93
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.h", start_line: 17 })'
 descriptor = "c decl at dragonflybsd/DragonFlyBSDProcessTable.h:17"
 cost_tokens = 18
-cum_tokens = 4219
+cum_tokens = 4175
 
 [batches.content]
 kind = "lines"
@@ -3596,11 +3334,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDMachine.h", chunk_index: 0 })'
 descriptor = "c decl names surface in dragonflybsd/DragonFlyBSDMachine.h"
-cost_tokens = 70
-cum_tokens = 4289
+cost_tokens = 68
+cum_tokens = 4243
 
 [batches.content]
 kind = "lines"
@@ -3639,14 +3377,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDMachine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDMachine.h"
 start = 27
 end = 27
 
@@ -3670,11 +3400,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 95
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcess.h", chunk_index: 0 })'
 descriptor = "c decl names surface in dragonflybsd/DragonFlyBSDProcess.h"
-cost_tokens = 95
-cum_tokens = 4384
+cost_tokens = 93
+cum_tokens = 4336
 
 [batches.content]
 kind = "lines"
@@ -3729,14 +3459,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcess.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcess.h"
 start = 19
 end = 19
 
@@ -3776,11 +3498,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 96
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcess.h", start_line: 18 })'
 descriptor = "c decl at dragonflybsd/DragonFlyBSDProcess.h:18"
 cost_tokens = 35
-cum_tokens = 4419
+cum_tokens = 4371
 
 [batches.content]
 kind = "lines"
@@ -3794,11 +3516,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDMachine.h", start_line: 26 })'
 descriptor = "c decl at dragonflybsd/DragonFlyBSDMachine.h:26"
 cost_tokens = 61
-cum_tokens = 4480
+cum_tokens = 4432
 
 [batches.content]
 kind = "lines"
@@ -3812,11 +3534,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/ProcessField.h", start_line: 11 })'
 descriptor = "c decl at dragonflybsd/ProcessField.h:11"
 cost_tokens = 56
-cum_tokens = 4536
+cum_tokens = 4488
 
 [batches.content]
 kind = "lines"
@@ -3830,11 +3552,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 98
+position = 99
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.h" })'
 descriptor = "c includes in dragonflybsd/DragonFlyBSDProcessTable.h"
 cost_tokens = 33
-cum_tokens = 4569
+cum_tokens = 4521
 
 [batches.content]
 kind = "lines"
@@ -3856,11 +3578,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcess.h" })'
 descriptor = "c includes in darwin/DarwinProcess.h"
 cost_tokens = 38
-cum_tokens = 4607
+cum_tokens = 4559
 
 [batches.content]
 kind = "lines"
@@ -3882,69 +3604,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 100
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in SwapMeter.h"
-cost_tokens = 36
-cum_tokens = 4643
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 101
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcess.h" })'
 descriptor = "c includes in dragonflybsd/DragonFlyBSDProcess.h"
 cost_tokens = 40
-cum_tokens = 4683
+cum_tokens = 4599
 
 [batches.content]
 kind = "lines"
@@ -3970,7 +3634,7 @@ position = 102
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcess.h" })'
 descriptor = "c includes in freebsd/FreeBSDProcess.h"
 cost_tokens = 40
-cum_tokens = 4723
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3996,7 +3660,7 @@ position = 103
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcess.h" })'
 descriptor = "c includes in netbsd/NetBSDProcess.h"
 cost_tokens = 40
-cum_tokens = 4763
+cum_tokens = 4679
 
 [batches.content]
 kind = "lines"
@@ -4022,7 +3686,7 @@ position = 104
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcess.h" })'
 descriptor = "c includes in openbsd/OpenBSDProcess.h"
 cost_tokens = 40
-cum_tokens = 4803
+cum_tokens = 4719
 
 [batches.content]
 kind = "lines"
@@ -4048,7 +3712,7 @@ position = 105
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htop/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 12
-cum_tokens = 4815
+cum_tokens = 4731
 
 [batches.content]
 kind = "lines"
@@ -4063,52 +3727,102 @@ kind = "full"
 
 [[batches]]
 position = 106
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h", chunk_index: 0 })'
-descriptor = "c decl names surface in XUtils.h"
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in MemoryMeter.h"
 cost_tokens = 37
-cum_tokens = 4852
+cum_tokens = 4768
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h"
-start = 162
-end = 162
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
+start = 2
+end = 2
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h"
-start = 172
-end = 172
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h"
-start = 163
-end = 163
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h"
-start = 173
-end = 173
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
+start = 21
+end = 21
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 107
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h", chunk_index: 0 })'
+descriptor = "c decl names surface in XUtils.h"
+cost_tokens = 37
+cum_tokens = 4805
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 108
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h", start_line: 162 })'
 descriptor = "c decl at XUtils.h:162"
 cost_tokens = 0
-cum_tokens = 4852
+cum_tokens = 4805
 
 [batches.content]
 kind = "lines"
@@ -4130,11 +3844,11 @@ end = 163
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 109
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/XUtils.h", start_line: 172 })'
 descriptor = "c decl at XUtils.h:172"
 cost_tokens = 0
-cum_tokens = 4852
+cum_tokens = 4805
 
 [batches.content]
 kind = "lines"
@@ -4156,11 +3870,11 @@ end = 173
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 110
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDMachine.h" })'
 descriptor = "c includes in openbsd/OpenBSDMachine.h"
 cost_tokens = 41
-cum_tokens = 4893
+cum_tokens = 4846
 
 [batches.content]
 kind = "lines"
@@ -4182,11 +3896,61 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in BatteryMeter.h"
+cost_tokens = 38
+cum_tokens = 4884
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.h" })'
 descriptor = "c includes in netbsd/NetBSDProcessTable.h"
 cost_tokens = 42
-cum_tokens = 4935
+cum_tokens = 4926
 
 [batches.content]
 kind = "lines"
@@ -4208,11 +3972,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 111
+position = 113
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDMachine.h", start_line: 43 })'
 descriptor = "c decl at netbsd/NetBSDMachine.h:43"
 cost_tokens = 108
-cum_tokens = 5043
+cum_tokens = 5034
 
 [batches.content]
 kind = "lines"
@@ -4250,17 +4014,17 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 112
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in MemoryMeter.h"
-cost_tokens = 39
-cum_tokens = 5082
+position = 114
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h", chunk_index: 0 })'
+descriptor = "c decl names surface in LoadAverageMeter.h"
+cost_tokens = 40
+cum_tokens = 5074
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
 start = 2
 end = 2
 
@@ -4268,7 +4032,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
 start = 13
 end = 13
 
@@ -4276,57 +4040,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 113
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in BatteryMeter.h"
-cost_tokens = 40
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
 start = 15
 end = 15
 
@@ -4334,43 +4048,27 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
-start = 3
-end = 3
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
 start = 16
 end = 16
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
-position = 114
+position = 115
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htop/README.md", section_index: 24 })'
 descriptor = "README.md section #24"
 cost_tokens = 29
-cum_tokens = 5151
+cum_tokens = 5103
 
 [batches.content]
 kind = "lines"
@@ -4392,121 +4090,11 @@ end = 219
 kind = "full"
 
 [[batches]]
-position = 115
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h", chunk_index: 0 })'
-descriptor = "c decl names surface in LoadAverageMeter.h"
-cost_tokens = 42
-cum_tokens = 5193
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 116
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c", chunk_index: 1 })'
-descriptor = "c decl names surface #1 in unsupported/Platform.c"
-cost_tokens = 15
-cum_tokens = 5208
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c"
-start = 178
-end = 178
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c"
-start = 179
-end = 179
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 117
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c", start_line: 178 })'
-descriptor = "c decl at unsupported/Platform.c:178"
-cost_tokens = 0
-cum_tokens = 5208
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c"
-start = 178
-end = 178
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c"
-start = 179
-end = 179
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 118
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in NetworkIOMeter.h"
-cost_tokens = 44
-cum_tokens = 5252
+cost_tokens = 42
+cum_tokens = 5145
 
 [batches.content]
 kind = "lines"
@@ -4537,14 +4125,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.h"
 start = 16
 end = 16
 
@@ -4560,11 +4140,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 117
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/UptimeMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in UptimeMeter.h"
-cost_tokens = 44
-cum_tokens = 5296
+cost_tokens = 42
+cum_tokens = 5187
 
 [batches.content]
 kind = "lines"
@@ -4595,14 +4175,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/UptimeMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/UptimeMeter.h"
 start = 14
 end = 14
 
@@ -4618,11 +4190,63 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
+position = 118
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in unsupported/Platform.c"
+cost_tokens = 15
+cum_tokens = 5202
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 119
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c", start_line: 178 })'
+descriptor = "c decl at unsupported/Platform.c:178"
+cost_tokens = 0
+cum_tokens = 5202
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 120
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/ProcessField.h", start_line: 11 })'
 descriptor = "c decl at freebsd/ProcessField.h:11"
 cost_tokens = 83
-cum_tokens = 5379
+cum_tokens = 5285
 
 [batches.content]
 kind = "lines"
@@ -4640,7 +4264,7 @@ position = 121
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisMachine.h", start_line: 32 })'
 descriptor = "c decl at solaris/SolarisMachine.h:32"
 cost_tokens = 122
-cum_tokens = 5501
+cum_tokens = 5407
 
 [batches.content]
 kind = "lines"
@@ -4658,7 +4282,7 @@ position = 122
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/Platform.c", start_line: 178 })'
 descriptor = "c decl body at unsupported/Platform.c:178"
 cost_tokens = 8
-cum_tokens = 5509
+cum_tokens = 5415
 
 [batches.content]
 kind = "lines"
@@ -4676,7 +4300,7 @@ position = 123
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/PlatformHelpers.h", start_line: 27 })'
 descriptor = "c decl doc at darwin/PlatformHelpers.h:27"
 cost_tokens = 58
-cum_tokens = 5567
+cum_tokens = 5473
 
 [batches.content]
 kind = "lines"
@@ -4694,7 +4318,7 @@ position = 124
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDMachine.h", start_line: 40 })'
 descriptor = "c decl at openbsd/OpenBSDMachine.h:40"
 cost_tokens = 126
-cum_tokens = 5693
+cum_tokens = 5599
 
 [batches.content]
 kind = "lines"
@@ -4744,7 +4368,7 @@ position = 125
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDMachine.h" })'
 descriptor = "c includes in netbsd/NetBSDMachine.h"
 cost_tokens = 52
-cum_tokens = 5745
+cum_tokens = 5651
 
 [batches.content]
 kind = "lines"
@@ -4770,7 +4394,7 @@ position = 126
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.h" })'
 descriptor = "c includes in freebsd/FreeBSDProcessTable.h"
 cost_tokens = 53
-cum_tokens = 5798
+cum_tokens = 5704
 
 [batches.content]
 kind = "lines"
@@ -4796,7 +4420,7 @@ position = 127
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcess.h" })'
 descriptor = "c includes in solaris/SolarisProcess.h"
 cost_tokens = 53
-cum_tokens = 5851
+cum_tokens = 5757
 
 [batches.content]
 kind = "lines"
@@ -4827,10 +4451,202 @@ kind = "full"
 
 [[batches]]
 position = 128
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h", chunk_index: 0 })'
+descriptor = "c decl names surface in CommandLine.h"
+cost_tokens = 48
+cum_tokens = 5805
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 129
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h", chunk_index: 0 })'
+descriptor = "c decl names surface in RowField.h"
+cost_tokens = 48
+cum_tokens = 5853
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
+start = 53
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 130
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h", start_line: 53 })'
+descriptor = "c decl at RowField.h:53"
+cost_tokens = 0
+cum_tokens = 5853
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h", chunk_index: 0 })'
+descriptor = "c decl names surface in MeterMode.h"
+cost_tokens = 49
+cum_tokens = 5902
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 132
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcMeter.c", chunk_index: 0 })'
 descriptor = "c decl names surface in zfs/ZfsArcMeter.c"
 cost_tokens = 43
-cum_tokens = 5894
+cum_tokens = 5945
 
 [batches.content]
 kind = "lines"
@@ -4868,11 +4684,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 133
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcMeter.c", start_line: 26 })'
 descriptor = "c decl at zfs/ZfsArcMeter.c:26"
 cost_tokens = 0
-cum_tokens = 5894
+cum_tokens = 5945
 
 [batches.content]
 kind = "lines"
@@ -4894,11 +4710,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 134
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/SolarisProcess.h", start_line: 26 })'
 descriptor = "c decl at solaris/SolarisProcess.h:26"
 cost_tokens = 133
-cum_tokens = 6027
+cum_tokens = 6078
 
 [batches.content]
 kind = "lines"
@@ -4912,11 +4728,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 131
+position = 135
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/docs/images" })'
 descriptor = "listing of 'docs/images'"
 cost_tokens = 4
-cum_tokens = 6031
+cum_tokens = 6082
 
 [batches.content]
 kind = "fs"
@@ -4926,161 +4742,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htop/docs/images"
 entries = ["screenshot.png"]
 
 [[batches]]
-position = 132
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h", chunk_index: 0 })'
-descriptor = "c decl names surface in CommandLine.h"
-cost_tokens = 50
-cum_tokens = 6081
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 133
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h", chunk_index: 0 })'
-descriptor = "c decl names surface in RowField.h"
-cost_tokens = 50
-cum_tokens = 6131
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
-start = 53
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 134
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h", start_line: 53 })'
-descriptor = "c decl at RowField.h:53"
-cost_tokens = 0
-cum_tokens = 6131
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/RowField.h"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 135
+position = 136
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsCompressedArcMeter.c", chunk_index: 0 })'
 descriptor = "c decl names surface in zfs/ZfsCompressedArcMeter.c"
 cost_tokens = 45
-cum_tokens = 6176
+cum_tokens = 6127
 
 [batches.content]
 kind = "lines"
@@ -5118,11 +4784,11 @@ end = 75
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 137
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsCompressedArcMeter.c", start_line: 27 })'
 descriptor = "c decl at zfs/ZfsCompressedArcMeter.c:27"
 cost_tokens = 0
-cum_tokens = 6176
+cum_tokens = 6127
 
 [batches.content]
 kind = "lines"
@@ -5144,11 +4810,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/generic" })'
 descriptor = "listing of 'generic'"
 cost_tokens = 86
-cum_tokens = 6262
+cum_tokens = 6213
 
 [batches.content]
 kind = "fs"
@@ -5158,11 +4824,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htop/generic"
 entries = ["Demangle.c", "Demangle.h", "ProvideDemangle.h", "UnwindPtrace.c", "UnwindPtrace.h", "fdstat_sysctl.c", "fdstat_sysctl.h", "gettime.c", "gettime.h", "hostname.c", "hostname.h", "openzfs_sysctl.c", "openzfs_sysctl.h", "uname.c", "uname.h"]
 
 [[batches]]
-position = 138
+position = 139
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/Demangle.h", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/Demangle.h"
-cost_tokens = 13
-cum_tokens = 6275
+cost_tokens = 11
+cum_tokens = 6224
 
 [batches.content]
 kind = "lines"
@@ -5174,47 +4840,31 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/Demangle.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 139
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/ProvideDemangle.h", chunk_index: 0 })'
-descriptor = "c decl names surface in generic/ProvideDemangle.h"
-cost_tokens = 14
-cum_tokens = 6289
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/ProvideDemangle.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/ProvideDemangle.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 140
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/ProvideDemangle.h", chunk_index: 0 })'
+descriptor = "c decl names surface in generic/ProvideDemangle.h"
+cost_tokens = 12
+cum_tokens = 6236
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/ProvideDemangle.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/UnwindPtrace.h", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/UnwindPtrace.h"
-cost_tokens = 14
-cum_tokens = 6303
+cost_tokens = 12
+cum_tokens = 6248
 
 [batches.content]
 kind = "lines"
@@ -5227,20 +4877,12 @@ end = 2
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/UnwindPtrace.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
-position = 141
+position = 142
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.h", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/hostname.h"
-cost_tokens = 28
-cum_tokens = 6331
+cost_tokens = 26
+cum_tokens = 6274
 
 [batches.content]
 kind = "lines"
@@ -5263,14 +4905,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.h"
 start = 14
 end = 14
 
@@ -5278,11 +4912,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 143
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.h", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/fdstat_sysctl.h"
-cost_tokens = 35
-cum_tokens = 6366
+cost_tokens = 33
+cum_tokens = 6307
 
 [batches.content]
 kind = "lines"
@@ -5305,14 +4939,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.h"
 start = 12
 end = 12
 
@@ -5320,11 +4946,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 144
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.h", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/openzfs_sysctl.h"
-cost_tokens = 57
-cum_tokens = 6423
+cost_tokens = 55
+cum_tokens = 6362
 
 [batches.content]
 kind = "lines"
@@ -5355,14 +4981,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.h"
 start = 14
 end = 14
 
@@ -5378,11 +4996,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 145
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/Demangle.h" })'
 descriptor = "c includes in generic/Demangle.h"
 cost_tokens = 10
-cum_tokens = 6433
+cum_tokens = 6372
 
 [batches.content]
 kind = "lines"
@@ -5396,11 +5014,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 145
+position = 146
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.h" })'
 descriptor = "c includes in generic/hostname.h"
 cost_tokens = 10
-cum_tokens = 6443
+cum_tokens = 6382
 
 [batches.content]
 kind = "lines"
@@ -5414,11 +5032,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 146
+position = 147
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.h" })'
 descriptor = "c includes in generic/uname.h"
 cost_tokens = 10
-cum_tokens = 6453
+cum_tokens = 6392
 
 [batches.content]
 kind = "lines"
@@ -5432,11 +5050,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.h", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/uname.h"
-cost_tokens = 71
-cum_tokens = 6524
+cost_tokens = 69
+cum_tokens = 6461
 
 [batches.content]
 kind = "lines"
@@ -5472,14 +5090,6 @@ end = 16
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.h"
@@ -5506,11 +5116,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 149
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.h" })'
 descriptor = "c includes in generic/openzfs_sysctl.h"
 cost_tokens = 15
-cum_tokens = 6539
+cum_tokens = 6476
 
 [batches.content]
 kind = "lines"
@@ -5524,11 +5134,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.h", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/gettime.h"
-cost_tokens = 117
-cum_tokens = 6656
+cost_tokens = 115
+cum_tokens = 6591
 
 [batches.content]
 kind = "lines"
@@ -5575,14 +5185,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.h"
 start = 15
 end = 15
 
@@ -5614,11 +5216,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 150
+position = 151
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.h", start_line: 18 })'
 descriptor = "c decl at generic/gettime.h:18"
 cost_tokens = 0
-cum_tokens = 6656
+cum_tokens = 6591
 
 [batches.content]
 kind = "lines"
@@ -5640,11 +5242,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 152
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.h", start_line: 26 })'
 descriptor = "c decl at generic/gettime.h:26"
 cost_tokens = 0
-cum_tokens = 6656
+cum_tokens = 6591
 
 [batches.content]
 kind = "lines"
@@ -5666,11 +5268,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 153
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.h" })'
 descriptor = "c includes in generic/gettime.h"
 cost_tokens = 20
-cum_tokens = 6676
+cum_tokens = 6611
 
 [batches.content]
 kind = "lines"
@@ -5684,11 +5286,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/UnwindPtrace.h" })'
 descriptor = "c includes in generic/UnwindPtrace.h"
 cost_tokens = 21
-cum_tokens = 6697
+cum_tokens = 6632
 
 [batches.content]
 kind = "lines"
@@ -5710,37 +5312,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.c", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/hostname.c"
 cost_tokens = 18
-cum_tokens = 6715
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.c"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.c"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 155
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.c", start_line: 15 })'
-descriptor = "c decl at generic/hostname.c:15"
-cost_tokens = 0
-cum_tokens = 6715
+cum_tokens = 6650
 
 [batches.content]
 kind = "lines"
@@ -5763,36 +5339,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 156
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.c", chunk_index: 0 })'
-descriptor = "c decl names surface in generic/fdstat_sysctl.c"
-cost_tokens = 22
-cum_tokens = 6737
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.c", start_line: 15 })'
+descriptor = "c decl at generic/hostname.c:15"
+cost_tokens = 0
+cum_tokens = 6650
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.c"
-start = 64
-end = 64
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.c"
+start = 15
+end = 15
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.c"
-start = 65
-end = 65
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/hostname.c"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 157
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.c", start_line: 64 })'
-descriptor = "c decl at generic/fdstat_sysctl.c:64"
-cost_tokens = 0
-cum_tokens = 6737
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.c", chunk_index: 0 })'
+descriptor = "c decl names surface in generic/fdstat_sysctl.c"
+cost_tokens = 22
+cum_tokens = 6672
 
 [batches.content]
 kind = "lines"
@@ -5815,52 +5391,78 @@ kind = "ellipsis"
 
 [[batches]]
 position = 158
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c", chunk_index: 0 })'
-descriptor = "c decl names surface in generic/uname.c"
-cost_tokens = 38
-cum_tokens = 6775
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.c", start_line: 64 })'
+descriptor = "c decl at generic/fdstat_sysctl.c:64"
+cost_tokens = 0
+cum_tokens = 6672
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c"
-start = 82
-end = 82
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.c"
+start = 64
+end = 64
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c"
-start = 113
-end = 113
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c"
-start = 114
-end = 114
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/fdstat_sysctl.c"
+start = 65
+end = 65
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 159
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c", chunk_index: 0 })'
+descriptor = "c decl names surface in generic/uname.c"
+cost_tokens = 38
+cum_tokens = 6710
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 160
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c", start_line: 82 })'
 descriptor = "c decl at generic/uname.c:82"
 cost_tokens = 0
-cum_tokens = 6775
+cum_tokens = 6710
 
 [batches.content]
 kind = "lines"
@@ -5882,11 +5484,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 160
+position = 161
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/uname.c", start_line: 113 })'
 descriptor = "c decl at generic/uname.c:113"
 cost_tokens = 0
-cum_tokens = 6775
+cum_tokens = 6710
 
 [batches.content]
 kind = "lines"
@@ -5908,11 +5510,11 @@ end = 114
 kind = "ellipsis"
 
 [[batches]]
-position = 161
+position = 162
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c", chunk_index: 0 })'
 descriptor = "c decl names surface in generic/openzfs_sysctl.c"
 cost_tokens = 44
-cum_tokens = 6819
+cum_tokens = 6754
 
 [batches.content]
 kind = "lines"
@@ -5945,42 +5547,42 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c"
 start = 59
 end = 59
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 162
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c", start_line: 28 })'
-descriptor = "c decl at generic/openzfs_sysctl.c:28"
-cost_tokens = 0
-cum_tokens = 6819
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c"
-start = 29
-end = 29
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 163
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c", start_line: 28 })'
+descriptor = "c decl at generic/openzfs_sysctl.c:28"
+cost_tokens = 0
+cum_tokens = 6754
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/openzfs_sysctl.c", start_line: 58 })'
 descriptor = "c decl at generic/openzfs_sysctl.c:58"
 cost_tokens = 0
-cum_tokens = 6819
+cum_tokens = 6754
 
 [batches.content]
 kind = "lines"
@@ -6002,11 +5604,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 164
+position = 165
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/zfs/ZfsArcStats.h", start_line: 10 })'
 descriptor = "c decl at zfs/ZfsArcStats.h:10"
 cost_tokens = 138
-cum_tokens = 6957
+cum_tokens = 6892
 
 [batches.content]
 kind = "lines"
@@ -6020,283 +5622,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 165
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h", chunk_index: 0 })'
-descriptor = "c decl names surface in MeterMode.h"
-cost_tokens = 53
-cum_tokens = 7010
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MeterMode.h"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 166
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c", chunk_index: 0 })'
-descriptor = "c decl names surface in generic/gettime.c"
-cost_tokens = 47
-cum_tokens = 7057
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 167
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c", start_line: 19 })'
-descriptor = "c decl at generic/gettime.c:19"
-cost_tokens = 0
-cum_tokens = 7057
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 168
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c", start_line: 45 })'
-descriptor = "c decl at generic/gettime.c:45"
-cost_tokens = 0
-cum_tokens = 7057
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 169
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.c", chunk_index: 0 })'
-descriptor = "c decl names surface in BatteryMeter.c"
-cost_tokens = 14
-cum_tokens = 7071
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.c"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.c"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 170
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.c", chunk_index: 0 })'
-descriptor = "c decl names surface in MemoryMeter.c"
-cost_tokens = 14
-cum_tokens = 7085
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.c"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.c"
-start = 101
-end = 101
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 171
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.c", chunk_index: 0 })'
-descriptor = "c decl names surface in SwapMeter.c"
-cost_tokens = 14
-cum_tokens = 7099
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.c"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.c"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 172
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.c", chunk_index: 0 })'
-descriptor = "c decl names surface in TasksMeter.c"
-cost_tokens = 14
-cum_tokens = 7113
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.c"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.c"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 173
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/ColorsPanel.h", chunk_index: 0 })'
 descriptor = "c decl names surface in ColorsPanel.h"
-cost_tokens = 55
-cum_tokens = 7168
+cost_tokens = 53
+cum_tokens = 6945
 
 [batches.content]
 kind = "lines"
@@ -6335,14 +5665,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/ColorsPanel.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/ColorsPanel.h"
 start = 15
 end = 15
 
@@ -6366,11 +5688,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 174
+position = 167
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/ColorsPanel.h", start_line: 14 })'
 descriptor = "c decl at ColorsPanel.h:14"
 cost_tokens = 23
-cum_tokens = 7191
+cum_tokens = 6968
 
 [batches.content]
 kind = "lines"
@@ -6392,11 +5714,105 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 175
+position = 168
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c", chunk_index: 0 })'
+descriptor = "c decl names surface in generic/gettime.c"
+cost_tokens = 47
+cum_tokens = 7015
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 169
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c", start_line: 19 })'
+descriptor = "c decl at generic/gettime.c:19"
+cost_tokens = 0
+cum_tokens = 7015
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 170
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c", start_line: 45 })'
+descriptor = "c decl at generic/gettime.c:45"
+cost_tokens = 0
+cum_tokens = 7015
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/generic/gettime.c"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 171
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/DateTimeMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in DateTimeMeter.h"
-cost_tokens = 56
-cum_tokens = 7247
+cost_tokens = 54
+cum_tokens = 7069
 
 [batches.content]
 kind = "lines"
@@ -6435,14 +5851,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/DateTimeMeter.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/DateTimeMeter.h"
 start = 14
 end = 14
 
@@ -6466,11 +5874,199 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
+position = 172
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.c", chunk_index: 0 })'
+descriptor = "c decl names surface in BatteryMeter.c"
+cost_tokens = 14
+cum_tokens = 7083
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.c"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.c"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 173
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.c", chunk_index: 0 })'
+descriptor = "c decl names surface in MemoryMeter.c"
+cost_tokens = 14
+cum_tokens = 7097
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.c"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.c"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 174
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.c", chunk_index: 0 })'
+descriptor = "c decl names surface in SwapMeter.c"
+cost_tokens = 14
+cum_tokens = 7111
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.c"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.c"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 175
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.c", chunk_index: 0 })'
+descriptor = "c decl names surface in TasksMeter.c"
+cost_tokens = 14
+cum_tokens = 7125
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.c"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.c"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 176
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h", chunk_index: 0 })'
+descriptor = "c decl names surface in SignalsPanel.h"
+cost_tokens = 58
+cum_tokens = 7183
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 177
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h", start_line: 17 })'
+descriptor = "c decl at SignalsPanel.h:17"
+cost_tokens = 24
+cum_tokens = 7207
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
+start = 17
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.c", chunk_index: 0 })'
 descriptor = "c decl names surface in HostnameMeter.c"
 cost_tokens = 15
-cum_tokens = 7262
+cum_tokens = 7222
 
 [batches.content]
 kind = "lines"
@@ -6492,11 +6088,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 177
+position = 179
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.c", chunk_index: 0 })'
 descriptor = "c decl names surface in SysArchMeter.c"
 cost_tokens = 15
-cum_tokens = 7277
+cum_tokens = 7237
 
 [batches.content]
 kind = "lines"
@@ -6518,11 +6114,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 178
+position = 180
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in solaris/Platform.h"
 cost_tokens = 99
-cum_tokens = 7376
+cum_tokens = 7336
 
 [batches.content]
 kind = "lines"
@@ -6592,11 +6188,11 @@ end = 179
 kind = "ellipsis"
 
 [[batches]]
-position = 179
+position = 181
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinMachine.h" })'
 descriptor = "c includes in darwin/DarwinMachine.h"
 cost_tokens = 65
-cum_tokens = 7441
+cum_tokens = 7401
 
 [batches.content]
 kind = "lines"
@@ -6618,103 +6214,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 180
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h", chunk_index: 0 })'
-descriptor = "c decl names surface in SignalsPanel.h"
-cost_tokens = 60
-cum_tokens = 7501
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 181
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h", start_line: 17 })'
-descriptor = "c decl at SignalsPanel.h:17"
-cost_tokens = 24
-cum_tokens = 7525
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h"
-start = 17
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 182
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h", start_line: 15 })'
 descriptor = "c decl at BatteryMeter.h:15"
 cost_tokens = 33
-cum_tokens = 7558
+cum_tokens = 7434
 
 [batches.content]
 kind = "lines"
@@ -6732,7 +6236,7 @@ position = 183
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CommandLine.h", start_line: 11 })'
 descriptor = "c decl at CommandLine.h:11"
 cost_tokens = 33
-cum_tokens = 7591
+cum_tokens = 7467
 
 [batches.content]
 kind = "lines"
@@ -6747,10 +6251,54 @@ kind = "full"
 
 [[batches]]
 position = 184
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in solaris/Platform.c"
+cost_tokens = 21
+cum_tokens = 7488
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c"
+start = 345
+end = 345
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c", start_line: 345 })'
+descriptor = "c decl at solaris/Platform.c:345"
+cost_tokens = 2
+cum_tokens = 7490
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c"
+start = 345
+end = 345
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c"
+start = 346
+end = 346
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 186
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htop/README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 18
-cum_tokens = 7609
+cum_tokens = 7508
 
 [batches.content]
 kind = "lines"
@@ -6764,63 +6312,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 185
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.c", chunk_index: 0 })'
-descriptor = "c decl names surface in NetworkIOMeter.c"
-cost_tokens = 16
-cum_tokens = 7625
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.c"
-start = 166
-end = 166
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.c"
-start = 167
-end = 167
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 186
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c" })'
-descriptor = "c includes in htop.c"
-cost_tokens = 28
-cum_tokens = 7653
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 187
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CategoriesPanel.h", chunk_index: 0 })'
 descriptor = "c decl names surface in CategoriesPanel.h"
-cost_tokens = 64
-cum_tokens = 7717
+cost_tokens = 62
+cum_tokens = 7570
 
 [batches.content]
 kind = "lines"
@@ -6856,14 +6352,6 @@ end = 25
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CategoriesPanel.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/CategoriesPanel.h"
@@ -6893,8 +6381,8 @@ kind = "ellipsis"
 position = 188
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/DisplayOptionsPanel.h", chunk_index: 0 })'
 descriptor = "c decl names surface in DisplayOptionsPanel.h"
-cost_tokens = 64
-cum_tokens = 7781
+cost_tokens = 62
+cum_tokens = 7632
 
 [batches.content]
 kind = "lines"
@@ -6933,14 +6421,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/DisplayOptionsPanel.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/DisplayOptionsPanel.h"
 start = 17
 end = 17
 
@@ -6967,8 +6447,8 @@ kind = "ellipsis"
 position = 189
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/HeaderOptionsPanel.h", chunk_index: 0 })'
 descriptor = "c decl names surface in HeaderOptionsPanel.h"
-cost_tokens = 64
-cum_tokens = 7845
+cost_tokens = 62
+cum_tokens = 7694
 
 [batches.content]
 kind = "lines"
@@ -7004,14 +6484,6 @@ end = 24
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/HeaderOptionsPanel.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/HeaderOptionsPanel.h"
@@ -7042,7 +6514,7 @@ position = 190
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/HeaderOptionsPanel.h", start_line: 15 })'
 descriptor = "c decl at HeaderOptionsPanel.h:15"
 cost_tokens = 34
-cum_tokens = 7879
+cum_tokens = 7728
 
 [batches.content]
 kind = "lines"
@@ -7065,10 +6537,62 @@ kind = "full"
 
 [[batches]]
 position = 191
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.c", chunk_index: 0 })'
+descriptor = "c decl names surface in NetworkIOMeter.c"
+cost_tokens = 16
+cum_tokens = 7744
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.c"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/NetworkIOMeter.c"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 192
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c" })'
+descriptor = "c includes in htop.c"
+cost_tokens = 28
+cum_tokens = 7772
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/htop.c"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htop/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 296
-cum_tokens = 8175
+cum_tokens = 8068
 
 [batches.content]
 kind = "lines"
@@ -7090,11 +6614,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 192
+position = 194
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c", chunk_index: 0 })'
 descriptor = "c decl names surface in darwin/DarwinProcessTable.c"
 cost_tokens = 57
-cum_tokens = 8232
+cum_tokens = 8125
 
 [batches.content]
 kind = "lines"
@@ -7143,68 +6667,68 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
 start = 73
 end = 73
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 193
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c", start_line: 56 })'
-descriptor = "c decl at darwin/DarwinProcessTable.c:56"
-cost_tokens = 0
-cum_tokens = 8232
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 194
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c", start_line: 66 })'
-descriptor = "c decl at darwin/DarwinProcessTable.c:66"
-cost_tokens = 0
-cum_tokens = 8232
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
-start = 67
-end = 67
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 195
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c", start_line: 56 })'
+descriptor = "c decl at darwin/DarwinProcessTable.c:56"
+cost_tokens = 0
+cum_tokens = 8125
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 196
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c", start_line: 66 })'
+descriptor = "c decl at darwin/DarwinProcessTable.c:66"
+cost_tokens = 0
+cum_tokens = 8125
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 197
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/darwin/DarwinProcessTable.c", start_line: 72 })'
 descriptor = "c decl at darwin/DarwinProcessTable.c:72"
 cost_tokens = 0
-cum_tokens = 8232
+cum_tokens = 8125
 
 [batches.content]
 kind = "lines"
@@ -7226,11 +6750,11 @@ end = 73
 kind = "ellipsis"
 
 [[batches]]
-position = 196
+position = 198
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c", chunk_index: 0 })'
 descriptor = "c decl names surface in dragonflybsd/DragonFlyBSDProcessTable.c"
 cost_tokens = 57
-cum_tokens = 8289
+cum_tokens = 8182
 
 [batches.content]
 kind = "lines"
@@ -7279,68 +6803,68 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
 start = 134
 end = 134
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 197
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c", start_line: 30 })'
-descriptor = "c decl at dragonflybsd/DragonFlyBSDProcessTable.c:30"
-cost_tokens = 0
-cum_tokens = 8289
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 198
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c", start_line: 40 })'
-descriptor = "c decl at dragonflybsd/DragonFlyBSDProcessTable.c:40"
-cost_tokens = 0
-cum_tokens = 8289
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
-start = 41
-end = 41
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 199
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c", start_line: 30 })'
+descriptor = "c decl at dragonflybsd/DragonFlyBSDProcessTable.c:30"
+cost_tokens = 0
+cum_tokens = 8182
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 200
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c", start_line: 40 })'
+descriptor = "c decl at dragonflybsd/DragonFlyBSDProcessTable.c:40"
+cost_tokens = 0
+cum_tokens = 8182
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 201
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDProcessTable.c", start_line: 133 })'
 descriptor = "c decl at dragonflybsd/DragonFlyBSDProcessTable.c:133"
 cost_tokens = 0
-cum_tokens = 8289
+cum_tokens = 8182
 
 [batches.content]
 kind = "lines"
@@ -7362,11 +6886,11 @@ end = 134
 kind = "ellipsis"
 
 [[batches]]
-position = 200
+position = 202
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c", chunk_index: 0 })'
 descriptor = "c decl names surface in freebsd/FreeBSDProcessTable.c"
 cost_tokens = 57
-cum_tokens = 8346
+cum_tokens = 8239
 
 [batches.content]
 kind = "lines"
@@ -7415,68 +6939,68 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
 start = 161
 end = 161
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 201
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c", start_line: 45 })'
-descriptor = "c decl at freebsd/FreeBSDProcessTable.c:45"
-cost_tokens = 0
-cum_tokens = 8346
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 202
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c", start_line: 56 })'
-descriptor = "c decl at freebsd/FreeBSDProcessTable.c:56"
-cost_tokens = 0
-cum_tokens = 8346
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
-start = 57
-end = 57
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 203
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c", start_line: 45 })'
+descriptor = "c decl at freebsd/FreeBSDProcessTable.c:45"
+cost_tokens = 0
+cum_tokens = 8239
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 204
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c", start_line: 56 })'
+descriptor = "c decl at freebsd/FreeBSDProcessTable.c:56"
+cost_tokens = 0
+cum_tokens = 8239
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 205
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDProcessTable.c", start_line: 160 })'
 descriptor = "c decl at freebsd/FreeBSDProcessTable.c:160"
 cost_tokens = 0
-cum_tokens = 8346
+cum_tokens = 8239
 
 [batches.content]
 kind = "lines"
@@ -7498,11 +7022,11 @@ end = 161
 kind = "ellipsis"
 
 [[batches]]
-position = 204
+position = 206
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c", chunk_index: 0 })'
 descriptor = "c decl names surface in netbsd/NetBSDProcessTable.c"
 cost_tokens = 57
-cum_tokens = 8403
+cum_tokens = 8296
 
 [batches.content]
 kind = "lines"
@@ -7551,68 +7075,68 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
 start = 172
 end = 172
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 205
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c", start_line: 40 })'
-descriptor = "c decl at netbsd/NetBSDProcessTable.c:40"
-cost_tokens = 0
-cum_tokens = 8403
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 206
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c", start_line: 50 })'
-descriptor = "c decl at netbsd/NetBSDProcessTable.c:50"
-cost_tokens = 0
-cum_tokens = 8403
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
-start = 51
-end = 51
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 207
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c", start_line: 40 })'
+descriptor = "c decl at netbsd/NetBSDProcessTable.c:40"
+cost_tokens = 0
+cum_tokens = 8296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 208
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c", start_line: 50 })'
+descriptor = "c decl at netbsd/NetBSDProcessTable.c:50"
+cost_tokens = 0
+cum_tokens = 8296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 209
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/netbsd/NetBSDProcessTable.c", start_line: 171 })'
 descriptor = "c decl at netbsd/NetBSDProcessTable.c:171"
 cost_tokens = 0
-cum_tokens = 8403
+cum_tokens = 8296
 
 [batches.content]
 kind = "lines"
@@ -7634,11 +7158,11 @@ end = 172
 kind = "ellipsis"
 
 [[batches]]
-position = 208
+position = 210
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c", chunk_index: 0 })'
 descriptor = "c decl names surface in openbsd/OpenBSDProcessTable.c"
 cost_tokens = 57
-cum_tokens = 8460
+cum_tokens = 8353
 
 [batches.content]
 kind = "lines"
@@ -7687,68 +7211,68 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
 start = 243
 end = 243
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 209
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c", start_line: 38 })'
-descriptor = "c decl at openbsd/OpenBSDProcessTable.c:38"
-cost_tokens = 0
-cum_tokens = 8460
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 210
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c", start_line: 48 })'
-descriptor = "c decl at openbsd/OpenBSDProcessTable.c:48"
-cost_tokens = 0
-cum_tokens = 8460
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
-start = 49
-end = 49
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 211
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c", start_line: 38 })'
+descriptor = "c decl at openbsd/OpenBSDProcessTable.c:38"
+cost_tokens = 0
+cum_tokens = 8353
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 212
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c", start_line: 48 })'
+descriptor = "c decl at openbsd/OpenBSDProcessTable.c:48"
+cost_tokens = 0
+cum_tokens = 8353
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 213
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/openbsd/OpenBSDProcessTable.c", start_line: 242 })'
 descriptor = "c decl at openbsd/OpenBSDProcessTable.c:242"
 cost_tokens = 0
-cum_tokens = 8460
+cum_tokens = 8353
 
 [batches.content]
 kind = "lines"
@@ -7770,11 +7294,11 @@ end = 243
 kind = "ellipsis"
 
 [[batches]]
-position = 212
+position = 214
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c", chunk_index: 0 })'
 descriptor = "c decl names surface in unsupported/UnsupportedProcessTable.c"
 cost_tokens = 57
-cum_tokens = 8517
+cum_tokens = 8410
 
 [batches.content]
 kind = "lines"
@@ -7823,68 +7347,68 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
 start = 36
 end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 213
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c", start_line: 19 })'
-descriptor = "c decl at unsupported/UnsupportedProcessTable.c:19"
-cost_tokens = 0
-cum_tokens = 8517
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 214
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c", start_line: 29 })'
-descriptor = "c decl at unsupported/UnsupportedProcessTable.c:29"
-cost_tokens = 0
-cum_tokens = 8517
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
-start = 30
-end = 30
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 215
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c", start_line: 19 })'
+descriptor = "c decl at unsupported/UnsupportedProcessTable.c:19"
+cost_tokens = 0
+cum_tokens = 8410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 216
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c", start_line: 29 })'
+descriptor = "c decl at unsupported/UnsupportedProcessTable.c:29"
+cost_tokens = 0
+cum_tokens = 8410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 217
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/unsupported/UnsupportedProcessTable.c", start_line: 35 })'
 descriptor = "c decl at unsupported/UnsupportedProcessTable.c:35"
 cost_tokens = 0
-cum_tokens = 8517
+cum_tokens = 8410
 
 [batches.content]
 kind = "lines"
@@ -7906,11 +7430,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 216
+position = 218
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/Affinity.h" })'
 descriptor = "c includes in Affinity.h"
 cost_tokens = 10
-cum_tokens = 8527
+cum_tokens = 8420
 
 [batches.content]
 kind = "lines"
@@ -7924,11 +7448,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 217
+position = 219
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/BatteryMeter.h" })'
 descriptor = "c includes in BatteryMeter.h"
 cost_tokens = 10
-cum_tokens = 8537
+cum_tokens = 8430
 
 [batches.content]
 kind = "lines"
@@ -7942,11 +7466,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 218
+position = 220
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CPUMeter.h" })'
 descriptor = "c includes in CPUMeter.h"
 cost_tokens = 10
-cum_tokens = 8547
+cum_tokens = 8440
 
 [batches.content]
 kind = "lines"
@@ -7960,11 +7484,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 219
+position = 221
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/DateTimeMeter.h" })'
 descriptor = "c includes in DateTimeMeter.h"
 cost_tokens = 10
-cum_tokens = 8557
+cum_tokens = 8450
 
 [batches.content]
 kind = "lines"
@@ -7978,11 +7502,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 220
+position = 222
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/FileDescriptorMeter.h" })'
 descriptor = "c includes in FileDescriptorMeter.h"
 cost_tokens = 10
-cum_tokens = 8567
+cum_tokens = 8460
 
 [batches.content]
 kind = "lines"
@@ -7996,11 +7520,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 221
+position = 223
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/HostnameMeter.h" })'
 descriptor = "c includes in HostnameMeter.h"
 cost_tokens = 10
-cum_tokens = 8577
+cum_tokens = 8470
 
 [batches.content]
 kind = "lines"
@@ -8014,11 +7538,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 222
+position = 224
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/LoadAverageMeter.h" })'
 descriptor = "c includes in LoadAverageMeter.h"
 cost_tokens = 10
-cum_tokens = 8587
+cum_tokens = 8480
 
 [batches.content]
 kind = "lines"
@@ -8032,11 +7556,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 223
+position = 225
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MemoryMeter.h" })'
 descriptor = "c includes in MemoryMeter.h"
 cost_tokens = 10
-cum_tokens = 8597
+cum_tokens = 8490
 
 [batches.content]
 kind = "lines"
@@ -8050,11 +7574,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 224
+position = 226
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/MemorySwapMeter.h" })'
 descriptor = "c includes in MemorySwapMeter.h"
 cost_tokens = 10
-cum_tokens = 8607
+cum_tokens = 8500
 
 [batches.content]
 kind = "lines"
@@ -8068,11 +7592,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 225
+position = 227
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.h" })'
 descriptor = "c includes in SignalsPanel.h"
 cost_tokens = 10
-cum_tokens = 8617
+cum_tokens = 8510
 
 [batches.content]
 kind = "lines"
@@ -8086,11 +7610,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 226
+position = 228
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SwapMeter.h" })'
 descriptor = "c includes in SwapMeter.h"
 cost_tokens = 10
-cum_tokens = 8627
+cum_tokens = 8520
 
 [batches.content]
 kind = "lines"
@@ -8104,11 +7628,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 227
+position = 229
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SysArchMeter.h" })'
 descriptor = "c includes in SysArchMeter.h"
 cost_tokens = 10
-cum_tokens = 8637
+cum_tokens = 8530
 
 [batches.content]
 kind = "lines"
@@ -8122,11 +7646,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 228
+position = 230
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/TasksMeter.h" })'
 descriptor = "c includes in TasksMeter.h"
 cost_tokens = 10
-cum_tokens = 8647
+cum_tokens = 8540
 
 [batches.content]
 kind = "lines"
@@ -8140,11 +7664,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 229
+position = 231
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/UptimeMeter.h" })'
 descriptor = "c includes in UptimeMeter.h"
 cost_tokens = 10
-cum_tokens = 8657
+cum_tokens = 8550
 
 [batches.content]
 kind = "lines"
@@ -8158,11 +7682,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 230
+position = 232
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/UsersTable.h" })'
 descriptor = "c includes in UsersTable.h"
 cost_tokens = 10
-cum_tokens = 8667
+cum_tokens = 8560
 
 [batches.content]
 kind = "lines"
@@ -8176,11 +7700,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 231
+position = 233
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.c", chunk_index: 0 })'
 descriptor = "c decl names surface in SignalsPanel.c"
 cost_tokens = 17
-cum_tokens = 8684
+cum_tokens = 8577
 
 [batches.content]
 kind = "lines"
@@ -8197,68 +7721,142 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.c"
 start = 24
 end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 232
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.c", start_line: 23 })'
-descriptor = "c decl at SignalsPanel.c:23"
-cost_tokens = 0
-cum_tokens = 8684
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.c"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.c"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 233
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.c", chunk_index: 1 })'
-descriptor = "c decl names surface #1 in freebsd/Platform.c"
-cost_tokens = 23
-cum_tokens = 8707
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.c"
-start = 399
-end = 399
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.c"
-start = 400
-end = 400
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 234
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.c", start_line: 399 })'
-descriptor = "c decl at freebsd/Platform.c:399"
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.c", start_line: 23 })'
+descriptor = "c decl at SignalsPanel.c:23"
 cost_tokens = 0
-cum_tokens = 8707
+cum_tokens = 8577
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/SignalsPanel.c"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 235
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h", chunk_index: 0 })'
+descriptor = "c decl names surface in CommandScreen.h"
+cost_tokens = 67
+cum_tokens = 8644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 236
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h", start_line: 16 })'
+descriptor = "c decl at CommandScreen.h:16"
+cost_tokens = 15
+cum_tokens = 8659
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
+start = 16
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.c", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in freebsd/Platform.c"
+cost_tokens = 23
+cum_tokens = 8682
 
 [batches.content]
 kind = "lines"
@@ -8280,63 +7878,137 @@ end = 400
 kind = "ellipsis"
 
 [[batches]]
-position = 235
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c", chunk_index: 1 })'
-descriptor = "c decl names surface #1 in solaris/Platform.c"
-cost_tokens = 23
-cum_tokens = 8730
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c"
-start = 345
-end = 345
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c"
-start = 346
-end = 346
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 236
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c", start_line: 345 })'
-descriptor = "c decl at solaris/Platform.c:345"
+position = 238
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.c", start_line: 399 })'
+descriptor = "c decl at freebsd/Platform.c:399"
 cost_tokens = 0
-cum_tokens = 8730
+cum_tokens = 8682
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c"
-start = 345
-end = 345
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.c"
+start = 399
+end = 399
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.c"
-start = 346
-end = 346
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.c"
+start = 400
+end = 400
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 237
+position = 239
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h", chunk_index: 0 })'
+descriptor = "c decl names surface in EnvScreen.h"
+cost_tokens = 68
+cum_tokens = 8750
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 240
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h", start_line: 17 })'
+descriptor = "c decl at EnvScreen.h:17"
+cost_tokens = 15
+cum_tokens = 8765
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
+start = 17
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.h", chunk_index: 0 })'
 descriptor = "c decl names surface in solaris/Platform.h"
-cost_tokens = 369
-cum_tokens = 9099
+cost_tokens = 367
+cum_tokens = 9132
 
 [batches.content]
 kind = "lines"
@@ -8535,14 +8207,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.h"
 start = 21
 end = 21
 
@@ -8726,11 +8390,11 @@ end = 91
 kind = "ellipsis"
 
 [[batches]]
-position = 238
+position = 242
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/solaris/Platform.h", start_line: 47 })'
 descriptor = "c decl at solaris/Platform.h:47"
 cost_tokens = 42
-cum_tokens = 9141
+cum_tokens = 9174
 
 [batches.content]
 kind = "lines"
@@ -8744,227 +8408,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 239
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h", chunk_index: 0 })'
-descriptor = "c decl names surface in CommandScreen.h"
-cost_tokens = 69
-cum_tokens = 9210
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 240
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h", start_line: 16 })'
-descriptor = "c decl at CommandScreen.h:16"
-cost_tokens = 15
-cum_tokens = 9225
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/CommandScreen.h"
-start = 16
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 241
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h", chunk_index: 0 })'
-descriptor = "c decl names surface in EnvScreen.h"
-cost_tokens = 70
-cum_tokens = 9295
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 242
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h", start_line: 17 })'
-descriptor = "c decl at EnvScreen.h:17"
-cost_tokens = 15
-cum_tokens = 9310
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/EnvScreen.h"
-start = 17
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 243
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htop/README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 20
-cum_tokens = 9330
+cum_tokens = 9194
 
 [batches.content]
 kind = "lines"
@@ -8982,7 +8430,7 @@ position = 244
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/FreeBSDMachine.h" })'
 descriptor = "c includes in freebsd/FreeBSDMachine.h"
 cost_tokens = 78
-cum_tokens = 9408
+cum_tokens = 9272
 
 [batches.content]
 kind = "lines"
@@ -9008,7 +8456,7 @@ position = 245
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/dragonflybsd/DragonFlyBSDMachine.h", start_line: 35 })'
 descriptor = "c decl at dragonflybsd/DragonFlyBSDMachine.h:35"
 cost_tokens = 175
-cum_tokens = 9583
+cum_tokens = 9447
 
 [batches.content]
 kind = "lines"
@@ -9071,10 +8519,396 @@ kind = "full"
 
 [[batches]]
 position = 246
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h", chunk_index: 0 })'
+descriptor = "c decl names surface in freebsd/Platform.h"
+cost_tokens = 381
+cum_tokens = 9828
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htop/freebsd/Platform.h"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 247
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htop/pcp" })'
 descriptor = "listing of 'pcp'"
 cost_tokens = 118
-cum_tokens = 9701
+cum_tokens = 9946
 
 [batches.content]
 kind = "fs"
@@ -9084,11 +8918,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp"
 entries = ["InDomTable.c", "InDomTable.h", "Instance.c", "Instance.h", "Metric.c", "Metric.h", "PCPDynamicColumn.c", "PCPDynamicColumn.h", "PCPDynamicMeter.c", "PCPDynamicMeter.h", "PCPDynamicScreen.c", "PCPDynamicScreen.h", "PCPMachine.c", "PCPMachine.h", "PCPProcess.c", "PCPProcess.h", "PCPProcessTable.c", "PCPProcessTable.h", "Platform.c", "Platform.h", "ProcessField.h", "columns", "meters", "screens"]
 
 [[batches]]
-position = 247
+position = 248
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPProcessTable.h", chunk_index: 0 })'
 descriptor = "c decl names surface in pcp/PCPProcessTable.h"
-cost_tokens = 27
-cum_tokens = 9728
+cost_tokens = 25
+cum_tokens = 9971
 
 [batches.content]
 kind = "lines"
@@ -9111,14 +8945,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPProcessTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPProcessTable.h"
 start = 21
 end = 21
 
@@ -9126,11 +8952,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 248
+position = 249
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPProcessTable.h", start_line: 20 })'
 descriptor = "c decl at pcp/PCPProcessTable.h:20"
 cost_tokens = 16
-cum_tokens = 9744
+cum_tokens = 9987
 
 [batches.content]
 kind = "lines"
@@ -9142,275 +8968,3 @@ end = 22
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 249
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/ProcessField.h", chunk_index: 0 })'
-descriptor = "c decl names surface in pcp/ProcessField.h"
-cost_tokens = 27
-cum_tokens = 9771
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/ProcessField.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/ProcessField.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/ProcessField.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/ProcessField.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 250
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h", chunk_index: 0 })'
-descriptor = "c decl names surface in pcp/PCPMachine.h"
-cost_tokens = 62
-cum_tokens = 9833
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 251
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h", start_line: 74 })'
-descriptor = "c decl at pcp/PCPMachine.h:74"
-cost_tokens = 36
-cum_tokens = 9869
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/PCPMachine.h"
-start = 74
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 252
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h", chunk_index: 0 })'
-descriptor = "c decl names surface in pcp/InDomTable.h"
-cost_tokens = 122
-cum_tokens = 9991
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htop/pcp/InDomTable.h"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"

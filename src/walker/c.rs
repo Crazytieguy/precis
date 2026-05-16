@@ -53,7 +53,7 @@ fn c_names_surface_chunk_index(decl_index: usize) -> usize {
 }
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
+    FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above_bounded, dedup_sorted,
     extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_any_extension,
     node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
     trim_end_before_next_decl,
@@ -92,6 +92,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if decls.is_empty() {
             continue;
         }
+        // Last 0-based row claimed by the file's HeaderBanner (the
+        // leading run of comment children of root). Used as a stop
+        // boundary so the first decl's `DeclDoc` doesn't walk into
+        // banner territory when there's no blank line between them.
+        let banner_end_row = header_banner_end_row(&tree);
         // C catalog files (`sds.h`, headers exposing the whole public
         // surface) often anchor NS rows on the *unified* declaration
         // listing — splitting at the default 12 fragments rows like
@@ -114,9 +119,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             .collect();
         let all_starts: std::collections::HashSet<usize> =
             decls.iter().map(|(_, i)| i.start_line).collect();
+        let src_lines: Vec<&str> = source.lines().collect();
         let names_lines_by_chunk: Vec<FileLines> = decls
             .chunks(chunk_size)
-            .map(|c| collect_decl_names_from_with_global_starts(c, &all_starts))
+            .map(|c| collect_decl_names_from_with_global_starts(c, &all_starts, &src_lines))
             .collect();
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
@@ -130,7 +136,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
             });
         }
-        let src_lines: Vec<&str> = source.lines().collect();
         for (decl_index, (node, info)) in decls.iter().enumerate() {
             let names_chunk_index = c_names_surface_chunk_index(decl_index);
             let names_predecessor = names_predecessors[names_chunk_index].clone();
@@ -140,7 +145,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 start_line: info.start_line,
             };
             let decl_lines = collect_decl(*node, info, &source, &all_starts);
-            let doc_lines = collect_doc_comments_above(*node, &source);
+            let doc_lines = collect_doc_comments_above_bounded(*node, &source, banner_end_row);
             let init_tables = if info.kind == DeclKind::FunctionDef {
                 find_init_tables_in_body(*node)
             } else {
@@ -667,6 +672,24 @@ fn collect_header_banner(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(lines)
 }
 
+/// 0-based row of the last comment in the file's HeaderBanner — the
+/// leading run of comment children of root. Mirrors
+/// [`collect_header_banner`]'s span shape so callers can keep
+/// `DeclDoc` from crossing the banner boundary. `None` when the file
+/// has no leading comment block.
+fn header_banner_end_row(tree: &Tree) -> Option<usize> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut end = None;
+    for child in root.children(&mut cursor) {
+        if child.kind() != "comment" {
+            break;
+        }
+        end = Some(child.end_position().row);
+    }
+    end
+}
+
 fn collect_includes(tree: &Tree, source: &str) -> FileLines {
     let mut lines = Vec::new();
     walk_top_level(tree.root_node(), source, &mut |node| {
@@ -680,21 +703,52 @@ fn collect_includes(tree: &Tree, source: &str) -> FileLines {
 fn collect_decl_names_from_with_global_starts(
     decls: &[(Node, DeclInfo)],
     all_starts: &std::collections::HashSet<usize>,
+    src_lines: &[&str],
 ) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    // Don't drop an ellipsis on the row of any decl (this chunk or
-    // another). Single-line decls on adjacent lines (`#define` runs)
-    // would otherwise claim the next decl's start row as a truncation
-    // marker and trip the scheduler's non-ancestor overlap guard once
-    // the chunks are scheduled into the same render tree.
+    // Don't drop an ellipsis on a row owned by another non-ancestor
+    // batch — the scheduler's overlap guard would panic when both fire.
+    // Three classes to avoid:
+    //   - another decl's start row (this chunk or another), since
+    //     adjacent single-line decls (`#define` runs) would otherwise
+    //     claim the next decl's anchor as a truncation marker;
+    //   - `#include` lines, owned by the file's `Includes` batch
+    //     (chibicc.h: the first decl is `#define _POSIX_C_SOURCE …` on
+    //     line 1, immediately followed by `#include` directives — the
+    //     naive ellipsis at line 2 conflicted with `Includes`);
+    //   - comment-only lines, which the *next* decl's `DeclDoc` will
+    //     claim (a doc-comment run between two decls falls in the
+    //     no-man's-land that the previous decl's ellipsis would
+    //     otherwise grab).
     for (_, info) in decls {
         full.push(info.start_line);
-        if !all_starts.contains(&(info.start_line + 1)) {
-            ellipses.push(info.start_line + 1);
+        let ellipsis_line = info.start_line + 1;
+        if !all_starts.contains(&ellipsis_line) && ellipsis_line_safe(ellipsis_line, src_lines) {
+            ellipses.push(ellipsis_line);
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
+}
+
+/// True iff the 1-based source line is safe to claim as an ellipsis
+/// marker — i.e. not a line another non-ancestor batch owns.
+fn ellipsis_line_safe(line: usize, src_lines: &[&str]) -> bool {
+    let Some(text) = src_lines.get(line - 1) else {
+        return false;
+    };
+    let trimmed = text.trim_start();
+    // `#include` lines belong to the file's `Includes` batch.
+    if trimmed.starts_with("#include") {
+        return false;
+    }
+    // Full-line comments — either the previous decl's trailing comment
+    // (rare) or the next decl's leading doc comment (common). Either
+    // way, another batch will claim them.
+    if trimmed.starts_with("//") || trimmed.starts_with("/*") || trimmed.starts_with('*') {
+        return false;
+    }
+    true
 }
 
 /// Lines for the decl's signature/header. For function definitions, the
@@ -1121,5 +1175,105 @@ int init(void) {
             has_decl_names,
             "expected a C::DeclNames batch; keys: {keys:?}"
         );
+    }
+
+    /// Run the scheduler on a synthetic single-file C fixture. Returns
+    /// only after `run` completes — in debug builds the call panics on
+    /// any non-ancestor overlap, so a successful return is the assertion.
+    fn assert_c_walker_overlap_free(filename: &str, src: &str) {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join(filename), src).unwrap();
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
+        let report = scheduler.run_with_report();
+        assert!(
+            !report.scheduled.is_empty(),
+            "expected at least one scheduled batch for {filename}; src:\n{src}"
+        );
+    }
+
+    #[test]
+    fn c_walker_overlap_audit_decl_then_includes() {
+        // chibicc.h shape: a `#define` (a `Macro` decl) on line 1
+        // followed immediately by `#include` directives. Without the
+        // ellipsis-safety check, `DeclNames` would claim line 2 as an
+        // ellipsis while `Includes` claims it as a real line.
+        let src = "\
+#define _POSIX_C_SOURCE 200809L
+#include <assert.h>
+#include <stdio.h>
+
+int foo(int x);
+";
+        assert_c_walker_overlap_free("foo.h", src);
+    }
+
+    #[test]
+    fn c_walker_overlap_audit_eol_comment_before_next_decl() {
+        // tinyusb video.h shape: every decl carries an end-of-line
+        // comment. The tree-sitter `comment` for the EOL trailer is a
+        // sibling of the *next* decl, and `collect_doc_comments_above`
+        // used to grab it as a `DeclDoc` — which then claimed a line
+        // already owned by the previous `Decl`.
+        let src = "\
+typedef int alpha; // trailer
+typedef int beta;  // trailer
+typedef int gamma;
+";
+        assert_c_walker_overlap_free("eol.h", src);
+    }
+
+    #[test]
+    fn c_walker_overlap_audit_eol_comment_run_before_decl() {
+        // Multiple consecutive EOL-trailered decls — the prev-sibling
+        // walk must stop at the first EOL trailer (not fall through to
+        // an earlier real doc).
+        let src = "\
+// real doc for first
+typedef int first; // EOL trailer
+typedef int second;
+";
+        assert_c_walker_overlap_free("eol-run.h", src);
+    }
+
+    #[test]
+    fn c_walker_overlap_audit_banner_touching_first_decl() {
+        // File-top comment block followed immediately by the first
+        // decl with no blank line. `HeaderBanner` claims the comments
+        // and so does `DeclDoc` if it walks back into them — the two
+        // are not in an ancestor relationship.
+        let src = "\
+/* license */
+/* brief */
+typedef int x;
+";
+        assert_c_walker_overlap_free("banner-touch.h", src);
+    }
+
+    #[test]
+    fn c_walker_overlap_audit_multichunk_decls_with_comments_between() {
+        // > 24 decls forces `DeclNames` to chunk. A doc comment line
+        // sitting between two chunks must not be claimed both by the
+        // previous chunk's ellipsis and by the next chunk's first
+        // decl's `DeclDoc`.
+        let mut src = String::new();
+        for i in 0..30 {
+            src.push_str(&format!("int fn_{i}(void);\n"));
+            if i == 23 {
+                src.push_str("// boundary doc\n");
+            }
+        }
+        assert_c_walker_overlap_free("multichunk.h", &src);
+    }
+
+    #[test]
+    fn c_walker_overlap_audit_adjacent_macro_runs() {
+        // Long run of single-line `#define`s. `DeclNames` ellipsis
+        // would otherwise land on each subsequent decl's start row.
+        let mut src = String::new();
+        for i in 0..40 {
+            src.push_str(&format!("#define CONST_{i} {i}\n"));
+        }
+        assert_c_walker_overlap_free("macros.h", &src);
     }
 }

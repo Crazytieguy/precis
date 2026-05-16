@@ -90,9 +90,9 @@ Score(3000)=0.430 I=0.653 C=0.282 ns_rows≤3K=16/40 (reached=2 partial=1 missin
 | walker |  | 3926 | 120 | c decl at src/builtin.h:10 |  |  | 0.387 |
 | ns | 3999 |  | 322 | jq attrs + util input state + colors (jq.h) | 2.11 |  | 0.372 |
 | walker |  | 4068 | 142 | c decl at src/parser.h:54 |  |  | 0.372 |
-| walker |  | 4140 | 72 | c decl names surface in src/linker.c |  |  | 0.372 |
-| walker |  | 4140 | 0 | c decl at src/linker.c:409 |  |  | 0.372 |
-| walker |  | 4140 | 0 | c decl at src/linker.c:435 |  |  | 0.372 |
+| walker |  | 4138 | 70 | c decl names surface in src/linker.c |  |  | 0.372 |
+| walker |  | 4138 | 0 | c decl at src/linker.c:435 |  |  | 0.372 |
+| walker |  | 4140 | 2 | c decl at src/linker.c:409 |  |  | 0.372 |
 | walker |  | 4164 | 24 | c decl at src/linker.c:28 |  |  | 0.372 |
 | walker |  | 4192 | 28 | c decl at src/linker.c:23 |  |  | 0.372 |
 | ns | 4452 |  | 453 | Lexer keywords + operators (lexer.l) | 3.1 |  | 0.352 |

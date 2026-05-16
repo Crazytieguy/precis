@@ -4693,24 +4693,10 @@ kind = "full"
 
 [[batches]]
 position = 137
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/platform" })'
-descriptor = "listing of 'src/platform'"
-cost_tokens = 13
-cum_tokens = 8469
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/platform"
-entries = ["linux", "macos", "wasm", "windows"]
-
-[[batches]]
-position = 138
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/transform.h"
-cost_tokens = 121
-cum_tokens = 8590
+cost_tokens = 119
+cum_tokens = 8575
 
 [batches.content]
 kind = "lines"
@@ -4765,14 +4751,6 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
 start = 15
 end = 15
 
@@ -4796,11 +4774,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 138
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h", start_line: 16 })'
 descriptor = "c decl at src/transform.h:16"
 cost_tokens = 13
-cum_tokens = 8603
+cum_tokens = 8588
 
 [batches.content]
 kind = "lines"
@@ -4822,11 +4800,25 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
+position = 139
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/platform" })'
+descriptor = "listing of 'src/platform'"
+cost_tokens = 13
+cum_tokens = 8601
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/platform"
+entries = ["linux", "macos", "wasm", "windows"]
+
+[[batches]]
 position = 140
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_state.h" })'
 descriptor = "c includes in src/ime_state.h"
 cost_tokens = 20
-cum_tokens = 8623
+cum_tokens = 8621
 
 [batches.content]
 kind = "lines"
@@ -4844,7 +4836,7 @@ position = 141
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h" })'
 descriptor = "c includes in src/spritemgr.h"
 cost_tokens = 20
-cum_tokens = 8643
+cum_tokens = 8641
 
 [batches.content]
 kind = "lines"
@@ -4862,7 +4854,7 @@ position = 142
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/srbuffer.h" })'
 descriptor = "c includes in src/srbuffer.h"
 cost_tokens = 20
-cum_tokens = 8663
+cum_tokens = 8661
 
 [batches.content]
 kind = "lines"
@@ -4880,7 +4872,7 @@ position = 143
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/loginfo.h", start_line: 6 })'
 descriptor = "c decl at src/loginfo.h:6"
 cost_tokens = 61
-cum_tokens = 8724
+cum_tokens = 8722
 
 [batches.content]
 kind = "lines"
@@ -4898,7 +4890,7 @@ position = 144
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 76 })'
 descriptor = "c decl body at src/sprite_submit.h:76"
 cost_tokens = 20
-cum_tokens = 8744
+cum_tokens = 8742
 
 [batches.content]
 kind = "lines"
@@ -4916,7 +4908,7 @@ position = 145
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/tmpbuffer.h" })'
 descriptor = "c includes in src/tmpbuffer.h"
 cost_tokens = 22
-cum_tokens = 8766
+cum_tokens = 8764
 
 [batches.content]
 kind = "lines"
@@ -4934,7 +4926,7 @@ position = 146
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/batch.h", start_line: 6 })'
 descriptor = "c decl at src/batch.h:6"
 cost_tokens = 67
-cum_tokens = 8833
+cum_tokens = 8831
 
 [batches.content]
 kind = "lines"
@@ -4952,7 +4944,7 @@ position = 147
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/material_blit.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/material_blit.c"
 cost_tokens = 19
-cum_tokens = 8852
+cum_tokens = 8850
 
 [batches.content]
 kind = "lines"
@@ -4994,7 +4986,7 @@ position = 148
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 47 })'
 descriptor = "c decl body at src/ime_char_filter.h:47"
 cost_tokens = 23
-cum_tokens = 8875
+cum_tokens = 8873
 
 [batches.content]
 kind = "lines"
@@ -5012,7 +5004,7 @@ position = 149
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/font_define.h"
 cost_tokens = 163
-cum_tokens = 9038
+cum_tokens = 9036
 
 [batches.content]
 kind = "lines"
@@ -5134,7 +5126,7 @@ position = 150
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 31 })'
 descriptor = "c decl at src/font_define.h:31"
 cost_tokens = 10
-cum_tokens = 9048
+cum_tokens = 9046
 
 [batches.content]
 kind = "lines"
@@ -5160,7 +5152,7 @@ position = 151
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 26 })'
 descriptor = "c decl at src/font_define.h:26"
 cost_tokens = 15
-cum_tokens = 9063
+cum_tokens = 9061
 
 [batches.content]
 kind = "lines"
@@ -5186,7 +5178,7 @@ position = 152
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 31 })'
 descriptor = "c decl body at src/font_define.h:31"
 cost_tokens = 16
-cum_tokens = 9079
+cum_tokens = 9077
 
 [batches.content]
 kind = "lines"
@@ -5204,7 +5196,7 @@ position = 153
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 26 })'
 descriptor = "c decl body at src/font_define.h:26"
 cost_tokens = 17
-cum_tokens = 9096
+cum_tokens = 9094
 
 [batches.content]
 kind = "lines"
@@ -5222,7 +5214,7 @@ position = 154
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h", start_line: 41 })'
 descriptor = "c decl body at src/ime_char_filter.h:41"
 cost_tokens = 24
-cum_tokens = 9120
+cum_tokens = 9118
 
 [batches.content]
 kind = "lines"
@@ -5240,7 +5232,7 @@ position = 155
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/font_define.h", start_line: 11 })'
 descriptor = "c decl at src/font_define.h:11"
 cost_tokens = 79
-cum_tokens = 9199
+cum_tokens = 9197
 
 [batches.content]
 kind = "lines"
@@ -5258,7 +5250,7 @@ position = 156
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 15 })'
 descriptor = "c decl body at src/sprite_submit.h:15"
 cost_tokens = 26
-cum_tokens = 9225
+cum_tokens = 9223
 
 [batches.content]
 kind = "lines"
@@ -5276,7 +5268,7 @@ position = 157
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/sprite_submit.h", start_line: 21 })'
 descriptor = "c decl body at src/sprite_submit.h:21"
 cost_tokens = 26
-cum_tokens = 9251
+cum_tokens = 9249
 
 [batches.content]
 kind = "lines"
@@ -5294,7 +5286,7 @@ position = 158
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/spritemgr.h", start_line: 9 })'
 descriptor = "c decl at src/spritemgr.h:9"
 cost_tokens = 81
-cum_tokens = 9332
+cum_tokens = 9330
 
 [batches.content]
 kind = "lines"
@@ -5309,28 +5301,10 @@ kind = "full"
 
 [[batches]]
 position = 159
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h", start_line: 6 })'
-descriptor = "c decl at src/transform.h:6"
-cost_tokens = 81
-cum_tokens = 9413
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
-start = 6
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h" })'
 descriptor = "c includes in src/ime_char_filter.h"
 cost_tokens = 30
-cum_tokens = 9443
+cum_tokens = 9360
 
 [batches.content]
 kind = "lines"
@@ -5339,6 +5313,24 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/ime_char_filter.h"
 start = 4
 end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h", start_line: 6 })'
+descriptor = "c decl at src/transform.h:6"
+cost_tokens = 83
+cum_tokens = 9443
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/soluna/src/transform.h"
+start = 6
+end = 12
 
 [batches.content.spans.render]
 kind = "full"

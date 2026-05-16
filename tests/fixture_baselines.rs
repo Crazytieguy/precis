@@ -152,10 +152,8 @@ per_fixture_tests!(audiobookshelf);
 per_fixture_tests!(hyperfine);
 per_fixture_tests!(vite);
 per_fixture_tests!(monaco_editor, "monaco-editor");
-// tinyusb + chibicc: NSes authored, fixtures cloned, but the C walker
-// emits non-ancestor overlaps on these specific repos (chibicc.h
-// Includes vs DeclNames chunk 0; tinyusb video.h DeclDoc vs Decl on
-// macro-form typedefs). Re-enable once the C walker bugs are fixed.
+per_fixture_tests!(tinyusb);
+per_fixture_tests!(chibicc);
 
 // ---- validation fixtures (held out — see module doc) ------------------
 

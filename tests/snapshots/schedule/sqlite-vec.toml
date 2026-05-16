@@ -1,6 +1,6 @@
 fixture = "sqlite-vec"
 budget = 10000
-cumulative_tokens = 9439
+cumulative_tokens = 9437
 batch_count = 139
 
 [[batches]]
@@ -917,8 +917,8 @@ entries = ["arithmetic.md", "binary-quant.md", "classifiers.md", "hybrid-search.
 position = 40
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", chunk_index: 0 })'
 descriptor = "c decl names surface in sqlite-vec.c"
-cost_tokens = 379
-cum_tokens = 2722
+cost_tokens = 377
+cum_tokens = 2720
 
 [batches.content]
 kind = "lines"
@@ -1061,14 +1061,6 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c"
-start = 116
-end = 116
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c"
 start = 584
 end = 584
 
@@ -1168,7 +1160,7 @@ position = 41
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 591 })'
 descriptor = "c decl at sqlite-vec.c:591"
 cost_tokens = 0
-cum_tokens = 2722
+cum_tokens = 2720
 
 [batches.content]
 kind = "lines"
@@ -1194,7 +1186,7 @@ position = 42
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 614 })'
 descriptor = "c decl at sqlite-vec.c:614"
 cost_tokens = 0
-cum_tokens = 2722
+cum_tokens = 2720
 
 [batches.content]
 kind = "lines"
@@ -1220,7 +1212,7 @@ position = 43
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 629 })'
 descriptor = "c decl at sqlite-vec.c:629"
 cost_tokens = 0
-cum_tokens = 2722
+cum_tokens = 2720
 
 [batches.content]
 kind = "lines"
@@ -1246,7 +1238,7 @@ position = 44
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 646 })'
 descriptor = "c decl at sqlite-vec.c:646"
 cost_tokens = 0
-cum_tokens = 2722
+cum_tokens = 2720
 
 [batches.content]
 kind = "lines"
@@ -1272,7 +1264,7 @@ position = 45
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 656 })'
 descriptor = "c decl at sqlite-vec.c:656"
 cost_tokens = 0
-cum_tokens = 2722
+cum_tokens = 2720
 
 [batches.content]
 kind = "lines"
@@ -1298,7 +1290,7 @@ position = 46
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 667 })'
 descriptor = "c decl at sqlite-vec.c:667"
 cost_tokens = 0
-cum_tokens = 2722
+cum_tokens = 2720
 
 [batches.content]
 kind = "lines"
@@ -1324,7 +1316,7 @@ position = 47
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 598 })'
 descriptor = "c decl at sqlite-vec.c:598"
 cost_tokens = 40
-cum_tokens = 2762
+cum_tokens = 2760
 
 [batches.content]
 kind = "lines"
@@ -1341,7 +1333,7 @@ kind = "full"
 position = 48
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 115 })'
 descriptor = "c decl at sqlite-vec.c:115"
-cost_tokens = 78
+cost_tokens = 80
 cum_tokens = 2840
 
 [batches.content]
@@ -1623,8 +1615,8 @@ entries = [".gitignore", ".python-version", "Cargo.lock", "Cargo.toml", "__snaps
 position = 61
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/sqlite-vec-internal.h", chunk_index: 0 })'
 descriptor = "c decl names surface in tests/sqlite-vec-internal.h"
-cost_tokens = 10
-cum_tokens = 3608
+cost_tokens = 8
+cum_tokens = 3606
 
 [batches.content]
 kind = "lines"
@@ -1637,20 +1629,12 @@ end = 3
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/sqlite-vec-internal.h"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
 position = 62
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/fuzz" })'
 descriptor = "listing of 'tests/fuzz'"
 cost_tokens = 48
-cum_tokens = 3656
+cum_tokens = 3654
 
 [batches.content]
 kind = "fs"
@@ -1664,7 +1648,7 @@ position = 63
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 7 })'
 descriptor = "ARCHITECTURE.md section #7"
 cost_tokens = 40
-cum_tokens = 3696
+cum_tokens = 3694
 
 [batches.content]
 kind = "lines"
@@ -1682,7 +1666,7 @@ position = 64
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 8 })'
 descriptor = "ARCHITECTURE.md section #8"
 cost_tokens = 41
-cum_tokens = 3737
+cum_tokens = 3735
 
 [batches.content]
 kind = "lines"
@@ -1700,7 +1684,7 @@ position = 65
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 656 })'
 descriptor = "c decl body at sqlite-vec.c:656"
 cost_tokens = 89
-cum_tokens = 3826
+cum_tokens = 3824
 
 [batches.content]
 kind = "lines"
@@ -1718,7 +1702,7 @@ position = 66
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro/src/lib.rs" })'
 descriptor = "mod/use plumbing in benchmarks/micro/src/lib.rs"
 cost_tokens = 16
-cum_tokens = 3842
+cum_tokens = 3840
 
 [batches.content]
 kind = "lines"
@@ -1736,7 +1720,7 @@ position = 67
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 2 })'
 descriptor = "ARCHITECTURE.md section #2"
 cost_tokens = 48
-cum_tokens = 3890
+cum_tokens = 3888
 
 [batches.content]
 kind = "lines"
@@ -1762,7 +1746,7 @@ position = 68
 key = 'C(InitTableRows { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 9772, end_line: 9798 })'
 descriptor = "c init table rows at sqlite-vec.c:9772-9798"
 cost_tokens = 498
-cum_tokens = 4388
+cum_tokens = 4386
 
 [batches.content]
 kind = "lines"
@@ -1780,7 +1764,7 @@ position = 69
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 1 })'
 descriptor = "ARCHITECTURE.md section #1"
 cost_tokens = 50
-cum_tokens = 4438
+cum_tokens = 4436
 
 [batches.content]
 kind = "lines"
@@ -1806,7 +1790,7 @@ position = 70
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 667 })'
 descriptor = "c decl body at sqlite-vec.c:667"
 cost_tokens = 113
-cum_tokens = 4551
+cum_tokens = 4549
 
 [batches.content]
 kind = "lines"
@@ -1824,7 +1808,7 @@ position = 71
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/Cargo.toml" })'
 descriptor = "[package] in tests/Cargo.toml"
 cost_tokens = 39
-cum_tokens = 4590
+cum_tokens = 4588
 
 [batches.content]
 kind = "lines"
@@ -1842,7 +1826,7 @@ position = 72
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in sqlite-vec.c"
 cost_tokens = 494
-cum_tokens = 5084
+cum_tokens = 5082
 
 [batches.content]
 kind = "lines"
@@ -2188,7 +2172,7 @@ position = 73
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1317 })'
 descriptor = "c decl at sqlite-vec.c:1317"
 cost_tokens = 0
-cum_tokens = 5084
+cum_tokens = 5082
 
 [batches.content]
 kind = "lines"
@@ -2214,7 +2198,7 @@ position = 74
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1812 })'
 descriptor = "c decl at sqlite-vec.c:1812"
 cost_tokens = 0
-cum_tokens = 5084
+cum_tokens = 5082
 
 [batches.content]
 kind = "lines"
@@ -2240,7 +2224,7 @@ position = 75
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1816 })'
 descriptor = "c decl at sqlite-vec.c:1816"
 cost_tokens = 0
-cum_tokens = 5084
+cum_tokens = 5082
 
 [batches.content]
 kind = "lines"
@@ -2266,7 +2250,7 @@ position = 76
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1824 })'
 descriptor = "c decl at sqlite-vec.c:1824"
 cost_tokens = 0
-cum_tokens = 5084
+cum_tokens = 5082
 
 [batches.content]
 kind = "lines"
@@ -2292,7 +2276,7 @@ position = 77
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1892 })'
 descriptor = "c decl at sqlite-vec.c:1892"
 cost_tokens = 0
-cum_tokens = 5084
+cum_tokens = 5082
 
 [batches.content]
 kind = "lines"
@@ -2318,7 +2302,7 @@ position = 78
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1886 })'
 descriptor = "c decl at sqlite-vec.c:1886"
 cost_tokens = 11
-cum_tokens = 5095
+cum_tokens = 5093
 
 [batches.content]
 kind = "lines"
@@ -2344,7 +2328,7 @@ position = 79
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1050 })'
 descriptor = "c decl at sqlite-vec.c:1050"
 cost_tokens = 25
-cum_tokens = 5120
+cum_tokens = 5118
 
 [batches.content]
 kind = "lines"
@@ -2362,7 +2346,7 @@ position = 80
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1880 })'
 descriptor = "c decl at sqlite-vec.c:1880"
 cost_tokens = 34
-cum_tokens = 5154
+cum_tokens = 5152
 
 [batches.content]
 kind = "lines"
@@ -2380,7 +2364,7 @@ position = 81
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 964 })'
 descriptor = "c decl at sqlite-vec.c:964"
 cost_tokens = 30
-cum_tokens = 5184
+cum_tokens = 5182
 
 [batches.content]
 kind = "lines"
@@ -2406,7 +2390,7 @@ position = 82
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1806 })'
 descriptor = "c decl at sqlite-vec.c:1806"
 cost_tokens = 38
-cum_tokens = 5222
+cum_tokens = 5220
 
 [batches.content]
 kind = "lines"
@@ -2424,7 +2408,7 @@ position = 83
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1900 })'
 descriptor = "c decl at sqlite-vec.c:1900"
 cost_tokens = 35
-cum_tokens = 5257
+cum_tokens = 5255
 
 [batches.content]
 kind = "lines"
@@ -2450,7 +2434,7 @@ position = 84
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1956 })'
 descriptor = "c decl at sqlite-vec.c:1956"
 cost_tokens = 38
-cum_tokens = 5295
+cum_tokens = 5293
 
 [batches.content]
 kind = "lines"
@@ -2476,7 +2460,7 @@ position = 85
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2033 })'
 descriptor = "c decl at sqlite-vec.c:2033"
 cost_tokens = 38
-cum_tokens = 5333
+cum_tokens = 5331
 
 [batches.content]
 kind = "lines"
@@ -2502,7 +2486,7 @@ position = 86
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2111 })'
 descriptor = "c decl at sqlite-vec.c:2111"
 cost_tokens = 42
-cum_tokens = 5375
+cum_tokens = 5373
 
 [batches.content]
 kind = "lines"
@@ -2528,7 +2512,7 @@ position = 87
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 998 })'
 descriptor = "c decl at sqlite-vec.c:998"
 cost_tokens = 54
-cum_tokens = 5429
+cum_tokens = 5427
 
 [batches.content]
 kind = "lines"
@@ -2554,7 +2538,7 @@ position = 88
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1816 })'
 descriptor = "c decl body at sqlite-vec.c:1816"
 cost_tokens = 27
-cum_tokens = 5456
+cum_tokens = 5454
 
 [batches.content]
 kind = "lines"
@@ -2572,7 +2556,7 @@ position = 89
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1798 })'
 descriptor = "c decl at sqlite-vec.c:1798"
 cost_tokens = 69
-cum_tokens = 5525
+cum_tokens = 5523
 
 [batches.content]
 kind = "lines"
@@ -2590,7 +2574,7 @@ position = 90
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1812 })'
 descriptor = "c decl body at sqlite-vec.c:1812"
 cost_tokens = 30
-cum_tokens = 5555
+cum_tokens = 5553
 
 [batches.content]
 kind = "lines"
@@ -2608,7 +2592,7 @@ position = 91
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2091 })'
 descriptor = "c decl at sqlite-vec.c:2091"
 cost_tokens = 81
-cum_tokens = 5636
+cum_tokens = 5634
 
 [batches.content]
 kind = "lines"
@@ -2626,7 +2610,7 @@ position = 92
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1886 })'
 descriptor = "c decl body at sqlite-vec.c:1886"
 cost_tokens = 46
-cum_tokens = 5682
+cum_tokens = 5680
 
 [batches.content]
 kind = "lines"
@@ -2644,7 +2628,7 @@ position = 93
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 964 })'
 descriptor = "c decl doc at sqlite-vec.c:964"
 cost_tokens = 148
-cum_tokens = 5830
+cum_tokens = 5828
 
 [batches.content]
 kind = "lines"
@@ -2662,7 +2646,7 @@ position = 94
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1892 })'
 descriptor = "c decl body at sqlite-vec.c:1892"
 cost_tokens = 70
-cum_tokens = 5900
+cum_tokens = 5898
 
 [batches.content]
 kind = "lines"
@@ -2680,7 +2664,7 @@ position = 95
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1956 })'
 descriptor = "c decl doc at sqlite-vec.c:1956"
 cost_tokens = 193
-cum_tokens = 6093
+cum_tokens = 6091
 
 [batches.content]
 kind = "lines"
@@ -2698,7 +2682,7 @@ position = 96
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2111 })'
 descriptor = "c decl doc at sqlite-vec.c:2111"
 cost_tokens = 210
-cum_tokens = 6303
+cum_tokens = 6301
 
 [batches.content]
 kind = "lines"
@@ -2716,7 +2700,7 @@ position = 97
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2033 })'
 descriptor = "c decl doc at sqlite-vec.c:2033"
 cost_tokens = 216
-cum_tokens = 6519
+cum_tokens = 6517
 
 [batches.content]
 kind = "lines"
@@ -2734,7 +2718,7 @@ position = 98
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1317 })'
 descriptor = "c decl body at sqlite-vec.c:1317"
 cost_tokens = 98
-cum_tokens = 6617
+cum_tokens = 6615
 
 [batches.content]
 kind = "lines"
@@ -2752,7 +2736,7 @@ position = 99
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 11 })'
 descriptor = "ARCHITECTURE.md section #11"
 cost_tokens = 56
-cum_tokens = 6673
+cum_tokens = 6671
 
 [batches.content]
 kind = "lines"
@@ -2786,7 +2770,7 @@ position = 100
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 614 })'
 descriptor = "c decl body at sqlite-vec.c:614"
 cost_tokens = 122
-cum_tokens = 6795
+cum_tokens = 6793
 
 [batches.content]
 kind = "lines"
@@ -2812,7 +2796,7 @@ position = 101
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 12 })'
 descriptor = "ARCHITECTURE.md section #12"
 cost_tokens = 57
-cum_tokens = 6852
+cum_tokens = 6850
 
 [batches.content]
 kind = "lines"
@@ -2846,7 +2830,7 @@ position = 102
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 13
-cum_tokens = 6865
+cum_tokens = 6863
 
 [batches.content]
 kind = "fs"
@@ -2860,7 +2844,7 @@ position = 103
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 15 })'
 descriptor = "ARCHITECTURE.md section #15"
 cost_tokens = 62
-cum_tokens = 6927
+cum_tokens = 6925
 
 [batches.content]
 kind = "lines"
@@ -2894,7 +2878,7 @@ position = 104
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro/src/lib.rs", start_line: 8, body_start_line: 9 })'
 descriptor = "pub item body at benchmarks/micro/src/lib.rs:8 body 9"
 cost_tokens = 37
-cum_tokens = 6964
+cum_tokens = 6962
 
 [batches.content]
 kind = "lines"
@@ -2912,7 +2896,7 @@ position = 105
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 500
-cum_tokens = 7464
+cum_tokens = 7462
 
 [batches.content]
 kind = "lines"
@@ -2962,7 +2946,7 @@ position = 106
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/sqlite-vec-internal.h" })'
 descriptor = "c includes in tests/sqlite-vec-internal.h"
 cost_tokens = 10
-cum_tokens = 7474
+cum_tokens = 7472
 
 [batches.content]
 kind = "lines"
@@ -2980,7 +2964,7 @@ position = 107
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in sqlite-vec.c"
 cost_tokens = 411
-cum_tokens = 7885
+cum_tokens = 7883
 
 [batches.content]
 kind = "lines"
@@ -3310,7 +3294,7 @@ position = 108
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2280 })'
 descriptor = "c decl at sqlite-vec.c:2280"
 cost_tokens = 0
-cum_tokens = 7885
+cum_tokens = 7883
 
 [batches.content]
 kind = "lines"
@@ -3336,7 +3320,7 @@ position = 109
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2731 })'
 descriptor = "c decl at sqlite-vec.c:2731"
 cost_tokens = 0
-cum_tokens = 7885
+cum_tokens = 7883
 
 [batches.content]
 kind = "lines"
@@ -3362,7 +3346,7 @@ position = 110
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2267 })'
 descriptor = "c decl at sqlite-vec.c:2267"
 cost_tokens = 11
-cum_tokens = 7896
+cum_tokens = 7894
 
 [batches.content]
 kind = "lines"
@@ -3388,7 +3372,7 @@ position = 111
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2724 })'
 descriptor = "c decl at sqlite-vec.c:2724"
 cost_tokens = 11
-cum_tokens = 7907
+cum_tokens = 7905
 
 [batches.content]
 kind = "lines"
@@ -3414,7 +3398,7 @@ position = 112
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2430 })'
 descriptor = "c decl at sqlite-vec.c:2430"
 cost_tokens = 16
-cum_tokens = 7923
+cum_tokens = 7921
 
 [batches.content]
 kind = "lines"
@@ -3432,7 +3416,7 @@ position = 113
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2877 })'
 descriptor = "c decl at sqlite-vec.c:2877"
 cost_tokens = 16
-cum_tokens = 7939
+cum_tokens = 7937
 
 [batches.content]
 kind = "lines"
@@ -3450,7 +3434,7 @@ position = 114
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2641 })'
 descriptor = "c decl at sqlite-vec.c:2641"
 cost_tokens = 14
-cum_tokens = 7953
+cum_tokens = 7951
 
 [batches.content]
 kind = "lines"
@@ -3476,7 +3460,7 @@ position = 115
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2294 })'
 descriptor = "c decl at sqlite-vec.c:2294"
 cost_tokens = 15
-cum_tokens = 7968
+cum_tokens = 7966
 
 [batches.content]
 kind = "lines"
@@ -3502,7 +3486,7 @@ position = 116
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2250 })'
 descriptor = "c decl at sqlite-vec.c:2250"
 cost_tokens = 33
-cum_tokens = 8001
+cum_tokens = 7999
 
 [batches.content]
 kind = "lines"
@@ -3520,7 +3504,7 @@ position = 117
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2256 })'
 descriptor = "c decl at sqlite-vec.c:2256"
 cost_tokens = 33
-cum_tokens = 8034
+cum_tokens = 8032
 
 [batches.content]
 kind = "lines"
@@ -3538,7 +3522,7 @@ position = 118
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2261 })'
 descriptor = "c decl at sqlite-vec.c:2261"
 cost_tokens = 37
-cum_tokens = 8071
+cum_tokens = 8069
 
 [batches.content]
 kind = "lines"
@@ -3556,7 +3540,7 @@ position = 119
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2718 })'
 descriptor = "c decl at sqlite-vec.c:2718"
 cost_tokens = 37
-cum_tokens = 8108
+cum_tokens = 8106
 
 [batches.content]
 kind = "lines"
@@ -3574,7 +3558,7 @@ position = 120
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2280 })'
 descriptor = "c decl body at sqlite-vec.c:2280"
 cost_tokens = 16
-cum_tokens = 8124
+cum_tokens = 8122
 
 [batches.content]
 kind = "lines"
@@ -3592,7 +3576,7 @@ position = 121
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2635 })'
 descriptor = "c decl at sqlite-vec.c:2635"
 cost_tokens = 40
-cum_tokens = 8164
+cum_tokens = 8162
 
 [batches.content]
 kind = "lines"
@@ -3610,7 +3594,7 @@ position = 122
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2881 })'
 descriptor = "c decl at sqlite-vec.c:2881"
 cost_tokens = 41
-cum_tokens = 8205
+cum_tokens = 8203
 
 [batches.content]
 kind = "lines"
@@ -3628,7 +3612,7 @@ position = 123
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2171 })'
 descriptor = "c decl at sqlite-vec.c:2171"
 cost_tokens = 38
-cum_tokens = 8243
+cum_tokens = 8241
 
 [batches.content]
 kind = "lines"
@@ -3654,7 +3638,7 @@ position = 124
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2236 })'
 descriptor = "c decl at sqlite-vec.c:2236"
 cost_tokens = 59
-cum_tokens = 8302
+cum_tokens = 8300
 
 [batches.content]
 kind = "lines"
@@ -3672,7 +3656,7 @@ position = 125
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2242 })'
 descriptor = "c decl at sqlite-vec.c:2242"
 cost_tokens = 61
-cum_tokens = 8363
+cum_tokens = 8361
 
 [batches.content]
 kind = "lines"
@@ -3690,7 +3674,7 @@ position = 126
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2740 })'
 descriptor = "c decl at sqlite-vec.c:2740"
 cost_tokens = 57
-cum_tokens = 8420
+cum_tokens = 8418
 
 [batches.content]
 kind = "lines"
@@ -3716,7 +3700,7 @@ position = 127
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2435 })'
 descriptor = "c decl at sqlite-vec.c:2435"
 cost_tokens = 72
-cum_tokens = 8492
+cum_tokens = 8490
 
 [batches.content]
 kind = "lines"
@@ -3734,7 +3718,7 @@ position = 128
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2724 })'
 descriptor = "c decl body at sqlite-vec.c:2724"
 cost_tokens = 49
-cum_tokens = 8541
+cum_tokens = 8539
 
 [batches.content]
 kind = "lines"
@@ -3752,7 +3736,7 @@ position = 129
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2622 })'
 descriptor = "c decl at sqlite-vec.c:2622"
 cost_tokens = 134
-cum_tokens = 8675
+cum_tokens = 8673
 
 [batches.content]
 kind = "lines"
@@ -3770,7 +3754,7 @@ position = 130
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2294 })'
 descriptor = "c decl doc at sqlite-vec.c:2294"
 cost_tokens = 154
-cum_tokens = 8829
+cum_tokens = 8827
 
 [batches.content]
 kind = "lines"
@@ -3788,7 +3772,7 @@ position = 131
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2731 })'
 descriptor = "c decl body at sqlite-vec.c:2731"
 cost_tokens = 70
-cum_tokens = 8899
+cum_tokens = 8897
 
 [batches.content]
 kind = "lines"
@@ -3806,7 +3790,7 @@ position = 132
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2171 })'
 descriptor = "c decl doc at sqlite-vec.c:2171"
 cost_tokens = 191
-cum_tokens = 9090
+cum_tokens = 9088
 
 [batches.content]
 kind = "lines"
@@ -3824,7 +3808,7 @@ position = 133
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2267 })'
 descriptor = "c decl body at sqlite-vec.c:2267"
 cost_tokens = 106
-cum_tokens = 9196
+cum_tokens = 9194
 
 [batches.content]
 kind = "lines"
@@ -3842,7 +3826,7 @@ position = 134
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/conftest.py", chunk_index: 0 })'
 descriptor = "python decl names surface in tests/conftest.py"
 cost_tokens = 10
-cum_tokens = 9206
+cum_tokens = 9204
 
 [batches.content]
 kind = "lines"
@@ -3868,7 +3852,7 @@ position = 135
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/conftest.py", start_line: 5 })'
 descriptor = "python decl at tests/conftest.py:5"
 cost_tokens = 5
-cum_tokens = 9211
+cum_tokens = 9209
 
 [batches.content]
 kind = "lines"
@@ -3886,7 +3870,7 @@ position = 136
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 629 })'
 descriptor = "c decl body at sqlite-vec.c:629"
 cost_tokens = 177
-cum_tokens = 9388
+cum_tokens = 9386
 
 [batches.content]
 kind = "lines"
@@ -3904,7 +3888,7 @@ position = 137
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro/Cargo.toml" })'
 descriptor = "[package] in benchmarks/micro/Cargo.toml"
 cost_tokens = 39
-cum_tokens = 9427
+cum_tokens = 9425
 
 [batches.content]
 kind = "lines"
@@ -3922,7 +3906,7 @@ position = 138
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in tests/utils.py"
 cost_tokens = 12
-cum_tokens = 9439
+cum_tokens = 9437
 
 [batches.content]
 kind = "lines"
@@ -3948,7 +3932,7 @@ position = 139
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/utils.py", start_line: 5 })'
 descriptor = "python decl at tests/utils.py:5"
 cost_tokens = 0
-cum_tokens = 9439
+cum_tokens = 9437
 
 [batches.content]
 kind = "lines"

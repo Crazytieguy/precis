@@ -2175,8 +2175,8 @@ kind = "full"
 position = 69
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/linker.c"
-cost_tokens = 72
-cum_tokens = 4140
+cost_tokens = 70
+cum_tokens = 4138
 
 [batches.content]
 kind = "lines"
@@ -2231,11 +2231,29 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
-start = 410
-end = 410
+start = 436
+end = 436
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 70
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 435 })'
+descriptor = "c decl at src/linker.c:435"
+cost_tokens = 0
+cum_tokens = 4138
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 435
+end = 435
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
@@ -2246,10 +2264,10 @@ end = 436
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 71
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 409 })'
 descriptor = "c decl at src/linker.c:409"
-cost_tokens = 0
+cost_tokens = 2
 cum_tokens = 4140
 
 [batches.content]
@@ -2267,32 +2285,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
 start = 410
 end = 410
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 71
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 435 })'
-descriptor = "c decl at src/linker.c:435"
-cost_tokens = 0
-cum_tokens = 4140
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
-start = 435
-end = 435
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
-start = 436
-end = 436
 
 [batches.content.spans.render]
 kind = "ellipsis"

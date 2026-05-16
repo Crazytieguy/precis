@@ -179,30 +179,30 @@ Score(3000)=0.595 I=0.809 C=0.437 ns_rows≤3K=21/42 (reached=8 partial=4 missin
 | walker |  | 8184 | 135 | c includes in src/procedures.c |  |  | 0.693 |
 | ns | 8244 |  | 232 | getBlockAt body — block_changes overlay + terrain fallback | 5.1 |  | 0.682 |
 | ns | 8443 |  | 199 | getBlockChange body — linear scan with chest skip | 5.2 |  | 0.673 |
-| walker |  | 8698 | 514 | c decl names surface in src/procedures.c |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:21 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:37 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:45 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:54 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:75 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:119 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:130 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:146 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:177 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:199 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:214 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:239 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:286 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:321 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:396 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:434 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:478 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:495 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:512 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:652 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:721 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:746 |  |  | 0.673 |
-| walker |  | 8698 | 0 | c decl at src/procedures.c:775 |  |  | 0.673 |
+| walker |  | 8694 | 510 | c decl names surface in src/procedures.c |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:37 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:45 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:54 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:75 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:119 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:130 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:177 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:199 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:214 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:239 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:286 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:321 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:396 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:434 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:478 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:495 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:512 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:652 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:721 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:746 |  |  | 0.673 |
+| walker |  | 8694 | 0 | c decl at src/procedures.c:775 |  |  | 0.673 |
+| walker |  | 8696 | 2 | c decl at src/procedures.c:21 |  |  | 0.673 |
+| walker |  | 8698 | 2 | c decl at src/procedures.c:146 |  |  | 0.673 |
 | walker |  | 8713 | 15 | c decl doc at src/procedures.c:495 |  |  | 0.673 |
 | walker |  | 8729 | 16 | c decl doc at src/procedures.c:54 |  |  | 0.673 |
 | walker |  | 8745 | 16 | c decl doc at src/procedures.c:75 |  |  | 0.673 |

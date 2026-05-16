@@ -220,15 +220,15 @@ Score(3000)=0.566 I=0.773 C=0.414 ns_rows≤3K=15/39 (reached=7 partial=3 missin
 | walker |  | 8120 | 100 | c decl body at krep.c:1125 |  |  | 0.660 |
 | ns | 8345 |  | 401 | krep.c — SIMD intrinsic include gating | 5.7 |  | 0.641 |
 | walker |  | 8379 | 259 | README.md section #41 |  |  | 0.641 |
-| walker |  | 8554 | 175 | c decl names surface in aho_corasick.c |  |  | 0.641 |
-| walker |  | 8554 | 0 | c decl at aho_corasick.c:293 |  |  | 0.641 |
-| walker |  | 8554 | 0 | c decl at aho_corasick.c:296 |  |  | 0.641 |
-| walker |  | 8559 | 5 | c decl at aho_corasick.c:111 |  |  | 0.641 |
-| walker |  | 8564 | 5 | c decl at aho_corasick.c:274 |  |  | 0.641 |
-| walker |  | 8569 | 5 | c decl at aho_corasick.c:287 |  |  | 0.641 |
-| walker |  | 8583 | 14 | c decl doc at aho_corasick.c:111 |  |  | 0.641 |
-| walker |  | 8597 | 14 | c decl doc at aho_corasick.c:274 |  |  | 0.641 |
-| walker |  | 8611 | 14 | c decl doc at aho_corasick.c:296 |  |  | 0.641 |
+| walker |  | 8552 | 173 | c decl names surface in aho_corasick.c |  |  | 0.641 |
+| walker |  | 8552 | 0 | c decl at aho_corasick.c:293 |  |  | 0.641 |
+| walker |  | 8552 | 0 | c decl at aho_corasick.c:296 |  |  | 0.641 |
+| walker |  | 8557 | 5 | c decl at aho_corasick.c:111 |  |  | 0.641 |
+| walker |  | 8562 | 5 | c decl at aho_corasick.c:274 |  |  | 0.641 |
+| walker |  | 8567 | 5 | c decl at aho_corasick.c:287 |  |  | 0.641 |
+| walker |  | 8581 | 14 | c decl doc at aho_corasick.c:111 |  |  | 0.641 |
+| walker |  | 8595 | 14 | c decl doc at aho_corasick.c:274 |  |  | 0.641 |
+| walker |  | 8611 | 16 | c decl doc at aho_corasick.c:296 |  |  | 0.641 |
 | walker |  | 8633 | 22 | c decl doc at aho_corasick.c:287 |  |  | 0.641 |
 | walker |  | 8654 | 21 | c decl doc at aho_corasick.c:293 |  |  | 0.641 |
 | walker |  | 8691 | 37 | c decl at aho_corasick.c:299 |  |  | 0.641 |
