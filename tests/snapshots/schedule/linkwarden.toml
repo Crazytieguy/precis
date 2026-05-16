@@ -1,7 +1,7 @@
 fixture = "linkwarden"
 budget = 10000
-cumulative_tokens = 9460
-batch_count = 302
+cumulative_tokens = 9482
+batch_count = 265
 
 [[batches]]
 position = 1
@@ -193,46 +193,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 11
-key = 'Typescript(Export { file: "packages/prisma/index.ts", start_line: 5 })'
-descriptor = "export at packages/prisma/index.ts:5"
-cost_tokens = 74
-cum_tokens = 432
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/prisma/index.ts"
-start = 5
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Typescript(Imports { file: "packages/prisma/index.ts" })'
-descriptor = "imports in packages/prisma/index.ts"
-cost_tokens = 15
-cum_tokens = 447
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/prisma/index.ts"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 137
-cum_tokens = 584
+cum_tokens = 495
 
 [batches.content]
 kind = "lines"
@@ -430,11 +394,11 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 12
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 9
-cum_tokens = 593
+cum_tokens = 504
 
 [batches.content]
 kind = "lines"
@@ -448,11 +412,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 15
+position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 26 })'
 descriptor = "README.md section #26"
 cost_tokens = 23
-cum_tokens = 616
+cum_tokens = 527
 
 [batches.content]
 kind = "lines"
@@ -474,11 +438,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 16
+position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 10
-cum_tokens = 626
+cum_tokens = 537
 
 [batches.content]
 kind = "lines"
@@ -492,11 +456,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 17
+position = 15
 key = 'Markdown(Section { file: "README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 10
-cum_tokens = 636
+cum_tokens = 547
 
 [batches.content]
 kind = "lines"
@@ -510,11 +474,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 18
+position = 16
 key = 'Markdown(Section { file: "README.md", section_index: 23 })'
 descriptor = "README.md section #23"
 cost_tokens = 11
-cum_tokens = 647
+cum_tokens = 558
 
 [batches.content]
 kind = "lines"
@@ -528,11 +492,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 19
+position = 17
 key = 'Markdown(Section { file: "README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 12
-cum_tokens = 659
+cum_tokens = 570
 
 [batches.content]
 kind = "lines"
@@ -546,11 +510,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 20
+position = 18
 key = 'Markdown(Section { file: "README.md", section_index: 29 })'
 descriptor = "README.md section #29"
 cost_tokens = 26
-cum_tokens = 685
+cum_tokens = 596
 
 [batches.content]
 kind = "lines"
@@ -572,11 +536,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 21
+position = 19
 key = 'Fs(DirListing { dir: "apps/worker" })'
 descriptor = "listing of 'apps/worker'"
 cost_tokens = 26
-cum_tokens = 711
+cum_tokens = 622
 
 [batches.content]
 kind = "fs"
@@ -586,29 +550,11 @@ parent = "apps/worker"
 entries = ["index.ts", "lib", "package.json", "templates", "tsconfig.json", "worker.ts", "workers"]
 
 [[batches]]
-position = 22
-key = 'Typescript(Imports { file: "apps/worker/index.ts" })'
-descriptor = "imports in apps/worker/index.ts"
-cost_tokens = 15
-cum_tokens = 726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/index.ts"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
+position = 20
 key = 'Markdown(Section { file: "README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 13
-cum_tokens = 739
+cum_tokens = 635
 
 [batches.content]
 kind = "lines"
@@ -622,11 +568,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 24
+position = 21
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 98
-cum_tokens = 837
+cum_tokens = 733
 
 [batches.content]
 kind = "lines"
@@ -640,11 +586,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 25
+position = 22
 key = 'Markdown(Section { file: "README.md", section_index: 22 })'
 descriptor = "README.md section #22"
 cost_tokens = 14
-cum_tokens = 851
+cum_tokens = 747
 
 [batches.content]
 kind = "lines"
@@ -658,11 +604,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 26
+position = 23
 key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 15
-cum_tokens = 866
+cum_tokens = 762
 
 [batches.content]
 kind = "lines"
@@ -676,11 +622,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 27
+position = 24
 key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 15
-cum_tokens = 881
+cum_tokens = 777
 
 [batches.content]
 kind = "lines"
@@ -694,11 +640,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 28
+position = 25
 key = 'Markdown(Section { file: "README.md", section_index: 24 })'
 descriptor = "README.md section #24"
 cost_tokens = 15
-cum_tokens = 896
+cum_tokens = 792
 
 [batches.content]
 kind = "lines"
@@ -712,11 +658,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 29
+position = 26
 key = 'Markdown(Section { file: "README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 16
-cum_tokens = 912
+cum_tokens = 808
 
 [batches.content]
 kind = "lines"
@@ -730,11 +676,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 30
+position = 27
 key = 'Markdown(Section { file: "README.md", section_index: 20 })'
 descriptor = "README.md section #20"
 cost_tokens = 16
-cum_tokens = 928
+cum_tokens = 824
 
 [batches.content]
 kind = "lines"
@@ -748,11 +694,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 31
+position = 28
 key = 'Fs(DirListing { dir: "packages/types" })'
 descriptor = "listing of 'packages/types'"
 cost_tokens = 13
-cum_tokens = 941
+cum_tokens = 837
 
 [batches.content]
 kind = "fs"
@@ -762,11 +708,11 @@ parent = "packages/types"
 entries = ["global.ts", "inputSelect.ts", "package.json"]
 
 [[batches]]
-position = 32
+position = 29
 key = 'Markdown(Section { file: "README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 17
-cum_tokens = 958
+cum_tokens = 854
 
 [batches.content]
 kind = "lines"
@@ -780,11 +726,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 33
+position = 30
 key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 18
-cum_tokens = 976
+cum_tokens = 872
 
 [batches.content]
 kind = "lines"
@@ -798,11 +744,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 34
+position = 31
 key = 'Markdown(Section { file: "README.md", section_index: 10 })'
 descriptor = "README.md section #10"
 cost_tokens = 18
-cum_tokens = 994
+cum_tokens = 890
 
 [batches.content]
 kind = "lines"
@@ -816,11 +762,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 35
+position = 32
 key = 'Markdown(Section { file: "README.md", section_index: 15 })'
 descriptor = "README.md section #15"
 cost_tokens = 19
-cum_tokens = 1013
+cum_tokens = 909
 
 [batches.content]
 kind = "lines"
@@ -834,11 +780,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 36
+position = 33
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 282
-cum_tokens = 1295
+cum_tokens = 1191
 
 [batches.content]
 kind = "lines"
@@ -876,11 +822,29 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 37
+position = 34
+key = 'Typescript(Export { file: "packages/prisma/index.ts", start_line: 5 })'
+descriptor = "export at packages/prisma/index.ts:5"
+cost_tokens = 74
+cum_tokens = 1265
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/prisma/index.ts"
+start = 5
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 22
-cum_tokens = 1317
+cum_tokens = 1287
 
 [batches.content]
 kind = "lines"
@@ -894,11 +858,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 38
+position = 36
 key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 22
-cum_tokens = 1339
+cum_tokens = 1309
 
 [batches.content]
 kind = "lines"
@@ -912,11 +876,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 39
+position = 37
 key = 'Fs(DirListing { dir: "packages/filesystem" })'
 descriptor = "listing of 'packages/filesystem'"
 cost_tokens = 54
-cum_tokens = 1393
+cum_tokens = 1363
 
 [batches.content]
 kind = "fs"
@@ -926,11 +890,11 @@ parent = "packages/filesystem"
 entries = ["createFile.ts", "createFolder.ts", "fileExists.ts", "index.ts", "manageFiles.ts", "moveFile.ts", "package.json", "readFile.ts", "removeFile.ts", "removeFolder.ts", "s3Client.ts"]
 
 [[batches]]
-position = 40
+position = 38
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 23
-cum_tokens = 1416
+cum_tokens = 1386
 
 [batches.content]
 kind = "lines"
@@ -944,11 +908,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 41
+position = 39
 key = 'Markdown(Section { file: "README.md", section_index: 13 })'
 descriptor = "README.md section #13"
 cost_tokens = 23
-cum_tokens = 1439
+cum_tokens = 1409
 
 [batches.content]
 kind = "lines"
@@ -957,6 +921,42 @@ kind = "lines"
 path = "README.md"
 start = 55
 end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Typescript(Imports { file: "apps/worker/index.ts" })'
+descriptor = "imports in apps/worker/index.ts"
+cost_tokens = 15
+cum_tokens = 1424
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/worker/index.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Typescript(Imports { file: "packages/prisma/index.ts" })'
+descriptor = "imports in packages/prisma/index.ts"
+cost_tokens = 15
+cum_tokens = 1439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/prisma/index.ts"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
@@ -1083,28 +1083,10 @@ entries = ["collections.tsx", "config.tsx", "dashboardData.tsx", "highlights.tsx
 
 [[batches]]
 position = 50
-key = 'Typescript(ExportNames { file: "apps/worker/lib/getLinkBatch.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/getLinkBatch.ts"
-cost_tokens = 10
-cum_tokens = 1823
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/getLinkBatch.ts"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
 key = 'Fs(DirListing { dir: "apps/mobile" })'
 descriptor = "listing of 'apps/mobile'"
 cost_tokens = 80
-cum_tokens = 1903
+cum_tokens = 1893
 
 [batches.content]
 kind = "fs"
@@ -1114,11 +1096,11 @@ parent = "apps/mobile"
 entries = [".easignore", ".env.sample", ".gitignore", "app", "app.json", "assets", "babel.config.js", "components", "eas.json", "lib", "metro.config.js", "nativewind-env.d.ts", "package.json", "plugins", "store", "styles", "tailwind.config.js", "tsconfig.json", "types"]
 
 [[batches]]
-position = 52
+position = 51
 key = 'Fs(DirListing { dir: "apps/mobile/lib" })'
 descriptor = "listing of 'apps/mobile/lib'"
 cost_tokens = 23
-cum_tokens = 1926
+cum_tokens = 1916
 
 [batches.content]
 kind = "fs"
@@ -1128,11 +1110,11 @@ parent = "apps/mobile/lib"
 entries = ["cache.ts", "colors.ts", "queryClient.ts", "queryPersister.ts", "theme.ts"]
 
 [[batches]]
-position = 53
+position = 52
 key = 'Fs(DirListing { dir: "apps/mobile/store" })'
 descriptor = "listing of 'apps/mobile/store'"
 cost_tokens = 12
-cum_tokens = 1938
+cum_tokens = 1928
 
 [batches.content]
 kind = "fs"
@@ -1142,11 +1124,11 @@ parent = "apps/mobile/store"
 entries = ["auth.ts", "data.ts", "tmp.ts"]
 
 [[batches]]
-position = 54
+position = 53
 key = 'Fs(DirListing { dir: "apps/mobile/app" })'
 descriptor = "listing of 'apps/mobile/app'"
 cost_tokens = 36
-cum_tokens = 1974
+cum_tokens = 1964
 
 [batches.content]
 kind = "fs"
@@ -1156,11 +1138,37 @@ parent = "apps/mobile/app"
 entries = ["(tabs)", "+not-found.tsx", "_layout.tsx", "incoming.tsx", "index.tsx", "links", "login.tsx"]
 
 [[batches]]
-position = 55
+position = 54
 key = 'Typescript(ExportNames { file: "apps/mobile/app/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/app/index.tsx"
 cost_tokens = 13
-cum_tokens = 1987
+cum_tokens = 1977
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/index.tsx"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/index.tsx"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'Typescript(Export { file: "apps/mobile/app/index.tsx", start_line: 12 })'
+descriptor = "export at apps/mobile/app/index.tsx:12"
+cost_tokens = 0
+cum_tokens = 1977
 
 [batches.content]
 kind = "lines"
@@ -1183,36 +1191,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 56
-key = 'Typescript(Export { file: "apps/mobile/app/index.tsx", start_line: 12 })'
-descriptor = "export at apps/mobile/app/index.tsx:12"
-cost_tokens = 0
-cum_tokens = 1987
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/index.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/index.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 57
 key = 'Fs(DirListing { dir: "apps/mobile/app/(tabs)" })'
 descriptor = "listing of 'apps/mobile/app/(tabs)'"
 cost_tokens = 21
-cum_tokens = 2008
+cum_tokens = 1998
 
 [batches.content]
 kind = "fs"
@@ -1222,29 +1204,11 @@ parent = "apps/mobile/app/(tabs)"
 entries = ["_layout.tsx", "collections", "dashboard", "links", "settings", "tags"]
 
 [[batches]]
-position = 58
-key = 'Typescript(ExportNames { file: "apps/mobile/lib/queryClient.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/lib/queryClient.ts"
-cost_tokens = 9
-cum_tokens = 2017
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/lib/queryClient.ts"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
+position = 57
 key = 'Fs(DirListing { dir: "apps/mobile/styles" })'
 descriptor = "listing of 'apps/mobile/styles'"
 cost_tokens = 4
-cum_tokens = 2021
+cum_tokens = 2002
 
 [batches.content]
 kind = "fs"
@@ -1254,107 +1218,11 @@ parent = "apps/mobile/styles"
 entries = ["global.css"]
 
 [[batches]]
-position = 60
-key = 'Typescript(ExportBody { file: "apps/mobile/app/index.tsx", start_line: 12, body_start_line: 13 })'
-descriptor = "export body at apps/mobile/app/index.tsx:12 body 13"
-cost_tokens = 917
-cum_tokens = 2938
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/index.tsx"
-start = 13
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/index.tsx"
-start = 16
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/index.tsx"
-start = 20
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/index.tsx"
-start = 40
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
-key = 'Typescript(ExportNames { file: "apps/mobile/store/auth.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/store/auth.ts"
-cost_tokens = 10
-cum_tokens = 2948
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/store/auth.ts"
-start = 157
-end = 157
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 62
-key = 'Typescript(ExportNames { file: "apps/mobile/store/data.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/store/data.ts"
-cost_tokens = 10
-cum_tokens = 2958
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/store/data.ts"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 63
-key = 'Typescript(ExportNames { file: "apps/mobile/store/tmp.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/store/tmp.ts"
-cost_tokens = 10
-cum_tokens = 2968
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/store/tmp.ts"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
+position = 58
 key = 'Fs(DirListing { dir: "apps/web" })'
 descriptor = "listing of 'apps/web'"
 cost_tokens = 81
-cum_tokens = 3049
+cum_tokens = 2083
 
 [batches.content]
 kind = "fs"
@@ -1364,11 +1232,11 @@ parent = "apps/web"
 entries = ["components", "components.json", "e2e", "hooks", "layouts", "lib", "next-i18next.config.js", "next.config.js", "package.json", "pages", "playwright.config.ts", "postcss.config.js", "public", "scripts", "store", "styles", "tailwind.config.js", "templates", "tsconfig.json", "types"]
 
 [[batches]]
-position = 65
+position = 59
 key = 'Fs(DirListing { dir: "apps/web/lib" })'
 descriptor = "listing of 'apps/web/lib'"
 cost_tokens = 13
-cum_tokens = 3062
+cum_tokens = 2096
 
 [batches.content]
 kind = "fs"
@@ -1378,11 +1246,11 @@ parent = "apps/web/lib"
 entries = ["api", "client", "shared", "utils.ts"]
 
 [[batches]]
-position = 66
+position = 60
 key = 'Fs(DirListing { dir: "apps/web/templates" })'
 descriptor = "listing of 'apps/web/templates'"
 cost_tokens = 21
-cum_tokens = 3083
+cum_tokens = 2117
 
 [batches.content]
 kind = "fs"
@@ -1392,11 +1260,11 @@ parent = "apps/web/templates"
 entries = ["acceptInvitation.html", "passwordReset.html", "verifyEmail.html", "verifyEmailChange.html"]
 
 [[batches]]
-position = 67
+position = 61
 key = 'Fs(DirListing { dir: "apps/web/layouts" })'
 descriptor = "listing of 'apps/web/layouts'"
 cost_tokens = 24
-cum_tokens = 3107
+cum_tokens = 2141
 
 [batches.content]
 kind = "fs"
@@ -1406,11 +1274,11 @@ parent = "apps/web/layouts"
 entries = ["AdminLayout.tsx", "AuthRedirect.tsx", "MainLayout.tsx", "SettingsLayout.tsx"]
 
 [[batches]]
-position = 68
+position = 62
 key = 'Fs(DirListing { dir: "apps/web/styles" })'
 descriptor = "listing of 'apps/web/styles'"
 cost_tokens = 4
-cum_tokens = 3111
+cum_tokens = 2145
 
 [batches.content]
 kind = "fs"
@@ -1420,11 +1288,11 @@ parent = "apps/web/styles"
 entries = ["globals.css"]
 
 [[batches]]
-position = 69
+position = 63
 key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 31
-cum_tokens = 3142
+cum_tokens = 2176
 
 [batches.content]
 kind = "lines"
@@ -1438,11 +1306,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 70
+position = 64
 key = 'Fs(DirListing { dir: "apps/web/e2e" })'
 descriptor = "listing of 'apps/web/e2e'"
 cost_tokens = 18
-cum_tokens = 3160
+cum_tokens = 2194
 
 [batches.content]
 kind = "fs"
@@ -1452,11 +1320,11 @@ parent = "apps/web/e2e"
 entries = [".env.example", "data", "fixtures", "index.ts", "tests"]
 
 [[batches]]
-position = 71
+position = 65
 key = 'Fs(DirListing { dir: "apps/web/e2e/fixtures" })'
 descriptor = "listing of 'apps/web/e2e/fixtures'"
 cost_tokens = 17
-cum_tokens = 3177
+cum_tokens = 2211
 
 [batches.content]
 kind = "fs"
@@ -1466,29 +1334,11 @@ parent = "apps/web/e2e/fixtures"
 entries = ["base", "index.ts", "login-page.ts", "registration-page.ts"]
 
 [[batches]]
-position = 72
-key = 'Typescript(Imports { file: "apps/mobile/app/index.tsx" })'
-descriptor = "imports in apps/mobile/app/index.tsx"
-cost_tokens = 165
-cum_tokens = 3342
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/index.tsx"
-start = 1
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
+position = 66
 key = 'Markdown(Section { file: "README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 33
-cum_tokens = 3375
+cum_tokens = 2244
 
 [batches.content]
 kind = "lines"
@@ -1502,11 +1352,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 74
+position = 67
 key = 'Fs(DirListing { dir: "apps/worker/templates" })'
 descriptor = "listing of 'apps/worker/templates'"
 cost_tokens = 5
-cum_tokens = 3380
+cum_tokens = 2249
 
 [batches.content]
 kind = "fs"
@@ -1516,11 +1366,11 @@ parent = "apps/worker/templates"
 entries = ["trialEnded.html"]
 
 [[batches]]
-position = 75
+position = 68
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 22
-cum_tokens = 3402
+cum_tokens = 2271
 
 [batches.content]
 kind = "fs"
@@ -1530,219 +1380,11 @@ parent = ".github/ISSUE_TEMPLATE"
 entries = ["ask-a-question.md", "bug-report.md", "feature-request.md", "installation-problem.yml"]
 
 [[batches]]
-position = 76
-key = 'Typescript(ExportNames { file: "apps/mobile/app/incoming.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/app/incoming.tsx"
-cost_tokens = 13
-cum_tokens = 3415
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/incoming.tsx"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/incoming.tsx"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 77
-key = 'Typescript(Export { file: "apps/mobile/app/incoming.tsx", start_line: 20 })'
-descriptor = "export at apps/mobile/app/incoming.tsx:20"
-cost_tokens = 0
-cum_tokens = 3415
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/incoming.tsx"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/incoming.tsx"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 78
-key = 'Typescript(ExportNames { file: "apps/mobile/app/login.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/app/login.tsx"
-cost_tokens = 13
-cum_tokens = 3428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/login.tsx"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/login.tsx"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 79
-key = 'Typescript(Export { file: "apps/mobile/app/login.tsx", start_line: 17 })'
-descriptor = "export at apps/mobile/app/login.tsx:17"
-cost_tokens = 0
-cum_tokens = 3428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/login.tsx"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/login.tsx"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 80
-key = 'Typescript(ExportNames { file: "apps/worker/lib/archiveHandler.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/archiveHandler.ts"
-cost_tokens = 13
-cum_tokens = 3441
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/archiveHandler.ts"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/archiveHandler.ts"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 81
-key = 'Typescript(Export { file: "apps/worker/lib/archiveHandler.ts", start_line: 25 })'
-descriptor = "export at apps/worker/lib/archiveHandler.ts:25"
-cost_tokens = 29
-cum_tokens = 3470
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/archiveHandler.ts"
-start = 25
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/archiveHandler.ts"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 82
-key = 'Typescript(ExportNames { file: "apps/worker/workers/migrationWorker.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/migrationWorker.ts"
-cost_tokens = 13
-cum_tokens = 3483
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/migrationWorker.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/migrationWorker.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 83
-key = 'Typescript(Export { file: "apps/worker/workers/migrationWorker.ts", start_line: 4 })'
-descriptor = "export at apps/worker/workers/migrationWorker.ts:4"
-cost_tokens = 0
-cum_tokens = 3483
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/migrationWorker.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/migrationWorker.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 84
+position = 69
 key = 'Fs(DirListing { dir: "apps/mobile/assets" })'
 descriptor = "listing of 'apps/mobile/assets'"
 cost_tokens = 6
-cum_tokens = 3489
+cum_tokens = 2277
 
 [batches.content]
 kind = "fs"
@@ -1752,11 +1394,11 @@ parent = "apps/mobile/assets"
 entries = ["fonts", "images"]
 
 [[batches]]
-position = 85
+position = 70
 key = 'Fs(DirListing { dir: "apps/mobile/assets/images" })'
 descriptor = "listing of 'apps/mobile/assets/images'"
 cost_tokens = 24
-cum_tokens = 3513
+cum_tokens = 2301
 
 [batches.content]
 kind = "fs"
@@ -1766,11 +1408,11 @@ parent = "apps/mobile/assets/images"
 entries = ["favicon.png", "icon.png", "linkwarden.png", "maskable_logo.png", "splash-icon.png"]
 
 [[batches]]
-position = 86
+position = 71
 key = 'Fs(DirListing { dir: "apps/mobile/components" })'
 descriptor = "listing of 'apps/mobile/components'"
 cost_tokens = 59
-cum_tokens = 3572
+cum_tokens = 2360
 
 [batches.content]
 kind = "fs"
@@ -1780,65 +1422,11 @@ parent = "apps/mobile/components"
 entries = ["ActionSheets", "CollectionListing.tsx", "DashboardItem.tsx", "DashboardSection.tsx", "ElementNotSupported.tsx", "Formats", "HapticTab.tsx", "LinkListing.tsx", "Links.tsx", "TagListing.tsx", "ui"]
 
 [[batches]]
-position = 87
-key = 'Typescript(ExportNames { file: "apps/mobile/components/CollectionListing.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/CollectionListing.tsx"
-cost_tokens = 9
-cum_tokens = 3581
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/CollectionListing.tsx"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 88
-key = 'Typescript(ExportNames { file: "apps/mobile/components/LinkListing.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/LinkListing.tsx"
-cost_tokens = 9
-cum_tokens = 3590
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/LinkListing.tsx"
-start = 339
-end = 339
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'Typescript(ExportNames { file: "apps/mobile/components/TagListing.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/TagListing.tsx"
-cost_tokens = 9
-cum_tokens = 3599
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/TagListing.tsx"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 90
+position = 72
 key = 'Fs(DirListing { dir: "apps/mobile/components/Formats" })'
 descriptor = "listing of 'apps/mobile/components/Formats'"
 cost_tokens = 26
-cum_tokens = 3625
+cum_tokens = 2386
 
 [batches.content]
 kind = "fs"
@@ -1848,37 +1436,11 @@ parent = "apps/mobile/components/Formats"
 entries = ["ImageFormat.tsx", "PdfFormat.tsx", "ReadableFormat.tsx", "WebpageFormat.tsx"]
 
 [[batches]]
-position = 91
-key = 'Typescript(ExportNames { file: "apps/mobile/components/DashboardSection.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/DashboardSection.tsx"
-cost_tokens = 11
-cum_tokens = 3636
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/DashboardSection.tsx"
-start = 340
-end = 340
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/DashboardSection.tsx"
-start = 341
-end = 341
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 92
+position = 73
 key = 'Fs(DirListing { dir: "apps/mobile/components/ActionSheets" })'
 descriptor = "listing of 'apps/mobile/components/ActionSheets'"
 cost_tokens = 32
-cum_tokens = 3668
+cum_tokens = 2418
 
 [batches.content]
 kind = "fs"
@@ -1888,81 +1450,11 @@ parent = "apps/mobile/components/ActionSheets"
 entries = ["AddLinkSheet.tsx", "EditLinkSheet.tsx", "NewCollectionSheet.tsx", "Sheets.tsx", "SupportSheet.tsx"]
 
 [[batches]]
-position = 93
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ActionSheets/Sheets.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ActionSheets/Sheets.tsx"
-cost_tokens = 6
-cum_tokens = 3674
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/Sheets.tsx"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
-key = 'Typescript(ExportNames { file: "apps/mobile/components/DashboardItem.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/DashboardItem.tsx"
-cost_tokens = 12
-cum_tokens = 3686
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/DashboardItem.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/DashboardItem.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 95
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ElementNotSupported.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ElementNotSupported.tsx"
-cost_tokens = 13
-cum_tokens = 3699
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ElementNotSupported.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ElementNotSupported.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 96
+position = 74
 key = 'Fs(DirListing { dir: "apps/web/hooks" })'
 descriptor = "listing of 'apps/web/hooks'"
 cost_tokens = 62
-cum_tokens = 3761
+cum_tokens = 2480
 
 [batches.content]
 kind = "fs"
@@ -1972,263 +1464,11 @@ parent = "apps/web/hooks"
 entries = ["useArchivalTags.ts", "useCollectivePermissions.ts", "useDetectPageBottom.tsx", "useInitialData.tsx", "useMediaQuery.tsx", "useOnScreen.tsx", "usePermissions.tsx", "useSort.tsx", "useWindowDimensions.tsx"]
 
 [[batches]]
-position = 97
-key = 'Typescript(ExportNames { file: "apps/web/hooks/useDetectPageBottom.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/useDetectPageBottom.tsx"
-cost_tokens = 11
-cum_tokens = 3772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useDetectPageBottom.tsx"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'Typescript(ExportNames { file: "apps/web/hooks/useSort.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/useSort.tsx"
-cost_tokens = 12
-cum_tokens = 3784
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useSort.tsx"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useSort.tsx"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 99
-key = 'Typescript(ExportNames { file: "apps/mobile/app/+not-found.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/app/+not-found.tsx"
-cost_tokens = 14
-cum_tokens = 3798
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/+not-found.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/+not-found.tsx"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 100
-key = 'Typescript(Export { file: "apps/mobile/app/+not-found.tsx", start_line: 4 })'
-descriptor = "export at apps/mobile/app/+not-found.tsx:4"
-cost_tokens = 0
-cum_tokens = 3798
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/+not-found.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/+not-found.tsx"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 101
-key = 'Typescript(ExportNames { file: "apps/web/hooks/useInitialData.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/useInitialData.tsx"
-cost_tokens = 14
-cum_tokens = 3812
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useInitialData.tsx"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useInitialData.tsx"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'Typescript(Export { file: "apps/web/hooks/useInitialData.tsx", start_line: 5 })'
-descriptor = "export at apps/web/hooks/useInitialData.tsx:5"
-cost_tokens = 0
-cum_tokens = 3812
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useInitialData.tsx"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useInitialData.tsx"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 103
-key = 'Typescript(ExportNames { file: "apps/web/hooks/useWindowDimensions.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/useWindowDimensions.tsx"
-cost_tokens = 14
-cum_tokens = 3826
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useWindowDimensions.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useWindowDimensions.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 104
-key = 'Typescript(Export { file: "apps/web/hooks/useWindowDimensions.tsx", start_line: 3 })'
-descriptor = "export at apps/web/hooks/useWindowDimensions.tsx:3"
-cost_tokens = 0
-cum_tokens = 3826
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useWindowDimensions.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useWindowDimensions.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 105
-key = 'Typescript(ExportNames { file: "apps/worker/workers/rssPolling.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/rssPolling.ts"
-cost_tokens = 14
-cum_tokens = 3840
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/rssPolling.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/rssPolling.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 106
-key = 'Typescript(Export { file: "apps/worker/workers/rssPolling.ts", start_line: 11 })'
-descriptor = "export at apps/worker/workers/rssPolling.ts:11"
-cost_tokens = 0
-cum_tokens = 3840
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/rssPolling.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/rssPolling.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 107
+position = 75
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 377
-cum_tokens = 4217
+cum_tokens = 2857
 
 [batches.content]
 kind = "lines"
@@ -2242,63 +1482,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 108
-key = 'Typescript(ExportNames { file: "apps/worker/workers/trialEndEmailWorker.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/trialEndEmailWorker.ts"
-cost_tokens = 15
-cum_tokens = 4232
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/trialEndEmailWorker.ts"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/trialEndEmailWorker.ts"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 109
-key = 'Typescript(Export { file: "apps/worker/workers/trialEndEmailWorker.ts", start_line: 21 })'
-descriptor = "export at apps/worker/workers/trialEndEmailWorker.ts:21"
-cost_tokens = 0
-cum_tokens = 4232
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/trialEndEmailWorker.ts"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/trialEndEmailWorker.ts"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 110
+position = 76
 key = 'Json(Identity { file: "apps/mobile/package.json" })'
 descriptor = "package identity in apps/mobile/package.json"
 cost_tokens = 38
-cum_tokens = 4270
+cum_tokens = 2895
 
 [batches.content]
 kind = "lines"
@@ -2328,11 +1516,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 111
+position = 77
 key = 'Json(Entry { file: "apps/mobile/package.json" })'
 descriptor = "package entrypoints in apps/mobile/package.json"
 cost_tokens = 14
-cum_tokens = 4284
+cum_tokens = 2909
 
 [batches.content]
 kind = "lines"
@@ -2346,11 +1534,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 112
+position = 78
 key = 'Json(Scripts { file: "apps/mobile/package.json" })'
 descriptor = "package scripts in apps/mobile/package.json"
 cost_tokens = 95
-cum_tokens = 4379
+cum_tokens = 3004
 
 [batches.content]
 kind = "lines"
@@ -2364,11 +1552,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 113
+position = 79
 key = 'Json(Identity { file: "packages/lib/package.json" })'
 descriptor = "package identity in packages/lib/package.json"
 cost_tokens = 38
-cum_tokens = 4417
+cum_tokens = 3042
 
 [batches.content]
 kind = "lines"
@@ -2382,11 +1570,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 114
+position = 80
 key = 'Json(Entry { file: "packages/lib/package.json" })'
 descriptor = "package entrypoints in packages/lib/package.json"
 cost_tokens = 12
-cum_tokens = 4429
+cum_tokens = 3054
 
 [batches.content]
 kind = "lines"
@@ -2400,11 +1588,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 115
+position = 81
 key = 'Json(Identity { file: "packages/router/package.json" })'
 descriptor = "package identity in packages/router/package.json"
 cost_tokens = 38
-cum_tokens = 4467
+cum_tokens = 3092
 
 [batches.content]
 kind = "lines"
@@ -2418,11 +1606,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 116
+position = 82
 key = 'Json(Entry { file: "packages/router/package.json" })'
 descriptor = "package entrypoints in packages/router/package.json"
 cost_tokens = 12
-cum_tokens = 4479
+cum_tokens = 3104
 
 [batches.content]
 kind = "lines"
@@ -2436,11 +1624,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 117
+position = 83
 key = 'Json(Identity { file: "packages/types/package.json" })'
 descriptor = "package identity in packages/types/package.json"
 cost_tokens = 38
-cum_tokens = 4517
+cum_tokens = 3142
 
 [batches.content]
 kind = "lines"
@@ -2454,11 +1642,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 118
+position = 84
 key = 'Json(Entry { file: "packages/types/package.json" })'
 descriptor = "package entrypoints in packages/types/package.json"
 cost_tokens = 12
-cum_tokens = 4529
+cum_tokens = 3154
 
 [batches.content]
 kind = "lines"
@@ -2472,11 +1660,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 119
+position = 85
 key = 'Fs(DirListing { dir: "apps/worker/lib/preservationScheme" })'
 descriptor = "listing of 'apps/worker/lib/preservationScheme'"
 cost_tokens = 42
-cum_tokens = 4571
+cum_tokens = 3196
 
 [batches.content]
 kind = "fs"
@@ -2486,83 +1674,11 @@ parent = "apps/worker/lib/preservationScheme"
 entries = ["handleArchivePreview.ts", "handleMonolith.ts", "handleReadability.ts", "handleScreenshotAndPdf.ts", "imageHandler.ts", "pdfHandler.ts", "sendToWayback.ts"]
 
 [[batches]]
-position = 120
-key = 'Typescript(ExportNames { file: "apps/worker/lib/preservationScheme/imageHandler.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/preservationScheme/imageHandler.ts"
-cost_tokens = 9
-cum_tokens = 4580
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/imageHandler.ts"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
-key = 'Typescript(ExportNames { file: "apps/worker/lib/preservationScheme/pdfHandler.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/preservationScheme/pdfHandler.ts"
-cost_tokens = 9
-cum_tokens = 4589
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/pdfHandler.ts"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
-key = 'Typescript(ExportNames { file: "apps/worker/lib/preservationScheme/handleArchivePreview.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/preservationScheme/handleArchivePreview.ts"
-cost_tokens = 10
-cum_tokens = 4599
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/handleArchivePreview.ts"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 123
-key = 'Typescript(ExportNames { file: "apps/worker/lib/preservationScheme/handleReadability.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/preservationScheme/handleReadability.ts"
-cost_tokens = 10
-cum_tokens = 4609
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/handleReadability.ts"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
+position = 86
 key = 'Json(Identity { file: "apps/worker/package.json" })'
 descriptor = "package identity in apps/worker/package.json"
 cost_tokens = 39
-cum_tokens = 4648
+cum_tokens = 3235
 
 [batches.content]
 kind = "lines"
@@ -2576,11 +1692,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 125
+position = 87
 key = 'Json(Entry { file: "apps/worker/package.json" })'
 descriptor = "package entrypoints in apps/worker/package.json"
 cost_tokens = 12
-cum_tokens = 4660
+cum_tokens = 3247
 
 [batches.content]
 kind = "lines"
@@ -2594,11 +1710,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 126
+position = 88
 key = 'Json(Scripts { file: "apps/worker/package.json" })'
 descriptor = "package scripts in apps/worker/package.json"
 cost_tokens = 58
-cum_tokens = 4718
+cum_tokens = 3305
 
 [batches.content]
 kind = "lines"
@@ -2612,11 +1728,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 127
+position = 89
 key = 'Json(Identity { file: "packages/filesystem/package.json" })'
 descriptor = "package identity in packages/filesystem/package.json"
 cost_tokens = 39
-cum_tokens = 4757
+cum_tokens = 3344
 
 [batches.content]
 kind = "lines"
@@ -2630,11 +1746,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 128
+position = 90
 key = 'Json(Entry { file: "packages/filesystem/package.json" })'
 descriptor = "package entrypoints in packages/filesystem/package.json"
 cost_tokens = 12
-cum_tokens = 4769
+cum_tokens = 3356
 
 [batches.content]
 kind = "lines"
@@ -2648,11 +1764,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 129
+position = 91
 key = 'Json(Identity { file: "packages/prisma/package.json" })'
 descriptor = "package identity in packages/prisma/package.json"
 cost_tokens = 39
-cum_tokens = 4808
+cum_tokens = 3395
 
 [batches.content]
 kind = "lines"
@@ -2666,11 +1782,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 130
+position = 92
 key = 'Json(Entry { file: "packages/prisma/package.json" })'
 descriptor = "package entrypoints in packages/prisma/package.json"
 cost_tokens = 25
-cum_tokens = 4833
+cum_tokens = 3420
 
 [batches.content]
 kind = "lines"
@@ -2692,11 +1808,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 131
+position = 93
 key = 'Json(Scripts { file: "packages/prisma/package.json" })'
 descriptor = "package scripts in packages/prisma/package.json"
 cost_tokens = 69
-cum_tokens = 4902
+cum_tokens = 3489
 
 [batches.content]
 kind = "lines"
@@ -2710,11 +1826,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 132
+position = 94
 key = 'Markdown(Section { file: "README.md", section_index: 31 })'
 descriptor = "README.md section #31"
 cost_tokens = 85
-cum_tokens = 4987
+cum_tokens = 3574
 
 [batches.content]
 kind = "lines"
@@ -2736,125 +1852,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 133
-key = 'Typescript(ExportNames { file: "apps/mobile/app/_layout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/app/_layout.tsx"
-cost_tokens = 16
-cum_tokens = 5003
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/_layout.tsx"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/_layout.tsx"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 134
-key = 'Typescript(ExportNames { file: "apps/worker/lib/getLinkBatchFairly.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/getLinkBatchFairly.ts"
-cost_tokens = 16
-cum_tokens = 5019
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/getLinkBatchFairly.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/getLinkBatchFairly.ts"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 135
-key = 'Typescript(Export { file: "apps/worker/lib/getLinkBatchFairly.ts", start_line: 12 })'
-descriptor = "export at apps/worker/lib/getLinkBatchFairly.ts:12"
-cost_tokens = 26
-cum_tokens = 5045
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/getLinkBatchFairly.ts"
-start = 12
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/getLinkBatchFairly.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 136
-key = 'Typescript(ExportNames { file: "apps/worker/lib/preservationScheme/handleScreenshotAndPdf.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/preservationScheme/handleScreenshotAndPdf.ts"
-cost_tokens = 11
-cum_tokens = 5056
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/handleScreenshotAndPdf.ts"
-start = 121
-end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'Typescript(ExportNames { file: "packages/lib/getOriginalFormat.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/getOriginalFormat.ts"
-cost_tokens = 10
-cum_tokens = 5066
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/getOriginalFormat.ts"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
+position = 95
 key = 'Markdown(Section { file: "README.md", section_index: 28 })'
 descriptor = "README.md section #28"
 cost_tokens = 101
-cum_tokens = 5167
+cum_tokens = 3675
 
 [batches.content]
 kind = "lines"
@@ -2876,453 +1878,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 139
-key = 'Typescript(ExportNames { file: "apps/mobile/lib/queryPersister.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/lib/queryPersister.ts"
-cost_tokens = 17
-cum_tokens = 5184
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/lib/queryPersister.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/lib/queryPersister.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 140
-key = 'Typescript(ExportNames { file: "apps/web/hooks/usePermissions.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/usePermissions.tsx"
-cost_tokens = 17
-cum_tokens = 5201
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/usePermissions.tsx"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/usePermissions.tsx"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 141
-key = 'Typescript(Export { file: "apps/web/hooks/usePermissions.tsx", start_line: 6 })'
-descriptor = "export at apps/web/hooks/usePermissions.tsx:6"
-cost_tokens = 0
-cum_tokens = 5201
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/usePermissions.tsx"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/usePermissions.tsx"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 142
-key = 'Typescript(ExportNames { file: "apps/web/layouts/AdminLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/layouts/AdminLayout.tsx"
-cost_tokens = 17
-cum_tokens = 5218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/AdminLayout.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/AdminLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 143
-key = 'Typescript(Export { file: "apps/web/layouts/AdminLayout.tsx", start_line: 12 })'
-descriptor = "export at apps/web/layouts/AdminLayout.tsx:12"
-cost_tokens = 0
-cum_tokens = 5218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/AdminLayout.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/AdminLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 144
-key = 'Typescript(ExportNames { file: "apps/web/layouts/AuthRedirect.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/layouts/AuthRedirect.tsx"
-cost_tokens = 17
-cum_tokens = 5235
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/AuthRedirect.tsx"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/AuthRedirect.tsx"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 145
-key = 'Typescript(Export { file: "apps/web/layouts/AuthRedirect.tsx", start_line: 15 })'
-descriptor = "export at apps/web/layouts/AuthRedirect.tsx:15"
-cost_tokens = 0
-cum_tokens = 5235
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/AuthRedirect.tsx"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/AuthRedirect.tsx"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 146
-key = 'Typescript(ExportNames { file: "apps/web/layouts/MainLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/layouts/MainLayout.tsx"
-cost_tokens = 17
-cum_tokens = 5252
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/MainLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/MainLayout.tsx"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 147
-key = 'Typescript(Export { file: "apps/web/layouts/MainLayout.tsx", start_line: 13 })'
-descriptor = "export at apps/web/layouts/MainLayout.tsx:13"
-cost_tokens = 0
-cum_tokens = 5252
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/MainLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/MainLayout.tsx"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 148
-key = 'Typescript(ExportNames { file: "apps/web/layouts/SettingsLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/layouts/SettingsLayout.tsx"
-cost_tokens = 17
-cum_tokens = 5269
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/SettingsLayout.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/SettingsLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 149
-key = 'Typescript(Export { file: "apps/web/layouts/SettingsLayout.tsx", start_line: 12 })'
-descriptor = "export at apps/web/layouts/SettingsLayout.tsx:12"
-cost_tokens = 0
-cum_tokens = 5269
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/SettingsLayout.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/layouts/SettingsLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 150
-key = 'Typescript(ExportNames { file: "apps/worker/lib/countUnprocessedBillableLinks.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/countUnprocessedBillableLinks.ts"
-cost_tokens = 17
-cum_tokens = 5286
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/countUnprocessedBillableLinks.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/countUnprocessedBillableLinks.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 151
-key = 'Typescript(Export { file: "apps/worker/lib/countUnprocessedBillableLinks.ts", start_line: 3 })'
-descriptor = "export at apps/worker/lib/countUnprocessedBillableLinks.ts:3"
-cost_tokens = 0
-cum_tokens = 5286
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/countUnprocessedBillableLinks.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/countUnprocessedBillableLinks.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 152
-key = 'Typescript(ExportNames { file: "apps/worker/lib/fetchHeaders.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/fetchHeaders.ts"
-cost_tokens = 17
-cum_tokens = 5303
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/fetchHeaders.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/fetchHeaders.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 153
-key = 'Typescript(Export { file: "apps/worker/lib/fetchHeaders.ts", start_line: 3 })'
-descriptor = "export at apps/worker/lib/fetchHeaders.ts:3"
-cost_tokens = 0
-cum_tokens = 5303
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/fetchHeaders.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/fetchHeaders.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 154
-key = 'Typescript(ExportNames { file: "apps/worker/workers/linkProcessing.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/linkProcessing.ts"
-cost_tokens = 17
-cum_tokens = 5320
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/linkProcessing.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/linkProcessing.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 155
-key = 'Typescript(Export { file: "apps/worker/workers/linkProcessing.ts", start_line: 11 })'
-descriptor = "export at apps/worker/workers/linkProcessing.ts:11"
-cost_tokens = 0
-cum_tokens = 5320
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/linkProcessing.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/linkProcessing.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 156
+position = 96
 key = 'Fs(DirListing { dir: "apps/mobile/plugins" })'
 descriptor = "listing of 'apps/mobile/plugins'"
 cost_tokens = 8
-cum_tokens = 5328
+cum_tokens = 3683
 
 [batches.content]
 kind = "fs"
@@ -3332,11 +1892,11 @@ parent = "apps/mobile/plugins"
 entries = ["with-daynight-transparent-nav.js"]
 
 [[batches]]
-position = 157
+position = 97
 key = 'Fs(DirListing { dir: "apps/web/public" })'
 descriptor = "listing of 'apps/web/public'"
 cost_tokens = 79
-cum_tokens = 5407
+cum_tokens = 3762
 
 [batches.content]
 kind = "fs"
@@ -3346,581 +1906,11 @@ parent = "apps/web/public"
 entries = ["android-chrome-192x192.png", "android-chrome-512x512.png", "apple-touch-icon.png", "favicon-16x16.png", "favicon-32x32.png", "favicon.ico", "icon.png", "linkwarden_dark.png", "linkwarden_light.png", "locales", "logo_maskable.png", "screenshots", "site.webmanifest"]
 
 [[batches]]
-position = 158
-key = 'Typescript(Imports { file: "packages/filesystem/index.ts" })'
-descriptor = "imports in packages/filesystem/index.ts"
-cost_tokens = 100
-cum_tokens = 5507
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/index.ts"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 159
-key = 'Typescript(ExportNames { file: "packages/filesystem/s3Client.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/s3Client.ts"
-cost_tokens = 10
-cum_tokens = 5517
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/s3Client.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
-key = 'Typescript(ExportNames { file: "packages/filesystem/createFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/createFile.ts"
-cost_tokens = 12
-cum_tokens = 5529
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFile.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFile.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 161
-key = 'Typescript(ExportNames { file: "packages/filesystem/readFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/readFile.ts"
-cost_tokens = 17
-cum_tokens = 5546
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/readFile.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/readFile.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 162
-key = 'Typescript(Export { file: "packages/filesystem/readFile.ts", start_line: 19 })'
-descriptor = "export at packages/filesystem/readFile.ts:19"
-cost_tokens = 0
-cum_tokens = 5546
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/readFile.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/readFile.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 163
-key = 'Typescript(ExportNames { file: "packages/filesystem/fileExists.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/fileExists.ts"
-cost_tokens = 20
-cum_tokens = 5566
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/fileExists.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/fileExists.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 164
-key = 'Typescript(Export { file: "packages/filesystem/fileExists.ts", start_line: 6 })'
-descriptor = "export at packages/filesystem/fileExists.ts:6"
-cost_tokens = 0
-cum_tokens = 5566
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/fileExists.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/fileExists.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 165
-key = 'Typescript(ExportNames { file: "packages/filesystem/moveFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/moveFile.ts"
-cost_tokens = 20
-cum_tokens = 5586
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/moveFile.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/moveFile.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 166
-key = 'Typescript(Export { file: "packages/filesystem/moveFile.ts", start_line: 6 })'
-descriptor = "export at packages/filesystem/moveFile.ts:6"
-cost_tokens = 0
-cum_tokens = 5586
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/moveFile.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/moveFile.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 167
-key = 'Typescript(ExportNames { file: "packages/filesystem/createFolder.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/createFolder.ts"
-cost_tokens = 21
-cum_tokens = 5607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFolder.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFolder.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 168
-key = 'Typescript(Export { file: "packages/filesystem/createFolder.ts", start_line: 5 })'
-descriptor = "export at packages/filesystem/createFolder.ts:5"
-cost_tokens = 0
-cum_tokens = 5607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFolder.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFolder.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 169
-key = 'Typescript(ExportNames { file: "packages/filesystem/removeFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/removeFile.ts"
-cost_tokens = 22
-cum_tokens = 5629
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFile.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFile.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 170
-key = 'Typescript(Export { file: "packages/filesystem/removeFile.ts", start_line: 6 })'
-descriptor = "export at packages/filesystem/removeFile.ts:6"
-cost_tokens = 0
-cum_tokens = 5629
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFile.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFile.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 171
-key = 'Typescript(ExportNames { file: "packages/filesystem/removeFolder.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/removeFolder.ts"
-cost_tokens = 22
-cum_tokens = 5651
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFolder.ts"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFolder.ts"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 172
-key = 'Typescript(Export { file: "packages/filesystem/removeFolder.ts", start_line: 40 })'
-descriptor = "export at packages/filesystem/removeFolder.ts:40"
-cost_tokens = 0
-cum_tokens = 5651
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFolder.ts"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFolder.ts"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 173
-key = 'Typescript(ExportBody { file: "packages/filesystem/createFolder.ts", start_line: 5, body_start_line: 6 })'
-descriptor = "export body at packages/filesystem/createFolder.ts:5 body 6"
-cost_tokens = 124
-cum_tokens = 5775
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFolder.ts"
-start = 6
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFolder.ts"
-start = 17
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 174
-key = 'Typescript(Export { file: "packages/filesystem/createFile.ts", start_line: 6 })'
-descriptor = "export at packages/filesystem/createFile.ts:6"
-cost_tokens = 74
-cum_tokens = 5849
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFile.ts"
-start = 6
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/createFile.ts"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 175
-key = 'Typescript(ExportBody { file: "packages/filesystem/fileExists.ts", start_line: 6, body_start_line: 7 })'
-descriptor = "export body at packages/filesystem/fileExists.ts:6 body 7"
-cost_tokens = 164
-cum_tokens = 6013
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/fileExists.ts"
-start = 7
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/fileExists.ts"
-start = 16
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/fileExists.ts"
-start = 22
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/fileExists.ts"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 176
-key = 'Typescript(ExportNames { file: "packages/filesystem/manageFiles.ts", chunk_index: 0, export_count: 3, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/manageFiles.ts"
-cost_tokens = 63
-cum_tokens = 6076
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 177
-key = 'Typescript(Export { file: "packages/filesystem/manageFiles.ts", start_line: 4 })'
-descriptor = "export at packages/filesystem/manageFiles.ts:4"
-cost_tokens = 0
-cum_tokens = 6076
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 178
-key = 'Typescript(Export { file: "packages/filesystem/manageFiles.ts", start_line: 33 })'
-descriptor = "export at packages/filesystem/manageFiles.ts:33"
-cost_tokens = 0
-cum_tokens = 6076
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/manageFiles.ts"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 179
+position = 98
 key = 'Fs(DirListing { dir: "apps/web/public/locales" })'
 descriptor = "listing of 'apps/web/public/locales'"
 cost_tokens = 49
-cum_tokens = 6125
+cum_tokens = 3811
 
 [batches.content]
 kind = "fs"
@@ -3930,11 +1920,11 @@ parent = "apps/web/public/locales"
 entries = ["de", "en", "es", "fr", "it", "ja", "nl", "pl", "pt-BR", "ro", "ru", "tr", "uk", "zh", "zh-TW"]
 
 [[batches]]
-position = 180
+position = 99
 key = 'Fs(DirListing { dir: "apps/mobile/components/ui" })'
 descriptor = "listing of 'apps/mobile/components/ui'"
 cost_tokens = 50
-cum_tokens = 6175
+cum_tokens = 3861
 
 [batches.content]
 kind = "fs"
@@ -3944,255 +1934,11 @@ parent = "apps/mobile/components/ui"
 entries = ["Button.tsx", "IconSymbol.ios.tsx", "IconSymbol.tsx", "Icons.tsx", "Input.tsx", "Spinner.tsx", "TabBarBackground.ios.tsx", "TabBarBackground.tsx"]
 
 [[batches]]
-position = 181
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ui/Input.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ui/Input.tsx"
-cost_tokens = 8
-cum_tokens = 6183
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ui/Input.tsx"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ui/Spinner.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ui/Spinner.tsx"
-cost_tokens = 8
-cum_tokens = 6191
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ui/Spinner.tsx"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ui/IconSymbol.ios.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ui/IconSymbol.ios.tsx"
-cost_tokens = 11
-cum_tokens = 6202
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ui/IconSymbol.ios.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ui/IconSymbol.ios.tsx"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 184
-key = 'Typescript(ExportNames { file: "packages/lib/transporter.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/transporter.ts"
-cost_tokens = 11
-cum_tokens = 6213
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/transporter.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/transporter.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 185
-key = 'Typescript(ExportNames { file: "apps/mobile/components/Links.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/Links.tsx"
-cost_tokens = 18
-cum_tokens = 6231
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/Links.tsx"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/Links.tsx"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 186
-key = 'Typescript(Export { file: "apps/mobile/components/Links.tsx", start_line: 26 })'
-descriptor = "export at apps/mobile/components/Links.tsx:26"
-cost_tokens = 0
-cum_tokens = 6231
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/Links.tsx"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/Links.tsx"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 187
-key = 'Typescript(ExportNames { file: "apps/web/hooks/useMediaQuery.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/useMediaQuery.tsx"
-cost_tokens = 18
-cum_tokens = 6249
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useMediaQuery.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useMediaQuery.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 188
-key = 'Typescript(Export { file: "apps/web/hooks/useMediaQuery.tsx", start_line: 3 })'
-descriptor = "export at apps/web/hooks/useMediaQuery.tsx:3"
-cost_tokens = 0
-cum_tokens = 6249
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useMediaQuery.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useMediaQuery.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 189
-key = 'Typescript(ExportNames { file: "apps/worker/workers/linkIndexing.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/linkIndexing.ts"
-cost_tokens = 18
-cum_tokens = 6267
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/linkIndexing.ts"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/linkIndexing.ts"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 190
-key = 'Typescript(Export { file: "apps/worker/workers/linkIndexing.ts", start_line: 63 })'
-descriptor = "export at apps/worker/workers/linkIndexing.ts:63"
-cost_tokens = 0
-cum_tokens = 6267
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/linkIndexing.ts"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/linkIndexing.ts"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 191
+position = 100
 key = 'Fs(DirListing { dir: "apps/web/pages" })'
 descriptor = "listing of 'apps/web/pages'"
 cost_tokens = 86
-cum_tokens = 6353
+cum_tokens = 3947
 
 [batches.content]
 kind = "fs"
@@ -4202,11 +1948,11 @@ parent = "apps/web/pages"
 entries = ["_app.tsx", "_document.tsx", "admin", "api", "auth", "collections", "confirmation.tsx", "dashboard.tsx", "forgot.tsx", "index.tsx", "links", "login.tsx", "member-onboarding.tsx", "preserved", "public", "register.tsx", "search.tsx", "settings", "subscribe.tsx", "tags"]
 
 [[batches]]
-position = 192
+position = 101
 key = 'Typescript(ExportNames { file: "apps/web/pages/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/index.tsx"
 cost_tokens = 12
-cum_tokens = 6365
+cum_tokens = 3959
 
 [batches.content]
 kind = "lines"
@@ -4228,11 +1974,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 193
+position = 102
 key = 'Typescript(Export { file: "apps/web/pages/index.tsx", start_line: 4 })'
 descriptor = "export at apps/web/pages/index.tsx:4"
 cost_tokens = 0
-cum_tokens = 6365
+cum_tokens = 3959
 
 [batches.content]
 kind = "lines"
@@ -4254,11 +2000,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 194
+position = 103
 key = 'Typescript(ExportBody { file: "apps/web/pages/index.tsx", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at apps/web/pages/index.tsx:4 body 5"
 cost_tokens = 36
-cum_tokens = 6401
+cum_tokens = 3995
 
 [batches.content]
 kind = "lines"
@@ -4280,11 +2026,25 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 195
+position = 104
+key = 'Fs(DirListing { dir: "apps/web/pages/public" })'
+descriptor = "listing of 'apps/web/pages/public'"
+cost_tokens = 9
+cum_tokens = 4004
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/public"
+entries = ["collections", "links", "preserved"]
+
+[[batches]]
+position = 105
 key = 'Typescript(Imports { file: "apps/web/pages/index.tsx" })'
 descriptor = "imports in apps/web/pages/index.tsx"
 cost_tokens = 27
-cum_tokens = 6428
+cum_tokens = 4031
 
 [batches.content]
 kind = "lines"
@@ -4298,77 +2058,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 196
-key = 'Fs(DirListing { dir: "apps/web/pages/public" })'
-descriptor = "listing of 'apps/web/pages/public'"
-cost_tokens = 9
-cum_tokens = 6437
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/pages/public"
-entries = ["collections", "links", "preserved"]
-
-[[batches]]
-position = 197
-key = 'Typescript(ExportNames { file: "apps/web/pages/_document.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/pages/_document.tsx"
-cost_tokens = 12
-cum_tokens = 6449
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/_document.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/_document.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 198
-key = 'Typescript(Export { file: "apps/web/pages/_document.tsx", start_line: 3 })'
-descriptor = "export at apps/web/pages/_document.tsx:3"
-cost_tokens = 0
-cum_tokens = 6449
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/_document.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/_document.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 199
+position = 106
 key = 'Fs(DirListing { dir: "apps/web/pages/links" })'
 descriptor = "listing of 'apps/web/pages/links'"
 cost_tokens = 16
-cum_tokens = 6465
+cum_tokens = 4047
 
 [batches.content]
 kind = "fs"
@@ -4378,11 +2072,11 @@ parent = "apps/web/pages/links"
 entries = ["[id].tsx", "index.tsx", "pinned.tsx"]
 
 [[batches]]
-position = 200
+position = 107
 key = 'Typescript(ExportNames { file: "apps/web/pages/links/index.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/links/index.tsx"
 cost_tokens = 21
-cum_tokens = 6486
+cum_tokens = 4068
 
 [batches.content]
 kind = "lines"
@@ -4412,11 +2106,11 @@ end = 75
 kind = "ellipsis"
 
 [[batches]]
-position = 201
+position = 108
 key = 'Typescript(ModuleItem { file: "apps/web/pages/links/index.tsx", start_line: 14 })'
 descriptor = "module item at apps/web/pages/links/index.tsx:14"
 cost_tokens = 17
-cum_tokens = 6503
+cum_tokens = 4085
 
 [batches.content]
 kind = "lines"
@@ -4438,29 +2132,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 202
-key = 'Typescript(Imports { file: "apps/web/pages/links/index.tsx" })'
-descriptor = "imports in apps/web/pages/links/index.tsx"
-cost_tokens = 192
-cum_tokens = 6695
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/links/index.tsx"
-start = 1
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 203
+position = 109
 key = 'Fs(DirListing { dir: "apps/web/pages/admin" })'
 descriptor = "listing of 'apps/web/pages/admin'"
 cost_tokens = 19
-cum_tokens = 6714
+cum_tokens = 4104
 
 [batches.content]
 kind = "fs"
@@ -4470,11 +2146,11 @@ parent = "apps/web/pages/admin"
 entries = ["background-jobs.tsx", "index.tsx", "user-administration.tsx"]
 
 [[batches]]
-position = 204
+position = 110
 key = 'Typescript(ExportNames { file: "apps/web/pages/admin/index.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/admin/index.tsx"
 cost_tokens = 35
-cum_tokens = 6749
+cum_tokens = 4139
 
 [batches.content]
 kind = "lines"
@@ -4512,11 +2188,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 205
+position = 111
 key = 'Typescript(Export { file: "apps/web/pages/admin/index.tsx", start_line: 3 })'
 descriptor = "export at apps/web/pages/admin/index.tsx:3"
 cost_tokens = 0
-cum_tokens = 6749
+cum_tokens = 4139
 
 [batches.content]
 kind = "lines"
@@ -4538,11 +2214,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 206
+position = 112
 key = 'Typescript(Export { file: "apps/web/pages/admin/index.tsx", start_line: 12 })'
 descriptor = "export at apps/web/pages/admin/index.tsx:12"
 cost_tokens = 0
-cum_tokens = 6749
+cum_tokens = 4139
 
 [batches.content]
 kind = "lines"
@@ -4564,11 +2240,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 207
+position = 113
 key = 'Typescript(ExportBody { file: "apps/web/pages/admin/index.tsx", start_line: 12, body_start_line: 13 })'
 descriptor = "export body at apps/web/pages/admin/index.tsx:12 body 13"
 cost_tokens = 6
-cum_tokens = 6755
+cum_tokens = 4145
 
 [batches.content]
 kind = "lines"
@@ -4582,11 +2258,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 208
+position = 114
 key = 'Typescript(ExportBody { file: "apps/web/pages/admin/index.tsx", start_line: 3, body_start_line: 4 })'
 descriptor = "export body at apps/web/pages/admin/index.tsx:3 body 4"
 cost_tokens = 47
-cum_tokens = 6802
+cum_tokens = 4192
 
 [batches.content]
 kind = "lines"
@@ -4600,11 +2276,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 209
+position = 115
 key = 'Typescript(Imports { file: "apps/web/pages/admin/index.tsx" })'
 descriptor = "imports in apps/web/pages/admin/index.tsx"
 cost_tokens = 16
-cum_tokens = 6818
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4618,133 +2294,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 210
-key = 'Typescript(Imports { file: "packages/filesystem/s3Client.ts" })'
-descriptor = "imports in packages/filesystem/s3Client.ts"
-cost_tokens = 17
-cum_tokens = 6835
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/s3Client.ts"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 211
-key = 'Typescript(ExportNames { file: "apps/web/hooks/useCollectivePermissions.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/useCollectivePermissions.ts"
-cost_tokens = 19
-cum_tokens = 6854
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useCollectivePermissions.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useCollectivePermissions.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 212
-key = 'Typescript(Export { file: "apps/web/hooks/useCollectivePermissions.ts", start_line: 6 })'
-descriptor = "export at apps/web/hooks/useCollectivePermissions.ts:6"
-cost_tokens = 0
-cum_tokens = 6854
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useCollectivePermissions.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useCollectivePermissions.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 213
-key = 'Typescript(ExportNames { file: "apps/worker/lib/protectPageRequests.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/protectPageRequests.ts"
-cost_tokens = 19
-cum_tokens = 6873
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/protectPageRequests.ts"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/protectPageRequests.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 214
-key = 'Typescript(Export { file: "apps/worker/lib/protectPageRequests.ts", start_line: 15 })'
-descriptor = "export at apps/worker/lib/protectPageRequests.ts:15"
-cost_tokens = 0
-cum_tokens = 6873
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/protectPageRequests.ts"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/protectPageRequests.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 215
+position = 116
 key = 'Fs(DirListing { dir: "apps/web/store" })'
 descriptor = "listing of 'apps/web/store'"
 cost_tokens = 9
-cum_tokens = 6882
+cum_tokens = 4217
 
 [batches.content]
 kind = "fs"
@@ -4754,47 +2308,11 @@ parent = "apps/web/store"
 entries = ["links.ts", "localSettings.ts"]
 
 [[batches]]
-position = 216
-key = 'Typescript(ExportNames { file: "apps/web/store/links.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/store/links.ts"
-cost_tokens = 10
-cum_tokens = 6892
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/store/links.ts"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 217
-key = 'Typescript(ExportNames { file: "apps/web/store/localSettings.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/store/localSettings.ts"
-cost_tokens = 11
-cum_tokens = 6903
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/store/localSettings.ts"
-start = 125
-end = 125
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 218
+position = 117
 key = 'Fs(DirListing { dir: "packages/prisma/client" })'
 descriptor = "listing of 'packages/prisma/client'"
 cost_tokens = 9
-cum_tokens = 6912
+cum_tokens = 4226
 
 [batches.content]
 kind = "fs"
@@ -4804,115 +2322,11 @@ parent = "packages/prisma/client"
 entries = ["index.d.ts", "index.js"]
 
 [[batches]]
-position = 219
-key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/_layout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/app/(tabs)/_layout.tsx"
-cost_tokens = 13
-cum_tokens = 6925
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/_layout.tsx"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/_layout.tsx"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 220
-key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/_layout.tsx", start_line: 9 })'
-descriptor = "export at apps/mobile/app/(tabs)/_layout.tsx:9"
-cost_tokens = 0
-cum_tokens = 6925
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/_layout.tsx"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/_layout.tsx"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 221
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ActionSheets/SupportSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ActionSheets/SupportSheet.tsx"
-cost_tokens = 13
-cum_tokens = 6938
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/SupportSheet.tsx"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/SupportSheet.tsx"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 222
-key = 'Typescript(Export { file: "apps/mobile/components/ActionSheets/SupportSheet.tsx", start_line: 10 })'
-descriptor = "export at apps/mobile/components/ActionSheets/SupportSheet.tsx:10"
-cost_tokens = 0
-cum_tokens = 6938
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/SupportSheet.tsx"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/SupportSheet.tsx"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 223
+position = 118
 key = 'Fs(DirListing { dir: "apps/web/e2e/fixtures/base" })'
 descriptor = "listing of 'apps/web/e2e/fixtures/base'"
 cost_tokens = 13
-cum_tokens = 6951
+cum_tokens = 4239
 
 [batches.content]
 kind = "fs"
@@ -4922,11 +2336,11 @@ parent = "apps/web/e2e/fixtures/base"
 entries = ["dashboard-page.ts", "modal.ts", "page.ts"]
 
 [[batches]]
-position = 224
+position = 119
 key = 'Fs(DirListing { dir: "apps/web/lib/shared" })'
 descriptor = "listing of 'apps/web/lib/shared'"
 cost_tokens = 20
-cum_tokens = 6971
+cum_tokens = 4259
 
 [batches.content]
 kind = "fs"
@@ -4936,91 +2350,11 @@ parent = "apps/web/lib/shared"
 entries = ["fetchTitleAndHeaders.ts", "getSuffixFromFormat.ts", "isValidUrl.ts"]
 
 [[batches]]
-position = 225
-key = 'Typescript(ExportNames { file: "packages/lib/getFormatBasedOnPreference.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/getFormatBasedOnPreference.ts"
-cost_tokens = 12
-cum_tokens = 6983
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/getFormatBasedOnPreference.ts"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 226
-key = 'Typescript(ExportNames { file: "packages/lib/getFormatFromContentType.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/getFormatFromContentType.ts"
-cost_tokens = 12
-cum_tokens = 6995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/getFormatFromContentType.ts"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 227
-key = 'Typescript(ExportNames { file: "packages/lib/getLinkTypeFromFormat.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/getLinkTypeFromFormat.ts"
-cost_tokens = 12
-cum_tokens = 7007
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/getLinkTypeFromFormat.ts"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 228
-key = 'Typescript(ExportNames { file: "packages/lib/safeFetch.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/safeFetch.ts"
-cost_tokens = 12
-cum_tokens = 7019
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/safeFetch.ts"
-start = 95
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/safeFetch.ts"
-start = 96
-end = 96
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 229
+position = 120
 key = 'Fs(DirListing { dir: "apps/web/pages/settings" })'
 descriptor = "listing of 'apps/web/pages/settings'"
 cost_tokens = 56
-cum_tokens = 7075
+cum_tokens = 4315
 
 [batches.content]
 kind = "fs"
@@ -5030,11 +2364,11 @@ parent = "apps/web/pages/settings"
 entries = ["access-tokens.tsx", "account.tsx", "background-jobs.tsx", "billing.tsx", "delete.tsx", "index.tsx", "password.tsx", "preference.tsx", "rss-subscriptions.tsx", "worker.tsx"]
 
 [[batches]]
-position = 230
+position = 121
 key = 'Typescript(ExportNames { file: "apps/web/pages/settings/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/settings/index.tsx"
 cost_tokens = 12
-cum_tokens = 7087
+cum_tokens = 4327
 
 [batches.content]
 kind = "lines"
@@ -5056,11 +2390,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 231
+position = 122
 key = 'Typescript(Export { file: "apps/web/pages/settings/index.tsx", start_line: 4 })'
 descriptor = "export at apps/web/pages/settings/index.tsx:4"
 cost_tokens = 0
-cum_tokens = 7087
+cum_tokens = 4327
 
 [batches.content]
 kind = "lines"
@@ -5082,11 +2416,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 232
+position = 123
 key = 'Typescript(ExportBody { file: "apps/web/pages/settings/index.tsx", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at apps/web/pages/settings/index.tsx:4 body 5"
 cost_tokens = 37
-cum_tokens = 7124
+cum_tokens = 4364
 
 [batches.content]
 kind = "lines"
@@ -5108,11 +2442,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 233
+position = 124
 key = 'Typescript(Imports { file: "apps/web/pages/settings/index.tsx" })'
 descriptor = "imports in apps/web/pages/settings/index.tsx"
 cost_tokens = 27
-cum_tokens = 7151
+cum_tokens = 4391
 
 [batches.content]
 kind = "lines"
@@ -5126,89 +2460,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 234
-key = 'Typescript(ExportNames { file: "apps/worker/workers/autoTagPreservedLinks.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/autoTagPreservedLinks.ts"
-cost_tokens = 20
-cum_tokens = 7171
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/autoTagPreservedLinks.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/autoTagPreservedLinks.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 235
-key = 'Typescript(Export { file: "apps/worker/workers/autoTagPreservedLinks.ts", start_line: 19 })'
-descriptor = "export at apps/worker/workers/autoTagPreservedLinks.ts:19"
-cost_tokens = 0
-cum_tokens = 7171
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/autoTagPreservedLinks.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/workers/autoTagPreservedLinks.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 236
-key = 'Typescript(ExportNames { file: "apps/web/e2e/fixtures/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/e2e/fixtures/index.ts"
-cost_tokens = 15
-cum_tokens = 7186
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/e2e/fixtures/index.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/e2e/fixtures/index.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 237
+position = 125
 key = 'Fs(DirListing { dir: "apps/mobile/app/links" })'
 descriptor = "listing of 'apps/mobile/app/links'"
 cost_tokens = 6
-cum_tokens = 7192
+cum_tokens = 4397
 
 [batches.content]
 kind = "fs"
@@ -5218,63 +2474,11 @@ parent = "apps/mobile/app/links"
 entries = ["[id].tsx"]
 
 [[batches]]
-position = 238
-key = 'Typescript(ExportNames { file: "apps/mobile/app/links/[id].tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/app/links/[id].tsx"
-cost_tokens = 13
-cum_tokens = 7205
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/links/[id].tsx"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/links/[id].tsx"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 239
-key = 'Typescript(Export { file: "apps/mobile/app/links/[id].tsx", start_line: 16 })'
-descriptor = "export at apps/mobile/app/links/[id].tsx:16"
-cost_tokens = 0
-cum_tokens = 7205
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/links/[id].tsx"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/links/[id].tsx"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 240
+position = 126
 key = 'Fs(DirListing { dir: "apps/mobile/assets/fonts" })'
 descriptor = "listing of 'apps/mobile/assets/fonts'"
 cost_tokens = 6
-cum_tokens = 7211
+cum_tokens = 4403
 
 [batches.content]
 kind = "fs"
@@ -5284,11 +2488,11 @@ parent = "apps/mobile/assets/fonts"
 entries = ["SpaceMono-Regular.ttf"]
 
 [[batches]]
-position = 241
+position = 127
 key = 'Fs(DirListing { dir: "apps/web/pages/preserved" })'
 descriptor = "listing of 'apps/web/pages/preserved'"
 cost_tokens = 6
-cum_tokens = 7217
+cum_tokens = 4409
 
 [batches.content]
 kind = "fs"
@@ -5298,11 +2502,11 @@ parent = "apps/web/pages/preserved"
 entries = ["[id].tsx"]
 
 [[batches]]
-position = 242
+position = 128
 key = 'Json(Dependencies { file: "packages/filesystem/package.json" })'
 descriptor = "package dependencies in packages/filesystem/package.json"
 cost_tokens = 34
-cum_tokens = 7251
+cum_tokens = 4443
 
 [batches.content]
 kind = "lines"
@@ -5316,193 +2520,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 243
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ActionSheets/AddLinkSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ActionSheets/AddLinkSheet.tsx"
-cost_tokens = 14
-cum_tokens = 7265
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/AddLinkSheet.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/AddLinkSheet.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 244
-key = 'Typescript(Export { file: "apps/mobile/components/ActionSheets/AddLinkSheet.tsx", start_line: 12 })'
-descriptor = "export at apps/mobile/components/ActionSheets/AddLinkSheet.tsx:12"
-cost_tokens = 0
-cum_tokens = 7265
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/AddLinkSheet.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/AddLinkSheet.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 245
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ActionSheets/EditLinkSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-cost_tokens = 14
-cum_tokens = 7279
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-start = 471
-end = 471
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-start = 472
-end = 472
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 246
-key = 'Typescript(Export { file: "apps/mobile/components/ActionSheets/EditLinkSheet.tsx", start_line: 471 })'
-descriptor = "export at apps/mobile/components/ActionSheets/EditLinkSheet.tsx:471"
-cost_tokens = 0
-cum_tokens = 7279
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-start = 471
-end = 471
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-start = 472
-end = 472
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 247
-key = 'Typescript(ExportNames { file: "apps/mobile/components/ActionSheets/NewCollectionSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-cost_tokens = 14
-cum_tokens = 7293
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 248
-key = 'Typescript(Export { file: "apps/mobile/components/ActionSheets/NewCollectionSheet.tsx", start_line: 12 })'
-descriptor = "export at apps/mobile/components/ActionSheets/NewCollectionSheet.tsx:12"
-cost_tokens = 0
-cum_tokens = 7293
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 249
-key = 'Typescript(ExportNames { file: "apps/worker/lib/preservationScheme/handleMonolith.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/preservationScheme/handleMonolith.ts"
-cost_tokens = 14
-cum_tokens = 7307
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/handleMonolith.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/handleMonolith.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 250
+position = 129
 key = 'Fs(DirListing { dir: "apps/web/public/locales/de" })'
 descriptor = "listing of 'apps/web/public/locales/de'"
 cost_tokens = 4
-cum_tokens = 7311
+cum_tokens = 4447
 
 [batches.content]
 kind = "fs"
@@ -5512,11 +2534,11 @@ parent = "apps/web/public/locales/de"
 entries = ["common.json"]
 
 [[batches]]
-position = 251
+position = 130
 key = 'Fs(DirListing { dir: "apps/web/public/locales/en" })'
 descriptor = "listing of 'apps/web/public/locales/en'"
 cost_tokens = 4
-cum_tokens = 7315
+cum_tokens = 4451
 
 [batches.content]
 kind = "fs"
@@ -5526,11 +2548,11 @@ parent = "apps/web/public/locales/en"
 entries = ["common.json"]
 
 [[batches]]
-position = 252
+position = 131
 key = 'Fs(DirListing { dir: "apps/web/public/locales/es" })'
 descriptor = "listing of 'apps/web/public/locales/es'"
 cost_tokens = 4
-cum_tokens = 7319
+cum_tokens = 4455
 
 [batches.content]
 kind = "fs"
@@ -5540,11 +2562,11 @@ parent = "apps/web/public/locales/es"
 entries = ["common.json"]
 
 [[batches]]
-position = 253
+position = 132
 key = 'Fs(DirListing { dir: "apps/web/public/locales/fr" })'
 descriptor = "listing of 'apps/web/public/locales/fr'"
 cost_tokens = 4
-cum_tokens = 7323
+cum_tokens = 4459
 
 [batches.content]
 kind = "fs"
@@ -5554,11 +2576,11 @@ parent = "apps/web/public/locales/fr"
 entries = ["common.json"]
 
 [[batches]]
-position = 254
+position = 133
 key = 'Fs(DirListing { dir: "apps/web/public/locales/it" })'
 descriptor = "listing of 'apps/web/public/locales/it'"
 cost_tokens = 4
-cum_tokens = 7327
+cum_tokens = 4463
 
 [batches.content]
 kind = "fs"
@@ -5568,11 +2590,11 @@ parent = "apps/web/public/locales/it"
 entries = ["common.json"]
 
 [[batches]]
-position = 255
+position = 134
 key = 'Fs(DirListing { dir: "apps/web/public/locales/ja" })'
 descriptor = "listing of 'apps/web/public/locales/ja'"
 cost_tokens = 4
-cum_tokens = 7331
+cum_tokens = 4467
 
 [batches.content]
 kind = "fs"
@@ -5582,11 +2604,11 @@ parent = "apps/web/public/locales/ja"
 entries = ["common.json"]
 
 [[batches]]
-position = 256
+position = 135
 key = 'Fs(DirListing { dir: "apps/web/public/locales/nl" })'
 descriptor = "listing of 'apps/web/public/locales/nl'"
 cost_tokens = 4
-cum_tokens = 7335
+cum_tokens = 4471
 
 [batches.content]
 kind = "fs"
@@ -5596,11 +2618,11 @@ parent = "apps/web/public/locales/nl"
 entries = ["common.json"]
 
 [[batches]]
-position = 257
+position = 136
 key = 'Fs(DirListing { dir: "apps/web/public/locales/pl" })'
 descriptor = "listing of 'apps/web/public/locales/pl'"
 cost_tokens = 4
-cum_tokens = 7339
+cum_tokens = 4475
 
 [batches.content]
 kind = "fs"
@@ -5610,11 +2632,11 @@ parent = "apps/web/public/locales/pl"
 entries = ["common.json"]
 
 [[batches]]
-position = 258
+position = 137
 key = 'Fs(DirListing { dir: "apps/web/public/locales/pt-BR" })'
 descriptor = "listing of 'apps/web/public/locales/pt-BR'"
 cost_tokens = 4
-cum_tokens = 7343
+cum_tokens = 4479
 
 [batches.content]
 kind = "fs"
@@ -5624,11 +2646,11 @@ parent = "apps/web/public/locales/pt-BR"
 entries = ["common.json"]
 
 [[batches]]
-position = 259
+position = 138
 key = 'Fs(DirListing { dir: "apps/web/public/locales/ro" })'
 descriptor = "listing of 'apps/web/public/locales/ro'"
 cost_tokens = 4
-cum_tokens = 7347
+cum_tokens = 4483
 
 [batches.content]
 kind = "fs"
@@ -5638,11 +2660,11 @@ parent = "apps/web/public/locales/ro"
 entries = ["common.json"]
 
 [[batches]]
-position = 260
+position = 139
 key = 'Fs(DirListing { dir: "apps/web/public/locales/ru" })'
 descriptor = "listing of 'apps/web/public/locales/ru'"
 cost_tokens = 4
-cum_tokens = 7351
+cum_tokens = 4487
 
 [batches.content]
 kind = "fs"
@@ -5652,11 +2674,11 @@ parent = "apps/web/public/locales/ru"
 entries = ["common.json"]
 
 [[batches]]
-position = 261
+position = 140
 key = 'Fs(DirListing { dir: "apps/web/public/locales/tr" })'
 descriptor = "listing of 'apps/web/public/locales/tr'"
 cost_tokens = 4
-cum_tokens = 7355
+cum_tokens = 4491
 
 [batches.content]
 kind = "fs"
@@ -5666,11 +2688,11 @@ parent = "apps/web/public/locales/tr"
 entries = ["common.json"]
 
 [[batches]]
-position = 262
+position = 141
 key = 'Fs(DirListing { dir: "apps/web/public/locales/uk" })'
 descriptor = "listing of 'apps/web/public/locales/uk'"
 cost_tokens = 4
-cum_tokens = 7359
+cum_tokens = 4495
 
 [batches.content]
 kind = "fs"
@@ -5680,11 +2702,11 @@ parent = "apps/web/public/locales/uk"
 entries = ["common.json"]
 
 [[batches]]
-position = 263
+position = 142
 key = 'Fs(DirListing { dir: "apps/web/public/locales/zh" })'
 descriptor = "listing of 'apps/web/public/locales/zh'"
 cost_tokens = 4
-cum_tokens = 7363
+cum_tokens = 4499
 
 [batches.content]
 kind = "fs"
@@ -5694,11 +2716,11 @@ parent = "apps/web/public/locales/zh"
 entries = ["common.json"]
 
 [[batches]]
-position = 264
+position = 143
 key = 'Fs(DirListing { dir: "apps/web/public/locales/zh-TW" })'
 descriptor = "listing of 'apps/web/public/locales/zh-TW'"
 cost_tokens = 4
-cum_tokens = 7367
+cum_tokens = 4503
 
 [batches.content]
 kind = "fs"
@@ -5708,183 +2730,11 @@ parent = "apps/web/public/locales/zh-TW"
 entries = ["common.json"]
 
 [[batches]]
-position = 265
-key = 'Typescript(ExportBody { file: "packages/filesystem/removeFile.ts", start_line: 6, body_start_line: 7 })'
-descriptor = "export body at packages/filesystem/removeFile.ts:6 body 7"
-cost_tokens = 225
-cum_tokens = 7592
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFile.ts"
-start = 7
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFile.ts"
-start = 13
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFile.ts"
-start = 27
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 266
-key = 'Typescript(ExportNames { file: "apps/mobile/components/HapticTab.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/HapticTab.tsx"
-cost_tokens = 21
-cum_tokens = 7613
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/HapticTab.tsx"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/HapticTab.tsx"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 267
-key = 'Typescript(Export { file: "apps/mobile/components/HapticTab.tsx", start_line: 5 })'
-descriptor = "export at apps/mobile/components/HapticTab.tsx:5"
-cost_tokens = 0
-cum_tokens = 7613
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/HapticTab.tsx"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/components/HapticTab.tsx"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 268
-key = 'Typescript(ExportNames { file: "apps/web/pages/search.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/pages/search.tsx"
-cost_tokens = 21
-cum_tokens = 7634
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/search.tsx"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/search.tsx"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/search.tsx"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 269
-key = 'Typescript(ExportNames { file: "packages/lib/generatePreview.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/generatePreview.ts"
-cost_tokens = 13
-cum_tokens = 7647
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/generatePreview.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/generatePreview.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 270
-key = 'Typescript(ExportNames { file: "packages/lib/rssHandler.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/rssHandler.ts"
-cost_tokens = 13
-cum_tokens = 7660
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/rssHandler.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/rssHandler.ts"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 271
+position = 144
 key = 'Json(Identity { file: "apps/web/package.json" })'
 descriptor = "package identity in apps/web/package.json"
 cost_tokens = 55
-cum_tokens = 7715
+cum_tokens = 4558
 
 [batches.content]
 kind = "lines"
@@ -5906,141 +2756,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 272
-key = 'Typescript(Export { file: "apps/web/hooks/useSort.tsx", start_line: 19 })'
-descriptor = "export at apps/web/hooks/useSort.tsx:19"
-cost_tokens = 53
-cum_tokens = 7768
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useSort.tsx"
-start = 19
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useSort.tsx"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 273
-key = 'Typescript(ExportNames { file: "apps/web/hooks/useOnScreen.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/useOnScreen.tsx"
-cost_tokens = 22
-cum_tokens = 7790
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useOnScreen.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useOnScreen.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 274
-key = 'Typescript(Export { file: "apps/web/hooks/useOnScreen.tsx", start_line: 3 })'
-descriptor = "export at apps/web/hooks/useOnScreen.tsx:3"
-cost_tokens = 0
-cum_tokens = 7790
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useOnScreen.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/hooks/useOnScreen.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 275
-key = 'Typescript(ExportNames { file: "apps/web/lib/shared/fetchTitleAndHeaders.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/lib/shared/fetchTitleAndHeaders.ts"
-cost_tokens = 15
-cum_tokens = 7805
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/lib/shared/fetchTitleAndHeaders.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/lib/shared/fetchTitleAndHeaders.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 276
-key = 'Typescript(Export { file: "apps/web/lib/shared/fetchTitleAndHeaders.ts", start_line: 3 })'
-descriptor = "export at apps/web/lib/shared/fetchTitleAndHeaders.ts:3"
-cost_tokens = 24
-cum_tokens = 7829
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/lib/shared/fetchTitleAndHeaders.ts"
-start = 3
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/lib/shared/fetchTitleAndHeaders.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 277
+position = 145
 key = 'Fs(DirListing { dir: ".vscode" })'
 descriptor = "listing of '.vscode'"
 cost_tokens = 4
-cum_tokens = 7833
+cum_tokens = 4562
 
 [batches.content]
 kind = "fs"
@@ -6050,123 +2770,11 @@ parent = ".vscode"
 entries = ["settings.json"]
 
 [[batches]]
-position = 278
-key = 'Typescript(ExportNames { file: "apps/web/playwright.config.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/playwright.config.ts"
-cost_tokens = 35
-cum_tokens = 7868
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/playwright.config.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/playwright.config.ts"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/playwright.config.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "apps/web/playwright.config.ts"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 279
-key = 'Typescript(ExportBody { file: "packages/filesystem/removeFolder.ts", start_line: 40, body_start_line: 41 })'
-descriptor = "export body at packages/filesystem/removeFolder.ts:40 body 41"
-cost_tokens = 242
-cum_tokens = 8110
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFolder.ts"
-start = 41
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/filesystem/removeFolder.ts"
-start = 59
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 280
-key = 'Typescript(ExportNames { file: "packages/lib/constants.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/constants.ts"
-cost_tokens = 14
-cum_tokens = 8124
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/constants.ts"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 281
-key = 'Typescript(ExportNames { file: "packages/lib/verifyCapacity.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/verifyCapacity.ts"
-cost_tokens = 14
-cum_tokens = 8138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/verifyCapacity.ts"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/verifyCapacity.ts"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 282
+position = 146
 key = 'Fs(DirListing { dir: "apps/mobile/types" })'
 descriptor = "listing of 'apps/mobile/types'"
 cost_tokens = 11
-cum_tokens = 8149
+cum_tokens = 4573
 
 [batches.content]
 kind = "fs"
@@ -6176,277 +2784,11 @@ parent = "apps/mobile/types"
 entries = ["global.ts", "nativewind-env.d.ts"]
 
 [[batches]]
-position = 283
-key = 'Typescript(ExportNames { file: "apps/web/pages/dashboard.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/pages/dashboard.tsx"
-cost_tokens = 23
-cum_tokens = 8172
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/dashboard.tsx"
-start = 211
-end = 211
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/dashboard.tsx"
-start = 213
-end = 213
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/dashboard.tsx"
-start = 212
-end = 212
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "apps/web/pages/dashboard.tsx"
-start = 214
-end = 214
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 284
-key = 'Typescript(ExportNames { file: "apps/web/pages/forgot.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/pages/forgot.tsx"
-cost_tokens = 23
-cum_tokens = 8195
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/forgot.tsx"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/forgot.tsx"
-start = 115
-end = 115
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/forgot.tsx"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 285
-key = 'Typescript(Export { file: "apps/web/pages/forgot.tsx", start_line: 15 })'
-descriptor = "export at apps/web/pages/forgot.tsx:15"
-cost_tokens = 0
-cum_tokens = 8195
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/forgot.tsx"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/forgot.tsx"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 286
-key = 'Typescript(ExportNames { file: "apps/web/pages/subscribe.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/pages/subscribe.tsx"
-cost_tokens = 23
-cum_tokens = 8218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/subscribe.tsx"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/subscribe.tsx"
-start = 201
-end = 201
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/subscribe.tsx"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 287
-key = 'Typescript(Export { file: "apps/web/pages/subscribe.tsx", start_line: 18 })'
-descriptor = "export at apps/web/pages/subscribe.tsx:18"
-cost_tokens = 0
-cum_tokens = 8218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/web/pages/subscribe.tsx"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/web/pages/subscribe.tsx"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 288
-key = 'Typescript(ExportNames { file: "apps/worker/lib/autoTagLink.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/autoTagLink.ts"
-cost_tokens = 23
-cum_tokens = 8241
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/autoTagLink.ts"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/autoTagLink.ts"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 289
-key = 'Typescript(Export { file: "apps/worker/lib/autoTagLink.ts", start_line: 69 })'
-descriptor = "export at apps/worker/lib/autoTagLink.ts:69"
-cost_tokens = 0
-cum_tokens = 8241
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/autoTagLink.ts"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/autoTagLink.ts"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 290
-key = 'Typescript(Export { file: "apps/worker/lib/preservationScheme/handleMonolith.ts", start_line: 6 })'
-descriptor = "export at apps/worker/lib/preservationScheme/handleMonolith.ts:6"
-cost_tokens = 39
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/handleMonolith.ts"
-start = 6
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/worker/lib/preservationScheme/handleMonolith.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 291
-key = 'Typescript(ExportNames { file: "packages/lib/meilisearchClient.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/meilisearchClient.ts"
-cost_tokens = 15
-cum_tokens = 8295
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/meilisearchClient.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/meilisearchClient.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 292
+position = 147
 key = 'Fs(DirListing { dir: "apps/mobile/app/(tabs)/collections" })'
 descriptor = "listing of 'apps/mobile/app/(tabs)/collections'"
 cost_tokens = 17
-cum_tokens = 8312
+cum_tokens = 4590
 
 [batches.content]
 kind = "fs"
@@ -6456,11 +2798,11 @@ parent = "apps/mobile/app/(tabs)/collections"
 entries = ["[id].tsx", "_layout.tsx", "index.tsx"]
 
 [[batches]]
-position = 293
+position = 148
 key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/collections/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/app/(tabs)/collections/index.tsx"
 cost_tokens = 13
-cum_tokens = 8325
+cum_tokens = 4603
 
 [batches.content]
 kind = "lines"
@@ -6482,11 +2824,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 294
+position = 149
 key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/collections/index.tsx", start_line: 19 })'
 descriptor = "export at apps/mobile/app/(tabs)/collections/index.tsx:19"
 cost_tokens = 0
-cum_tokens = 8325
+cum_tokens = 4603
 
 [batches.content]
 kind = "lines"
@@ -6508,11 +2850,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 295
+position = 150
 key = 'Typescript(ModuleItem { file: "apps/mobile/app/(tabs)/collections/index.tsx", start_line: 87 })'
 descriptor = "module item at apps/mobile/app/(tabs)/collections/index.tsx:87"
 cost_tokens = 65
-cum_tokens = 8390
+cum_tokens = 4668
 
 [batches.content]
 kind = "lines"
@@ -6526,87 +2868,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 296
-key = 'Typescript(ExportBody { file: "apps/mobile/app/(tabs)/collections/index.tsx", start_line: 19, body_start_line: 20 })'
-descriptor = "export body at apps/mobile/app/(tabs)/collections/index.tsx:19 body 20"
-cost_tokens = 683
-cum_tokens = 9073
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/collections/index.tsx"
-start = 20
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/collections/index.tsx"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/collections/index.tsx"
-start = 26
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/collections/index.tsx"
-start = 30
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/collections/index.tsx"
-start = 36
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/collections/index.tsx"
-start = 39
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 297
-key = 'Typescript(Imports { file: "apps/mobile/app/(tabs)/collections/index.tsx" })'
-descriptor = "imports in apps/mobile/app/(tabs)/collections/index.tsx"
-cost_tokens = 204
-cum_tokens = 9277
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "apps/mobile/app/(tabs)/collections/index.tsx"
-start = 1
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 298
+position = 151
 key = 'Fs(DirListing { dir: "apps/mobile/app/(tabs)/dashboard" })'
 descriptor = "listing of 'apps/mobile/app/(tabs)/dashboard'"
 cost_tokens = 17
-cum_tokens = 9294
+cum_tokens = 4685
 
 [batches.content]
 kind = "fs"
@@ -6616,11 +2882,11 @@ parent = "apps/mobile/app/(tabs)/dashboard"
 entries = ["[section].tsx", "_layout.tsx", "index.tsx"]
 
 [[batches]]
-position = 299
+position = 152
 key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/dashboard/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/app/(tabs)/dashboard/index.tsx"
 cost_tokens = 13
-cum_tokens = 9307
+cum_tokens = 4698
 
 [batches.content]
 kind = "lines"
@@ -6642,11 +2908,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 300
+position = 153
 key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/dashboard/index.tsx", start_line: 24 })'
 descriptor = "export at apps/mobile/app/(tabs)/dashboard/index.tsx:24"
 cost_tokens = 0
-cum_tokens = 9307
+cum_tokens = 4698
 
 [batches.content]
 kind = "lines"
@@ -6668,11 +2934,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 301
+position = 154
 key = 'Typescript(ModuleItem { file: "apps/mobile/app/(tabs)/dashboard/index.tsx", start_line: 22 })'
 descriptor = "module item at apps/mobile/app/(tabs)/dashboard/index.tsx:22"
 cost_tokens = 18
-cum_tokens = 9325
+cum_tokens = 4716
 
 [batches.content]
 kind = "lines"
@@ -6686,11 +2952,2487 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 302
+position = 155
+key = 'Fs(DirListing { dir: "apps/mobile/app/(tabs)/settings" })'
+descriptor = "listing of 'apps/mobile/app/(tabs)/settings'"
+cost_tokens = 17
+cum_tokens = 4733
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/mobile/app/(tabs)/settings"
+entries = ["_layout.tsx", "index.tsx", "preferredCollection.tsx"]
+
+[[batches]]
+position = 156
+key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/settings/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/mobile/app/(tabs)/settings/index.tsx"
+cost_tokens = 13
+cum_tokens = 4746
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 157
+key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/settings/index.tsx", start_line: 32 })'
+descriptor = "export at apps/mobile/app/(tabs)/settings/index.tsx:32"
+cost_tokens = 0
+cum_tokens = 4746
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 158
+key = 'Fs(DirListing { dir: "apps/mobile/app/(tabs)/tags" })'
+descriptor = "listing of 'apps/mobile/app/(tabs)/tags'"
+cost_tokens = 17
+cum_tokens = 4763
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/mobile/app/(tabs)/tags"
+entries = ["[id].tsx", "_layout.tsx", "index.tsx"]
+
+[[batches]]
+position = 159
+key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/tags/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/mobile/app/(tabs)/tags/index.tsx"
+cost_tokens = 13
+cum_tokens = 4776
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 160
+key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/tags/index.tsx", start_line: 32 })'
+descriptor = "export at apps/mobile/app/(tabs)/tags/index.tsx:32"
+cost_tokens = 0
+cum_tokens = 4776
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 161
+key = 'Typescript(ModuleItem { file: "apps/mobile/app/(tabs)/tags/index.tsx", start_line: 20 })'
+descriptor = "module item at apps/mobile/app/(tabs)/tags/index.tsx:20"
+cost_tokens = 17
+cum_tokens = 4793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Typescript(ModuleItem { file: "apps/mobile/app/(tabs)/tags/index.tsx", start_line: 22 })'
+descriptor = "module item at apps/mobile/app/(tabs)/tags/index.tsx:22"
+cost_tokens = 18
+cum_tokens = 4811
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 163
+key = 'Typescript(ModuleItemBody { file: "apps/mobile/app/(tabs)/tags/index.tsx", start_line: 22, body_start_line: 23 })'
+descriptor = "module item body at apps/mobile/app/(tabs)/tags/index.tsx:22 body 23"
+cost_tokens = 48
+cum_tokens = 4859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 25
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'Typescript(ModuleItem { file: "apps/mobile/app/(tabs)/tags/index.tsx", start_line: 116 })'
+descriptor = "module item at apps/mobile/app/(tabs)/tags/index.tsx:116"
+cost_tokens = 65
+cum_tokens = 4924
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 116
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Fs(DirListing { dir: "apps/web/types" })'
+descriptor = "listing of 'apps/web/types'"
+cost_tokens = 12
+cum_tokens = 4936
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/types"
+entries = ["himalaya.d.ts", "next-auth.d.ts"]
+
+[[batches]]
+position = 166
+key = 'Typescript(ModuleItem { file: "apps/mobile/app/(tabs)/settings/index.tsx", start_line: 263 })'
+descriptor = "module item at apps/mobile/app/(tabs)/settings/index.tsx:263"
+cost_tokens = 91
+cum_tokens = 5027
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 263
+end = 273
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'Json(Dependencies { file: "packages/types/package.json" })'
+descriptor = "package dependencies in packages/types/package.json"
+cost_tokens = 43
+cum_tokens = 5070
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/types/package.json"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'Fs(DirListing { dir: "apps/web/pages/public/collections" })'
+descriptor = "listing of 'apps/web/pages/public/collections'"
+cost_tokens = 5
+cum_tokens = 5075
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/public/collections"
+entries = ["[id]"]
+
+[[batches]]
+position = 169
+key = 'Fs(DirListing { dir: "apps/web/pages/api" })'
+descriptor = "listing of 'apps/web/pages/api'"
+cost_tokens = 8
+cum_tokens = 5083
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api"
+entries = ["v1", "v2"]
+
+[[batches]]
+position = 170
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v2" })'
+descriptor = "listing of 'apps/web/pages/api/v2'"
+cost_tokens = 3
+cum_tokens = 5086
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v2"
+entries = ["dashboard"]
+
+[[batches]]
+position = 171
+key = 'Fs(DirListing { dir: "apps/web/lib/client" })'
+descriptor = "listing of 'apps/web/lib/client'"
+cost_tokens = 79
+cum_tokens = 5165
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/client"
+entries = ["addMemberToCollection.ts", "getLatestVersion.ts", "getPublicCollectionData.ts", "getPublicUserData.ts", "getServerSideProps.ts", "icons.ts", "importBookmarks.ts", "oklchVariableToHex.ts", "openLink.ts", "pinLink.ts", "remToPixels.ts", "resizeImage.ts", "unescapeString.ts"]
+
+[[batches]]
+position = 172
+key = 'Fs(DirListing { dir: ".devcontainer" })'
+descriptor = "listing of '.devcontainer'"
+cost_tokens = 5
+cum_tokens = 5170
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".devcontainer"
+entries = ["devcontainer.json"]
+
+[[batches]]
+position = 173
+key = 'Json(Dependencies { file: "package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 181
+cum_tokens = 5351
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 28
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v2/dashboard" })'
+descriptor = "listing of 'apps/web/pages/api/v2/dashboard'"
+cost_tokens = 4
+cum_tokens = 5355
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v2/dashboard"
+entries = ["index.ts"]
+
+[[batches]]
+position = 175
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v2/dashboard/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v2/dashboard/index.ts"
+cost_tokens = 12
+cum_tokens = 5367
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 176
+key = 'Typescript(Export { file: "apps/web/pages/api/v2/dashboard/index.ts", start_line: 7 })'
+descriptor = "export at apps/web/pages/api/v2/dashboard/index.ts:7"
+cost_tokens = 28
+cum_tokens = 5395
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 7
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 177
+key = 'Typescript(ExportBody { file: "apps/web/pages/api/v2/dashboard/index.ts", start_line: 7, body_start_line: 11 })'
+descriptor = "export body at apps/web/pages/api/v2/dashboard/index.ts:7 body 11"
+cost_tokens = 284
+cum_tokens = 5679
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 14
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 20
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 25
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 28
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 37
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Fs(DirListing { dir: "apps/web/pages/public/links" })'
+descriptor = "listing of 'apps/web/pages/public/links'"
+cost_tokens = 6
+cum_tokens = 5685
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/public/links"
+entries = ["[id].tsx"]
+
+[[batches]]
+position = 179
+key = 'Fs(DirListing { dir: "apps/web/pages/public/preserved" })'
+descriptor = "listing of 'apps/web/pages/public/preserved'"
+cost_tokens = 6
+cum_tokens = 5691
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/public/preserved"
+entries = ["[id].tsx"]
+
+[[batches]]
+position = 180
+key = 'Fs(DirListing { dir: "apps/web/e2e/tests" })'
+descriptor = "listing of 'apps/web/e2e/tests'"
+cost_tokens = 6
+cum_tokens = 5697
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/e2e/tests"
+entries = ["global", "public"]
+
+[[batches]]
+position = 181
+key = 'Markdown(Section { file: "README.md", section_index: 27 })'
+descriptor = "README.md section #27"
+cost_tokens = 184
+cum_tokens = 5881
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Typescript(Imports { file: "apps/web/pages/api/v2/dashboard/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v2/dashboard/index.ts"
+cost_tokens = 74
+cum_tokens = 5955
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v2/dashboard/index.ts"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Fs(DirListing { dir: "apps/web/lib/api" })'
+descriptor = "listing of 'apps/web/lib/api'"
+cost_tokens = 97
+cum_tokens = 6052
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api"
+entries = ["archives", "controllers", "getCollectionRootOwnerAndMembers.ts", "getPermission.ts", "isAuthenticatedRequest.ts", "isDemoMode.ts", "paymentCheckout.ts", "preserved", "searchQueryBuilder.ts", "sendChangeEmailVerificationRequest.ts", "sendInvitationRequest.ts", "sendPasswordResetRequest.ts", "sendVerificationRequest.ts", "setCollection.ts", "stripe", "verifyByCredentials.ts", "verifyToken.ts", "verifyUser.ts"]
+
+[[batches]]
+position = 184
+key = 'Fs(DirListing { dir: "apps/web/lib/api/stripe" })'
+descriptor = "listing of 'apps/web/lib/api/stripe'"
+cost_tokens = 33
+cum_tokens = 6085
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/stripe"
+entries = ["checkSubscriptionByEmail.ts", "handleSubscription.ts", "stripeSDK.ts", "updateCustomerEmail.ts", "updateSeats.ts", "verifySubscription.ts"]
+
+[[batches]]
+position = 185
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers" })'
+descriptor = "listing of 'apps/web/lib/api/controllers'"
+cost_tokens = 36
+cum_tokens = 6121
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers"
+entries = ["collections", "dashboard", "highlights", "links", "migration", "public", "search", "session", "tags", "tokens", "users", "worker"]
+
+[[batches]]
+position = 186
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/links" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/links'"
+cost_tokens = 17
+cum_tokens = 6138
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/links"
+entries = ["bulk", "getLinks.ts", "linkId", "postLink.ts"]
+
+[[batches]]
+position = 187
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/public" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/public'"
+cost_tokens = 9
+cum_tokens = 6147
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/public"
+entries = ["collections", "links", "users"]
+
+[[batches]]
+position = 188
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/tags" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/tags'"
+cost_tokens = 27
+cum_tokens = 6174
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/tags"
+entries = ["bulkTagDelete.ts", "createOrUpdateTags.ts", "getTags.ts", "mergeTags.ts", "tagId"]
+
+[[batches]]
+position = 189
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/links/linkId" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/links/linkId'"
+cost_tokens = 24
+cum_tokens = 6198
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/links/linkId"
+entries = ["deleteLinkById.ts", "getLinkById.ts", "highlight", "updateLinkById.ts"]
+
+[[batches]]
+position = 190
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/collections" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/collections'"
+cost_tokens = 14
+cum_tokens = 6212
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/collections"
+entries = ["collectionId", "getCollections.ts", "postCollection.ts"]
+
+[[batches]]
+position = 191
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/tokens" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/tokens'"
+cost_tokens = 14
+cum_tokens = 6226
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/tokens"
+entries = ["getTokens.ts", "postToken.ts", "tokenId"]
+
+[[batches]]
+position = 192
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/users" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/users'"
+cost_tokens = 14
+cum_tokens = 6240
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/users"
+entries = ["getUsers.ts", "postUser.ts", "userId"]
+
+[[batches]]
+position = 193
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/users/userId" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/users/userId'"
+cost_tokens = 27
+cum_tokens = 6267
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/users/userId"
+entries = ["deleteUserById.ts", "getUserById.ts", "updateUserById.ts", "updateUserPreference.ts"]
+
+[[batches]]
+position = 194
+key = 'Fs(DirListing { dir: "apps/web/public/screenshots" })'
+descriptor = "listing of 'apps/web/public/screenshots'"
+cost_tokens = 10
+cum_tokens = 6277
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/public/screenshots"
+entries = ["screenshot1.png", "screenshot2.png"]
+
+[[batches]]
+position = 195
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1" })'
+descriptor = "listing of 'apps/web/pages/api/v1'"
+cost_tokens = 69
+cum_tokens = 6346
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1"
+entries = ["archives", "auth", "avatar", "collections", "config", "dashboard", "getFavicon", "highlights", "links", "logins", "migration", "payment", "preserved", "public", "rss", "search", "session", "tags", "tokens", "users", "webhook", "worker"]
+
+[[batches]]
+position = 196
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/preserved" })'
+descriptor = "listing of 'apps/web/pages/api/v1/preserved'"
+cost_tokens = 18
+cum_tokens = 6364
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/preserved"
+entries = ["token.test.ts", "token.ts", "view.test.ts", "view.ts"]
+
+[[batches]]
+position = 197
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/auth" })'
+descriptor = "listing of 'apps/web/pages/api/v1/auth'"
+cost_tokens = 22
+cum_tokens = 6386
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/auth"
+entries = ["[...nextauth].ts", "forgot-password.ts", "reset-password.ts", "verify-email.ts"]
+
+[[batches]]
+position = 198
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/public" })'
+descriptor = "listing of 'apps/web/pages/api/v1/public'"
+cost_tokens = 9
+cum_tokens = 6395
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/public"
+entries = ["collections", "links", "users"]
+
+[[batches]]
+position = 199
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/links" })'
+descriptor = "listing of 'apps/web/pages/api/v1/links'"
+cost_tokens = 12
+cum_tokens = 6407
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/links"
+entries = ["[id]", "archive", "index.ts"]
+
+[[batches]]
+position = 200
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/links/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/links/index.ts"
+cost_tokens = 24
+cum_tokens = 6431
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/index.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 201
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/links/index.ts", start_line: 9 })'
+descriptor = "export at apps/web/pages/api/v1/links/index.ts:9"
+cost_tokens = 0
+cum_tokens = 6431
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/index.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 202
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/users" })'
+descriptor = "listing of 'apps/web/pages/api/v1/users'"
+cost_tokens = 13
+cum_tokens = 6444
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/users"
+entries = ["[id]", "index.ts", "me.ts"]
+
+[[batches]]
+position = 203
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/users/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/users/index.ts"
+cost_tokens = 24
+cum_tokens = 6468
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 204
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/users/index.ts", start_line: 6 })'
+descriptor = "export at apps/web/pages/api/v1/users/index.ts:6"
+cost_tokens = 0
+cum_tokens = 6468
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 205
+key = 'Typescript(ExportBody { file: "apps/web/pages/api/v1/users/index.ts", start_line: 6, body_start_line: 7 })'
+descriptor = "export body at apps/web/pages/api/v1/users/index.ts:6 body 7"
+cost_tokens = 202
+cum_tokens = 6670
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 7
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 14
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 21
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/links/[id]" })'
+descriptor = "listing of 'apps/web/pages/api/v1/links/[id]'"
+cost_tokens = 10
+cum_tokens = 6680
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/links/[id]"
+entries = ["archive", "highlights", "index.ts"]
+
+[[batches]]
+position = 207
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/links/[id]/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/links/[id]/index.ts"
+cost_tokens = 24
+cum_tokens = 6704
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/[id]/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/[id]/index.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 208
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/links/[id]/index.ts", start_line: 7 })'
+descriptor = "export at apps/web/pages/api/v1/links/[id]/index.ts:7"
+cost_tokens = 0
+cum_tokens = 6704
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/[id]/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/[id]/index.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 209
+key = 'Typescript(ExportBody { file: "apps/web/pages/api/v1/links/[id]/index.ts", start_line: 7, body_start_line: 8 })'
+descriptor = "export body at apps/web/pages/api/v1/links/[id]/index.ts:7 body 8"
+cost_tokens = 401
+cum_tokens = 7105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/[id]/index.ts"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/[id]/index.ts"
+start = 11
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/[id]/index.ts"
+start = 23
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/links/[id]/index.ts"
+start = 39
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'Typescript(Imports { file: "apps/web/pages/api/v1/users/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v1/users/index.ts"
+cost_tokens = 66
+cum_tokens = 7171
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/users/index.ts"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/tags" })'
+descriptor = "listing of 'apps/web/pages/api/v1/tags'"
+cost_tokens = 14
+cum_tokens = 7185
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/tags"
+entries = ["[id].ts", "index.ts", "merge.ts"]
+
+[[batches]]
+position = 212
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/tags/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/tags/index.ts"
+cost_tokens = 24
+cum_tokens = 7209
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/tags/index.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/tags/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 213
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/tags/index.ts", start_line: 9 })'
+descriptor = "export at apps/web/pages/api/v1/tags/index.ts:9"
+cost_tokens = 0
+cum_tokens = 7209
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/tags/index.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/tags/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 214
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/dashboard" })'
+descriptor = "listing of 'apps/web/pages/api/v1/dashboard'"
+cost_tokens = 4
+cum_tokens = 7213
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/dashboard"
+entries = ["index.ts"]
+
+[[batches]]
+position = 215
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/dashboard/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/dashboard/index.ts"
+cost_tokens = 12
+cum_tokens = 7225
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/dashboard/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/dashboard/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 216
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/dashboard/index.ts", start_line: 6 })'
+descriptor = "export at apps/web/pages/api/v1/dashboard/index.ts:6"
+cost_tokens = 28
+cum_tokens = 7253
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/dashboard/index.ts"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/dashboard/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 217
+key = 'Typescript(ExportBody { file: "apps/web/pages/api/v1/dashboard/index.ts", start_line: 6, body_start_line: 10 })'
+descriptor = "export body at apps/web/pages/api/v1/dashboard/index.ts:6 body 10"
+cost_tokens = 137
+cum_tokens = 7390
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/dashboard/index.ts"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/dashboard/index.ts"
+start = 13
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/dashboard/index.ts"
+start = 19
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 218
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/getFavicon" })'
+descriptor = "listing of 'apps/web/pages/api/v1/getFavicon'"
+cost_tokens = 4
+cum_tokens = 7394
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/getFavicon"
+entries = ["index.ts"]
+
+[[batches]]
+position = 219
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/getFavicon/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/getFavicon/index.ts"
+cost_tokens = 12
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/getFavicon/index.ts"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/getFavicon/index.ts"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 220
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/getFavicon/index.ts", start_line: 33 })'
+descriptor = "export at apps/web/pages/api/v1/getFavicon/index.ts:33"
+cost_tokens = 28
+cum_tokens = 7434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/getFavicon/index.ts"
+start = 33
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/getFavicon/index.ts"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 221
+key = 'Typescript(Imports { file: "apps/web/pages/api/v1/getFavicon/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v1/getFavicon/index.ts"
+cost_tokens = 34
+cum_tokens = 7468
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/getFavicon/index.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 222
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/logins" })'
+descriptor = "listing of 'apps/web/pages/api/v1/logins'"
+cost_tokens = 4
+cum_tokens = 7472
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/logins"
+entries = ["index.ts"]
+
+[[batches]]
+position = 223
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/logins/index.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
+descriptor = "export names surface in apps/web/pages/api/v1/logins/index.ts"
+cost_tokens = 36
+cum_tokens = 7508
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 224
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/logins/index.ts", start_line: 20 })'
+descriptor = "export at apps/web/pages/api/v1/logins/index.ts:20"
+cost_tokens = 0
+cum_tokens = 7508
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 225
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/logins/index.ts", start_line: 13 })'
+descriptor = "export at apps/web/pages/api/v1/logins/index.ts:13"
+cost_tokens = 30
+cum_tokens = 7538
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 13
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 226
+key = 'Typescript(ExportBody { file: "apps/web/pages/api/v1/logins/index.ts", start_line: 13, body_start_line: 17 })'
+descriptor = "export body at apps/web/pages/api/v1/logins/index.ts:13 body 17"
+cost_tokens = 9
+cum_tokens = 7547
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/logins/index.ts", start_line: 4 })'
+descriptor = "export at apps/web/pages/api/v1/logins/index.ts:4"
+cost_tokens = 74
+cum_tokens = 7621
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 4
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 228
+key = 'Typescript(Imports { file: "apps/web/pages/api/v1/logins/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v1/logins/index.ts"
+cost_tokens = 31
+cum_tokens = 7652
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/logins/index.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 229
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/migration" })'
+descriptor = "listing of 'apps/web/pages/api/v1/migration'"
+cost_tokens = 4
+cum_tokens = 7656
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/migration"
+entries = ["index.ts"]
+
+[[batches]]
+position = 230
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/migration/index.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/migration/index.ts"
+cost_tokens = 35
+cum_tokens = 7691
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/migration/index.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/migration/index.ts"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/migration/index.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/migration/index.ts"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 231
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/migration/index.ts", start_line: 48 })'
+descriptor = "export at apps/web/pages/api/v1/migration/index.ts:48"
+cost_tokens = 0
+cum_tokens = 7691
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/migration/index.ts"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/migration/index.ts"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 232
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/migration/index.ts", start_line: 11 })'
+descriptor = "export at apps/web/pages/api/v1/migration/index.ts:11"
+cost_tokens = 27
+cum_tokens = 7718
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/migration/index.ts"
+start = 11
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 233
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/payment" })'
+descriptor = "listing of 'apps/web/pages/api/v1/payment'"
+cost_tokens = 4
+cum_tokens = 7722
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/payment"
+entries = ["index.ts"]
+
+[[batches]]
+position = 234
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/payment/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/payment/index.ts"
+cost_tokens = 24
+cum_tokens = 7746
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 235
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/payment/index.ts", start_line: 7 })'
+descriptor = "export at apps/web/pages/api/v1/payment/index.ts:7"
+cost_tokens = 0
+cum_tokens = 7746
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 236
+key = 'Typescript(ExportBody { file: "apps/web/pages/api/v1/payment/index.ts", start_line: 7, body_start_line: 8 })'
+descriptor = "export body at apps/web/pages/api/v1/payment/index.ts:7 body 8"
+cost_tokens = 341
+cum_tokens = 8087
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 21
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 28
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 33
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/search" })'
+descriptor = "listing of 'apps/web/pages/api/v1/search'"
+cost_tokens = 4
+cum_tokens = 8091
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/search"
+entries = ["index.ts"]
+
+[[batches]]
+position = 238
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/search/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/search/index.ts"
+cost_tokens = 12
+cum_tokens = 8103
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 239
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/search/index.ts", start_line: 6 })'
+descriptor = "export at apps/web/pages/api/v1/search/index.ts:6"
+cost_tokens = 28
+cum_tokens = 8131
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 240
+key = 'Typescript(ExportBody { file: "apps/web/pages/api/v1/search/index.ts", start_line: 6, body_start_line: 10 })'
+descriptor = "export body at apps/web/pages/api/v1/search/index.ts:6 body 10"
+cost_tokens = 312
+cum_tokens = 8443
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 13
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 30
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 35
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'Typescript(Imports { file: "apps/web/pages/api/v1/search/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v1/search/index.ts"
+cost_tokens = 67
+cum_tokens = 8510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/search/index.ts"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/session" })'
+descriptor = "listing of 'apps/web/pages/api/v1/session'"
+cost_tokens = 4
+cum_tokens = 8514
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/session"
+entries = ["index.ts"]
+
+[[batches]]
+position = 243
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/session/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/session/index.ts"
+cost_tokens = 12
+cum_tokens = 8526
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 244
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/session/index.ts", start_line: 6 })'
+descriptor = "export at apps/web/pages/api/v1/session/index.ts:6"
+cost_tokens = 28
+cum_tokens = 8554
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 245
+key = 'Typescript(ExportBody { file: "apps/web/pages/api/v1/session/index.ts", start_line: 6, body_start_line: 10 })'
+descriptor = "export body at apps/web/pages/api/v1/session/index.ts:6 body 10"
+cost_tokens = 256
+cum_tokens = 8810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 12
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 24
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 30
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/webhook" })'
+descriptor = "listing of 'apps/web/pages/api/v1/webhook'"
+cost_tokens = 4
+cum_tokens = 8814
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/webhook"
+entries = ["index.ts"]
+
+[[batches]]
+position = 247
+key = 'Typescript(ExportNames { file: "apps/web/pages/api/v1/webhook/index.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/api/v1/webhook/index.ts"
+cost_tokens = 23
+cum_tokens = 8837
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/webhook/index.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/webhook/index.ts"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/webhook/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/webhook/index.ts"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 248
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/webhook/index.ts", start_line: 27 })'
+descriptor = "export at apps/web/pages/api/v1/webhook/index.ts:27"
+cost_tokens = 28
+cum_tokens = 8865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/webhook/index.ts"
+start = 27
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/webhook/index.ts"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 249
+key = 'Typescript(Export { file: "apps/web/pages/api/v1/webhook/index.ts", start_line: 5 })'
+descriptor = "export at apps/web/pages/api/v1/webhook/index.ts:5"
+cost_tokens = 27
+cum_tokens = 8892
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/webhook/index.ts"
+start = 5
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 250
+key = 'Typescript(Imports { file: "apps/web/pages/api/v1/webhook/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v1/webhook/index.ts"
+cost_tokens = 53
+cum_tokens = 8945
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/webhook/index.ts"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 251
+key = 'Typescript(Imports { file: "apps/web/pages/api/v1/dashboard/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v1/dashboard/index.ts"
+cost_tokens = 69
+cum_tokens = 9014
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/dashboard/index.ts"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 252
+key = 'Typescript(Imports { file: "apps/web/pages/api/v1/session/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v1/session/index.ts"
+cost_tokens = 70
+cum_tokens = 9084
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/session/index.ts"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 253
+key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/public/collections" })'
+descriptor = "listing of 'apps/web/pages/api/v1/public/collections'"
+cost_tokens = 12
+cum_tokens = 9096
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1/public/collections"
+entries = ["[id].ts", "links", "tags"]
+
+[[batches]]
+position = 254
+key = 'Typescript(Imports { file: "apps/web/pages/api/v1/payment/index.ts" })'
+descriptor = "imports in apps/web/pages/api/v1/payment/index.ts"
+cost_tokens = 79
+cum_tokens = 9175
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/api/v1/payment/index.ts"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 255
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/migration" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/migration'"
+cost_tokens = 48
+cum_tokens = 9223
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/migration"
+entries = ["exportData.ts", "importFromHTMLFile.test.ts", "importFromHTMLFile.ts", "importFromLinkwarden.ts", "importFromOmnivore.ts", "importFromPocket.ts", "importFromWallabag.ts"]
+
+[[batches]]
+position = 256
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/search" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/search'"
+cost_tokens = 5
+cum_tokens = 9228
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/search"
+entries = ["searchLinks.ts"]
+
+[[batches]]
+position = 257
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/session" })'
+descriptor = "listing of 'apps/web/lib/api/controllers/session'"
+cost_tokens = 5
+cum_tokens = 9233
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers/session"
+entries = ["createSession.ts"]
+
+[[batches]]
+position = 258
+key = 'Fs(DirListing { dir: "apps/web/pages/collections" })'
+descriptor = "listing of 'apps/web/pages/collections'"
+cost_tokens = 11
+cum_tokens = 9244
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/collections"
+entries = ["[id].tsx", "index.tsx"]
+
+[[batches]]
+position = 259
+key = 'Typescript(ExportNames { file: "apps/web/pages/collections/index.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/collections/index.tsx"
+cost_tokens = 21
+cum_tokens = 9265
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/collections/index.tsx"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/collections/index.tsx"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/collections/index.tsx"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 260
+key = 'Typescript(ModuleItem { file: "apps/web/pages/collections/index.tsx", start_line: 21 })'
+descriptor = "module item at apps/web/pages/collections/index.tsx:21"
+cost_tokens = 17
+cum_tokens = 9282
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/collections/index.tsx"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/collections/index.tsx"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 261
+key = 'Fs(DirListing { dir: "apps/web/pages/tags" })'
+descriptor = "listing of 'apps/web/pages/tags'"
+cost_tokens = 11
+cum_tokens = 9293
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/pages/tags"
+entries = ["[id].tsx", "index.tsx"]
+
+[[batches]]
+position = 262
+key = 'Typescript(ExportNames { file: "apps/web/pages/tags/index.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/pages/tags/index.tsx"
+cost_tokens = 23
+cum_tokens = 9316
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/tags/index.tsx"
+start = 278
+end = 278
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/tags/index.tsx"
+start = 280
+end = 280
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/tags/index.tsx"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "apps/web/pages/tags/index.tsx"
+start = 281
+end = 281
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 263
+key = 'Typescript(ModuleItem { file: "apps/web/pages/tags/index.tsx", start_line: 282 })'
+descriptor = "module item at apps/web/pages/tags/index.tsx:282"
+cost_tokens = 14
+cum_tokens = 9330
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/tags/index.tsx"
+start = 282
+end = 282
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/tags/index.tsx"
+start = 283
+end = 283
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 264
+key = 'Typescript(ModuleItem { file: "apps/web/pages/tags/index.tsx", start_line: 29 })'
+descriptor = "module item at apps/web/pages/tags/index.tsx:29"
+cost_tokens = 17
+cum_tokens = 9347
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/web/pages/tags/index.tsx"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/web/pages/tags/index.tsx"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 265
 key = 'Typescript(ModuleItem { file: "apps/mobile/app/(tabs)/dashboard/index.tsx", start_line: 153 })'
 descriptor = "module item at apps/mobile/app/(tabs)/dashboard/index.tsx:153"
 cost_tokens = 135
-cum_tokens = 9460
+cum_tokens = 9482
 
 [batches.content]
 kind = "lines"

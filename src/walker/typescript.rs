@@ -101,6 +101,10 @@ const JS_CLASS_MEMBER_SPLIT_MAX: usize = 40;
 pub struct TypescriptState {
     public_surface: OnceCell<HashSet<PathBuf>>,
     in_surface_lookup: RefCell<HashMap<PathBuf, bool>>,
+    /// Cache of nearest-enclosing-non-root `package.json` directory for a
+    /// file. `None` means there is no non-root `package.json` between the
+    /// file and the seed root (the file belongs to the root package).
+    nearest_subpackage_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
 }
 
 impl TypescriptState {
@@ -124,6 +128,48 @@ impl TypescriptState {
             .borrow_mut()
             .insert(file.to_path_buf(), hit);
         hit
+    }
+
+    /// Walk up from `file` to the nearest dir under `root` that contains
+    /// its own `package.json` — that's the enclosing JS/TS sub-package.
+    /// Returns `None` when no non-root `package.json` lies between the
+    /// file and the seed root (the file belongs to the root package).
+    /// Memoized per file.
+    ///
+    /// Mirrors [`crate::walker::rust::RustState::nearest_member_dir`] in
+    /// shape, but unconditional: it doesn't require the sub-package to be
+    /// declared in a `workspaces`/`pnpm-workspace.yaml` field. The use
+    /// case is generic sub-package detection (e.g. monaco-editor's
+    /// `webpack-plugin/`, which has its own `package.json` but isn't part
+    /// of a declared workspace).
+    pub(in crate::walker) fn nearest_subpackage_dir(
+        &self,
+        file: &Path,
+        root: &Path,
+    ) -> Option<PathBuf> {
+        let key = file.to_path_buf();
+        if let Some(hit) = self.nearest_subpackage_dir_lookup.borrow().get(&key) {
+            return hit.clone();
+        }
+        let mut result = None;
+        let mut dir = file.parent();
+        while let Some(current) = dir {
+            if current == root {
+                break;
+            }
+            if !current.starts_with(root) {
+                break;
+            }
+            if current.join("package.json").is_file() {
+                result = Some(current.to_path_buf());
+                break;
+            }
+            dir = current.parent();
+        }
+        self.nearest_subpackage_dir_lookup
+            .borrow_mut()
+            .insert(key, result.clone());
+        result
     }
 }
 
@@ -1509,7 +1555,9 @@ fn ends_with_ignore_ascii_case(value: &str, suffix: &str) -> bool {
 
 fn module_doc_lede_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx)) * js_factor
+    mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx))
+        * js_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
@@ -1519,25 +1567,28 @@ fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
         * secondary_ts_workspace_member_factor(file, ctx)
 }
 
-/// Damp TS files inside a workspace member dir whose basename doesn't
-/// match the workspace root (the convention: the *primary* member
-/// shares the repo basename — `d2ts/packages/d2ts/` in d2ts).
-/// Secondary members are reference implementations or test infra from
-/// the workspace's perspective, so per-package imports/exports rank
-/// below the primary package's surface. Mirrors Rust's
-/// SECONDARY_WORKSPACE_MEMBER_FACTOR.
+/// Damp factor for TS/JS files in a "secondary" sub-package — a
+/// directory under root with its own `package.json` whose basename
+/// doesn't match the root basename. The convention `secondary_factor`
+/// keys off is *the primary sub-package shares the repo basename*:
+/// `d2ts/packages/d2ts/`, `vite/packages/vite/`, `cmdk/cmdk/`. Anything
+/// else under the root (`monaco-editor/webpack-plugin/`, `vite/packages/
+/// plugin-legacy/`, `linkwarden/apps/worker/`) is auxiliary from the
+/// repo's perspective — its imports/exports/per-item batches should
+/// rank below the primary package's surface. Mirrors Rust's
+/// `secondary_workspace_member_factor`.
+///
+/// Sub-package detection uses the nearest-enclosing-non-root
+/// `package.json` (see `TypescriptState::nearest_subpackage_dir`). This
+/// covers npm/yarn `workspaces`-declared layouts, pnpm-declared layouts,
+/// and undeclared multi-package monorepos (monaco-editor) uniformly.
+const SECONDARY_TS_SUBPACKAGE_FACTOR: f64 = 0.5;
+
 fn secondary_ts_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    let Ok(rel) = file.strip_prefix(ctx.root()) else {
-        return 1.0;
-    };
-    let mut comps = rel.components();
-    let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) else {
-        return 1.0;
-    };
-    if first != "packages" {
-        return 1.0;
-    }
-    let Some(member) = comps.next().and_then(|c| c.as_os_str().to_str()) else {
+    let Some(subpackage_dir) = ctx
+        .typescript_state()
+        .nearest_subpackage_dir(file, ctx.root())
+    else {
         return 1.0;
     };
     let root_basename = ctx
@@ -1545,7 +1596,15 @@ fn secondary_ts_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
         .file_name()
         .and_then(|n| n.to_str())
         .unwrap_or_default();
-    if member == root_basename { 1.0 } else { 0.7 }
+    let member_basename = subpackage_dir
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or_default();
+    if member_basename == root_basename {
+        1.0
+    } else {
+        SECONDARY_TS_SUBPACKAGE_FACTOR
+    }
 }
 
 fn imports_chunk_value(
@@ -1588,14 +1647,18 @@ fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) 
     let k = kind.kind_weight();
     let cat = (0.20 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.6 * k).min(1.0);
-    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
+    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx))
+        * js_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.62 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.95 * k).min(1.0);
-    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
+    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx))
+        * js_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
@@ -1607,7 +1670,9 @@ fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64)
     };
     let cat = (0.38 * class_boost * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.7 * class_boost * k).min(1.0);
-    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
+    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx))
+        * js_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
@@ -1622,7 +1687,9 @@ fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor:
     };
     let cat = (0.30 * class_boost * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.82 * class_boost * k).min(1.0);
-    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
+    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx))
+        * js_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 // Strictly below `Export.catastrophic` (0.70) — `Export`'s signature already
@@ -1632,7 +1699,9 @@ fn export_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64)
     let k = kind.kind_weight();
     let cat = (0.45 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.9 * k).min(1.0);
-    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
+    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx))
+        * js_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 // --- parser ---

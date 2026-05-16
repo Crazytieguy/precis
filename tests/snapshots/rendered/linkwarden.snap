@@ -10,6 +10,10 @@ expression: rendered
     CODE_OF_CONDUCT.md
     FUNDING.yml
     ISSUE_TEMPLATE/
+        ask-a-question.md
+        bug-report.md
+        feature-request.md
+        installation-problem.yml
     SECURITY.md
     pull_request_template.md
     workflows/
@@ -40,6 +44,7 @@ README.md
     …
     43→- 📸 Auto capture a screenshot, PDF, and single html file of each webpage
     44→- 📖 Reader view of the webpage, with the ability to highlight and annotate text
+    45→- 🏛️ Send your webpage to Wayback Machine ([archive.org](https://archive.org)) for a snapshot (optional)
     46→- ✨ Local AI Tagging to automatically tag your links based on their content (optional)
     47→- 📂 Organize links by collection, sub-collection, name, description and multiple tags
     48→- 👥 Collaborate on gathering links in a collection
@@ -50,6 +55,7 @@ README.md
     53→- 🌓 Dark/Light mode support
     54→- 🧩 Browser extension (star it [here](https://github.com/linkwarden/browser-extension)!)
     55→- 🔄 Browser Synchronization (using [Floccus](https://floccus.org)!)
+    56→- ⬆️ Upload from SingleFile (check out the [guide](https://docs.linkwarden.app/Usage/upload-from-singlefile))
     57→- 🔐 SSO integration (Enterprise and Self-hosted users only)
     58→- 🍎 iOS Shortcut to save links to Linkwarden
     59→- 🔑 API keys
@@ -102,98 +108,116 @@ apps/
             incoming.tsx
             index.tsx
                 12→export default function HomeScreen() {
-                13→  const { auth } = useAuthStore();
-                14→  const { colorScheme } = useColorScheme();
-                16→  if (auth.session) {
-                17→    return <Redirect href="/dashboard" />;
-                18→  }
-                20→  return (
-                21→    <Animated.View
-                22→      entering={SlideInDown.springify(500).damping(100).stiffness(300)}
-                23→      className="flex-col justify-end h-full"
-                24→    >
-                25→      <View className="h-full bg-primary relative">
-                26→        <View className="my-auto">
-                27→          <Image
-                28→            source={require("@/assets/images/linkwarden.png")}
-                29→            className="w-[120px] h-[120px] mx-auto"
-                30→          />
-                31→          <Text className="text-base-100 text-4xl font-semibold mt-7 mx-auto">
-                32→            Linkwarden
-                33→          </Text>
-                34→        </View>
-                35→        <View>
-                36→          <Text className="text-base-100 text-xl text-center font-semibold mx-4 mt-3">
-                37→            Welcome to the official mobile app for Linkwarden!
-                38→          </Text>
-                40→          <Text className="text-base-100 text-xl text-center mx-4 mt-3">
-                41→            Expect regular improvements and new features as we continue refining
-                42→            the experience.
-                43→          </Text>
-                44→        </View>
-                45→        <Svg
-                46→          viewBox="0 0 1440 320"
-                47→          width={Dimensions.get("screen").width}
-                48→          height={Dimensions.get("screen").width * (320 / 1440) + 2}
-                49→        >
-                50→          <Path
-                51→            fill={rawTheme[colorScheme as ThemeName]["base-100"]}
-                52→            fill-opacity="1"
-                53→            d="M0,256L48,234.7C96,213,192,171,288,176C384,181,480,235,576,266.7C672,299,768,309,864,277.3C960,245,1056,171,1152,122.7C1248,75,1344,53,1392,42.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-                54→          />
-                55→        </Svg>
-                56→        <SafeAreaView
-                57→          edges={["bottom"]}
-                58→          className="flex-col justify-end h-auto duration-100 pt-10 bg-base-100 -mt-2 pb-10 gap-4 w-full px-4"
-                59→        >
-                60→          <Button
-                61→            variant="accent"
-                62→            size="lg"
-                63→            onPress={() => router.navigate("/login")}
-                64→          >
-                65→            <Text className="text-white text-xl">Get Started</Text>
-                66→          </Button>
-                67→          <TouchableOpacity
-                68→            className="w-fit mx-auto"
-                69→            onPress={() => SheetManager.show("support-sheet")}
-                70→          >
-                71→            <Text className="text-neutral text-center w-fit">Need help?</Text>
-                72→          </TouchableOpacity>
-                73→        </SafeAreaView>
-                74→      </View>
-                75→    </Animated.View>
-                76→  );
+                …
             links/
             login.tsx
         app.json
         assets/
+            fonts/
+            images/
+                favicon.png
+                icon.png
+                linkwarden.png
+                maskable_logo.png
+                splash-icon.png
         babel.config.js
         components/
+            ActionSheets/
+                AddLinkSheet.tsx
+                EditLinkSheet.tsx
+                NewCollectionSheet.tsx
+                Sheets.tsx
+                SupportSheet.tsx
+            CollectionListing.tsx
+            DashboardItem.tsx
+            DashboardSection.tsx
+            ElementNotSupported.tsx
+            Formats/
+                ImageFormat.tsx
+                PdfFormat.tsx
+                ReadableFormat.tsx
+                WebpageFormat.tsx
+            HapticTab.tsx
+            LinkListing.tsx
+            Links.tsx
+            TagListing.tsx
+            ui/
         eas.json
         lib/
             cache.ts
             colors.ts
             queryClient.ts
-                14→export { queryClient };
             queryPersister.ts
             theme.ts
         metro.config.js
         nativewind-env.d.ts
         package.json
+            2→  "name": "@linkwarden/mobile",
+            3→  "main": "expo-router/entry",
+            4→  "version": "0.0.0",
+            90→  "private": true
         plugins/
         store/
             auth.ts
-                157→export default useAuthStore;
             data.ts
-                38→export default useDataStore;
             tmp.ts
-                26→export default useTmpStore;
         styles/
             global.css
         tailwind.config.js
         tsconfig.json
         types/
     web/
+        components/
+        components.json
+        e2e/
+            .env.example
+            data/
+            fixtures/
+                base/
+                index.ts
+                login-page.ts
+                registration-page.ts
+            index.ts
+            tests/
+        hooks/
+            useArchivalTags.ts
+            useCollectivePermissions.ts
+            useDetectPageBottom.tsx
+            useInitialData.tsx
+            useMediaQuery.tsx
+            useOnScreen.tsx
+            usePermissions.tsx
+            useSort.tsx
+            useWindowDimensions.tsx
+        layouts/
+            AdminLayout.tsx
+            AuthRedirect.tsx
+            MainLayout.tsx
+            SettingsLayout.tsx
+        lib/
+            api/
+            client/
+            shared/
+            utils.ts
+        next-i18next.config.js
+        next.config.js
+        package.json
+        pages/
+        playwright.config.ts
+        postcss.config.js
+        public/
+        scripts/
+        store/
+        styles/
+            globals.css
+        tailwind.config.js
+        templates/
+            acceptInvitation.html
+            passwordReset.html
+            verifyEmail.html
+            verifyEmailChange.html
+        tsconfig.json
+        types/
     worker/
         index.ts
             1→import { spawn } from "node:child_process";
@@ -204,13 +228,13 @@ apps/
             countUnprocessedBillableLinks.ts
             fetchHeaders.ts
             getLinkBatch.ts
-                53→export default getLinkBatch;
             getLinkBatchFairly.ts
             preservationScheme/
             prompts.ts
             protectPageRequests.ts
         package.json
         templates/
+            trialEnded.html
         tsconfig.json
         worker.ts
         workers/
@@ -239,6 +263,24 @@ package.json
     7→    "apps/*",
     8→    "packages/*"
     9→  ],
+    10→  "scripts": {
+    11→    "web:dev": "dotenv -- yarn workspace @linkwarden/web dev",
+    12→    "web:build": "dotenv -- yarn workspace @linkwarden/web build",
+    13→    "web:start": "dotenv -- yarn workspace @linkwarden/web start",
+    14→    "update:browserslist-db": "npx update-browserslist-db@latest",
+    15→    "worker:dev": "dotenv -- yarn workspace @linkwarden/worker dev",
+    16→    "worker:start": "dotenv -- yarn workspace @linkwarden/worker start",
+    17→    "concurrently:dev": "concurrently \"dotenv -- yarn workspace @linkwarden/web dev\" \"dotenv -- yarn workspace @linkwarden/worker dev\"",
+    18→    "concurrently:start": "concurrently \"dotenv -- yarn workspace @linkwarden/web start\" \"dotenv -- yarn workspace @linkwarden/worker start\"",
+    19→    "prisma:deploy": "dotenv -- yarn workspace @linkwarden/prisma deploy",
+    20→    "prisma:dev": "dotenv -- yarn workspace @linkwarden/prisma dev",
+    21→    "prisma:generate": "yarn workspace @linkwarden/prisma generate",
+    22→    "prisma:studio": "yarn workspace @linkwarden/prisma studio",
+    23→    "format": "yarn workspaces run format",
+    24→    "test": "vitest",
+    25→    "coverage": "vitest run --coverage",
+    26→    "postinstall": "yarn workspace @linkwarden/web run postinstall && patch-package"
+    27→  },
 packages/
     filesystem/
         createFile.ts

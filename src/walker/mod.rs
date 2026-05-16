@@ -237,6 +237,10 @@ impl WalkCtx {
         &self.rust_state
     }
 
+    pub(in crate::walker) fn typescript_state(&self) -> &typescript::TypescriptState {
+        &self.typescript_state
+    }
+
     pub(in crate::walker) fn fs_state(&self) -> &fs::FsState {
         &self.fs_state
     }

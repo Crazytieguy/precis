@@ -1,7 +1,7 @@
 fixture = "dockly"
 budget = 10000
-cumulative_tokens = 8768
-batch_count = 165
+cumulative_tokens = 9933
+batch_count = 162
 
 [[batches]]
 position = 1
@@ -4887,36 +4887,10 @@ entries = ["bug_report.yaml"]
 
 [[batches]]
 position = 154
-key = 'Typescript(Imports { file: "docs/src/pages/index.js" })'
-descriptor = "imports in docs/src/pages/index.js"
-cost_tokens = 76
-cum_tokens = 7527
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/src/pages/index.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/src/pages/index.js"
-start = 5
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
 key = 'Markdown(Section { file: ".github/PULL_REQUEST_TEMPLATE.md", section_index: 1 })'
 descriptor = ".github/PULL_REQUEST_TEMPLATE.md section #1"
 cost_tokens = 18
-cum_tokens = 7545
+cum_tokens = 7469
 
 [batches.content]
 kind = "lines"
@@ -4954,11 +4928,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 156
+position = 155
 key = 'Markdown(Section { file: "CONTRIBUTING.md", section_index: 1 })'
 descriptor = "CONTRIBUTING.md section #1"
 cost_tokens = 38
-cum_tokens = 7583
+cum_tokens = 7507
 
 [batches.content]
 kind = "lines"
@@ -4980,11 +4954,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 157
+position = 156
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/info.widget.template.js", start_line: 6, body_start_line: 8 })'
 descriptor = "export body at src/widgetsTemplates/info.widget.template.js:6 body 8"
 cost_tokens = 917
-cum_tokens = 8500
+cum_tokens = 8424
 
 [batches.content]
 kind = "lines"
@@ -5110,11 +5084,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 158
+position = 157
 key = 'Fs(DirListing { dir: "docs/src/assets/scss" })'
 descriptor = "listing of 'docs/src/assets/scss'"
 cost_tokens = 26
-cum_tokens = 8526
+cum_tokens = 8450
 
 [batches.content]
 kind = "fs"
@@ -5124,101 +5098,11 @@ parent = "docs/src/assets/scss"
 entries = ["base", "components", "ie8.scss", "ie9.scss", "layout", "libs", "main.scss"]
 
 [[batches]]
-position = 159
-key = 'Typescript(ExportNames { file: "docs/src/components/Header.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in docs/src/components/Header.js"
-cost_tokens = 8
-cum_tokens = 8534
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/src/components/Header.js"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
-key = 'Typescript(ExportNames { file: "docs/src/components/Nav.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in docs/src/components/Nav.js"
-cost_tokens = 8
-cum_tokens = 8542
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/src/components/Nav.js"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 161
-key = 'Typescript(ExportNames { file: "docs/src/components/Scroll.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in docs/src/components/Scroll.js"
-cost_tokens = 8
-cum_tokens = 8550
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/src/components/Scroll.js"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 162
-key = 'Typescript(ExportNames { file: "docs/src/components/layout.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in docs/src/components/layout.js"
-cost_tokens = 8
-cum_tokens = 8558
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/src/components/layout.js"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 163
-key = 'Typescript(ExportNames { file: "docs/src/pages/generic.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in docs/src/pages/generic.js"
-cost_tokens = 8
-cum_tokens = 8566
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/src/pages/generic.js"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 164
+position = 158
 key = 'Json(IdentityMeta { file: "docs/package.json" })'
 descriptor = "package identity metadata in docs/package.json"
 cost_tokens = 83
-cum_tokens = 8649
+cum_tokens = 8533
 
 [batches.content]
 kind = "lines"
@@ -5248,11 +5132,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 165
+position = 159
 key = 'Json(Scripts { file: "docs/package.json" })'
 descriptor = "package scripts in docs/package.json"
 cost_tokens = 119
-cum_tokens = 8768
+cum_tokens = 8652
 
 [batches.content]
 kind = "lines"
@@ -5264,3 +5148,209 @@ end = 31
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 160
+key = 'Typescript(ExportBody { file: "src/widgetsTemplates/help.widget.template.js", start_line: 5, body_start_line: 7 })'
+descriptor = "export body at src/widgetsTemplates/help.widget.template.js:5 body 7"
+cost_tokens = 1234
+cum_tokens = 9886
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 7
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 20
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 24
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 31
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 59
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 94
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 106
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 117
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 126
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 139
+end = 140
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Fs(DirListing { dir: "docs/src/assets/scss/libs" })'
+descriptor = "listing of 'docs/src/assets/scss/libs'"
+cost_tokens = 22
+cum_tokens = 9908
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/src/assets/scss/libs"
+entries = ["_functions.scss", "_mixins.scss", "_skel.scss", "_vars.scss"]
+
+[[batches]]
+position = 162
+key = 'Fs(DirListing { dir: "docs/src/assets/scss/layout" })'
+descriptor = "listing of 'docs/src/assets/scss/layout'"
+cost_tokens = 25
+cum_tokens = 9933
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/src/assets/scss/layout"
+entries = ["_footer.scss", "_header.scss", "_main.scss", "_nav.scss", "_wrapper.scss"]

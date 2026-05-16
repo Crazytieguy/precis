@@ -118,62 +118,46 @@ Score(3000)=0.618 I=0.747 C=0.512 ns_rows≤3K=19/42 (reached=12 partial=0 missi
 | walker |  | 4847 | 52 | README.md section #5 |  |  | 0.551 |
 | walker |  | 4903 | 56 | README.md section #17 |  |  | 0.554 |
 | walker |  | 4920 | 17 | listing of 'website/pages' |  |  | 0.565 |
-| walker |  | 4932 | 12 | export names surface in website/pages/index.tsx |  |  | 0.565 |
-| walker |  | 4932 | 0 | export at website/pages/index.tsx:29 |  |  | 0.565 |
-| walker |  | 5075 | 143 | README.md section #36 |  |  | 0.565 |
-| walker |  | 5133 | 58 | README.md section #10 |  |  | 0.568 |
-| walker |  | 5138 | 5 | listing of '.husky' |  |  | 0.568 |
-| walker |  | 5148 | 10 | module item at website/pages/index.tsx:300 |  |  | 0.568 |
+| walker |  | 5063 | 143 | README.md section #36 |  |  | 0.565 |
+| walker |  | 5121 | 58 | README.md section #10 |  |  | 0.568 |
+| walker |  | 5126 | 5 | listing of '.husky' |  |  | 0.568 |
 | ns | 5181 |  | 691 | index.tsx — sort() body (DOM-as-truth, in code) | 6.2 | 3.1 | 0.525 |
-| walker |  | 5214 | 66 | README.md section #26 |  |  | 0.528 |
+| walker |  | 5192 | 66 | README.md section #26 |  |  | 0.528 |
 | ns | 5336 |  | 155 | command-score — exported scoring function signature | 7.1 |  | 0.523 |
-| walker |  | 5456 | 242 | json config tsconfig.json |  |  | 0.523 |
-| walker |  | 5524 | 68 | README.md section #20 |  |  | 0.534 |
-| walker |  | 5584 | 60 | listing of 'test/pages' |  |  | 0.579 |
-| walker |  | 5592 | 8 | export names surface in test/pages/index.tsx |  |  | 0.579 |
-| ns | 5647 |  | 311 | command-score — SCORE_* constants (positive weights) | 7.2 |  | 0.566 |
-| walker |  | 5662 | 70 | README.md section #27 |  |  | 0.576 |
-| walker |  | 5673 | 11 | module item at website/pages/index.tsx:101 |  |  | 0.576 |
-| walker |  | 5684 | 11 | module item at website/pages/index.tsx:158 |  |  | 0.576 |
-| walker |  | 5695 | 11 | module item at website/pages/index.tsx:262 |  |  | 0.576 |
-| walker |  | 5706 | 11 | module item at website/pages/index.tsx:296 |  |  | 0.576 |
-| walker |  | 5717 | 11 | module item at website/pages/index.tsx:350 |  |  | 0.576 |
+| walker |  | 5434 | 242 | json config tsconfig.json |  |  | 0.523 |
+| walker |  | 5502 | 68 | README.md section #20 |  |  | 0.534 |
+| walker |  | 5562 | 60 | listing of 'test/pages' |  |  | 0.579 |
+| walker |  | 5632 | 70 | README.md section #27 |  |  | 0.589 |
+| ns | 5647 |  | 311 | command-score — SCORE_* constants (positive weights) | 7.2 |  | 0.576 |
+| walker |  | 6018 | 386 | ARCHITECTURE.md section #0 |  |  | 0.576 |
 | ns | 6081 |  | 434 | command-score — PENALTY_* constants (decay weights) | 7.3 | 7.2 | 0.558 |
-| walker |  | 6103 | 386 | ARCHITECTURE.md section #0 |  |  | 0.558 |
-| walker |  | 6115 | 12 | module item at website/pages/index.tsx:123 |  |  | 0.558 |
-| walker |  | 6127 | 12 | module item at website/pages/index.tsx:326 |  |  | 0.558 |
-| walker |  | 6204 | 77 | README.md section #15 |  |  | 0.558 |
-| walker |  | 6241 | 37 | README.md section #34 |  |  | 0.558 |
-| ns | 6245 |  | 164 | Test file → describe-block names | 8.1 |  | 0.551 |
-| walker |  | 6320 | 79 | README.md section #18 |  |  | 0.560 |
-| walker |  | 6328 | 8 | listing of '.github' |  |  | 0.560 |
-| walker |  | 6332 | 4 | listing of '.github/workflows' |  |  | 0.560 |
-| walker |  | 6344 | 12 | module item at test/pages/index.tsx:3 |  |  | 0.560 |
-| walker |  | 6431 | 87 | README.md section #32 |  |  | 0.560 |
-| ns | 6516 |  | 271 | Playwright config — test dir + dev-server hookup | 8.2 |  | 0.547 |
-| walker |  | 6528 | 97 | README.md section #7 |  |  | 0.549 |
-| walker |  | 6630 | 102 | README.md section #14 |  |  | 0.549 |
-| walker |  | 6745 | 115 | README.md section #16 |  |  | 0.572 |
-| walker |  | 6770 | 25 | module item at website/pages/index.tsx:25 |  |  | 0.572 |
-| walker |  | 6893 | 123 | README.md section #6 |  |  | 0.572 |
-| walker |  | 6916 | 23 | module item at website/pages/index.tsx:84 |  |  | 0.572 |
-| ns | 6992 |  | 476 | test/pages/keybinds — fixture for every keybind spec | 8.3 |  | 0.546 |
-| walker |  | 7042 | 126 | README.md section #9 |  |  | 0.547 |
-| walker |  | 7174 | 132 | README.md section #8 |  |  | 0.551 |
-| walker |  | 7194 | 20 | module item at website/pages/index.tsx:27 |  |  | 0.551 |
-| walker |  | 7207 | 13 | imports in test/pages/index.tsx |  |  | 0.551 |
+| walker |  | 6095 | 77 | README.md section #15 |  |  | 0.558 |
+| walker |  | 6132 | 37 | README.md section #34 |  |  | 0.558 |
+| walker |  | 6211 | 79 | README.md section #18 |  |  | 0.567 |
+| walker |  | 6219 | 8 | listing of '.github' |  |  | 0.567 |
+| walker |  | 6223 | 4 | listing of '.github/workflows' |  |  | 0.567 |
+| ns | 6245 |  | 164 | Test file → describe-block names | 8.1 |  | 0.560 |
+| walker |  | 6310 | 87 | README.md section #32 |  |  | 0.560 |
+| walker |  | 6407 | 97 | README.md section #7 |  |  | 0.563 |
+| walker |  | 6509 | 102 | README.md section #14 |  |  | 0.563 |
+| ns | 6516 |  | 271 | Playwright config — test dir + dev-server hookup | 8.2 |  | 0.549 |
+| walker |  | 6624 | 115 | README.md section #16 |  |  | 0.572 |
+| walker |  | 6747 | 123 | README.md section #6 |  |  | 0.572 |
+| walker |  | 6873 | 126 | README.md section #9 |  |  | 0.573 |
+| ns | 6992 |  | 476 | test/pages/keybinds — fixture for every keybind spec | 8.3 |  | 0.547 |
+| walker |  | 7005 | 132 | README.md section #8 |  |  | 0.551 |
+| walker |  | 7013 | 8 | export names surface in test/pages/index.tsx |  |  | 0.551 |
 | ns | 7365 |  | 373 | index.tsx — Item header (registration + state subscriptions) | 9.1 | 4.3 | 0.565 |
-| walker |  | 7582 | 375 | README.md section #35 |  |  | 0.573 |
-| walker |  | 7658 | 76 | README.md section #25 |  |  | 0.585 |
+| walker |  | 7388 | 375 | README.md section #35 |  |  | 0.573 |
+| walker |  | 7464 | 76 | README.md section #25 |  |  | 0.585 |
+| walker |  | 7610 | 146 | README.md section #12 |  |  | 0.585 |
 | ns | 7686 |  | 321 | index.tsx — Item render output (the cmdk-item div) | 9.2 | 9.1 | 0.596 |
-| walker |  | 7804 | 146 | README.md section #12 |  |  | 0.596 |
-| walker |  | 7930 | 126 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.604 |
-| walker |  | 8078 | 148 | README.md section #11 |  |  | 0.604 |
-| walker |  | 8111 | 33 | module item at website/pages/index.tsx:20 |  |  | 0.604 |
+| walker |  | 7736 | 126 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.604 |
+| walker |  | 7884 | 148 | README.md section #11 |  |  | 0.604 |
+| walker |  | 7965 | 81 | README.md section #13 |  |  | 0.604 |
 | ns | 8154 |  | 468 | index.tsx — Group component body | 9.3 | 4.3 | 0.618 |
-| walker |  | 8192 | 81 | README.md section #13 |  |  | 0.618 |
-| ns | 8625 |  | 471 | index.tsx — useCmdk + useValue helpers | 9.4 |  | 0.599 |
-| walker |  | 8775 | 583 | README.md section #2 |  |  | 0.659 |
+| walker |  | 8548 | 583 | README.md section #2 |  |  | 0.680 |
+| ns | 8625 |  | 471 | index.tsx — useCmdk + useValue helpers | 9.4 |  | 0.659 |
 | ns | 9027 |  | 402 | Architecture — Discarded approaches (rejected alternatives) | 10.1 | 3.1 | 0.654 |
 | ns | 9480 |  | 453 | test/pages/group — fixture for the group.test specs | 10.2 |  | 0.635 |
 | ns | 9603 |  | 123 | Architecture — Performance + Groups bodies | 10.3 | 3.1 | 0.636 |

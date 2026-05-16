@@ -1,7 +1,7 @@
 fixture = "superstruct"
 budget = 10000
-cumulative_tokens = 9888
-batch_count = 150
+cumulative_tokens = 9833
+batch_count = 146
 
 [[batches]]
 position = 1
@@ -2665,28 +2665,10 @@ kind = "full"
 
 [[batches]]
 position = 77
-key = 'Typescript(ModuleItem { file: "examples/default-values.js", start_line: 12 })'
-descriptor = "module item at examples/default-values.js:12"
-cost_tokens = 10
-cum_tokens = 3755
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/default-values.js"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 78
 key = 'Typescript(ExportDoc { file: "src/error.ts", start_line: 25 })'
 descriptor = "export doc at src/error.ts:25"
 cost_tokens = 109
-cum_tokens = 3864
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -2700,11 +2682,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 79
+position = 78
 key = 'Typescript(ExportNames { file: "src/struct.ts", chunk_index: 0, export_count: 13, type_only_export_count: 7 })'
 descriptor = "export names surface in src/struct.ts"
 cost_tokens = 208
-cum_tokens = 4072
+cum_tokens = 4062
 
 [batches.content]
 kind = "lines"
@@ -2902,11 +2884,11 @@ end = 260
 kind = "ellipsis"
 
 [[batches]]
-position = 80
+position = 79
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 175 })'
 descriptor = "export at src/struct.ts:175"
 cost_tokens = 0
-cum_tokens = 4072
+cum_tokens = 4062
 
 [batches.content]
 kind = "lines"
@@ -2928,11 +2910,11 @@ end = 176
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 80
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 231 })'
 descriptor = "export at src/struct.ts:231"
 cost_tokens = 0
-cum_tokens = 4072
+cum_tokens = 4062
 
 [batches.content]
 kind = "lines"
@@ -2946,11 +2928,11 @@ end = 231
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 237 })'
 descriptor = "export at src/struct.ts:237"
 cost_tokens = 0
-cum_tokens = 4072
+cum_tokens = 4062
 
 [batches.content]
 kind = "lines"
@@ -2964,11 +2946,11 @@ end = 237
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 253 })'
 descriptor = "export at src/struct.ts:253"
 cost_tokens = 0
-cum_tokens = 4072
+cum_tokens = 4062
 
 [batches.content]
 kind = "lines"
@@ -2982,11 +2964,11 @@ end = 253
 kind = "full"
 
 [[batches]]
-position = 84
+position = 83
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 259 })'
 descriptor = "export at src/struct.ts:259"
 cost_tokens = 0
-cum_tokens = 4072
+cum_tokens = 4062
 
 [batches.content]
 kind = "lines"
@@ -3000,11 +2982,11 @@ end = 259
 kind = "full"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 221 })'
 descriptor = "export at src/struct.ts:221"
 cost_tokens = 32
-cum_tokens = 4104
+cum_tokens = 4094
 
 [batches.content]
 kind = "lines"
@@ -3018,11 +3000,11 @@ end = 225
 kind = "full"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 243 })'
 descriptor = "export at src/struct.ts:243"
 cost_tokens = 39
-cum_tokens = 4143
+cum_tokens = 4133
 
 [batches.content]
 kind = "lines"
@@ -3036,11 +3018,11 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 139 })'
 descriptor = "export at src/struct.ts:139"
 cost_tokens = 37
-cum_tokens = 4180
+cum_tokens = 4170
 
 [batches.content]
 kind = "lines"
@@ -3062,11 +3044,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 157 })'
 descriptor = "export at src/struct.ts:157"
 cost_tokens = 37
-cum_tokens = 4217
+cum_tokens = 4207
 
 [batches.content]
 kind = "lines"
@@ -3088,11 +3070,11 @@ end = 162
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 88
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 123 })'
 descriptor = "export at src/struct.ts:123"
 cost_tokens = 40
-cum_tokens = 4257
+cum_tokens = 4247
 
 [batches.content]
 kind = "lines"
@@ -3114,11 +3096,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 89
 key = 'Typescript(ExportBody { file: "src/struct.ts", start_line: 123, body_start_line: 128 })'
 descriptor = "export body at src/struct.ts:123 body 128"
 cost_tokens = 42
-cum_tokens = 4299
+cum_tokens = 4289
 
 [batches.content]
 kind = "lines"
@@ -3140,11 +3122,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 185 })'
 descriptor = "export at src/struct.ts:185"
 cost_tokens = 83
-cum_tokens = 4382
+cum_tokens = 4372
 
 [batches.content]
 kind = "lines"
@@ -3166,11 +3148,11 @@ end = 194
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 91
 key = 'Typescript(ExportBody { file: "src/struct.ts", start_line: 139, body_start_line: 144 })'
 descriptor = "export body at src/struct.ts:139 body 144"
 cost_tokens = 65
-cum_tokens = 4447
+cum_tokens = 4437
 
 [batches.content]
 kind = "lines"
@@ -3192,11 +3174,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Typescript(ExportBody { file: "src/struct.ts", start_line: 157, body_start_line: 162 })'
 descriptor = "export body at src/struct.ts:157 body 162"
 cost_tokens = 69
-cum_tokens = 4516
+cum_tokens = 4506
 
 [batches.content]
 kind = "lines"
@@ -3218,11 +3200,11 @@ end = 168
 kind = "full"
 
 [[batches]]
-position = 94
+position = 93
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 243 })'
 descriptor = "export doc at src/struct.ts:243"
 cost_tokens = 25
-cum_tokens = 4541
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
@@ -3236,11 +3218,11 @@ end = 241
 kind = "full"
 
 [[batches]]
-position = 95
+position = 94
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 175 })'
 descriptor = "export doc at src/struct.ts:175"
 cost_tokens = 23
-cum_tokens = 4564
+cum_tokens = 4554
 
 [batches.content]
 kind = "lines"
@@ -3254,11 +3236,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 96
+position = 95
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 259 })'
 descriptor = "export doc at src/struct.ts:259"
 cost_tokens = 27
-cum_tokens = 4591
+cum_tokens = 4581
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3254,11 @@ end = 257
 kind = "full"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 231 })'
 descriptor = "export doc at src/struct.ts:231"
 cost_tokens = 29
-cum_tokens = 4620
+cum_tokens = 4610
 
 [batches.content]
 kind = "lines"
@@ -3290,11 +3272,11 @@ end = 229
 kind = "full"
 
 [[batches]]
-position = 98
+position = 97
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 237 })'
 descriptor = "export doc at src/struct.ts:237"
 cost_tokens = 29
-cum_tokens = 4649
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3308,11 +3290,11 @@ end = 235
 kind = "full"
 
 [[batches]]
-position = 99
+position = 98
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 253 })'
 descriptor = "export doc at src/struct.ts:253"
 cost_tokens = 30
-cum_tokens = 4679
+cum_tokens = 4669
 
 [batches.content]
 kind = "lines"
@@ -3326,11 +3308,11 @@ end = 251
 kind = "full"
 
 [[batches]]
-position = 100
+position = 99
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 123 })'
 descriptor = "export doc at src/struct.ts:123"
 cost_tokens = 28
-cum_tokens = 4707
+cum_tokens = 4697
 
 [batches.content]
 kind = "lines"
@@ -3344,11 +3326,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 101
+position = 100
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 139 })'
 descriptor = "export doc at src/struct.ts:139"
 cost_tokens = 29
-cum_tokens = 4736
+cum_tokens = 4726
 
 [batches.content]
 kind = "lines"
@@ -3362,11 +3344,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 102
+position = 101
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 157 })'
 descriptor = "export doc at src/struct.ts:157"
 cost_tokens = 30
-cum_tokens = 4766
+cum_tokens = 4756
 
 [batches.content]
 kind = "lines"
@@ -3380,11 +3362,11 @@ end = 155
 kind = "full"
 
 [[batches]]
-position = 103
+position = 102
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 185 })'
 descriptor = "export doc at src/struct.ts:185"
 cost_tokens = 46
-cum_tokens = 4812
+cum_tokens = 4802
 
 [batches.content]
 kind = "lines"
@@ -3398,11 +3380,11 @@ end = 183
 kind = "full"
 
 [[batches]]
-position = 104
+position = 103
 key = 'Typescript(Export { file: "src/struct.ts", start_line: 10 })'
 descriptor = "export at src/struct.ts:10"
 cost_tokens = 376
-cum_tokens = 5188
+cum_tokens = 5178
 
 [batches.content]
 kind = "lines"
@@ -3512,11 +3494,11 @@ end = 115
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 104
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 10 })'
 descriptor = "export doc at src/struct.ts:10"
 cost_tokens = 69
-cum_tokens = 5257
+cum_tokens = 5247
 
 [batches.content]
 kind = "lines"
@@ -3530,11 +3512,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 106
+position = 105
 key = 'Typescript(ExportBody { file: "src/struct.ts", start_line: 10, body_start_line: 30 })'
 descriptor = "export body at src/struct.ts:10 body 30"
 cost_tokens = 339
-cum_tokens = 5596
+cum_tokens = 5586
 
 [batches.content]
 kind = "lines"
@@ -3612,11 +3594,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 107
+position = 106
 key = 'Typescript(ExportDoc { file: "src/struct.ts", start_line: 221 })'
 descriptor = "export doc at src/struct.ts:221"
 cost_tokens = 97
-cum_tokens = 5693
+cum_tokens = 5683
 
 [batches.content]
 kind = "lines"
@@ -3630,11 +3612,11 @@ end = 219
 kind = "full"
 
 [[batches]]
-position = 108
+position = 107
 key = 'Markdown(Section { file: "docs/reference/refinements.md", section_index: 0 })'
 descriptor = "docs/reference/refinements.md section #0"
 cost_tokens = 50
-cum_tokens = 5743
+cum_tokens = 5733
 
 [batches.content]
 kind = "lines"
@@ -3656,11 +3638,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 109
+position = 108
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 305
-cum_tokens = 6048
+cum_tokens = 6038
 
 [batches.content]
 kind = "lines"
@@ -3690,11 +3672,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 110
+position = 109
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 76
-cum_tokens = 6124
+cum_tokens = 6114
 
 [batches.content]
 kind = "lines"
@@ -3708,11 +3690,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 111
+position = 110
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 32
-cum_tokens = 6156
+cum_tokens = 6146
 
 [batches.content]
 kind = "lines"
@@ -3726,11 +3708,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 112
+position = 111
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 324
-cum_tokens = 6480
+cum_tokens = 6470
 
 [batches.content]
 kind = "lines"
@@ -3744,11 +3726,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 113
+position = 112
 key = 'Markdown(Section { file: "Readme.md", section_index: 0 })'
 descriptor = "Readme.md section #0"
 cost_tokens = 884
-cum_tokens = 7364
+cum_tokens = 7354
 
 [batches.content]
 kind = "lines"
@@ -3938,11 +3920,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 114
+position = 113
 key = 'Typescript(ModuleDocLede { file: "test/index.ts" })'
 descriptor = "module-doc lede in test/index.ts"
 cost_tokens = 22
-cum_tokens = 7386
+cum_tokens = 7376
 
 [batches.content]
 kind = "lines"
@@ -3956,29 +3938,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 115
-key = 'Typescript(ModuleItem { file: "examples/default-values.js", start_line: 30 })'
-descriptor = "module item at examples/default-values.js:30"
-cost_tokens = 12
-cum_tokens = 7398
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/default-values.js"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
+position = 114
 key = 'Typescript(Imports { file: "src/structs/coercions.ts" })'
 descriptor = "imports in src/structs/coercions.ts"
 cost_tokens = 48
-cum_tokens = 7446
+cum_tokens = 7424
 
 [batches.content]
 kind = "lines"
@@ -3992,11 +3956,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 117
+position = 115
 key = 'Typescript(ExportBody { file: "src/structs/coercions.ts", start_line: 38, body_start_line: 45 })'
 descriptor = "export body at src/structs/coercions.ts:38 body 45"
 cost_tokens = 209
-cum_tokens = 7655
+cum_tokens = 7633
 
 [batches.content]
 kind = "lines"
@@ -4050,11 +4014,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 118
+position = 116
 key = 'Markdown(Section { file: "docs/reference/coercions.md", section_index: 0 })'
 descriptor = "docs/reference/coercions.md section #0"
 cost_tokens = 60
-cum_tokens = 7715
+cum_tokens = 7693
 
 [batches.content]
 kind = "lines"
@@ -4076,11 +4040,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 119
+position = 117
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 185
-cum_tokens = 7900
+cum_tokens = 7878
 
 [batches.content]
 kind = "lines"
@@ -4094,11 +4058,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 120
+position = 118
 key = 'Fs(DirListing { dir: ".vscode" })'
 descriptor = "listing of '.vscode'"
 cost_tokens = 4
-cum_tokens = 7904
+cum_tokens = 7882
 
 [batches.content]
 kind = "fs"
@@ -4108,29 +4072,11 @@ parent = ".vscode"
 entries = ["settings.json"]
 
 [[batches]]
-position = 121
-key = 'Typescript(ModuleItem { file: "examples/returning-errors.js", start_line: 19 })'
-descriptor = "module item at examples/returning-errors.js:19"
-cost_tokens = 16
-cum_tokens = 7920
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/returning-errors.js"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
+position = 119
 key = 'Typescript(ExportDoc { file: "src/structs/coercions.ts", start_line: 79 })'
 descriptor = "export doc at src/structs/coercions.ts:79"
 cost_tokens = 77
-cum_tokens = 7997
+cum_tokens = 7959
 
 [batches.content]
 kind = "lines"
@@ -4144,29 +4090,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 123
-key = 'Typescript(ModuleItem { file: "examples/custom-types.js", start_line: 7 })'
-descriptor = "module item at examples/custom-types.js:7"
-cost_tokens = 17
-cum_tokens = 8014
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/custom-types.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
+position = 120
 key = 'Typescript(ExportDoc { file: "src/structs/coercions.ts", start_line: 38 })'
 descriptor = "export doc at src/structs/coercions.ts:38"
 cost_tokens = 82
-cum_tokens = 8096
+cum_tokens = 8041
 
 [batches.content]
 kind = "lines"
@@ -4180,11 +4108,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 125
+position = 121
 key = 'Typescript(ExportNames { file: "src/structs/utilities.ts", chunk_index: 0, export_count: 13, type_only_export_count: 0 })'
 descriptor = "export names surface in src/structs/utilities.ts"
 cost_tokens = 193
-cum_tokens = 8289
+cum_tokens = 8234
 
 [batches.content]
 kind = "lines"
@@ -4382,11 +4310,11 @@ end = 222
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 122
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 60 })'
 descriptor = "export at src/structs/utilities.ts:60"
 cost_tokens = 0
-cum_tokens = 8289
+cum_tokens = 8234
 
 [batches.content]
 kind = "lines"
@@ -4408,11 +4336,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 123
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 71 })'
 descriptor = "export at src/structs/utilities.ts:71"
 cost_tokens = 0
-cum_tokens = 8289
+cum_tokens = 8234
 
 [batches.content]
 kind = "lines"
@@ -4434,11 +4362,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 124
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 140 })'
 descriptor = "export at src/structs/utilities.ts:140"
 cost_tokens = 0
-cum_tokens = 8289
+cum_tokens = 8234
 
 [batches.content]
 kind = "lines"
@@ -4460,11 +4388,11 @@ end = 141
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 125
 key = 'Typescript(ExportBody { file: "src/structs/utilities.ts", start_line: 71, body_start_line: 72 })'
 descriptor = "export body at src/structs/utilities.ts:71 body 72"
 cost_tokens = 17
-cum_tokens = 8306
+cum_tokens = 8251
 
 [batches.content]
 kind = "lines"
@@ -4478,11 +4406,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 130
+position = 126
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 106 })'
 descriptor = "export at src/structs/utilities.ts:106"
 cost_tokens = 33
-cum_tokens = 8339
+cum_tokens = 8284
 
 [batches.content]
 kind = "lines"
@@ -4504,11 +4432,11 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 127
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 197 })'
 descriptor = "export at src/structs/utilities.ts:197"
 cost_tokens = 37
-cum_tokens = 8376
+cum_tokens = 8321
 
 [batches.content]
 kind = "lines"
@@ -4530,11 +4458,11 @@ end = 200
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 128
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 80 })'
 descriptor = "export at src/structs/utilities.ts:80"
 cost_tokens = 38
-cum_tokens = 8414
+cum_tokens = 8359
 
 [batches.content]
 kind = "lines"
@@ -4556,11 +4484,11 @@ end = 84
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 129
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 221 })'
 descriptor = "export at src/structs/utilities.ts:221"
 cost_tokens = 43
-cum_tokens = 8457
+cum_tokens = 8402
 
 [batches.content]
 kind = "lines"
@@ -4582,11 +4510,11 @@ end = 225
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 130
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 171 })'
 descriptor = "export at src/structs/utilities.ts:171"
 cost_tokens = 44
-cum_tokens = 8501
+cum_tokens = 8446
 
 [batches.content]
 kind = "lines"
@@ -4608,11 +4536,11 @@ end = 175
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 131
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 17 })'
 descriptor = "export at src/structs/utilities.ts:17"
 cost_tokens = 45
-cum_tokens = 8546
+cum_tokens = 8491
 
 [batches.content]
 kind = "lines"
@@ -4626,11 +4554,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 136
+position = 132
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 21 })'
 descriptor = "export at src/structs/utilities.ts:21"
 cost_tokens = 102
-cum_tokens = 8648
+cum_tokens = 8593
 
 [batches.content]
 kind = "lines"
@@ -4644,11 +4572,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 137
+position = 133
 key = 'Typescript(ExportBody { file: "src/structs/utilities.ts", start_line: 60, body_start_line: 61 })'
 descriptor = "export body at src/structs/utilities.ts:60 body 61"
 cost_tokens = 65
-cum_tokens = 8713
+cum_tokens = 8658
 
 [batches.content]
 kind = "lines"
@@ -4662,11 +4590,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 138
+position = 134
 key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 71 })'
 descriptor = "export doc at src/structs/utilities.ts:71"
 cost_tokens = 26
-cum_tokens = 8739
+cum_tokens = 8684
 
 [batches.content]
 kind = "lines"
@@ -4680,11 +4608,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 139
+position = 135
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 30 })'
 descriptor = "export at src/structs/utilities.ts:30"
 cost_tokens = 150
-cum_tokens = 8889
+cum_tokens = 8834
 
 [batches.content]
 kind = "lines"
@@ -4698,11 +4626,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 140
+position = 136
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 44 })'
 descriptor = "export at src/structs/utilities.ts:44"
 cost_tokens = 182
-cum_tokens = 9071
+cum_tokens = 9016
 
 [batches.content]
 kind = "lines"
@@ -4716,11 +4644,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 141
+position = 137
 key = 'Typescript(ExportBody { file: "src/structs/utilities.ts", start_line: 80, body_start_line: 84 })'
 descriptor = "export body at src/structs/utilities.ts:80 body 84"
 cost_tokens = 119
-cum_tokens = 9190
+cum_tokens = 9135
 
 [batches.content]
 kind = "lines"
@@ -4734,11 +4662,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 142
+position = 138
 key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 80 })'
 descriptor = "export doc at src/structs/utilities.ts:80"
 cost_tokens = 55
-cum_tokens = 9245
+cum_tokens = 9190
 
 [batches.content]
 kind = "lines"
@@ -4752,11 +4680,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 143
+position = 139
 key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 171 })'
 descriptor = "export doc at src/structs/utilities.ts:171"
 cost_tokens = 57
-cum_tokens = 9302
+cum_tokens = 9247
 
 [batches.content]
 kind = "lines"
@@ -4770,11 +4698,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 144
+position = 140
 key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 221 })'
 descriptor = "export doc at src/structs/utilities.ts:221"
 cost_tokens = 57
-cum_tokens = 9359
+cum_tokens = 9304
 
 [batches.content]
 kind = "lines"
@@ -4788,11 +4716,11 @@ end = 219
 kind = "full"
 
 [[batches]]
-position = 145
+position = 141
 key = 'Typescript(ExportBody { file: "src/structs/utilities.ts", start_line: 106, body_start_line: 109 })'
 descriptor = "export body at src/structs/utilities.ts:106 body 109"
 cost_tokens = 206
-cum_tokens = 9565
+cum_tokens = 9510
 
 [batches.content]
 kind = "lines"
@@ -4806,11 +4734,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 146
+position = 142
 key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 197 })'
 descriptor = "export doc at src/structs/utilities.ts:197"
 cost_tokens = 63
-cum_tokens = 9628
+cum_tokens = 9573
 
 [batches.content]
 kind = "lines"
@@ -4824,11 +4752,11 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 147
+position = 143
 key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 17 })'
 descriptor = "export doc at src/structs/utilities.ts:17"
 cost_tokens = 68
-cum_tokens = 9696
+cum_tokens = 9641
 
 [batches.content]
 kind = "lines"
@@ -4842,11 +4770,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 148
+position = 144
 key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 106 })'
 descriptor = "export doc at src/structs/utilities.ts:106"
 cost_tokens = 81
-cum_tokens = 9777
+cum_tokens = 9722
 
 [batches.content]
 kind = "lines"
@@ -4860,11 +4788,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 149
+position = 145
 key = 'Typescript(ExportNames { file: "test/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in test/index.ts"
 cost_tokens = 20
-cum_tokens = 9797
+cum_tokens = 9742
 
 [batches.content]
 kind = "lines"
@@ -4878,11 +4806,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 150
+position = 146
 key = 'Typescript(ExportDoc { file: "src/structs/refinements.ts", start_line: 146 })'
 descriptor = "export doc at src/structs/refinements.ts:146"
 cost_tokens = 91
-cum_tokens = 9888
+cum_tokens = 9833
 
 [batches.content]
 kind = "lines"

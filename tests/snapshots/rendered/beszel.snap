@@ -169,8 +169,6 @@ internal/
             13→var DistDirFS, _ = fs.Sub(distDir, "dist")
         index.html
         lingui.config.ts
-            3→export default defineConfig({
-            …
         package-lock.json
         package.json
             2→	"name": "beszel",
@@ -196,7 +194,7 @@ internal/
                 33→const SystemDetail = lazy(() => import("@/components/routes/system.tsx"))
                 34→const CopyToClipboardDialog = lazy(() => import("@/components/copy-to-clipboard.tsx"))
                 36→const App = memo(() => {
-                37→	const page = useStore($router)
+                …
                 87→const Layout = () => {
                 …
                 122→const I18nApp = () => {
@@ -207,8 +205,6 @@ internal/
         tsconfig.json
         tsconfig.node.json
         vite.config.ts
-            7→export default defineConfig({
-            …
     tests/
     users/
         users.go

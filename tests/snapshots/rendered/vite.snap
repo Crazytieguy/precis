@@ -64,44 +64,7 @@ packages/
                 797→  assumptions: Record<string, boolean>,
                 798→  list: Set<string>,
                 799→): Promise<void> {
-                800→  const babel = await loadBabel()
-                801→  const result = babel.transform(code, {
-                802→    ast: true,
-                803→    code: false,
-                804→    babelrc: false,
-                805→    configFile: false,
-                806→    compact: false,
-                807→    targets,
-                808→    assumptions,
-                809→    browserslistConfigFile: false,
-                810→    plugins: [
-                811→      [
-                812→        (await import('babel-plugin-polyfill-corejs3')).default,
-                813→        {
-                814→          method: 'usage-global',
-                815→          version: _require('core-js/package.json').version,
-                816→          shippedProposals: true,
-                817→        },
-                818→      ],
-                819→      [
-                820→        (await import('babel-plugin-polyfill-regenerator')).default,
-                821→        {
-                822→          method: 'usage-global',
-                823→        },
-                824→      ],
-                825→    ],
-                826→  })
-                827→  for (const node of result!.ast!.program.body) {
-                828→    if (node.type === 'ImportDeclaration') {
-                829→      const source = node.source.value
-                830→      if (
-                831→        source.startsWith('core-js/') ||
-                832→        source.startsWith('regenerator-runtime/')
-                833→      ) {
-                834→        list.add(source)
-                835→      }
-                836→    }
-                837→  }
+                …
                 1057→export const cspHashes: string[] = [
                 1058→  safari10NoModuleFix,
                 1059→  systemJSInlineCode,
@@ -141,7 +104,11 @@ packages/
         package.json
         rolldown.config.ts
             161→export default defineConfig([
-            …
+            162→  envConfig,
+            163→  clientConfig,
+            164→  nodeConfig,
+            165→  moduleRunnerConfig,
+            166→])
         rolldown.dts.config.ts
             35→export default defineConfig({
             …
@@ -169,8 +136,22 @@ packages/
                     …
                 esmEvaluator.ts
                     15→export class ESModulesEvaluator implements ModuleEvaluator {
+                    16→  public readonly startOffset: number =
+                    17→    getAsyncFunctionDeclarationPaddingLineCount()
+                    19→  async runInlinedModule(
+                    20→    context: ModuleRunnerContext,
+                    21→    code: string,
+                    22→  ): Promise<any> {
+                    …
+                    47→  runExternalModule(filepath: string): Promise<any> {
                     …
                 evaluatedModules.ts
+                    11→export class EvaluatedModuleNode {
+                    …
+                    29→export class EvaluatedModules {
+                    …
+                    147→export function normalizeModuleId(file: string): string {
+                    …
                 hmrHandler.ts
                 hmrLogger.ts
                 importMetaResolver.ts
@@ -182,6 +163,7 @@ packages/
                     7→} from './evaluatedModules'
                     8→export { ModuleRunner } from './runner'
                     9→export { ESModulesEvaluator } from './esmEvaluator'
+                    15→export { createWebSocketModuleRunnerTransport } from '../shared/moduleRunnerTransport'
                 runner.ts
                     38→export class ModuleRunner {
                     …
@@ -228,6 +210,22 @@ packages/
                 external.ts
                 http.ts
                 idResolver.ts
+                    11→export type ResolveIdFn = (
+                    12→  environment: PartialEnvironment,
+                    13→  id: string,
+                    14→  importer?: string,
+                    15→  aliasOnly?: boolean,
+                    16→) => Promise<string | undefined>
+                    23→export function createBackCompatIdResolver(
+                    24→  config: ResolvedConfig,
+                    25→  options?: Partial<InternalResolveOptions>,
+                    26→): ResolveIdFn {
+                    …
+                    42→export function createIdResolver(
+                    43→  config: ResolvedConfig,
+                    44→  options?: Partial<InternalResolveOptions>,
+                    45→): ResolveIdFn {
+                    …
                 index.ts
                     1→import type * as Rolldown from 'rolldown'
                     2→import {
@@ -314,6 +312,14 @@ packages/
         tsconfig.check.json
         tsconfig.json
         types/
+            customEvent.d.ts
+            hmrPayload.d.ts
+            hot.d.ts
+            import-meta.d.ts
+            importGlob.d.ts
+            importMeta.d.ts
+            internal/
+            metadata.d.ts
 patches/
     chokidar@3.6.0.patch
     dotenv-expand@13.0.0.patch

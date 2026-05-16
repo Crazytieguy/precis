@@ -141,6 +141,7 @@ packages/
         src/
             app.css
             assets/
+                favicon.ico
             index.tsx
             locales/
             modules/
@@ -291,6 +292,16 @@ packages/
             integrations/
                 cli.md
                 npm-package.md
+                    1→# NPM Package
+                    …
+                    9→## Installation
+                    …
+                    13→### Using npm
+                    …
+                    19→### Using yarn
+                    …
+                    25→### Using pnpm
+                    …
                 versioning.md
             public/
             resources/
@@ -338,14 +349,10 @@ packages/
                 api.constants.ts
                 api.models.test.ts
                 api.models.ts
-                    3→export { isApiClientErrorWithCode, isApiClientErrorWithStatusCode };
-                    …
             crypto/
                 crypto.constants.ts
                 crypto.types.ts
                 crypto.usecases.ts
-                    7→export { decryptNote, encryptNote };
-                    …
                 encryption-algorithms/
                 serialization/
             files/
@@ -373,12 +380,8 @@ packages/
                 notes.models.test.ts
                 notes.models.ts
                 notes.services.ts
-                    3→export { fetchNote, storeNote };
-                    …
                 notes.types.ts
                 notes.usecases.ts
-                    8→export { createNote };
-                    …
         tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml
