@@ -561,7 +561,9 @@ fn body_fu_factor(file: &Path) -> f64 {
 }
 
 fn c_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(file, ctx, is_header_file(file)) * secondary_root_pair_factor(file, ctx)
+    file_depth_factor(file, ctx, is_header_file(file))
+        * secondary_root_pair_factor(file, ctx)
+        * stdlib_shim_factor(file, ctx)
 }
 
 /// Damp depth-1 `.c/.h` files whose stem doesn't match the repo's
@@ -605,19 +607,18 @@ fn header_banner_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Headers' banner is often the canonical "what is this header"
     // signal; .c file banners are usually license boilerplate.
     let cat = if is_header_file(file) { 0.55 } else { 0.05 };
-    mix_signals(cat, 0.4, 0.7, c_depth_factor(file, ctx)) * stdlib_shim_factor(file, ctx)
+    mix_signals(cat, 0.4, 0.7, c_depth_factor(file, ctx))
 }
 
 fn includes_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let cat = (0.30 * header_cat_factor(file)).min(1.0);
-    mix_signals(cat, 0.55, 0.3, c_depth_factor(file, ctx)) * stdlib_shim_factor(file, ctx)
+    mix_signals(cat, 0.55, 0.3, c_depth_factor(file, ctx))
 }
 
 fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
     let cat = (0.80 * header_cat_factor(file)).min(1.0);
     mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx))
         * names_surface_chunk_factor(chunk_index, chunk_count)
-        * stdlib_shim_factor(file, ctx)
 }
 
 /// Vendored / shim standard-library headers (`include/stdarg.h`,
@@ -627,6 +628,8 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
 /// own translation units can `#include <stdarg.h>`. NSes never anchor
 /// on their decl-names surface. Apply a flat demotion so they sit
 /// behind real project headers in the early budget.
+const STDLIB_SHIM_FACTOR: f64 = 0.25;
+
 fn stdlib_shim_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if !is_header_file(file) || ctx.depth_from_root(file) < 2 {
         return 1.0;
@@ -641,11 +644,6 @@ fn stdlib_shim_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-const STDLIB_SHIM_FACTOR: f64 = 0.25;
-
-/// C99/C11 standard-library header basenames (extension stripped). A
-/// `.h` file at depth ≥ 2 with this stem is almost certainly a vendored
-/// compat shim — the project's own headers don't collide with this set.
 fn is_known_c_stdlib_stem(stem: &str) -> bool {
     matches!(
         stem,
@@ -685,21 +683,21 @@ fn decl_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.70 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.85 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.65, c_depth_factor(file, ctx)) * stdlib_shim_factor(file, ctx)
+    mix_signals(cat, fu, 0.65, c_depth_factor(file, ctx))
 }
 
 fn decl_doc_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.20 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.6 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.8, c_depth_factor(file, ctx)) * stdlib_shim_factor(file, ctx)
+    mix_signals(cat, fu, 0.8, c_depth_factor(file, ctx))
 }
 
 fn decl_body_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.30 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.80 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.7, c_depth_factor(file, ctx)) * stdlib_shim_factor(file, ctx)
+    mix_signals(cat, fu, 0.7, c_depth_factor(file, ctx))
 }
 
 fn init_table_value(file: &Path, ctx: &WalkCtx) -> f64 {
