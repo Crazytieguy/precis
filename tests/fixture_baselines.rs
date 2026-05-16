@@ -31,6 +31,9 @@
 //!
 //! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all four artifact
 //! types (sets `INSTA_UPDATE=always` internally for the rendered snapshot).
+//! A successful regen run *is* a passing test run — the on-disk baselines
+//! and the freshly-computed `actual` are byte-identical when it returns,
+//! so a follow-up plain `cargo t` is redundant.
 
 use std::fs;
 use std::path::{Path, PathBuf};
