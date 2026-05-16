@@ -134,4 +134,5 @@ issues, not calibration ones, and may need a respawn of step 2.
   ones than a direct draft.
 - Don't edit a frozen NS — the calibration loop iterates the walker
   against the NS, not the other way around.
-- Don't commit `.new` sidecars (gitignored by default; CI guards).
+- Don't commit `.new` sidecars (gitignored by default; auto-removed
+  on the next matching or `UPDATE_BASELINES=1` run).

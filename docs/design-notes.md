@@ -94,8 +94,8 @@ itself is the source of truth for architecture and invariants.
     + mdbook/toasty/sps/otree and no canonical "what Rust is famous
     for" CLI.
   Pick by reasoning from general archetype gaps, not by reading
-  `tests/validation/`. Each new fixture is permanent CI time + a
-  corpus-wide divergence regen on every future walker change.
+  `tests/validation/`. Each new fixture is permanent `cargo t` time
+  + a corpus-wide divergence regen on every future walker change.
 - **Growth envelope**: each batch's marginal cost must satisfy
   `cost_i ≤ 100 + 0.3 · cumulative_before`. Per-batch is too local;
   cumulative matches the author's intuition ("doubling aggregate on
