@@ -5,7 +5,7 @@ batch_count = 179
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 81
 cum_tokens = 81
@@ -14,12 +14,12 @@ cum_tokens = 81
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq"
+parent = "."
 entries = [".gitattributes", ".github", ".gitignore", ".gitmodules", "AUTHORS", "COPYING", "ChangeLog", "Dockerfile", "KEYS", "Makefile.am", "NEWS.md", "README.md", "SECURITY.md", "build", "compile-ios.sh", "config", "configure.ac", "docs", "jq.1.prebuilt", "jq.spec", "libjq.pc.in", "m4", "scripts", "sig", "src", "tests", "vendor"]
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/config" })'
+key = 'Fs(DirListing { dir: "config" })'
 descriptor = "listing of 'config'"
 cost_tokens = 9
 cum_tokens = 90
@@ -28,12 +28,12 @@ cum_tokens = 90
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/config"
+parent = "config"
 entries = [".gitignore", "m4"]
 
 [[batches]]
 position = 3
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 64
 cum_tokens = 154
@@ -42,7 +42,7 @@ cum_tokens = 154
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 1
 end = 1
 
@@ -50,7 +50,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 3
 end = 3
 
@@ -59,7 +59,7 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/m4" })'
+key = 'Fs(DirListing { dir: "m4" })'
 descriptor = "listing of 'm4'"
 cost_tokens = 23
 cum_tokens = 177
@@ -68,12 +68,12 @@ cum_tokens = 177
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/m4"
+parent = "m4"
 entries = ["ax_compare_version.m4", "ax_prog_bison_version.m4", "ax_pthread.m4"]
 
 [[batches]]
 position = 5
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md" })'
+key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 71
 cum_tokens = 248
@@ -82,7 +82,7 @@ cum_tokens = 248
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 5
 end = 5
 
@@ -90,7 +90,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 10
 end = 10
 
@@ -98,7 +98,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 12
 end = 12
 
@@ -106,7 +106,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 16
 end = 16
 
@@ -114,7 +114,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 34
 end = 34
 
@@ -122,7 +122,7 @@ end = 34
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 67
 end = 67
 
@@ -130,7 +130,7 @@ end = 67
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 73
 end = 73
 
@@ -138,7 +138,7 @@ end = 73
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 6
 end = 6
 
@@ -146,7 +146,7 @@ end = 6
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 11
 end = 11
 
@@ -154,7 +154,7 @@ end = 11
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 13
 end = 13
 
@@ -162,7 +162,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 17
 end = 17
 
@@ -170,7 +170,7 @@ end = 17
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 35
 end = 35
 
@@ -178,7 +178,7 @@ end = 35
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 68
 end = 68
 
@@ -186,7 +186,7 @@ end = 68
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 74
 end = 74
 
@@ -195,7 +195,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 6
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor" })'
+key = 'Fs(DirListing { dir: "vendor" })'
 descriptor = "listing of 'vendor'"
 cost_tokens = 9
 cum_tokens = 257
@@ -204,12 +204,12 @@ cum_tokens = 257
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor"
+parent = "vendor"
 entries = ["decNumber", "oniguruma"]
 
 [[batches]]
 position = 7
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs" })'
+key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 52
 cum_tokens = 309
@@ -218,12 +218,12 @@ cum_tokens = 309
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs"
+parent = "docs"
 entries = ["Pipfile", "Pipfile.lock", "README.md", "build_manpage.py", "build_mantests.py", "build_website.py", "content", "manual_schema.yml", "public", "templates", "validate_manual_schema.py"]
 
 [[batches]]
 position = 8
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
 descriptor = "README headline in docs/README.md"
 cost_tokens = 49
 cum_tokens = 358
@@ -232,7 +232,7 @@ cum_tokens = 358
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+path = "docs/README.md"
 start = 1
 end = 2
 
@@ -240,7 +240,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+path = "docs/README.md"
 start = 4
 end = 5
 
@@ -249,7 +249,7 @@ kind = "full"
 
 [[batches]]
 position = 9
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content" })'
+key = 'Fs(DirListing { dir: "docs/content" })'
 descriptor = "listing of 'docs/content'"
 cost_tokens = 13
 cum_tokens = 371
@@ -258,12 +258,12 @@ cum_tokens = 371
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content"
+parent = "docs/content"
 entries = ["download", "index.yml", "manual", "tutorial"]
 
 [[batches]]
 position = 10
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/templates" })'
+key = 'Fs(DirListing { dir: "docs/templates" })'
 descriptor = "listing of 'docs/templates'"
 cost_tokens = 21
 cum_tokens = 392
@@ -272,12 +272,12 @@ cum_tokens = 392
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/templates"
+parent = "docs/templates"
 entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
 
 [[batches]]
 position = 11
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 49
 cum_tokens = 441
@@ -286,7 +286,7 @@ cum_tokens = 441
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 5
 end = 5
 
@@ -294,7 +294,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 7
 end = 8
 
@@ -303,7 +303,7 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public" })'
+key = 'Fs(DirListing { dir: "docs/public" })'
 descriptor = "listing of 'docs/public'"
 cost_tokens = 31
 cum_tokens = 472
@@ -312,12 +312,12 @@ cum_tokens = 472
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public"
+parent = "docs/public"
 entries = [".htaccess", "CNAME", "css", "icon.png", "icon.svg", "jq.svg", "js", "robots.txt"]
 
 [[batches]]
 position = 13
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/config/m4" })'
+key = 'Fs(DirListing { dir: "config/m4" })'
 descriptor = "listing of 'config/m4'"
 cost_tokens = 47
 cum_tokens = 519
@@ -326,12 +326,12 @@ cum_tokens = 519
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/config/m4"
+parent = "config/m4"
 entries = [".gitignore", "check-math-func.m4", "find-func-no-libs.m4", "find-func-no-libs2.m4", "find-func.m4", "misc.m4"]
 
 [[batches]]
 position = 14
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/src" })'
+key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 233
 cum_tokens = 752
@@ -340,12 +340,12 @@ cum_tokens = 752
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/src"
+parent = "src"
 entries = ["builtin.c", "builtin.h", "builtin.jq", "bytecode.c", "bytecode.h", "compile.c", "compile.h", "exec_stack.h", "execute.c", "inject_errors.c", "jq.h", "jq_parser.h", "jq_test.c", "jv.c", "jv.h", "jv_alloc.c", "jv_alloc.h", "jv_aux.c", "jv_dtoa.c", "jv_dtoa.h", "jv_dtoa_tsd.c", "jv_dtoa_tsd.h", "jv_file.c", "jv_parse.c", "jv_print.c", "jv_private.h", "jv_thread.h", "jv_unicode.c", "jv_unicode.h", "jv_utf8_tables.h", "lexer.c", "lexer.h", "lexer.l", "libm.h", "linker.c", "linker.h", "locfile.c", "locfile.h", "main.c", "opcode_list.h", "parser.c", "parser.h", "parser.y", "util.c", "util.h"]
 
 [[batches]]
 position = 15
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_dtoa_tsd.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_dtoa_tsd.h"
 cost_tokens = 19
 cum_tokens = 771
@@ -354,7 +354,7 @@ cum_tokens = 771
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.h"
+path = "src/jv_dtoa_tsd.h"
 start = 3
 end = 3
 
@@ -362,7 +362,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.h"
+path = "src/jv_dtoa_tsd.h"
 start = 4
 end = 4
 
@@ -371,7 +371,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 16
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_utf8_tables.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_utf8_tables.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_utf8_tables.h"
 cost_tokens = 20
 cum_tokens = 791
@@ -380,7 +380,7 @@ cum_tokens = 791
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_utf8_tables.h"
+path = "src/jv_utf8_tables.h"
 start = 1
 end = 1
 
@@ -388,7 +388,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_utf8_tables.h"
+path = "src/jv_utf8_tables.h"
 start = 2
 end = 2
 
@@ -397,7 +397,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 17
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_private.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_private.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_private.h"
 cost_tokens = 30
 cum_tokens = 821
@@ -406,7 +406,7 @@ cum_tokens = 821
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_private.h"
+path = "src/jv_private.h"
 start = 4
 end = 5
 
@@ -414,7 +414,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_private.h"
+path = "src/jv_private.h"
 start = 6
 end = 6
 
@@ -423,7 +423,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 18
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jq_parser.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jq_parser.h"
 cost_tokens = 37
 cum_tokens = 858
@@ -432,7 +432,7 @@ cum_tokens = 858
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h"
+path = "src/jq_parser.h"
 start = 6
 end = 7
 
@@ -440,7 +440,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h"
+path = "src/jq_parser.h"
 start = 8
 end = 8
 
@@ -449,7 +449,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 19
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/linker.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/linker.h"
 cost_tokens = 46
 cum_tokens = 904
@@ -458,7 +458,7 @@ cum_tokens = 904
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.h"
+path = "src/linker.h"
 start = 4
 end = 5
 
@@ -466,7 +466,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.h"
+path = "src/linker.h"
 start = 6
 end = 6
 
@@ -475,7 +475,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 20
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/exec_stack.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/exec_stack.h"
 cost_tokens = 48
 cum_tokens = 952
@@ -484,7 +484,7 @@ cum_tokens = 952
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 40
 end = 40
 
@@ -492,7 +492,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 44
 end = 44
 
@@ -500,7 +500,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 50
 end = 50
 
@@ -508,7 +508,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 52
 end = 52
 
@@ -516,7 +516,7 @@ end = 52
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 41
 end = 41
 
@@ -524,7 +524,7 @@ end = 41
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 45
 end = 45
 
@@ -532,7 +532,7 @@ end = 45
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 51
 end = 51
 
@@ -540,7 +540,7 @@ end = 51
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 53
 end = 53
 
@@ -549,7 +549,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 21
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/builtin.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/builtin.h"
 cost_tokens = 52
 cum_tokens = 1004
@@ -558,7 +558,7 @@ cum_tokens = 1004
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+path = "src/builtin.h"
 start = 8
 end = 8
 
@@ -566,7 +566,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+path = "src/builtin.h"
 start = 10
 end = 10
 
@@ -574,7 +574,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+path = "src/builtin.h"
 start = 24
 end = 24
 
@@ -582,7 +582,7 @@ end = 24
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+path = "src/builtin.h"
 start = 9
 end = 9
 
@@ -590,7 +590,7 @@ end = 9
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+path = "src/builtin.h"
 start = 11
 end = 11
 
@@ -598,7 +598,7 @@ end = 11
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+path = "src/builtin.h"
 start = 25
 end = 25
 
@@ -607,7 +607,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 22
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/util.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/util.h"
 cost_tokens = 59
 cum_tokens = 1063
@@ -616,7 +616,7 @@ cum_tokens = 1063
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+path = "src/util.h"
 start = 16
 end = 18
 
@@ -624,7 +624,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+path = "src/util.h"
 start = 44
 end = 44
 
@@ -632,7 +632,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+path = "src/util.h"
 start = 19
 end = 19
 
@@ -640,7 +640,7 @@ end = 19
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+path = "src/util.h"
 start = 45
 end = 45
 
@@ -649,7 +649,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 23
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h", start_line: 44 })'
+key = 'C(Decl { file: "src/util.h", start_line: 44 })'
 descriptor = "c decl at src/util.h:44"
 cost_tokens = 13
 cum_tokens = 1076
@@ -658,7 +658,7 @@ cum_tokens = 1076
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+path = "src/util.h"
 start = 44
 end = 45
 
@@ -667,7 +667,7 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h" })'
+key = 'C(Includes { file: "src/jv_alloc.h" })'
 descriptor = "c includes in src/jv_alloc.h"
 cost_tokens = 10
 cum_tokens = 1086
@@ -676,7 +676,7 @@ cum_tokens = 1086
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h"
+path = "src/jv_alloc.h"
 start = 4
 end = 4
 
@@ -685,7 +685,7 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h" })'
+key = 'C(Includes { file: "src/locfile.h" })'
 descriptor = "c includes in src/locfile.h"
 cost_tokens = 10
 cum_tokens = 1096
@@ -694,7 +694,7 @@ cum_tokens = 1096
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 4
 end = 4
 
@@ -703,7 +703,7 @@ kind = "full"
 
 [[batches]]
 position = 26
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h" })'
+key = 'C(Includes { file: "src/parser.h" })'
 descriptor = "c includes in src/parser.h"
 cost_tokens = 11
 cum_tokens = 1107
@@ -712,7 +712,7 @@ cum_tokens = 1107
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 50
 end = 50
 
@@ -721,7 +721,7 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h", start_line: 40 })'
+key = 'C(Decl { file: "src/exec_stack.h", start_line: 40 })'
 descriptor = "c decl at src/exec_stack.h:40"
 cost_tokens = 41
 cum_tokens = 1148
@@ -730,7 +730,7 @@ cum_tokens = 1148
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 40
 end = 43
 
@@ -739,7 +739,7 @@ kind = "full"
 
 [[batches]]
 position = 28
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h", start_line: 52 })'
+key = 'C(Decl { file: "src/exec_stack.h", start_line: 52 })'
 descriptor = "c decl at src/exec_stack.h:52"
 cost_tokens = 49
 cum_tokens = 1197
@@ -748,7 +748,7 @@ cum_tokens = 1197
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 52
 end = 56
 
@@ -757,7 +757,7 @@ kind = "full"
 
 [[batches]]
 position = 29
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/locfile.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/locfile.h"
 cost_tokens = 107
 cum_tokens = 1304
@@ -766,7 +766,7 @@ cum_tokens = 1304
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 6
 end = 6
 
@@ -774,7 +774,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 12
 end = 12
 
@@ -782,7 +782,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 23
 end = 27
 
@@ -790,7 +790,7 @@ end = 27
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 7
 end = 7
 
@@ -798,7 +798,7 @@ end = 7
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 13
 end = 13
 
@@ -806,7 +806,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 28
 end = 28
 
@@ -815,7 +815,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 30
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h", start_line: 6 })'
+key = 'C(Decl { file: "src/locfile.h", start_line: 6 })'
 descriptor = "c decl at src/locfile.h:6"
 cost_tokens = 15
 cum_tokens = 1319
@@ -824,7 +824,7 @@ cum_tokens = 1319
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 6
 end = 8
 
@@ -833,7 +833,7 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_alloc.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_alloc.h"
 cost_tokens = 131
 cum_tokens = 1450
@@ -842,7 +842,7 @@ cum_tokens = 1450
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h"
+path = "src/jv_alloc.h"
 start = 6
 end = 13
 
@@ -850,7 +850,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h"
+path = "src/jv_alloc.h"
 start = 14
 end = 14
 
@@ -859,7 +859,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 32
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq.h" })'
+key = 'C(Includes { file: "src/jq.h" })'
 descriptor = "c includes in src/jq.h"
 cost_tokens = 21
 cum_tokens = 1471
@@ -868,7 +868,7 @@ cum_tokens = 1471
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq.h"
+path = "src/jq.h"
 start = 4
 end = 5
 
@@ -877,7 +877,7 @@ kind = "full"
 
 [[batches]]
 position = 33
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h" })'
+key = 'C(Includes { file: "src/jq_parser.h" })'
 descriptor = "c includes in src/jq_parser.h"
 cost_tokens = 21
 cum_tokens = 1492
@@ -886,7 +886,7 @@ cum_tokens = 1492
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h"
+path = "src/jq_parser.h"
 start = 3
 end = 4
 
@@ -895,7 +895,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h" })'
+key = 'C(Includes { file: "src/util.h" })'
 descriptor = "c includes in src/util.h"
 cost_tokens = 21
 cum_tokens = 1513
@@ -904,7 +904,7 @@ cum_tokens = 1513
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+path = "src/util.h"
 start = 14
 end = 14
 
@@ -912,7 +912,7 @@ end = 14
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+path = "src/util.h"
 start = 60
 end = 60
 
@@ -921,7 +921,7 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_unicode.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_unicode.h"
 cost_tokens = 147
 cum_tokens = 1660
@@ -930,7 +930,7 @@ cum_tokens = 1660
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+path = "src/jv_unicode.h"
 start = 4
 end = 6
 
@@ -938,7 +938,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+path = "src/jv_unicode.h"
 start = 8
 end = 8
 
@@ -946,7 +946,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+path = "src/jv_unicode.h"
 start = 10
 end = 11
 
@@ -954,7 +954,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+path = "src/jv_unicode.h"
 start = 13
 end = 13
 
@@ -962,7 +962,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+path = "src/jv_unicode.h"
 start = 7
 end = 7
 
@@ -970,7 +970,7 @@ end = 7
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+path = "src/jv_unicode.h"
 start = 9
 end = 9
 
@@ -978,7 +978,7 @@ end = 9
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+path = "src/jv_unicode.h"
 start = 12
 end = 12
 
@@ -986,7 +986,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+path = "src/jv_unicode.h"
 start = 14
 end = 14
 
@@ -995,7 +995,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 36
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/bytecode.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/bytecode.h"
 cost_tokens = 167
 cum_tokens = 1827
@@ -1004,7 +1004,7 @@ cum_tokens = 1827
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 20
 end = 20
 
@@ -1012,7 +1012,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 32
 end = 32
 
@@ -1020,7 +1020,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 44
 end = 44
 
@@ -1028,7 +1028,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 47
 end = 48
 
@@ -1036,7 +1036,7 @@ end = 48
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 59
 end = 59
 
@@ -1044,7 +1044,7 @@ end = 59
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 70
 end = 70
 
@@ -1052,7 +1052,7 @@ end = 70
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 72
 end = 72
 
@@ -1060,7 +1060,7 @@ end = 72
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 90
 end = 91
 
@@ -1068,7 +1068,7 @@ end = 91
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 93
 end = 94
 
@@ -1076,7 +1076,7 @@ end = 94
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 21
 end = 21
 
@@ -1084,7 +1084,7 @@ end = 21
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 33
 end = 33
 
@@ -1092,7 +1092,7 @@ end = 33
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 45
 end = 45
 
@@ -1100,7 +1100,7 @@ end = 45
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 49
 end = 49
 
@@ -1108,7 +1108,7 @@ end = 49
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 60
 end = 60
 
@@ -1116,7 +1116,7 @@ end = 60
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 71
 end = 71
 
@@ -1124,7 +1124,7 @@ end = 71
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 73
 end = 73
 
@@ -1132,7 +1132,7 @@ end = 73
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 92
 end = 92
 
@@ -1140,7 +1140,7 @@ end = 92
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 95
 end = 95
 
@@ -1149,7 +1149,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 59 })'
+key = 'C(Decl { file: "src/bytecode.h", start_line: 59 })'
 descriptor = "c decl at src/bytecode.h:59"
 cost_tokens = 35
 cum_tokens = 1862
@@ -1158,7 +1158,7 @@ cum_tokens = 1862
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 59
 end = 63
 
@@ -1167,7 +1167,7 @@ kind = "full"
 
 [[batches]]
 position = 38
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 32 })'
+key = 'C(Decl { file: "src/bytecode.h", start_line: 32 })'
 descriptor = "c decl at src/bytecode.h:32"
 cost_tokens = 62
 cum_tokens = 1924
@@ -1176,7 +1176,7 @@ cum_tokens = 1924
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 32
 end = 34
 
@@ -1184,7 +1184,7 @@ end = 34
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 36
 end = 36
 
@@ -1192,7 +1192,7 @@ end = 36
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 38
 end = 39
 
@@ -1200,7 +1200,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 41
 end = 42
 
@@ -1209,7 +1209,7 @@ kind = "full"
 
 [[batches]]
 position = 39
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_file.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_file.c"
 cost_tokens = 21
 cum_tokens = 1945
@@ -1218,7 +1218,7 @@ cum_tokens = 1945
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c"
+path = "src/jv_file.c"
 start = 12
 end = 12
 
@@ -1226,7 +1226,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c"
+path = "src/jv_file.c"
 start = 13
 end = 13
 
@@ -1235,7 +1235,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 40
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c", start_line: 12 })'
+key = 'C(Decl { file: "src/jv_file.c", start_line: 12 })'
 descriptor = "c decl at src/jv_file.c:12"
 cost_tokens = 0
 cum_tokens = 1945
@@ -1244,7 +1244,7 @@ cum_tokens = 1945
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c"
+path = "src/jv_file.c"
 start = 12
 end = 12
 
@@ -1252,7 +1252,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c"
+path = "src/jv_file.c"
 start = 13
 end = 13
 
@@ -1261,7 +1261,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 41
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h", start_line: 12 })'
+key = 'C(Decl { file: "src/locfile.h", start_line: 12 })'
 descriptor = "c decl at src/locfile.h:12"
 cost_tokens = 77
 cum_tokens = 2022
@@ -1270,7 +1270,7 @@ cum_tokens = 2022
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+path = "src/locfile.h"
 start = 12
 end = 21
 
@@ -1279,7 +1279,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h" })'
+key = 'C(Includes { file: "src/builtin.h" })'
 descriptor = "c includes in src/builtin.h"
 cost_tokens = 31
 cum_tokens = 2053
@@ -1288,7 +1288,7 @@ cum_tokens = 2053
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+path = "src/builtin.h"
 start = 4
 end = 6
 
@@ -1297,7 +1297,7 @@ kind = "full"
 
 [[batches]]
 position = 43
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv.h" })'
+key = 'C(Includes { file: "src/jv.h" })'
 descriptor = "c includes in src/jv.h"
 cost_tokens = 31
 cum_tokens = 2084
@@ -1306,7 +1306,7 @@ cum_tokens = 2084
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv.h"
+path = "src/jv.h"
 start = 4
 end = 6
 
@@ -1315,7 +1315,7 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_dtoa.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_dtoa.h"
 cost_tokens = 206
 cum_tokens = 2290
@@ -1324,7 +1324,7 @@ cum_tokens = 2290
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 3
 end = 3
 
@@ -1332,7 +1332,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 5
 end = 6
 
@@ -1340,7 +1340,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 11
 end = 12
 
@@ -1348,7 +1348,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 14
 end = 14
 
@@ -1356,7 +1356,7 @@ end = 14
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 17
 end = 18
 
@@ -1364,7 +1364,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 20
 end = 21
 
@@ -1372,7 +1372,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 4
 end = 4
 
@@ -1380,7 +1380,7 @@ end = 4
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 7
 end = 7
 
@@ -1388,7 +1388,7 @@ end = 7
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 13
 end = 13
 
@@ -1396,7 +1396,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 15
 end = 15
 
@@ -1404,7 +1404,7 @@ end = 15
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 19
 end = 19
 
@@ -1412,7 +1412,7 @@ end = 19
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 22
 end = 22
 
@@ -1421,7 +1421,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 45
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h", start_line: 6 })'
+key = 'C(Decl { file: "src/jv_dtoa.h", start_line: 6 })'
 descriptor = "c decl at src/jv_dtoa.h:6"
 cost_tokens = 32
 cum_tokens = 2322
@@ -1430,7 +1430,7 @@ cum_tokens = 2322
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+path = "src/jv_dtoa.h"
 start = 6
 end = 9
 
@@ -1439,7 +1439,7 @@ kind = "full"
 
 [[batches]]
 position = 46
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h" })'
+key = 'C(Includes { file: "src/lexer.h" })'
 descriptor = "c includes in src/lexer.h"
 cost_tokens = 40
 cum_tokens = 2362
@@ -1448,7 +1448,7 @@ cum_tokens = 2362
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 258
 end = 261
 
@@ -1457,7 +1457,7 @@ kind = "full"
 
 [[batches]]
 position = 47
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h" })'
+key = 'C(Includes { file: "src/bytecode.h" })'
 descriptor = "c includes in src/bytecode.h"
 cost_tokens = 42
 cum_tokens = 2404
@@ -1466,7 +1466,7 @@ cum_tokens = 2404
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 3
 end = 3
 
@@ -1474,7 +1474,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 5
 end = 5
 
@@ -1482,7 +1482,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 9
 end = 9
 
@@ -1490,7 +1490,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 16
 end = 16
 
@@ -1499,7 +1499,7 @@ kind = "full"
 
 [[batches]]
 position = 48
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h" })'
+key = 'C(Includes { file: "src/compile.h" })'
 descriptor = "c includes in src/compile.h"
 cost_tokens = 43
 cum_tokens = 2447
@@ -1508,7 +1508,7 @@ cum_tokens = 2447
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 3
 end = 6
 
@@ -1517,7 +1517,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 72 })'
+key = 'C(Decl { file: "src/bytecode.h", start_line: 72 })'
 descriptor = "c decl at src/bytecode.h:72"
 cost_tokens = 112
 cum_tokens = 2559
@@ -1526,7 +1526,7 @@ cum_tokens = 2559
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 72
 end = 74
 
@@ -1534,7 +1534,7 @@ end = 74
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 76
 end = 77
 
@@ -1542,7 +1542,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 79
 end = 80
 
@@ -1550,7 +1550,7 @@ end = 80
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 82
 end = 83
 
@@ -1558,7 +1558,7 @@ end = 83
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 85
 end = 85
 
@@ -1566,7 +1566,7 @@ end = 85
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 87
 end = 88
 
@@ -1575,7 +1575,7 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jq_test.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jq_test.c"
 cost_tokens = 36
 cum_tokens = 2595
@@ -1584,7 +1584,7 @@ cum_tokens = 2595
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 21
 end = 21
 
@@ -1592,7 +1592,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 78
 end = 78
 
@@ -1600,7 +1600,7 @@ end = 78
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 22
 end = 22
 
@@ -1608,7 +1608,7 @@ end = 22
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 79
 end = 79
 
@@ -1617,7 +1617,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 51
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c", start_line: 21 })'
+key = 'C(Decl { file: "src/jq_test.c", start_line: 21 })'
 descriptor = "c decl at src/jq_test.c:21"
 cost_tokens = 0
 cum_tokens = 2595
@@ -1626,7 +1626,7 @@ cum_tokens = 2595
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 21
 end = 21
 
@@ -1634,7 +1634,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 22
 end = 22
 
@@ -1643,7 +1643,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 52
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c", start_line: 78 })'
+key = 'C(Decl { file: "src/jq_test.c", start_line: 78 })'
 descriptor = "c decl at src/jq_test.c:78"
 cost_tokens = 14
 cum_tokens = 2609
@@ -1652,7 +1652,7 @@ cum_tokens = 2609
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 78
 end = 80
 
@@ -1661,7 +1661,7 @@ kind = "full"
 
 [[batches]]
 position = 53
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 48 })'
+key = 'C(Decl { file: "src/bytecode.h", start_line: 48 })'
 descriptor = "c decl at src/bytecode.h:48"
 cost_tokens = 123
 cum_tokens = 2732
@@ -1670,7 +1670,7 @@ cum_tokens = 2732
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 48
 end = 57
 
@@ -1679,7 +1679,7 @@ kind = "full"
 
 [[batches]]
 position = 54
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", chunk_index: 2 })'
+key = 'C(DeclNames { file: "src/lexer.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in src/lexer.h"
 cost_tokens = 82
 cum_tokens = 2814
@@ -1688,7 +1688,7 @@ cum_tokens = 2814
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 518
 end = 518
 
@@ -1696,7 +1696,7 @@ end = 518
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 520
 end = 520
 
@@ -1704,7 +1704,7 @@ end = 520
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 522
 end = 522
 
@@ -1712,7 +1712,7 @@ end = 522
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 519
 end = 519
 
@@ -1720,7 +1720,7 @@ end = 519
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 521
 end = 521
 
@@ -1728,7 +1728,7 @@ end = 521
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 523
 end = 523
 
@@ -1737,7 +1737,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 55
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/parser.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/parser.h"
 cost_tokens = 266
 cum_tokens = 3080
@@ -1746,7 +1746,7 @@ cum_tokens = 3080
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 51
 end = 51
 
@@ -1754,7 +1754,7 @@ end = 51
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 53
 end = 54
 
@@ -1762,7 +1762,7 @@ end = 54
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 126
 end = 146
 
@@ -1770,7 +1770,7 @@ end = 146
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 52
 end = 52
 
@@ -1778,7 +1778,7 @@ end = 52
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 55
 end = 55
 
@@ -1787,7 +1787,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 56
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", start_line: 126 })'
+key = 'C(Decl { file: "src/parser.h", start_line: 126 })'
 descriptor = "c decl at src/parser.h:126"
 cost_tokens = 0
 cum_tokens = 3080
@@ -1796,7 +1796,7 @@ cum_tokens = 3080
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 126
 end = 126
 
@@ -1805,7 +1805,7 @@ kind = "full"
 
 [[batches]]
 position = 57
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", start_line: 126 })'
+key = 'C(DeclDoc { file: "src/parser.h", start_line: 126 })'
 descriptor = "c decl doc at src/parser.h:126"
 cost_tokens = 10
 cum_tokens = 3090
@@ -1814,7 +1814,7 @@ cum_tokens = 3090
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 125
 end = 125
 
@@ -1823,7 +1823,7 @@ kind = "full"
 
 [[batches]]
 position = 58
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 20 })'
+key = 'C(Decl { file: "src/bytecode.h", start_line: 20 })'
 descriptor = "c decl at src/bytecode.h:20"
 cost_tokens = 144
 cum_tokens = 3234
@@ -1832,7 +1832,7 @@ cum_tokens = 3234
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+path = "src/bytecode.h"
 start = 20
 end = 31
 
@@ -1841,7 +1841,7 @@ kind = "full"
 
 [[batches]]
 position = 59
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", chunk_index: 2 })'
+key = 'C(DeclNames { file: "src/parser.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in src/parser.h"
 cost_tokens = 96
 cum_tokens = 3330
@@ -1850,7 +1850,7 @@ cum_tokens = 3330
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 171
 end = 175
 
@@ -1858,7 +1858,7 @@ end = 175
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 211
 end = 211
 
@@ -1866,7 +1866,7 @@ end = 211
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 176
 end = 176
 
@@ -1874,7 +1874,7 @@ end = 176
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 212
 end = 212
 
@@ -1883,7 +1883,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 60
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/compile.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/compile.h"
 cost_tokens = 323
 cum_tokens = 3653
@@ -1892,7 +1892,7 @@ cum_tokens = 3653
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 8
 end = 9
 
@@ -1900,7 +1900,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 12
 end = 12
 
@@ -1908,7 +1908,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 17
 end = 17
 
@@ -1916,7 +1916,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 19
 end = 32
 
@@ -1924,7 +1924,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 34
 end = 39
 
@@ -1932,7 +1932,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 10
 end = 10
 
@@ -1940,7 +1940,7 @@ end = 10
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 13
 end = 13
 
@@ -1948,7 +1948,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 18
 end = 18
 
@@ -1956,7 +1956,7 @@ end = 18
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 33
 end = 33
 
@@ -1965,7 +1965,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 61
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h", start_line: 12 })'
+key = 'C(Decl { file: "src/compile.h", start_line: 12 })'
 descriptor = "c decl at src/compile.h:12"
 cost_tokens = 23
 cum_tokens = 3676
@@ -1974,7 +1974,7 @@ cum_tokens = 3676
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 12
 end = 15
 
@@ -1983,7 +1983,7 @@ kind = "full"
 
 [[batches]]
 position = 62
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h" })'
+key = 'C(Includes { file: "src/exec_stack.h" })'
 descriptor = "c includes in src/exec_stack.h"
 cost_tokens = 72
 cum_tokens = 3748
@@ -1992,7 +1992,7 @@ cum_tokens = 3748
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+path = "src/exec_stack.h"
 start = 3
 end = 9
 
@@ -2001,7 +2001,7 @@ kind = "full"
 
 [[batches]]
 position = 63
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_dtoa_tsd.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_dtoa_tsd.c"
 cost_tokens = 58
 cum_tokens = 3806
@@ -2010,7 +2010,7 @@ cum_tokens = 3806
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 22
 end = 22
 
@@ -2018,7 +2018,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 31
 end = 31
 
@@ -2026,7 +2026,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 39
 end = 39
 
@@ -2034,7 +2034,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 23
 end = 23
 
@@ -2042,7 +2042,7 @@ end = 23
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 32
 end = 32
 
@@ -2050,7 +2050,7 @@ end = 32
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 40
 end = 40
 
@@ -2059,7 +2059,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 64
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c", start_line: 22 })'
+key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 22 })'
 descriptor = "c decl at src/jv_dtoa_tsd.c:22"
 cost_tokens = 0
 cum_tokens = 3806
@@ -2068,7 +2068,7 @@ cum_tokens = 3806
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 22
 end = 22
 
@@ -2076,7 +2076,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 23
 end = 23
 
@@ -2085,7 +2085,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 65
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c", start_line: 31 })'
+key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 31 })'
 descriptor = "c decl at src/jv_dtoa_tsd.c:31"
 cost_tokens = 0
 cum_tokens = 3806
@@ -2094,7 +2094,7 @@ cum_tokens = 3806
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 31
 end = 31
 
@@ -2102,7 +2102,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 32
 end = 32
 
@@ -2111,7 +2111,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 66
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c", start_line: 39 })'
+key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 39 })'
 descriptor = "c decl at src/jv_dtoa_tsd.c:39"
 cost_tokens = 0
 cum_tokens = 3806
@@ -2120,7 +2120,7 @@ cum_tokens = 3806
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 39
 end = 39
 
@@ -2128,7 +2128,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 40
 end = 40
 
@@ -2137,7 +2137,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 67
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h", start_line: 10 })'
+key = 'C(Decl { file: "src/builtin.h", start_line: 10 })'
 descriptor = "c decl at src/builtin.h:10"
 cost_tokens = 120
 cum_tokens = 3926
@@ -2146,7 +2146,7 @@ cum_tokens = 3926
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+path = "src/builtin.h"
 start = 10
 end = 21
 
@@ -2155,7 +2155,7 @@ kind = "full"
 
 [[batches]]
 position = 68
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", start_line: 54 })'
+key = 'C(Decl { file: "src/parser.h", start_line: 54 })'
 descriptor = "c decl at src/parser.h:54"
 cost_tokens = 142
 cum_tokens = 4068
@@ -2164,7 +2164,7 @@ cum_tokens = 4068
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 54
 end = 63
 
@@ -2173,7 +2173,7 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/linker.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/linker.c"
 cost_tokens = 70
 cum_tokens = 4138
@@ -2182,7 +2182,7 @@ cum_tokens = 4138
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 23
 end = 23
 
@@ -2190,7 +2190,7 @@ end = 23
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 28
 end = 28
 
@@ -2198,7 +2198,7 @@ end = 28
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 409
 end = 409
 
@@ -2206,7 +2206,7 @@ end = 409
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 435
 end = 435
 
@@ -2214,7 +2214,7 @@ end = 435
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 24
 end = 24
 
@@ -2222,7 +2222,7 @@ end = 24
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 29
 end = 29
 
@@ -2230,7 +2230,7 @@ end = 29
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 436
 end = 436
 
@@ -2239,7 +2239,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 70
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 435 })'
+key = 'C(Decl { file: "src/linker.c", start_line: 435 })'
 descriptor = "c decl at src/linker.c:435"
 cost_tokens = 0
 cum_tokens = 4138
@@ -2248,7 +2248,7 @@ cum_tokens = 4138
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 435
 end = 435
 
@@ -2256,7 +2256,7 @@ end = 435
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 436
 end = 436
 
@@ -2265,7 +2265,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 71
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 409 })'
+key = 'C(Decl { file: "src/linker.c", start_line: 409 })'
 descriptor = "c decl at src/linker.c:409"
 cost_tokens = 2
 cum_tokens = 4140
@@ -2274,7 +2274,7 @@ cum_tokens = 4140
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 409
 end = 409
 
@@ -2282,7 +2282,7 @@ end = 409
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 410
 end = 410
 
@@ -2291,7 +2291,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 72
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 28 })'
+key = 'C(Decl { file: "src/linker.c", start_line: 28 })'
 descriptor = "c decl at src/linker.c:28"
 cost_tokens = 24
 cum_tokens = 4164
@@ -2300,7 +2300,7 @@ cum_tokens = 4164
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 28
 end = 31
 
@@ -2309,7 +2309,7 @@ kind = "full"
 
 [[batches]]
 position = 73
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 23 })'
+key = 'C(Decl { file: "src/linker.c", start_line: 23 })'
 descriptor = "c decl at src/linker.c:23"
 cost_tokens = 28
 cum_tokens = 4192
@@ -2318,7 +2318,7 @@ cum_tokens = 4192
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 23
 end = 27
 
@@ -2327,7 +2327,7 @@ kind = "full"
 
 [[batches]]
 position = 74
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/lexer.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/lexer.h"
 cost_tokens = 455
 cum_tokens = 4647
@@ -2336,7 +2336,7 @@ cum_tokens = 4647
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 2
 end = 3
 
@@ -2344,7 +2344,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 9
 end = 9
 
@@ -2352,7 +2352,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 14
 end = 16
 
@@ -2360,7 +2360,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 336
 end = 336
 
@@ -2368,7 +2368,7 @@ end = 336
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 352
 end = 359
 
@@ -2376,7 +2376,7 @@ end = 359
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 435
 end = 441
 
@@ -2384,7 +2384,7 @@ end = 441
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 443
 end = 444
 
@@ -2392,7 +2392,7 @@ end = 444
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 4
 end = 4
 
@@ -2400,7 +2400,7 @@ end = 4
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 10
 end = 10
 
@@ -2408,7 +2408,7 @@ end = 10
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 17
 end = 17
 
@@ -2416,7 +2416,7 @@ end = 17
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 337
 end = 337
 
@@ -2424,7 +2424,7 @@ end = 337
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 360
 end = 360
 
@@ -2432,7 +2432,7 @@ end = 360
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 442
 end = 442
 
@@ -2441,7 +2441,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 75
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", start_line: 336 })'
+key = 'C(Decl { file: "src/lexer.h", start_line: 336 })'
 descriptor = "c decl at src/lexer.h:336"
 cost_tokens = 0
 cum_tokens = 4647
@@ -2450,7 +2450,7 @@ cum_tokens = 4647
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 336
 end = 336
 
@@ -2459,7 +2459,7 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", start_line: 352 })'
+key = 'C(Decl { file: "src/lexer.h", start_line: 352 })'
 descriptor = "c decl at src/lexer.h:352"
 cost_tokens = 0
 cum_tokens = 4647
@@ -2468,7 +2468,7 @@ cum_tokens = 4647
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 352
 end = 352
 
@@ -2477,7 +2477,7 @@ kind = "full"
 
 [[batches]]
 position = 77
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", start_line: 336 })'
+key = 'C(DeclDoc { file: "src/lexer.h", start_line: 336 })'
 descriptor = "c decl doc at src/lexer.h:336"
 cost_tokens = 16
 cum_tokens = 4663
@@ -2486,7 +2486,7 @@ cum_tokens = 4663
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 335
 end = 335
 
@@ -2495,7 +2495,7 @@ kind = "full"
 
 [[batches]]
 position = 78
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", start_line: 352 })'
+key = 'C(DeclDoc { file: "src/lexer.h", start_line: 352 })'
 descriptor = "c decl doc at src/lexer.h:352"
 cost_tokens = 33
 cum_tokens = 4696
@@ -2504,7 +2504,7 @@ cum_tokens = 4696
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 350
 end = 351
 
@@ -2513,7 +2513,7 @@ kind = "full"
 
 [[batches]]
 position = 79
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/download" })'
+key = 'Fs(DirListing { dir: "docs/content/download" })'
 descriptor = "listing of 'docs/content/download'"
 cost_tokens = 4
 cum_tokens = 4700
@@ -2522,12 +2522,12 @@ cum_tokens = 4700
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/download"
+parent = "docs/content/download"
 entries = ["default.yml"]
 
 [[batches]]
 position = 80
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/tutorial" })'
+key = 'Fs(DirListing { dir: "docs/content/tutorial" })'
 descriptor = "listing of 'docs/content/tutorial'"
 cost_tokens = 4
 cum_tokens = 4704
@@ -2536,12 +2536,12 @@ cum_tokens = 4704
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/tutorial"
+parent = "docs/content/tutorial"
 entries = ["default.yml"]
 
 [[batches]]
 position = 81
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public/css" })'
+key = 'Fs(DirListing { dir: "docs/public/css" })'
 descriptor = "listing of 'docs/public/css'"
 cost_tokens = 4
 cum_tokens = 4708
@@ -2550,12 +2550,12 @@ cum_tokens = 4708
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public/css"
+parent = "docs/public/css"
 entries = ["style.css"]
 
 [[batches]]
 position = 82
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "src/parser.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in src/parser.h"
 cost_tokens = 261
 cum_tokens = 4969
@@ -2564,7 +2564,7 @@ cum_tokens = 4969
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 147
 end = 170
 
@@ -2573,7 +2573,7 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/main.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/main.c"
 cost_tokens = 83
 cum_tokens = 5052
@@ -2582,7 +2582,7 @@ cum_tokens = 5052
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+path = "src/main.c"
 start = 43
 end = 43
 
@@ -2590,7 +2590,7 @@ end = 43
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+path = "src/main.c"
 start = 145
 end = 145
 
@@ -2598,7 +2598,7 @@ end = 145
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+path = "src/main.c"
 start = 164
 end = 164
 
@@ -2606,7 +2606,7 @@ end = 164
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+path = "src/main.c"
 start = 172
 end = 173
 
@@ -2614,7 +2614,7 @@ end = 173
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+path = "src/main.c"
 start = 44
 end = 44
 
@@ -2622,7 +2622,7 @@ end = 44
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+path = "src/main.c"
 start = 146
 end = 146
 
@@ -2630,7 +2630,7 @@ end = 146
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+path = "src/main.c"
 start = 165
 end = 165
 
@@ -2638,7 +2638,7 @@ end = 165
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+path = "src/main.c"
 start = 174
 end = 174
 
@@ -2647,7 +2647,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 84
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 7 })'
+key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 80
 cum_tokens = 5132
@@ -2656,7 +2656,7 @@ cum_tokens = 5132
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 67
 end = 67
 
@@ -2664,7 +2664,7 @@ end = 67
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 69
 end = 71
 
@@ -2673,7 +2673,7 @@ kind = "full"
 
 [[batches]]
 position = 85
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual" })'
+key = 'Fs(DirListing { dir: "docs/content/manual" })'
 descriptor = "listing of 'docs/content/manual'"
 cost_tokens = 43
 cum_tokens = 5175
@@ -2682,12 +2682,12 @@ cum_tokens = 5175
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual"
+parent = "docs/content/manual"
 entries = ["dev", "manual.yml", "v1.3", "v1.4", "v1.5", "v1.6", "v1.7", "v1.8"]
 
 [[batches]]
 position = 86
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 3 })'
+key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 31
 cum_tokens = 5206
@@ -2696,7 +2696,7 @@ cum_tokens = 5206
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 18
 end = 18
 
@@ -2705,7 +2705,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public/js" })'
+key = 'Fs(DirListing { dir: "docs/public/js" })'
 descriptor = "listing of 'docs/public/js'"
 cost_tokens = 5
 cum_tokens = 5211
@@ -2714,12 +2714,12 @@ cum_tokens = 5211
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public/js"
+parent = "docs/public/js"
 entries = ["manual-search.js"]
 
 [[batches]]
 position = 88
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 8 })'
+key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 82
 cum_tokens = 5293
@@ -2728,7 +2728,7 @@ cum_tokens = 5293
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 73
 end = 73
 
@@ -2736,7 +2736,7 @@ end = 73
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 75
 end = 78
 
@@ -2745,7 +2745,7 @@ kind = "full"
 
 [[batches]]
 position = 89
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_print.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_print.c"
 cost_tokens = 104
 cum_tokens = 5397
@@ -2754,7 +2754,7 @@ cum_tokens = 5397
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 24
 end = 26
 
@@ -2762,7 +2762,7 @@ end = 26
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 31
 end = 31
 
@@ -2770,7 +2770,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 36
 end = 37
 
@@ -2778,7 +2778,7 @@ end = 37
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 40
 end = 40
 
@@ -2786,7 +2786,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 27
 end = 27
 
@@ -2794,7 +2794,7 @@ end = 27
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 32
 end = 32
 
@@ -2802,7 +2802,7 @@ end = 32
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 38
 end = 38
 
@@ -2810,7 +2810,7 @@ end = 38
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 41
 end = 41
 
@@ -2819,7 +2819,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 90
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c", start_line: 40 })'
+key = 'C(Decl { file: "src/jv_print.c", start_line: 40 })'
 descriptor = "c decl at src/jv_print.c:40"
 cost_tokens = 0
 cum_tokens = 5397
@@ -2828,7 +2828,7 @@ cum_tokens = 5397
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 40
 end = 40
 
@@ -2836,7 +2836,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 41
 end = 41
 
@@ -2845,7 +2845,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 91
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "src/compile.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in src/compile.h"
 cost_tokens = 364
 cum_tokens = 5761
@@ -2854,7 +2854,7 @@ cum_tokens = 5761
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 40
 end = 53
 
@@ -2862,7 +2862,7 @@ end = 53
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 55
 end = 59
 
@@ -2870,7 +2870,7 @@ end = 59
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 61
 end = 63
 
@@ -2878,7 +2878,7 @@ end = 63
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 65
 end = 65
 
@@ -2886,7 +2886,7 @@ end = 65
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 67
 end = 67
 
@@ -2894,7 +2894,7 @@ end = 67
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 54
 end = 54
 
@@ -2902,7 +2902,7 @@ end = 54
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 60
 end = 60
 
@@ -2910,7 +2910,7 @@ end = 60
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 64
 end = 64
 
@@ -2918,7 +2918,7 @@ end = 64
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 66
 end = 66
 
@@ -2927,7 +2927,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 92
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/templates/shared" })'
+key = 'Fs(DirListing { dir: "docs/templates/shared" })'
 descriptor = "listing of 'docs/templates/shared'"
 cost_tokens = 21
 cum_tokens = 5782
@@ -2936,12 +2936,12 @@ cum_tokens = 5782
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/templates/shared"
+parent = "docs/templates/shared"
 entries = ["_footer.html.j2", "_head.html.j2", "_navbar.html.j2"]
 
 [[batches]]
 position = 93
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/locfile.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/locfile.c"
 cost_tokens = 119
 cum_tokens = 5901
@@ -2950,7 +2950,7 @@ cum_tokens = 5901
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 12
 end = 12
 
@@ -2958,7 +2958,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 37
 end = 37
 
@@ -2966,7 +2966,7 @@ end = 37
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 41
 end = 41
 
@@ -2974,7 +2974,7 @@ end = 41
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 50
 end = 50
 
@@ -2982,7 +2982,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 63
 end = 63
 
@@ -2990,7 +2990,7 @@ end = 63
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 13
 end = 13
 
@@ -2998,7 +2998,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 38
 end = 38
 
@@ -3006,7 +3006,7 @@ end = 38
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 42
 end = 42
 
@@ -3014,7 +3014,7 @@ end = 42
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 51
 end = 51
 
@@ -3022,7 +3022,7 @@ end = 51
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 64
 end = 64
 
@@ -3031,7 +3031,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 94
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 12 })'
+key = 'C(Decl { file: "src/locfile.c", start_line: 12 })'
 descriptor = "c decl at src/locfile.c:12"
 cost_tokens = 0
 cum_tokens = 5901
@@ -3040,7 +3040,7 @@ cum_tokens = 5901
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 12
 end = 12
 
@@ -3048,7 +3048,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 13
 end = 13
 
@@ -3057,7 +3057,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 95
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 37 })'
+key = 'C(Decl { file: "src/locfile.c", start_line: 37 })'
 descriptor = "c decl at src/locfile.c:37"
 cost_tokens = 0
 cum_tokens = 5901
@@ -3066,7 +3066,7 @@ cum_tokens = 5901
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 37
 end = 37
 
@@ -3074,7 +3074,7 @@ end = 37
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 38
 end = 38
 
@@ -3083,7 +3083,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 96
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 41 })'
+key = 'C(Decl { file: "src/locfile.c", start_line: 41 })'
 descriptor = "c decl at src/locfile.c:41"
 cost_tokens = 0
 cum_tokens = 5901
@@ -3092,7 +3092,7 @@ cum_tokens = 5901
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 41
 end = 41
 
@@ -3100,7 +3100,7 @@ end = 41
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 42
 end = 42
 
@@ -3109,7 +3109,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 97
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 50 })'
+key = 'C(Decl { file: "src/locfile.c", start_line: 50 })'
 descriptor = "c decl at src/locfile.c:50"
 cost_tokens = 0
 cum_tokens = 5901
@@ -3118,7 +3118,7 @@ cum_tokens = 5901
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 50
 end = 50
 
@@ -3126,7 +3126,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 51
 end = 51
 
@@ -3135,7 +3135,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 98
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 63 })'
+key = 'C(Decl { file: "src/locfile.c", start_line: 63 })'
 descriptor = "c decl at src/locfile.c:63"
 cost_tokens = 0
 cum_tokens = 5901
@@ -3144,7 +3144,7 @@ cum_tokens = 5901
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 63
 end = 63
 
@@ -3152,7 +3152,7 @@ end = 63
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 64
 end = 64
 
@@ -3161,7 +3161,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 99
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 37 })'
+key = 'C(DeclBody { file: "src/locfile.c", start_line: 37 })'
 descriptor = "c decl body at src/locfile.c:37"
 cost_tokens = 16
 cum_tokens = 5917
@@ -3170,7 +3170,7 @@ cum_tokens = 5917
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+path = "src/locfile.c"
 start = 38
 end = 39
 
@@ -3179,7 +3179,7 @@ kind = "full"
 
 [[batches]]
 position = 100
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/README.md", section_index: 0 })'
 descriptor = "docs/README.md section #0"
 cost_tokens = 300
 cum_tokens = 6217
@@ -3188,7 +3188,7 @@ cum_tokens = 6217
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+path = "docs/README.md"
 start = 7
 end = 8
 
@@ -3196,7 +3196,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+path = "docs/README.md"
 start = 10
 end = 10
 
@@ -3204,7 +3204,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+path = "docs/README.md"
 start = 12
 end = 14
 
@@ -3212,7 +3212,7 @@ end = 14
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+path = "docs/README.md"
 start = 16
 end = 17
 
@@ -3220,7 +3220,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+path = "docs/README.md"
 start = 19
 end = 22
 
@@ -3228,7 +3228,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+path = "docs/README.md"
 start = 24
 end = 25
 
@@ -3237,7 +3237,7 @@ kind = "full"
 
 [[batches]]
 position = 101
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 5 })'
+key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 39
 cum_tokens = 6256
@@ -3246,7 +3246,7 @@ cum_tokens = 6256
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 36
 end = 36
 
@@ -3254,7 +3254,7 @@ end = 36
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 38
 end = 41
 
@@ -3263,7 +3263,7 @@ kind = "full"
 
 [[batches]]
 position = 102
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/dev" })'
+key = 'Fs(DirListing { dir: "docs/content/manual/dev" })'
 descriptor = "listing of 'docs/content/manual/dev'"
 cost_tokens = 4
 cum_tokens = 6260
@@ -3272,12 +3272,12 @@ cum_tokens = 6260
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/dev"
+parent = "docs/content/manual/dev"
 entries = ["manual.yml"]
 
 [[batches]]
 position = 103
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.3" })'
+key = 'Fs(DirListing { dir: "docs/content/manual/v1.3" })'
 descriptor = "listing of 'docs/content/manual/v1.3'"
 cost_tokens = 4
 cum_tokens = 6264
@@ -3286,12 +3286,12 @@ cum_tokens = 6264
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.3"
+parent = "docs/content/manual/v1.3"
 entries = ["manual.yml"]
 
 [[batches]]
 position = 104
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.4" })'
+key = 'Fs(DirListing { dir: "docs/content/manual/v1.4" })'
 descriptor = "listing of 'docs/content/manual/v1.4'"
 cost_tokens = 4
 cum_tokens = 6268
@@ -3300,12 +3300,12 @@ cum_tokens = 6268
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.4"
+parent = "docs/content/manual/v1.4"
 entries = ["manual.yml"]
 
 [[batches]]
 position = 105
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.5" })'
+key = 'Fs(DirListing { dir: "docs/content/manual/v1.5" })'
 descriptor = "listing of 'docs/content/manual/v1.5'"
 cost_tokens = 4
 cum_tokens = 6272
@@ -3314,12 +3314,12 @@ cum_tokens = 6272
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.5"
+parent = "docs/content/manual/v1.5"
 entries = ["manual.yml"]
 
 [[batches]]
 position = 106
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.6" })'
+key = 'Fs(DirListing { dir: "docs/content/manual/v1.6" })'
 descriptor = "listing of 'docs/content/manual/v1.6'"
 cost_tokens = 4
 cum_tokens = 6276
@@ -3328,12 +3328,12 @@ cum_tokens = 6276
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.6"
+parent = "docs/content/manual/v1.6"
 entries = ["manual.yml"]
 
 [[batches]]
 position = 107
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.7" })'
+key = 'Fs(DirListing { dir: "docs/content/manual/v1.7" })'
 descriptor = "listing of 'docs/content/manual/v1.7'"
 cost_tokens = 4
 cum_tokens = 6280
@@ -3342,12 +3342,12 @@ cum_tokens = 6280
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.7"
+parent = "docs/content/manual/v1.7"
 entries = ["manual.yml"]
 
 [[batches]]
 position = 108
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.8" })'
+key = 'Fs(DirListing { dir: "docs/content/manual/v1.8" })'
 descriptor = "listing of 'docs/content/manual/v1.8'"
 cost_tokens = 4
 cum_tokens = 6284
@@ -3356,12 +3356,12 @@ cum_tokens = 6284
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.8"
+parent = "docs/content/manual/v1.8"
 entries = ["manual.yml"]
 
 [[batches]]
 position = 109
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 409 })'
+key = 'C(DeclDoc { file: "src/linker.c", start_line: 409 })'
 descriptor = "c decl doc at src/linker.c:409"
 cost_tokens = 33
 cum_tokens = 6317
@@ -3370,7 +3370,7 @@ cum_tokens = 6317
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+path = "src/linker.c"
 start = 407
 end = 408
 
@@ -3379,7 +3379,7 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h" })'
+key = 'C(HeaderBanner { file: "src/parser.h" })'
 descriptor = "c header banner in src/parser.h"
 cost_tokens = 515
 cum_tokens = 6832
@@ -3388,7 +3388,7 @@ cum_tokens = 6832
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 1
 end = 1
 
@@ -3396,7 +3396,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 3
 end = 3
 
@@ -3404,7 +3404,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 5
 end = 6
 
@@ -3412,7 +3412,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 8
 end = 11
 
@@ -3420,7 +3420,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 13
 end = 16
 
@@ -3428,7 +3428,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 18
 end = 19
 
@@ -3436,7 +3436,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 21
 end = 29
 
@@ -3444,7 +3444,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 31
 end = 32
 
@@ -3452,7 +3452,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+path = "src/parser.h"
 start = 34
 end = 36
 
@@ -3461,7 +3461,7 @@ kind = "full"
 
 [[batches]]
 position = 111
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "src/lexer.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in src/lexer.h"
 cost_tokens = 519
 cum_tokens = 7351
@@ -3470,7 +3470,7 @@ cum_tokens = 7351
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 445
 end = 445
 
@@ -3478,7 +3478,7 @@ end = 445
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 447
 end = 449
 
@@ -3486,7 +3486,7 @@ end = 449
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 456
 end = 456
 
@@ -3494,7 +3494,7 @@ end = 456
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 477
 end = 477
 
@@ -3502,7 +3502,7 @@ end = 477
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 479
 end = 479
 
@@ -3510,7 +3510,7 @@ end = 479
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 481
 end = 481
 
@@ -3518,7 +3518,7 @@ end = 481
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 486
 end = 486
 
@@ -3526,7 +3526,7 @@ end = 486
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 488
 end = 488
 
@@ -3534,7 +3534,7 @@ end = 488
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 490
 end = 490
 
@@ -3542,7 +3542,7 @@ end = 490
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 492
 end = 492
 
@@ -3550,7 +3550,7 @@ end = 492
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 494
 end = 494
 
@@ -3558,7 +3558,7 @@ end = 494
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 496
 end = 496
 
@@ -3566,7 +3566,7 @@ end = 496
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 498
 end = 498
 
@@ -3574,7 +3574,7 @@ end = 498
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 500
 end = 500
 
@@ -3582,7 +3582,7 @@ end = 500
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 502
 end = 502
 
@@ -3590,7 +3590,7 @@ end = 502
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 504
 end = 504
 
@@ -3598,7 +3598,7 @@ end = 504
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 506
 end = 506
 
@@ -3606,7 +3606,7 @@ end = 506
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 508
 end = 508
 
@@ -3614,7 +3614,7 @@ end = 508
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 510
 end = 510
 
@@ -3622,7 +3622,7 @@ end = 510
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 512
 end = 512
 
@@ -3630,7 +3630,7 @@ end = 512
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 514
 end = 514
 
@@ -3638,7 +3638,7 @@ end = 514
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 516
 end = 516
 
@@ -3646,7 +3646,7 @@ end = 516
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 446
 end = 446
 
@@ -3654,7 +3654,7 @@ end = 446
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 450
 end = 450
 
@@ -3662,7 +3662,7 @@ end = 450
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 457
 end = 457
 
@@ -3670,7 +3670,7 @@ end = 457
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 478
 end = 478
 
@@ -3678,7 +3678,7 @@ end = 478
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 480
 end = 480
 
@@ -3686,7 +3686,7 @@ end = 480
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 482
 end = 482
 
@@ -3694,7 +3694,7 @@ end = 482
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 487
 end = 487
 
@@ -3702,7 +3702,7 @@ end = 487
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 489
 end = 489
 
@@ -3710,7 +3710,7 @@ end = 489
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 491
 end = 491
 
@@ -3718,7 +3718,7 @@ end = 491
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 493
 end = 493
 
@@ -3726,7 +3726,7 @@ end = 493
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 495
 end = 495
 
@@ -3734,7 +3734,7 @@ end = 495
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 497
 end = 497
 
@@ -3742,7 +3742,7 @@ end = 497
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 499
 end = 499
 
@@ -3750,7 +3750,7 @@ end = 499
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 501
 end = 501
 
@@ -3758,7 +3758,7 @@ end = 501
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 503
 end = 503
 
@@ -3766,7 +3766,7 @@ end = 503
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 505
 end = 505
 
@@ -3774,7 +3774,7 @@ end = 505
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 507
 end = 507
 
@@ -3782,7 +3782,7 @@ end = 507
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 509
 end = 509
 
@@ -3790,7 +3790,7 @@ end = 509
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 511
 end = 511
 
@@ -3798,7 +3798,7 @@ end = 511
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 513
 end = 513
 
@@ -3806,7 +3806,7 @@ end = 513
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 515
 end = 515
 
@@ -3814,7 +3814,7 @@ end = 515
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+path = "src/lexer.h"
 start = 517
 end = 517
 
@@ -3823,7 +3823,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 112
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_unicode.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_unicode.c"
 cost_tokens = 161
 cum_tokens = 7512
@@ -3832,7 +3832,7 @@ cum_tokens = 7512
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 11
 end = 11
 
@@ -3840,7 +3840,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 29
 end = 29
 
@@ -3848,7 +3848,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 77
 end = 77
 
@@ -3856,7 +3856,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 86
 end = 86
 
@@ -3864,7 +3864,7 @@ end = 86
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 93
 end = 93
 
@@ -3872,7 +3872,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 100
 end = 100
 
@@ -3880,7 +3880,7 @@ end = 100
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 124
 end = 124
 
@@ -3888,7 +3888,7 @@ end = 124
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 12
 end = 12
 
@@ -3896,7 +3896,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 30
 end = 30
 
@@ -3904,7 +3904,7 @@ end = 30
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 78
 end = 78
 
@@ -3912,7 +3912,7 @@ end = 78
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 87
 end = 87
 
@@ -3920,7 +3920,7 @@ end = 87
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 94
 end = 94
 
@@ -3928,7 +3928,7 @@ end = 94
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 101
 end = 101
 
@@ -3936,7 +3936,7 @@ end = 101
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 125
 end = 125
 
@@ -3945,7 +3945,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 113
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 11 })'
+key = 'C(Decl { file: "src/jv_unicode.c", start_line: 11 })'
 descriptor = "c decl at src/jv_unicode.c:11"
 cost_tokens = 0
 cum_tokens = 7512
@@ -3954,7 +3954,7 @@ cum_tokens = 7512
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 11
 end = 11
 
@@ -3962,7 +3962,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 12
 end = 12
 
@@ -3971,7 +3971,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 114
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 29 })'
+key = 'C(Decl { file: "src/jv_unicode.c", start_line: 29 })'
 descriptor = "c decl at src/jv_unicode.c:29"
 cost_tokens = 0
 cum_tokens = 7512
@@ -3980,7 +3980,7 @@ cum_tokens = 7512
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 29
 end = 29
 
@@ -3988,7 +3988,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 30
 end = 30
 
@@ -3997,7 +3997,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 115
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 77 })'
+key = 'C(Decl { file: "src/jv_unicode.c", start_line: 77 })'
 descriptor = "c decl at src/jv_unicode.c:77"
 cost_tokens = 0
 cum_tokens = 7512
@@ -4006,7 +4006,7 @@ cum_tokens = 7512
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 77
 end = 77
 
@@ -4014,7 +4014,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 78
 end = 78
 
@@ -4023,7 +4023,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 116
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 86 })'
+key = 'C(Decl { file: "src/jv_unicode.c", start_line: 86 })'
 descriptor = "c decl at src/jv_unicode.c:86"
 cost_tokens = 0
 cum_tokens = 7512
@@ -4032,7 +4032,7 @@ cum_tokens = 7512
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 86
 end = 86
 
@@ -4040,7 +4040,7 @@ end = 86
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 87
 end = 87
 
@@ -4049,7 +4049,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 117
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 93 })'
+key = 'C(Decl { file: "src/jv_unicode.c", start_line: 93 })'
 descriptor = "c decl at src/jv_unicode.c:93"
 cost_tokens = 0
 cum_tokens = 7512
@@ -4058,7 +4058,7 @@ cum_tokens = 7512
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 93
 end = 93
 
@@ -4066,7 +4066,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 94
 end = 94
 
@@ -4075,7 +4075,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 118
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 100 })'
+key = 'C(Decl { file: "src/jv_unicode.c", start_line: 100 })'
 descriptor = "c decl at src/jv_unicode.c:100"
 cost_tokens = 0
 cum_tokens = 7512
@@ -4084,7 +4084,7 @@ cum_tokens = 7512
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 100
 end = 100
 
@@ -4092,7 +4092,7 @@ end = 100
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 101
 end = 101
 
@@ -4101,7 +4101,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 119
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 124 })'
+key = 'C(Decl { file: "src/jv_unicode.c", start_line: 124 })'
 descriptor = "c decl at src/jv_unicode.c:124"
 cost_tokens = 0
 cum_tokens = 7512
@@ -4110,7 +4110,7 @@ cum_tokens = 7512
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 124
 end = 124
 
@@ -4118,7 +4118,7 @@ end = 124
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 125
 end = 125
 
@@ -4127,7 +4127,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 120
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 86 })'
+key = 'C(DeclDoc { file: "src/jv_unicode.c", start_line: 86 })'
 descriptor = "c decl doc at src/jv_unicode.c:86"
 cost_tokens = 19
 cum_tokens = 7531
@@ -4136,7 +4136,7 @@ cum_tokens = 7531
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 85
 end = 85
 
@@ -4145,7 +4145,7 @@ kind = "full"
 
 [[batches]]
 position = 121
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 124 })'
+key = 'C(DeclDoc { file: "src/jv_unicode.c", start_line: 124 })'
 descriptor = "c decl doc at src/jv_unicode.c:124"
 cost_tokens = 36
 cum_tokens = 7567
@@ -4154,7 +4154,7 @@ cum_tokens = 7567
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 122
 end = 123
 
@@ -4163,7 +4163,7 @@ kind = "full"
 
 [[batches]]
 position = 122
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 27
 cum_tokens = 7594
@@ -4172,7 +4172,7 @@ cum_tokens = 7594
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 12
 end = 12
 
@@ -4180,7 +4180,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+path = "README.md"
 start = 14
 end = 14
 
@@ -4189,7 +4189,7 @@ kind = "full"
 
 [[batches]]
 position = 123
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_alloc.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_alloc.c"
 cost_tokens = 174
 cum_tokens = 7768
@@ -4198,7 +4198,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 7
 end = 7
 
@@ -4206,7 +4206,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 141
 end = 141
 
@@ -4214,7 +4214,7 @@ end = 141
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 149
 end = 149
 
@@ -4222,7 +4222,7 @@ end = 149
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 153
 end = 153
 
@@ -4230,7 +4230,7 @@ end = 153
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 162
 end = 162
 
@@ -4238,7 +4238,7 @@ end = 162
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 167
 end = 167
 
@@ -4246,7 +4246,7 @@ end = 167
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 175
 end = 175
 
@@ -4254,7 +4254,7 @@ end = 175
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 179
 end = 179
 
@@ -4262,7 +4262,7 @@ end = 179
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 183
 end = 183
 
@@ -4270,7 +4270,7 @@ end = 183
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 8
 end = 8
 
@@ -4278,7 +4278,7 @@ end = 8
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 142
 end = 142
 
@@ -4286,7 +4286,7 @@ end = 142
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 150
 end = 150
 
@@ -4294,7 +4294,7 @@ end = 150
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 154
 end = 154
 
@@ -4302,7 +4302,7 @@ end = 154
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 163
 end = 163
 
@@ -4310,7 +4310,7 @@ end = 163
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 168
 end = 168
 
@@ -4318,7 +4318,7 @@ end = 168
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 176
 end = 176
 
@@ -4326,7 +4326,7 @@ end = 176
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 180
 end = 180
 
@@ -4334,7 +4334,7 @@ end = 180
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 184
 end = 184
 
@@ -4343,7 +4343,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 124
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 141 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 141 })'
 descriptor = "c decl at src/jv_alloc.c:141"
 cost_tokens = 0
 cum_tokens = 7768
@@ -4352,7 +4352,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 141
 end = 141
 
@@ -4360,7 +4360,7 @@ end = 141
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 142
 end = 142
 
@@ -4369,7 +4369,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 125
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 149 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 149 })'
 descriptor = "c decl at src/jv_alloc.c:149"
 cost_tokens = 0
 cum_tokens = 7768
@@ -4378,7 +4378,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 149
 end = 149
 
@@ -4386,7 +4386,7 @@ end = 149
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 150
 end = 150
 
@@ -4395,7 +4395,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 126
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 153 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 153 })'
 descriptor = "c decl at src/jv_alloc.c:153"
 cost_tokens = 0
 cum_tokens = 7768
@@ -4404,7 +4404,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 153
 end = 153
 
@@ -4412,7 +4412,7 @@ end = 153
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 154
 end = 154
 
@@ -4421,7 +4421,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 127
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 162 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 162 })'
 descriptor = "c decl at src/jv_alloc.c:162"
 cost_tokens = 0
 cum_tokens = 7768
@@ -4430,7 +4430,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 162
 end = 162
 
@@ -4438,7 +4438,7 @@ end = 162
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 163
 end = 163
 
@@ -4447,7 +4447,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 128
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 167 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 167 })'
 descriptor = "c decl at src/jv_alloc.c:167"
 cost_tokens = 0
 cum_tokens = 7768
@@ -4456,7 +4456,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 167
 end = 167
 
@@ -4464,7 +4464,7 @@ end = 167
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 168
 end = 168
 
@@ -4473,7 +4473,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 129
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 175 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 175 })'
 descriptor = "c decl at src/jv_alloc.c:175"
 cost_tokens = 0
 cum_tokens = 7768
@@ -4482,7 +4482,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 175
 end = 175
 
@@ -4490,7 +4490,7 @@ end = 175
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 176
 end = 176
 
@@ -4499,7 +4499,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 130
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 179 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 179 })'
 descriptor = "c decl at src/jv_alloc.c:179"
 cost_tokens = 0
 cum_tokens = 7768
@@ -4508,7 +4508,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 179
 end = 179
 
@@ -4516,7 +4516,7 @@ end = 179
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 180
 end = 180
 
@@ -4525,7 +4525,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 131
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 183 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 183 })'
 descriptor = "c decl at src/jv_alloc.c:183"
 cost_tokens = 0
 cum_tokens = 7768
@@ -4534,7 +4534,7 @@ cum_tokens = 7768
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 183
 end = 183
 
@@ -4542,7 +4542,7 @@ end = 183
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 184
 end = 184
 
@@ -4551,7 +4551,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 132
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 179 })'
+key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 179 })'
 descriptor = "c decl body at src/jv_alloc.c:179"
 cost_tokens = 6
 cum_tokens = 7774
@@ -4560,7 +4560,7 @@ cum_tokens = 7774
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 180
 end = 180
 
@@ -4569,7 +4569,7 @@ kind = "full"
 
 [[batches]]
 position = 133
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 149 })'
+key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 149 })'
 descriptor = "c decl body at src/jv_alloc.c:149"
 cost_tokens = 7
 cum_tokens = 7781
@@ -4578,7 +4578,7 @@ cum_tokens = 7781
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 150
 end = 150
 
@@ -4587,7 +4587,7 @@ kind = "full"
 
 [[batches]]
 position = 134
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 175 })'
+key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 175 })'
 descriptor = "c decl body at src/jv_alloc.c:175"
 cost_tokens = 7
 cum_tokens = 7788
@@ -4596,7 +4596,7 @@ cum_tokens = 7788
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 176
 end = 176
 
@@ -4605,7 +4605,7 @@ kind = "full"
 
 [[batches]]
 position = 135
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 7 })'
+key = 'C(Decl { file: "src/jv_alloc.c", start_line: 7 })'
 descriptor = "c decl at src/jv_alloc.c:7"
 cost_tokens = 25
 cum_tokens = 7813
@@ -4614,7 +4614,7 @@ cum_tokens = 7813
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 7
 end = 10
 
@@ -4623,7 +4623,7 @@ kind = "full"
 
 [[batches]]
 position = 136
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 162 })'
+key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 162 })'
 descriptor = "c decl body at src/jv_alloc.c:162"
 cost_tokens = 27
 cum_tokens = 7840
@@ -4632,7 +4632,7 @@ cum_tokens = 7840
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 163
 end = 164
 
@@ -4641,7 +4641,7 @@ kind = "full"
 
 [[batches]]
 position = 137
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/inject_errors.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/inject_errors.c"
 cost_tokens = 191
 cum_tokens = 8031
@@ -4650,7 +4650,7 @@ cum_tokens = 8031
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 22
 end = 22
 
@@ -4658,7 +4658,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 30
 end = 30
 
@@ -4666,7 +4666,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 32
 end = 32
 
@@ -4674,7 +4674,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 39
 end = 39
 
@@ -4682,7 +4682,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 59
 end = 59
 
@@ -4690,7 +4690,7 @@ end = 59
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 69
 end = 69
 
@@ -4698,7 +4698,7 @@ end = 69
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 77
 end = 77
 
@@ -4706,7 +4706,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 85
 end = 85
 
@@ -4714,7 +4714,7 @@ end = 85
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 93
 end = 93
 
@@ -4722,7 +4722,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 103
 end = 103
 
@@ -4730,7 +4730,7 @@ end = 103
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 23
 end = 23
 
@@ -4738,7 +4738,7 @@ end = 23
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 31
 end = 31
 
@@ -4746,7 +4746,7 @@ end = 31
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 33
 end = 33
 
@@ -4754,7 +4754,7 @@ end = 33
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 40
 end = 40
 
@@ -4762,7 +4762,7 @@ end = 40
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 60
 end = 60
 
@@ -4770,7 +4770,7 @@ end = 60
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 70
 end = 70
 
@@ -4778,7 +4778,7 @@ end = 70
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 78
 end = 78
 
@@ -4786,7 +4786,7 @@ end = 78
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 86
 end = 86
 
@@ -4794,7 +4794,7 @@ end = 86
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 94
 end = 94
 
@@ -4802,7 +4802,7 @@ end = 94
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 104
 end = 104
 
@@ -4811,7 +4811,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 138
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", start_line: 39 })'
+key = 'C(Decl { file: "src/inject_errors.c", start_line: 39 })'
 descriptor = "c decl at src/inject_errors.c:39"
 cost_tokens = 0
 cum_tokens = 8031
@@ -4820,7 +4820,7 @@ cum_tokens = 8031
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 39
 end = 39
 
@@ -4828,7 +4828,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 40
 end = 40
 
@@ -4837,7 +4837,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 139
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", start_line: 59 })'
+key = 'C(Decl { file: "src/inject_errors.c", start_line: 59 })'
 descriptor = "c decl at src/inject_errors.c:59"
 cost_tokens = 0
 cum_tokens = 8031
@@ -4846,7 +4846,7 @@ cum_tokens = 8031
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 59
 end = 59
 
@@ -4854,7 +4854,7 @@ end = 59
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 60
 end = 60
 
@@ -4863,7 +4863,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 140
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", start_line: 69 })'
+key = 'C(Decl { file: "src/inject_errors.c", start_line: 69 })'
 descriptor = "c decl at src/inject_errors.c:69"
 cost_tokens = 0
 cum_tokens = 8031
@@ -4872,7 +4872,7 @@ cum_tokens = 8031
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 69
 end = 69
 
@@ -4880,7 +4880,7 @@ end = 69
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 70
 end = 70
 
@@ -4889,7 +4889,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 141
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", start_line: 77 })'
+key = 'C(Decl { file: "src/inject_errors.c", start_line: 77 })'
 descriptor = "c decl at src/inject_errors.c:77"
 cost_tokens = 0
 cum_tokens = 8031
@@ -4898,7 +4898,7 @@ cum_tokens = 8031
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 77
 end = 77
 
@@ -4906,7 +4906,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 78
 end = 78
 
@@ -4915,7 +4915,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 142
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", start_line: 85 })'
+key = 'C(Decl { file: "src/inject_errors.c", start_line: 85 })'
 descriptor = "c decl at src/inject_errors.c:85"
 cost_tokens = 0
 cum_tokens = 8031
@@ -4924,7 +4924,7 @@ cum_tokens = 8031
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 85
 end = 85
 
@@ -4932,7 +4932,7 @@ end = 85
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 86
 end = 86
 
@@ -4941,7 +4941,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 143
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", start_line: 93 })'
+key = 'C(Decl { file: "src/inject_errors.c", start_line: 93 })'
 descriptor = "c decl at src/inject_errors.c:93"
 cost_tokens = 0
 cum_tokens = 8031
@@ -4950,7 +4950,7 @@ cum_tokens = 8031
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 93
 end = 93
 
@@ -4958,7 +4958,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 94
 end = 94
 
@@ -4967,7 +4967,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 144
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", start_line: 103 })'
+key = 'C(Decl { file: "src/inject_errors.c", start_line: 103 })'
 descriptor = "c decl at src/inject_errors.c:103"
 cost_tokens = 0
 cum_tokens = 8031
@@ -4976,7 +4976,7 @@ cum_tokens = 8031
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 103
 end = 103
 
@@ -4984,7 +4984,7 @@ end = 103
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 104
 end = 104
 
@@ -4993,7 +4993,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 145
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c" })'
+key = 'C(Includes { file: "src/jv_unicode.c" })'
 descriptor = "c includes in src/jv_unicode.c"
 cost_tokens = 46
 cum_tokens = 8077
@@ -5002,7 +5002,7 @@ cum_tokens = 8077
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+path = "src/jv_unicode.c"
 start = 1
 end = 4
 
@@ -5011,7 +5011,7 @@ kind = "full"
 
 [[batches]]
 position = 146
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c", start_line: 32 })'
+key = 'C(Decl { file: "src/inject_errors.c", start_line: 32 })'
 descriptor = "c decl at src/inject_errors.c:32"
 cost_tokens = 56
 cum_tokens = 8133
@@ -5020,7 +5020,7 @@ cum_tokens = 8133
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 32
 end = 37
 
@@ -5029,7 +5029,7 @@ kind = "full"
 
 [[batches]]
 position = 147
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c" })'
+key = 'C(Includes { file: "src/jv_alloc.c" })'
 descriptor = "c includes in src/jv_alloc.c"
 cost_tokens = 51
 cum_tokens = 8184
@@ -5038,7 +5038,7 @@ cum_tokens = 8184
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+path = "src/jv_alloc.c"
 start = 1
 end = 5
 
@@ -5047,7 +5047,7 @@ kind = "full"
 
 [[batches]]
 position = 148
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c" })'
+key = 'C(Includes { file: "src/bytecode.c" })'
 descriptor = "c includes in src/bytecode.c"
 cost_tokens = 53
 cum_tokens = 8237
@@ -5056,7 +5056,7 @@ cum_tokens = 8237
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 1
 end = 3
 
@@ -5064,7 +5064,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 5
 end = 6
 
@@ -5073,7 +5073,7 @@ kind = "full"
 
 [[batches]]
 position = 149
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/jv_aux.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_aux.c"
 cost_tokens = 254
 cum_tokens = 8491
@@ -5082,7 +5082,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 80
 end = 80
 
@@ -5090,7 +5090,7 @@ end = 80
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 146
 end = 146
 
@@ -5098,7 +5098,7 @@ end = 146
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 230
 end = 230
 
@@ -5106,7 +5106,7 @@ end = 230
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 372
 end = 372
 
@@ -5114,7 +5114,7 @@ end = 372
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 431
 end = 431
 
@@ -5122,7 +5122,7 @@ end = 431
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 504
 end = 504
 
@@ -5130,7 +5130,7 @@ end = 504
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 554
 end = 554
 
@@ -5138,7 +5138,7 @@ end = 554
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 566
 end = 566
 
@@ -5146,7 +5146,7 @@ end = 566
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 600
 end = 600
 
@@ -5154,7 +5154,7 @@ end = 600
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 675
 end = 675
 
@@ -5162,7 +5162,7 @@ end = 675
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 711
 end = 711
 
@@ -5170,7 +5170,7 @@ end = 711
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 726
 end = 726
 
@@ -5178,7 +5178,7 @@ end = 726
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 754
 end = 754
 
@@ -5186,7 +5186,7 @@ end = 754
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 81
 end = 81
 
@@ -5194,7 +5194,7 @@ end = 81
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 147
 end = 147
 
@@ -5202,7 +5202,7 @@ end = 147
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 231
 end = 231
 
@@ -5210,7 +5210,7 @@ end = 231
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 373
 end = 373
 
@@ -5218,7 +5218,7 @@ end = 373
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 432
 end = 432
 
@@ -5226,7 +5226,7 @@ end = 432
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 505
 end = 505
 
@@ -5234,7 +5234,7 @@ end = 505
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 555
 end = 555
 
@@ -5242,7 +5242,7 @@ end = 555
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 567
 end = 567
 
@@ -5250,7 +5250,7 @@ end = 567
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 601
 end = 601
 
@@ -5258,7 +5258,7 @@ end = 601
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 676
 end = 676
 
@@ -5266,7 +5266,7 @@ end = 676
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 712
 end = 712
 
@@ -5274,7 +5274,7 @@ end = 712
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 727
 end = 727
 
@@ -5282,7 +5282,7 @@ end = 727
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 755
 end = 755
 
@@ -5291,7 +5291,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 150
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 80 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 80 })'
 descriptor = "c decl at src/jv_aux.c:80"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5300,7 +5300,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 80
 end = 80
 
@@ -5308,7 +5308,7 @@ end = 80
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 81
 end = 81
 
@@ -5317,7 +5317,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 151
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 146 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 146 })'
 descriptor = "c decl at src/jv_aux.c:146"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5326,7 +5326,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 146
 end = 146
 
@@ -5334,7 +5334,7 @@ end = 146
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 147
 end = 147
 
@@ -5343,7 +5343,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 152
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 230 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 230 })'
 descriptor = "c decl at src/jv_aux.c:230"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5352,7 +5352,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 230
 end = 230
 
@@ -5360,7 +5360,7 @@ end = 230
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 231
 end = 231
 
@@ -5369,7 +5369,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 153
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 372 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 372 })'
 descriptor = "c decl at src/jv_aux.c:372"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5378,7 +5378,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 372
 end = 372
 
@@ -5386,7 +5386,7 @@ end = 372
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 373
 end = 373
 
@@ -5395,7 +5395,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 154
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 431 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 431 })'
 descriptor = "c decl at src/jv_aux.c:431"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5404,7 +5404,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 431
 end = 431
 
@@ -5412,7 +5412,7 @@ end = 431
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 432
 end = 432
 
@@ -5421,7 +5421,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 155
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 504 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 504 })'
 descriptor = "c decl at src/jv_aux.c:504"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5430,7 +5430,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 504
 end = 504
 
@@ -5438,7 +5438,7 @@ end = 504
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 505
 end = 505
 
@@ -5447,7 +5447,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 156
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 554 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 554 })'
 descriptor = "c decl at src/jv_aux.c:554"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5456,7 +5456,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 554
 end = 554
 
@@ -5464,7 +5464,7 @@ end = 554
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 555
 end = 555
 
@@ -5473,7 +5473,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 157
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 566 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 566 })'
 descriptor = "c decl at src/jv_aux.c:566"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5482,7 +5482,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 566
 end = 566
 
@@ -5490,7 +5490,7 @@ end = 566
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 567
 end = 567
 
@@ -5499,7 +5499,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 158
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 600 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 600 })'
 descriptor = "c decl at src/jv_aux.c:600"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5508,7 +5508,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 600
 end = 600
 
@@ -5516,7 +5516,7 @@ end = 600
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 601
 end = 601
 
@@ -5525,7 +5525,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 159
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 711 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 711 })'
 descriptor = "c decl at src/jv_aux.c:711"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5534,7 +5534,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 711
 end = 711
 
@@ -5542,7 +5542,7 @@ end = 711
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 712
 end = 712
 
@@ -5551,7 +5551,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 160
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 726 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 726 })'
 descriptor = "c decl at src/jv_aux.c:726"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5560,7 +5560,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 726
 end = 726
 
@@ -5568,7 +5568,7 @@ end = 726
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 727
 end = 727
 
@@ -5577,7 +5577,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 161
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 754 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 754 })'
 descriptor = "c decl at src/jv_aux.c:754"
 cost_tokens = 0
 cum_tokens = 8491
@@ -5586,7 +5586,7 @@ cum_tokens = 8491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 754
 end = 754
 
@@ -5594,7 +5594,7 @@ end = 754
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 755
 end = 755
 
@@ -5603,7 +5603,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 162
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c", start_line: 675 })'
+key = 'C(Decl { file: "src/jv_aux.c", start_line: 675 })'
 descriptor = "c decl at src/jv_aux.c:675"
 cost_tokens = 29
 cum_tokens = 8520
@@ -5612,7 +5612,7 @@ cum_tokens = 8520
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_aux.c"
+path = "src/jv_aux.c"
 start = 675
 end = 679
 
@@ -5621,7 +5621,7 @@ kind = "full"
 
 [[batches]]
 position = 163
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c" })'
+key = 'C(Includes { file: "src/jq_test.c" })'
 descriptor = "c includes in src/jq_test.c"
 cost_tokens = 61
 cum_tokens = 8581
@@ -5630,7 +5630,7 @@ cum_tokens = 8581
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 1
 end = 4
 
@@ -5638,7 +5638,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+path = "src/jq_test.c"
 start = 8
 end = 9
 
@@ -5647,7 +5647,7 @@ kind = "full"
 
 [[batches]]
 position = 164
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c" })'
+key = 'C(Includes { file: "src/inject_errors.c" })'
 descriptor = "c includes in src/inject_errors.c"
 cost_tokens = 62
 cum_tokens = 8643
@@ -5656,7 +5656,7 @@ cum_tokens = 8643
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/inject_errors.c"
+path = "src/inject_errors.c"
 start = 1
 end = 6
 
@@ -5665,7 +5665,7 @@ kind = "full"
 
 [[batches]]
 position = 165
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.c" })'
+key = 'C(Includes { file: "src/jv_dtoa.c" })'
 descriptor = "c includes in src/jv_dtoa.c"
 cost_tokens = 66
 cum_tokens = 8709
@@ -5674,7 +5674,7 @@ cum_tokens = 8709
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.c"
+path = "src/jv_dtoa.c"
 start = 195
 end = 195
 
@@ -5682,7 +5682,7 @@ end = 195
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.c"
+path = "src/jv_dtoa.c"
 start = 197
 end = 198
 
@@ -5690,7 +5690,7 @@ end = 198
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.c"
+path = "src/jv_dtoa.c"
 start = 216
 end = 217
 
@@ -5698,7 +5698,7 @@ end = 217
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.c"
+path = "src/jv_dtoa.c"
 start = 254
 end = 254
 
@@ -5707,7 +5707,7 @@ kind = "full"
 
 [[batches]]
 position = 166
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c", start_line: 31 })'
+key = 'C(Decl { file: "src/jv_print.c", start_line: 31 })'
 descriptor = "c decl at src/jv_print.c:31"
 cost_tokens = 65
 cum_tokens = 8774
@@ -5716,7 +5716,7 @@ cum_tokens = 8774
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 31
 end = 33
 
@@ -5725,7 +5725,7 @@ kind = "full"
 
 [[batches]]
 position = 167
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c", start_line: 31 })'
+key = 'C(DeclDoc { file: "src/jv_print.c", start_line: 31 })'
 descriptor = "c decl doc at src/jv_print.c:31"
 cost_tokens = 59
 cum_tokens = 8833
@@ -5734,7 +5734,7 @@ cum_tokens = 8833
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+path = "src/jv_print.c"
 start = 28
 end = 30
 
@@ -5743,7 +5743,7 @@ kind = "full"
 
 [[batches]]
 position = 168
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h", chunk_index: 2 })'
+key = 'C(DeclNames { file: "src/compile.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in src/compile.h"
 cost_tokens = 550
 cum_tokens = 9383
@@ -5752,7 +5752,7 @@ cum_tokens = 9383
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 68
 end = 77
 
@@ -5760,7 +5760,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 79
 end = 80
 
@@ -5768,7 +5768,7 @@ end = 80
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 82
 end = 82
 
@@ -5776,7 +5776,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 84
 end = 84
 
@@ -5784,7 +5784,7 @@ end = 84
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 91
 end = 98
 
@@ -5792,7 +5792,7 @@ end = 98
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 100
 end = 101
 
@@ -5800,7 +5800,7 @@ end = 101
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 78
 end = 78
 
@@ -5808,7 +5808,7 @@ end = 78
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 81
 end = 81
 
@@ -5816,7 +5816,7 @@ end = 81
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 83
 end = 83
 
@@ -5824,7 +5824,7 @@ end = 83
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 85
 end = 85
 
@@ -5832,7 +5832,7 @@ end = 85
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 99
 end = 99
 
@@ -5840,7 +5840,7 @@ end = 99
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 102
 end = 102
 
@@ -5849,7 +5849,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 169
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h", start_line: 101 })'
+key = 'C(Decl { file: "src/compile.h", start_line: 101 })'
 descriptor = "c decl at src/compile.h:101"
 cost_tokens = 44
 cum_tokens = 9427
@@ -5858,7 +5858,7 @@ cum_tokens = 9427
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+path = "src/compile.h"
 start = 101
 end = 102
 
@@ -5867,7 +5867,7 @@ kind = "full"
 
 [[batches]]
 position = 170
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c" })'
+key = 'C(Includes { file: "src/jv_dtoa_tsd.c" })'
 descriptor = "c includes in src/jv_dtoa_tsd.c"
 cost_tokens = 72
 cum_tokens = 9499
@@ -5876,7 +5876,7 @@ cum_tokens = 9499
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 1
 end = 2
 
@@ -5884,7 +5884,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+path = "src/jv_dtoa_tsd.c"
 start = 4
 end = 7
 
@@ -5893,7 +5893,7 @@ kind = "full"
 
 [[batches]]
 position = 171
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/bytecode.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/bytecode.c"
 cost_tokens = 314
 cum_tokens = 9813
@@ -5902,7 +5902,7 @@ cum_tokens = 9813
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 9
 end = 17
 
@@ -5910,7 +5910,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 19
 end = 19
 
@@ -5918,7 +5918,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 31
 end = 31
 
@@ -5926,7 +5926,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 40
 end = 40
 
@@ -5934,7 +5934,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 64
 end = 64
 
@@ -5942,7 +5942,7 @@ end = 64
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 95
 end = 95
 
@@ -5950,7 +5950,7 @@ end = 95
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 149
 end = 149
 
@@ -5958,7 +5958,7 @@ end = 149
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 18
 end = 18
 
@@ -5966,7 +5966,7 @@ end = 18
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 20
 end = 20
 
@@ -5974,7 +5974,7 @@ end = 20
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 32
 end = 32
 
@@ -5982,7 +5982,7 @@ end = 32
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 41
 end = 41
 
@@ -5990,7 +5990,7 @@ end = 41
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 65
 end = 65
 
@@ -5998,7 +5998,7 @@ end = 65
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 96
 end = 96
 
@@ -6006,7 +6006,7 @@ end = 96
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 150
 end = 150
 
@@ -6015,7 +6015,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 172
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", start_line: 9 })'
+key = 'C(Decl { file: "src/bytecode.c", start_line: 9 })'
 descriptor = "c decl at src/bytecode.c:9"
 cost_tokens = 0
 cum_tokens = 9813
@@ -6024,7 +6024,7 @@ cum_tokens = 9813
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 9
 end = 9
 
@@ -6033,7 +6033,7 @@ kind = "full"
 
 [[batches]]
 position = 173
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", start_line: 31 })'
+key = 'C(Decl { file: "src/bytecode.c", start_line: 31 })'
 descriptor = "c decl at src/bytecode.c:31"
 cost_tokens = 0
 cum_tokens = 9813
@@ -6042,7 +6042,7 @@ cum_tokens = 9813
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 31
 end = 31
 
@@ -6050,7 +6050,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 32
 end = 32
 
@@ -6059,7 +6059,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 174
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", start_line: 40 })'
+key = 'C(Decl { file: "src/bytecode.c", start_line: 40 })'
 descriptor = "c decl at src/bytecode.c:40"
 cost_tokens = 0
 cum_tokens = 9813
@@ -6068,7 +6068,7 @@ cum_tokens = 9813
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 40
 end = 40
 
@@ -6076,7 +6076,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 41
 end = 41
 
@@ -6085,7 +6085,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 175
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", start_line: 64 })'
+key = 'C(Decl { file: "src/bytecode.c", start_line: 64 })'
 descriptor = "c decl at src/bytecode.c:64"
 cost_tokens = 0
 cum_tokens = 9813
@@ -6094,7 +6094,7 @@ cum_tokens = 9813
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 64
 end = 64
 
@@ -6102,7 +6102,7 @@ end = 64
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 65
 end = 65
 
@@ -6111,7 +6111,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 176
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", start_line: 95 })'
+key = 'C(Decl { file: "src/bytecode.c", start_line: 95 })'
 descriptor = "c decl at src/bytecode.c:95"
 cost_tokens = 0
 cum_tokens = 9813
@@ -6120,7 +6120,7 @@ cum_tokens = 9813
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 95
 end = 95
 
@@ -6128,7 +6128,7 @@ end = 95
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 96
 end = 96
 
@@ -6137,7 +6137,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 177
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", start_line: 149 })'
+key = 'C(Decl { file: "src/bytecode.c", start_line: 149 })'
 descriptor = "c decl at src/bytecode.c:149"
 cost_tokens = 0
 cum_tokens = 9813
@@ -6146,7 +6146,7 @@ cum_tokens = 9813
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 149
 end = 149
 
@@ -6154,7 +6154,7 @@ end = 149
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 150
 end = 150
 
@@ -6163,7 +6163,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 178
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", start_line: 19 })'
+key = 'C(Decl { file: "src/bytecode.c", start_line: 19 })'
 descriptor = "c decl at src/bytecode.c:19"
 cost_tokens = 15
 cum_tokens = 9828
@@ -6172,7 +6172,7 @@ cum_tokens = 9828
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 19
 end = 20
 
@@ -6181,7 +6181,7 @@ kind = "full"
 
 [[batches]]
 position = 179
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c", start_line: 9 })'
+key = 'C(DeclDoc { file: "src/bytecode.c", start_line: 9 })'
 descriptor = "c decl doc at src/bytecode.c:9"
 cost_tokens = 9
 cum_tokens = 9837
@@ -6190,7 +6190,7 @@ cum_tokens = 9837
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.c"
+path = "src/bytecode.c"
 start = 8
 end = 8
 

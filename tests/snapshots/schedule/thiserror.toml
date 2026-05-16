@@ -5,7 +5,7 @@ batch_count = 117
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 38
 cum_tokens = 38
@@ -14,12 +14,12 @@ cum_tokens = 38
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror"
+parent = "."
 entries = [".github", ".gitignore", "Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "README.md", "build", "build.rs", "impl", "rust-toolchain.toml", "src", "tests"]
 
 [[batches]]
 position = 2
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 43
 cum_tokens = 81
@@ -28,7 +28,7 @@ cum_tokens = 81
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 1
 end = 2
 
@@ -36,7 +36,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 9
 end = 10
 
@@ -45,7 +45,7 @@ kind = "full"
 
 [[batches]]
 position = 3
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md" })'
+key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 29
 cum_tokens = 110
@@ -54,7 +54,7 @@ cum_tokens = 110
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 21
 end = 21
 
@@ -62,7 +62,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 44
 end = 44
 
@@ -70,7 +70,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 211
 end = 211
 
@@ -78,7 +78,7 @@ end = 211
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 22
 end = 22
 
@@ -86,7 +86,7 @@ end = 22
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 45
 end = 45
 
@@ -94,7 +94,7 @@ end = 45
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 212
 end = 212
 
@@ -103,7 +103,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src" })'
+key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 25
 cum_tokens = 135
@@ -112,12 +112,12 @@ cum_tokens = 135
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src"
+parent = "src"
 entries = ["aserror.rs", "display.rs", "lib.rs", "private.rs", "provide.rs", "var.rs"]
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl" })'
+key = 'Fs(DirListing { dir: "impl" })'
 descriptor = "listing of 'impl'"
 cost_tokens = 19
 cum_tokens = 154
@@ -126,12 +126,12 @@ cum_tokens = 154
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl"
+parent = "impl"
 entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
 
 [[batches]]
 position = 6
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 64
 cum_tokens = 218
@@ -140,7 +140,7 @@ cum_tokens = 218
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 12
 end = 12
 
@@ -148,7 +148,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 14
 end = 17
 
@@ -156,7 +156,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 19
 end = 19
 
@@ -165,7 +165,7 @@ kind = "full"
 
 [[batches]]
 position = 7
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs" })'
+key = 'Rust(ModUse { file: "src/lib.rs" })'
 descriptor = "mod/use plumbing in src/lib.rs"
 cost_tokens = 46
 cum_tokens = 264
@@ -174,7 +174,7 @@ cum_tokens = 264
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 281
 end = 282
 
@@ -182,7 +182,7 @@ end = 282
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 284
 end = 285
 
@@ -190,7 +190,7 @@ end = 285
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 287
 end = 287
 
@@ -198,7 +198,7 @@ end = 287
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 289
 end = 289
 
@@ -207,7 +207,7 @@ kind = "full"
 
 [[batches]]
 position = 8
-key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml" })'
+key = 'Toml(Identity { file: "Cargo.toml" })'
 descriptor = "[package] in Cargo.toml"
 cost_tokens = 183
 cum_tokens = 447
@@ -216,7 +216,7 @@ cum_tokens = 447
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+path = "Cargo.toml"
 start = 1
 end = 12
 
@@ -224,7 +224,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+path = "Cargo.toml"
 start = 39
 end = 40
 
@@ -233,7 +233,7 @@ kind = "full"
 
 [[batches]]
 position = 9
-key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs" })'
+key = 'Rust(CrateDocLede { file: "src/lib.rs" })'
 descriptor = "crate-doc lede in src/lib.rs"
 cost_tokens = 267
 cum_tokens = 714
@@ -242,7 +242,7 @@ cum_tokens = 714
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 1
 end = 13
 
@@ -251,7 +251,7 @@ kind = "full"
 
 [[batches]]
 position = 10
-key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml" })'
+key = 'Toml(Features { file: "Cargo.toml" })'
 descriptor = "[features] in Cargo.toml"
 cost_tokens = 161
 cum_tokens = 875
@@ -260,7 +260,7 @@ cum_tokens = 875
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+path = "Cargo.toml"
 start = 14
 end = 15
 
@@ -268,7 +268,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+path = "Cargo.toml"
 start = 17
 end = 28
 
@@ -277,7 +277,7 @@ kind = "full"
 
 [[batches]]
 position = 11
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src" })'
+key = 'Fs(DirListing { dir: "impl/src" })'
 descriptor = "listing of 'impl/src'"
 cost_tokens = 47
 cum_tokens = 922
@@ -286,12 +286,12 @@ cum_tokens = 922
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src"
+parent = "impl/src"
 entries = ["ast.rs", "attr.rs", "expand.rs", "fallback.rs", "fmt.rs", "generics.rs", "lib.rs", "prop.rs", "scan_expr.rs", "unraw.rs", "valid.rs"]
 
 [[batches]]
 position = 12
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs", start_line: 40 })'
+key = 'Rust(PubItem { file: "impl/src/lib.rs", start_line: 40 })'
 descriptor = "pub item at impl/src/lib.rs:40"
 cost_tokens = 19
 cum_tokens = 941
@@ -300,7 +300,7 @@ cum_tokens = 941
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+path = "impl/src/lib.rs"
 start = 40
 end = 40
 
@@ -308,7 +308,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+path = "impl/src/lib.rs"
 start = 41
 end = 41
 
@@ -317,7 +317,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 13
-key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs" })'
+key = 'Rust(MethodSigs { file: "impl/src/lib.rs" })'
 descriptor = "impl method sigs in impl/src/lib.rs"
 cost_tokens = 35
 cum_tokens = 976
@@ -326,7 +326,7 @@ cum_tokens = 976
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+path = "impl/src/lib.rs"
 start = 48
 end = 49
 
@@ -334,7 +334,7 @@ end = 49
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+path = "impl/src/lib.rs"
 start = 50
 end = 50
 
@@ -343,7 +343,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 14
-key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs", start_line: 40, body_start_line: 41 })'
+key = 'Rust(PubItemBody { file: "impl/src/lib.rs", start_line: 40, body_start_line: 41 })'
 descriptor = "pub item body at impl/src/lib.rs:40 body 41"
 cost_tokens = 29
 cum_tokens = 1005
@@ -352,7 +352,7 @@ cum_tokens = 1005
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+path = "impl/src/lib.rs"
 start = 41
 end = 42
 
@@ -361,7 +361,7 @@ kind = "full"
 
 [[batches]]
 position = 15
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs" })'
+key = 'Rust(ModUse { file: "impl/src/lib.rs" })'
 descriptor = "mod/use plumbing in impl/src/lib.rs"
 cost_tokens = 128
 cum_tokens = 1133
@@ -370,7 +370,7 @@ cum_tokens = 1133
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+path = "impl/src/lib.rs"
 start = 23
 end = 32
 
@@ -378,7 +378,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+path = "impl/src/lib.rs"
 start = 34
 end = 37
 
@@ -387,7 +387,7 @@ kind = "full"
 
 [[batches]]
 position = 16
-key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml" })'
+key = 'Toml(Dependencies { file: "impl/Cargo.toml" })'
 descriptor = "[dependencies] in impl/Cargo.toml"
 cost_tokens = 49
 cum_tokens = 1182
@@ -396,7 +396,7 @@ cum_tokens = 1182
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml"
+path = "impl/Cargo.toml"
 start = 14
 end = 17
 
@@ -405,7 +405,7 @@ kind = "full"
 
 [[batches]]
 position = 17
-key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml" })'
+key = 'Toml(Dependencies { file: "Cargo.toml" })'
 descriptor = "[dependencies] in Cargo.toml"
 cost_tokens = 107
 cum_tokens = 1289
@@ -414,7 +414,7 @@ cum_tokens = 1289
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+path = "Cargo.toml"
 start = 30
 end = 31
 
@@ -422,7 +422,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+path = "Cargo.toml"
 start = 33
 end = 37
 
@@ -431,7 +431,7 @@ kind = "full"
 
 [[batches]]
 position = 18
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs" })'
+key = 'Rust(PubItemNames { file: "src/provide.rs" })'
 descriptor = "pub-item names surface in src/provide.rs"
 cost_tokens = 26
 cum_tokens = 1315
@@ -440,7 +440,7 @@ cum_tokens = 1315
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+path = "src/provide.rs"
 start = 4
 end = 4
 
@@ -448,7 +448,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+path = "src/provide.rs"
 start = 19
 end = 19
 
@@ -456,7 +456,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+path = "src/provide.rs"
 start = 5
 end = 5
 
@@ -464,7 +464,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+path = "src/provide.rs"
 start = 20
 end = 20
 
@@ -473,7 +473,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 19
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs" })'
+key = 'Rust(PubItemNames { file: "impl/src/unraw.rs" })'
 descriptor = "pub-item names surface in impl/src/unraw.rs"
 cost_tokens = 26
 cum_tokens = 1341
@@ -482,7 +482,7 @@ cum_tokens = 1341
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+path = "impl/src/unraw.rs"
 start = 12
 end = 12
 
@@ -490,7 +490,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+path = "impl/src/unraw.rs"
 start = 82
 end = 82
 
@@ -498,7 +498,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+path = "impl/src/unraw.rs"
 start = 13
 end = 13
 
@@ -506,7 +506,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+path = "impl/src/unraw.rs"
 start = 83
 end = 83
 
@@ -515,7 +515,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 20
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs", start_line: 82 })'
+key = 'Rust(PubItem { file: "impl/src/unraw.rs", start_line: 82 })'
 descriptor = "pub item at impl/src/unraw.rs:82"
 cost_tokens = 23
 cum_tokens = 1364
@@ -524,7 +524,7 @@ cum_tokens = 1364
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+path = "impl/src/unraw.rs"
 start = 82
 end = 85
 
@@ -533,7 +533,7 @@ kind = "full"
 
 [[batches]]
 position = 21
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs" })'
+key = 'Rust(PubItemNames { file: "src/display.rs" })'
 descriptor = "pub-item names surface in src/display.rs"
 cost_tokens = 27
 cum_tokens = 1391
@@ -542,7 +542,7 @@ cum_tokens = 1391
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+path = "src/display.rs"
 start = 6
 end = 6
 
@@ -550,7 +550,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+path = "src/display.rs"
 start = 46
 end = 46
 
@@ -558,7 +558,7 @@ end = 46
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+path = "src/display.rs"
 start = 7
 end = 7
 
@@ -566,7 +566,7 @@ end = 7
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+path = "src/display.rs"
 start = 47
 end = 47
 
@@ -575,7 +575,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 22
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs" })'
+key = 'Rust(PubItemNames { file: "impl/src/generics.rs" })'
 descriptor = "pub-item names surface in impl/src/generics.rs"
 cost_tokens = 27
 cum_tokens = 1418
@@ -584,7 +584,7 @@ cum_tokens = 1418
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 8
 end = 8
 
@@ -592,7 +592,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 48
 end = 48
 
@@ -600,7 +600,7 @@ end = 48
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 9
 end = 9
 
@@ -608,7 +608,7 @@ end = 9
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 49
 end = 49
 
@@ -617,7 +617,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 23
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs", start_line: 8 })'
+key = 'Rust(PubItem { file: "impl/src/generics.rs", start_line: 8 })'
 descriptor = "pub item at impl/src/generics.rs:8"
 cost_tokens = 16
 cum_tokens = 1434
@@ -626,7 +626,7 @@ cum_tokens = 1434
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 8
 end = 10
 
@@ -635,7 +635,7 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs", start_line: 48 })'
+key = 'Rust(PubItem { file: "impl/src/generics.rs", start_line: 48 })'
 descriptor = "pub item at impl/src/generics.rs:48"
 cost_tokens = 39
 cum_tokens = 1473
@@ -644,7 +644,7 @@ cum_tokens = 1473
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 48
 end = 51
 
@@ -653,7 +653,7 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs" })'
+key = 'Rust(PubItemNames { file: "src/aserror.rs" })'
 descriptor = "pub-item names surface in src/aserror.rs"
 cost_tokens = 28
 cum_tokens = 1501
@@ -662,7 +662,7 @@ cum_tokens = 1501
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+path = "src/aserror.rs"
 start = 5
 end = 5
 
@@ -670,7 +670,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+path = "src/aserror.rs"
 start = 45
 end = 45
 
@@ -678,7 +678,7 @@ end = 45
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+path = "src/aserror.rs"
 start = 6
 end = 6
 
@@ -686,7 +686,7 @@ end = 6
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+path = "src/aserror.rs"
 start = 46
 end = 46
 
@@ -695,7 +695,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 26
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests" })'
+key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 72
 cum_tokens = 1573
@@ -704,12 +704,12 @@ cum_tokens = 1573
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests"
+parent = "tests"
 entries = ["compiletest.rs", "no-std", "test_backtrace.rs", "test_display.rs", "test_error.rs", "test_expr.rs", "test_from.rs", "test_generics.rs", "test_lints.rs", "test_option.rs", "test_path.rs", "test_source.rs", "test_transparent.rs", "ui"]
 
 [[batches]]
 position = 27
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs" })'
+key = 'Rust(PubItemNames { file: "impl/src/expand.rs" })'
 descriptor = "pub-item names surface in impl/src/expand.rs"
 cost_tokens = 42
 cum_tokens = 1615
@@ -718,7 +718,7 @@ cum_tokens = 1615
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 12
 end = 12
 
@@ -726,7 +726,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 505
 end = 505
 
@@ -734,7 +734,7 @@ end = 505
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 13
 end = 13
 
@@ -742,7 +742,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 506
 end = 506
 
@@ -751,7 +751,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 28
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs", start_line: 12 })'
+key = 'Rust(PubItem { file: "impl/src/expand.rs", start_line: 12 })'
 descriptor = "pub item at impl/src/expand.rs:12"
 cost_tokens = 0
 cum_tokens = 1615
@@ -760,7 +760,7 @@ cum_tokens = 1615
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 12
 end = 12
 
@@ -768,7 +768,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 13
 end = 13
 
@@ -777,7 +777,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 29
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs", start_line: 505 })'
+key = 'Rust(PubItem { file: "impl/src/expand.rs", start_line: 505 })'
 descriptor = "pub item at impl/src/expand.rs:505"
 cost_tokens = 0
 cum_tokens = 1615
@@ -786,7 +786,7 @@ cum_tokens = 1615
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 505
 end = 505
 
@@ -794,7 +794,7 @@ end = 505
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 506
 end = 506
 
@@ -803,7 +803,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 30
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 183
 cum_tokens = 1798
@@ -812,7 +812,7 @@ cum_tokens = 1798
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 21
 end = 21
 
@@ -820,7 +820,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 23
 end = 24
 
@@ -828,7 +828,7 @@ end = 24
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 26
 end = 40
 
@@ -836,7 +836,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 42
 end = 42
 
@@ -845,7 +845,7 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 3 })'
+key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 28
 cum_tokens = 1826
@@ -854,7 +854,7 @@ cum_tokens = 1826
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 51
 end = 52
 
@@ -863,7 +863,7 @@ kind = "full"
 
 [[batches]]
 position = 32
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs" })'
+key = 'Rust(ModUse { file: "impl/src/valid.rs" })'
 descriptor = "mod/use plumbing in impl/src/valid.rs"
 cost_tokens = 49
 cum_tokens = 1875
@@ -872,7 +872,7 @@ cum_tokens = 1875
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 1
 end = 3
 
@@ -881,7 +881,7 @@ kind = "full"
 
 [[batches]]
 position = 33
-key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml" })'
+key = 'Toml(Identity { file: "impl/Cargo.toml" })'
 descriptor = "[package] in impl/Cargo.toml"
 cost_tokens = 122
 cum_tokens = 1997
@@ -890,7 +890,7 @@ cum_tokens = 1997
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml"
+path = "impl/Cargo.toml"
 start = 1
 end = 9
 
@@ -899,7 +899,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/prop.rs" })'
+key = 'Rust(ModUse { file: "impl/src/prop.rs" })'
 descriptor = "mod/use plumbing in impl/src/prop.rs"
 cost_tokens = 51
 cum_tokens = 2048
@@ -908,7 +908,7 @@ cum_tokens = 2048
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/prop.rs"
+path = "impl/src/prop.rs"
 start = 1
 end = 4
 
@@ -917,7 +917,7 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs" })'
+key = 'Rust(ModUse { file: "impl/src/fallback.rs" })'
 descriptor = "mod/use plumbing in impl/src/fallback.rs"
 cost_tokens = 54
 cum_tokens = 2102
@@ -926,7 +926,7 @@ cum_tokens = 2102
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs"
+path = "impl/src/fallback.rs"
 start = 1
 end = 5
 
@@ -935,7 +935,7 @@ kind = "full"
 
 [[batches]]
 position = 36
-key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs", start_line: 12, body_start_line: 13 })'
+key = 'Rust(PubItemBody { file: "impl/src/expand.rs", start_line: 12, body_start_line: 13 })'
 descriptor = "pub item body at impl/src/expand.rs:12 body 13"
 cost_tokens = 95
 cum_tokens = 2197
@@ -944,7 +944,7 @@ cum_tokens = 2197
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 13
 end = 19
 
@@ -953,7 +953,7 @@ kind = "full"
 
 [[batches]]
 position = 37
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs" })'
+key = 'Rust(PubItemNames { file: "impl/src/ast.rs" })'
 descriptor = "pub-item names surface in impl/src/ast.rs"
 cost_tokens = 76
 cum_tokens = 2273
@@ -962,7 +962,7 @@ cum_tokens = 2273
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 10
 end = 10
 
@@ -970,7 +970,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 15
 end = 15
 
@@ -978,7 +978,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 22
 end = 22
 
@@ -986,7 +986,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 29
 end = 29
 
@@ -994,7 +994,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 36
 end = 36
 
@@ -1002,7 +1002,7 @@ end = 36
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 45
 end = 45
 
@@ -1010,7 +1010,7 @@ end = 45
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 11
 end = 11
 
@@ -1018,7 +1018,7 @@ end = 11
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 16
 end = 16
 
@@ -1026,7 +1026,7 @@ end = 16
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 23
 end = 23
 
@@ -1034,7 +1034,7 @@ end = 23
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 30
 end = 30
 
@@ -1042,7 +1042,7 @@ end = 30
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 37
 end = 37
 
@@ -1050,7 +1050,7 @@ end = 37
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 46
 end = 46
 
@@ -1059,7 +1059,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 38
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 10 })'
+key = 'Rust(PubItem { file: "impl/src/ast.rs", start_line: 10 })'
 descriptor = "pub item at impl/src/ast.rs:10"
 cost_tokens = 26
 cum_tokens = 2299
@@ -1068,7 +1068,7 @@ cum_tokens = 2299
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 10
 end = 13
 
@@ -1077,7 +1077,7 @@ kind = "full"
 
 [[batches]]
 position = 39
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 45 })'
+key = 'Rust(PubItem { file: "impl/src/ast.rs", start_line: 45 })'
 descriptor = "pub item at impl/src/ast.rs:45"
 cost_tokens = 50
 cum_tokens = 2349
@@ -1086,7 +1086,7 @@ cum_tokens = 2349
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 45
 end = 52
 
@@ -1095,7 +1095,7 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 15 })'
+key = 'Rust(PubItem { file: "impl/src/ast.rs", start_line: 15 })'
 descriptor = "pub item at impl/src/ast.rs:15"
 cost_tokens = 53
 cum_tokens = 2402
@@ -1104,7 +1104,7 @@ cum_tokens = 2402
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 15
 end = 20
 
@@ -1113,7 +1113,7 @@ kind = "full"
 
 [[batches]]
 position = 41
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 29 })'
+key = 'Rust(PubItem { file: "impl/src/ast.rs", start_line: 29 })'
 descriptor = "pub item at impl/src/ast.rs:29"
 cost_tokens = 53
 cum_tokens = 2455
@@ -1122,7 +1122,7 @@ cum_tokens = 2455
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 29
 end = 34
 
@@ -1131,7 +1131,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 22 })'
+key = 'Rust(PubItem { file: "impl/src/ast.rs", start_line: 22 })'
 descriptor = "pub item at impl/src/ast.rs:22"
 cost_tokens = 54
 cum_tokens = 2509
@@ -1140,7 +1140,7 @@ cum_tokens = 2509
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 22
 end = 27
 
@@ -1149,7 +1149,7 @@ kind = "full"
 
 [[batches]]
 position = 43
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 36 })'
+key = 'Rust(PubItem { file: "impl/src/ast.rs", start_line: 36 })'
 descriptor = "pub item at impl/src/ast.rs:36"
 cost_tokens = 65
 cum_tokens = 2574
@@ -1158,7 +1158,7 @@ cum_tokens = 2574
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 36
 end = 42
 
@@ -1167,7 +1167,7 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs" })'
+key = 'Rust(ModUse { file: "impl/src/scan_expr.rs" })'
 descriptor = "mod/use plumbing in impl/src/scan_expr.rs"
 cost_tokens = 75
 cum_tokens = 2649
@@ -1176,7 +1176,7 @@ cum_tokens = 2649
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs"
+path = "impl/src/scan_expr.rs"
 start = 1
 end = 4
 
@@ -1185,7 +1185,7 @@ kind = "full"
 
 [[batches]]
 position = 45
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/.github" })'
+key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
 cum_tokens = 2657
@@ -1194,12 +1194,12 @@ cum_tokens = 2657
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/.github"
+parent = ".github"
 entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
 position = 46
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/.github/workflows" })'
+key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
 cum_tokens = 2661
@@ -1208,12 +1208,12 @@ cum_tokens = 2661
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/.github/workflows"
+parent = ".github/workflows"
 entries = ["ci.yml"]
 
 [[batches]]
 position = 47
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs", start_line: 192 })'
+key = 'Rust(PubItem { file: "impl/src/scan_expr.rs", start_line: 192 })'
 descriptor = "pub item at impl/src/scan_expr.rs:192"
 cost_tokens = 21
 cum_tokens = 2682
@@ -1222,7 +1222,7 @@ cum_tokens = 2682
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs"
+path = "impl/src/scan_expr.rs"
 start = 192
 end = 192
 
@@ -1230,7 +1230,7 @@ end = 192
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs"
+path = "impl/src/scan_expr.rs"
 start = 193
 end = 193
 
@@ -1239,7 +1239,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 48
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 12 })'
+key = 'Markdown(Section { file: "README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 272
 cum_tokens = 2954
@@ -1248,7 +1248,7 @@ cum_tokens = 2954
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 211
 end = 211
 
@@ -1256,7 +1256,7 @@ end = 211
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 213
 end = 217
 
@@ -1264,7 +1264,7 @@ end = 217
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 219
 end = 219
 
@@ -1272,7 +1272,7 @@ end = 219
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 221
 end = 221
 
@@ -1280,7 +1280,7 @@ end = 221
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 223
 end = 223
 
@@ -1288,7 +1288,7 @@ end = 223
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 225
 end = 228
 
@@ -1296,7 +1296,7 @@ end = 228
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 230
 end = 230
 
@@ -1304,7 +1304,7 @@ end = 230
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 232
 end = 236
 
@@ -1313,7 +1313,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 11 })'
+key = 'Markdown(Section { file: "README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 52
 cum_tokens = 3006
@@ -1322,7 +1322,7 @@ cum_tokens = 3006
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 204
 end = 205
 
@@ -1330,7 +1330,7 @@ end = 205
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 207
 end = 207
 
@@ -1339,7 +1339,7 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs" })'
+key = 'Rust(ModUse { file: "impl/src/generics.rs" })'
 descriptor = "mod/use plumbing in impl/src/generics.rs"
 cost_tokens = 101
 cum_tokens = 3107
@@ -1348,7 +1348,7 @@ cum_tokens = 3107
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 1
 end = 6
 
@@ -1357,7 +1357,7 @@ kind = "full"
 
 [[batches]]
 position = 51
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs" })'
+key = 'Rust(ModUse { file: "impl/src/unraw.rs" })'
 descriptor = "mod/use plumbing in impl/src/unraw.rs"
 cost_tokens = 102
 cum_tokens = 3209
@@ -1366,7 +1366,7 @@ cum_tokens = 3209
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+path = "impl/src/unraw.rs"
 start = 1
 end = 8
 
@@ -1375,7 +1375,7 @@ kind = "full"
 
 [[batches]]
 position = 52
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs" })'
+key = 'Rust(PubItemNames { file: "impl/src/attr.rs" })'
 descriptor = "pub-item names surface in impl/src/attr.rs"
 cost_tokens = 110
 cum_tokens = 3319
@@ -1384,7 +1384,7 @@ cum_tokens = 3319
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 11
 end = 11
 
@@ -1392,7 +1392,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 21
 end = 21
 
@@ -1400,7 +1400,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 33
 end = 33
 
@@ -1408,7 +1408,7 @@ end = 33
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 39
 end = 39
 
@@ -1416,7 +1416,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 45
 end = 45
 
@@ -1424,7 +1424,7 @@ end = 45
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 51
 end = 51
 
@@ -1432,7 +1432,7 @@ end = 51
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 57
 end = 57
 
@@ -1440,7 +1440,7 @@ end = 57
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 69
 end = 69
 
@@ -1448,7 +1448,7 @@ end = 69
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 12
 end = 12
 
@@ -1456,7 +1456,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 22
 end = 22
 
@@ -1464,7 +1464,7 @@ end = 22
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 34
 end = 34
 
@@ -1472,7 +1472,7 @@ end = 34
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 40
 end = 40
 
@@ -1480,7 +1480,7 @@ end = 40
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 46
 end = 46
 
@@ -1488,7 +1488,7 @@ end = 46
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 52
 end = 52
 
@@ -1496,7 +1496,7 @@ end = 52
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 58
 end = 58
 
@@ -1504,7 +1504,7 @@ end = 58
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 70
 end = 70
 
@@ -1513,7 +1513,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 53
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 69 })'
+key = 'Rust(PubItem { file: "impl/src/attr.rs", start_line: 69 })'
 descriptor = "pub item at impl/src/attr.rs:69"
 cost_tokens = 0
 cum_tokens = 3319
@@ -1522,7 +1522,7 @@ cum_tokens = 3319
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 69
 end = 69
 
@@ -1530,7 +1530,7 @@ end = 69
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 70
 end = 70
 
@@ -1539,7 +1539,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 54
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 33 })'
+key = 'Rust(PubItem { file: "impl/src/attr.rs", start_line: 33 })'
 descriptor = "pub item at impl/src/attr.rs:33"
 cost_tokens = 25
 cum_tokens = 3344
@@ -1548,7 +1548,7 @@ cum_tokens = 3344
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 33
 end = 36
 
@@ -1557,7 +1557,7 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 39 })'
+key = 'Rust(PubItem { file: "impl/src/attr.rs", start_line: 39 })'
 descriptor = "pub item at impl/src/attr.rs:39"
 cost_tokens = 25
 cum_tokens = 3369
@@ -1566,7 +1566,7 @@ cum_tokens = 3369
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 39
 end = 42
 
@@ -1575,7 +1575,7 @@ kind = "full"
 
 [[batches]]
 position = 56
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 45 })'
+key = 'Rust(PubItem { file: "impl/src/attr.rs", start_line: 45 })'
 descriptor = "pub item at impl/src/attr.rs:45"
 cost_tokens = 25
 cum_tokens = 3394
@@ -1584,7 +1584,7 @@ cum_tokens = 3394
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 45
 end = 48
 
@@ -1593,7 +1593,7 @@ kind = "full"
 
 [[batches]]
 position = 57
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 51 })'
+key = 'Rust(PubItem { file: "impl/src/attr.rs", start_line: 51 })'
 descriptor = "pub item at impl/src/attr.rs:51"
 cost_tokens = 26
 cum_tokens = 3420
@@ -1602,7 +1602,7 @@ cum_tokens = 3420
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 51
 end = 54
 
@@ -1611,7 +1611,7 @@ kind = "full"
 
 [[batches]]
 position = 58
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 57 })'
+key = 'Rust(PubItem { file: "impl/src/attr.rs", start_line: 57 })'
 descriptor = "pub item at impl/src/attr.rs:57"
 cost_tokens = 71
 cum_tokens = 3491
@@ -1620,7 +1620,7 @@ cum_tokens = 3491
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 57
 end = 67
 
@@ -1629,7 +1629,7 @@ kind = "full"
 
 [[batches]]
 position = 59
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 11 })'
+key = 'Rust(PubItem { file: "impl/src/attr.rs", start_line: 11 })'
 descriptor = "pub item at impl/src/attr.rs:11"
 cost_tokens = 88
 cum_tokens = 3579
@@ -1638,7 +1638,7 @@ cum_tokens = 3579
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 11
 end = 18
 
@@ -1647,7 +1647,7 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 21 })'
+key = 'Rust(PubItem { file: "impl/src/attr.rs", start_line: 21 })'
 descriptor = "pub item at impl/src/attr.rs:21"
 cost_tokens = 106
 cum_tokens = 3685
@@ -1656,7 +1656,7 @@ cum_tokens = 3685
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 21
 end = 30
 
@@ -1665,7 +1665,7 @@ kind = "full"
 
 [[batches]]
 position = 61
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs" })'
+key = 'Rust(ModUse { file: "impl/src/ast.rs" })'
 descriptor = "mod/use plumbing in impl/src/ast.rs"
 cost_tokens = 114
 cum_tokens = 3799
@@ -1674,7 +1674,7 @@ cum_tokens = 3799
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+path = "impl/src/ast.rs"
 start = 1
 end = 8
 
@@ -1683,7 +1683,7 @@ kind = "full"
 
 [[batches]]
 position = 62
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs", start_line: 7 })'
+key = 'Rust(PubItem { file: "impl/src/fallback.rs", start_line: 7 })'
 descriptor = "pub item at impl/src/fallback.rs:7"
 cost_tokens = 28
 cum_tokens = 3827
@@ -1692,7 +1692,7 @@ cum_tokens = 3827
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs"
+path = "impl/src/fallback.rs"
 start = 7
 end = 7
 
@@ -1700,7 +1700,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs"
+path = "impl/src/fallback.rs"
 start = 8
 end = 8
 
@@ -1709,7 +1709,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 63
-key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 69, body_start_line: 121 })'
+key = 'Rust(PubItemBody { file: "impl/src/attr.rs", start_line: 69, body_start_line: 121 })'
 descriptor = "pub item body at impl/src/attr.rs:69 body 121"
 cost_tokens = 8
 cum_tokens = 3835
@@ -1718,7 +1718,7 @@ cum_tokens = 3835
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 121
 end = 121
 
@@ -1727,7 +1727,7 @@ kind = "full"
 
 [[batches]]
 position = 64
-key = 'Rust(CrateDocBody { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs" })'
+key = 'Rust(CrateDocBody { file: "src/lib.rs" })'
 descriptor = "crate-doc body in src/lib.rs"
 cost_tokens = 2481
 cum_tokens = 6316
@@ -1736,7 +1736,7 @@ cum_tokens = 6316
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 14
 end = 16
 
@@ -1744,7 +1744,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 18
 end = 62
 
@@ -1752,7 +1752,7 @@ end = 62
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 66
 end = 77
 
@@ -1760,7 +1760,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 90
 end = 107
 
@@ -1768,7 +1768,7 @@ end = 107
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 118
 end = 122
 
@@ -1776,7 +1776,7 @@ end = 122
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 129
 end = 141
 
@@ -1784,7 +1784,7 @@ end = 141
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 145
 end = 150
 
@@ -1792,7 +1792,7 @@ end = 150
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 157
 end = 164
 
@@ -1800,7 +1800,7 @@ end = 164
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 166
 end = 172
 
@@ -1808,7 +1808,7 @@ end = 172
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 174
 end = 182
 
@@ -1816,7 +1816,7 @@ end = 182
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 184
 end = 190
 
@@ -1824,7 +1824,7 @@ end = 190
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 192
 end = 197
 
@@ -1832,7 +1832,7 @@ end = 197
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 199
 end = 206
 
@@ -1840,7 +1840,7 @@ end = 206
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 208
 end = 215
 
@@ -1848,7 +1848,7 @@ end = 215
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 218
 end = 219
 
@@ -1856,7 +1856,7 @@ end = 219
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 221
 end = 221
 
@@ -1864,7 +1864,7 @@ end = 221
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 223
 end = 233
 
@@ -1872,7 +1872,7 @@ end = 233
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 236
 end = 247
 
@@ -1880,7 +1880,7 @@ end = 247
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 249
 end = 249
 
@@ -1888,7 +1888,7 @@ end = 249
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+path = "src/lib.rs"
 start = 251
 end = 260
 
@@ -1897,7 +1897,7 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fmt.rs" })'
+key = 'Rust(MethodSigs { file: "impl/src/fmt.rs" })'
 descriptor = "impl method sigs in impl/src/fmt.rs"
 cost_tokens = 40
 cum_tokens = 6356
@@ -1906,7 +1906,7 @@ cum_tokens = 6356
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fmt.rs"
+path = "impl/src/fmt.rs"
 start = 15
 end = 16
 
@@ -1914,7 +1914,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fmt.rs"
+path = "impl/src/fmt.rs"
 start = 17
 end = 17
 
@@ -1923,7 +1923,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 66
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs" })'
+key = 'Rust(ModUse { file: "impl/src/expand.rs" })'
 descriptor = "mod/use plumbing in impl/src/expand.rs"
 cost_tokens = 147
 cum_tokens = 6503
@@ -1932,7 +1932,7 @@ cum_tokens = 6503
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 1
 end = 10
 
@@ -1941,7 +1941,7 @@ kind = "full"
 
 [[batches]]
 position = 67
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs" })'
+key = 'Rust(ModUse { file: "impl/src/attr.rs" })'
 descriptor = "mod/use plumbing in impl/src/attr.rs"
 cost_tokens = 153
 cum_tokens = 6656
@@ -1950,7 +1950,7 @@ cum_tokens = 6656
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 1
 end = 9
 
@@ -1959,7 +1959,7 @@ kind = "full"
 
 [[batches]]
 position = 68
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs" })'
+key = 'Rust(PubItemNames { file: "tests/test_backtrace.rs" })'
 descriptor = "pub-item names surface in tests/test_backtrace.rs"
 cost_tokens = 22
 cum_tokens = 6678
@@ -1968,7 +1968,7 @@ cum_tokens = 6678
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+path = "tests/test_backtrace.rs"
 start = 8
 end = 8
 
@@ -1976,7 +1976,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+path = "tests/test_backtrace.rs"
 start = 13
 end = 13
 
@@ -1984,7 +1984,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+path = "tests/test_backtrace.rs"
 start = 9
 end = 9
 
@@ -1992,7 +1992,7 @@ end = 9
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+path = "tests/test_backtrace.rs"
 start = 14
 end = 14
 
@@ -2001,7 +2001,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 69
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs", start_line: 13 })'
+key = 'Rust(PubItem { file: "tests/test_backtrace.rs", start_line: 13 })'
 descriptor = "pub item at tests/test_backtrace.rs:13"
 cost_tokens = 19
 cum_tokens = 6697
@@ -2010,7 +2010,7 @@ cum_tokens = 6697
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+path = "tests/test_backtrace.rs"
 start = 13
 end = 15
 
@@ -2019,7 +2019,7 @@ kind = "full"
 
 [[batches]]
 position = 70
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 74
 cum_tokens = 6771
@@ -2028,7 +2028,7 @@ cum_tokens = 6771
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 46
 end = 49
 
@@ -2037,7 +2037,7 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs" })'
+key = 'Rust(PubItemNames { file: "tests/test_expr.rs" })'
 descriptor = "pub-item names surface in tests/test_expr.rs"
 cost_tokens = 23
 cum_tokens = 6794
@@ -2046,7 +2046,7 @@ cum_tokens = 6794
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+path = "tests/test_expr.rs"
 start = 11
 end = 11
 
@@ -2054,7 +2054,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+path = "tests/test_expr.rs"
 start = 41
 end = 41
 
@@ -2062,7 +2062,7 @@ end = 41
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+path = "tests/test_expr.rs"
 start = 12
 end = 12
 
@@ -2070,7 +2070,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+path = "tests/test_expr.rs"
 start = 42
 end = 42
 
@@ -2079,7 +2079,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 72
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs" })'
+key = 'Rust(PubItemNames { file: "tests/test_path.rs" })'
 descriptor = "pub-item names surface in tests/test_path.rs"
 cost_tokens = 23
 cum_tokens = 6817
@@ -2088,7 +2088,7 @@ cum_tokens = 6817
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+path = "tests/test_path.rs"
 start = 29
 end = 29
 
@@ -2096,7 +2096,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+path = "tests/test_path.rs"
 start = 35
 end = 35
 
@@ -2104,7 +2104,7 @@ end = 35
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+path = "tests/test_path.rs"
 start = 30
 end = 30
 
@@ -2112,7 +2112,7 @@ end = 30
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+path = "tests/test_path.rs"
 start = 36
 end = 36
 
@@ -2121,7 +2121,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 73
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs", start_line: 29 })'
+key = 'Rust(PubItem { file: "tests/test_path.rs", start_line: 29 })'
 descriptor = "pub item at tests/test_path.rs:29"
 cost_tokens = 24
 cum_tokens = 6841
@@ -2130,7 +2130,7 @@ cum_tokens = 6841
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+path = "tests/test_path.rs"
 start = 29
 end = 32
 
@@ -2139,7 +2139,7 @@ kind = "full"
 
 [[batches]]
 position = 74
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs", start_line: 5 })'
+key = 'Rust(PubItem { file: "src/aserror.rs", start_line: 5 })'
 descriptor = "pub item at src/aserror.rs:5"
 cost_tokens = 23
 cum_tokens = 6864
@@ -2148,7 +2148,7 @@ cum_tokens = 6864
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+path = "src/aserror.rs"
 start = 5
 end = 7
 
@@ -2157,7 +2157,7 @@ kind = "full"
 
 [[batches]]
 position = 75
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fmt.rs" })'
+key = 'Rust(ModUse { file: "impl/src/fmt.rs" })'
 descriptor = "mod/use plumbing in impl/src/fmt.rs"
 cost_tokens = 194
 cum_tokens = 7058
@@ -2166,7 +2166,7 @@ cum_tokens = 7058
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fmt.rs"
+path = "impl/src/fmt.rs"
 start = 1
 end = 13
 
@@ -2175,7 +2175,7 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "src/provide.rs", start_line: 4 })'
 descriptor = "pub item at src/provide.rs:4"
 cost_tokens = 28
 cum_tokens = 7086
@@ -2184,7 +2184,7 @@ cum_tokens = 7086
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+path = "src/provide.rs"
 start = 4
 end = 6
 
@@ -2193,7 +2193,7 @@ kind = "full"
 
 [[batches]]
 position = 77
-key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs" })'
+key = 'Rust(MethodSigs { file: "impl/src/attr.rs" })'
 descriptor = "impl method sigs in impl/src/attr.rs"
 cost_tokens = 65
 cum_tokens = 7151
@@ -2202,7 +2202,7 @@ cum_tokens = 7151
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 302
 end = 303
 
@@ -2210,7 +2210,7 @@ end = 303
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 342
 end = 343
 
@@ -2218,7 +2218,7 @@ end = 343
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 304
 end = 304
 
@@ -2226,7 +2226,7 @@ end = 304
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+path = "impl/src/attr.rs"
 start = 344
 end = 344
 
@@ -2235,7 +2235,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 78
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs" })'
+key = 'Rust(PubItemNames { file: "tests/test_source.rs" })'
 descriptor = "pub-item names surface in tests/test_source.rs"
 cost_tokens = 35
 cum_tokens = 7186
@@ -2244,7 +2244,7 @@ cum_tokens = 7186
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 7
 end = 7
 
@@ -2252,7 +2252,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 13
 end = 13
 
@@ -2260,7 +2260,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 21
 end = 21
 
@@ -2268,7 +2268,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 8
 end = 8
 
@@ -2276,7 +2276,7 @@ end = 8
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 14
 end = 14
 
@@ -2284,7 +2284,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 22
 end = 22
 
@@ -2293,7 +2293,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 79
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs", start_line: 7 })'
+key = 'Rust(PubItem { file: "tests/test_source.rs", start_line: 7 })'
 descriptor = "pub item at tests/test_source.rs:7"
 cost_tokens = 14
 cum_tokens = 7200
@@ -2302,7 +2302,7 @@ cum_tokens = 7200
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 7
 end = 9
 
@@ -2311,7 +2311,7 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs", start_line: 21 })'
+key = 'Rust(PubItem { file: "tests/test_source.rs", start_line: 21 })'
 descriptor = "pub item at tests/test_source.rs:21"
 cost_tokens = 29
 cum_tokens = 7229
@@ -2320,7 +2320,7 @@ cum_tokens = 7229
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 21
 end = 24
 
@@ -2329,7 +2329,7 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs", start_line: 13 })'
+key = 'Rust(PubItem { file: "tests/test_source.rs", start_line: 13 })'
 descriptor = "pub item at tests/test_source.rs:13"
 cost_tokens = 31
 cum_tokens = 7260
@@ -2338,7 +2338,7 @@ cum_tokens = 7260
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+path = "tests/test_source.rs"
 start = 13
 end = 17
 
@@ -2347,7 +2347,7 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs", start_line: 35 })'
+key = 'Rust(PubItem { file: "tests/test_path.rs", start_line: 35 })'
 descriptor = "pub item at tests/test_path.rs:35"
 cost_tokens = 57
 cum_tokens = 7317
@@ -2356,7 +2356,7 @@ cum_tokens = 7317
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+path = "tests/test_path.rs"
 start = 35
 end = 40
 
@@ -2365,7 +2365,7 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 9 })'
+key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 127
 cum_tokens = 7444
@@ -2374,7 +2374,7 @@ cum_tokens = 7444
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 155
 end = 156
 
@@ -2382,7 +2382,7 @@ end = 156
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 158
 end = 167
 
@@ -2391,7 +2391,7 @@ kind = "full"
 
 [[batches]]
 position = 84
-key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs", start_line: 505, body_start_line: 506 })'
+key = 'Rust(PubItemBody { file: "impl/src/expand.rs", start_line: 505, body_start_line: 506 })'
 descriptor = "pub item body at impl/src/expand.rs:505 body 506"
 cost_tokens = 37
 cum_tokens = 7481
@@ -2400,7 +2400,7 @@ cum_tokens = 7481
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+path = "impl/src/expand.rs"
 start = 506
 end = 508
 
@@ -2409,7 +2409,7 @@ kind = "full"
 
 [[batches]]
 position = 85
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 7 })'
+key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 160
 cum_tokens = 7641
@@ -2418,7 +2418,7 @@ cum_tokens = 7641
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 123
 end = 126
 
@@ -2426,7 +2426,7 @@ end = 126
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 128
 end = 129
 
@@ -2434,7 +2434,7 @@ end = 129
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 131
 end = 136
 
@@ -2443,7 +2443,7 @@ kind = "full"
 
 [[batches]]
 position = 86
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 5 })'
+key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 170
 cum_tokens = 7811
@@ -2452,7 +2452,7 @@ cum_tokens = 7811
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 89
 end = 90
 
@@ -2460,7 +2460,7 @@ end = 90
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 92
 end = 94
 
@@ -2468,7 +2468,7 @@ end = 94
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 96
 end = 102
 
@@ -2477,7 +2477,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs" })'
+key = 'Rust(MethodSigs { file: "impl/src/valid.rs" })'
 descriptor = "impl method sigs in impl/src/valid.rs"
 cost_tokens = 133
 cum_tokens = 7944
@@ -2486,7 +2486,7 @@ cum_tokens = 7944
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 5
 end = 6
 
@@ -2494,7 +2494,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 14
 end = 15
 
@@ -2502,7 +2502,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 45
 end = 46
 
@@ -2510,7 +2510,7 @@ end = 46
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 66
 end = 67
 
@@ -2518,7 +2518,7 @@ end = 67
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 91
 end = 92
 
@@ -2526,7 +2526,7 @@ end = 92
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 7
 end = 7
 
@@ -2534,7 +2534,7 @@ end = 7
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 16
 end = 16
 
@@ -2542,7 +2542,7 @@ end = 16
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 47
 end = 47
 
@@ -2550,7 +2550,7 @@ end = 47
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 68
 end = 68
 
@@ -2558,7 +2558,7 @@ end = 68
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/valid.rs"
+path = "impl/src/valid.rs"
 start = 93
 end = 93
 
@@ -2567,7 +2567,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 88
-key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs" })'
+key = 'Rust(MethodSigs { file: "impl/src/generics.rs" })'
 descriptor = "impl method sigs in impl/src/generics.rs"
 cost_tokens = 134
 cum_tokens = 8078
@@ -2576,7 +2576,7 @@ cum_tokens = 8078
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 12
 end = 13
 
@@ -2584,7 +2584,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 19
 end = 19
 
@@ -2592,7 +2592,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 53
 end = 54
 
@@ -2600,7 +2600,7 @@ end = 54
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 61
 end = 61
 
@@ -2608,7 +2608,7 @@ end = 61
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 74
 end = 74
 
@@ -2616,7 +2616,7 @@ end = 74
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 14
 end = 14
 
@@ -2624,7 +2624,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 20
 end = 20
 
@@ -2632,7 +2632,7 @@ end = 20
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 55
 end = 55
 
@@ -2640,7 +2640,7 @@ end = 55
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 62
 end = 62
 
@@ -2648,7 +2648,7 @@ end = 62
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+path = "impl/src/generics.rs"
 start = 75
 end = 75
 
@@ -2657,7 +2657,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 89
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs", start_line: 6 })'
+key = 'Rust(PubItem { file: "src/display.rs", start_line: 6 })'
 descriptor = "pub item at src/display.rs:6"
 cost_tokens = 66
 cum_tokens = 8144
@@ -2666,7 +2666,7 @@ cum_tokens = 8144
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+path = "src/display.rs"
 start = 6
 end = 9
 
@@ -2674,7 +2674,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+path = "src/display.rs"
 start = 11
 end = 12
 
@@ -2683,7 +2683,7 @@ kind = "full"
 
 [[batches]]
 position = 90
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 8 })'
+key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 193
 cum_tokens = 8337
@@ -2692,7 +2692,7 @@ cum_tokens = 8337
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 138
 end = 142
 
@@ -2700,7 +2700,7 @@ end = 142
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+path = "README.md"
 start = 145
 end = 153
 
@@ -2709,7 +2709,7 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui" })'
+key = 'Fs(DirListing { dir: "tests/ui" })'
 descriptor = "listing of 'tests/ui'"
 cost_tokens = 528
 cum_tokens = 8865
@@ -2718,12 +2718,12 @@ cum_tokens = 8865
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui"
+parent = "tests/ui"
 entries = ["bad-field-attr.rs", "bad-field-attr.stderr", "concat-display.rs", "concat-display.stderr", "display-underscore.rs", "display-underscore.stderr", "duplicate-enum-source.rs", "duplicate-enum-source.stderr", "duplicate-fmt.rs", "duplicate-fmt.stderr", "duplicate-struct-source.rs", "duplicate-struct-source.stderr", "duplicate-transparent.rs", "duplicate-transparent.stderr", "expression-fallback.rs", "expression-fallback.stderr", "fallback-impl-with-display.rs", "fallback-impl-with-display.stderr", "from-backtrace-backtrace.rs", "from-backtrace-backtrace.stderr", "from-not-source.rs", "from-not-source.stderr", "invalid-input-impl-anyway.rs", "invalid-input-impl-anyway.stderr", "lifetime.rs", "lifetime.stderr", "missing-display.rs", "missing-display.stderr", "missing-fmt.rs", "missing-fmt.stderr", "no-display.rs", "no-display.stderr", "numbered-positional-tuple.rs", "numbered-positional-tuple.stderr", "raw-identifier.rs", "raw-identifier.stderr", "same-from-type.rs", "same-from-type.stderr", "source-enum-not-error.rs", "source-enum-not-error.stderr", "source-enum-unnamed-field-not-error.rs", "source-enum-unnamed-field-not-error.stderr", "source-struct-not-error.rs", "source-struct-not-error.stderr", "source-struct-unnamed-field-not-error.rs", "source-struct-unnamed-field-not-error.stderr", "struct-with-fmt.rs", "struct-with-fmt.stderr", "transparent-display.rs", "transparent-display.stderr", "transparent-enum-many.rs", "transparent-enum-many.stderr", "transparent-enum-not-error.rs", "transparent-enum-not-error.stderr", "transparent-enum-source.rs", "transparent-enum-source.stderr", "transparent-enum-unnamed-field-not-error.rs", "transparent-enum-unnamed-field-not-error.stderr", "transparent-struct-many.rs", "transparent-struct-many.stderr", "transparent-struct-not-error.rs", "transparent-struct-not-error.stderr", "transparent-struct-source.rs", "transparent-struct-source.stderr", "transparent-struct-unnamed-field-not-error.rs", "transparent-struct-unnamed-field-not-error.stderr", "unconditional-recursion.rs", "unconditional-recursion.stderr", "unexpected-field-fmt.rs", "unexpected-field-fmt.stderr", "unexpected-struct-source.rs", "unexpected-struct-source.stderr", "union.rs", "union.stderr"]
 
 [[batches]]
 position = 92
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-struct-not-error.rs", start_line: 5 })'
+key = 'Rust(PubItem { file: "tests/ui/transparent-struct-not-error.rs", start_line: 5 })'
 descriptor = "pub item at tests/ui/transparent-struct-not-error.rs:5"
 cost_tokens = 22
 cum_tokens = 8887
@@ -2732,7 +2732,7 @@ cum_tokens = 8887
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-struct-not-error.rs"
+path = "tests/ui/transparent-struct-not-error.rs"
 start = 5
 end = 7
 
@@ -2741,7 +2741,7 @@ kind = "full"
 
 [[batches]]
 position = 93
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/missing-display.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/missing-display.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/missing-display.rs:4"
 cost_tokens = 28
 cum_tokens = 8915
@@ -2750,7 +2750,7 @@ cum_tokens = 8915
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/missing-display.rs"
+path = "tests/ui/missing-display.rs"
 start = 4
 end = 7
 
@@ -2759,7 +2759,7 @@ kind = "full"
 
 [[batches]]
 position = 94
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-struct-not-error.rs", start_line: 8 })'
+key = 'Rust(PubItem { file: "tests/ui/source-struct-not-error.rs", start_line: 8 })'
 descriptor = "pub item at tests/ui/source-struct-not-error.rs:8"
 cost_tokens = 24
 cum_tokens = 8939
@@ -2768,7 +2768,7 @@ cum_tokens = 8939
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-struct-not-error.rs"
+path = "tests/ui/source-struct-not-error.rs"
 start = 8
 end = 10
 
@@ -2777,7 +2777,7 @@ kind = "full"
 
 [[batches]]
 position = 95
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-unnamed-field-not-error.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/transparent-enum-unnamed-field-not-error.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/transparent-enum-unnamed-field-not-error.rs:4"
 cost_tokens = 31
 cum_tokens = 8970
@@ -2786,7 +2786,7 @@ cum_tokens = 8970
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-unnamed-field-not-error.rs"
+path = "tests/ui/transparent-enum-unnamed-field-not-error.rs"
 start = 4
 end = 7
 
@@ -2795,7 +2795,7 @@ kind = "full"
 
 [[batches]]
 position = 96
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/raw-identifier.rs", start_line: 5 })'
+key = 'Rust(PubItem { file: "tests/ui/raw-identifier.rs", start_line: 5 })'
 descriptor = "pub item at tests/ui/raw-identifier.rs:5"
 cost_tokens = 26
 cum_tokens = 8996
@@ -2804,7 +2804,7 @@ cum_tokens = 8996
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/raw-identifier.rs"
+path = "tests/ui/raw-identifier.rs"
 start = 5
 end = 7
 
@@ -2813,7 +2813,7 @@ kind = "full"
 
 [[batches]]
 position = 97
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-not-error.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/transparent-enum-not-error.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/transparent-enum-not-error.rs:4"
 cost_tokens = 34
 cum_tokens = 9030
@@ -2822,7 +2822,7 @@ cum_tokens = 9030
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-not-error.rs"
+path = "tests/ui/transparent-enum-not-error.rs"
 start = 4
 end = 7
 
@@ -2831,7 +2831,7 @@ kind = "full"
 
 [[batches]]
 position = 98
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs" })'
+key = 'Rust(PubItemNames { file: "tests/ui/no-display.rs" })'
 descriptor = "pub-item names surface in tests/ui/no-display.rs"
 cost_tokens = 22
 cum_tokens = 9052
@@ -2840,7 +2840,7 @@ cum_tokens = 9052
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs"
+path = "tests/ui/no-display.rs"
 start = 8
 end = 8
 
@@ -2848,7 +2848,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs"
+path = "tests/ui/no-display.rs"
 start = 14
 end = 14
 
@@ -2856,7 +2856,7 @@ end = 14
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs"
+path = "tests/ui/no-display.rs"
 start = 9
 end = 9
 
@@ -2864,7 +2864,7 @@ end = 9
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs"
+path = "tests/ui/no-display.rs"
 start = 15
 end = 15
 
@@ -2873,7 +2873,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 99
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs", start_line: 8 })'
+key = 'Rust(PubItem { file: "tests/ui/no-display.rs", start_line: 8 })'
 descriptor = "pub item at tests/ui/no-display.rs:8"
 cost_tokens = 13
 cum_tokens = 9065
@@ -2882,7 +2882,7 @@ cum_tokens = 9065
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs"
+path = "tests/ui/no-display.rs"
 start = 8
 end = 10
 
@@ -2891,7 +2891,7 @@ kind = "full"
 
 [[batches]]
 position = 100
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs", start_line: 14 })'
+key = 'Rust(PubItem { file: "tests/ui/no-display.rs", start_line: 14 })'
 descriptor = "pub item at tests/ui/no-display.rs:14"
 cost_tokens = 13
 cum_tokens = 9078
@@ -2900,7 +2900,7 @@ cum_tokens = 9078
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/no-display.rs"
+path = "tests/ui/no-display.rs"
 start = 14
 end = 16
 
@@ -2909,7 +2909,7 @@ kind = "full"
 
 [[batches]]
 position = 101
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-not-error.rs" })'
+key = 'Rust(PubItemNames { file: "tests/ui/source-enum-not-error.rs" })'
 descriptor = "pub-item names surface in tests/ui/source-enum-not-error.rs"
 cost_tokens = 22
 cum_tokens = 9100
@@ -2918,7 +2918,7 @@ cum_tokens = 9100
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-not-error.rs"
+path = "tests/ui/source-enum-not-error.rs"
 start = 4
 end = 4
 
@@ -2926,7 +2926,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-not-error.rs"
+path = "tests/ui/source-enum-not-error.rs"
 start = 8
 end = 8
 
@@ -2934,7 +2934,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-not-error.rs"
+path = "tests/ui/source-enum-not-error.rs"
 start = 5
 end = 5
 
@@ -2942,7 +2942,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-not-error.rs"
+path = "tests/ui/source-enum-not-error.rs"
 start = 9
 end = 9
 
@@ -2951,7 +2951,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 102
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-not-error.rs", start_line: 8 })'
+key = 'Rust(PubItem { file: "tests/ui/source-enum-not-error.rs", start_line: 8 })'
 descriptor = "pub item at tests/ui/source-enum-not-error.rs:8"
 cost_tokens = 15
 cum_tokens = 9115
@@ -2960,7 +2960,7 @@ cum_tokens = 9115
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-not-error.rs"
+path = "tests/ui/source-enum-not-error.rs"
 start = 8
 end = 10
 
@@ -2969,7 +2969,7 @@ kind = "full"
 
 [[batches]]
 position = 103
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-unnamed-field-not-error.rs" })'
+key = 'Rust(PubItemNames { file: "tests/ui/source-enum-unnamed-field-not-error.rs" })'
 descriptor = "pub-item names surface in tests/ui/source-enum-unnamed-field-not-error.rs"
 cost_tokens = 22
 cum_tokens = 9137
@@ -2978,7 +2978,7 @@ cum_tokens = 9137
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-unnamed-field-not-error.rs"
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
 start = 4
 end = 4
 
@@ -2986,7 +2986,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-unnamed-field-not-error.rs"
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
 start = 8
 end = 8
 
@@ -2994,7 +2994,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-unnamed-field-not-error.rs"
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
 start = 5
 end = 5
 
@@ -3002,7 +3002,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-unnamed-field-not-error.rs"
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
 start = 9
 end = 9
 
@@ -3011,7 +3011,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 104
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-unnamed-field-not-error.rs", start_line: 8 })'
+key = 'Rust(PubItem { file: "tests/ui/source-enum-unnamed-field-not-error.rs", start_line: 8 })'
 descriptor = "pub item at tests/ui/source-enum-unnamed-field-not-error.rs:8"
 cost_tokens = 16
 cum_tokens = 9153
@@ -3020,7 +3020,7 @@ cum_tokens = 9153
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/source-enum-unnamed-field-not-error.rs"
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
 start = 8
 end = 10
 
@@ -3029,7 +3029,7 @@ kind = "full"
 
 [[batches]]
 position = 105
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-many.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/transparent-enum-many.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/transparent-enum-many.rs:4"
 cost_tokens = 36
 cum_tokens = 9189
@@ -3038,7 +3038,7 @@ cum_tokens = 9189
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-many.rs"
+path = "tests/ui/transparent-enum-many.rs"
 start = 4
 end = 7
 
@@ -3047,7 +3047,7 @@ kind = "full"
 
 [[batches]]
 position = 106
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-source.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/transparent-enum-source.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/transparent-enum-source.rs:4"
 cost_tokens = 37
 cum_tokens = 9226
@@ -3056,7 +3056,7 @@ cum_tokens = 9226
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-source.rs"
+path = "tests/ui/transparent-enum-source.rs"
 start = 4
 end = 7
 
@@ -3065,7 +3065,7 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/missing-fmt.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/missing-fmt.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/missing-fmt.rs:4"
 cost_tokens = 41
 cum_tokens = 9267
@@ -3074,7 +3074,7 @@ cum_tokens = 9267
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/missing-fmt.rs"
+path = "tests/ui/missing-fmt.rs"
 start = 4
 end = 8
 
@@ -3083,7 +3083,7 @@ kind = "full"
 
 [[batches]]
 position = 108
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-struct-many.rs", start_line: 5 })'
+key = 'Rust(PubItem { file: "tests/ui/transparent-struct-many.rs", start_line: 5 })'
 descriptor = "pub item at tests/ui/transparent-struct-many.rs:5"
 cost_tokens = 33
 cum_tokens = 9300
@@ -3092,7 +3092,7 @@ cum_tokens = 9300
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-struct-many.rs"
+path = "tests/ui/transparent-struct-many.rs"
 start = 5
 end = 8
 
@@ -3101,7 +3101,7 @@ kind = "full"
 
 [[batches]]
 position = 109
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/union.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/union.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/union.rs:4"
 cost_tokens = 33
 cum_tokens = 9333
@@ -3110,7 +3110,7 @@ cum_tokens = 9333
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/union.rs"
+path = "tests/ui/union.rs"
 start = 4
 end = 7
 
@@ -3119,7 +3119,7 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/unexpected-field-fmt.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/unexpected-field-fmt.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/unexpected-field-fmt.rs:4"
 cost_tokens = 49
 cum_tokens = 9382
@@ -3128,7 +3128,7 @@ cum_tokens = 9382
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/unexpected-field-fmt.rs"
+path = "tests/ui/unexpected-field-fmt.rs"
 start = 4
 end = 9
 
@@ -3137,7 +3137,7 @@ kind = "full"
 
 [[batches]]
 position = 111
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-backtrace-backtrace.rs", start_line: 8 })'
+key = 'Rust(PubItem { file: "tests/ui/from-backtrace-backtrace.rs", start_line: 8 })'
 descriptor = "pub item at tests/ui/from-backtrace-backtrace.rs:8"
 cost_tokens = 49
 cum_tokens = 9431
@@ -3146,7 +3146,7 @@ cum_tokens = 9431
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-backtrace-backtrace.rs"
+path = "tests/ui/from-backtrace-backtrace.rs"
 start = 8
 end = 13
 
@@ -3155,7 +3155,7 @@ kind = "full"
 
 [[batches]]
 position = 112
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-not-source.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/from-not-source.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/from-not-source.rs:4"
 cost_tokens = 53
 cum_tokens = 9484
@@ -3164,7 +3164,7 @@ cum_tokens = 9484
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-not-source.rs"
+path = "tests/ui/from-not-source.rs"
 start = 4
 end = 9
 
@@ -3173,7 +3173,7 @@ kind = "full"
 
 [[batches]]
 position = 113
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-enum-source.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/duplicate-enum-source.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/duplicate-enum-source.rs:4"
 cost_tokens = 68
 cum_tokens = 9552
@@ -3182,7 +3182,7 @@ cum_tokens = 9552
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-enum-source.rs"
+path = "tests/ui/duplicate-enum-source.rs"
 start = 4
 end = 11
 
@@ -3191,7 +3191,7 @@ kind = "full"
 
 [[batches]]
 position = 114
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-struct-source.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/duplicate-struct-source.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/duplicate-struct-source.rs:4"
 cost_tokens = 54
 cum_tokens = 9606
@@ -3200,7 +3200,7 @@ cum_tokens = 9606
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-struct-source.rs"
+path = "tests/ui/duplicate-struct-source.rs"
 start = 4
 end = 9
 
@@ -3209,7 +3209,7 @@ kind = "full"
 
 [[batches]]
 position = 115
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs", start_line: 41 })'
+key = 'Rust(PubItem { file: "tests/test_expr.rs", start_line: 41 })'
 descriptor = "pub item at tests/test_expr.rs:41"
 cost_tokens = 124
 cum_tokens = 9730
@@ -3218,7 +3218,7 @@ cum_tokens = 9730
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+path = "tests/test_expr.rs"
 start = 41
 end = 53
 
@@ -3227,7 +3227,7 @@ kind = "full"
 
 [[batches]]
 position = 116
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/same-from-type.rs", start_line: 4 })'
+key = 'Rust(PubItem { file: "tests/ui/same-from-type.rs", start_line: 4 })'
 descriptor = "pub item at tests/ui/same-from-type.rs:4"
 cost_tokens = 71
 cum_tokens = 9801
@@ -3236,7 +3236,7 @@ cum_tokens = 9801
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/same-from-type.rs"
+path = "tests/ui/same-from-type.rs"
 start = 4
 end = 9
 
@@ -3245,7 +3245,7 @@ kind = "full"
 
 [[batches]]
 position = 117
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs" })'
+key = 'Rust(PubItemNames { file: "tests/ui/duplicate-fmt.rs" })'
 descriptor = "pub-item names surface in tests/ui/duplicate-fmt.rs"
 cost_tokens = 46
 cum_tokens = 9847
@@ -3254,7 +3254,7 @@ cum_tokens = 9847
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs"
+path = "tests/ui/duplicate-fmt.rs"
 start = 6
 end = 6
 
@@ -3262,7 +3262,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs"
+path = "tests/ui/duplicate-fmt.rs"
 start = 11
 end = 11
 
@@ -3270,7 +3270,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs"
+path = "tests/ui/duplicate-fmt.rs"
 start = 16
 end = 16
 
@@ -3278,7 +3278,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs"
+path = "tests/ui/duplicate-fmt.rs"
 start = 21
 end = 21
 
@@ -3286,7 +3286,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs"
+path = "tests/ui/duplicate-fmt.rs"
 start = 7
 end = 7
 
@@ -3294,7 +3294,7 @@ end = 7
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs"
+path = "tests/ui/duplicate-fmt.rs"
 start = 12
 end = 12
 
@@ -3302,7 +3302,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs"
+path = "tests/ui/duplicate-fmt.rs"
 start = 17
 end = 17
 
@@ -3310,7 +3310,7 @@ end = 17
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/duplicate-fmt.rs"
+path = "tests/ui/duplicate-fmt.rs"
 start = 22
 end = 22
 

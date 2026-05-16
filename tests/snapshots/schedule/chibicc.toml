@@ -5,7 +5,7 @@ batch_count = 107
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chibicc" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 51
 cum_tokens = 51
@@ -14,12 +14,12 @@ cum_tokens = 51
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/chibicc"
+parent = "."
 entries = [".gitignore", "LICENSE", "Makefile", "README.md", "chibicc.h", "codegen.c", "hashmap.c", "include", "main.c", "parse.c", "preprocess.c", "strings.c", "test", "tokenize.c", "type.c", "unicode.c"]
 
 [[batches]]
 position = 2
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 70
 cum_tokens = 121
@@ -28,7 +28,7 @@ cum_tokens = 121
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 1
 end = 1
 
@@ -36,7 +36,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 3
 end = 5
 
@@ -45,7 +45,7 @@ kind = "full"
 
 [[batches]]
 position = 3
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md" })'
+key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 59
 cum_tokens = 180
@@ -54,7 +54,7 @@ cum_tokens = 180
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 55
 end = 55
 
@@ -62,7 +62,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 93
 end = 93
 
@@ -70,7 +70,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 110
 end = 110
 
@@ -78,7 +78,7 @@ end = 110
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 128
 end = 128
 
@@ -86,7 +86,7 @@ end = 128
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 180
 end = 180
 
@@ -94,7 +94,7 @@ end = 180
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 188
 end = 188
 
@@ -102,7 +102,7 @@ end = 188
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 56
 end = 56
 
@@ -110,7 +110,7 @@ end = 56
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 94
 end = 94
 
@@ -118,7 +118,7 @@ end = 94
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 111
 end = 111
 
@@ -126,7 +126,7 @@ end = 111
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 129
 end = 129
 
@@ -134,7 +134,7 @@ end = 129
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 181
 end = 181
 
@@ -142,7 +142,7 @@ end = 181
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 189
 end = 189
 
@@ -151,7 +151,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include" })'
+key = 'Fs(DirListing { dir: "include" })'
 descriptor = "listing of 'include'"
 cost_tokens = 36
 cum_tokens = 216
@@ -160,12 +160,12 @@ cum_tokens = 216
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include"
+parent = "include"
 entries = ["float.h", "stdalign.h", "stdarg.h", "stdatomic.h", "stdbool.h", "stddef.h", "stdnoreturn.h"]
 
 [[batches]]
 position = 5
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdnoreturn.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/stdnoreturn.h", chunk_index: 0 })'
 descriptor = "c decl names surface in include/stdnoreturn.h"
 cost_tokens = 15
 cum_tokens = 231
@@ -174,7 +174,7 @@ cum_tokens = 231
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdnoreturn.h"
+path = "include/stdnoreturn.h"
 start = 4
 end = 4
 
@@ -182,7 +182,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdnoreturn.h"
+path = "include/stdnoreturn.h"
 start = 5
 end = 5
 
@@ -191,7 +191,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 6
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdbool.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/stdbool.h", chunk_index: 0 })'
 descriptor = "c decl names surface in include/stdbool.h"
 cost_tokens = 47
 cum_tokens = 278
@@ -200,7 +200,7 @@ cum_tokens = 278
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdbool.h"
+path = "include/stdbool.h"
 start = 4
 end = 7
 
@@ -208,7 +208,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdbool.h"
+path = "include/stdbool.h"
 start = 8
 end = 8
 
@@ -217,7 +217,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 7
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdalign.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/stdalign.h", chunk_index: 0 })'
 descriptor = "c decl names surface in include/stdalign.h"
 cost_tokens = 54
 cum_tokens = 332
@@ -226,7 +226,7 @@ cum_tokens = 332
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdalign.h"
+path = "include/stdalign.h"
 start = 4
 end = 7
 
@@ -234,7 +234,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdalign.h"
+path = "include/stdalign.h"
 start = 8
 end = 8
 
@@ -243,7 +243,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 8
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stddef.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/stddef.h", chunk_index: 0 })'
 descriptor = "c decl names surface in include/stddef.h"
 cost_tokens = 80
 cum_tokens = 412
@@ -252,7 +252,7 @@ cum_tokens = 412
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stddef.h"
+path = "include/stddef.h"
 start = 4
 end = 4
 
@@ -260,7 +260,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stddef.h"
+path = "include/stddef.h"
 start = 6
 end = 9
 
@@ -268,7 +268,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stddef.h"
+path = "include/stddef.h"
 start = 11
 end = 11
 
@@ -276,7 +276,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stddef.h"
+path = "include/stddef.h"
 start = 5
 end = 5
 
@@ -284,7 +284,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stddef.h"
+path = "include/stddef.h"
 start = 10
 end = 10
 
@@ -292,7 +292,7 @@ end = 10
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stddef.h"
+path = "include/stddef.h"
 start = 12
 end = 12
 
@@ -301,7 +301,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/stdarg.h", chunk_index: 0 })'
 descriptor = "c decl names surface in include/stdarg.h"
 cost_tokens = 121
 cum_tokens = 533
@@ -310,7 +310,7 @@ cum_tokens = 533
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 4
 end = 4
 
@@ -318,7 +318,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 11
 end = 11
 
@@ -326,7 +326,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 13
 end = 13
 
@@ -334,7 +334,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 16
 end = 16
 
@@ -342,7 +342,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 44
 end = 44
 
@@ -350,7 +350,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 52
 end = 52
 
@@ -358,7 +358,7 @@ end = 52
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 54
 end = 55
 
@@ -366,7 +366,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 5
 end = 5
 
@@ -374,7 +374,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 12
 end = 12
 
@@ -382,7 +382,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 14
 end = 14
 
@@ -390,7 +390,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 17
 end = 17
 
@@ -398,7 +398,7 @@ end = 17
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 45
 end = 45
 
@@ -406,7 +406,7 @@ end = 45
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 53
 end = 53
 
@@ -414,7 +414,7 @@ end = 53
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 56
 end = 56
 
@@ -423,7 +423,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h", start_line: 13 })'
+key = 'C(Decl { file: "include/stdarg.h", start_line: 13 })'
 descriptor = "c decl at include/stdarg.h:13"
 cost_tokens = 23
 cum_tokens = 556
@@ -432,7 +432,7 @@ cum_tokens = 556
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 13
 end = 14
 
@@ -441,7 +441,7 @@ kind = "full"
 
 [[batches]]
 position = 11
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h", start_line: 4 })'
+key = 'C(Decl { file: "include/stdarg.h", start_line: 4 })'
 descriptor = "c decl at include/stdarg.h:4"
 cost_tokens = 49
 cum_tokens = 605
@@ -450,7 +450,7 @@ cum_tokens = 605
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 4
 end = 9
 
@@ -459,7 +459,7 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h", start_line: 44 })'
+key = 'C(Decl { file: "include/stdarg.h", start_line: 44 })'
 descriptor = "c decl at include/stdarg.h:44"
 cost_tokens = 113
 cum_tokens = 718
@@ -468,7 +468,7 @@ cum_tokens = 718
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdarg.h"
+path = "include/stdarg.h"
 start = 44
 end = 50
 
@@ -477,7 +477,7 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "include/float.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in include/float.h"
 cost_tokens = 179
 cum_tokens = 897
@@ -486,7 +486,7 @@ cum_tokens = 897
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h"
+path = "include/float.h"
 start = 31
 end = 40
 
@@ -494,7 +494,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h"
+path = "include/float.h"
 start = 41
 end = 41
 
@@ -503,7 +503,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 14
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h", chunk_index: 3 })'
+key = 'C(DeclNames { file: "include/stdatomic.h", chunk_index: 3 })'
 descriptor = "c decl names surface #3 in include/stdatomic.h"
 cost_tokens = 69
 cum_tokens = 966
@@ -512,7 +512,7 @@ cum_tokens = 966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 96
 end = 100
 
@@ -520,7 +520,7 @@ end = 100
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 101
 end = 101
 
@@ -529,7 +529,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 15
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/stdatomic.h", chunk_index: 0 })'
 descriptor = "c decl names surface in include/stdatomic.h"
 cost_tokens = 382
 cum_tokens = 1348
@@ -538,7 +538,7 @@ cum_tokens = 1348
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 4
 end = 13
 
@@ -546,7 +546,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 15
 end = 15
 
@@ -554,7 +554,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 24
 end = 29
 
@@ -562,7 +562,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 31
 end = 32
 
@@ -570,7 +570,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 34
 end = 35
 
@@ -578,7 +578,7 @@ end = 35
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 37
 end = 39
 
@@ -586,7 +586,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 14
 end = 14
 
@@ -594,7 +594,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 16
 end = 16
 
@@ -602,7 +602,7 @@ end = 16
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 30
 end = 30
 
@@ -610,7 +610,7 @@ end = 30
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 33
 end = 33
 
@@ -618,7 +618,7 @@ end = 33
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 36
 end = 36
 
@@ -627,7 +627,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 16
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h", start_line: 15 })'
+key = 'C(Decl { file: "include/stdatomic.h", start_line: 15 })'
 descriptor = "c decl at include/stdatomic.h:15"
 cost_tokens = 67
 cum_tokens = 1415
@@ -636,7 +636,7 @@ cum_tokens = 1415
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 15
 end = 22
 
@@ -645,7 +645,7 @@ kind = "full"
 
 [[batches]]
 position = 17
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 0 })'
 descriptor = "c decl names surface in chibicc.h"
 cost_tokens = 402
 cum_tokens = 1817
@@ -654,7 +654,7 @@ cum_tokens = 1817
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 1
 end = 1
 
@@ -662,7 +662,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 21
 end = 22
 
@@ -670,7 +670,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 28
 end = 32
 
@@ -678,7 +678,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 38
 end = 38
 
@@ -686,7 +686,7 @@ end = 38
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 44
 end = 45
 
@@ -694,7 +694,7 @@ end = 45
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 52
 end = 52
 
@@ -702,7 +702,7 @@ end = 52
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 62
 end = 62
 
@@ -710,7 +710,7 @@ end = 62
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 73
 end = 74
 
@@ -718,7 +718,7 @@ end = 74
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 94
 end = 102
 
@@ -726,7 +726,7 @@ end = 102
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 23
 end = 23
 
@@ -734,7 +734,7 @@ end = 23
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 33
 end = 33
 
@@ -742,7 +742,7 @@ end = 33
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 39
 end = 39
 
@@ -750,7 +750,7 @@ end = 39
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 46
 end = 46
 
@@ -758,7 +758,7 @@ end = 46
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 53
 end = 53
 
@@ -766,7 +766,7 @@ end = 53
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 63
 end = 63
 
@@ -774,7 +774,7 @@ end = 63
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 75
 end = 75
 
@@ -783,7 +783,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 18
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 73 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 73 })'
 descriptor = "c decl at chibicc.h:73"
 cost_tokens = 0
 cum_tokens = 1817
@@ -792,7 +792,7 @@ cum_tokens = 1817
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 73
 end = 73
 
@@ -801,7 +801,7 @@ kind = "full"
 
 [[batches]]
 position = 19
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 73 })'
+key = 'C(DeclDoc { file: "chibicc.h", start_line: 73 })'
 descriptor = "c decl doc at chibicc.h:73"
 cost_tokens = 8
 cum_tokens = 1825
@@ -810,7 +810,7 @@ cum_tokens = 1825
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 72
 end = 72
 
@@ -819,7 +819,7 @@ kind = "full"
 
 [[batches]]
 position = 20
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 38 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 38 })'
 descriptor = "c decl at chibicc.h:38"
 cost_tokens = 31
 cum_tokens = 1856
@@ -828,7 +828,7 @@ cum_tokens = 1856
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 38
 end = 42
 
@@ -837,7 +837,7 @@ kind = "full"
 
 [[batches]]
 position = 21
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 62 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 62 })'
 descriptor = "c decl at chibicc.h:62"
 cost_tokens = 62
 cum_tokens = 1918
@@ -846,7 +846,7 @@ cum_tokens = 1918
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 62
 end = 65
 
@@ -854,7 +854,7 @@ end = 65
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 67
 end = 70
 
@@ -863,7 +863,7 @@ kind = "full"
 
 [[batches]]
 position = 22
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 52 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 52 })'
 descriptor = "c decl at chibicc.h:52"
 cost_tokens = 105
 cum_tokens = 2023
@@ -872,7 +872,7 @@ cum_tokens = 2023
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 52
 end = 60
 
@@ -881,7 +881,7 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 52 })'
+key = 'C(DeclDoc { file: "chibicc.h", start_line: 52 })'
 descriptor = "c decl doc at chibicc.h:52"
 cost_tokens = 7
 cum_tokens = 2030
@@ -890,7 +890,7 @@ cum_tokens = 2030
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 51
 end = 51
 
@@ -899,7 +899,7 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/float.h", chunk_index: 0 })'
 descriptor = "c decl names surface in include/float.h"
 cost_tokens = 415
 cum_tokens = 2445
@@ -908,7 +908,7 @@ cum_tokens = 2445
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h"
+path = "include/float.h"
 start = 4
 end = 7
 
@@ -916,7 +916,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h"
+path = "include/float.h"
 start = 9
 end = 18
 
@@ -924,7 +924,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h"
+path = "include/float.h"
 start = 20
 end = 29
 
@@ -932,7 +932,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h"
+path = "include/float.h"
 start = 8
 end = 8
 
@@ -940,7 +940,7 @@ end = 8
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h"
+path = "include/float.h"
 start = 19
 end = 19
 
@@ -948,7 +948,7 @@ end = 19
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/float.h"
+path = "include/float.h"
 start = 30
 end = 30
 
@@ -957,7 +957,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 25
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in chibicc.h"
 cost_tokens = 292
 cum_tokens = 2737
@@ -966,7 +966,7 @@ cum_tokens = 2737
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 103
 end = 106
 
@@ -974,7 +974,7 @@ end = 106
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 108
 end = 108
 
@@ -982,7 +982,7 @@ end = 108
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 115
 end = 119
 
@@ -990,7 +990,7 @@ end = 119
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 126
 end = 127
 
@@ -998,7 +998,7 @@ end = 127
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 167
 end = 168
 
@@ -1006,7 +1006,7 @@ end = 168
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 176
 end = 176
 
@@ -1014,7 +1014,7 @@ end = 176
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 228
 end = 228
 
@@ -1022,7 +1022,7 @@ end = 228
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 293
 end = 295
 
@@ -1030,7 +1030,7 @@ end = 295
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 301
 end = 301
 
@@ -1038,7 +1038,7 @@ end = 301
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 320
 end = 320
 
@@ -1046,7 +1046,7 @@ end = 320
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 362
 end = 362
 
@@ -1054,7 +1054,7 @@ end = 362
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 377
 end = 378
 
@@ -1062,7 +1062,7 @@ end = 378
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 107
 end = 107
 
@@ -1070,7 +1070,7 @@ end = 107
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 109
 end = 109
 
@@ -1078,7 +1078,7 @@ end = 109
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 120
 end = 120
 
@@ -1086,7 +1086,7 @@ end = 120
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 128
 end = 128
 
@@ -1094,7 +1094,7 @@ end = 128
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 169
 end = 169
 
@@ -1102,7 +1102,7 @@ end = 169
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 177
 end = 177
 
@@ -1110,7 +1110,7 @@ end = 177
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 229
 end = 229
 
@@ -1118,7 +1118,7 @@ end = 229
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 296
 end = 296
 
@@ -1126,7 +1126,7 @@ end = 296
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 302
 end = 302
 
@@ -1134,7 +1134,7 @@ end = 302
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 321
 end = 321
 
@@ -1142,7 +1142,7 @@ end = 321
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 363
 end = 363
 
@@ -1150,7 +1150,7 @@ end = 363
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 379
 end = 379
 
@@ -1159,7 +1159,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 26
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 126 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 126 })'
 descriptor = "c decl at chibicc.h:126"
 cost_tokens = 0
 cum_tokens = 2737
@@ -1168,7 +1168,7 @@ cum_tokens = 2737
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 126
 end = 126
 
@@ -1177,7 +1177,7 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 167 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 167 })'
 descriptor = "c decl at chibicc.h:167"
 cost_tokens = 0
 cum_tokens = 2737
@@ -1186,7 +1186,7 @@ cum_tokens = 2737
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 167
 end = 167
 
@@ -1195,7 +1195,7 @@ kind = "full"
 
 [[batches]]
 position = 28
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 126 })'
+key = 'C(DeclDoc { file: "chibicc.h", start_line: 126 })'
 descriptor = "c decl doc at chibicc.h:126"
 cost_tokens = 9
 cum_tokens = 2746
@@ -1204,7 +1204,7 @@ cum_tokens = 2746
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 125
 end = 125
 
@@ -1213,7 +1213,7 @@ kind = "full"
 
 [[batches]]
 position = 29
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 108 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 108 })'
 descriptor = "c decl at chibicc.h:108"
 cost_tokens = 19
 cum_tokens = 2765
@@ -1222,7 +1222,7 @@ cum_tokens = 2765
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 108
 end = 109
 
@@ -1231,7 +1231,7 @@ kind = "full"
 
 [[batches]]
 position = 30
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 168 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 168 })'
 descriptor = "c decl at chibicc.h:168"
 cost_tokens = 39
 cum_tokens = 2804
@@ -1240,7 +1240,7 @@ cum_tokens = 2804
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 168
 end = 173
 
@@ -1249,7 +1249,7 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 167 })'
+key = 'C(DeclDoc { file: "chibicc.h", start_line: 167 })'
 descriptor = "c decl doc at chibicc.h:167"
 cost_tokens = 41
 cum_tokens = 2845
@@ -1258,7 +1258,7 @@ cum_tokens = 2845
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 164
 end = 166
 
@@ -1267,7 +1267,7 @@ kind = "full"
 
 [[batches]]
 position = 32
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 362 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 362 })'
 descriptor = "c decl at chibicc.h:362"
 cost_tokens = 105
 cum_tokens = 2950
@@ -1276,7 +1276,7 @@ cum_tokens = 2950
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 362
 end = 369
 
@@ -1284,7 +1284,7 @@ end = 369
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 371
 end = 375
 
@@ -1293,7 +1293,7 @@ kind = "full"
 
 [[batches]]
 position = 33
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 362 })'
+key = 'C(DeclDoc { file: "chibicc.h", start_line: 362 })'
 descriptor = "c decl doc at chibicc.h:362"
 cost_tokens = 8
 cum_tokens = 2958
@@ -1302,7 +1302,7 @@ cum_tokens = 2958
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 361
 end = 361
 
@@ -1311,7 +1311,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 301 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 301 })'
 descriptor = "c decl at chibicc.h:301"
 cost_tokens = 142
 cum_tokens = 3100
@@ -1320,7 +1320,7 @@ cum_tokens = 3100
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 301
 end = 318
 
@@ -1329,7 +1329,7 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 74 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 74 })'
 descriptor = "c decl at chibicc.h:74"
 cost_tokens = 275
 cum_tokens = 3375
@@ -1338,7 +1338,7 @@ cum_tokens = 3375
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 74
 end = 82
 
@@ -1346,7 +1346,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 84
 end = 92
 
@@ -1355,7 +1355,7 @@ kind = "full"
 
 [[batches]]
 position = 36
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "strings.c", chunk_index: 0 })'
 descriptor = "c decl names surface in strings.c"
 cost_tokens = 35
 cum_tokens = 3410
@@ -1364,7 +1364,7 @@ cum_tokens = 3410
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 3
 end = 3
 
@@ -1372,7 +1372,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 20
 end = 20
 
@@ -1380,7 +1380,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 4
 end = 4
 
@@ -1388,7 +1388,7 @@ end = 4
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 21
 end = 21
 
@@ -1397,7 +1397,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c", start_line: 3 })'
+key = 'C(Decl { file: "strings.c", start_line: 3 })'
 descriptor = "c decl at strings.c:3"
 cost_tokens = 0
 cum_tokens = 3410
@@ -1406,7 +1406,7 @@ cum_tokens = 3410
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 3
 end = 3
 
@@ -1414,7 +1414,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 4
 end = 4
 
@@ -1423,7 +1423,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 38
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c", start_line: 20 })'
+key = 'C(Decl { file: "strings.c", start_line: 20 })'
 descriptor = "c decl at strings.c:20"
 cost_tokens = 0
 cum_tokens = 3410
@@ -1432,7 +1432,7 @@ cum_tokens = 3410
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 20
 end = 20
 
@@ -1440,7 +1440,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 21
 end = 21
 
@@ -1449,7 +1449,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 39
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 127 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 127 })'
 descriptor = "c decl at chibicc.h:127"
 cost_tokens = 295
 cum_tokens = 3705
@@ -1458,7 +1458,7 @@ cum_tokens = 3705
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 127
 end = 133
 
@@ -1466,7 +1466,7 @@ end = 133
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 135
 end = 136
 
@@ -1474,7 +1474,7 @@ end = 136
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 138
 end = 141
 
@@ -1482,7 +1482,7 @@ end = 141
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 143
 end = 147
 
@@ -1490,7 +1490,7 @@ end = 147
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 149
 end = 156
 
@@ -1498,7 +1498,7 @@ end = 156
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 158
 end = 162
 
@@ -1507,7 +1507,7 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/type.c", chunk_index: 1 })'
+key = 'C(DeclNames { file: "type.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in type.c"
 cost_tokens = 14
 cum_tokens = 3719
@@ -1516,7 +1516,7 @@ cum_tokens = 3719
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/type.c"
+path = "type.c"
 start = 176
 end = 176
 
@@ -1524,7 +1524,7 @@ end = 176
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/type.c"
+path = "type.c"
 start = 177
 end = 177
 
@@ -1533,7 +1533,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 41
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/type.c", start_line: 176 })'
+key = 'C(Decl { file: "type.c", start_line: 176 })'
 descriptor = "c decl at type.c:176"
 cost_tokens = 0
 cum_tokens = 3719
@@ -1542,7 +1542,7 @@ cum_tokens = 3719
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/type.c"
+path = "type.c"
 start = 176
 end = 176
 
@@ -1550,7 +1550,7 @@ end = 176
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/type.c"
+path = "type.c"
 start = 177
 end = 177
 
@@ -1559,7 +1559,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 42
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md", section_index: 5 })'
+key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 96
 cum_tokens = 3815
@@ -1568,7 +1568,7 @@ cum_tokens = 3815
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 180
 end = 180
 
@@ -1576,7 +1576,7 @@ end = 180
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 182
 end = 186
 
@@ -1585,7 +1585,7 @@ kind = "full"
 
 [[batches]]
 position = 43
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "include/stdatomic.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in include/stdatomic.h"
 cost_tokens = 452
 cum_tokens = 4267
@@ -1594,7 +1594,7 @@ cum_tokens = 4267
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 40
 end = 41
 
@@ -1602,7 +1602,7 @@ end = 41
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 43
 end = 47
 
@@ -1610,7 +1610,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 49
 end = 49
 
@@ -1618,7 +1618,7 @@ end = 49
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 52
 end = 52
 
@@ -1626,7 +1626,7 @@ end = 52
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 55
 end = 56
 
@@ -1634,7 +1634,7 @@ end = 56
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 58
 end = 61
 
@@ -1642,7 +1642,7 @@ end = 61
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 63
 end = 71
 
@@ -1650,7 +1650,7 @@ end = 71
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 42
 end = 42
 
@@ -1658,7 +1658,7 @@ end = 42
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 48
 end = 48
 
@@ -1666,7 +1666,7 @@ end = 48
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 50
 end = 50
 
@@ -1674,7 +1674,7 @@ end = 50
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 53
 end = 53
 
@@ -1682,7 +1682,7 @@ end = 53
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 57
 end = 57
 
@@ -1690,7 +1690,7 @@ end = 57
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 62
 end = 62
 
@@ -1699,7 +1699,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 44
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h", start_line: 49 })'
+key = 'C(Decl { file: "include/stdatomic.h", start_line: 49 })'
 descriptor = "c decl at include/stdatomic.h:49"
 cost_tokens = 17
 cum_tokens = 4284
@@ -1708,7 +1708,7 @@ cum_tokens = 4284
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 49
 end = 50
 
@@ -1717,7 +1717,7 @@ kind = "full"
 
 [[batches]]
 position = 45
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h", start_line: 52 })'
+key = 'C(Decl { file: "include/stdatomic.h", start_line: 52 })'
 descriptor = "c decl at include/stdatomic.h:52"
 cost_tokens = 17
 cum_tokens = 4301
@@ -1726,7 +1726,7 @@ cum_tokens = 4301
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 52
 end = 53
 
@@ -1735,7 +1735,7 @@ kind = "full"
 
 [[batches]]
 position = 46
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h" })'
+key = 'C(Includes { file: "chibicc.h" })'
 descriptor = "c includes in chibicc.h"
 cost_tokens = 189
 cum_tokens = 4490
@@ -1744,7 +1744,7 @@ cum_tokens = 4490
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 2
 end = 19
 
@@ -1753,7 +1753,7 @@ kind = "full"
 
 [[batches]]
 position = 47
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", chunk_index: 2 })'
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in chibicc.h"
 cost_tokens = 290
 cum_tokens = 4780
@@ -1762,7 +1762,7 @@ cum_tokens = 4780
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 380
 end = 383
 
@@ -1770,7 +1770,7 @@ end = 383
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 385
 end = 388
 
@@ -1778,7 +1778,7 @@ end = 388
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 390
 end = 392
 
@@ -1786,7 +1786,7 @@ end = 392
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 394
 end = 405
 
@@ -1794,7 +1794,7 @@ end = 405
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 411
 end = 411
 
@@ -1802,7 +1802,7 @@ end = 411
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 384
 end = 384
 
@@ -1810,7 +1810,7 @@ end = 384
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 389
 end = 389
 
@@ -1818,7 +1818,7 @@ end = 389
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 393
 end = 393
 
@@ -1826,7 +1826,7 @@ end = 393
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 406
 end = 406
 
@@ -1835,7 +1835,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 48
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c" })'
+key = 'C(Includes { file: "codegen.c" })'
 descriptor = "c includes in codegen.c"
 cost_tokens = 12
 cum_tokens = 4792
@@ -1844,7 +1844,7 @@ cum_tokens = 4792
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 1
 end = 1
 
@@ -1853,7 +1853,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/hashmap.c" })'
+key = 'C(Includes { file: "hashmap.c" })'
 descriptor = "c includes in hashmap.c"
 cost_tokens = 12
 cum_tokens = 4804
@@ -1862,7 +1862,7 @@ cum_tokens = 4804
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/hashmap.c"
+path = "hashmap.c"
 start = 3
 end = 3
 
@@ -1871,7 +1871,7 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c" })'
+key = 'C(Includes { file: "main.c" })'
 descriptor = "c includes in main.c"
 cost_tokens = 12
 cum_tokens = 4816
@@ -1880,7 +1880,7 @@ cum_tokens = 4816
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 1
 end = 1
 
@@ -1889,7 +1889,7 @@ kind = "full"
 
 [[batches]]
 position = 51
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c" })'
+key = 'C(Includes { file: "parse.c" })'
 descriptor = "c includes in parse.c"
 cost_tokens = 12
 cum_tokens = 4828
@@ -1898,7 +1898,7 @@ cum_tokens = 4828
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 19
 end = 19
 
@@ -1907,7 +1907,7 @@ kind = "full"
 
 [[batches]]
 position = 52
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/preprocess.c" })'
+key = 'C(Includes { file: "preprocess.c" })'
 descriptor = "c includes in preprocess.c"
 cost_tokens = 12
 cum_tokens = 4840
@@ -1916,7 +1916,7 @@ cum_tokens = 4840
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/preprocess.c"
+path = "preprocess.c"
 start = 25
 end = 25
 
@@ -1925,7 +1925,7 @@ kind = "full"
 
 [[batches]]
 position = 53
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c" })'
+key = 'C(Includes { file: "strings.c" })'
 descriptor = "c includes in strings.c"
 cost_tokens = 12
 cum_tokens = 4852
@@ -1934,7 +1934,7 @@ cum_tokens = 4852
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 1
 end = 1
 
@@ -1943,7 +1943,7 @@ kind = "full"
 
 [[batches]]
 position = 54
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/tokenize.c" })'
+key = 'C(Includes { file: "tokenize.c" })'
 descriptor = "c includes in tokenize.c"
 cost_tokens = 12
 cum_tokens = 4864
@@ -1952,7 +1952,7 @@ cum_tokens = 4864
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/tokenize.c"
+path = "tokenize.c"
 start = 1
 end = 1
 
@@ -1961,7 +1961,7 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/type.c" })'
+key = 'C(Includes { file: "type.c" })'
 descriptor = "c includes in type.c"
 cost_tokens = 12
 cum_tokens = 4876
@@ -1970,7 +1970,7 @@ cum_tokens = 4876
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/type.c"
+path = "type.c"
 start = 1
 end = 1
 
@@ -1979,7 +1979,7 @@ kind = "full"
 
 [[batches]]
 position = 56
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c" })'
+key = 'C(Includes { file: "unicode.c" })'
 descriptor = "c includes in unicode.c"
 cost_tokens = 12
 cum_tokens = 4888
@@ -1988,7 +1988,7 @@ cum_tokens = 4888
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 1
 end = 1
 
@@ -1997,7 +1997,7 @@ kind = "full"
 
 [[batches]]
 position = 57
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 936
 cum_tokens = 5824
@@ -2006,7 +2006,7 @@ cum_tokens = 5824
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 7
 end = 17
 
@@ -2014,7 +2014,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 19
 end = 27
 
@@ -2022,7 +2022,7 @@ end = 27
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 29
 end = 41
 
@@ -2030,7 +2030,7 @@ end = 41
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 43
 end = 50
 
@@ -2038,7 +2038,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 52
 end = 53
 
@@ -2047,7 +2047,7 @@ kind = "full"
 
 [[batches]]
 position = 58
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 320 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 320 })'
 descriptor = "c decl at chibicc.h:320"
 cost_tokens = 400
 cum_tokens = 6224
@@ -2056,7 +2056,7 @@ cum_tokens = 6224
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 320
 end = 326
 
@@ -2064,7 +2064,7 @@ end = 326
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 328
 end = 336
 
@@ -2072,7 +2072,7 @@ end = 336
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 338
 end = 340
 
@@ -2080,7 +2080,7 @@ end = 340
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 342
 end = 343
 
@@ -2088,7 +2088,7 @@ end = 343
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 345
 end = 347
 
@@ -2096,7 +2096,7 @@ end = 347
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 349
 end = 352
 
@@ -2104,7 +2104,7 @@ end = 352
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 354
 end = 359
 
@@ -2113,7 +2113,7 @@ kind = "full"
 
 [[batches]]
 position = 59
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 164
 cum_tokens = 6388
@@ -2122,7 +2122,7 @@ cum_tokens = 6388
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 93
 end = 93
 
@@ -2130,7 +2130,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 95
 end = 95
 
@@ -2138,7 +2138,7 @@ end = 95
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 97
 end = 98
 
@@ -2146,7 +2146,7 @@ end = 98
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 100
 end = 102
 
@@ -2154,7 +2154,7 @@ end = 102
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 104
 end = 106
 
@@ -2162,7 +2162,7 @@ end = 106
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 108
 end = 108
 
@@ -2171,7 +2171,7 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h", chunk_index: 2 })'
+key = 'C(DeclNames { file: "include/stdatomic.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in include/stdatomic.h"
 cost_tokens = 346
 cum_tokens = 6734
@@ -2180,7 +2180,7 @@ cum_tokens = 6734
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/include/stdatomic.h"
+path = "include/stdatomic.h"
 start = 72
 end = 95
 
@@ -2189,7 +2189,7 @@ kind = "full"
 
 [[batches]]
 position = 61
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c", start_line: 20 })'
+key = 'C(DeclDoc { file: "strings.c", start_line: 20 })'
 descriptor = "c decl doc at strings.c:20"
 cost_tokens = 17
 cum_tokens = 6751
@@ -2198,7 +2198,7 @@ cum_tokens = 6751
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/strings.c"
+path = "strings.c"
 start = 19
 end = 19
 
@@ -2207,7 +2207,7 @@ kind = "full"
 
 [[batches]]
 position = 62
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", chunk_index: 3 })'
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 3 })'
 descriptor = "c decl names surface #3 in chibicc.h"
 cost_tokens = 298
 cum_tokens = 7049
@@ -2216,7 +2216,7 @@ cum_tokens = 7049
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 412
 end = 412
 
@@ -2224,7 +2224,7 @@ end = 412
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 418
 end = 422
 
@@ -2232,7 +2232,7 @@ end = 422
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 428
 end = 428
 
@@ -2240,7 +2240,7 @@ end = 428
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 434
 end = 434
 
@@ -2248,7 +2248,7 @@ end = 434
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 440
 end = 446
 
@@ -2256,7 +2256,7 @@ end = 446
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 452
 end = 452
 
@@ -2264,7 +2264,7 @@ end = 452
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 454
 end = 457
 
@@ -2272,7 +2272,7 @@ end = 457
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 413
 end = 413
 
@@ -2280,7 +2280,7 @@ end = 413
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 423
 end = 423
 
@@ -2288,7 +2288,7 @@ end = 423
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 429
 end = 429
 
@@ -2296,7 +2296,7 @@ end = 429
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 435
 end = 435
 
@@ -2304,7 +2304,7 @@ end = 435
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 447
 end = 447
 
@@ -2312,7 +2312,7 @@ end = 447
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 453
 end = 453
 
@@ -2321,7 +2321,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 63
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 428 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 428 })'
 descriptor = "c decl at chibicc.h:428"
 cost_tokens = 33
 cum_tokens = 7082
@@ -2330,7 +2330,7 @@ cum_tokens = 7082
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 428
 end = 432
 
@@ -2339,7 +2339,7 @@ kind = "full"
 
 [[batches]]
 position = 64
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 434 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 434 })'
 descriptor = "c decl at chibicc.h:434"
 cost_tokens = 33
 cum_tokens = 7115
@@ -2348,7 +2348,7 @@ cum_tokens = 7115
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 434
 end = 438
 
@@ -2357,7 +2357,7 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 228 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 228 })'
 descriptor = "c decl at chibicc.h:228"
 cost_tokens = 518
 cum_tokens = 7633
@@ -2366,7 +2366,7 @@ cum_tokens = 7633
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 228
 end = 232
 
@@ -2374,7 +2374,7 @@ end = 232
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 234
 end = 235
 
@@ -2382,7 +2382,7 @@ end = 235
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 237
 end = 242
 
@@ -2390,7 +2390,7 @@ end = 242
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 244
 end = 246
 
@@ -2398,7 +2398,7 @@ end = 246
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 248
 end = 249
 
@@ -2406,7 +2406,7 @@ end = 249
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 251
 end = 252
 
@@ -2414,7 +2414,7 @@ end = 252
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 254
 end = 258
 
@@ -2422,7 +2422,7 @@ end = 258
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 260
 end = 263
 
@@ -2430,7 +2430,7 @@ end = 263
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 265
 end = 267
 
@@ -2438,7 +2438,7 @@ end = 267
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 269
 end = 271
 
@@ -2446,7 +2446,7 @@ end = 271
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 273
 end = 274
 
@@ -2454,7 +2454,7 @@ end = 274
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 276
 end = 279
 
@@ -2462,7 +2462,7 @@ end = 279
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 281
 end = 283
 
@@ -2470,7 +2470,7 @@ end = 283
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 285
 end = 286
 
@@ -2478,7 +2478,7 @@ end = 286
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 288
 end = 291
 
@@ -2487,7 +2487,7 @@ kind = "full"
 
 [[batches]]
 position = 66
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 228 })'
+key = 'C(DeclDoc { file: "chibicc.h", start_line: 228 })'
 descriptor = "c decl doc at chibicc.h:228"
 cost_tokens = 9
 cum_tokens = 7642
@@ -2496,7 +2496,7 @@ cum_tokens = 7642
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 227
 end = 227
 
@@ -2505,7 +2505,7 @@ kind = "full"
 
 [[batches]]
 position = 67
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "main.c", chunk_index: 0 })'
 descriptor = "c decl names surface in main.c"
 cost_tokens = 81
 cum_tokens = 7723
@@ -2514,7 +2514,7 @@ cum_tokens = 7723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 3
 end = 3
 
@@ -2522,7 +2522,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 7
 end = 9
 
@@ -2530,7 +2530,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 31
 end = 31
 
@@ -2538,7 +2538,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 586
 end = 586
 
@@ -2546,7 +2546,7 @@ end = 586
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 700
 end = 700
 
@@ -2554,7 +2554,7 @@ end = 700
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 4
 end = 4
 
@@ -2562,7 +2562,7 @@ end = 4
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 10
 end = 10
 
@@ -2570,7 +2570,7 @@ end = 10
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 32
 end = 32
 
@@ -2578,7 +2578,7 @@ end = 32
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 587
 end = 587
 
@@ -2586,7 +2586,7 @@ end = 587
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 701
 end = 701
 
@@ -2595,7 +2595,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 68
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c", start_line: 586 })'
+key = 'C(Decl { file: "main.c", start_line: 586 })'
 descriptor = "c decl at main.c:586"
 cost_tokens = 0
 cum_tokens = 7723
@@ -2604,7 +2604,7 @@ cum_tokens = 7723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 586
 end = 586
 
@@ -2612,7 +2612,7 @@ end = 586
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 587
 end = 587
 
@@ -2621,7 +2621,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 69
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c", start_line: 700 })'
+key = 'C(Decl { file: "main.c", start_line: 700 })'
 descriptor = "c decl at main.c:700"
 cost_tokens = 0
 cum_tokens = 7723
@@ -2630,7 +2630,7 @@ cum_tokens = 7723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 700
 end = 700
 
@@ -2638,7 +2638,7 @@ end = 700
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 701
 end = 701
 
@@ -2647,7 +2647,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 70
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c", start_line: 586 })'
+key = 'C(DeclDoc { file: "main.c", start_line: 586 })'
 descriptor = "c decl doc at main.c:586"
 cost_tokens = 13
 cum_tokens = 7736
@@ -2656,7 +2656,7 @@ cum_tokens = 7736
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 585
 end = 585
 
@@ -2665,7 +2665,7 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c", start_line: 3 })'
+key = 'C(Decl { file: "main.c", start_line: 3 })'
 descriptor = "c decl at main.c:3"
 cost_tokens = 31
 cum_tokens = 7767
@@ -2674,7 +2674,7 @@ cum_tokens = 7767
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 3
 end = 5
 
@@ -2683,7 +2683,7 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "unicode.c", chunk_index: 0 })'
 descriptor = "c decl names surface in unicode.c"
 cost_tokens = 91
 cum_tokens = 7858
@@ -2692,7 +2692,7 @@ cum_tokens = 7858
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 4
 end = 4
 
@@ -2700,7 +2700,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 37
 end = 37
 
@@ -2708,7 +2708,7 @@ end = 37
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 87
 end = 87
 
@@ -2716,7 +2716,7 @@ end = 87
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 110
 end = 110
 
@@ -2724,7 +2724,7 @@ end = 110
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 181
 end = 181
 
@@ -2732,7 +2732,7 @@ end = 181
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 5
 end = 5
 
@@ -2740,7 +2740,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 38
 end = 38
 
@@ -2748,7 +2748,7 @@ end = 38
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 88
 end = 88
 
@@ -2756,7 +2756,7 @@ end = 88
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 111
 end = 111
 
@@ -2764,7 +2764,7 @@ end = 111
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 182
 end = 182
 
@@ -2773,7 +2773,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 73
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", start_line: 4 })'
+key = 'C(Decl { file: "unicode.c", start_line: 4 })'
 descriptor = "c decl at unicode.c:4"
 cost_tokens = 0
 cum_tokens = 7858
@@ -2782,7 +2782,7 @@ cum_tokens = 7858
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 4
 end = 4
 
@@ -2790,7 +2790,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 5
 end = 5
 
@@ -2799,7 +2799,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 74
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", start_line: 37 })'
+key = 'C(Decl { file: "unicode.c", start_line: 37 })'
 descriptor = "c decl at unicode.c:37"
 cost_tokens = 0
 cum_tokens = 7858
@@ -2808,7 +2808,7 @@ cum_tokens = 7858
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 37
 end = 37
 
@@ -2816,7 +2816,7 @@ end = 37
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 38
 end = 38
 
@@ -2825,7 +2825,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 75
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", start_line: 87 })'
+key = 'C(Decl { file: "unicode.c", start_line: 87 })'
 descriptor = "c decl at unicode.c:87"
 cost_tokens = 0
 cum_tokens = 7858
@@ -2834,7 +2834,7 @@ cum_tokens = 7858
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 87
 end = 87
 
@@ -2842,7 +2842,7 @@ end = 87
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 88
 end = 88
 
@@ -2851,7 +2851,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 76
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", start_line: 110 })'
+key = 'C(Decl { file: "unicode.c", start_line: 110 })'
 descriptor = "c decl at unicode.c:110"
 cost_tokens = 0
 cum_tokens = 7858
@@ -2860,7 +2860,7 @@ cum_tokens = 7858
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 110
 end = 110
 
@@ -2868,7 +2868,7 @@ end = 110
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 111
 end = 111
 
@@ -2877,7 +2877,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 77
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", start_line: 181 })'
+key = 'C(Decl { file: "unicode.c", start_line: 181 })'
 descriptor = "c decl at unicode.c:181"
 cost_tokens = 0
 cum_tokens = 7858
@@ -2886,7 +2886,7 @@ cum_tokens = 7858
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 181
 end = 181
 
@@ -2894,7 +2894,7 @@ end = 181
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 182
 end = 182
 
@@ -2903,7 +2903,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 78
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", start_line: 4 })'
+key = 'C(DeclDoc { file: "unicode.c", start_line: 4 })'
 descriptor = "c decl doc at unicode.c:4"
 cost_tokens = 14
 cum_tokens = 7872
@@ -2912,7 +2912,7 @@ cum_tokens = 7872
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 3
 end = 3
 
@@ -2921,7 +2921,7 @@ kind = "full"
 
 [[batches]]
 position = 79
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 176 })'
+key = 'C(Decl { file: "chibicc.h", start_line: 176 })'
 descriptor = "c decl at chibicc.h:176"
 cost_tokens = 636
 cum_tokens = 8508
@@ -2930,7 +2930,7 @@ cum_tokens = 8508
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 176
 end = 225
 
@@ -2939,7 +2939,7 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h", start_line: 176 })'
+key = 'C(DeclDoc { file: "chibicc.h", start_line: 176 })'
 descriptor = "c decl doc at chibicc.h:176"
 cost_tokens = 8
 cum_tokens = 8516
@@ -2948,7 +2948,7 @@ cum_tokens = 8516
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/chibicc.h"
+path = "chibicc.h"
 start = 175
 end = 175
 
@@ -2957,7 +2957,7 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/hashmap.c" })'
+key = 'C(HeaderBanner { file: "hashmap.c" })'
 descriptor = "c header banner in hashmap.c"
 cost_tokens = 17
 cum_tokens = 8533
@@ -2966,7 +2966,7 @@ cum_tokens = 8533
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/hashmap.c"
+path = "hashmap.c"
 start = 1
 end = 1
 
@@ -2975,7 +2975,7 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md", section_index: 3 })'
+key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 247
 cum_tokens = 8780
@@ -2984,7 +2984,7 @@ cum_tokens = 8780
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 110
 end = 110
 
@@ -2992,7 +2992,7 @@ end = 110
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 112
 end = 115
 
@@ -3000,7 +3000,7 @@ end = 115
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 117
 end = 121
 
@@ -3008,7 +3008,7 @@ end = 121
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 123
 end = 126
 
@@ -3017,7 +3017,7 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", start_line: 110 })'
+key = 'C(DeclDoc { file: "unicode.c", start_line: 110 })'
 descriptor = "c decl doc at unicode.c:110"
 cost_tokens = 28
 cum_tokens = 8808
@@ -3026,7 +3026,7 @@ cum_tokens = 8808
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 108
 end = 109
 
@@ -3035,7 +3035,7 @@ kind = "full"
 
 [[batches]]
 position = 84
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c", start_line: 181 })'
+key = 'C(DeclDoc { file: "unicode.c", start_line: 181 })'
 descriptor = "c decl doc at unicode.c:181"
 cost_tokens = 28
 cum_tokens = 8836
@@ -3044,7 +3044,7 @@ cum_tokens = 8836
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/unicode.c"
+path = "unicode.c"
 start = 179
 end = 180
 
@@ -3053,7 +3053,7 @@ kind = "full"
 
 [[batches]]
 position = 85
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c", start_line: 586 })'
+key = 'C(DeclBody { file: "main.c", start_line: 586 })'
 descriptor = "c decl body at main.c:586"
 cost_tokens = 20
 cum_tokens = 8856
@@ -3062,7 +3062,7 @@ cum_tokens = 8856
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/main.c"
+path = "main.c"
 start = 587
 end = 588
 
@@ -3071,7 +3071,7 @@ kind = "full"
 
 [[batches]]
 position = 86
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 428
 cum_tokens = 9284
@@ -3080,7 +3080,7 @@ cum_tokens = 9284
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 55
 end = 55
 
@@ -3088,7 +3088,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 57
 end = 58
 
@@ -3096,7 +3096,7 @@ end = 58
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 60
 end = 61
 
@@ -3104,7 +3104,7 @@ end = 61
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 63
 end = 75
 
@@ -3112,7 +3112,7 @@ end = 75
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 77
 end = 79
 
@@ -3120,7 +3120,7 @@ end = 79
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 81
 end = 82
 
@@ -3128,7 +3128,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 84
 end = 86
 
@@ -3136,7 +3136,7 @@ end = 86
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/README.md"
+path = "README.md"
 start = 88
 end = 91
 
@@ -3145,7 +3145,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "parse.c", chunk_index: 0 })'
 descriptor = "c decl names surface in parse.c"
 cost_tokens = 136
 cum_tokens = 9420
@@ -3154,7 +3154,7 @@ cum_tokens = 9420
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 23
 end = 23
 
@@ -3162,7 +3162,7 @@ end = 23
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 31
 end = 32
 
@@ -3170,7 +3170,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 42
 end = 42
 
@@ -3178,7 +3178,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 54
 end = 55
 
@@ -3186,7 +3186,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 75
 end = 76
 
@@ -3194,7 +3194,7 @@ end = 76
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 244
 end = 244
 
@@ -3202,7 +3202,7 @@ end = 244
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 1987
 end = 1987
 
@@ -3210,7 +3210,7 @@ end = 1987
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 3337
 end = 3337
 
@@ -3218,7 +3218,7 @@ end = 3337
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 24
 end = 24
 
@@ -3226,7 +3226,7 @@ end = 24
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 33
 end = 33
 
@@ -3234,7 +3234,7 @@ end = 33
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 43
 end = 43
 
@@ -3242,7 +3242,7 @@ end = 43
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 56
 end = 56
 
@@ -3250,7 +3250,7 @@ end = 56
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 77
 end = 77
 
@@ -3258,7 +3258,7 @@ end = 77
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 245
 end = 245
 
@@ -3266,7 +3266,7 @@ end = 245
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 1988
 end = 1988
 
@@ -3274,7 +3274,7 @@ end = 1988
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 3338
 end = 3338
 
@@ -3283,7 +3283,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 88
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 31 })'
+key = 'C(Decl { file: "parse.c", start_line: 31 })'
 descriptor = "c decl at parse.c:31"
 cost_tokens = 0
 cum_tokens = 9420
@@ -3292,7 +3292,7 @@ cum_tokens = 9420
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 31
 end = 31
 
@@ -3301,7 +3301,7 @@ kind = "full"
 
 [[batches]]
 position = 89
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 54 })'
+key = 'C(Decl { file: "parse.c", start_line: 54 })'
 descriptor = "c decl at parse.c:54"
 cost_tokens = 0
 cum_tokens = 9420
@@ -3310,7 +3310,7 @@ cum_tokens = 9420
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 54
 end = 54
 
@@ -3319,7 +3319,7 @@ kind = "full"
 
 [[batches]]
 position = 90
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 75 })'
+key = 'C(Decl { file: "parse.c", start_line: 75 })'
 descriptor = "c decl at parse.c:75"
 cost_tokens = 0
 cum_tokens = 9420
@@ -3328,7 +3328,7 @@ cum_tokens = 9420
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 75
 end = 75
 
@@ -3337,7 +3337,7 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 244 })'
+key = 'C(Decl { file: "parse.c", start_line: 244 })'
 descriptor = "c decl at parse.c:244"
 cost_tokens = 0
 cum_tokens = 9420
@@ -3346,7 +3346,7 @@ cum_tokens = 9420
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 244
 end = 244
 
@@ -3354,7 +3354,7 @@ end = 244
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 245
 end = 245
 
@@ -3363,7 +3363,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 92
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 1987 })'
+key = 'C(Decl { file: "parse.c", start_line: 1987 })'
 descriptor = "c decl at parse.c:1987"
 cost_tokens = 0
 cum_tokens = 9420
@@ -3372,7 +3372,7 @@ cum_tokens = 9420
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 1987
 end = 1987
 
@@ -3380,7 +3380,7 @@ end = 1987
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 1988
 end = 1988
 
@@ -3389,7 +3389,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 93
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 3337 })'
+key = 'C(Decl { file: "parse.c", start_line: 3337 })'
 descriptor = "c decl at parse.c:3337"
 cost_tokens = 0
 cum_tokens = 9420
@@ -3398,7 +3398,7 @@ cum_tokens = 9420
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 3337
 end = 3337
 
@@ -3406,7 +3406,7 @@ end = 3337
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 3338
 end = 3338
 
@@ -3415,7 +3415,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 94
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 31 })'
+key = 'C(DeclDoc { file: "parse.c", start_line: 31 })'
 descriptor = "c decl doc at parse.c:31"
 cost_tokens = 10
 cum_tokens = 9430
@@ -3424,7 +3424,7 @@ cum_tokens = 9430
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 30
 end = 30
 
@@ -3433,7 +3433,7 @@ kind = "full"
 
 [[batches]]
 position = 95
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 75 })'
+key = 'C(DeclDoc { file: "parse.c", start_line: 75 })'
 descriptor = "c decl doc at parse.c:75"
 cost_tokens = 10
 cum_tokens = 9440
@@ -3442,7 +3442,7 @@ cum_tokens = 9440
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 74
 end = 74
 
@@ -3451,7 +3451,7 @@ kind = "full"
 
 [[batches]]
 position = 96
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 3337 })'
+key = 'C(DeclDoc { file: "parse.c", start_line: 3337 })'
 descriptor = "c decl doc at parse.c:3337"
 cost_tokens = 18
 cum_tokens = 9458
@@ -3460,7 +3460,7 @@ cum_tokens = 9458
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 3336
 end = 3336
 
@@ -3469,7 +3469,7 @@ kind = "full"
 
 [[batches]]
 position = 97
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 76 })'
+key = 'C(Decl { file: "parse.c", start_line: 76 })'
 descriptor = "c decl at parse.c:76"
 cost_tokens = 40
 cum_tokens = 9498
@@ -3478,7 +3478,7 @@ cum_tokens = 9498
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 76
 end = 81
 
@@ -3487,7 +3487,7 @@ kind = "full"
 
 [[batches]]
 position = 98
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 23 })'
+key = 'C(Decl { file: "parse.c", start_line: 23 })'
 descriptor = "c decl at parse.c:23"
 cost_tokens = 44
 cum_tokens = 9542
@@ -3496,7 +3496,7 @@ cum_tokens = 9542
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 23
 end = 28
 
@@ -3505,7 +3505,7 @@ kind = "full"
 
 [[batches]]
 position = 99
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c", start_line: 23 })'
+key = 'C(DeclDoc { file: "parse.c", start_line: 23 })'
 descriptor = "c decl doc at parse.c:23"
 cost_tokens = 25
 cum_tokens = 9567
@@ -3514,7 +3514,7 @@ cum_tokens = 9567
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/parse.c"
+path = "parse.c"
 start = 21
 end = 22
 
@@ -3523,7 +3523,7 @@ kind = "full"
 
 [[batches]]
 position = 100
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "codegen.c", chunk_index: 0 })'
 descriptor = "c decl names surface in codegen.c"
 cost_tokens = 143
 cum_tokens = 9710
@@ -3532,7 +3532,7 @@ cum_tokens = 9710
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 3
 end = 4
 
@@ -3540,7 +3540,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 55
 end = 55
 
@@ -3548,7 +3548,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 284
 end = 284
 
@@ -3556,7 +3556,7 @@ end = 284
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 356
 end = 356
 
@@ -3564,7 +3564,7 @@ end = 356
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 360
 end = 360
 
@@ -3572,7 +3572,7 @@ end = 360
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 1585
 end = 1585
 
@@ -3580,7 +3580,7 @@ end = 1585
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 5
 end = 5
 
@@ -3588,7 +3588,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 56
 end = 56
 
@@ -3596,7 +3596,7 @@ end = 56
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 285
 end = 285
 
@@ -3604,7 +3604,7 @@ end = 285
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 357
 end = 357
 
@@ -3612,7 +3612,7 @@ end = 357
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 361
 end = 361
 
@@ -3620,7 +3620,7 @@ end = 361
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 1586
 end = 1586
 
@@ -3629,7 +3629,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 101
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c", start_line: 55 })'
+key = 'C(Decl { file: "codegen.c", start_line: 55 })'
 descriptor = "c decl at codegen.c:55"
 cost_tokens = 0
 cum_tokens = 9710
@@ -3638,7 +3638,7 @@ cum_tokens = 9710
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 55
 end = 55
 
@@ -3646,7 +3646,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 56
 end = 56
 
@@ -3655,7 +3655,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 102
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c", start_line: 1585 })'
+key = 'C(Decl { file: "codegen.c", start_line: 1585 })'
 descriptor = "c decl at codegen.c:1585"
 cost_tokens = 0
 cum_tokens = 9710
@@ -3664,7 +3664,7 @@ cum_tokens = 9710
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 1585
 end = 1585
 
@@ -3672,7 +3672,7 @@ end = 1585
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 1586
 end = 1586
 
@@ -3681,7 +3681,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 103
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c", start_line: 55 })'
+key = 'C(DeclBody { file: "codegen.c", start_line: 55 })'
 descriptor = "c decl body at codegen.c:55"
 cost_tokens = 17
 cum_tokens = 9727
@@ -3690,7 +3690,7 @@ cum_tokens = 9727
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/codegen.c"
+path = "codegen.c"
 start = 56
 end = 56
 
@@ -3699,7 +3699,7 @@ kind = "full"
 
 [[batches]]
 position = 104
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chibicc/test" })'
+key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 211
 cum_tokens = 9938
@@ -3708,12 +3708,12 @@ cum_tokens = 9938
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/chibicc/test"
+parent = "test"
 entries = ["alignof.c", "alloca.c", "arith.c", "asm.c", "atomic.c", "attribute.c", "bitfield.c", "builtin.c", "cast.c", "common", "commonsym.c", "compat.c", "complit.c", "const.c", "constexpr.c", "control.c", "decl.c", "driver.sh", "enum.c", "extern.c", "float.c", "function.c", "generic.c", "include1.h", "include2.h", "include3.h", "include4.h", "initializer.c", "line.c", "literal.c", "macro.c", "offsetof.c", "pointer.c", "pragma-once.c", "sizeof.c", "stdhdr.c", "string.c", "struct.c", "test.h", "thirdparty", "tls.c", "typedef.c", "typeof.c", "unicode.c", "union.c", "usualconv.c", "varargs.c", "variable.c", "vla.c"]
 
 [[batches]]
 position = 105
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/test/include3.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "test/include3.h", chunk_index: 0 })'
 descriptor = "c decl names surface in test/include3.h"
 cost_tokens = 10
 cum_tokens = 9948
@@ -3722,7 +3722,7 @@ cum_tokens = 9948
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/test/include3.h"
+path = "test/include3.h"
 start = 1
 end = 1
 
@@ -3731,7 +3731,7 @@ kind = "full"
 
 [[batches]]
 position = 106
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/test/include4.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "test/include4.h", chunk_index: 0 })'
 descriptor = "c decl names surface in test/include4.h"
 cost_tokens = 10
 cum_tokens = 9958
@@ -3740,7 +3740,7 @@ cum_tokens = 9958
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/test/include4.h"
+path = "test/include4.h"
 start = 1
 end = 1
 
@@ -3749,7 +3749,7 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chibicc/test/include2.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "test/include2.h", chunk_index: 0 })'
 descriptor = "c decl names surface in test/include2.h"
 cost_tokens = 11
 cum_tokens = 9969
@@ -3758,7 +3758,7 @@ cum_tokens = 9969
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/chibicc/test/include2.h"
+path = "test/include2.h"
 start = 1
 end = 1
 

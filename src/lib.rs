@@ -146,6 +146,7 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         batch_count: batches.len(),
         batches,
         candidates,
+        root,
     })
 }
 

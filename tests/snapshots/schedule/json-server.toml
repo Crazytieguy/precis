@@ -5,7 +5,7 @@ batch_count = 92
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 48
 cum_tokens = 48
@@ -14,12 +14,12 @@ cum_tokens = 48
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server"
+parent = "."
 entries = [".gitattributes", ".github", ".gitignore", ".husky", ".oxfmtrc.json", "LICENSE", "README.md", "fixtures", "package.json", "pnpm-lock.yaml", "public", "schema.json", "src", "tsconfig.json", "views"]
 
 [[batches]]
 position = 2
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 9
 cum_tokens = 57
@@ -28,7 +28,7 @@ cum_tokens = 57
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 1
 end = 1
 
@@ -37,7 +37,7 @@ kind = "full"
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/public" })'
+key = 'Fs(DirListing { dir: "public" })'
 descriptor = "listing of 'public'"
 cost_tokens = 4
 cum_tokens = 61
@@ -46,12 +46,12 @@ cum_tokens = 61
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/public"
+parent = "public"
 entries = ["test.html"]
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/views" })'
+key = 'Fs(DirListing { dir: "views" })'
 descriptor = "listing of 'views'"
 cost_tokens = 4
 cum_tokens = 65
@@ -60,12 +60,12 @@ cum_tokens = 65
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/views"
+parent = "views"
 entries = ["index.html"]
 
 [[batches]]
 position = 5
-key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json" })'
+key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 61
 cum_tokens = 126
@@ -74,7 +74,7 @@ cum_tokens = 126
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 2
 end = 4
 
@@ -82,7 +82,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 20
 end = 20
 
@@ -90,7 +90,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 34
 end = 34
 
@@ -99,7 +99,7 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/src" })'
+key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 71
 cum_tokens = 197
@@ -108,12 +108,12 @@ cum_tokens = 197
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/src"
+parent = "src"
 entries = ["adapters", "app.test.ts", "app.ts", "bin.ts", "matches-where.test.ts", "matches-where.ts", "paginate.test.ts", "paginate.ts", "parse-where.test.ts", "parse-where.ts", "random-id.ts", "service.test.ts", "service.ts", "where-operators.ts"]
 
 [[batches]]
 position = 7
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "src/random-id.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/random-id.ts"
 cost_tokens = 13
 cum_tokens = 210
@@ -122,7 +122,7 @@ cum_tokens = 210
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts"
+path = "src/random-id.ts"
 start = 3
 end = 3
 
@@ -130,7 +130,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts"
+path = "src/random-id.ts"
 start = 4
 end = 4
 
@@ -139,7 +139,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 8
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts", start_line: 3 })'
+key = 'Typescript(Export { file: "src/random-id.ts", start_line: 3 })'
 descriptor = "export at src/random-id.ts:3"
 cost_tokens = 0
 cum_tokens = 210
@@ -148,7 +148,7 @@ cum_tokens = 210
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts"
+path = "src/random-id.ts"
 start = 3
 end = 3
 
@@ -156,7 +156,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts"
+path = "src/random-id.ts"
 start = 4
 end = 4
 
@@ -165,7 +165,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md" })'
+key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 192
 cum_tokens = 402
@@ -174,7 +174,7 @@ cum_tokens = 402
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 11
 end = 11
 
@@ -182,7 +182,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 17
 end = 17
 
@@ -190,7 +190,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 91
 end = 91
 
@@ -198,7 +198,7 @@ end = 91
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 93
 end = 93
 
@@ -206,7 +206,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 104
 end = 104
 
@@ -214,7 +214,7 @@ end = 104
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 110
 end = 110
 
@@ -222,7 +222,7 @@ end = 110
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 118
 end = 118
 
@@ -230,7 +230,7 @@ end = 118
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 132
 end = 132
 
@@ -238,7 +238,7 @@ end = 132
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 134
 end = 134
 
@@ -246,7 +246,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 147
 end = 147
 
@@ -254,7 +254,7 @@ end = 147
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 157
 end = 157
 
@@ -262,7 +262,7 @@ end = 157
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 159
 end = 159
 
@@ -270,7 +270,7 @@ end = 159
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 186
 end = 186
 
@@ -278,7 +278,7 @@ end = 186
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 194
 end = 194
 
@@ -286,7 +286,7 @@ end = 194
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 220
 end = 220
 
@@ -294,7 +294,7 @@ end = 220
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 227
 end = 227
 
@@ -302,7 +302,7 @@ end = 227
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 235
 end = 235
 
@@ -310,7 +310,7 @@ end = 235
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 241
 end = 241
 
@@ -318,7 +318,7 @@ end = 241
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 254
 end = 254
 
@@ -326,7 +326,7 @@ end = 254
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 12
 end = 12
 
@@ -334,7 +334,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 18
 end = 18
 
@@ -342,7 +342,7 @@ end = 18
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 92
 end = 92
 
@@ -350,7 +350,7 @@ end = 92
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 94
 end = 94
 
@@ -358,7 +358,7 @@ end = 94
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 105
 end = 105
 
@@ -366,7 +366,7 @@ end = 105
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 111
 end = 111
 
@@ -374,7 +374,7 @@ end = 111
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 119
 end = 119
 
@@ -382,7 +382,7 @@ end = 119
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 133
 end = 133
 
@@ -390,7 +390,7 @@ end = 133
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 135
 end = 135
 
@@ -398,7 +398,7 @@ end = 135
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 148
 end = 148
 
@@ -406,7 +406,7 @@ end = 148
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 158
 end = 158
 
@@ -414,7 +414,7 @@ end = 158
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 160
 end = 160
 
@@ -422,7 +422,7 @@ end = 160
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 187
 end = 187
 
@@ -430,7 +430,7 @@ end = 187
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 195
 end = 195
 
@@ -438,7 +438,7 @@ end = 195
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 221
 end = 221
 
@@ -446,7 +446,7 @@ end = 221
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 228
 end = 228
 
@@ -454,7 +454,7 @@ end = 228
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 236
 end = 236
 
@@ -462,7 +462,7 @@ end = 236
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 242
 end = 242
 
@@ -470,7 +470,7 @@ end = 242
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 255
 end = 255
 
@@ -479,7 +479,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 22
 cum_tokens = 424
@@ -488,7 +488,7 @@ cum_tokens = 424
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 11
 end = 11
 
@@ -496,7 +496,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 13
 end = 15
 
@@ -505,7 +505,7 @@ kind = "full"
 
 [[batches]]
 position = 11
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 143
 cum_tokens = 567
@@ -514,7 +514,7 @@ cum_tokens = 567
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 3
 end = 3
 
@@ -522,7 +522,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 5
 end = 6
 
@@ -530,7 +530,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 8
 end = 9
 
@@ -539,7 +539,7 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 18 })'
+key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 27
 cum_tokens = 594
@@ -548,7 +548,7 @@ cum_tokens = 594
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 235
 end = 235
 
@@ -556,7 +556,7 @@ end = 235
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 237
 end = 239
 
@@ -565,7 +565,7 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 9 })'
+key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 11
 cum_tokens = 605
@@ -574,7 +574,7 @@ cum_tokens = 605
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 161
 end = 161
 
@@ -583,7 +583,7 @@ kind = "full"
 
 [[batches]]
 position = 14
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters" })'
+key = 'Fs(DirListing { dir: "src/adapters" })'
 descriptor = "listing of 'src/adapters'"
 cost_tokens = 17
 cum_tokens = 622
@@ -592,12 +592,12 @@ cum_tokens = 622
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters"
+parent = "src/adapters"
 entries = ["normalized-adapter.test.ts", "normalized-adapter.ts", "observer.ts"]
 
 [[batches]]
 position = 15
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "src/parse-where.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/parse-where.ts"
 cost_tokens = 17
 cum_tokens = 639
@@ -606,7 +606,7 @@ cum_tokens = 639
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 58
 end = 58
 
@@ -614,7 +614,7 @@ end = 58
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 59
 end = 59
 
@@ -623,7 +623,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 16
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts", start_line: 58 })'
+key = 'Typescript(Export { file: "src/parse-where.ts", start_line: 58 })'
 descriptor = "export at src/parse-where.ts:58"
 cost_tokens = 0
 cum_tokens = 639
@@ -632,7 +632,7 @@ cum_tokens = 639
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 58
 end = 58
 
@@ -640,7 +640,7 @@ end = 58
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 59
 end = 59
 
@@ -649,7 +649,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 17
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts", start_line: 3, body_start_line: 4 })'
+key = 'Typescript(ExportBody { file: "src/random-id.ts", start_line: 3, body_start_line: 4 })'
 descriptor = "export body at src/random-id.ts:3 body 4"
 cost_tokens = 16
 cum_tokens = 655
@@ -658,7 +658,7 @@ cum_tokens = 655
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts"
+path = "src/random-id.ts"
 start = 4
 end = 4
 
@@ -667,7 +667,7 @@ kind = "full"
 
 [[batches]]
 position = 18
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "src/adapters/observer.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/adapters/observer.ts"
 cost_tokens = 12
 cum_tokens = 667
@@ -676,7 +676,7 @@ cum_tokens = 667
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 4
 end = 4
 
@@ -684,7 +684,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 5
 end = 5
 
@@ -693,7 +693,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 19
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "src/matches-where.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/matches-where.ts"
 cost_tokens = 22
 cum_tokens = 689
@@ -702,7 +702,7 @@ cum_tokens = 689
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 24
 end = 24
 
@@ -710,7 +710,7 @@ end = 24
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 25
 end = 25
 
@@ -719,7 +719,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 20
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts", start_line: 24 })'
+key = 'Typescript(Export { file: "src/matches-where.ts", start_line: 24 })'
 descriptor = "export at src/matches-where.ts:24"
 cost_tokens = 0
 cum_tokens = 689
@@ -728,7 +728,7 @@ cum_tokens = 689
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 24
 end = 24
 
@@ -736,7 +736,7 @@ end = 24
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 25
 end = 25
 
@@ -745,7 +745,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 21
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 6 })'
+key = 'Markdown(Section { file: "README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 27
 cum_tokens = 716
@@ -754,7 +754,7 @@ cum_tokens = 716
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 116
 end = 116
 
@@ -763,7 +763,7 @@ kind = "full"
 
 [[batches]]
 position = 22
-key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json" })'
+key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 188
 cum_tokens = 904
@@ -772,7 +772,7 @@ cum_tokens = 904
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 5
 end = 19
 
@@ -780,7 +780,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 21
 end = 25
 
@@ -789,7 +789,7 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json" })'
+key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 69
 cum_tokens = 973
@@ -798,7 +798,7 @@ cum_tokens = 973
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 26
 end = 33
 
@@ -807,7 +807,7 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json" })'
+key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 32
 cum_tokens = 1005
@@ -816,7 +816,7 @@ cum_tokens = 1005
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 72
 end = 74
 
@@ -825,7 +825,7 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json" })'
+key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 164
 cum_tokens = 1169
@@ -834,7 +834,7 @@ cum_tokens = 1169
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 35
 end = 45
 
@@ -843,7 +843,7 @@ kind = "full"
 
 [[batches]]
 position = 26
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
+key = 'Typescript(ExportNames { file: "src/app.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
 descriptor = "export names surface in src/app.ts"
 cost_tokens = 34
 cum_tokens = 1203
@@ -852,7 +852,7 @@ cum_tokens = 1203
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 18
 end = 18
 
@@ -860,7 +860,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 94
 end = 94
 
@@ -868,7 +868,7 @@ end = 94
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 19
 end = 19
 
@@ -876,7 +876,7 @@ end = 19
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 95
 end = 95
 
@@ -885,7 +885,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 27
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts", start_line: 94 })'
+key = 'Typescript(Export { file: "src/app.ts", start_line: 94 })'
 descriptor = "export at src/app.ts:94"
 cost_tokens = 0
 cum_tokens = 1203
@@ -894,7 +894,7 @@ cum_tokens = 1203
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 94
 end = 94
 
@@ -902,7 +902,7 @@ end = 94
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 95
 end = 95
 
@@ -911,7 +911,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 28
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts", start_line: 18 })'
+key = 'Typescript(Export { file: "src/app.ts", start_line: 18 })'
 descriptor = "export at src/app.ts:18"
 cost_tokens = 21
 cum_tokens = 1224
@@ -920,7 +920,7 @@ cum_tokens = 1224
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 18
 end = 21
 
@@ -929,7 +929,7 @@ kind = "full"
 
 [[batches]]
 position = 29
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 13 })'
+key = 'Markdown(Section { file: "README.md", section_index: 13 })'
 descriptor = "README.md section #13"
 cost_tokens = 30
 cum_tokens = 1254
@@ -938,7 +938,7 @@ cum_tokens = 1254
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 196
 end = 198
 
@@ -947,7 +947,7 @@ kind = "full"
 
 [[batches]]
 position = 30
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
+key = 'Typescript(ExportNames { file: "src/paginate.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
 descriptor = "export names surface in src/paginate.ts"
 cost_tokens = 43
 cum_tokens = 1297
@@ -956,7 +956,7 @@ cum_tokens = 1297
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 1
 end = 1
 
@@ -964,7 +964,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 11
 end = 11
 
@@ -972,7 +972,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 2
 end = 2
 
@@ -980,7 +980,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 12
 end = 12
 
@@ -989,7 +989,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 31
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts", start_line: 11 })'
+key = 'Typescript(Export { file: "src/paginate.ts", start_line: 11 })'
 descriptor = "export at src/paginate.ts:11"
 cost_tokens = 0
 cum_tokens = 1297
@@ -998,7 +998,7 @@ cum_tokens = 1297
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 11
 end = 11
 
@@ -1006,7 +1006,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 12
 end = 12
 
@@ -1015,7 +1015,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 32
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts", start_line: 1 })'
+key = 'Typescript(Export { file: "src/paginate.ts", start_line: 1 })'
 descriptor = "export at src/paginate.ts:1"
 cost_tokens = 70
 cum_tokens = 1367
@@ -1024,7 +1024,7 @@ cum_tokens = 1367
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 1
 end = 9
 
@@ -1033,7 +1033,7 @@ kind = "full"
 
 [[batches]]
 position = 33
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/tsconfig.json" })'
+key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 152
 cum_tokens = 1519
@@ -1042,7 +1042,7 @@ cum_tokens = 1519
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/tsconfig.json"
+path = "tsconfig.json"
 start = 1
 end = 14
 
@@ -1051,7 +1051,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 19 })'
+key = 'Markdown(Section { file: "README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 99
 cum_tokens = 1618
@@ -1060,7 +1060,7 @@ cum_tokens = 1618
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 241
 end = 241
 
@@ -1068,7 +1068,7 @@ end = 241
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 243
 end = 243
 
@@ -1076,7 +1076,7 @@ end = 243
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 245
 end = 245
 
@@ -1084,7 +1084,7 @@ end = 245
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 247
 end = 250
 
@@ -1092,7 +1092,7 @@ end = 250
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 252
 end = 252
 
@@ -1101,7 +1101,7 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
+key = 'Typescript(ExportNames { file: "src/where-operators.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
 descriptor = "export names surface in src/where-operators.ts"
 cost_tokens = 52
 cum_tokens = 1670
@@ -1110,7 +1110,7 @@ cum_tokens = 1670
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 1
 end = 1
 
@@ -1118,7 +1118,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 14
 end = 14
 
@@ -1126,7 +1126,7 @@ end = 14
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 16
 end = 16
 
@@ -1134,7 +1134,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 2
 end = 2
 
@@ -1142,7 +1142,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 15
 end = 15
 
@@ -1150,7 +1150,7 @@ end = 15
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 17
 end = 17
 
@@ -1159,7 +1159,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 36
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts", start_line: 16 })'
+key = 'Typescript(Export { file: "src/where-operators.ts", start_line: 16 })'
 descriptor = "export at src/where-operators.ts:16"
 cost_tokens = 0
 cum_tokens = 1670
@@ -1168,7 +1168,7 @@ cum_tokens = 1670
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 16
 end = 16
 
@@ -1176,7 +1176,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 17
 end = 17
 
@@ -1185,7 +1185,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts", start_line: 16, body_start_line: 17 })'
+key = 'Typescript(ExportBody { file: "src/where-operators.ts", start_line: 16, body_start_line: 17 })'
 descriptor = "export body at src/where-operators.ts:16 body 17"
 cost_tokens = 16
 cum_tokens = 1686
@@ -1194,7 +1194,7 @@ cum_tokens = 1686
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 17
 end = 17
 
@@ -1203,7 +1203,7 @@ kind = "full"
 
 [[batches]]
 position = 38
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 7 })'
+key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 132
 cum_tokens = 1818
@@ -1212,7 +1212,7 @@ cum_tokens = 1818
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 118
 end = 118
 
@@ -1220,7 +1220,7 @@ end = 118
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 120
 end = 120
 
@@ -1228,7 +1228,7 @@ end = 120
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 122
 end = 128
 
@@ -1236,7 +1236,7 @@ end = 128
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 130
 end = 130
 
@@ -1245,7 +1245,7 @@ kind = "full"
 
 [[batches]]
 position = 39
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 8 })'
+key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 142
 cum_tokens = 1960
@@ -1254,7 +1254,7 @@ cum_tokens = 1960
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 132
 end = 132
 
@@ -1262,7 +1262,7 @@ end = 132
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 134
 end = 134
 
@@ -1270,7 +1270,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 136
 end = 136
 
@@ -1278,7 +1278,7 @@ end = 136
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 138
 end = 145
 
@@ -1286,7 +1286,7 @@ end = 145
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 147
 end = 147
 
@@ -1294,7 +1294,7 @@ end = 147
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 149
 end = 149
 
@@ -1302,7 +1302,7 @@ end = 149
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 151
 end = 155
 
@@ -1311,7 +1311,7 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts" })'
+key = 'Typescript(Imports { file: "src/random-id.ts" })'
 descriptor = "imports in src/random-id.ts"
 cost_tokens = 15
 cum_tokens = 1975
@@ -1320,7 +1320,7 @@ cum_tokens = 1975
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts"
+path = "src/random-id.ts"
 start = 1
 end = 1
 
@@ -1329,7 +1329,7 @@ kind = "full"
 
 [[batches]]
 position = 41
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 15 })'
+key = 'Markdown(Section { file: "README.md", section_index: 15 })'
 descriptor = "README.md section #15"
 cost_tokens = 48
 cum_tokens = 2023
@@ -1338,7 +1338,7 @@ cum_tokens = 2023
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 216
 end = 218
 
@@ -1347,7 +1347,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts", start_line: 1 })'
+key = 'Typescript(Export { file: "src/where-operators.ts", start_line: 1 })'
 descriptor = "export at src/where-operators.ts:1"
 cost_tokens = 88
 cum_tokens = 2111
@@ -1356,7 +1356,7 @@ cum_tokens = 2111
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts"
+path = "src/where-operators.ts"
 start = 1
 end = 12
 
@@ -1365,7 +1365,7 @@ kind = "full"
 
 [[batches]]
 position = 43
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/.husky" })'
+key = 'Fs(DirListing { dir: ".husky" })'
 descriptor = "listing of '.husky'"
 cost_tokens = 5
 cum_tokens = 2116
@@ -1374,12 +1374,12 @@ cum_tokens = 2116
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/.husky"
+parent = ".husky"
 entries = ["pre-commit"]
 
 [[batches]]
 position = 44
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts", chunk_index: 0, export_count: 5, type_only_export_count: 3 })'
+key = 'Typescript(ExportNames { file: "src/service.ts", chunk_index: 0, export_count: 5, type_only_export_count: 3 })'
 descriptor = "export names surface in src/service.ts"
 cost_tokens = 77
 cum_tokens = 2193
@@ -1388,7 +1388,7 @@ cum_tokens = 2193
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 9
 end = 9
 
@@ -1396,7 +1396,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 11
 end = 11
 
@@ -1404,7 +1404,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 13
 end = 13
 
@@ -1412,7 +1412,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 17
 end = 17
 
@@ -1420,7 +1420,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 81
 end = 81
 
@@ -1428,7 +1428,7 @@ end = 81
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 10
 end = 10
 
@@ -1436,7 +1436,7 @@ end = 10
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 12
 end = 12
 
@@ -1444,7 +1444,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 14
 end = 14
 
@@ -1452,7 +1452,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 18
 end = 18
 
@@ -1460,7 +1460,7 @@ end = 18
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 82
 end = 82
 
@@ -1469,7 +1469,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 45
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts", start_line: 13 })'
+key = 'Typescript(Export { file: "src/service.ts", start_line: 13 })'
 descriptor = "export at src/service.ts:13"
 cost_tokens = 0
 cum_tokens = 2193
@@ -1478,7 +1478,7 @@ cum_tokens = 2193
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 13
 end = 13
 
@@ -1486,7 +1486,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 14
 end = 14
 
@@ -1495,7 +1495,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 46
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts", start_line: 13, body_start_line: 14 })'
+key = 'Typescript(ExportBody { file: "src/service.ts", start_line: 13, body_start_line: 14 })'
 descriptor = "export body at src/service.ts:13 body 14"
 cost_tokens = 21
 cum_tokens = 2214
@@ -1504,7 +1504,7 @@ cum_tokens = 2214
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 14
 end = 14
 
@@ -1513,7 +1513,7 @@ kind = "full"
 
 [[batches]]
 position = 47
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/schema.json" })'
+key = 'Json(Whole { file: "schema.json" })'
 descriptor = "json config schema.json"
 cost_tokens = 102
 cum_tokens = 2316
@@ -1522,7 +1522,7 @@ cum_tokens = 2316
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/schema.json"
+path = "schema.json"
 start = 1
 end = 10
 
@@ -1531,7 +1531,7 @@ kind = "full"
 
 [[batches]]
 position = 48
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 20 })'
+key = 'Markdown(Section { file: "README.md", section_index: 20 })'
 descriptor = "README.md section #20"
 cost_tokens = 162
 cum_tokens = 2478
@@ -1540,7 +1540,7 @@ cum_tokens = 2478
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 254
 end = 254
 
@@ -1548,7 +1548,7 @@ end = 254
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 256
 end = 256
 
@@ -1556,7 +1556,7 @@ end = 256
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 258
 end = 261
 
@@ -1564,7 +1564,7 @@ end = 261
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 263
 end = 263
 
@@ -1573,7 +1573,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts", start_line: 58, body_start_line: 59 })'
+key = 'Typescript(ExportBody { file: "src/parse-where.ts", start_line: 58, body_start_line: 59 })'
 descriptor = "export body at src/parse-where.ts:58 body 59"
 cost_tokens = 105
 cum_tokens = 2583
@@ -1582,7 +1582,7 @@ cum_tokens = 2583
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 59
 end = 60
 
@@ -1590,7 +1590,7 @@ end = 60
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 62
 end = 66
 
@@ -1598,7 +1598,7 @@ end = 66
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 68
 end = 68
 
@@ -1607,7 +1607,7 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
+key = 'Typescript(ExportNames { file: "src/adapters/normalized-adapter.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
 descriptor = "export names surface in src/adapters/normalized-adapter.ts"
 cost_tokens = 59
 cum_tokens = 2642
@@ -1616,7 +1616,7 @@ cum_tokens = 2642
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 6
 end = 7
 
@@ -1624,7 +1624,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 11
 end = 11
 
@@ -1632,7 +1632,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 8
 end = 8
 
@@ -1640,7 +1640,7 @@ end = 8
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 12
 end = 12
 
@@ -1649,7 +1649,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 51
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts", start_line: 7 })'
+key = 'Typescript(Export { file: "src/adapters/normalized-adapter.ts", start_line: 7 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:7"
 cost_tokens = 13
 cum_tokens = 2655
@@ -1658,7 +1658,7 @@ cum_tokens = 2655
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 7
 end = 9
 
@@ -1667,7 +1667,7 @@ kind = "full"
 
 [[batches]]
 position = 52
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts", start_line: 11 })'
+key = 'Typescript(Export { file: "src/adapters/normalized-adapter.ts", start_line: 11 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:11"
 cost_tokens = 60
 cum_tokens = 2715
@@ -1676,7 +1676,7 @@ cum_tokens = 2715
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 11
 end = 12
 
@@ -1684,7 +1684,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 14
 end = 14
 
@@ -1692,7 +1692,7 @@ end = 14
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 18
 end = 18
 
@@ -1700,7 +1700,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 44
 end = 44
 
@@ -1708,7 +1708,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 15
 end = 15
 
@@ -1716,7 +1716,7 @@ end = 15
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 19
 end = 19
 
@@ -1724,7 +1724,7 @@ end = 19
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 45
 end = 45
 
@@ -1733,7 +1733,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 53
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts" })'
+key = 'Typescript(Imports { file: "src/adapters/observer.ts" })'
 descriptor = "imports in src/adapters/observer.ts"
 cost_tokens = 14
 cum_tokens = 2729
@@ -1742,7 +1742,7 @@ cum_tokens = 2729
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 1
 end = 1
 
@@ -1751,7 +1751,7 @@ kind = "full"
 
 [[batches]]
 position = 54
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 16 })'
+key = 'Markdown(Section { file: "README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 37
 cum_tokens = 2766
@@ -1760,7 +1760,7 @@ cum_tokens = 2766
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 220
 end = 220
 
@@ -1768,7 +1768,7 @@ end = 220
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 222
 end = 225
 
@@ -1777,7 +1777,7 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/.github" })'
+key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
 cum_tokens = 2774
@@ -1786,12 +1786,12 @@ cum_tokens = 2774
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/.github"
+parent = ".github"
 entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
 position = 56
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/.github/workflows" })'
+key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
 cum_tokens = 2783
@@ -1800,12 +1800,12 @@ cum_tokens = 2783
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/.github/workflows"
+parent = ".github/workflows"
 entries = ["node.js.yml", "publish.yml"]
 
 [[batches]]
 position = 57
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/fixtures" })'
+key = 'Fs(DirListing { dir: "fixtures" })'
 descriptor = "listing of 'fixtures'"
 cost_tokens = 9
 cum_tokens = 2792
@@ -1814,12 +1814,12 @@ cum_tokens = 2792
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/fixtures"
+parent = "fixtures"
 entries = ["db.json", "db.json5"]
 
 [[batches]]
 position = 58
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts", start_line: 4 })'
+key = 'Typescript(Export { file: "src/adapters/observer.ts", start_line: 4 })'
 descriptor = "export at src/adapters/observer.ts:4"
 cost_tokens = 158
 cum_tokens = 2950
@@ -1828,7 +1828,7 @@ cum_tokens = 2950
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 4
 end = 5
 
@@ -1836,7 +1836,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 7
 end = 18
 
@@ -1844,7 +1844,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 20
 end = 20
 
@@ -1852,7 +1852,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 24
 end = 24
 
@@ -1860,7 +1860,7 @@ end = 24
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 31
 end = 31
 
@@ -1868,7 +1868,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 21
 end = 21
 
@@ -1876,7 +1876,7 @@ end = 21
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 25
 end = 25
 
@@ -1884,7 +1884,7 @@ end = 25
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 32
 end = 32
 
@@ -1893,7 +1893,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 59
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts", start_line: 4, body_start_line: 21 })'
+key = 'Typescript(ExportBody { file: "src/adapters/observer.ts", start_line: 4, body_start_line: 21 })'
 descriptor = "export body at src/adapters/observer.ts:4 body 21"
 cost_tokens = 80
 cum_tokens = 3030
@@ -1902,7 +1902,7 @@ cum_tokens = 3030
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 21
 end = 21
 
@@ -1910,7 +1910,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 25
 end = 28
 
@@ -1918,7 +1918,7 @@ end = 28
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts"
+path = "src/adapters/observer.ts"
 start = 32
 end = 34
 
@@ -1927,7 +1927,7 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts" })'
+key = 'Typescript(Imports { file: "src/matches-where.ts" })'
 descriptor = "imports in src/matches-where.ts"
 cost_tokens = 37
 cum_tokens = 3067
@@ -1936,7 +1936,7 @@ cum_tokens = 3067
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 1
 end = 1
 
@@ -1944,7 +1944,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 3
 end = 3
 
@@ -1953,7 +1953,7 @@ kind = "full"
 
 [[batches]]
 position = 61
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json" })'
+key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 389
 cum_tokens = 3456
@@ -1962,7 +1962,7 @@ cum_tokens = 3456
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+path = "package.json"
 start = 46
 end = 71
 
@@ -1971,7 +1971,7 @@ kind = "full"
 
 [[batches]]
 position = 62
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 12 })'
+key = 'Markdown(Section { file: "README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 52
 cum_tokens = 3508
@@ -1980,7 +1980,7 @@ cum_tokens = 3508
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 186
 end = 186
 
@@ -1988,7 +1988,7 @@ end = 186
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 188
 end = 192
 
@@ -1997,7 +1997,7 @@ kind = "full"
 
 [[batches]]
 position = 63
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts" })'
+key = 'Typescript(Imports { file: "src/parse-where.ts" })'
 descriptor = "imports in src/parse-where.ts"
 cost_tokens = 52
 cum_tokens = 3560
@@ -2006,7 +2006,7 @@ cum_tokens = 3560
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 1
 end = 2
 
@@ -2014,7 +2014,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts"
+path = "src/parse-where.ts"
 start = 4
 end = 4
 
@@ -2023,7 +2023,7 @@ kind = "full"
 
 [[batches]]
 position = 64
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 17 })'
+key = 'Markdown(Section { file: "README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 63
 cum_tokens = 3623
@@ -2032,7 +2032,7 @@ cum_tokens = 3623
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 227
 end = 227
 
@@ -2040,7 +2040,7 @@ end = 227
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 229
 end = 229
 
@@ -2048,7 +2048,7 @@ end = 229
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 231
 end = 233
 
@@ -2057,7 +2057,7 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 11 })'
+key = 'Markdown(Section { file: "README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 122
 cum_tokens = 3745
@@ -2066,7 +2066,7 @@ cum_tokens = 3745
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 174
 end = 174
 
@@ -2074,7 +2074,7 @@ end = 174
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 176
 end = 184
 
@@ -2083,7 +2083,7 @@ kind = "full"
 
 [[batches]]
 position = 66
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts", start_line: 81 })'
+key = 'Typescript(Export { file: "src/service.ts", start_line: 81 })'
 descriptor = "export at src/service.ts:81"
 cost_tokens = 481
 cum_tokens = 4226
@@ -2092,7 +2092,7 @@ cum_tokens = 4226
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 81
 end = 82
 
@@ -2100,7 +2100,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 84
 end = 84
 
@@ -2108,7 +2108,7 @@ end = 84
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 88
 end = 88
 
@@ -2116,7 +2116,7 @@ end = 88
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 92
 end = 92
 
@@ -2124,7 +2124,7 @@ end = 92
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 96
 end = 96
 
@@ -2132,7 +2132,7 @@ end = 96
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 110
 end = 119
 
@@ -2140,7 +2140,7 @@ end = 119
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 145
 end = 145
 
@@ -2148,7 +2148,7 @@ end = 145
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 156
 end = 156
 
@@ -2156,7 +2156,7 @@ end = 156
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 166
 end = 171
 
@@ -2164,7 +2164,7 @@ end = 171
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 186
 end = 186
 
@@ -2172,7 +2172,7 @@ end = 186
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 190
 end = 190
 
@@ -2180,7 +2180,7 @@ end = 190
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 194
 end = 194
 
@@ -2188,7 +2188,7 @@ end = 194
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 198
 end = 198
 
@@ -2196,7 +2196,7 @@ end = 198
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 202
 end = 206
 
@@ -2204,7 +2204,7 @@ end = 206
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 85
 end = 85
 
@@ -2212,7 +2212,7 @@ end = 85
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 89
 end = 89
 
@@ -2220,7 +2220,7 @@ end = 89
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 93
 end = 93
 
@@ -2228,7 +2228,7 @@ end = 93
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 97
 end = 97
 
@@ -2236,7 +2236,7 @@ end = 97
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 120
 end = 120
 
@@ -2244,7 +2244,7 @@ end = 120
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 146
 end = 146
 
@@ -2252,7 +2252,7 @@ end = 146
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 157
 end = 157
 
@@ -2260,7 +2260,7 @@ end = 157
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 172
 end = 172
 
@@ -2268,7 +2268,7 @@ end = 172
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 187
 end = 187
 
@@ -2276,7 +2276,7 @@ end = 187
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 191
 end = 191
 
@@ -2284,7 +2284,7 @@ end = 191
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 195
 end = 195
 
@@ -2292,7 +2292,7 @@ end = 195
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 199
 end = 199
 
@@ -2300,7 +2300,7 @@ end = 199
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 207
 end = 207
 
@@ -2309,7 +2309,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 67
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 5 })'
+key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 161
 cum_tokens = 4387
@@ -2318,7 +2318,7 @@ cum_tokens = 4387
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 112
 end = 114
 
@@ -2327,7 +2327,7 @@ kind = "full"
 
 [[batches]]
 position = 68
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 10 })'
+key = 'Markdown(Section { file: "README.md", section_index: 10 })'
 descriptor = "README.md section #10"
 cost_tokens = 137
 cum_tokens = 4524
@@ -2336,7 +2336,7 @@ cum_tokens = 4524
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 163
 end = 163
 
@@ -2344,7 +2344,7 @@ end = 163
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 165
 end = 172
 
@@ -2353,7 +2353,7 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts", start_line: 11, body_start_line: 12 })'
+key = 'Typescript(ExportBody { file: "src/paginate.ts", start_line: 11, body_start_line: 12 })'
 descriptor = "export body at src/paginate.ts:11 body 12"
 cost_tokens = 300
 cum_tokens = 4824
@@ -2362,7 +2362,7 @@ cum_tokens = 4824
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 12
 end = 14
 
@@ -2370,7 +2370,7 @@ end = 14
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 16
 end = 18
 
@@ -2378,7 +2378,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 20
 end = 23
 
@@ -2386,7 +2386,7 @@ end = 23
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 25
 end = 27
 
@@ -2394,7 +2394,7 @@ end = 27
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.ts"
+path = "src/paginate.ts"
 start = 29
 end = 37
 
@@ -2403,7 +2403,7 @@ kind = "full"
 
 [[batches]]
 position = 70
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 664
 cum_tokens = 5488
@@ -2412,7 +2412,7 @@ cum_tokens = 5488
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 17
 end = 17
 
@@ -2420,7 +2420,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 19
 end = 19
 
@@ -2428,7 +2428,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 21
 end = 36
 
@@ -2436,7 +2436,7 @@ end = 36
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 38
 end = 38
 
@@ -2444,7 +2444,7 @@ end = 38
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 40
 end = 40
 
@@ -2452,7 +2452,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 42
 end = 56
 
@@ -2460,7 +2460,7 @@ end = 56
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 58
 end = 58
 
@@ -2468,7 +2468,7 @@ end = 58
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 60
 end = 60
 
@@ -2476,7 +2476,7 @@ end = 60
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 62
 end = 62
 
@@ -2484,7 +2484,7 @@ end = 62
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 64
 end = 66
 
@@ -2492,7 +2492,7 @@ end = 66
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 68
 end = 72
 
@@ -2500,7 +2500,7 @@ end = 72
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 74
 end = 74
 
@@ -2508,7 +2508,7 @@ end = 74
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 76
 end = 78
 
@@ -2516,7 +2516,7 @@ end = 78
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 80
 end = 87
 
@@ -2524,7 +2524,7 @@ end = 87
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 89
 end = 89
 
@@ -2533,7 +2533,7 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts", start_line: 11, body_start_line: 15 })'
+key = 'Typescript(ExportBody { file: "src/adapters/normalized-adapter.ts", start_line: 11, body_start_line: 15 })'
 descriptor = "export body at src/adapters/normalized-adapter.ts:11 body 15"
 cost_tokens = 220
 cum_tokens = 5708
@@ -2542,7 +2542,7 @@ cum_tokens = 5708
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 15
 end = 15
 
@@ -2550,7 +2550,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 19
 end = 19
 
@@ -2558,7 +2558,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 21
 end = 23
 
@@ -2566,7 +2566,7 @@ end = 23
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 25
 end = 25
 
@@ -2574,7 +2574,7 @@ end = 25
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 27
 end = 32
 
@@ -2582,7 +2582,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 34
 end = 39
 
@@ -2590,7 +2590,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 41
 end = 41
 
@@ -2598,7 +2598,7 @@ end = 41
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 45
 end = 45
 
@@ -2607,7 +2607,7 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 4 })'
+key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 103
 cum_tokens = 5811
@@ -2616,7 +2616,7 @@ cum_tokens = 5811
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 104
 end = 104
 
@@ -2624,7 +2624,7 @@ end = 104
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 106
 end = 108
 
@@ -2633,7 +2633,7 @@ kind = "full"
 
 [[batches]]
 position = 73
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 14 })'
+key = 'Markdown(Section { file: "README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 157
 cum_tokens = 5968
@@ -2642,7 +2642,7 @@ cum_tokens = 5968
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 200
 end = 214
 
@@ -2651,7 +2651,7 @@ kind = "full"
 
 [[batches]]
 position = 74
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts" })'
+key = 'Typescript(Imports { file: "src/adapters/normalized-adapter.ts" })'
 descriptor = "imports in src/adapters/normalized-adapter.ts"
 cost_tokens = 45
 cum_tokens = 6013
@@ -2660,7 +2660,7 @@ cum_tokens = 6013
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 1
 end = 1
 
@@ -2668,7 +2668,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts"
+path = "src/adapters/normalized-adapter.ts"
 start = 3
 end = 4
 
@@ -2677,7 +2677,7 @@ kind = "full"
 
 [[batches]]
 position = 75
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts" })'
+key = 'Typescript(Imports { file: "src/service.ts" })'
 descriptor = "imports in src/service.ts"
 cost_tokens = 101
 cum_tokens = 6114
@@ -2686,7 +2686,7 @@ cum_tokens = 6114
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 1
 end = 4
 
@@ -2694,7 +2694,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 6
 end = 8
 
@@ -2703,7 +2703,7 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts" })'
+key = 'Typescript(Imports { file: "src/app.ts" })'
 descriptor = "imports in src/app.ts"
 cost_tokens = 161
 cum_tokens = 6275
@@ -2712,7 +2712,7 @@ cum_tokens = 6275
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 1
 end = 2
 
@@ -2720,7 +2720,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 4
 end = 9
 
@@ -2728,7 +2728,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 11
 end = 13
 
@@ -2737,7 +2737,7 @@ kind = "full"
 
 [[batches]]
 position = 77
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts", start_line: 81, body_start_line: 85 })'
+key = 'Typescript(ExportBody { file: "src/service.ts", start_line: 81, body_start_line: 85 })'
 descriptor = "export body at src/service.ts:81 body 85"
 cost_tokens = 873
 cum_tokens = 7148
@@ -2746,7 +2746,7 @@ cum_tokens = 7148
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 85
 end = 85
 
@@ -2754,7 +2754,7 @@ end = 85
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 89
 end = 89
 
@@ -2762,7 +2762,7 @@ end = 89
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 93
 end = 93
 
@@ -2770,7 +2770,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 97
 end = 97
 
@@ -2778,7 +2778,7 @@ end = 97
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 99
 end = 105
 
@@ -2786,7 +2786,7 @@ end = 105
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 107
 end = 107
 
@@ -2794,7 +2794,7 @@ end = 107
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 120
 end = 120
 
@@ -2802,7 +2802,7 @@ end = 120
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 122
 end = 124
 
@@ -2810,7 +2810,7 @@ end = 124
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 126
 end = 126
 
@@ -2818,7 +2818,7 @@ end = 126
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 128
 end = 131
 
@@ -2826,7 +2826,7 @@ end = 131
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 133
 end = 136
 
@@ -2834,7 +2834,7 @@ end = 136
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 138
 end = 140
 
@@ -2842,7 +2842,7 @@ end = 140
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 142
 end = 142
 
@@ -2850,7 +2850,7 @@ end = 142
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 146
 end = 147
 
@@ -2858,7 +2858,7 @@ end = 147
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 149
 end = 150
 
@@ -2866,7 +2866,7 @@ end = 150
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 152
 end = 153
 
@@ -2874,7 +2874,7 @@ end = 153
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 157
 end = 158
 
@@ -2882,7 +2882,7 @@ end = 158
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 160
 end = 160
 
@@ -2890,7 +2890,7 @@ end = 160
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 162
 end = 163
 
@@ -2898,7 +2898,7 @@ end = 163
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 172
 end = 173
 
@@ -2906,7 +2906,7 @@ end = 173
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 175
 end = 176
 
@@ -2914,7 +2914,7 @@ end = 176
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 178
 end = 180
 
@@ -2922,7 +2922,7 @@ end = 180
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 182
 end = 183
 
@@ -2930,7 +2930,7 @@ end = 183
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 187
 end = 187
 
@@ -2938,7 +2938,7 @@ end = 187
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 191
 end = 191
 
@@ -2946,7 +2946,7 @@ end = 191
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 195
 end = 195
 
@@ -2954,7 +2954,7 @@ end = 195
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 199
 end = 199
 
@@ -2962,7 +2962,7 @@ end = 199
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 207
 end = 208
 
@@ -2970,7 +2970,7 @@ end = 208
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 210
 end = 213
 
@@ -2978,7 +2978,7 @@ end = 213
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 215
 end = 217
 
@@ -2986,7 +2986,7 @@ end = 217
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts"
+path = "src/service.ts"
 start = 219
 end = 220
 
@@ -2995,7 +2995,7 @@ kind = "full"
 
 [[batches]]
 position = 78
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts", start_line: 24, body_start_line: 25 })'
+key = 'Typescript(ExportBody { file: "src/matches-where.ts", start_line: 24, body_start_line: 25 })'
 descriptor = "export body at src/matches-where.ts:24 body 25"
 cost_tokens = 772
 cum_tokens = 7920
@@ -3004,7 +3004,7 @@ cum_tokens = 7920
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 25
 end = 27
 
@@ -3012,7 +3012,7 @@ end = 27
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 29
 end = 35
 
@@ -3020,7 +3020,7 @@ end = 35
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 37
 end = 39
 
@@ -3028,7 +3028,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 41
 end = 41
 
@@ -3036,7 +3036,7 @@ end = 41
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 43
 end = 44
 
@@ -3044,7 +3044,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 46
 end = 47
 
@@ -3052,7 +3052,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 49
 end = 73
 
@@ -3060,7 +3060,7 @@ end = 73
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 75
 end = 77
 
@@ -3068,7 +3068,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 79
 end = 80
 
@@ -3076,7 +3076,7 @@ end = 80
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 82
 end = 82
 
@@ -3084,7 +3084,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 84
 end = 85
 
@@ -3092,7 +3092,7 @@ end = 85
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
+path = "src/matches-where.ts"
 start = 87
 end = 87
 
@@ -3101,7 +3101,7 @@ kind = "full"
 
 [[batches]]
 position = 79
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts", start_line: 94, body_start_line: 95 })'
+key = 'Typescript(ExportBody { file: "src/app.ts", start_line: 94, body_start_line: 95 })'
 descriptor = "export body at src/app.ts:94 body 95"
 cost_tokens = 781
 cum_tokens = 8701
@@ -3110,7 +3110,7 @@ cum_tokens = 8701
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 95
 end = 96
 
@@ -3118,7 +3118,7 @@ end = 96
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 98
 end = 99
 
@@ -3126,7 +3126,7 @@ end = 99
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 101
 end = 105
 
@@ -3134,7 +3134,7 @@ end = 105
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 107
 end = 116
 
@@ -3142,7 +3142,7 @@ end = 116
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 118
 end = 119
 
@@ -3150,7 +3150,7 @@ end = 119
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 121
 end = 121
 
@@ -3158,7 +3158,7 @@ end = 121
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 123
 end = 125
 
@@ -3166,7 +3166,7 @@ end = 125
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 127
 end = 135
 
@@ -3174,7 +3174,7 @@ end = 135
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 137
 end = 141
 
@@ -3182,7 +3182,7 @@ end = 141
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 143
 end = 143
 
@@ -3190,7 +3190,7 @@ end = 143
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 145
 end = 145
 
@@ -3198,7 +3198,7 @@ end = 145
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 147
 end = 147
 
@@ -3206,7 +3206,7 @@ end = 147
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 149
 end = 149
 
@@ -3214,7 +3214,7 @@ end = 149
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 151
 end = 151
 
@@ -3222,7 +3222,7 @@ end = 151
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 153
 end = 157
 
@@ -3230,7 +3230,7 @@ end = 157
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 159
 end = 167
 
@@ -3238,7 +3238,7 @@ end = 167
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/app.ts"
+path = "src/app.ts"
 start = 169
 end = 169
 
@@ -3247,7 +3247,7 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/bin.ts" })'
+key = 'Typescript(Imports { file: "src/bin.ts" })'
 descriptor = "imports in src/bin.ts"
 cost_tokens = 249
 cum_tokens = 8950
@@ -3256,7 +3256,7 @@ cum_tokens = 8950
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/bin.ts"
+path = "src/bin.ts"
 start = 2
 end = 4
 
@@ -3264,7 +3264,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/bin.ts"
+path = "src/bin.ts"
 start = 6
 end = 12
 
@@ -3272,7 +3272,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/bin.ts"
+path = "src/bin.ts"
 start = 14
 end = 19
 
@@ -3281,7 +3281,7 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 3 })'
+key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 323
 cum_tokens = 9273
@@ -3290,7 +3290,7 @@ cum_tokens = 9273
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 93
 end = 93
 
@@ -3298,7 +3298,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md"
+path = "README.md"
 start = 95
 end = 101
 
@@ -3307,7 +3307,7 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/.oxfmtrc.json" })'
+key = 'Json(Whole { file: ".oxfmtrc.json" })'
 descriptor = "json config .oxfmtrc.json"
 cost_tokens = 31
 cum_tokens = 9304
@@ -3316,7 +3316,7 @@ cum_tokens = 9304
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/.oxfmtrc.json"
+path = ".oxfmtrc.json"
 start = 1
 end = 4
 
@@ -3325,7 +3325,7 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/.gitignore" })'
+key = 'Plaintext(Whole { file: ".gitignore" })'
 descriptor = "plaintext config .gitignore"
 cost_tokens = 51
 cum_tokens = 9355
@@ -3334,7 +3334,7 @@ cum_tokens = 9355
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/.gitignore"
+path = ".gitignore"
 start = 1
 end = 7
 
@@ -3343,7 +3343,7 @@ kind = "full"
 
 [[batches]]
 position = 84
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/LICENSE" })'
+key = 'Plaintext(Whole { file: "LICENSE" })'
 descriptor = "plaintext config LICENSE"
 cost_tokens = 289
 cum_tokens = 9644
@@ -3352,7 +3352,7 @@ cum_tokens = 9644
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/LICENSE"
+path = "LICENSE"
 start = 1
 end = 1
 
@@ -3360,7 +3360,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/LICENSE"
+path = "LICENSE"
 start = 3
 end = 3
 
@@ -3368,7 +3368,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/LICENSE"
+path = "LICENSE"
 start = 5
 end = 10
 
@@ -3376,7 +3376,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/LICENSE"
+path = "LICENSE"
 start = 12
 end = 13
 
@@ -3384,7 +3384,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/LICENSE"
+path = "LICENSE"
 start = 15
 end = 21
 
@@ -3393,7 +3393,7 @@ kind = "full"
 
 [[batches]]
 position = 85
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts", start_line: 10 })'
+key = 'Typescript(ModuleItem { file: "src/adapters/normalized-adapter.test.ts", start_line: 10 })'
 descriptor = "module item at src/adapters/normalized-adapter.test.ts:10"
 cost_tokens = 94
 cum_tokens = 9738
@@ -3402,7 +3402,7 @@ cum_tokens = 9738
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 10
 end = 11
 
@@ -3410,7 +3410,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 13
 end = 13
 
@@ -3418,7 +3418,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 17
 end = 17
 
@@ -3426,7 +3426,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 21
 end = 21
 
@@ -3434,7 +3434,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 25
 end = 25
 
@@ -3442,7 +3442,7 @@ end = 25
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 14
 end = 14
 
@@ -3450,7 +3450,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 18
 end = 18
 
@@ -3458,7 +3458,7 @@ end = 18
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 22
 end = 22
 
@@ -3466,7 +3466,7 @@ end = 22
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 26
 end = 26
 
@@ -3475,7 +3475,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 86
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts", start_line: 10, body_start_line: 26 })'
+key = 'Typescript(ModuleItemBody { file: "src/adapters/normalized-adapter.test.ts", start_line: 10, body_start_line: 26 })'
 descriptor = "module item body at src/adapters/normalized-adapter.test.ts:10 body 26"
 cost_tokens = 8
 cum_tokens = 9746
@@ -3484,7 +3484,7 @@ cum_tokens = 9746
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 26
 end = 26
 
@@ -3493,7 +3493,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts", start_line: 10, body_start_line: 14 })'
+key = 'Typescript(ModuleItemBody { file: "src/adapters/normalized-adapter.test.ts", start_line: 10, body_start_line: 14 })'
 descriptor = "module item body at src/adapters/normalized-adapter.test.ts:10 body 14"
 cost_tokens = 9
 cum_tokens = 9755
@@ -3502,7 +3502,7 @@ cum_tokens = 9755
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 14
 end = 14
 
@@ -3511,7 +3511,7 @@ kind = "full"
 
 [[batches]]
 position = 88
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts", start_line: 10, body_start_line: 22 })'
+key = 'Typescript(ModuleItemBody { file: "src/adapters/normalized-adapter.test.ts", start_line: 10, body_start_line: 22 })'
 descriptor = "module item body at src/adapters/normalized-adapter.test.ts:10 body 22"
 cost_tokens = 11
 cum_tokens = 9766
@@ -3520,7 +3520,7 @@ cum_tokens = 9766
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 22
 end = 22
 
@@ -3529,7 +3529,7 @@ kind = "full"
 
 [[batches]]
 position = 89
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts", start_line: 10, body_start_line: 18 })'
+key = 'Typescript(ModuleItemBody { file: "src/adapters/normalized-adapter.test.ts", start_line: 10, body_start_line: 18 })'
 descriptor = "module item body at src/adapters/normalized-adapter.test.ts:10 body 18"
 cost_tokens = 18
 cum_tokens = 9784
@@ -3538,7 +3538,7 @@ cum_tokens = 9784
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.test.ts"
+path = "src/adapters/normalized-adapter.test.ts"
 start = 18
 end = 18
 
@@ -3547,7 +3547,7 @@ kind = "full"
 
 [[batches]]
 position = 90
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.test.ts" })'
+key = 'Typescript(Imports { file: "src/paginate.test.ts" })'
 descriptor = "imports in src/paginate.test.ts"
 cost_tokens = 38
 cum_tokens = 9822
@@ -3556,7 +3556,7 @@ cum_tokens = 9822
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.test.ts"
+path = "src/paginate.test.ts"
 start = 1
 end = 2
 
@@ -3564,7 +3564,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/paginate.test.ts"
+path = "src/paginate.test.ts"
 start = 4
 end = 4
 
@@ -3573,7 +3573,7 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.test.ts" })'
+key = 'Typescript(Imports { file: "src/parse-where.test.ts" })'
 descriptor = "imports in src/parse-where.test.ts"
 cost_tokens = 41
 cum_tokens = 9863
@@ -3582,7 +3582,7 @@ cum_tokens = 9863
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.test.ts"
+path = "src/parse-where.test.ts"
 start = 1
 end = 2
 
@@ -3590,7 +3590,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.test.ts"
+path = "src/parse-where.test.ts"
 start = 4
 end = 4
 
@@ -3599,7 +3599,7 @@ kind = "full"
 
 [[batches]]
 position = 92
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.test.ts" })'
+key = 'Typescript(Imports { file: "src/matches-where.test.ts" })'
 descriptor = "imports in src/matches-where.test.ts"
 cost_tokens = 57
 cum_tokens = 9920
@@ -3608,7 +3608,7 @@ cum_tokens = 9920
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.test.ts"
+path = "src/matches-where.test.ts"
 start = 1
 end = 2
 
@@ -3616,7 +3616,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.test.ts"
+path = "src/matches-where.test.ts"
 start = 4
 end = 4
 
@@ -3624,7 +3624,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.test.ts"
+path = "src/matches-where.test.ts"
 start = 6
 end = 6
 

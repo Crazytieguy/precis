@@ -5,7 +5,7 @@ batch_count = 163
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 102
 cum_tokens = 102
@@ -14,12 +14,12 @@ cum_tokens = 102
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/commander"
+parent = "."
 entries = [".editorconfig", ".gitattributes", ".github", ".gitignore", ".prettierignore", ".prettierrc.js", "CHANGELOG.md", "CONTRIBUTING.md", "LICENSE", "Readme.md", "Readme_zh-CN.md", "SECURITY.md", "docs", "eslint.config.js", "esm.mjs", "examples", "index.js", "jest.config.js", "lib", "package-lock.json", "package-support.json", "package.json", "tests", "tsconfig.js.json", "tsconfig.json", "tsconfig.ts.json", "typings"]
 
 [[batches]]
 position = 2
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md" })'
+key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 30
 cum_tokens = 132
@@ -28,7 +28,7 @@ cum_tokens = 132
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 1
 end = 1
 
@@ -36,7 +36,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 8
 end = 8
 
@@ -45,7 +45,7 @@ kind = "full"
 
 [[batches]]
 position = 3
-key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 69
 cum_tokens = 201
@@ -54,7 +54,7 @@ cum_tokens = 201
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 2
 end = 4
 
@@ -62,7 +62,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 16
 end = 16
 
@@ -70,7 +70,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 43
 end = 43
 
@@ -79,7 +79,7 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/lib" })'
+key = 'Fs(DirListing { dir: "lib" })'
 descriptor = "listing of 'lib'"
 cost_tokens = 25
 cum_tokens = 226
@@ -88,12 +88,12 @@ cum_tokens = 226
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/commander/lib"
+parent = "lib"
 entries = ["argument.js", "command.js", "error.js", "help.js", "option.js", "suggestSimilar.js"]
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/typings" })'
+key = 'Fs(DirListing { dir: "typings" })'
 descriptor = "listing of 'typings'"
 cost_tokens = 17
 cum_tokens = 243
@@ -102,12 +102,12 @@ cum_tokens = 243
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/commander/typings"
+parent = "typings"
 entries = ["esm.d.mts", "index.d.ts", "index.test-d.ts"]
 
 [[batches]]
 position = 6
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 1 })'
+key = 'Markdown(Section { file: "Readme.md", section_index: 1 })'
 descriptor = "Readme.md section #1"
 cost_tokens = 28
 cum_tokens = 271
@@ -116,7 +116,7 @@ cum_tokens = 271
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 61
 end = 61
 
@@ -124,7 +124,7 @@ end = 61
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 63
 end = 65
 
@@ -133,7 +133,7 @@ kind = "full"
 
 [[batches]]
 position = 7
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/option.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/option.js"
 cost_tokens = 40
 cum_tokens = 311
@@ -142,7 +142,7 @@ cum_tokens = 311
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 3
 end = 3
 
@@ -150,7 +150,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 268
 end = 268
 
@@ -158,7 +158,7 @@ end = 268
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 379
 end = 380
 
@@ -166,7 +166,7 @@ end = 380
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 4
 end = 4
 
@@ -174,7 +174,7 @@ end = 4
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 269
 end = 269
 
@@ -183,7 +183,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 8
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3 })'
+key = 'Typescript(Export { file: "lib/option.js", start_line: 3 })'
 descriptor = "export at lib/option.js:3"
 cost_tokens = 0
 cum_tokens = 311
@@ -192,7 +192,7 @@ cum_tokens = 311
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 3
 end = 3
 
@@ -200,7 +200,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 4
 end = 4
 
@@ -209,7 +209,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 203 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 203 })'
 descriptor = "export member at lib/option.js:3 member 203"
 cost_tokens = 10
 cum_tokens = 321
@@ -218,7 +218,7 @@ cum_tokens = 321
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 203
 end = 203
 
@@ -226,7 +226,7 @@ end = 203
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 204
 end = 204
 
@@ -235,7 +235,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 65 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 65 })'
 descriptor = "export member at lib/option.js:3 member 65"
 cost_tokens = 11
 cum_tokens = 332
@@ -244,7 +244,7 @@ cum_tokens = 332
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 65
 end = 65
 
@@ -252,7 +252,7 @@ end = 65
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 66
 end = 66
 
@@ -261,7 +261,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 11
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 82 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 82 })'
 descriptor = "export member at lib/option.js:3 member 82"
 cost_tokens = 11
 cum_tokens = 343
@@ -270,7 +270,7 @@ cum_tokens = 343
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 82
 end = 82
 
@@ -278,7 +278,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 83
 end = 83
 
@@ -287,7 +287,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 12
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 120 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 120 })'
 descriptor = "export member at lib/option.js:3 member 120"
 cost_tokens = 11
 cum_tokens = 354
@@ -296,7 +296,7 @@ cum_tokens = 354
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 120
 end = 120
 
@@ -304,7 +304,7 @@ end = 120
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 121
 end = 121
 
@@ -313,7 +313,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 13
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 181 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 181 })'
 descriptor = "export member at lib/option.js:3 member 181"
 cost_tokens = 11
 cum_tokens = 365
@@ -322,7 +322,7 @@ cum_tokens = 365
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 181
 end = 181
 
@@ -330,7 +330,7 @@ end = 181
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 182
 end = 182
 
@@ -339,7 +339,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 14
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 217 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 217 })'
 descriptor = "export member at lib/option.js:3 member 217"
 cost_tokens = 11
 cum_tokens = 376
@@ -348,7 +348,7 @@ cum_tokens = 376
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 217
 end = 217
 
@@ -356,7 +356,7 @@ end = 217
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 218
 end = 218
 
@@ -365,7 +365,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 15
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 243 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 243 })'
 descriptor = "export member at lib/option.js:3 member 243"
 cost_tokens = 11
 cum_tokens = 387
@@ -374,7 +374,7 @@ cum_tokens = 387
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 243
 end = 243
 
@@ -382,7 +382,7 @@ end = 243
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 244
 end = 244
 
@@ -391,7 +391,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 16
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 256 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 256 })'
 descriptor = "export member at lib/option.js:3 member 256"
 cost_tokens = 11
 cum_tokens = 398
@@ -400,7 +400,7 @@ cum_tokens = 398
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 256
 end = 256
 
@@ -408,7 +408,7 @@ end = 256
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 257
 end = 257
 
@@ -417,7 +417,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 17
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 268 })'
+key = 'Typescript(Export { file: "lib/option.js", start_line: 268 })'
 descriptor = "export at lib/option.js:268"
 cost_tokens = 26
 cum_tokens = 424
@@ -426,7 +426,7 @@ cum_tokens = 424
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 268
 end = 268
 
@@ -434,7 +434,7 @@ end = 268
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 272
 end = 272
 
@@ -442,7 +442,7 @@ end = 272
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 297
 end = 297
 
@@ -450,7 +450,7 @@ end = 297
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 273
 end = 273
 
@@ -458,7 +458,7 @@ end = 273
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 298
 end = 298
 
@@ -467,7 +467,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 18
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 132 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 132 })'
 descriptor = "export member at lib/option.js:3 member 132"
 cost_tokens = 12
 cum_tokens = 436
@@ -476,7 +476,7 @@ cum_tokens = 436
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 132
 end = 132
 
@@ -484,7 +484,7 @@ end = 132
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 133
 end = 133
 
@@ -493,7 +493,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 19
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 11 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 11 })'
 descriptor = "export member at lib/option.js:3 member 11"
 cost_tokens = 13
 cum_tokens = 449
@@ -502,7 +502,7 @@ cum_tokens = 449
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 11
 end = 11
 
@@ -510,7 +510,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 12
 end = 12
 
@@ -519,7 +519,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 20
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 47 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 47 })'
 descriptor = "export member at lib/option.js:3 member 47"
 cost_tokens = 13
 cum_tokens = 462
@@ -528,7 +528,7 @@ cum_tokens = 462
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 47
 end = 47
 
@@ -536,7 +536,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 48
 end = 48
 
@@ -545,7 +545,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 21
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 230 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 230 })'
 descriptor = "export member at lib/option.js:3 member 230"
 cost_tokens = 13
 cum_tokens = 475
@@ -554,7 +554,7 @@ cum_tokens = 475
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 230
 end = 230
 
@@ -562,7 +562,7 @@ end = 230
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 231
 end = 231
 
@@ -571,7 +571,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 22
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 100 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 100 })'
 descriptor = "export member at lib/option.js:3 member 100"
 cost_tokens = 14
 cum_tokens = 489
@@ -580,7 +580,7 @@ cum_tokens = 489
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 100
 end = 100
 
@@ -588,7 +588,7 @@ end = 100
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 101
 end = 101
 
@@ -597,7 +597,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 23
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 156 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 156 })'
 descriptor = "export member at lib/option.js:3 member 156"
 cost_tokens = 15
 cum_tokens = 504
@@ -606,7 +606,7 @@ cum_tokens = 504
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 156
 end = 156
 
@@ -614,7 +614,7 @@ end = 156
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 157
 end = 157
 
@@ -623,7 +623,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 24
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 165 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 165 })'
 descriptor = "export member at lib/option.js:3 member 165"
 cost_tokens = 15
 cum_tokens = 519
@@ -632,7 +632,7 @@ cum_tokens = 519
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 165
 end = 165
 
@@ -640,7 +640,7 @@ end = 165
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 166
 end = 166
 
@@ -649,7 +649,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 25
-key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 144 })'
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 144 })'
 descriptor = "export member at lib/option.js:3 member 144"
 cost_tokens = 17
 cum_tokens = 536
@@ -658,7 +658,7 @@ cum_tokens = 536
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 144
 end = 144
 
@@ -666,7 +666,7 @@ end = 144
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 145
 end = 145
 
@@ -675,7 +675,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 26
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/docs" })'
+key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 36
 cum_tokens = 572
@@ -684,12 +684,12 @@ cum_tokens = 572
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/commander/docs"
+parent = "docs"
 entries = ["deprecated.md", "help-in-depth.md", "options-in-depth.md", "parsing-and-hooks.md", "release-policy.md", "terminology.md", "zh-CN"]
 
 [[batches]]
 position = 27
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md" })'
+key = 'Markdown(HeadingsOutline { file: "docs/help-in-depth.md" })'
 descriptor = "headings outline in docs/help-in-depth.md"
 cost_tokens = 42
 cum_tokens = 614
@@ -698,7 +698,7 @@ cum_tokens = 614
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 1
 end = 1
 
@@ -706,7 +706,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 20
 end = 20
 
@@ -714,7 +714,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 34
 end = 34
 
@@ -722,7 +722,7 @@ end = 34
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 118
 end = 118
 
@@ -730,7 +730,7 @@ end = 118
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 2
 end = 2
 
@@ -738,7 +738,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 21
 end = 21
 
@@ -746,7 +746,7 @@ end = 21
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 35
 end = 35
 
@@ -754,7 +754,7 @@ end = 35
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 119
 end = 119
 
@@ -763,7 +763,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 28
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/help.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/help.js"
 cost_tokens = 41
 cum_tokens = 655
@@ -772,7 +772,7 @@ cum_tokens = 655
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 12
 end = 12
 
@@ -780,7 +780,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 740
 end = 740
 
@@ -788,7 +788,7 @@ end = 740
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 746
 end = 747
 
@@ -796,7 +796,7 @@ end = 747
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 13
 end = 13
 
@@ -804,7 +804,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 741
 end = 741
 
@@ -813,7 +813,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 29
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js", start_line: 740 })'
+key = 'Typescript(Export { file: "lib/help.js", start_line: 740 })'
 descriptor = "export at lib/help.js:740"
 cost_tokens = 0
 cum_tokens = 655
@@ -822,7 +822,7 @@ cum_tokens = 655
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 740
 end = 740
 
@@ -830,7 +830,7 @@ end = 740
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 741
 end = 741
 
@@ -839,7 +839,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 30
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/index.js", chunk_index: 0, export_count: 11, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "index.js", chunk_index: 0, export_count: 11, type_only_export_count: 0 })'
 descriptor = "export names surface in index.js"
 cost_tokens = 150
 cum_tokens = 805
@@ -848,7 +848,7 @@ cum_tokens = 805
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 7
 end = 7
 
@@ -856,7 +856,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 9
 end = 11
 
@@ -864,7 +864,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 17
 end = 20
 
@@ -872,7 +872,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 22
 end = 24
 
@@ -880,7 +880,7 @@ end = 24
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 8
 end = 8
 
@@ -888,7 +888,7 @@ end = 8
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 12
 end = 12
 
@@ -896,7 +896,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 21
 end = 21
 
@@ -905,7 +905,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 31
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/index.js", start_line: 17 })'
+key = 'Typescript(Export { file: "index.js", start_line: 17 })'
 descriptor = "export at index.js:17"
 cost_tokens = 0
 cum_tokens = 805
@@ -914,7 +914,7 @@ cum_tokens = 805
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 17
 end = 17
 
@@ -923,7 +923,7 @@ kind = "full"
 
 [[batches]]
 position = 32
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/index.js", start_line: 17 })'
+key = 'Typescript(ExportDoc { file: "index.js", start_line: 17 })'
 descriptor = "export doc at index.js:17"
 cost_tokens = 19
 cum_tokens = 824
@@ -932,7 +932,7 @@ cum_tokens = 824
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 13
 end = 15
 
@@ -941,7 +941,7 @@ kind = "full"
 
 [[batches]]
 position = 33
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/argument.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/argument.js"
 cost_tokens = 48
 cum_tokens = 872
@@ -950,7 +950,7 @@ cum_tokens = 872
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 3
 end = 3
 
@@ -958,7 +958,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 143
 end = 143
 
@@ -966,7 +966,7 @@ end = 143
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 149
 end = 150
 
@@ -974,7 +974,7 @@ end = 150
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 4
 end = 4
 
@@ -982,7 +982,7 @@ end = 4
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 144
 end = 144
 
@@ -991,7 +991,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 34
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", start_line: 143 })'
+key = 'Typescript(Export { file: "lib/argument.js", start_line: 143 })'
 descriptor = "export at lib/argument.js:143"
 cost_tokens = 0
 cum_tokens = 872
@@ -1000,7 +1000,7 @@ cum_tokens = 872
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 143
 end = 143
 
@@ -1008,7 +1008,7 @@ end = 143
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 144
 end = 144
 
@@ -1017,7 +1017,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 35
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/command.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/command.js"
 cost_tokens = 51
 cum_tokens = 923
@@ -1026,7 +1026,7 @@ cum_tokens = 923
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 13
 end = 13
 
@@ -1034,7 +1034,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 2752
 end = 2752
 
@@ -1042,7 +1042,7 @@ end = 2752
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 2776
 end = 2777
 
@@ -1050,7 +1050,7 @@ end = 2777
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 14
 end = 14
 
@@ -1058,7 +1058,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 2753
 end = 2753
 
@@ -1067,7 +1067,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 36
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js", start_line: 2752 })'
+key = 'Typescript(Export { file: "lib/command.js", start_line: 2752 })'
 descriptor = "export at lib/command.js:2752"
 cost_tokens = 0
 cum_tokens = 923
@@ -1076,7 +1076,7 @@ cum_tokens = 923
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 2752
 end = 2752
 
@@ -1084,7 +1084,7 @@ end = 2752
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 2753
 end = 2753
 
@@ -1093,7 +1093,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/error.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/error.js"
 cost_tokens = 51
 cum_tokens = 974
@@ -1102,7 +1102,7 @@ cum_tokens = 974
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 4
 end = 4
 
@@ -1110,7 +1110,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 25
 end = 25
 
@@ -1118,7 +1118,7 @@ end = 25
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 38
 end = 39
 
@@ -1126,7 +1126,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 5
 end = 5
 
@@ -1134,7 +1134,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 26
 end = 26
 
@@ -1143,7 +1143,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 38
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 25 })'
+key = 'Typescript(Export { file: "lib/error.js", start_line: 25 })'
 descriptor = "export at lib/error.js:25"
 cost_tokens = 11
 cum_tokens = 985
@@ -1152,7 +1152,7 @@ cum_tokens = 985
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 25
 end = 25
 
@@ -1160,7 +1160,7 @@ end = 25
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 30
 end = 30
 
@@ -1168,7 +1168,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 31
 end = 31
 
@@ -1177,7 +1177,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 39
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 4 })'
+key = 'Typescript(Export { file: "lib/error.js", start_line: 4 })'
 descriptor = "export at lib/error.js:4"
 cost_tokens = 16
 cum_tokens = 1001
@@ -1186,7 +1186,7 @@ cum_tokens = 1001
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 4
 end = 4
 
@@ -1194,7 +1194,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 11
 end = 11
 
@@ -1202,7 +1202,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 12
 end = 12
 
@@ -1211,7 +1211,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 40
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md" })'
+key = 'Markdown(HeadingsOutline { file: "docs/options-in-depth.md" })'
 descriptor = "headings outline in docs/options-in-depth.md"
 cost_tokens = 67
 cum_tokens = 1068
@@ -1220,7 +1220,7 @@ cum_tokens = 1068
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 2
 end = 2
 
@@ -1228,7 +1228,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 15
 end = 15
 
@@ -1236,7 +1236,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 30
 end = 30
 
@@ -1244,7 +1244,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 148
 end = 148
 
@@ -1252,7 +1252,7 @@ end = 148
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 191
 end = 191
 
@@ -1260,7 +1260,7 @@ end = 191
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 3
 end = 3
 
@@ -1268,7 +1268,7 @@ end = 3
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 16
 end = 16
 
@@ -1276,7 +1276,7 @@ end = 16
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 31
 end = 31
 
@@ -1284,7 +1284,7 @@ end = 31
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 149
 end = 149
 
@@ -1292,7 +1292,7 @@ end = 149
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 192
 end = 192
 
@@ -1301,7 +1301,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 41
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 25, body_start_line: 31 })'
+key = 'Typescript(ExportBody { file: "lib/error.js", start_line: 25, body_start_line: 31 })'
 descriptor = "export body at lib/error.js:25 body 31"
 cost_tokens = 55
 cum_tokens = 1123
@@ -1310,7 +1310,7 @@ cum_tokens = 1123
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 31
 end = 34
 
@@ -1319,7 +1319,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", start_line: 3 })'
+key = 'Typescript(Export { file: "lib/argument.js", start_line: 3 })'
 descriptor = "export at lib/argument.js:3"
 cost_tokens = 96
 cum_tokens = 1219
@@ -1328,7 +1328,7 @@ cum_tokens = 1219
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 3
 end = 3
 
@@ -1336,7 +1336,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 13
 end = 13
 
@@ -1344,7 +1344,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 48
 end = 48
 
@@ -1352,7 +1352,7 @@ end = 48
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 56
 end = 56
 
@@ -1360,7 +1360,7 @@ end = 56
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 73
 end = 73
 
@@ -1368,7 +1368,7 @@ end = 73
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 86
 end = 86
 
@@ -1376,7 +1376,7 @@ end = 86
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 98
 end = 98
 
@@ -1384,7 +1384,7 @@ end = 98
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 119
 end = 119
 
@@ -1392,7 +1392,7 @@ end = 119
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 129
 end = 129
 
@@ -1400,7 +1400,7 @@ end = 129
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 14
 end = 14
 
@@ -1408,7 +1408,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 49
 end = 49
 
@@ -1416,7 +1416,7 @@ end = 49
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 57
 end = 57
 
@@ -1424,7 +1424,7 @@ end = 57
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 74
 end = 74
 
@@ -1432,7 +1432,7 @@ end = 74
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 87
 end = 87
 
@@ -1440,7 +1440,7 @@ end = 87
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 99
 end = 99
 
@@ -1448,7 +1448,7 @@ end = 99
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 120
 end = 120
 
@@ -1456,7 +1456,7 @@ end = 120
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 130
 end = 130
 
@@ -1465,7 +1465,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 43
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", start_line: 143, body_start_line: 144 })'
+key = 'Typescript(ExportBody { file: "lib/argument.js", start_line: 143, body_start_line: 144 })'
 descriptor = "export body at lib/argument.js:143 body 144"
 cost_tokens = 48
 cum_tokens = 1267
@@ -1474,7 +1474,7 @@ cum_tokens = 1267
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 144
 end = 144
 
@@ -1482,7 +1482,7 @@ end = 144
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 146
 end = 146
 
@@ -1491,7 +1491,7 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js", start_line: 740, body_start_line: 741 })'
+key = 'Typescript(ExportBody { file: "lib/help.js", start_line: 740, body_start_line: 741 })'
 descriptor = "export body at lib/help.js:740 body 741"
 cost_tokens = 50
 cum_tokens = 1317
@@ -1500,7 +1500,7 @@ cum_tokens = 1317
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 741
 end = 743
 
@@ -1509,7 +1509,7 @@ kind = "full"
 
 [[batches]]
 position = 45
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 4 })'
+key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 4 })'
 descriptor = "export doc at lib/error.js:4"
 cost_tokens = 19
 cum_tokens = 1336
@@ -1518,7 +1518,7 @@ cum_tokens = 1336
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 1
 end = 3
 
@@ -1527,7 +1527,7 @@ kind = "full"
 
 [[batches]]
 position = 46
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 25 })'
+key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 25 })'
 descriptor = "export doc at lib/error.js:25"
 cost_tokens = 20
 cum_tokens = 1356
@@ -1536,7 +1536,7 @@ cum_tokens = 1356
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 22
 end = 24
 
@@ -1545,7 +1545,7 @@ kind = "full"
 
 [[batches]]
 position = 47
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 4, body_start_line: 12 })'
+key = 'Typescript(ExportBody { file: "lib/error.js", start_line: 4, body_start_line: 12 })'
 descriptor = "export body at lib/error.js:4 body 12"
 cost_tokens = 80
 cum_tokens = 1436
@@ -1554,7 +1554,7 @@ cum_tokens = 1436
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js"
+path = "lib/error.js"
 start = 12
 end = 18
 
@@ -1563,7 +1563,7 @@ kind = "full"
 
 [[batches]]
 position = 48
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js" })'
+key = 'Typescript(Imports { file: "lib/argument.js" })'
 descriptor = "imports in lib/argument.js"
 cost_tokens = 16
 cum_tokens = 1452
@@ -1572,7 +1572,7 @@ cum_tokens = 1452
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 1
 end = 1
 
@@ -1581,7 +1581,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js" })'
+key = 'Typescript(Imports { file: "lib/option.js" })'
 descriptor = "imports in lib/option.js"
 cost_tokens = 16
 cum_tokens = 1468
@@ -1590,7 +1590,7 @@ cum_tokens = 1468
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 1
 end = 1
 
@@ -1599,7 +1599,7 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js" })'
+key = 'Typescript(Imports { file: "lib/help.js" })'
 descriptor = "imports in lib/help.js"
 cost_tokens = 17
 cum_tokens = 1485
@@ -1608,7 +1608,7 @@ cum_tokens = 1485
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 1
 end = 1
 
@@ -1617,7 +1617,7 @@ kind = "full"
 
 [[batches]]
 position = 51
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/index.js" })'
+key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 83
 cum_tokens = 1568
@@ -1626,7 +1626,7 @@ cum_tokens = 1568
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/index.js"
+path = "index.js"
 start = 1
 end = 5
 
@@ -1635,7 +1635,7 @@ kind = "full"
 
 [[batches]]
 position = 52
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "esm.mjs", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in esm.mjs"
 cost_tokens = 9
 cum_tokens = 1577
@@ -1644,7 +1644,7 @@ cum_tokens = 1577
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs"
+path = "esm.mjs"
 start = 4
 end = 4
 
@@ -1652,7 +1652,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs"
+path = "esm.mjs"
 start = 5
 end = 5
 
@@ -1661,7 +1661,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 53
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs" })'
+key = 'Typescript(Imports { file: "esm.mjs" })'
 descriptor = "imports in esm.mjs"
 cost_tokens = 11
 cum_tokens = 1588
@@ -1670,7 +1670,7 @@ cum_tokens = 1588
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs"
+path = "esm.mjs"
 start = 1
 end = 1
 
@@ -1679,7 +1679,7 @@ kind = "full"
 
 [[batches]]
 position = 54
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs", start_line: 4 })'
+key = 'Typescript(Export { file: "esm.mjs", start_line: 4 })'
 descriptor = "export at esm.mjs:4"
 cost_tokens = 97
 cum_tokens = 1685
@@ -1688,7 +1688,7 @@ cum_tokens = 1685
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs"
+path = "esm.mjs"
 start = 4
 end = 16
 
@@ -1697,7 +1697,7 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN" })'
+key = 'Fs(DirListing { dir: "docs/zh-CN" })'
 descriptor = "listing of 'docs/zh-CN'"
 cost_tokens = 25
 cum_tokens = 1710
@@ -1706,12 +1706,12 @@ cum_tokens = 1710
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN"
+parent = "docs/zh-CN"
 entries = ["不再推荐使用的功能.md", "可变参数的选项.md", "术语表.md"]
 
 [[batches]]
 position = 56
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/examples" })'
+key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 237
 cum_tokens = 1947
@@ -1720,12 +1720,12 @@ cum_tokens = 1947
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/commander/examples"
+parent = "examples"
 entries = ["action-this.js", "alias.js", "argument.js", "arguments-custom-processing.js", "arguments-extra.js", "color-help-replacement.mjs", "color-help.mjs", "configure-help.js", "configure-output.js", "custom-command-class.js", "custom-help", "custom-help-description", "custom-help-text.js", "custom-version", "defaultCommand.js", "deploy", "description", "global-options-added.js", "global-options-nested.js", "help-centered.mjs", "help-groups.js", "help-subcommands-usage.js", "hook.js", "man-style-help.mjs", "nestedCommands.js", "options-boolean-or-value.js", "options-common.js", "options-conflicts.js", "options-custom-processing.js", "options-defaults.js", "options-env.js", "options-extra.js", "options-implies.js", "options-negatable.js", "options-required.js", "options-variadic.js", "pass-through-options.js", "pizza", "pm", "pm-install", "pm-list.js", "positional-options.js", "split.js", "string-util.js", "thank.js"]
 
 [[batches]]
 position = 57
-key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 151
 cum_tokens = 2098
@@ -1734,7 +1734,7 @@ cum_tokens = 2098
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 5
 end = 15
 
@@ -1742,7 +1742,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 17
 end = 20
 
@@ -1751,7 +1751,7 @@ kind = "full"
 
 [[batches]]
 position = 58
-key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 282
 cum_tokens = 2380
@@ -1760,7 +1760,7 @@ cum_tokens = 2380
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 35
 end = 42
 
@@ -1768,7 +1768,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 44
 end = 61
 
@@ -1776,7 +1776,7 @@ end = 61
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 77
 end = 77
 
@@ -1785,7 +1785,7 @@ kind = "full"
 
 [[batches]]
 position = 59
-key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 28
 cum_tokens = 2408
@@ -1794,7 +1794,7 @@ cum_tokens = 2408
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 78
 end = 80
 
@@ -1803,7 +1803,7 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js", start_line: 2752 })'
+key = 'Typescript(ExportDoc { file: "lib/command.js", start_line: 2752 })'
 descriptor = "export doc at lib/command.js:2752"
 cost_tokens = 34
 cum_tokens = 2442
@@ -1812,7 +1812,7 @@ cum_tokens = 2442
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 2748
 end = 2751
 
@@ -1821,7 +1821,7 @@ kind = "full"
 
 [[batches]]
 position = 61
-key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 259
 cum_tokens = 2701
@@ -1830,7 +1830,7 @@ cum_tokens = 2701
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 21
 end = 34
 
@@ -1839,7 +1839,7 @@ kind = "full"
 
 [[batches]]
 position = 62
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js", start_line: 6 })'
+key = 'Typescript(ModuleItem { file: "examples/custom-command-class.js", start_line: 6 })'
 descriptor = "module item at examples/custom-command-class.js:6"
 cost_tokens = 24
 cum_tokens = 2725
@@ -1848,7 +1848,7 @@ cum_tokens = 2725
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js"
+path = "examples/custom-command-class.js"
 start = 6
 end = 7
 
@@ -1856,7 +1856,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js"
+path = "examples/custom-command-class.js"
 start = 8
 end = 8
 
@@ -1865,7 +1865,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 63
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/suggestSimilar.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/suggestSimilar.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/suggestSimilar.js"
 cost_tokens = 26
 cum_tokens = 2751
@@ -1874,7 +1874,7 @@ cum_tokens = 2751
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/suggestSimilar.js"
+path = "lib/suggestSimilar.js"
 start = 56
 end = 56
 
@@ -1882,7 +1882,7 @@ end = 56
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/suggestSimilar.js"
+path = "lib/suggestSimilar.js"
 start = 101
 end = 101
 
@@ -1890,7 +1890,7 @@ end = 101
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/suggestSimilar.js"
+path = "lib/suggestSimilar.js"
 start = 57
 end = 57
 
@@ -1899,7 +1899,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 64
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/suggestSimilar.js", start_line: 56 })'
+key = 'Typescript(Export { file: "lib/suggestSimilar.js", start_line: 56 })'
 descriptor = "export at lib/suggestSimilar.js:56"
 cost_tokens = 0
 cum_tokens = 2751
@@ -1908,7 +1908,7 @@ cum_tokens = 2751
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/suggestSimilar.js"
+path = "lib/suggestSimilar.js"
 start = 56
 end = 56
 
@@ -1916,7 +1916,7 @@ end = 56
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/suggestSimilar.js"
+path = "lib/suggestSimilar.js"
 start = 57
 end = 57
 
@@ -1925,7 +1925,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 65
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md" })'
+key = 'Markdown(HeadingsOutline { file: "docs/zh-CN/可变参数的选项.md" })'
 descriptor = "headings outline in docs/zh-CN/可变参数的选项.md"
 cost_tokens = 127
 cum_tokens = 2878
@@ -1934,7 +1934,7 @@ cum_tokens = 2878
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 1
 end = 1
 
@@ -1942,7 +1942,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 26
 end = 26
 
@@ -1950,7 +1950,7 @@ end = 26
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 73
 end = 73
 
@@ -1958,7 +1958,7 @@ end = 73
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 98
 end = 98
 
@@ -1966,7 +1966,7 @@ end = 98
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 120
 end = 120
 
@@ -1974,7 +1974,7 @@ end = 120
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 142
 end = 142
 
@@ -1982,7 +1982,7 @@ end = 142
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 183
 end = 183
 
@@ -1990,7 +1990,7 @@ end = 183
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 2
 end = 2
 
@@ -1998,7 +1998,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 27
 end = 27
 
@@ -2006,7 +2006,7 @@ end = 27
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 74
 end = 74
 
@@ -2014,7 +2014,7 @@ end = 74
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 99
 end = 99
 
@@ -2022,7 +2022,7 @@ end = 99
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 121
 end = 121
 
@@ -2030,7 +2030,7 @@ end = 121
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 143
 end = 143
 
@@ -2038,7 +2038,7 @@ end = 143
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+path = "docs/zh-CN/可变参数的选项.md"
 start = 184
 end = 184
 
@@ -2047,7 +2047,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 66
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 7 })'
+key = 'Markdown(Section { file: "Readme.md", section_index: 7 })'
 descriptor = "Readme.md section #7"
 cost_tokens = 78
 cum_tokens = 2956
@@ -2056,7 +2056,7 @@ cum_tokens = 2956
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 956
 end = 956
 
@@ -2064,7 +2064,7 @@ end = 956
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 958
 end = 958
 
@@ -2072,7 +2072,7 @@ end = 958
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 960
 end = 964
 
@@ -2081,7 +2081,7 @@ kind = "full"
 
 [[batches]]
 position = 67
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md" })'
+key = 'Markdown(HeadingsOutline { file: "docs/zh-CN/不再推荐使用的功能.md" })'
 descriptor = "headings outline in docs/zh-CN/不再推荐使用的功能.md"
 cost_tokens = 163
 cum_tokens = 3119
@@ -2090,7 +2090,7 @@ cum_tokens = 3119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 1
 end = 1
 
@@ -2098,7 +2098,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 18
 end = 18
 
@@ -2106,7 +2106,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 30
 end = 30
 
@@ -2114,7 +2114,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 40
 end = 40
 
@@ -2122,7 +2122,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 61
 end = 61
 
@@ -2130,7 +2130,7 @@ end = 61
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 79
 end = 79
 
@@ -2138,7 +2138,7 @@ end = 79
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 104
 end = 104
 
@@ -2146,7 +2146,7 @@ end = 104
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 114
 end = 114
 
@@ -2154,7 +2154,7 @@ end = 114
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 134
 end = 134
 
@@ -2162,7 +2162,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 157
 end = 157
 
@@ -2170,7 +2170,7 @@ end = 157
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 187
 end = 187
 
@@ -2178,7 +2178,7 @@ end = 187
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 2
 end = 2
 
@@ -2186,7 +2186,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 19
 end = 19
 
@@ -2194,7 +2194,7 @@ end = 19
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 31
 end = 31
 
@@ -2202,7 +2202,7 @@ end = 31
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 41
 end = 41
 
@@ -2210,7 +2210,7 @@ end = 41
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 62
 end = 62
 
@@ -2218,7 +2218,7 @@ end = 62
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 80
 end = 80
 
@@ -2226,7 +2226,7 @@ end = 80
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 105
 end = 105
 
@@ -2234,7 +2234,7 @@ end = 105
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 115
 end = 115
 
@@ -2242,7 +2242,7 @@ end = 115
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 135
 end = 135
 
@@ -2250,7 +2250,7 @@ end = 135
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 158
 end = 158
 
@@ -2258,7 +2258,7 @@ end = 158
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+path = "docs/zh-CN/不再推荐使用的功能.md"
 start = 188
 end = 188
 
@@ -2267,7 +2267,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 68
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js", start_line: 4 })'
+key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 4 })'
 descriptor = "module item at examples/configure-output.js:4"
 cost_tokens = 12
 cum_tokens = 3131
@@ -2276,7 +2276,7 @@ cum_tokens = 3131
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js"
+path = "examples/configure-output.js"
 start = 4
 end = 4
 
@@ -2284,7 +2284,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js"
+path = "examples/configure-output.js"
 start = 5
 end = 5
 
@@ -2293,7 +2293,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 69
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js", start_line: 15 })'
+key = 'Typescript(ModuleItem { file: "examples/custom-command-class.js", start_line: 15 })'
 descriptor = "module item at examples/custom-command-class.js:15"
 cost_tokens = 12
 cum_tokens = 3143
@@ -2302,7 +2302,7 @@ cum_tokens = 3143
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js"
+path = "examples/custom-command-class.js"
 start = 15
 end = 15
 
@@ -2310,7 +2310,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js"
+path = "examples/custom-command-class.js"
 start = 16
 end = 16
 
@@ -2319,7 +2319,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 70
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js", start_line: 21 })'
+key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 21 })'
 descriptor = "module item at examples/nestedCommands.js:21"
 cost_tokens = 12
 cum_tokens = 3155
@@ -2328,7 +2328,7 @@ cum_tokens = 3155
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js"
+path = "examples/nestedCommands.js"
 start = 21
 end = 21
 
@@ -2336,7 +2336,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js"
+path = "examples/nestedCommands.js"
 start = 22
 end = 22
 
@@ -2345,7 +2345,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 71
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/action-this.js", start_line: 6 })'
+key = 'Typescript(ModuleItem { file: "examples/action-this.js", start_line: 6 })'
 descriptor = "module item at examples/action-this.js:6"
 cost_tokens = 10
 cum_tokens = 3165
@@ -2354,7 +2354,7 @@ cum_tokens = 3165
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/action-this.js"
+path = "examples/action-this.js"
 start = 6
 end = 6
 
@@ -2363,7 +2363,7 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/alias.js", start_line: 6 })'
+key = 'Typescript(ModuleItem { file: "examples/alias.js", start_line: 6 })'
 descriptor = "module item at examples/alias.js:6"
 cost_tokens = 10
 cum_tokens = 3175
@@ -2372,7 +2372,7 @@ cum_tokens = 3175
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/alias.js"
+path = "examples/alias.js"
 start = 6
 end = 6
 
@@ -2381,7 +2381,7 @@ kind = "full"
 
 [[batches]]
 position = 73
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/argument.js", start_line: 6 })'
+key = 'Typescript(ModuleItem { file: "examples/argument.js", start_line: 6 })'
 descriptor = "module item at examples/argument.js:6"
 cost_tokens = 10
 cum_tokens = 3185
@@ -2390,7 +2390,7 @@ cum_tokens = 3185
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/argument.js"
+path = "examples/argument.js"
 start = 6
 end = 6
 
@@ -2399,7 +2399,7 @@ kind = "full"
 
 [[batches]]
 position = 74
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/help-groups.js", start_line: 5 })'
+key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 5 })'
 descriptor = "module item at examples/help-groups.js:5"
 cost_tokens = 10
 cum_tokens = 3195
@@ -2408,7 +2408,7 @@ cum_tokens = 3195
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/help-groups.js"
+path = "examples/help-groups.js"
 start = 5
 end = 5
 
@@ -2417,7 +2417,7 @@ kind = "full"
 
 [[batches]]
 position = 75
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/hook.js", start_line: 4 })'
+key = 'Typescript(ModuleItem { file: "examples/hook.js", start_line: 4 })'
 descriptor = "module item at examples/hook.js:4"
 cost_tokens = 10
 cum_tokens = 3205
@@ -2426,7 +2426,7 @@ cum_tokens = 3205
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/hook.js"
+path = "examples/hook.js"
 start = 4
 end = 4
 
@@ -2435,7 +2435,7 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-boolean-or-value.js", start_line: 14 })'
+key = 'Typescript(ModuleItem { file: "examples/options-boolean-or-value.js", start_line: 14 })'
 descriptor = "module item at examples/options-boolean-or-value.js:14"
 cost_tokens = 10
 cum_tokens = 3215
@@ -2444,7 +2444,7 @@ cum_tokens = 3215
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-boolean-or-value.js"
+path = "examples/options-boolean-or-value.js"
 start = 14
 end = 14
 
@@ -2453,7 +2453,7 @@ kind = "full"
 
 [[batches]]
 position = 77
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-common.js", start_line: 16 })'
+key = 'Typescript(ModuleItem { file: "examples/options-common.js", start_line: 16 })'
 descriptor = "module item at examples/options-common.js:16"
 cost_tokens = 10
 cum_tokens = 3225
@@ -2462,7 +2462,7 @@ cum_tokens = 3225
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-common.js"
+path = "examples/options-common.js"
 start = 16
 end = 16
 
@@ -2471,7 +2471,7 @@ kind = "full"
 
 [[batches]]
 position = 78
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-conflicts.js", start_line: 3 })'
+key = 'Typescript(ModuleItem { file: "examples/options-conflicts.js", start_line: 3 })'
 descriptor = "module item at examples/options-conflicts.js:3"
 cost_tokens = 10
 cum_tokens = 3235
@@ -2480,7 +2480,7 @@ cum_tokens = 3235
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-conflicts.js"
+path = "examples/options-conflicts.js"
 start = 3
 end = 3
 
@@ -2489,7 +2489,7 @@ kind = "full"
 
 [[batches]]
 position = 79
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 45 })'
+key = 'Typescript(ModuleItem { file: "examples/options-custom-processing.js", start_line: 45 })'
 descriptor = "module item at examples/options-custom-processing.js:45"
 cost_tokens = 10
 cum_tokens = 3245
@@ -2498,7 +2498,7 @@ cum_tokens = 3245
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 45
 end = 45
 
@@ -2507,7 +2507,7 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-env.js", start_line: 3 })'
+key = 'Typescript(ModuleItem { file: "examples/options-env.js", start_line: 3 })'
 descriptor = "module item at examples/options-env.js:3"
 cost_tokens = 10
 cum_tokens = 3255
@@ -2516,7 +2516,7 @@ cum_tokens = 3255
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-env.js"
+path = "examples/options-env.js"
 start = 3
 end = 3
 
@@ -2525,7 +2525,7 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-extra.js", start_line: 8 })'
+key = 'Typescript(ModuleItem { file: "examples/options-extra.js", start_line: 8 })'
 descriptor = "module item at examples/options-extra.js:8"
 cost_tokens = 10
 cum_tokens = 3265
@@ -2534,7 +2534,7 @@ cum_tokens = 3265
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-extra.js"
+path = "examples/options-extra.js"
 start = 8
 end = 8
 
@@ -2543,7 +2543,7 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-implies.js", start_line: 3 })'
+key = 'Typescript(ModuleItem { file: "examples/options-implies.js", start_line: 3 })'
 descriptor = "module item at examples/options-implies.js:3"
 cost_tokens = 10
 cum_tokens = 3275
@@ -2552,7 +2552,7 @@ cum_tokens = 3275
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-implies.js"
+path = "examples/options-implies.js"
 start = 3
 end = 3
 
@@ -2561,7 +2561,7 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js", start_line: 17 })'
+key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 17 })'
 descriptor = "module item at examples/options-negatable.js:17"
 cost_tokens = 10
 cum_tokens = 3285
@@ -2570,7 +2570,7 @@ cum_tokens = 3285
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js"
+path = "examples/options-negatable.js"
 start = 17
 end = 17
 
@@ -2579,7 +2579,7 @@ kind = "full"
 
 [[batches]]
 position = 84
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/pass-through-options.js", start_line: 4 })'
+key = 'Typescript(ModuleItem { file: "examples/pass-through-options.js", start_line: 4 })'
 descriptor = "module item at examples/pass-through-options.js:4"
 cost_tokens = 10
 cum_tokens = 3295
@@ -2588,7 +2588,7 @@ cum_tokens = 3295
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/pass-through-options.js"
+path = "examples/pass-through-options.js"
 start = 4
 end = 4
 
@@ -2597,7 +2597,7 @@ kind = "full"
 
 [[batches]]
 position = 85
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/positional-options.js", start_line: 4 })'
+key = 'Typescript(ModuleItem { file: "examples/positional-options.js", start_line: 4 })'
 descriptor = "module item at examples/positional-options.js:4"
 cost_tokens = 10
 cum_tokens = 3305
@@ -2606,7 +2606,7 @@ cum_tokens = 3305
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/positional-options.js"
+path = "examples/positional-options.js"
 start = 4
 end = 4
 
@@ -2615,7 +2615,7 @@ kind = "full"
 
 [[batches]]
 position = 86
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/split.js", start_line: 9 })'
+key = 'Typescript(ModuleItem { file: "examples/split.js", start_line: 9 })'
 descriptor = "module item at examples/split.js:9"
 cost_tokens = 10
 cum_tokens = 3315
@@ -2624,7 +2624,7 @@ cum_tokens = 3315
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/split.js"
+path = "examples/split.js"
 start = 9
 end = 9
 
@@ -2633,7 +2633,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/string-util.js", start_line: 2 })'
+key = 'Typescript(ModuleItem { file: "examples/string-util.js", start_line: 2 })'
 descriptor = "module item at examples/string-util.js:2"
 cost_tokens = 10
 cum_tokens = 3325
@@ -2642,7 +2642,7 @@ cum_tokens = 3325
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/string-util.js"
+path = "examples/string-util.js"
 start = 2
 end = 2
 
@@ -2651,7 +2651,7 @@ kind = "full"
 
 [[batches]]
 position = 88
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/thank.js", start_line: 6 })'
+key = 'Typescript(ModuleItem { file: "examples/thank.js", start_line: 6 })'
 descriptor = "module item at examples/thank.js:6"
 cost_tokens = 10
 cum_tokens = 3335
@@ -2660,7 +2660,7 @@ cum_tokens = 3335
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/thank.js"
+path = "examples/thank.js"
 start = 6
 end = 6
 
@@ -2669,7 +2669,7 @@ kind = "full"
 
 [[batches]]
 position = 89
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js", start_line: 10 })'
+key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 10 })'
 descriptor = "module item at examples/arguments-custom-processing.js:10"
 cost_tokens = 13
 cum_tokens = 3348
@@ -2678,7 +2678,7 @@ cum_tokens = 3348
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js"
+path = "examples/arguments-custom-processing.js"
 start = 10
 end = 10
 
@@ -2686,7 +2686,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js"
+path = "examples/arguments-custom-processing.js"
 start = 11
 end = 11
 
@@ -2695,7 +2695,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 90
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 10 })'
+key = 'Typescript(ModuleItem { file: "examples/options-custom-processing.js", start_line: 10 })'
 descriptor = "module item at examples/options-custom-processing.js:10"
 cost_tokens = 13
 cum_tokens = 3361
@@ -2704,7 +2704,7 @@ cum_tokens = 3361
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 10
 end = 10
 
@@ -2712,7 +2712,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 11
 end = 11
 
@@ -2721,7 +2721,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 91
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 23 })'
+key = 'Typescript(ModuleItem { file: "examples/options-custom-processing.js", start_line: 23 })'
 descriptor = "module item at examples/options-custom-processing.js:23"
 cost_tokens = 13
 cum_tokens = 3374
@@ -2730,7 +2730,7 @@ cum_tokens = 3374
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 23
 end = 23
 
@@ -2738,7 +2738,7 @@ end = 23
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 24
 end = 24
 
@@ -2747,7 +2747,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 92
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 23, body_start_line: 24 })'
+key = 'Typescript(ModuleItemBody { file: "examples/options-custom-processing.js", start_line: 23, body_start_line: 24 })'
 descriptor = "module item body at examples/options-custom-processing.js:23 body 24"
 cost_tokens = 9
 cum_tokens = 3383
@@ -2756,7 +2756,7 @@ cum_tokens = 3383
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 24
 end = 24
 
@@ -2765,7 +2765,7 @@ kind = "full"
 
 [[batches]]
 position = 93
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 27 })'
+key = 'Typescript(ModuleItem { file: "examples/options-custom-processing.js", start_line: 27 })'
 descriptor = "module item at examples/options-custom-processing.js:27"
 cost_tokens = 13
 cum_tokens = 3396
@@ -2774,7 +2774,7 @@ cum_tokens = 3396
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 27
 end = 27
 
@@ -2782,7 +2782,7 @@ end = 27
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 28
 end = 28
 
@@ -2791,7 +2791,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 94
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 27, body_start_line: 28 })'
+key = 'Typescript(ModuleItemBody { file: "examples/options-custom-processing.js", start_line: 27, body_start_line: 28 })'
 descriptor = "module item body at examples/options-custom-processing.js:27 body 28"
 cost_tokens = 7
 cum_tokens = 3403
@@ -2800,7 +2800,7 @@ cum_tokens = 3403
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 28
 end = 28
 
@@ -2809,7 +2809,7 @@ kind = "full"
 
 [[batches]]
 position = 95
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 0 })'
+key = 'Markdown(Section { file: "Readme.md", section_index: 0 })'
 descriptor = "Readme.md section #0"
 cost_tokens = 825
 cum_tokens = 4228
@@ -2818,7 +2818,7 @@ cum_tokens = 4228
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 10
 end = 10
 
@@ -2826,7 +2826,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 12
 end = 57
 
@@ -2834,7 +2834,7 @@ end = 57
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 59
 end = 59
 
@@ -2843,7 +2843,7 @@ kind = "full"
 
 [[batches]]
 position = 96
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js", start_line: 20 })'
+key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 20 })'
 descriptor = "module item at examples/arguments-custom-processing.js:20"
 cost_tokens = 14
 cum_tokens = 4242
@@ -2852,7 +2852,7 @@ cum_tokens = 4242
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js"
+path = "examples/arguments-custom-processing.js"
 start = 20
 end = 20
 
@@ -2860,7 +2860,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js"
+path = "examples/arguments-custom-processing.js"
 start = 21
 end = 21
 
@@ -2869,7 +2869,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 97
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js", start_line: 20, body_start_line: 21 })'
+key = 'Typescript(ModuleItemBody { file: "examples/arguments-custom-processing.js", start_line: 20, body_start_line: 21 })'
 descriptor = "module item body at examples/arguments-custom-processing.js:20 body 21"
 cost_tokens = 11
 cum_tokens = 4253
@@ -2878,7 +2878,7 @@ cum_tokens = 4253
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js"
+path = "examples/arguments-custom-processing.js"
 start = 21
 end = 21
 
@@ -2887,7 +2887,7 @@ kind = "full"
 
 [[batches]]
 position = 98
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js", start_line: 8 })'
+key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 8 })'
 descriptor = "module item at examples/arguments-custom-processing.js:8"
 cost_tokens = 11
 cum_tokens = 4264
@@ -2896,7 +2896,7 @@ cum_tokens = 4264
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js"
+path = "examples/arguments-custom-processing.js"
 start = 8
 end = 8
 
@@ -2905,7 +2905,7 @@ kind = "full"
 
 [[batches]]
 position = 99
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-extra.js", start_line: 6 })'
+key = 'Typescript(ModuleItem { file: "examples/arguments-extra.js", start_line: 6 })'
 descriptor = "module item at examples/arguments-extra.js:6"
 cost_tokens = 11
 cum_tokens = 4275
@@ -2914,7 +2914,7 @@ cum_tokens = 4275
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-extra.js"
+path = "examples/arguments-extra.js"
 start = 6
 end = 6
 
@@ -2923,7 +2923,7 @@ kind = "full"
 
 [[batches]]
 position = 100
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js", start_line: 2 })'
+key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 2 })'
 descriptor = "module item at examples/configure-output.js:2"
 cost_tokens = 11
 cum_tokens = 4286
@@ -2932,7 +2932,7 @@ cum_tokens = 4286
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js"
+path = "examples/configure-output.js"
 start = 2
 end = 2
 
@@ -2941,7 +2941,7 @@ kind = "full"
 
 [[batches]]
 position = 101
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/defaultCommand.js", start_line: 4 })'
+key = 'Typescript(ModuleItem { file: "examples/defaultCommand.js", start_line: 4 })'
 descriptor = "module item at examples/defaultCommand.js:4"
 cost_tokens = 11
 cum_tokens = 4297
@@ -2950,7 +2950,7 @@ cum_tokens = 4297
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/defaultCommand.js"
+path = "examples/defaultCommand.js"
 start = 4
 end = 4
 
@@ -2959,7 +2959,7 @@ kind = "full"
 
 [[batches]]
 position = 102
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js", start_line: 4 })'
+key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 4 })'
 descriptor = "module item at examples/nestedCommands.js:4"
 cost_tokens = 11
 cum_tokens = 4308
@@ -2968,7 +2968,7 @@ cum_tokens = 4308
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js"
+path = "examples/nestedCommands.js"
 start = 4
 end = 4
 
@@ -2977,7 +2977,7 @@ kind = "full"
 
 [[batches]]
 position = 103
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-boolean-or-value.js", start_line: 8 })'
+key = 'Typescript(ModuleItem { file: "examples/options-boolean-or-value.js", start_line: 8 })'
 descriptor = "module item at examples/options-boolean-or-value.js:8"
 cost_tokens = 11
 cum_tokens = 4319
@@ -2986,7 +2986,7 @@ cum_tokens = 4319
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-boolean-or-value.js"
+path = "examples/options-boolean-or-value.js"
 start = 8
 end = 8
 
@@ -2995,7 +2995,7 @@ kind = "full"
 
 [[batches]]
 position = 104
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-common.js", start_line: 7 })'
+key = 'Typescript(ModuleItem { file: "examples/options-common.js", start_line: 7 })'
 descriptor = "module item at examples/options-common.js:7"
 cost_tokens = 11
 cum_tokens = 4330
@@ -3004,7 +3004,7 @@ cum_tokens = 4330
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-common.js"
+path = "examples/options-common.js"
 start = 7
 end = 7
 
@@ -3013,7 +3013,7 @@ kind = "full"
 
 [[batches]]
 position = 105
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 8 })'
+key = 'Typescript(ModuleItem { file: "examples/options-custom-processing.js", start_line: 8 })'
 descriptor = "module item at examples/options-custom-processing.js:8"
 cost_tokens = 11
 cum_tokens = 4341
@@ -3022,7 +3022,7 @@ cum_tokens = 4341
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 8
 end = 8
 
@@ -3031,7 +3031,7 @@ kind = "full"
 
 [[batches]]
 position = 106
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-defaults.js", start_line: 7 })'
+key = 'Typescript(ModuleItem { file: "examples/options-defaults.js", start_line: 7 })'
 descriptor = "module item at examples/options-defaults.js:7"
 cost_tokens = 11
 cum_tokens = 4352
@@ -3040,7 +3040,7 @@ cum_tokens = 4352
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-defaults.js"
+path = "examples/options-defaults.js"
 start = 7
 end = 7
 
@@ -3049,7 +3049,7 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js", start_line: 8 })'
+key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 8 })'
 descriptor = "module item at examples/options-negatable.js:8"
 cost_tokens = 11
 cum_tokens = 4363
@@ -3058,7 +3058,7 @@ cum_tokens = 4363
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js"
+path = "examples/options-negatable.js"
 start = 8
 end = 8
 
@@ -3067,7 +3067,7 @@ kind = "full"
 
 [[batches]]
 position = 108
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-required.js", start_line: 9 })'
+key = 'Typescript(ModuleItem { file: "examples/options-required.js", start_line: 9 })'
 descriptor = "module item at examples/options-required.js:9"
 cost_tokens = 11
 cum_tokens = 4374
@@ -3076,7 +3076,7 @@ cum_tokens = 4374
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-required.js"
+path = "examples/options-required.js"
 start = 9
 end = 9
 
@@ -3085,7 +3085,7 @@ kind = "full"
 
 [[batches]]
 position = 109
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-variadic.js", start_line: 6 })'
+key = 'Typescript(ModuleItem { file: "examples/options-variadic.js", start_line: 6 })'
 descriptor = "module item at examples/options-variadic.js:6"
 cost_tokens = 11
 cum_tokens = 4385
@@ -3094,7 +3094,7 @@ cum_tokens = 4385
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-variadic.js"
+path = "examples/options-variadic.js"
 start = 6
 end = 6
 
@@ -3103,7 +3103,7 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", start_line: 143 })'
+key = 'Typescript(ExportDoc { file: "lib/argument.js", start_line: 143 })'
 descriptor = "export doc at lib/argument.js:143"
 cost_tokens = 63
 cum_tokens = 4448
@@ -3112,7 +3112,7 @@ cum_tokens = 4448
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 135
 end = 141
 
@@ -3121,7 +3121,7 @@ kind = "full"
 
 [[batches]]
 position = 111
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/hook.js", start_line: 8 })'
+key = 'Typescript(ModuleItem { file: "examples/hook.js", start_line: 8 })'
 descriptor = "module item at examples/hook.js:8"
 cost_tokens = 12
 cum_tokens = 4460
@@ -3130,7 +3130,7 @@ cum_tokens = 4460
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/hook.js"
+path = "examples/hook.js"
 start = 8
 end = 8
 
@@ -3139,7 +3139,7 @@ kind = "full"
 
 [[batches]]
 position = 112
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js", start_line: 11 })'
+key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 11 })'
 descriptor = "module item at examples/nestedCommands.js:11"
 cost_tokens = 12
 cum_tokens = 4472
@@ -3148,7 +3148,7 @@ cum_tokens = 4472
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js"
+path = "examples/nestedCommands.js"
 start = 11
 end = 11
 
@@ -3157,7 +3157,7 @@ kind = "full"
 
 [[batches]]
 position = 113
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 19 })'
+key = 'Typescript(ModuleItem { file: "examples/options-custom-processing.js", start_line: 19 })'
 descriptor = "module item at examples/options-custom-processing.js:19"
 cost_tokens = 16
 cum_tokens = 4488
@@ -3166,7 +3166,7 @@ cum_tokens = 4488
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 19
 end = 19
 
@@ -3174,7 +3174,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 20
 end = 20
 
@@ -3183,7 +3183,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 114
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js", start_line: 19, body_start_line: 20 })'
+key = 'Typescript(ModuleItemBody { file: "examples/options-custom-processing.js", start_line: 19, body_start_line: 20 })'
 descriptor = "module item body at examples/options-custom-processing.js:19 body 20"
 cost_tokens = 9
 cum_tokens = 4497
@@ -3192,7 +3192,7 @@ cum_tokens = 4497
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 20
 end = 20
 
@@ -3201,7 +3201,7 @@ kind = "full"
 
 [[batches]]
 position = 115
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js", start_line: 740 })'
+key = 'Typescript(ExportDoc { file: "lib/help.js", start_line: 740 })'
 descriptor = "export doc at lib/help.js:740"
 cost_tokens = 72
 cum_tokens = 4569
@@ -3210,7 +3210,7 @@ cum_tokens = 4569
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 732
 end = 738
 
@@ -3219,7 +3219,7 @@ kind = "full"
 
 [[batches]]
 position = 116
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/help-groups.js", start_line: 6 })'
+key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 6 })'
 descriptor = "module item at examples/help-groups.js:6"
 cost_tokens = 14
 cum_tokens = 4583
@@ -3228,7 +3228,7 @@ cum_tokens = 4583
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/help-groups.js"
+path = "examples/help-groups.js"
 start = 6
 end = 6
 
@@ -3237,7 +3237,7 @@ kind = "full"
 
 [[batches]]
 position = 117
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/help-groups.js", start_line: 7 })'
+key = 'Typescript(ModuleItem { file: "examples/help-groups.js", start_line: 7 })'
 descriptor = "module item at examples/help-groups.js:7"
 cost_tokens = 14
 cum_tokens = 4597
@@ -3246,7 +3246,7 @@ cum_tokens = 4597
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/help-groups.js"
+path = "examples/help-groups.js"
 start = 7
 end = 7
 
@@ -3255,7 +3255,7 @@ kind = "full"
 
 [[batches]]
 position = 118
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js", start_line: 12 })'
+key = 'Typescript(Export { file: "lib/help.js", start_line: 12 })'
 descriptor = "export at lib/help.js:12"
 cost_tokens = 555
 cum_tokens = 5152
@@ -3264,7 +3264,7 @@ cum_tokens = 5152
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 12
 end = 13
 
@@ -3272,7 +3272,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 29
 end = 29
 
@@ -3280,7 +3280,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 40
 end = 40
 
@@ -3288,7 +3288,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 62
 end = 62
 
@@ -3296,7 +3296,7 @@ end = 62
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 79
 end = 79
 
@@ -3304,7 +3304,7 @@ end = 79
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 112
 end = 112
 
@@ -3312,7 +3312,7 @@ end = 112
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 139
 end = 139
 
@@ -3320,7 +3320,7 @@ end = 139
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 162
 end = 162
 
@@ -3328,7 +3328,7 @@ end = 162
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 182
 end = 182
 
@@ -3336,7 +3336,7 @@ end = 182
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 193
 end = 193
 
@@ -3344,7 +3344,7 @@ end = 193
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 205
 end = 205
 
@@ -3352,7 +3352,7 @@ end = 205
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 224
 end = 224
 
@@ -3360,7 +3360,7 @@ end = 224
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 241
 end = 241
 
@@ -3368,7 +3368,7 @@ end = 241
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 258
 end = 258
 
@@ -3376,7 +3376,7 @@ end = 258
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 276
 end = 276
 
@@ -3384,7 +3384,7 @@ end = 276
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 300
 end = 300
 
@@ -3392,7 +3392,7 @@ end = 300
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 313
 end = 313
 
@@ -3400,7 +3400,7 @@ end = 313
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 325
 end = 325
 
@@ -3408,7 +3408,7 @@ end = 325
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 372
 end = 372
 
@@ -3416,7 +3416,7 @@ end = 372
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 403
 end = 403
 
@@ -3424,7 +3424,7 @@ end = 403
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 417
 end = 417
 
@@ -3432,7 +3432,7 @@ end = 417
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 443
 end = 443
 
@@ -3440,7 +3440,7 @@ end = 443
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 535
 end = 535
 
@@ -3448,7 +3448,7 @@ end = 535
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 545
 end = 545
 
@@ -3456,7 +3456,7 @@ end = 545
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 549
 end = 549
 
@@ -3464,7 +3464,7 @@ end = 549
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 563
 end = 563
 
@@ -3472,7 +3472,7 @@ end = 563
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 566
 end = 566
 
@@ -3480,7 +3480,7 @@ end = 566
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 569
 end = 569
 
@@ -3488,7 +3488,7 @@ end = 569
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 572
 end = 572
 
@@ -3496,7 +3496,7 @@ end = 572
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 575
 end = 575
 
@@ -3504,7 +3504,7 @@ end = 575
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 578
 end = 578
 
@@ -3512,7 +3512,7 @@ end = 578
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 581
 end = 581
 
@@ -3520,7 +3520,7 @@ end = 581
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 594
 end = 594
 
@@ -3528,7 +3528,7 @@ end = 594
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 597
 end = 597
 
@@ -3536,7 +3536,7 @@ end = 597
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 600
 end = 600
 
@@ -3544,7 +3544,7 @@ end = 600
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 603
 end = 603
 
@@ -3552,7 +3552,7 @@ end = 603
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 606
 end = 606
 
@@ -3560,7 +3560,7 @@ end = 606
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 618
 end = 618
 
@@ -3568,7 +3568,7 @@ end = 618
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 633
 end = 633
 
@@ -3576,7 +3576,7 @@ end = 633
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 650
 end = 650
 
@@ -3584,7 +3584,7 @@ end = 650
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 695
 end = 695
 
@@ -3592,7 +3592,7 @@ end = 695
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 14
 end = 14
 
@@ -3600,7 +3600,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 30
 end = 30
 
@@ -3608,7 +3608,7 @@ end = 30
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 41
 end = 41
 
@@ -3616,7 +3616,7 @@ end = 41
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 63
 end = 63
 
@@ -3624,7 +3624,7 @@ end = 63
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 80
 end = 80
 
@@ -3632,7 +3632,7 @@ end = 80
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 113
 end = 113
 
@@ -3640,7 +3640,7 @@ end = 113
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 140
 end = 140
 
@@ -3648,7 +3648,7 @@ end = 140
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 163
 end = 163
 
@@ -3656,7 +3656,7 @@ end = 163
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 183
 end = 183
 
@@ -3664,7 +3664,7 @@ end = 183
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 194
 end = 194
 
@@ -3672,7 +3672,7 @@ end = 194
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 206
 end = 206
 
@@ -3680,7 +3680,7 @@ end = 206
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 225
 end = 225
 
@@ -3688,7 +3688,7 @@ end = 225
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 242
 end = 242
 
@@ -3696,7 +3696,7 @@ end = 242
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 259
 end = 259
 
@@ -3704,7 +3704,7 @@ end = 259
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 277
 end = 277
 
@@ -3712,7 +3712,7 @@ end = 277
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 301
 end = 301
 
@@ -3720,7 +3720,7 @@ end = 301
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 314
 end = 314
 
@@ -3728,7 +3728,7 @@ end = 314
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 326
 end = 326
 
@@ -3736,7 +3736,7 @@ end = 326
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 373
 end = 373
 
@@ -3744,7 +3744,7 @@ end = 373
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 404
 end = 404
 
@@ -3752,7 +3752,7 @@ end = 404
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 418
 end = 418
 
@@ -3760,7 +3760,7 @@ end = 418
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 444
 end = 444
 
@@ -3768,7 +3768,7 @@ end = 444
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 536
 end = 536
 
@@ -3776,7 +3776,7 @@ end = 536
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 546
 end = 546
 
@@ -3784,7 +3784,7 @@ end = 546
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 550
 end = 550
 
@@ -3792,7 +3792,7 @@ end = 550
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 564
 end = 564
 
@@ -3800,7 +3800,7 @@ end = 564
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 567
 end = 567
 
@@ -3808,7 +3808,7 @@ end = 567
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 570
 end = 570
 
@@ -3816,7 +3816,7 @@ end = 570
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 573
 end = 573
 
@@ -3824,7 +3824,7 @@ end = 573
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 576
 end = 576
 
@@ -3832,7 +3832,7 @@ end = 576
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 579
 end = 579
 
@@ -3840,7 +3840,7 @@ end = 579
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 582
 end = 582
 
@@ -3848,7 +3848,7 @@ end = 582
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 595
 end = 595
 
@@ -3856,7 +3856,7 @@ end = 595
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 598
 end = 598
 
@@ -3864,7 +3864,7 @@ end = 598
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 601
 end = 601
 
@@ -3872,7 +3872,7 @@ end = 601
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 604
 end = 604
 
@@ -3880,7 +3880,7 @@ end = 604
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 607
 end = 607
 
@@ -3888,7 +3888,7 @@ end = 607
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 619
 end = 619
 
@@ -3896,7 +3896,7 @@ end = 619
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 634
 end = 634
 
@@ -3904,7 +3904,7 @@ end = 634
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 651
 end = 651
 
@@ -3912,7 +3912,7 @@ end = 651
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js"
+path = "lib/help.js"
 start = 696
 end = 696
 
@@ -3921,7 +3921,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 119
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/split.js", start_line: 10 })'
+key = 'Typescript(ModuleItem { file: "examples/split.js", start_line: 10 })'
 descriptor = "module item at examples/split.js:10"
 cost_tokens = 15
 cum_tokens = 5167
@@ -3930,7 +3930,7 @@ cum_tokens = 5167
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/split.js"
+path = "examples/split.js"
 start = 10
 end = 10
 
@@ -3939,7 +3939,7 @@ kind = "full"
 
 [[batches]]
 position = 120
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 268 })'
+key = 'Typescript(ExportDoc { file: "lib/option.js", start_line: 268 })'
 descriptor = "export doc at lib/option.js:268"
 cost_tokens = 112
 cum_tokens = 5279
@@ -3948,7 +3948,7 @@ cum_tokens = 5279
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js"
+path = "lib/option.js"
 start = 261
 end = 267
 
@@ -3957,7 +3957,7 @@ kind = "full"
 
 [[batches]]
 position = 121
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js", start_line: 2752, body_start_line: 2753 })'
+key = 'Typescript(ExportBody { file: "lib/command.js", start_line: 2752, body_start_line: 2753 })'
 descriptor = "export body at lib/command.js:2752 body 2753"
 cost_tokens = 360
 cum_tokens = 5639
@@ -3966,7 +3966,7 @@ cum_tokens = 5639
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 2753
 end = 2763
 
@@ -3974,7 +3974,7 @@ end = 2763
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js"
+path = "lib/command.js"
 start = 2765
 end = 2773
 
@@ -3983,7 +3983,7 @@ kind = "full"
 
 [[batches]]
 position = 122
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js", start_line: 6, body_start_line: 8 })'
+key = 'Typescript(ModuleItemBody { file: "examples/custom-command-class.js", start_line: 6, body_start_line: 8 })'
 descriptor = "module item body at examples/custom-command-class.js:6 body 8"
 cost_tokens = 59
 cum_tokens = 5698
@@ -3992,7 +3992,7 @@ cum_tokens = 5698
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js"
+path = "examples/custom-command-class.js"
 start = 8
 end = 11
 
@@ -4001,7 +4001,7 @@ kind = "full"
 
 [[batches]]
 position = 123
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js" })'
+key = 'Typescript(Imports { file: "examples/arguments-custom-processing.js" })'
 descriptor = "imports in examples/arguments-custom-processing.js"
 cost_tokens = 12
 cum_tokens = 5710
@@ -4010,7 +4010,7 @@ cum_tokens = 5710
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js"
+path = "examples/arguments-custom-processing.js"
 start = 7
 end = 7
 
@@ -4019,7 +4019,7 @@ kind = "full"
 
 [[batches]]
 position = 124
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-extra.js" })'
+key = 'Typescript(Imports { file: "examples/arguments-extra.js" })'
 descriptor = "imports in examples/arguments-extra.js"
 cost_tokens = 12
 cum_tokens = 5722
@@ -4028,7 +4028,7 @@ cum_tokens = 5722
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-extra.js"
+path = "examples/arguments-extra.js"
 start = 5
 end = 5
 
@@ -4037,7 +4037,7 @@ kind = "full"
 
 [[batches]]
 position = 125
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js" })'
+key = 'Typescript(Imports { file: "examples/configure-output.js" })'
 descriptor = "imports in examples/configure-output.js"
 cost_tokens = 12
 cum_tokens = 5734
@@ -4046,7 +4046,7 @@ cum_tokens = 5734
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js"
+path = "examples/configure-output.js"
 start = 1
 end = 1
 
@@ -4055,7 +4055,7 @@ kind = "full"
 
 [[batches]]
 position = 126
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js" })'
+key = 'Typescript(Imports { file: "examples/custom-command-class.js" })'
 descriptor = "imports in examples/custom-command-class.js"
 cost_tokens = 12
 cum_tokens = 5746
@@ -4064,7 +4064,7 @@ cum_tokens = 5746
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js"
+path = "examples/custom-command-class.js"
 start = 2
 end = 2
 
@@ -4073,7 +4073,7 @@ kind = "full"
 
 [[batches]]
 position = 127
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/defaultCommand.js" })'
+key = 'Typescript(Imports { file: "examples/defaultCommand.js" })'
 descriptor = "imports in examples/defaultCommand.js"
 cost_tokens = 12
 cum_tokens = 5758
@@ -4082,7 +4082,7 @@ cum_tokens = 5758
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/defaultCommand.js"
+path = "examples/defaultCommand.js"
 start = 3
 end = 3
 
@@ -4091,7 +4091,7 @@ kind = "full"
 
 [[batches]]
 position = 128
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js" })'
+key = 'Typescript(Imports { file: "examples/nestedCommands.js" })'
 descriptor = "imports in examples/nestedCommands.js"
 cost_tokens = 12
 cum_tokens = 5770
@@ -4100,7 +4100,7 @@ cum_tokens = 5770
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js"
+path = "examples/nestedCommands.js"
 start = 3
 end = 3
 
@@ -4109,7 +4109,7 @@ kind = "full"
 
 [[batches]]
 position = 129
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-boolean-or-value.js" })'
+key = 'Typescript(Imports { file: "examples/options-boolean-or-value.js" })'
 descriptor = "imports in examples/options-boolean-or-value.js"
 cost_tokens = 12
 cum_tokens = 5782
@@ -4118,7 +4118,7 @@ cum_tokens = 5782
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-boolean-or-value.js"
+path = "examples/options-boolean-or-value.js"
 start = 7
 end = 7
 
@@ -4127,7 +4127,7 @@ kind = "full"
 
 [[batches]]
 position = 130
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-common.js" })'
+key = 'Typescript(Imports { file: "examples/options-common.js" })'
 descriptor = "imports in examples/options-common.js"
 cost_tokens = 12
 cum_tokens = 5794
@@ -4136,7 +4136,7 @@ cum_tokens = 5794
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-common.js"
+path = "examples/options-common.js"
 start = 6
 end = 6
 
@@ -4145,7 +4145,7 @@ kind = "full"
 
 [[batches]]
 position = 131
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js" })'
+key = 'Typescript(Imports { file: "examples/options-custom-processing.js" })'
 descriptor = "imports in examples/options-custom-processing.js"
 cost_tokens = 12
 cum_tokens = 5806
@@ -4154,7 +4154,7 @@ cum_tokens = 5806
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js"
+path = "examples/options-custom-processing.js"
 start = 7
 end = 7
 
@@ -4163,7 +4163,7 @@ kind = "full"
 
 [[batches]]
 position = 132
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-defaults.js" })'
+key = 'Typescript(Imports { file: "examples/options-defaults.js" })'
 descriptor = "imports in examples/options-defaults.js"
 cost_tokens = 12
 cum_tokens = 5818
@@ -4172,7 +4172,7 @@ cum_tokens = 5818
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-defaults.js"
+path = "examples/options-defaults.js"
 start = 6
 end = 6
 
@@ -4181,7 +4181,7 @@ kind = "full"
 
 [[batches]]
 position = 133
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js" })'
+key = 'Typescript(Imports { file: "examples/options-negatable.js" })'
 descriptor = "imports in examples/options-negatable.js"
 cost_tokens = 12
 cum_tokens = 5830
@@ -4190,7 +4190,7 @@ cum_tokens = 5830
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js"
+path = "examples/options-negatable.js"
 start = 7
 end = 7
 
@@ -4199,7 +4199,7 @@ kind = "full"
 
 [[batches]]
 position = 134
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-required.js" })'
+key = 'Typescript(Imports { file: "examples/options-required.js" })'
 descriptor = "imports in examples/options-required.js"
 cost_tokens = 12
 cum_tokens = 5842
@@ -4208,7 +4208,7 @@ cum_tokens = 5842
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-required.js"
+path = "examples/options-required.js"
 start = 8
 end = 8
 
@@ -4217,7 +4217,7 @@ kind = "full"
 
 [[batches]]
 position = 135
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-variadic.js" })'
+key = 'Typescript(Imports { file: "examples/options-variadic.js" })'
 descriptor = "imports in examples/options-variadic.js"
 cost_tokens = 12
 cum_tokens = 5854
@@ -4226,7 +4226,7 @@ cum_tokens = 5854
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-variadic.js"
+path = "examples/options-variadic.js"
 start = 5
 end = 5
 
@@ -4235,7 +4235,7 @@ kind = "full"
 
 [[batches]]
 position = 136
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js", start_line: 18 })'
+key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 18 })'
 descriptor = "module item at examples/options-negatable.js:18"
 cost_tokens = 21
 cum_tokens = 5875
@@ -4244,7 +4244,7 @@ cum_tokens = 5875
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js"
+path = "examples/options-negatable.js"
 start = 18
 end = 18
 
@@ -4253,7 +4253,7 @@ kind = "full"
 
 [[batches]]
 position = 137
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/help-in-depth.md", section_index: 0 })'
 descriptor = "docs/help-in-depth.md section #0"
 cost_tokens = 192
 cum_tokens = 6067
@@ -4262,7 +4262,7 @@ cum_tokens = 6067
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 1
 end = 1
 
@@ -4270,7 +4270,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 3
 end = 4
 
@@ -4278,7 +4278,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 6
 end = 6
 
@@ -4286,7 +4286,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 8
 end = 13
 
@@ -4294,7 +4294,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+path = "docs/help-in-depth.md"
 start = 15
 end = 18
 
@@ -4303,7 +4303,7 @@ kind = "full"
 
 [[batches]]
 position = 138
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/action-this.js" })'
+key = 'Typescript(Imports { file: "examples/action-this.js" })'
 descriptor = "imports in examples/action-this.js"
 cost_tokens = 14
 cum_tokens = 6081
@@ -4312,7 +4312,7 @@ cum_tokens = 6081
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/action-this.js"
+path = "examples/action-this.js"
 start = 5
 end = 5
 
@@ -4321,7 +4321,7 @@ kind = "full"
 
 [[batches]]
 position = 139
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/alias.js" })'
+key = 'Typescript(Imports { file: "examples/alias.js" })'
 descriptor = "imports in examples/alias.js"
 cost_tokens = 14
 cum_tokens = 6095
@@ -4330,7 +4330,7 @@ cum_tokens = 6095
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/alias.js"
+path = "examples/alias.js"
 start = 5
 end = 5
 
@@ -4339,7 +4339,7 @@ kind = "full"
 
 [[batches]]
 position = 140
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/argument.js" })'
+key = 'Typescript(Imports { file: "examples/argument.js" })'
 descriptor = "imports in examples/argument.js"
 cost_tokens = 14
 cum_tokens = 6109
@@ -4348,7 +4348,7 @@ cum_tokens = 6109
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/argument.js"
+path = "examples/argument.js"
 start = 5
 end = 5
 
@@ -4357,7 +4357,7 @@ kind = "full"
 
 [[batches]]
 position = 141
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/pass-through-options.js" })'
+key = 'Typescript(Imports { file: "examples/pass-through-options.js" })'
 descriptor = "imports in examples/pass-through-options.js"
 cost_tokens = 14
 cum_tokens = 6123
@@ -4366,7 +4366,7 @@ cum_tokens = 6123
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/pass-through-options.js"
+path = "examples/pass-through-options.js"
 start = 3
 end = 3
 
@@ -4375,7 +4375,7 @@ kind = "full"
 
 [[batches]]
 position = 142
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/positional-options.js" })'
+key = 'Typescript(Imports { file: "examples/positional-options.js" })'
 descriptor = "imports in examples/positional-options.js"
 cost_tokens = 14
 cum_tokens = 6137
@@ -4384,7 +4384,7 @@ cum_tokens = 6137
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/positional-options.js"
+path = "examples/positional-options.js"
 start = 3
 end = 3
 
@@ -4393,7 +4393,7 @@ kind = "full"
 
 [[batches]]
 position = 143
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/split.js" })'
+key = 'Typescript(Imports { file: "examples/split.js" })'
 descriptor = "imports in examples/split.js"
 cost_tokens = 14
 cum_tokens = 6151
@@ -4402,7 +4402,7 @@ cum_tokens = 6151
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/split.js"
+path = "examples/split.js"
 start = 1
 end = 1
 
@@ -4411,7 +4411,7 @@ kind = "full"
 
 [[batches]]
 position = 144
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/string-util.js" })'
+key = 'Typescript(Imports { file: "examples/string-util.js" })'
 descriptor = "imports in examples/string-util.js"
 cost_tokens = 14
 cum_tokens = 6165
@@ -4420,7 +4420,7 @@ cum_tokens = 6165
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/string-util.js"
+path = "examples/string-util.js"
 start = 1
 end = 1
 
@@ -4429,7 +4429,7 @@ kind = "full"
 
 [[batches]]
 position = 145
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/thank.js" })'
+key = 'Typescript(Imports { file: "examples/thank.js" })'
 descriptor = "imports in examples/thank.js"
 cost_tokens = 14
 cum_tokens = 6179
@@ -4438,7 +4438,7 @@ cum_tokens = 6179
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/thank.js"
+path = "examples/thank.js"
 start = 5
 end = 5
 
@@ -4447,7 +4447,7 @@ kind = "full"
 
 [[batches]]
 position = 146
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", start_line: 3, body_start_line: 14 })'
+key = 'Typescript(ExportBody { file: "lib/argument.js", start_line: 3, body_start_line: 14 })'
 descriptor = "export body at lib/argument.js:3 body 14"
 cost_tokens = 542
 cum_tokens = 6721
@@ -4456,7 +4456,7 @@ cum_tokens = 6721
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 14
 end = 19
 
@@ -4464,7 +4464,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 21
 end = 34
 
@@ -4472,7 +4472,7 @@ end = 34
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 36
 end = 39
 
@@ -4480,7 +4480,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 49
 end = 49
 
@@ -4488,7 +4488,7 @@ end = 49
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 57
 end = 59
 
@@ -4496,7 +4496,7 @@ end = 59
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 61
 end = 62
 
@@ -4504,7 +4504,7 @@ end = 62
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 74
 end = 76
 
@@ -4512,7 +4512,7 @@ end = 76
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 87
 end = 88
 
@@ -4520,7 +4520,7 @@ end = 88
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 99
 end = 111
 
@@ -4528,7 +4528,7 @@ end = 111
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 120
 end = 121
 
@@ -4536,7 +4536,7 @@ end = 121
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js"
+path = "lib/argument.js"
 start = 130
 end = 131
 
@@ -4545,7 +4545,7 @@ kind = "full"
 
 [[batches]]
 position = 147
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 228
 cum_tokens = 6949
@@ -4554,7 +4554,7 @@ cum_tokens = 6949
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+path = "package.json"
 start = 62
 end = 76
 
@@ -4563,7 +4563,7 @@ kind = "full"
 
 [[batches]]
 position = 148
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/options-in-depth.md", section_index: 0 })'
 descriptor = "docs/options-in-depth.md section #0"
 cost_tokens = 215
 cum_tokens = 7164
@@ -4572,7 +4572,7 @@ cum_tokens = 7164
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 2
 end = 2
 
@@ -4580,7 +4580,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 4
 end = 5
 
@@ -4588,7 +4588,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+path = "docs/options-in-depth.md"
 start = 7
 end = 13
 
@@ -4597,7 +4597,7 @@ kind = "full"
 
 [[batches]]
 position = 149
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/help-groups.js" })'
+key = 'Typescript(Imports { file: "examples/help-groups.js" })'
 descriptor = "imports in examples/help-groups.js"
 cost_tokens = 16
 cum_tokens = 7180
@@ -4606,7 +4606,7 @@ cum_tokens = 7180
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/help-groups.js"
+path = "examples/help-groups.js"
 start = 1
 end = 1
 
@@ -4615,7 +4615,7 @@ kind = "full"
 
 [[batches]]
 position = 150
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/hook.js" })'
+key = 'Typescript(Imports { file: "examples/hook.js" })'
 descriptor = "imports in examples/hook.js"
 cost_tokens = 16
 cum_tokens = 7196
@@ -4624,7 +4624,7 @@ cum_tokens = 7196
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/hook.js"
+path = "examples/hook.js"
 start = 3
 end = 3
 
@@ -4633,7 +4633,7 @@ kind = "full"
 
 [[batches]]
 position = 151
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-conflicts.js" })'
+key = 'Typescript(Imports { file: "examples/options-conflicts.js" })'
 descriptor = "imports in examples/options-conflicts.js"
 cost_tokens = 16
 cum_tokens = 7212
@@ -4642,7 +4642,7 @@ cum_tokens = 7212
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-conflicts.js"
+path = "examples/options-conflicts.js"
 start = 2
 end = 2
 
@@ -4651,7 +4651,7 @@ kind = "full"
 
 [[batches]]
 position = 152
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-env.js" })'
+key = 'Typescript(Imports { file: "examples/options-env.js" })'
 descriptor = "imports in examples/options-env.js"
 cost_tokens = 16
 cum_tokens = 7228
@@ -4660,7 +4660,7 @@ cum_tokens = 7228
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-env.js"
+path = "examples/options-env.js"
 start = 2
 end = 2
 
@@ -4669,7 +4669,7 @@ kind = "full"
 
 [[batches]]
 position = 153
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-extra.js" })'
+key = 'Typescript(Imports { file: "examples/options-extra.js" })'
 descriptor = "imports in examples/options-extra.js"
 cost_tokens = 16
 cum_tokens = 7244
@@ -4678,7 +4678,7 @@ cum_tokens = 7244
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-extra.js"
+path = "examples/options-extra.js"
 start = 7
 end = 7
 
@@ -4687,7 +4687,7 @@ kind = "full"
 
 [[batches]]
 position = 154
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-implies.js" })'
+key = 'Typescript(Imports { file: "examples/options-implies.js" })'
 descriptor = "imports in examples/options-implies.js"
 cost_tokens = 16
 cum_tokens = 7260
@@ -4696,7 +4696,7 @@ cum_tokens = 7260
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-implies.js"
+path = "examples/options-implies.js"
 start = 2
 end = 2
 
@@ -4705,7 +4705,7 @@ kind = "full"
 
 [[batches]]
 position = 155
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 3 })'
+key = 'Markdown(Section { file: "Readme.md", section_index: 3 })'
 descriptor = "Readme.md section #3"
 cost_tokens = 258
 cum_tokens = 7518
@@ -4714,7 +4714,7 @@ cum_tokens = 7518
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 147
 end = 147
 
@@ -4722,7 +4722,7 @@ end = 147
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 149
 end = 150
 
@@ -4730,7 +4730,7 @@ end = 150
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 152
 end = 155
 
@@ -4738,7 +4738,7 @@ end = 155
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 157
 end = 157
 
@@ -4746,7 +4746,7 @@ end = 157
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 159
 end = 163
 
@@ -4754,7 +4754,7 @@ end = 163
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 165
 end = 169
 
@@ -4762,7 +4762,7 @@ end = 169
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 171
 end = 175
 
@@ -4771,7 +4771,7 @@ kind = "full"
 
 [[batches]]
 position = 156
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/terminology.md", section_index: 0 })'
 descriptor = "docs/terminology.md section #0"
 cost_tokens = 224
 cum_tokens = 7742
@@ -4780,7 +4780,7 @@ cum_tokens = 7742
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+path = "docs/terminology.md"
 start = 1
 end = 1
 
@@ -4788,7 +4788,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+path = "docs/terminology.md"
 start = 3
 end = 3
 
@@ -4796,7 +4796,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+path = "docs/terminology.md"
 start = 5
 end = 10
 
@@ -4804,7 +4804,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+path = "docs/terminology.md"
 start = 12
 end = 12
 
@@ -4812,7 +4812,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+path = "docs/terminology.md"
 start = 14
 end = 16
 
@@ -4820,7 +4820,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+path = "docs/terminology.md"
 start = 18
 end = 18
 
@@ -4829,7 +4829,7 @@ kind = "full"
 
 [[batches]]
 position = 157
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js", start_line: 4, body_start_line: 5 })'
+key = 'Typescript(ModuleItemBody { file: "examples/configure-output.js", start_line: 4, body_start_line: 5 })'
 descriptor = "module item body at examples/configure-output.js:4 body 5"
 cost_tokens = 38
 cum_tokens = 7780
@@ -4838,7 +4838,7 @@ cum_tokens = 7780
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js"
+path = "examples/configure-output.js"
 start = 5
 end = 6
 
@@ -4847,7 +4847,7 @@ kind = "full"
 
 [[batches]]
 position = 158
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/parsing-and-hooks.md", section_index: 0 })'
 descriptor = "docs/parsing-and-hooks.md section #0"
 cost_tokens = 260
 cum_tokens = 8040
@@ -4856,7 +4856,7 @@ cum_tokens = 8040
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+path = "docs/parsing-and-hooks.md"
 start = 1
 end = 1
 
@@ -4864,7 +4864,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+path = "docs/parsing-and-hooks.md"
 start = 3
 end = 4
 
@@ -4872,7 +4872,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+path = "docs/parsing-and-hooks.md"
 start = 6
 end = 6
 
@@ -4880,7 +4880,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+path = "docs/parsing-and-hooks.md"
 start = 8
 end = 13
 
@@ -4888,7 +4888,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+path = "docs/parsing-and-hooks.md"
 start = 15
 end = 15
 
@@ -4896,7 +4896,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+path = "docs/parsing-and-hooks.md"
 start = 17
 end = 23
 
@@ -4905,7 +4905,7 @@ kind = "full"
 
 [[batches]]
 position = 159
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js", start_line: 19 })'
+key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 19 })'
 descriptor = "module item at examples/options-negatable.js:19"
 cost_tokens = 31
 cum_tokens = 8071
@@ -4914,7 +4914,7 @@ cum_tokens = 8071
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js"
+path = "examples/options-negatable.js"
 start = 19
 end = 20
 
@@ -4923,7 +4923,7 @@ kind = "full"
 
 [[batches]]
 position = 160
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 9 })'
+key = 'Markdown(Section { file: "Readme.md", section_index: 9 })'
 descriptor = "Readme.md section #9"
 cost_tokens = 231
 cum_tokens = 8302
@@ -4932,7 +4932,7 @@ cum_tokens = 8302
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 1164
 end = 1164
 
@@ -4940,7 +4940,7 @@ end = 1164
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 1166
 end = 1166
 
@@ -4948,7 +4948,7 @@ end = 1166
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 1168
 end = 1168
 
@@ -4956,7 +4956,7 @@ end = 1168
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 1170
 end = 1170
 
@@ -4964,7 +4964,7 @@ end = 1170
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 1172
 end = 1172
 
@@ -4972,7 +4972,7 @@ end = 1172
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 1174
 end = 1174
 
@@ -4980,7 +4980,7 @@ end = 1174
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+path = "Readme.md"
 start = 1176
 end = 1176
 
@@ -4989,7 +4989,7 @@ kind = "full"
 
 [[batches]]
 position = 161
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/release-policy.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/release-policy.md", section_index: 0 })'
 descriptor = "docs/release-policy.md section #0"
 cost_tokens = 311
 cum_tokens = 8613
@@ -4998,7 +4998,7 @@ cum_tokens = 8613
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/release-policy.md"
+path = "docs/release-policy.md"
 start = 1
 end = 1
 
@@ -5006,7 +5006,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/release-policy.md"
+path = "docs/release-policy.md"
 start = 3
 end = 3
 
@@ -5014,7 +5014,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/release-policy.md"
+path = "docs/release-policy.md"
 start = 5
 end = 5
 
@@ -5022,7 +5022,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/release-policy.md"
+path = "docs/release-policy.md"
 start = 7
 end = 8
 
@@ -5030,7 +5030,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/release-policy.md"
+path = "docs/release-policy.md"
 start = 10
 end = 10
 
@@ -5038,7 +5038,7 @@ end = 10
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/release-policy.md"
+path = "docs/release-policy.md"
 start = 12
 end = 16
 
@@ -5047,7 +5047,7 @@ kind = "full"
 
 [[batches]]
 position = 162
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.js.json" })'
+key = 'Json(Whole { file: "tsconfig.js.json" })'
 descriptor = "json config tsconfig.js.json"
 cost_tokens = 164
 cum_tokens = 8777
@@ -5056,7 +5056,7 @@ cum_tokens = 8777
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.js.json"
+path = "tsconfig.js.json"
 start = 1
 end = 15
 
@@ -5065,7 +5065,7 @@ kind = "full"
 
 [[batches]]
 position = 163
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package-support.json" })'
+key = 'Json(Whole { file: "package-support.json" })'
 descriptor = "json config package-support.json"
 cost_tokens = 165
 cum_tokens = 8942
@@ -5074,7 +5074,7 @@ cum_tokens = 8942
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package-support.json"
+path = "package-support.json"
 start = 1
 end = 19
 

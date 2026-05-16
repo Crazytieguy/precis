@@ -5,7 +5,7 @@ batch_count = 187
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 28
 cum_tokens = 28
@@ -14,12 +14,12 @@ cum_tokens = 28
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/neco"
+parent = "."
 entries = [".github", ".gitignore", ".package", "LICENSE", "README.md", "deps", "docs", "examples", "neco.c", "neco.h", "tests"]
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/docs" })'
+key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 25
 cum_tokens = 53
@@ -28,12 +28,12 @@ cum_tokens = 53
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/neco/docs"
+parent = "docs"
 entries = [".gitignore", "API.md", "README.md", "TECHNICAL.md", "assets", "tools"]
 
 [[batches]]
 position = 3
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
 descriptor = "README headline in docs/README.md"
 cost_tokens = 9
 cum_tokens = 62
@@ -42,7 +42,7 @@ cum_tokens = 62
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/README.md"
+path = "docs/README.md"
 start = 1
 end = 1
 
@@ -51,7 +51,7 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets" })'
+key = 'Fs(DirListing { dir: "docs/assets" })'
 descriptor = "listing of 'docs/assets'"
 cost_tokens = 21
 cum_tokens = 83
@@ -60,12 +60,12 @@ cum_tokens = 83
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets"
+parent = "docs/assets"
 entries = ["API_foot.md", "API_head.md", "logo-dark.png", "logo-light.png"]
 
 [[batches]]
 position = 5
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.h" })'
+key = 'C(Includes { file: "neco.h" })'
 descriptor = "c includes in neco.h"
 cost_tokens = 31
 cum_tokens = 114
@@ -74,7 +74,7 @@ cum_tokens = 114
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.h"
+path = "neco.h"
 start = 12
 end = 14
 
@@ -83,7 +83,7 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.h" })'
+key = 'C(HeaderBanner { file: "neco.h" })'
 descriptor = "c header banner in neco.h"
 cost_tokens = 87
 cum_tokens = 201
@@ -92,7 +92,7 @@ cum_tokens = 201
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.h"
+path = "neco.h"
 start = 1
 end = 7
 
@@ -101,7 +101,7 @@ kind = "full"
 
 [[batches]]
 position = 7
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 408
 cum_tokens = 609
@@ -110,7 +110,7 @@ cum_tokens = 609
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 14
 end = 16
 
@@ -118,7 +118,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 18
 end = 18
 
@@ -126,7 +126,7 @@ end = 18
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 20
 end = 31
 
@@ -134,7 +134,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 33
 end = 33
 
@@ -143,7 +143,7 @@ kind = "full"
 
 [[batches]]
 position = 8
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md" })'
+key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 233
 cum_tokens = 842
@@ -152,7 +152,7 @@ cum_tokens = 842
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 38
 end = 38
 
@@ -160,7 +160,7 @@ end = 38
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 49
 end = 49
 
@@ -168,7 +168,7 @@ end = 49
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 57
 end = 57
 
@@ -176,7 +176,7 @@ end = 57
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 77
 end = 77
 
@@ -184,7 +184,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 93
 end = 93
 
@@ -192,7 +192,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 125
 end = 125
 
@@ -200,7 +200,7 @@ end = 125
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 181
 end = 181
 
@@ -208,7 +208,7 @@ end = 181
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 228
 end = 228
 
@@ -216,7 +216,7 @@ end = 228
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 262
 end = 262
 
@@ -224,7 +224,7 @@ end = 262
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 299
 end = 299
 
@@ -232,7 +232,7 @@ end = 299
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 344
 end = 344
 
@@ -240,7 +240,7 @@ end = 344
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 431
 end = 431
 
@@ -248,7 +248,7 @@ end = 431
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 469
 end = 469
 
@@ -256,7 +256,7 @@ end = 469
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 473
 end = 473
 
@@ -264,7 +264,7 @@ end = 473
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 498
 end = 498
 
@@ -272,7 +272,7 @@ end = 498
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 504
 end = 504
 
@@ -280,7 +280,7 @@ end = 504
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 511
 end = 511
 
@@ -288,7 +288,7 @@ end = 511
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 579
 end = 579
 
@@ -296,7 +296,7 @@ end = 579
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 39
 end = 39
 
@@ -304,7 +304,7 @@ end = 39
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 50
 end = 50
 
@@ -312,7 +312,7 @@ end = 50
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 58
 end = 58
 
@@ -320,7 +320,7 @@ end = 58
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 78
 end = 78
 
@@ -328,7 +328,7 @@ end = 78
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 94
 end = 94
 
@@ -336,7 +336,7 @@ end = 94
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 126
 end = 126
 
@@ -344,7 +344,7 @@ end = 126
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 182
 end = 182
 
@@ -352,7 +352,7 @@ end = 182
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 229
 end = 229
 
@@ -360,7 +360,7 @@ end = 229
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 263
 end = 263
 
@@ -368,7 +368,7 @@ end = 263
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 300
 end = 300
 
@@ -376,7 +376,7 @@ end = 300
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 345
 end = 345
 
@@ -384,7 +384,7 @@ end = 345
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 432
 end = 432
 
@@ -392,7 +392,7 @@ end = 432
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 470
 end = 470
 
@@ -400,7 +400,7 @@ end = 470
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 474
 end = 474
 
@@ -408,7 +408,7 @@ end = 474
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 499
 end = 499
 
@@ -416,7 +416,7 @@ end = 499
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 505
 end = 505
 
@@ -424,7 +424,7 @@ end = 505
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 512
 end = 512
 
@@ -432,7 +432,7 @@ end = 512
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 580
 end = 580
 
@@ -441,7 +441,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 46
 cum_tokens = 888
@@ -450,7 +450,7 @@ cum_tokens = 888
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 35
 end = 36
 
@@ -459,7 +459,7 @@ kind = "full"
 
 [[batches]]
 position = 10
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 21 })'
+key = 'Markdown(Section { file: "README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 16
 cum_tokens = 904
@@ -468,7 +468,7 @@ cum_tokens = 904
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 579
 end = 579
 
@@ -476,7 +476,7 @@ end = 579
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 581
 end = 581
 
@@ -485,7 +485,7 @@ kind = "full"
 
 [[batches]]
 position = 11
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 55
 cum_tokens = 959
@@ -494,7 +494,7 @@ cum_tokens = 959
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 49
 end = 49
 
@@ -502,7 +502,7 @@ end = 49
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 51
 end = 51
 
@@ -510,7 +510,7 @@ end = 51
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 53
 end = 55
 
@@ -519,7 +519,7 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md" })'
+key = 'Markdown(HeadingsOutline { file: "docs/assets/API_head.md" })'
 descriptor = "headings outline in docs/assets/API_head.md"
 cost_tokens = 68
 cum_tokens = 1027
@@ -528,7 +528,7 @@ cum_tokens = 1027
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 1
 end = 1
 
@@ -536,7 +536,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 12
 end = 12
 
@@ -544,7 +544,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 34
 end = 34
 
@@ -552,7 +552,7 @@ end = 34
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 36
 end = 36
 
@@ -560,7 +560,7 @@ end = 36
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 57
 end = 57
 
@@ -568,7 +568,7 @@ end = 57
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 99
 end = 99
 
@@ -576,7 +576,7 @@ end = 99
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 2
 end = 2
 
@@ -584,7 +584,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 13
 end = 13
 
@@ -592,7 +592,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 35
 end = 35
 
@@ -600,7 +600,7 @@ end = 35
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 37
 end = 37
 
@@ -608,7 +608,7 @@ end = 37
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 58
 end = 58
 
@@ -616,7 +616,7 @@ end = 58
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 100
 end = 100
 
@@ -625,7 +625,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 13
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 16 })'
+key = 'Markdown(Section { file: "README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 15
 cum_tokens = 1042
@@ -634,7 +634,7 @@ cum_tokens = 1042
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 513
 end = 513
 
@@ -643,7 +643,7 @@ kind = "full"
 
 [[batches]]
 position = 14
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/deps" })'
+key = 'Fs(DirListing { dir: "deps" })'
 descriptor = "listing of 'deps'"
 cost_tokens = 42
 cum_tokens = 1084
@@ -652,12 +652,12 @@ cum_tokens = 1084
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/neco/deps"
+parent = "deps"
 entries = [".gitignore", ".package", "aat.h", "embed.sh", "sco.c", "sco.h", "stack.c", "stack.h", "worker.c", "worker.h"]
 
 [[batches]]
 position = 15
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 14 })'
+key = 'Markdown(Section { file: "README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 62
 cum_tokens = 1146
@@ -666,7 +666,7 @@ cum_tokens = 1146
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 498
 end = 498
 
@@ -674,7 +674,7 @@ end = 498
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 500
 end = 502
 
@@ -683,7 +683,7 @@ kind = "full"
 
 [[batches]]
 position = 16
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/examples" })'
+key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 51
 cum_tokens = 1197
@@ -692,12 +692,12 @@ cum_tokens = 1197
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/neco/examples"
+parent = "examples"
 entries = ["README.md", "channel-buffering.c", "channels.c", "channels2.c", "coroutines.c", "echo-client.c", "echo-server.c", "generators.c", "portscan.c", "select.c", "signals.c"]
 
 [[batches]]
 position = 17
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 122
 cum_tokens = 1319
@@ -706,7 +706,7 @@ cum_tokens = 1319
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 38
 end = 38
 
@@ -714,7 +714,7 @@ end = 38
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 40
 end = 43
 
@@ -722,7 +722,7 @@ end = 43
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 45
 end = 47
 
@@ -731,7 +731,7 @@ kind = "full"
 
 [[batches]]
 position = 18
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "docs/README.md", section_index: 1 })'
 descriptor = "docs/README.md section #1"
 cost_tokens = 103
 cum_tokens = 1422
@@ -740,7 +740,7 @@ cum_tokens = 1422
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/README.md"
+path = "docs/README.md"
 start = 3
 end = 3
 
@@ -748,7 +748,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/README.md"
+path = "docs/README.md"
 start = 5
 end = 7
 
@@ -756,7 +756,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/README.md"
+path = "docs/README.md"
 start = 9
 end = 9
 
@@ -765,7 +765,7 @@ kind = "full"
 
 [[batches]]
 position = 19
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 3 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 3 })'
 descriptor = "docs/API.md section #3"
 cost_tokens = 11
 cum_tokens = 1433
@@ -774,7 +774,7 @@ cum_tokens = 1433
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 18
 end = 18
 
@@ -783,7 +783,7 @@ kind = "full"
 
 [[batches]]
 position = 20
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 15 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 15 })'
 descriptor = "docs/API.md section #15"
 cost_tokens = 11
 cum_tokens = 1444
@@ -792,7 +792,7 @@ cum_tokens = 1444
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 30
 end = 30
 
@@ -801,7 +801,7 @@ kind = "full"
 
 [[batches]]
 position = 21
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 16 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 16 })'
 descriptor = "docs/API.md section #16"
 cost_tokens = 11
 cum_tokens = 1455
@@ -810,7 +810,7 @@ cum_tokens = 1455
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 31
 end = 31
 
@@ -819,7 +819,7 @@ kind = "full"
 
 [[batches]]
 position = 22
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 4 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 4 })'
 descriptor = "docs/API.md section #4"
 cost_tokens = 12
 cum_tokens = 1467
@@ -828,7 +828,7 @@ cum_tokens = 1467
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 19
 end = 19
 
@@ -837,7 +837,7 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 0 })'
 descriptor = "docs/API.md section #0"
 cost_tokens = 106
 cum_tokens = 1573
@@ -846,7 +846,7 @@ cum_tokens = 1573
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 3
 end = 3
 
@@ -854,7 +854,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 5
 end = 5
 
@@ -862,7 +862,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 7
 end = 8
 
@@ -870,7 +870,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 10
 end = 11
 
@@ -879,7 +879,7 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "neco.c", chunk_index: 0 })'
 descriptor = "c decl names surface in neco.c"
 cost_tokens = 292
 cum_tokens = 1865
@@ -888,7 +888,7 @@ cum_tokens = 1865
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1124
 end = 1124
 
@@ -896,7 +896,7 @@ end = 1124
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1155
 end = 1155
 
@@ -904,7 +904,7 @@ end = 1155
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1198
 end = 1198
 
@@ -912,7 +912,7 @@ end = 1198
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1282
 end = 1282
 
@@ -920,7 +920,7 @@ end = 1282
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1293
 end = 1293
 
@@ -928,7 +928,7 @@ end = 1293
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1312
 end = 1313
 
@@ -936,7 +936,7 @@ end = 1313
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1320
 end = 1320
 
@@ -944,7 +944,7 @@ end = 1320
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1337
 end = 1337
 
@@ -952,7 +952,7 @@ end = 1337
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1364
 end = 1364
 
@@ -960,7 +960,7 @@ end = 1364
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1814
 end = 1814
 
@@ -968,7 +968,7 @@ end = 1814
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1819
 end = 1819
 
@@ -976,7 +976,7 @@ end = 1819
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1875
 end = 1875
 
@@ -984,7 +984,7 @@ end = 1875
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1880
 end = 1880
 
@@ -992,7 +992,7 @@ end = 1880
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1899
 end = 1899
 
@@ -1000,7 +1000,7 @@ end = 1899
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2029
 end = 2029
 
@@ -1008,7 +1008,7 @@ end = 2029
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2037
 end = 2037
 
@@ -1016,7 +1016,7 @@ end = 2037
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2051
 end = 2051
 
@@ -1024,7 +1024,7 @@ end = 2051
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2056
 end = 2056
 
@@ -1032,7 +1032,7 @@ end = 2056
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2065
 end = 2065
 
@@ -1040,7 +1040,7 @@ end = 2065
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2074
 end = 2074
 
@@ -1048,7 +1048,7 @@ end = 2074
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2094
 end = 2094
 
@@ -1056,7 +1056,7 @@ end = 2094
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2106
 end = 2106
 
@@ -1064,7 +1064,7 @@ end = 2106
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2120
 end = 2120
 
@@ -1072,7 +1072,7 @@ end = 2120
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1125
 end = 1125
 
@@ -1080,7 +1080,7 @@ end = 1125
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1156
 end = 1156
 
@@ -1088,7 +1088,7 @@ end = 1156
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1199
 end = 1199
 
@@ -1096,7 +1096,7 @@ end = 1199
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1283
 end = 1283
 
@@ -1104,7 +1104,7 @@ end = 1283
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1294
 end = 1294
 
@@ -1112,7 +1112,7 @@ end = 1294
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1314
 end = 1314
 
@@ -1120,7 +1120,7 @@ end = 1314
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1321
 end = 1321
 
@@ -1128,7 +1128,7 @@ end = 1321
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1338
 end = 1338
 
@@ -1136,7 +1136,7 @@ end = 1338
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1365
 end = 1365
 
@@ -1144,7 +1144,7 @@ end = 1365
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1815
 end = 1815
 
@@ -1152,7 +1152,7 @@ end = 1815
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1820
 end = 1820
 
@@ -1160,7 +1160,7 @@ end = 1820
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1876
 end = 1876
 
@@ -1168,7 +1168,7 @@ end = 1876
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1881
 end = 1881
 
@@ -1176,7 +1176,7 @@ end = 1881
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1900
 end = 1900
 
@@ -1184,7 +1184,7 @@ end = 1900
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2030
 end = 2030
 
@@ -1192,7 +1192,7 @@ end = 2030
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2038
 end = 2038
 
@@ -1200,7 +1200,7 @@ end = 2038
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2052
 end = 2052
 
@@ -1208,7 +1208,7 @@ end = 2052
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2057
 end = 2057
 
@@ -1216,7 +1216,7 @@ end = 2057
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2066
 end = 2066
 
@@ -1224,7 +1224,7 @@ end = 2066
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2075
 end = 2075
 
@@ -1232,7 +1232,7 @@ end = 2075
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2095
 end = 2095
 
@@ -1240,7 +1240,7 @@ end = 2095
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2107
 end = 2107
 
@@ -1248,7 +1248,7 @@ end = 2107
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2121
 end = 2121
 
@@ -1257,7 +1257,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 25
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1312 })'
+key = 'C(Decl { file: "neco.c", start_line: 1312 })'
 descriptor = "c decl at neco.c:1312"
 cost_tokens = 0
 cum_tokens = 1865
@@ -1266,7 +1266,7 @@ cum_tokens = 1865
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1312
 end = 1312
 
@@ -1275,7 +1275,7 @@ kind = "full"
 
 [[batches]]
 position = 26
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1313 })'
+key = 'C(Decl { file: "neco.c", start_line: 1313 })'
 descriptor = "c decl at neco.c:1313"
 cost_tokens = 0
 cum_tokens = 1865
@@ -1284,7 +1284,7 @@ cum_tokens = 1865
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1313
 end = 1313
 
@@ -1292,7 +1292,7 @@ end = 1313
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1314
 end = 1314
 
@@ -1301,7 +1301,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 27
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2029 })'
+key = 'C(Decl { file: "neco.c", start_line: 2029 })'
 descriptor = "c decl at neco.c:2029"
 cost_tokens = 11
 cum_tokens = 1876
@@ -1310,7 +1310,7 @@ cum_tokens = 1876
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2029
 end = 2030
 
@@ -1318,7 +1318,7 @@ end = 2030
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2031
 end = 2031
 
@@ -1327,7 +1327,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 28
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2065 })'
+key = 'C(Decl { file: "neco.c", start_line: 2065 })'
 descriptor = "c decl at neco.c:2065"
 cost_tokens = 11
 cum_tokens = 1887
@@ -1336,7 +1336,7 @@ cum_tokens = 1887
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2065
 end = 2066
 
@@ -1344,7 +1344,7 @@ end = 2066
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2067
 end = 2067
 
@@ -1353,7 +1353,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 29
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2056 })'
+key = 'C(Decl { file: "neco.c", start_line: 2056 })'
 descriptor = "c decl at neco.c:2056"
 cost_tokens = 12
 cum_tokens = 1899
@@ -1362,7 +1362,7 @@ cum_tokens = 1899
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2056
 end = 2057
 
@@ -1370,7 +1370,7 @@ end = 2057
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2058
 end = 2058
 
@@ -1379,7 +1379,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 30
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2051 })'
+key = 'C(Decl { file: "neco.c", start_line: 2051 })'
 descriptor = "c decl at neco.c:2051"
 cost_tokens = 13
 cum_tokens = 1912
@@ -1388,7 +1388,7 @@ cum_tokens = 1912
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2051
 end = 2052
 
@@ -1396,7 +1396,7 @@ end = 2052
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2053
 end = 2053
 
@@ -1405,7 +1405,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 31
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2074 })'
+key = 'C(Decl { file: "neco.c", start_line: 2074 })'
 descriptor = "c decl at neco.c:2074"
 cost_tokens = 14
 cum_tokens = 1926
@@ -1414,7 +1414,7 @@ cum_tokens = 1926
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2074
 end = 2075
 
@@ -1422,7 +1422,7 @@ end = 2075
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2076
 end = 2076
 
@@ -1431,7 +1431,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 32
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2106 })'
+key = 'C(Decl { file: "neco.c", start_line: 2106 })'
 descriptor = "c decl at neco.c:2106"
 cost_tokens = 14
 cum_tokens = 1940
@@ -1440,7 +1440,7 @@ cum_tokens = 1940
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2106
 end = 2107
 
@@ -1448,7 +1448,7 @@ end = 2107
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2108
 end = 2108
 
@@ -1457,7 +1457,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 33
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2120 })'
+key = 'C(Decl { file: "neco.c", start_line: 2120 })'
 descriptor = "c decl at neco.c:2120"
 cost_tokens = 14
 cum_tokens = 1954
@@ -1466,7 +1466,7 @@ cum_tokens = 1954
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2120
 end = 2121
 
@@ -1474,7 +1474,7 @@ end = 2121
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2122
 end = 2122
 
@@ -1483,7 +1483,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 34
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2037 })'
+key = 'C(Decl { file: "neco.c", start_line: 2037 })'
 descriptor = "c decl at neco.c:2037"
 cost_tokens = 15
 cum_tokens = 1969
@@ -1492,7 +1492,7 @@ cum_tokens = 1969
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2037
 end = 2038
 
@@ -1500,7 +1500,7 @@ end = 2038
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2039
 end = 2039
 
@@ -1509,7 +1509,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 35
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2094 })'
+key = 'C(Decl { file: "neco.c", start_line: 2094 })'
 descriptor = "c decl at neco.c:2094"
 cost_tokens = 15
 cum_tokens = 1984
@@ -1518,7 +1518,7 @@ cum_tokens = 1984
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2094
 end = 2095
 
@@ -1526,7 +1526,7 @@ end = 2095
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2096
 end = 2096
 
@@ -1535,7 +1535,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 36
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1320 })'
+key = 'C(Decl { file: "neco.c", start_line: 1320 })'
 descriptor = "c decl at neco.c:1320"
 cost_tokens = 16
 cum_tokens = 2000
@@ -1544,7 +1544,7 @@ cum_tokens = 2000
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1320
 end = 1321
 
@@ -1552,7 +1552,7 @@ end = 1321
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1322
 end = 1322
 
@@ -1561,7 +1561,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1293 })'
+key = 'C(Decl { file: "neco.c", start_line: 1293 })'
 descriptor = "c decl at neco.c:1293"
 cost_tokens = 19
 cum_tokens = 2019
@@ -1570,7 +1570,7 @@ cum_tokens = 2019
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1293
 end = 1294
 
@@ -1578,7 +1578,7 @@ end = 1294
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1295
 end = 1295
 
@@ -1587,7 +1587,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 38
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1293 })'
+key = 'C(DeclDoc { file: "neco.c", start_line: 1293 })'
 descriptor = "c decl doc at neco.c:1293"
 cost_tokens = 11
 cum_tokens = 2030
@@ -1596,7 +1596,7 @@ cum_tokens = 2030
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1292
 end = 1292
 
@@ -1605,7 +1605,7 @@ kind = "full"
 
 [[batches]]
 position = 39
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1282 })'
+key = 'C(Decl { file: "neco.c", start_line: 1282 })'
 descriptor = "c decl at neco.c:1282"
 cost_tokens = 20
 cum_tokens = 2050
@@ -1614,7 +1614,7 @@ cum_tokens = 2050
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1282
 end = 1283
 
@@ -1622,7 +1622,7 @@ end = 1283
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1284
 end = 1284
 
@@ -1631,7 +1631,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 40
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1282 })'
+key = 'C(DeclDoc { file: "neco.c", start_line: 1282 })'
 descriptor = "c decl doc at neco.c:1282"
 cost_tokens = 11
 cum_tokens = 2061
@@ -1640,7 +1640,7 @@ cum_tokens = 2061
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1281
 end = 1281
 
@@ -1649,7 +1649,7 @@ kind = "full"
 
 [[batches]]
 position = 41
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1814 })'
+key = 'C(Decl { file: "neco.c", start_line: 1814 })'
 descriptor = "c decl at neco.c:1814"
 cost_tokens = 26
 cum_tokens = 2087
@@ -1658,7 +1658,7 @@ cum_tokens = 2087
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1814
 end = 1817
 
@@ -1667,7 +1667,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1899 })'
+key = 'C(Decl { file: "neco.c", start_line: 1899 })'
 descriptor = "c decl at neco.c:1899"
 cost_tokens = 26
 cum_tokens = 2113
@@ -1676,7 +1676,7 @@ cum_tokens = 2113
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1899
 end = 1902
 
@@ -1685,7 +1685,7 @@ kind = "full"
 
 [[batches]]
 position = 43
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1875 })'
+key = 'C(Decl { file: "neco.c", start_line: 1875 })'
 descriptor = "c decl at neco.c:1875"
 cost_tokens = 29
 cum_tokens = 2142
@@ -1694,7 +1694,7 @@ cum_tokens = 2142
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1875
 end = 1878
 
@@ -1703,7 +1703,7 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1880 })'
+key = 'C(Decl { file: "neco.c", start_line: 1880 })'
 descriptor = "c decl at neco.c:1880"
 cost_tokens = 28
 cum_tokens = 2170
@@ -1712,7 +1712,7 @@ cum_tokens = 2170
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1880
 end = 1881
 
@@ -1721,7 +1721,7 @@ kind = "full"
 
 [[batches]]
 position = 45
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2051 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2051 })'
 descriptor = "c decl body at neco.c:2051"
 cost_tokens = 16
 cum_tokens = 2186
@@ -1730,7 +1730,7 @@ cum_tokens = 2186
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2053
 end = 2053
 
@@ -1739,7 +1739,7 @@ kind = "full"
 
 [[batches]]
 position = 46
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2120 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2120 })'
 descriptor = "c decl body at neco.c:2120"
 cost_tokens = 16
 cum_tokens = 2202
@@ -1748,7 +1748,7 @@ cum_tokens = 2202
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2122
 end = 2122
 
@@ -1757,7 +1757,7 @@ kind = "full"
 
 [[batches]]
 position = 47
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1312 })'
+key = 'C(DeclDoc { file: "neco.c", start_line: 1312 })'
 descriptor = "c decl doc at neco.c:1312"
 cost_tokens = 27
 cum_tokens = 2229
@@ -1766,7 +1766,7 @@ cum_tokens = 2229
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1310
 end = 1311
 
@@ -1775,7 +1775,7 @@ kind = "full"
 
 [[batches]]
 position = 48
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1320 })'
+key = 'C(DeclDoc { file: "neco.c", start_line: 1320 })'
 descriptor = "c decl doc at neco.c:1320"
 cost_tokens = 40
 cum_tokens = 2269
@@ -1784,7 +1784,7 @@ cum_tokens = 2269
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1318
 end = 1319
 
@@ -1793,7 +1793,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1155 })'
+key = 'C(Decl { file: "neco.c", start_line: 1155 })'
 descriptor = "c decl at neco.c:1155"
 cost_tokens = 58
 cum_tokens = 2327
@@ -1802,7 +1802,7 @@ cum_tokens = 2327
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1155
 end = 1160
 
@@ -1811,7 +1811,7 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1313 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 1313 })'
 descriptor = "c decl body at neco.c:1313"
 cost_tokens = 32
 cum_tokens = 2359
@@ -1820,7 +1820,7 @@ cum_tokens = 2359
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1314
 end = 1315
 
@@ -1829,7 +1829,7 @@ kind = "full"
 
 [[batches]]
 position = 51
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1337 })'
+key = 'C(Decl { file: "neco.c", start_line: 1337 })'
 descriptor = "c decl at neco.c:1337"
 cost_tokens = 91
 cum_tokens = 2450
@@ -1838,7 +1838,7 @@ cum_tokens = 2450
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1337
 end = 1342
 
@@ -1847,7 +1847,7 @@ kind = "full"
 
 [[batches]]
 position = 52
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1364 })'
+key = 'C(Decl { file: "neco.c", start_line: 1364 })'
 descriptor = "c decl at neco.c:1364"
 cost_tokens = 99
 cum_tokens = 2549
@@ -1856,7 +1856,7 @@ cum_tokens = 2549
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1364
 end = 1373
 
@@ -1865,7 +1865,7 @@ kind = "full"
 
 [[batches]]
 position = 53
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2029 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2029 })'
 descriptor = "c decl body at neco.c:2029"
 cost_tokens = 44
 cum_tokens = 2593
@@ -1874,7 +1874,7 @@ cum_tokens = 2593
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2031
 end = 2034
 
@@ -1883,7 +1883,7 @@ kind = "full"
 
 [[batches]]
 position = 54
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 19 })'
+key = 'Markdown(Section { file: "README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 31
 cum_tokens = 2624
@@ -1892,7 +1892,7 @@ cum_tokens = 2624
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 523
 end = 523
 
@@ -1901,7 +1901,7 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/tools" })'
+key = 'Fs(DirListing { dir: "docs/tools" })'
 descriptor = "listing of 'docs/tools'"
 cost_tokens = 14
 cum_tokens = 2638
@@ -1910,12 +1910,12 @@ cum_tokens = 2638
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/tools"
+parent = "docs/tools"
 entries = ["README.md", "build-api.sh", "doxygen-md"]
 
 [[batches]]
 position = 56
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 5 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 5 })'
 descriptor = "docs/API.md section #5"
 cost_tokens = 13
 cum_tokens = 2651
@@ -1924,7 +1924,7 @@ cum_tokens = 2651
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 20
 end = 20
 
@@ -1933,7 +1933,7 @@ kind = "full"
 
 [[batches]]
 position = 57
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 6 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 6 })'
 descriptor = "docs/API.md section #6"
 cost_tokens = 13
 cum_tokens = 2664
@@ -1942,7 +1942,7 @@ cum_tokens = 2664
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 21
 end = 21
 
@@ -1951,7 +1951,7 @@ kind = "full"
 
 [[batches]]
 position = 58
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 14 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 14 })'
 descriptor = "docs/API.md section #14"
 cost_tokens = 13
 cum_tokens = 2677
@@ -1960,7 +1960,7 @@ cum_tokens = 2677
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 29
 end = 29
 
@@ -1969,7 +1969,7 @@ kind = "full"
 
 [[batches]]
 position = 59
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 17 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 17 })'
 descriptor = "docs/API.md section #17"
 cost_tokens = 13
 cum_tokens = 2690
@@ -1978,7 +1978,7 @@ cum_tokens = 2690
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 32
 end = 32
 
@@ -1987,7 +1987,7 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 2 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 2 })'
 descriptor = "docs/API.md section #2"
 cost_tokens = 14
 cum_tokens = 2704
@@ -1996,7 +1996,7 @@ cum_tokens = 2704
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 17
 end = 17
 
@@ -2005,7 +2005,7 @@ kind = "full"
 
 [[batches]]
 position = 61
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 7 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 7 })'
 descriptor = "docs/API.md section #7"
 cost_tokens = 14
 cum_tokens = 2718
@@ -2014,7 +2014,7 @@ cum_tokens = 2718
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 22
 end = 22
 
@@ -2023,7 +2023,7 @@ kind = "full"
 
 [[batches]]
 position = 62
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 10 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 10 })'
 descriptor = "docs/API.md section #10"
 cost_tokens = 14
 cum_tokens = 2732
@@ -2032,7 +2032,7 @@ cum_tokens = 2732
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 25
 end = 25
 
@@ -2041,7 +2041,7 @@ kind = "full"
 
 [[batches]]
 position = 63
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 13 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 13 })'
 descriptor = "docs/API.md section #13"
 cost_tokens = 14
 cum_tokens = 2746
@@ -2050,7 +2050,7 @@ cum_tokens = 2746
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 28
 end = 28
 
@@ -2059,7 +2059,7 @@ kind = "full"
 
 [[batches]]
 position = 64
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 19 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 19 })'
 descriptor = "docs/API.md section #19"
 cost_tokens = 14
 cum_tokens = 2760
@@ -2068,7 +2068,7 @@ cum_tokens = 2760
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 34
 end = 34
 
@@ -2077,7 +2077,7 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 12 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 12 })'
 descriptor = "docs/API.md section #12"
 cost_tokens = 15
 cum_tokens = 2775
@@ -2086,7 +2086,7 @@ cum_tokens = 2775
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 27
 end = 27
 
@@ -2095,7 +2095,7 @@ kind = "full"
 
 [[batches]]
 position = 66
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 18 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 18 })'
 descriptor = "docs/API.md section #18"
 cost_tokens = 15
 cum_tokens = 2790
@@ -2104,7 +2104,7 @@ cum_tokens = 2790
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 33
 end = 33
 
@@ -2113,7 +2113,7 @@ kind = "full"
 
 [[batches]]
 position = 67
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1320 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 1320 })'
 descriptor = "c decl body at neco.c:1320"
 cost_tokens = 58
 cum_tokens = 2848
@@ -2122,7 +2122,7 @@ cum_tokens = 2848
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1322
 end = 1327
 
@@ -2131,7 +2131,7 @@ kind = "full"
 
 [[batches]]
 position = 68
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2065 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2065 })'
 descriptor = "c decl body at neco.c:2065"
 cost_tokens = 58
 cum_tokens = 2906
@@ -2140,7 +2140,7 @@ cum_tokens = 2906
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2067
 end = 2071
 
@@ -2149,7 +2149,7 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 43 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 43 })'
 descriptor = "docs/API.md section #43"
 cost_tokens = 47
 cum_tokens = 2953
@@ -2158,7 +2158,7 @@ cum_tokens = 2953
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 476
 end = 479
 
@@ -2166,7 +2166,7 @@ end = 479
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 481
 end = 481
 
@@ -2175,7 +2175,7 @@ kind = "full"
 
 [[batches]]
 position = 70
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 44 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 44 })'
 descriptor = "docs/API.md section #44"
 cost_tokens = 47
 cum_tokens = 3000
@@ -2184,7 +2184,7 @@ cum_tokens = 3000
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 482
 end = 485
 
@@ -2192,7 +2192,7 @@ end = 485
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 487
 end = 487
 
@@ -2201,7 +2201,7 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1819 })'
+key = 'C(Decl { file: "neco.c", start_line: 1819 })'
 descriptor = "c decl at neco.c:1819"
 cost_tokens = 147
 cum_tokens = 3147
@@ -2210,7 +2210,7 @@ cum_tokens = 3147
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1819
 end = 1834
 
@@ -2219,7 +2219,7 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2056 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2056 })'
 descriptor = "c decl body at neco.c:2056"
 cost_tokens = 61
 cum_tokens = 3208
@@ -2228,7 +2228,7 @@ cum_tokens = 3208
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2058
 end = 2062
 
@@ -2237,7 +2237,7 @@ kind = "full"
 
 [[batches]]
 position = 73
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 1 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 1 })'
 descriptor = "docs/API.md section #1"
 cost_tokens = 16
 cum_tokens = 3224
@@ -2246,7 +2246,7 @@ cum_tokens = 3224
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 16
 end = 16
 
@@ -2255,7 +2255,7 @@ kind = "full"
 
 [[batches]]
 position = 74
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 4 })'
+key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 163
 cum_tokens = 3387
@@ -2264,7 +2264,7 @@ cum_tokens = 3387
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 77
 end = 77
 
@@ -2272,7 +2272,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 79
 end = 81
 
@@ -2280,7 +2280,7 @@ end = 81
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 83
 end = 85
 
@@ -2288,7 +2288,7 @@ end = 85
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 87
 end = 91
 
@@ -2297,7 +2297,7 @@ kind = "full"
 
 [[batches]]
 position = 75
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 3 })'
+key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 178
 cum_tokens = 3565
@@ -2306,7 +2306,7 @@ cum_tokens = 3565
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 57
 end = 57
 
@@ -2314,7 +2314,7 @@ end = 57
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 59
 end = 59
 
@@ -2322,7 +2322,7 @@ end = 59
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 61
 end = 61
 
@@ -2330,7 +2330,7 @@ end = 61
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 63
 end = 65
 
@@ -2338,7 +2338,7 @@ end = 65
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 67
 end = 69
 
@@ -2346,7 +2346,7 @@ end = 69
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 71
 end = 75
 
@@ -2355,7 +2355,7 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/TECHNICAL.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/TECHNICAL.md", section_index: 0 })'
 descriptor = "docs/TECHNICAL.md section #0"
 cost_tokens = 160
 cum_tokens = 3725
@@ -2364,7 +2364,7 @@ cum_tokens = 3725
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/TECHNICAL.md"
+path = "docs/TECHNICAL.md"
 start = 1
 end = 1
 
@@ -2372,7 +2372,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/TECHNICAL.md"
+path = "docs/TECHNICAL.md"
 start = 3
 end = 3
 
@@ -2380,7 +2380,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/TECHNICAL.md"
+path = "docs/TECHNICAL.md"
 start = 5
 end = 5
 
@@ -2388,7 +2388,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/TECHNICAL.md"
+path = "docs/TECHNICAL.md"
 start = 7
 end = 8
 
@@ -2396,7 +2396,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/TECHNICAL.md"
+path = "docs/TECHNICAL.md"
 start = 10
 end = 20
 
@@ -2405,7 +2405,7 @@ kind = "full"
 
 [[batches]]
 position = 77
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 8 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 8 })'
 descriptor = "docs/API.md section #8"
 cost_tokens = 17
 cum_tokens = 3742
@@ -2414,7 +2414,7 @@ cum_tokens = 3742
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 23
 end = 23
 
@@ -2423,7 +2423,7 @@ kind = "full"
 
 [[batches]]
 position = 78
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 9 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 9 })'
 descriptor = "docs/API.md section #9"
 cost_tokens = 17
 cum_tokens = 3759
@@ -2432,7 +2432,7 @@ cum_tokens = 3759
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 24
 end = 24
 
@@ -2441,7 +2441,7 @@ kind = "full"
 
 [[batches]]
 position = 79
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 3 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 3 })'
 descriptor = "docs/assets/API_head.md section #3"
 cost_tokens = 11
 cum_tokens = 3770
@@ -2450,7 +2450,7 @@ cum_tokens = 3770
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 16
 end = 16
 
@@ -2459,7 +2459,7 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 15 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 15 })'
 descriptor = "docs/assets/API_head.md section #15"
 cost_tokens = 11
 cum_tokens = 3781
@@ -2468,7 +2468,7 @@ cum_tokens = 3781
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 28
 end = 28
 
@@ -2477,7 +2477,7 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 16 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 16 })'
 descriptor = "docs/assets/API_head.md section #16"
 cost_tokens = 11
 cum_tokens = 3792
@@ -2486,7 +2486,7 @@ cum_tokens = 3792
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 29
 end = 29
 
@@ -2495,7 +2495,7 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 0 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 0 })'
 descriptor = "docs/assets/API_head.md section #0"
 cost_tokens = 96
 cum_tokens = 3888
@@ -2504,7 +2504,7 @@ cum_tokens = 3888
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 1
 end = 1
 
@@ -2512,7 +2512,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 3
 end = 3
 
@@ -2520,7 +2520,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 5
 end = 6
 
@@ -2528,7 +2528,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 8
 end = 9
 
@@ -2537,7 +2537,7 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/tests" })'
+key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 126
 cum_tokens = 4014
@@ -2546,12 +2546,12 @@ cum_tokens = 4014
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/neco/tests"
+parent = "tests"
 entries = ["README.md", "bench.c", "fail_counters.h", "panic.h", "priv_funcs.h", "run.sh", "signals.h", "test_basic.c", "test_cancel.c", "test_chan.c", "test_errors.c", "test_gen.c", "test_join.c", "test_misc.c", "test_net.c", "test_panic.c", "test_pipe.c", "test_rand.c", "test_signal.c", "test_sleep.c", "test_stream.c", "test_suspend.c", "test_sync.c", "test_wait.c", "test_work.c", "tests.h"]
 
 [[batches]]
 position = 84
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 4 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 4 })'
 descriptor = "docs/assets/API_head.md section #4"
 cost_tokens = 12
 cum_tokens = 4026
@@ -2560,7 +2560,7 @@ cum_tokens = 4026
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 17
 end = 17
 
@@ -2569,7 +2569,7 @@ kind = "full"
 
 [[batches]]
 position = 85
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 17 })'
+key = 'Markdown(Section { file: "README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 48
 cum_tokens = 4074
@@ -2578,7 +2578,7 @@ cum_tokens = 4074
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 515
 end = 517
 
@@ -2587,7 +2587,7 @@ kind = "full"
 
 [[batches]]
 position = 86
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 11 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 11 })'
 descriptor = "docs/API.md section #11"
 cost_tokens = 20
 cum_tokens = 4094
@@ -2596,7 +2596,7 @@ cum_tokens = 4094
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 26
 end = 26
 
@@ -2605,7 +2605,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1282 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 1282 })'
 descriptor = "c decl body at neco.c:1282"
 cost_tokens = 78
 cum_tokens = 4172
@@ -2614,7 +2614,7 @@ cum_tokens = 4172
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1284
 end = 1289
 
@@ -2623,7 +2623,7 @@ kind = "full"
 
 [[batches]]
 position = 88
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 5 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 5 })'
 descriptor = "docs/assets/API_head.md section #5"
 cost_tokens = 13
 cum_tokens = 4185
@@ -2632,7 +2632,7 @@ cum_tokens = 4185
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 18
 end = 18
 
@@ -2641,7 +2641,7 @@ kind = "full"
 
 [[batches]]
 position = 89
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 6 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 6 })'
 descriptor = "docs/assets/API_head.md section #6"
 cost_tokens = 13
 cum_tokens = 4198
@@ -2650,7 +2650,7 @@ cum_tokens = 4198
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 19
 end = 19
 
@@ -2659,7 +2659,7 @@ kind = "full"
 
 [[batches]]
 position = 90
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 14 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 14 })'
 descriptor = "docs/assets/API_head.md section #14"
 cost_tokens = 13
 cum_tokens = 4211
@@ -2668,7 +2668,7 @@ cum_tokens = 4211
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 27
 end = 27
 
@@ -2677,7 +2677,7 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 17 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 17 })'
 descriptor = "docs/assets/API_head.md section #17"
 cost_tokens = 13
 cum_tokens = 4224
@@ -2686,7 +2686,7 @@ cum_tokens = 4224
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 30
 end = 30
 
@@ -2695,7 +2695,7 @@ kind = "full"
 
 [[batches]]
 position = 92
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", chunk_index: 1 })'
+key = 'C(DeclNames { file: "neco.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in neco.c"
 cost_tokens = 309
 cum_tokens = 4533
@@ -2704,7 +2704,7 @@ cum_tokens = 4533
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2125
 end = 2125
 
@@ -2712,7 +2712,7 @@ end = 2125
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2130
 end = 2130
 
@@ -2720,7 +2720,7 @@ end = 2130
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2135
 end = 2135
 
@@ -2728,7 +2728,7 @@ end = 2135
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2145
 end = 2145
 
@@ -2736,7 +2736,7 @@ end = 2145
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2154
 end = 2154
 
@@ -2744,7 +2744,7 @@ end = 2154
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2160
 end = 2160
 
@@ -2752,7 +2752,7 @@ end = 2160
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2165
 end = 2165
 
@@ -2760,7 +2760,7 @@ end = 2165
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2192
 end = 2192
 
@@ -2768,7 +2768,7 @@ end = 2192
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2247
 end = 2247
 
@@ -2776,7 +2776,7 @@ end = 2247
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2261
 end = 2261
 
@@ -2784,7 +2784,7 @@ end = 2261
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2267
 end = 2267
 
@@ -2792,7 +2792,7 @@ end = 2267
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2285
 end = 2285
 
@@ -2800,7 +2800,7 @@ end = 2285
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2441
 end = 2441
 
@@ -2808,7 +2808,7 @@ end = 2441
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2459
 end = 2459
 
@@ -2816,7 +2816,7 @@ end = 2459
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2551
 end = 2551
 
@@ -2824,7 +2824,7 @@ end = 2551
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2598
 end = 2598
 
@@ -2832,7 +2832,7 @@ end = 2598
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2607
 end = 2607
 
@@ -2840,7 +2840,7 @@ end = 2607
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2616
 end = 2616
 
@@ -2848,7 +2848,7 @@ end = 2616
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2898
 end = 2898
 
@@ -2856,7 +2856,7 @@ end = 2898
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2924
 end = 2924
 
@@ -2864,7 +2864,7 @@ end = 2924
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2926
 end = 2926
 
@@ -2872,7 +2872,7 @@ end = 2926
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3105
 end = 3106
 
@@ -2880,7 +2880,7 @@ end = 3106
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3121
 end = 3121
 
@@ -2888,7 +2888,7 @@ end = 3121
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2126
 end = 2126
 
@@ -2896,7 +2896,7 @@ end = 2126
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2131
 end = 2131
 
@@ -2904,7 +2904,7 @@ end = 2131
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2136
 end = 2136
 
@@ -2912,7 +2912,7 @@ end = 2136
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2146
 end = 2146
 
@@ -2920,7 +2920,7 @@ end = 2146
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2155
 end = 2155
 
@@ -2928,7 +2928,7 @@ end = 2155
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2161
 end = 2161
 
@@ -2936,7 +2936,7 @@ end = 2161
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2166
 end = 2166
 
@@ -2944,7 +2944,7 @@ end = 2166
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2193
 end = 2193
 
@@ -2952,7 +2952,7 @@ end = 2193
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2248
 end = 2248
 
@@ -2960,7 +2960,7 @@ end = 2248
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2262
 end = 2262
 
@@ -2968,7 +2968,7 @@ end = 2262
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2268
 end = 2268
 
@@ -2976,7 +2976,7 @@ end = 2268
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2286
 end = 2286
 
@@ -2984,7 +2984,7 @@ end = 2286
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2442
 end = 2442
 
@@ -2992,7 +2992,7 @@ end = 2442
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2460
 end = 2460
 
@@ -3000,7 +3000,7 @@ end = 2460
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2552
 end = 2552
 
@@ -3008,7 +3008,7 @@ end = 2552
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2599
 end = 2599
 
@@ -3016,7 +3016,7 @@ end = 2599
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2608
 end = 2608
 
@@ -3024,7 +3024,7 @@ end = 2608
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2617
 end = 2617
 
@@ -3032,7 +3032,7 @@ end = 2617
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2899
 end = 2899
 
@@ -3040,7 +3040,7 @@ end = 2899
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2925
 end = 2925
 
@@ -3048,7 +3048,7 @@ end = 2925
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2927
 end = 2927
 
@@ -3056,7 +3056,7 @@ end = 2927
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3107
 end = 3107
 
@@ -3064,7 +3064,7 @@ end = 3107
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3122
 end = 3122
 
@@ -3073,7 +3073,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 93
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3105 })'
+key = 'C(Decl { file: "neco.c", start_line: 3105 })'
 descriptor = "c decl at neco.c:3105"
 cost_tokens = 0
 cum_tokens = 4533
@@ -3082,7 +3082,7 @@ cum_tokens = 4533
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3105
 end = 3105
 
@@ -3091,7 +3091,7 @@ kind = "full"
 
 [[batches]]
 position = 94
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2154 })'
+key = 'C(Decl { file: "neco.c", start_line: 2154 })'
 descriptor = "c decl at neco.c:2154"
 cost_tokens = 11
 cum_tokens = 4544
@@ -3100,7 +3100,7 @@ cum_tokens = 4544
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2154
 end = 2155
 
@@ -3108,7 +3108,7 @@ end = 2155
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2156
 end = 2156
 
@@ -3117,7 +3117,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 95
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2135 })'
+key = 'C(Decl { file: "neco.c", start_line: 2135 })'
 descriptor = "c decl at neco.c:2135"
 cost_tokens = 13
 cum_tokens = 4557
@@ -3126,7 +3126,7 @@ cum_tokens = 4557
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2135
 end = 2136
 
@@ -3134,7 +3134,7 @@ end = 2136
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2137
 end = 2137
 
@@ -3143,7 +3143,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 96
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2125 })'
+key = 'C(Decl { file: "neco.c", start_line: 2125 })'
 descriptor = "c decl at neco.c:2125"
 cost_tokens = 14
 cum_tokens = 4571
@@ -3152,7 +3152,7 @@ cum_tokens = 4571
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2125
 end = 2126
 
@@ -3160,7 +3160,7 @@ end = 2126
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2127
 end = 2127
 
@@ -3169,7 +3169,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 97
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2130 })'
+key = 'C(Decl { file: "neco.c", start_line: 2130 })'
 descriptor = "c decl at neco.c:2130"
 cost_tokens = 14
 cum_tokens = 4585
@@ -3178,7 +3178,7 @@ cum_tokens = 4585
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2130
 end = 2131
 
@@ -3186,7 +3186,7 @@ end = 2131
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2132
 end = 2132
 
@@ -3195,7 +3195,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 98
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2145 })'
+key = 'C(Decl { file: "neco.c", start_line: 2145 })'
 descriptor = "c decl at neco.c:2145"
 cost_tokens = 14
 cum_tokens = 4599
@@ -3204,7 +3204,7 @@ cum_tokens = 4599
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2145
 end = 2146
 
@@ -3212,7 +3212,7 @@ end = 2146
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2147
 end = 2147
 
@@ -3221,7 +3221,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 99
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2160 })'
+key = 'C(Decl { file: "neco.c", start_line: 2160 })'
 descriptor = "c decl at neco.c:2160"
 cost_tokens = 15
 cum_tokens = 4614
@@ -3230,7 +3230,7 @@ cum_tokens = 4614
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2160
 end = 2161
 
@@ -3238,7 +3238,7 @@ end = 2161
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2162
 end = 2162
 
@@ -3247,7 +3247,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 100
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2607 })'
+key = 'C(Decl { file: "neco.c", start_line: 2607 })'
 descriptor = "c decl at neco.c:2607"
 cost_tokens = 15
 cum_tokens = 4629
@@ -3256,7 +3256,7 @@ cum_tokens = 4629
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2607
 end = 2608
 
@@ -3264,7 +3264,7 @@ end = 2608
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2609
 end = 2609
 
@@ -3273,7 +3273,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 101
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2616 })'
+key = 'C(Decl { file: "neco.c", start_line: 2616 })'
 descriptor = "c decl at neco.c:2616"
 cost_tokens = 15
 cum_tokens = 4644
@@ -3282,7 +3282,7 @@ cum_tokens = 4644
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2616
 end = 2617
 
@@ -3290,7 +3290,7 @@ end = 2617
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2618
 end = 2618
 
@@ -3299,7 +3299,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 102
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2926 })'
+key = 'C(Decl { file: "neco.c", start_line: 2926 })'
 descriptor = "c decl at neco.c:2926"
 cost_tokens = 15
 cum_tokens = 4659
@@ -3308,7 +3308,7 @@ cum_tokens = 4659
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2926
 end = 2927
 
@@ -3316,7 +3316,7 @@ end = 2927
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2928
 end = 2928
 
@@ -3325,7 +3325,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 103
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2459 })'
+key = 'C(Decl { file: "neco.c", start_line: 2459 })'
 descriptor = "c decl at neco.c:2459"
 cost_tokens = 16
 cum_tokens = 4675
@@ -3334,7 +3334,7 @@ cum_tokens = 4675
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2459
 end = 2460
 
@@ -3342,7 +3342,7 @@ end = 2460
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2461
 end = 2461
 
@@ -3351,7 +3351,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 104
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2130 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2130 })'
 descriptor = "c decl body at neco.c:2130"
 cost_tokens = 9
 cum_tokens = 4684
@@ -3360,7 +3360,7 @@ cum_tokens = 4684
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2132
 end = 2132
 
@@ -3369,7 +3369,7 @@ kind = "full"
 
 [[batches]]
 position = 105
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2551 })'
+key = 'C(Decl { file: "neco.c", start_line: 2551 })'
 descriptor = "c decl at neco.c:2551"
 cost_tokens = 20
 cum_tokens = 4704
@@ -3378,7 +3378,7 @@ cum_tokens = 4704
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2551
 end = 2552
 
@@ -3386,7 +3386,7 @@ end = 2552
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2553
 end = 2553
 
@@ -3395,7 +3395,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 106
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2598 })'
+key = 'C(Decl { file: "neco.c", start_line: 2598 })'
 descriptor = "c decl at neco.c:2598"
 cost_tokens = 20
 cum_tokens = 4724
@@ -3404,7 +3404,7 @@ cum_tokens = 4724
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2598
 end = 2599
 
@@ -3412,7 +3412,7 @@ end = 2599
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2600
 end = 2600
 
@@ -3421,7 +3421,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 107
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2125 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2125 })'
 descriptor = "c decl body at neco.c:2125"
 cost_tokens = 10
 cum_tokens = 4734
@@ -3430,7 +3430,7 @@ cum_tokens = 4734
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2127
 end = 2127
 
@@ -3439,7 +3439,7 @@ kind = "full"
 
 [[batches]]
 position = 108
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2441 })'
+key = 'C(Decl { file: "neco.c", start_line: 2441 })'
 descriptor = "c decl at neco.c:2441"
 cost_tokens = 22
 cum_tokens = 4756
@@ -3448,7 +3448,7 @@ cum_tokens = 4756
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2441
 end = 2442
 
@@ -3456,7 +3456,7 @@ end = 2442
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2443
 end = 2443
 
@@ -3465,7 +3465,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 109
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2160 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2160 })'
 descriptor = "c decl body at neco.c:2160"
 cost_tokens = 11
 cum_tokens = 4767
@@ -3474,7 +3474,7 @@ cum_tokens = 4767
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2162
 end = 2162
 
@@ -3483,7 +3483,7 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3105 })'
+key = 'C(DeclDoc { file: "neco.c", start_line: 3105 })'
 descriptor = "c decl doc at neco.c:3105"
 cost_tokens = 14
 cum_tokens = 4781
@@ -3492,7 +3492,7 @@ cum_tokens = 4781
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3104
 end = 3104
 
@@ -3501,7 +3501,7 @@ kind = "full"
 
 [[batches]]
 position = 111
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2459 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2459 })'
 descriptor = "c decl body at neco.c:2459"
 cost_tokens = 13
 cum_tokens = 4794
@@ -3510,7 +3510,7 @@ cum_tokens = 4794
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2461
 end = 2461
 
@@ -3519,7 +3519,7 @@ kind = "full"
 
 [[batches]]
 position = 112
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2607 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2607 })'
 descriptor = "c decl body at neco.c:2607"
 cost_tokens = 13
 cum_tokens = 4807
@@ -3528,7 +3528,7 @@ cum_tokens = 4807
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2609
 end = 2609
 
@@ -3537,7 +3537,7 @@ kind = "full"
 
 [[batches]]
 position = 113
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2616 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2616 })'
 descriptor = "c decl body at neco.c:2616"
 cost_tokens = 13
 cum_tokens = 4820
@@ -3546,7 +3546,7 @@ cum_tokens = 4820
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2618
 end = 2618
 
@@ -3555,7 +3555,7 @@ kind = "full"
 
 [[batches]]
 position = 114
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2154 })'
+key = 'C(DeclDoc { file: "neco.c", start_line: 2154 })'
 descriptor = "c decl doc at neco.c:2154"
 cost_tokens = 21
 cum_tokens = 4841
@@ -3564,7 +3564,7 @@ cum_tokens = 4841
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2153
 end = 2153
 
@@ -3573,7 +3573,7 @@ kind = "full"
 
 [[batches]]
 position = 115
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2192 })'
+key = 'C(Decl { file: "neco.c", start_line: 2192 })'
 descriptor = "c decl at neco.c:2192"
 cost_tokens = 30
 cum_tokens = 4871
@@ -3582,7 +3582,7 @@ cum_tokens = 4871
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2192
 end = 2193
 
@@ -3590,7 +3590,7 @@ end = 2193
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2194
 end = 2194
 
@@ -3599,7 +3599,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 116
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2192 })'
+key = 'C(DeclDoc { file: "neco.c", start_line: 2192 })'
 descriptor = "c decl doc at neco.c:2192"
 cost_tokens = 17
 cum_tokens = 4888
@@ -3608,7 +3608,7 @@ cum_tokens = 4888
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2191
 end = 2191
 
@@ -3617,7 +3617,7 @@ kind = "full"
 
 [[batches]]
 position = 117
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3121 })'
+key = 'C(Decl { file: "neco.c", start_line: 3121 })'
 descriptor = "c decl at neco.c:3121"
 cost_tokens = 30
 cum_tokens = 4918
@@ -3626,7 +3626,7 @@ cum_tokens = 4918
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3121
 end = 3123
 
@@ -3634,7 +3634,7 @@ end = 3123
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3124
 end = 3124
 
@@ -3643,7 +3643,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 118
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2285 })'
+key = 'C(Decl { file: "neco.c", start_line: 2285 })'
 descriptor = "c decl at neco.c:2285"
 cost_tokens = 36
 cum_tokens = 4954
@@ -3652,7 +3652,7 @@ cum_tokens = 4954
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2285
 end = 2289
 
@@ -3661,7 +3661,7 @@ kind = "full"
 
 [[batches]]
 position = 119
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2441 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2441 })'
 descriptor = "c decl body at neco.c:2441"
 cost_tokens = 15
 cum_tokens = 4969
@@ -3670,7 +3670,7 @@ cum_tokens = 4969
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2443
 end = 2443
 
@@ -3679,7 +3679,7 @@ kind = "full"
 
 [[batches]]
 position = 120
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2598 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2598 })'
 descriptor = "c decl body at neco.c:2598"
 cost_tokens = 17
 cum_tokens = 4986
@@ -3688,7 +3688,7 @@ cum_tokens = 4986
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2600
 end = 2600
 
@@ -3697,7 +3697,7 @@ kind = "full"
 
 [[batches]]
 position = 121
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2261 })'
+key = 'C(Decl { file: "neco.c", start_line: 2261 })'
 descriptor = "c decl at neco.c:2261"
 cost_tokens = 42
 cum_tokens = 5028
@@ -3706,7 +3706,7 @@ cum_tokens = 5028
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2261
 end = 2265
 
@@ -3715,7 +3715,7 @@ kind = "full"
 
 [[batches]]
 position = 122
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2551 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2551 })'
 descriptor = "c decl body at neco.c:2551"
 cost_tokens = 18
 cum_tokens = 5046
@@ -3724,7 +3724,7 @@ cum_tokens = 5046
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2553
 end = 2553
 
@@ -3733,7 +3733,7 @@ kind = "full"
 
 [[batches]]
 position = 123
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2165 })'
+key = 'C(Decl { file: "neco.c", start_line: 2165 })'
 descriptor = "c decl at neco.c:2165"
 cost_tokens = 63
 cum_tokens = 5109
@@ -3742,7 +3742,7 @@ cum_tokens = 5109
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2165
 end = 2171
 
@@ -3751,7 +3751,7 @@ kind = "full"
 
 [[batches]]
 position = 124
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3121 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 3121 })'
 descriptor = "c decl body at neco.c:3121"
 cost_tokens = 31
 cum_tokens = 5140
@@ -3760,7 +3760,7 @@ cum_tokens = 5140
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3124
 end = 3126
 
@@ -3769,7 +3769,7 @@ kind = "full"
 
 [[batches]]
 position = 125
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3121 })'
+key = 'C(DeclDoc { file: "neco.c", start_line: 3121 })'
 descriptor = "c decl doc at neco.c:3121"
 cost_tokens = 70
 cum_tokens = 5210
@@ -3778,7 +3778,7 @@ cum_tokens = 5210
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 3116
 end = 3120
 
@@ -3787,7 +3787,7 @@ kind = "full"
 
 [[batches]]
 position = 126
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2145 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2145 })'
 descriptor = "c decl body at neco.c:2145"
 cost_tokens = 44
 cum_tokens = 5254
@@ -3796,7 +3796,7 @@ cum_tokens = 5254
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2147
 end = 2150
 
@@ -3805,7 +3805,7 @@ kind = "full"
 
 [[batches]]
 position = 127
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2154 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2154 })'
 descriptor = "c decl body at neco.c:2154"
 cost_tokens = 46
 cum_tokens = 5300
@@ -3814,7 +3814,7 @@ cum_tokens = 5300
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2156
 end = 2157
 
@@ -3823,7 +3823,7 @@ kind = "full"
 
 [[batches]]
 position = 128
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2247 })'
+key = 'C(Decl { file: "neco.c", start_line: 2247 })'
 descriptor = "c decl at neco.c:2247"
 cost_tokens = 142
 cum_tokens = 5442
@@ -3832,7 +3832,7 @@ cum_tokens = 5442
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2247
 end = 2259
 
@@ -3841,7 +3841,7 @@ kind = "full"
 
 [[batches]]
 position = 129
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2135 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2135 })'
 descriptor = "c decl body at neco.c:2135"
 cost_tokens = 61
 cum_tokens = 5503
@@ -3850,7 +3850,7 @@ cum_tokens = 5503
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2137
 end = 2142
 
@@ -3859,7 +3859,7 @@ kind = "full"
 
 [[batches]]
 position = 130
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2267 })'
+key = 'C(Decl { file: "neco.c", start_line: 2267 })'
 descriptor = "c decl at neco.c:2267"
 cost_tokens = 187
 cum_tokens = 5690
@@ -3868,7 +3868,7 @@ cum_tokens = 5690
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2267
 end = 2283
 
@@ -3877,7 +3877,7 @@ kind = "full"
 
 [[batches]]
 position = 131
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1124 })'
+key = 'C(Decl { file: "neco.c", start_line: 1124 })'
 descriptor = "c decl at neco.c:1124"
 cost_tokens = 203
 cum_tokens = 5893
@@ -3886,7 +3886,7 @@ cum_tokens = 5893
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 1124
 end = 1141
 
@@ -3895,7 +3895,7 @@ kind = "full"
 
 [[batches]]
 position = 132
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 45 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 45 })'
 descriptor = "docs/API.md section #45"
 cost_tokens = 67
 cum_tokens = 5960
@@ -3904,7 +3904,7 @@ cum_tokens = 5960
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 488
 end = 491
 
@@ -3912,7 +3912,7 @@ end = 491
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 493
 end = 493
 
@@ -3921,7 +3921,7 @@ kind = "full"
 
 [[batches]]
 position = 133
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 18 })'
+key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 54
 cum_tokens = 6014
@@ -3930,7 +3930,7 @@ cum_tokens = 6014
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 519
 end = 521
 
@@ -3939,7 +3939,7 @@ kind = "full"
 
 [[batches]]
 position = 134
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 2 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 2 })'
 descriptor = "docs/assets/API_head.md section #2"
 cost_tokens = 14
 cum_tokens = 6028
@@ -3948,7 +3948,7 @@ cum_tokens = 6028
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 15
 end = 15
 
@@ -3957,7 +3957,7 @@ kind = "full"
 
 [[batches]]
 position = 135
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 7 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 7 })'
 descriptor = "docs/assets/API_head.md section #7"
 cost_tokens = 14
 cum_tokens = 6042
@@ -3966,7 +3966,7 @@ cum_tokens = 6042
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 20
 end = 20
 
@@ -3975,7 +3975,7 @@ kind = "full"
 
 [[batches]]
 position = 136
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 10 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 10 })'
 descriptor = "docs/assets/API_head.md section #10"
 cost_tokens = 14
 cum_tokens = 6056
@@ -3984,7 +3984,7 @@ cum_tokens = 6056
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 23
 end = 23
 
@@ -3993,7 +3993,7 @@ kind = "full"
 
 [[batches]]
 position = 137
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 13 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 13 })'
 descriptor = "docs/assets/API_head.md section #13"
 cost_tokens = 14
 cum_tokens = 6070
@@ -4002,7 +4002,7 @@ cum_tokens = 6070
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 26
 end = 26
 
@@ -4011,7 +4011,7 @@ kind = "full"
 
 [[batches]]
 position = 138
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 19 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 19 })'
 descriptor = "docs/assets/API_head.md section #19"
 cost_tokens = 14
 cum_tokens = 6084
@@ -4020,7 +4020,7 @@ cum_tokens = 6084
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 32
 end = 32
 
@@ -4029,7 +4029,7 @@ kind = "full"
 
 [[batches]]
 position = 139
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/tests/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "tests/README.md" })'
 descriptor = "README headline in tests/README.md"
 cost_tokens = 21
 cum_tokens = 6105
@@ -4038,7 +4038,7 @@ cum_tokens = 6105
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/tests/README.md"
+path = "tests/README.md"
 start = 1
 end = 1
 
@@ -4046,7 +4046,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/tests/README.md"
+path = "tests/README.md"
 start = 3
 end = 3
 
@@ -4055,7 +4055,7 @@ kind = "full"
 
 [[batches]]
 position = 140
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 121 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 121 })'
 descriptor = "docs/API.md section #121"
 cost_tokens = 73
 cum_tokens = 6178
@@ -4064,7 +4064,7 @@ cum_tokens = 6178
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1847
 end = 1850
 
@@ -4072,7 +4072,7 @@ end = 1850
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1852
 end = 1852
 
@@ -4081,7 +4081,7 @@ kind = "full"
 
 [[batches]]
 position = 141
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 12 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 12 })'
 descriptor = "docs/assets/API_head.md section #12"
 cost_tokens = 15
 cum_tokens = 6193
@@ -4090,7 +4090,7 @@ cum_tokens = 6193
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 25
 end = 25
 
@@ -4099,7 +4099,7 @@ kind = "full"
 
 [[batches]]
 position = 142
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 18 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 18 })'
 descriptor = "docs/assets/API_head.md section #18"
 cost_tokens = 15
 cum_tokens = 6208
@@ -4108,7 +4108,7 @@ cum_tokens = 6208
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 31
 end = 31
 
@@ -4117,7 +4117,7 @@ kind = "full"
 
 [[batches]]
 position = 143
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 135 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 135 })'
 descriptor = "docs/API.md section #135"
 cost_tokens = 75
 cum_tokens = 6283
@@ -4126,7 +4126,7 @@ cum_tokens = 6283
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2125
 end = 2128
 
@@ -4134,7 +4134,7 @@ end = 2128
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2130
 end = 2130
 
@@ -4143,7 +4143,7 @@ kind = "full"
 
 [[batches]]
 position = 144
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 33 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 33 })'
 descriptor = "docs/API.md section #33"
 cost_tokens = 76
 cum_tokens = 6359
@@ -4152,7 +4152,7 @@ cum_tokens = 6359
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 338
 end = 338
 
@@ -4160,7 +4160,7 @@ end = 338
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 340
 end = 340
 
@@ -4168,7 +4168,7 @@ end = 340
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 344
 end = 344
 
@@ -4176,7 +4176,7 @@ end = 344
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 347
 end = 347
 
@@ -4185,7 +4185,7 @@ kind = "full"
 
 [[batches]]
 position = 145
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/examples/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "examples/README.md" })'
 descriptor = "README headline in examples/README.md"
 cost_tokens = 23
 cum_tokens = 6382
@@ -4194,7 +4194,7 @@ cum_tokens = 6382
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/examples/README.md"
+path = "examples/README.md"
 start = 1
 end = 1
 
@@ -4202,7 +4202,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/examples/README.md"
+path = "examples/README.md"
 start = 3
 end = 3
 
@@ -4211,7 +4211,7 @@ kind = "full"
 
 [[batches]]
 position = 146
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 86 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 86 })'
 descriptor = "docs/API.md section #86"
 cost_tokens = 78
 cum_tokens = 6460
@@ -4220,7 +4220,7 @@ cum_tokens = 6460
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1389
 end = 1392
 
@@ -4228,7 +4228,7 @@ end = 1392
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1394
 end = 1394
 
@@ -4237,7 +4237,7 @@ kind = "full"
 
 [[batches]]
 position = 147
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 87 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 87 })'
 descriptor = "docs/API.md section #87"
 cost_tokens = 78
 cum_tokens = 6538
@@ -4246,7 +4246,7 @@ cum_tokens = 6538
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1395
 end = 1398
 
@@ -4254,7 +4254,7 @@ end = 1398
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1400
 end = 1400
 
@@ -4263,7 +4263,7 @@ kind = "full"
 
 [[batches]]
 position = 148
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 1 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 1 })'
 descriptor = "docs/assets/API_head.md section #1"
 cost_tokens = 16
 cum_tokens = 6554
@@ -4272,7 +4272,7 @@ cum_tokens = 6554
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 14
 end = 14
 
@@ -4281,7 +4281,7 @@ kind = "full"
 
 [[batches]]
 position = 149
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 90 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 90 })'
 descriptor = "docs/API.md section #90"
 cost_tokens = 79
 cum_tokens = 6633
@@ -4290,7 +4290,7 @@ cum_tokens = 6633
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1413
 end = 1416
 
@@ -4298,7 +4298,7 @@ end = 1416
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1418
 end = 1418
 
@@ -4307,7 +4307,7 @@ kind = "full"
 
 [[batches]]
 position = 150
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 124 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 124 })'
 descriptor = "docs/API.md section #124"
 cost_tokens = 79
 cum_tokens = 6712
@@ -4316,7 +4316,7 @@ cum_tokens = 6712
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1865
 end = 1868
 
@@ -4324,7 +4324,7 @@ end = 1868
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1870
 end = 1870
 
@@ -4333,7 +4333,7 @@ kind = "full"
 
 [[batches]]
 position = 151
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 161 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 161 })'
 descriptor = "docs/API.md section #161"
 cost_tokens = 79
 cum_tokens = 6791
@@ -4342,7 +4342,7 @@ cum_tokens = 6791
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2382
 end = 2385
 
@@ -4350,7 +4350,7 @@ end = 2385
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2387
 end = 2387
 
@@ -4358,7 +4358,7 @@ end = 2387
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2389
 end = 2389
 
@@ -4367,7 +4367,7 @@ kind = "full"
 
 [[batches]]
 position = 152
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 99 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 99 })'
 descriptor = "docs/API.md section #99"
 cost_tokens = 80
 cum_tokens = 6871
@@ -4376,7 +4376,7 @@ cum_tokens = 6871
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1467
 end = 1470
 
@@ -4384,7 +4384,7 @@ end = 1470
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1472
 end = 1472
 
@@ -4393,7 +4393,7 @@ kind = "full"
 
 [[batches]]
 position = 153
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 97 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 97 })'
 descriptor = "docs/API.md section #97"
 cost_tokens = 81
 cum_tokens = 6952
@@ -4402,7 +4402,7 @@ cum_tokens = 6952
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1455
 end = 1458
 
@@ -4410,7 +4410,7 @@ end = 1458
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1460
 end = 1460
 
@@ -4419,7 +4419,7 @@ kind = "full"
 
 [[batches]]
 position = 154
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 100 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 100 })'
 descriptor = "docs/API.md section #100"
 cost_tokens = 81
 cum_tokens = 7033
@@ -4428,7 +4428,7 @@ cum_tokens = 7033
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1473
 end = 1476
 
@@ -4436,7 +4436,7 @@ end = 1476
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1478
 end = 1478
 
@@ -4445,7 +4445,7 @@ kind = "full"
 
 [[batches]]
 position = 155
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 101 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 101 })'
 descriptor = "docs/API.md section #101"
 cost_tokens = 81
 cum_tokens = 7114
@@ -4454,7 +4454,7 @@ cum_tokens = 7114
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1479
 end = 1482
 
@@ -4462,7 +4462,7 @@ end = 1482
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1484
 end = 1484
 
@@ -4471,7 +4471,7 @@ kind = "full"
 
 [[batches]]
 position = 156
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 122 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 122 })'
 descriptor = "docs/API.md section #122"
 cost_tokens = 81
 cum_tokens = 7195
@@ -4480,7 +4480,7 @@ cum_tokens = 7195
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1853
 end = 1856
 
@@ -4488,7 +4488,7 @@ end = 1856
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1858
 end = 1858
 
@@ -4497,7 +4497,7 @@ kind = "full"
 
 [[batches]]
 position = 157
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2094 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2094 })'
 descriptor = "c decl body at neco.c:2094"
 cost_tokens = 101
 cum_tokens = 7296
@@ -4506,7 +4506,7 @@ cum_tokens = 7296
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2096
 end = 2103
 
@@ -4515,7 +4515,7 @@ kind = "full"
 
 [[batches]]
 position = 158
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 89 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 89 })'
 descriptor = "docs/API.md section #89"
 cost_tokens = 82
 cum_tokens = 7378
@@ -4524,7 +4524,7 @@ cum_tokens = 7378
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1407
 end = 1410
 
@@ -4532,7 +4532,7 @@ end = 1410
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1412
 end = 1412
 
@@ -4541,7 +4541,7 @@ kind = "full"
 
 [[batches]]
 position = 159
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 96 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 96 })'
 descriptor = "docs/API.md section #96"
 cost_tokens = 82
 cum_tokens = 7460
@@ -4550,7 +4550,7 @@ cum_tokens = 7460
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1449
 end = 1452
 
@@ -4558,7 +4558,7 @@ end = 1452
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1454
 end = 1454
 
@@ -4567,7 +4567,7 @@ kind = "full"
 
 [[batches]]
 position = 160
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 145 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 145 })'
 descriptor = "docs/API.md section #145"
 cost_tokens = 82
 cum_tokens = 7542
@@ -4576,7 +4576,7 @@ cum_tokens = 7542
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2272
 end = 2275
 
@@ -4584,7 +4584,7 @@ end = 2275
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2277
 end = 2277
 
@@ -4593,7 +4593,7 @@ kind = "full"
 
 [[batches]]
 position = 161
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 42 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 42 })'
 descriptor = "docs/API.md section #42"
 cost_tokens = 83
 cum_tokens = 7625
@@ -4602,7 +4602,7 @@ cum_tokens = 7625
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 466
 end = 473
 
@@ -4610,7 +4610,7 @@ end = 473
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 475
 end = 475
 
@@ -4619,7 +4619,7 @@ kind = "full"
 
 [[batches]]
 position = 162
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 91 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 91 })'
 descriptor = "docs/API.md section #91"
 cost_tokens = 83
 cum_tokens = 7708
@@ -4628,7 +4628,7 @@ cum_tokens = 7708
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1419
 end = 1422
 
@@ -4636,7 +4636,7 @@ end = 1422
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1424
 end = 1424
 
@@ -4645,7 +4645,7 @@ kind = "full"
 
 [[batches]]
 position = 163
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 123 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 123 })'
 descriptor = "docs/API.md section #123"
 cost_tokens = 83
 cum_tokens = 7791
@@ -4654,7 +4654,7 @@ cum_tokens = 7791
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1859
 end = 1862
 
@@ -4662,7 +4662,7 @@ end = 1862
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1864
 end = 1864
 
@@ -4671,7 +4671,7 @@ kind = "full"
 
 [[batches]]
 position = 164
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 146 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 146 })'
 descriptor = "docs/API.md section #146"
 cost_tokens = 83
 cum_tokens = 7874
@@ -4680,7 +4680,7 @@ cum_tokens = 7874
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2278
 end = 2281
 
@@ -4688,7 +4688,7 @@ end = 2281
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2283
 end = 2283
 
@@ -4697,7 +4697,7 @@ kind = "full"
 
 [[batches]]
 position = 165
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 160 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 160 })'
 descriptor = "docs/API.md section #160"
 cost_tokens = 83
 cum_tokens = 7957
@@ -4706,7 +4706,7 @@ cum_tokens = 7957
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2376
 end = 2379
 
@@ -4714,7 +4714,7 @@ end = 2379
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2381
 end = 2381
 
@@ -4723,7 +4723,7 @@ kind = "full"
 
 [[batches]]
 position = 166
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 8 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 8 })'
 descriptor = "docs/assets/API_head.md section #8"
 cost_tokens = 17
 cum_tokens = 7974
@@ -4732,7 +4732,7 @@ cum_tokens = 7974
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 21
 end = 21
 
@@ -4741,7 +4741,7 @@ kind = "full"
 
 [[batches]]
 position = 167
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 9 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 9 })'
 descriptor = "docs/assets/API_head.md section #9"
 cost_tokens = 17
 cum_tokens = 7991
@@ -4750,7 +4750,7 @@ cum_tokens = 7991
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 22
 end = 22
 
@@ -4759,7 +4759,7 @@ kind = "full"
 
 [[batches]]
 position = 168
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 88 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 88 })'
 descriptor = "docs/API.md section #88"
 cost_tokens = 84
 cum_tokens = 8075
@@ -4768,7 +4768,7 @@ cum_tokens = 8075
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1401
 end = 1404
 
@@ -4776,7 +4776,7 @@ end = 1404
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1406
 end = 1406
 
@@ -4785,7 +4785,7 @@ kind = "full"
 
 [[batches]]
 position = 169
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 93 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 93 })'
 descriptor = "docs/API.md section #93"
 cost_tokens = 85
 cum_tokens = 8160
@@ -4794,7 +4794,7 @@ cum_tokens = 8160
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1431
 end = 1434
 
@@ -4802,7 +4802,7 @@ end = 1434
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1436
 end = 1436
 
@@ -4811,7 +4811,7 @@ kind = "full"
 
 [[batches]]
 position = 170
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 94 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 94 })'
 descriptor = "docs/API.md section #94"
 cost_tokens = 86
 cum_tokens = 8246
@@ -4820,7 +4820,7 @@ cum_tokens = 8246
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1437
 end = 1440
 
@@ -4828,7 +4828,7 @@ end = 1440
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1442
 end = 1442
 
@@ -4837,7 +4837,7 @@ kind = "full"
 
 [[batches]]
 position = 171
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 102 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 102 })'
 descriptor = "docs/API.md section #102"
 cost_tokens = 86
 cum_tokens = 8332
@@ -4846,7 +4846,7 @@ cum_tokens = 8332
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1485
 end = 1488
 
@@ -4854,7 +4854,7 @@ end = 1488
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1490
 end = 1490
 
@@ -4863,7 +4863,7 @@ kind = "full"
 
 [[batches]]
 position = 172
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 95 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 95 })'
 descriptor = "docs/API.md section #95"
 cost_tokens = 87
 cum_tokens = 8419
@@ -4872,7 +4872,7 @@ cum_tokens = 8419
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1443
 end = 1446
 
@@ -4880,7 +4880,7 @@ end = 1446
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1448
 end = 1448
 
@@ -4889,7 +4889,7 @@ kind = "full"
 
 [[batches]]
 position = 173
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 5 })'
+key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 267
 cum_tokens = 8686
@@ -4898,7 +4898,7 @@ cum_tokens = 8686
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 93
 end = 93
 
@@ -4906,7 +4906,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 95
 end = 95
 
@@ -4914,7 +4914,7 @@ end = 95
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 97
 end = 99
 
@@ -4922,7 +4922,7 @@ end = 99
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 101
 end = 106
 
@@ -4930,7 +4930,7 @@ end = 106
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 108
 end = 113
 
@@ -4938,7 +4938,7 @@ end = 113
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 115
 end = 117
 
@@ -4946,7 +4946,7 @@ end = 117
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+path = "README.md"
 start = 119
 end = 123
 
@@ -4955,7 +4955,7 @@ kind = "full"
 
 [[batches]]
 position = 174
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 151 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 151 })'
 descriptor = "docs/API.md section #151"
 cost_tokens = 90
 cum_tokens = 8776
@@ -4964,7 +4964,7 @@ cum_tokens = 8776
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2312
 end = 2315
 
@@ -4972,7 +4972,7 @@ end = 2315
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2317
 end = 2317
 
@@ -4981,7 +4981,7 @@ kind = "full"
 
 [[batches]]
 position = 175
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 92 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 92 })'
 descriptor = "docs/API.md section #92"
 cost_tokens = 91
 cum_tokens = 8867
@@ -4990,7 +4990,7 @@ cum_tokens = 8867
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1425
 end = 1428
 
@@ -4998,7 +4998,7 @@ end = 1428
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1430
 end = 1430
 
@@ -5007,7 +5007,7 @@ kind = "full"
 
 [[batches]]
 position = 176
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 98 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 98 })'
 descriptor = "docs/API.md section #98"
 cost_tokens = 91
 cum_tokens = 8958
@@ -5016,7 +5016,7 @@ cum_tokens = 8958
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1461
 end = 1464
 
@@ -5024,7 +5024,7 @@ end = 1464
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1466
 end = 1466
 
@@ -5033,7 +5033,7 @@ kind = "full"
 
 [[batches]]
 position = 177
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 103 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 103 })'
 descriptor = "docs/API.md section #103"
 cost_tokens = 92
 cum_tokens = 9050
@@ -5042,7 +5042,7 @@ cum_tokens = 9050
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1491
 end = 1494
 
@@ -5050,7 +5050,7 @@ end = 1494
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 1496
 end = 1496
 
@@ -5059,7 +5059,7 @@ kind = "full"
 
 [[batches]]
 position = 178
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 147 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 147 })'
 descriptor = "docs/API.md section #147"
 cost_tokens = 92
 cum_tokens = 9142
@@ -5068,7 +5068,7 @@ cum_tokens = 9142
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2284
 end = 2288
 
@@ -5076,7 +5076,7 @@ end = 2288
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2291
 end = 2291
 
@@ -5085,7 +5085,7 @@ kind = "full"
 
 [[batches]]
 position = 179
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 149 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 149 })'
 descriptor = "docs/API.md section #149"
 cost_tokens = 93
 cum_tokens = 9235
@@ -5094,7 +5094,7 @@ cum_tokens = 9235
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2300
 end = 2303
 
@@ -5102,7 +5102,7 @@ end = 2303
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2305
 end = 2305
 
@@ -5111,7 +5111,7 @@ kind = "full"
 
 [[batches]]
 position = 180
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 153 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 153 })'
 descriptor = "docs/API.md section #153"
 cost_tokens = 93
 cum_tokens = 9328
@@ -5120,7 +5120,7 @@ cum_tokens = 9328
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2324
 end = 2327
 
@@ -5128,7 +5128,7 @@ end = 2327
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2329
 end = 2329
 
@@ -5137,7 +5137,7 @@ kind = "full"
 
 [[batches]]
 position = 181
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 41 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 41 })'
 descriptor = "docs/API.md section #41"
 cost_tokens = 94
 cum_tokens = 9422
@@ -5146,7 +5146,7 @@ cum_tokens = 9422
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 455
 end = 463
 
@@ -5154,7 +5154,7 @@ end = 463
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 465
 end = 465
 
@@ -5163,7 +5163,7 @@ kind = "full"
 
 [[batches]]
 position = 182
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 158 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 158 })'
 descriptor = "docs/API.md section #158"
 cost_tokens = 94
 cum_tokens = 9516
@@ -5172,7 +5172,7 @@ cum_tokens = 9516
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2360
 end = 2364
 
@@ -5180,7 +5180,7 @@ end = 2364
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2367
 end = 2367
 
@@ -5189,7 +5189,7 @@ kind = "full"
 
 [[batches]]
 position = 183
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 150 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 150 })'
 descriptor = "docs/API.md section #150"
 cost_tokens = 95
 cum_tokens = 9611
@@ -5198,7 +5198,7 @@ cum_tokens = 9611
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2306
 end = 2309
 
@@ -5206,7 +5206,7 @@ end = 2309
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2311
 end = 2311
 
@@ -5215,7 +5215,7 @@ kind = "full"
 
 [[batches]]
 position = 184
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2106 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2106 })'
 descriptor = "c decl body at neco.c:2106"
 cost_tokens = 119
 cum_tokens = 9730
@@ -5224,7 +5224,7 @@ cum_tokens = 9730
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2108
 end = 2117
 
@@ -5233,7 +5233,7 @@ kind = "full"
 
 [[batches]]
 position = 185
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2192 })'
+key = 'C(DeclBody { file: "neco.c", start_line: 2192 })'
 descriptor = "c decl body at neco.c:2192"
 cost_tokens = 120
 cum_tokens = 9850
@@ -5242,7 +5242,7 @@ cum_tokens = 9850
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+path = "neco.c"
 start = 2194
 end = 2202
 
@@ -5251,7 +5251,7 @@ kind = "full"
 
 [[batches]]
 position = 186
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 11 })'
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 11 })'
 descriptor = "docs/assets/API_head.md section #11"
 cost_tokens = 20
 cum_tokens = 9870
@@ -5260,7 +5260,7 @@ cum_tokens = 9870
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+path = "docs/assets/API_head.md"
 start = 24
 end = 24
 
@@ -5269,7 +5269,7 @@ kind = "full"
 
 [[batches]]
 position = 187
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 152 })'
+key = 'Markdown(Section { file: "docs/API.md", section_index: 152 })'
 descriptor = "docs/API.md section #152"
 cost_tokens = 101
 cum_tokens = 9971
@@ -5278,7 +5278,7 @@ cum_tokens = 9971
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2318
 end = 2321
 
@@ -5286,7 +5286,7 @@ end = 2321
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+path = "docs/API.md"
 start = 2323
 end = 2323
 

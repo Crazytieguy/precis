@@ -5,7 +5,7 @@ batch_count = 48
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/p-queue" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 39
 cum_tokens = 39
@@ -14,12 +14,12 @@ cum_tokens = 39
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/p-queue"
+parent = "."
 entries = [".editorconfig", ".gitattributes", ".github", ".gitignore", ".npmrc", "bench.ts", "license", "package.json", "readme.md", "source", "test", "test-d", "tsconfig.json"]
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/p-queue/test-d" })'
+key = 'Fs(DirListing { dir: "test-d" })'
 descriptor = "listing of 'test-d'"
 cost_tokens = 6
 cum_tokens = 45
@@ -28,12 +28,12 @@ cum_tokens = 45
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/p-queue/test-d"
+parent = "test-d"
 entries = ["index.test-d.ts"]
 
 [[batches]]
 position = 3
-key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
+key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 62
 cum_tokens = 107
@@ -42,7 +42,7 @@ cum_tokens = 107
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 2
 end = 5
 
@@ -50,7 +50,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 8
 end = 8
 
@@ -59,7 +59,7 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md" })'
+key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
 descriptor = "README headline in readme.md"
 cost_tokens = 55
 cum_tokens = 162
@@ -68,7 +68,7 @@ cum_tokens = 162
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1
 end = 1
 
@@ -76,7 +76,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 3
 end = 3
 
@@ -84,7 +84,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 5
 end = 5
 
@@ -93,7 +93,7 @@ kind = "full"
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source" })'
+key = 'Fs(DirListing { dir: "source" })'
 descriptor = "listing of 'source'"
 cost_tokens = 23
 cum_tokens = 185
@@ -102,12 +102,12 @@ cum_tokens = 185
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source"
+parent = "source"
 entries = ["index.ts", "lower-bound.ts", "options.ts", "priority-queue.ts", "queue.ts"]
 
 [[batches]]
 position = 6
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "source/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in source/index.ts"
 cost_tokens = 61
 cum_tokens = 246
@@ -116,7 +116,7 @@ cum_tokens = 246
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 16
 end = 16
 
@@ -124,7 +124,7 @@ end = 16
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 17
 end = 17
 
@@ -133,7 +133,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 7
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md" })'
+key = 'Markdown(HeadingsOutline { file: "readme.md" })'
 descriptor = "headings outline in readme.md"
 cost_tokens = 118
 cum_tokens = 364
@@ -142,7 +142,7 @@ cum_tokens = 364
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 39
 end = 39
 
@@ -150,7 +150,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 47
 end = 47
 
@@ -158,7 +158,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 68
 end = 68
 
@@ -166,7 +166,7 @@ end = 68
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 70
 end = 70
 
@@ -174,7 +174,7 @@ end = 70
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 162
 end = 162
 
@@ -182,7 +182,7 @@ end = 162
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 512
 end = 512
 
@@ -190,7 +190,7 @@ end = 512
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 698
 end = 698
 
@@ -198,7 +198,7 @@ end = 698
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 768
 end = 768
 
@@ -206,7 +206,7 @@ end = 768
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 813
 end = 813
 
@@ -214,7 +214,7 @@ end = 813
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 847
 end = 847
 
@@ -222,7 +222,7 @@ end = 847
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1066
 end = 1066
 
@@ -230,7 +230,7 @@ end = 1066
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1071
 end = 1071
 
@@ -238,7 +238,7 @@ end = 1071
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 40
 end = 40
 
@@ -246,7 +246,7 @@ end = 40
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 48
 end = 48
 
@@ -254,7 +254,7 @@ end = 48
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 69
 end = 69
 
@@ -262,7 +262,7 @@ end = 69
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 71
 end = 71
 
@@ -270,7 +270,7 @@ end = 71
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 163
 end = 163
 
@@ -278,7 +278,7 @@ end = 163
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 513
 end = 513
 
@@ -286,7 +286,7 @@ end = 513
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 699
 end = 699
 
@@ -294,7 +294,7 @@ end = 699
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 769
 end = 769
 
@@ -302,7 +302,7 @@ end = 769
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 814
 end = 814
 
@@ -310,7 +310,7 @@ end = 814
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 848
 end = 848
 
@@ -318,7 +318,7 @@ end = 848
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1067
 end = 1067
 
@@ -326,7 +326,7 @@ end = 1067
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1072
 end = 1072
 
@@ -335,7 +335,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 8
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 5 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 5 })'
 descriptor = "readme.md section #5"
 cost_tokens = 10
 cum_tokens = 374
@@ -344,7 +344,7 @@ cum_tokens = 374
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 164
 end = 164
 
@@ -353,7 +353,7 @@ kind = "full"
 
 [[batches]]
 position = 9
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 24 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 24 })'
 descriptor = "readme.md section #24"
 cost_tokens = 13
 cum_tokens = 387
@@ -362,7 +362,7 @@ cum_tokens = 387
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 440
 end = 440
 
@@ -371,7 +371,7 @@ kind = "full"
 
 [[batches]]
 position = 10
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts" })'
+key = 'Typescript(Imports { file: "source/index.ts" })'
 descriptor = "imports in source/index.ts"
 cost_tokens = 84
 cum_tokens = 471
@@ -380,7 +380,7 @@ cum_tokens = 471
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 1
 end = 5
 
@@ -389,7 +389,7 @@ kind = "full"
 
 [[batches]]
 position = 11
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
+key = 'Typescript(ExportNames { file: "source/priority-queue.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
 descriptor = "export names surface in source/priority-queue.ts"
 cost_tokens = 35
 cum_tokens = 506
@@ -398,7 +398,7 @@ cum_tokens = 506
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 7
 end = 7
 
@@ -406,7 +406,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 11
 end = 11
 
@@ -414,7 +414,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 8
 end = 8
 
@@ -422,7 +422,7 @@ end = 8
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 12
 end = 12
 
@@ -431,7 +431,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 12
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts", start_line: 7 })'
+key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 7 })'
 descriptor = "export at source/priority-queue.ts:7"
 cost_tokens = 17
 cum_tokens = 523
@@ -440,7 +440,7 @@ cum_tokens = 523
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 7
 end = 9
 
@@ -449,7 +449,7 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts", start_line: 11 })'
+key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 11 })'
 descriptor = "export at source/priority-queue.ts:11"
 cost_tokens = 173
 cum_tokens = 696
@@ -458,7 +458,7 @@ cum_tokens = 696
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 11
 end = 12
 
@@ -466,7 +466,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 15
 end = 15
 
@@ -474,7 +474,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 17
 end = 17
 
@@ -482,7 +482,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 50
 end = 50
 
@@ -490,7 +490,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 61
 end = 63
 
@@ -498,7 +498,7 @@ end = 63
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 82
 end = 82
 
@@ -506,7 +506,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 102
 end = 102
 
@@ -514,7 +514,7 @@ end = 102
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 115
 end = 115
 
@@ -522,7 +522,7 @@ end = 115
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 119
 end = 119
 
@@ -530,7 +530,7 @@ end = 119
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 18
 end = 18
 
@@ -538,7 +538,7 @@ end = 18
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 51
 end = 51
 
@@ -546,7 +546,7 @@ end = 51
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 64
 end = 64
 
@@ -554,7 +554,7 @@ end = 64
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 83
 end = 83
 
@@ -562,7 +562,7 @@ end = 83
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 103
 end = 103
 
@@ -570,7 +570,7 @@ end = 103
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 116
 end = 116
 
@@ -578,7 +578,7 @@ end = 116
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 120
 end = 120
 
@@ -587,7 +587,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 14
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts" })'
+key = 'Typescript(Imports { file: "source/options.ts" })'
 descriptor = "imports in source/options.ts"
 cost_tokens = 18
 cum_tokens = 714
@@ -596,7 +596,7 @@ cum_tokens = 714
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts"
+path = "source/options.ts"
 start = 1
 end = 1
 
@@ -605,7 +605,7 @@ kind = "full"
 
 [[batches]]
 position = 15
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 9 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 9 })'
 descriptor = "readme.md section #9"
 cost_tokens = 18
 cum_tokens = 732
@@ -614,7 +614,7 @@ cum_tokens = 732
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 240
 end = 240
 
@@ -622,7 +622,7 @@ end = 240
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 242
 end = 242
 
@@ -631,7 +631,7 @@ kind = "full"
 
 [[batches]]
 position = 16
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 34 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 34 })'
 descriptor = "readme.md section #34"
 cost_tokens = 43
 cum_tokens = 775
@@ -640,7 +640,7 @@ cum_tokens = 775
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1066
 end = 1066
 
@@ -648,7 +648,7 @@ end = 1066
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1068
 end = 1069
 
@@ -657,7 +657,7 @@ kind = "full"
 
 [[batches]]
 position = 17
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 25 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 25 })'
 descriptor = "readme.md section #25"
 cost_tokens = 20
 cum_tokens = 795
@@ -666,7 +666,7 @@ cum_tokens = 795
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 442
 end = 442
 
@@ -674,7 +674,7 @@ end = 442
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 444
 end = 444
 
@@ -683,7 +683,7 @@ kind = "full"
 
 [[batches]]
 position = 18
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 0 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 0 })'
 descriptor = "readme.md section #0"
 cost_tokens = 366
 cum_tokens = 1161
@@ -692,7 +692,7 @@ cum_tokens = 1161
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 7
 end = 7
 
@@ -700,7 +700,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 9
 end = 9
 
@@ -708,7 +708,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 11
 end = 11
 
@@ -716,7 +716,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 13
 end = 35
 
@@ -724,7 +724,7 @@ end = 35
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 37
 end = 37
 
@@ -733,7 +733,7 @@ kind = "full"
 
 [[batches]]
 position = 19
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/tsconfig.json" })'
+key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 81
 cum_tokens = 1242
@@ -742,7 +742,7 @@ cum_tokens = 1242
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/tsconfig.json"
+path = "tsconfig.json"
 start = 1
 end = 9
 
@@ -751,7 +751,7 @@ kind = "full"
 
 [[batches]]
 position = 20
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 22 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 22 })'
 descriptor = "readme.md section #22"
 cost_tokens = 23
 cum_tokens = 1265
@@ -760,7 +760,7 @@ cum_tokens = 1265
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 419
 end = 419
 
@@ -768,7 +768,7 @@ end = 419
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 421
 end = 421
 
@@ -777,7 +777,7 @@ kind = "full"
 
 [[batches]]
 position = 21
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts", start_line: 16 })'
+key = 'Typescript(Export { file: "source/index.ts", start_line: 16 })'
 descriptor = "export at source/index.ts:16"
 cost_tokens = 1185
 cum_tokens = 2450
@@ -786,7 +786,7 @@ cum_tokens = 2450
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 16
 end = 17
 
@@ -794,7 +794,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 19
 end = 19
 
@@ -802,7 +802,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 21
 end = 21
 
@@ -810,7 +810,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 23
 end = 23
 
@@ -818,7 +818,7 @@ end = 23
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 25
 end = 26
 
@@ -826,7 +826,7 @@ end = 26
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 28
 end = 28
 
@@ -834,7 +834,7 @@ end = 28
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 30
 end = 30
 
@@ -842,7 +842,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 32
 end = 32
 
@@ -850,7 +850,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 34
 end = 34
 
@@ -858,7 +858,7 @@ end = 34
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 36
 end = 36
 
@@ -866,7 +866,7 @@ end = 36
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 38
 end = 38
 
@@ -874,7 +874,7 @@ end = 38
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 41
 end = 42
 
@@ -882,7 +882,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 44
 end = 44
 
@@ -890,7 +890,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 46
 end = 46
 
@@ -898,7 +898,7 @@ end = 46
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 48
 end = 48
 
@@ -906,7 +906,7 @@ end = 48
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 51
 end = 51
 
@@ -914,7 +914,7 @@ end = 51
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 53
 end = 53
 
@@ -922,7 +922,7 @@ end = 53
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 56
 end = 56
 
@@ -930,7 +930,7 @@ end = 56
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 59
 end = 64
 
@@ -938,7 +938,7 @@ end = 64
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 66
 end = 66
 
@@ -946,7 +946,7 @@ end = 66
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 83
 end = 83
 
@@ -954,7 +954,7 @@ end = 83
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 85
 end = 85
 
@@ -962,7 +962,7 @@ end = 85
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 137
 end = 137
 
@@ -970,7 +970,7 @@ end = 137
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 160
 end = 160
 
@@ -978,7 +978,7 @@ end = 160
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 168
 end = 168
 
@@ -986,7 +986,7 @@ end = 168
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 179
 end = 179
 
@@ -994,7 +994,7 @@ end = 179
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 183
 end = 183
 
@@ -1002,7 +1002,7 @@ end = 183
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 196
 end = 196
 
@@ -1010,7 +1010,7 @@ end = 196
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 200
 end = 200
 
@@ -1018,7 +1018,7 @@ end = 200
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 211
 end = 211
 
@@ -1026,7 +1026,7 @@ end = 211
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 219
 end = 219
 
@@ -1034,7 +1034,7 @@ end = 219
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 265
 end = 265
 
@@ -1042,7 +1042,7 @@ end = 265
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 275
 end = 275
 
@@ -1050,7 +1050,7 @@ end = 275
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 282
 end = 282
 
@@ -1058,7 +1058,7 @@ end = 282
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 289
 end = 289
 
@@ -1066,7 +1066,7 @@ end = 289
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 340
 end = 340
 
@@ -1074,7 +1074,7 @@ end = 340
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 360
 end = 360
 
@@ -1082,7 +1082,7 @@ end = 360
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 377
 end = 377
 
@@ -1090,7 +1090,7 @@ end = 377
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 382
 end = 382
 
@@ -1098,7 +1098,7 @@ end = 382
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 386
 end = 386
 
@@ -1106,7 +1106,7 @@ end = 386
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 432
 end = 432
 
@@ -1114,7 +1114,7 @@ end = 432
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 443
 end = 444
 
@@ -1122,7 +1122,7 @@ end = 444
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 581
 end = 588
 
@@ -1130,7 +1130,7 @@ end = 588
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 595
 end = 595
 
@@ -1138,7 +1138,7 @@ end = 595
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 609
 end = 609
 
@@ -1146,7 +1146,7 @@ end = 609
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 616
 end = 616
 
@@ -1154,7 +1154,7 @@ end = 616
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 652
 end = 652
 
@@ -1162,7 +1162,7 @@ end = 652
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 668
 end = 668
 
@@ -1170,7 +1170,7 @@ end = 668
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 682
 end = 682
 
@@ -1178,7 +1178,7 @@ end = 682
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 696
 end = 696
 
@@ -1186,7 +1186,7 @@ end = 696
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 707
 end = 707
 
@@ -1194,7 +1194,7 @@ end = 707
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 718
 end = 718
 
@@ -1202,7 +1202,7 @@ end = 718
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 756
 end = 756
 
@@ -1210,7 +1210,7 @@ end = 756
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 767
 end = 767
 
@@ -1218,7 +1218,7 @@ end = 767
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 785
 end = 785
 
@@ -1226,7 +1226,7 @@ end = 785
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 794
 end = 794
 
@@ -1234,7 +1234,7 @@ end = 794
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 802
 end = 802
 
@@ -1242,7 +1242,7 @@ end = 802
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 809
 end = 809
 
@@ -1250,7 +1250,7 @@ end = 809
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 813
 end = 813
 
@@ -1258,7 +1258,7 @@ end = 813
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 832
 end = 832
 
@@ -1266,7 +1266,7 @@ end = 832
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 845
 end = 845
 
@@ -1274,7 +1274,7 @@ end = 845
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 854
 end = 854
 
@@ -1282,7 +1282,7 @@ end = 854
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 888
 end = 888
 
@@ -1290,7 +1290,7 @@ end = 888
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 918
 end = 918
 
@@ -1298,7 +1298,7 @@ end = 918
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 952
 end = 957
 
@@ -1306,7 +1306,7 @@ end = 957
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 86
 end = 86
 
@@ -1314,7 +1314,7 @@ end = 86
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 138
 end = 138
 
@@ -1322,7 +1322,7 @@ end = 138
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 161
 end = 161
 
@@ -1330,7 +1330,7 @@ end = 161
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 169
 end = 169
 
@@ -1338,7 +1338,7 @@ end = 169
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 180
 end = 180
 
@@ -1346,7 +1346,7 @@ end = 180
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 184
 end = 184
 
@@ -1354,7 +1354,7 @@ end = 184
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 197
 end = 197
 
@@ -1362,7 +1362,7 @@ end = 197
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 201
 end = 201
 
@@ -1370,7 +1370,7 @@ end = 201
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 212
 end = 212
 
@@ -1378,7 +1378,7 @@ end = 212
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 220
 end = 220
 
@@ -1386,7 +1386,7 @@ end = 220
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 266
 end = 266
 
@@ -1394,7 +1394,7 @@ end = 266
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 276
 end = 276
 
@@ -1402,7 +1402,7 @@ end = 276
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 283
 end = 283
 
@@ -1410,7 +1410,7 @@ end = 283
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 290
 end = 290
 
@@ -1418,7 +1418,7 @@ end = 290
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 341
 end = 341
 
@@ -1426,7 +1426,7 @@ end = 341
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 361
 end = 361
 
@@ -1434,7 +1434,7 @@ end = 361
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 378
 end = 378
 
@@ -1442,7 +1442,7 @@ end = 378
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 383
 end = 383
 
@@ -1450,7 +1450,7 @@ end = 383
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 387
 end = 387
 
@@ -1458,7 +1458,7 @@ end = 387
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 433
 end = 433
 
@@ -1466,7 +1466,7 @@ end = 433
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 445
 end = 445
 
@@ -1474,7 +1474,7 @@ end = 445
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 589
 end = 589
 
@@ -1482,7 +1482,7 @@ end = 589
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 596
 end = 596
 
@@ -1490,7 +1490,7 @@ end = 596
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 610
 end = 610
 
@@ -1498,7 +1498,7 @@ end = 610
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 617
 end = 617
 
@@ -1506,7 +1506,7 @@ end = 617
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 653
 end = 653
 
@@ -1514,7 +1514,7 @@ end = 653
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 669
 end = 669
 
@@ -1522,7 +1522,7 @@ end = 669
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 683
 end = 683
 
@@ -1530,7 +1530,7 @@ end = 683
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 697
 end = 697
 
@@ -1538,7 +1538,7 @@ end = 697
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 708
 end = 708
 
@@ -1546,7 +1546,7 @@ end = 708
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 719
 end = 719
 
@@ -1554,7 +1554,7 @@ end = 719
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 757
 end = 757
 
@@ -1562,7 +1562,7 @@ end = 757
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 768
 end = 768
 
@@ -1570,7 +1570,7 @@ end = 768
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 786
 end = 786
 
@@ -1578,7 +1578,7 @@ end = 786
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 795
 end = 795
 
@@ -1586,7 +1586,7 @@ end = 795
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 803
 end = 803
 
@@ -1594,7 +1594,7 @@ end = 803
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 810
 end = 810
 
@@ -1602,7 +1602,7 @@ end = 810
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 814
 end = 814
 
@@ -1610,7 +1610,7 @@ end = 814
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 833
 end = 833
 
@@ -1618,7 +1618,7 @@ end = 833
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 846
 end = 846
 
@@ -1626,7 +1626,7 @@ end = 846
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 855
 end = 855
 
@@ -1634,7 +1634,7 @@ end = 855
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 889
 end = 889
 
@@ -1642,7 +1642,7 @@ end = 889
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 919
 end = 919
 
@@ -1650,7 +1650,7 @@ end = 919
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 958
 end = 958
 
@@ -1659,7 +1659,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 22
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts", start_line: 16 })'
+key = 'Typescript(ExportDoc { file: "source/index.ts", start_line: 16 })'
 descriptor = "export doc at source/index.ts:16"
 cost_tokens = 20
 cum_tokens = 2470
@@ -1668,7 +1668,7 @@ cum_tokens = 2470
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/index.ts"
+path = "source/index.ts"
 start = 13
 end = 15
 
@@ -1677,7 +1677,7 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/p-queue/test" })'
+key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 31
 cum_tokens = 2501
@@ -1686,12 +1686,12 @@ cum_tokens = 2501
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/p-queue/test"
+parent = "test"
 entries = ["advanced.ts", "basic.ts", "debug.ts", "priority-queue.ts", "rate-limit.ts", "strict.ts", "validation.ts"]
 
 [[batches]]
 position = 24
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 19 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 19 })'
 descriptor = "readme.md section #19"
 cost_tokens = 26
 cum_tokens = 2527
@@ -1700,7 +1700,7 @@ cum_tokens = 2527
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 355
 end = 355
 
@@ -1708,7 +1708,7 @@ end = 355
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 357
 end = 357
 
@@ -1717,7 +1717,7 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 1 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 1 })'
 descriptor = "readme.md section #1"
 cost_tokens = 121
 cum_tokens = 2648
@@ -1726,7 +1726,7 @@ cum_tokens = 2648
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 39
 end = 39
 
@@ -1734,7 +1734,7 @@ end = 39
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 41
 end = 43
 
@@ -1742,7 +1742,7 @@ end = 43
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 45
 end = 45
 
@@ -1751,7 +1751,7 @@ kind = "full"
 
 [[batches]]
 position = 26
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts" })'
+key = 'Typescript(Imports { file: "source/priority-queue.ts" })'
 descriptor = "imports in source/priority-queue.ts"
 cost_tokens = 47
 cum_tokens = 2695
@@ -1760,7 +1760,7 @@ cum_tokens = 2695
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 1
 end = 3
 
@@ -1769,7 +1769,7 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 3 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 3 })'
 descriptor = "readme.md section #3"
 cost_tokens = 34
 cum_tokens = 2729
@@ -1778,7 +1778,7 @@ cum_tokens = 2729
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 72
 end = 72
 
@@ -1787,7 +1787,7 @@ kind = "full"
 
 [[batches]]
 position = 28
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "source/lower-bound.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in source/lower-bound.ts"
 cost_tokens = 38
 cum_tokens = 2767
@@ -1796,7 +1796,7 @@ cum_tokens = 2767
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+path = "source/lower-bound.ts"
 start = 3
 end = 3
 
@@ -1804,7 +1804,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+path = "source/lower-bound.ts"
 start = 4
 end = 4
 
@@ -1813,7 +1813,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 29
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts", start_line: 3 })'
+key = 'Typescript(Export { file: "source/lower-bound.ts", start_line: 3 })'
 descriptor = "export at source/lower-bound.ts:3"
 cost_tokens = 0
 cum_tokens = 2767
@@ -1822,7 +1822,7 @@ cum_tokens = 2767
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+path = "source/lower-bound.ts"
 start = 3
 end = 3
 
@@ -1830,7 +1830,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+path = "source/lower-bound.ts"
 start = 4
 end = 4
 
@@ -1839,7 +1839,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 30
-key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
+key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 243
 cum_tokens = 3010
@@ -1848,7 +1848,7 @@ cum_tokens = 3010
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 6
 end = 7
 
@@ -1856,7 +1856,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 27
 end = 48
 
@@ -1865,7 +1865,7 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
+key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 92
 cum_tokens = 3102
@@ -1874,7 +1874,7 @@ cum_tokens = 3102
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 9
 end = 13
 
@@ -1882,7 +1882,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 23
 end = 26
 
@@ -1891,7 +1891,7 @@ kind = "full"
 
 [[batches]]
 position = 32
-key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
+key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 29
 cum_tokens = 3131
@@ -1900,7 +1900,7 @@ cum_tokens = 3131
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 14
 end = 16
 
@@ -1909,7 +1909,7 @@ kind = "full"
 
 [[batches]]
 position = 33
-key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
+key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 106
 cum_tokens = 3237
@@ -1918,7 +1918,7 @@ cum_tokens = 3237
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 17
 end = 22
 
@@ -1927,7 +1927,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 8 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 8 })'
 descriptor = "readme.md section #8"
 cost_tokens = 44
 cum_tokens = 3281
@@ -1936,7 +1936,7 @@ cum_tokens = 3281
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 236
 end = 236
 
@@ -1944,7 +1944,7 @@ end = 236
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 238
 end = 238
 
@@ -1953,7 +1953,7 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 2 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 2 })'
 descriptor = "readme.md section #2"
 cost_tokens = 180
 cum_tokens = 3461
@@ -1962,7 +1962,7 @@ cum_tokens = 3461
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 47
 end = 47
 
@@ -1970,7 +1970,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 49
 end = 49
 
@@ -1978,7 +1978,7 @@ end = 49
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 51
 end = 53
 
@@ -1986,7 +1986,7 @@ end = 53
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 55
 end = 55
 
@@ -1994,7 +1994,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 57
 end = 60
 
@@ -2002,7 +2002,7 @@ end = 60
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 62
 end = 66
 
@@ -2011,7 +2011,7 @@ kind = "full"
 
 [[batches]]
 position = 36
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 26 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 26 })'
 descriptor = "readme.md section #26"
 cost_tokens = 59
 cum_tokens = 3520
@@ -2020,7 +2020,7 @@ cum_tokens = 3520
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 446
 end = 446
 
@@ -2028,7 +2028,7 @@ end = 446
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 448
 end = 448
 
@@ -2037,7 +2037,7 @@ kind = "full"
 
 [[batches]]
 position = 37
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 10 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 10 })'
 descriptor = "readme.md section #10"
 cost_tokens = 63
 cum_tokens = 3583
@@ -2046,7 +2046,7 @@ cum_tokens = 3583
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 244
 end = 244
 
@@ -2054,7 +2054,7 @@ end = 244
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 246
 end = 246
 
@@ -2062,7 +2062,7 @@ end = 246
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 248
 end = 248
 
@@ -2071,7 +2071,7 @@ kind = "full"
 
 [[batches]]
 position = 38
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/queue.ts", chunk_index: 0, export_count: 2, type_only_export_count: 2 })'
+key = 'Typescript(ExportNames { file: "source/queue.ts", chunk_index: 0, export_count: 2, type_only_export_count: 2 })'
 descriptor = "export names surface in source/queue.ts"
 cost_tokens = 32
 cum_tokens = 3615
@@ -2080,7 +2080,7 @@ cum_tokens = 3615
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/queue.ts"
+path = "source/queue.ts"
 start = 1
 end = 1
 
@@ -2088,7 +2088,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/queue.ts"
+path = "source/queue.ts"
 start = 3
 end = 3
 
@@ -2096,7 +2096,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/queue.ts"
+path = "source/queue.ts"
 start = 2
 end = 2
 
@@ -2104,7 +2104,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/queue.ts"
+path = "source/queue.ts"
 start = 4
 end = 4
 
@@ -2113,7 +2113,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 39
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts", start_line: 3, body_start_line: 4 })'
+key = 'Typescript(ExportBody { file: "source/lower-bound.ts", start_line: 3, body_start_line: 4 })'
 descriptor = "export body at source/lower-bound.ts:3 body 4"
 cost_tokens = 138
 cum_tokens = 3753
@@ -2122,7 +2122,7 @@ cum_tokens = 3753
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+path = "source/lower-bound.ts"
 start = 4
 end = 5
 
@@ -2130,7 +2130,7 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+path = "source/lower-bound.ts"
 start = 7
 end = 9
 
@@ -2138,7 +2138,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+path = "source/lower-bound.ts"
 start = 11
 end = 17
 
@@ -2146,7 +2146,7 @@ end = 17
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+path = "source/lower-bound.ts"
 start = 19
 end = 19
 
@@ -2155,7 +2155,7 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts", start_line: 11, body_start_line: 18 })'
+key = 'Typescript(ExportBody { file: "source/priority-queue.ts", start_line: 11, body_start_line: 18 })'
 descriptor = "export body at source/priority-queue.ts:11 body 18"
 cost_tokens = 1025
 cum_tokens = 4778
@@ -2164,7 +2164,7 @@ cum_tokens = 4778
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 18
 end = 21
 
@@ -2172,7 +2172,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 23
 end = 28
 
@@ -2180,7 +2180,7 @@ end = 28
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 30
 end = 36
 
@@ -2188,7 +2188,7 @@ end = 36
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 38
 end = 42
 
@@ -2196,7 +2196,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 44
 end = 47
 
@@ -2204,7 +2204,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 51
 end = 55
 
@@ -2212,7 +2212,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 57
 end = 58
 
@@ -2220,7 +2220,7 @@ end = 58
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 64
 end = 68
 
@@ -2228,7 +2228,7 @@ end = 68
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 70
 end = 72
 
@@ -2236,7 +2236,7 @@ end = 72
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 74
 end = 75
 
@@ -2244,7 +2244,7 @@ end = 75
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 77
 end = 79
 
@@ -2252,7 +2252,7 @@ end = 79
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 83
 end = 85
 
@@ -2260,7 +2260,7 @@ end = 85
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 87
 end = 88
 
@@ -2268,7 +2268,7 @@ end = 88
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 90
 end = 97
 
@@ -2276,7 +2276,7 @@ end = 97
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 99
 end = 99
 
@@ -2284,7 +2284,7 @@ end = 99
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 103
 end = 103
 
@@ -2292,7 +2292,7 @@ end = 103
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 105
 end = 110
 
@@ -2300,7 +2300,7 @@ end = 110
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 112
 end = 112
 
@@ -2308,7 +2308,7 @@ end = 112
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 116
 end = 116
 
@@ -2316,7 +2316,7 @@ end = 116
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 120
 end = 123
 
@@ -2324,7 +2324,7 @@ end = 123
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts"
+path = "source/priority-queue.ts"
 start = 125
 end = 126
 
@@ -2333,7 +2333,7 @@ kind = "full"
 
 [[batches]]
 position = 41
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 35 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 35 })'
 descriptor = "readme.md section #35"
 cost_tokens = 163
 cum_tokens = 4941
@@ -2342,7 +2342,7 @@ cum_tokens = 4941
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1071
 end = 1071
 
@@ -2350,7 +2350,7 @@ end = 1071
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 1073
 end = 1077
 
@@ -2359,7 +2359,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/p-queue/.github" })'
+key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
 cum_tokens = 4948
@@ -2368,12 +2368,12 @@ cum_tokens = 4948
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/p-queue/.github"
+parent = ".github"
 entries = ["security.md", "workflows"]
 
 [[batches]]
 position = 43
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/p-queue/.github/workflows" })'
+key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
 cum_tokens = 4952
@@ -2382,12 +2382,12 @@ cum_tokens = 4952
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/p-queue/.github/workflows"
+parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
 position = 44
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/bench.ts" })'
+key = 'Typescript(Imports { file: "bench.ts" })'
 descriptor = "imports in bench.ts"
 cost_tokens = 59
 cum_tokens = 5011
@@ -2396,7 +2396,7 @@ cum_tokens = 5011
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/bench.ts"
+path = "bench.ts"
 start = 1
 end = 4
 
@@ -2405,7 +2405,7 @@ kind = "full"
 
 [[batches]]
 position = 45
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 32 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 32 })'
 descriptor = "readme.md section #32"
 cost_tokens = 224
 cum_tokens = 5235
@@ -2414,7 +2414,7 @@ cum_tokens = 5235
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 813
 end = 813
 
@@ -2422,7 +2422,7 @@ end = 813
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 815
 end = 815
 
@@ -2430,7 +2430,7 @@ end = 815
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 817
 end = 818
 
@@ -2438,7 +2438,7 @@ end = 818
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 820
 end = 823
 
@@ -2446,7 +2446,7 @@ end = 823
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 825
 end = 827
 
@@ -2454,7 +2454,7 @@ end = 827
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 829
 end = 831
 
@@ -2462,7 +2462,7 @@ end = 831
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 833
 end = 835
 
@@ -2470,7 +2470,7 @@ end = 835
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 837
 end = 840
 
@@ -2478,7 +2478,7 @@ end = 840
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 842
 end = 843
 
@@ -2486,7 +2486,7 @@ end = 843
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 845
 end = 845
 
@@ -2495,7 +2495,7 @@ kind = "full"
 
 [[batches]]
 position = 46
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
+key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 310
 cum_tokens = 5545
@@ -2504,7 +2504,7 @@ cum_tokens = 5545
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json"
+path = "package.json"
 start = 49
 end = 68
 
@@ -2513,7 +2513,7 @@ kind = "full"
 
 [[batches]]
 position = 47
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 18 })'
+key = 'Markdown(Section { file: "readme.md", section_index: 18 })'
 descriptor = "readme.md section #18"
 cost_tokens = 106
 cum_tokens = 5651
@@ -2522,7 +2522,7 @@ cum_tokens = 5651
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 348
 end = 348
 
@@ -2530,7 +2530,7 @@ end = 348
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 350
 end = 350
 
@@ -2538,7 +2538,7 @@ end = 350
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md"
+path = "readme.md"
 start = 352
 end = 353
 
@@ -2547,7 +2547,7 @@ kind = "full"
 
 [[batches]]
 position = 48
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts", chunk_index: 0, export_count: 3, type_only_export_count: 3 })'
+key = 'Typescript(ExportNames { file: "source/options.ts", chunk_index: 0, export_count: 3, type_only_export_count: 3 })'
 descriptor = "export names surface in source/options.ts"
 cost_tokens = 55
 cum_tokens = 5706
@@ -2556,7 +2556,7 @@ cum_tokens = 5706
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts"
+path = "source/options.ts"
 start = 27
 end = 27
 
@@ -2564,7 +2564,7 @@ end = 27
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts"
+path = "source/options.ts"
 start = 97
 end = 97
 
@@ -2572,7 +2572,7 @@ end = 97
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts"
+path = "source/options.ts"
 start = 111
 end = 111
 
@@ -2580,7 +2580,7 @@ end = 111
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts"
+path = "source/options.ts"
 start = 28
 end = 28
 
@@ -2588,7 +2588,7 @@ end = 28
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts"
+path = "source/options.ts"
 start = 98
 end = 98
 
@@ -2596,7 +2596,7 @@ end = 98
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts"
+path = "source/options.ts"
 start = 112
 end = 112
 

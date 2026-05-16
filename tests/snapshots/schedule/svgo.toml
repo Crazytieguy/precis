@@ -5,7 +5,7 @@ batch_count = 149
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 86
 cum_tokens = 86
@@ -14,12 +14,12 @@ cum_tokens = 86
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo"
+parent = "."
 entries = [".gitattributes", ".github", ".gitignore", ".prettierignore", ".prettierrc", ".yarn", ".yarnrc.yml", "CONTRIBUTING.md", "LICENSE", "README.md", "bin", "cspell.jsonc", "docs", "eslint.config.mjs", "lib", "logo", "package.json", "plugins", "rollup.config.js", "scripts", "test", "test-d", "tsconfig.build.json", "tsconfig.json", "yarn.lock"]
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/test-d" })'
+key = 'Fs(DirListing { dir: "test-d" })'
 descriptor = "listing of 'test-d'"
 cost_tokens = 3
 cum_tokens = 89
@@ -28,12 +28,12 @@ cum_tokens = 89
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/test-d"
+parent = "test-d"
 entries = ["lib"]
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/bin" })'
+key = 'Fs(DirListing { dir: "bin" })'
 descriptor = "listing of 'bin'"
 cost_tokens = 5
 cum_tokens = 94
@@ -42,12 +42,12 @@ cum_tokens = 94
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/bin"
+parent = "bin"
 entries = ["svgo.js"]
 
 [[batches]]
 position = 4
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 39
 cum_tokens = 133
@@ -56,7 +56,7 @@ cum_tokens = 133
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 5
 end = 5
 
@@ -65,7 +65,7 @@ kind = "truncated"
 pattern = '\# SVGO'
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 7
 end = 7
 
@@ -74,7 +74,7 @@ kind = "full"
 
 [[batches]]
 position = 5
-key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json" })'
+key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 74
 cum_tokens = 207
@@ -83,7 +83,7 @@ cum_tokens = 207
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json"
+path = "package.json"
 start = 3
 end = 7
 
@@ -92,7 +92,7 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/logo" })'
+key = 'Fs(DirListing { dir: "logo" })'
 descriptor = "listing of 'logo'"
 cost_tokens = 25
 cum_tokens = 232
@@ -101,12 +101,12 @@ cum_tokens = 232
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/logo"
+parent = "logo"
 entries = ["isotype-white.svg", "isotype.svg", "logo-web.svg", "logo-white.svg", "logo.svg"]
 
 [[batches]]
 position = 7
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/docs" })'
+key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 43
 cum_tokens = 275
@@ -115,12 +115,12 @@ cum_tokens = 275
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/docs"
+parent = "docs"
 entries = ["01-index.mdx", "02-usage", "03-preset-default.mdx", "04-plugins", "05-plugins-api.mdx", "06-migrations"]
 
 [[batches]]
 position = 8
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md" })'
+key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 108
 cum_tokens = 383
@@ -129,7 +129,7 @@ cum_tokens = 383
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 9
 end = 9
 
@@ -137,7 +137,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 13
 end = 13
 
@@ -145,7 +145,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 28
 end = 28
 
@@ -153,7 +153,7 @@ end = 28
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 48
 end = 48
 
@@ -161,7 +161,7 @@ end = 48
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 79
 end = 79
 
@@ -169,7 +169,7 @@ end = 79
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 108
 end = 108
 
@@ -177,7 +177,7 @@ end = 108
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 134
 end = 134
 
@@ -185,7 +185,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 138
 end = 138
 
@@ -193,7 +193,7 @@ end = 138
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 153
 end = 153
 
@@ -201,7 +201,7 @@ end = 153
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 169
 end = 169
 
@@ -209,7 +209,7 @@ end = 169
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 175
 end = 175
 
@@ -217,7 +217,7 @@ end = 175
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 10
 end = 10
 
@@ -225,7 +225,7 @@ end = 10
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 14
 end = 14
 
@@ -233,7 +233,7 @@ end = 14
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 29
 end = 29
 
@@ -241,7 +241,7 @@ end = 29
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 49
 end = 49
 
@@ -249,7 +249,7 @@ end = 49
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 80
 end = 80
 
@@ -257,7 +257,7 @@ end = 80
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 109
 end = 109
 
@@ -265,7 +265,7 @@ end = 109
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 135
 end = 135
 
@@ -273,7 +273,7 @@ end = 135
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 139
 end = 139
 
@@ -281,7 +281,7 @@ end = 139
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 154
 end = 154
 
@@ -289,7 +289,7 @@ end = 154
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 170
 end = 170
 
@@ -297,7 +297,7 @@ end = 170
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 176
 end = 176
 
@@ -306,7 +306,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 10 })'
+key = 'Markdown(Section { file: "README.md", section_index: 10 })'
 descriptor = "README.md section #10"
 cost_tokens = 13
 cum_tokens = 396
@@ -315,7 +315,7 @@ cum_tokens = 396
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 134
 end = 134
 
@@ -323,7 +323,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 136
 end = 136
 
@@ -332,7 +332,7 @@ kind = "full"
 
 [[batches]]
 position = 10
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/.github" })'
+key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 12
 cum_tokens = 408
@@ -341,12 +341,12 @@ cum_tokens = 408
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/.github"
+parent = ".github"
 entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
 
 [[batches]]
 position = 11
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/.github/workflows" })'
+key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 22
 cum_tokens = 430
@@ -355,12 +355,12 @@ cum_tokens = 430
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/.github/workflows"
+parent = ".github/workflows"
 entries = ["ci.yml", "codeql.yml", "publish.yml", "regression.yml", "test-report.yml"]
 
 [[batches]]
 position = 12
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib" })'
+key = 'Fs(DirListing { dir: "lib" })'
 descriptor = "listing of 'lib'"
 cost_tokens = 90
 cum_tokens = 520
@@ -369,12 +369,12 @@ cum_tokens = 520
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib"
+parent = "lib"
 entries = ["builtin.js", "parser.js", "parser.test.js", "path.js", "path.test.js", "stringifier.js", "style.js", "style.test.js", "svgo", "svgo-node.js", "svgo-node.test.js", "svgo.js", "svgo.test.js", "types.js", "types.ts", "util", "version.js", "xast.js", "xast.test.js"]
 
 [[batches]]
 position = 13
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo" })'
+key = 'Fs(DirListing { dir: "lib/svgo" })'
 descriptor = "listing of 'lib/svgo'"
 cost_tokens = 19
 cum_tokens = 539
@@ -383,12 +383,12 @@ cum_tokens = 539
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo"
+parent = "lib/svgo"
 entries = ["coa.js", "css-select-adapter.js", "plugins.js", "tools.js"]
 
 [[batches]]
 position = 14
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/types.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/types.js"
 cost_tokens = 7
 cum_tokens = 546
@@ -397,7 +397,7 @@ cum_tokens = 546
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.js"
+path = "lib/types.js"
 start = 1
 end = 1
 
@@ -406,7 +406,7 @@ kind = "full"
 
 [[batches]]
 position = 15
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 52
 cum_tokens = 598
@@ -415,7 +415,7 @@ cum_tokens = 598
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 9
 end = 9
 
@@ -423,7 +423,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 11
 end = 11
 
@@ -432,7 +432,7 @@ kind = "full"
 
 [[batches]]
 position = 16
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 8 })'
+key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 11
 cum_tokens = 609
@@ -441,7 +441,7 @@ cum_tokens = 609
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 110
 end = 110
 
@@ -450,7 +450,7 @@ kind = "full"
 
 [[batches]]
 position = 17
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/test-d/lib" })'
+key = 'Fs(DirListing { dir: "test-d/lib" })'
 descriptor = "listing of 'test-d/lib'"
 cost_tokens = 8
 cum_tokens = 617
@@ -459,12 +459,12 @@ cum_tokens = 617
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/test-d/lib"
+parent = "test-d/lib"
 entries = ["svgo-node.test-d.ts"]
 
 [[batches]]
 position = 18
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/builtin.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/builtin.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/builtin.js"
 cost_tokens = 14
 cum_tokens = 631
@@ -473,7 +473,7 @@ cum_tokens = 631
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/builtin.js"
+path = "lib/builtin.js"
 start = 62
 end = 62
 
@@ -481,7 +481,7 @@ end = 62
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/builtin.js"
+path = "lib/builtin.js"
 start = 63
 end = 63
 
@@ -490,7 +490,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 19
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/version.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/version.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/version.js"
 cost_tokens = 15
 cum_tokens = 646
@@ -499,7 +499,7 @@ cum_tokens = 646
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/version.js"
+path = "lib/version.js"
 start = 7
 end = 7
 
@@ -508,7 +508,7 @@ kind = "full"
 
 [[batches]]
 position = 20
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/version.js", start_line: 7 })'
+key = 'Typescript(Export { file: "lib/version.js", start_line: 7 })'
 descriptor = "export at lib/version.js:7"
 cost_tokens = 0
 cum_tokens = 646
@@ -517,7 +517,7 @@ cum_tokens = 646
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/version.js"
+path = "lib/version.js"
 start = 7
 end = 7
 
@@ -526,7 +526,7 @@ kind = "full"
 
 [[batches]]
 position = 21
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/docs/02-usage" })'
+key = 'Fs(DirListing { dir: "docs/02-usage" })'
 descriptor = "listing of 'docs/02-usage'"
 cost_tokens = 19
 cum_tokens = 665
@@ -535,12 +535,12 @@ cum_tokens = 665
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/docs/02-usage"
+parent = "docs/02-usage"
 entries = ["01-node.mdx", "02-browser.mdx", "index.mdx"]
 
 [[batches]]
 position = 22
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 14 })'
+key = 'Markdown(Section { file: "README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 49
 cum_tokens = 714
@@ -549,7 +549,7 @@ cum_tokens = 714
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 175
 end = 175
 
@@ -557,7 +557,7 @@ end = 175
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 177
 end = 177
 
@@ -565,7 +565,7 @@ end = 177
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 179
 end = 179
 
@@ -574,7 +574,7 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/stringifier.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/stringifier.js"
 cost_tokens = 20
 cum_tokens = 734
@@ -583,7 +583,7 @@ cum_tokens = 734
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js"
+path = "lib/stringifier.js"
 start = 66
 end = 66
 
@@ -591,7 +591,7 @@ end = 66
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js"
+path = "lib/stringifier.js"
 start = 67
 end = 67
 
@@ -600,7 +600,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 24
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js", start_line: 66 })'
+key = 'Typescript(Export { file: "lib/stringifier.js", start_line: 66 })'
 descriptor = "export at lib/stringifier.js:66"
 cost_tokens = 0
 cum_tokens = 734
@@ -609,7 +609,7 @@ cum_tokens = 734
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js"
+path = "lib/stringifier.js"
 start = 66
 end = 66
 
@@ -617,7 +617,7 @@ end = 66
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js"
+path = "lib/stringifier.js"
 start = 67
 end = 67
 
@@ -626,7 +626,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 25
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/test" })'
+key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 34
 cum_tokens = 768
@@ -635,12 +635,12 @@ cum_tokens = 768
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/test"
+parent = "test"
 entries = ["browser.js", "cli", "coa", "fixtures", "plugins", "regression", "svg2js", "svgo", "svgo.cjs"]
 
 [[batches]]
 position = 26
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/.github/ISSUE_TEMPLATE" })'
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 19
 cum_tokens = 787
@@ -649,12 +649,12 @@ cum_tokens = 787
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/.github/ISSUE_TEMPLATE"
+parent = ".github/ISSUE_TEMPLATE"
 entries = ["bug_report.md", "config.yml", "feature_request.md", "plugin_request.md"]
 
 [[batches]]
 position = 27
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/svgo.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo.js"
 cost_tokens = 25
 cum_tokens = 812
@@ -663,7 +663,7 @@ cum_tokens = 812
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js"
+path = "lib/svgo.js"
 start = 81
 end = 81
 
@@ -671,7 +671,7 @@ end = 81
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js"
+path = "lib/svgo.js"
 start = 136
 end = 136
 
@@ -679,7 +679,7 @@ end = 136
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js"
+path = "lib/svgo.js"
 start = 82
 end = 82
 
@@ -687,7 +687,7 @@ end = 82
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js"
+path = "lib/svgo.js"
 start = 137
 end = 137
 
@@ -696,7 +696,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 28
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js", start_line: 81 })'
+key = 'Typescript(Export { file: "lib/svgo.js", start_line: 81 })'
 descriptor = "export at lib/svgo.js:81"
 cost_tokens = 0
 cum_tokens = 812
@@ -705,7 +705,7 @@ cum_tokens = 812
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js"
+path = "lib/svgo.js"
 start = 81
 end = 81
 
@@ -713,7 +713,7 @@ end = 81
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js"
+path = "lib/svgo.js"
 start = 82
 end = 82
 
@@ -722,7 +722,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 29
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/docs/06-migrations" })'
+key = 'Fs(DirListing { dir: "docs/06-migrations" })'
 descriptor = "listing of 'docs/06-migrations'"
 cost_tokens = 34
 cum_tokens = 846
@@ -731,12 +731,12 @@ cum_tokens = 846
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/docs/06-migrations"
+parent = "docs/06-migrations"
 entries = ["01-migration-from-v3-to-v4.mdx", "02-migration-from-v2-to-v3.mdx", "_category_.json"]
 
 [[batches]]
 position = 30
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 111
 cum_tokens = 957
@@ -745,7 +745,7 @@ cum_tokens = 957
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 13
 end = 13
 
@@ -753,7 +753,7 @@ end = 13
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 15
 end = 15
 
@@ -761,7 +761,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 17
 end = 19
 
@@ -769,7 +769,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 21
 end = 22
 
@@ -777,7 +777,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 24
 end = 26
 
@@ -786,7 +786,7 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/css-select-adapter.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/svgo/css-select-adapter.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo/css-select-adapter.js"
 cost_tokens = 16
 cum_tokens = 973
@@ -795,7 +795,7 @@ cum_tokens = 973
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/css-select-adapter.js"
+path = "lib/svgo/css-select-adapter.js"
 start = 78
 end = 78
 
@@ -803,7 +803,7 @@ end = 78
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/css-select-adapter.js"
+path = "lib/svgo/css-select-adapter.js"
 start = 79
 end = 79
 
@@ -812,7 +812,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 32
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/css-select-adapter.js", start_line: 78 })'
+key = 'Typescript(Export { file: "lib/svgo/css-select-adapter.js", start_line: 78 })'
 descriptor = "export at lib/svgo/css-select-adapter.js:78"
 cost_tokens = 0
 cum_tokens = 973
@@ -821,7 +821,7 @@ cum_tokens = 973
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/css-select-adapter.js"
+path = "lib/svgo/css-select-adapter.js"
 start = 78
 end = 78
 
@@ -829,7 +829,7 @@ end = 78
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/css-select-adapter.js"
+path = "lib/svgo/css-select-adapter.js"
 start = 79
 end = 79
 
@@ -838,7 +838,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 33
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 5 })'
+key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 30
 cum_tokens = 1003
@@ -847,7 +847,7 @@ cum_tokens = 1003
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 81
 end = 81
 
@@ -856,7 +856,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/path.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/path.js"
 cost_tokens = 30
 cum_tokens = 1033
@@ -865,7 +865,7 @@ cum_tokens = 1033
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 141
 end = 141
 
@@ -873,7 +873,7 @@ end = 141
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 302
 end = 302
 
@@ -881,7 +881,7 @@ end = 302
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 142
 end = 142
 
@@ -889,7 +889,7 @@ end = 142
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 303
 end = 303
 
@@ -898,7 +898,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 35
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js", start_line: 141 })'
+key = 'Typescript(Export { file: "lib/path.js", start_line: 141 })'
 descriptor = "export at lib/path.js:141"
 cost_tokens = 0
 cum_tokens = 1033
@@ -907,7 +907,7 @@ cum_tokens = 1033
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 141
 end = 141
 
@@ -915,7 +915,7 @@ end = 141
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 142
 end = 142
 
@@ -924,7 +924,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 36
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/parser.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/parser.js"
 cost_tokens = 33
 cum_tokens = 1066
@@ -933,7 +933,7 @@ cum_tokens = 1066
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 4
 end = 4
 
@@ -941,7 +941,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 80
 end = 80
 
@@ -949,7 +949,7 @@ end = 80
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 5
 end = 5
 
@@ -957,7 +957,7 @@ end = 5
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 81
 end = 81
 
@@ -966,7 +966,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js", start_line: 80 })'
+key = 'Typescript(Export { file: "lib/parser.js", start_line: 80 })'
 descriptor = "export at lib/parser.js:80"
 cost_tokens = 0
 cum_tokens = 1066
@@ -975,7 +975,7 @@ cum_tokens = 1066
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 80
 end = 80
 
@@ -983,7 +983,7 @@ end = 80
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 81
 end = 81
 
@@ -992,7 +992,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 38
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js", start_line: 4 })'
+key = 'Typescript(Export { file: "lib/parser.js", start_line: 4 })'
 descriptor = "export at lib/parser.js:4"
 cost_tokens = 30
 cum_tokens = 1096
@@ -1001,7 +1001,7 @@ cum_tokens = 1096
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 4
 end = 4
 
@@ -1009,7 +1009,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 12
 end = 12
 
@@ -1017,7 +1017,7 @@ end = 12
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 25
 end = 25
 
@@ -1025,7 +1025,7 @@ end = 25
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 13
 end = 13
 
@@ -1033,7 +1033,7 @@ end = 13
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 26
 end = 26
 
@@ -1042,7 +1042,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 39
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util" })'
+key = 'Fs(DirListing { dir: "lib/util" })'
 descriptor = "listing of 'lib/util'"
 cost_tokens = 13
 cum_tokens = 1109
@@ -1051,12 +1051,12 @@ cum_tokens = 1109
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util"
+parent = "lib/util"
 entries = ["map-nodes-to-parents.js", "visit.js"]
 
 [[batches]]
 position = 40
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/util/map-nodes-to-parents.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/util/map-nodes-to-parents.js"
 cost_tokens = 15
 cum_tokens = 1124
@@ -1065,7 +1065,7 @@ cum_tokens = 1124
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js"
+path = "lib/util/map-nodes-to-parents.js"
 start = 9
 end = 9
 
@@ -1073,7 +1073,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js"
+path = "lib/util/map-nodes-to-parents.js"
 start = 10
 end = 10
 
@@ -1082,7 +1082,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 41
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js", start_line: 9 })'
+key = 'Typescript(Export { file: "lib/util/map-nodes-to-parents.js", start_line: 9 })'
 descriptor = "export at lib/util/map-nodes-to-parents.js:9"
 cost_tokens = 0
 cum_tokens = 1124
@@ -1091,7 +1091,7 @@ cum_tokens = 1124
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js"
+path = "lib/util/map-nodes-to-parents.js"
 start = 9
 end = 9
 
@@ -1099,7 +1099,7 @@ end = 9
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js"
+path = "lib/util/map-nodes-to-parents.js"
 start = 10
 end = 10
 
@@ -1108,7 +1108,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 42
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js", start_line: 302 })'
+key = 'Typescript(Export { file: "lib/path.js", start_line: 302 })'
 descriptor = "export at lib/path.js:302"
 cost_tokens = 32
 cum_tokens = 1156
@@ -1117,7 +1117,7 @@ cum_tokens = 1156
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 302
 end = 306
 
@@ -1125,7 +1125,7 @@ end = 306
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 307
 end = 307
 
@@ -1134,7 +1134,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 43
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/svgo-node.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo-node.js"
 cost_tokens = 40
 cum_tokens = 1196
@@ -1143,7 +1143,7 @@ cum_tokens = 1196
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 44
 end = 44
 
@@ -1151,7 +1151,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 83
 end = 83
 
@@ -1159,7 +1159,7 @@ end = 83
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 45
 end = 45
 
@@ -1167,7 +1167,7 @@ end = 45
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 84
 end = 84
 
@@ -1176,7 +1176,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 44
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js", start_line: 44 })'
+key = 'Typescript(Export { file: "lib/svgo-node.js", start_line: 44 })'
 descriptor = "export at lib/svgo-node.js:44"
 cost_tokens = 0
 cum_tokens = 1196
@@ -1185,7 +1185,7 @@ cum_tokens = 1196
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 44
 end = 44
 
@@ -1193,7 +1193,7 @@ end = 44
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 45
 end = 45
 
@@ -1202,7 +1202,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 45
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js", start_line: 83 })'
+key = 'Typescript(Export { file: "lib/svgo-node.js", start_line: 83 })'
 descriptor = "export at lib/svgo-node.js:83"
 cost_tokens = 0
 cum_tokens = 1196
@@ -1211,7 +1211,7 @@ cum_tokens = 1196
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 83
 end = 83
 
@@ -1219,7 +1219,7 @@ end = 83
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 84
 end = 84
 
@@ -1228,7 +1228,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 46
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/docs/06-migrations/_category_.json" })'
+key = 'Json(Whole { file: "docs/06-migrations/_category_.json" })'
 descriptor = "json config docs/06-migrations/_category_.json"
 cost_tokens = 22
 cum_tokens = 1218
@@ -1237,7 +1237,7 @@ cum_tokens = 1218
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/docs/06-migrations/_category_.json"
+path = "docs/06-migrations/_category_.json"
 start = 1
 end = 3
 
@@ -1246,7 +1246,7 @@ kind = "full"
 
 [[batches]]
 position = 47
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 7 })'
+key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 40
 cum_tokens = 1258
@@ -1255,7 +1255,7 @@ cum_tokens = 1258
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 106
 end = 106
 
@@ -1264,7 +1264,7 @@ kind = "full"
 
 [[batches]]
 position = 48
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 3 })'
+key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 137
 cum_tokens = 1395
@@ -1273,7 +1273,7 @@ cum_tokens = 1395
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 28
 end = 28
 
@@ -1281,7 +1281,7 @@ end = 28
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 30
 end = 30
 
@@ -1289,7 +1289,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 32
 end = 34
 
@@ -1297,7 +1297,7 @@ end = 34
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 36
 end = 36
 
@@ -1305,7 +1305,7 @@ end = 36
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 38
 end = 40
 
@@ -1313,7 +1313,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 42
 end = 42
 
@@ -1321,7 +1321,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 44
 end = 46
 
@@ -1330,7 +1330,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/test/regression" })'
+key = 'Fs(DirListing { dir: "test/regression" })'
 descriptor = "listing of 'test/regression'"
 cost_tokens = 35
 cum_tokens = 1430
@@ -1339,12 +1339,12 @@ cum_tokens = 1430
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/test/regression"
+parent = "test/regression"
 entries = ["compare.js", "delta.js", "extract.js", "file-lists.js", "lib.js", "lists", "optimize.js", "regression-io.js"]
 
 [[batches]]
 position = 50
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 13 })'
+key = 'Markdown(Section { file: "README.md", section_index: 13 })'
 descriptor = "README.md section #13"
 cost_tokens = 115
 cum_tokens = 1545
@@ -1353,7 +1353,7 @@ cum_tokens = 1545
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 169
 end = 169
 
@@ -1361,7 +1361,7 @@ end = 169
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 171
 end = 173
 
@@ -1370,7 +1370,7 @@ kind = "full"
 
 [[batches]]
 position = 51
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/plugins" })'
+key = 'Fs(DirListing { dir: "plugins" })'
 descriptor = "listing of 'plugins'"
 cost_tokens = 356
 cum_tokens = 1901
@@ -1379,12 +1379,12 @@ cum_tokens = 1901
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/plugins"
+parent = "plugins"
 entries = ["_collections.js", "_path.js", "_transforms.js", "addAttributesToSVGElement.js", "addClassesToSVGElement.js", "applyTransforms.js", "cleanupAttrs.js", "cleanupEnableBackground.js", "cleanupIds.js", "cleanupListOfValues.js", "cleanupNumericValues.js", "collapseGroups.js", "convertColors.js", "convertEllipseToCircle.js", "convertOneStopGradients.js", "convertPathData.js", "convertShapeToPath.js", "convertStyleToAttrs.js", "convertTransform.js", "inlineStyles.js", "mergePaths.js", "mergeStyles.js", "minifyStyles.js", "moveElemsAttrsToGroup.js", "moveGroupAttrsToElems.js", "prefixIds.js", "preset-default.js", "removeAttributesBySelector.js", "removeAttrs.js", "removeComments.js", "removeDeprecatedAttrs.js", "removeDesc.js", "removeDimensions.js", "removeDoctype.js", "removeEditorsNSData.js", "removeElementsByAttr.js", "removeEmptyAttrs.js", "removeEmptyContainers.js", "removeEmptyText.js", "removeHiddenElems.js", "removeMetadata.js", "removeNonInheritableGroupAttrs.js", "removeOffCanvasPaths.js", "removeRasterImages.js", "removeScripts.js", "removeStyleElement.js", "removeTitle.js", "removeUnknownsAndDefaults.js", "removeUnusedNS.js", "removeUselessDefs.js", "removeUselessStrokeAndFill.js", "removeViewBox.js", "removeXMLNS.js", "removeXMLProcInst.js", "removeXlink.js", "reusePaths.js", "sortAttrs.js", "sortDefsChildren.js"]
 
 [[batches]]
 position = 52
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js", start_line: 136 })'
+key = 'Typescript(Export { file: "lib/svgo.js", start_line: 136 })'
 descriptor = "export at lib/svgo.js:136"
 cost_tokens = 53
 cum_tokens = 1954
@@ -1393,7 +1393,7 @@ cum_tokens = 1954
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js"
+path = "lib/svgo.js"
 start = 136
 end = 143
 
@@ -1402,7 +1402,7 @@ kind = "full"
 
 [[batches]]
 position = 53
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/test/fixtures" })'
+key = 'Fs(DirListing { dir: "test/fixtures" })'
 descriptor = "listing of 'test/fixtures'"
 cost_tokens = 4
 cum_tokens = 1958
@@ -1411,12 +1411,12 @@ cum_tokens = 1958
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/test/fixtures"
+parent = "test/fixtures"
 entries = ["config-loader"]
 
 [[batches]]
 position = 54
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/svgo/coa.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo/coa.js"
 cost_tokens = 29
 cum_tokens = 1987
@@ -1425,7 +1425,7 @@ cum_tokens = 1987
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 19
 end = 19
 
@@ -1433,7 +1433,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 30
 end = 30
 
@@ -1441,7 +1441,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 20
 end = 20
 
@@ -1449,7 +1449,7 @@ end = 20
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 31
 end = 31
 
@@ -1458,7 +1458,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 55
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js", start_line: 19 })'
+key = 'Typescript(Export { file: "lib/svgo/coa.js", start_line: 19 })'
 descriptor = "export at lib/svgo/coa.js:19"
 cost_tokens = 0
 cum_tokens = 1987
@@ -1467,7 +1467,7 @@ cum_tokens = 1987
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 19
 end = 19
 
@@ -1475,7 +1475,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 20
 end = 20
 
@@ -1484,7 +1484,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 56
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js", start_line: 30 })'
+key = 'Typescript(Export { file: "lib/svgo/coa.js", start_line: 30 })'
 descriptor = "export at lib/svgo/coa.js:30"
 cost_tokens = 0
 cum_tokens = 1987
@@ -1493,7 +1493,7 @@ cum_tokens = 1987
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 30
 end = 30
 
@@ -1501,7 +1501,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 31
 end = 31
 
@@ -1510,7 +1510,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 57
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/svgo/plugins.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo/plugins.js"
 cost_tokens = 30
 cum_tokens = 2017
@@ -1519,7 +1519,7 @@ cum_tokens = 2017
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 14
 end = 14
 
@@ -1527,7 +1527,7 @@ end = 14
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 40
 end = 40
 
@@ -1535,7 +1535,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 15
 end = 15
 
@@ -1543,7 +1543,7 @@ end = 15
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 41
 end = 41
 
@@ -1552,7 +1552,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 58
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js", start_line: 40 })'
+key = 'Typescript(Export { file: "lib/svgo/plugins.js", start_line: 40 })'
 descriptor = "export at lib/svgo/plugins.js:40"
 cost_tokens = 0
 cum_tokens = 2017
@@ -1561,7 +1561,7 @@ cum_tokens = 2017
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 40
 end = 40
 
@@ -1569,7 +1569,7 @@ end = 40
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 41
 end = 41
 
@@ -1578,7 +1578,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 59
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/visit.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/util/visit.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/util/visit.js"
 cost_tokens = 33
 cum_tokens = 2050
@@ -1587,7 +1587,7 @@ cum_tokens = 2050
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/visit.js"
+path = "lib/util/visit.js"
 start = 1
 end = 1
 
@@ -1595,7 +1595,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/visit.js"
+path = "lib/util/visit.js"
 start = 8
 end = 8
 
@@ -1603,7 +1603,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/visit.js"
+path = "lib/util/visit.js"
 start = 2
 end = 2
 
@@ -1611,7 +1611,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/visit.js"
+path = "lib/util/visit.js"
 start = 9
 end = 9
 
@@ -1620,7 +1620,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 60
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/visit.js", start_line: 8 })'
+key = 'Typescript(Export { file: "lib/util/visit.js", start_line: 8 })'
 descriptor = "export at lib/util/visit.js:8"
 cost_tokens = 0
 cum_tokens = 2050
@@ -1629,7 +1629,7 @@ cum_tokens = 2050
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/visit.js"
+path = "lib/util/visit.js"
 start = 8
 end = 8
 
@@ -1637,7 +1637,7 @@ end = 8
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/visit.js"
+path = "lib/util/visit.js"
 start = 9
 end = 9
 
@@ -1646,7 +1646,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 61
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/test/fixtures/config-loader" })'
+key = 'Fs(DirListing { dir: "test/fixtures/config-loader" })'
 descriptor = "listing of 'test/fixtures/config-loader'"
 cost_tokens = 49
 cum_tokens = 2099
@@ -1655,12 +1655,12 @@ cum_tokens = 2099
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/test/fixtures/config-loader"
+parent = "test/fixtures/config-loader"
 entries = ["cjs", "invalid-array.js", "invalid-null.js", "invalid-runtime.js", "invalid-runtime.mjs", "invalid-string.js", "mjs", "module-not-found.js", "one", "svgo.config.js"]
 
 [[batches]]
 position = 62
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/tsconfig.json" })'
+key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 223
 cum_tokens = 2322
@@ -1669,7 +1669,7 @@ cum_tokens = 2322
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/tsconfig.json"
+path = "tsconfig.json"
 start = 1
 end = 23
 
@@ -1678,7 +1678,7 @@ kind = "full"
 
 [[batches]]
 position = 63
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/scripts" })'
+key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 5
 cum_tokens = 2327
@@ -1687,12 +1687,12 @@ cum_tokens = 2327
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/scripts"
+parent = "scripts"
 entries = ["sync-version.js"]
 
 [[batches]]
 position = 64
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/style.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/style.js"
 cost_tokens = 67
 cum_tokens = 2394
@@ -1701,7 +1701,7 @@ cum_tokens = 2394
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 195
 end = 195
 
@@ -1709,7 +1709,7 @@ end = 195
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 211
 end = 211
 
@@ -1717,7 +1717,7 @@ end = 211
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 253
 end = 253
 
@@ -1725,7 +1725,7 @@ end = 253
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 286
 end = 286
 
@@ -1733,7 +1733,7 @@ end = 286
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 196
 end = 196
 
@@ -1741,7 +1741,7 @@ end = 196
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 212
 end = 212
 
@@ -1749,7 +1749,7 @@ end = 212
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 254
 end = 254
 
@@ -1757,7 +1757,7 @@ end = 254
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 287
 end = 287
 
@@ -1766,7 +1766,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 65
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 195 })'
+key = 'Typescript(Export { file: "lib/style.js", start_line: 195 })'
 descriptor = "export at lib/style.js:195"
 cost_tokens = 0
 cum_tokens = 2394
@@ -1775,7 +1775,7 @@ cum_tokens = 2394
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 195
 end = 195
 
@@ -1783,7 +1783,7 @@ end = 195
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 196
 end = 196
 
@@ -1792,7 +1792,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 66
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 211 })'
+key = 'Typescript(Export { file: "lib/style.js", start_line: 211 })'
 descriptor = "export at lib/style.js:211"
 cost_tokens = 0
 cum_tokens = 2394
@@ -1801,7 +1801,7 @@ cum_tokens = 2394
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 211
 end = 211
 
@@ -1809,7 +1809,7 @@ end = 211
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 212
 end = 212
 
@@ -1818,7 +1818,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 67
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 253 })'
+key = 'Typescript(Export { file: "lib/style.js", start_line: 253 })'
 descriptor = "export at lib/style.js:253"
 cost_tokens = 0
 cum_tokens = 2394
@@ -1827,7 +1827,7 @@ cum_tokens = 2394
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 253
 end = 253
 
@@ -1835,7 +1835,7 @@ end = 253
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 254
 end = 254
 
@@ -1844,7 +1844,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 68
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 286 })'
+key = 'Typescript(Export { file: "lib/style.js", start_line: 286 })'
 descriptor = "export at lib/style.js:286"
 cost_tokens = 40
 cum_tokens = 2434
@@ -1853,7 +1853,7 @@ cum_tokens = 2434
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 286
 end = 291
 
@@ -1861,7 +1861,7 @@ end = 291
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 292
 end = 292
 
@@ -1870,7 +1870,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 69
-key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json" })'
+key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 504
 cum_tokens = 2938
@@ -1879,7 +1879,7 @@ cum_tokens = 2938
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json"
+path = "package.json"
 start = 8
 end = 52
 
@@ -1888,7 +1888,7 @@ kind = "full"
 
 [[batches]]
 position = 70
-key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json" })'
+key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 227
 cum_tokens = 3165
@@ -1897,7 +1897,7 @@ cum_tokens = 3165
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json"
+path = "package.json"
 start = 53
 end = 73
 
@@ -1906,7 +1906,7 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json" })'
+key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 47
 cum_tokens = 3212
@@ -1915,7 +1915,7 @@ cum_tokens = 3212
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json"
+path = "package.json"
 start = 2
 end = 2
 
@@ -1923,7 +1923,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json"
+path = "package.json"
 start = 74
 end = 76
 
@@ -1932,7 +1932,7 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json" })'
+key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 381
 cum_tokens = 3593
@@ -1941,7 +1941,7 @@ cum_tokens = 3593
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json"
+path = "package.json"
 start = 77
 end = 93
 
@@ -1950,7 +1950,7 @@ kind = "full"
 
 [[batches]]
 position = 73
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/.yarn" })'
+key = 'Fs(DirListing { dir: ".yarn" })'
 descriptor = "listing of '.yarn'"
 cost_tokens = 6
 cum_tokens = 3599
@@ -1959,12 +1959,12 @@ cum_tokens = 3599
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/.yarn"
+parent = ".yarn"
 entries = ["patches", "plugins"]
 
 [[batches]]
 position = 74
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/xast.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/xast.js"
 cost_tokens = 81
 cum_tokens = 3680
@@ -1973,7 +1973,7 @@ cum_tokens = 3680
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 22
 end = 22
 
@@ -1981,7 +1981,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 32
 end = 32
 
@@ -1989,7 +1989,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 42
 end = 42
 
@@ -1997,7 +1997,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 50
 end = 50
 
@@ -2005,7 +2005,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 23
 end = 23
 
@@ -2013,7 +2013,7 @@ end = 23
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 33
 end = 33
 
@@ -2021,7 +2021,7 @@ end = 33
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 43
 end = 43
 
@@ -2029,7 +2029,7 @@ end = 43
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 51
 end = 51
 
@@ -2038,7 +2038,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 75
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 22 })'
+key = 'Typescript(Export { file: "lib/xast.js", start_line: 22 })'
 descriptor = "export at lib/xast.js:22"
 cost_tokens = 0
 cum_tokens = 3680
@@ -2047,7 +2047,7 @@ cum_tokens = 3680
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 22
 end = 22
 
@@ -2055,7 +2055,7 @@ end = 22
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 23
 end = 23
 
@@ -2064,7 +2064,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 76
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 32 })'
+key = 'Typescript(Export { file: "lib/xast.js", start_line: 32 })'
 descriptor = "export at lib/xast.js:32"
 cost_tokens = 0
 cum_tokens = 3680
@@ -2073,7 +2073,7 @@ cum_tokens = 3680
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 32
 end = 32
 
@@ -2081,7 +2081,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 33
 end = 33
 
@@ -2090,7 +2090,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 77
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 42 })'
+key = 'Typescript(Export { file: "lib/xast.js", start_line: 42 })'
 descriptor = "export at lib/xast.js:42"
 cost_tokens = 0
 cum_tokens = 3680
@@ -2099,7 +2099,7 @@ cum_tokens = 3680
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 42
 end = 42
 
@@ -2107,7 +2107,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 43
 end = 43
 
@@ -2116,7 +2116,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 78
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 50 })'
+key = 'Typescript(Export { file: "lib/xast.js", start_line: 50 })'
 descriptor = "export at lib/xast.js:50"
 cost_tokens = 0
 cum_tokens = 3680
@@ -2125,7 +2125,7 @@ cum_tokens = 3680
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 50
 end = 50
 
@@ -2133,7 +2133,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 51
 end = 51
 
@@ -2142,7 +2142,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 79
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 42, body_start_line: 43 })'
+key = 'Typescript(ExportBody { file: "lib/xast.js", start_line: 42, body_start_line: 43 })'
 descriptor = "export body at lib/xast.js:42 body 43"
 cost_tokens = 17
 cum_tokens = 3697
@@ -2151,7 +2151,7 @@ cum_tokens = 3697
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 43
 end = 43
 
@@ -2160,7 +2160,7 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 22, body_start_line: 23 })'
+key = 'Typescript(ExportBody { file: "lib/xast.js", start_line: 22, body_start_line: 23 })'
 descriptor = "export body at lib/xast.js:22 body 23"
 cost_tokens = 18
 cum_tokens = 3715
@@ -2169,7 +2169,7 @@ cum_tokens = 3715
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 23
 end = 23
 
@@ -2178,7 +2178,7 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 32, body_start_line: 33 })'
+key = 'Typescript(ExportBody { file: "lib/xast.js", start_line: 32, body_start_line: 33 })'
 descriptor = "export body at lib/xast.js:32 body 33"
 cost_tokens = 18
 cum_tokens = 3733
@@ -2187,7 +2187,7 @@ cum_tokens = 3733
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 33
 end = 33
 
@@ -2196,7 +2196,7 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 50, body_start_line: 51 })'
+key = 'Typescript(ExportBody { file: "lib/xast.js", start_line: 50, body_start_line: 51 })'
 descriptor = "export body at lib/xast.js:50 body 51"
 cost_tokens = 33
 cum_tokens = 3766
@@ -2205,7 +2205,7 @@ cum_tokens = 3766
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 51
 end = 52
 
@@ -2214,7 +2214,7 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/tsconfig.build.json" })'
+key = 'Json(Whole { file: "tsconfig.build.json" })'
 descriptor = "json config tsconfig.build.json"
 cost_tokens = 108
 cum_tokens = 3874
@@ -2223,7 +2223,7 @@ cum_tokens = 3874
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/tsconfig.build.json"
+path = "tsconfig.build.json"
 start = 1
 end = 10
 
@@ -2232,7 +2232,7 @@ kind = "full"
 
 [[batches]]
 position = 84
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js", start_line: 14 })'
+key = 'Typescript(Export { file: "lib/svgo/plugins.js", start_line: 14 })'
 descriptor = "export at lib/svgo/plugins.js:14"
 cost_tokens = 43
 cum_tokens = 3917
@@ -2241,7 +2241,7 @@ cum_tokens = 3917
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 14
 end = 20
 
@@ -2249,7 +2249,7 @@ end = 20
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 21
 end = 21
 
@@ -2258,7 +2258,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 85
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js" })'
+key = 'Typescript(Imports { file: "lib/stringifier.js" })'
 descriptor = "imports in lib/stringifier.js"
 cost_tokens = 16
 cum_tokens = 3933
@@ -2267,7 +2267,7 @@ cum_tokens = 3933
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js"
+path = "lib/stringifier.js"
 start = 1
 end = 1
 
@@ -2276,7 +2276,7 @@ kind = "full"
 
 [[batches]]
 position = 86
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/svgo/docs/04-plugins" })'
+key = 'Fs(DirListing { dir: "docs/04-plugins" })'
 descriptor = "listing of 'docs/04-plugins'"
 cost_tokens = 388
 cum_tokens = 4321
@@ -2285,12 +2285,12 @@ cum_tokens = 4321
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/svgo/docs/04-plugins"
+parent = "docs/04-plugins"
 entries = ["addAttributesToSVGElement.mdx", "addClassesToSVGElement.mdx", "cleanupAttrs.mdx", "cleanupEnableBackground.mdx", "cleanupIds.mdx", "cleanupListOfValues.mdx", "cleanupNumericValues.mdx", "collapseGroups.mdx", "convertColors.mdx", "convertEllipseToCircle.mdx", "convertOneStopGradients.mdx", "convertPathData.mdx", "convertShapeToPath.mdx", "convertStyleToAttrs.mdx", "convertTransform.mdx", "index.mdx", "inlineStyles.mdx", "mergePaths.mdx", "mergeStyles.mdx", "minifyStyles.mdx", "moveElemsAttrsToGroup.mdx", "moveGroupAttrsToElems.mdx", "prefixIds.mdx", "removeAttributesBySelector.mdx", "removeAttrs.mdx", "removeComments.mdx", "removeDeprecatedAttrs.mdx", "removeDesc.mdx", "removeDimensions.mdx", "removeDoctype.mdx", "removeEditorsNSData.mdx", "removeElementsByAttr.mdx", "removeEmptyAttrs.mdx", "removeEmptyContainers.mdx", "removeEmptyText.mdx", "removeHiddenElems.mdx", "removeMetadata.mdx", "removeNonInheritableGroupAttrs.mdx", "removeOffCanvasPaths.mdx", "removeRasterImages.mdx", "removeScripts.mdx", "removeStyleElement.mdx", "removeTitle.mdx", "removeUnknownsAndDefaults.mdx", "removeUnusedNS.mdx", "removeUselessDefs.mdx", "removeUselessStrokeAndFill.mdx", "removeViewBox.mdx", "removeXMLNS.mdx", "removeXMLProcInst.mdx", "removeXlink.mdx", "reusePaths.mdx", "sortAttrs.mdx", "sortDefsChildren.mdx"]
 
 [[batches]]
 position = 87
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js" })'
+key = 'Typescript(Imports { file: "lib/path.js" })'
 descriptor = "imports in lib/path.js"
 cost_tokens = 20
 cum_tokens = 4341
@@ -2299,7 +2299,7 @@ cum_tokens = 4341
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 5
 end = 5
 
@@ -2308,7 +2308,7 @@ kind = "full"
 
 [[batches]]
 position = 88
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js", start_line: 19, body_start_line: 20 })'
+key = 'Typescript(ExportBody { file: "lib/svgo/coa.js", start_line: 19, body_start_line: 20 })'
 descriptor = "export body at lib/svgo/coa.js:19 body 20"
 cost_tokens = 48
 cum_tokens = 4389
@@ -2317,7 +2317,7 @@ cum_tokens = 4389
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 20
 end = 24
 
@@ -2326,7 +2326,7 @@ kind = "full"
 
 [[batches]]
 position = 89
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js" })'
+key = 'Typescript(Imports { file: "lib/util/map-nodes-to-parents.js" })'
 descriptor = "imports in lib/util/map-nodes-to-parents.js"
 cost_tokens = 13
 cum_tokens = 4402
@@ -2335,7 +2335,7 @@ cum_tokens = 4402
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js"
+path = "lib/util/map-nodes-to-parents.js"
 start = 1
 end = 1
 
@@ -2344,7 +2344,7 @@ kind = "full"
 
 [[batches]]
 position = 90
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js", start_line: 30 })'
+key = 'Typescript(ExportDoc { file: "lib/svgo/coa.js", start_line: 30 })'
 descriptor = "export doc at lib/svgo/coa.js:30"
 cost_tokens = 27
 cum_tokens = 4429
@@ -2353,7 +2353,7 @@ cum_tokens = 4429
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 27
 end = 29
 
@@ -2362,7 +2362,7 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 4 })'
+key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 332
 cum_tokens = 4761
@@ -2371,7 +2371,7 @@ cum_tokens = 4761
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 48
 end = 48
 
@@ -2379,7 +2379,7 @@ end = 48
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 50
 end = 50
 
@@ -2387,7 +2387,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 52
 end = 52
 
@@ -2395,7 +2395,7 @@ end = 52
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 54
 end = 54
 
@@ -2403,7 +2403,7 @@ end = 54
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 56
 end = 66
 
@@ -2411,7 +2411,7 @@ end = 66
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 68
 end = 77
 
@@ -2420,7 +2420,7 @@ kind = "full"
 
 [[batches]]
 position = 92
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js" })'
+key = 'Typescript(Imports { file: "lib/parser.js" })'
 descriptor = "imports in lib/parser.js"
 cost_tokens = 27
 cum_tokens = 4788
@@ -2429,7 +2429,7 @@ cum_tokens = 4788
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 1
 end = 2
 
@@ -2438,7 +2438,7 @@ kind = "full"
 
 [[batches]]
 position = 93
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js" })'
+key = 'Typescript(Imports { file: "lib/svgo/plugins.js" })'
 descriptor = "imports in lib/svgo/plugins.js"
 cost_tokens = 15
 cum_tokens = 4803
@@ -2447,7 +2447,7 @@ cum_tokens = 4803
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 1
 end = 1
 
@@ -2456,7 +2456,7 @@ kind = "full"
 
 [[batches]]
 position = 94
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 195, body_start_line: 196 })'
+key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 195, body_start_line: 196 })'
 descriptor = "export body at lib/style.js:195 body 196"
 cost_tokens = 93
 cum_tokens = 4896
@@ -2465,7 +2465,7 @@ cum_tokens = 4896
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 196
 end = 202
 
@@ -2473,7 +2473,7 @@ end = 202
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 204
 end = 204
 
@@ -2482,7 +2482,7 @@ kind = "full"
 
 [[batches]]
 position = 95
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js" })'
+key = 'Typescript(Imports { file: "lib/svgo/tools.js" })'
 descriptor = "imports in lib/svgo/tools.js"
 cost_tokens = 19
 cum_tokens = 4915
@@ -2491,7 +2491,7 @@ cum_tokens = 4915
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 1
 end = 1
 
@@ -2500,7 +2500,7 @@ kind = "full"
 
 [[batches]]
 position = 96
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js", start_line: 302 })'
+key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 302 })'
 descriptor = "export doc at lib/path.js:302"
 cost_tokens = 36
 cum_tokens = 4951
@@ -2509,7 +2509,7 @@ cum_tokens = 4951
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 298
 end = 301
 
@@ -2518,7 +2518,7 @@ kind = "full"
 
 [[batches]]
 position = 97
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js" })'
+key = 'Typescript(Imports { file: "lib/xast.js" })'
 descriptor = "imports in lib/xast.js"
 cost_tokens = 38
 cum_tokens = 4989
@@ -2527,7 +2527,7 @@ cum_tokens = 4989
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 1
 end = 2
 
@@ -2536,7 +2536,7 @@ kind = "full"
 
 [[batches]]
 position = 98
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js", start_line: 141 })'
+key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 141 })'
 descriptor = "export doc at lib/path.js:141"
 cost_tokens = 40
 cum_tokens = 5029
@@ -2545,7 +2545,7 @@ cum_tokens = 5029
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/path.js"
+path = "lib/path.js"
 start = 137
 end = 140
 
@@ -2554,7 +2554,7 @@ kind = "full"
 
 [[batches]]
 position = 99
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/css-select-adapter.js" })'
+key = 'Typescript(Imports { file: "lib/svgo/css-select-adapter.js" })'
 descriptor = "imports in lib/svgo/css-select-adapter.js"
 cost_tokens = 22
 cum_tokens = 5051
@@ -2563,7 +2563,7 @@ cum_tokens = 5051
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/css-select-adapter.js"
+path = "lib/svgo/css-select-adapter.js"
 start = 1
 end = 1
 
@@ -2572,7 +2572,7 @@ kind = "full"
 
 [[batches]]
 position = 100
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json" })'
+key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 649
 cum_tokens = 5700
@@ -2581,7 +2581,7 @@ cum_tokens = 5700
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/package.json"
+path = "package.json"
 start = 104
 end = 143
 
@@ -2590,7 +2590,7 @@ kind = "full"
 
 [[batches]]
 position = 101
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 9 })'
+key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 162
 cum_tokens = 5862
@@ -2599,7 +2599,7 @@ cum_tokens = 5862
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 112
 end = 112
 
@@ -2607,7 +2607,7 @@ end = 112
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 114
 end = 115
 
@@ -2615,7 +2615,7 @@ end = 115
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 117
 end = 120
 
@@ -2623,7 +2623,7 @@ end = 120
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 122
 end = 132
 
@@ -2632,7 +2632,7 @@ kind = "full"
 
 [[batches]]
 position = 102
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", chunk_index: 0, export_count: 37, type_only_export_count: 37 })'
+key = 'Typescript(ExportNames { file: "lib/types.ts", chunk_index: 0, export_count: 37, type_only_export_count: 37 })'
 descriptor = "export names surface in lib/types.ts"
 cost_tokens = 186
 cum_tokens = 6048
@@ -2641,7 +2641,7 @@ cum_tokens = 6048
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 30
 end = 30
 
@@ -2649,7 +2649,7 @@ end = 30
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 67
 end = 67
 
@@ -2657,7 +2657,7 @@ end = 67
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 71
 end = 71
 
@@ -2665,7 +2665,7 @@ end = 71
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 100
 end = 100
 
@@ -2673,7 +2673,7 @@ end = 100
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 108
 end = 108
 
@@ -2681,7 +2681,7 @@ end = 108
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 111
 end = 111
 
@@ -2689,7 +2689,7 @@ end = 111
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 117
 end = 117
 
@@ -2697,7 +2697,7 @@ end = 117
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 133
 end = 133
 
@@ -2705,7 +2705,7 @@ end = 133
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 155
 end = 155
 
@@ -2713,7 +2713,7 @@ end = 155
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 161
 end = 161
 
@@ -2721,7 +2721,7 @@ end = 161
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 169
 end = 169
 
@@ -2729,7 +2729,7 @@ end = 169
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 175
 end = 175
 
@@ -2737,7 +2737,7 @@ end = 175
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 31
 end = 31
 
@@ -2745,7 +2745,7 @@ end = 31
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 68
 end = 68
 
@@ -2753,7 +2753,7 @@ end = 68
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 72
 end = 72
 
@@ -2761,7 +2761,7 @@ end = 72
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 101
 end = 101
 
@@ -2769,7 +2769,7 @@ end = 101
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 109
 end = 109
 
@@ -2777,7 +2777,7 @@ end = 109
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 112
 end = 112
 
@@ -2785,7 +2785,7 @@ end = 112
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 118
 end = 118
 
@@ -2793,7 +2793,7 @@ end = 118
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 134
 end = 134
 
@@ -2801,7 +2801,7 @@ end = 134
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 156
 end = 156
 
@@ -2809,7 +2809,7 @@ end = 156
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 162
 end = 162
 
@@ -2817,7 +2817,7 @@ end = 162
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 170
 end = 170
 
@@ -2825,7 +2825,7 @@ end = 170
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 176
 end = 176
 
@@ -2834,7 +2834,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 103
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", start_line: 108 })'
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 108 })'
 descriptor = "export at lib/types.ts:108"
 cost_tokens = 9
 cum_tokens = 6057
@@ -2843,7 +2843,7 @@ cum_tokens = 6057
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 108
 end = 109
 
@@ -2852,7 +2852,7 @@ kind = "full"
 
 [[batches]]
 position = 104
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", start_line: 175 })'
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 175 })'
 descriptor = "export at lib/types.ts:175"
 cost_tokens = 22
 cum_tokens = 6079
@@ -2861,7 +2861,7 @@ cum_tokens = 6079
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 175
 end = 178
 
@@ -2870,7 +2870,7 @@ kind = "full"
 
 [[batches]]
 position = 105
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", start_line: 67 })'
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 67 })'
 descriptor = "export at lib/types.ts:67"
 cost_tokens = 24
 cum_tokens = 6103
@@ -2879,7 +2879,7 @@ cum_tokens = 6103
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 67
 end = 69
 
@@ -2888,7 +2888,7 @@ kind = "full"
 
 [[batches]]
 position = 106
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 6 })'
+key = 'Markdown(Section { file: "README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 164
 cum_tokens = 6267
@@ -2897,7 +2897,7 @@ cum_tokens = 6267
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 83
 end = 83
 
@@ -2905,7 +2905,7 @@ end = 83
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 85
 end = 93
 
@@ -2913,7 +2913,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 95
 end = 104
 
@@ -2922,7 +2922,7 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 211 })'
+key = 'Typescript(ExportDoc { file: "lib/style.js", start_line: 211 })'
 descriptor = "export doc at lib/style.js:211"
 cost_tokens = 45
 cum_tokens = 6312
@@ -2931,7 +2931,7 @@ cum_tokens = 6312
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 207
 end = 210
 
@@ -2940,7 +2940,7 @@ kind = "full"
 
 [[batches]]
 position = 108
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js", start_line: 83, body_start_line: 84 })'
+key = 'Typescript(ExportBody { file: "lib/svgo-node.js", start_line: 83, body_start_line: 84 })'
 descriptor = "export body at lib/svgo-node.js:83 body 84"
 cost_tokens = 150
 cum_tokens = 6462
@@ -2949,7 +2949,7 @@ cum_tokens = 6462
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 84
 end = 97
 
@@ -2958,7 +2958,7 @@ kind = "full"
 
 [[batches]]
 position = 109
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/version.js", start_line: 7 })'
+key = 'Typescript(ExportDoc { file: "lib/version.js", start_line: 7 })'
 descriptor = "export doc at lib/version.js:7"
 cost_tokens = 49
 cum_tokens = 6511
@@ -2967,7 +2967,7 @@ cum_tokens = 6511
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/version.js"
+path = "lib/version.js"
 start = 1
 end = 6
 
@@ -2976,7 +2976,7 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 50 })'
+key = 'Typescript(ExportDoc { file: "lib/xast.js", start_line: 50 })'
 descriptor = "export doc at lib/xast.js:50"
 cost_tokens = 49
 cum_tokens = 6560
@@ -2985,7 +2985,7 @@ cum_tokens = 6560
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 46
 end = 49
 
@@ -2994,7 +2994,7 @@ kind = "full"
 
 [[batches]]
 position = 111
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", chunk_index: 0, export_count: 9, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "lib/svgo/tools.js", chunk_index: 0, export_count: 9, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo/tools.js"
 cost_tokens = 163
 cum_tokens = 6723
@@ -3003,7 +3003,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 21
 end = 21
 
@@ -3011,7 +3011,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 43
 end = 43
 
@@ -3019,7 +3019,7 @@ end = 43
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 78
 end = 78
 
@@ -3027,7 +3027,7 @@ end = 78
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 134
 end = 134
 
@@ -3035,7 +3035,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 163
 end = 163
 
@@ -3043,7 +3043,7 @@ end = 163
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 194
 end = 194
 
@@ -3051,7 +3051,7 @@ end = 194
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 206
 end = 206
 
@@ -3059,7 +3059,7 @@ end = 206
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 215
 end = 215
 
@@ -3067,7 +3067,7 @@ end = 215
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 250
 end = 250
 
@@ -3075,7 +3075,7 @@ end = 250
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 22
 end = 22
 
@@ -3083,7 +3083,7 @@ end = 22
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 44
 end = 44
 
@@ -3091,7 +3091,7 @@ end = 44
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 79
 end = 79
 
@@ -3099,7 +3099,7 @@ end = 79
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 135
 end = 135
 
@@ -3107,7 +3107,7 @@ end = 135
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 164
 end = 164
 
@@ -3115,7 +3115,7 @@ end = 164
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 195
 end = 195
 
@@ -3123,7 +3123,7 @@ end = 195
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 207
 end = 207
 
@@ -3131,7 +3131,7 @@ end = 207
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 216
 end = 216
 
@@ -3139,7 +3139,7 @@ end = 216
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 251
 end = 251
 
@@ -3148,7 +3148,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 112
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 21 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 21 })'
 descriptor = "export at lib/svgo/tools.js:21"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3157,7 +3157,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 21
 end = 21
 
@@ -3165,7 +3165,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 22
 end = 22
 
@@ -3174,7 +3174,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 113
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 43 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 43 })'
 descriptor = "export at lib/svgo/tools.js:43"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3183,7 +3183,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 43
 end = 43
 
@@ -3191,7 +3191,7 @@ end = 43
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 44
 end = 44
 
@@ -3200,7 +3200,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 114
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 78 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 78 })'
 descriptor = "export at lib/svgo/tools.js:78"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3209,7 +3209,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 78
 end = 78
 
@@ -3217,7 +3217,7 @@ end = 78
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 79
 end = 79
 
@@ -3226,7 +3226,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 115
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 134 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 134 })'
 descriptor = "export at lib/svgo/tools.js:134"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3235,7 +3235,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 134
 end = 134
 
@@ -3243,7 +3243,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 135
 end = 135
 
@@ -3252,7 +3252,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 116
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 163 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 163 })'
 descriptor = "export at lib/svgo/tools.js:163"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3261,7 +3261,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 163
 end = 163
 
@@ -3269,7 +3269,7 @@ end = 163
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 164
 end = 164
 
@@ -3278,7 +3278,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 117
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 194 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 194 })'
 descriptor = "export at lib/svgo/tools.js:194"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3287,7 +3287,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 194
 end = 194
 
@@ -3295,7 +3295,7 @@ end = 194
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 195
 end = 195
 
@@ -3304,7 +3304,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 118
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 206 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 206 })'
 descriptor = "export at lib/svgo/tools.js:206"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3313,7 +3313,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 206
 end = 206
 
@@ -3321,7 +3321,7 @@ end = 206
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 207
 end = 207
 
@@ -3330,7 +3330,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 119
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 215 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 215 })'
 descriptor = "export at lib/svgo/tools.js:215"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3339,7 +3339,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 215
 end = 215
 
@@ -3347,7 +3347,7 @@ end = 215
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 216
 end = 216
 
@@ -3356,7 +3356,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 120
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 250 })'
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 250 })'
 descriptor = "export at lib/svgo/tools.js:250"
 cost_tokens = 0
 cum_tokens = 6723
@@ -3365,7 +3365,7 @@ cum_tokens = 6723
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 250
 end = 250
 
@@ -3373,7 +3373,7 @@ end = 250
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 251
 end = 251
 
@@ -3382,7 +3382,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 121
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", start_line: 111 })'
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 111 })'
 descriptor = "export at lib/types.ts:111"
 cost_tokens = 31
 cum_tokens = 6754
@@ -3391,7 +3391,7 @@ cum_tokens = 6754
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 111
 end = 115
 
@@ -3400,7 +3400,7 @@ kind = "full"
 
 [[batches]]
 position = 122
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", start_line: 169 })'
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 169 })'
 descriptor = "export at lib/types.ts:169"
 cost_tokens = 31
 cum_tokens = 6785
@@ -3409,7 +3409,7 @@ cum_tokens = 6785
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 169
 end = 173
 
@@ -3418,7 +3418,7 @@ kind = "full"
 
 [[batches]]
 position = 123
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js" })'
+key = 'Typescript(Imports { file: "lib/svgo-node.js" })'
 descriptor = "imports in lib/svgo-node.js"
 cost_tokens = 57
 cum_tokens = 6842
@@ -3427,7 +3427,7 @@ cum_tokens = 6842
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 1
 end = 5
 
@@ -3436,7 +3436,7 @@ kind = "full"
 
 [[batches]]
 position = 124
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 134, body_start_line: 135 })'
+key = 'Typescript(ExportBody { file: "lib/svgo/tools.js", start_line: 134, body_start_line: 135 })'
 descriptor = "export body at lib/svgo/tools.js:134 body 135"
 cost_tokens = 112
 cum_tokens = 6954
@@ -3445,7 +3445,7 @@ cum_tokens = 6954
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 135
 end = 135
 
@@ -3453,7 +3453,7 @@ end = 135
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 137
 end = 139
 
@@ -3461,7 +3461,7 @@ end = 139
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 141
 end = 143
 
@@ -3469,7 +3469,7 @@ end = 143
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 145
 end = 145
 
@@ -3478,7 +3478,7 @@ kind = "full"
 
 [[batches]]
 position = 125
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 253 })'
+key = 'Typescript(ExportDoc { file: "lib/style.js", start_line: 253 })'
 descriptor = "export doc at lib/style.js:253"
 cost_tokens = 63
 cum_tokens = 7017
@@ -3487,7 +3487,7 @@ cum_tokens = 7017
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 248
 end = 252
 
@@ -3496,7 +3496,7 @@ kind = "full"
 
 [[batches]]
 position = 126
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 11 })'
+key = 'Markdown(Section { file: "README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 105
 cum_tokens = 7122
@@ -3505,7 +3505,7 @@ cum_tokens = 7122
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 138
 end = 138
 
@@ -3513,7 +3513,7 @@ end = 138
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 140
 end = 140
 
@@ -3521,7 +3521,7 @@ end = 140
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 142
 end = 143
 
@@ -3529,7 +3529,7 @@ end = 143
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 145
 end = 148
 
@@ -3537,7 +3537,7 @@ end = 148
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 150
 end = 151
 
@@ -3546,7 +3546,7 @@ kind = "full"
 
 [[batches]]
 position = 127
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 253, body_start_line: 254 })'
+key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 253, body_start_line: 254 })'
 descriptor = "export body at lib/style.js:253 body 254"
 cost_tokens = 209
 cum_tokens = 7331
@@ -3555,7 +3555,7 @@ cum_tokens = 7331
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 254
 end = 270
 
@@ -3564,7 +3564,7 @@ kind = "full"
 
 [[batches]]
 position = 128
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", start_line: 155 })'
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 155 })'
 descriptor = "export at lib/types.ts:155"
 cost_tokens = 38
 cum_tokens = 7369
@@ -3573,7 +3573,7 @@ cum_tokens = 7369
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 155
 end = 159
 
@@ -3582,7 +3582,7 @@ kind = "full"
 
 [[batches]]
 position = 129
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js", start_line: 14, body_start_line: 21 })'
+key = 'Typescript(ExportBody { file: "lib/svgo/plugins.js", start_line: 14, body_start_line: 21 })'
 descriptor = "export body at lib/svgo/plugins.js:14 body 21"
 cost_tokens = 120
 cum_tokens = 7489
@@ -3591,7 +3591,7 @@ cum_tokens = 7489
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 21
 end = 26
 
@@ -3599,7 +3599,7 @@ end = 26
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/plugins.js"
+path = "lib/svgo/plugins.js"
 start = 28
 end = 32
 
@@ -3608,7 +3608,7 @@ kind = "full"
 
 [[batches]]
 position = 130
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md", section_index: 12 })'
+key = 'Markdown(Section { file: "README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 112
 cum_tokens = 7601
@@ -3617,7 +3617,7 @@ cum_tokens = 7601
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 153
 end = 153
 
@@ -3625,7 +3625,7 @@ end = 153
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 155
 end = 155
 
@@ -3633,7 +3633,7 @@ end = 155
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 157
 end = 158
 
@@ -3641,7 +3641,7 @@ end = 158
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 160
 end = 161
 
@@ -3649,7 +3649,7 @@ end = 161
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 163
 end = 163
 
@@ -3657,7 +3657,7 @@ end = 163
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/README.md"
+path = "README.md"
 start = 165
 end = 167
 
@@ -3666,7 +3666,7 @@ kind = "full"
 
 [[batches]]
 position = 131
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js", start_line: 81 })'
+key = 'Typescript(ExportDoc { file: "lib/svgo.js", start_line: 81 })'
 descriptor = "export doc at lib/svgo.js:81"
 cost_tokens = 70
 cum_tokens = 7671
@@ -3675,7 +3675,7 @@ cum_tokens = 7671
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo.js"
+path = "lib/svgo.js"
 start = 74
 end = 80
 
@@ -3684,7 +3684,7 @@ kind = "full"
 
 [[batches]]
 position = 132
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js", start_line: 9, body_start_line: 10 })'
+key = 'Typescript(ExportBody { file: "lib/util/map-nodes-to-parents.js", start_line: 9, body_start_line: 10 })'
 descriptor = "export body at lib/util/map-nodes-to-parents.js:9 body 10"
 cost_tokens = 162
 cum_tokens = 7833
@@ -3693,7 +3693,7 @@ cum_tokens = 7833
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js"
+path = "lib/util/map-nodes-to-parents.js"
 start = 10
 end = 11
 
@@ -3701,7 +3701,7 @@ end = 11
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js"
+path = "lib/util/map-nodes-to-parents.js"
 start = 13
 end = 26
 
@@ -3709,7 +3709,7 @@ end = 26
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/util/map-nodes-to-parents.js"
+path = "lib/util/map-nodes-to-parents.js"
 start = 28
 end = 28
 
@@ -3718,7 +3718,7 @@ kind = "full"
 
 [[batches]]
 position = 133
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js", start_line: 83 })'
+key = 'Typescript(ExportDoc { file: "lib/svgo-node.js", start_line: 83 })'
 descriptor = "export doc at lib/svgo-node.js:83"
 cost_tokens = 72
 cum_tokens = 7905
@@ -3727,7 +3727,7 @@ cum_tokens = 7905
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 76
 end = 82
 
@@ -3736,7 +3736,7 @@ kind = "full"
 
 [[batches]]
 position = 134
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js", start_line: 80 })'
+key = 'Typescript(ExportDoc { file: "lib/parser.js", start_line: 80 })'
 descriptor = "export doc at lib/parser.js:80"
 cost_tokens = 74
 cum_tokens = 7979
@@ -3745,7 +3745,7 @@ cum_tokens = 7979
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/parser.js"
+path = "lib/parser.js"
 start = 73
 end = 79
 
@@ -3754,7 +3754,7 @@ kind = "full"
 
 [[batches]]
 position = 135
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js", start_line: 66 })'
+key = 'Typescript(ExportDoc { file: "lib/stringifier.js", start_line: 66 })'
 descriptor = "export doc at lib/stringifier.js:66"
 cost_tokens = 76
 cum_tokens = 8055
@@ -3763,7 +3763,7 @@ cum_tokens = 8055
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/stringifier.js"
+path = "lib/stringifier.js"
 start = 59
 end = 65
 
@@ -3772,7 +3772,7 @@ kind = "full"
 
 [[batches]]
 position = 136
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js", start_line: 19 })'
+key = 'Typescript(ExportDoc { file: "lib/svgo/coa.js", start_line: 19 })'
 descriptor = "export doc at lib/svgo/coa.js:19"
 cost_tokens = 52
 cum_tokens = 8107
@@ -3781,7 +3781,7 @@ cum_tokens = 8107
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/coa.js"
+path = "lib/svgo/coa.js"
 start = 14
 end = 18
 
@@ -3790,7 +3790,7 @@ kind = "full"
 
 [[batches]]
 position = 137
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", start_line: 161 })'
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 161 })'
 descriptor = "export at lib/types.ts:161"
 cost_tokens = 46
 cum_tokens = 8153
@@ -3799,7 +3799,7 @@ cum_tokens = 8153
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 161
 end = 167
 
@@ -3808,7 +3808,7 @@ kind = "full"
 
 [[batches]]
 position = 138
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 215 })'
+key = 'Typescript(ExportDoc { file: "lib/svgo/tools.js", start_line: 215 })'
 descriptor = "export doc at lib/svgo/tools.js:215"
 cost_tokens = 45
 cum_tokens = 8198
@@ -3817,7 +3817,7 @@ cum_tokens = 8198
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 210
 end = 214
 
@@ -3826,7 +3826,7 @@ kind = "full"
 
 [[batches]]
 position = 139
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 42 })'
+key = 'Typescript(ExportDoc { file: "lib/xast.js", start_line: 42 })'
 descriptor = "export doc at lib/xast.js:42"
 cost_tokens = 82
 cum_tokens = 8280
@@ -3835,7 +3835,7 @@ cum_tokens = 8280
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 36
 end = 41
 
@@ -3844,7 +3844,7 @@ kind = "full"
 
 [[batches]]
 position = 140
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js", start_line: 286, body_start_line: 292 })'
+key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 286, body_start_line: 292 })'
 descriptor = "export body at lib/style.js:286 body 292"
 cost_tokens = 271
 cum_tokens = 8551
@@ -3853,7 +3853,7 @@ cum_tokens = 8551
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 292
 end = 295
 
@@ -3861,7 +3861,7 @@ end = 295
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 297
 end = 302
 
@@ -3869,7 +3869,7 @@ end = 302
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 304
 end = 304
 
@@ -3877,7 +3877,7 @@ end = 304
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 306
 end = 309
 
@@ -3885,7 +3885,7 @@ end = 309
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 311
 end = 313
 
@@ -3893,7 +3893,7 @@ end = 313
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 315
 end = 316
 
@@ -3901,7 +3901,7 @@ end = 316
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 318
 end = 321
 
@@ -3909,7 +3909,7 @@ end = 321
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/style.js"
+path = "lib/style.js"
 start = 323
 end = 323
 
@@ -3918,7 +3918,7 @@ kind = "full"
 
 [[batches]]
 position = 141
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md" })'
+key = 'Markdown(HeadingsOutline { file: "CONTRIBUTING.md" })'
 descriptor = "headings outline in CONTRIBUTING.md"
 cost_tokens = 96
 cum_tokens = 8647
@@ -3927,7 +3927,7 @@ cum_tokens = 8647
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 1
 end = 1
 
@@ -3935,7 +3935,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 3
 end = 3
 
@@ -3943,7 +3943,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 15
 end = 15
 
@@ -3951,7 +3951,7 @@ end = 15
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 19
 end = 19
 
@@ -3959,7 +3959,7 @@ end = 19
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 21
 end = 21
 
@@ -3967,7 +3967,7 @@ end = 21
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 26
 end = 26
 
@@ -3975,7 +3975,7 @@ end = 26
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 46
 end = 46
 
@@ -3983,7 +3983,7 @@ end = 46
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 60
 end = 60
 
@@ -3991,7 +3991,7 @@ end = 60
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 69
 end = 69
 
@@ -3999,7 +3999,7 @@ end = 69
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 77
 end = 77
 
@@ -4007,7 +4007,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 2
 end = 2
 
@@ -4015,7 +4015,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 4
 end = 4
 
@@ -4023,7 +4023,7 @@ end = 4
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 16
 end = 16
 
@@ -4031,7 +4031,7 @@ end = 16
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 20
 end = 20
 
@@ -4039,7 +4039,7 @@ end = 20
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 22
 end = 22
 
@@ -4047,7 +4047,7 @@ end = 22
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 27
 end = 27
 
@@ -4055,7 +4055,7 @@ end = 27
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 47
 end = 47
 
@@ -4063,7 +4063,7 @@ end = 47
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 61
 end = 61
 
@@ -4071,7 +4071,7 @@ end = 61
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 70
 end = 70
 
@@ -4079,7 +4079,7 @@ end = 70
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 78
 end = 78
 
@@ -4088,7 +4088,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 142
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md", section_index: 0 })'
+key = 'Markdown(Section { file: "CONTRIBUTING.md", section_index: 0 })'
 descriptor = "CONTRIBUTING.md section #0"
 cost_tokens = 0
 cum_tokens = 8647
@@ -4097,7 +4097,7 @@ cum_tokens = 8647
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/CONTRIBUTING.md"
+path = "CONTRIBUTING.md"
 start = 1
 end = 1
 
@@ -4106,7 +4106,7 @@ kind = "full"
 
 [[batches]]
 position = 143
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", start_line: 133 })'
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 133 })'
 descriptor = "export at lib/types.ts:133"
 cost_tokens = 51
 cum_tokens = 8698
@@ -4115,7 +4115,7 @@ cum_tokens = 8698
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 133
 end = 138
 
@@ -4124,7 +4124,7 @@ kind = "full"
 
 [[batches]]
 position = 144
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 21, body_start_line: 22 })'
+key = 'Typescript(ExportBody { file: "lib/svgo/tools.js", start_line: 21, body_start_line: 22 })'
 descriptor = "export body at lib/svgo/tools.js:21 body 22"
 cost_tokens = 159
 cum_tokens = 8857
@@ -4133,7 +4133,7 @@ cum_tokens = 8857
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 22
 end = 34
 
@@ -4142,7 +4142,7 @@ kind = "full"
 
 [[batches]]
 position = 145
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js", start_line: 43 })'
+key = 'Typescript(ExportDoc { file: "lib/svgo/tools.js", start_line: 43 })'
 descriptor = "export doc at lib/svgo/tools.js:43"
 cost_tokens = 52
 cum_tokens = 8909
@@ -4151,7 +4151,7 @@ cum_tokens = 8909
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo/tools.js"
+path = "lib/svgo/tools.js"
 start = 37
 end = 42
 
@@ -4160,7 +4160,7 @@ kind = "full"
 
 [[batches]]
 position = 146
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js", start_line: 44, body_start_line: 45 })'
+key = 'Typescript(ExportBody { file: "lib/svgo-node.js", start_line: 44, body_start_line: 45 })'
 descriptor = "export body at lib/svgo-node.js:44 body 45"
 cost_tokens = 319
 cum_tokens = 9228
@@ -4169,7 +4169,7 @@ cum_tokens = 9228
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 45
 end = 52
 
@@ -4177,7 +4177,7 @@ end = 52
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/svgo-node.js"
+path = "lib/svgo-node.js"
 start = 54
 end = 73
 
@@ -4186,7 +4186,7 @@ kind = "full"
 
 [[batches]]
 position = 147
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/builtin.js", start_line: 62 })'
+key = 'Typescript(Export { file: "lib/builtin.js", start_line: 62 })'
 descriptor = "export at lib/builtin.js:62"
 cost_tokens = 500
 cum_tokens = 9728
@@ -4195,7 +4195,7 @@ cum_tokens = 9728
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/builtin.js"
+path = "lib/builtin.js"
 start = 62
 end = 117
 
@@ -4204,7 +4204,7 @@ kind = "full"
 
 [[batches]]
 position = 148
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js", start_line: 22 })'
+key = 'Typescript(ExportDoc { file: "lib/xast.js", start_line: 22 })'
 descriptor = "export doc at lib/xast.js:22"
 cost_tokens = 102
 cum_tokens = 9830
@@ -4213,7 +4213,7 @@ cum_tokens = 9830
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/xast.js"
+path = "lib/xast.js"
 start = 16
 end = 21
 
@@ -4222,7 +4222,7 @@ kind = "full"
 
 [[batches]]
 position = 149
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts", chunk_index: 1, export_count: 37, type_only_export_count: 37 })'
+key = 'Typescript(ExportNames { file: "lib/types.ts", chunk_index: 1, export_count: 37, type_only_export_count: 37 })'
 descriptor = "export names surface #1 in lib/types.ts"
 cost_tokens = 167
 cum_tokens = 9997
@@ -4231,7 +4231,7 @@ cum_tokens = 9997
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 180
 end = 180
 
@@ -4239,7 +4239,7 @@ end = 180
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 185
 end = 185
 
@@ -4247,7 +4247,7 @@ end = 185
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 190
 end = 190
 
@@ -4255,7 +4255,7 @@ end = 190
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 197
 end = 197
 
@@ -4263,7 +4263,7 @@ end = 197
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 205
 end = 205
 
@@ -4271,7 +4271,7 @@ end = 205
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 210
 end = 210
 
@@ -4279,7 +4279,7 @@ end = 210
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 212
 end = 212
 
@@ -4287,7 +4287,7 @@ end = 212
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 214
 end = 214
 
@@ -4295,7 +4295,7 @@ end = 214
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 243
 end = 243
 
@@ -4303,7 +4303,7 @@ end = 243
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 248
 end = 248
 
@@ -4311,7 +4311,7 @@ end = 248
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 253
 end = 253
 
@@ -4319,7 +4319,7 @@ end = 253
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 263
 end = 263
 
@@ -4327,7 +4327,7 @@ end = 263
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 181
 end = 181
 
@@ -4335,7 +4335,7 @@ end = 181
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 186
 end = 186
 
@@ -4343,7 +4343,7 @@ end = 186
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 191
 end = 191
 
@@ -4351,7 +4351,7 @@ end = 191
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 198
 end = 198
 
@@ -4359,7 +4359,7 @@ end = 198
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 206
 end = 206
 
@@ -4367,7 +4367,7 @@ end = 206
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 211
 end = 211
 
@@ -4375,7 +4375,7 @@ end = 211
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 213
 end = 213
 
@@ -4383,7 +4383,7 @@ end = 213
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 215
 end = 215
 
@@ -4391,7 +4391,7 @@ end = 215
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 244
 end = 244
 
@@ -4399,7 +4399,7 @@ end = 244
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 249
 end = 249
 
@@ -4407,7 +4407,7 @@ end = 249
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 254
 end = 254
 
@@ -4415,7 +4415,7 @@ end = 254
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/svgo/lib/types.ts"
+path = "lib/types.ts"
 start = 264
 end = 264
 

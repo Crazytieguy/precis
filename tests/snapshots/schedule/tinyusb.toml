@@ -5,7 +5,7 @@ batch_count = 233
 
 [[batches]]
 position = 1
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb" })'
+key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
 cost_tokens = 107
 cum_tokens = 107
@@ -14,12 +14,12 @@ cum_tokens = 107
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb"
+parent = "."
 entries = [".PVS-Studio", ".circleci", ".clang-format", ".claude", ".codespellrc", ".gitattributes", ".github", ".gitignore", ".idea", ".pre-commit-config.yaml", ".readthedocs.yaml", "AGENTS.md", "CLAUDE.md", "CODE_OF_CONDUCT.rst", "CONTRIBUTORS.rst", "LICENSE", "README.rst", "SConscript", "docs", "examples", "hw", "lib", "library.json", "pkg.yml", "repository.yml", "sonar-project.properties", "src", "test", "tools", "version.yml"]
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/hw" })'
+key = 'Fs(DirListing { dir: "hw" })'
 descriptor = "listing of 'hw'"
 cost_tokens = 7
 cum_tokens = 114
@@ -28,12 +28,12 @@ cum_tokens = 114
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/hw"
+parent = "hw"
 entries = ["bsp", "mcu"]
 
 [[batches]]
 position = 3
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/README.rst" })'
+key = 'Markdown(ReadmeHeadline { file: "README.rst" })'
 descriptor = "README headline in README.rst"
 cost_tokens = 47
 cum_tokens = 161
@@ -42,7 +42,7 @@ cum_tokens = 161
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/README.rst"
+path = "README.rst"
 start = 1
 end = 2
 
@@ -50,7 +50,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/README.rst"
+path = "README.rst"
 start = 4
 end = 4
 
@@ -59,7 +59,7 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib" })'
+key = 'Fs(DirListing { dir: "lib" })'
 descriptor = "listing of 'lib'"
 cost_tokens = 17
 cum_tokens = 178
@@ -68,12 +68,12 @@ cum_tokens = 178
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib"
+parent = "lib"
 entries = ["SEGGER_RTT", "embedded-cli", "networking", "rt-thread"]
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/.claude" })'
+key = 'Fs(DirListing { dir: ".claude" })'
 descriptor = "listing of '.claude'"
 cost_tokens = 6
 cum_tokens = 184
@@ -82,12 +82,12 @@ cum_tokens = 184
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/.claude"
+parent = ".claude"
 entries = ["commands", "skills"]
 
 [[batches]]
 position = 6
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT" })'
+key = 'Fs(DirListing { dir: "lib/SEGGER_RTT" })'
 descriptor = "listing of 'lib/SEGGER_RTT'"
 cost_tokens = 14
 cum_tokens = 198
@@ -96,12 +96,12 @@ cum_tokens = 198
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT"
+parent = "lib/SEGGER_RTT"
 entries = ["Config", "LICENSE.md", "README.md", "RTT"]
 
 [[batches]]
 position = 7
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/README.md" })'
+key = 'Markdown(ReadmeHeadline { file: "lib/SEGGER_RTT/README.md" })'
 descriptor = "README headline in lib/SEGGER_RTT/README.md"
 cost_tokens = 21
 cum_tokens = 219
@@ -110,7 +110,7 @@ cum_tokens = 219
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/README.md"
+path = "lib/SEGGER_RTT/README.md"
 start = 1
 end = 2
 
@@ -118,7 +118,7 @@ end = 2
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/README.md"
+path = "lib/SEGGER_RTT/README.md"
 start = 4
 end = 4
 
@@ -127,7 +127,7 @@ kind = "full"
 
 [[batches]]
 position = 8
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src" })'
+key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 50
 cum_tokens = 269
@@ -136,12 +136,12 @@ cum_tokens = 269
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src"
+parent = "src"
 entries = ["CMakeLists.txt", "class", "common", "device", "host", "osal", "portable", "tinyusb.mk", "tusb.c", "tusb.h", "tusb_option.h", "typec"]
 
 [[batches]]
 position = 9
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/hw/mcu" })'
+key = 'Fs(DirListing { dir: "hw/mcu" })'
 descriptor = "listing of 'hw/mcu'"
 cost_tokens = 15
 cum_tokens = 284
@@ -150,12 +150,12 @@ cum_tokens = 284
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/hw/mcu"
+parent = "hw/mcu"
 entries = ["bridgetek", "dialog", "nordic", "sony"]
 
 [[batches]]
 position = 10
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/tusb_option.h" })'
+key = 'C(Includes { file: "src/tusb_option.h" })'
 descriptor = "c includes in src/tusb_option.h"
 cost_tokens = 28
 cum_tokens = 312
@@ -164,7 +164,7 @@ cum_tokens = 312
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/tusb_option.h"
+path = "src/tusb_option.h"
 start = 29
 end = 29
 
@@ -172,7 +172,7 @@ end = 29
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/tusb_option.h"
+path = "src/tusb_option.h"
 start = 269
 end = 269
 
@@ -181,7 +181,7 @@ kind = "full"
 
 [[batches]]
 position = 11
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/typec" })'
+key = 'Fs(DirListing { dir: "src/typec" })'
 descriptor = "listing of 'src/typec'"
 cost_tokens = 20
 cum_tokens = 332
@@ -190,12 +190,12 @@ cum_tokens = 332
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/typec"
+parent = "src/typec"
 entries = ["pd_types.h", "tcd.h", "usbc.c", "usbc.h"]
 
 [[batches]]
 position = 12
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/typec/usbc.h" })'
+key = 'C(Includes { file: "src/typec/usbc.h" })'
 descriptor = "c includes in src/typec/usbc.h"
 cost_tokens = 24
 cum_tokens = 356
@@ -204,7 +204,7 @@ cum_tokens = 356
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/typec/usbc.h"
+path = "src/typec/usbc.h"
 start = 30
 end = 31
 
@@ -213,7 +213,7 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/test" })'
+key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 10
 cum_tokens = 366
@@ -222,12 +222,12 @@ cum_tokens = 366
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/test"
+parent = "test"
 entries = ["fuzz", "hil", "unit-test"]
 
 [[batches]]
 position = 14
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/rt-thread" })'
+key = 'Fs(DirListing { dir: "lib/rt-thread" })'
 descriptor = "listing of 'lib/rt-thread'"
 cost_tokens = 22
 cum_tokens = 388
@@ -236,12 +236,12 @@ cum_tokens = 388
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/rt-thread"
+parent = "lib/rt-thread"
 entries = ["SConscript", "port", "tusb_config.h", "tusb_rt_thread_port.c"]
 
 [[batches]]
 position = 15
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device" })'
+key = 'Fs(DirListing { dir: "src/device" })'
 descriptor = "listing of 'src/device'"
 cost_tokens = 22
 cum_tokens = 410
@@ -250,12 +250,12 @@ cum_tokens = 410
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device"
+parent = "src/device"
 entries = ["dcd.h", "usbd.c", "usbd.h", "usbd_pvt.h"]
 
 [[batches]]
 position = 16
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h" })'
+key = 'C(Includes { file: "src/device/usbd.h" })'
 descriptor = "c includes in src/device/usbd.h"
 cost_tokens = 13
 cum_tokens = 423
@@ -264,7 +264,7 @@ cum_tokens = 423
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 30
 end = 30
 
@@ -273,7 +273,7 @@ kind = "full"
 
 [[batches]]
 position = 17
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "lib/SEGGER_RTT/README.md", section_index: 0 })'
 descriptor = "lib/SEGGER_RTT/README.md section #0"
 cost_tokens = 37
 cum_tokens = 460
@@ -282,7 +282,7 @@ cum_tokens = 460
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/README.md"
+path = "lib/SEGGER_RTT/README.md"
 start = 6
 end = 7
 
@@ -291,7 +291,7 @@ kind = "full"
 
 [[batches]]
 position = 18
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs" })'
+key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 53
 cum_tokens = 513
@@ -300,12 +300,12 @@ cum_tokens = 513
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs"
+parent = "docs"
 entries = ["_static", "assets", "conf.py", "faq.rst", "getting_started.rst", "index.rst", "info", "integration.rst", "porting.rst", "reference", "requirements.txt", "troubleshooting.rst"]
 
 [[batches]]
 position = 19
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs/info" })'
+key = 'Fs(DirListing { dir: "docs/info" })'
 descriptor = "listing of 'docs/info'"
 cost_tokens = 24
 cum_tokens = 537
@@ -314,12 +314,12 @@ cum_tokens = 537
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs/info"
+parent = "docs/info"
 entries = ["changelog.rst", "code_of_conduct.rst", "contributors.rst", "index.rst"]
 
 [[batches]]
 position = 20
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/dcd.h" })'
+key = 'C(Includes { file: "src/device/dcd.h" })'
 descriptor = "c includes in src/device/dcd.h"
 cost_tokens = 38
 cum_tokens = 575
@@ -328,7 +328,7 @@ cum_tokens = 575
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/dcd.h"
+path = "src/device/dcd.h"
 start = 30
 end = 32
 
@@ -337,7 +337,7 @@ kind = "full"
 
 [[batches]]
 position = 21
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd_pvt.h" })'
+key = 'C(Includes { file: "src/device/usbd_pvt.h" })'
 descriptor = "c includes in src/device/usbd_pvt.h"
 cost_tokens = 38
 cum_tokens = 613
@@ -346,7 +346,7 @@ cum_tokens = 613
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd_pvt.h"
+path = "src/device/usbd_pvt.h"
 start = 29
 end = 31
 
@@ -355,7 +355,7 @@ kind = "full"
 
 [[batches]]
 position = 22
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/host" })'
+key = 'Fs(DirListing { dir: "src/host" })'
 descriptor = "listing of 'src/host'"
 cost_tokens = 30
 cum_tokens = 643
@@ -364,12 +364,12 @@ cum_tokens = 643
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/host"
+parent = "src/host"
 entries = ["hcd.h", "hub.c", "hub.h", "usbh.c", "usbh.h", "usbh_pvt.h"]
 
 [[batches]]
 position = 23
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/host/hub.h" })'
+key = 'C(Includes { file: "src/host/hub.h" })'
 descriptor = "c includes in src/host/hub.h"
 cost_tokens = 13
 cum_tokens = 656
@@ -378,7 +378,7 @@ cum_tokens = 656
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/host/hub.h"
+path = "src/host/hub.h"
 start = 30
 end = 30
 
@@ -387,7 +387,7 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/host/hcd.h" })'
+key = 'C(Includes { file: "src/host/hcd.h" })'
 descriptor = "c includes in src/host/hcd.h"
 cost_tokens = 38
 cum_tokens = 694
@@ -396,7 +396,7 @@ cum_tokens = 694
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/host/hcd.h"
+path = "src/host/hcd.h"
 start = 30
 end = 32
 
@@ -405,7 +405,7 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/host/usbh_pvt.h" })'
+key = 'C(Includes { file: "src/host/usbh_pvt.h" })'
 descriptor = "c includes in src/host/usbh_pvt.h"
 cost_tokens = 38
 cum_tokens = 732
@@ -414,7 +414,7 @@ cum_tokens = 732
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/host/usbh_pvt.h"
+path = "src/host/usbh_pvt.h"
 start = 30
 end = 32
 
@@ -423,7 +423,7 @@ kind = "full"
 
 [[batches]]
 position = 26
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/typec/tcd.h" })'
+key = 'C(Includes { file: "src/typec/tcd.h" })'
 descriptor = "c includes in src/typec/tcd.h"
 cost_tokens = 49
 cum_tokens = 781
@@ -432,7 +432,7 @@ cum_tokens = 781
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/typec/tcd.h"
+path = "src/typec/tcd.h"
 start = 30
 end = 31
 
@@ -440,7 +440,7 @@ end = 31
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/typec/tcd.h"
+path = "src/typec/tcd.h"
 start = 33
 end = 34
 
@@ -449,7 +449,7 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs/reference" })'
+key = 'Fs(DirListing { dir: "docs/reference" })'
 descriptor = "listing of 'docs/reference'"
 cost_tokens = 37
 cum_tokens = 818
@@ -458,12 +458,12 @@ cum_tokens = 818
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs/reference"
+parent = "docs/reference"
 entries = ["architecture.rst", "boards.rst", "concurrency.rst", "dependencies.rst", "glossary.rst", "index.rst", "usb_concepts.rst"]
 
 [[batches]]
 position = 28
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking" })'
+key = 'Fs(DirListing { dir: "lib/networking" })'
 descriptor = "listing of 'lib/networking'"
 cost_tokens = 37
 cum_tokens = 855
@@ -472,12 +472,12 @@ cum_tokens = 855
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking"
+parent = "lib/networking"
 entries = ["dhserver.c", "dhserver.h", "dnserver.c", "dnserver.h", "ndis.h", "rndis_protocol.h", "rndis_reports.c"]
 
 [[batches]]
 position = 29
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "lib/networking/dhserver.h", chunk_index: 0 })'
 descriptor = "c decl names surface in lib/networking/dhserver.h"
 cost_tokens = 24
 cum_tokens = 879
@@ -486,7 +486,7 @@ cum_tokens = 879
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h"
+path = "lib/networking/dhserver.h"
 start = 42
 end = 42
 
@@ -494,7 +494,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h"
+path = "lib/networking/dhserver.h"
 start = 49
 end = 49
 
@@ -502,7 +502,7 @@ end = 49
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h"
+path = "lib/networking/dhserver.h"
 start = 43
 end = 43
 
@@ -510,7 +510,7 @@ end = 43
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h"
+path = "lib/networking/dhserver.h"
 start = 50
 end = 50
 
@@ -519,7 +519,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 30
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dnserver.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "lib/networking/dnserver.h", chunk_index: 0 })'
 descriptor = "c decl names surface in lib/networking/dnserver.h"
 cost_tokens = 26
 cum_tokens = 905
@@ -528,7 +528,7 @@ cum_tokens = 905
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dnserver.h"
+path = "lib/networking/dnserver.h"
 start = 42
 end = 42
 
@@ -536,7 +536,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dnserver.h"
+path = "lib/networking/dnserver.h"
 start = 43
 end = 43
 
@@ -545,7 +545,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 31
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h", start_line: 42 })'
+key = 'C(Decl { file: "lib/networking/dhserver.h", start_line: 42 })'
 descriptor = "c decl at lib/networking/dhserver.h:42"
 cost_tokens = 45
 cum_tokens = 950
@@ -554,7 +554,7 @@ cum_tokens = 950
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h"
+path = "lib/networking/dhserver.h"
 start = 42
 end = 47
 
@@ -563,7 +563,7 @@ kind = "full"
 
 [[batches]]
 position = 32
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h" })'
+key = 'C(Includes { file: "lib/networking/rndis_protocol.h" })'
 descriptor = "c includes in lib/networking/rndis_protocol.h"
 cost_tokens = 21
 cum_tokens = 971
@@ -572,7 +572,7 @@ cum_tokens = 971
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 47
 end = 47
 
@@ -580,7 +580,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 290
 end = 290
 
@@ -589,7 +589,7 @@ kind = "full"
 
 [[batches]]
 position = 33
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h", start_line: 49 })'
+key = 'C(Decl { file: "lib/networking/dhserver.h", start_line: 49 })'
 descriptor = "c decl at lib/networking/dhserver.h:49"
 cost_tokens = 75
 cum_tokens = 1046
@@ -598,7 +598,7 @@ cum_tokens = 1046
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h"
+path = "lib/networking/dhserver.h"
 start = 49
 end = 57
 
@@ -607,7 +607,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs/assets" })'
+key = 'Fs(DirListing { dir: "docs/assets" })'
 descriptor = "listing of 'docs/assets'"
 cost_tokens = 14
 cum_tokens = 1060
@@ -616,12 +616,12 @@ cum_tokens = 1060
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs/assets"
+parent = "docs/assets"
 entries = ["adafruit_logo.svg", "logo.svg", "stack.svg"]
 
 [[batches]]
 position = 35
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs/_static" })'
+key = 'Fs(DirListing { dir: "docs/_static" })'
 descriptor = "listing of 'docs/_static'"
 cost_tokens = 4
 cum_tokens = 1064
@@ -630,12 +630,12 @@ cum_tokens = 1064
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/docs/_static"
+parent = "docs/_static"
 entries = ["custom.css"]
 
 [[batches]]
 position = 36
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/tusb.c" })'
+key = 'C(Includes { file: "src/tusb.c" })'
 descriptor = "c includes in src/tusb.c"
 cost_tokens = 12
 cum_tokens = 1076
@@ -644,7 +644,7 @@ cum_tokens = 1076
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/tusb.c"
+path = "src/tusb.c"
 start = 27
 end = 27
 
@@ -653,7 +653,7 @@ kind = "full"
 
 [[batches]]
 position = 37
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class" })'
+key = 'Fs(DirListing { dir: "src/class" })'
 descriptor = "listing of 'src/class'"
 cost_tokens = 46
 cum_tokens = 1122
@@ -662,12 +662,12 @@ cum_tokens = 1122
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class"
+parent = "src/class"
 entries = ["audio", "bth", "cdc", "dfu", "hid", "midi", "msc", "mtp", "net", "printer", "usbtmc", "vendor", "video"]
 
 [[batches]]
 position = 38
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/vendor" })'
+key = 'Fs(DirListing { dir: "src/class/vendor" })'
 descriptor = "listing of 'src/class/vendor'"
 cost_tokens = 20
 cum_tokens = 1142
@@ -676,12 +676,12 @@ cum_tokens = 1142
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/vendor"
+parent = "src/class/vendor"
 entries = ["vendor_device.c", "vendor_device.h", "vendor_host.c", "vendor_host.h"]
 
 [[batches]]
 position = 39
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/vendor/vendor_host.h" })'
+key = 'C(Includes { file: "src/class/vendor/vendor_host.h" })'
 descriptor = "c includes in src/class/vendor/vendor_host.h"
 cost_tokens = 13
 cum_tokens = 1155
@@ -690,7 +690,7 @@ cum_tokens = 1155
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/vendor/vendor_host.h"
+path = "src/class/vendor/vendor_host.h"
 start = 30
 end = 30
 
@@ -699,7 +699,7 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid" })'
+key = 'Fs(DirListing { dir: "src/class/hid" })'
 descriptor = "listing of 'src/class/hid'"
 cost_tokens = 24
 cum_tokens = 1179
@@ -708,12 +708,12 @@ cum_tokens = 1179
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid"
+parent = "src/class/hid"
 entries = ["hid.h", "hid_device.c", "hid_device.h", "hid_host.c", "hid_host.h"]
 
 [[batches]]
 position = 41
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid_device.h" })'
+key = 'C(Includes { file: "src/class/hid/hid_device.h" })'
 descriptor = "c includes in src/class/hid/hid_device.h"
 cost_tokens = 10
 cum_tokens = 1189
@@ -722,7 +722,7 @@ cum_tokens = 1189
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid_device.h"
+path = "src/class/hid/hid_device.h"
 start = 30
 end = 30
 
@@ -731,7 +731,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid_host.h" })'
+key = 'C(Includes { file: "src/class/hid/hid_host.h" })'
 descriptor = "c includes in src/class/hid/hid_host.h"
 cost_tokens = 10
 cum_tokens = 1199
@@ -740,7 +740,7 @@ cum_tokens = 1199
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid_host.h"
+path = "src/class/hid/hid_host.h"
 start = 30
 end = 30
 
@@ -749,7 +749,7 @@ kind = "full"
 
 [[batches]]
 position = 43
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h" })'
+key = 'C(Includes { file: "src/class/hid/hid.h" })'
 descriptor = "c includes in src/class/hid/hid.h"
 cost_tokens = 13
 cum_tokens = 1212
@@ -758,7 +758,7 @@ cum_tokens = 1212
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 34
 end = 34
 
@@ -767,7 +767,7 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net" })'
+key = 'Fs(DirListing { dir: "src/class/net" })'
 descriptor = "listing of 'src/class/net'"
 cost_tokens = 25
 cum_tokens = 1237
@@ -776,12 +776,12 @@ cum_tokens = 1237
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net"
+parent = "src/class/net"
 entries = ["ecm_rndis_device.c", "ncm.h", "ncm_device.c", "net_device.h"]
 
 [[batches]]
 position = 45
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/class/net/net_device.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/class/net/net_device.h"
 cost_tokens = 18
 cum_tokens = 1255
@@ -790,7 +790,7 @@ cum_tokens = 1255
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 45
 end = 45
 
@@ -798,7 +798,7 @@ end = 45
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 51
 end = 51
 
@@ -806,7 +806,7 @@ end = 51
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 46
 end = 46
 
@@ -814,7 +814,7 @@ end = 46
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 52
 end = 52
 
@@ -823,7 +823,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 46
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h", start_line: 45 })'
+key = 'C(Decl { file: "src/class/net/net_device.h", start_line: 45 })'
 descriptor = "c decl at src/class/net/net_device.h:45"
 cost_tokens = 34
 cum_tokens = 1289
@@ -832,7 +832,7 @@ cum_tokens = 1289
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 45
 end = 48
 
@@ -841,7 +841,7 @@ kind = "full"
 
 [[batches]]
 position = 47
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h", start_line: 45 })'
+key = 'C(DeclDoc { file: "src/class/net/net_device.h", start_line: 45 })'
 descriptor = "c decl doc at src/class/net/net_device.h:45"
 cost_tokens = 16
 cum_tokens = 1305
@@ -850,7 +850,7 @@ cum_tokens = 1305
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 44
 end = 44
 
@@ -859,7 +859,7 @@ kind = "full"
 
 [[batches]]
 position = 48
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h" })'
+key = 'C(Includes { file: "src/class/net/ncm.h" })'
 descriptor = "c includes in src/class/net/ncm.h"
 cost_tokens = 13
 cum_tokens = 1318
@@ -868,7 +868,7 @@ cum_tokens = 1318
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 31
 end = 31
 
@@ -877,7 +877,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h" })'
+key = 'C(Includes { file: "src/class/net/net_device.h" })'
 descriptor = "c includes in src/class/net/net_device.h"
 cost_tokens = 24
 cum_tokens = 1342
@@ -886,7 +886,7 @@ cum_tokens = 1342
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 31
 end = 32
 
@@ -895,7 +895,7 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/class/net/ncm.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/class/net/ncm.h"
 cost_tokens = 184
 cum_tokens = 1526
@@ -904,7 +904,7 @@ cum_tokens = 1526
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 82
 end = 82
 
@@ -912,7 +912,7 @@ end = 82
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 102
 end = 104
 
@@ -920,7 +920,7 @@ end = 104
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 106
 end = 106
 
@@ -928,7 +928,7 @@ end = 106
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 121
 end = 121
 
@@ -936,7 +936,7 @@ end = 121
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 129
 end = 129
 
@@ -944,7 +944,7 @@ end = 129
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 134
 end = 134
 
@@ -952,7 +952,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 141
 end = 141
 
@@ -960,7 +960,7 @@ end = 141
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 150
 end = 150
 
@@ -968,7 +968,7 @@ end = 150
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 158
 end = 158
 
@@ -976,7 +976,7 @@ end = 158
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 164
 end = 164
 
@@ -984,7 +984,7 @@ end = 164
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 172
 end = 172
 
@@ -992,7 +992,7 @@ end = 172
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 83
 end = 83
 
@@ -1000,7 +1000,7 @@ end = 83
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 105
 end = 105
 
@@ -1008,7 +1008,7 @@ end = 105
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 107
 end = 107
 
@@ -1016,7 +1016,7 @@ end = 107
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 122
 end = 122
 
@@ -1024,7 +1024,7 @@ end = 122
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 130
 end = 130
 
@@ -1032,7 +1032,7 @@ end = 130
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 135
 end = 135
 
@@ -1040,7 +1040,7 @@ end = 135
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 142
 end = 142
 
@@ -1048,7 +1048,7 @@ end = 142
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 151
 end = 151
 
@@ -1056,7 +1056,7 @@ end = 151
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 159
 end = 159
 
@@ -1064,7 +1064,7 @@ end = 159
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 165
 end = 165
 
@@ -1072,7 +1072,7 @@ end = 165
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 173
 end = 173
 
@@ -1081,7 +1081,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 51
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 129 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 129 })'
 descriptor = "c decl at src/class/net/ncm.h:129"
 cost_tokens = 36
 cum_tokens = 1562
@@ -1090,7 +1090,7 @@ cum_tokens = 1562
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 129
 end = 132
 
@@ -1099,7 +1099,7 @@ kind = "full"
 
 [[batches]]
 position = 52
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 158 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 158 })'
 descriptor = "c decl at src/class/net/ncm.h:158"
 cost_tokens = 42
 cum_tokens = 1604
@@ -1108,7 +1108,7 @@ cum_tokens = 1604
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 158
 end = 162
 
@@ -1117,7 +1117,7 @@ kind = "full"
 
 [[batches]]
 position = 53
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 172 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 172 })'
 descriptor = "c decl at src/class/net/ncm.h:172"
 cost_tokens = 53
 cum_tokens = 1657
@@ -1126,7 +1126,7 @@ cum_tokens = 1657
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 172
 end = 176
 
@@ -1135,7 +1135,7 @@ kind = "full"
 
 [[batches]]
 position = 54
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 134 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 134 })'
 descriptor = "c decl at src/class/net/ncm.h:134"
 cost_tokens = 59
 cum_tokens = 1716
@@ -1144,7 +1144,7 @@ cum_tokens = 1716
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 134
 end = 139
 
@@ -1153,7 +1153,7 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 121 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 121 })'
 descriptor = "c decl at src/class/net/ncm.h:121"
 cost_tokens = 66
 cum_tokens = 1782
@@ -1162,7 +1162,7 @@ cum_tokens = 1782
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 121
 end = 127
 
@@ -1171,7 +1171,7 @@ kind = "full"
 
 [[batches]]
 position = 56
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 150 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 150 })'
 descriptor = "c decl at src/class/net/ncm.h:150"
 cost_tokens = 67
 cum_tokens = 1849
@@ -1180,7 +1180,7 @@ cum_tokens = 1849
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 150
 end = 156
 
@@ -1189,7 +1189,7 @@ kind = "full"
 
 [[batches]]
 position = 57
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 164 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 164 })'
 descriptor = "c decl at src/class/net/ncm.h:164"
 cost_tokens = 75
 cum_tokens = 1924
@@ -1198,7 +1198,7 @@ cum_tokens = 1924
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 164
 end = 170
 
@@ -1207,7 +1207,7 @@ kind = "full"
 
 [[batches]]
 position = 58
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 141 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 141 })'
 descriptor = "c decl at src/class/net/ncm.h:141"
 cost_tokens = 98
 cum_tokens = 2022
@@ -1216,7 +1216,7 @@ cum_tokens = 2022
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 141
 end = 148
 
@@ -1225,7 +1225,7 @@ kind = "full"
 
 [[batches]]
 position = 59
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h", start_line: 51 })'
+key = 'C(Decl { file: "src/class/net/net_device.h", start_line: 51 })'
 descriptor = "c decl at src/class/net/net_device.h:51"
 cost_tokens = 153
 cum_tokens = 2175
@@ -1234,7 +1234,7 @@ cum_tokens = 2175
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 51
 end = 59
 
@@ -1243,7 +1243,7 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h", start_line: 51 })'
+key = 'C(DeclDoc { file: "src/class/net/net_device.h", start_line: 51 })'
 descriptor = "c decl doc at src/class/net/net_device.h:51"
 cost_tokens = 15
 cum_tokens = 2190
@@ -1252,7 +1252,7 @@ cum_tokens = 2190
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/net_device.h"
+path = "src/class/net/net_device.h"
 start = 50
 end = 50
 
@@ -1261,7 +1261,7 @@ kind = "full"
 
 [[batches]]
 position = 61
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli" })'
+key = 'Fs(DirListing { dir: "lib/embedded-cli" })'
 descriptor = "listing of 'lib/embedded-cli'"
 cost_tokens = 5
 cum_tokens = 2195
@@ -1270,12 +1270,12 @@ cum_tokens = 2195
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli"
+parent = "lib/embedded-cli"
 entries = ["embedded_cli.h"]
 
 [[batches]]
 position = 62
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h" })'
+key = 'C(Includes { file: "lib/embedded-cli/embedded_cli.h" })'
 descriptor = "c includes in lib/embedded-cli/embedded_cli.h"
 cost_tokens = 40
 cum_tokens = 2235
@@ -1284,7 +1284,7 @@ cum_tokens = 2235
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 37
 end = 37
 
@@ -1292,7 +1292,7 @@ end = 37
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 42
 end = 42
 
@@ -1300,7 +1300,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 342
 end = 343
 
@@ -1309,7 +1309,7 @@ kind = "full"
 
 [[batches]]
 position = 63
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/class/hid/hid.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/class/hid/hid.h"
 cost_tokens = 354
 cum_tokens = 2589
@@ -1318,7 +1318,7 @@ cum_tokens = 2589
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 47
 end = 47
 
@@ -1326,7 +1326,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 61
 end = 61
 
@@ -1334,7 +1334,7 @@ end = 61
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 68
 end = 68
 
@@ -1342,7 +1342,7 @@ end = 68
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 76
 end = 76
 
@@ -1350,7 +1350,7 @@ end = 76
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 84
 end = 84
 
@@ -1358,7 +1358,7 @@ end = 84
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 93
 end = 93
 
@@ -1366,7 +1366,7 @@ end = 93
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 104
 end = 104
 
@@ -1374,7 +1374,7 @@ end = 104
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 145
 end = 145
 
@@ -1382,7 +1382,7 @@ end = 145
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 195
 end = 195
 
@@ -1390,7 +1390,7 @@ end = 195
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 208
 end = 208
 
@@ -1398,7 +1398,7 @@ end = 208
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 246
 end = 247
 
@@ -1406,7 +1406,7 @@ end = 247
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 249
 end = 250
 
@@ -1414,7 +1414,7 @@ end = 250
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 252
 end = 252
 
@@ -1422,7 +1422,7 @@ end = 252
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 254
 end = 255
 
@@ -1430,7 +1430,7 @@ end = 255
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 257
 end = 258
 
@@ -1438,7 +1438,7 @@ end = 258
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 260
 end = 264
 
@@ -1446,7 +1446,7 @@ end = 264
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 48
 end = 48
 
@@ -1454,7 +1454,7 @@ end = 48
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 62
 end = 62
 
@@ -1462,7 +1462,7 @@ end = 62
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 69
 end = 69
 
@@ -1470,7 +1470,7 @@ end = 69
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 77
 end = 77
 
@@ -1478,7 +1478,7 @@ end = 77
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 85
 end = 85
 
@@ -1486,7 +1486,7 @@ end = 85
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 94
 end = 94
 
@@ -1494,7 +1494,7 @@ end = 94
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 105
 end = 105
 
@@ -1502,7 +1502,7 @@ end = 105
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 146
 end = 146
 
@@ -1510,7 +1510,7 @@ end = 146
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 196
 end = 196
 
@@ -1518,7 +1518,7 @@ end = 196
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 209
 end = 209
 
@@ -1526,7 +1526,7 @@ end = 209
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 248
 end = 248
 
@@ -1534,7 +1534,7 @@ end = 248
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 251
 end = 251
 
@@ -1542,7 +1542,7 @@ end = 251
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 253
 end = 253
 
@@ -1550,7 +1550,7 @@ end = 253
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 256
 end = 256
 
@@ -1558,7 +1558,7 @@ end = 256
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 259
 end = 259
 
@@ -1567,7 +1567,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 64
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 246 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 246 })'
 descriptor = "c decl at src/class/hid/hid.h:246"
 cost_tokens = 0
 cum_tokens = 2589
@@ -1576,7 +1576,7 @@ cum_tokens = 2589
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 246
 end = 246
 
@@ -1585,7 +1585,7 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 145 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 145 })'
 descriptor = "c decl at src/class/hid/hid.h:145"
 cost_tokens = 38
 cum_tokens = 2627
@@ -1594,7 +1594,7 @@ cum_tokens = 2627
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 145
 end = 149
 
@@ -1603,7 +1603,7 @@ kind = "full"
 
 [[batches]]
 position = 66
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 145 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 145 })'
 descriptor = "c decl doc at src/class/hid/hid.h:145"
 cost_tokens = 16
 cum_tokens = 2643
@@ -1612,7 +1612,7 @@ cum_tokens = 2643
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 144
 end = 144
 
@@ -1621,7 +1621,7 @@ kind = "full"
 
 [[batches]]
 position = 67
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 61 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 61 })'
 descriptor = "c decl at src/class/hid/hid.h:61"
 cost_tokens = 51
 cum_tokens = 2694
@@ -1630,7 +1630,7 @@ cum_tokens = 2694
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 61
 end = 65
 
@@ -1639,7 +1639,7 @@ kind = "full"
 
 [[batches]]
 position = 68
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 61 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 61 })'
 descriptor = "c decl doc at src/class/hid/hid.h:61"
 cost_tokens = 9
 cum_tokens = 2703
@@ -1648,7 +1648,7 @@ cum_tokens = 2703
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 60
 end = 60
 
@@ -1657,7 +1657,7 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 84 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 84 })'
 descriptor = "c decl at src/class/hid/hid.h:84"
 cost_tokens = 67
 cum_tokens = 2770
@@ -1666,7 +1666,7 @@ cum_tokens = 2770
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 84
 end = 90
 
@@ -1675,7 +1675,7 @@ kind = "full"
 
 [[batches]]
 position = 70
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 84 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 84 })'
 descriptor = "c decl doc at src/class/hid/hid.h:84"
 cost_tokens = 10
 cum_tokens = 2780
@@ -1684,7 +1684,7 @@ cum_tokens = 2780
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 83
 end = 83
 
@@ -1693,7 +1693,7 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 68 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 68 })'
 descriptor = "c decl at src/class/hid/hid.h:68"
 cost_tokens = 68
 cum_tokens = 2848
@@ -1702,7 +1702,7 @@ cum_tokens = 2848
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 68
 end = 73
 
@@ -1711,7 +1711,7 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 68 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 68 })'
 descriptor = "c decl doc at src/class/hid/hid.h:68"
 cost_tokens = 9
 cum_tokens = 2857
@@ -1720,7 +1720,7 @@ cum_tokens = 2857
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 67
 end = 67
 
@@ -1729,7 +1729,7 @@ kind = "full"
 
 [[batches]]
 position = 73
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 76 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 76 })'
 descriptor = "c decl at src/class/hid/hid.h:76"
 cost_tokens = 74
 cum_tokens = 2931
@@ -1738,7 +1738,7 @@ cum_tokens = 2931
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 76
 end = 81
 
@@ -1747,7 +1747,7 @@ kind = "full"
 
 [[batches]]
 position = 74
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 76 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 76 })'
 descriptor = "c decl doc at src/class/hid/hid.h:76"
 cost_tokens = 9
 cum_tokens = 2940
@@ -1756,7 +1756,7 @@ cum_tokens = 2940
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 75
 end = 75
 
@@ -1765,7 +1765,7 @@ kind = "full"
 
 [[batches]]
 position = 75
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 246 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 246 })'
 descriptor = "c decl doc at src/class/hid/hid.h:246"
 cost_tokens = 42
 cum_tokens = 2982
@@ -1774,7 +1774,7 @@ cum_tokens = 2982
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 244
 end = 245
 
@@ -1783,7 +1783,7 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 93 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 93 })'
 descriptor = "c decl at src/class/hid/hid.h:93"
 cost_tokens = 139
 cum_tokens = 3121
@@ -1792,7 +1792,7 @@ cum_tokens = 3121
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 93
 end = 101
 
@@ -1801,7 +1801,7 @@ kind = "full"
 
 [[batches]]
 position = 77
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 93 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 93 })'
 descriptor = "c decl doc at src/class/hid/hid.h:93"
 cost_tokens = 11
 cum_tokens = 3132
@@ -1810,7 +1810,7 @@ cum_tokens = 3132
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 92
 end = 92
 
@@ -1819,7 +1819,7 @@ kind = "full"
 
 [[batches]]
 position = 78
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/msc" })'
+key = 'Fs(DirListing { dir: "src/class/msc" })'
 descriptor = "listing of 'src/class/msc'"
 cost_tokens = 29
 cum_tokens = 3161
@@ -1828,12 +1828,12 @@ cum_tokens = 3161
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/msc"
+parent = "src/class/msc"
 entries = ["msc.h", "msc_device.c", "msc_device.h", "msc_host.c", "msc_host.h"]
 
 [[batches]]
 position = 79
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/msc/msc_host.h" })'
+key = 'C(Includes { file: "src/class/msc/msc_host.h" })'
 descriptor = "c includes in src/class/msc/msc_host.h"
 cost_tokens = 10
 cum_tokens = 3171
@@ -1842,7 +1842,7 @@ cum_tokens = 3171
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/msc/msc_host.h"
+path = "src/class/msc/msc_host.h"
 start = 30
 end = 30
 
@@ -1851,7 +1851,7 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/msc/msc.h" })'
+key = 'C(Includes { file: "src/class/msc/msc.h" })'
 descriptor = "c includes in src/class/msc/msc.h"
 cost_tokens = 13
 cum_tokens = 3184
@@ -1860,7 +1860,7 @@ cum_tokens = 3184
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/msc/msc.h"
+path = "src/class/msc/msc.h"
 start = 30
 end = 30
 
@@ -1869,7 +1869,7 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/msc/msc_device.h" })'
+key = 'C(Includes { file: "src/class/msc/msc_device.h" })'
 descriptor = "c includes in src/class/msc/msc_device.h"
 cost_tokens = 23
 cum_tokens = 3207
@@ -1878,7 +1878,7 @@ cum_tokens = 3207
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/msc/msc_device.h"
+path = "src/class/msc/msc_device.h"
 start = 30
 end = 31
 
@@ -1887,7 +1887,7 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/common" })'
+key = 'Fs(DirListing { dir: "src/common" })'
 descriptor = "listing of 'src/common'"
 cost_tokens = 56
 cum_tokens = 3263
@@ -1896,12 +1896,12 @@ cum_tokens = 3263
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/common"
+parent = "src/common"
 entries = ["tusb_common.h", "tusb_compiler.h", "tusb_debug.h", "tusb_fifo.c", "tusb_fifo.h", "tusb_mcu.h", "tusb_private.h", "tusb_types.h", "tusb_verify.h"]
 
 [[batches]]
 position = 83
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/common/tusb_types.h" })'
+key = 'C(Includes { file: "src/common/tusb_types.h" })'
 descriptor = "c includes in src/common/tusb_types.h"
 cost_tokens = 33
 cum_tokens = 3296
@@ -1910,7 +1910,7 @@ cum_tokens = 3296
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/common/tusb_types.h"
+path = "src/common/tusb_types.h"
 start = 30
 end = 32
 
@@ -1919,7 +1919,7 @@ kind = "full"
 
 [[batches]]
 position = 84
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/common/tusb_verify.h" })'
+key = 'C(Includes { file: "src/common/tusb_verify.h" })'
 descriptor = "c includes in src/common/tusb_verify.h"
 cost_tokens = 45
 cum_tokens = 3341
@@ -1928,7 +1928,7 @@ cum_tokens = 3341
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/common/tusb_verify.h"
+path = "src/common/tusb_verify.h"
 start = 29
 end = 32
 
@@ -1937,7 +1937,7 @@ kind = "full"
 
 [[batches]]
 position = 85
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/dfu" })'
+key = 'Fs(DirListing { dir: "src/class/dfu" })'
 descriptor = "listing of 'src/class/dfu'"
 cost_tokens = 31
 cum_tokens = 3372
@@ -1946,12 +1946,12 @@ cum_tokens = 3372
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/dfu"
+parent = "src/class/dfu"
 entries = ["dfu.h", "dfu_device.c", "dfu_device.h", "dfu_rt_device.c", "dfu_rt_device.h"]
 
 [[batches]]
 position = 86
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/dfu/dfu_device.h" })'
+key = 'C(Includes { file: "src/class/dfu/dfu_device.h" })'
 descriptor = "c includes in src/class/dfu/dfu_device.h"
 cost_tokens = 11
 cum_tokens = 3383
@@ -1960,7 +1960,7 @@ cum_tokens = 3383
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/dfu/dfu_device.h"
+path = "src/class/dfu/dfu_device.h"
 start = 30
 end = 30
 
@@ -1969,7 +1969,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/dfu/dfu_rt_device.h" })'
+key = 'C(Includes { file: "src/class/dfu/dfu_rt_device.h" })'
 descriptor = "c includes in src/class/dfu/dfu_rt_device.h"
 cost_tokens = 11
 cum_tokens = 3394
@@ -1978,7 +1978,7 @@ cum_tokens = 3394
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/dfu/dfu_rt_device.h"
+path = "src/class/dfu/dfu_rt_device.h"
 start = 30
 end = 30
 
@@ -1987,7 +1987,7 @@ kind = "full"
 
 [[batches]]
 position = 88
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/dfu/dfu.h" })'
+key = 'C(Includes { file: "src/class/dfu/dfu.h" })'
 descriptor = "c includes in src/class/dfu/dfu.h"
 cost_tokens = 13
 cum_tokens = 3407
@@ -1996,7 +1996,7 @@ cum_tokens = 3407
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/dfu/dfu.h"
+path = "src/class/dfu/dfu.h"
 start = 30
 end = 30
 
@@ -2005,7 +2005,7 @@ kind = "full"
 
 [[batches]]
 position = 89
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/midi" })'
+key = 'Fs(DirListing { dir: "src/class/midi" })'
 descriptor = "listing of 'src/class/midi'"
 cost_tokens = 31
 cum_tokens = 3438
@@ -2014,12 +2014,12 @@ cum_tokens = 3438
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/midi"
+parent = "src/class/midi"
 entries = ["README_midi_host.md", "midi.h", "midi_device.c", "midi_device.h", "midi_host.c", "midi_host.h"]
 
 [[batches]]
 position = 90
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/midi/midi.h" })'
+key = 'C(Includes { file: "src/class/midi/midi.h" })'
 descriptor = "c includes in src/class/midi/midi.h"
 cost_tokens = 13
 cum_tokens = 3451
@@ -2028,7 +2028,7 @@ cum_tokens = 3451
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/midi/midi.h"
+path = "src/class/midi/midi.h"
 start = 30
 end = 30
 
@@ -2037,7 +2037,7 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/midi/midi_device.h" })'
+key = 'C(Includes { file: "src/class/midi/midi_device.h" })'
 descriptor = "c includes in src/class/midi/midi_device.h"
 cost_tokens = 23
 cum_tokens = 3474
@@ -2046,7 +2046,7 @@ cum_tokens = 3474
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/midi/midi_device.h"
+path = "src/class/midi/midi_device.h"
 start = 30
 end = 31
 
@@ -2055,7 +2055,7 @@ kind = "full"
 
 [[batches]]
 position = 92
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/midi/midi_host.h" })'
+key = 'C(Includes { file: "src/class/midi/midi_host.h" })'
 descriptor = "c includes in src/class/midi/midi_host.h"
 cost_tokens = 23
 cum_tokens = 3497
@@ -2064,7 +2064,7 @@ cum_tokens = 3497
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/midi/midi_host.h"
+path = "src/class/midi/midi_host.h"
 start = 30
 end = 31
 
@@ -2073,7 +2073,7 @@ kind = "full"
 
 [[batches]]
 position = 93
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h" })'
+key = 'C(Includes { file: "lib/networking/dhserver.h" })'
 descriptor = "c includes in lib/networking/dhserver.h"
 cost_tokens = 80
 cum_tokens = 3577
@@ -2082,7 +2082,7 @@ cum_tokens = 3577
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dhserver.h"
+path = "lib/networking/dhserver.h"
 start = 34
 end = 40
 
@@ -2091,7 +2091,7 @@ kind = "full"
 
 [[batches]]
 position = 94
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/device/usbd.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/device/usbd.h"
 cost_tokens = 389
 cum_tokens = 3966
@@ -2100,7 +2100,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 37
 end = 37
 
@@ -2108,7 +2108,7 @@ end = 37
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 42
 end = 42
 
@@ -2116,7 +2116,7 @@ end = 42
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 51
 end = 51
 
@@ -2124,7 +2124,7 @@ end = 51
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 63
 end = 63
 
@@ -2132,7 +2132,7 @@ end = 63
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 67
 end = 67
 
@@ -2140,7 +2140,7 @@ end = 67
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 73
 end = 73
 
@@ -2148,7 +2148,7 @@ end = 73
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 83
 end = 83
 
@@ -2156,7 +2156,7 @@ end = 83
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 86
 end = 86
 
@@ -2164,7 +2164,7 @@ end = 86
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 91
 end = 91
 
@@ -2172,7 +2172,7 @@ end = 91
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 94
 end = 94
 
@@ -2180,7 +2180,7 @@ end = 94
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 100
 end = 100
 
@@ -2188,7 +2188,7 @@ end = 100
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 107
 end = 107
 
@@ -2196,7 +2196,7 @@ end = 107
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 110
 end = 110
 
@@ -2204,7 +2204,7 @@ end = 110
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 114
 end = 114
 
@@ -2212,7 +2212,7 @@ end = 114
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 117
 end = 117
 
@@ -2220,7 +2220,7 @@ end = 117
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 120
 end = 120
 
@@ -2228,7 +2228,7 @@ end = 120
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 123
 end = 123
 
@@ -2236,7 +2236,7 @@ end = 123
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 131
 end = 131
 
@@ -2244,7 +2244,7 @@ end = 131
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 135
 end = 135
 
@@ -2252,7 +2252,7 @@ end = 135
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 139
 end = 139
 
@@ -2260,7 +2260,7 @@ end = 139
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 142
 end = 142
 
@@ -2268,7 +2268,7 @@ end = 142
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 147
 end = 147
 
@@ -2276,7 +2276,7 @@ end = 147
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 150
 end = 150
 
@@ -2284,7 +2284,7 @@ end = 150
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 158
 end = 158
 
@@ -2292,7 +2292,7 @@ end = 158
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 38
 end = 38
 
@@ -2300,7 +2300,7 @@ end = 38
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 43
 end = 43
 
@@ -2308,7 +2308,7 @@ end = 43
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 52
 end = 52
 
@@ -2316,7 +2316,7 @@ end = 52
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 64
 end = 64
 
@@ -2324,7 +2324,7 @@ end = 64
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 68
 end = 68
 
@@ -2332,7 +2332,7 @@ end = 68
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 74
 end = 74
 
@@ -2340,7 +2340,7 @@ end = 74
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 84
 end = 84
 
@@ -2348,7 +2348,7 @@ end = 84
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 87
 end = 87
 
@@ -2356,7 +2356,7 @@ end = 87
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 92
 end = 92
 
@@ -2364,7 +2364,7 @@ end = 92
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 95
 end = 95
 
@@ -2372,7 +2372,7 @@ end = 95
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 101
 end = 101
 
@@ -2380,7 +2380,7 @@ end = 101
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 108
 end = 108
 
@@ -2388,7 +2388,7 @@ end = 108
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 111
 end = 111
 
@@ -2396,7 +2396,7 @@ end = 111
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 115
 end = 115
 
@@ -2404,7 +2404,7 @@ end = 115
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 118
 end = 118
 
@@ -2412,7 +2412,7 @@ end = 118
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 121
 end = 121
 
@@ -2420,7 +2420,7 @@ end = 121
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 124
 end = 124
 
@@ -2428,7 +2428,7 @@ end = 124
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 132
 end = 132
 
@@ -2436,7 +2436,7 @@ end = 132
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 136
 end = 136
 
@@ -2444,7 +2444,7 @@ end = 136
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 140
 end = 140
 
@@ -2452,7 +2452,7 @@ end = 140
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 143
 end = 143
 
@@ -2460,7 +2460,7 @@ end = 143
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 148
 end = 148
 
@@ -2468,7 +2468,7 @@ end = 148
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 151
 end = 151
 
@@ -2476,7 +2476,7 @@ end = 151
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 159
 end = 159
 
@@ -2485,7 +2485,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 95
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 63 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 63 })'
 descriptor = "c decl at src/device/usbd.h:63"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2494,7 +2494,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 63
 end = 63
 
@@ -2503,7 +2503,7 @@ kind = "full"
 
 [[batches]]
 position = 96
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 67 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 67 })'
 descriptor = "c decl at src/device/usbd.h:67"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2512,7 +2512,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 67
 end = 67
 
@@ -2521,7 +2521,7 @@ kind = "full"
 
 [[batches]]
 position = 97
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 73 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 73 })'
 descriptor = "c decl at src/device/usbd.h:73"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2530,7 +2530,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 73
 end = 73
 
@@ -2538,7 +2538,7 @@ end = 73
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 74
 end = 74
 
@@ -2547,7 +2547,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 98
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 83 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 83 })'
 descriptor = "c decl at src/device/usbd.h:83"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2556,7 +2556,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 83
 end = 83
 
@@ -2565,7 +2565,7 @@ kind = "full"
 
 [[batches]]
 position = 99
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 86 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 86 })'
 descriptor = "c decl at src/device/usbd.h:86"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2574,7 +2574,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 86
 end = 86
 
@@ -2583,7 +2583,7 @@ kind = "full"
 
 [[batches]]
 position = 100
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 91 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 91 })'
 descriptor = "c decl at src/device/usbd.h:91"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2592,7 +2592,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 91
 end = 91
 
@@ -2601,7 +2601,7 @@ kind = "full"
 
 [[batches]]
 position = 101
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 100 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 100 })'
 descriptor = "c decl at src/device/usbd.h:100"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2610,7 +2610,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 100
 end = 100
 
@@ -2619,7 +2619,7 @@ kind = "full"
 
 [[batches]]
 position = 102
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 107 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 107 })'
 descriptor = "c decl at src/device/usbd.h:107"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2628,7 +2628,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 107
 end = 107
 
@@ -2637,7 +2637,7 @@ kind = "full"
 
 [[batches]]
 position = 103
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 110 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 110 })'
 descriptor = "c decl at src/device/usbd.h:110"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2646,7 +2646,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 110
 end = 110
 
@@ -2655,7 +2655,7 @@ kind = "full"
 
 [[batches]]
 position = 104
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 114 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 114 })'
 descriptor = "c decl at src/device/usbd.h:114"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2664,7 +2664,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 114
 end = 114
 
@@ -2673,7 +2673,7 @@ kind = "full"
 
 [[batches]]
 position = 105
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 117 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 117 })'
 descriptor = "c decl at src/device/usbd.h:117"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2682,7 +2682,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 117
 end = 117
 
@@ -2691,7 +2691,7 @@ kind = "full"
 
 [[batches]]
 position = 106
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 120 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 120 })'
 descriptor = "c decl at src/device/usbd.h:120"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2700,7 +2700,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 120
 end = 120
 
@@ -2709,7 +2709,7 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 131 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 131 })'
 descriptor = "c decl at src/device/usbd.h:131"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2718,7 +2718,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 131
 end = 131
 
@@ -2727,7 +2727,7 @@ kind = "full"
 
 [[batches]]
 position = 108
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 135 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 135 })'
 descriptor = "c decl at src/device/usbd.h:135"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2736,7 +2736,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 135
 end = 135
 
@@ -2745,7 +2745,7 @@ kind = "full"
 
 [[batches]]
 position = 109
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 139 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 139 })'
 descriptor = "c decl at src/device/usbd.h:139"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2754,7 +2754,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 139
 end = 139
 
@@ -2763,7 +2763,7 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 142 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 142 })'
 descriptor = "c decl at src/device/usbd.h:142"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2772,7 +2772,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 142
 end = 142
 
@@ -2781,7 +2781,7 @@ kind = "full"
 
 [[batches]]
 position = 111
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 147 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 147 })'
 descriptor = "c decl at src/device/usbd.h:147"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2790,7 +2790,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 147
 end = 147
 
@@ -2799,7 +2799,7 @@ kind = "full"
 
 [[batches]]
 position = 112
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 150 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 150 })'
 descriptor = "c decl at src/device/usbd.h:150"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2808,7 +2808,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 150
 end = 150
 
@@ -2817,7 +2817,7 @@ kind = "full"
 
 [[batches]]
 position = 113
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 158 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 158 })'
 descriptor = "c decl at src/device/usbd.h:158"
 cost_tokens = 0
 cum_tokens = 3966
@@ -2826,7 +2826,7 @@ cum_tokens = 3966
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 158
 end = 158
 
@@ -2835,7 +2835,7 @@ kind = "full"
 
 [[batches]]
 position = 114
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 123 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 123 })'
 descriptor = "c decl at src/device/usbd.h:123"
 cost_tokens = 10
 cum_tokens = 3976
@@ -2844,7 +2844,7 @@ cum_tokens = 3976
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 123
 end = 124
 
@@ -2852,7 +2852,7 @@ end = 124
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 125
 end = 125
 
@@ -2861,7 +2861,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 115
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 94 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 94 })'
 descriptor = "c decl at src/device/usbd.h:94"
 cost_tokens = 11
 cum_tokens = 3987
@@ -2870,7 +2870,7 @@ cum_tokens = 3987
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 94
 end = 95
 
@@ -2878,7 +2878,7 @@ end = 95
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 96
 end = 96
 
@@ -2887,7 +2887,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 116
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 51 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 51 })'
 descriptor = "c decl at src/device/usbd.h:51"
 cost_tokens = 25
 cum_tokens = 4012
@@ -2896,7 +2896,7 @@ cum_tokens = 4012
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 51
 end = 53
 
@@ -2905,7 +2905,7 @@ kind = "full"
 
 [[batches]]
 position = 117
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 110 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 110 })'
 descriptor = "c decl doc at src/device/usbd.h:110"
 cost_tokens = 10
 cum_tokens = 4022
@@ -2914,7 +2914,7 @@ cum_tokens = 4022
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 109
 end = 109
 
@@ -2923,7 +2923,7 @@ kind = "full"
 
 [[batches]]
 position = 118
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 37 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 37 })'
 descriptor = "c decl at src/device/usbd.h:37"
 cost_tokens = 33
 cum_tokens = 4055
@@ -2932,7 +2932,7 @@ cum_tokens = 4055
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 37
 end = 40
 
@@ -2941,7 +2941,7 @@ kind = "full"
 
 [[batches]]
 position = 119
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 37 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 37 })'
 descriptor = "c decl doc at src/device/usbd.h:37"
 cost_tokens = 12
 cum_tokens = 4067
@@ -2950,7 +2950,7 @@ cum_tokens = 4067
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 36
 end = 36
 
@@ -2959,7 +2959,7 @@ kind = "full"
 
 [[batches]]
 position = 120
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 120 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 120 })'
 descriptor = "c decl doc at src/device/usbd.h:120"
 cost_tokens = 11
 cum_tokens = 4078
@@ -2968,7 +2968,7 @@ cum_tokens = 4078
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 119
 end = 119
 
@@ -2977,7 +2977,7 @@ kind = "full"
 
 [[batches]]
 position = 121
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 123 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 123 })'
 descriptor = "c decl doc at src/device/usbd.h:123"
 cost_tokens = 13
 cum_tokens = 4091
@@ -2986,7 +2986,7 @@ cum_tokens = 4091
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 122
 end = 122
 
@@ -2995,7 +2995,7 @@ kind = "full"
 
 [[batches]]
 position = 122
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 94 })'
+key = 'C(DeclBody { file: "src/device/usbd.h", start_line: 94 })'
 descriptor = "c decl body at src/device/usbd.h:94"
 cost_tokens = 12
 cum_tokens = 4103
@@ -3004,7 +3004,7 @@ cum_tokens = 4103
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 96
 end = 96
 
@@ -3013,7 +3013,7 @@ kind = "full"
 
 [[batches]]
 position = 123
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 86 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 86 })'
 descriptor = "c decl doc at src/device/usbd.h:86"
 cost_tokens = 13
 cum_tokens = 4116
@@ -3022,7 +3022,7 @@ cum_tokens = 4116
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 85
 end = 85
 
@@ -3031,7 +3031,7 @@ kind = "full"
 
 [[batches]]
 position = 124
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 117 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 117 })'
 descriptor = "c decl doc at src/device/usbd.h:117"
 cost_tokens = 13
 cum_tokens = 4129
@@ -3040,7 +3040,7 @@ cum_tokens = 4129
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 116
 end = 116
 
@@ -3049,7 +3049,7 @@ kind = "full"
 
 [[batches]]
 position = 125
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 150 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 150 })'
 descriptor = "c decl doc at src/device/usbd.h:150"
 cost_tokens = 13
 cum_tokens = 4142
@@ -3058,7 +3058,7 @@ cum_tokens = 4142
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 149
 end = 149
 
@@ -3067,7 +3067,7 @@ kind = "full"
 
 [[batches]]
 position = 126
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 142 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 142 })'
 descriptor = "c decl doc at src/device/usbd.h:142"
 cost_tokens = 15
 cum_tokens = 4157
@@ -3076,7 +3076,7 @@ cum_tokens = 4157
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 141
 end = 141
 
@@ -3085,7 +3085,7 @@ kind = "full"
 
 [[batches]]
 position = 127
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 94 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 94 })'
 descriptor = "c decl doc at src/device/usbd.h:94"
 cost_tokens = 17
 cum_tokens = 4174
@@ -3094,7 +3094,7 @@ cum_tokens = 4174
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 93
 end = 93
 
@@ -3103,7 +3103,7 @@ kind = "full"
 
 [[batches]]
 position = 128
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 107 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 107 })'
 descriptor = "c decl doc at src/device/usbd.h:107"
 cost_tokens = 14
 cum_tokens = 4188
@@ -3112,7 +3112,7 @@ cum_tokens = 4188
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 106
 end = 106
 
@@ -3121,7 +3121,7 @@ kind = "full"
 
 [[batches]]
 position = 129
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 100 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 100 })'
 descriptor = "c decl doc at src/device/usbd.h:100"
 cost_tokens = 17
 cum_tokens = 4205
@@ -3130,7 +3130,7 @@ cum_tokens = 4205
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 99
 end = 99
 
@@ -3139,7 +3139,7 @@ kind = "full"
 
 [[batches]]
 position = 130
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 131 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 131 })'
 descriptor = "c decl doc at src/device/usbd.h:131"
 cost_tokens = 18
 cum_tokens = 4223
@@ -3148,7 +3148,7 @@ cum_tokens = 4223
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 130
 end = 130
 
@@ -3157,7 +3157,7 @@ kind = "full"
 
 [[batches]]
 position = 131
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 135 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 135 })'
 descriptor = "c decl doc at src/device/usbd.h:135"
 cost_tokens = 26
 cum_tokens = 4249
@@ -3166,7 +3166,7 @@ cum_tokens = 4249
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 133
 end = 134
 
@@ -3175,7 +3175,7 @@ kind = "full"
 
 [[batches]]
 position = 132
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 139 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 139 })'
 descriptor = "c decl doc at src/device/usbd.h:139"
 cost_tokens = 26
 cum_tokens = 4275
@@ -3184,7 +3184,7 @@ cum_tokens = 4275
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 137
 end = 138
 
@@ -3193,7 +3193,7 @@ kind = "full"
 
 [[batches]]
 position = 133
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 158 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 158 })'
 descriptor = "c decl doc at src/device/usbd.h:158"
 cost_tokens = 26
 cum_tokens = 4301
@@ -3202,7 +3202,7 @@ cum_tokens = 4301
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 156
 end = 157
 
@@ -3211,7 +3211,7 @@ kind = "full"
 
 [[batches]]
 position = 134
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 42 })'
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 42 })'
 descriptor = "c decl at src/device/usbd.h:42"
 cost_tokens = 69
 cum_tokens = 4370
@@ -3220,7 +3220,7 @@ cum_tokens = 4370
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 42
 end = 45
 
@@ -3229,7 +3229,7 @@ kind = "full"
 
 [[batches]]
 position = 135
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 83 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 83 })'
 descriptor = "c decl doc at src/device/usbd.h:83"
 cost_tokens = 38
 cum_tokens = 4408
@@ -3238,7 +3238,7 @@ cum_tokens = 4408
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 81
 end = 82
 
@@ -3247,7 +3247,7 @@ kind = "full"
 
 [[batches]]
 position = 136
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 114 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 114 })'
 descriptor = "c decl doc at src/device/usbd.h:114"
 cost_tokens = 40
 cum_tokens = 4448
@@ -3256,7 +3256,7 @@ cum_tokens = 4448
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 112
 end = 113
 
@@ -3265,7 +3265,7 @@ kind = "full"
 
 [[batches]]
 position = 137
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 67 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 67 })'
 descriptor = "c decl doc at src/device/usbd.h:67"
 cost_tokens = 46
 cum_tokens = 4494
@@ -3274,7 +3274,7 @@ cum_tokens = 4494
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 65
 end = 66
 
@@ -3283,7 +3283,7 @@ kind = "full"
 
 [[batches]]
 position = 138
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 147 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 147 })'
 descriptor = "c decl doc at src/device/usbd.h:147"
 cost_tokens = 52
 cum_tokens = 4546
@@ -3292,7 +3292,7 @@ cum_tokens = 4546
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 144
 end = 146
 
@@ -3301,7 +3301,7 @@ kind = "full"
 
 [[batches]]
 position = 139
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 123 })'
+key = 'C(DeclBody { file: "src/device/usbd.h", start_line: 123 })'
 descriptor = "c decl body at src/device/usbd.h:123"
 cost_tokens = 43
 cum_tokens = 4589
@@ -3310,7 +3310,7 @@ cum_tokens = 4589
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 125
 end = 127
 
@@ -3319,7 +3319,7 @@ kind = "full"
 
 [[batches]]
 position = 140
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 91 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 91 })'
 descriptor = "c decl doc at src/device/usbd.h:91"
 cost_tokens = 67
 cum_tokens = 4656
@@ -3328,7 +3328,7 @@ cum_tokens = 4656
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 88
 end = 90
 
@@ -3337,7 +3337,7 @@ kind = "full"
 
 [[batches]]
 position = 141
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h", start_line: 63 })'
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 63 })'
 descriptor = "c decl doc at src/device/usbd.h:63"
 cost_tokens = 70
 cum_tokens = 4726
@@ -3346,7 +3346,7 @@ cum_tokens = 4726
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/device/usbd.h"
+path = "src/device/usbd.h"
 start = 59
 end = 62
 
@@ -3355,7 +3355,7 @@ kind = "full"
 
 [[batches]]
 position = 142
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "lib/embedded-cli/embedded_cli.h", chunk_index: 0 })'
 descriptor = "c decl names surface in lib/embedded-cli/embedded_cli.h"
 cost_tokens = 393
 cum_tokens = 5119
@@ -3364,7 +3364,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 55
 end = 55
 
@@ -3372,7 +3372,7 @@ end = 55
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 58
 end = 58
 
@@ -3380,7 +3380,7 @@ end = 58
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 61
 end = 64
 
@@ -3388,7 +3388,7 @@ end = 64
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 67
 end = 67
 
@@ -3396,7 +3396,7 @@ end = 67
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 86
 end = 86
 
@@ -3404,7 +3404,7 @@ end = 86
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 120
 end = 120
 
@@ -3412,7 +3412,7 @@ end = 120
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 150
 end = 150
 
@@ -3420,7 +3420,7 @@ end = 150
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 213
 end = 213
 
@@ -3428,7 +3428,7 @@ end = 213
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 223
 end = 223
 
@@ -3436,7 +3436,7 @@ end = 223
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 232
 end = 232
 
@@ -3444,7 +3444,7 @@ end = 232
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 238
 end = 238
 
@@ -3452,7 +3452,7 @@ end = 238
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 249
 end = 249
 
@@ -3460,7 +3460,7 @@ end = 249
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 255
 end = 255
 
@@ -3468,7 +3468,7 @@ end = 255
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 264
 end = 264
 
@@ -3476,7 +3476,7 @@ end = 264
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 274
 end = 274
 
@@ -3484,7 +3484,7 @@ end = 274
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 280
 end = 280
 
@@ -3492,7 +3492,7 @@ end = 280
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 294
 end = 294
 
@@ -3500,7 +3500,7 @@ end = 294
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 302
 end = 302
 
@@ -3508,7 +3508,7 @@ end = 302
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 310
 end = 310
 
@@ -3516,7 +3516,7 @@ end = 310
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 319
 end = 319
 
@@ -3524,7 +3524,7 @@ end = 319
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 326
 end = 326
 
@@ -3532,7 +3532,7 @@ end = 326
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 59
 end = 59
 
@@ -3540,7 +3540,7 @@ end = 59
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 65
 end = 65
 
@@ -3548,7 +3548,7 @@ end = 65
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 214
 end = 214
 
@@ -3556,7 +3556,7 @@ end = 214
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 224
 end = 224
 
@@ -3564,7 +3564,7 @@ end = 224
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 233
 end = 233
 
@@ -3572,7 +3572,7 @@ end = 233
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 239
 end = 239
 
@@ -3580,7 +3580,7 @@ end = 239
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 250
 end = 250
 
@@ -3588,7 +3588,7 @@ end = 250
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 256
 end = 256
 
@@ -3596,7 +3596,7 @@ end = 256
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 265
 end = 265
 
@@ -3604,7 +3604,7 @@ end = 265
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 275
 end = 275
 
@@ -3612,7 +3612,7 @@ end = 275
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 281
 end = 281
 
@@ -3620,7 +3620,7 @@ end = 281
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 295
 end = 295
 
@@ -3628,7 +3628,7 @@ end = 295
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 303
 end = 303
 
@@ -3636,7 +3636,7 @@ end = 303
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 311
 end = 311
 
@@ -3644,7 +3644,7 @@ end = 311
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 320
 end = 320
 
@@ -3652,7 +3652,7 @@ end = 320
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 327
 end = 327
 
@@ -3661,7 +3661,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 143
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 213 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 213 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:213"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3670,7 +3670,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 213
 end = 213
 
@@ -3679,7 +3679,7 @@ kind = "full"
 
 [[batches]]
 position = 144
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 223 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 223 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:223"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3688,7 +3688,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 223
 end = 223
 
@@ -3697,7 +3697,7 @@ kind = "full"
 
 [[batches]]
 position = 145
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 232 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 232 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:232"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3706,7 +3706,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 232
 end = 232
 
@@ -3715,7 +3715,7 @@ kind = "full"
 
 [[batches]]
 position = 146
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 238 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 238 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:238"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3724,7 +3724,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 238
 end = 238
 
@@ -3733,7 +3733,7 @@ kind = "full"
 
 [[batches]]
 position = 147
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 249 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 249 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:249"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3742,7 +3742,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 249
 end = 249
 
@@ -3751,7 +3751,7 @@ kind = "full"
 
 [[batches]]
 position = 148
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 255 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 255 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:255"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3760,7 +3760,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 255
 end = 255
 
@@ -3769,7 +3769,7 @@ kind = "full"
 
 [[batches]]
 position = 149
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 264 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 264 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:264"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3778,7 +3778,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 264
 end = 264
 
@@ -3787,7 +3787,7 @@ kind = "full"
 
 [[batches]]
 position = 150
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 274 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 274 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:274"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3796,7 +3796,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 274
 end = 274
 
@@ -3805,7 +3805,7 @@ kind = "full"
 
 [[batches]]
 position = 151
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 280 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 280 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:280"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3814,7 +3814,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 280
 end = 280
 
@@ -3823,7 +3823,7 @@ kind = "full"
 
 [[batches]]
 position = 152
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 294 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 294 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:294"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3832,7 +3832,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 294
 end = 294
 
@@ -3841,7 +3841,7 @@ kind = "full"
 
 [[batches]]
 position = 153
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 302 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 302 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:302"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3850,7 +3850,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 302
 end = 302
 
@@ -3859,7 +3859,7 @@ kind = "full"
 
 [[batches]]
 position = 154
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 310 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 310 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:310"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3868,7 +3868,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 310
 end = 310
 
@@ -3877,7 +3877,7 @@ kind = "full"
 
 [[batches]]
 position = 155
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 319 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 319 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:319"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3886,7 +3886,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 319
 end = 319
 
@@ -3895,7 +3895,7 @@ kind = "full"
 
 [[batches]]
 position = 156
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 326 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 326 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:326"
 cost_tokens = 0
 cum_tokens = 5119
@@ -3904,7 +3904,7 @@ cum_tokens = 5119
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 326
 end = 326
 
@@ -3913,7 +3913,7 @@ kind = "full"
 
 [[batches]]
 position = 157
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 58 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 58 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:58"
 cost_tokens = 18
 cum_tokens = 5137
@@ -3922,7 +3922,7 @@ cum_tokens = 5137
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 58
 end = 59
 
@@ -3931,7 +3931,7 @@ kind = "full"
 
 [[batches]]
 position = 158
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 280 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 280 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:280"
 cost_tokens = 30
 cum_tokens = 5167
@@ -3940,7 +3940,7 @@ cum_tokens = 5167
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 276
 end = 279
 
@@ -3949,7 +3949,7 @@ kind = "full"
 
 [[batches]]
 position = 159
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 238 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 238 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:238"
 cost_tokens = 33
 cum_tokens = 5200
@@ -3958,7 +3958,7 @@ cum_tokens = 5200
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 234
 end = 237
 
@@ -3967,7 +3967,7 @@ kind = "full"
 
 [[batches]]
 position = 160
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 255 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 255 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:255"
 cost_tokens = 37
 cum_tokens = 5237
@@ -3976,7 +3976,7 @@ cum_tokens = 5237
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 251
 end = 254
 
@@ -3985,7 +3985,7 @@ kind = "full"
 
 [[batches]]
 position = 161
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 58 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 58 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:58"
 cost_tokens = 38
 cum_tokens = 5275
@@ -3994,7 +3994,7 @@ cum_tokens = 5275
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 56
 end = 57
 
@@ -4003,7 +4003,7 @@ kind = "full"
 
 [[batches]]
 position = 162
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 326 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 326 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:326"
 cost_tokens = 46
 cum_tokens = 5321
@@ -4012,7 +4012,7 @@ cum_tokens = 5321
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 321
 end = 325
 
@@ -4021,7 +4021,7 @@ kind = "full"
 
 [[batches]]
 position = 163
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 302 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 302 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:302"
 cost_tokens = 58
 cum_tokens = 5379
@@ -4030,7 +4030,7 @@ cum_tokens = 5379
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 296
 end = 301
 
@@ -4039,7 +4039,7 @@ kind = "full"
 
 [[batches]]
 position = 164
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 310 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 310 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:310"
 cost_tokens = 64
 cum_tokens = 5443
@@ -4048,7 +4048,7 @@ cum_tokens = 5443
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 304
 end = 309
 
@@ -4057,7 +4057,7 @@ kind = "full"
 
 [[batches]]
 position = 165
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 67 })'
+key = 'C(Decl { file: "lib/embedded-cli/embedded_cli.h", start_line: 67 })'
 descriptor = "c decl at lib/embedded-cli/embedded_cli.h:67"
 cost_tokens = 153
 cum_tokens = 5596
@@ -4066,7 +4066,7 @@ cum_tokens = 5596
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 67
 end = 72
 
@@ -4074,7 +4074,7 @@ end = 72
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 74
 end = 81
 
@@ -4083,7 +4083,7 @@ kind = "full"
 
 [[batches]]
 position = 166
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 264 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 264 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:264"
 cost_tokens = 78
 cum_tokens = 5674
@@ -4092,7 +4092,7 @@ cum_tokens = 5674
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 257
 end = 263
 
@@ -4101,7 +4101,7 @@ kind = "full"
 
 [[batches]]
 position = 167
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 232 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 232 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:232"
 cost_tokens = 80
 cum_tokens = 5754
@@ -4110,7 +4110,7 @@ cum_tokens = 5754
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 225
 end = 231
 
@@ -4119,7 +4119,7 @@ kind = "full"
 
 [[batches]]
 position = 168
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 274 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 274 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:274"
 cost_tokens = 92
 cum_tokens = 5846
@@ -4128,7 +4128,7 @@ cum_tokens = 5846
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 266
 end = 273
 
@@ -4137,7 +4137,7 @@ kind = "full"
 
 [[batches]]
 position = 169
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h", start_line: 106 })'
+key = 'C(Decl { file: "src/class/net/ncm.h", start_line: 106 })'
 descriptor = "c decl at src/class/net/ncm.h:106"
 cost_tokens = 182
 cum_tokens = 6028
@@ -4146,7 +4146,7 @@ cum_tokens = 6028
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/net/ncm.h"
+path = "src/class/net/ncm.h"
 start = 106
 end = 119
 
@@ -4155,7 +4155,7 @@ kind = "full"
 
 [[batches]]
 position = 170
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 319 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 319 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:319"
 cost_tokens = 96
 cum_tokens = 6124
@@ -4164,7 +4164,7 @@ cum_tokens = 6124
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 312
 end = 318
 
@@ -4173,7 +4173,7 @@ kind = "full"
 
 [[batches]]
 position = 171
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 47 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 47 })'
 descriptor = "c decl at src/class/hid/hid.h:47"
 cost_tokens = 185
 cum_tokens = 6309
@@ -4182,7 +4182,7 @@ cum_tokens = 6309
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 47
 end = 50
 
@@ -4190,7 +4190,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 52
 end = 54
 
@@ -4198,7 +4198,7 @@ end = 54
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 56
 end = 58
 
@@ -4207,7 +4207,7 @@ kind = "full"
 
 [[batches]]
 position = 172
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 47 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 47 })'
 descriptor = "c decl doc at src/class/hid/hid.h:47"
 cost_tokens = 9
 cum_tokens = 6318
@@ -4216,7 +4216,7 @@ cum_tokens = 6318
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 46
 end = 46
 
@@ -4225,7 +4225,7 @@ kind = "full"
 
 [[batches]]
 position = 173
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 223 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 223 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:223"
 cost_tokens = 97
 cum_tokens = 6415
@@ -4234,7 +4234,7 @@ cum_tokens = 6415
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 215
 end = 222
 
@@ -4243,7 +4243,7 @@ kind = "full"
 
 [[batches]]
 position = 174
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 195 })'
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 195 })'
 descriptor = "c decl at src/class/hid/hid.h:195"
 cost_tokens = 192
 cum_tokens = 6607
@@ -4252,7 +4252,7 @@ cum_tokens = 6607
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 195
 end = 205
 
@@ -4261,7 +4261,7 @@ kind = "full"
 
 [[batches]]
 position = 175
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h", start_line: 195 })'
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 195 })'
 descriptor = "c decl doc at src/class/hid/hid.h:195"
 cost_tokens = 11
 cum_tokens = 6618
@@ -4270,7 +4270,7 @@ cum_tokens = 6618
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/hid/hid.h"
+path = "src/class/hid/hid.h"
 start = 194
 end = 194
 
@@ -4279,7 +4279,7 @@ kind = "full"
 
 [[batches]]
 position = 176
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/RTT" })'
+key = 'Fs(DirListing { dir: "lib/SEGGER_RTT/RTT" })'
 descriptor = "listing of 'lib/SEGGER_RTT/RTT'"
 cost_tokens = 35
 cum_tokens = 6653
@@ -4288,12 +4288,12 @@ cum_tokens = 6653
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/RTT"
+parent = "lib/SEGGER_RTT/RTT"
 entries = ["SEGGER_RTT.c", "SEGGER_RTT.h", "SEGGER_RTT_ASM_ARMv7M.S", "SEGGER_RTT_printf.c"]
 
 [[batches]]
 position = 177
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/RTT/SEGGER_RTT.h" })'
+key = 'C(Includes { file: "lib/SEGGER_RTT/RTT/SEGGER_RTT.h" })'
 descriptor = "c includes in lib/SEGGER_RTT/RTT/SEGGER_RTT.h"
 cost_tokens = 17
 cum_tokens = 6670
@@ -4302,7 +4302,7 @@ cum_tokens = 6670
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/SEGGER_RTT/RTT/SEGGER_RTT.h"
+path = "lib/SEGGER_RTT/RTT/SEGGER_RTT.h"
 start = 56
 end = 56
 
@@ -4311,7 +4311,7 @@ kind = "full"
 
 [[batches]]
 position = 178
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal" })'
+key = 'Fs(DirListing { dir: "src/osal" })'
 descriptor = "listing of 'src/osal'"
 cost_tokens = 64
 cum_tokens = 6734
@@ -4320,12 +4320,12 @@ cum_tokens = 6734
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal"
+parent = "src/osal"
 entries = ["osal.h", "osal_freertos.h", "osal_mynewt.h", "osal_none.h", "osal_pico.h", "osal_rtthread.h", "osal_rtx4.h", "osal_threadx.h", "osal_zephyr.h"]
 
 [[batches]]
 position = 179
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "src/osal/osal_zephyr.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in src/osal/osal_zephyr.h"
 cost_tokens = 25
 cum_tokens = 6759
@@ -4334,7 +4334,7 @@ cum_tokens = 6759
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h"
+path = "src/osal/osal_zephyr.h"
 start = 152
 end = 152
 
@@ -4342,7 +4342,7 @@ end = 152
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h"
+path = "src/osal/osal_zephyr.h"
 start = 153
 end = 153
 
@@ -4351,7 +4351,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 180
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h", start_line: 152 })'
+key = 'C(Decl { file: "src/osal/osal_zephyr.h", start_line: 152 })'
 descriptor = "c decl at src/osal/osal_zephyr.h:152"
 cost_tokens = 0
 cum_tokens = 6759
@@ -4360,7 +4360,7 @@ cum_tokens = 6759
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h"
+path = "src/osal/osal_zephyr.h"
 start = 152
 end = 152
 
@@ -4368,7 +4368,7 @@ end = 152
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h"
+path = "src/osal/osal_zephyr.h"
 start = 153
 end = 153
 
@@ -4377,7 +4377,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 181
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_rtx4.h" })'
+key = 'C(Includes { file: "src/osal/osal_rtx4.h" })'
 descriptor = "c includes in src/osal/osal_rtx4.h"
 cost_tokens = 10
 cum_tokens = 6769
@@ -4386,7 +4386,7 @@ cum_tokens = 6769
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_rtx4.h"
+path = "src/osal/osal_rtx4.h"
 start = 31
 end = 31
 
@@ -4395,7 +4395,7 @@ kind = "full"
 
 [[batches]]
 position = 182
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_mynewt.h" })'
+key = 'C(Includes { file: "src/osal/osal_mynewt.h" })'
 descriptor = "c includes in src/osal/osal_mynewt.h"
 cost_tokens = 11
 cum_tokens = 6780
@@ -4404,7 +4404,7 @@ cum_tokens = 6780
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_mynewt.h"
+path = "src/osal/osal_mynewt.h"
 start = 30
 end = 30
 
@@ -4413,7 +4413,7 @@ kind = "full"
 
 [[batches]]
 position = 183
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_rtthread.h" })'
+key = 'C(Includes { file: "src/osal/osal_rtthread.h" })'
 descriptor = "c includes in src/osal/osal_rtthread.h"
 cost_tokens = 11
 cum_tokens = 6791
@@ -4422,7 +4422,7 @@ cum_tokens = 6791
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_rtthread.h"
+path = "src/osal/osal_rtthread.h"
 start = 32
 end = 32
 
@@ -4431,7 +4431,7 @@ kind = "full"
 
 [[batches]]
 position = 184
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_threadx.h" })'
+key = 'C(Includes { file: "src/osal/osal_threadx.h" })'
 descriptor = "c includes in src/osal/osal_threadx.h"
 cost_tokens = 11
 cum_tokens = 6802
@@ -4440,7 +4440,7 @@ cum_tokens = 6802
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_threadx.h"
+path = "src/osal/osal_threadx.h"
 start = 31
 end = 31
 
@@ -4449,7 +4449,7 @@ kind = "full"
 
 [[batches]]
 position = 185
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h" })'
+key = 'C(Includes { file: "src/osal/osal_zephyr.h" })'
 descriptor = "c includes in src/osal/osal_zephyr.h"
 cost_tokens = 12
 cum_tokens = 6814
@@ -4458,7 +4458,7 @@ cum_tokens = 6814
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h"
+path = "src/osal/osal_zephyr.h"
 start = 29
 end = 29
 
@@ -4467,7 +4467,7 @@ kind = "full"
 
 [[batches]]
 position = 186
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h", start_line: 152 })'
+key = 'C(DeclBody { file: "src/osal/osal_zephyr.h", start_line: 152 })'
 descriptor = "c decl body at src/osal/osal_zephyr.h:152"
 cost_tokens = 16
 cum_tokens = 6830
@@ -4476,7 +4476,7 @@ cum_tokens = 6830
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_zephyr.h"
+path = "src/osal/osal_zephyr.h"
 start = 153
 end = 153
 
@@ -4485,7 +4485,7 @@ kind = "full"
 
 [[batches]]
 position = 187
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_pico.h" })'
+key = 'C(Includes { file: "src/osal/osal_pico.h" })'
 descriptor = "c includes in src/osal/osal_pico.h"
 cost_tokens = 52
 cum_tokens = 6882
@@ -4494,7 +4494,7 @@ cum_tokens = 6882
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_pico.h"
+path = "src/osal/osal_pico.h"
 start = 30
 end = 33
 
@@ -4503,7 +4503,7 @@ kind = "full"
 
 [[batches]]
 position = 188
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_freertos.h" })'
+key = 'C(Includes { file: "src/osal/osal_freertos.h" })'
 descriptor = "c includes in src/osal/osal_freertos.h"
 cost_tokens = 83
 cum_tokens = 6965
@@ -4512,7 +4512,7 @@ cum_tokens = 6965
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/osal/osal_freertos.h"
+path = "src/osal/osal_freertos.h"
 start = 31
 end = 34
 
@@ -4521,7 +4521,7 @@ kind = "full"
 
 [[batches]]
 position = 189
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h", start_line: 249 })'
+key = 'C(DeclDoc { file: "lib/embedded-cli/embedded_cli.h", start_line: 249 })'
 descriptor = "c decl doc at lib/embedded-cli/embedded_cli.h:249"
 cost_tokens = 106
 cum_tokens = 7071
@@ -4530,7 +4530,7 @@ cum_tokens = 7071
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/embedded-cli/embedded_cli.h"
+path = "lib/embedded-cli/embedded_cli.h"
 start = 240
 end = 248
 
@@ -4539,7 +4539,7 @@ kind = "full"
 
 [[batches]]
 position = 190
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dnserver.h" })'
+key = 'C(Includes { file: "lib/networking/dnserver.h" })'
 descriptor = "c includes in lib/networking/dnserver.h"
 cost_tokens = 93
 cum_tokens = 7164
@@ -4548,7 +4548,7 @@ cum_tokens = 7164
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/dnserver.h"
+path = "lib/networking/dnserver.h"
 start = 33
 end = 40
 
@@ -4557,7 +4557,7 @@ kind = "full"
 
 [[batches]]
 position = 191
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "lib/networking/rndis_protocol.h", chunk_index: 0 })'
 descriptor = "c decl names surface in lib/networking/rndis_protocol.h"
 cost_tokens = 476
 cum_tokens = 7640
@@ -4566,7 +4566,7 @@ cum_tokens = 7640
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 49
 end = 50
 
@@ -4574,7 +4574,7 @@ end = 50
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 52
 end = 57
 
@@ -4582,7 +4582,7 @@ end = 57
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 61
 end = 73
 
@@ -4590,7 +4590,7 @@ end = 73
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 75
 end = 77
 
@@ -4598,7 +4598,7 @@ end = 77
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 51
 end = 51
 
@@ -4606,7 +4606,7 @@ end = 51
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 58
 end = 58
 
@@ -4614,7 +4614,7 @@ end = 58
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 74
 end = 74
 
@@ -4623,7 +4623,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 192
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h", start_line: 61 })'
+key = 'C(Decl { file: "lib/networking/rndis_protocol.h", start_line: 61 })'
 descriptor = "c decl at lib/networking/rndis_protocol.h:61"
 cost_tokens = 0
 cum_tokens = 7640
@@ -4632,7 +4632,7 @@ cum_tokens = 7640
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 61
 end = 61
 
@@ -4641,7 +4641,7 @@ kind = "full"
 
 [[batches]]
 position = 193
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h", start_line: 61 })'
+key = 'C(DeclDoc { file: "lib/networking/rndis_protocol.h", start_line: 61 })'
 descriptor = "c decl doc at lib/networking/rndis_protocol.h:61"
 cost_tokens = 17
 cum_tokens = 7657
@@ -4650,7 +4650,7 @@ cum_tokens = 7657
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/lib/networking/rndis_protocol.h"
+path = "lib/networking/rndis_protocol.h"
 start = 60
 end = 60
 
@@ -4659,7 +4659,7 @@ kind = "full"
 
 [[batches]]
 position = 194
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio" })'
+key = 'Fs(DirListing { dir: "src/class/audio" })'
 descriptor = "listing of 'src/class/audio'"
 cost_tokens = 14
 cum_tokens = 7671
@@ -4668,12 +4668,12 @@ cum_tokens = 7671
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio"
+parent = "src/class/audio"
 entries = ["audio.h", "audio_device.c", "audio_device.h"]
 
 [[batches]]
 position = 195
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/class/audio/audio_device.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/class/audio/audio_device.h"
 cost_tokens = 19
 cum_tokens = 7690
@@ -4682,7 +4682,7 @@ cum_tokens = 7690
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h"
+path = "src/class/audio/audio_device.h"
 start = 162
 end = 162
 
@@ -4690,7 +4690,7 @@ end = 162
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h"
+path = "src/class/audio/audio_device.h"
 start = 163
 end = 163
 
@@ -4699,7 +4699,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 196
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h", start_line: 162 })'
+key = 'C(Decl { file: "src/class/audio/audio_device.h", start_line: 162 })'
 descriptor = "c decl at src/class/audio/audio_device.h:162"
 cost_tokens = 0
 cum_tokens = 7690
@@ -4708,7 +4708,7 @@ cum_tokens = 7690
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h"
+path = "src/class/audio/audio_device.h"
 start = 162
 end = 162
 
@@ -4717,7 +4717,7 @@ kind = "full"
 
 [[batches]]
 position = 197
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h" })'
+key = 'C(Includes { file: "src/class/audio/audio_device.h" })'
 descriptor = "c includes in src/class/audio/audio_device.h"
 cost_tokens = 10
 cum_tokens = 7700
@@ -4726,7 +4726,7 @@ cum_tokens = 7700
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h"
+path = "src/class/audio/audio_device.h"
 start = 32
 end = 32
 
@@ -4735,7 +4735,7 @@ kind = "full"
 
 [[batches]]
 position = 198
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio.h" })'
+key = 'C(Includes { file: "src/class/audio/audio.h" })'
 descriptor = "c includes in src/class/audio/audio.h"
 cost_tokens = 13
 cum_tokens = 7713
@@ -4744,7 +4744,7 @@ cum_tokens = 7713
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio.h"
+path = "src/class/audio/audio.h"
 start = 36
 end = 36
 
@@ -4753,7 +4753,7 @@ kind = "full"
 
 [[batches]]
 position = 199
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h", start_line: 162 })'
+key = 'C(DeclDoc { file: "src/class/audio/audio_device.h", start_line: 162 })'
 descriptor = "c decl doc at src/class/audio/audio_device.h:162"
 cost_tokens = 26
 cum_tokens = 7739
@@ -4762,7 +4762,7 @@ cum_tokens = 7739
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/audio/audio_device.h"
+path = "src/class/audio/audio_device.h"
 start = 161
 end = 161
 
@@ -4771,7 +4771,7 @@ kind = "full"
 
 [[batches]]
 position = 200
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/printer" })'
+key = 'Fs(DirListing { dir: "src/class/printer" })'
 descriptor = "listing of 'src/class/printer'"
 cost_tokens = 14
 cum_tokens = 7753
@@ -4780,12 +4780,12 @@ cum_tokens = 7753
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/printer"
+parent = "src/class/printer"
 entries = ["printer.h", "printer_device.c", "printer_device.h"]
 
 [[batches]]
 position = 201
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/printer/printer.h" })'
+key = 'C(Includes { file: "src/class/printer/printer.h" })'
 descriptor = "c includes in src/class/printer/printer.h"
 cost_tokens = 13
 cum_tokens = 7766
@@ -4794,7 +4794,7 @@ cum_tokens = 7766
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/printer/printer.h"
+path = "src/class/printer/printer.h"
 start = 30
 end = 30
 
@@ -4803,7 +4803,7 @@ kind = "full"
 
 [[batches]]
 position = 202
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video" })'
+key = 'Fs(DirListing { dir: "src/class/video" })'
 descriptor = "listing of 'src/class/video'"
 cost_tokens = 14
 cum_tokens = 7780
@@ -4812,12 +4812,12 @@ cum_tokens = 7780
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video"
+parent = "src/class/video"
 entries = ["video.h", "video_device.c", "video_device.h"]
 
 [[batches]]
 position = 203
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h" })'
+key = 'C(Includes { file: "src/class/video/video.h" })'
 descriptor = "c includes in src/class/video/video.h"
 cost_tokens = 13
 cum_tokens = 7793
@@ -4826,7 +4826,7 @@ cum_tokens = 7793
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 30
 end = 30
 
@@ -4835,7 +4835,7 @@ kind = "full"
 
 [[batches]]
 position = 204
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video_device.h" })'
+key = 'C(Includes { file: "src/class/video/video_device.h" })'
 descriptor = "c includes in src/class/video/video_device.h"
 cost_tokens = 23
 cum_tokens = 7816
@@ -4844,7 +4844,7 @@ cum_tokens = 7816
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video_device.h"
+path = "src/class/video/video_device.h"
 start = 31
 end = 32
 
@@ -4853,7 +4853,7 @@ kind = "full"
 
 [[batches]]
 position = 205
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/class/video/video.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/class/video/video.h"
 cost_tokens = 363
 cum_tokens = 8179
@@ -4862,7 +4862,7 @@ cum_tokens = 8179
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 32
 end = 32
 
@@ -4870,7 +4870,7 @@ end = 32
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 37
 end = 37
 
@@ -4878,7 +4878,7 @@ end = 37
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 47
 end = 47
 
@@ -4886,7 +4886,7 @@ end = 47
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 59
 end = 59
 
@@ -4894,7 +4894,7 @@ end = 59
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 69
 end = 69
 
@@ -4902,7 +4902,7 @@ end = 69
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 83
 end = 83
 
@@ -4910,7 +4910,7 @@ end = 83
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 91
 end = 91
 
@@ -4918,7 +4918,7 @@ end = 91
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 97
 end = 97
 
@@ -4926,7 +4926,7 @@ end = 97
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 110
 end = 110
 
@@ -4934,7 +4934,7 @@ end = 110
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 134
 end = 134
 
@@ -4942,7 +4942,7 @@ end = 134
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 142
 end = 142
 
@@ -4950,7 +4950,7 @@ end = 142
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 161
 end = 161
 
@@ -4958,7 +4958,7 @@ end = 161
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 168
 end = 168
 
@@ -4966,7 +4966,7 @@ end = 168
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 183
 end = 183
 
@@ -4974,7 +4974,7 @@ end = 183
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 210
 end = 210
 
@@ -4982,7 +4982,7 @@ end = 210
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 218
 end = 219
 
@@ -4990,7 +4990,7 @@ end = 219
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 222
 end = 223
 
@@ -4998,7 +4998,7 @@ end = 223
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 225
 end = 225
 
@@ -5006,7 +5006,7 @@ end = 225
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 228
 end = 228
 
@@ -5014,7 +5014,7 @@ end = 228
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 240
 end = 240
 
@@ -5022,7 +5022,7 @@ end = 240
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 253
 end = 253
 
@@ -5030,7 +5030,7 @@ end = 253
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 276
 end = 276
 
@@ -5038,7 +5038,7 @@ end = 276
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 33
 end = 33
 
@@ -5046,7 +5046,7 @@ end = 33
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 38
 end = 38
 
@@ -5054,7 +5054,7 @@ end = 38
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 48
 end = 48
 
@@ -5062,7 +5062,7 @@ end = 48
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 60
 end = 60
 
@@ -5070,7 +5070,7 @@ end = 60
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 70
 end = 70
 
@@ -5078,7 +5078,7 @@ end = 70
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 84
 end = 84
 
@@ -5086,7 +5086,7 @@ end = 84
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 92
 end = 92
 
@@ -5094,7 +5094,7 @@ end = 92
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 98
 end = 98
 
@@ -5102,7 +5102,7 @@ end = 98
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 111
 end = 111
 
@@ -5110,7 +5110,7 @@ end = 111
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 135
 end = 135
 
@@ -5118,7 +5118,7 @@ end = 135
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 143
 end = 143
 
@@ -5126,7 +5126,7 @@ end = 143
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 162
 end = 162
 
@@ -5134,7 +5134,7 @@ end = 162
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 169
 end = 169
 
@@ -5142,7 +5142,7 @@ end = 169
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 211
 end = 211
 
@@ -5150,7 +5150,7 @@ end = 211
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 220
 end = 220
 
@@ -5158,7 +5158,7 @@ end = 220
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 224
 end = 224
 
@@ -5166,7 +5166,7 @@ end = 224
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 226
 end = 226
 
@@ -5174,7 +5174,7 @@ end = 226
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 229
 end = 229
 
@@ -5182,7 +5182,7 @@ end = 229
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 241
 end = 241
 
@@ -5190,7 +5190,7 @@ end = 241
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 254
 end = 254
 
@@ -5198,7 +5198,7 @@ end = 254
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 277
 end = 277
 
@@ -5207,7 +5207,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 206
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 32 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 32 })'
 descriptor = "c decl at src/class/video/video.h:32"
 cost_tokens = 22
 cum_tokens = 8201
@@ -5216,7 +5216,7 @@ cum_tokens = 8201
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 32
 end = 34
 
@@ -5225,7 +5225,7 @@ kind = "full"
 
 [[batches]]
 position = 207
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 91 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 91 })'
 descriptor = "c decl at src/class/video/video.h:91"
 cost_tokens = 38
 cum_tokens = 8239
@@ -5234,7 +5234,7 @@ cum_tokens = 8239
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 91
 end = 94
 
@@ -5243,7 +5243,7 @@ kind = "full"
 
 [[batches]]
 position = 208
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 91 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 91 })'
 descriptor = "c decl doc at src/class/video/video.h:91"
 cost_tokens = 11
 cum_tokens = 8250
@@ -5252,7 +5252,7 @@ cum_tokens = 8250
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 90
 end = 90
 
@@ -5261,7 +5261,7 @@ kind = "full"
 
 [[batches]]
 position = 209
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 223 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 223 })'
 descriptor = "c decl at src/class/video/video.h:223"
 cost_tokens = 39
 cum_tokens = 8289
@@ -5270,7 +5270,7 @@ cum_tokens = 8289
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 223
 end = 224
 
@@ -5279,7 +5279,7 @@ kind = "full"
 
 [[batches]]
 position = 210
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 225 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 225 })'
 descriptor = "c decl at src/class/video/video.h:225"
 cost_tokens = 39
 cum_tokens = 8328
@@ -5288,7 +5288,7 @@ cum_tokens = 8328
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 225
 end = 226
 
@@ -5297,7 +5297,7 @@ kind = "full"
 
 [[batches]]
 position = 211
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 134 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 134 })'
 descriptor = "c decl at src/class/video/video.h:134"
 cost_tokens = 56
 cum_tokens = 8384
@@ -5306,7 +5306,7 @@ cum_tokens = 8384
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 134
 end = 139
 
@@ -5315,7 +5315,7 @@ kind = "full"
 
 [[batches]]
 position = 212
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 134 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 134 })'
 descriptor = "c decl doc at src/class/video/video.h:134"
 cost_tokens = 17
 cum_tokens = 8401
@@ -5324,7 +5324,7 @@ cum_tokens = 8401
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 133
 end = 133
 
@@ -5333,7 +5333,7 @@ kind = "full"
 
 [[batches]]
 position = 213
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 83 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 83 })'
 descriptor = "c decl at src/class/video/video.h:83"
 cost_tokens = 57
 cum_tokens = 8458
@@ -5342,7 +5342,7 @@ cum_tokens = 8458
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 83
 end = 88
 
@@ -5351,7 +5351,7 @@ kind = "full"
 
 [[batches]]
 position = 214
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 83 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 83 })'
 descriptor = "c decl doc at src/class/video/video.h:83"
 cost_tokens = 12
 cum_tokens = 8470
@@ -5360,7 +5360,7 @@ cum_tokens = 8470
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 82
 end = 82
 
@@ -5369,7 +5369,7 @@ kind = "full"
 
 [[batches]]
 position = 215
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 161 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 161 })'
 descriptor = "c decl at src/class/video/video.h:161"
 cost_tokens = 65
 cum_tokens = 8535
@@ -5378,7 +5378,7 @@ cum_tokens = 8535
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 161
 end = 165
 
@@ -5387,7 +5387,7 @@ kind = "full"
 
 [[batches]]
 position = 216
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 161 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 161 })'
 descriptor = "c decl doc at src/class/video/video.h:161"
 cost_tokens = 17
 cum_tokens = 8552
@@ -5396,7 +5396,7 @@ cum_tokens = 8552
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 160
 end = 160
 
@@ -5405,7 +5405,7 @@ kind = "full"
 
 [[batches]]
 position = 217
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 228 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 228 })'
 descriptor = "c decl at src/class/video/video.h:228"
 cost_tokens = 101
 cum_tokens = 8653
@@ -5414,7 +5414,7 @@ cum_tokens = 8653
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 228
 end = 236
 
@@ -5423,7 +5423,7 @@ kind = "full"
 
 [[batches]]
 position = 218
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 276 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 276 })'
 descriptor = "c decl at src/class/video/video.h:276"
 cost_tokens = 77
 cum_tokens = 8730
@@ -5432,7 +5432,7 @@ cum_tokens = 8730
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 276
 end = 281
 
@@ -5441,7 +5441,7 @@ kind = "full"
 
 [[batches]]
 position = 219
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 276 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 276 })'
 descriptor = "c decl doc at src/class/video/video.h:276"
 cost_tokens = 14
 cum_tokens = 8744
@@ -5450,7 +5450,7 @@ cum_tokens = 8744
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 275
 end = 275
 
@@ -5459,7 +5459,7 @@ kind = "full"
 
 [[batches]]
 position = 220
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 59 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 59 })'
 descriptor = "c decl at src/class/video/video.h:59"
 cost_tokens = 102
 cum_tokens = 8846
@@ -5468,7 +5468,7 @@ cum_tokens = 8846
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 59
 end = 66
 
@@ -5477,7 +5477,7 @@ kind = "full"
 
 [[batches]]
 position = 221
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 59 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 59 })'
 descriptor = "c decl doc at src/class/video/video.h:59"
 cost_tokens = 14
 cum_tokens = 8860
@@ -5486,7 +5486,7 @@ cum_tokens = 8860
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 58
 end = 58
 
@@ -5495,7 +5495,7 @@ kind = "full"
 
 [[batches]]
 position = 222
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 240 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 240 })'
 descriptor = "c decl at src/class/video/video.h:240"
 cost_tokens = 114
 cum_tokens = 8974
@@ -5504,7 +5504,7 @@ cum_tokens = 8974
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 240
 end = 249
 
@@ -5513,7 +5513,7 @@ kind = "full"
 
 [[batches]]
 position = 223
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 37 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 37 })'
 descriptor = "c decl at src/class/video/video.h:37"
 cost_tokens = 117
 cum_tokens = 9091
@@ -5522,7 +5522,7 @@ cum_tokens = 9091
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 37
 end = 44
 
@@ -5531,7 +5531,7 @@ kind = "full"
 
 [[batches]]
 position = 224
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 37 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 37 })'
 descriptor = "c decl doc at src/class/video/video.h:37"
 cost_tokens = 14
 cum_tokens = 9105
@@ -5540,7 +5540,7 @@ cum_tokens = 9105
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 36
 end = 36
 
@@ -5549,7 +5549,7 @@ kind = "full"
 
 [[batches]]
 position = 225
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 69 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 69 })'
 descriptor = "c decl at src/class/video/video.h:69"
 cost_tokens = 124
 cum_tokens = 9229
@@ -5558,7 +5558,7 @@ cum_tokens = 9229
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 69
 end = 80
 
@@ -5567,7 +5567,7 @@ kind = "full"
 
 [[batches]]
 position = 226
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 69 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 69 })'
 descriptor = "c decl doc at src/class/video/video.h:69"
 cost_tokens = 18
 cum_tokens = 9247
@@ -5576,7 +5576,7 @@ cum_tokens = 9247
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 68
 end = 68
 
@@ -5585,7 +5585,7 @@ kind = "full"
 
 [[batches]]
 position = 227
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 210 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 210 })'
 descriptor = "c decl at src/class/video/video.h:210"
 cost_tokens = 95
 cum_tokens = 9342
@@ -5594,7 +5594,7 @@ cum_tokens = 9342
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 210
 end = 217
 
@@ -5603,7 +5603,7 @@ kind = "full"
 
 [[batches]]
 position = 228
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 210 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 210 })'
 descriptor = "c decl doc at src/class/video/video.h:210"
 cost_tokens = 14
 cum_tokens = 9356
@@ -5612,7 +5612,7 @@ cum_tokens = 9356
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 209
 end = 209
 
@@ -5621,7 +5621,7 @@ kind = "full"
 
 [[batches]]
 position = 229
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 47 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 47 })'
 descriptor = "c decl at src/class/video/video.h:47"
 cost_tokens = 133
 cum_tokens = 9489
@@ -5630,7 +5630,7 @@ cum_tokens = 9489
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 47
 end = 56
 
@@ -5639,7 +5639,7 @@ kind = "full"
 
 [[batches]]
 position = 230
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 47 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 47 })'
 descriptor = "c decl doc at src/class/video/video.h:47"
 cost_tokens = 14
 cum_tokens = 9503
@@ -5648,7 +5648,7 @@ cum_tokens = 9503
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 46
 end = 46
 
@@ -5657,7 +5657,7 @@ kind = "full"
 
 [[batches]]
 position = 231
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 97 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 97 })'
 descriptor = "c decl at src/class/video/video.h:97"
 cost_tokens = 146
 cum_tokens = 9649
@@ -5666,7 +5666,7 @@ cum_tokens = 9649
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 97
 end = 107
 
@@ -5675,7 +5675,7 @@ kind = "full"
 
 [[batches]]
 position = 232
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 97 })'
+key = 'C(DeclDoc { file: "src/class/video/video.h", start_line: 97 })'
 descriptor = "c decl doc at src/class/video/video.h:97"
 cost_tokens = 18
 cum_tokens = 9667
@@ -5684,7 +5684,7 @@ cum_tokens = 9667
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 96
 end = 96
 
@@ -5693,7 +5693,7 @@ kind = "full"
 
 [[batches]]
 position = 233
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h", start_line: 253 })'
+key = 'C(Decl { file: "src/class/video/video.h", start_line: 253 })'
 descriptor = "c decl at src/class/video/video.h:253"
 cost_tokens = 173
 cum_tokens = 9840
@@ -5702,7 +5702,7 @@ cum_tokens = 9840
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 253
 end = 260
 
@@ -5710,7 +5710,7 @@ end = 260
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tinyusb/src/class/video/video.h"
+path = "src/class/video/video.h"
 start = 262
 end = 267
 

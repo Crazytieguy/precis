@@ -246,7 +246,8 @@ fn check_fixture_baselines(fixture: &str) {
 }
 
 fn check_schedule_toml(fixture: &str, schedule: &Schedule) {
-    let serialized = toml::to_string(schedule)
+    let serialized = schedule
+        .to_toml_normalized()
         .unwrap_or_else(|e| panic!("serializing schedule({fixture}): {e}"));
     compare_or_update(
         "schedule TOML",
