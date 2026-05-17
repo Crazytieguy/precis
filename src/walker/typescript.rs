@@ -452,12 +452,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 file: file.clone(),
                 start_line: item.start_line,
             };
+            let item_line_count = item.lines.full.len();
             if let Some(content) = single_file_lines_content(file, &source, item.lines) {
                 out.push(Batch {
                     key: item_key.clone().into(),
                     predecessor: module_predecessor.clone(),
                     content,
-                    value: module_item_value(file, item.kind, ctx, js_factor) * per_export_factor,
+                    value: module_item_value(file, item.kind, ctx, js_factor)
+                        * per_export_factor
+                        * module_item_data_table_factor(file, item.kind, item_line_count),
                 });
             }
             if !item.body_parts.is_empty() {
@@ -1949,6 +1952,32 @@ fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f6
     mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx))
         * js_factor
         * secondary_ts_workspace_member_factor(file, ctx)
+}
+
+/// Boost multi-line top-level `const` data declarations on
+/// entrypoint JS/JSX files. A multi-line `const X = [/*…*/]` or
+/// `const X = {/*…*/}` at the entrypoint of a project — option
+/// tables, route maps, command-line definitions, default config —
+/// is exactly the kind of declarative anchor NS authors call out
+/// ("CLI options", "default config", "route map"). Without the
+/// boost, the same-file single-line plumbing consts
+/// (`const X = require('./y')`, `const PORT = ...`) win the V/C
+/// race because their cost is in the denominator and value is
+/// flat across `Const` items.
+///
+/// Restricted to entrypoint files (the boost would crowd small
+/// budgets if applied to every internal helper file) and to `Const`
+/// / `Default`-const kinds (function / class items don't need the
+/// span signal — `kind_weight` already separates them). Threshold
+/// of 3 lines avoids lifting trivial two-line declarations.
+fn module_item_data_table_factor(file: &Path, kind: ItemKind, line_count: usize) -> f64 {
+    if !matches!(kind, ItemKind::Const | ItemKind::Default) {
+        return 1.0;
+    }
+    if !is_entrypoint_file(file) {
+        return 1.0;
+    }
+    if line_count >= 3 { 1.6 } else { 1.0 }
 }
 
 fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {

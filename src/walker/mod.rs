@@ -792,3 +792,36 @@ pub(crate) fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {
     v.dedup();
     v
 }
+
+/// Walk the rows strictly between a struct/union body's `{` and `}`,
+/// accumulating non-blank 1-based row numbers into groups separated by
+/// blank source lines. Each returned `(group_start_line, rows)` tuple
+/// describes one contiguous non-blank run in the body — what Cobra-/
+/// chibicc-style aggregates use as the natural field-group split. Empty
+/// when the body has no interior or no non-blank rows.
+pub(crate) fn collect_blank_line_groups(body: Node, source: &str) -> Vec<(usize, Vec<usize>)> {
+    let body_start = body.start_position().row;
+    let body_end = body.end_position().row;
+    if body_end <= body_start + 1 {
+        return Vec::new();
+    }
+    let src_lines: Vec<&str> = source.lines().collect();
+    let mut groups: Vec<(usize, Vec<usize>)> = Vec::new();
+    let mut current: Vec<usize> = Vec::new();
+    for row in (body_start + 1)..body_end {
+        let line = src_lines.get(row).copied().unwrap_or("");
+        if line.trim().is_empty() {
+            if !current.is_empty() {
+                let start = *current.first().unwrap();
+                groups.push((start, std::mem::take(&mut current)));
+            }
+        } else {
+            current.push(row + 1);
+        }
+    }
+    if !current.is_empty() {
+        let start = *current.first().unwrap();
+        groups.push((start, current));
+    }
+    groups
+}

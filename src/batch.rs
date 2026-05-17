@@ -411,6 +411,24 @@ pub enum CKey {
         start_line: usize,
         end_line: usize,
     },
+    /// A blank-line-separated field group inside a big struct/union body,
+    /// or a sized chunk of enumerators inside a big enum body. NS authors
+    /// anchor on per-field-group rows for the giant aggregates that
+    /// dominate C catalog headers (chibicc.h's `Obj`, `Node`, `Type`,
+    /// `NodeKind`, `TypeKind`). At the default whole-aggregate
+    /// granularity, the `Decl` batch for one of these structs is too
+    /// large to fit at small budgets, and no member content is delivered.
+    /// Emitted only when a struct/union has ≥3 blank-line groups, or an
+    /// enum has ≥`AGGREGATE_ENUM_CHUNK_MIN` enumerators.
+    /// Predecessor: matching [`CKey::Decl`] at the same `start_line` —
+    /// line overlap with the Decl is allowed as ancestor overlap, and
+    /// the Decl's own rendered span is reduced to the type header +
+    /// closer so the two batches don't conflict on body rows.
+    AggregateMemberGroup {
+        file: PathBuf,
+        start_line: usize,
+        group_start_line: usize,
+    },
 }
 
 /// Go batches. Mirrors the C walker shape — per-file orientation
@@ -1285,7 +1303,7 @@ impl CKey {
     /// and krep.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
-            CKey::Decl { .. } | CKey::DeclBody { .. } => 0.45,
+            CKey::Decl { .. } | CKey::DeclBody { .. } | CKey::AggregateMemberGroup { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -1334,6 +1352,16 @@ impl CKey {
                     end_line
                 )
             }
+            CKey::AggregateMemberGroup {
+                file,
+                start_line,
+                group_start_line,
+            } => format!(
+                "c aggregate member group at {}:{} group {}",
+                display_path(file, fixture_root),
+                start_line,
+                group_start_line,
+            ),
         }
     }
 }

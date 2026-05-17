@@ -1,4 +1,4 @@
-Score(3000)=0.492 I=0.804 C=0.301 ns_rows≤3K=18/45 (reached=4 partial=2 missing=12)
+Score(3000)=0.528 I=0.820 C=0.340 ns_rows≤3K=18/45 (reached=5 partial=2 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -30,104 +30,104 @@ Score(3000)=0.492 I=0.804 C=0.301 ns_rows≤3K=18/45 (reached=4 partial=2 missin
 | ns | 619 |  | 151 | package.json — secondary runtime deps | 1.6.1 | 1.6 | 0.544 |
 | walker |  | 669 | 91 | README headline in docs/README.md |  |  | 0.544 |
 | walker |  | 717 | 48 | headings outline in docs/README.md |  |  | 0.544 |
-| walker |  | 780 | 63 | listing of 'server' |  |  | 0.732 |
-| ns | 804 |  | 185 | README — feature list (first half) | 1.7 | 1.1 | 0.672 |
-| walker |  | 810 | 30 | listing of 'docs/controllers' |  |  | 0.672 |
-| walker |  | 875 | 65 | listing of 'client' |  |  | 0.674 |
-| walker |  | 933 | 58 | package identity in client/package.json |  |  | 0.674 |
-| ns | 939 |  | 135 | README — feature list (second half) | 1.7.1 | 1.7 | 0.637 |
-| walker |  | 946 | 13 | package identity metadata in client/package.json |  |  | 0.637 |
-| walker |  | 958 | 12 | package entrypoints in client/package.json |  |  | 0.637 |
-| walker |  | 984 | 26 | listing of 'client/players' |  |  | 0.637 |
-| walker |  | 1012 | 28 | listing of 'client/store' |  |  | 0.638 |
-| walker |  | 1045 | 33 | listing of 'docs/objects' |  |  | 0.638 |
-| walker |  | 1057 | 12 | listing of 'client/layouts' |  |  | 0.638 |
-| ns | 1112 |  | 173 | index.js — CLI options | 1.8 |  | 0.602 |
-| walker |  | 1155 | 98 | docs/README.md section #0 |  |  | 0.602 |
-| walker |  | 1191 | 36 | listing of 'client/plugins' |  |  | 0.603 |
-| walker |  | 1212 | 21 | listing of 'docs/objects/metadata' |  |  | 0.603 |
-| walker |  | 1251 | 39 | listing of 'client/assets' |  |  | 0.603 |
-| walker |  | 1255 | 4 | listing of 'client/middleware' |  |  | 0.603 |
-| walker |  | 1295 | 40 | listing of 'client/components' |  |  | 0.604 |
-| walker |  | 1310 | 15 | listing of 'server/finders' |  |  | 0.604 |
-| walker |  | 1326 | 16 | listing of 'server/routers' |  |  | 0.604 |
-| ns | 1347 |  | 235 | index.js — Server() instantiation + start() | 1.9 | 1.8 | 0.593 |
-| walker |  | 1352 | 26 | listing of 'client/components/readers' |  |  | 0.593 |
-| walker |  | 1369 | 17 | listing of 'client/mixins' |  |  | 0.593 |
-| ns | 1385 |  | 38 | Server.js — class signature + ctor | 2.1 |  | 0.584 |
-| walker |  | 1418 | 49 | listing of 'server/providers' |  |  | 0.585 |
-| ns | 1447 |  | 62 | Server.js — class method index (names only) | 2.2 | 2.1 | 0.566 |
-| walker |  | 1469 | 51 | listing of 'client/pages' |  |  | 0.567 |
-| ns | 1610 |  | 163 | Server.js — globals from ctor args | 2.3 | 2.1 | 0.541 |
-| walker |  | 1822 | 353 | package scripts in package.json |  |  | 0.621 |
-| walker |  | 1874 | 52 | listing of 'server/objects' |  |  | 0.622 |
-| walker |  | 1895 | 21 | listing of 'server/objects/files' |  |  | 0.622 |
-| ns | 1900 |  | 290 | Server.js — manager + router instantiations | 2.4 | 2.1 | 0.568 |
-| walker |  | 1914 | 19 | listing of 'server/auth' |  |  | 0.569 |
-| walker |  | 1968 | 54 | listing of 'client/static' |  |  | 0.569 |
-| walker |  | 1992 | 24 | listing of 'client/static/fonts' |  |  | 0.569 |
-| walker |  | 1995 | 3 | listing of 'client/static/libs' |  |  | 0.569 |
-| walker |  | 2025 | 30 | listing of 'client/components/covers' |  |  | 0.569 |
-| walker |  | 2037 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.569 |
-| ns | 2299 |  | 399 | Server.js — init() lifecycle body | 2.5 | 2.2 | 0.510 |
-| walker |  | 2355 | 318 | headings outline in readme.md |  |  | 0.511 |
-| walker |  | 2355 | 0 | readme.md section #49 |  |  | 0.511 |
-| walker |  | 2375 | 20 | readme.md section #50 |  |  | 0.511 |
-| walker |  | 2387 | 12 | readme.md section #9 |  |  | 0.511 |
-| walker |  | 2413 | 26 | readme.md section #24 |  |  | 0.511 |
-| walker |  | 2426 | 13 | readme.md section #2 |  |  | 0.513 |
-| walker |  | 2439 | 13 | readme.md section #4 |  |  | 0.515 |
-| walker |  | 2452 | 13 | readme.md section #8 |  |  | 0.518 |
-| walker |  | 2466 | 14 | readme.md section #11 |  |  | 0.519 |
-| walker |  | 2480 | 14 | readme.md section #16 |  |  | 0.521 |
-| walker |  | 2495 | 15 | readme.md section #5 |  |  | 0.525 |
-| walker |  | 2510 | 15 | readme.md section #10 |  |  | 0.530 |
-| walker |  | 2525 | 15 | readme.md section #14 |  |  | 0.533 |
-| walker |  | 2550 | 25 | readme.md section #71 |  |  | 0.533 |
-| walker |  | 2566 | 16 | readme.md section #13 |  |  | 0.537 |
-| walker |  | 2583 | 17 | readme.md section #3 |  |  | 0.543 |
-| walker |  | 2601 | 18 | readme.md section #7 |  |  | 0.551 |
-| walker |  | 2620 | 19 | readme.md section #6 |  |  | 0.558 |
-| ns | 2625 |  | 326 | Server.js — start() head: middleware + router mounts | 2.6 | 2.2 | 0.514 |
-| walker |  | 2632 | 12 | readme.md section #63 |  |  | 0.514 |
-| walker |  | 2654 | 22 | readme.md section #18 |  |  | 0.514 |
-| walker |  | 2715 | 61 | readme.md section #23 |  |  | 0.514 |
-| walker |  | 2741 | 26 | readme.md section #12 |  |  | 0.520 |
-| ns | 2746 |  | 121 | controllers/ directory listing | 3.1 |  | 0.492 |
-| walker |  | 2761 | 20 | readme.md section #46 |  |  | 0.492 |
-| walker |  | 2783 | 22 | listing of 'client/static/fonts/absicons' |  |  | 0.492 |
-| walker |  | 2796 | 13 | listing of 'client/assets/ebooks' |  |  | 0.492 |
-| walker |  | 2809 | 13 | listing of 'docs/objects/entities' |  |  | 0.492 |
-| walker |  | 2849 | 40 | docs/README.md section #3 |  |  | 0.492 |
-| walker |  | 2870 | 21 | readme.md section #39 |  |  | 0.492 |
-| walker |  | 2904 | 34 | readme.md section #17 |  |  | 0.492 |
-| walker |  | 2942 | 38 | listing of 'client/components/controls' |  |  | 0.492 |
-| walker |  | 2946 | 4 | listing of 'client/pages/audiobook' |  |  | 0.492 |
-| walker |  | 2950 | 4 | listing of 'client/pages/batch' |  |  | 0.492 |
-| walker |  | 2954 | 4 | listing of 'client/pages/item' |  |  | 0.492 |
-| walker |  | 2958 | 4 | listing of 'client/pages/library' |  |  | 0.492 |
-| walker |  | 2962 | 4 | listing of 'client/pages/upload' |  |  | 0.492 |
-| walker |  | 2992 | 30 | readme.md section #20 |  |  | 0.492 |
-| walker |  | 3015 | 23 | readme.md section #44 |  |  | 0.492 |
-| walker |  | 3090 | 75 | listing of 'server/scanner' |  |  | 0.493 |
-| walker |  | 3162 | 72 | readme.md section #25 |  |  | 0.493 |
-| walker |  | 3177 | 15 | listing of 'server/objects/settings' |  |  | 0.494 |
-| walker |  | 3203 | 26 | listing of 'client/pages/library/_library' |  |  | 0.494 |
-| walker |  | 3246 | 43 | listing of 'client/components/stats' |  |  | 0.494 |
-| walker |  | 3284 | 38 | readme.md section #1 |  |  | 0.506 |
-| walker |  | 3300 | 16 | listing of 'docs/objects/files' |  |  | 0.506 |
-| walker |  | 3328 | 28 | listing of 'client/static/fonts/Source_Sans_Pro' |  |  | 0.506 |
-| walker |  | 3353 | 25 | readme.md section #34 |  |  | 0.506 |
-| walker |  | 3423 | 70 | docs/README.md section #1 |  |  | 0.506 |
-| walker |  | 3440 | 17 | listing of 'client/components/player' |  |  | 0.506 |
-| walker |  | 3445 | 5 | listing of 'client/pages/author' |  |  | 0.506 |
-| walker |  | 3450 | 5 | listing of 'client/pages/collection' |  |  | 0.506 |
-| walker |  | 3455 | 5 | listing of 'client/pages/playlist' |  |  | 0.506 |
-| walker |  | 3460 | 5 | listing of 'client/pages/share' |  |  | 0.506 |
-| walker |  | 3465 | 5 | listing of 'client/static/textures' |  |  | 0.506 |
-| walker |  | 3470 | 5 | listing of 'docs/objects/settings' |  |  | 0.506 |
-| ns | 3488 |  | 742 | ApiRouter — Library + Item route paths | 3.2 |  | 0.460 |
-| walker |  | 3643 | 173 | module item at index.js:1 |  |  | 0.492 |
+| ns | 804 |  | 185 | README — feature list (first half) | 1.7 | 1.1 | 0.500 |
+| walker |  | 890 | 173 | module item at index.js:1 |  |  | 0.506 |
+| ns | 939 |  | 135 | README — feature list (second half) | 1.7.1 | 1.7 | 0.478 |
+| walker |  | 953 | 63 | listing of 'server' |  |  | 0.642 |
+| walker |  | 983 | 30 | listing of 'docs/controllers' |  |  | 0.642 |
+| walker |  | 1048 | 65 | listing of 'client' |  |  | 0.644 |
+| walker |  | 1106 | 58 | package identity in client/package.json |  |  | 0.644 |
+| ns | 1112 |  | 173 | index.js — CLI options | 1.8 |  | 0.670 |
+| walker |  | 1119 | 13 | package identity metadata in client/package.json |  |  | 0.670 |
+| walker |  | 1131 | 12 | package entrypoints in client/package.json |  |  | 0.670 |
+| walker |  | 1157 | 26 | listing of 'client/players' |  |  | 0.670 |
+| walker |  | 1185 | 28 | listing of 'client/store' |  |  | 0.670 |
+| walker |  | 1218 | 33 | listing of 'docs/objects' |  |  | 0.670 |
+| walker |  | 1230 | 12 | listing of 'client/layouts' |  |  | 0.670 |
+| walker |  | 1328 | 98 | docs/README.md section #0 |  |  | 0.670 |
+| ns | 1347 |  | 235 | index.js — Server() instantiation + start() | 1.9 | 1.8 | 0.653 |
+| walker |  | 1364 | 36 | listing of 'client/plugins' |  |  | 0.654 |
+| walker |  | 1385 | 21 | listing of 'docs/objects/metadata' |  |  | 0.645 |
+| ns | 1385 |  | 38 | Server.js — class signature + ctor | 2.1 |  | 0.645 |
+| walker |  | 1424 | 39 | listing of 'client/assets' |  |  | 0.645 |
+| walker |  | 1428 | 4 | listing of 'client/middleware' |  |  | 0.645 |
+| ns | 1447 |  | 62 | Server.js — class method index (names only) | 2.2 | 2.1 | 0.624 |
+| walker |  | 1468 | 40 | listing of 'client/components' |  |  | 0.625 |
+| walker |  | 1483 | 15 | listing of 'server/finders' |  |  | 0.625 |
+| walker |  | 1499 | 16 | listing of 'server/routers' |  |  | 0.625 |
+| walker |  | 1525 | 26 | listing of 'client/components/readers' |  |  | 0.625 |
+| walker |  | 1542 | 17 | listing of 'client/mixins' |  |  | 0.625 |
+| walker |  | 1591 | 49 | listing of 'server/providers' |  |  | 0.625 |
+| ns | 1610 |  | 163 | Server.js — globals from ctor args | 2.3 | 2.1 | 0.596 |
+| walker |  | 1642 | 51 | listing of 'client/pages' |  |  | 0.597 |
+| ns | 1900 |  | 290 | Server.js — manager + router instantiations | 2.4 | 2.1 | 0.546 |
+| walker |  | 1995 | 353 | package scripts in package.json |  |  | 0.616 |
+| walker |  | 2047 | 52 | listing of 'server/objects' |  |  | 0.616 |
+| walker |  | 2068 | 21 | listing of 'server/objects/files' |  |  | 0.616 |
+| walker |  | 2087 | 19 | listing of 'server/auth' |  |  | 0.617 |
+| walker |  | 2141 | 54 | listing of 'client/static' |  |  | 0.617 |
+| walker |  | 2165 | 24 | listing of 'client/static/fonts' |  |  | 0.617 |
+| walker |  | 2168 | 3 | listing of 'client/static/libs' |  |  | 0.617 |
+| walker |  | 2198 | 30 | listing of 'client/components/covers' |  |  | 0.617 |
+| walker |  | 2210 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.617 |
+| ns | 2299 |  | 399 | Server.js — init() lifecycle body | 2.5 | 2.2 | 0.554 |
+| walker |  | 2528 | 318 | headings outline in readme.md |  |  | 0.554 |
+| walker |  | 2528 | 0 | readme.md section #49 |  |  | 0.554 |
+| walker |  | 2548 | 20 | readme.md section #50 |  |  | 0.554 |
+| walker |  | 2560 | 12 | readme.md section #9 |  |  | 0.555 |
+| walker |  | 2586 | 26 | readme.md section #24 |  |  | 0.555 |
+| walker |  | 2599 | 13 | readme.md section #2 |  |  | 0.556 |
+| walker |  | 2612 | 13 | readme.md section #4 |  |  | 0.558 |
+| walker |  | 2625 | 13 | readme.md section #8 |  |  | 0.517 |
+| ns | 2625 |  | 326 | Server.js — start() head: middleware + router mounts | 2.6 | 2.2 | 0.517 |
+| walker |  | 2639 | 14 | readme.md section #11 |  |  | 0.517 |
+| walker |  | 2653 | 14 | readme.md section #16 |  |  | 0.519 |
+| walker |  | 2668 | 15 | readme.md section #5 |  |  | 0.522 |
+| walker |  | 2683 | 15 | readme.md section #10 |  |  | 0.527 |
+| walker |  | 2698 | 15 | readme.md section #14 |  |  | 0.529 |
+| walker |  | 2723 | 25 | readme.md section #71 |  |  | 0.529 |
+| walker |  | 2739 | 16 | readme.md section #13 |  |  | 0.533 |
+| ns | 2746 |  | 121 | controllers/ directory listing | 3.1 |  | 0.504 |
+| walker |  | 2756 | 17 | readme.md section #3 |  |  | 0.510 |
+| walker |  | 2774 | 18 | readme.md section #7 |  |  | 0.516 |
+| walker |  | 2793 | 19 | readme.md section #6 |  |  | 0.523 |
+| walker |  | 2805 | 12 | readme.md section #63 |  |  | 0.523 |
+| walker |  | 2827 | 22 | readme.md section #18 |  |  | 0.523 |
+| walker |  | 2888 | 61 | readme.md section #23 |  |  | 0.523 |
+| walker |  | 2914 | 26 | readme.md section #12 |  |  | 0.528 |
+| walker |  | 2934 | 20 | readme.md section #46 |  |  | 0.528 |
+| walker |  | 2956 | 22 | listing of 'client/static/fonts/absicons' |  |  | 0.528 |
+| walker |  | 2969 | 13 | listing of 'client/assets/ebooks' |  |  | 0.528 |
+| walker |  | 2982 | 13 | listing of 'docs/objects/entities' |  |  | 0.528 |
+| walker |  | 3022 | 40 | docs/README.md section #3 |  |  | 0.528 |
+| walker |  | 3043 | 21 | readme.md section #39 |  |  | 0.528 |
+| walker |  | 3077 | 34 | readme.md section #17 |  |  | 0.528 |
+| walker |  | 3115 | 38 | listing of 'client/components/controls' |  |  | 0.528 |
+| walker |  | 3119 | 4 | listing of 'client/pages/audiobook' |  |  | 0.528 |
+| walker |  | 3123 | 4 | listing of 'client/pages/batch' |  |  | 0.528 |
+| walker |  | 3127 | 4 | listing of 'client/pages/item' |  |  | 0.528 |
+| walker |  | 3131 | 4 | listing of 'client/pages/library' |  |  | 0.528 |
+| walker |  | 3135 | 4 | listing of 'client/pages/upload' |  |  | 0.528 |
+| walker |  | 3165 | 30 | readme.md section #20 |  |  | 0.528 |
+| walker |  | 3188 | 23 | readme.md section #44 |  |  | 0.528 |
+| walker |  | 3263 | 75 | listing of 'server/scanner' |  |  | 0.529 |
+| walker |  | 3335 | 72 | readme.md section #25 |  |  | 0.529 |
+| walker |  | 3350 | 15 | listing of 'server/objects/settings' |  |  | 0.530 |
+| walker |  | 3376 | 26 | listing of 'client/pages/library/_library' |  |  | 0.530 |
+| walker |  | 3419 | 43 | listing of 'client/components/stats' |  |  | 0.530 |
+| walker |  | 3457 | 38 | readme.md section #1 |  |  | 0.542 |
+| walker |  | 3473 | 16 | listing of 'docs/objects/files' |  |  | 0.542 |
+| ns | 3488 |  | 742 | ApiRouter — Library + Item route paths | 3.2 |  | 0.492 |
+| walker |  | 3501 | 28 | listing of 'client/static/fonts/Source_Sans_Pro' |  |  | 0.492 |
+| walker |  | 3526 | 25 | readme.md section #34 |  |  | 0.492 |
+| walker |  | 3596 | 70 | docs/README.md section #1 |  |  | 0.492 |
+| walker |  | 3613 | 17 | listing of 'client/components/player' |  |  | 0.492 |
+| walker |  | 3618 | 5 | listing of 'client/pages/author' |  |  | 0.492 |
+| walker |  | 3623 | 5 | listing of 'client/pages/collection' |  |  | 0.492 |
+| walker |  | 3628 | 5 | listing of 'client/pages/playlist' |  |  | 0.492 |
+| walker |  | 3633 | 5 | listing of 'client/pages/share' |  |  | 0.492 |
+| walker |  | 3638 | 5 | listing of 'client/static/textures' |  |  | 0.492 |
+| walker |  | 3643 | 5 | listing of 'docs/objects/settings' |  |  | 0.492 |
 | walker |  | 3703 | 60 | docs/README.md section #2 |  |  | 0.492 |
 | walker |  | 3755 | 52 | listing of 'client/components/app' |  |  | 0.492 |
 | walker |  | 3852 | 97 | listing of 'server/managers' |  |  | 0.494 |

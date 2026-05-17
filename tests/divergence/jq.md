@@ -201,43 +201,47 @@ Score(3000)=0.603 I=0.716 C=0.508 ns_rows≤3K=16/40 (reached=4 partial=2 missin
 | walker |  | 8065 | 0 | c decl at src/jv_parse.c:909 |  |  | 0.482 |
 | walker |  | 8065 | 0 | c decl at src/jv_parse.c:913 |  |  | 0.482 |
 | walker |  | 8065 | 0 | c decl at src/jv_parse.c:917 |  |  | 0.482 |
-| walker |  | 8079 | 14 | c decl body at src/jv_parse.c:913 |  |  | 0.482 |
-| walker |  | 8108 | 29 | c decl at src/jv_parse.c:646 |  |  | 0.482 |
-| walker |  | 8139 | 31 | c decl at src/jv_parse.c:640 |  |  | 0.482 |
+| walker |  | 8070 | 5 | c decl at src/jv_parse.c:34 |  |  | 0.482 |
+| walker |  | 8078 | 8 | c aggregate member group at src/jv_parse.c:34 group 42 |  |  | 0.482 |
+| walker |  | 8088 | 10 | c aggregate member group at src/jv_parse.c:34 group 56 |  |  | 0.482 |
+| walker |  | 8100 | 12 | c aggregate member group at src/jv_parse.c:34 group 58 |  |  | 0.482 |
+| walker |  | 8114 | 14 | c decl body at src/jv_parse.c:913 |  |  | 0.482 |
 | ns | 8142 |  | 434 | builtin.jq prelude — def names (first half, truncated) | 4.5 |  | 0.458 |
-| walker |  | 8171 | 32 | c decl at src/jv_parse.c:643 |  |  | 0.458 |
-| walker |  | 8204 | 33 | c decl at src/jv_parse.c:637 |  |  | 0.458 |
-| walker |  | 8222 | 18 | c decl body at src/jv_parse.c:722 |  |  | 0.458 |
-| walker |  | 8240 | 18 | c decl body at src/jv_parse.c:909 |  |  | 0.458 |
-| walker |  | 8258 | 18 | c decl body at src/jv_parse.c:917 |  |  | 0.458 |
-| walker |  | 8304 | 46 | c decl at src/jv_parse.c:556 |  |  | 0.458 |
+| walker |  | 8143 | 29 | c decl at src/jv_parse.c:646 |  |  | 0.458 |
+| walker |  | 8174 | 31 | c decl at src/jv_parse.c:640 |  |  | 0.458 |
+| walker |  | 8206 | 32 | c decl at src/jv_parse.c:643 |  |  | 0.458 |
+| walker |  | 8239 | 33 | c decl at src/jv_parse.c:637 |  |  | 0.458 |
+| walker |  | 8257 | 18 | c decl body at src/jv_parse.c:722 |  |  | 0.458 |
+| walker |  | 8275 | 18 | c decl body at src/jv_parse.c:909 |  |  | 0.458 |
+| walker |  | 8293 | 18 | c decl body at src/jv_parse.c:917 |  |  | 0.458 |
 | ns | 8310 |  | 168 | builtin.jq prelude — second-half def name samples (truncated) | 4.5b | 4.5 | 0.450 |
-| walker |  | 8379 | 75 | c decl at src/jv_parse.c:25 |  |  | 0.450 |
-| walker |  | 8420 | 41 | c decl body at src/jv_parse.c:729 |  |  | 0.450 |
-| walker |  | 8451 | 31 | c includes in src/builtin.h |  |  | 0.450 |
-| walker |  | 8462 | 11 | python decl names surface in docs/build_mantests.py |  |  | 0.450 |
-| walker |  | 8668 | 206 | c decl names surface in src/jv_dtoa.h |  |  | 0.450 |
-| walker |  | 8700 | 32 | c decl at src/jv_dtoa.h:6 |  |  | 0.435 |
+| walker |  | 8339 | 46 | c decl at src/jv_parse.c:556 |  |  | 0.450 |
+| walker |  | 8367 | 28 | c aggregate member group at src/jv_parse.c:34 group 52 |  |  | 0.450 |
+| walker |  | 8442 | 75 | c decl at src/jv_parse.c:25 |  |  | 0.450 |
+| walker |  | 8483 | 41 | c decl body at src/jv_parse.c:729 |  |  | 0.450 |
+| walker |  | 8514 | 31 | c includes in src/builtin.h |  |  | 0.450 |
+| walker |  | 8525 | 11 | python decl names surface in docs/build_mantests.py |  |  | 0.450 |
 | ns | 8700 |  | 390 | opcode_list.h — every VM opcode name (truncated) | 5.1 |  | 0.435 |
-| walker |  | 8782 | 82 | c decl at src/inject_errors.c:22 |  |  | 0.435 |
-| walker |  | 8993 | 211 | c decl names surface #5 in src/jv.h |  |  | 0.450 |
-| walker |  | 9037 | 44 | c decl body at src/jv_alloc.c:141 |  |  | 0.450 |
-| ns | 9043 |  | 343 | struct bytecode + struct cfunction (bytecode.h) | 5.2 |  | 0.440 |
-| walker |  | 9081 | 44 | c decl body at src/jv_alloc.c:167 |  |  | 0.440 |
-| walker |  | 9125 | 44 | c decl body at src/jv_alloc.c:183 |  |  | 0.440 |
-| walker |  | 9210 | 85 | c includes in src/jv_aux.c |  |  | 0.440 |
+| walker |  | 8731 | 206 | c decl names surface in src/jv_dtoa.h |  |  | 0.435 |
+| walker |  | 8763 | 32 | c decl at src/jv_dtoa.h:6 |  |  | 0.435 |
+| walker |  | 8845 | 82 | c decl at src/inject_errors.c:22 |  |  | 0.435 |
+| ns | 9043 |  | 343 | struct bytecode + struct cfunction (bytecode.h) | 5.2 |  | 0.426 |
+| walker |  | 9056 | 211 | c decl names surface #5 in src/jv.h |  |  | 0.440 |
+| walker |  | 9100 | 44 | c decl body at src/jv_alloc.c:141 |  |  | 0.440 |
+| walker |  | 9144 | 44 | c decl body at src/jv_alloc.c:167 |  |  | 0.440 |
+| walker |  | 9188 | 44 | c decl body at src/jv_alloc.c:183 |  |  | 0.440 |
 | ns | 9241 |  | 198 | block typedef + IR doc comment (compile.h + compile.c) | 5.3 |  | 0.434 |
-| walker |  | 9298 | 88 | c includes in src/jq_test.c |  |  | 0.434 |
-| walker |  | 9345 | 47 | c decl body at src/jv_dtoa_tsd.c:22 |  |  | 0.434 |
-| walker |  | 9510 | 165 | listing of 'tests' |  |  | 0.435 |
-| ns | 9547 |  | 306 | jq_state struct (execute.c) | 5.5 |  | 0.425 |
+| walker |  | 9273 | 85 | c includes in src/jv_aux.c |  |  | 0.434 |
+| walker |  | 9361 | 88 | c includes in src/jq_test.c |  |  | 0.434 |
+| walker |  | 9408 | 47 | c decl body at src/jv_dtoa_tsd.c:22 |  |  | 0.434 |
+| ns | 9547 |  | 306 | jq_state struct (execute.c) | 5.5 |  | 0.424 |
+| walker |  | 9573 | 165 | listing of 'tests' |  |  | 0.425 |
 | ns | 9600 |  | 53 | jq_next + jq_init + jq_compile entry locations | 5.6 |  | 0.424 |
-| walker |  | 9604 | 94 | c includes in src/compile.c |  |  | 0.424 |
-| walker |  | 9698 | 94 | c includes in src/jv_file.c |  |  | 0.424 |
+| walker |  | 9667 | 94 | c includes in src/compile.c |  |  | 0.424 |
+| walker |  | 9761 | 94 | c includes in src/jv_file.c |  |  | 0.424 |
 | ns | 9790 |  | 190 | main.c CLI options enum (flag bits only) | 6.1 |  | 0.420 |
-| walker |  | 9815 | 117 | c decl at src/main.c:164 |  |  | 0.420 |
 | ns | 9847 |  | 57 | linker.c — lib_entry struct + load_library signature | 6.2 |  | 0.421 |
-| walker |  | 9916 | 101 | c decl doc at src/jv_unicode.c:11 |  |  | 0.421 |
+| walker |  | 9878 | 117 | c decl at src/main.c:164 |  |  | 0.421 |
 | ns | 9935 |  | 88 | tests/ listing (top-level only) | 7.1 |  | 0.433 |
-| walker |  | 9966 | 50 | c decl body at src/jv_parse.c:715 |  |  | 0.433 |
 | ns | 9974 |  | 39 | tests/jq.test format header | 7.2 |  | 0.432 |
+| walker |  | 9979 | 101 | c decl doc at src/jv_unicode.c:11 |  |  | 0.432 |

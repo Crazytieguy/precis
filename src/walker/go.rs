@@ -54,8 +54,8 @@ use crate::content::BatchContent;
 use crate::value::{mix_signals, names_surface_chunk_factor};
 
 use super::{
-    FileLines, WalkCtx, collect_doc_comments_above, dedup_sorted, extend_span, file_depth_factor,
-    file_lines_covered_by,
+    FileLines, WalkCtx, collect_blank_line_groups, collect_doc_comments_above, dedup_sorted,
+    extend_span, file_depth_factor, file_lines_covered_by,
     fs::{files_with_extension, list_dir},
     push_rows, signature_end_row, single_file_lines_content,
 };
@@ -660,37 +660,15 @@ fn find_struct_body(spec: Node) -> Option<Node> {
 /// Split a struct body into blank-line-separated field groups. Each
 /// group's `rows` covers the leading `//` doc comments + the field
 /// row(s) of every contiguous non-blank source line in the group.
-/// Source line numbers are 1-based.
+/// Wraps the shared [`collect_blank_line_groups`] helper.
 fn collect_struct_field_groups(struct_body: Node, source: &str) -> Vec<StructFieldGroup> {
-    let body_start = struct_body.start_position().row;
-    let body_end = struct_body.end_position().row;
-    if body_end <= body_start + 1 {
-        return Vec::new();
-    }
-    let src_lines: Vec<&str> = source.lines().collect();
-    let mut groups: Vec<StructFieldGroup> = Vec::new();
-    let mut current: Vec<usize> = Vec::new();
-    // Walk rows strictly between the `{` and the `}` lines.
-    for row in (body_start + 1)..body_end {
-        let line = src_lines.get(row).copied().unwrap_or("");
-        if line.trim().is_empty() {
-            if !current.is_empty() {
-                groups.push(StructFieldGroup {
-                    group_start_line: *current.first().unwrap(),
-                    rows: std::mem::take(&mut current),
-                });
-            }
-        } else {
-            current.push(row + 1);
-        }
-    }
-    if !current.is_empty() {
-        groups.push(StructFieldGroup {
-            group_start_line: *current.first().unwrap(),
-            rows: current,
-        });
-    }
-    groups
+    collect_blank_line_groups(struct_body, source)
+        .into_iter()
+        .map(|(group_start_line, rows)| StructFieldGroup {
+            group_start_line,
+            rows,
+        })
+        .collect()
 }
 
 fn grouped_value_info(node: Node, source: &str, kind: DeclKind) -> DeclInfo {

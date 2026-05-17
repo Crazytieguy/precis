@@ -32,13 +32,6 @@ client/
         cards/
         content/
         controls/
-            FilterSelect.vue
-            GlobalSearch.vue
-            LibraryFilterSelect.vue
-            LibrarySortSelect.vue
-            PlaybackSpeedControl.vue
-            SortSelect.vue
-            VolumeControl.vue
         covers/
             AuthorImage.vue
             BookCover.vue
@@ -83,24 +76,19 @@ client/
     pages/
         account.vue
         audiobook/
-            _id/
         author/
         batch/
-            index.vue
         collection/
         config/
         config.vue
         index.vue
         item/
-            _id/
         library/
-            _library/
         login.vue
         oops.vue
         playlist/
         share/
         upload/
-            index.vue
     players/
         AudioTrack.js
         CastPlayer.js
@@ -164,7 +152,6 @@ docs/
         …
         21→### Generating documentation
         …
-        23→Redocly allows for creating a static HTML page to document the API. This is done by using `redocly build-docs [file]` and supports exploded specs.
         25→### Putting it all together
         …
     controllers/
@@ -202,6 +189,16 @@ images/
     LibraryStreamSquare.png
     banner.svg
 index.js
+    1→const optionDefinitions = [
+    2→  { name: 'config', alias: 'c', type: String },
+    3→  { name: 'metadata', alias: 'm', type: String },
+    4→  { name: 'port', alias: 'p', type: String },
+    5→  { name: 'host', alias: 'h', type: String },
+    6→  { name: 'source', alias: 's', type: String },
+    7→  { name: 'dev', alias: 'd', type: Boolean },
+    8→  // Run in production mode and use dev.js config
+    9→  { name: 'prod-with-dev-env', alias: 'r', type: Boolean }
+    10→]
     13→const options = commandLineArgs(optionDefinitions)
     21→const isDev = process.env.NODE_ENV !== 'production'
     38→const inputConfig = options.config ? Path.resolve(options.config) : null
@@ -267,13 +264,11 @@ readme.md
     33→- Merge your audio files into a single m4b
     34→- Embed metadata and cover image into your audio files
     38→- Open RSS feeds for podcasts and audiobooks
-    40→Is there a feature you are looking for? [Suggest it](https://github.com/advplyr/audiobookshelf/issues/new/choose)
     42→Join us on [Discord](https://discord.gg/HQgCbd6E75)
     44→### Demo
     …
     50→### Android App (beta)
     …
-    52→Try it out on the [Google Play Store](https://play.google.com/store/apps/details?id=com.audiobookshelf.app)
     54→### iOS App (beta)
     …
     60→### Build your own tools & clients
@@ -299,8 +294,6 @@ readme.md
     …
     200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
     …
-    243→6. **Advanced Settings Tab**
-    244→   - Leave as is.
     246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)
     …
     258→### Example Caddyfile - [Caddy Reverse Proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)

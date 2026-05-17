@@ -50,23 +50,23 @@ Score(3000)=0.618 I=0.747 C=0.512 ns_rows≤3K=19/42 (reached=12 partial=0 missi
 | ns | 1232 |  | 66 | Architecture — Approach paragraph (DOM-as-truth) | 3.1 |  | 0.540 |
 | walker |  | 1234 | 17 | module item at cmdk/src/index.tsx:155 |  |  | 0.541 |
 | walker |  | 1252 | 18 | module item at cmdk/src/index.tsx:156 |  |  | 0.541 |
-| walker |  | 1279 | 27 | module item at cmdk/src/index.tsx:1004 |  |  | 0.541 |
-| walker |  | 1300 | 21 | module item at cmdk/src/index.tsx:158 |  |  | 0.542 |
-| walker |  | 1332 | 32 | module item at cmdk/src/index.tsx:149 |  |  | 0.542 |
+| walker |  | 1325 | 73 | module item at cmdk/src/index.tsx:930 |  |  | 0.542 |
 | ns | 1342 |  | 110 | index.tsx — module imports + 'use client' | 4.1 |  | 0.524 |
-| walker |  | 1357 | 25 | module item at cmdk/src/index.tsx:991 |  |  | 0.524 |
-| walker |  | 1384 | 27 | module item at cmdk/src/index.tsx:161 |  |  | 0.525 |
-| walker |  | 1451 | 67 | module item at cmdk/src/index.tsx:137 |  |  | 0.526 |
-| walker |  | 1516 | 65 | module item at cmdk/src/index.tsx:1071 |  |  | 0.526 |
-| ns | 1557 |  | 215 | index.tsx — public exports surface | 4.2 |  | 0.480 |
-| walker |  | 1600 | 84 | module item at cmdk/src/index.tsx:143 |  |  | 0.482 |
-| walker |  | 1676 | 76 | module item at cmdk/src/index.tsx:1010 |  |  | 0.482 |
-| ns | 1718 |  | 161 | index.tsx — every component declaration line | 4.3 |  | 0.467 |
-| walker |  | 1749 | 73 | module item at cmdk/src/index.tsx:930 |  |  | 0.477 |
-| walker |  | 1850 | 101 | export names surface #1 in cmdk/src/index.tsx |  |  | 0.538 |
-| ns | 1857 |  | 139 | index.tsx — data-attribute selectors + SELECT_EVENT | 4.4 |  | 0.554 |
-| walker |  | 2025 | 175 | module item at cmdk/src/index.tsx:123 |  |  | 0.561 |
-| walker |  | 2160 | 135 | module item at cmdk/src/index.tsx:1081 |  |  | 0.561 |
+| walker |  | 1352 | 27 | module item at cmdk/src/index.tsx:1004 |  |  | 0.524 |
+| walker |  | 1373 | 21 | module item at cmdk/src/index.tsx:158 |  |  | 0.525 |
+| walker |  | 1405 | 32 | module item at cmdk/src/index.tsx:149 |  |  | 0.525 |
+| walker |  | 1430 | 25 | module item at cmdk/src/index.tsx:991 |  |  | 0.525 |
+| walker |  | 1457 | 27 | module item at cmdk/src/index.tsx:161 |  |  | 0.526 |
+| ns | 1557 |  | 215 | index.tsx — public exports surface | 4.2 |  | 0.490 |
+| walker |  | 1592 | 135 | module item at cmdk/src/index.tsx:1081 |  |  | 0.490 |
+| walker |  | 1659 | 67 | module item at cmdk/src/index.tsx:137 |  |  | 0.491 |
+| ns | 1718 |  | 161 | index.tsx — every component declaration line | 4.3 |  | 0.476 |
+| walker |  | 1724 | 65 | module item at cmdk/src/index.tsx:1071 |  |  | 0.476 |
+| walker |  | 1808 | 84 | module item at cmdk/src/index.tsx:143 |  |  | 0.477 |
+| ns | 1857 |  | 139 | index.tsx — data-attribute selectors + SELECT_EVENT | 4.4 |  | 0.498 |
+| walker |  | 1884 | 76 | module item at cmdk/src/index.tsx:1010 |  |  | 0.498 |
+| walker |  | 1985 | 101 | export names surface #1 in cmdk/src/index.tsx |  |  | 0.554 |
+| walker |  | 2160 | 175 | module item at cmdk/src/index.tsx:123 |  |  | 0.561 |
 | ns | 2215 |  | 358 | index.tsx — internal type system (Context/State/Store) | 4.5 |  | 0.606 |
 | walker |  | 2428 | 268 | export names surface in cmdk/src/index.tsx |  |  | 0.658 |
 | walker |  | 2428 | 0 | export at cmdk/src/index.tsx:169 |  |  | 0.658 |

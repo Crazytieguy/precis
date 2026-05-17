@@ -1,7 +1,7 @@
 fixture = "tinyusb"
 budget = 10000
-cumulative_tokens = 9966
-batch_count = 233
+cumulative_tokens = 9991
+batch_count = 241
 
 [[batches]]
 position = 1
@@ -5765,10 +5765,98 @@ kind = "full"
 
 [[batches]]
 position = 203
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 104 })'
+descriptor = "c decl at src/class/hid/hid.h:104"
+cost_tokens = 13
+cum_tokens = 8396
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/hid/hid.h"
+start = 104
+end = 105
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/class/hid/hid.h"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 208 })'
+descriptor = "c decl at src/class/hid/hid.h:208"
+cost_tokens = 16
+cum_tokens = 8412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/hid/hid.h"
+start = 208
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/class/hid/hid.h"
+start = 242
+end = 242
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 205
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 104 })'
+descriptor = "c decl doc at src/class/hid/hid.h:104"
+cost_tokens = 9
+cum_tokens = 8421
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/hid/hid.h"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 208 })'
+descriptor = "c decl doc at src/class/hid/hid.h:208"
+cost_tokens = 11
+cum_tokens = 8432
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/hid/hid.h"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 207
 key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 145 })'
 descriptor = "c decl at src/class/hid/hid.h:145"
 cost_tokens = 38
-cum_tokens = 8421
+cum_tokens = 8470
 
 [batches.content]
 kind = "lines"
@@ -5782,11 +5870,11 @@ end = 149
 kind = "full"
 
 [[batches]]
-position = 204
+position = 208
 key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 145 })'
 descriptor = "c decl doc at src/class/hid/hid.h:145"
 cost_tokens = 16
-cum_tokens = 8437
+cum_tokens = 8486
 
 [batches.content]
 kind = "lines"
@@ -5800,11 +5888,11 @@ end = 144
 kind = "full"
 
 [[batches]]
-position = 205
+position = 209
 key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 61 })'
 descriptor = "c decl at src/class/hid/hid.h:61"
 cost_tokens = 51
-cum_tokens = 8488
+cum_tokens = 8537
 
 [batches.content]
 kind = "lines"
@@ -5818,11 +5906,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 206
+position = 210
 key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 61 })'
 descriptor = "c decl doc at src/class/hid/hid.h:61"
 cost_tokens = 9
-cum_tokens = 8497
+cum_tokens = 8546
 
 [batches.content]
 kind = "lines"
@@ -5836,11 +5924,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 207
+position = 211
 key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 84 })'
 descriptor = "c decl at src/class/hid/hid.h:84"
 cost_tokens = 67
-cum_tokens = 8564
+cum_tokens = 8613
 
 [batches.content]
 kind = "lines"
@@ -5854,11 +5942,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 208
+position = 212
 key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 84 })'
 descriptor = "c decl doc at src/class/hid/hid.h:84"
 cost_tokens = 10
-cum_tokens = 8574
+cum_tokens = 8623
 
 [batches.content]
 kind = "lines"
@@ -5872,11 +5960,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 209
+position = 213
 key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 68 })'
 descriptor = "c decl at src/class/hid/hid.h:68"
 cost_tokens = 68
-cum_tokens = 8642
+cum_tokens = 8691
 
 [batches.content]
 kind = "lines"
@@ -5890,11 +5978,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 210
+position = 214
 key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 68 })'
 descriptor = "c decl doc at src/class/hid/hid.h:68"
 cost_tokens = 9
-cum_tokens = 8651
+cum_tokens = 8700
 
 [batches.content]
 kind = "lines"
@@ -5908,11 +5996,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 211
+position = 215
 key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 76 })'
 descriptor = "c decl at src/class/hid/hid.h:76"
 cost_tokens = 74
-cum_tokens = 8725
+cum_tokens = 8774
 
 [batches.content]
 kind = "lines"
@@ -5926,11 +6014,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 212
+position = 216
 key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 76 })'
 descriptor = "c decl doc at src/class/hid/hid.h:76"
 cost_tokens = 9
-cum_tokens = 8734
+cum_tokens = 8783
 
 [batches.content]
 kind = "lines"
@@ -5944,11 +6032,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 213
+position = 217
 key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 246 })'
 descriptor = "c decl doc at src/class/hid/hid.h:246"
 cost_tokens = 42
-cum_tokens = 8776
+cum_tokens = 8825
 
 [batches.content]
 kind = "lines"
@@ -5962,11 +6050,11 @@ end = 245
 kind = "full"
 
 [[batches]]
-position = 214
+position = 218
 key = 'C(Decl { file: "src/class/hid/hid.h", start_line: 93 })'
 descriptor = "c decl at src/class/hid/hid.h:93"
 cost_tokens = 139
-cum_tokens = 8915
+cum_tokens = 8964
 
 [batches.content]
 kind = "lines"
@@ -5980,11 +6068,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 215
+position = 219
 key = 'C(DeclDoc { file: "src/class/hid/hid.h", start_line: 93 })'
 descriptor = "c decl doc at src/class/hid/hid.h:93"
 cost_tokens = 11
-cum_tokens = 8926
+cum_tokens = 8975
 
 [batches.content]
 kind = "lines"
@@ -5998,11 +6086,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 216
+position = 220
 key = 'Fs(DirListing { dir: "src/class/msc" })'
 descriptor = "listing of 'src/class/msc'"
 cost_tokens = 29
-cum_tokens = 8955
+cum_tokens = 9004
 
 [batches.content]
 kind = "fs"
@@ -6012,11 +6100,11 @@ parent = "src/class/msc"
 entries = ["msc.h", "msc_device.c", "msc_device.h", "msc_host.c", "msc_host.h"]
 
 [[batches]]
-position = 217
+position = 221
 key = 'C(Includes { file: "src/class/msc/msc_host.h" })'
 descriptor = "c includes in src/class/msc/msc_host.h"
 cost_tokens = 10
-cum_tokens = 8965
+cum_tokens = 9014
 
 [batches.content]
 kind = "lines"
@@ -6030,11 +6118,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 218
+position = 222
 key = 'C(Includes { file: "src/class/msc/msc.h" })'
 descriptor = "c includes in src/class/msc/msc.h"
 cost_tokens = 13
-cum_tokens = 8978
+cum_tokens = 9027
 
 [batches.content]
 kind = "lines"
@@ -6048,11 +6136,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 219
+position = 223
 key = 'C(Includes { file: "src/class/msc/msc_device.h" })'
 descriptor = "c includes in src/class/msc/msc_device.h"
 cost_tokens = 23
-cum_tokens = 9001
+cum_tokens = 9050
 
 [batches.content]
 kind = "lines"
@@ -6066,11 +6154,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 220
+position = 224
 key = 'C(DeclNames { file: "src/class/msc/msc.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/class/msc/msc.h"
 cost_tokens = 262
-cum_tokens = 9263
+cum_tokens = 9312
 
 [batches.content]
 kind = "lines"
@@ -6444,11 +6532,91 @@ end = 385
 kind = "ellipsis"
 
 [[batches]]
-position = 221
+position = 225
+key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 192 })'
+descriptor = "c decl at src/class/msc/msc.h:192"
+cost_tokens = 15
+cum_tokens = 9327
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/msc/msc.h"
+start = 192
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/class/msc/msc.h"
+start = 233
+end = 233
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'C(AggregateMemberGroup { file: "src/class/msc/msc.h", start_line: 192, group_start_line: 200 })'
+descriptor = "c aggregate member group at src/class/msc/msc.h:192 group 200"
+cost_tokens = 10
+cum_tokens = 9337
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/msc/msc.h"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'C(AggregateMemberGroup { file: "src/class/msc/msc.h", start_line: 192, group_start_line: 207 })'
+descriptor = "c aggregate member group at src/class/msc/msc.h:192 group 207"
+cost_tokens = 11
+cum_tokens = 9348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/msc/msc.h"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 228
+key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 192 })'
+descriptor = "c decl doc at src/class/msc/msc.h:192"
+cost_tokens = 11
+cum_tokens = 9359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/msc/msc.h"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 229
 key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 376 })'
 descriptor = "c decl at src/class/msc/msc.h:376"
 cost_tokens = 51
-cum_tokens = 9314
+cum_tokens = 9410
 
 [batches.content]
 kind = "lines"
@@ -6462,11 +6630,11 @@ end = 379
 kind = "full"
 
 [[batches]]
-position = 222
+position = 230
 key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 376 })'
 descriptor = "c decl doc at src/class/msc/msc.h:376"
 cost_tokens = 14
-cum_tokens = 9328
+cum_tokens = 9424
 
 [batches.content]
 kind = "lines"
@@ -6480,11 +6648,11 @@ end = 375
 kind = "full"
 
 [[batches]]
-position = 223
+position = 231
 key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 333 })'
 descriptor = "c decl at src/class/msc/msc.h:333"
 cost_tokens = 59
-cum_tokens = 9387
+cum_tokens = 9483
 
 [batches.content]
 kind = "lines"
@@ -6498,11 +6666,29 @@ end = 339
 kind = "full"
 
 [[batches]]
-position = 224
+position = 232
+key = 'C(AggregateMemberGroup { file: "src/class/msc/msc.h", start_line: 192, group_start_line: 197 })'
+descriptor = "c aggregate member group at src/class/msc/msc.h:192 group 197"
+cost_tokens = 29
+cum_tokens = 9512
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/msc/msc.h"
+start = 197
+end = 198
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 233
 key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 50 })'
 descriptor = "c decl at src/class/msc/msc.h:50"
 cost_tokens = 63
-cum_tokens = 9450
+cum_tokens = 9575
 
 [batches.content]
 kind = "lines"
@@ -6516,11 +6702,29 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 225
+position = 234
+key = 'C(AggregateMemberGroup { file: "src/class/msc/msc.h", start_line: 192, group_start_line: 194 })'
+descriptor = "c aggregate member group at src/class/msc/msc.h:192 group 194"
+cost_tokens = 33
+cum_tokens = 9608
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/class/msc/msc.h"
+start = 194
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
 key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 333 })'
 descriptor = "c decl doc at src/class/msc/msc.h:333"
 cost_tokens = 37
-cum_tokens = 9487
+cum_tokens = 9645
 
 [batches.content]
 kind = "lines"
@@ -6534,11 +6738,11 @@ end = 332
 kind = "full"
 
 [[batches]]
-position = 226
+position = 236
 key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 283 })'
 descriptor = "c decl at src/class/msc/msc.h:283"
 cost_tokens = 77
-cum_tokens = 9564
+cum_tokens = 9722
 
 [batches.content]
 kind = "lines"
@@ -6568,11 +6772,11 @@ end = 292
 kind = "full"
 
 [[batches]]
-position = 227
+position = 237
 key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 283 })'
 descriptor = "c decl doc at src/class/msc/msc.h:283"
 cost_tokens = 15
-cum_tokens = 9579
+cum_tokens = 9737
 
 [batches.content]
 kind = "lines"
@@ -6586,11 +6790,11 @@ end = 282
 kind = "full"
 
 [[batches]]
-position = 228
+position = 238
 key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 74 })'
 descriptor = "c decl at src/class/msc/msc.h:74"
 cost_tokens = 78
-cum_tokens = 9657
+cum_tokens = 9815
 
 [batches.content]
 kind = "lines"
@@ -6604,11 +6808,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 229
+position = 239
 key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 168 })'
 descriptor = "c decl at src/class/msc/msc.h:168"
 cost_tokens = 81
-cum_tokens = 9738
+cum_tokens = 9896
 
 [batches.content]
 kind = "lines"
@@ -6622,11 +6826,11 @@ end = 174
 kind = "full"
 
 [[batches]]
-position = 230
+position = 240
 key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 168 })'
 descriptor = "c decl doc at src/class/msc/msc.h:168"
 cost_tokens = 12
-cum_tokens = 9750
+cum_tokens = 9908
 
 [batches.content]
 kind = "lines"
@@ -6640,11 +6844,11 @@ end = 167
 kind = "full"
 
 [[batches]]
-position = 231
+position = 241
 key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 296 })'
 descriptor = "c decl at src/class/msc/msc.h:296"
 cost_tokens = 83
-cum_tokens = 9833
+cum_tokens = 9991
 
 [batches.content]
 kind = "lines"
@@ -6653,42 +6857,6 @@ kind = "lines"
 path = "src/class/msc/msc.h"
 start = 296
 end = 302
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 232
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 57 })'
-descriptor = "c decl at src/class/msc/msc.h:57"
-cost_tokens = 91
-cum_tokens = 9924
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 57
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 233
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 57 })'
-descriptor = "c decl doc at src/class/msc/msc.h:57"
-cost_tokens = 42
-cum_tokens = 9966
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 55
-end = 56
 
 [batches.content.spans.render]
 kind = "full"

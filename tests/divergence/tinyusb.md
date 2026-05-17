@@ -233,40 +233,48 @@ Score(3000)=0.565 I=0.756 C=0.422 ns_rows≤3K=13/35 (reached=3 partial=2 missin
 | ns | 8361 |  | 313 | examples/{device,host,dual} listings | 5.1 |  | 0.359 |
 | walker |  | 8383 | 354 | c decl names surface in src/class/hid/hid.h |  |  | 0.359 |
 | walker |  | 8383 | 0 | c decl at src/class/hid/hid.h:246 |  |  | 0.359 |
-| walker |  | 8421 | 38 | c decl at src/class/hid/hid.h:145 |  |  | 0.359 |
-| walker |  | 8437 | 16 | c decl doc at src/class/hid/hid.h:145 |  |  | 0.359 |
+| walker |  | 8396 | 13 | c decl at src/class/hid/hid.h:104 |  |  | 0.359 |
+| walker |  | 8412 | 16 | c decl at src/class/hid/hid.h:208 |  |  | 0.359 |
+| walker |  | 8421 | 9 | c decl doc at src/class/hid/hid.h:104 |  |  | 0.359 |
+| walker |  | 8432 | 11 | c decl doc at src/class/hid/hid.h:208 |  |  | 0.359 |
 | ns | 8446 |  | 85 | src/portable/ — MCU-vendor coverage | 5.2 |  | 0.353 |
-| walker |  | 8488 | 51 | c decl at src/class/hid/hid.h:61 |  |  | 0.353 |
-| walker |  | 8497 | 9 | c decl doc at src/class/hid/hid.h:61 |  |  | 0.353 |
-| walker |  | 8564 | 67 | c decl at src/class/hid/hid.h:84 |  |  | 0.353 |
-| walker |  | 8574 | 10 | c decl doc at src/class/hid/hid.h:84 |  |  | 0.353 |
-| walker |  | 8642 | 68 | c decl at src/class/hid/hid.h:68 |  |  | 0.353 |
-| walker |  | 8651 | 9 | c decl doc at src/class/hid/hid.h:68 |  |  | 0.353 |
-| walker |  | 8725 | 74 | c decl at src/class/hid/hid.h:76 |  |  | 0.353 |
-| walker |  | 8734 | 9 | c decl doc at src/class/hid/hid.h:76 |  |  | 0.353 |
-| walker |  | 8776 | 42 | c decl doc at src/class/hid/hid.h:246 |  |  | 0.353 |
-| walker |  | 8915 | 139 | c decl at src/class/hid/hid.h:93 |  |  | 0.353 |
-| walker |  | 8926 | 11 | c decl doc at src/class/hid/hid.h:93 |  |  | 0.353 |
+| walker |  | 8470 | 38 | c decl at src/class/hid/hid.h:145 |  |  | 0.353 |
+| walker |  | 8486 | 16 | c decl doc at src/class/hid/hid.h:145 |  |  | 0.353 |
+| walker |  | 8537 | 51 | c decl at src/class/hid/hid.h:61 |  |  | 0.353 |
+| walker |  | 8546 | 9 | c decl doc at src/class/hid/hid.h:61 |  |  | 0.353 |
+| walker |  | 8613 | 67 | c decl at src/class/hid/hid.h:84 |  |  | 0.353 |
+| walker |  | 8623 | 10 | c decl doc at src/class/hid/hid.h:84 |  |  | 0.353 |
+| walker |  | 8691 | 68 | c decl at src/class/hid/hid.h:68 |  |  | 0.353 |
+| walker |  | 8700 | 9 | c decl doc at src/class/hid/hid.h:68 |  |  | 0.353 |
+| walker |  | 8774 | 74 | c decl at src/class/hid/hid.h:76 |  |  | 0.353 |
+| walker |  | 8783 | 9 | c decl doc at src/class/hid/hid.h:76 |  |  | 0.353 |
+| walker |  | 8825 | 42 | c decl doc at src/class/hid/hid.h:246 |  |  | 0.353 |
 | ns | 8935 |  | 489 | hw/bsp/ board-family listing | 5.3 |  | 0.331 |
-| walker |  | 8955 | 29 | listing of 'src/class/msc' |  |  | 0.331 |
-| walker |  | 8965 | 10 | c includes in src/class/msc/msc_host.h |  |  | 0.331 |
-| walker |  | 8978 | 13 | c includes in src/class/msc/msc.h |  |  | 0.331 |
-| walker |  | 9001 | 23 | c includes in src/class/msc/msc_device.h |  |  | 0.331 |
+| walker |  | 8964 | 139 | c decl at src/class/hid/hid.h:93 |  |  | 0.331 |
+| walker |  | 8975 | 11 | c decl doc at src/class/hid/hid.h:93 |  |  | 0.331 |
+| walker |  | 9004 | 29 | listing of 'src/class/msc' |  |  | 0.331 |
+| walker |  | 9014 | 10 | c includes in src/class/msc/msc_host.h |  |  | 0.331 |
+| walker |  | 9027 | 13 | c includes in src/class/msc/msc.h |  |  | 0.331 |
+| walker |  | 9050 | 23 | c includes in src/class/msc/msc_device.h |  |  | 0.331 |
 | ns | 9075 |  | 140 | src/common + src/osal + src/typec listings | 5.4 |  | 0.327 |
 | ns | 9206 |  | 131 | test/ + tools/ + docs/reference/ listings | 5.5 |  | 0.326 |
-| walker |  | 9263 | 262 | c decl names surface in src/class/msc/msc.h |  |  | 0.326 |
-| walker |  | 9314 | 51 | c decl at src/class/msc/msc.h:376 |  |  | 0.326 |
-| walker |  | 9328 | 14 | c decl doc at src/class/msc/msc.h:376 |  |  | 0.326 |
-| walker |  | 9387 | 59 | c decl at src/class/msc/msc.h:333 |  |  | 0.326 |
-| walker |  | 9450 | 63 | c decl at src/class/msc/msc.h:50 |  |  | 0.326 |
-| walker |  | 9487 | 37 | c decl doc at src/class/msc/msc.h:333 |  |  | 0.326 |
-| walker |  | 9564 | 77 | c decl at src/class/msc/msc.h:283 |  |  | 0.326 |
-| walker |  | 9579 | 15 | c decl doc at src/class/msc/msc.h:283 |  |  | 0.326 |
+| walker |  | 9312 | 262 | c decl names surface in src/class/msc/msc.h |  |  | 0.326 |
+| walker |  | 9327 | 15 | c decl at src/class/msc/msc.h:192 |  |  | 0.326 |
+| walker |  | 9337 | 10 | c aggregate member group at src/class/msc/msc.h:192 group 200 |  |  | 0.326 |
+| walker |  | 9348 | 11 | c aggregate member group at src/class/msc/msc.h:192 group 207 |  |  | 0.326 |
+| walker |  | 9359 | 11 | c decl doc at src/class/msc/msc.h:192 |  |  | 0.326 |
+| walker |  | 9410 | 51 | c decl at src/class/msc/msc.h:376 |  |  | 0.326 |
+| walker |  | 9424 | 14 | c decl doc at src/class/msc/msc.h:376 |  |  | 0.326 |
+| walker |  | 9483 | 59 | c decl at src/class/msc/msc.h:333 |  |  | 0.326 |
+| walker |  | 9512 | 29 | c aggregate member group at src/class/msc/msc.h:192 group 197 |  |  | 0.326 |
+| walker |  | 9575 | 63 | c decl at src/class/msc/msc.h:50 |  |  | 0.326 |
+| walker |  | 9608 | 33 | c aggregate member group at src/class/msc/msc.h:192 group 194 |  |  | 0.326 |
 | ns | 9616 |  | 410 | USB transfer types — TinyUSB-context mapping | 5.6 |  | 0.320 |
-| walker |  | 9657 | 78 | c decl at src/class/msc/msc.h:74 |  |  | 0.320 |
-| walker |  | 9738 | 81 | c decl at src/class/msc/msc.h:168 |  |  | 0.320 |
-| walker |  | 9750 | 12 | c decl doc at src/class/msc/msc.h:168 |  |  | 0.320 |
-| walker |  | 9833 | 83 | c decl at src/class/msc/msc.h:296 |  |  | 0.320 |
+| walker |  | 9645 | 37 | c decl doc at src/class/msc/msc.h:333 |  |  | 0.320 |
+| walker |  | 9722 | 77 | c decl at src/class/msc/msc.h:283 |  |  | 0.320 |
+| walker |  | 9737 | 15 | c decl doc at src/class/msc/msc.h:283 |  |  | 0.320 |
+| walker |  | 9815 | 78 | c decl at src/class/msc/msc.h:74 |  |  | 0.320 |
 | ns | 9840 |  | 224 | AGENTS.md build + test recipe pointers | 5.7 |  | 0.317 |
-| walker |  | 9924 | 91 | c decl at src/class/msc/msc.h:57 |  |  | 0.317 |
-| walker |  | 9966 | 42 | c decl doc at src/class/msc/msc.h:57 |  |  | 0.317 |
+| walker |  | 9896 | 81 | c decl at src/class/msc/msc.h:168 |  |  | 0.317 |
+| walker |  | 9908 | 12 | c decl doc at src/class/msc/msc.h:168 |  |  | 0.317 |
+| walker |  | 9991 | 83 | c decl at src/class/msc/msc.h:296 |  |  | 0.317 |

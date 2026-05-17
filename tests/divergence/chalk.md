@@ -119,46 +119,46 @@ Score(3000)=0.562 I=0.801 C=0.394 ns_rows≤3K=18/46 (reached=7 partial=1 missin
 | walker |  | 5811 | 12 | module item at source/vendor/ansi-styles/index.js:1 |  |  | 0.505 |
 | ns | 5849 |  | 284 | ansi-styles: rgbToAnsi256 conversion | 4.7 |  | 0.491 |
 | walker |  | 6053 | 242 | plaintext config license |  |  | 0.491 |
-| walker |  | 6066 | 13 | module item at source/index.js:10 |  |  | 0.492 |
-| walker |  | 6079 | 13 | module item at source/index.js:12 |  |  | 0.492 |
-| walker |  | 6092 | 13 | module item at source/index.js:41 |  |  | 0.493 |
-| walker |  | 6106 | 14 | module item at source/index.js:119 |  |  | 0.494 |
-| ns | 6137 |  | 288 | ansi-styles: hexToRgb conversion | 4.8 |  | 0.480 |
-| walker |  | 6160 | 54 | export names surface in source/index.js |  |  | 0.485 |
-| walker |  | 6168 | 8 | export at source/index.js:34 |  |  | 0.486 |
-| walker |  | 6195 | 27 | export at source/index.js:220 |  |  | 0.489 |
-| walker |  | 6219 | 24 | export body at source/index.js:34 body 36 |  |  | 0.493 |
-| walker |  | 6234 | 15 | module item at source/index.js:11 |  |  | 0.494 |
-| walker |  | 6251 | 17 | module item at source/index.js:168 |  |  | 0.495 |
-| walker |  | 6269 | 18 | module item at source/index.js:24 |  |  | 0.497 |
-| walker |  | 6287 | 18 | module item at source/index.js:94 |  |  | 0.497 |
-| walker |  | 6337 | 50 | export body at source/vendor/supports-color/index.js:176 body 177 |  |  | 0.497 |
-| walker |  | 6357 | 20 | module item at source/index.js:8 |  |  | 0.499 |
-| walker |  | 6377 | 20 | module item at source/index.js:132 |  |  | 0.501 |
-| walker |  | 6404 | 27 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.501 |
-| walker |  | 6480 | 76 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.511 |
-| walker |  | 6508 | 28 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.511 |
-| walker |  | 6531 | 23 | module item at source/index.js:74 |  |  | 0.515 |
-| walker |  | 6554 | 23 | module item at source/index.js:152 |  |  | 0.518 |
-| walker |  | 6585 | 31 | module item at source/vendor/ansi-styles/index.js:3 |  |  | 0.519 |
-| ns | 6618 |  | 481 | ansi-styles: ansi256ToAnsi conversion | 4.9 |  | 0.495 |
-| walker |  | 6621 | 36 | module item at source/vendor/ansi-styles/index.js:5 |  |  | 0.497 |
-| walker |  | 6670 | 49 | module item at source/index.js:15 |  |  | 0.502 |
-| walker |  | 6719 | 49 | module item at source/vendor/ansi-styles/index.js:7 |  |  | 0.505 |
-| walker |  | 6767 | 48 | module item body at source/index.js:41 body 42 |  |  | 0.514 |
-| walker |  | 6803 | 36 | imports in source/vendor/supports-color/index.js |  |  | 0.514 |
-| ns | 6804 |  | 186 | ansi-styles: hexToAnsi256 / rgbToAnsi / hexToAnsi compositions | 4.10 |  | 0.505 |
-| walker |  | 6819 | 16 | imports in source/vendor/supports-color/index.d.ts |  |  | 0.505 |
-| walker |  | 6832 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.505 |
-| walker |  | 6927 | 95 | export names surface in source/vendor/supports-color/index.d.ts |  |  | 0.505 |
-| walker |  | 6927 | 0 | export at source/vendor/supports-color/index.d.ts:19 |  |  | 0.505 |
-| ns | 6957 |  | 153 | supports-color: helper signatures (locations) | 5.1 |  | 0.506 |
-| walker |  | 6989 | 62 | export at source/vendor/supports-color/index.d.ts:3 |  |  | 0.506 |
-| walker |  | 7127 | 138 | export at source/vendor/supports-color/index.d.ts:24 |  |  | 0.507 |
-| walker |  | 7148 | 21 | export doc at source/vendor/supports-color/index.d.ts:24 |  |  | 0.507 |
-| walker |  | 7224 | 76 | export doc at source/vendor/supports-color/index.d.ts:19 |  |  | 0.507 |
-| ns | 7270 |  | 313 | supports-color: flag + env force-color resolution | 5.2 | 5.1 | 0.493 |
-| walker |  | 7282 | 58 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.501 |
+| walker |  | 6102 | 49 | module item at source/index.js:15 |  |  | 0.497 |
+| walker |  | 6115 | 13 | module item at source/index.js:10 |  |  | 0.497 |
+| walker |  | 6128 | 13 | module item at source/index.js:12 |  |  | 0.498 |
+| ns | 6137 |  | 288 | ansi-styles: hexToRgb conversion | 4.8 |  | 0.484 |
+| walker |  | 6141 | 13 | module item at source/index.js:41 |  |  | 0.485 |
+| walker |  | 6155 | 14 | module item at source/index.js:119 |  |  | 0.485 |
+| walker |  | 6209 | 54 | export names surface in source/index.js |  |  | 0.490 |
+| walker |  | 6217 | 8 | export at source/index.js:34 |  |  | 0.491 |
+| walker |  | 6244 | 27 | export at source/index.js:220 |  |  | 0.495 |
+| walker |  | 6268 | 24 | export body at source/index.js:34 body 36 |  |  | 0.498 |
+| walker |  | 6283 | 15 | module item at source/index.js:11 |  |  | 0.499 |
+| walker |  | 6341 | 58 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.499 |
+| walker |  | 6358 | 17 | module item at source/index.js:168 |  |  | 0.500 |
+| walker |  | 6376 | 18 | module item at source/index.js:24 |  |  | 0.503 |
+| walker |  | 6394 | 18 | module item at source/index.js:94 |  |  | 0.503 |
+| walker |  | 6444 | 50 | export body at source/vendor/supports-color/index.js:176 body 177 |  |  | 0.503 |
+| walker |  | 6464 | 20 | module item at source/index.js:8 |  |  | 0.504 |
+| walker |  | 6484 | 20 | module item at source/index.js:132 |  |  | 0.507 |
+| walker |  | 6511 | 27 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.507 |
+| walker |  | 6587 | 76 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.517 |
+| walker |  | 6615 | 28 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.517 |
+| ns | 6618 |  | 481 | ansi-styles: ansi256ToAnsi conversion | 4.9 |  | 0.493 |
+| walker |  | 6638 | 23 | module item at source/index.js:74 |  |  | 0.496 |
+| walker |  | 6661 | 23 | module item at source/index.js:152 |  |  | 0.500 |
+| walker |  | 6692 | 31 | module item at source/vendor/ansi-styles/index.js:3 |  |  | 0.501 |
+| walker |  | 6728 | 36 | module item at source/vendor/ansi-styles/index.js:5 |  |  | 0.502 |
+| walker |  | 6777 | 49 | module item at source/vendor/ansi-styles/index.js:7 |  |  | 0.505 |
+| ns | 6804 |  | 186 | ansi-styles: hexToAnsi256 / rgbToAnsi / hexToAnsi compositions | 4.10 |  | 0.497 |
+| walker |  | 6825 | 48 | module item body at source/index.js:41 body 42 |  |  | 0.506 |
+| walker |  | 6861 | 36 | imports in source/vendor/supports-color/index.js |  |  | 0.506 |
+| walker |  | 6877 | 16 | imports in source/vendor/supports-color/index.d.ts |  |  | 0.506 |
+| walker |  | 6890 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.506 |
+| ns | 6957 |  | 153 | supports-color: helper signatures (locations) | 5.1 |  | 0.514 |
+| walker |  | 6985 | 95 | export names surface in source/vendor/supports-color/index.d.ts |  |  | 0.514 |
+| walker |  | 6985 | 0 | export at source/vendor/supports-color/index.d.ts:19 |  |  | 0.514 |
+| walker |  | 7047 | 62 | export at source/vendor/supports-color/index.d.ts:3 |  |  | 0.514 |
+| walker |  | 7185 | 138 | export at source/vendor/supports-color/index.d.ts:24 |  |  | 0.515 |
+| walker |  | 7206 | 21 | export doc at source/vendor/supports-color/index.d.ts:24 |  |  | 0.516 |
+| ns | 7270 |  | 313 | supports-color: flag + env force-color resolution | 5.2 | 5.1 | 0.501 |
+| walker |  | 7282 | 76 | export doc at source/vendor/supports-color/index.d.ts:19 |  |  | 0.501 |
 | walker |  | 7358 | 76 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.501 |
 | walker |  | 7438 | 80 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.502 |
 | ns | 7445 |  | 175 | supports-color: hasFlag + translateLevel | 5.3 | 5.1 | 0.512 |

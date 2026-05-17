@@ -20,33 +20,10 @@ README.md
     …
     180→## About the Author
     …
-    182→I'm Rui Ueyama. I'm the creator of [8cc](https://github.com/rui314/8cc),
-    183→which is a hobby C compiler, and also the original creator of the current
-    184→version of [LLVM lld](https://lld.llvm.org) linker, which is a
-    185→production-quality linker used by various operating systems and large-scale
-    186→build systems.
     188→## References
     …
 chibicc.h
     1→#define _POSIX_C_SOURCE 200809L
-    2→#include <assert.h>
-    3→#include <ctype.h>
-    4→#include <errno.h>
-    5→#include <glob.h>
-    6→#include <libgen.h>
-    7→#include <stdarg.h>
-    8→#include <stdbool.h>
-    9→#include <stdint.h>
-    10→#include <stdio.h>
-    11→#include <stdlib.h>
-    12→#include <stdnoreturn.h>
-    13→#include <string.h>
-    14→#include <strings.h>
-    15→#include <sys/stat.h>
-    16→#include <sys/types.h>
-    17→#include <sys/wait.h>
-    18→#include <time.h>
-    19→#include <unistd.h>
     21→#define MAX(x, y) ((x) < (y) ? (y) : (x))
     22→#define MIN(x, y) ((x) < (y) ? (x) : (y))
     …
@@ -167,10 +144,61 @@ chibicc.h
     171→  char **label;
     172→  long addend;
     173→};
+    175→// AST node
     176→typedef enum {
     …
+    225→} NodeKind;
+    227→// AST node type
     228→struct Node {
-    …
+    229→  NodeKind kind; // Node kind
+    230→  Node *next;    // Next node
+    231→  Type *ty;      // Type, e.g. int or pointer to int
+    232→  Token *tok;    // Representative token
+    234→  Node *lhs;     // Left-hand side
+    235→  Node *rhs;     // Right-hand side
+    237→  // "if" or "for" statement
+    238→  Node *cond;
+    239→  Node *then;
+    240→  Node *els;
+    241→  Node *init;
+    242→  Node *inc;
+    244→  // "break" and "continue" labels
+    245→  char *brk_label;
+    246→  char *cont_label;
+    248→  // Block or statement expression
+    249→  Node *body;
+    251→  // Struct member access
+    252→  Member *member;
+    254→  // Function call
+    255→  Type *func_ty;
+    256→  Node *args;
+    257→  bool pass_by_stack;
+    258→  Obj *ret_buffer;
+    260→  // Goto or labeled statement, or labels-as-values
+    261→  char *label;
+    262→  char *unique_label;
+    263→  Node *goto_next;
+    265→  // Switch
+    266→  Node *case_next;
+    267→  Node *default_case;
+    269→  // Case
+    270→  long begin;
+    271→  long end;
+    273→  // "asm" string literal
+    274→  char *asm_str;
+    276→  // Atomic compare-and-swap
+    277→  Node *cas_addr;
+    278→  Node *cas_old;
+    279→  Node *cas_new;
+    281→  // Atomic op= operators
+    282→  Obj *atomic_addr;
+    283→  Node *atomic_expr;
+    285→  // Variable
+    286→  Obj *var;
+    288→  // Numeric literal
+    289→  int64_t val;
+    290→  long double fval;
+    291→};
     293→Node *new_cast(Node *expr, Type *ty);
     294→int64_t const_expr(Token **rest, Token *tok);
     295→Obj *parse(Token *tok);
@@ -194,7 +222,30 @@ chibicc.h
     317→  TY_UNION,
     318→} TypeKind;
     320→struct Type {
-    …
+    321→  TypeKind kind;
+    322→  int size;           // sizeof() value
+    323→  int align;          // alignment
+    324→  bool is_unsigned;   // unsigned or signed
+    325→  bool is_atomic;     // true if _Atomic
+    326→  Type *origin;       // for type compatibility check
+    338→  // Declaration
+    339→  Token *name;
+    340→  Token *name_pos;
+    342→  // Array
+    343→  int array_len;
+    345→  // Variable-length array
+    346→  Node *vla_len; // # of elements
+    347→  Obj *vla_size; // sizeof() value
+    349→  // Struct
+    350→  Member *members;
+    351→  bool is_flexible;
+    352→  bool is_packed;
+    354→  // Function type
+    355→  Type *return_ty;
+    356→  Type *params;
+    357→  bool is_variadic;
+    358→  Type *next;
+    359→};
     361→// Struct member
     362→struct Member {
     363→  Member *next;
@@ -212,38 +263,8 @@ chibicc.h
     377→extern Type *ty_void;
     378→extern Type *ty_bool;
     …
-    380→extern Type *ty_char;
-    381→extern Type *ty_short;
-    382→extern Type *ty_int;
-    383→extern Type *ty_long;
-    …
-    385→extern Type *ty_uchar;
-    386→extern Type *ty_ushort;
-    387→extern Type *ty_uint;
-    388→extern Type *ty_ulong;
-    …
-    390→extern Type *ty_float;
-    391→extern Type *ty_double;
-    392→extern Type *ty_ldouble;
-    …
-    394→bool is_integer(Type *ty);
-    395→bool is_flonum(Type *ty);
-    396→bool is_numeric(Type *ty);
-    397→bool is_compatible(Type *t1, Type *t2);
-    398→Type *copy_type(Type *ty);
-    399→Type *pointer_to(Type *base);
-    400→Type *func_type(Type *return_ty);
-    401→Type *array_of(Type *base, int size);
-    402→Type *vla_of(Type *base, Node *expr);
-    403→Type *enum_type(void);
-    404→Type *struct_type(void);
-    405→void add_type(Node *node);
-    …
-    411→void codegen(Obj *prog, FILE *out);
 codegen.c
-    1→#include "chibicc.h"
 hashmap.c
-    3→#include "chibicc.h"
 include/
     float.h
     stdalign.h
@@ -255,23 +276,16 @@ include/
         4→#define noreturn _Noreturn
         …
 main.c
-    1→#include "chibicc.h"
 parse.c
-    19→#include "chibicc.h"
 preprocess.c
-    25→#include "chibicc.h"
 strings.c
-    1→#include "chibicc.h"
     3→void strarray_push(StringArray *arr, char *s) {
     …
     20→char *format(char *fmt, ...) {
     …
 test/
 tokenize.c
-    1→#include "chibicc.h"
 type.c
-    1→#include "chibicc.h"
     176→void add_type(Node *node) {
     …
 unicode.c
-    1→#include "chibicc.h"

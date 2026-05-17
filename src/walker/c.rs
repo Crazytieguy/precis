@@ -20,6 +20,12 @@
 //!   a decl. Predecessor: matching `Decl`.
 //! - `DeclBody { file, start_line }`: body interior of a function
 //!   definition. Predecessor: matching `Decl`.
+//! - `AggregateMemberGroup { file, start_line, group_start_line }`:
+//!   per-field-group split for big struct/union bodies (≥3 blank-line
+//!   groups) and per-chunk split for big enum bodies
+//!   (≥`AGGREGATE_ENUM_CHUNK_MIN` enumerators). Predecessor: matching
+//!   `Decl`. When emitted, the parent `Decl` covers only the type
+//!   header + closing brace so the two render disjoint body rows.
 //!
 //! Public-vs-private rule:
 //! - `.c` files: top-level `static` items are excluded (file-private).
@@ -192,10 +198,10 @@ fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
 }
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above_bounded, dedup_sorted,
-    extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_any_extension,
-    node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
-    trim_end_before_next_decl,
+    FileLines, WalkCtx, build_per_file_content, collect_blank_line_groups,
+    collect_doc_comments_above_bounded, dedup_sorted, extend_span, file_depth_factor,
+    file_lines_covered_by, fs::files_with_any_extension, node_end_row_trimmed, push_rows,
+    signature_end_row, single_file_lines_content, trim_end_before_next_decl,
 };
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -366,6 +372,26 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     });
                 }
             }
+            // Per-group / per-chunk batches for big aggregate bodies.
+            // Sibling of `DeclDoc` under the same `Decl` predecessor;
+            // the parent `Decl`'s span was trimmed in `collect_decl` to
+            // the type header + closer so the group rows don't overlap.
+            for group in &info.member_groups {
+                let lines = FileLines::new(group.rows.clone());
+                if let Some(content) = single_file_lines_content(file, &source, lines) {
+                    out.push(Batch {
+                        key: CKey::AggregateMemberGroup {
+                            file: file.clone(),
+                            start_line: info.start_line,
+                            group_start_line: group.group_start_line,
+                        }
+                        .into(),
+                        predecessor: Some(decl_predecessor.clone()),
+                        content,
+                        value: aggregate_member_group_value(file, info.kind, ctx),
+                    });
+                }
+            }
         }
     }
 
@@ -410,12 +436,27 @@ impl DeclKind {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 struct DeclInfo {
     start_line: usize,
     kind: DeclKind,
     /// True for `function_definition` only — gates `DeclBody` emission.
     has_body: bool,
+    /// Per-group/per-chunk member-batches for big aggregates. Empty when
+    /// the decl isn't a chunk-eligible struct/union/enum. When non-empty,
+    /// the parent `Decl` is trimmed to the type header + closing brace so
+    /// each group renders disjoint body rows.
+    member_groups: Vec<AggregateMemberGroup>,
+}
+
+/// One chunk of a big aggregate body. Used for both blank-line-separated
+/// struct/union field groups and sized enum-body chunks.
+#[derive(Debug, Clone)]
+struct AggregateMemberGroup {
+    /// 1-based start line of the first row in the group.
+    group_start_line: usize,
+    /// All 1-based row numbers covered by this group.
+    rows: Vec<usize>,
 }
 
 /// All public top-level decls in `file`'s tree, in source order, paired
@@ -608,7 +649,7 @@ fn is_header_guard(ifdef: Node, source: &str) -> bool {
 /// `static` items in `.c` files, etc.).
 fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> {
     let start_line = node.start_position().row + 1;
-    match node.kind() {
+    let (kind, has_body) = match node.kind() {
         "function_definition" => {
             let static_ = has_static_specifier(node, source);
             let inline = has_inline_specifier(node, source);
@@ -617,11 +658,7 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
             if static_ && !(in_header && inline) {
                 return None;
             }
-            Some(DeclInfo {
-                start_line,
-                kind: DeclKind::FunctionDef,
-                has_body: true,
-            })
+            (DeclKind::FunctionDef, true)
         }
         "declaration" => {
             if has_static_specifier(node, source) {
@@ -634,45 +671,164 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
             } else {
                 DeclKind::Variable
             };
-            Some(DeclInfo {
-                start_line,
-                kind,
-                has_body: false,
-            })
+            (kind, false)
         }
-        "type_definition" => Some(DeclInfo {
-            start_line,
-            kind: DeclKind::Typedef,
-            has_body: false,
-        }),
+        "type_definition" => (DeclKind::Typedef, false),
         // Tree-sitter-c parses a top-level bare `struct foo { … };`
         // (no declarator) as a `struct_specifier` followed by a `;`
         // token rather than wrapping them in a `declaration`. Surface
         // the specifier itself.
-        "struct_specifier" | "union_specifier" | "enum_specifier" => Some(DeclInfo {
-            start_line,
-            kind: DeclKind::Aggregate,
-            has_body: false,
-        }),
+        "struct_specifier" | "union_specifier" | "enum_specifier" => (DeclKind::Aggregate, false),
         "preproc_def" => {
             // Skip the header-guard's own `#define X` — it's part of
             // the guard envelope, not a public macro.
             if is_header_guard_define(node, source) {
                 return None;
             }
-            Some(DeclInfo {
-                start_line,
-                kind: DeclKind::Macro,
-                has_body: false,
-            })
+            (DeclKind::Macro, false)
         }
-        "preproc_function_def" => Some(DeclInfo {
-            start_line,
-            kind: DeclKind::MacroFn,
-            has_body: false,
-        }),
+        "preproc_function_def" => (DeclKind::MacroFn, false),
+        _ => return None,
+    };
+    let member_groups = if matches!(kind, DeclKind::Aggregate | DeclKind::Typedef) {
+        find_aggregate_body(node)
+            .map(|body| collect_aggregate_member_groups(body, source))
+            .unwrap_or_default()
+    } else {
+        Vec::new()
+    };
+    Some(DeclInfo {
+        start_line,
+        kind,
+        has_body,
+        member_groups,
+    })
+}
+
+/// Minimum source-line span (closing brace minus opening brace) for a
+/// struct/union body to be eligible for blank-line field-group chunking.
+/// Below this, the unchunked aggregate fits cheaply at any reasonable
+/// budget and splitting adds scheduling churn without payoff.
+const AGGREGATE_STRUCT_MIN_LINES: usize = 30;
+
+/// Minimum number of blank-line-separated field groups required for
+/// struct/union chunking. A two-group struct's groups are roughly half
+/// the struct each — the parent Decl is already cheap to schedule.
+const AGGREGATE_STRUCT_MIN_GROUPS: usize = 3;
+
+/// Minimum number of enumerators required for enum chunking. Below
+/// this the whole enum is small enough that splitting adds scheduling
+/// churn for no benefit (a 16-row enum already fits in a 3K budget as
+/// a single `Decl`). chibicc.h's `NodeKind` (49 enumerators) and
+/// `TypeKind` (16) anchor this threshold: NodeKind is the canonical
+/// chunk target; TypeKind stays whole.
+const AGGREGATE_ENUM_CHUNK_MIN: usize = 32;
+
+/// Chunk size for big enum bodies. Roughly matches the inner-row
+/// granularity of NS atoms — a typical NS author rows like "ND_ADD
+/// through ND_SHR (arithmetic / bit ops)" cover 10–14 enumerators.
+const AGGREGATE_ENUM_CHUNK_SIZE: usize = 12;
+
+/// Locate the body node of a top-level aggregate decl. Handles:
+/// - bare `struct_specifier` / `union_specifier` / `enum_specifier`,
+/// - `declaration` whose type_specifier is one of the above,
+/// - `type_definition` (`typedef struct { … } X;`).
+///
+/// Returns the inner `field_declaration_list` (struct/union) or
+/// `enumerator_list` (enum); `None` for forward declarations and
+/// any decl shape without an inner body.
+fn find_aggregate_body(node: Node) -> Option<Node> {
+    fn spec_body(spec: Node) -> Option<Node> {
+        match spec.kind() {
+            "struct_specifier" | "union_specifier" => {
+                let body = spec.child_by_field_name("body")?;
+                (body.kind() == "field_declaration_list").then_some(body)
+            }
+            "enum_specifier" => {
+                let body = spec.child_by_field_name("body")?;
+                (body.kind() == "enumerator_list").then_some(body)
+            }
+            _ => None,
+        }
+    }
+    match node.kind() {
+        "struct_specifier" | "union_specifier" | "enum_specifier" => spec_body(node),
+        "declaration" | "type_definition" => {
+            let mut cursor = node.walk();
+            node.children(&mut cursor).find_map(spec_body)
+        }
         _ => None,
     }
+}
+
+/// Decompose an aggregate body into chunks. Struct/union bodies split
+/// on blank lines (each non-empty run is a group); enum bodies split
+/// into fixed-size chunks. Returns an empty vec when the body is too
+/// small to be worth chunking.
+fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
+    let body_start = body.start_position().row;
+    let body_end = body.end_position().row;
+    if body_end <= body_start + 1 {
+        return Vec::new();
+    }
+    match body.kind() {
+        "field_declaration_list" => {
+            if body_end.saturating_sub(body_start) + 1 < AGGREGATE_STRUCT_MIN_LINES {
+                return Vec::new();
+            }
+            let groups = collect_struct_blank_line_groups(body, source);
+            if groups.len() < AGGREGATE_STRUCT_MIN_GROUPS {
+                return Vec::new();
+            }
+            groups
+        }
+        "enumerator_list" => collect_enum_chunks(body),
+        _ => Vec::new(),
+    }
+}
+
+/// Blank-line-separated field groups for a struct/union body, as
+/// `AggregateMemberGroup`s. Wraps the shared
+/// [`collect_blank_line_groups`] helper.
+fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
+    collect_blank_line_groups(body, source)
+        .into_iter()
+        .map(|(group_start_line, rows)| AggregateMemberGroup {
+            group_start_line,
+            rows,
+        })
+        .collect()
+}
+
+/// Split an enum body into fixed-size enumerator chunks. Each chunk's
+/// `rows` covers every 1-based source row the chunked enumerators
+/// occupy, including continuation rows of multi-line enumerators
+/// (`FOO = (1 << 20)\n  | (1 << 21),`). Returns an empty vec when the
+/// enum has fewer than `AGGREGATE_ENUM_CHUNK_MIN` enumerators (small
+/// enums stay as a single `Decl`).
+fn collect_enum_chunks(body: Node) -> Vec<AggregateMemberGroup> {
+    let mut cursor = body.walk();
+    let enumerator_spans: Vec<(usize, usize)> = body
+        .named_children(&mut cursor)
+        .filter(|c| c.kind() == "enumerator")
+        .map(|c| (c.start_position().row, c.end_position().row))
+        .collect();
+    if enumerator_spans.len() < AGGREGATE_ENUM_CHUNK_MIN {
+        return Vec::new();
+    }
+    enumerator_spans
+        .chunks(AGGREGATE_ENUM_CHUNK_SIZE)
+        .map(|chunk| {
+            let mut rows = Vec::new();
+            for (start, end) in chunk {
+                push_rows(&mut rows, *start, *end);
+            }
+            AggregateMemberGroup {
+                group_start_line: chunk[0].0 + 1,
+                rows,
+            }
+        })
+        .collect()
 }
 
 /// Is this `#define X` the back-half of a `#ifndef X` / `#define X`
@@ -978,6 +1134,18 @@ fn decl_body_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, fu, 0.7, c_depth_factor(file, ctx))
 }
 
+/// Value for one slice of a chunked struct/union/enum body. Calibrated
+/// lower than `decl_value` for a whole-Aggregate Decl — each group is
+/// one section of the aggregate's identity, not the entire type — so
+/// the scheduler still favours unchunked anchors in load-bearing files
+/// over a blanket per-group sweep.
+fn aggregate_member_group_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
+    let k = kind.kind_weight();
+    let cat = (0.45 * k * header_cat_factor(file)).min(1.0);
+    let fu = (0.75 * k * body_fu_factor(file)).min(1.0);
+    mix_signals(cat, fu, 0.45, c_depth_factor(file, ctx))
+}
+
 fn init_table_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Modest value: NS authors rank registration tables in tier 2.5+
     // (typically NS_cum > 3K), so a high value just displaces tier-1
@@ -1171,7 +1339,10 @@ fn ellipsis_line_safe(line: usize, src_lines: &[&str]) -> bool {
 /// signature with a body-elision marker (only when the body has interior
 /// rows to elide). For prototypes / typedefs / variables / `#define`s,
 /// the whole statement. For struct / union / enum at top level, the
-/// whole specifier.
+/// whole specifier — except when the decl is chunked into per-member
+/// groups (`info.member_groups` non-empty), in which case the parent
+/// `Decl` covers only the type header + closing brace so the member
+/// groups own the body rows.
 ///
 /// `all_starts` is the set of 1-based `start_line`s of every sibling decl
 /// in this translation unit (including this decl's own). Spans are
@@ -1218,7 +1389,28 @@ fn collect_decl(
                 start_row,
                 all_starts,
             );
-            push_rows(&mut full, start_row, end_row);
+            if !info.member_groups.is_empty()
+                && let Some(body) = find_aggregate_body(node)
+            {
+                // Chunked aggregate: keep the type header (start_row
+                // through the body's opening line), the body's closing
+                // brace line, and any trailing rows after the body (the
+                // `;` line of a `struct foo { … };` is usually the same
+                // as the closing-brace line for a bare specifier; for a
+                // `typedef … { … } Name;` shape the typedef name lives
+                // there).
+                let body_start = body.start_position().row;
+                let body_end = body.end_position().row;
+                push_rows(&mut full, start_row, body_start);
+                if body_end > body_start && body_end <= end_row {
+                    full.push(body_end + 1);
+                }
+                if end_row > body_end {
+                    push_rows(&mut full, body_end + 1, end_row);
+                }
+            } else {
+                push_rows(&mut full, start_row, end_row);
+            }
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
@@ -1591,7 +1783,7 @@ sds sdsnewlen(const void *init, size_t initlen) { return 0; }
                 DeclKind::FunctionDef,
             ],
             "decl kinds mismatch; got {:?}\nsource:\n{src}",
-            decls.iter().map(|(_, d)| *d).collect::<Vec<_>>()
+            decls.iter().map(|(_, d)| d.kind).collect::<Vec<_>>()
         );
     }
 
@@ -1903,6 +2095,177 @@ typedef int x;
         assert!(parse_include_headers(tmp.path()).is_none());
         std::fs::write(tmp.path().join("Makefile.am"), "AM_CFLAGS = -Wall\n").expect("write");
         assert!(parse_include_headers(tmp.path()).is_none());
+    }
+
+    #[test]
+    fn c_aggregate_struct_with_three_blank_line_groups_chunks() {
+        // chibicc-style: large struct with ≥3 blank-line-separated field
+        // groups. Each group becomes an AggregateMemberGroup; the parent
+        // Decl is trimmed to the header + closer so the two render
+        // disjoint body rows.
+        let mut src = String::from("struct Obj {\n");
+        for i in 0..10 {
+            src.push_str(&format!("  int field_a_{i};\n"));
+        }
+        src.push('\n');
+        for i in 0..10 {
+            src.push_str(&format!("  int field_b_{i};\n"));
+        }
+        src.push('\n');
+        for i in 0..10 {
+            src.push_str(&format!("  int field_c_{i};\n"));
+        }
+        src.push_str("};\n");
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("obj.h"), &src).unwrap();
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
+        let report = scheduler.run_with_report();
+        let group_count = report
+            .scheduled
+            .iter()
+            .filter(|r| matches!(&r.key, BatchKey::C(CKey::AggregateMemberGroup { .. })))
+            .count();
+        assert_eq!(
+            group_count,
+            3,
+            "expected 3 AggregateMemberGroup batches; keys: {:?}",
+            report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>(),
+        );
+    }
+
+    #[test]
+    fn c_aggregate_struct_with_two_groups_stays_whole() {
+        // Two-group struct: below the chunking threshold (3 groups),
+        // emitted as a single whole-aggregate Decl.
+        let mut src = String::from("struct Pair {\n");
+        for i in 0..20 {
+            src.push_str(&format!("  int a_{i};\n"));
+        }
+        src.push('\n');
+        for i in 0..20 {
+            src.push_str(&format!("  int b_{i};\n"));
+        }
+        src.push_str("};\n");
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("pair.h"), &src).unwrap();
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
+        let report = scheduler.run_with_report();
+        let has_group = report
+            .scheduled
+            .iter()
+            .any(|r| matches!(&r.key, BatchKey::C(CKey::AggregateMemberGroup { .. })));
+        assert!(
+            !has_group,
+            "two-group struct must not chunk; keys: {:?}",
+            report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>(),
+        );
+    }
+
+    #[test]
+    fn c_aggregate_big_enum_chunks_into_fixed_size_groups() {
+        // chibicc-style NodeKind: 49 enumerators. The enum body splits
+        // into AGGREGATE_ENUM_CHUNK_SIZE-sized chunks.
+        let mut src = String::from("typedef enum {\n");
+        for i in 0..40 {
+            src.push_str(&format!("  ND_{i},\n"));
+        }
+        src.push_str("} NodeKind;\n");
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("nodekind.h"), &src).unwrap();
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
+        let report = scheduler.run_with_report();
+        let group_count = report
+            .scheduled
+            .iter()
+            .filter(|r| matches!(&r.key, BatchKey::C(CKey::AggregateMemberGroup { .. })))
+            .count();
+        let expected = 40_usize.div_ceil(AGGREGATE_ENUM_CHUNK_SIZE);
+        assert_eq!(
+            group_count, expected,
+            "expected {expected} enum chunks for 40 enumerators at chunk size {AGGREGATE_ENUM_CHUNK_SIZE}",
+        );
+    }
+
+    #[test]
+    fn c_aggregate_big_enum_preserves_multiline_enumerator_rows() {
+        // Multi-line enumerator values (`FOO = (1 << 20)\n  | (1 << 21),`)
+        // must contribute every row to the chunk that owns them — the
+        // trimmed parent Decl no longer covers them, so dropping
+        // continuation rows would silently truncate the enum.
+        let mut src = String::from("typedef enum {\n");
+        for i in 0..(AGGREGATE_ENUM_CHUNK_MIN + 2) {
+            // Every other enumerator has a multi-line value.
+            if i % 2 == 0 {
+                src.push_str(&format!(
+                    "  K_{i} = (1 << {i})\n         | (1 << {}),\n",
+                    i + 1
+                ));
+            } else {
+                src.push_str(&format!("  K_{i},\n"));
+            }
+        }
+        src.push_str("} Multi;\n");
+        let (source, tree) = parse(&src);
+        let decls = find_decls(&tree, &source, std::path::Path::new("multi.h"));
+        let enum_decl = decls
+            .iter()
+            .find(|(_, d)| d.kind == DeclKind::Typedef && !d.member_groups.is_empty())
+            .expect("multi-line enum should be chunked");
+        let mut all_rows: Vec<usize> = Vec::new();
+        for group in &enum_decl.1.member_groups {
+            all_rows.extend(&group.rows);
+        }
+        all_rows.sort();
+        all_rows.dedup();
+        // Continuation rows: enumerator i (even) starts at line 2+2i and
+        // ends at 2+2i+1. Every row between body open and close should
+        // appear in some group.
+        let multiline_continuations: Vec<usize> = (0..(AGGREGATE_ENUM_CHUNK_MIN + 2))
+            .filter(|i| i % 2 == 0)
+            .map(|i| {
+                // Lines are 1-based; the typedef header is line 1, first
+                // enumerator starts at line 2. Each multi-line enumerator
+                // before this one consumed 2 lines, each single-line one
+                // consumed 1. K_i starts at: 2 + sum over j<i of (j%2==0 ? 2 : 1).
+                let prev_lines: usize = (0..i).map(|j| if j % 2 == 0 { 2 } else { 1 }).sum();
+                // continuation row = first row + 1.
+                2 + prev_lines + 1
+            })
+            .collect();
+        for cont in &multiline_continuations {
+            assert!(
+                all_rows.contains(cont),
+                "continuation row {cont} missing from chunked rows {all_rows:?}",
+            );
+        }
+    }
+
+    #[test]
+    fn c_aggregate_small_enum_stays_whole() {
+        // Below AGGREGATE_ENUM_CHUNK_MIN enumerators: a single whole-Decl
+        // batch with no chunking.
+        let mut src = String::from("typedef enum {\n");
+        for i in 0..(AGGREGATE_ENUM_CHUNK_MIN - 1) {
+            src.push_str(&format!("  K_{i},\n"));
+        }
+        src.push_str("} SmallKind;\n");
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("small.h"), &src).unwrap();
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
+        let report = scheduler.run_with_report();
+        let has_group = report
+            .scheduled
+            .iter()
+            .any(|r| matches!(&r.key, BatchKey::C(CKey::AggregateMemberGroup { .. })));
+        assert!(
+            !has_group,
+            "small enum must not chunk; keys: {:?}",
+            report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>(),
+        );
     }
 
     /// `+=` appends and `$(VAR)` expansions would leave an incomplete
