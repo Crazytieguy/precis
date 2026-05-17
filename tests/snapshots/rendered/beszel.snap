@@ -11,6 +11,137 @@ LICENSE
 Makefile
 SECURITY.md
 agent/
+    agent.go
+    agent_cache.go
+    agent_cache_test.go
+    agent_test_helpers.go
+        3→package agent
+        5→// TESTING ONLY: GetConnectionManager is a helper function to get the connection manager for testing.
+        6→func (a *Agent) GetConnectionManager() *ConnectionManager {
+        7→	return a.connectionManager
+    battery/
+        battery.go
+            2→package battery
+            4→const (
+            5→	stateUnknown uint8 = iota
+            6→	stateEmpty
+            7→	stateFull
+            8→	stateCharging
+            9→	stateDischarging
+            10→	stateIdle
+            11→)
+        battery_darwin.go
+        battery_linux.go
+        battery_linux_test.go
+        battery_stub.go
+            7→func HasReadableBattery() bool {
+            8→	return false
+            11→func GetBatteryStats() (uint8, uint8, error) {
+            12→	return 0, 0, errors.ErrUnsupported
+        battery_windows.go
+    client.go
+    client_test.go
+    connection_manager.go
+    connection_manager_test.go
+    cpu.go
+    data_dir.go
+    data_dir_test.go
+    deltatracker/
+    disk.go
+    disk_test.go
+    docker.go
+    docker_test.go
+    emmc_common.go
+    emmc_common_test.go
+    emmc_linux.go
+    emmc_linux_test.go
+    emmc_stub.go
+        3→package agent
+        7→func scanEmmcDevices() []*DeviceInfo {
+        8→	return nil
+        11→func (sm *SmartManager) collectEmmcHealth(deviceInfo *DeviceInfo) (bool, error) {
+        12→	return false, nil
+    fingerprint.go
+    fingerprint_test.go
+    gpu.go
+    gpu_amd_linux.go
+    gpu_amd_linux_test.go
+    gpu_amd_unsupported.go
+        9→func (gm *GPUManager) hasAmdSysfs() bool {
+        10→	return false
+        13→func (gm *GPUManager) collectAmdStats() error {
+        14→	return errors.ErrUnsupported
+    gpu_darwin.go
+    gpu_darwin_test.go
+    gpu_darwin_unsupported.go
+        3→package agent
+        6→func (gm *GPUManager) startPowermetricsCollector() {}
+        …
+        9→func (gm *GPUManager) startMacmonCollector() {}
+    gpu_intel.go
+    gpu_nvml.go
+    gpu_nvml_linux.go
+    gpu_nvml_unsupported.go
+        3→package agent
+        5→import "fmt"
+        7→type nvmlCollector struct {
+        8→	gm *GPUManager
+        9→}
+        11→func (c *nvmlCollector) init() error {
+        …
+        15→func (c *nvmlCollector) start() {}
+    gpu_nvml_windows.go
+    gpu_nvtop.go
+    gpu_test.go
+    handlers.go
+    handlers_test.go
+    health/
+    lhm/
+    mdraid_linux.go
+    mdraid_linux_test.go
+    mdraid_stub.go
+        3→package agent
+        5→func scanMdraidDevices() []*DeviceInfo {
+        6→	return nil
+        9→func (sm *SmartManager) collectMdraidHealth(deviceInfo *DeviceInfo) (bool, error) {
+        10→	return false, nil
+    network.go
+    network_test.go
+    response.go
+        13→func newAgentResponse(data any, requestID *uint32) common.AgentResponse {
+        …
+    sensors.go
+    sensors_default.go
+        9→var getSensorTemps = sensors.TemperaturesWithContext
+    sensors_test.go
+    sensors_windows.go
+    server.go
+    server_test.go
+    smart.go
+    smart_nonwindows.go
+        3→package agent
+        5→import "errors"
+        7→func ensureEmbeddedSmartctl() (string, error) {
+        8→	return "", errors.ErrUnsupported
+    smart_test.go
+    smart_windows.go
+    system.go
+    system_test.go
+    systemd.go
+    systemd_nonlinux.go
+    systemd_nonlinux_test.go
+    systemd_test.go
+    test-data/
+        amdgpu.ids
+        container.json
+        container2.json
+        nvtop.json
+        smart/
+        system_info.json
+    tools/
+    update.go
+    utils/
+    zfs/
 beszel.go
     1→// Package beszel provides core application constants and version information
     2→// which are used throughout the application.
@@ -61,15 +192,6 @@ internal/
     cmd/
         agent/
         hub/
-            hub.go
-                19→func main() {
-                …
-                38→func getBaseApp() *pocketbase.PocketBase {
-                …
-                68→func newHealthCmd() *cobra.Command {
-                …
-                87→func checkHealth(baseURL string) error {
-                …
     common/
     dockerfile_agent
     dockerfile_agent_alpine
@@ -78,23 +200,11 @@ internal/
     dockerfile_hub
     entities/
         container/
-            container.go
-                1→package container
-                3→import "time"
         smart/
         system/
-            system.go
         systemd/
     ghupdate/
         extract.go
-            16→func extract(srcPath, destDir string) error {
-            …
-            25→func extractTarGz(srcPath, destDir string) error {
-            …
-            80→func extractZip(src, dest string) error {
-            …
-            102→func extractFile(zipFile *zip.File, basePath string) error {
-            …
         ghupdate.go
         ghupdate_test.go
         release.go
@@ -112,33 +222,6 @@ internal/
             …
         selinux_test.go
     hub/
-        agent_connect.go
-        agent_connect_test.go
-        api.go
-        api_test.go
-        collections.go
-        collections_test.go
-        config/
-        expirymap/
-        heartbeat/
-        hub.go
-        hub_test.go
-        hub_test_helpers.go
-        server.go
-        server_development.go
-        server_production.go
-            18→func (h *Hub) startServer(se *core.ServeEvent) error {
-            …
-        systems/
-        transport/
-        update.go
-            13→// Update updates beszel to the latest version
-            14→func Update(cmd *cobra.Command, _ []string) {
-            …
-            58→func restartService() {
-            …
-        utils/
-        ws/
     migrations/
     records/
         records.go
@@ -157,54 +240,6 @@ internal/
             20→func TwoDecimals(value float64) float64 {
             21→	return twoDecimals(value)
     site/
-        .gitignore
-        .prettierrc
-        biome.json
-        bun.lock
-        components.json
-        embed.go
-            10→var distDir embed.FS
-            …
-            12→// DistDirFS contains the embedded dist directory files (without the "dist" prefix)
-            13→var DistDirFS, _ = fs.Sub(distDir, "dist")
-        index.html
-        lingui.config.ts
-        package-lock.json
-        package.json
-            2→	"name": "beszel",
-            3→	"private": true,
-            4→	"version": "0.18.7",
-            5→	"type": "module",
-        public/
-            static/
-                InterVariable.woff2
-                icon.png
-                icon.svg
-                manifest.json
-        src/
-            components/
-            index.css
-            lib/
-            locales/
-            main.tsx
-                29→const LoginPage = lazy(() => import("@/components/login/login.tsx"))
-                30→const Home = lazy(() => import("@/components/routes/home.tsx"))
-                31→const Containers = lazy(() => import("@/components/routes/containers.tsx"))
-                32→const Smart = lazy(() => import("@/components/routes/smart.tsx"))
-                33→const SystemDetail = lazy(() => import("@/components/routes/system.tsx"))
-                34→const CopyToClipboardDialog = lazy(() => import("@/components/copy-to-clipboard.tsx"))
-                36→const App = memo(() => {
-                …
-                87→const Layout = () => {
-                …
-                122→const I18nApp = () => {
-                …
-            types.d.ts
-            vite-env.d.ts
-        tsconfig.app.json
-        tsconfig.json
-        tsconfig.node.json
-        vite.config.ts
     tests/
     users/
         users.go
@@ -228,9 +263,6 @@ readme.md
     22→- **Automatic backups**: Save to and restore from disk or S3-compatible storage.
     25→## Architecture
     …
-    27→Beszel consists of two main components: the **hub** and the **agent**.
-    29→- **Hub**: A web application built on [PocketBase](https://pocketbase.io/) that provides a dashboard for viewing and managing connected systems.
-    30→- **Agent**: Runs on each system you want to monitor and communicates system metrics to the hub.
     32→## Getting started
     …
     34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
@@ -241,16 +273,10 @@ readme.md
     40→![Notification Settings](https://beszel.dev/image/settings-notifications.png)
     42→## Supported metrics
     …
-    44→- **CPU usage** - Host system and Docker / Podman containers.
-    45→- **Memory usage** - Host system and containers. Includes swap and ZFS ARC.
-    46→- **Disk usage** - Host system. Supports multiple partitions and devices.
-    47→- **Disk I/O** - Host system. Supports multiple partitions and devices.
     48→- **Network usage** - Host system and containers.
     49→- **Load average** - Host system.
     50→- **Temperature** - Host system sensors.
-    51→- **GPU usage / power draw** - Nvidia, AMD, and Intel.
     52→- **Battery** - Host system battery charge.
-    53→- **Containers** - Status and metrics of all running Docker / Podman containers.
     56→## Help and discussion
     …
     68→## License
@@ -275,7 +301,6 @@ supplemental/
         systemd.md
             1→# Installing as a Linux systemd service
             …
-            3→This is useful if you want to run the hub or agent in the background continuously, including after a reboot.
             5→## Install script (recommended)
             …
             16→### Hub

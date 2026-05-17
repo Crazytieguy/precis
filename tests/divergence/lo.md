@@ -37,47 +37,47 @@ Score(3000)=0.477 I=0.648 C=0.351 ns_rows≤3K=16/51 (reached=4 partial=2 missin
 | ns | 619 |  | 58 | constraints.go — Clonable interface (whole file) | 2.4 |  | 0.796 |
 | walker |  | 631 | 19 | README headline in internal/xtime/README.md |  |  | 0.796 |
 | walker |  | 656 | 25 | go package + imports in time.go |  |  | 0.796 |
-| walker |  | 663 | 7 | go package + imports in internal/constraints/constraints.go |  |  | 0.796 |
-| walker |  | 670 | 7 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.796 |
-| walker |  | 678 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.796 |
-| walker |  | 693 | 15 | go package + imports in parallel/slice.go |  |  | 0.796 |
-| walker |  | 729 | 36 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.796 |
-| walker |  | 729 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.796 |
-| walker |  | 729 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.796 |
-| walker |  | 762 | 33 | README.md section #6 |  |  | 0.796 |
 | ns | 777 |  | 158 | Sub-package directory listings — it/, parallel/, mutable/ | 2.5 |  | 0.660 |
-| walker |  | 801 | 39 | go package + imports in concurrency.go |  |  | 0.660 |
-| walker |  | 841 | 40 | go package + imports in errors.go |  |  | 0.660 |
-| ns | 841 |  | 64 | Sub-package directory listings — internal/* | 2.6 |  | 0.660 |
-| walker |  | 882 | 41 | go package + imports in math.go |  |  | 0.660 |
-| walker |  | 941 | 59 | internal/xtime/README.md section #0 |  |  | 0.660 |
-| walker |  | 989 | 48 | go package + imports in retry.go |  |  | 0.660 |
-| walker |  | 1012 | 23 | go package + imports in mutable/slice.go |  |  | 0.660 |
-| walker |  | 1063 | 51 | go decl names surface in internal/constraints/constraints.go |  |  | 0.660 |
-| walker |  | 1076 | 13 | go decl at internal/constraints/constraints.go:26 |  |  | 0.660 |
-| walker |  | 1092 | 16 | go decl at internal/constraints/constraints.go:33 |  |  | 0.660 |
-| walker |  | 1108 | 16 | go decl at internal/constraints/constraints.go:40 |  |  | 0.660 |
-| ns | 1122 |  | 281 | Sub-package directory listings — exp/, exp/simd/, benchmark/ | 2.7 |  | 0.561 |
-| walker |  | 1135 | 27 | go decl at internal/constraints/constraints.go:12 |  |  | 0.561 |
-| walker |  | 1165 | 30 | go decl at internal/constraints/constraints.go:19 |  |  | 0.561 |
-| walker |  | 1219 | 54 | go package + imports in channel.go |  |  | 0.561 |
-| walker |  | 1274 | 55 | go package + imports in find.go |  |  | 0.561 |
-| walker |  | 1329 | 55 | go package + imports in slice.go |  |  | 0.561 |
-| walker |  | 1345 | 16 | go package + imports in internal/xtime/time.go |  |  | 0.561 |
-| ns | 1362 |  | 240 | Helper index — slice (a): Filter..PartitionBy | 3.1 |  | 0.525 |
-| walker |  | 1394 | 49 | README.md section #8 |  |  | 0.525 |
-| walker |  | 1528 | 134 | listing of 'it' |  |  | 0.643 |
-| walker |  | 1553 | 25 | go decl names surface in it/string.go |  |  | 0.643 |
-| walker |  | 1553 | 0 | go decl at it/string.go:13 |  |  | 0.643 |
-| walker |  | 1568 | 15 | go package + imports in it/string.go |  |  | 0.643 |
-| walker |  | 1658 | 90 | go decl names surface in it/channel.go |  |  | 0.643 |
-| walker |  | 1658 | 0 | go decl at it/channel.go:13 |  |  | 0.643 |
-| walker |  | 1658 | 0 | go decl at it/channel.go:29 |  |  | 0.643 |
-| walker |  | 1658 | 0 | go decl at it/channel.go:45 |  |  | 0.643 |
+| walker |  | 790 | 134 | listing of 'it' |  |  | 0.824 |
+| walker |  | 815 | 25 | go decl names surface in it/string.go |  |  | 0.824 |
+| walker |  | 815 | 0 | go decl at it/string.go:13 |  |  | 0.824 |
+| walker |  | 822 | 7 | go package + imports in internal/constraints/constraints.go |  |  | 0.824 |
+| walker |  | 829 | 7 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.824 |
+| walker |  | 837 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.824 |
+| ns | 841 |  | 64 | Sub-package directory listings — internal/* | 2.6 |  | 0.808 |
+| walker |  | 852 | 15 | go package + imports in it/string.go |  |  | 0.808 |
+| walker |  | 867 | 15 | go package + imports in parallel/slice.go |  |  | 0.808 |
+| walker |  | 903 | 36 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.808 |
+| walker |  | 903 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.808 |
+| walker |  | 903 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.808 |
+| walker |  | 936 | 33 | README.md section #6 |  |  | 0.808 |
+| walker |  | 975 | 39 | go package + imports in concurrency.go |  |  | 0.808 |
+| walker |  | 1015 | 40 | go package + imports in errors.go |  |  | 0.808 |
+| walker |  | 1056 | 41 | go package + imports in math.go |  |  | 0.808 |
+| walker |  | 1115 | 59 | internal/xtime/README.md section #0 |  |  | 0.808 |
+| ns | 1122 |  | 281 | Sub-package directory listings — exp/, exp/simd/, benchmark/ | 2.7 |  | 0.687 |
+| walker |  | 1163 | 48 | go package + imports in retry.go |  |  | 0.687 |
+| walker |  | 1186 | 23 | go package + imports in mutable/slice.go |  |  | 0.687 |
+| walker |  | 1276 | 90 | go decl names surface in it/channel.go |  |  | 0.687 |
+| walker |  | 1276 | 0 | go decl at it/channel.go:13 |  |  | 0.687 |
+| walker |  | 1276 | 0 | go decl at it/channel.go:29 |  |  | 0.687 |
+| walker |  | 1276 | 0 | go decl at it/channel.go:45 |  |  | 0.687 |
+| walker |  | 1327 | 51 | go decl names surface in internal/constraints/constraints.go |  |  | 0.687 |
+| walker |  | 1340 | 13 | go decl at internal/constraints/constraints.go:26 |  |  | 0.687 |
+| walker |  | 1356 | 16 | go decl at internal/constraints/constraints.go:33 |  |  | 0.687 |
+| ns | 1362 |  | 240 | Helper index — slice (a): Filter..PartitionBy | 3.1 |  | 0.642 |
+| walker |  | 1372 | 16 | go decl at internal/constraints/constraints.go:40 |  |  | 0.642 |
+| walker |  | 1399 | 27 | go decl at internal/constraints/constraints.go:12 |  |  | 0.643 |
+| walker |  | 1429 | 30 | go decl at internal/constraints/constraints.go:19 |  |  | 0.643 |
+| walker |  | 1483 | 54 | go package + imports in channel.go |  |  | 0.643 |
+| walker |  | 1538 | 55 | go package + imports in find.go |  |  | 0.643 |
+| walker |  | 1593 | 55 | go package + imports in slice.go |  |  | 0.643 |
+| walker |  | 1631 | 38 | go decl doc at it/channel.go:13 |  |  | 0.643 |
+| walker |  | 1647 | 16 | go package + imports in internal/xtime/time.go |  |  | 0.643 |
 | ns | 1673 |  | 311 | Helper index — slice (b): Flatten..Reject and friends | 3.2 |  | 0.599 |
-| walker |  | 1696 | 38 | go decl doc at it/channel.go:13 |  |  | 0.599 |
-| walker |  | 1737 | 41 | go decl doc at it/channel.go:29 |  |  | 0.599 |
-| walker |  | 1780 | 43 | go decl doc at it/channel.go:45 |  |  | 0.599 |
+| walker |  | 1688 | 41 | go decl doc at it/channel.go:29 |  |  | 0.599 |
+| walker |  | 1731 | 43 | go decl doc at it/channel.go:45 |  |  | 0.599 |
+| walker |  | 1780 | 49 | README.md section #8 |  |  | 0.599 |
 | walker |  | 1814 | 34 | go package + imports in it/map.go |  |  | 0.599 |
 | ns | 1928 |  | 255 | Helper index — slice (c): Count..TrimSuffix | 3.3 |  | 0.566 |
 | walker |  | 2022 | 208 | go decl names surface in find.go |  |  | 0.566 |

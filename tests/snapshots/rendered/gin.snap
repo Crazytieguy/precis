@@ -47,35 +47,77 @@ README.md
     222→### Getting Started with Contributing
     …
 auth.go
-    17→const AuthUserKey = "user"
-    …
-    20→const AuthProxyUserKey = "proxy_user"
-    …
-    23→type Accounts map[string]string
-    …
-    25→type authPair struct {
-    …
-    30→type authPairs []authPair
-    …
-    32→func (a authPairs) searchCredential(authValue string) (string, bool) {
-    …
-    48→func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {
-    …
-    72→func BasicAuth(accounts Accounts) HandlerFunc {
-    73→	return BasicAuthForRealm(accounts, "")
-    76→func processAccounts(accounts Accounts) authPairs {
-    …
-    91→func authorizationHeader(user, password string) string {
-    …
-    98→func BasicAuthForProxy(accounts Accounts, realm string) HandlerFunc {
-    …
 auth_test.go
 benchmarks_test.go
 binding/
+    binding.go
+        7→package binding
+        9→import "net/http"
+    binding_msgpack_test.go
+    binding_nomsgpack.go
+        7→package binding
+        9→import "net/http"
+    binding_test.go
+    bson.go
+        14→type bsonBinding struct{}
+        …
+        16→func (bsonBinding) Name() string {
+        17→	return "bson"
+        20→func (b bsonBinding) Bind(req *http.Request, obj any) error {
+        …
+        28→func (bsonBinding) BindBody(body []byte, obj any) error {
+        …
+    default_validator.go
+    default_validator_benchmark_test.go
+    default_validator_test.go
+    form.go
+    form_mapping.go
+    form_mapping_benchmark_test.go
+    form_mapping_test.go
+    header.go
+    json.go
+    json_test.go
+    msgpack.go
+    msgpack_test.go
+    multipart_form_mapping.go
+    multipart_form_mapping_test.go
+    plain.go
+    protobuf.go
+        15→type protobufBinding struct{}
+        …
+        17→func (protobufBinding) Name() string {
+        18→	return "protobuf"
+        21→func (b protobufBinding) Bind(req *http.Request, obj any) error {
+        …
+        29→func (protobufBinding) BindBody(body []byte, obj any) error {
+        …
+    query.go
+        5→package binding
+        7→import "net/http"
+        9→type queryBinding struct{}
+        …
+        11→func (queryBinding) Name() string {
+        12→	return "query"
+        15→func (queryBinding) Bind(req *http.Request, obj any) error {
+        …
+    toml.go
+    toml_test.go
+    uri.go
+        5→package binding
+        7→type uriBinding struct{}
+        …
+        9→func (uriBinding) Name() string {
+        10→	return "uri"
+        13→func (uriBinding) BindUri(m map[string][]string, obj any) error {
+        …
+    validate_test.go
+    xml.go
+    xml_test.go
+    yaml.go
+    yaml_test.go
 codec/
     json/
         api.go
-            9→// API the json codec in use.
             10→var API Core
             …
             13→type Core interface {
@@ -112,22 +154,6 @@ deprecated.go
     …
 deprecated_test.go
 doc.go
-    1→/*
-    2→Package gin implements a HTTP web framework called gin.
-    4→See https://gin-gonic.com/ for more information about gin.
-    6→Example:
-    8→	package main
-    10→	import "github.com/gin-gonic/gin"
-    12→	func main() {
-    13→		r := gin.Default()
-    14→		r.GET("/ping", func(c *gin.Context) {
-    15→			c.JSON(200, gin.H{
-    16→				"message": "pong",
-    17→			})
-    18→		})
-    19→		r.Run() // listen and serve on 0.0.0.0:8080
-    20→	}
-    21→*/
     22→package gin // import "github.com/gin-gonic/gin"
 docs/
     doc.md
@@ -163,17 +189,6 @@ ginS/
     README.md
         1→# Gin Default Server
         3→This is API experiment for Gin.
-        5→```go
-        6→package main
-        8→import (
-        9→	"github.com/gin-gonic/gin"
-        10→	"github.com/gin-gonic/gin/ginS"
-        11→)
-        13→func main() {
-        14→	ginS.GET("/", func(c *gin.Context) { c.String(200, "Hello World") })
-        15→	ginS.Run()
-        16→}
-        17→```
     gins.go
     gins_test.go
 gin_integration_test.go

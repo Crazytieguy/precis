@@ -12,75 +12,75 @@ Score(3000)=0.598 I=0.752 C=0.476 ns_rows≤3K=16/45 (reached=5 partial=3 missin
 | ns | 281 |  | 135 | Feature bullets — subcommand/flag/help capabilities | 1.3 |  | 0.600 |
 | walker |  | 328 | 62 | README headline in README.md |  |  | 0.759 |
 | ns | 379 |  | 98 | Feature bullets — completion/docs/aliases/viper | 1.4 | 1.3 | 0.692 |
-| walker |  | 391 | 63 | headings outline in README.md |  |  | 0.692 |
-| walker |  | 405 | 14 | README.md section #0 |  |  | 0.692 |
-| walker |  | 501 | 96 | go module file go.mod |  |  | 0.700 |
-| ns | 575 |  | 196 | Tests + meta files + subdir listings | 1.5 |  | 0.468 |
-| walker |  | 592 | 91 | headings outline in CONDUCT.md |  |  | 0.468 |
-| ns | 704 |  | 129 | go.mod (module path + deps) | 1.6 |  | 0.502 |
-| walker |  | 770 | 178 | go decl names surface in command.go |  |  | 0.504 |
-| walker |  | 770 | 0 | go decl at command.go:42 |  |  | 0.504 |
-| walker |  | 770 | 0 | go decl at command.go:269 |  |  | 0.504 |
-| walker |  | 770 | 0 | go decl at command.go:275 |  |  | 0.504 |
-| walker |  | 770 | 0 | go decl at command.go:281 |  |  | 0.504 |
-| walker |  | 770 | 0 | go decl at command.go:289 |  |  | 0.504 |
-| walker |  | 775 | 5 | go decl at command.go:54 |  |  | 0.504 |
-| walker |  | 783 | 8 | go struct field group at command.go:54 group 218 |  |  | 0.504 |
-| walker |  | 792 | 9 | go decl at command.go:33 |  |  | 0.504 |
-| walker |  | 798 | 6 | go decl body at command.go:269 |  |  | 0.504 |
-| walker |  | 817 | 19 | go decl at command.go:45 |  |  | 0.505 |
-| walker |  | 824 | 7 | go decl body at command.go:275 |  |  | 0.505 |
-| walker |  | 831 | 7 | go decl body at command.go:281 |  |  | 0.505 |
-| walker |  | 844 | 13 | go decl doc at command.go:45 |  |  | 0.505 |
-| walker |  | 863 | 19 | go struct field group at command.go:54 group 92 |  |  | 0.506 |
-| walker |  | 883 | 20 | go struct field group at command.go:54 group 148 |  |  | 0.506 |
-| walker |  | 901 | 18 | go decl doc at command.go:42 |  |  | 0.507 |
-| walker |  | 925 | 24 | go struct field group at command.go:54 group 82 |  |  | 0.507 |
-| walker |  | 950 | 25 | go struct field group at command.go:54 group 194 |  |  | 0.507 |
-| walker |  | 976 | 26 | go struct field group at command.go:54 group 191 |  |  | 0.507 |
-| ns | 986 |  | 282 | Command struct opening + Use field | 2.1 |  | 0.462 |
-| walker |  | 1003 | 27 | go struct field group at command.go:54 group 73 |  |  | 0.462 |
-| walker |  | 1030 | 27 | go struct field group at command.go:54 group 229 |  |  | 0.462 |
-| walker |  | 1057 | 27 | go struct field group at command.go:54 group 235 |  |  | 0.463 |
-| walker |  | 1086 | 29 | go struct field group at command.go:54 group 79 |  |  | 0.463 |
-| walker |  | 1115 | 29 | go struct field group at command.go:54 group 238 |  |  | 0.464 |
-| walker |  | 1145 | 30 | go struct field group at command.go:54 group 104 |  |  | 0.464 |
-| walker |  | 1175 | 30 | go struct field group at command.go:54 group 188 |  |  | 0.464 |
-| walker |  | 1205 | 30 | go struct field group at command.go:54 group 204 |  |  | 0.464 |
-| ns | 1209 |  | 223 | Command help-text fields | 2.2 |  | 0.434 |
-| walker |  | 1236 | 31 | go struct field group at command.go:54 group 207 |  |  | 0.434 |
-| walker |  | 1270 | 34 | go struct field group at command.go:54 group 66 |  |  | 0.449 |
-| walker |  | 1304 | 34 | go struct field group at command.go:54 group 76 |  |  | 0.468 |
-| walker |  | 1338 | 34 | go struct field group at command.go:54 group 232 |  |  | 0.469 |
-| walker |  | 1356 | 18 | go decl body at command.go:289 |  |  | 0.469 |
-| walker |  | 1397 | 41 | go struct field group at command.go:54 group 257 |  |  | 0.469 |
-| ns | 1402 |  | 193 | Command ValidArgs + Args + ArgAliases | 2.3 |  | 0.441 |
-| walker |  | 1441 | 44 | go struct field group at command.go:54 group 253 |  |  | 0.442 |
-| walker |  | 1486 | 45 | go struct field group at command.go:54 group 69 |  |  | 0.475 |
-| walker |  | 1531 | 45 | go struct field group at command.go:54 group 107 |  |  | 0.475 |
-| walker |  | 1576 | 45 | go struct field group at command.go:54 group 241 |  |  | 0.477 |
-| walker |  | 1610 | 34 | go decl doc at command.go:275 |  |  | 0.477 |
-| walker |  | 1662 | 52 | go struct field group at command.go:54 group 245 |  |  | 0.478 |
-| walker |  | 1714 | 52 | go struct field group at command.go:54 group 249 |  |  | 0.480 |
-| walker |  | 1756 | 42 | go decl doc at command.go:281 |  |  | 0.480 |
-| walker |  | 1811 | 55 | go struct field group at command.go:54 group 100 |  |  | 0.481 |
-| walker |  | 1867 | 56 | go struct field group at command.go:54 group 95 |  |  | 0.493 |
-| ns | 1895 |  | 493 | Full *Run hook family (10 fields) | 2.4 |  | 0.439 |
-| walker |  | 1936 | 69 | go decl doc at command.go:54 |  |  | 0.445 |
-| walker |  | 1989 | 53 | go decl doc at command.go:289 |  |  | 0.445 |
-| walker |  | 2072 | 83 | go struct field group at command.go:54 group 210 |  |  | 0.445 |
-| ns | 2144 |  | 249 | Command BashCompletionFunction + Deprecated + Annotations + Version | 2.5 |  | 0.442 |
-| walker |  | 2156 | 84 | go struct field group at command.go:54 group 197 |  |  | 0.442 |
-| walker |  | 2169 | 13 | go decl names surface in command_notwin.go |  |  | 0.442 |
-| walker |  | 2194 | 25 | README.md section #5 |  |  | 0.442 |
-| walker |  | 2297 | 103 | go struct field group at command.go:54 group 220 |  |  | 0.442 |
-| walker |  | 2401 | 104 | go struct field group at command.go:54 group 111 |  |  | 0.478 |
-| walker |  | 2427 | 26 | listing of 'site/content' |  |  | 0.495 |
-| walker |  | 2535 | 108 | go struct field group at command.go:54 group 85 |  |  | 0.536 |
-| ns | 2540 |  | 396 | Command boolean knobs | 2.6 |  | 0.560 |
-| ns | 2542 |  | 2 | Command struct private fields — ellipsis hint | 2.7 | 2.4 | 0.559 |
-| walker |  | 2567 | 32 | go package + imports in args.go |  |  | 0.559 |
-| walker |  | 2626 | 59 | listing of 'doc' |  |  | 0.607 |
+| walker |  | 387 | 59 | listing of 'doc' |  |  | 0.710 |
+| walker |  | 450 | 63 | headings outline in README.md |  |  | 0.710 |
+| walker |  | 464 | 14 | README.md section #0 |  |  | 0.710 |
+| walker |  | 560 | 96 | go module file go.mod |  |  | 0.718 |
+| ns | 575 |  | 196 | Tests + meta files + subdir listings | 1.5 |  | 0.561 |
+| walker |  | 651 | 91 | headings outline in CONDUCT.md |  |  | 0.561 |
+| ns | 704 |  | 129 | go.mod (module path + deps) | 1.6 |  | 0.582 |
+| walker |  | 829 | 178 | go decl names surface in command.go |  |  | 0.584 |
+| walker |  | 829 | 0 | go decl at command.go:42 |  |  | 0.584 |
+| walker |  | 829 | 0 | go decl at command.go:269 |  |  | 0.584 |
+| walker |  | 829 | 0 | go decl at command.go:275 |  |  | 0.584 |
+| walker |  | 829 | 0 | go decl at command.go:281 |  |  | 0.584 |
+| walker |  | 829 | 0 | go decl at command.go:289 |  |  | 0.584 |
+| walker |  | 834 | 5 | go decl at command.go:54 |  |  | 0.584 |
+| walker |  | 842 | 8 | go struct field group at command.go:54 group 218 |  |  | 0.584 |
+| walker |  | 851 | 9 | go decl at command.go:33 |  |  | 0.584 |
+| walker |  | 857 | 6 | go decl body at command.go:269 |  |  | 0.584 |
+| walker |  | 876 | 19 | go decl at command.go:45 |  |  | 0.585 |
+| walker |  | 883 | 7 | go decl body at command.go:275 |  |  | 0.585 |
+| walker |  | 890 | 7 | go decl body at command.go:281 |  |  | 0.585 |
+| walker |  | 903 | 13 | go decl doc at command.go:45 |  |  | 0.586 |
+| walker |  | 922 | 19 | go struct field group at command.go:54 group 92 |  |  | 0.586 |
+| walker |  | 942 | 20 | go struct field group at command.go:54 group 148 |  |  | 0.586 |
+| walker |  | 960 | 18 | go decl doc at command.go:42 |  |  | 0.587 |
+| walker |  | 984 | 24 | go struct field group at command.go:54 group 82 |  |  | 0.587 |
+| ns | 986 |  | 282 | Command struct opening + Use field | 2.1 |  | 0.535 |
+| walker |  | 1009 | 25 | go struct field group at command.go:54 group 194 |  |  | 0.535 |
+| walker |  | 1035 | 26 | go struct field group at command.go:54 group 191 |  |  | 0.535 |
+| walker |  | 1062 | 27 | go struct field group at command.go:54 group 73 |  |  | 0.536 |
+| walker |  | 1089 | 27 | go struct field group at command.go:54 group 229 |  |  | 0.536 |
+| walker |  | 1116 | 27 | go struct field group at command.go:54 group 235 |  |  | 0.536 |
+| walker |  | 1145 | 29 | go struct field group at command.go:54 group 79 |  |  | 0.537 |
+| walker |  | 1174 | 29 | go struct field group at command.go:54 group 238 |  |  | 0.537 |
+| walker |  | 1204 | 30 | go struct field group at command.go:54 group 104 |  |  | 0.537 |
+| ns | 1209 |  | 223 | Command help-text fields | 2.2 |  | 0.500 |
+| walker |  | 1234 | 30 | go struct field group at command.go:54 group 188 |  |  | 0.500 |
+| walker |  | 1264 | 30 | go struct field group at command.go:54 group 204 |  |  | 0.500 |
+| walker |  | 1295 | 31 | go struct field group at command.go:54 group 207 |  |  | 0.500 |
+| walker |  | 1329 | 34 | go struct field group at command.go:54 group 66 |  |  | 0.513 |
+| walker |  | 1363 | 34 | go struct field group at command.go:54 group 76 |  |  | 0.531 |
+| walker |  | 1397 | 34 | go struct field group at command.go:54 group 232 |  |  | 0.532 |
+| ns | 1402 |  | 193 | Command ValidArgs + Args + ArgAliases | 2.3 |  | 0.500 |
+| walker |  | 1415 | 18 | go decl body at command.go:289 |  |  | 0.500 |
+| walker |  | 1456 | 41 | go struct field group at command.go:54 group 257 |  |  | 0.500 |
+| walker |  | 1500 | 44 | go struct field group at command.go:54 group 253 |  |  | 0.501 |
+| walker |  | 1545 | 45 | go struct field group at command.go:54 group 69 |  |  | 0.532 |
+| walker |  | 1590 | 45 | go struct field group at command.go:54 group 107 |  |  | 0.533 |
+| walker |  | 1635 | 45 | go struct field group at command.go:54 group 241 |  |  | 0.534 |
+| walker |  | 1669 | 34 | go decl doc at command.go:275 |  |  | 0.534 |
+| walker |  | 1721 | 52 | go struct field group at command.go:54 group 245 |  |  | 0.536 |
+| walker |  | 1773 | 52 | go struct field group at command.go:54 group 249 |  |  | 0.538 |
+| walker |  | 1815 | 42 | go decl doc at command.go:281 |  |  | 0.538 |
+| walker |  | 1870 | 55 | go struct field group at command.go:54 group 100 |  |  | 0.539 |
+| ns | 1895 |  | 493 | Full *Run hook family (10 fields) | 2.4 |  | 0.480 |
+| walker |  | 1926 | 56 | go struct field group at command.go:54 group 95 |  |  | 0.489 |
+| walker |  | 1995 | 69 | go decl doc at command.go:54 |  |  | 0.496 |
+| walker |  | 2048 | 53 | go decl doc at command.go:289 |  |  | 0.496 |
+| walker |  | 2131 | 83 | go struct field group at command.go:54 group 210 |  |  | 0.496 |
+| ns | 2144 |  | 249 | Command BashCompletionFunction + Deprecated + Annotations + Version | 2.5 |  | 0.488 |
+| walker |  | 2215 | 84 | go struct field group at command.go:54 group 197 |  |  | 0.488 |
+| walker |  | 2228 | 13 | go decl names surface in command_notwin.go |  |  | 0.488 |
+| walker |  | 2253 | 25 | README.md section #5 |  |  | 0.488 |
+| walker |  | 2356 | 103 | go struct field group at command.go:54 group 220 |  |  | 0.488 |
+| walker |  | 2460 | 104 | go struct field group at command.go:54 group 111 |  |  | 0.523 |
+| walker |  | 2486 | 26 | listing of 'site/content' |  |  | 0.552 |
+| ns | 2540 |  | 396 | Command boolean knobs | 2.6 |  | 0.575 |
+| ns | 2542 |  | 2 | Command struct private fields — ellipsis hint | 2.7 | 2.4 | 0.574 |
+| walker |  | 2594 | 108 | go struct field group at command.go:54 group 85 |  |  | 0.607 |
+| walker |  | 2626 | 32 | go package + imports in args.go |  |  | 0.607 |
 | ns | 2706 |  | 164 | Group struct + FParseErrWhitelist + annotation constants | 2.8 |  | 0.620 |
 | walker |  | 2710 | 84 | go package + imports in cobra.go |  |  | 0.620 |
 | ns | 2808 |  | 102 | Set* configuration setters — name index | 3.1 |  | 0.596 |

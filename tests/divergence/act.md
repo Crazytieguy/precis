@@ -15,26 +15,26 @@ Score(3000)=0.494 I=0.767 C=0.318 ns_rows≤3K=20/41 (reached=5 partial=2 missin
 | walker |  | 232 | 52 | README headline in README.md |  |  | 0.316 |
 | walker |  | 242 | 10 | go decl doc at main.go:11 |  |  | 0.316 |
 | ns | 287 |  | 125 | Repo root file listing | 1.5 |  | 0.597 |
-| walker |  | 297 | 55 | headings outline in README.md |  |  | 0.597 |
-| walker |  | 362 | 65 | headings outline in IMAGES.md |  |  | 0.597 |
-| walker |  | 387 | 25 | README.md section #2 |  |  | 0.597 |
-| ns | 443 |  | 156 | main.go entry point (full) | 1.6 |  | 0.511 |
-| walker |  | 444 | 57 | go package + imports in main.go |  |  | 0.549 |
-| walker |  | 469 | 25 | README.md section #3 |  |  | 0.549 |
-| walker |  | 510 | 41 | listing of 'pkg' |  |  | 0.739 |
-| walker |  | 529 | 19 | listing of 'pkg/schema' |  |  | 0.739 |
-| walker |  | 575 | 46 | listing of 'cmd' |  |  | 0.860 |
-| walker |  | 591 | 16 | go decl names surface in cmd/graph.go |  |  | 0.860 |
-| walker |  | 591 | 0 | go decl at cmd/graph.go:10 |  |  | 0.860 |
-| walker |  | 607 | 16 | go decl names surface in cmd/list.go |  |  | 0.860 |
-| walker |  | 607 | 0 | go decl at cmd/list.go:11 |  |  | 0.860 |
-| walker |  | 626 | 19 | go decl names surface in cmd/platforms.go |  |  | 0.860 |
-| walker |  | 626 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.860 |
-| ns | 635 |  | 192 | CLAUDE.md architecture: execution flow | 1.7 |  | 0.806 |
-| walker |  | 658 | 32 | go decl names surface in cmd/dir.go |  |  | 0.806 |
-| walker |  | 658 | 0 | go decl at cmd/dir.go:15 |  |  | 0.806 |
-| walker |  | 667 | 9 | go decl at cmd/dir.go:10 |  |  | 0.806 |
-| walker |  | 686 | 19 | listing of 'cmd/testdata' |  |  | 0.806 |
+| walker |  | 288 | 46 | listing of 'cmd' |  |  | 0.739 |
+| walker |  | 304 | 16 | go decl names surface in cmd/graph.go |  |  | 0.739 |
+| walker |  | 304 | 0 | go decl at cmd/graph.go:10 |  |  | 0.739 |
+| walker |  | 320 | 16 | go decl names surface in cmd/list.go |  |  | 0.739 |
+| walker |  | 320 | 0 | go decl at cmd/list.go:11 |  |  | 0.739 |
+| walker |  | 339 | 19 | go decl names surface in cmd/platforms.go |  |  | 0.739 |
+| walker |  | 339 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.739 |
+| walker |  | 394 | 55 | headings outline in README.md |  |  | 0.739 |
+| ns | 443 |  | 156 | main.go entry point (full) | 1.6 |  | 0.631 |
+| walker |  | 459 | 65 | headings outline in IMAGES.md |  |  | 0.631 |
+| walker |  | 491 | 32 | go decl names surface in cmd/dir.go |  |  | 0.631 |
+| walker |  | 491 | 0 | go decl at cmd/dir.go:15 |  |  | 0.631 |
+| walker |  | 500 | 9 | go decl at cmd/dir.go:10 |  |  | 0.631 |
+| walker |  | 525 | 25 | README.md section #2 |  |  | 0.631 |
+| walker |  | 582 | 57 | go package + imports in main.go |  |  | 0.668 |
+| walker |  | 601 | 19 | listing of 'cmd/testdata' |  |  | 0.668 |
+| walker |  | 626 | 25 | README.md section #3 |  |  | 0.668 |
+| ns | 635 |  | 192 | CLAUDE.md architecture: execution flow | 1.7 |  | 0.626 |
+| walker |  | 667 | 41 | listing of 'pkg' |  |  | 0.806 |
+| walker |  | 686 | 19 | listing of 'pkg/schema' |  |  | 0.806 |
 | walker |  | 708 | 22 | listing of 'pkg/exprparser' |  |  | 0.806 |
 | walker |  | 754 | 46 | go decl names surface in cmd/secrets.go |  |  | 0.806 |
 | walker |  | 754 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.806 |

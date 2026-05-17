@@ -225,13 +225,57 @@ fn has_module_entrypoint(dir: &Path) -> bool {
         .any(|name| dir.join(name).is_file())
 }
 
+/// Go-specific module-source detection. A directory is a Go subpackage
+/// when it contains multiple non-test `.go` files (the language rule
+/// says any `.go` file declares a package, but small helper dirs are
+/// usually plumbing rather than an API-surface partition; the file-
+/// count threshold is calibrated against the divergence corpus). The
+/// module-tier promotion is restricted to **root-level** subpackages
+/// (the dir's parent contains a `go.mod`): NS authors anchor on these
+/// as the package's API-surface partition (gin's `binding`/`render`,
+/// lo's `it`, beszel's `agent`), on par with Rust's `mod.rs`-bearing
+/// subdirs. Deeper Go subdirs and small helper dirs shouldn't crowd
+/// the early budget — the parent listing already names them.
+fn is_go_module_subpackage(dir: &Path) -> bool {
+    const MIN_GO_FILES: usize = 5;
+    let Some(parent) = dir.parent() else {
+        return false;
+    };
+    if !parent.join("go.mod").is_file() {
+        return false;
+    }
+    count_go_package_source(dir, MIN_GO_FILES) >= MIN_GO_FILES
+}
+
+fn count_go_package_source(dir: &Path, target: usize) -> usize {
+    let Ok(read_dir) = std::fs::read_dir(dir) else {
+        return 0;
+    };
+    let mut count = 0;
+    for entry in read_dir.flatten() {
+        let Ok(ft) = entry.file_type() else { continue };
+        if !ft.is_file() {
+            continue;
+        }
+        let name = entry.file_name();
+        let Some(name) = name.to_str() else { continue };
+        if name.ends_with(".go") && !name.ends_with("_test.go") {
+            count += 1;
+            if count >= target {
+                return count;
+            }
+        }
+    }
+    count
+}
+
 fn is_module_source_dir(dir: &Path, sibling_module_dir: bool) -> bool {
     if is_type_surface_dir(dir) {
         return false;
     }
     let entrypoint_module = has_module_entrypoint(dir)
         && (dir.parent().is_some_and(is_source_dir) || has_python_module_entrypoint(dir));
-    entrypoint_module || sibling_module_dir
+    entrypoint_module || sibling_module_dir || is_go_module_subpackage(dir)
 }
 
 fn is_type_surface_dir(dir: &Path) -> bool {

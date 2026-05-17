@@ -148,14 +148,15 @@ Score(3000)=0.618 I=0.747 C=0.512 ns_rows≤3K=19/42 (reached=12 partial=0 missi
 | ns | 6992 |  | 476 | test/pages/keybinds — fixture for every keybind spec | 8.3 |  | 0.559 |
 | walker |  | 7030 | 126 | README.md section #9 |  |  | 0.561 |
 | walker |  | 7162 | 132 | README.md section #8 |  |  | 0.565 |
+| walker |  | 7170 | 8 | export names surface in test/pages/index.tsx |  |  | 0.565 |
 | ns | 7365 |  | 373 | index.tsx — Item header (registration + state subscriptions) | 9.1 | 4.3 | 0.578 |
-| walker |  | 7537 | 375 | README.md section #35 |  |  | 0.585 |
-| walker |  | 7683 | 146 | README.md section #12 |  |  | 0.585 |
+| walker |  | 7545 | 375 | README.md section #35 |  |  | 0.585 |
 | ns | 7686 |  | 321 | index.tsx — Item render output (the cmdk-item div) | 9.2 | 9.1 | 0.596 |
-| walker |  | 7809 | 126 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.604 |
-| walker |  | 7957 | 148 | README.md section #11 |  |  | 0.604 |
+| walker |  | 7691 | 146 | README.md section #12 |  |  | 0.596 |
+| walker |  | 7817 | 126 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.604 |
+| walker |  | 7965 | 148 | README.md section #11 |  |  | 0.604 |
 | ns | 8154 |  | 468 | index.tsx — Group component body | 9.3 | 4.3 | 0.618 |
-| walker |  | 8540 | 583 | README.md section #2 |  |  | 0.680 |
+| walker |  | 8548 | 583 | README.md section #2 |  |  | 0.680 |
 | ns | 8625 |  | 471 | index.tsx — useCmdk + useValue helpers | 9.4 |  | 0.659 |
 | ns | 9027 |  | 402 | Architecture — Discarded approaches (rejected alternatives) | 10.1 | 3.1 | 0.654 |
 | ns | 9480 |  | 453 | test/pages/group — fixture for the group.test specs | 10.2 |  | 0.635 |
