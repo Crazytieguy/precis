@@ -220,10 +220,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
 
+        // Lines claimed by an imports / re-export-chunk batch on this
+        // file. Threaded into `collect_export_names_from` so the
+        // names-surface ellipsis marker never lands on a line owned by
+        // another peer batch — peers don't form an ancestor chain, so
+        // an overlap would be a scheduler conflict.
+        let mut import_owned_lines: HashSet<usize> = HashSet::new();
         if let Some((source, tree)) = parse_ts(ctx, file) {
             if let Some(chunks) = collect_reexport_import_chunks(file, &tree, &source) {
                 let chunk_count = chunks.len();
                 for (chunk_index, lines) in chunks.into_iter().enumerate() {
+                    import_owned_lines.extend(lines.full.iter().copied());
                     let Some(content) = single_file_lines_content(file, &source, lines) else {
                         continue;
                     };
@@ -238,15 +245,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         value: imports_chunk_value(file, ctx, chunk_index, chunk_count, js_factor),
                     });
                 }
-            } else if let Some(content) =
-                single_file_lines_content(file, &source, collect_imports(&tree, &source))
-            {
-                out.push(Batch {
-                    key: TsKey::Imports { file: file.clone() }.into(),
-                    predecessor: module_predecessor.clone(),
-                    content,
-                    value: imports_value(file, ctx, js_factor),
-                });
+            } else {
+                let lines = collect_imports(&tree, &source);
+                import_owned_lines.extend(lines.full.iter().copied());
+                if let Some(content) = single_file_lines_content(file, &source, lines) {
+                    out.push(Batch {
+                        key: TsKey::Imports { file: file.clone() }.into(),
+                        predecessor: module_predecessor.clone(),
+                        content,
+                        value: imports_value(file, ctx, js_factor),
+                    });
+                }
             }
         } else if let Some(content) = build_per_file_content(file, ctx, parse_ts, collect_imports) {
             out.push(Batch {
@@ -304,7 +313,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 .collect();
             let names_lines_by_chunk: Vec<_> = exports
                 .chunks(chunk_size)
-                .map(|chunk| collect_export_names_from(chunk, &export_start_lines))
+                .map(|chunk| {
+                    collect_export_names_from(chunk, &export_start_lines, &import_owned_lines)
+                })
                 .collect();
             for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
                 let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
@@ -2253,11 +2264,41 @@ fn collect_reexport_import_chunks(
     if !is_entrypoint_file(file) {
         return None;
     }
-    let groups = collect_reexport_import_groups(tree, source)?;
+    let mut groups = collect_reexport_import_groups(tree, source)?;
     if !should_chunk_import_groups(&groups) {
         return None;
     }
+    prioritize_relative_source_groups(&mut groups);
     Some(groups_to_file_lines(groups))
+}
+
+/// Reorder chunk groups so bare-reexports from package-relative sources
+/// (`./x`, `../x`) precede external-package imports. The early chunk
+/// indexes carry the most `imports_chunk_value` (later indexes fall off
+/// with `reexport_import_chunk_factor`); for a package entrypoint, the
+/// `./*` re-export wall is the public-API map a consumer is looking
+/// for, while imports of external libraries are plumbing. Document
+/// order alone puts `import * as Rolldown from 'rolldown'` ahead of
+/// `export { defineConfig } from './config'`, which inverts the value
+/// ordering on big walls.
+fn prioritize_relative_source_groups(groups: &mut [ImportGroup]) {
+    // Stable sort preserves intra-bucket document order so the rank
+    // within each class still tracks source-order proximity.
+    groups.sort_by_key(|group| !is_relative_source(&group.source));
+}
+
+fn is_relative_source(source_key: &str) -> bool {
+    // `source_key` is the raw quoted source literal (e.g. `'./config'`).
+    let bytes = source_key.as_bytes();
+    if bytes.len() < 3 {
+        return false;
+    }
+    let quote = bytes[0];
+    if quote != b'\'' && quote != b'"' && quote != b'`' {
+        return false;
+    }
+    let inner = &source_key[1..];
+    inner.starts_with("./") || inner.starts_with("../")
 }
 
 fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> {
@@ -2312,6 +2353,18 @@ fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<Impor
                     source,
                 );
             }
+            // Single-line surface aliases sitting next to the wall — local
+            // re-export clauses (`export [type] { X }` without a `from`)
+            // and inline one-line `export const X = …` / `export type X
+            // = …`. These are structurally wall items (forwarding /
+            // aliasing locally-named identifiers) and shouldn't be
+            // counted against the "other implementation" tolerance — the
+            // pattern is common at the head and middle of TS package
+            // entrypoints (e.g. vite's `node/index.ts` mixes 200+ bare
+            // reexports with a handful of one-line `export const`
+            // aliases). Their lines aren't pulled into any chunk —
+            // `find_export_starts` already covers them.
+            "export_statement" if is_wall_compatible_inline_export(child) => {}
             "comment" | "hash_bang_line" => {}
             _ if !tolerate_reexport_wall_other(child, &mut other_statements, &mut other_lines) => {
                 return None;
@@ -2383,16 +2436,40 @@ fn is_bare_reexport(node: Node) -> bool {
     first_decl_child(node).is_none() && has_export_clause(node) && has_from_source(node)
 }
 
+/// True when an `export_statement` is a single-line surface alias / local
+/// forward that should not interrupt a re-export wall — `export [type] {
+/// X }` without a `from`, or one-line `export const X = …` / `export
+/// type X = …` aliases. Multi-line bodies are real implementation and
+/// stop the wall.
+fn is_wall_compatible_inline_export(node: Node) -> bool {
+    if node_line_count(node) > 1 {
+        return false;
+    }
+    if has_export_clause(node) && !has_from_source(node) {
+        return true;
+    }
+    first_decl_child(node).is_some()
+}
+
 fn collect_export_names_from(
     items: &[ExportInfo<'_>],
     export_start_lines: &HashSet<usize>,
+    import_owned_lines: &HashSet<usize>,
 ) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for item in items {
         full.push(item.start_line);
         let ellipsis_line = item.start_line + 1;
-        if !export_start_lines.contains(&ellipsis_line) {
+        // Suppress the courtesy ellipsis when the next source line is
+        // structural — another real export start, or a line owned by
+        // the imports / re-export-chunk batch. The latter only matters
+        // when an inline `export const` / `export type { … }` sits
+        // adjacent to a bare re-export wall (TS entrypoint pattern):
+        // peer batches can't overlap line ownership.
+        if !export_start_lines.contains(&ellipsis_line)
+            && !import_owned_lines.contains(&ellipsis_line)
+        {
             ellipses.push(ellipsis_line);
         }
     }

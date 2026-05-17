@@ -219,21 +219,25 @@ packages/
                     45→): ResolveIdFn {
                     …
                 index.ts
-                    1→import type * as Rolldown from 'rolldown'
-                    2→import {
-                    3→  parseAst as _parseAst,
-                    4→  parseAstAsync as _parseAstAsync,
-                    5→} from 'rolldown/parseAst'
-                    6→import type * as Rollup from '#types/internal/rollupTypeCompat'
                     8→export type { Rollup, Rolldown }
-                    …
                     24→/** @deprecated - use `parse` instead */
                     25→export const parseAst: typeof _parseAst = _parseAst
                     26→/** @deprecated - use `parseAsync` instead */
                     27→export const parseAstAsync: typeof _parseAstAsync = _parseAstAsync
                     …
+                    29→export {
+                    30→  defineConfig,
+                    31→  loadConfigFromFile,
+                    32→  resolveConfig,
+                    33→  sortUserPlugins,
+                    34→} from './config'
+                    35→export { perEnvironmentPlugin } from './plugin'
+                    36→export { perEnvironmentState } from './environment'
+                    37→export { createServer } from './server'
+                    38→export { preview } from './preview'
+                    39→export { build, createBuilder } from './build'
+                    41→export { optimizeDeps } from './optimizer'
                     87→export const esbuildVersion = '0.25.0'
-                    …
                 internalIndex.ts
                 logger.ts
                 nodeResolve.ts
