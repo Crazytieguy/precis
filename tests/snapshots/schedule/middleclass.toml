@@ -1,7 +1,7 @@
 fixture = "middleclass"
 budget = 10000
-cumulative_tokens = 3176
-batch_count = 32
+cumulative_tokens = 3608
+batch_count = 43
 
 [[batches]]
 position = 1
@@ -249,10 +249,344 @@ kind = "ellipsis"
 
 [[batches]]
 position = 7
+key = 'Fs(DirListing { dir: "spec" })'
+descriptor = "listing of 'spec'"
+cost_tokens = 58
+cum_tokens = 294
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "spec"
+entries = ["class_spec.lua", "classes_spec.lua", "default_methods_spec.lua", "instances_spec.lua", "metamethods_lua_5_2.lua", "metamethods_lua_5_3.lua", "metamethods_spec.lua", "mixins_spec.lua"]
+
+[[batches]]
+position = 8
+key = 'Lua(DeclNames { file: "spec/metamethods_spec.lua", chunk_index: 0 })'
+descriptor = "lua decl names surface in spec/metamethods_spec.lua"
+cost_tokens = 36
+cum_tokens = 330
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "spec/metamethods_spec.lua"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "spec/metamethods_spec.lua"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "spec/metamethods_spec.lua"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "spec/metamethods_spec.lua"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "rockspecs" })'
+descriptor = "listing of 'rockspecs'"
+cost_tokens = 80
+cum_tokens = 410
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "rockspecs"
+entries = ["middleclass-3.0-0.rockspec", "middleclass-3.1-0.rockspec", "middleclass-3.2-0.rockspec", "middleclass-4.0-0.rockspec", "middleclass-4.1-0.rockspec", "middleclass-4.1.1-0.rockspec"]
+
+[[batches]]
+position = 10
+key = 'Lua(DeclNames { file: "middleclass.lua", chunk_index: 1 })'
+descriptor = "lua decl names surface #1 in middleclass.lua"
+cost_tokens = 87
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
+key = 'Lua(Decl { file: "middleclass.lua", start_line: 144 })'
+descriptor = "lua decl at middleclass.lua:144"
+cost_tokens = 0
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 12
+key = 'Lua(Decl { file: "middleclass.lua", start_line: 151 })'
+descriptor = "lua decl at middleclass.lua:151"
+cost_tokens = 0
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'Lua(Decl { file: "middleclass.lua", start_line: 172 })'
+descriptor = "lua decl at middleclass.lua:172"
+cost_tokens = 0
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Lua(Decl { file: "middleclass.lua", start_line: 178 })'
+descriptor = "lua decl at middleclass.lua:178"
+cost_tokens = 0
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 15
+key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 172 })'
+descriptor = "lua decl body at middleclass.lua:172"
+cost_tokens = 15
+cum_tokens = 512
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 174
+end = 174
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 144 })'
+descriptor = "lua decl body at middleclass.lua:144"
+cost_tokens = 21
+cum_tokens = 533
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 146
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 178 })'
+descriptor = "lua decl body at middleclass.lua:178"
+cost_tokens = 24
+cum_tokens = 557
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
 key = 'Lua(DeclNames { file: "middleclass.lua", chunk_index: 0 })'
 descriptor = "lua decl names surface in middleclass.lua"
-cost_tokens = 141
-cum_tokens = 377
+cost_tokens = 207
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -307,8 +641,32 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "middleclass.lua"
-start = 186
-end = 186
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 138
+end = 139
 
 [batches.content.spans.render]
 kind = "full"
@@ -363,18 +721,42 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "middleclass.lua"
-start = 187
-end = 187
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 140
+end = 140
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 19
 key = 'Lua(Decl { file: "middleclass.lua", start_line: 31 })'
 descriptor = "lua decl at middleclass.lua:31"
 cost_tokens = 0
-cum_tokens = 377
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -396,11 +778,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 20
 key = 'Lua(Decl { file: "middleclass.lua", start_line: 57 })'
 descriptor = "lua decl at middleclass.lua:57"
 cost_tokens = 0
-cum_tokens = 377
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -422,11 +804,11 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 21
 key = 'Lua(Decl { file: "middleclass.lua", start_line: 68 })'
 descriptor = "lua decl at middleclass.lua:68"
 cost_tokens = 0
-cum_tokens = 377
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -448,11 +830,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 22
 key = 'Lua(Decl { file: "middleclass.lua", start_line: 81 })'
 descriptor = "lua decl at middleclass.lua:81"
 cost_tokens = 0
-cum_tokens = 377
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -474,11 +856,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 23
 key = 'Lua(Decl { file: "middleclass.lua", start_line: 109 })'
 descriptor = "lua decl at middleclass.lua:109"
 cost_tokens = 0
-cum_tokens = 377
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -500,81 +882,37 @@ end = 110
 kind = "ellipsis"
 
 [[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "spec" })'
-descriptor = "listing of 'spec'"
-cost_tokens = 58
-cum_tokens = 435
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "spec"
-entries = ["class_spec.lua", "classes_spec.lua", "default_methods_spec.lua", "instances_spec.lua", "metamethods_lua_5_2.lua", "metamethods_lua_5_3.lua", "metamethods_spec.lua", "mixins_spec.lua"]
-
-[[batches]]
-position = 14
-key = 'Lua(DeclNames { file: "spec/metamethods_spec.lua", chunk_index: 0 })'
-descriptor = "lua decl names surface in spec/metamethods_spec.lua"
-cost_tokens = 36
-cum_tokens = 471
+position = 24
+key = 'Lua(Decl { file: "middleclass.lua", start_line: 129 })'
+descriptor = "lua decl at middleclass.lua:129"
+cost_tokens = 0
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "spec/metamethods_spec.lua"
-start = 3
-end = 3
+path = "middleclass.lua"
+start = 129
+end = 129
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "spec/metamethods_spec.lua"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "spec/metamethods_spec.lua"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "spec/metamethods_spec.lua"
-start = 8
-end = 8
+path = "middleclass.lua"
+start = 130
+end = 130
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "rockspecs" })'
-descriptor = "listing of 'rockspecs'"
-cost_tokens = 80
-cum_tokens = 551
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "rockspecs"
-entries = ["middleclass-3.0-0.rockspec", "middleclass-3.1-0.rockspec", "middleclass-3.2-0.rockspec", "middleclass-4.0-0.rockspec", "middleclass-4.1-0.rockspec", "middleclass-4.1.1-0.rockspec"]
-
-[[batches]]
-position = 16
+position = 25
 key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 68 })'
 descriptor = "lua decl body at middleclass.lua:68"
 cost_tokens = 37
-cum_tokens = 588
+cum_tokens = 801
 
 [batches.content]
 kind = "lines"
@@ -588,11 +926,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 17
+position = 26
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 482
-cum_tokens = 1070
+cum_tokens = 1283
 
 [batches.content]
 kind = "lines"
@@ -798,11 +1136,29 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 18
+position = 27
+key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 129 })'
+descriptor = "lua decl body at middleclass.lua:129"
+cost_tokens = 57
+cum_tokens = 1340
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 131
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
 key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 57 })'
 descriptor = "lua decl body at middleclass.lua:57"
 cost_tokens = 76
-cum_tokens = 1146
+cum_tokens = 1416
 
 [batches.content]
 kind = "lines"
@@ -824,11 +1180,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 19
+position = 29
 key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 109 })'
 descriptor = "lua decl body at middleclass.lua:109"
 cost_tokens = 112
-cum_tokens = 1258
+cum_tokens = 1528
 
 [batches.content]
 kind = "lines"
@@ -858,11 +1214,53 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 20
+position = 30
+key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 151 })'
+descriptor = "lua decl body at middleclass.lua:151"
+cost_tokens = 162
+cum_tokens = 1690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 157
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 164
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
 key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 31 })'
 descriptor = "lua decl body at middleclass.lua:31"
 cost_tokens = 198
-cum_tokens = 1456
+cum_tokens = 1888
 
 [batches.content]
 kind = "lines"
@@ -892,11 +1290,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 21
+position = 32
 key = 'Markdown(Section { file: "UPDATING.md", section_index: 0 })'
 descriptor = "UPDATING.md section #0"
 cost_tokens = 752
-cum_tokens = 2208
+cum_tokens = 2640
 
 [batches.content]
 kind = "lines"
@@ -1086,11 +1484,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 22
+position = 33
 key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 81 })'
 descriptor = "lua decl body at middleclass.lua:81"
 cost_tokens = 253
-cum_tokens = 2461
+cum_tokens = 2893
 
 [batches.content]
 kind = "lines"
@@ -1128,11 +1526,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 23
+position = 34
 key = 'Markdown(HeadingsOutline { file: "CHANGELOG.md" })'
 descriptor = "headings outline in CHANGELOG.md"
 cost_tokens = 133
-cum_tokens = 2594
+cum_tokens = 3026
 
 [batches.content]
 kind = "lines"
@@ -1282,11 +1680,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 35
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0 })'
 descriptor = "CHANGELOG.md section #0"
 cost_tokens = 0
-cum_tokens = 2594
+cum_tokens = 3026
 
 [batches.content]
 kind = "lines"
@@ -1300,11 +1698,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 25
+position = 36
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 4 })'
 descriptor = "CHANGELOG.md section #4"
 cost_tokens = 30
-cum_tokens = 2624
+cum_tokens = 3056
 
 [batches.content]
 kind = "lines"
@@ -1326,11 +1724,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 26
+position = 37
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 2 })'
 descriptor = "CHANGELOG.md section #2"
 cost_tokens = 49
-cum_tokens = 2673
+cum_tokens = 3105
 
 [batches.content]
 kind = "lines"
@@ -1352,11 +1750,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 27
+position = 38
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 6 })'
 descriptor = "CHANGELOG.md section #6"
 cost_tokens = 30
-cum_tokens = 2703
+cum_tokens = 3135
 
 [batches.content]
 kind = "lines"
@@ -1378,11 +1776,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 28
+position = 39
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 5 })'
 descriptor = "CHANGELOG.md section #5"
 cost_tokens = 37
-cum_tokens = 2740
+cum_tokens = 3172
 
 [batches.content]
 kind = "lines"
@@ -1404,11 +1802,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 29
+position = 40
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 1 })'
 descriptor = "CHANGELOG.md section #1"
 cost_tokens = 92
-cum_tokens = 2832
+cum_tokens = 3264
 
 [batches.content]
 kind = "lines"
@@ -1430,11 +1828,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 30
+position = 41
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 3 })'
 descriptor = "CHANGELOG.md section #3"
 cost_tokens = 91
-cum_tokens = 2923
+cum_tokens = 3355
 
 [batches.content]
 kind = "lines"
@@ -1456,11 +1854,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 31
+position = 42
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 8 })'
 descriptor = "CHANGELOG.md section #8"
 cost_tokens = 82
-cum_tokens = 3005
+cum_tokens = 3437
 
 [batches.content]
 kind = "lines"
@@ -1482,11 +1880,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 32
+position = 43
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 7 })'
 descriptor = "CHANGELOG.md section #7"
 cost_tokens = 171
-cum_tokens = 3176
+cum_tokens = 3608
 
 [batches.content]
 kind = "lines"

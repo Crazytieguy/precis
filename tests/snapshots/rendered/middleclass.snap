@@ -4,39 +4,6 @@ expression: rendered
 ---
 .travis.yml
 CHANGELOG.md
-    1→middleclass changelog
-    2→====================
-    …
-    4→# Version 4.1.1
-    …
-    6→* Fixed a bug in which `static` values which evaluated to `false` were not available
-    7→  in subclasses (#51, thanks @qaisjp for the patch!)
-    8→* `isInstanceOf` does not throw an error any more when its first parameter is a
-    9→  primitive (#55) (This effectively undoes the change introduced in 4.1.0)
-    12→# Version 4.1.0
-    …
-    14→* Simplifies implementation of `isInstanceOf` and `isSubclassOf`. They will now raise an error if their first
-    15→  parameter (the `self`) isn't an instance or a class respectively.
-    17→# Version 4.0.0
-    …
-    19→* Unified the method and metamethod lookup into a single algorithm
-    20→* Added the capacity of setting up the `__index` metamethod in classes
-    21→* Removed global `Object` (classes created with `class(<name>)` have no superclass now)
-    22→* Removed default method `Class:implements(<mixin>)`
-    23→* Renamed several internal functions
-    25→# Version 3.2.0
-    …
-    27→* Changed the way metamethods were handled to fix certain bugs (un-stubbed metamethods could not be inherited)
-    29→# Version 3.1.0
-    …
-    31→* Added Lua 5.3 metamethod support (`__band`, `__bor`, `__bxor`, `__shl`, `__bnot`)
-    33→# Version 3.0.1
-    …
-    35→* Added `__len`, `__ipairs` and `__pairs` metamethods for Lua 5.2
-    37→# Version 3.0
-    …
-    48→# Version 2.0
-    …
 MIT-LICENSE.txt
 README.md
     1→middleclass
@@ -211,6 +178,43 @@ middleclass.lua
     117→    aClass.static[name] = method
     118→  end
     120→  if type(mixin.included)=="function" then mixin:included(aClass) end
+    125→  __tostring   = function(self) return "instance of " .. tostring(self.class) end,
+    …
+    127→  initialize   = function(self, ...) end,
+    …
+    129→  isInstanceOf = function(self, aClass)
+    …
+    131→       and type(self) == 'table'
+    132→       and (self.class == aClass
+    133→            or type(self.class) == 'table'
+    134→            and type(self.class.isSubclassOf) == 'function'
+    138→  static = {
+    139→    allocate = function(self)
+    …
+    144→    new = function(self, ...)
+    …
+    146→      local instance = self:allocate()
+    147→      instance:initialize(...)
+    151→    subclass = function(self, name)
+    …
+    153→      assert(type(name) == "string", "You must provide a name(string) for your class")
+    155→      local subclass = _createClass(name, self)
+    157→      for methodName, f in pairs(self.__instanceDict) do
+    158→        if not (methodName == "__index" and type(f) == "table") then
+    159→          _propagateInstanceMethod(subclass, methodName, f)
+    160→        end
+    161→      end
+    162→      subclass.initialize = function(instance, ...) return self.initialize(instance, ...) end
+    164→      self.subclasses[subclass] = true
+    165→      self:subclassed(subclass)
+    170→    subclassed = function(self, other) end,
+    …
+    172→    isSubclassOf = function(self, other)
+    …
+    174→             type(self.super) == 'table' and
+    178→    include = function(self, ...)
+    …
+    180→      for _,mixin in ipairs({...}) do _includeMixin(self, mixin) end
     186→function middleclass.class(name, super)
     …
 performance/

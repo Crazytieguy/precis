@@ -1,8 +1,12 @@
 //! Lua walker. LuaCATS-meta files (`---@meta` / dense `---@` tags) get
 //! a whole-file batch; other Lua sources use per-decl breakdown
-//! mirroring the C/Python shape. Three top-level decl shapes are
-//! recognized: `function_declaration`, and `assignment_statement` /
-//! `variable_declaration` whose RHS is a `function_definition`.
+//! mirroring the C/Python shape. Recognized decl shapes:
+//!  - `function_declaration` (incl. `local function`),
+//!  - `assignment_statement` / `variable_declaration` with a
+//!    `function_definition` RHS, and
+//!  - function-valued `field`s inside a top-level table-constructor RHS
+//!    (the tables-as-classes idiom: `local M = { foo = function() ... end }`),
+//!    surfaced one level deep so a `static = { ... }` sub-table resolves.
 //!
 //! Batch variants are documented on [`crate::batch::LuaKey`].
 
@@ -174,30 +178,79 @@ struct DeclInfo {
 /// function-like declaration we recognize. Sorted by start_line; dups
 /// (rare; e.g. when `declaration` wraps a `function_declaration` that
 /// also surfaces directly) are coalesced.
+///
+/// Tables-as-classes (`local M = { foo = function(...) end, ... }`) are
+/// idiomatic Lua: a function-valued field inside a table-constructor RHS
+/// is treated the same as `function M.foo(...) end` for purposes of
+/// surface enumeration. Fields are surfaced one level deep into nested
+/// table constructors so common shapes like `static = { ... }` resolve.
 fn find_decls<'a>(tree: &'a Tree, _source: &str) -> Vec<(Node<'a>, DeclInfo)> {
     let root = tree.root_node();
     let mut out = Vec::new();
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
-        let included = match child.kind() {
-            "function_declaration" => true,
-            "variable_declaration" | "assignment_statement" => {
-                function_definition_rhs(child).is_some()
+        match child.kind() {
+            "function_declaration" => {
+                push_decl(&mut out, child);
             }
-            _ => false,
-        };
-        if included {
-            out.push((
-                child,
-                DeclInfo {
-                    start_line: child.start_position().row + 1,
-                },
-            ));
+            "variable_declaration" | "assignment_statement" => {
+                if function_definition_rhs(child).is_some() {
+                    push_decl(&mut out, child);
+                } else if let Some(tc) = table_constructor_rhs(child) {
+                    collect_function_fields(tc, &mut out, 1);
+                }
+            }
+            _ => {}
         }
     }
     out.sort_by_key(|(_, d)| d.start_line);
     out.dedup_by_key(|(_, d)| d.start_line);
     out
+}
+
+fn push_decl<'a>(out: &mut Vec<(Node<'a>, DeclInfo)>, node: Node<'a>) {
+    out.push((
+        node,
+        DeclInfo {
+            start_line: node.start_position().row + 1,
+        },
+    ));
+}
+
+/// Walk `field` children of a table constructor and emit any whose value is a
+/// `function_definition`. Recurses into nested `table_constructor` values up
+/// to `remaining_depth` more levels — typical Lua puts at most one nesting
+/// level (e.g. a `static = { ... }` sub-table on a class mixin), so going
+/// deeper risks surfacing data-table contents that aren't method-like.
+fn collect_function_fields<'a>(
+    tc: Node<'a>,
+    out: &mut Vec<(Node<'a>, DeclInfo)>,
+    remaining_depth: u8,
+) {
+    let mut cursor = tc.walk();
+    for field in tc.children(&mut cursor) {
+        if field.kind() != "field" {
+            continue;
+        }
+        let Some(value) = field.child_by_field_name("value") else {
+            continue;
+        };
+        match value.kind() {
+            "function_definition" => push_decl(out, field),
+            "table_constructor" if remaining_depth > 0 => {
+                // Only surface the sub-table's parent field if at least one
+                // of its descendants would have been surfaced — keeps pure
+                // data subtables (e.g. nested config) out of the names
+                // surface.
+                let before = out.len();
+                collect_function_fields(value, out, remaining_depth - 1);
+                if out.len() > before {
+                    push_decl(out, field);
+                }
+            }
+            _ => {}
+        }
+    }
 }
 
 /// The `function_definition` node that's the RHS of an `assignment_statement`
@@ -216,6 +269,32 @@ fn function_definition_rhs<'a>(node: Node<'a>) -> Option<Node<'a>> {
             }
             "assignment_statement" => {
                 if let Some(n) = function_definition_rhs(child) {
+                    return Some(n);
+                }
+            }
+            _ => {}
+        }
+    }
+    None
+}
+
+/// The `table_constructor` node that's the RHS of an `assignment_statement`
+/// or `variable_declaration`. Returns `None` if the RHS is something else
+/// (function definition, primitive, function call, etc.).
+fn table_constructor_rhs<'a>(node: Node<'a>) -> Option<Node<'a>> {
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        match child.kind() {
+            "expression_list" => {
+                let mut inner = child.walk();
+                for expr in child.children(&mut inner) {
+                    if expr.kind() == "table_constructor" {
+                        return Some(expr);
+                    }
+                }
+            }
+            "assignment_statement" => {
+                if let Some(n) = table_constructor_rhs(child) {
                     return Some(n);
                 }
             }
@@ -325,6 +404,14 @@ fn body_node_for_decl<'a>(node: Node<'a>) -> Option<Node<'a>> {
             let fn_def = function_definition_rhs(node)?;
             fn_def.child_by_field_name("body")
         }
+        "field" => {
+            let value = node.child_by_field_name("value")?;
+            if value.kind() == "function_definition" {
+                value.child_by_field_name("body")
+            } else {
+                None
+            }
+        }
         _ => None,
     }
 }
@@ -416,6 +503,32 @@ mod tests {
             .expect("load lua grammar");
         let tree = parser.parse(source, None).expect("parse");
         (source.to_string(), tree)
+    }
+
+    #[test]
+    fn lua_finds_table_as_class_function_fields() {
+        let src = "\
+local M = {
+  foo = function(self) return 1 end,
+  bar = function(self) return 2 end,
+  static = {
+    baz = function(self) return 3 end,
+  },
+  data = 42,
+}
+return M
+";
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree, &source);
+        let starts: Vec<usize> = decls.iter().map(|(_, i)| i.start_line).collect();
+        assert!(
+            starts.contains(&2) && starts.contains(&3) && starts.contains(&5),
+            "decls: {decls:?}"
+        );
+        assert!(
+            !starts.contains(&7),
+            "data=42 must not be a decl: {decls:?}"
+        );
     }
 
     #[test]
