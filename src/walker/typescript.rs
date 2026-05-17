@@ -284,6 +284,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             };
             let export_count = exports.len();
             let type_only_export_count = exports.iter().filter(|item| item.is_type_only).count();
+            let interface_export_count = exports
+                .iter()
+                .filter(|item| matches!(item.kind, ItemKind::Interface))
+                .count();
             let has_split_js_class_export = is_js_file(file)
                 && exports
                     .iter()
@@ -326,6 +330,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         chunk_count,
                         js_factor,
                         has_split_js_class_export,
+                        interface_export_count,
                     ) * per_export_factor
                         * prototype_boost,
                 });
@@ -1917,6 +1922,7 @@ fn export_names_value(
     chunk_count: usize,
     js_factor: f64,
     has_split_js_class_export: bool,
+    interface_export_count: usize,
 ) -> f64 {
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
     let class_split_factor = if has_split_js_class_export { 1.12 } else { 1.0 };
@@ -1925,7 +1931,49 @@ fn export_names_value(
         * js_factor
         * class_split_factor
         * secondary_ts_workspace_member_factor(file, ctx)
+        * interface_density_boost(file, ctx, chunk_index, interface_export_count)
 }
+
+/// Files declaring many `export interface`s are canonical type-anchor
+/// modules — the names surface opens a catalog of public types
+/// consumers reach for when orienting. Without this boost the value-
+/// bearing siblings (`plugin.ts`, `optimizer/index.ts`) win the V/C
+/// race and the type-anchor's names surface can sit past the budget
+/// tail despite being the natural type-orientation entry point.
+///
+/// Applied only to the first names-surface chunk: that's where the
+/// catalog opens. Boosting trailing chunks would invert the chunk-
+/// falloff order (later chunks have smaller cost and would beat the
+/// first one on V/C) and pull tail content into the budget without
+/// delivering the catalog header. Restricted to depth ≥ 2 to keep the
+/// boost from firing on root-level interface dumps (which already get
+/// the entrypoint depth-pin) — the targeted symptom is *nested*
+/// anchors losing to nested siblings.
+///
+/// Logarithmic growth so dense catalogs (vite's `config.ts` with 14
+/// interfaces, monaco's `register.ts` with 13–15) get more lift than
+/// borderline cases, without letting outliers (drizzle-kit's
+/// `jsonStatements.ts` with 80) crowd everything else. Constants are
+/// first-pass; calibration territory.
+fn interface_density_boost(
+    file: &Path,
+    ctx: &WalkCtx,
+    chunk_index: usize,
+    interface_export_count: usize,
+) -> f64 {
+    if chunk_index != 0
+        || interface_export_count < INTERFACE_DENSITY_MIN
+        || ctx.depth_from_root(file) < 2
+    {
+        return 1.0;
+    }
+    let excess = (interface_export_count - INTERFACE_DENSITY_MIN) as f64;
+    1.0 + INTERFACE_DENSITY_BOOST_BASE + INTERFACE_DENSITY_BOOST_PER_EXCESS * (1.0 + excess).ln()
+}
+
+const INTERFACE_DENSITY_MIN: usize = 5;
+const INTERFACE_DENSITY_BOOST_BASE: f64 = 0.5;
+const INTERFACE_DENSITY_BOOST_PER_EXCESS: f64 = 0.25;
 
 fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
