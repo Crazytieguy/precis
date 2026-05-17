@@ -95,10 +95,6 @@ database/
         cassandra_test.go
         examples/
     clickhouse/
-        README.md
-        clickhouse.go
-        clickhouse_test.go
-        examples/
     cockroachdb/
     crate/
     driver.go
@@ -338,6 +334,8 @@ source/
             1→# iofs
             3→https://pkg.go.dev/github.com/golang-migrate/migrate/v4/source/iofs
         doc.go
+            1→/*
+            2→Package iofs provides the Go 1.16+ io/fs#FS driver.
             10→package iofs
         example_test.go
         iofs.go

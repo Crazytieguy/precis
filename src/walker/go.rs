@@ -1056,15 +1056,41 @@ fn collect_package_imports(tree: &Tree, source: &str) -> FileLines {
 /// provides ...`). Emitted as a separate batch (vs folding into
 /// `PackageImports`) so the lede can fire standalone at low cost when
 /// the `PackageImports` batch's `import (...)` block is heavy.
+///
+/// `/* … */` block comments span the whole godoc body in a single
+/// tree-sitter node — line/example/notes/etc — which can balloon the
+/// "lede" batch to hundreds of tokens (e.g. gin's `doc.go` ships an
+/// example `package main` block inside `/* … */`). Keep only the first
+/// paragraph: stop at the first blank source line inside the comment.
+/// `//`-style ledes are unaffected (each `//` line is its own node,
+/// and `collect_doc_comments_above` already stops at any source-row gap).
 fn collect_package_doc_lede(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
         if child.kind() == "package_clause" {
-            return collect_doc_comments_above(child, source);
+            let lines = collect_doc_comments_above(child, source);
+            return truncate_at_first_blank_row(lines, source);
         }
     }
     FileLines::new(Vec::new())
+}
+
+/// Drop any row at or after the first blank source line in `lines.full`.
+/// `FileLines` row numbers are 1-based.
+fn truncate_at_first_blank_row(lines: FileLines, source: &str) -> FileLines {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let mut kept = Vec::new();
+    for row in lines.full {
+        if src_lines
+            .get(row.saturating_sub(1))
+            .is_some_and(|t| t.trim().is_empty())
+        {
+            break;
+        }
+        kept.push(row);
+    }
+    FileLines::new(kept)
 }
 
 /// One full + ellipsis pair per name line so a grouped block surfaces
@@ -1251,6 +1277,42 @@ func Bar() {}
             bar_doc.full.is_empty(),
             "blank-line gap separates the comment from Bar's decl; got {bar_doc:?}"
         );
+    }
+
+    #[test]
+    fn go_package_doc_lede_truncates_block_comment_at_first_blank_line() {
+        // Block-comment ledes (gin's `doc.go`) often pack an entire
+        // `Example:` body into the `/* … */` node. The lede batch should
+        // ship only the first paragraph; the rest is example content
+        // that's high cost and not the identity-level signal.
+        let src = "\
+/*
+Package foo summarises the package in one sentence.
+
+Example:
+
+\tx := foo.New()
+\tx.Run()
+*/
+package foo
+";
+        let (source, tree) = parse(src);
+        let lede = collect_package_doc_lede(&tree, &source);
+        assert_eq!(lede.full, vec![1, 2]);
+    }
+
+    #[test]
+    fn go_package_doc_lede_preserves_line_comment_block() {
+        // `//`-style ledes don't have blank source rows inside the
+        // contiguous comment run, so truncation is a no-op.
+        let src = "\
+// Package foo summarises the package.
+// Continues onto a second line.
+package foo
+";
+        let (source, tree) = parse(src);
+        let lede = collect_package_doc_lede(&tree, &source);
+        assert_eq!(lede.full, vec![1, 2]);
     }
 
     #[test]

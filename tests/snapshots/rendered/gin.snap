@@ -154,6 +154,8 @@ deprecated.go
     …
 deprecated_test.go
 doc.go
+    1→/*
+    2→Package gin implements a HTTP web framework called gin.
     22→package gin // import "github.com/gin-gonic/gin"
 docs/
     doc.md
@@ -318,7 +320,6 @@ render/
         16→}
         18→var tomlContentType = []string{"application/toml; charset=utf-8"}
         …
-        20→// Render (TOML) marshals the given interface object and writes data with custom ContentType.
         21→func (r TOML) Render(w http.ResponseWriter) error {
         …
         33→// WriteContentType (TOML) writes TOML ContentType for response.
