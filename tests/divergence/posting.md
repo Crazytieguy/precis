@@ -16,19 +16,19 @@ Score(3000)=0.521 I=0.717 C=0.378 ns_rows≤3K=16/54 (reached=7 partial=2 missin
 | ns | 447 |  | 72 | README feature list (first half) | 1.5 |  | 0.600 |
 | ns | 546 |  | 99 | README feature list (second half) | 1.6 |  | 0.562 |
 | walker |  | 569 | 219 | python imports in src/posting/__init__.py |  |  | 0.562 |
-| walker |  | 656 | 87 | listing of 'src/posting/widgets' |  |  | 0.565 |
-| ns | 669 |  | 123 | CLI command names | 1.7 |  | 0.529 |
-| walker |  | 722 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.530 |
-| walker |  | 752 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.532 |
-| walker |  | 762 | 10 | python decl names surface in src/posting/exit_codes.py |  |  | 0.532 |
-| walker |  | 772 | 10 | python decl names surface in src/posting/help_data.py |  |  | 0.532 |
-| walker |  | 778 | 6 | python decl at src/posting/help_data.py:4 |  |  | 0.532 |
-| walker |  | 788 | 10 | python decl names surface in src/posting/messages.py |  |  | 0.532 |
-| walker |  | 796 | 8 | python decl at src/posting/messages.py:6 |  |  | 0.532 |
-| walker |  | 805 | 9 | python class body at src/posting/messages.py:6 |  |  | 0.532 |
-| walker |  | 815 | 10 | python decl names surface in src/posting/version.py |  |  | 0.532 |
+| walker |  | 583 | 14 | listing of 'src/posting/importing' |  |  | 0.563 |
+| ns | 669 |  | 123 | CLI command names | 1.7 |  | 0.527 |
+| walker |  | 670 | 87 | listing of 'src/posting/widgets' |  |  | 0.530 |
+| walker |  | 700 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.530 |
+| walker |  | 766 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.532 |
+| walker |  | 776 | 10 | python decl names surface in src/posting/exit_codes.py |  |  | 0.532 |
+| walker |  | 786 | 10 | python decl names surface in src/posting/help_data.py |  |  | 0.532 |
+| walker |  | 792 | 6 | python decl at src/posting/help_data.py:4 |  |  | 0.532 |
+| walker |  | 802 | 10 | python decl names surface in src/posting/messages.py |  |  | 0.532 |
+| walker |  | 810 | 8 | python decl at src/posting/messages.py:6 |  |  | 0.532 |
 | ns | 818 |  | 149 | Runtime dependencies (CLI, HTTP, OpenAPI, clipboard) | 1.8 |  | 0.505 |
-| walker |  | 829 | 14 | listing of 'src/posting/importing' |  |  | 0.505 |
+| walker |  | 819 | 9 | python class body at src/posting/messages.py:6 |  |  | 0.505 |
+| walker |  | 829 | 10 | python decl names surface in src/posting/version.py |  |  | 0.505 |
 | walker |  | 842 | 13 | python decl names surface in src/posting/_start_time.py |  |  | 0.505 |
 | walker |  | 855 | 13 | python decl names surface in src/posting/suggesters.py |  |  | 0.505 |
 | walker |  | 926 | 71 | [package] in pyproject.toml |  |  | 0.539 |

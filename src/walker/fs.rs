@@ -178,7 +178,15 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         (0.5, 0.45, 0.25)
     };
-    let depth = if supporting_source_dir || source_inventory_dir {
+    let depth = if source_inventory_dir && under_root_source_ancestor {
+        // A flat partition under a root-adjacent `lib/`/`src/` is the
+        // package's API surface root (alongside the module-source tier)
+        // — its listing is what names the partition, regardless of
+        // layout depth. Pin to depth 1 so axios's `lib/helpers` doesn't
+        // get a path-depth discount that lets the same package's tiny
+        // sibling dirs out-rank it on the V/C race.
+        file_depth_factor(dir, ctx, true)
+    } else if supporting_source_dir || source_inventory_dir {
         inventory_depth_factor(dir, ctx, non_essential)
     } else if module_source_dir || src_of_sibling_modules {
         file_depth_factor(dir, ctx, true)

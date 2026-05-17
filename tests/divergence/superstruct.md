@@ -7,13 +7,13 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | walker |  | 141 | 76 | package identity in package.json |  |  | 0.000 |
 | walker |  | 160 | 19 | listing of 'src' |  |  | 0.000 |
 | ns | 161 |  | 65 | Repo root listing | 1.2 |  | 0.856 |
-| ns | 240 |  | 79 | Public entry — src/index.ts in full | 1.3 |  | 0.725 |
-| walker |  | 248 | 88 | README headline in Readme.md |  |  | 0.725 |
-| walker |  | 269 | 21 | listing of 'docs' |  |  | 0.729 |
-| walker |  | 294 | 25 | export names surface in src/error.ts |  |  | 0.730 |
-| ns | 306 |  | 66 | Readme runtime-errors paragraph | 1.4 |  | 0.713 |
-| walker |  | 348 | 54 | headings outline in Readme.md |  |  | 0.721 |
-| walker |  | 366 | 18 | listing of 'src/structs' |  |  | 0.741 |
+| walker |  | 178 | 18 | listing of 'src/structs' |  |  | 0.881 |
+| ns | 240 |  | 79 | Public entry — src/index.ts in full | 1.3 |  | 0.747 |
+| walker |  | 266 | 88 | README headline in Readme.md |  |  | 0.747 |
+| walker |  | 287 | 21 | listing of 'docs' |  |  | 0.750 |
+| ns | 306 |  | 66 | Readme runtime-errors paragraph | 1.4 |  | 0.733 |
+| walker |  | 312 | 25 | export names surface in src/error.ts |  |  | 0.733 |
+| walker |  | 366 | 54 | headings outline in Readme.md |  |  | 0.741 |
 | walker |  | 382 | 16 | Readme.md section #10 |  |  | 0.741 |
 | ns | 394 |  | 88 | package.json — name, version, license | 1.5 |  | 0.715 |
 | ns | 431 |  | 37 | src/ tree (flat layout) | 2.1 |  | 0.729 |

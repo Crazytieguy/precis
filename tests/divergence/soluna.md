@@ -113,27 +113,27 @@ Score(3000)=0.604 I=0.727 C=0.502 ns_rows≤3K=18/40 (reached=6 partial=6 missin
 | walker |  | 6892 | 28 | c decl names surface in src/luabuffer.h |  |  | 0.739 |
 | walker |  | 6920 | 28 | c decl names surface in src/version.h |  |  | 0.739 |
 | walker |  | 6955 | 35 | c decl names surface in src/ime_state.h |  |  | 0.739 |
-| walker |  | 6974 | 19 | c decl at src/luabuffer.h:8 |  |  | 0.739 |
-| walker |  | 7025 | 51 | c decl names surface in src/spritemgr.h |  |  | 0.739 |
-| walker |  | 7080 | 55 | c decl names surface in src/render_bindings.h |  |  | 0.739 |
-| walker |  | 7100 | 20 | c decl at src/render_bindings.h:6 |  |  | 0.739 |
-| walker |  | 7165 | 65 | c decl names surface in src/ime_char_filter.h |  |  | 0.739 |
-| walker |  | 7187 | 22 | c decl at src/ime_char_filter.h:41 |  |  | 0.740 |
+| walker |  | 6968 | 13 | listing of 'src/platform' |  |  | 0.739 |
+| walker |  | 6987 | 19 | c decl at src/luabuffer.h:8 |  |  | 0.739 |
+| walker |  | 7038 | 51 | c decl names surface in src/spritemgr.h |  |  | 0.739 |
+| walker |  | 7093 | 55 | c decl names surface in src/render_bindings.h |  |  | 0.739 |
+| walker |  | 7113 | 20 | c decl at src/render_bindings.h:6 |  |  | 0.739 |
+| walker |  | 7178 | 65 | c decl names surface in src/ime_char_filter.h |  |  | 0.739 |
 | ns | 7187 |  | 486 | docs/callback.lua — frame/key/mouse/resize hooks | 3.12 |  | 0.740 |
-| walker |  | 7215 | 28 | c decl at src/ime_char_filter.h:27 |  |  | 0.740 |
-| walker |  | 7243 | 28 | c decl at src/ime_char_filter.h:47 |  |  | 0.740 |
-| walker |  | 7271 | 28 | c decl at src/ime_char_filter.h:52 |  |  | 0.740 |
-| walker |  | 7281 | 10 | c includes in src/batch.h |  |  | 0.740 |
-| walker |  | 7291 | 10 | c includes in src/font_define.h |  |  | 0.740 |
-| walker |  | 7301 | 10 | c includes in src/loginfo.h |  |  | 0.740 |
-| walker |  | 7311 | 10 | c includes in src/transform.h |  |  | 0.740 |
-| walker |  | 7319 | 8 | c decl names surface in src/font_system.c |  |  | 0.740 |
-| walker |  | 7327 | 8 | c decl names surface in src/lfs.c |  |  | 0.740 |
-| walker |  | 7335 | 8 | c decl names surface in src/openurl.c |  |  | 0.740 |
-| walker |  | 7343 | 8 | c decl names surface in src/truetype.c |  |  | 0.740 |
-| walker |  | 7351 | 8 | c decl names surface in src/writelog.c |  |  | 0.740 |
-| walker |  | 7381 | 30 | c decl at src/ime_char_filter.h:16 |  |  | 0.740 |
-| walker |  | 7394 | 13 | listing of 'src/platform' |  |  | 0.740 |
+| walker |  | 7200 | 22 | c decl at src/ime_char_filter.h:41 |  |  | 0.740 |
+| walker |  | 7228 | 28 | c decl at src/ime_char_filter.h:27 |  |  | 0.740 |
+| walker |  | 7256 | 28 | c decl at src/ime_char_filter.h:47 |  |  | 0.740 |
+| walker |  | 7284 | 28 | c decl at src/ime_char_filter.h:52 |  |  | 0.740 |
+| walker |  | 7294 | 10 | c includes in src/batch.h |  |  | 0.740 |
+| walker |  | 7304 | 10 | c includes in src/font_define.h |  |  | 0.740 |
+| walker |  | 7314 | 10 | c includes in src/loginfo.h |  |  | 0.740 |
+| walker |  | 7324 | 10 | c includes in src/transform.h |  |  | 0.740 |
+| walker |  | 7332 | 8 | c decl names surface in src/font_system.c |  |  | 0.740 |
+| walker |  | 7340 | 8 | c decl names surface in src/lfs.c |  |  | 0.740 |
+| walker |  | 7348 | 8 | c decl names surface in src/openurl.c |  |  | 0.740 |
+| walker |  | 7356 | 8 | c decl names surface in src/truetype.c |  |  | 0.740 |
+| walker |  | 7364 | 8 | c decl names surface in src/writelog.c |  |  | 0.740 |
+| walker |  | 7394 | 30 | c decl at src/ime_char_filter.h:16 |  |  | 0.740 |
 | walker |  | 7472 | 78 | c decl names surface in src/tmpbuffer.h |  |  | 0.740 |
 | walker |  | 7491 | 19 | c decl at src/tmpbuffer.h:7 |  |  | 0.740 |
 | walker |  | 7519 | 28 | c decl at src/tmpbuffer.h:15 |  |  | 0.740 |
@@ -192,17 +192,18 @@ Score(3000)=0.604 I=0.727 C=0.502 ns_rows≤3K=18/40 (reached=6 partial=6 missin
 | ns | 9086 |  | 196 | src/render.c — soluna.render luaL_Reg | 5.4 |  | 0.653 |
 | walker |  | 9094 | 17 | c decl body at src/font_define.h:26 |  |  | 0.653 |
 | walker |  | 9118 | 24 | c decl body at src/ime_char_filter.h:41 |  |  | 0.653 |
-| walker |  | 9197 | 79 | c decl at src/font_define.h:11 |  |  | 0.653 |
-| walker |  | 9223 | 26 | c decl body at src/sprite_submit.h:15 |  |  | 0.653 |
-| walker |  | 9249 | 26 | c decl body at src/sprite_submit.h:21 |  |  | 0.653 |
-| walker |  | 9330 | 81 | c decl at src/spritemgr.h:9 |  |  | 0.653 |
-| walker |  | 9360 | 30 | c includes in src/ime_char_filter.h |  |  | 0.653 |
+| walker |  | 9141 | 23 | listing of 'src/platform/wasm' |  |  | 0.653 |
+| walker |  | 9220 | 79 | c decl at src/font_define.h:11 |  |  | 0.653 |
+| walker |  | 9246 | 26 | c decl body at src/sprite_submit.h:15 |  |  | 0.653 |
+| walker |  | 9272 | 26 | c decl body at src/sprite_submit.h:21 |  |  | 0.653 |
+| walker |  | 9353 | 81 | c decl at src/spritemgr.h:9 |  |  | 0.653 |
+| walker |  | 9383 | 30 | c includes in src/ime_char_filter.h |  |  | 0.653 |
 | ns | 9436 |  | 350 | src/spritemgr.c — SOLUNA_BATCH metatable | 5.5 |  | 0.641 |
-| walker |  | 9443 | 83 | c decl at src/transform.h:6 |  |  | 0.641 |
-| walker |  | 9527 | 84 | c decl at src/srbuffer.h:11 |  |  | 0.641 |
-| walker |  | 9552 | 25 | c decl names surface in src/material_util.c |  |  | 0.641 |
+| walker |  | 9466 | 83 | c decl at src/transform.h:6 |  |  | 0.641 |
+| walker |  | 9550 | 84 | c decl at src/srbuffer.h:11 |  |  | 0.641 |
 | ns | 9570 |  | 134 | src/service/start.lua — dispatch fn locations + event-name list | 6.1 |  | 0.637 |
-| walker |  | 9584 | 32 | c includes in src/luabuffer.h |  |  | 0.637 |
+| walker |  | 9575 | 25 | c decl names surface in src/material_util.c |  |  | 0.637 |
+| walker |  | 9607 | 32 | c includes in src/luabuffer.h |  |  | 0.637 |
 | ns | 9727 |  | 157 | src/service/render.lua + main.lua — fn signatures + material ids | 6.2 |  | 0.632 |
-| walker |  | 9798 | 214 | c decl names surface in src/material_util.h |  |  | 0.632 |
+| walker |  | 9821 | 214 | c decl names surface in src/material_util.h |  |  | 0.632 |
 | ns | 9979 |  | 252 | Lualib signature locations: spritebundle + layout + packageloader + coroutine + fontmgr + initsetting + text | 6.3 |  | 0.624 |

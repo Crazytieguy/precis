@@ -59,10 +59,24 @@ entries = ["error.ts", "index.ts", "struct.ts", "structs", "utils.ts"]
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "src/structs" })'
+descriptor = "listing of 'src/structs'"
+cost_tokens = 18
+cum_tokens = 178
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/structs"
+entries = ["coercions.ts", "refinements.ts", "types.ts", "utilities.ts"]
+
+[[batches]]
+position = 5
 key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 88
-cum_tokens = 248
+cum_tokens = 266
 
 [batches.content]
 kind = "lines"
@@ -92,11 +106,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 5
+position = 6
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 21
-cum_tokens = 269
+cum_tokens = 287
 
 [batches.content]
 kind = "fs"
@@ -106,11 +120,11 @@ parent = "docs"
 entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
 
 [[batches]]
-position = 6
+position = 7
 key = 'Typescript(ExportNames { file: "src/error.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
 descriptor = "export names surface in src/error.ts"
 cost_tokens = 25
-cum_tokens = 294
+cum_tokens = 312
 
 [batches.content]
 kind = "lines"
@@ -148,11 +162,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 54
-cum_tokens = 348
+cum_tokens = 366
 
 [batches.content]
 kind = "lines"
@@ -252,20 +266,6 @@ end = 232
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "src/structs" })'
-descriptor = "listing of 'src/structs'"
-cost_tokens = 18
-cum_tokens = 366
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/structs"
-entries = ["coercions.ts", "refinements.ts", "types.ts", "utilities.ts"]
 
 [[batches]]
 position = 9

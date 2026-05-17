@@ -307,10 +307,24 @@ kind = "full"
 
 [[batches]]
 position = 16
+key = 'Fs(DirListing { dir: "src/flask/sansio" })'
+descriptor = "listing of 'src/flask/sansio'"
+cost_tokens = 17
+cum_tokens = 510
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/flask/sansio"
+entries = ["README.md", "app.py", "blueprints.py", "scaffold.py"]
+
+[[batches]]
+position = 17
 key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 9 })'
 descriptor = "python imports #9 in src/flask/__init__.py"
 cost_tokens = 64
-cum_tokens = 557
+cum_tokens = 574
 
 [batches.content]
 kind = "lines"
@@ -324,11 +338,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 6 })'
 descriptor = "python imports #6 in src/flask/__init__.py"
 cost_tokens = 146
-cum_tokens = 703
+cum_tokens = 720
 
 [batches.content]
 kind = "lines"
@@ -342,11 +356,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Python(Imports { file: "src/flask/json/__init__.py" })'
 descriptor = "python imports in src/flask/json/__init__.py"
 cost_tokens = 81
-cum_tokens = 784
+cum_tokens = 801
 
 [batches.content]
 kind = "lines"
@@ -382,20 +396,6 @@ end = 10
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "src/flask/sansio" })'
-descriptor = "listing of 'src/flask/sansio'"
-cost_tokens = 17
-cum_tokens = 801
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/flask/sansio"
-entries = ["README.md", "app.py", "blueprints.py", "scaffold.py"]
 
 [[batches]]
 position = 20

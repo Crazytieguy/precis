@@ -60,59 +60,6 @@ ECOSYSTEM.md
 LICENSE
 MIGRATION_GUIDE.md
 README.md
-    1→<h3 align="center">💎 Platinum sponsors <br /></h3>
-    331→## Table of Contents
-    333→- [Features](#features)
-    334→- [Browser Support](#browser-support)
-    335→- [Installing](#installing)
-    336→  - [Package manager](#package-manager)
-    337→  - [CDN](#cdn)
-    338→- [Example](#example)
-    339→- [Axios API](#axios-api)
-    340→- [Request method aliases](#request-method-aliases)
-    341→- [Concurrency 👎](#concurrency-deprecated)
-    342→- [Creating an instance](#creating-an-instance)
-    343→- [Instance methods](#instance-methods)
-    344→- [Request Config](#request-config)
-    345→- [Response Schema](#response-schema)
-    346→- [Config Defaults](#config-defaults)
-    347→  - [Global axios defaults](#global-axios-defaults)
-    348→  - [Custom instance defaults](#custom-instance-defaults)
-    349→  - [Config order of precedence](#config-order-of-precedence)
-    350→- [Interceptors](#interceptors)
-    351→  - [Multiple Interceptors](#multiple-interceptors)
-    352→- [Handling Errors](#handling-errors)
-    353→- [Handling Timeouts](#handling-timeouts)
-    354→- [Cancellation](#cancellation)
-    355→  - [AbortController](#abortcontroller)
-    356→  - [CancelToken 👎](#canceltoken-deprecated)
-    357→- [Using application/x-www-form-urlencoded format](#using-applicationx-www-form-urlencoded-format)
-    358→  - [URLSearchParams](#urlsearchparams)
-    359→  - [Query string](#query-string-older-browsers)
-    360→  - [🆕 Automatic serialization](#-automatic-serialization-to-urlsearchparams)
-    361→- [Using multipart/form-data format](#using-multipartform-data-format)
-    362→  - [FormData](#formdata)
-    363→  - [🆕 Automatic serialization](#-automatic-serialization-to-formdata)
-    364→- [Files Posting](#files-posting)
-    365→- [HTML Form Posting](#-html-form-posting-browser)
-    366→- [🆕 Progress capturing](#-progress-capturing)
-    367→- [🆕 Rate limiting](#-rate-limiting)
-    368→- [🆕 AxiosHeaders](#-axiosheaders)
-    369→- [🔥 Fetch adapter](#-fetch-adapter)
-    370→  - [🔥 Custom fetch](#-custom-fetch)
-    371→    - [🔥 Using with Tauri](#-using-with-tauri)
-    372→    - [🔥 Using with SvelteKit](#-using-with-sveltekit)
-    373→- [🔥 HTTP2](#-http2)
-    374→- [Semver](#semver)
-    375→- [Promises](#promises)
-    376→- [TypeScript](#typescript)
-    377→- [Contributing](#contributing)
-    378→  - [Local setup](#local-setup)
-    379→- [Resources](#resources)
-    380→- [Credits](#credits)
-    381→- [License](#license)
-    389→- **Data Transformation:** Transform request and response data automatically.
-    390→- **Request Cancellation:** Cancel requests using built-in mechanisms.
 SECURITY.md
 THREATMODEL.md
 docs/
@@ -227,6 +174,58 @@ lib/
         classes/
         data.js
     helpers/
+        AxiosTransformStream.js
+            156→export default AxiosTransformStream;
+        AxiosURLSearchParams.js
+        HttpStatusCode.js
+            77→export default HttpStatusCode;
+        README.md
+            1→# axios // helpers
+            3→The modules found in `helpers/` should be generic modules that are _not_ specific to the domain logic of axios. These modules could theoretically be published to npm on their own and consumed by other modules or apps. Some examples of generic modules are things like:
+            5→- Browser polyfills
+            6→- Managing cookies
+            7→- Parsing HTTP headers
+        ZlibHeaderTransformStream.js
+        bind.js
+        buildURL.js
+        callbackify.js
+            18→export default callbackify;
+        combineURLs.js
+        composeSignals.js
+            57→export default composeSignals;
+        cookies.js
+        deprecatedMethod.js
+        estimateDataURLDecodedBytes.js
+        formDataToJSON.js
+        formDataToStream.js
+        fromDataURI.js
+        isAbsoluteURL.js
+        isAxiosError.js
+        isURLSameOrigin.js
+        null.js
+            2→export default null;
+        parseHeaders.js
+        parseProtocol.js
+        progressEventReducer.js
+        readBlob.js
+            15→export default readBlob;
+        resolveConfig.js
+        sanitizeHeaderValue.js
+        shouldBypassProxy.js
+        speedometer.js
+            55→export default speedometer;
+        spread.js
+        throttle.js
+            44→export default throttle;
+        toFormData.js
+            249→export default toFormData;
+        toURLEncodedForm.js
+        trackStream.js
+        validator.js
+            109→export default {
+            110→  assertOptions,
+            111→  validators,
+            112→};
     platform/
         browser/
             classes/
@@ -247,7 +246,6 @@ lib/
                 12→  protocols: ['http', 'https', 'file', 'blob', 'url', 'data'],
                 13→};
         common/
-            utils.js
         index.js
             1→import platform from './node/index.js';
             2→import * as utils from './common/utils.js';
@@ -316,15 +314,6 @@ tests/
         esm/
     unit/
 tsconfig.json
-    1→{
-    2→  "compilerOptions": {
-    3→    "module": "node16",
-    4→    "lib": ["dom", "es2015"],
-    5→    "types": [],
-    6→    "strict": true,
-    7→    "noEmit": true
-    8→  }
-    9→}
 tslint.json
 vitest.config.js
 webpack.config.js

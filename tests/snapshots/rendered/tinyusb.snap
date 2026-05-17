@@ -59,14 +59,7 @@ lib/
             46→	uint32_t   lease;
             47→} dhcp_entry_t;
             49→typedef struct dhcp_config
-            50→{
-            51→	ip4_addr_t    router;
-            52→	uint16_t      port;
-            53→	ip4_addr_t    dns;
-            54→	const char   *domain;
-            55→	int           num_entry;
-            56→	dhcp_entry_t *entries;
-            57→} dhcp_config_t;
+            …
             62→err_t dhserv_init(const dhcp_config_t *c);
             63→void dhserv_free(void);
             …
@@ -94,6 +87,165 @@ sonar-project.properties
 src/
     CMakeLists.txt
     class/
+        audio/
+            audio.h
+                36→#include "common/tusb_common.h"
+            audio_device.c
+            audio_device.h
+                32→#include "audio.h"
+        bth/
+        cdc/
+            cdc.h
+                35→#include "common/tusb_common.h"
+            cdc_device.c
+            cdc_device.h
+                30→#include "cdc.h"
+            cdc_host.c
+            cdc_host.h
+                30→#include "cdc.h"
+            cdc_rndis.h
+                36→#include "cdc.h"
+                47→typedef enum
+                …
+                72→typedef enum
+                …
+                93→typedef struct {
+                …
+                104→typedef struct {
+                …
+                122→typedef struct {
+                …
+                137→typedef struct {
+                …
+                152→typedef struct {
+                …
+                160→typedef struct {
+                …
+                180→typedef struct {
+                …
+                188→typedef struct {
+                …
+                197→typedef struct {
+                …
+                224→typedef struct {
+                …
+                236→typedef enum
+                …
+                277→typedef enum
+                …
+            serial/
+                ch34x.h
+                cp210x.h
+                ftdi_sio.h
+                    28→#include <stdint.h>
+                pl2303.h
+                    30→#include <stdbool.h>
+                    31→#include <stdint.h>
+        dfu/
+            dfu.h
+                30→#include "common/tusb_common.h"
+                40→// DFU Protocol
+                41→typedef enum
+                42→{
+                43→  DFU_PROTOCOL_RT  = 0x01,
+                44→  DFU_PROTOCOL_DFU = 0x02,
+                45→} dfu_protocol_type_t;
+                47→// DFU Descriptor Type
+                48→typedef enum
+                49→{
+                50→  DFU_DESC_FUNCTIONAL = 0x21,
+                51→} dfu_descriptor_type_t;
+                54→typedef enum {
+                …
+                65→typedef enum {
+                …
+                80→typedef enum {
+                …
+                99→#define DFU_ATTR_CAN_DOWNLOAD              (1u << 0)
+                100→#define DFU_ATTR_CAN_UPLOAD                (1u << 1)
+                101→#define DFU_ATTR_MANIFESTATION_TOLERANT    (1u << 2)
+                102→#define DFU_ATTR_WILL_DETACH               (1u << 3)
+                …
+                105→typedef struct TU_ATTR_PACKED
+                …
+            dfu_device.c
+            dfu_device.h
+                30→#include "dfu.h"
+            dfu_rt_device.c
+            dfu_rt_device.h
+                30→#include "dfu.h"
+                40→void tud_dfu_runtime_reboot_to_dfu_cb(void);
+                …
+                42→//--------------------------------------------------------------------+
+                43→// Internal Class Driver API
+                44→//--------------------------------------------------------------------+
+                45→void     dfu_rtd_init(void);
+                46→bool     dfu_rtd_deinit(void);
+                47→void     dfu_rtd_reset(uint8_t rhport);
+                48→uint16_t dfu_rtd_open(uint8_t rhport, tusb_desc_interface_t const * itf_desc, uint16_t max_len);
+                49→bool     dfu_rtd_control_xfer_cb(uint8_t rhport, uint8_t stage, tusb_control_request_t const * request);
+                …
+        hid/
+            hid.h
+                34→#include "common/tusb_common.h"
+            hid_device.c
+            hid_device.h
+                30→#include "hid.h"
+            hid_host.c
+            hid_host.h
+                30→#include "hid.h"
+        midi/
+            README_midi_host.md
+            midi.h
+                30→#include "common/tusb_common.h"
+            midi_device.c
+            midi_device.h
+                147→bool     midid_xfer_cb(uint8_t rhport, uint8_t edpt_addr, xfer_result_t result, uint32_t xferred_bytes);
+                …
+            midi_host.c
+            midi_host.h
+        msc/
+            msc.h
+                30→#include "common/tusb_common.h"
+            msc_device.c
+            msc_device.h
+            msc_host.c
+            msc_host.h
+                30→#include "msc.h"
+        mtp/
+            mtp.h
+                30→#include "common/tusb_common.h"
+            mtp_device.c
+            mtp_device.h
+        net/
+            ecm_rndis_device.c
+            ncm.h
+                31→#include "common/tusb_common.h"
+            ncm_device.c
+            net_device.h
+        printer/
+            printer.h
+                30→#include "common/tusb_common.h"
+                37→typedef enum {
+                …
+                45→typedef union TU_ATTR_PACKED {
+                …
+            printer_device.c
+            printer_device.h
+                34→#include "printer.h"
+        usbtmc/
+        vendor/
+            vendor_device.c
+            vendor_device.h
+                34→#include "common/tusb_common.h"
+            vendor_host.c
+            vendor_host.h
+                30→#include "common/tusb_common.h"
+        video/
+            video.h
+                30→#include "common/tusb_common.h"
+            video_device.c
+            video_device.h
     common/
     device/
         dcd.h
@@ -210,116 +362,9 @@ src/
     tusb_option.h
     typec/
         pd_types.h
-            38→// Start of all packed definitions for compiler without per-type packed
-            39→TU_ATTR_PACKED_BEGIN
-            40→TU_ATTR_BIT_FIELD_ORDER_BEGIN
-            42→//--------------------------------------------------------------------+
-            43→// TYPE-C
-            44→//--------------------------------------------------------------------+
-            46→typedef enum {
-            47→  TUSB_TYPEC_PORT_SRC,
-            48→  TUSB_TYPEC_PORT_SNK,
-            49→  TUSB_TYPEC_PORT_DRP
-            50→} tusb_typec_port_type_t;
-            52→enum {
-            …
-            80→enum {
-            …
-            99→enum {
-            100→  PD_REV_10	= 0x0,
-            101→  PD_REV_20	= 0x1,
-            102→  PD_REV_30	= 0x2,
-            103→};
-            105→enum {
-            106→  PD_DATA_ROLE_UFP	= 0x0,
-            107→  PD_DATA_ROLE_DFP	= 0x1,
-            108→};
-            110→enum {
-            111→  PD_POWER_ROLE_SINK	= 0x0,
-            112→  PD_POWER_ROLE_SOURCE	= 0x1,
-            113→};
-            115→typedef struct TU_ATTR_PACKED {
-            …
-            126→typedef struct TU_ATTR_PACKED {
-            …
-            139→// All table references are from USBPD Specification rev3.1 version 1.8
-            140→enum {
-            141→  PD_PDO_TYPE_FIXED = 0, // Vmin = Vmax
-            142→  PD_PDO_TYPE_BATTERY,
-            143→  PD_PDO_TYPE_VARIABLE, // non-battery
-            144→  PD_PDO_TYPE_APDO, // Augmented Power Data Object
-            145→};
-            148→typedef struct TU_ATTR_PACKED {
-            …
-            165→typedef struct TU_ATTR_PACKED {
-            …
-            174→typedef struct TU_ATTR_PACKED {
-            …
-            183→typedef struct TU_ATTR_PACKED {
-            …
-            200→typedef struct TU_ATTR_PACKED {
-            …
-            214→typedef struct TU_ATTR_PACKED {
-            …
-            229→TU_ATTR_PACKED_END  // End of all packed definitions
-            230→TU_ATTR_BIT_FIELD_ORDER_END
         tcd.h
-            44→enum {
-            …
-            51→typedef struct TU_ATTR_PACKED {
-            …
-            72→// Initialize controller
-            73→bool tcd_init(uint8_t rhport, uint32_t port_type);
-            …
-            75→// Enable interrupt
-            76→void tcd_int_enable (uint8_t rhport);
-            …
-            78→// Disable interrupt
-            79→void tcd_int_disable(uint8_t rhport);
-            …
-            81→// Interrupt Handler
-            82→void tcd_int_handler(uint8_t rhport);
-            …
-            88→bool tcd_msg_receive(uint8_t rhport, uint8_t* buffer, uint16_t total_bytes);
-            89→bool tcd_msg_send(uint8_t rhport, uint8_t const* buffer, uint16_t total_bytes);
-            …
-            96→extern void tcd_event_handler(tcd_event_t const * event, bool in_isr);
-            …
-            98→TU_ATTR_ALWAYS_INLINE static inline
-            99→void tcd_event_cc_changed(uint8_t rhport, uint8_t cc1, uint8_t cc2, bool in_isr) {
-            …
-            111→TU_ATTR_ALWAYS_INLINE static inline
-            112→void tcd_event_rx_complete(uint8_t rhport, uint16_t xferred_bytes, uint8_t result, bool in_isr) {
-            …
-            125→TU_ATTR_ALWAYS_INLINE static inline
-            …
         usbc.c
         usbc.h
-            30→#include "common/tusb_common.h"
-            31→#include "pd_types.h"
-            49→// Init typec stack on a port
-            50→bool tuc_init(uint8_t rhport, uint32_t port_type);
-            …
-            52→// Check if typec port is initialized
-            53→bool tuc_inited(uint8_t rhport);
-            …
-            58→void tuc_task_ext(uint32_t timeout_ms, bool in_isr);
-            …
-            60→// Task function should be called in main/rtos loop
-            61→TU_ATTR_ALWAYS_INLINE static inline
-            62→void tuc_task (void) {
-            63→  tuc_task_ext(UINT32_MAX, false);
-            70→// Interrupt handler, name alias to TCD
-            71→#define tuc_int_handler tcd_int_handler
-            …
-            77→bool tuc_pd_data_received_cb(uint8_t rhport, pd_header_t const* header, uint8_t const* dobj, uint8_t const* p_end);
-            78→bool tuc_pd_control_received_cb(uint8_t rhport, pd_header_t const* header);
-            …
-            84→bool tuc_msg_request(uint8_t rhport, void const* rdo);
-            …
 test/
-    fuzz/
-    hil/
-    unit-test/
 tools/
 version.yml
