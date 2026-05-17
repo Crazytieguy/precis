@@ -25,8 +25,11 @@
 //! - The wrapping `#ifndef X` / `#define X` / `#endif` header guard
 //!   (recognized structurally — first `#ifndef` whose name is then
 //!   `#define`d on the next line, regardless of naming convention) is
-//!   descended into transparently. Other `preproc_if` / `preproc_ifdef`
-//!   blocks render verbatim as a single decl line at the top.
+//!   descended into transparently. `extern "C" { ... }` linkage specs
+//!   (including the `#ifdef __cplusplus` wrapper idiom common in C
+//!   headers) are likewise descended through so the wrapped decls are
+//!   visited as top-level. Other `preproc_if` / `preproc_ifdef` blocks
+//!   are opaque — anything they wrap is invisible to the walker.
 //!
 //! Parse trees are cached in [`WalkCtx`].
 
@@ -253,10 +256,6 @@ enum DeclKind {
     Macro,
     /// `#define X(args) body` — function-like macro.
     MacroFn,
-    /// Catch-all for top-level nodes we render but don't classify
-    /// further (linkage_specification, attributed_statement, the
-    /// rendered representation of an unrecognized preproc_if block).
-    Other,
 }
 
 impl DeclKind {
@@ -269,7 +268,6 @@ impl DeclKind {
             DeclKind::MacroFn => 0.95,
             DeclKind::Macro => 0.90,
             DeclKind::Variable => 0.80,
-            DeclKind::Other => 0.85,
         }
     }
 }
@@ -285,7 +283,8 @@ struct DeclInfo {
 /// All public top-level decls in `file`'s tree, in source order, paired
 /// with the AST node so per-decl collectors don't have to re-walk.
 /// Descends transparently through a single wrapping `#ifndef X` /
-/// `#define X` / `#endif` header guard.
+/// `#define X` / `#endif` header guard and through `extern "C" { ... }`
+/// linkage specs (raw or wrapped in `#ifdef __cplusplus`).
 fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, DeclInfo)> {
     let in_header = is_header_file(file);
     let mut out = Vec::new();
@@ -300,21 +299,102 @@ fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, D
 }
 
 /// Visit every "effective top-level" item — translation_unit children
-/// minus the wrapping header guard, with the guard's body's children
-/// raised to top-level instead.
+/// minus envelopes that wrap real decls. Descends transparently
+/// through:
+/// - the file's `#ifndef X / #define X` header guard (a single wrapping
+///   `preproc_ifdef`)
+/// - `extern "C" { ... }` linkage specs, including the `#ifdef __cplusplus`
+///   wrapper that C headers use to make the spec C++-only. tree-sitter-c
+///   parses `extern "C" {` and its matching `}` into a single
+///   `linkage_specification` node even when each brace lives in its own
+///   `#ifdef __cplusplus` block, so the actual decls hang off the
+///   `linkage_specification`'s `declaration_list`.
 fn walk_top_level<'a, F: FnMut(Node<'a>)>(root: Node<'a>, source: &str, visit: &mut F) {
     let header_guard_body = header_guard_body_node(root, source);
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
         if Some(child) == header_guard_body {
-            let mut inner = child.walk();
-            for inner_child in child.children(&mut inner) {
-                visit(inner_child);
-            }
+            descend_envelopes(child, source, visit);
         } else {
-            visit(child);
+            visit_with_envelope_descent(child, source, visit);
         }
     }
+}
+
+/// Visit each child of `node`, applying the same envelope-descent rule
+/// the top-level walk uses. Used for nodes that are themselves a
+/// descent boundary (header guard, `extern "C"` linkage_specification).
+fn descend_envelopes<'a, F: FnMut(Node<'a>)>(node: Node<'a>, source: &str, visit: &mut F) {
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        visit_with_envelope_descent(child, source, visit);
+    }
+}
+
+/// Either visit `node` as top-level, or — if it's an `extern "C" { ... }`
+/// envelope (raw or `#ifdef __cplusplus`-wrapped) — descend into the
+/// decls it contains.
+fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
+    node: Node<'a>,
+    source: &str,
+    visit: &mut F,
+) {
+    if let Some(decl_list) = extern_c_declaration_list(node, source) {
+        descend_envelopes(decl_list, source, visit);
+        return;
+    }
+    visit(node);
+}
+
+/// If `node` is an `extern "C" { ... }` envelope, return the inner
+/// `declaration_list` whose children are the wrapped decls. Recognizes
+/// both a bare `linkage_specification` and the
+/// `#ifdef __cplusplus / extern "C" { / #endif` wrapper idiom common in
+/// C headers. The `#ifdef` envelope is accepted only when the guard
+/// symbol is `__cplusplus` and the body's sole non-token child is the
+/// `linkage_specification` — a feature-gate (`#ifdef FEATURE_X`) around
+/// a linkage spec must stay opaque to avoid advertising
+/// platform/feature-gated decls as unconditional public API.
+fn extern_c_declaration_list<'a>(node: Node<'a>, source: &str) -> Option<Node<'a>> {
+    let linkage = match node.kind() {
+        "linkage_specification" => node,
+        "preproc_ifdef" => cplusplus_wrapped_linkage_specification(node, source)?,
+        _ => return None,
+    };
+    let mut cursor = linkage.walk();
+    linkage
+        .children(&mut cursor)
+        .find(|c| c.kind() == "declaration_list")
+}
+
+/// If `ifdef` is shaped like `#ifdef __cplusplus / linkage_specification /
+/// #endif` (with the standard `#ifdef` / identifier / body / `#endif`
+/// children tree-sitter-c surfaces), return the `linkage_specification`
+/// child. Otherwise `None` — including when the guard symbol isn't
+/// `__cplusplus` (a feature gate), the directive is `#ifndef` (which
+/// inverts the gate), or the body contains anything besides a single
+/// `linkage_specification`.
+fn cplusplus_wrapped_linkage_specification<'a>(ifdef: Node<'a>, source: &str) -> Option<Node<'a>> {
+    let mut cursor = ifdef.walk();
+    let mut children = ifdef.children(&mut cursor);
+    if children.next()?.kind() != "#ifdef" {
+        return None;
+    }
+    let name_node = children.next()?;
+    if name_node.kind() != "identifier"
+        || &source[name_node.start_byte()..name_node.end_byte()] != "__cplusplus"
+    {
+        return None;
+    }
+    let mut found: Option<Node<'a>> = None;
+    for child in children {
+        match child.kind() {
+            "#endif" | "\n" | "comment" => {}
+            "linkage_specification" if found.is_none() => found = Some(child),
+            _ => return None,
+        }
+    }
+    found
 }
 
 /// The `preproc_ifdef` node that wraps the file body as a header guard,
@@ -451,11 +531,6 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
         "preproc_function_def" => Some(DeclInfo {
             start_line,
             kind: DeclKind::MacroFn,
-            has_body: false,
-        }),
-        "linkage_specification" => Some(DeclInfo {
-            start_line,
-            kind: DeclKind::Other,
             has_body: false,
         }),
         _ => None,
@@ -856,8 +931,7 @@ fn collect_decl(
         | DeclKind::Typedef
         | DeclKind::Aggregate
         | DeclKind::Macro
-        | DeclKind::MacroFn
-        | DeclKind::Other => {
+        | DeclKind::MacroFn => {
             let end_row = trim_end_before_next_decl(
                 node_end_row_trimmed(node, source),
                 start_row,
@@ -1024,6 +1098,76 @@ mod tests {
                 "expected the one prototype to be visible after descending the guard:\n{src}"
             );
             assert_eq!(decls[0].1.kind, DeclKind::FunctionDecl);
+        }
+    }
+
+    #[test]
+    fn c_feature_gated_linkage_block_stays_opaque() {
+        // A non-`__cplusplus` `#ifdef`/`#ifndef` around an `extern "C"`
+        // block is a feature/platform gate, not the C++-only linkage
+        // idiom. The wrapped decls must NOT be surfaced as top-level
+        // public API — otherwise the walker would advertise
+        // platform-gated entrypoints as unconditional.
+        let cases = &[
+            "\
+#ifdef FEATURE_X
+extern \"C\" {
+int gated_only(int x);
+}
+#endif
+",
+            "\
+#ifndef NO_LINKAGE
+extern \"C\" {
+int gated_only(int x);
+}
+#endif
+",
+        ];
+        for src in cases {
+            let (source, tree) = parse(src);
+            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"));
+            assert!(
+                decls.is_empty(),
+                "feature-gated linkage spec must stay opaque; got decls:\n{src}\n{decls:?}",
+            );
+        }
+    }
+
+    #[test]
+    fn c_extern_c_block_is_descended_transparently() {
+        // Bare `extern "C" { ... }` — decls must surface as top-level.
+        let bare = "\
+extern \"C\" {
+int foo(int x);
+typedef int bar_t;
+}
+";
+        // `#ifdef __cplusplus / extern \"C\" {` envelope idiom from real
+        // headers (jq.h, neco.h, tinyusb's tusb.h). tree-sitter-c parses
+        // the matching `{` and `}` into a single `linkage_specification`
+        // even though each lives in its own `#ifdef __cplusplus` block.
+        let wrapped = "\
+#ifdef __cplusplus
+extern \"C\" {
+#endif
+
+int foo(int x);
+typedef int bar_t;
+
+#ifdef __cplusplus
+}
+#endif
+";
+        for src in &[bare, wrapped] {
+            let (source, tree) = parse(src);
+            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"));
+            let kinds: Vec<DeclKind> = decls.iter().map(|(_, d)| d.kind).collect();
+            assert_eq!(
+                kinds,
+                vec![DeclKind::FunctionDecl, DeclKind::Typedef],
+                "expected wrapped decls to be visible at top-level:\n{src}\ngot {decls:?}",
+            );
         }
     }
 

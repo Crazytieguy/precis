@@ -75,7 +75,6 @@ README.md
     511→### Thread local runtime
     …
     513→There can be no more than one scheduler per thread.
-    523→_Pthread utilties such as `pthread_mutex_t` and `pthread_cond_t` do not work very well in coroutines._
     579→## License
     …
     581→Source code is available under the MIT [License](LICENSE).
@@ -99,31 +98,10 @@ docs/
         8→[neco.h](../neco.h) and [neco.c](../neco.c) source files for the Neco library.
         10→For a more general overview please see the project 
         11→[README](https://github.com/tidwall/neco). 
-        17→- [Basic operations](#basic-operations)
         18→- [Channels](#channels)
         19→- [Generators](#generators)
-        20→- [Mutexes](#mutexes)
-        21→- [WaitGroups](#waitgroups)
-        22→- [Condition variables](#condition-variables)
-        25→- [Networking utilities](#Networking-utilities)
-        27→- [Random number generator](#random-number-generator)
-        28→- [Error handling](#error-handling)
-        29→- [Background worker](#background-worker)
         30→- [Time](#time)
         31→- [Signals](#signals)
-        32→- [Cancelation](#cancelation)
-        33→- [Stats and information](#stats-and-information)
-        34→- [Global environment](#global-environment)
-        476→## neco_chan
-        477→```c
-        478→struct neco_chan;
-        479→```
-        481→<a name='structneco__stream'></a>
-        482→## neco_stream
-        483→```c
-        484→struct neco_stream;
-        485→```
-        487→<a name='structneco__gen'></a>
     README.md
         1→# Neco Documentation
         3→## [API.md](API.md)
@@ -150,9 +128,6 @@ docs/
         logo-dark.png
         logo-light.png
     tools/
-        README.md
-        build-api.sh
-        doxygen-md/
 examples/
     README.md
     channel-buffering.c
@@ -166,106 +141,6 @@ examples/
     select.c
     signals.c
 neco.c
-    1124→struct llco {
-    …
-    1155→#define llco_cleanup_guard() { \
-    1156→    if (llco_cleanup_active) { \
-    1157→        fprintf(stderr, "%s not available during cleanup\n", __func__); \
-    1158→        abort(); \
-    1159→    } \
-    1160→}
-    1198→LLCO_NOINLINE LLCO_NORETURN
-    …
-    1281→// Start a new coroutine.
-    1282→LLCO_EXTERN
-    1283→void llco_start(struct llco_desc *desc, bool final) {
-    …
-    1292→// Switch to another coroutine.
-    1293→LLCO_EXTERN
-    1294→void llco_switch(struct llco *co, bool final) {
-    …
-    1310→// Return the current coroutine or NULL if not currently running in a
-    1311→// coroutine.
-    1312→LLCO_EXTERN
-    1313→struct llco *llco_current(void) {
-    1314→    llco_cleanup_guard();
-    1315→    return llco_cur == &llco_thread ? 0 : llco_cur;
-    1318→// Returns a string that indicates which coroutine method is being used by
-    1319→// the program. Such as "asm" or "ucontext", etc.
-    1320→LLCO_EXTERN
-    1321→const char *llco_method(void *caps) {
-    1322→    (void)caps;
-    1323→    return LLCO_METHOD
-    1324→#ifdef LLCO_STACKJMP
-    1325→        ",stackjmp"
-    1326→#endif
-    1327→    ;
-    1337→struct llco_dlinfo {
-    1338→    const char      *dli_fname;     /* Pathname of shared object */
-    1339→    void            *dli_fbase;     /* Base address of shared object */
-    1340→    const char      *dli_sname;     /* Name of nearest symbol */
-    1341→    void            *dli_saddr;     /* Address of nearest symbol */
-    1342→};
-    1364→struct llco_unwind_context {
-    1365→    void *udata;
-    1366→    void *start_ip;
-    1367→    bool started;
-    1368→    int nsymbols;
-    1369→    int nsymbols_actual;
-    1370→    struct llco_symbol last;
-    1371→    bool (*func)(struct llco_symbol *, void *);
-    1372→    void *unwind_addr;
-    1373→};
-    1814→struct sco_link {
-    1815→    struct sco *prev;
-    1816→    struct sco *next;
-    1817→};
-    1819→struct sco {
-    …
-    1875→struct sco_map {
-    1876→    struct sco *roots[SCO_NSHARDS];
-    1877→    int count;
-    1878→};
-    1880→#define scp_map_getaat(sco) \
-    1881→    (&map->roots[sco_mix13((sco)->id) & (SCO_NSHARDS-1)])
-    1899→struct sco_list {
-    1900→    struct sco_link head;
-    1901→    struct sco_link tail;
-    1902→};
-    2029→SCO_EXTERN
-    2030→void sco_exit(void) {
-    2031→    if (sco_cur) {
-    2032→        sco_exit_to_main_requested = true;
-    2033→        sco_switch(false, true);
-    2034→    }
-    2037→SCO_EXTERN
-    2038→void sco_start(struct sco_desc *desc) {
-    …
-    2051→SCO_EXTERN
-    2052→int64_t sco_id(void) {
-    2053→    return sco_cur ? sco_cur->id : 0;
-    2056→SCO_EXTERN
-    2057→void sco_yield(void) {
-    …
-    2065→SCO_EXTERN
-    2066→void sco_pause(void) {
-    2067→    if (sco_cur) {
-    2068→        sco_map_insert(&sco_paused, sco_cur);
-    2069→        sco_npaused++;
-    2070→        sco_switch(false, false);
-    2071→    }
-    2074→SCO_EXTERN
-    2075→void sco_resume(int64_t id) {
-    …
-    2094→SCO_EXTERN
-    2095→void sco_detach(int64_t id) {
-    …
-    2106→SCO_EXTERN
-    2107→void sco_attach(int64_t id) {
-    …
-    2120→SCO_EXTERN
-    2121→void *sco_udata(void) {
-    2122→    return sco_cur ? sco_cur->udata : NULL;
 neco.h
     1→// https://github.com/tidwall/neco
     2→//
@@ -277,4 +152,79 @@ neco.h
     12→#include <stdbool.h>
     13→#include <stdint.h>
     14→#include <sys/types.h>
+    30→/// @defgroup BasicOperations Basic operations
+    31→/// Neco provides standard operations for starting a coroutine, sleeping, 
+    32→/// suspending, resuming, yielding to another coroutine, joining/waiting for
+    33→/// child coroutines, and exiting a running coroutine.
+    34→/// @{
+    35→int neco_start(void(*coroutine)(int argc, void *argv[]), int argc, ...);
+    36→int neco_startv(void(*coroutine)(int argc, void *argv[]), int argc, void *argv[]);
+    37→int neco_yield(void);
+    38→int neco_sleep(int64_t nanosecs);
+    39→int neco_sleep_dl(int64_t deadline);
+    40→int neco_join(int64_t id);
+    41→int neco_join_dl(int64_t id, int64_t deadline);
+    42→int neco_suspend(void);
+    43→int neco_suspend_dl(int64_t deadline);
+    44→int neco_resume(int64_t id);
+    45→void neco_exit(void);
+    46→int64_t neco_getid(void);
+    47→int64_t neco_lastid(void);
+    48→int64_t neco_starterid(void);
+    55→/// @defgroup Channels Channels
+    56→/// Channels allow for sending and receiving values between coroutines.
+    57→/// By default, sends and receives will block until the other side is ready.
+    58→/// This allows the coroutines to synchronize without using locks or condition
+    59→/// variables.
+    60→/// @{
+    61→typedef struct neco_chan neco_chan;
+    …
+    63→int neco_chan_make(neco_chan **chan, size_t data_size, size_t capacity);
+    64→int neco_chan_retain(neco_chan *chan);
+    65→int neco_chan_release(neco_chan *chan);
+    66→int neco_chan_send(neco_chan *chan, void *data);
+    67→int neco_chan_send_dl(neco_chan *chan, void *data, int64_t deadline);
+    68→int neco_chan_broadcast(neco_chan *chan, void *data);
+    69→int neco_chan_recv(neco_chan *chan, void *data);
+    70→int neco_chan_recv_dl(neco_chan *chan, void *data, int64_t deadline);
+    71→int neco_chan_tryrecv(neco_chan *chan, void *data);
+    72→int neco_chan_close(neco_chan *chan);
+    73→int neco_chan_select(int nchans, ...);
+    74→int neco_chan_select_dl(int64_t deadline, int nchans, ...);
+    75→int neco_chan_selectv(int nchans, neco_chan *chans[]);
+    76→int neco_chan_selectv_dl(int nchans, neco_chan *chans[], int64_t deadline);
+    77→int neco_chan_tryselect(int nchans, ...);
+    78→int neco_chan_tryselectv(int nchans, neco_chan *chans[]);
+    79→int neco_chan_case(neco_chan *chan, void *data);
+    86→/// @defgroup Generators Generators
+    87→/// A generator is a specialized iterator-bound coroutine that can produce a
+    88→/// sequence of values to be iterated over.
+    89→/// @{
+    90→typedef struct neco_gen neco_gen;
+    …
+    92→int neco_gen_start(neco_gen **gen, size_t data_size, void(*coroutine)(int argc, void *argv[]), int argc, ...);
+    93→int neco_gen_startv(neco_gen **gen, size_t data_size, void(*coroutine)(int argc, void *argv[]), int argc, void *argv[]);
+    94→int neco_gen_retain(neco_gen *gen);
+    95→int neco_gen_release(neco_gen *gen);
+    96→int neco_gen_yield(void *data);
+    97→int neco_gen_yield_dl(void *data, int64_t deadline);
+    98→int neco_gen_next(neco_gen *gen, void *data);
+    99→int neco_gen_next_dl(neco_gen *gen, void *data, int64_t deadline);
+    100→int neco_gen_close(neco_gen *gen);
+    107→/// @defgroup Mutexes Mutexes
+    108→/// A mutex is synchronization mechanism that blocks access to variables by
+    109→/// multiple coroutines at once. This enforces exclusive access by a coroutine
+    110→/// to a variable or set of variables and helps to avoid data inconsistencies
+    111→/// due to race conditions.
+    112→/// @{
+    113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
+    …
+    115→#define NECO_MUTEX_INITIALIZER { 0 }
+    …
+    117→int neco_mutex_init(neco_mutex *mutex);
+    118→int neco_mutex_lock(neco_mutex *mutex);
+    119→int neco_mutex_lock_dl(neco_mutex *mutex, int64_t deadline);
+    120→int neco_mutex_trylock(neco_mutex *mutex);
+    424→#include <stdio.h>
+    425→#include <stdlib.h>
 tests/
