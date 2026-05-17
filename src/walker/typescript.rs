@@ -443,12 +443,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         }
         let module_items = find_module_items(&tree, &source, &src_lines, &export_start_lines);
-        // README-cited JS files (canonical example scripts referenced from
-        // the root README) emit private statements as module items even
-        // though they aren't entrypoints — those statements ARE the
-        // example's content the NS author anchored on.
-        let emit_private_nonclass = (is_entrypoint_file(file) || ctx.is_readme_cited(file))
-            && (is_tsx_file(file) || is_js_file(file));
+        // README-cited JS files (canonical example scripts referenced
+        // from the root README) and entrypoint siblings (`src/node.js` /
+        // `src/browser.js` alongside `src/index.js`) emit private
+        // statements as module items even though they aren't entrypoints.
+        // For platform-plugin siblings the entrypoint typically just
+        // dispatches via conditional `require`, so the public-surface
+        // BFS can miss them — but their private helpers (an internal
+        // `getDate` / `localstorage` function) are still part of the
+        // surface NS authors anchor on as function-name locations.
+        let emit_private_nonclass =
+            (is_entrypoint_file(file) || ctx.is_readme_cited(file) || is_entrypoint_sibling(file))
+                && (is_tsx_file(file) || is_js_file(file));
         for item in module_items {
             if !emit_private_nonclass && !matches!(item.kind, ItemKind::Class) {
                 continue;
@@ -577,7 +583,12 @@ fn emit_export_body_parts(
         else {
             continue;
         };
-        let segment_factor = if is_class_peer {
+        // Factory siblings are complementary anchors, not alternative
+        // body slices — exempt them from the late-segment damping
+        // that targets catalog files' long body chains. Without this
+        // exempt, the inner-helper bodies (segments 5+) collapse to
+        // 5% value and lose every budget race.
+        let segment_factor = if item.factory_sibling_body_parts {
             1.0
         } else {
             body_segment_value_factor(*emit.body_segment_index)
@@ -594,8 +605,7 @@ fn emit_export_body_parts(
             value: export_body_value(emit.file, item.kind, emit.ctx, emit.js_factor)
                 * emit.per_export_factor
                 * part_value_factor
-                * segment_factor
-                * tiny_body_value_factor(part_line_count),
+                * segment_factor,
         });
         if !is_class_peer {
             *emit.body_segment_index += 1;
@@ -1749,6 +1759,33 @@ fn has_default_keyword(node: Node, source: &str) -> bool {
             c.kind() == "keyword" && text == "default"
         }
     })
+}
+
+/// True when `file` lives in a source directory (`src/` or `lib/`)
+/// alongside a TS/JS entrypoint file. The entrypoint dispatches to
+/// its siblings (often via runtime-conditional `require` that
+/// `compute_public_surface` can't follow), so the siblings' private
+/// helpers are still part of the documented surface NS authors
+/// anchor on as function-name locations.
+///
+/// Restricted to `src/` / `lib/` to keep build-tooling files at the
+/// repo root (`gulpfile.js`, `karma.conf.js`, etc.) from picking up
+/// private-helper emission just because they happen to share a
+/// directory with `index.js` at the root.
+fn is_entrypoint_sibling(file: &Path) -> bool {
+    if is_entrypoint_file(file) {
+        // The entrypoint itself is not a "sibling" of itself for this check.
+        return false;
+    }
+    let Some(parent) = file.parent() else {
+        return false;
+    };
+    if !is_source_dir(parent) {
+        return false;
+    }
+    JS_MODULE_ENTRYPOINT_FILES
+        .iter()
+        .any(|name| parent.join(name).is_file())
 }
 
 /// Files whose name signals "module entrypoint / public surface".

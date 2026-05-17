@@ -174,8 +174,11 @@ src/
         210→	}
         219→function load() {
         …
+        247→function localstorage() {
+        …
         258→module.exports = require('./common')(exports);
         …
+        260→const {formatters} = module.exports;
     common.js
         2→/**
         3→ * This is the common logic for both the Node.js and web browser
@@ -199,12 +202,37 @@ src/
         49→		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
         60→	function createDebug(namespace) {
         149→	function extend(namespace, delimiter) {
+        150→		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
+        151→		newDebug.log = this.log;
+        152→		return newDebug;
         162→	function enable(namespaces) {
         192→	function matchesTemplate(search, template) {
         233→	function disable() {
+        234→		const namespaces = [
+        235→			...createDebug.names,
+        236→			...createDebug.skips.map(namespace => '-' + namespace)
+        237→		].join(',');
+        238→		createDebug.enable('');
+        239→		return namespaces;
         249→	function enabled(name) {
+        250→		for (const skip of createDebug.skips) {
+        251→			if (matchesTemplate(name, skip)) {
+        252→				return false;
+        253→			}
+        254→		}
+        256→		for (const ns of createDebug.names) {
+        257→			if (matchesTemplate(name, ns)) {
+        258→				return true;
+        259→			}
+        260→		}
+        262→		return false;
         272→	function coerce(val) {
+        273→		if (val instanceof Error) {
+        274→			return val.stack || val.message;
+        275→		}
+        276→		return val;
         283→	function destroy() {
+        284→		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
         287→	createDebug.enable(createDebug.load());
         289→	return createDebug;
         292→module.exports = setup;
@@ -216,45 +244,8 @@ src/
     node.js
         5→const tty = require('tty');
         6→const util = require('util');
-        8→/**
-        9→ * This is the Node.js implementation of `debug()`.
-        10→ */
-        12→exports.init = init;
-        13→exports.log = log;
-        14→exports.formatArgs = formatArgs;
-        15→exports.save = save;
-        16→exports.load = load;
-        17→exports.useColors = useColors;
-        18→exports.destroy = util.deprecate(
-        19→	() => {},
-        20→	'Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.'
-        21→);
-        23→/**
-        24→ * Colors.
-        25→ */
-        27→exports.colors = [6, 2, 3, 4, 5, 1];
+        182→function getDate() {
         …
-        124→exports.inspectOpts = Object.keys(process.env).filter(key => {
-        …
-        151→/**
-        152→ * Is stdout a TTY? Colored output is enabled when `true`.
-        153→ */
-        155→function useColors() {
-        156→	return 'colors' in exports.inspectOpts ?
-        157→		Boolean(exports.inspectOpts.colors) :
-        158→		tty.isatty(process.stderr.fd);
-        161→/**
-        162→ * Adds ANSI color escape codes if enabled.
-        163→ *
-        164→ * @api public
-        165→ */
-        167→function formatArgs(args) {
-        …
-        189→/**
-        190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
-        191→ */
-        193→function log(...args) {
-        194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
         203→function save(namespaces) {
         204→	if (namespaces) {
         205→		process.env.DEBUG = namespaces;
@@ -269,6 +260,7 @@ src/
         …
         240→module.exports = require('./common')(exports);
         …
+        242→const {formatters} = module.exports;
 test.js
     3→const assert = require('assert');
     4→const debug = require('./src');

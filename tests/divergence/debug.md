@@ -1,4 +1,4 @@
-Score(3000)=0.496 I=0.784 C=0.314 ns_rows≤3K=23/44 (reached=10 partial=3 missing=10)
+Score(3000)=0.535 I=0.786 C=0.364 ns_rows≤3K=23/44 (reached=11 partial=4 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -33,102 +33,110 @@ Score(3000)=0.496 I=0.784 C=0.314 ns_rows≤3K=23/44 (reached=10 partial=3 missi
 | walker |  | 824 | 108 | package scripts in package.json |  |  | 0.450 |
 | walker |  | 843 | 19 | export body at src/common.js:7 body 287 |  |  | 0.477 |
 | ns | 852 |  | 36 | browser.js bottom wiring + formatters.j | 2.9 |  | 0.468 |
-| walker |  | 858 | 15 | export names surface #1 in src/browser.js |  |  | 0.472 |
-| walker |  | 880 | 22 | imports in test.js |  |  | 0.472 |
-| walker |  | 920 | 40 | README.md section #15 |  |  | 0.472 |
-| ns | 985 |  | 133 | README H2 heading locations | 2.10 |  | 0.543 |
-| ns | 1114 |  | 129 | enabled(name): namespace match loop | 3.1 | 2.2 | 0.503 |
-| walker |  | 1192 | 272 | package dependencies in package.json |  |  | 0.529 |
-| walker |  | 1316 | 124 | README.md section #5 |  |  | 0.483 |
-| ns | 1316 |  | 202 | enable(namespaces): comma/whitespace split + names/skips partition | 3.2 | 2.2 | 0.483 |
-| walker |  | 1364 | 48 | export names surface #1 in src/node.js |  |  | 0.492 |
-| walker |  | 1364 | 0 | export at src/node.js:203 |  |  | 0.492 |
-| walker |  | 1364 | 0 | export at src/node.js:220 |  |  | 0.492 |
-| walker |  | 1364 | 0 | export at src/node.js:231 |  |  | 0.492 |
-| ns | 1387 |  | 71 | disable(): rebuild namespaces string, then clear | 3.3 | 2.2 | 0.476 |
-| walker |  | 1450 | 86 | export body at src/common.js:7 body 8 |  |  | 0.533 |
-| walker |  | 1537 | 87 | export body at src/node.js:203 body 204 |  |  | 0.534 |
-| walker |  | 1625 | 88 | export body at src/common.js:7 body 41 |  |  | 0.584 |
-| walker |  | 1671 | 46 | imports in test.node.js |  |  | 0.584 |
-| walker |  | 1693 | 22 | imports in src/node.js |  |  | 0.584 |
-| ns | 1763 |  | 376 | createDebug factory: signature + per-instance setup tail | 3.4 | 2.2 | 0.513 |
-| walker |  | 1792 | 99 | export body at src/common.js:7 body 42 |  |  | 0.514 |
-| walker |  | 1991 | 199 | README.md section #4 |  |  | 0.514 |
-| walker |  | 2126 | 135 | export names surface in src/browser.js |  |  | 0.556 |
-| walker |  | 2126 | 0 | export at src/browser.js:7 |  |  | 0.556 |
-| walker |  | 2126 | 0 | export at src/browser.js:115 |  |  | 0.556 |
-| walker |  | 2126 | 0 | export at src/browser.js:149 |  |  | 0.556 |
-| walker |  | 2126 | 0 | export at src/browser.js:192 |  |  | 0.556 |
-| walker |  | 2126 | 0 | export at src/browser.js:200 |  |  | 0.556 |
-| walker |  | 2126 | 0 | export at src/browser.js:219 |  |  | 0.556 |
-| walker |  | 2217 | 91 | export at src/browser.js:12 |  |  | 0.557 |
-| ns | 2246 |  | 483 | matchesTemplate(): wildcard match algorithm | 3.5 | 2.2 | 0.496 |
-| walker |  | 2321 | 104 | export body at src/browser.js:200 body 201 |  |  | 0.496 |
-| walker |  | 2347 | 26 | export doc at src/browser.js:7 |  |  | 0.496 |
-| walker |  | 2383 | 36 | export doc at src/browser.js:149 |  |  | 0.496 |
-| walker |  | 2423 | 40 | export doc at src/common.js:7 |  |  | 0.496 |
-| walker |  | 2582 | 159 | README.md section #6 |  |  | 0.497 |
-| walker |  | 2735 | 153 | export names surface in src/node.js |  |  | 0.529 |
-| walker |  | 2735 | 0 | export at src/node.js:12 |  |  | 0.529 |
-| walker |  | 2735 | 0 | export at src/node.js:27 |  |  | 0.529 |
-| walker |  | 2735 | 0 | export at src/node.js:155 |  |  | 0.529 |
-| walker |  | 2735 | 0 | export at src/node.js:167 |  |  | 0.529 |
-| walker |  | 2735 | 0 | export at src/node.js:193 |  |  | 0.529 |
-| walker |  | 2756 | 21 | export body at src/node.js:193 body 194 |  |  | 0.529 |
-| ns | 2781 |  | 535 | debug(...args) inner body: per-call dispatch | 3.6 | 2.2 | 0.473 |
-| walker |  | 2793 | 37 | export body at src/node.js:155 body 156 |  |  | 0.474 |
-| walker |  | 2838 | 45 | export at src/node.js:18 |  |  | 0.496 |
-| walker |  | 2855 | 17 | export doc at src/node.js:27 |  |  | 0.496 |
-| walker |  | 2884 | 29 | export doc at src/node.js:155 |  |  | 0.496 |
-| walker |  | 2910 | 26 | export doc at src/node.js:12 |  |  | 0.497 |
-| walker |  | 2942 | 32 | export doc at src/node.js:193 |  |  | 0.497 |
-| ns | 2958 |  | 177 | selectColor + extend bodies | 3.7 | 2.2 | 0.496 |
-| walker |  | 2979 | 37 | export doc at src/node.js:167 |  |  | 0.496 |
-| ns | 3048 |  | 90 | coerce + destroy bodies | 3.8 | 2.2 | 0.488 |
-| walker |  | 3128 | 149 | export body at src/browser.js:219 body 220 |  |  | 0.489 |
-| walker |  | 3174 | 46 | export doc at src/browser.js:200 |  |  | 0.489 |
-| walker |  | 3220 | 46 | export doc at src/node.js:203 |  |  | 0.489 |
-| ns | 3257 |  | 209 | node.js formatArgs(): ANSI color escapes + ms diff append | 4.1 | 2.5 | 0.477 |
-| walker |  | 3336 | 116 | README.md section #11 |  |  | 0.477 |
-| ns | 3379 |  | 122 | node.js log() + getDate() + useColors() bodies | 4.2 | 2.5 | 0.476 |
-| walker |  | 3387 | 51 | export doc at src/browser.js:219 |  |  | 0.476 |
-| walker |  | 3438 | 51 | export doc at src/node.js:220 |  |  | 0.477 |
-| ns | 3664 |  | 285 | node.js DEBUG_* env-var parser (inspectOpts) | 4.3 |  | 0.457 |
-| walker |  | 3775 | 337 | README.md section #3 |  |  | 0.457 |
-| walker |  | 3886 | 111 | README.md section #13 |  |  | 0.457 |
-| ns | 3917 |  | 253 | node.js save() + load() + init() bodies | 4.4 | 2.5 | 0.461 |
-| walker |  | 4076 | 190 | export body at src/node.js:167 body 168 |  |  | 0.485 |
-| ns | 4082 |  | 165 | node.js supports-color colors override | 4.5 |  | 0.477 |
-| ns | 4221 |  | 139 | node.js formatters.o + formatters.O bodies | 4.6 | 2.6 | 0.466 |
-| ns | 4297 |  | 76 | node.js requires + tty/util imports | 4.7 |  | 0.467 |
-| walker |  | 4332 | 256 | export at src/node.js:124 |  |  | 0.514 |
-| walker |  | 4396 | 64 | export doc at src/node.js:231 |  |  | 0.514 |
-| walker |  | 4455 | 59 | export doc at src/node.js:124 |  |  | 0.514 |
-| ns | 4694 |  | 397 | browser.js formatArgs(): %c-CSS coloring + last-%c trick | 4.8 | 2.8 | 0.492 |
-| walker |  | 4698 | 243 | README.md section #7 |  |  | 0.494 |
-| ns | 5181 |  | 487 | browser.js useColors() body: Electron/IE/WebKit/Firebug detection | 4.9 | 2.8 | 0.478 |
-| walker |  | 5283 | 585 | export body at karma.conf.js:1 body 2 |  |  | 0.478 |
-| walker |  | 5366 | 83 | export doc at src/browser.js:192 |  |  | 0.478 |
-| walker |  | 5734 | 368 | export body at src/browser.js:149 body 150 |  |  | 0.517 |
-| ns | 5734 |  | 553 | browser.js save/load/localstorage bodies | 4.10 | 2.8 | 0.517 |
-| ns | 5842 |  | 108 | browser.js destroy IIFE warning | 4.11 |  | 0.523 |
-| ns | 5900 |  | 58 | browser.js formatters.j body | 4.12 | 2.9 | 0.519 |
-| walker |  | 5972 | 238 | README.md section #10 |  |  | 0.521 |
-| ns | 6123 |  | 223 | test.js describe/it locations | 5.1 |  | 0.512 |
-| ns | 6560 |  | 437 | README Wildcards + Environment Variables sections | 5.2 | 2.10 | 0.528 |
-| walker |  | 6843 | 871 | README.md section #2 |  |  | 0.528 |
-| ns | 6953 |  | 393 | README Formatters table + Custom formatters example | 5.3 | 2.10 | 0.513 |
-| walker |  | 7307 | 464 | export body at src/browser.js:115 body 116 |  |  | 0.540 |
-| ns | 7350 |  | 397 | README Output streams + Conventions | 5.4 | 2.10 | 0.551 |
-| walker |  | 7523 | 216 | README.md section #14 |  |  | 0.551 |
-| ns | 7779 |  | 429 | README Extend + Set dynamically (key parts) | 5.5 | 2.10 | 0.534 |
-| walker |  | 7881 | 358 | README.md section #8 |  |  | 0.561 |
-| walker |  | 8240 | 359 | README.md section #9 |  |  | 0.561 |
-| ns | 8703 |  | 924 | test.js: extend + disable test bodies | 5.6 | 5.1 | 0.524 |
-| walker |  | 8999 | 759 | export at src/browser.js:27 |  |  | 0.524 |
-| walker |  | 9016 | 17 | export doc at src/browser.js:27 |  |  | 0.524 |
-| ns | 9145 |  | 442 | test.node.js full | 5.7 |  | 0.510 |
-| walker |  | 9343 | 327 | README.md section #18 |  |  | 0.510 |
-| ns | 9716 |  | 571 | Infra: package.json scripts, .travis.yml, .gitignore | 5.8 |  | 0.503 |
-| walker |  | 9747 | 404 | README.md section #12 |  |  | 0.529 |
-| walker |  | 9832 | 85 | plaintext config .gitignore |  |  | 0.537 |
+| walker |  | 854 | 11 | module item at src/browser.js:247 |  |  | 0.469 |
+| walker |  | 865 | 11 | module item at src/node.js:182 |  |  | 0.471 |
+| walker |  | 880 | 15 | export names surface #1 in src/browser.js |  |  | 0.475 |
+| walker |  | 893 | 13 | module item at src/browser.js:260 |  |  | 0.485 |
+| walker |  | 906 | 13 | module item at src/node.js:242 |  |  | 0.488 |
+| walker |  | 942 | 36 | export body at src/common.js:7 body 284 |  |  | 0.488 |
+| walker |  | 981 | 39 | export body at src/common.js:7 body 273 |  |  | 0.489 |
+| ns | 985 |  | 133 | README H2 heading locations | 2.10 |  | 0.556 |
+| walker |  | 1003 | 22 | imports in test.js |  |  | 0.556 |
+| walker |  | 1053 | 50 | export body at src/common.js:7 body 150 |  |  | 0.556 |
+| walker |  | 1093 | 40 | README.md section #15 |  |  | 0.556 |
+| ns | 1114 |  | 129 | enabled(name): namespace match loop | 3.1 | 2.2 | 0.515 |
+| walker |  | 1157 | 64 | export body at src/common.js:7 body 234 |  |  | 0.517 |
+| ns | 1316 |  | 202 | enable(namespaces): comma/whitespace split + names/skips partition | 3.2 | 2.2 | 0.472 |
+| ns | 1387 |  | 71 | disable(): rebuild namespaces string, then clear | 3.3 | 2.2 | 0.483 |
+| walker |  | 1429 | 272 | package dependencies in package.json |  |  | 0.506 |
+| walker |  | 1553 | 124 | README.md section #5 |  |  | 0.506 |
+| walker |  | 1601 | 48 | export names surface #1 in src/node.js |  |  | 0.523 |
+| walker |  | 1601 | 0 | export at src/node.js:203 |  |  | 0.523 |
+| walker |  | 1601 | 0 | export at src/node.js:220 |  |  | 0.523 |
+| walker |  | 1601 | 0 | export at src/node.js:231 |  |  | 0.523 |
+| walker |  | 1687 | 86 | export body at src/common.js:7 body 8 |  |  | 0.578 |
+| ns | 1763 |  | 376 | createDebug factory: signature + per-instance setup tail | 3.4 | 2.2 | 0.507 |
+| walker |  | 1774 | 87 | export body at src/node.js:203 body 204 |  |  | 0.508 |
+| walker |  | 1862 | 88 | export body at src/common.js:7 body 41 |  |  | 0.558 |
+| walker |  | 1908 | 46 | imports in test.node.js |  |  | 0.558 |
+| walker |  | 1930 | 22 | imports in src/node.js |  |  | 0.558 |
+| walker |  | 2029 | 99 | export body at src/common.js:7 body 42 |  |  | 0.560 |
+| walker |  | 2140 | 111 | export body at src/common.js:7 body 250 |  |  | 0.608 |
+| ns | 2246 |  | 483 | matchesTemplate(): wildcard match algorithm | 3.5 | 2.2 | 0.542 |
+| walker |  | 2339 | 199 | README.md section #4 |  |  | 0.542 |
+| walker |  | 2474 | 135 | export names surface in src/browser.js |  |  | 0.583 |
+| walker |  | 2474 | 0 | export at src/browser.js:7 |  |  | 0.583 |
+| walker |  | 2474 | 0 | export at src/browser.js:115 |  |  | 0.583 |
+| walker |  | 2474 | 0 | export at src/browser.js:149 |  |  | 0.583 |
+| walker |  | 2474 | 0 | export at src/browser.js:192 |  |  | 0.583 |
+| walker |  | 2474 | 0 | export at src/browser.js:200 |  |  | 0.583 |
+| walker |  | 2474 | 0 | export at src/browser.js:219 |  |  | 0.583 |
+| walker |  | 2565 | 91 | export at src/browser.js:12 |  |  | 0.584 |
+| walker |  | 2669 | 104 | export body at src/browser.js:200 body 201 |  |  | 0.584 |
+| walker |  | 2695 | 26 | export doc at src/browser.js:7 |  |  | 0.584 |
+| walker |  | 2731 | 36 | export doc at src/browser.js:149 |  |  | 0.584 |
+| walker |  | 2771 | 40 | export doc at src/common.js:7 |  |  | 0.584 |
+| ns | 2781 |  | 535 | debug(...args) inner body: per-call dispatch | 3.6 | 2.2 | 0.523 |
+| walker |  | 2930 | 159 | README.md section #6 |  |  | 0.523 |
+| ns | 2958 |  | 177 | selectColor + extend bodies | 3.7 | 2.2 | 0.535 |
+| ns | 3048 |  | 90 | coerce + destroy bodies | 3.8 | 2.2 | 0.542 |
+| walker |  | 3083 | 153 | export names surface in src/node.js |  |  | 0.570 |
+| walker |  | 3083 | 0 | export at src/node.js:12 |  |  | 0.570 |
+| walker |  | 3083 | 0 | export at src/node.js:27 |  |  | 0.570 |
+| walker |  | 3083 | 0 | export at src/node.js:155 |  |  | 0.570 |
+| walker |  | 3083 | 0 | export at src/node.js:167 |  |  | 0.570 |
+| walker |  | 3083 | 0 | export at src/node.js:193 |  |  | 0.570 |
+| walker |  | 3104 | 21 | export body at src/node.js:193 body 194 |  |  | 0.570 |
+| walker |  | 3141 | 37 | export body at src/node.js:155 body 156 |  |  | 0.571 |
+| walker |  | 3186 | 45 | export at src/node.js:18 |  |  | 0.590 |
+| walker |  | 3203 | 17 | export doc at src/node.js:27 |  |  | 0.590 |
+| walker |  | 3232 | 29 | export doc at src/node.js:155 |  |  | 0.590 |
+| ns | 3257 |  | 209 | node.js formatArgs(): ANSI color escapes + ms diff append | 4.1 | 2.5 | 0.575 |
+| walker |  | 3258 | 26 | export doc at src/node.js:12 |  |  | 0.576 |
+| walker |  | 3290 | 32 | export doc at src/node.js:193 |  |  | 0.576 |
+| walker |  | 3327 | 37 | export doc at src/node.js:167 |  |  | 0.576 |
+| ns | 3379 |  | 122 | node.js log() + getDate() + useColors() bodies | 4.2 | 2.5 | 0.573 |
+| walker |  | 3476 | 149 | export body at src/browser.js:219 body 220 |  |  | 0.574 |
+| walker |  | 3522 | 46 | export doc at src/browser.js:200 |  |  | 0.574 |
+| walker |  | 3568 | 46 | export doc at src/node.js:203 |  |  | 0.574 |
+| ns | 3664 |  | 285 | node.js DEBUG_* env-var parser (inspectOpts) | 4.3 |  | 0.550 |
+| walker |  | 3684 | 116 | README.md section #11 |  |  | 0.550 |
+| walker |  | 3735 | 51 | export doc at src/browser.js:219 |  |  | 0.551 |
+| walker |  | 3786 | 51 | export doc at src/node.js:220 |  |  | 0.552 |
+| ns | 3917 |  | 253 | node.js save() + load() + init() bodies | 4.4 | 2.5 | 0.549 |
+| walker |  | 3964 | 178 | export body at src/common.js:7 body 163 |  |  | 0.586 |
+| ns | 4082 |  | 165 | node.js supports-color colors override | 4.5 |  | 0.576 |
+| ns | 4221 |  | 139 | node.js formatters.o + formatters.O bodies | 4.6 | 2.6 | 0.563 |
+| ns | 4297 |  | 76 | node.js requires + tty/util imports | 4.7 |  | 0.562 |
+| walker |  | 4301 | 337 | README.md section #3 |  |  | 0.562 |
+| walker |  | 4412 | 111 | README.md section #13 |  |  | 0.562 |
+| walker |  | 4602 | 190 | export body at src/node.js:167 body 168 |  |  | 0.582 |
+| ns | 4694 |  | 397 | browser.js formatArgs(): %c-CSS coloring + last-%c trick | 4.8 | 2.8 | 0.557 |
+| walker |  | 4858 | 256 | export at src/node.js:124 |  |  | 0.597 |
+| walker |  | 4922 | 64 | export doc at src/node.js:231 |  |  | 0.597 |
+| walker |  | 4981 | 59 | export doc at src/node.js:124 |  |  | 0.597 |
+| ns | 5181 |  | 487 | browser.js useColors() body: Electron/IE/WebKit/Firebug detection | 4.9 | 2.8 | 0.578 |
+| walker |  | 5224 | 243 | README.md section #7 |  |  | 0.580 |
+| ns | 5734 |  | 553 | browser.js save/load/localstorage bodies | 4.10 | 2.8 | 0.568 |
+| walker |  | 5809 | 585 | export body at karma.conf.js:1 body 2 |  |  | 0.568 |
+| ns | 5842 |  | 108 | browser.js destroy IIFE warning | 4.11 |  | 0.574 |
+| walker |  | 5892 | 83 | export doc at src/browser.js:192 |  |  | 0.574 |
+| ns | 5900 |  | 58 | browser.js formatters.j body | 4.12 | 2.9 | 0.570 |
+| ns | 6123 |  | 223 | test.js describe/it locations | 5.1 |  | 0.560 |
+| walker |  | 6260 | 368 | export body at src/browser.js:149 body 150 |  |  | 0.598 |
+| ns | 6560 |  | 437 | README Wildcards + Environment Variables sections | 5.2 | 2.10 | 0.609 |
+| walker |  | 6631 | 371 | export body at src/common.js:7 body 193 |  |  | 0.642 |
+| walker |  | 6869 | 238 | README.md section #10 |  |  | 0.644 |
+| ns | 6953 |  | 393 | README Formatters table + Custom formatters example | 5.3 | 2.10 | 0.625 |
+| ns | 7350 |  | 397 | README Output streams + Conventions | 5.4 | 2.10 | 0.632 |
+| walker |  | 7740 | 871 | README.md section #2 |  |  | 0.632 |
+| ns | 7779 |  | 429 | README Extend + Set dynamically (key parts) | 5.5 | 2.10 | 0.612 |
+| walker |  | 8204 | 464 | export body at src/browser.js:115 body 116 |  |  | 0.635 |
+| walker |  | 8420 | 216 | README.md section #14 |  |  | 0.635 |
+| ns | 8703 |  | 924 | test.js: extend + disable test bodies | 5.6 | 5.1 | 0.593 |
+| walker |  | 8778 | 358 | README.md section #8 |  |  | 0.616 |
+| walker |  | 9137 | 359 | README.md section #9 |  |  | 0.616 |
+| ns | 9145 |  | 442 | test.node.js full | 5.7 |  | 0.600 |
+| ns | 9716 |  | 571 | Infra: package.json scripts, .travis.yml, .gitignore | 5.8 |  | 0.589 |
+| walker |  | 9896 | 759 | export at src/browser.js:27 |  |  | 0.589 |
+| walker |  | 9913 | 17 | export doc at src/browser.js:27 |  |  | 0.589 |
