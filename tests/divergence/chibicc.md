@@ -1,4 +1,4 @@
-Score(3000)=0.495 I=0.762 C=0.322 ns_rows≤3K=18/39 (reached=6 partial=2 missing=10)
+Score(3000)=0.514 I=0.753 C=0.351 ns_rows≤3K=18/39 (reached=5 partial=3 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -9,158 +9,164 @@ Score(3000)=0.495 I=0.762 C=0.322 ns_rows≤3K=18/39 (reached=6 partial=2 missin
 | walker |  | 121 | 70 | README headline in README.md |  |  | 0.849 |
 | ns | 152 |  | 36 | include/ listing — bundled standard-library shims | 1.4 |  | 0.713 |
 | walker |  | 180 | 59 | headings outline in README.md |  |  | 0.714 |
-| walker |  | 216 | 36 | listing of 'include' |  |  | 0.881 |
-| ns | 273 |  | 121 | README "Internals" header + first two stages | 1.5 |  | 0.734 |
-| ns | 344 |  | 71 | README "Internals" — Parse + Codegen stages | 2.1 | 1.5 | 0.682 |
-| ns | 459 |  | 115 | chibicc.h §strings.c — StringArray + prototypes | 2.2 |  | 0.582 |
-| walker |  | 618 | 402 | c decl names surface in chibicc.h |  |  | 0.697 |
-| walker |  | 618 | 0 | c decl at chibicc.h:73 |  |  | 0.697 |
-| walker |  | 626 | 8 | c decl doc at chibicc.h:73 |  |  | 0.697 |
-| walker |  | 657 | 31 | c decl at chibicc.h:38 |  |  | 0.755 |
-| ns | 670 |  | 211 | test/ listing — every per-feature .c file | 2.3 |  | 0.520 |
-| walker |  | 719 | 62 | c decl at chibicc.h:62 |  |  | 0.521 |
-| ns | 754 |  | 84 | chibicc.h §preprocess.c — public prototypes | 2.4 |  | 0.496 |
-| ns | 807 |  | 53 | chibicc.h §codegen.c — public prototypes | 2.5 |  | 0.482 |
-| walker |  | 824 | 105 | c decl at chibicc.h:52 |  |  | 0.486 |
-| walker |  | 831 | 7 | c decl doc at chibicc.h:52 |  |  | 0.486 |
-| ns | 906 |  | 99 | chibicc.h §unicode.c — public prototypes | 2.6 |  | 0.466 |
-| ns | 985 |  | 79 | chibicc.h §main.c — public surface (file_exists, extern flags) | 2.7 |  | 0.446 |
-| walker |  | 1123 | 292 | c decl names surface #1 in chibicc.h |  |  | 0.477 |
-| walker |  | 1123 | 0 | c decl at chibicc.h:126 |  |  | 0.477 |
-| walker |  | 1123 | 0 | c decl at chibicc.h:167 |  |  | 0.477 |
-| walker |  | 1128 | 5 | c decl at chibicc.h:127 |  |  | 0.477 |
-| walker |  | 1133 | 5 | c decl at chibicc.h:228 |  |  | 0.477 |
-| walker |  | 1138 | 5 | c decl at chibicc.h:320 |  |  | 0.477 |
-| walker |  | 1146 | 8 | c decl at chibicc.h:176 |  |  | 0.477 |
-| walker |  | 1154 | 8 | c decl doc at chibicc.h:176 |  |  | 0.477 |
-| walker |  | 1163 | 9 | c decl doc at chibicc.h:126 |  |  | 0.477 |
-| walker |  | 1172 | 9 | c decl doc at chibicc.h:228 |  |  | 0.477 |
-| walker |  | 1191 | 19 | c decl at chibicc.h:108 |  |  | 0.478 |
-| walker |  | 1208 | 17 | c aggregate member group at chibicc.h:127 group 135 |  |  | 0.478 |
-| walker |  | 1225 | 17 | c aggregate member group at chibicc.h:228 group 285 |  |  | 0.478 |
-| ns | 1234 |  | 249 | chibicc.h §hashmap.c — HashEntry/HashMap structs + prototypes | 2.8 |  | 0.437 |
-| walker |  | 1242 | 17 | c aggregate member group at chibicc.h:320 group 342 |  |  | 0.437 |
-| walker |  | 1281 | 39 | c decl at chibicc.h:168 |  |  | 0.437 |
-| walker |  | 1300 | 19 | c aggregate member group at chibicc.h:228 group 251 |  |  | 0.437 |
-| walker |  | 1320 | 20 | c aggregate member group at chibicc.h:228 group 248 |  |  | 0.437 |
-| walker |  | 1342 | 22 | c aggregate member group at chibicc.h:228 group 273 |  |  | 0.437 |
-| walker |  | 1366 | 24 | c aggregate member group at chibicc.h:228 group 269 |  |  | 0.438 |
-| walker |  | 1393 | 27 | c aggregate member group at chibicc.h:320 group 338 |  |  | 0.438 |
-| walker |  | 1421 | 28 | c aggregate member group at chibicc.h:228 group 265 |  |  | 0.438 |
-| walker |  | 1450 | 29 | c aggregate member group at chibicc.h:228 group 288 |  |  | 0.438 |
-| ns | 1459 |  | 225 | chibicc.h §tokenize.c — TokenKind enum + File struct | 2.9 |  | 0.482 |
-| walker |  | 1480 | 30 | c aggregate member group at chibicc.h:228 group 234 |  |  | 0.482 |
-| walker |  | 1511 | 31 | c aggregate member group at chibicc.h:228 group 281 |  |  | 0.482 |
-| walker |  | 1552 | 41 | c decl doc at chibicc.h:167 |  |  | 0.483 |
-| walker |  | 1588 | 36 | c aggregate member group at chibicc.h:228 group 244 |  |  | 0.484 |
-| walker |  | 1625 | 37 | c aggregate member group at chibicc.h:127 group 158 |  |  | 0.484 |
-| walker |  | 1662 | 37 | c aggregate member group at chibicc.h:320 group 349 |  |  | 0.484 |
-| walker |  | 1700 | 38 | c aggregate member group at chibicc.h:127 group 138 |  |  | 0.485 |
-| walker |  | 1742 | 42 | c aggregate member group at chibicc.h:228 group 276 |  |  | 0.485 |
-| ns | 1765 |  | 306 | chibicc.h §tokenize.c — Token struct (every field commented) | 2.10 | 2.9 | 0.457 |
-| walker |  | 1784 | 42 | c aggregate member group at chibicc.h:320 group 345 |  |  | 0.457 |
-| walker |  | 1830 | 46 | c aggregate member group at chibicc.h:228 group 260 |  |  | 0.458 |
-| walker |  | 1877 | 47 | c aggregate member group at chibicc.h:320 group 354 |  |  | 0.458 |
-| walker |  | 1925 | 48 | c aggregate member group at chibicc.h:228 group 254 |  |  | 0.459 |
-| walker |  | 1974 | 49 | c aggregate member group at chibicc.h:127 group 143 |  |  | 0.460 |
-| ns | 2054 |  | 289 | chibicc.h §tokenize.c — error/skip/tokenize prototypes + unreachable() | 2.11 | 2.9 | 0.497 |
-| walker |  | 2079 | 105 | c decl at chibicc.h:362 |  |  | 0.498 |
-| walker |  | 2087 | 8 | c decl doc at chibicc.h:362 |  |  | 0.498 |
-| walker |  | 2147 | 60 | c aggregate member group at chibicc.h:228 group 237 |  |  | 0.499 |
-| walker |  | 2208 | 61 | c aggregate member group at chibicc.h:228 group 229 |  |  | 0.501 |
-| ns | 2301 |  | 247 | parse.c — top-of-file comment (recursive-descent convention) | 3.1 |  | 0.480 |
-| walker |  | 2350 | 142 | c decl at chibicc.h:301 |  |  | 0.481 |
-| walker |  | 2424 | 74 | c aggregate member group at chibicc.h:127 group 149 |  |  | 0.483 |
-| walker |  | 2499 | 75 | c aggregate member group at chibicc.h:127 group 128 |  |  | 0.485 |
-| walker |  | 2579 | 80 | c aggregate member group at chibicc.h:320 group 321 |  |  | 0.486 |
-| walker |  | 2594 | 15 | c decl names surface in include/stdnoreturn.h |  |  | 0.486 |
-| walker |  | 2869 | 275 | c decl at chibicc.h:74 |  |  | 0.553 |
-| walker |  | 2904 | 35 | c decl names surface in strings.c |  |  | 0.554 |
-| walker |  | 2904 | 0 | c decl at strings.c:3 |  |  | 0.554 |
-| walker |  | 2904 | 0 | c decl at strings.c:20 |  |  | 0.554 |
-| walker |  | 2918 | 14 | c decl names surface #1 in type.c |  |  | 0.554 |
-| walker |  | 2918 | 0 | c decl at type.c:176 |  |  | 0.554 |
-| ns | 2954 |  | 653 | chibicc.h §parse.c — NodeKind enum (the AST node catalog) | 3.2 |  | 0.495 |
-| walker |  | 3058 | 140 | c aggregate member group at chibicc.h:176 group 177 |  |  | 0.505 |
-| walker |  | 3203 | 145 | c aggregate member group at chibicc.h:320 group 328 |  |  | 0.507 |
-| ns | 3301 |  | 347 | chibicc.h §parse.c — Obj struct (variable or function) | 3.3 |  | 0.546 |
-| walker |  | 3351 | 148 | c aggregate member group at chibicc.h:176 group 189 |  |  | 0.566 |
-| walker |  | 3447 | 96 | README.md section #5 |  |  | 0.566 |
-| walker |  | 3636 | 189 | c includes in chibicc.h |  |  | 0.566 |
-| walker |  | 3926 | 290 | c decl names surface #2 in chibicc.h |  |  | 0.571 |
-| ns | 4057 |  | 756 | chibicc.h §parse.c — Node struct (every AST field grouped) | 3.4 |  | 0.609 |
-| walker |  | 4091 | 165 | c aggregate member group at chibicc.h:176 group 201 |  |  | 0.635 |
-| walker |  | 4266 | 175 | c aggregate member group at chibicc.h:176 group 213 |  |  | 0.675 |
-| walker |  | 4278 | 12 | c includes in codegen.c |  |  | 0.675 |
-| walker |  | 4290 | 12 | c includes in hashmap.c |  |  | 0.675 |
-| walker |  | 4302 | 12 | c includes in main.c |  |  | 0.675 |
-| walker |  | 4314 | 12 | c includes in parse.c |  |  | 0.675 |
-| walker |  | 4326 | 12 | c includes in preprocess.c |  |  | 0.675 |
-| walker |  | 4338 | 12 | c includes in strings.c |  |  | 0.675 |
-| walker |  | 4350 | 12 | c includes in tokenize.c |  |  | 0.675 |
-| walker |  | 4362 | 12 | c includes in type.c |  |  | 0.675 |
-| walker |  | 4374 | 12 | c includes in unicode.c |  |  | 0.675 |
-| ns | 4675 |  | 618 | chibicc.h §type.c — TypeKind enum + Type struct | 3.5 |  | 0.685 |
-| ns | 5113 |  | 438 | chibicc.h §type.c — Member struct + extern ty_* + predicates/constructors | 3.6 |  | 0.696 |
-| walker |  | 5310 | 936 | README.md section #0 |  |  | 0.696 |
-| walker |  | 5474 | 164 | README.md section #2 |  |  | 0.730 |
-| ns | 5475 |  | 362 | preprocess.c — top-of-file comment (hideset algorithm) | 3.7 |  | 0.712 |
-| walker |  | 5491 | 17 | c decl doc at strings.c:20 |  |  | 0.712 |
-| ns | 5492 |  | 17 | strings.c — function locations (every top-level fn) | 4.1 |  | 0.713 |
-| ns | 5608 |  | 116 | hashmap.c — function locations | 4.2 |  | 0.704 |
-| ns | 5747 |  | 139 | type.c — function locations | 4.3 |  | 0.693 |
-| walker |  | 5789 | 298 | c decl names surface #3 in chibicc.h |  |  | 0.719 |
-| ns | 5811 |  | 64 | unicode.c — function locations | 4.4 |  | 0.714 |
-| walker |  | 5822 | 33 | c decl at chibicc.h:428 |  |  | 0.720 |
-| walker |  | 5855 | 33 | c decl at chibicc.h:434 |  |  | 0.727 |
-| walker |  | 5936 | 81 | c decl names surface in main.c |  |  | 0.727 |
-| walker |  | 5936 | 0 | c decl at main.c:586 |  |  | 0.727 |
-| walker |  | 5936 | 0 | c decl at main.c:700 |  |  | 0.727 |
-| walker |  | 5949 | 13 | c decl doc at main.c:586 |  |  | 0.727 |
-| walker |  | 5980 | 31 | c decl at main.c:3 |  |  | 0.727 |
-| walker |  | 6027 | 47 | c decl names surface in include/stdbool.h |  |  | 0.727 |
-| ns | 6085 |  | 274 | main.c — function locations | 4.5 |  | 0.708 |
-| walker |  | 6118 | 91 | c decl names surface in unicode.c |  |  | 0.711 |
-| walker |  | 6118 | 0 | c decl at unicode.c:4 |  |  | 0.711 |
-| walker |  | 6118 | 0 | c decl at unicode.c:37 |  |  | 0.711 |
-| walker |  | 6118 | 0 | c decl at unicode.c:87 |  |  | 0.711 |
-| walker |  | 6118 | 0 | c decl at unicode.c:110 |  |  | 0.711 |
-| walker |  | 6118 | 0 | c decl at unicode.c:181 |  |  | 0.711 |
-| walker |  | 6132 | 14 | c decl doc at unicode.c:4 |  |  | 0.711 |
-| walker |  | 6186 | 54 | c decl names surface in include/stdalign.h |  |  | 0.711 |
-| walker |  | 6203 | 17 | c header banner in hashmap.c |  |  | 0.711 |
-| ns | 6419 |  | 334 | tokenize.c — function locations | 4.6 |  | 0.690 |
-| walker |  | 6450 | 247 | README.md section #3 |  |  | 0.690 |
-| walker |  | 6478 | 28 | c decl doc at unicode.c:110 |  |  | 0.690 |
-| walker |  | 6506 | 28 | c decl doc at unicode.c:181 |  |  | 0.690 |
-| walker |  | 6526 | 20 | c decl body at main.c:586 |  |  | 0.690 |
-| ns | 6732 |  | 313 | codegen.c — function locations | 4.7 |  | 0.670 |
-| walker |  | 6954 | 428 | README.md section #1 |  |  | 0.671 |
-| walker |  | 7090 | 136 | c decl names surface in parse.c |  |  | 0.671 |
-| walker |  | 7090 | 0 | c decl at parse.c:31 |  |  | 0.671 |
-| walker |  | 7090 | 0 | c decl at parse.c:54 |  |  | 0.671 |
-| walker |  | 7090 | 0 | c decl at parse.c:75 |  |  | 0.671 |
-| walker |  | 7090 | 0 | c decl at parse.c:244 |  |  | 0.671 |
-| walker |  | 7090 | 0 | c decl at parse.c:1987 |  |  | 0.671 |
-| walker |  | 7090 | 0 | c decl at parse.c:3337 |  |  | 0.671 |
-| walker |  | 7100 | 10 | c decl doc at parse.c:31 |  |  | 0.671 |
-| walker |  | 7110 | 10 | c decl doc at parse.c:75 |  |  | 0.671 |
-| walker |  | 7128 | 18 | c decl doc at parse.c:3337 |  |  | 0.671 |
-| walker |  | 7168 | 40 | c decl at parse.c:76 |  |  | 0.671 |
-| walker |  | 7212 | 44 | c decl at parse.c:23 |  |  | 0.671 |
-| walker |  | 7237 | 25 | c decl doc at parse.c:23 |  |  | 0.671 |
-| ns | 7302 |  | 570 | preprocess.c — function locations | 4.8 |  | 0.642 |
-| walker |  | 7380 | 143 | c decl names surface in codegen.c |  |  | 0.642 |
-| walker |  | 7380 | 0 | c decl at codegen.c:55 |  |  | 0.642 |
-| walker |  | 7380 | 0 | c decl at codegen.c:1585 |  |  | 0.642 |
-| walker |  | 7397 | 17 | c decl body at codegen.c:55 |  |  | 0.642 |
-| walker |  | 7608 | 211 | listing of 'test' |  |  | 0.719 |
-| walker |  | 7618 | 10 | c decl names surface in test/include3.h |  |  | 0.719 |
-| walker |  | 7628 | 10 | c decl names surface in test/include4.h |  |  | 0.719 |
-| walker |  | 7639 | 11 | c decl names surface in test/include2.h |  |  | 0.719 |
-| walker |  | 7677 | 38 | c decl names surface in test/include1.h |  |  | 0.719 |
-| walker |  | 7757 | 80 | c decl names surface in include/stddef.h |  |  | 0.719 |
-| walker |  | 7780 | 23 | c decl body at parse.c:1987 |  |  | 0.719 |
+| walker |  | 233 | 53 | c decl names surface #1 in chibicc.h |  |  | 0.719 |
+| walker |  | 264 | 31 | c decl at chibicc.h:38 |  |  | 0.728 |
+| ns | 273 |  | 121 | README "Internals" header + first two stages | 1.5 |  | 0.607 |
+| walker |  | 300 | 36 | listing of 'include' |  |  | 0.748 |
+| ns | 344 |  | 71 | README "Internals" — Parse + Codegen stages | 2.1 | 1.5 | 0.694 |
+| walker |  | 423 | 123 | c decl names surface in chibicc.h |  |  | 0.787 |
+| ns | 459 |  | 115 | chibicc.h §strings.c — StringArray + prototypes | 2.2 |  | 0.752 |
+| walker |  | 486 | 63 | c decl names surface #3 in chibicc.h |  |  | 0.756 |
+| walker |  | 517 | 31 | c decl names surface #6 in chibicc.h |  |  | 0.757 |
+| walker |  | 532 | 15 | c decl names surface in include/stdnoreturn.h |  |  | 0.757 |
+| walker |  | 567 | 35 | c decl names surface in strings.c |  |  | 0.757 |
+| walker |  | 567 | 0 | c decl at strings.c:3 |  |  | 0.757 |
+| walker |  | 567 | 0 | c decl at strings.c:20 |  |  | 0.757 |
+| walker |  | 670 | 103 | c decl names surface #4 in chibicc.h |  |  | 0.522 |
+| walker |  | 670 | 0 | c decl at chibicc.h:126 |  |  | 0.522 |
+| walker |  | 670 | 0 | c decl at chibicc.h:167 |  |  | 0.522 |
+| ns | 670 |  | 211 | test/ listing — every per-feature .c file | 2.3 |  | 0.522 |
+| walker |  | 675 | 5 | c decl at chibicc.h:127 |  |  | 0.522 |
+| walker |  | 680 | 5 | c decl at chibicc.h:228 |  |  | 0.522 |
+| walker |  | 688 | 8 | c decl at chibicc.h:176 |  |  | 0.522 |
+| walker |  | 696 | 8 | c decl doc at chibicc.h:176 |  |  | 0.522 |
+| walker |  | 705 | 9 | c decl doc at chibicc.h:126 |  |  | 0.522 |
+| walker |  | 714 | 9 | c decl doc at chibicc.h:228 |  |  | 0.522 |
+| walker |  | 731 | 17 | c aggregate member group at chibicc.h:127 group 135 |  |  | 0.522 |
+| walker |  | 748 | 17 | c aggregate member group at chibicc.h:228 group 285 |  |  | 0.522 |
+| ns | 754 |  | 84 | chibicc.h §preprocess.c — public prototypes | 2.4 |  | 0.527 |
+| walker |  | 787 | 39 | c decl at chibicc.h:168 |  |  | 0.527 |
+| walker |  | 806 | 19 | c aggregate member group at chibicc.h:228 group 251 |  |  | 0.527 |
+| ns | 807 |  | 53 | chibicc.h §codegen.c — public prototypes | 2.5 |  | 0.522 |
+| walker |  | 826 | 20 | c aggregate member group at chibicc.h:228 group 248 |  |  | 0.522 |
+| walker |  | 848 | 22 | c aggregate member group at chibicc.h:228 group 273 |  |  | 0.522 |
+| walker |  | 872 | 24 | c aggregate member group at chibicc.h:228 group 269 |  |  | 0.522 |
+| walker |  | 900 | 28 | c aggregate member group at chibicc.h:228 group 265 |  |  | 0.522 |
+| ns | 906 |  | 99 | chibicc.h §unicode.c — public prototypes | 2.6 |  | 0.501 |
+| walker |  | 929 | 29 | c aggregate member group at chibicc.h:228 group 288 |  |  | 0.501 |
+| walker |  | 959 | 30 | c aggregate member group at chibicc.h:228 group 234 |  |  | 0.501 |
+| ns | 985 |  | 79 | chibicc.h §main.c — public surface (file_exists, extern flags) | 2.7 |  | 0.480 |
+| walker |  | 990 | 31 | c aggregate member group at chibicc.h:228 group 281 |  |  | 0.480 |
+| walker |  | 1031 | 41 | c decl doc at chibicc.h:167 |  |  | 0.481 |
+| walker |  | 1067 | 36 | c aggregate member group at chibicc.h:228 group 244 |  |  | 0.482 |
+| walker |  | 1104 | 37 | c aggregate member group at chibicc.h:127 group 158 |  |  | 0.482 |
+| walker |  | 1142 | 38 | c aggregate member group at chibicc.h:127 group 138 |  |  | 0.483 |
+| walker |  | 1184 | 42 | c aggregate member group at chibicc.h:228 group 276 |  |  | 0.483 |
+| walker |  | 1230 | 46 | c aggregate member group at chibicc.h:228 group 260 |  |  | 0.484 |
+| ns | 1234 |  | 249 | chibicc.h §hashmap.c — HashEntry/HashMap structs + prototypes | 2.8 |  | 0.443 |
+| walker |  | 1278 | 48 | c aggregate member group at chibicc.h:228 group 254 |  |  | 0.444 |
+| walker |  | 1327 | 49 | c aggregate member group at chibicc.h:127 group 143 |  |  | 0.445 |
+| walker |  | 1387 | 60 | c aggregate member group at chibicc.h:228 group 237 |  |  | 0.446 |
+| walker |  | 1448 | 61 | c aggregate member group at chibicc.h:228 group 229 |  |  | 0.447 |
+| ns | 1459 |  | 225 | chibicc.h §tokenize.c — TokenKind enum + File struct | 2.9 |  | 0.413 |
+| walker |  | 1522 | 74 | c aggregate member group at chibicc.h:127 group 149 |  |  | 0.414 |
+| walker |  | 1597 | 75 | c aggregate member group at chibicc.h:127 group 128 |  |  | 0.416 |
+| walker |  | 1611 | 14 | c decl names surface #1 in type.c |  |  | 0.416 |
+| walker |  | 1611 | 0 | c decl at type.c:176 |  |  | 0.416 |
+| walker |  | 1751 | 140 | c aggregate member group at chibicc.h:176 group 177 |  |  | 0.417 |
+| ns | 1765 |  | 306 | chibicc.h §tokenize.c — Token struct (every field commented) | 2.10 | 2.9 | 0.392 |
+| walker |  | 1899 | 148 | c aggregate member group at chibicc.h:176 group 189 |  |  | 0.393 |
+| walker |  | 1995 | 96 | README.md section #5 |  |  | 0.393 |
+| ns | 2054 |  | 289 | chibicc.h §tokenize.c — error/skip/tokenize prototypes + unreachable() | 2.11 | 2.9 | 0.376 |
+| walker |  | 2184 | 189 | c includes in chibicc.h |  |  | 0.376 |
+| ns | 2301 |  | 247 | parse.c — top-of-file comment (recursive-descent convention) | 3.1 |  | 0.361 |
+| walker |  | 2349 | 165 | c aggregate member group at chibicc.h:176 group 201 |  |  | 0.363 |
+| walker |  | 2652 | 303 | c decl names surface #2 in chibicc.h |  |  | 0.423 |
+| walker |  | 2652 | 0 | c decl at chibicc.h:73 |  |  | 0.423 |
+| walker |  | 2660 | 8 | c decl doc at chibicc.h:73 |  |  | 0.423 |
+| walker |  | 2679 | 19 | c decl at chibicc.h:108 |  |  | 0.431 |
+| walker |  | 2741 | 62 | c decl at chibicc.h:62 |  |  | 0.443 |
+| walker |  | 2846 | 105 | c decl at chibicc.h:52 |  |  | 0.489 |
+| walker |  | 2853 | 7 | c decl doc at chibicc.h:52 |  |  | 0.494 |
+| ns | 2954 |  | 653 | chibicc.h §parse.c — NodeKind enum (the AST node catalog) | 3.2 |  | 0.514 |
+| walker |  | 3128 | 275 | c decl at chibicc.h:74 |  |  | 0.568 |
+| ns | 3301 |  | 347 | chibicc.h §parse.c — Obj struct (variable or function) | 3.3 |  | 0.595 |
+| walker |  | 3303 | 175 | c aggregate member group at chibicc.h:176 group 213 |  |  | 0.646 |
+| walker |  | 3315 | 12 | c includes in codegen.c |  |  | 0.646 |
+| walker |  | 3327 | 12 | c includes in hashmap.c |  |  | 0.646 |
+| walker |  | 3339 | 12 | c includes in main.c |  |  | 0.646 |
+| walker |  | 3351 | 12 | c includes in parse.c |  |  | 0.646 |
+| walker |  | 3363 | 12 | c includes in preprocess.c |  |  | 0.646 |
+| walker |  | 3375 | 12 | c includes in strings.c |  |  | 0.646 |
+| walker |  | 3387 | 12 | c includes in tokenize.c |  |  | 0.646 |
+| walker |  | 3399 | 12 | c includes in type.c |  |  | 0.646 |
+| walker |  | 3411 | 12 | c includes in unicode.c |  |  | 0.646 |
+| ns | 4057 |  | 756 | chibicc.h §parse.c — Node struct (every AST field grouped) | 3.4 |  | 0.664 |
+| walker |  | 4347 | 936 | README.md section #0 |  |  | 0.664 |
+| walker |  | 4511 | 164 | README.md section #2 |  |  | 0.702 |
+| walker |  | 4589 | 78 | c decl names surface #7 in chibicc.h |  |  | 0.711 |
+| walker |  | 4606 | 17 | c decl doc at strings.c:20 |  |  | 0.711 |
+| walker |  | 4659 | 53 | c decl names surface #9 in chibicc.h |  |  | 0.721 |
+| ns | 4675 |  | 618 | chibicc.h §type.c — TypeKind enum + Type struct | 3.5 |  | 0.664 |
+| walker |  | 4740 | 81 | c decl names surface in main.c |  |  | 0.664 |
+| walker |  | 4740 | 0 | c decl at main.c:586 |  |  | 0.664 |
+| walker |  | 4740 | 0 | c decl at main.c:700 |  |  | 0.664 |
+| walker |  | 4753 | 13 | c decl doc at main.c:586 |  |  | 0.664 |
+| walker |  | 4784 | 31 | c decl at main.c:3 |  |  | 0.664 |
+| walker |  | 4831 | 47 | c decl names surface in include/stdbool.h |  |  | 0.664 |
+| walker |  | 4922 | 91 | c decl names surface in unicode.c |  |  | 0.664 |
+| walker |  | 4922 | 0 | c decl at unicode.c:4 |  |  | 0.664 |
+| walker |  | 4922 | 0 | c decl at unicode.c:37 |  |  | 0.664 |
+| walker |  | 4922 | 0 | c decl at unicode.c:87 |  |  | 0.664 |
+| walker |  | 4922 | 0 | c decl at unicode.c:110 |  |  | 0.664 |
+| walker |  | 4922 | 0 | c decl at unicode.c:181 |  |  | 0.664 |
+| walker |  | 4936 | 14 | c decl doc at unicode.c:4 |  |  | 0.664 |
+| walker |  | 4990 | 54 | c decl names surface in include/stdalign.h |  |  | 0.664 |
+| walker |  | 5007 | 17 | c header banner in hashmap.c |  |  | 0.664 |
+| ns | 5113 |  | 438 | chibicc.h §type.c — Member struct + extern ty_* + predicates/constructors | 3.6 |  | 0.631 |
+| walker |  | 5254 | 247 | README.md section #3 |  |  | 0.631 |
+| walker |  | 5282 | 28 | c decl doc at unicode.c:110 |  |  | 0.631 |
+| walker |  | 5310 | 28 | c decl doc at unicode.c:181 |  |  | 0.631 |
+| walker |  | 5330 | 20 | c decl body at main.c:586 |  |  | 0.631 |
+| ns | 5475 |  | 362 | preprocess.c — top-of-file comment (hideset algorithm) | 3.7 |  | 0.615 |
+| ns | 5492 |  | 17 | strings.c — function locations (every top-level fn) | 4.1 |  | 0.616 |
+| ns | 5608 |  | 116 | hashmap.c — function locations | 4.2 |  | 0.608 |
+| ns | 5747 |  | 139 | type.c — function locations | 4.3 |  | 0.599 |
+| walker |  | 5758 | 428 | README.md section #1 |  |  | 0.600 |
+| ns | 5811 |  | 64 | unicode.c — function locations | 4.4 |  | 0.599 |
+| walker |  | 5894 | 136 | c decl names surface in parse.c |  |  | 0.599 |
+| walker |  | 5894 | 0 | c decl at parse.c:31 |  |  | 0.599 |
+| walker |  | 5894 | 0 | c decl at parse.c:54 |  |  | 0.599 |
+| walker |  | 5894 | 0 | c decl at parse.c:75 |  |  | 0.599 |
+| walker |  | 5894 | 0 | c decl at parse.c:244 |  |  | 0.599 |
+| walker |  | 5894 | 0 | c decl at parse.c:1987 |  |  | 0.599 |
+| walker |  | 5894 | 0 | c decl at parse.c:3337 |  |  | 0.599 |
+| walker |  | 5904 | 10 | c decl doc at parse.c:31 |  |  | 0.599 |
+| walker |  | 5914 | 10 | c decl doc at parse.c:75 |  |  | 0.599 |
+| walker |  | 5932 | 18 | c decl doc at parse.c:3337 |  |  | 0.599 |
+| walker |  | 5972 | 40 | c decl at parse.c:76 |  |  | 0.599 |
+| walker |  | 6016 | 44 | c decl at parse.c:23 |  |  | 0.599 |
+| walker |  | 6041 | 25 | c decl doc at parse.c:23 |  |  | 0.599 |
+| ns | 6085 |  | 274 | main.c — function locations | 4.5 |  | 0.583 |
+| walker |  | 6184 | 143 | c decl names surface in codegen.c |  |  | 0.583 |
+| walker |  | 6184 | 0 | c decl at codegen.c:55 |  |  | 0.583 |
+| walker |  | 6184 | 0 | c decl at codegen.c:1585 |  |  | 0.583 |
+| walker |  | 6201 | 17 | c decl body at codegen.c:55 |  |  | 0.583 |
+| walker |  | 6412 | 211 | listing of 'test' |  |  | 0.670 |
+| ns | 6419 |  | 334 | tokenize.c — function locations | 4.6 |  | 0.649 |
+| walker |  | 6422 | 10 | c decl names surface in test/include3.h |  |  | 0.649 |
+| walker |  | 6432 | 10 | c decl names surface in test/include4.h |  |  | 0.649 |
+| walker |  | 6443 | 11 | c decl names surface in test/include2.h |  |  | 0.649 |
+| walker |  | 6481 | 38 | c decl names surface in test/include1.h |  |  | 0.649 |
+| walker |  | 6561 | 80 | c decl names surface in include/stddef.h |  |  | 0.649 |
+| walker |  | 6584 | 23 | c decl body at parse.c:1987 |  |  | 0.649 |
+| ns | 6732 |  | 313 | codegen.c — function locations | 4.7 |  | 0.631 |
+| walker |  | 6907 | 323 | c decl names surface #5 in chibicc.h |  |  | 0.656 |
+| walker |  | 6912 | 5 | c decl at chibicc.h:320 |  |  | 0.656 |
+| walker |  | 6929 | 17 | c aggregate member group at chibicc.h:320 group 342 |  |  | 0.656 |
+| walker |  | 6956 | 27 | c aggregate member group at chibicc.h:320 group 338 |  |  | 0.657 |
+| walker |  | 6993 | 37 | c aggregate member group at chibicc.h:320 group 349 |  |  | 0.658 |
+| walker |  | 7035 | 42 | c aggregate member group at chibicc.h:320 group 345 |  |  | 0.659 |
+| walker |  | 7082 | 47 | c aggregate member group at chibicc.h:320 group 354 |  |  | 0.662 |
+| walker |  | 7187 | 105 | c decl at chibicc.h:362 |  |  | 0.681 |
+| walker |  | 7195 | 8 | c decl doc at chibicc.h:362 |  |  | 0.683 |
+| ns | 7302 |  | 570 | preprocess.c — function locations | 4.8 |  | 0.654 |
+| walker |  | 7337 | 142 | c decl at chibicc.h:301 |  |  | 0.665 |
+| walker |  | 7417 | 80 | c aggregate member group at chibicc.h:320 group 321 |  |  | 0.676 |
+| walker |  | 7562 | 145 | c aggregate member group at chibicc.h:320 group 328 |  |  | 0.699 |
+| walker |  | 7714 | 152 | c decl names surface #8 in chibicc.h |  |  | 0.707 |
+| walker |  | 7747 | 33 | c decl at chibicc.h:428 |  |  | 0.712 |
+| walker |  | 7780 | 33 | c decl at chibicc.h:434 |  |  | 0.719 |
 | walker |  | 7841 | 61 | c decl at parse.c:42 |  |  | 0.719 |
 | walker |  | 7854 | 13 | c decl doc at parse.c:42 |  |  | 0.719 |
 | walker |  | 7922 | 68 | c decl at parse.c:32 |  |  | 0.719 |

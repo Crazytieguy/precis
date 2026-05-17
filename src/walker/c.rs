@@ -45,6 +45,7 @@
 
 use std::cell::{OnceCell, RefCell};
 use std::collections::{HashMap, HashSet};
+use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -53,19 +54,22 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, CKey};
 use crate::value::{mix_signals, names_surface_chunk_factor};
 
-/// Chunk size for C declaration-name surfaces. Larger than the
-/// `NAMES_SURFACE_CHUNK_SIZE = 12` used by Python/TS because C
-/// headers regularly expose 50+ decls and NS authors anchor on
+/// Chunk size for C declaration-name surfaces when there's no
+/// structural signal (banner-separated sections) to chunk on. Larger
+/// than the `NAMES_SURFACE_CHUNK_SIZE = 12` used by Python/TS because
+/// C headers regularly expose 50+ decls and NS authors anchor on
 /// unified subset rows (e.g. sds's "Public fn declarations — utility
-/// fns" covers 14 specific lines). A 24-decl chunk keeps the
-/// surface coherent for files in the 25–48 decl band while still
-/// splitting catalog headers like krep.h (~80 decls) so the first
-/// chunk reaches the budget.
+/// fns" covers 14 specific lines). A 24-decl chunk keeps the surface
+/// coherent for files in the 25–48 decl band while still splitting
+/// catalog headers like krep.h (~80 decls) so the first chunk reaches
+/// the budget.
 const C_DECL_NAMES_CHUNK_SIZE: usize = 24;
 
-fn c_names_surface_chunk_index(decl_index: usize) -> usize {
-    decl_index / C_DECL_NAMES_CHUNK_SIZE
-}
+/// Minimum number of `// <stem>.c` section banners required to switch
+/// from count-based chunking to section-banner chunking on a canonical
+/// entry header. Below this, the header isn't an amalgamation catalog
+/// and the count-based chunks fit the surface better.
+const SECTION_BANNER_MIN_COUNT: usize = 3;
 
 /// Per-run C-walker state. Caches the seed-root's autotools
 /// `include_HEADERS` declaration (parsed from `Makefile.am` once per
@@ -204,6 +208,146 @@ use super::{
     single_file_lines_content, trim_end_before_next_decl,
 };
 
+/// Partition the in-source-order `decls` of a single C source file into
+/// chunks for the decl-names surface. Two strategies:
+///
+/// 1. **Section-banner chunking** (preferred for amalgamation-style
+///    headers): when `file` is a header at a canonical entry location
+///    and contains at least `SECTION_BANNER_MIN_COUNT` top-level
+///    `// <stem>.c` banner comments, chunk on banner boundaries. Each
+///    chunk's decls are the run of decls whose `start_line` falls
+///    between consecutive banners; any decls before the first banner
+///    form the leading "preamble" chunk. Chunks with zero decls are
+///    skipped — banners with no following decls (a banner immediately
+///    before the next banner) don't produce empty surfaces.
+/// 2. **Count-based fallback**: split into `C_DECL_NAMES_CHUNK_SIZE`-
+///    sized chunks. This is what every C header without amalgamation
+///    structure uses (the typical case).
+fn compute_decl_chunk_ranges(
+    decls: &[(Node, DeclInfo)],
+    tree: &Tree,
+    source: &str,
+    file: &Path,
+    ctx: &WalkCtx,
+) -> Vec<Range<usize>> {
+    if let Some(ranges) = section_banner_chunk_ranges(decls, tree, source, file, ctx) {
+        return ranges;
+    }
+    count_based_chunk_ranges(decls.len())
+}
+
+/// Section-banner chunking — see [`compute_decl_chunk_ranges`].
+/// Returns `None` when the file doesn't qualify (not a header at a
+/// canonical entry location, or fewer than `SECTION_BANNER_MIN_COUNT`
+/// banner comments).
+fn section_banner_chunk_ranges(
+    decls: &[(Node, DeclInfo)],
+    tree: &Tree,
+    source: &str,
+    file: &Path,
+    ctx: &WalkCtx,
+) -> Option<Vec<Range<usize>>> {
+    if !is_header_file(file) || !is_at_canonical_entry_location(file, ctx) {
+        return None;
+    }
+    let banner_lines = find_module_section_banner_lines(tree, source);
+    if banner_lines.len() < SECTION_BANNER_MIN_COUNT {
+        return None;
+    }
+    // Partition decl indices by their start_line vs banner lines. A
+    // decl at line >= banner_lines[k] and < banner_lines[k+1] belongs
+    // to chunk k+1 (chunk 0 is the preamble); after the last banner,
+    // decls belong to the final chunk.
+    let mut ranges: Vec<Range<usize>> = Vec::new();
+    let mut start = 0usize;
+    for &boundary in &banner_lines {
+        // Find the first decl whose start_line >= boundary.
+        let end = decls
+            .iter()
+            .position(|(_, d)| d.start_line >= boundary)
+            .unwrap_or(decls.len());
+        if end > start {
+            ranges.push(start..end);
+        }
+        start = end;
+    }
+    if start < decls.len() {
+        ranges.push(start..decls.len());
+    }
+    // Without at least two chunks the section split doesn't add
+    // anything over the unchunked surface; fall back so values stay
+    // calibrated against count-based chunking.
+    if ranges.len() < 2 {
+        return None;
+    }
+    Some(ranges)
+}
+
+/// Count-based chunking — see [`compute_decl_chunk_ranges`]. A file
+/// with `≤ C_DECL_NAMES_CHUNK_SIZE` decls yields one chunk; otherwise
+/// chunks of exactly `C_DECL_NAMES_CHUNK_SIZE` decls (the final chunk
+/// may be smaller).
+fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
+    if decl_count == 0 {
+        return Vec::new();
+    }
+    let chunk_size = C_DECL_NAMES_CHUNK_SIZE;
+    let mut ranges = Vec::new();
+    let mut i = 0;
+    while i < decl_count {
+        let end = (i + chunk_size).min(decl_count);
+        ranges.push(i..end);
+        i = end;
+    }
+    ranges
+}
+
+/// 1-based line numbers of top-level `// <stem>.c` (or `/* <stem>.c */`)
+/// banner comments — the amalgamation-style section dividers chibicc.h
+/// uses to partition prototypes by their backing translation unit. Only
+/// `comment` children of the translation_unit root are scanned;
+/// comments nested inside decls or preproc blocks don't count, since
+/// the chunker partitions top-level decls.
+fn find_module_section_banner_lines(tree: &Tree, source: &str) -> Vec<usize> {
+    let mut out = Vec::new();
+    let mut cursor = tree.root_node().walk();
+    for child in tree.root_node().children(&mut cursor) {
+        if child.kind() != "comment" {
+            continue;
+        }
+        let text = &source[child.start_byte()..child.end_byte()];
+        if is_module_section_banner_comment(text) {
+            out.push(child.start_position().row + 1);
+        }
+    }
+    out
+}
+
+/// True iff `text` (a comment node's source slice) is a module-section
+/// banner — `// <stem>.c` or `/* <stem>.c */` after trimming, where
+/// `<stem>` is an identifier-shaped C identifier (letters, digits,
+/// underscores). Tolerates surrounding whitespace and the chibicc
+/// triple-slash idiom (`// \n// foo.c \n//`) which tree-sitter-c
+/// surfaces as three sibling `comment` nodes — the middle one is the
+/// banner.
+fn is_module_section_banner_comment(text: &str) -> bool {
+    let body = if let Some(rest) = text.strip_prefix("//") {
+        rest
+    } else if let Some(rest) = text.strip_prefix("/*").and_then(|s| s.strip_suffix("*/")) {
+        rest
+    } else {
+        return false;
+    };
+    let trimmed = body.trim();
+    let Some(stem) = trimmed.strip_suffix(".c") else {
+        return false;
+    };
+    !stem.is_empty()
+        && stem
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '-')
+}
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let c_files = c_source_files(dir);
     if c_files.is_empty() {
@@ -250,12 +394,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // "Public fn declarations — utility fns" across chunks. Chunk
         // only when the surface is large enough that the unified batch
         // would lose the value/cost race against per-decl batches.
-        let chunk_size = C_DECL_NAMES_CHUNK_SIZE;
-        let names_chunk_count = if decls.len() <= chunk_size {
-            1
-        } else {
-            decls.len().div_ceil(chunk_size)
-        };
+        let chunk_ranges = compute_decl_chunk_ranges(&decls, &tree, &source, file, ctx);
+        let names_chunk_count = chunk_ranges.len();
         let names_predecessors: Vec<_> = (0..names_chunk_count)
             .map(|chunk_index| {
                 BatchKey::C(CKey::DeclNames {
@@ -267,10 +407,27 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let all_starts: std::collections::HashSet<usize> =
             decls.iter().map(|(_, i)| i.start_line).collect();
         let src_lines: Vec<&str> = source.lines().collect();
-        let names_lines_by_chunk: Vec<FileLines> = decls
-            .chunks(chunk_size)
-            .map(|c| collect_decl_names_from_with_global_starts(c, &all_starts, &src_lines))
+        let names_lines_by_chunk: Vec<FileLines> = chunk_ranges
+            .iter()
+            .map(|range| {
+                collect_decl_names_from_with_global_starts(
+                    &decls[range.clone()],
+                    &all_starts,
+                    &src_lines,
+                )
+            })
             .collect();
+        // Per-decl index → chunk index lookup. Built from the chunk
+        // ranges so callers don't re-divide.
+        let decl_to_chunk: Vec<usize> = {
+            let mut v = vec![0_usize; decls.len()];
+            for (chunk_index, range) in chunk_ranges.iter().enumerate() {
+                for i in range.clone() {
+                    v[i] = chunk_index;
+                }
+            }
+            v
+        };
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
             else {
@@ -284,7 +441,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
         for (decl_index, (node, info)) in decls.iter().enumerate() {
-            let names_chunk_index = c_names_surface_chunk_index(decl_index);
+            let names_chunk_index = decl_to_chunk[decl_index];
             let names_predecessor = names_predecessors[names_chunk_index].clone();
             let chunk_names_lines = &names_lines_by_chunk[names_chunk_index];
             let decl_key = CKey::Decl {

@@ -20,10 +20,33 @@ README.md
     …
     180→## About the Author
     …
+    182→I'm Rui Ueyama. I'm the creator of [8cc](https://github.com/rui314/8cc),
+    183→which is a hobby C compiler, and also the original creator of the current
+    184→version of [LLVM lld](https://lld.llvm.org) linker, which is a
+    185→production-quality linker used by various operating systems and large-scale
+    186→build systems.
     188→## References
     …
 chibicc.h
     1→#define _POSIX_C_SOURCE 200809L
+    2→#include <assert.h>
+    3→#include <ctype.h>
+    4→#include <errno.h>
+    5→#include <glob.h>
+    6→#include <libgen.h>
+    7→#include <stdarg.h>
+    8→#include <stdbool.h>
+    9→#include <stdint.h>
+    10→#include <stdio.h>
+    11→#include <stdlib.h>
+    12→#include <stdnoreturn.h>
+    13→#include <string.h>
+    14→#include <strings.h>
+    15→#include <sys/stat.h>
+    16→#include <sys/types.h>
+    17→#include <sys/wait.h>
+    18→#include <time.h>
+    19→#include <unistd.h>
     21→#define MAX(x, y) ((x) < (y) ? (y) : (x))
     22→#define MIN(x, y) ((x) < (y) ? (x) : (y))
     …
@@ -62,23 +85,7 @@ chibicc.h
     72→// Token type
     73→typedef struct Token Token;
     74→struct Token {
-    75→  TokenKind kind;   // Token kind
-    76→  Token *next;      // Next token
-    77→  int64_t val;      // If kind is TK_NUM, its value
-    78→  long double fval; // If kind is TK_NUM, its value
-    79→  char *loc;        // Token location
-    80→  int len;          // Token length
-    81→  Type *ty;         // Used if TK_NUM or TK_STR
-    82→  char *str;        // String literal contents including terminating '\0'
-    84→  File *file;       // Source location
-    85→  char *filename;   // Filename
-    86→  int line_no;      // Line number
-    87→  int line_delta;   // Line number
-    88→  bool at_bol;      // True if this token is at beginning of line
-    89→  bool has_space;   // True if this token follows a space character
-    90→  Hideset *hideset; // For macro expansion
-    91→  Token *origin;    // If this is expanded from a macro, the original token
-    92→};
+    …
     94→noreturn void error(char *fmt, ...) __attribute__((format(printf, 1, 2)));
     95→noreturn void error_at(char *loc, char *fmt, ...) __attribute__((format(printf, 2, 3)));
     96→noreturn void error_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
@@ -146,7 +153,42 @@ chibicc.h
     173→};
     175→// AST node
     176→typedef enum {
-    …
+    177→  ND_NULL_EXPR, // Do nothing
+    178→  ND_ADD,       // +
+    179→  ND_SUB,       // -
+    180→  ND_MUL,       // *
+    181→  ND_DIV,       // /
+    182→  ND_NEG,       // unary -
+    183→  ND_MOD,       // %
+    184→  ND_BITAND,    // &
+    185→  ND_BITOR,     // |
+    186→  ND_BITXOR,    // ^
+    187→  ND_SHL,       // <<
+    188→  ND_SHR,       // >>
+    189→  ND_EQ,        // ==
+    190→  ND_NE,        // !=
+    191→  ND_LT,        // <
+    192→  ND_LE,        // <=
+    193→  ND_ASSIGN,    // =
+    194→  ND_COND,      // ?:
+    195→  ND_COMMA,     // ,
+    196→  ND_MEMBER,    // . (struct member access)
+    197→  ND_ADDR,      // unary &
+    198→  ND_DEREF,     // unary *
+    199→  ND_NOT,       // !
+    200→  ND_BITNOT,    // ~
+    201→  ND_LOGAND,    // &&
+    202→  ND_LOGOR,     // ||
+    203→  ND_RETURN,    // "return"
+    204→  ND_IF,        // "if"
+    205→  ND_FOR,       // "for" or "while"
+    206→  ND_DO,        // "do"
+    207→  ND_SWITCH,    // "switch"
+    208→  ND_CASE,      // "case"
+    209→  ND_BLOCK,     // { ... }
+    210→  ND_GOTO,      // "goto"
+    211→  ND_GOTO_EXPR, // "goto" labels-as-values
+    212→  ND_LABEL,     // Labeled statement
     225→} NodeKind;
     227→// AST node type
     228→struct Node {
@@ -203,65 +245,8 @@ chibicc.h
     294→int64_t const_expr(Token **rest, Token *tok);
     295→Obj *parse(Token *tok);
     …
-    301→typedef enum {
-    302→  TY_VOID,
-    303→  TY_BOOL,
-    304→  TY_CHAR,
-    305→  TY_SHORT,
-    306→  TY_INT,
-    307→  TY_LONG,
-    308→  TY_FLOAT,
-    309→  TY_DOUBLE,
-    310→  TY_LDOUBLE,
-    311→  TY_ENUM,
-    312→  TY_PTR,
-    313→  TY_FUNC,
-    314→  TY_ARRAY,
-    315→  TY_VLA, // variable-length array
-    316→  TY_STRUCT,
-    317→  TY_UNION,
-    318→} TypeKind;
-    320→struct Type {
-    321→  TypeKind kind;
-    322→  int size;           // sizeof() value
-    323→  int align;          // alignment
-    324→  bool is_unsigned;   // unsigned or signed
-    325→  bool is_atomic;     // true if _Atomic
-    326→  Type *origin;       // for type compatibility check
-    338→  // Declaration
-    339→  Token *name;
-    340→  Token *name_pos;
-    342→  // Array
-    343→  int array_len;
-    345→  // Variable-length array
-    346→  Node *vla_len; // # of elements
-    347→  Obj *vla_size; // sizeof() value
-    349→  // Struct
-    350→  Member *members;
-    351→  bool is_flexible;
-    352→  bool is_packed;
-    354→  // Function type
-    355→  Type *return_ty;
-    356→  Type *params;
-    357→  bool is_variadic;
-    358→  Type *next;
-    359→};
-    361→// Struct member
-    362→struct Member {
-    363→  Member *next;
-    364→  Type *ty;
-    365→  Token *tok; // for error message
-    366→  Token *name;
-    367→  int idx;
-    368→  int align;
-    369→  int offset;
-    371→  // Bitfield
-    372→  bool is_bitfield;
-    373→  int bit_offset;
-    374→  int bit_width;
-    375→};
-    377→extern Type *ty_void;
-    378→extern Type *ty_bool;
+    411→void codegen(Obj *prog, FILE *out);
+    412→int align_to(int n, int align);
     …
 codegen.c
 hashmap.c
