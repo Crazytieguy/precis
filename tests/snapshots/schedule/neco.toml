@@ -1,6 +1,6 @@
 fixture = "neco"
 budget = 10000
-cumulative_tokens = 9935
+cumulative_tokens = 9994
 batch_count = 184
 
 [[batches]]
@@ -83,10 +83,36 @@ kind = "full"
 
 [[batches]]
 position = 6
+key = 'C(Includes { file: "neco.h" })'
+descriptor = "c includes in neco.h"
+cost_tokens = 110
+cum_tokens = 280
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "neco.h"
+start = 12
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "neco.h"
+start = 424
+end = 425
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 408
-cum_tokens = 578
+cum_tokens = 688
 
 [batches.content]
 kind = "lines"
@@ -124,37 +150,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 7
-key = 'C(Includes { file: "neco.h" })'
-descriptor = "c includes in neco.h"
-cost_tokens = 51
-cum_tokens = 629
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "neco.h"
-start = 12
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "neco.h"
-start = 424
-end = 425
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 8
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 233
-cum_tokens = 862
+cum_tokens = 921
 
 [batches.content]
 kind = "lines"
@@ -452,7 +452,7 @@ position = 9
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 46
-cum_tokens = 908
+cum_tokens = 967
 
 [batches.content]
 kind = "lines"
@@ -470,7 +470,7 @@ position = 10
 key = 'Markdown(Section { file: "README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 16
-cum_tokens = 924
+cum_tokens = 983
 
 [batches.content]
 kind = "lines"
@@ -496,7 +496,7 @@ position = 11
 key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 55
-cum_tokens = 979
+cum_tokens = 1038
 
 [batches.content]
 kind = "lines"
@@ -530,7 +530,7 @@ position = 12
 key = 'Markdown(HeadingsOutline { file: "docs/assets/API_head.md" })'
 descriptor = "headings outline in docs/assets/API_head.md"
 cost_tokens = 68
-cum_tokens = 1047
+cum_tokens = 1106
 
 [batches.content]
 kind = "lines"
@@ -636,7 +636,7 @@ position = 13
 key = 'C(DeclNames { file: "neco.h", chunk_index: 0 })'
 descriptor = "c decl names surface in neco.h"
 cost_tokens = 412
-cum_tokens = 1459
+cum_tokens = 1518
 
 [batches.content]
 kind = "lines"
@@ -678,7 +678,7 @@ position = 14
 key = 'C(Decl { file: "neco.h", start_line: 35 })'
 descriptor = "c decl at neco.h:35"
 cost_tokens = 0
-cum_tokens = 1459
+cum_tokens = 1518
 
 [batches.content]
 kind = "lines"
@@ -696,7 +696,7 @@ position = 15
 key = 'C(Decl { file: "neco.h", start_line: 61 })'
 descriptor = "c decl at neco.h:61"
 cost_tokens = 0
-cum_tokens = 1459
+cum_tokens = 1518
 
 [batches.content]
 kind = "lines"
@@ -714,7 +714,7 @@ position = 16
 key = 'C(DeclDoc { file: "neco.h", start_line: 61 })'
 descriptor = "c decl doc at neco.h:61"
 cost_tokens = 78
-cum_tokens = 1537
+cum_tokens = 1596
 
 [batches.content]
 kind = "lines"
@@ -732,7 +732,7 @@ position = 17
 key = 'C(DeclDoc { file: "neco.h", start_line: 35 })'
 descriptor = "c decl doc at neco.h:35"
 cost_tokens = 74
-cum_tokens = 1611
+cum_tokens = 1670
 
 [batches.content]
 kind = "lines"
@@ -750,7 +750,7 @@ position = 18
 key = 'Markdown(Section { file: "README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 15
-cum_tokens = 1626
+cum_tokens = 1685
 
 [batches.content]
 kind = "lines"
@@ -768,7 +768,7 @@ position = 19
 key = 'Fs(DirListing { dir: "deps" })'
 descriptor = "listing of 'deps'"
 cost_tokens = 42
-cum_tokens = 1668
+cum_tokens = 1727
 
 [batches.content]
 kind = "fs"
@@ -782,7 +782,7 @@ position = 20
 key = 'Markdown(Section { file: "README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 62
-cum_tokens = 1730
+cum_tokens = 1789
 
 [batches.content]
 kind = "lines"
@@ -808,7 +808,7 @@ position = 21
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 51
-cum_tokens = 1781
+cum_tokens = 1840
 
 [batches.content]
 kind = "fs"
@@ -822,7 +822,7 @@ position = 22
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 122
-cum_tokens = 1903
+cum_tokens = 1962
 
 [batches.content]
 kind = "lines"
@@ -856,7 +856,7 @@ position = 23
 key = 'C(DeclNames { file: "neco.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in neco.h"
 cost_tokens = 485
-cum_tokens = 2388
+cum_tokens = 2447
 
 [batches.content]
 kind = "lines"
@@ -938,7 +938,7 @@ position = 24
 key = 'C(Decl { file: "neco.h", start_line: 90 })'
 descriptor = "c decl at neco.h:90"
 cost_tokens = 0
-cum_tokens = 2388
+cum_tokens = 2447
 
 [batches.content]
 kind = "lines"
@@ -956,7 +956,7 @@ position = 25
 key = 'C(Decl { file: "neco.h", start_line: 113 })'
 descriptor = "c decl at neco.h:113"
 cost_tokens = 0
-cum_tokens = 2388
+cum_tokens = 2447
 
 [batches.content]
 kind = "lines"
@@ -974,7 +974,7 @@ position = 26
 key = 'C(DeclDoc { file: "neco.h", start_line: 90 })'
 descriptor = "c decl doc at neco.h:90"
 cost_tokens = 51
-cum_tokens = 2439
+cum_tokens = 2498
 
 [batches.content]
 kind = "lines"
@@ -992,7 +992,7 @@ position = 27
 key = 'C(DeclDoc { file: "neco.h", start_line: 113 })'
 descriptor = "c decl doc at neco.h:113"
 cost_tokens = 86
-cum_tokens = 2525
+cum_tokens = 2584
 
 [batches.content]
 kind = "lines"
@@ -1010,7 +1010,7 @@ position = 28
 key = 'Markdown(Section { file: "docs/README.md", section_index: 1 })'
 descriptor = "docs/README.md section #1"
 cost_tokens = 103
-cum_tokens = 2628
+cum_tokens = 2687
 
 [batches.content]
 kind = "lines"
@@ -1044,7 +1044,7 @@ position = 29
 key = 'Markdown(Section { file: "docs/API.md", section_index: 3 })'
 descriptor = "docs/API.md section #3"
 cost_tokens = 11
-cum_tokens = 2639
+cum_tokens = 2698
 
 [batches.content]
 kind = "lines"
@@ -1062,7 +1062,7 @@ position = 30
 key = 'Markdown(Section { file: "docs/API.md", section_index: 15 })'
 descriptor = "docs/API.md section #15"
 cost_tokens = 11
-cum_tokens = 2650
+cum_tokens = 2709
 
 [batches.content]
 kind = "lines"
@@ -1080,7 +1080,7 @@ position = 31
 key = 'Markdown(Section { file: "docs/API.md", section_index: 16 })'
 descriptor = "docs/API.md section #16"
 cost_tokens = 11
-cum_tokens = 2661
+cum_tokens = 2720
 
 [batches.content]
 kind = "lines"
@@ -1098,7 +1098,7 @@ position = 32
 key = 'Markdown(Section { file: "docs/API.md", section_index: 4 })'
 descriptor = "docs/API.md section #4"
 cost_tokens = 12
-cum_tokens = 2673
+cum_tokens = 2732
 
 [batches.content]
 kind = "lines"
@@ -1116,7 +1116,7 @@ position = 33
 key = 'Markdown(Section { file: "docs/API.md", section_index: 0 })'
 descriptor = "docs/API.md section #0"
 cost_tokens = 106
-cum_tokens = 2779
+cum_tokens = 2838
 
 [batches.content]
 kind = "lines"
@@ -1158,7 +1158,7 @@ position = 34
 key = 'C(DeclNames { file: "neco.c", chunk_index: 0 })'
 descriptor = "c decl names surface in neco.c"
 cost_tokens = 292
-cum_tokens = 3071
+cum_tokens = 3130
 
 [batches.content]
 kind = "lines"
@@ -1536,7 +1536,7 @@ position = 35
 key = 'C(Decl { file: "neco.c", start_line: 1312 })'
 descriptor = "c decl at neco.c:1312"
 cost_tokens = 0
-cum_tokens = 3071
+cum_tokens = 3130
 
 [batches.content]
 kind = "lines"
@@ -1554,7 +1554,7 @@ position = 36
 key = 'C(Decl { file: "neco.c", start_line: 1313 })'
 descriptor = "c decl at neco.c:1313"
 cost_tokens = 0
-cum_tokens = 3071
+cum_tokens = 3130
 
 [batches.content]
 kind = "lines"
@@ -1580,7 +1580,7 @@ position = 37
 key = 'C(Decl { file: "neco.c", start_line: 2029 })'
 descriptor = "c decl at neco.c:2029"
 cost_tokens = 11
-cum_tokens = 3082
+cum_tokens = 3141
 
 [batches.content]
 kind = "lines"
@@ -1606,7 +1606,7 @@ position = 38
 key = 'C(Decl { file: "neco.c", start_line: 2065 })'
 descriptor = "c decl at neco.c:2065"
 cost_tokens = 11
-cum_tokens = 3093
+cum_tokens = 3152
 
 [batches.content]
 kind = "lines"
@@ -1632,7 +1632,7 @@ position = 39
 key = 'C(Decl { file: "neco.c", start_line: 2056 })'
 descriptor = "c decl at neco.c:2056"
 cost_tokens = 12
-cum_tokens = 3105
+cum_tokens = 3164
 
 [batches.content]
 kind = "lines"
@@ -1658,7 +1658,7 @@ position = 40
 key = 'C(Decl { file: "neco.c", start_line: 2051 })'
 descriptor = "c decl at neco.c:2051"
 cost_tokens = 13
-cum_tokens = 3118
+cum_tokens = 3177
 
 [batches.content]
 kind = "lines"
@@ -1684,7 +1684,7 @@ position = 41
 key = 'C(Decl { file: "neco.c", start_line: 2074 })'
 descriptor = "c decl at neco.c:2074"
 cost_tokens = 14
-cum_tokens = 3132
+cum_tokens = 3191
 
 [batches.content]
 kind = "lines"
@@ -1710,7 +1710,7 @@ position = 42
 key = 'C(Decl { file: "neco.c", start_line: 2106 })'
 descriptor = "c decl at neco.c:2106"
 cost_tokens = 14
-cum_tokens = 3146
+cum_tokens = 3205
 
 [batches.content]
 kind = "lines"
@@ -1736,7 +1736,7 @@ position = 43
 key = 'C(Decl { file: "neco.c", start_line: 2120 })'
 descriptor = "c decl at neco.c:2120"
 cost_tokens = 14
-cum_tokens = 3160
+cum_tokens = 3219
 
 [batches.content]
 kind = "lines"
@@ -1762,7 +1762,7 @@ position = 44
 key = 'C(Decl { file: "neco.c", start_line: 2037 })'
 descriptor = "c decl at neco.c:2037"
 cost_tokens = 15
-cum_tokens = 3175
+cum_tokens = 3234
 
 [batches.content]
 kind = "lines"
@@ -1788,7 +1788,7 @@ position = 45
 key = 'C(Decl { file: "neco.c", start_line: 2094 })'
 descriptor = "c decl at neco.c:2094"
 cost_tokens = 15
-cum_tokens = 3190
+cum_tokens = 3249
 
 [batches.content]
 kind = "lines"
@@ -1814,7 +1814,7 @@ position = 46
 key = 'C(Decl { file: "neco.c", start_line: 1320 })'
 descriptor = "c decl at neco.c:1320"
 cost_tokens = 16
-cum_tokens = 3206
+cum_tokens = 3265
 
 [batches.content]
 kind = "lines"
@@ -1840,7 +1840,7 @@ position = 47
 key = 'C(Decl { file: "neco.c", start_line: 1293 })'
 descriptor = "c decl at neco.c:1293"
 cost_tokens = 19
-cum_tokens = 3225
+cum_tokens = 3284
 
 [batches.content]
 kind = "lines"
@@ -1866,7 +1866,7 @@ position = 48
 key = 'C(DeclDoc { file: "neco.c", start_line: 1293 })'
 descriptor = "c decl doc at neco.c:1293"
 cost_tokens = 11
-cum_tokens = 3236
+cum_tokens = 3295
 
 [batches.content]
 kind = "lines"
@@ -1884,7 +1884,7 @@ position = 49
 key = 'C(Decl { file: "neco.c", start_line: 1282 })'
 descriptor = "c decl at neco.c:1282"
 cost_tokens = 20
-cum_tokens = 3256
+cum_tokens = 3315
 
 [batches.content]
 kind = "lines"
@@ -1910,7 +1910,7 @@ position = 50
 key = 'C(DeclDoc { file: "neco.c", start_line: 1282 })'
 descriptor = "c decl doc at neco.c:1282"
 cost_tokens = 11
-cum_tokens = 3267
+cum_tokens = 3326
 
 [batches.content]
 kind = "lines"
@@ -1928,7 +1928,7 @@ position = 51
 key = 'C(Decl { file: "neco.c", start_line: 1814 })'
 descriptor = "c decl at neco.c:1814"
 cost_tokens = 26
-cum_tokens = 3293
+cum_tokens = 3352
 
 [batches.content]
 kind = "lines"
@@ -1946,7 +1946,7 @@ position = 52
 key = 'C(Decl { file: "neco.c", start_line: 1899 })'
 descriptor = "c decl at neco.c:1899"
 cost_tokens = 26
-cum_tokens = 3319
+cum_tokens = 3378
 
 [batches.content]
 kind = "lines"
@@ -1964,7 +1964,7 @@ position = 53
 key = 'C(Decl { file: "neco.c", start_line: 1875 })'
 descriptor = "c decl at neco.c:1875"
 cost_tokens = 29
-cum_tokens = 3348
+cum_tokens = 3407
 
 [batches.content]
 kind = "lines"
@@ -1982,7 +1982,7 @@ position = 54
 key = 'C(Decl { file: "neco.c", start_line: 1880 })'
 descriptor = "c decl at neco.c:1880"
 cost_tokens = 28
-cum_tokens = 3376
+cum_tokens = 3435
 
 [batches.content]
 kind = "lines"
@@ -2000,7 +2000,7 @@ position = 55
 key = 'C(DeclBody { file: "neco.c", start_line: 2051 })'
 descriptor = "c decl body at neco.c:2051"
 cost_tokens = 16
-cum_tokens = 3392
+cum_tokens = 3451
 
 [batches.content]
 kind = "lines"
@@ -2018,7 +2018,7 @@ position = 56
 key = 'C(DeclBody { file: "neco.c", start_line: 2120 })'
 descriptor = "c decl body at neco.c:2120"
 cost_tokens = 16
-cum_tokens = 3408
+cum_tokens = 3467
 
 [batches.content]
 kind = "lines"
@@ -2036,7 +2036,7 @@ position = 57
 key = 'C(DeclDoc { file: "neco.c", start_line: 1312 })'
 descriptor = "c decl doc at neco.c:1312"
 cost_tokens = 27
-cum_tokens = 3435
+cum_tokens = 3494
 
 [batches.content]
 kind = "lines"
@@ -2054,7 +2054,7 @@ position = 58
 key = 'C(DeclDoc { file: "neco.c", start_line: 1320 })'
 descriptor = "c decl doc at neco.c:1320"
 cost_tokens = 40
-cum_tokens = 3475
+cum_tokens = 3534
 
 [batches.content]
 kind = "lines"
@@ -2072,7 +2072,7 @@ position = 59
 key = 'C(Decl { file: "neco.c", start_line: 1155 })'
 descriptor = "c decl at neco.c:1155"
 cost_tokens = 58
-cum_tokens = 3533
+cum_tokens = 3592
 
 [batches.content]
 kind = "lines"
@@ -2090,7 +2090,7 @@ position = 60
 key = 'C(DeclBody { file: "neco.c", start_line: 1313 })'
 descriptor = "c decl body at neco.c:1313"
 cost_tokens = 32
-cum_tokens = 3565
+cum_tokens = 3624
 
 [batches.content]
 kind = "lines"
@@ -2108,7 +2108,7 @@ position = 61
 key = 'C(Decl { file: "neco.c", start_line: 1337 })'
 descriptor = "c decl at neco.c:1337"
 cost_tokens = 91
-cum_tokens = 3656
+cum_tokens = 3715
 
 [batches.content]
 kind = "lines"
@@ -2126,7 +2126,7 @@ position = 62
 key = 'C(Decl { file: "neco.c", start_line: 1364 })'
 descriptor = "c decl at neco.c:1364"
 cost_tokens = 99
-cum_tokens = 3755
+cum_tokens = 3814
 
 [batches.content]
 kind = "lines"
@@ -2144,7 +2144,7 @@ position = 63
 key = 'C(DeclBody { file: "neco.c", start_line: 2029 })'
 descriptor = "c decl body at neco.c:2029"
 cost_tokens = 44
-cum_tokens = 3799
+cum_tokens = 3858
 
 [batches.content]
 kind = "lines"
@@ -2162,7 +2162,7 @@ position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 31
-cum_tokens = 3830
+cum_tokens = 3889
 
 [batches.content]
 kind = "lines"
@@ -2180,7 +2180,7 @@ position = 65
 key = 'Fs(DirListing { dir: "docs/tools" })'
 descriptor = "listing of 'docs/tools'"
 cost_tokens = 14
-cum_tokens = 3844
+cum_tokens = 3903
 
 [batches.content]
 kind = "fs"
@@ -2194,7 +2194,7 @@ position = 66
 key = 'Markdown(Section { file: "docs/API.md", section_index: 5 })'
 descriptor = "docs/API.md section #5"
 cost_tokens = 13
-cum_tokens = 3857
+cum_tokens = 3916
 
 [batches.content]
 kind = "lines"
@@ -2212,7 +2212,7 @@ position = 67
 key = 'Markdown(Section { file: "docs/API.md", section_index: 6 })'
 descriptor = "docs/API.md section #6"
 cost_tokens = 13
-cum_tokens = 3870
+cum_tokens = 3929
 
 [batches.content]
 kind = "lines"
@@ -2230,7 +2230,7 @@ position = 68
 key = 'Markdown(Section { file: "docs/API.md", section_index: 14 })'
 descriptor = "docs/API.md section #14"
 cost_tokens = 13
-cum_tokens = 3883
+cum_tokens = 3942
 
 [batches.content]
 kind = "lines"
@@ -2248,7 +2248,7 @@ position = 69
 key = 'Markdown(Section { file: "docs/API.md", section_index: 17 })'
 descriptor = "docs/API.md section #17"
 cost_tokens = 13
-cum_tokens = 3896
+cum_tokens = 3955
 
 [batches.content]
 kind = "lines"
@@ -2266,7 +2266,7 @@ position = 70
 key = 'Markdown(Section { file: "docs/API.md", section_index: 2 })'
 descriptor = "docs/API.md section #2"
 cost_tokens = 14
-cum_tokens = 3910
+cum_tokens = 3969
 
 [batches.content]
 kind = "lines"
@@ -2284,7 +2284,7 @@ position = 71
 key = 'Markdown(Section { file: "docs/API.md", section_index: 7 })'
 descriptor = "docs/API.md section #7"
 cost_tokens = 14
-cum_tokens = 3924
+cum_tokens = 3983
 
 [batches.content]
 kind = "lines"
@@ -2302,7 +2302,7 @@ position = 72
 key = 'Markdown(Section { file: "docs/API.md", section_index: 10 })'
 descriptor = "docs/API.md section #10"
 cost_tokens = 14
-cum_tokens = 3938
+cum_tokens = 3997
 
 [batches.content]
 kind = "lines"
@@ -2320,7 +2320,7 @@ position = 73
 key = 'Markdown(Section { file: "docs/API.md", section_index: 13 })'
 descriptor = "docs/API.md section #13"
 cost_tokens = 14
-cum_tokens = 3952
+cum_tokens = 4011
 
 [batches.content]
 kind = "lines"
@@ -2338,7 +2338,7 @@ position = 74
 key = 'Markdown(Section { file: "docs/API.md", section_index: 19 })'
 descriptor = "docs/API.md section #19"
 cost_tokens = 14
-cum_tokens = 3966
+cum_tokens = 4025
 
 [batches.content]
 kind = "lines"
@@ -2356,7 +2356,7 @@ position = 75
 key = 'Markdown(Section { file: "docs/API.md", section_index: 12 })'
 descriptor = "docs/API.md section #12"
 cost_tokens = 15
-cum_tokens = 3981
+cum_tokens = 4040
 
 [batches.content]
 kind = "lines"
@@ -2374,7 +2374,7 @@ position = 76
 key = 'Markdown(Section { file: "docs/API.md", section_index: 18 })'
 descriptor = "docs/API.md section #18"
 cost_tokens = 15
-cum_tokens = 3996
+cum_tokens = 4055
 
 [batches.content]
 kind = "lines"
@@ -2392,7 +2392,7 @@ position = 77
 key = 'C(DeclBody { file: "neco.c", start_line: 1320 })'
 descriptor = "c decl body at neco.c:1320"
 cost_tokens = 58
-cum_tokens = 4054
+cum_tokens = 4113
 
 [batches.content]
 kind = "lines"
@@ -2410,7 +2410,7 @@ position = 78
 key = 'C(DeclBody { file: "neco.c", start_line: 2065 })'
 descriptor = "c decl body at neco.c:2065"
 cost_tokens = 58
-cum_tokens = 4112
+cum_tokens = 4171
 
 [batches.content]
 kind = "lines"
@@ -2428,7 +2428,7 @@ position = 79
 key = 'Markdown(Section { file: "docs/API.md", section_index: 43 })'
 descriptor = "docs/API.md section #43"
 cost_tokens = 47
-cum_tokens = 4159
+cum_tokens = 4218
 
 [batches.content]
 kind = "lines"
@@ -2454,7 +2454,7 @@ position = 80
 key = 'Markdown(Section { file: "docs/API.md", section_index: 44 })'
 descriptor = "docs/API.md section #44"
 cost_tokens = 47
-cum_tokens = 4206
+cum_tokens = 4265
 
 [batches.content]
 kind = "lines"
@@ -2480,7 +2480,7 @@ position = 81
 key = 'C(Decl { file: "neco.c", start_line: 1819 })'
 descriptor = "c decl at neco.c:1819"
 cost_tokens = 147
-cum_tokens = 4353
+cum_tokens = 4412
 
 [batches.content]
 kind = "lines"
@@ -2498,7 +2498,7 @@ position = 82
 key = 'C(DeclBody { file: "neco.c", start_line: 2056 })'
 descriptor = "c decl body at neco.c:2056"
 cost_tokens = 61
-cum_tokens = 4414
+cum_tokens = 4473
 
 [batches.content]
 kind = "lines"
@@ -2516,7 +2516,7 @@ position = 83
 key = 'Markdown(Section { file: "docs/API.md", section_index: 1 })'
 descriptor = "docs/API.md section #1"
 cost_tokens = 16
-cum_tokens = 4430
+cum_tokens = 4489
 
 [batches.content]
 kind = "lines"
@@ -2534,7 +2534,7 @@ position = 84
 key = 'C(DeclNames { file: "neco.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in neco.h"
 cost_tokens = 506
-cum_tokens = 4936
+cum_tokens = 4995
 
 [batches.content]
 kind = "lines"
@@ -2608,7 +2608,7 @@ position = 85
 key = 'C(Decl { file: "neco.h", start_line: 135 })'
 descriptor = "c decl at neco.h:135"
 cost_tokens = 0
-cum_tokens = 4936
+cum_tokens = 4995
 
 [batches.content]
 kind = "lines"
@@ -2626,7 +2626,7 @@ position = 86
 key = 'C(Decl { file: "neco.h", start_line: 149 })'
 descriptor = "c decl at neco.h:149"
 cost_tokens = 0
-cum_tokens = 4936
+cum_tokens = 4995
 
 [batches.content]
 kind = "lines"
@@ -2644,7 +2644,7 @@ position = 87
 key = 'C(Decl { file: "neco.h", start_line: 169 })'
 descriptor = "c decl at neco.h:169"
 cost_tokens = 0
-cum_tokens = 4936
+cum_tokens = 4995
 
 [batches.content]
 kind = "lines"
@@ -2662,7 +2662,7 @@ position = 88
 key = 'C(DeclDoc { file: "neco.h", start_line: 169 })'
 descriptor = "c decl doc at neco.h:169"
 cost_tokens = 12
-cum_tokens = 4948
+cum_tokens = 5007
 
 [batches.content]
 kind = "lines"
@@ -2680,7 +2680,7 @@ position = 89
 key = 'C(DeclDoc { file: "neco.h", start_line: 149 })'
 descriptor = "c decl doc at neco.h:149"
 cost_tokens = 51
-cum_tokens = 4999
+cum_tokens = 5058
 
 [batches.content]
 kind = "lines"
@@ -2698,7 +2698,7 @@ position = 90
 key = 'C(DeclDoc { file: "neco.h", start_line: 135 })'
 descriptor = "c decl doc at neco.h:135"
 cost_tokens = 127
-cum_tokens = 5126
+cum_tokens = 5185
 
 [batches.content]
 kind = "lines"
@@ -2716,7 +2716,7 @@ position = 91
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 163
-cum_tokens = 5289
+cum_tokens = 5348
 
 [batches.content]
 kind = "lines"
@@ -2758,7 +2758,7 @@ position = 92
 key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 178
-cum_tokens = 5467
+cum_tokens = 5526
 
 [batches.content]
 kind = "lines"
@@ -2816,7 +2816,7 @@ position = 93
 key = 'Markdown(Section { file: "docs/TECHNICAL.md", section_index: 0 })'
 descriptor = "docs/TECHNICAL.md section #0"
 cost_tokens = 160
-cum_tokens = 5627
+cum_tokens = 5686
 
 [batches.content]
 kind = "lines"
@@ -2866,7 +2866,7 @@ position = 94
 key = 'Markdown(Section { file: "docs/API.md", section_index: 8 })'
 descriptor = "docs/API.md section #8"
 cost_tokens = 17
-cum_tokens = 5644
+cum_tokens = 5703
 
 [batches.content]
 kind = "lines"
@@ -2884,7 +2884,7 @@ position = 95
 key = 'Markdown(Section { file: "docs/API.md", section_index: 9 })'
 descriptor = "docs/API.md section #9"
 cost_tokens = 17
-cum_tokens = 5661
+cum_tokens = 5720
 
 [batches.content]
 kind = "lines"
@@ -2902,7 +2902,7 @@ position = 96
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 3 })'
 descriptor = "docs/assets/API_head.md section #3"
 cost_tokens = 11
-cum_tokens = 5672
+cum_tokens = 5731
 
 [batches.content]
 kind = "lines"
@@ -2920,7 +2920,7 @@ position = 97
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 15 })'
 descriptor = "docs/assets/API_head.md section #15"
 cost_tokens = 11
-cum_tokens = 5683
+cum_tokens = 5742
 
 [batches.content]
 kind = "lines"
@@ -2938,7 +2938,7 @@ position = 98
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 16 })'
 descriptor = "docs/assets/API_head.md section #16"
 cost_tokens = 11
-cum_tokens = 5694
+cum_tokens = 5753
 
 [batches.content]
 kind = "lines"
@@ -2956,7 +2956,7 @@ position = 99
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 0 })'
 descriptor = "docs/assets/API_head.md section #0"
 cost_tokens = 96
-cum_tokens = 5790
+cum_tokens = 5849
 
 [batches.content]
 kind = "lines"
@@ -2998,7 +2998,7 @@ position = 100
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 126
-cum_tokens = 5916
+cum_tokens = 5975
 
 [batches.content]
 kind = "fs"
@@ -3012,7 +3012,7 @@ position = 101
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 4 })'
 descriptor = "docs/assets/API_head.md section #4"
 cost_tokens = 12
-cum_tokens = 5928
+cum_tokens = 5987
 
 [batches.content]
 kind = "lines"
@@ -3030,7 +3030,7 @@ position = 102
 key = 'Markdown(Section { file: "README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 48
-cum_tokens = 5976
+cum_tokens = 6035
 
 [batches.content]
 kind = "lines"
@@ -3048,7 +3048,7 @@ position = 103
 key = 'Markdown(Section { file: "docs/API.md", section_index: 11 })'
 descriptor = "docs/API.md section #11"
 cost_tokens = 20
-cum_tokens = 5996
+cum_tokens = 6055
 
 [batches.content]
 kind = "lines"
@@ -3066,7 +3066,7 @@ position = 104
 key = 'C(DeclBody { file: "neco.c", start_line: 1282 })'
 descriptor = "c decl body at neco.c:1282"
 cost_tokens = 78
-cum_tokens = 6074
+cum_tokens = 6133
 
 [batches.content]
 kind = "lines"
@@ -3084,7 +3084,7 @@ position = 105
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 5 })'
 descriptor = "docs/assets/API_head.md section #5"
 cost_tokens = 13
-cum_tokens = 6087
+cum_tokens = 6146
 
 [batches.content]
 kind = "lines"
@@ -3102,7 +3102,7 @@ position = 106
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 6 })'
 descriptor = "docs/assets/API_head.md section #6"
 cost_tokens = 13
-cum_tokens = 6100
+cum_tokens = 6159
 
 [batches.content]
 kind = "lines"
@@ -3120,7 +3120,7 @@ position = 107
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 14 })'
 descriptor = "docs/assets/API_head.md section #14"
 cost_tokens = 13
-cum_tokens = 6113
+cum_tokens = 6172
 
 [batches.content]
 kind = "lines"
@@ -3138,7 +3138,7 @@ position = 108
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 17 })'
 descriptor = "docs/assets/API_head.md section #17"
 cost_tokens = 13
-cum_tokens = 6126
+cum_tokens = 6185
 
 [batches.content]
 kind = "lines"
@@ -3156,7 +3156,7 @@ position = 109
 key = 'C(DeclNames { file: "neco.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in neco.c"
 cost_tokens = 309
-cum_tokens = 6435
+cum_tokens = 6494
 
 [batches.content]
 kind = "lines"
@@ -3534,7 +3534,7 @@ position = 110
 key = 'C(Decl { file: "neco.c", start_line: 3105 })'
 descriptor = "c decl at neco.c:3105"
 cost_tokens = 0
-cum_tokens = 6435
+cum_tokens = 6494
 
 [batches.content]
 kind = "lines"
@@ -3552,7 +3552,7 @@ position = 111
 key = 'C(Decl { file: "neco.c", start_line: 2154 })'
 descriptor = "c decl at neco.c:2154"
 cost_tokens = 11
-cum_tokens = 6446
+cum_tokens = 6505
 
 [batches.content]
 kind = "lines"
@@ -3578,7 +3578,7 @@ position = 112
 key = 'C(Decl { file: "neco.c", start_line: 2135 })'
 descriptor = "c decl at neco.c:2135"
 cost_tokens = 13
-cum_tokens = 6459
+cum_tokens = 6518
 
 [batches.content]
 kind = "lines"
@@ -3604,7 +3604,7 @@ position = 113
 key = 'C(Decl { file: "neco.c", start_line: 2125 })'
 descriptor = "c decl at neco.c:2125"
 cost_tokens = 14
-cum_tokens = 6473
+cum_tokens = 6532
 
 [batches.content]
 kind = "lines"
@@ -3630,7 +3630,7 @@ position = 114
 key = 'C(Decl { file: "neco.c", start_line: 2130 })'
 descriptor = "c decl at neco.c:2130"
 cost_tokens = 14
-cum_tokens = 6487
+cum_tokens = 6546
 
 [batches.content]
 kind = "lines"
@@ -3656,7 +3656,7 @@ position = 115
 key = 'C(Decl { file: "neco.c", start_line: 2145 })'
 descriptor = "c decl at neco.c:2145"
 cost_tokens = 14
-cum_tokens = 6501
+cum_tokens = 6560
 
 [batches.content]
 kind = "lines"
@@ -3682,7 +3682,7 @@ position = 116
 key = 'C(Decl { file: "neco.c", start_line: 2160 })'
 descriptor = "c decl at neco.c:2160"
 cost_tokens = 15
-cum_tokens = 6516
+cum_tokens = 6575
 
 [batches.content]
 kind = "lines"
@@ -3708,7 +3708,7 @@ position = 117
 key = 'C(Decl { file: "neco.c", start_line: 2607 })'
 descriptor = "c decl at neco.c:2607"
 cost_tokens = 15
-cum_tokens = 6531
+cum_tokens = 6590
 
 [batches.content]
 kind = "lines"
@@ -3734,7 +3734,7 @@ position = 118
 key = 'C(Decl { file: "neco.c", start_line: 2616 })'
 descriptor = "c decl at neco.c:2616"
 cost_tokens = 15
-cum_tokens = 6546
+cum_tokens = 6605
 
 [batches.content]
 kind = "lines"
@@ -3760,7 +3760,7 @@ position = 119
 key = 'C(Decl { file: "neco.c", start_line: 2926 })'
 descriptor = "c decl at neco.c:2926"
 cost_tokens = 15
-cum_tokens = 6561
+cum_tokens = 6620
 
 [batches.content]
 kind = "lines"
@@ -3786,7 +3786,7 @@ position = 120
 key = 'C(Decl { file: "neco.c", start_line: 2459 })'
 descriptor = "c decl at neco.c:2459"
 cost_tokens = 16
-cum_tokens = 6577
+cum_tokens = 6636
 
 [batches.content]
 kind = "lines"
@@ -3812,7 +3812,7 @@ position = 121
 key = 'C(DeclBody { file: "neco.c", start_line: 2130 })'
 descriptor = "c decl body at neco.c:2130"
 cost_tokens = 9
-cum_tokens = 6586
+cum_tokens = 6645
 
 [batches.content]
 kind = "lines"
@@ -3830,7 +3830,7 @@ position = 122
 key = 'C(Decl { file: "neco.c", start_line: 2551 })'
 descriptor = "c decl at neco.c:2551"
 cost_tokens = 20
-cum_tokens = 6606
+cum_tokens = 6665
 
 [batches.content]
 kind = "lines"
@@ -3856,7 +3856,7 @@ position = 123
 key = 'C(Decl { file: "neco.c", start_line: 2598 })'
 descriptor = "c decl at neco.c:2598"
 cost_tokens = 20
-cum_tokens = 6626
+cum_tokens = 6685
 
 [batches.content]
 kind = "lines"
@@ -3882,7 +3882,7 @@ position = 124
 key = 'C(DeclBody { file: "neco.c", start_line: 2125 })'
 descriptor = "c decl body at neco.c:2125"
 cost_tokens = 10
-cum_tokens = 6636
+cum_tokens = 6695
 
 [batches.content]
 kind = "lines"
@@ -3900,7 +3900,7 @@ position = 125
 key = 'C(Decl { file: "neco.c", start_line: 2441 })'
 descriptor = "c decl at neco.c:2441"
 cost_tokens = 22
-cum_tokens = 6658
+cum_tokens = 6717
 
 [batches.content]
 kind = "lines"
@@ -3926,7 +3926,7 @@ position = 126
 key = 'C(DeclBody { file: "neco.c", start_line: 2160 })'
 descriptor = "c decl body at neco.c:2160"
 cost_tokens = 11
-cum_tokens = 6669
+cum_tokens = 6728
 
 [batches.content]
 kind = "lines"
@@ -3944,7 +3944,7 @@ position = 127
 key = 'C(DeclDoc { file: "neco.c", start_line: 3105 })'
 descriptor = "c decl doc at neco.c:3105"
 cost_tokens = 14
-cum_tokens = 6683
+cum_tokens = 6742
 
 [batches.content]
 kind = "lines"
@@ -3962,7 +3962,7 @@ position = 128
 key = 'C(DeclBody { file: "neco.c", start_line: 2459 })'
 descriptor = "c decl body at neco.c:2459"
 cost_tokens = 13
-cum_tokens = 6696
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3980,7 +3980,7 @@ position = 129
 key = 'C(DeclBody { file: "neco.c", start_line: 2607 })'
 descriptor = "c decl body at neco.c:2607"
 cost_tokens = 13
-cum_tokens = 6709
+cum_tokens = 6768
 
 [batches.content]
 kind = "lines"
@@ -3998,7 +3998,7 @@ position = 130
 key = 'C(DeclBody { file: "neco.c", start_line: 2616 })'
 descriptor = "c decl body at neco.c:2616"
 cost_tokens = 13
-cum_tokens = 6722
+cum_tokens = 6781
 
 [batches.content]
 kind = "lines"
@@ -4016,7 +4016,7 @@ position = 131
 key = 'C(DeclDoc { file: "neco.c", start_line: 2154 })'
 descriptor = "c decl doc at neco.c:2154"
 cost_tokens = 21
-cum_tokens = 6743
+cum_tokens = 6802
 
 [batches.content]
 kind = "lines"
@@ -4034,7 +4034,7 @@ position = 132
 key = 'C(Decl { file: "neco.c", start_line: 2192 })'
 descriptor = "c decl at neco.c:2192"
 cost_tokens = 30
-cum_tokens = 6773
+cum_tokens = 6832
 
 [batches.content]
 kind = "lines"
@@ -4060,7 +4060,7 @@ position = 133
 key = 'C(DeclDoc { file: "neco.c", start_line: 2192 })'
 descriptor = "c decl doc at neco.c:2192"
 cost_tokens = 17
-cum_tokens = 6790
+cum_tokens = 6849
 
 [batches.content]
 kind = "lines"
@@ -4078,7 +4078,7 @@ position = 134
 key = 'C(Decl { file: "neco.c", start_line: 3121 })'
 descriptor = "c decl at neco.c:3121"
 cost_tokens = 30
-cum_tokens = 6820
+cum_tokens = 6879
 
 [batches.content]
 kind = "lines"
@@ -4104,7 +4104,7 @@ position = 135
 key = 'C(Decl { file: "neco.c", start_line: 2285 })'
 descriptor = "c decl at neco.c:2285"
 cost_tokens = 36
-cum_tokens = 6856
+cum_tokens = 6915
 
 [batches.content]
 kind = "lines"
@@ -4122,7 +4122,7 @@ position = 136
 key = 'C(DeclBody { file: "neco.c", start_line: 2441 })'
 descriptor = "c decl body at neco.c:2441"
 cost_tokens = 15
-cum_tokens = 6871
+cum_tokens = 6930
 
 [batches.content]
 kind = "lines"
@@ -4140,7 +4140,7 @@ position = 137
 key = 'C(DeclBody { file: "neco.c", start_line: 2598 })'
 descriptor = "c decl body at neco.c:2598"
 cost_tokens = 17
-cum_tokens = 6888
+cum_tokens = 6947
 
 [batches.content]
 kind = "lines"
@@ -4158,7 +4158,7 @@ position = 138
 key = 'C(Decl { file: "neco.c", start_line: 2261 })'
 descriptor = "c decl at neco.c:2261"
 cost_tokens = 42
-cum_tokens = 6930
+cum_tokens = 6989
 
 [batches.content]
 kind = "lines"
@@ -4176,7 +4176,7 @@ position = 139
 key = 'C(DeclBody { file: "neco.c", start_line: 2551 })'
 descriptor = "c decl body at neco.c:2551"
 cost_tokens = 18
-cum_tokens = 6948
+cum_tokens = 7007
 
 [batches.content]
 kind = "lines"
@@ -4194,7 +4194,7 @@ position = 140
 key = 'C(Decl { file: "neco.c", start_line: 2165 })'
 descriptor = "c decl at neco.c:2165"
 cost_tokens = 63
-cum_tokens = 7011
+cum_tokens = 7070
 
 [batches.content]
 kind = "lines"
@@ -4212,7 +4212,7 @@ position = 141
 key = 'C(DeclBody { file: "neco.c", start_line: 3121 })'
 descriptor = "c decl body at neco.c:3121"
 cost_tokens = 31
-cum_tokens = 7042
+cum_tokens = 7101
 
 [batches.content]
 kind = "lines"
@@ -4230,7 +4230,7 @@ position = 142
 key = 'C(DeclDoc { file: "neco.c", start_line: 3121 })'
 descriptor = "c decl doc at neco.c:3121"
 cost_tokens = 70
-cum_tokens = 7112
+cum_tokens = 7171
 
 [batches.content]
 kind = "lines"
@@ -4248,7 +4248,7 @@ position = 143
 key = 'C(DeclBody { file: "neco.c", start_line: 2145 })'
 descriptor = "c decl body at neco.c:2145"
 cost_tokens = 44
-cum_tokens = 7156
+cum_tokens = 7215
 
 [batches.content]
 kind = "lines"
@@ -4266,7 +4266,7 @@ position = 144
 key = 'C(DeclBody { file: "neco.c", start_line: 2154 })'
 descriptor = "c decl body at neco.c:2154"
 cost_tokens = 46
-cum_tokens = 7202
+cum_tokens = 7261
 
 [batches.content]
 kind = "lines"
@@ -4284,7 +4284,7 @@ position = 145
 key = 'C(Decl { file: "neco.c", start_line: 2247 })'
 descriptor = "c decl at neco.c:2247"
 cost_tokens = 142
-cum_tokens = 7344
+cum_tokens = 7403
 
 [batches.content]
 kind = "lines"
@@ -4302,7 +4302,7 @@ position = 146
 key = 'C(DeclBody { file: "neco.c", start_line: 2135 })'
 descriptor = "c decl body at neco.c:2135"
 cost_tokens = 61
-cum_tokens = 7405
+cum_tokens = 7464
 
 [batches.content]
 kind = "lines"
@@ -4320,7 +4320,7 @@ position = 147
 key = 'C(Decl { file: "neco.c", start_line: 2267 })'
 descriptor = "c decl at neco.c:2267"
 cost_tokens = 187
-cum_tokens = 7592
+cum_tokens = 7651
 
 [batches.content]
 kind = "lines"
@@ -4338,7 +4338,7 @@ position = 148
 key = 'C(Decl { file: "neco.c", start_line: 1124 })'
 descriptor = "c decl at neco.c:1124"
 cost_tokens = 203
-cum_tokens = 7795
+cum_tokens = 7854
 
 [batches.content]
 kind = "lines"
@@ -4356,7 +4356,7 @@ position = 149
 key = 'Markdown(Section { file: "docs/API.md", section_index: 45 })'
 descriptor = "docs/API.md section #45"
 cost_tokens = 67
-cum_tokens = 7862
+cum_tokens = 7921
 
 [batches.content]
 kind = "lines"
@@ -4382,7 +4382,7 @@ position = 150
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 54
-cum_tokens = 7916
+cum_tokens = 7975
 
 [batches.content]
 kind = "lines"
@@ -4400,7 +4400,7 @@ position = 151
 key = 'C(DeclNames { file: "neco.h", chunk_index: 3 })'
 descriptor = "c decl names surface #3 in neco.h"
 cost_tokens = 485
-cum_tokens = 8401
+cum_tokens = 8460
 
 [batches.content]
 kind = "lines"
@@ -4594,7 +4594,7 @@ position = 152
 key = 'C(Decl { file: "neco.h", start_line: 188 })'
 descriptor = "c decl at neco.h:188"
 cost_tokens = 0
-cum_tokens = 8401
+cum_tokens = 8460
 
 [batches.content]
 kind = "lines"
@@ -4612,7 +4612,7 @@ position = 153
 key = 'C(Decl { file: "neco.h", start_line: 191 })'
 descriptor = "c decl at neco.h:191"
 cost_tokens = 0
-cum_tokens = 8401
+cum_tokens = 8460
 
 [batches.content]
 kind = "lines"
@@ -4630,7 +4630,7 @@ position = 154
 key = 'C(Decl { file: "neco.h", start_line: 231 })'
 descriptor = "c decl at neco.h:231"
 cost_tokens = 16
-cum_tokens = 8417
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -4648,7 +4648,7 @@ position = 155
 key = 'C(Decl { file: "neco.h", start_line: 177 })'
 descriptor = "c decl at neco.h:177"
 cost_tokens = 17
-cum_tokens = 8434
+cum_tokens = 8493
 
 [batches.content]
 kind = "lines"
@@ -4666,7 +4666,7 @@ position = 156
 key = 'C(Decl { file: "neco.h", start_line: 179 })'
 descriptor = "c decl at neco.h:179"
 cost_tokens = 22
-cum_tokens = 8456
+cum_tokens = 8515
 
 [batches.content]
 kind = "lines"
@@ -4684,7 +4684,7 @@ position = 157
 key = 'C(DeclDoc { file: "neco.h", start_line: 188 })'
 descriptor = "c decl doc at neco.h:188"
 cost_tokens = 16
-cum_tokens = 8472
+cum_tokens = 8531
 
 [batches.content]
 kind = "lines"
@@ -4702,7 +4702,7 @@ position = 158
 key = 'C(DeclDoc { file: "neco.h", start_line: 191 })'
 descriptor = "c decl doc at neco.h:191"
 cost_tokens = 17
-cum_tokens = 8489
+cum_tokens = 8548
 
 [batches.content]
 kind = "lines"
@@ -4720,7 +4720,7 @@ position = 159
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 2 })'
 descriptor = "docs/assets/API_head.md section #2"
 cost_tokens = 14
-cum_tokens = 8503
+cum_tokens = 8562
 
 [batches.content]
 kind = "lines"
@@ -4738,7 +4738,7 @@ position = 160
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 7 })'
 descriptor = "docs/assets/API_head.md section #7"
 cost_tokens = 14
-cum_tokens = 8517
+cum_tokens = 8576
 
 [batches.content]
 kind = "lines"
@@ -4756,7 +4756,7 @@ position = 161
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 10 })'
 descriptor = "docs/assets/API_head.md section #10"
 cost_tokens = 14
-cum_tokens = 8531
+cum_tokens = 8590
 
 [batches.content]
 kind = "lines"
@@ -4774,7 +4774,7 @@ position = 162
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 13 })'
 descriptor = "docs/assets/API_head.md section #13"
 cost_tokens = 14
-cum_tokens = 8545
+cum_tokens = 8604
 
 [batches.content]
 kind = "lines"
@@ -4792,7 +4792,7 @@ position = 163
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 19 })'
 descriptor = "docs/assets/API_head.md section #19"
 cost_tokens = 14
-cum_tokens = 8559
+cum_tokens = 8618
 
 [batches.content]
 kind = "lines"
@@ -4810,7 +4810,7 @@ position = 164
 key = 'Markdown(ReadmeHeadline { file: "tests/README.md" })'
 descriptor = "README headline in tests/README.md"
 cost_tokens = 21
-cum_tokens = 8580
+cum_tokens = 8639
 
 [batches.content]
 kind = "lines"
@@ -4836,7 +4836,7 @@ position = 165
 key = 'Markdown(Section { file: "docs/API.md", section_index: 121 })'
 descriptor = "docs/API.md section #121"
 cost_tokens = 73
-cum_tokens = 8653
+cum_tokens = 8712
 
 [batches.content]
 kind = "lines"
@@ -4862,7 +4862,7 @@ position = 166
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 12 })'
 descriptor = "docs/assets/API_head.md section #12"
 cost_tokens = 15
-cum_tokens = 8668
+cum_tokens = 8727
 
 [batches.content]
 kind = "lines"
@@ -4880,7 +4880,7 @@ position = 167
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 18 })'
 descriptor = "docs/assets/API_head.md section #18"
 cost_tokens = 15
-cum_tokens = 8683
+cum_tokens = 8742
 
 [batches.content]
 kind = "lines"
@@ -4898,7 +4898,7 @@ position = 168
 key = 'Markdown(Section { file: "docs/API.md", section_index: 135 })'
 descriptor = "docs/API.md section #135"
 cost_tokens = 75
-cum_tokens = 8758
+cum_tokens = 8817
 
 [batches.content]
 kind = "lines"
@@ -4924,7 +4924,7 @@ position = 169
 key = 'Markdown(Section { file: "docs/API.md", section_index: 33 })'
 descriptor = "docs/API.md section #33"
 cost_tokens = 76
-cum_tokens = 8834
+cum_tokens = 8893
 
 [batches.content]
 kind = "lines"
@@ -4966,7 +4966,7 @@ position = 170
 key = 'Markdown(ReadmeHeadline { file: "examples/README.md" })'
 descriptor = "README headline in examples/README.md"
 cost_tokens = 23
-cum_tokens = 8857
+cum_tokens = 8916
 
 [batches.content]
 kind = "lines"
@@ -4992,7 +4992,7 @@ position = 171
 key = 'Markdown(Section { file: "docs/API.md", section_index: 86 })'
 descriptor = "docs/API.md section #86"
 cost_tokens = 78
-cum_tokens = 8935
+cum_tokens = 8994
 
 [batches.content]
 kind = "lines"
@@ -5018,7 +5018,7 @@ position = 172
 key = 'Markdown(Section { file: "docs/API.md", section_index: 87 })'
 descriptor = "docs/API.md section #87"
 cost_tokens = 78
-cum_tokens = 9013
+cum_tokens = 9072
 
 [batches.content]
 kind = "lines"
@@ -5044,7 +5044,7 @@ position = 173
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 1 })'
 descriptor = "docs/assets/API_head.md section #1"
 cost_tokens = 16
-cum_tokens = 9029
+cum_tokens = 9088
 
 [batches.content]
 kind = "lines"
@@ -5062,7 +5062,7 @@ position = 174
 key = 'Markdown(Section { file: "docs/API.md", section_index: 90 })'
 descriptor = "docs/API.md section #90"
 cost_tokens = 79
-cum_tokens = 9108
+cum_tokens = 9167
 
 [batches.content]
 kind = "lines"
@@ -5088,7 +5088,7 @@ position = 175
 key = 'Markdown(Section { file: "docs/API.md", section_index: 124 })'
 descriptor = "docs/API.md section #124"
 cost_tokens = 79
-cum_tokens = 9187
+cum_tokens = 9246
 
 [batches.content]
 kind = "lines"
@@ -5114,7 +5114,7 @@ position = 176
 key = 'Markdown(Section { file: "docs/API.md", section_index: 161 })'
 descriptor = "docs/API.md section #161"
 cost_tokens = 79
-cum_tokens = 9266
+cum_tokens = 9325
 
 [batches.content]
 kind = "lines"
@@ -5148,7 +5148,7 @@ position = 177
 key = 'Markdown(Section { file: "docs/API.md", section_index: 99 })'
 descriptor = "docs/API.md section #99"
 cost_tokens = 80
-cum_tokens = 9346
+cum_tokens = 9405
 
 [batches.content]
 kind = "lines"
@@ -5174,7 +5174,7 @@ position = 178
 key = 'Markdown(Section { file: "docs/API.md", section_index: 97 })'
 descriptor = "docs/API.md section #97"
 cost_tokens = 81
-cum_tokens = 9427
+cum_tokens = 9486
 
 [batches.content]
 kind = "lines"
@@ -5200,7 +5200,7 @@ position = 179
 key = 'Markdown(Section { file: "docs/API.md", section_index: 100 })'
 descriptor = "docs/API.md section #100"
 cost_tokens = 81
-cum_tokens = 9508
+cum_tokens = 9567
 
 [batches.content]
 kind = "lines"
@@ -5226,7 +5226,7 @@ position = 180
 key = 'Markdown(Section { file: "docs/API.md", section_index: 101 })'
 descriptor = "docs/API.md section #101"
 cost_tokens = 81
-cum_tokens = 9589
+cum_tokens = 9648
 
 [batches.content]
 kind = "lines"
@@ -5252,7 +5252,7 @@ position = 181
 key = 'Markdown(Section { file: "docs/API.md", section_index: 122 })'
 descriptor = "docs/API.md section #122"
 cost_tokens = 81
-cum_tokens = 9670
+cum_tokens = 9729
 
 [batches.content]
 kind = "lines"
@@ -5278,7 +5278,7 @@ position = 182
 key = 'C(DeclBody { file: "neco.c", start_line: 2094 })'
 descriptor = "c decl body at neco.c:2094"
 cost_tokens = 101
-cum_tokens = 9771
+cum_tokens = 9830
 
 [batches.content]
 kind = "lines"
@@ -5296,7 +5296,7 @@ position = 183
 key = 'Markdown(Section { file: "docs/API.md", section_index: 89 })'
 descriptor = "docs/API.md section #89"
 cost_tokens = 82
-cum_tokens = 9853
+cum_tokens = 9912
 
 [batches.content]
 kind = "lines"
@@ -5322,7 +5322,7 @@ position = 184
 key = 'Markdown(Section { file: "docs/API.md", section_index: 96 })'
 descriptor = "docs/API.md section #96"
 cost_tokens = 82
-cum_tokens = 9935
+cum_tokens = 9994
 
 [batches.content]
 kind = "lines"

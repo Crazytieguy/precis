@@ -260,10 +260,6 @@ src/
         …
     lexer.c
     lexer.h
-        258→#include <stdio.h>
-        259→#include <string.h>
-        260→#include <errno.h>
-        261→#include <stdlib.h>
         518→void yyset_lval ( YYSTYPE * yylval_param , yyscan_t yyscanner );
         …
         520→       YYLTYPE *yyget_lloc ( yyscan_t yyscanner );
@@ -307,6 +303,15 @@ src/
     parser.y
     util.c
     util.h
+        4→#ifdef WIN32
+        5→/* For WriteFile() below */
+        6→#include <windows.h>
+        7→#include <io.h>
+        8→#include <processenv.h>
+        9→#include <shellapi.h>
+        10→#include <wchar.h>
+        11→#include <wtypes.h>
+        12→#endif
         14→#include "jv.h"
         16→jv expand_path(jv);
         17→jv get_home(void);

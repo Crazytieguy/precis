@@ -129,146 +129,146 @@ Score(3000)=0.595 I=0.809 C=0.437 ns_rows≤3K=21/42 (reached=8 partial=4 missin
 | walker |  | 4150 | 23 | README.md section #5 |  |  | 0.648 |
 | walker |  | 4339 | 189 | c decl names surface #2 in include/packets.h |  |  | 0.656 |
 | walker |  | 4681 | 342 | c decl names surface #1 in include/procedures.h |  |  | 0.689 |
-| walker |  | 4721 | 40 | c includes in src/globals.c |  |  | 0.689 |
 | ns | 4813 |  | 734 | globals.h — feature toggle #defines + their comments | 4.7 |  | 0.641 |
-| walker |  | 5286 | 565 | c decl names surface #1 in include/packets.h |  |  | 0.700 |
-| walker |  | 5320 | 34 | c decl doc at src/tools.c:42 |  |  | 0.700 |
+| walker |  | 5246 | 565 | c decl names surface #1 in include/packets.h |  |  | 0.700 |
+| walker |  | 5280 | 34 | c decl doc at src/tools.c:42 |  |  | 0.700 |
+| walker |  | 5320 | 40 | README.md section #6 |  |  | 0.700 |
 | ns | 5344 |  | 531 | globals.h — tickrate / RNG seeds / world-gen knobs | 4.8 |  | 0.718 |
-| walker |  | 5360 | 40 | README.md section #6 |  |  | 0.718 |
-| walker |  | 5401 | 41 | README.md section #7 |  |  | 0.718 |
-| walker |  | 5609 | 208 | c decl names surface in src/globals.c |  |  | 0.742 |
-| walker |  | 5660 | 51 | c includes in src/varnum.c |  |  | 0.742 |
-| walker |  | 5705 | 45 | README.md section #8 |  |  | 0.742 |
-| walker |  | 5721 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.742 |
+| walker |  | 5361 | 41 | README.md section #7 |  |  | 0.718 |
+| walker |  | 5569 | 208 | c decl names surface in src/globals.c |  |  | 0.742 |
+| walker |  | 5614 | 45 | README.md section #8 |  |  | 0.742 |
+| walker |  | 5630 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.742 |
 | ns | 5889 |  | 545 | globals.h — disk-sync + network buffer knobs (with SYNC_WORLD_TO_DISK gate) | 4.9 |  | 0.720 |
 | ns | 6036 |  | 147 | globals.h — preamble + ESP_PLATFORM gating | 4.10 |  | 0.708 |
-| walker |  | 6219 | 498 | c decl at include/globals.h:200 |  |  | 0.759 |
-| walker |  | 6268 | 49 | README.md section #9 |  |  | 0.759 |
+| walker |  | 6128 | 498 | c decl at include/globals.h:200 |  |  | 0.759 |
+| walker |  | 6177 | 49 | README.md section #9 |  |  | 0.759 |
+| walker |  | 6239 | 62 | c includes in src/crafting.c |  |  | 0.759 |
 | ns | 6273 |  | 237 | README — Configuration 'important options' bullets | 4.11 |  | 0.755 |
-| walker |  | 6330 | 62 | c includes in src/crafting.c |  |  | 0.755 |
-| walker |  | 6393 | 63 | c includes in src/structures.c |  |  | 0.755 |
-| walker |  | 6417 | 24 | imports in build_registries.js |  |  | 0.755 |
-| walker |  | 6489 | 72 | c includes in src/tools.c |  |  | 0.755 |
+| walker |  | 6302 | 63 | c includes in src/structures.c |  |  | 0.755 |
+| walker |  | 6326 | 24 | imports in build_registries.js |  |  | 0.755 |
+| walker |  | 6733 | 407 | c decl names surface in src/worldgen.c |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:13 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:24 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:51 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:117 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:126 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:142 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:160 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:173 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:323 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:358 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:374 |  |  | 0.755 |
+| walker |  | 6733 | 0 | c decl at src/worldgen.c:401 |  |  | 0.755 |
+| walker |  | 6760 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.755 |
+| walker |  | 6800 | 40 | c decl doc at src/worldgen.c:401 |  |  | 0.755 |
 | ns | 6815 |  | 542 | README — Compilation section | 4.12 |  | 0.747 |
-| walker |  | 6896 | 407 | c decl names surface in src/worldgen.c |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:13 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:24 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:51 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:117 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:126 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:142 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:160 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:173 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:323 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:358 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:374 |  |  | 0.747 |
-| walker |  | 6896 | 0 | c decl at src/worldgen.c:401 |  |  | 0.747 |
-| walker |  | 6923 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.747 |
-| walker |  | 6963 | 40 | c decl doc at src/worldgen.c:401 |  |  | 0.747 |
-| walker |  | 7015 | 52 | c decl doc at src/worldgen.c:126 |  |  | 0.747 |
-| walker |  | 7118 | 103 | c includes in src/worldgen.c |  |  | 0.747 |
+| walker |  | 6852 | 52 | c decl doc at src/worldgen.c:126 |  |  | 0.747 |
+| walker |  | 6955 | 103 | c includes in src/worldgen.c |  |  | 0.747 |
+| walker |  | 7059 | 104 | c includes in src/globals.c |  |  | 0.747 |
 | ns | 7274 |  | 459 | main.c — handlePacket signature + author's design comment | 4.13 |  | 0.723 |
-| walker |  | 7378 | 260 | README.md section #4 |  |  | 0.723 |
-| walker |  | 7484 | 106 | c includes in src/packets.c |  |  | 0.723 |
-| ns | 7762 |  | 488 | main() — startup signature + seed/state initialization | 4.14 |  | 0.699 |
-| walker |  | 7798 | 314 | README.md section #3 |  |  | 0.709 |
-| walker |  | 7855 | 57 | c decl body at src/structures.c:9 |  |  | 0.709 |
-| walker |  | 7914 | 59 | c decl body at src/varnum.c:34 |  |  | 0.709 |
+| walker |  | 7319 | 260 | README.md section #4 |  |  | 0.723 |
+| walker |  | 7434 | 115 | c includes in src/varnum.c |  |  | 0.723 |
+| walker |  | 7748 | 314 | README.md section #3 |  |  | 0.733 |
+| ns | 7762 |  | 488 | main() — startup signature + seed/state initialization | 4.14 |  | 0.709 |
+| walker |  | 7805 | 57 | c decl body at src/structures.c:9 |  |  | 0.709 |
+| walker |  | 7864 | 59 | c decl body at src/varnum.c:34 |  |  | 0.709 |
 | ns | 8012 |  | 250 | main.c — handlePacket switch case index (truncated) | 4.15 |  | 0.693 |
-| walker |  | 8049 | 135 | c includes in src/main.c |  |  | 0.693 |
-| walker |  | 8184 | 135 | c includes in src/procedures.c |  |  | 0.693 |
+| walker |  | 8028 | 164 | c includes in src/procedures.c |  |  | 0.693 |
 | ns | 8244 |  | 232 | getBlockAt body — block_changes overlay + terrain fallback | 5.1 |  | 0.682 |
 | ns | 8443 |  | 199 | getBlockChange body — linear scan with chest skip | 5.2 |  | 0.673 |
-| walker |  | 8694 | 510 | c decl names surface in src/procedures.c |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:37 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:45 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:54 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:75 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:119 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:130 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:177 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:199 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:214 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:239 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:286 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:321 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:396 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:434 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:478 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:495 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:512 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:652 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:721 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:746 |  |  | 0.673 |
-| walker |  | 8694 | 0 | c decl at src/procedures.c:775 |  |  | 0.673 |
-| walker |  | 8696 | 2 | c decl at src/procedures.c:21 |  |  | 0.673 |
-| walker |  | 8698 | 2 | c decl at src/procedures.c:146 |  |  | 0.673 |
-| walker |  | 8713 | 15 | c decl doc at src/procedures.c:495 |  |  | 0.673 |
-| walker |  | 8729 | 16 | c decl doc at src/procedures.c:54 |  |  | 0.673 |
-| walker |  | 8745 | 16 | c decl doc at src/procedures.c:75 |  |  | 0.673 |
-| walker |  | 8761 | 16 | c decl doc at src/procedures.c:146 |  |  | 0.673 |
-| walker |  | 8778 | 17 | c decl doc at src/procedures.c:321 |  |  | 0.673 |
-| walker |  | 8795 | 17 | c decl doc at src/procedures.c:775 |  |  | 0.673 |
-| walker |  | 8813 | 18 | c decl doc at src/procedures.c:177 |  |  | 0.673 |
-| walker |  | 8831 | 18 | c decl doc at src/procedures.c:721 |  |  | 0.673 |
-| walker |  | 8850 | 19 | c decl doc at src/procedures.c:130 |  |  | 0.673 |
+| walker |  | 8538 | 510 | c decl names surface in src/procedures.c |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:37 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:45 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:54 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:75 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:119 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:130 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:177 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:199 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:214 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:239 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:286 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:321 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:396 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:434 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:478 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:495 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:512 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:652 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:721 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:746 |  |  | 0.673 |
+| walker |  | 8538 | 0 | c decl at src/procedures.c:775 |  |  | 0.673 |
+| walker |  | 8540 | 2 | c decl at src/procedures.c:21 |  |  | 0.673 |
+| walker |  | 8542 | 2 | c decl at src/procedures.c:146 |  |  | 0.673 |
+| walker |  | 8557 | 15 | c decl doc at src/procedures.c:495 |  |  | 0.673 |
+| walker |  | 8573 | 16 | c decl doc at src/procedures.c:54 |  |  | 0.673 |
+| walker |  | 8589 | 16 | c decl doc at src/procedures.c:75 |  |  | 0.673 |
+| walker |  | 8605 | 16 | c decl doc at src/procedures.c:146 |  |  | 0.673 |
+| walker |  | 8622 | 17 | c decl doc at src/procedures.c:321 |  |  | 0.673 |
+| walker |  | 8639 | 17 | c decl doc at src/procedures.c:775 |  |  | 0.673 |
+| walker |  | 8657 | 18 | c decl doc at src/procedures.c:177 |  |  | 0.673 |
+| walker |  | 8675 | 18 | c decl doc at src/procedures.c:721 |  |  | 0.673 |
+| walker |  | 8694 | 19 | c decl doc at src/procedures.c:130 |  |  | 0.673 |
+| walker |  | 8713 | 19 | c decl doc at src/procedures.c:746 |  |  | 0.673 |
+| walker |  | 8736 | 23 | c decl doc at src/procedures.c:396 |  |  | 0.673 |
+| walker |  | 8769 | 33 | c decl doc at src/procedures.c:434 |  |  | 0.673 |
+| walker |  | 8814 | 45 | c decl doc at src/procedures.c:652 |  |  | 0.673 |
 | ns | 8853 |  | 410 | getChunkBiome body — biome from world_seed bit pattern | 5.3 |  | 0.659 |
-| walker |  | 8869 | 19 | c decl doc at src/procedures.c:746 |  |  | 0.659 |
-| walker |  | 8892 | 23 | c decl doc at src/procedures.c:396 |  |  | 0.659 |
-| walker |  | 8925 | 33 | c decl doc at src/procedures.c:434 |  |  | 0.659 |
-| walker |  | 8970 | 45 | c decl doc at src/procedures.c:652 |  |  | 0.659 |
-| walker |  | 9036 | 66 | c decl body at src/procedures.c:45 |  |  | 0.659 |
-| walker |  | 9107 | 71 | c decl body at src/procedures.c:37 |  |  | 0.659 |
+| walker |  | 8880 | 66 | c decl body at src/procedures.c:45 |  |  | 0.659 |
+| walker |  | 8951 | 71 | c decl body at src/procedures.c:37 |  |  | 0.659 |
 | ns | 9148 |  | 295 | handlePlayerJoin body — chat + spawn entity broadcast | 5.4 |  | 0.648 |
 | ns | 9430 |  | 282 | handleServerTick — world_time + per-player tick header | 5.5 |  | 0.639 |
-| ns | 9589 |  | 159 | sc_blockUpdate body — concrete sc_ packet wire format example | 5.6 |  | 0.635 |
-| walker |  | 9655 | 548 | c decl names surface in src/packets.c |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:28 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:49 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:66 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:85 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:99 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:137 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:151 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:166 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:183 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:190 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:245 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:275 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:287 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:300 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:314 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:323 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:332 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:433 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:444 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:471 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:480 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:488 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:512 |  |  | 0.635 |
-| walker |  | 9655 | 0 | c decl at src/packets.c:528 |  |  | 0.635 |
-| walker |  | 9666 | 11 | c decl doc at src/packets.c:49 |  |  | 0.635 |
-| walker |  | 9677 | 11 | c decl doc at src/packets.c:66 |  |  | 0.635 |
-| walker |  | 9688 | 11 | c decl doc at src/packets.c:85 |  |  | 0.635 |
-| walker |  | 9699 | 11 | c decl doc at src/packets.c:183 |  |  | 0.635 |
-| walker |  | 9710 | 11 | c decl doc at src/packets.c:300 |  |  | 0.635 |
-| walker |  | 9721 | 11 | c decl doc at src/packets.c:471 |  |  | 0.636 |
-| walker |  | 9732 | 11 | c decl doc at src/packets.c:488 |  |  | 0.636 |
-| walker |  | 9743 | 11 | c decl doc at src/packets.c:512 |  |  | 0.636 |
-| walker |  | 9754 | 11 | c decl doc at src/packets.c:528 |  |  | 0.636 |
-| walker |  | 9766 | 12 | c decl doc at src/packets.c:190 |  |  | 0.636 |
-| walker |  | 9778 | 12 | c decl doc at src/packets.c:323 |  |  | 0.636 |
-| walker |  | 9790 | 12 | c decl doc at src/packets.c:444 |  |  | 0.636 |
-| walker |  | 9803 | 13 | c decl doc at src/packets.c:137 |  |  | 0.636 |
-| walker |  | 9816 | 13 | c decl doc at src/packets.c:151 |  |  | 0.636 |
-| walker |  | 9829 | 13 | c decl doc at src/packets.c:166 |  |  | 0.636 |
-| walker |  | 9842 | 13 | c decl doc at src/packets.c:245 |  |  | 0.636 |
-| walker |  | 9855 | 13 | c decl doc at src/packets.c:275 |  |  | 0.636 |
-| walker |  | 9869 | 14 | c decl doc at src/packets.c:332 |  |  | 0.636 |
-| walker |  | 9883 | 14 | c decl doc at src/packets.c:480 |  |  | 0.636 |
-| walker |  | 9898 | 15 | c decl doc at src/packets.c:28 |  |  | 0.636 |
+| walker |  | 9499 | 548 | c decl names surface in src/packets.c |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:28 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:49 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:66 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:85 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:99 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:137 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:151 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:166 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:183 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:190 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:245 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:275 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:287 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:300 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:314 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:323 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:332 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:433 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:444 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:471 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:480 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:488 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:512 |  |  | 0.639 |
+| walker |  | 9499 | 0 | c decl at src/packets.c:528 |  |  | 0.639 |
+| walker |  | 9510 | 11 | c decl doc at src/packets.c:49 |  |  | 0.639 |
+| walker |  | 9521 | 11 | c decl doc at src/packets.c:66 |  |  | 0.639 |
+| walker |  | 9532 | 11 | c decl doc at src/packets.c:85 |  |  | 0.639 |
+| walker |  | 9543 | 11 | c decl doc at src/packets.c:183 |  |  | 0.639 |
+| walker |  | 9554 | 11 | c decl doc at src/packets.c:300 |  |  | 0.639 |
+| walker |  | 9565 | 11 | c decl doc at src/packets.c:471 |  |  | 0.639 |
+| walker |  | 9576 | 11 | c decl doc at src/packets.c:488 |  |  | 0.639 |
+| walker |  | 9587 | 11 | c decl doc at src/packets.c:512 |  |  | 0.639 |
+| ns | 9589 |  | 159 | sc_blockUpdate body — concrete sc_ packet wire format example | 5.6 |  | 0.636 |
+| walker |  | 9598 | 11 | c decl doc at src/packets.c:528 |  |  | 0.636 |
+| walker |  | 9610 | 12 | c decl doc at src/packets.c:190 |  |  | 0.636 |
+| walker |  | 9622 | 12 | c decl doc at src/packets.c:323 |  |  | 0.636 |
+| walker |  | 9634 | 12 | c decl doc at src/packets.c:444 |  |  | 0.636 |
+| walker |  | 9647 | 13 | c decl doc at src/packets.c:137 |  |  | 0.636 |
+| walker |  | 9660 | 13 | c decl doc at src/packets.c:151 |  |  | 0.636 |
+| walker |  | 9673 | 13 | c decl doc at src/packets.c:166 |  |  | 0.636 |
+| walker |  | 9686 | 13 | c decl doc at src/packets.c:245 |  |  | 0.636 |
+| walker |  | 9699 | 13 | c decl doc at src/packets.c:275 |  |  | 0.636 |
+| walker |  | 9713 | 14 | c decl doc at src/packets.c:332 |  |  | 0.636 |
+| walker |  | 9727 | 14 | c decl doc at src/packets.c:480 |  |  | 0.636 |
+| walker |  | 9742 | 15 | c decl doc at src/packets.c:28 |  |  | 0.636 |
+| walker |  | 9757 | 15 | c decl doc at src/packets.c:287 |  |  | 0.636 |
+| walker |  | 9772 | 15 | c decl doc at src/packets.c:433 |  |  | 0.636 |
+| walker |  | 9791 | 19 | c decl doc at src/packets.c:314 |  |  | 0.636 |
+| walker |  | 9828 | 37 | c decl body at src/packets.c:183 |  |  | 0.636 |
+| walker |  | 9880 | 52 | c decl body at src/packets.c:433 |  |  | 0.636 |
 | ns | 9899 |  | 310 | placeTreeStructure intro — replaceable-helper + trunk | 5.7 |  | 0.629 |
-| walker |  | 9913 | 15 | c decl doc at src/packets.c:287 |  |  | 0.629 |
-| walker |  | 9928 | 15 | c decl doc at src/packets.c:433 |  |  | 0.629 |
-| walker |  | 9947 | 19 | c decl doc at src/packets.c:314 |  |  | 0.629 |
-| walker |  | 9984 | 37 | c decl body at src/packets.c:183 |  |  | 0.629 |
+| walker |  | 9934 | 54 | c decl body at src/packets.c:480 |  |  | 0.629 |
+| walker |  | 9997 | 63 | c decl body at src/packets.c:314 |  |  | 0.629 |

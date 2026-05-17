@@ -1,6 +1,6 @@
 fixture = "krep"
 budget = 10000
-cumulative_tokens = 9909
+cumulative_tokens = 9728
 batch_count = 211
 
 [[batches]]
@@ -5687,36 +5687,10 @@ kind = "full"
 
 [[batches]]
 position = 202
-key = 'C(Includes { file: "krep.c" })'
-descriptor = "c includes in krep.c"
-cost_tokens = 333
-cum_tokens = 9187
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "krep.c"
-start = 13
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "krep.c"
-start = 16
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 203
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 13
-cum_tokens = 9200
+cum_tokens = 8867
 
 [batches.content]
 kind = "fs"
@@ -5726,11 +5700,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "dependabot.yml", "workflows"]
 
 [[batches]]
-position = 204
+position = 203
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 9208
+cum_tokens = 8875
 
 [batches.content]
 kind = "fs"
@@ -5740,11 +5714,11 @@ parent = ".github/workflows"
 entries = ["ci.yml", "release.yml"]
 
 [[batches]]
-position = 205
+position = 204
 key = 'C(HeaderBanner { file: "test/test_krep.h" })'
 descriptor = "c header banner in test/test_krep.h"
 cost_tokens = 24
-cum_tokens = 9232
+cum_tokens = 8899
 
 [batches.content]
 kind = "lines"
@@ -5758,11 +5732,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 206
+position = 205
 key = 'C(DeclBody { file: "krep.c", start_line: 4313 })'
 descriptor = "c decl body at krep.c:4313"
 cost_tokens = 138
-cum_tokens = 9370
+cum_tokens = 9037
 
 [batches.content]
 kind = "lines"
@@ -5800,11 +5774,11 @@ end = 4328
 kind = "full"
 
 [[batches]]
-position = 207
+position = 206
 key = 'Markdown(Section { file: "README.md", section_index: 48 })'
 descriptor = "README.md section #48"
 cost_tokens = 81
-cum_tokens = 9451
+cum_tokens = 9118
 
 [batches.content]
 kind = "lines"
@@ -5834,11 +5808,11 @@ end = 229
 kind = "full"
 
 [[batches]]
-position = 208
+position = 207
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 107
-cum_tokens = 9558
+cum_tokens = 9225
 
 [batches.content]
 kind = "lines"
@@ -5884,11 +5858,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 209
+position = 208
 key = 'Markdown(Section { file: "README.md", section_index: 45 })'
 descriptor = "README.md section #45"
 cost_tokens = 84
-cum_tokens = 9642
+cum_tokens = 9309
 
 [batches.content]
 kind = "lines"
@@ -5918,11 +5892,11 @@ end = 205
 kind = "full"
 
 [[batches]]
-position = 210
+position = 209
 key = 'C(DeclBody { file: "krep.c", start_line: 401 })'
 descriptor = "c decl body at krep.c:401"
 cost_tokens = 156
-cum_tokens = 9798
+cum_tokens = 9465
 
 [batches.content]
 kind = "lines"
@@ -5952,11 +5926,11 @@ end = 414
 kind = "full"
 
 [[batches]]
-position = 211
+position = 210
 key = 'C(Decl { file: "aho_corasick.c", start_line: 17 })'
 descriptor = "c decl at aho_corasick.c:17"
 cost_tokens = 111
-cum_tokens = 9909
+cum_tokens = 9576
 
 [batches.content]
 kind = "lines"
@@ -5965,6 +5939,32 @@ kind = "lines"
 path = "aho_corasick.c"
 start = 17
 end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'Markdown(Section { file: "README.md", section_index: 43 })'
+descriptor = "README.md section #43"
+cost_tokens = 152
+cum_tokens = 9728
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 188
+end = 193
 
 [batches.content.spans.render]
 kind = "full"

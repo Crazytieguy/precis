@@ -199,17 +199,6 @@ sqlite-dist.toml
     7→authors = ["Alex Garcia"]
     8→git_tag_format = "v$VERSION"
 sqlite-vec.c
-    1→#include "sqlite-vec.h"
-    3→#include <assert.h>
-    4→#include <errno.h>
-    5→#include <float.h>
-    6→#include <inttypes.h>
-    7→#include <limits.h>
-    8→#include <math.h>
-    9→#include <stdbool.h>
-    10→#include <stdint.h>
-    11→#include <stdlib.h>
-    12→#include <string.h>
     76→typedef int8_t i8;
     77→typedef uint8_t u8;
     78→typedef int16_t i16;
@@ -239,7 +228,11 @@ sqlite-vec.c
     589→#define JSON_SUBTYPE 74
     …
     591→void vtab_set_error(sqlite3_vtab *pVTab, const char *zFormat, ...) {
-    …
+    592→  va_list args;
+    593→  sqlite3_free(pVTab->zErrMsg);
+    594→  va_start(args, zFormat);
+    595→  pVTab->zErrMsg = sqlite3_vmprintf(zFormat, args);
+    596→  va_end(args);
     598→struct Array {
     599→  size_t element_size;
     600→  size_t length;

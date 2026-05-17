@@ -236,19 +236,19 @@ Score(3000)=0.566 I=0.773 C=0.414 ns_rows≤3K=15/39 (reached=7 partial=3 missin
 | walker |  | 8767 | 15 | c decl doc at aho_corasick.c:299 |  |  | 0.641 |
 | walker |  | 8828 | 61 | c decl at aho_corasick.c:26 |  |  | 0.645 |
 | walker |  | 8854 | 26 | c decl body at aho_corasick.c:287 |  |  | 0.645 |
+| walker |  | 8867 | 13 | listing of '.github' |  |  | 0.645 |
+| walker |  | 8875 | 8 | listing of '.github/workflows' |  |  | 0.645 |
+| walker |  | 8899 | 24 | c header banner in test/test_krep.h |  |  | 0.645 |
 | ns | 8912 |  | 567 | search_chunk_thread — what each worker actually does | 5.8 |  | 0.620 |
-| walker |  | 9187 | 333 | c includes in krep.c |  |  | 0.620 |
+| walker |  | 9037 | 138 | c decl body at krep.c:4313 |  |  | 0.620 |
+| walker |  | 9118 | 81 | README.md section #48 |  |  | 0.620 |
 | ns | 9197 |  | 285 | krep.c top-level function names — locations | 6.1 |  | 0.617 |
-| walker |  | 9200 | 13 | listing of '.github' |  |  | 0.617 |
-| walker |  | 9208 | 8 | listing of '.github/workflows' |  |  | 0.617 |
-| walker |  | 9232 | 24 | c header banner in test/test_krep.h |  |  | 0.617 |
+| walker |  | 9225 | 107 | README.md section #18 |  |  | 0.617 |
 | ns | 9298 |  | 101 | aho_corasick.c function names — locations | 6.2 |  | 0.616 |
+| walker |  | 9309 | 84 | README.md section #45 |  |  | 0.616 |
 | ns | 9340 |  | 42 | test/ FS listing | 7.1 |  | 0.619 |
-| walker |  | 9370 | 138 | c decl body at krep.c:4313 |  |  | 0.619 |
-| walker |  | 9451 | 81 | README.md section #48 |  |  | 0.619 |
-| walker |  | 9558 | 107 | README.md section #18 |  |  | 0.619 |
-| ns | 9620 |  | 280 | Makefile — sources and main build target | 7.2 |  | 0.608 |
-| walker |  | 9642 | 84 | README.md section #45 |  |  | 0.608 |
-| walker |  | 9798 | 156 | c decl body at krep.c:401 |  |  | 0.608 |
-| walker |  | 9909 | 111 | c decl at aho_corasick.c:17 |  |  | 0.620 |
+| walker |  | 9465 | 156 | c decl body at krep.c:401 |  |  | 0.619 |
+| walker |  | 9576 | 111 | c decl at aho_corasick.c:17 |  |  | 0.632 |
+| ns | 9620 |  | 280 | Makefile — sources and main build target | 7.2 |  | 0.620 |
+| walker |  | 9728 | 152 | README.md section #43 |  |  | 0.620 |
 | ns | 9938 |  | 318 | Makefile — arch/SIMD flag detection | 7.3 |  | 0.609 |

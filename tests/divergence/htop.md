@@ -210,88 +210,86 @@ Score(3000)=0.192 I=0.441 C=0.084 ns_rows≤3K=16/44 (reached=1 partial=1 missin
 | walker |  | 7189 | 15 | c decl names surface in SysArchMeter.c |  |  | 0.234 |
 | walker |  | 7288 | 99 | c decl names surface #2 in solaris/Platform.h |  |  | 0.234 |
 | walker |  | 7353 | 65 | c includes in darwin/DarwinMachine.h |  |  | 0.234 |
-| walker |  | 7386 | 33 | c decl at BatteryMeter.h:15 |  |  | 0.234 |
-| walker |  | 7419 | 33 | c decl at CommandLine.h:11 |  |  | 0.234 |
-| walker |  | 7440 | 21 | c decl names surface #1 in solaris/Platform.c |  |  | 0.234 |
-| walker |  | 7442 | 2 | c decl at solaris/Platform.c:345 |  |  | 0.234 |
-| walker |  | 7460 | 18 | README.md section #8 |  |  | 0.234 |
-| walker |  | 7522 | 62 | c decl names surface in CategoriesPanel.h |  |  | 0.234 |
-| walker |  | 7584 | 62 | c decl names surface in DisplayOptionsPanel.h |  |  | 0.234 |
-| walker |  | 7646 | 62 | c decl names surface in HeaderOptionsPanel.h |  |  | 0.234 |
-| walker |  | 7680 | 34 | c decl at HeaderOptionsPanel.h:15 |  |  | 0.234 |
-| walker |  | 7696 | 16 | c decl names surface in NetworkIOMeter.c |  |  | 0.234 |
-| walker |  | 7724 | 28 | c includes in htop.c |  |  | 0.234 |
+| walker |  | 7418 | 65 | c includes in generic/ProvideDemangle.h |  |  | 0.234 |
+| walker |  | 7451 | 33 | c decl at BatteryMeter.h:15 |  |  | 0.234 |
+| walker |  | 7484 | 33 | c decl at CommandLine.h:11 |  |  | 0.234 |
+| walker |  | 7505 | 21 | c decl names surface #1 in solaris/Platform.c |  |  | 0.234 |
+| walker |  | 7507 | 2 | c decl at solaris/Platform.c:345 |  |  | 0.234 |
+| walker |  | 7525 | 18 | README.md section #8 |  |  | 0.234 |
+| walker |  | 7587 | 62 | c decl names surface in CategoriesPanel.h |  |  | 0.234 |
+| walker |  | 7649 | 62 | c decl names surface in DisplayOptionsPanel.h |  |  | 0.234 |
+| walker |  | 7711 | 62 | c decl names surface in HeaderOptionsPanel.h |  |  | 0.234 |
+| walker |  | 7745 | 34 | c decl at HeaderOptionsPanel.h:15 |  |  | 0.234 |
+| walker |  | 7761 | 16 | c decl names surface in NetworkIOMeter.c |  |  | 0.234 |
+| walker |  | 7789 | 28 | c includes in htop.c |  |  | 0.234 |
 | ns | 7907 |  | 1004 | Action_setBindings — the keymap table | 4.1 |  | 0.222 |
 | ns | 7932 |  | 25 | Action_pickFromVector — pointer to modal-list helper | 4.2 |  | 0.222 |
-| walker |  | 8020 | 296 | README.md section #0 |  |  | 0.222 |
-| walker |  | 8077 | 57 | c decl names surface in darwin/DarwinProcessTable.c |  |  | 0.222 |
-| walker |  | 8077 | 0 | c decl at darwin/DarwinProcessTable.c:56 |  |  | 0.222 |
-| walker |  | 8077 | 0 | c decl at darwin/DarwinProcessTable.c:66 |  |  | 0.222 |
-| walker |  | 8077 | 0 | c decl at darwin/DarwinProcessTable.c:72 |  |  | 0.222 |
-| walker |  | 8134 | 57 | c decl names surface in dragonflybsd/DragonFlyBSDProcessTable.c |  |  | 0.222 |
-| walker |  | 8134 | 0 | c decl at dragonflybsd/DragonFlyBSDProcessTable.c:30 |  |  | 0.222 |
-| walker |  | 8134 | 0 | c decl at dragonflybsd/DragonFlyBSDProcessTable.c:40 |  |  | 0.222 |
-| walker |  | 8134 | 0 | c decl at dragonflybsd/DragonFlyBSDProcessTable.c:133 |  |  | 0.222 |
-| walker |  | 8191 | 57 | c decl names surface in freebsd/FreeBSDProcessTable.c |  |  | 0.222 |
-| walker |  | 8191 | 0 | c decl at freebsd/FreeBSDProcessTable.c:45 |  |  | 0.222 |
-| walker |  | 8191 | 0 | c decl at freebsd/FreeBSDProcessTable.c:56 |  |  | 0.222 |
-| walker |  | 8191 | 0 | c decl at freebsd/FreeBSDProcessTable.c:160 |  |  | 0.222 |
-| walker |  | 8248 | 57 | c decl names surface in netbsd/NetBSDProcessTable.c |  |  | 0.217 |
-| walker |  | 8248 | 0 | c decl at netbsd/NetBSDProcessTable.c:40 |  |  | 0.217 |
-| walker |  | 8248 | 0 | c decl at netbsd/NetBSDProcessTable.c:50 |  |  | 0.217 |
-| walker |  | 8248 | 0 | c decl at netbsd/NetBSDProcessTable.c:171 |  |  | 0.217 |
+| walker |  | 8085 | 296 | README.md section #0 |  |  | 0.222 |
+| walker |  | 8142 | 57 | c decl names surface in darwin/DarwinProcessTable.c |  |  | 0.222 |
+| walker |  | 8142 | 0 | c decl at darwin/DarwinProcessTable.c:56 |  |  | 0.222 |
+| walker |  | 8142 | 0 | c decl at darwin/DarwinProcessTable.c:66 |  |  | 0.222 |
+| walker |  | 8142 | 0 | c decl at darwin/DarwinProcessTable.c:72 |  |  | 0.222 |
+| walker |  | 8199 | 57 | c decl names surface in dragonflybsd/DragonFlyBSDProcessTable.c |  |  | 0.222 |
+| walker |  | 8199 | 0 | c decl at dragonflybsd/DragonFlyBSDProcessTable.c:30 |  |  | 0.222 |
+| walker |  | 8199 | 0 | c decl at dragonflybsd/DragonFlyBSDProcessTable.c:40 |  |  | 0.222 |
+| walker |  | 8199 | 0 | c decl at dragonflybsd/DragonFlyBSDProcessTable.c:133 |  |  | 0.222 |
 | ns | 8248 |  | 316 | Function-bar contract | 4.3 |  | 0.217 |
-| walker |  | 8305 | 57 | c decl names surface in openbsd/OpenBSDProcessTable.c |  |  | 0.217 |
-| walker |  | 8305 | 0 | c decl at openbsd/OpenBSDProcessTable.c:38 |  |  | 0.217 |
-| walker |  | 8305 | 0 | c decl at openbsd/OpenBSDProcessTable.c:48 |  |  | 0.217 |
-| walker |  | 8305 | 0 | c decl at openbsd/OpenBSDProcessTable.c:242 |  |  | 0.217 |
-| walker |  | 8362 | 57 | c decl names surface in unsupported/UnsupportedProcessTable.c |  |  | 0.217 |
-| walker |  | 8362 | 0 | c decl at unsupported/UnsupportedProcessTable.c:19 |  |  | 0.217 |
-| walker |  | 8362 | 0 | c decl at unsupported/UnsupportedProcessTable.c:29 |  |  | 0.217 |
-| walker |  | 8362 | 0 | c decl at unsupported/UnsupportedProcessTable.c:35 |  |  | 0.217 |
-| walker |  | 8372 | 10 | c includes in Affinity.h |  |  | 0.217 |
-| walker |  | 8382 | 10 | c includes in BatteryMeter.h |  |  | 0.217 |
-| walker |  | 8392 | 10 | c includes in CPUMeter.h |  |  | 0.217 |
-| walker |  | 8402 | 10 | c includes in DateTimeMeter.h |  |  | 0.217 |
-| walker |  | 8412 | 10 | c includes in FileDescriptorMeter.h |  |  | 0.217 |
-| walker |  | 8422 | 10 | c includes in HostnameMeter.h |  |  | 0.217 |
-| walker |  | 8432 | 10 | c includes in LoadAverageMeter.h |  |  | 0.217 |
-| walker |  | 8442 | 10 | c includes in MemoryMeter.h |  |  | 0.217 |
-| walker |  | 8452 | 10 | c includes in MemorySwapMeter.h |  |  | 0.217 |
-| walker |  | 8462 | 10 | c includes in SignalsPanel.h |  |  | 0.217 |
-| walker |  | 8472 | 10 | c includes in SwapMeter.h |  |  | 0.217 |
-| walker |  | 8482 | 10 | c includes in SysArchMeter.h |  |  | 0.217 |
-| walker |  | 8492 | 10 | c includes in TasksMeter.h |  |  | 0.217 |
-| walker |  | 8502 | 10 | c includes in UptimeMeter.h |  |  | 0.217 |
-| walker |  | 8512 | 10 | c includes in UsersTable.h |  |  | 0.217 |
-| walker |  | 8529 | 17 | c decl names surface in SignalsPanel.c |  |  | 0.217 |
-| walker |  | 8529 | 0 | c decl at SignalsPanel.c:23 |  |  | 0.217 |
-| walker |  | 8596 | 67 | c decl names surface in CommandScreen.h |  |  | 0.217 |
-| walker |  | 8611 | 15 | c decl at CommandScreen.h:16 |  |  | 0.217 |
+| walker |  | 8256 | 57 | c decl names surface in freebsd/FreeBSDProcessTable.c |  |  | 0.217 |
+| walker |  | 8256 | 0 | c decl at freebsd/FreeBSDProcessTable.c:45 |  |  | 0.217 |
+| walker |  | 8256 | 0 | c decl at freebsd/FreeBSDProcessTable.c:56 |  |  | 0.217 |
+| walker |  | 8256 | 0 | c decl at freebsd/FreeBSDProcessTable.c:160 |  |  | 0.217 |
+| walker |  | 8313 | 57 | c decl names surface in netbsd/NetBSDProcessTable.c |  |  | 0.217 |
+| walker |  | 8313 | 0 | c decl at netbsd/NetBSDProcessTable.c:40 |  |  | 0.217 |
+| walker |  | 8313 | 0 | c decl at netbsd/NetBSDProcessTable.c:50 |  |  | 0.217 |
+| walker |  | 8313 | 0 | c decl at netbsd/NetBSDProcessTable.c:171 |  |  | 0.217 |
+| walker |  | 8370 | 57 | c decl names surface in openbsd/OpenBSDProcessTable.c |  |  | 0.217 |
+| walker |  | 8370 | 0 | c decl at openbsd/OpenBSDProcessTable.c:38 |  |  | 0.217 |
+| walker |  | 8370 | 0 | c decl at openbsd/OpenBSDProcessTable.c:48 |  |  | 0.217 |
+| walker |  | 8370 | 0 | c decl at openbsd/OpenBSDProcessTable.c:242 |  |  | 0.217 |
+| walker |  | 8427 | 57 | c decl names surface in unsupported/UnsupportedProcessTable.c |  |  | 0.217 |
+| walker |  | 8427 | 0 | c decl at unsupported/UnsupportedProcessTable.c:19 |  |  | 0.217 |
+| walker |  | 8427 | 0 | c decl at unsupported/UnsupportedProcessTable.c:29 |  |  | 0.217 |
+| walker |  | 8427 | 0 | c decl at unsupported/UnsupportedProcessTable.c:35 |  |  | 0.217 |
+| walker |  | 8437 | 10 | c includes in BatteryMeter.h |  |  | 0.217 |
+| walker |  | 8447 | 10 | c includes in CPUMeter.h |  |  | 0.217 |
+| walker |  | 8457 | 10 | c includes in DateTimeMeter.h |  |  | 0.217 |
+| walker |  | 8467 | 10 | c includes in FileDescriptorMeter.h |  |  | 0.217 |
+| walker |  | 8477 | 10 | c includes in HostnameMeter.h |  |  | 0.217 |
+| walker |  | 8487 | 10 | c includes in LoadAverageMeter.h |  |  | 0.217 |
+| walker |  | 8497 | 10 | c includes in MemoryMeter.h |  |  | 0.217 |
+| walker |  | 8507 | 10 | c includes in MemorySwapMeter.h |  |  | 0.217 |
+| walker |  | 8517 | 10 | c includes in SwapMeter.h |  |  | 0.217 |
+| walker |  | 8527 | 10 | c includes in SysArchMeter.h |  |  | 0.217 |
+| walker |  | 8537 | 10 | c includes in TasksMeter.h |  |  | 0.217 |
+| walker |  | 8547 | 10 | c includes in UptimeMeter.h |  |  | 0.217 |
+| walker |  | 8557 | 10 | c includes in UsersTable.h |  |  | 0.217 |
+| walker |  | 8574 | 17 | c decl names surface in SignalsPanel.c |  |  | 0.217 |
+| walker |  | 8574 | 0 | c decl at SignalsPanel.c:23 |  |  | 0.217 |
 | ns | 8621 |  | 373 | MainPanel — the process-list widget | 4.4 |  | 0.212 |
-| walker |  | 8634 | 23 | c decl names surface #1 in freebsd/Platform.c |  |  | 0.212 |
-| walker |  | 8634 | 0 | c decl at freebsd/Platform.c:399 |  |  | 0.212 |
-| walker |  | 8702 | 68 | c decl names surface in EnvScreen.h |  |  | 0.212 |
-| walker |  | 8717 | 15 | c decl at EnvScreen.h:17 |  |  | 0.212 |
+| walker |  | 8641 | 67 | c decl names surface in CommandScreen.h |  |  | 0.212 |
+| walker |  | 8656 | 15 | c decl at CommandScreen.h:16 |  |  | 0.212 |
+| walker |  | 8679 | 23 | c decl names surface #1 in freebsd/Platform.c |  |  | 0.212 |
+| walker |  | 8679 | 0 | c decl at freebsd/Platform.c:399 |  |  | 0.212 |
+| walker |  | 8747 | 68 | c decl names surface in EnvScreen.h |  |  | 0.212 |
+| walker |  | 8762 | 15 | c decl at EnvScreen.h:17 |  |  | 0.212 |
 | ns | 8935 |  | 314 | ScreenManager struct + ScreenManager_run | 4.5 |  | 0.208 |
-| walker |  | 9084 | 367 | c decl names surface in solaris/Platform.h |  |  | 0.208 |
-| walker |  | 9126 | 42 | c decl at solaris/Platform.h:47 |  |  | 0.208 |
-| walker |  | 9146 | 20 | README.md section #16 |  |  | 0.208 |
-| walker |  | 9224 | 78 | c includes in freebsd/FreeBSDMachine.h |  |  | 0.208 |
+| walker |  | 9129 | 367 | c decl names surface in solaris/Platform.h |  |  | 0.208 |
+| walker |  | 9171 | 42 | c decl at solaris/Platform.h:47 |  |  | 0.208 |
+| walker |  | 9191 | 20 | README.md section #16 |  |  | 0.208 |
 | ns | 9265 |  | 330 | Header — top-meter container | 4.6 |  | 0.204 |
-| walker |  | 9399 | 175 | c decl at dragonflybsd/DragonFlyBSDMachine.h:35 |  |  | 0.204 |
+| walker |  | 9269 | 78 | c includes in freebsd/FreeBSDMachine.h |  |  | 0.204 |
 | ns | 9403 |  | 138 | Settings.h — top-level Settings struct (locations) | 5.1 |  | 0.202 |
 | ns | 9433 |  | 30 | Settings_read entry point | 5.2 |  | 0.202 |
+| walker |  | 9444 | 175 | c decl at dragonflybsd/DragonFlyBSDMachine.h:35 |  |  | 0.202 |
 | ns | 9501 |  | 68 | htoprc key roster (sample of literal names, truncated) | 5.3 | 5.2 | 0.201 |
 | ns | 9593 |  | 92 | PCP dynamic-screen config example (cgroups) | 5.4 |  | 0.199 |
 | ns | 9652 |  | 59 | PCP dynamic-column config example | 5.5 |  | 0.199 |
 | ns | 9737 |  | 85 | Hot-path entry points (signatures) | 6.1 |  | 0.198 |
-| walker |  | 9780 | 381 | c decl names surface in freebsd/Platform.h |  |  | 0.198 |
+| walker |  | 9825 | 381 | c decl names surface in freebsd/Platform.h |  |  | 0.198 |
 | ns | 9850 |  | 113 | Meter render modes (locations) | 6.2 |  | 0.198 |
 | ns | 9867 |  | 17 | Process_fields table location (Linux) | 6.3 |  | 0.197 |
 | ns | 9893 |  | 26 | Linux signals table + memory classes | 6.4 |  | 0.197 |
-| walker |  | 9898 | 118 | listing of 'pcp' |  |  | 0.233 |
-| walker |  | 9923 | 25 | c decl names surface in pcp/PCPProcessTable.h |  |  | 0.233 |
-| walker |  | 9939 | 16 | c decl at pcp/PCPProcessTable.h:20 |  |  | 0.233 |
-| walker |  | 9964 | 25 | c decl names surface in pcp/ProcessField.h |  |  | 0.233 |
+| walker |  | 9943 | 118 | listing of 'pcp' |  |  | 0.233 |
+| walker |  | 9968 | 25 | c decl names surface in pcp/PCPProcessTable.h |  |  | 0.233 |
 | ns | 9978 |  | 85 | Static-inline accessors (Process + Row) | 6.5 |  | 0.232 |
+| walker |  | 9984 | 16 | c decl at pcp/PCPProcessTable.h:20 |  |  | 0.232 |

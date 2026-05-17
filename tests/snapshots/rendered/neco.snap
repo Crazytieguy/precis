@@ -152,6 +152,12 @@ neco.h
     12→#include <stdbool.h>
     13→#include <stdint.h>
     14→#include <sys/types.h>
+    15→#ifdef _WIN32
+    16→#include <ws2tcpip.h>
+    17→#else
+    18→#include <netdb.h>
+    19→#include <sys/socket.h>
+    20→#endif
     30→/// @defgroup BasicOperations Basic operations
     31→/// Neco provides standard operations for starting a coroutine, sleeping, 
     32→/// suspending, resuming, yielding to another coroutine, joining/waiting for

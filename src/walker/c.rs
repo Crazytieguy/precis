@@ -3,7 +3,11 @@
 //!
 //! Per-file keys:
 //! - `HeaderBanner { file }`: top-of-file `/* */` block (license / brief)
-//! - `Includes { file }`: `#include` directives at the top of the file
+//! - `Includes { file }`: `#include` directives, plus any top-level
+//!   `#if`/`#ifdef` blocks whose body is exclusively directive content
+//!   and contains at least one `#include` (the conditional include-map
+//!   idiom: `#if CFG_TUH_HID { #include "class/hid/hid_host.h" }`).
+//!   Conditional blocks that wrap real code are opaque.
 //! - `DeclNames { file }`: surface listing of every top-level public
 //!   declaration's first line — catastrophic-omission hedge
 //!
@@ -79,18 +83,20 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
 
-        if let Some(content) = build_per_file_content(file, ctx, parse_c, collect_includes) {
+        let Some((source, tree)) = parse_c(ctx, file) else {
+            continue;
+        };
+
+        let (includes_lines, include_count) = collect_includes(&tree, &source);
+        if let Some(content) = single_file_lines_content(file, &source, includes_lines) {
             out.push(Batch {
                 key: CKey::Includes { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: includes_value(file, ctx),
+                value: includes_value(file, ctx, include_count),
             });
         }
 
-        let Some((source, tree)) = parse_c(ctx, file) else {
-            continue;
-        };
         let decls = find_decls(&tree, &source, file);
         if decls.is_empty() {
             continue;
@@ -685,9 +691,49 @@ fn header_banner_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.4, 0.7, c_depth_factor(file, ctx))
 }
 
-fn includes_value(file: &Path, ctx: &WalkCtx) -> f64 {
+/// Per-conditional-`#include` value increment for an umbrella header's
+/// feature-gated include map. The Includes batch grows roughly
+/// linearly in cost with directive count when it captures a class /
+/// platform include map (tinyusb's `tusb.h`: each `#if CFG_TUH_*`
+/// arm is ~3 lines around one `#include`), so value must scale
+/// similarly to stay competitive under the scheduler's
+/// `value / cost^0.35` ranking — otherwise the bigger batch slips
+/// past 3K and the NS-anchored "what classes/modules ship" map never
+/// lands in early budget. Gated on conditional content so plain
+/// stdlib include lists (chibicc.h-style 18 stdlib lines) don't get
+/// promoted ahead of higher-value surfaces.
+const HUB_INCLUDE_VALUE_PER_DIRECTIVE: f64 = 80.0;
+
+/// True iff `file` sits where a project's canonical entry header
+/// would: directly at the repo root, or directly under `src/`. Used
+/// to gate the hub-header boost so platform-specific Platform.h-style
+/// files deeper in the tree (htop's `solaris/Platform.h`,
+/// `freebsd/Platform.h`) don't trigger it — those have comparable
+/// include counts but aren't the project's umbrella header.
+fn is_at_canonical_entry_location(file: &Path, ctx: &WalkCtx) -> bool {
+    match ctx.depth_from_root(file) {
+        1 => true,
+        2 => {
+            file.parent()
+                .and_then(|p| p.file_name())
+                .and_then(|n| n.to_str())
+                == Some("src")
+        }
+        _ => false,
+    }
+}
+
+fn includes_value(file: &Path, ctx: &WalkCtx, conditional_include_count: usize) -> f64 {
     let cat = (0.30 * header_cat_factor(file)).min(1.0);
-    mix_signals(cat, 0.55, 0.3, c_depth_factor(file, ctx))
+    let base = mix_signals(cat, 0.55, 0.3, c_depth_factor(file, ctx));
+    if !is_header_file(file)
+        || conditional_include_count == 0
+        || !is_at_canonical_entry_location(file, ctx)
+    {
+        return base;
+    }
+    let extra = HUB_INCLUDE_VALUE_PER_DIRECTIVE * conditional_include_count as f64;
+    base + extra * c_depth_factor(file, ctx).max(0.0)
 }
 
 fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
@@ -825,14 +871,92 @@ fn header_banner_end_row(tree: &Tree) -> Option<usize> {
     end
 }
 
-fn collect_includes(tree: &Tree, source: &str) -> FileLines {
+/// Collect the file's include-map lines along with a count of
+/// conditional `#include` directives folded into the batch — the
+/// signal a hub header needs the value boost. The line set captures
+/// unconditional `#include`s plus any top-level conditional block
+/// whose body is exclusively directive content and contains an
+/// `#include` (the feature-gated include-map idiom). The count covers
+/// `#include`s nested inside those captured conditional blocks; plain
+/// stdlib include lists (chibicc.h-style 18-deep `#include <stdarg.h>`
+/// runs) report zero, so the hub boost only fires when the file
+/// actually carries a conditional/include-map shape.
+fn collect_includes(tree: &Tree, source: &str) -> (FileLines, usize) {
     let mut lines = Vec::new();
+    let mut conditional_include_count = 0;
     walk_top_level(tree.root_node(), source, &mut |node| {
-        if node.kind() == "preproc_include" {
-            extend_span(&mut lines, node, source);
+        match node.kind() {
+            "preproc_include" => extend_span(&mut lines, node, source),
+            // Top-level conditional: classify once. If its body is
+            // directive-only AND has at least one nested `#include`,
+            // capture the whole block range (gate directives stay
+            // legible) and count its includes as conditional-map
+            // content. Code-heavy conditionals (mongoose amalgamation)
+            // stay opaque and contribute nothing.
+            "preproc_if" | "preproc_ifdef" => {
+                let class = classify_conditional(node);
+                if class.directive_only && class.include_count > 0 {
+                    extend_span(&mut lines, node, source);
+                    conditional_include_count += class.include_count;
+                }
+            }
+            _ => {}
         }
     });
-    FileLines::new(dedup_sorted(lines))
+    (
+        FileLines::new(dedup_sorted(lines)),
+        conditional_include_count,
+    )
+}
+
+/// Result of classifying a `preproc_if*` / `preproc_else*` block.
+#[derive(Default)]
+struct ConditionalClass {
+    /// True iff every named child is preprocessor content — `#include`,
+    /// `#define`, comments, condition/name tokens, and nested
+    /// conditionals that are themselves directive-only. A block
+    /// wrapping real C code (`declaration`, `function_definition`,
+    /// `statement`, `linkage_specification`, …) is not directive-only.
+    directive_only: bool,
+    /// `#include` directives in this block's subtree, summed across
+    /// every branch (top-level + `#else` / `#elif` arms + nested
+    /// conditionals).
+    include_count: usize,
+}
+
+/// Classify a `preproc_if*` / `preproc_else*` block.
+fn classify_conditional(node: Node) -> ConditionalClass {
+    let mut out = ConditionalClass {
+        directive_only: true,
+        include_count: 0,
+    };
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        match child.kind() {
+            "preproc_include" => out.include_count += 1,
+            "preproc_def" | "preproc_function_def" | "comment" => {}
+            "preproc_if" | "preproc_ifdef" | "preproc_else" | "preproc_elif"
+            | "preproc_elifdef" => {
+                let nested = classify_conditional(child);
+                out.include_count += nested.include_count;
+                out.directive_only &= nested.directive_only;
+            }
+            // Condition/name tokens on the `#if` / `#ifdef` itself.
+            "identifier"
+            | "binary_expression"
+            | "parenthesized_expression"
+            | "unary_expression"
+            | "call_expression"
+            | "preproc_defined"
+            | "number_literal"
+            | "char_literal"
+            | "string_literal" => {}
+            // Anything else (declaration, function_definition, …) means
+            // the block wraps real code.
+            _ => out.directive_only = false,
+        }
+    }
+    out
 }
 
 fn collect_decl_names_from_with_global_starts(
@@ -1099,6 +1223,112 @@ mod tests {
             );
             assert_eq!(decls[0].1.kind, DeclKind::FunctionDecl);
         }
+    }
+
+    #[test]
+    fn c_includes_capture_directive_only_conditional_block() {
+        // The canonical "feature-gated include map" — `#if CFG_FOO {
+        // #include "x.h" }` — should be folded into the Includes batch
+        // so a reader sees which optional/platform components are
+        // available. The block range (gate + include + #endif) is
+        // captured verbatim.
+        let src = "\
+#include <stdint.h>
+
+#if CFG_FOO_ENABLED
+  #include \"foo.h\"
+
+  #if CFG_FOO_HID
+    #include \"hid_foo.h\"
+  #endif
+#endif
+
+int bar(int x);
+";
+        let (source, tree) = parse(src);
+        let (fl, conditional_count) = collect_includes(&tree, &source);
+        // Lines 1 (#include stdint), 3-9 (the conditional block,
+        // collapsing blanks). Blank lines (line 2, 5, 9 inside block)
+        // are dropped by build_file_spans, not by the collector.
+        let mut full = fl.full.clone();
+        full.sort();
+        assert_eq!(full, vec![1, 3, 4, 5, 6, 7, 8, 9]);
+        // 2 `#include`s inside the captured conditional map — that's
+        // the signal the hub-header boost rides on.
+        assert_eq!(conditional_count, 2);
+    }
+
+    #[test]
+    fn c_includes_skip_conditional_wrapping_real_code() {
+        // A conditional that wraps real declarations (mongoose-style
+        // amalgamation: `#if MG_ENABLE_HTTP { /* big impl */ }`) must
+        // not be captured by Includes — only the unconditional
+        // `#include` survives. The nested `#include` doesn't count
+        // toward the hub signal either, since the conditional was
+        // skipped: counting it would re-introduce the false positive
+        // the directive-only gate exists to prevent.
+        let src = "\
+#include <stdint.h>
+
+#if MG_ENABLE_HTTP
+#include \"http_priv.h\"
+int http_serve(void) { return 0; }
+#endif
+";
+        let (source, tree) = parse(src);
+        let (fl, conditional_count) = collect_includes(&tree, &source);
+        let mut full = fl.full.clone();
+        full.sort();
+        // Only the unconditional include at line 1 — the conditional
+        // wraps a `function_definition` so it stays opaque.
+        assert_eq!(full, vec![1]);
+        assert_eq!(conditional_count, 0);
+    }
+
+    #[test]
+    fn c_includes_skip_conditional_without_any_include() {
+        // A directive-only conditional that has no `#include` inside
+        // (e.g., `#ifdef __GNUC__ { #define FALLTHROUGH … }`) isn't
+        // part of the include map — leave it to the per-decl Macro
+        // batches.
+        let src = "\
+#include <stdint.h>
+
+#ifdef __GNUC__
+  #define FALLTHROUGH __attribute__((fallthrough))
+#endif
+";
+        let (source, tree) = parse(src);
+        let (fl, conditional_count) = collect_includes(&tree, &source);
+        let mut full = fl.full.clone();
+        full.sort();
+        assert_eq!(full, vec![1]);
+        assert_eq!(conditional_count, 0);
+    }
+
+    #[test]
+    fn c_includes_plain_stdlib_list_reports_no_conditional_includes() {
+        // chibicc.h-style: many unconditional `#include <stdlib.h>`
+        // directives. These shouldn't trigger the hub-header boost;
+        // the hub framing is about feature-gated subsystem maps, not
+        // a stdlib preamble.
+        let src = "\
+#include <assert.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+#include <sys/types.h>
+
+int foo(int x);
+";
+        let (source, tree) = parse(src);
+        let (_fl, conditional_count) = collect_includes(&tree, &source);
+        assert_eq!(conditional_count, 0);
     }
 
     #[test]
