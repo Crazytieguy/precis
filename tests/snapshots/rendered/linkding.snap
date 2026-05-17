@@ -139,10 +139,6 @@ bookmarks/
             ensure_superuser.py
                 5→class Command(BaseCommand):
                 6→    help = "Creates an admin user non-interactively if it doesn't exist"
-                8→    def add_arguments(self, parser):
-                …
-                13→    def handle(self, *args, **options):
-                …
             full_backup.py
                 9→class Command(BaseCommand):
                 10→    help = "Creates a backup of the linkding data folder"
@@ -384,3 +380,4 @@ supervisord-tasks.conf
 uv.lock
 uwsgi.ini
 version.txt
+    1→1.45.0

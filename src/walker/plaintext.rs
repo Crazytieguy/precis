@@ -103,8 +103,11 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     }
     // Extensionless orientation files matched case-insensitively. Kept
     // separate from the `LICENSE` block so we don't accidentally match
-    // `version.h` or similar — `lower` is only used here.
-    if lower == "version" {
+    // `version.h` or similar — `lower` is only used here. `version.txt`
+    // is the de-facto Python-project variant when a project ships its
+    // canonical version stamp as a sibling of `pyproject.toml` rather
+    // than baking it into the `[project].version` scalar (linkding).
+    if lower == "version" || lower == "version.txt" {
         return Some(Class::Version);
     }
     if lower == "todo" {
@@ -205,9 +208,12 @@ mod tests {
             ("pnpm-workspace.yaml", Some(Class::Toolchain)),
             // Extensionless orientation files (case-insensitive on the
             // stem). `VERSION` is a one-line version stamp common in
-            // C-shaped projects; `TODO` is a plain backlog file.
+            // C-shaped projects; `TODO` is a plain backlog file. The
+            // `version.txt` variant is Python convention.
             ("VERSION", Some(Class::Version)),
             ("version", Some(Class::Version)),
+            ("version.txt", Some(Class::Version)),
+            ("VERSION.txt", Some(Class::Version)),
             ("TODO", Some(Class::Todo)),
             // Owned by other walkers.
             ("LICENSE.md", None),
