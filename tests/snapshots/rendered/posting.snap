@@ -111,6 +111,8 @@ pyproject.toml
 src/
     posting/
         __init__.py
+            1→# This import should be the first thing to run, to ensure that
+            2→# the START_TIME is set as early as possible.
             3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
             7→import sys
             10→from .collection import (

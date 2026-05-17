@@ -69,6 +69,7 @@ dev/
     requirements.txt
 py3xui/
     __init__.py
+        1→# pylint: disable=missing-module-docstring
         2→from py3xui.api.api import Api
         3→from py3xui.async_api.async_api import AsyncApi
         4→from py3xui.client.client import Client
@@ -81,6 +82,7 @@ py3xui/
             5→This module contains the DatabaseApi class, which is responsible handling database operations
             6→in the XUI API.
         __init__.py
+            1→# pylint: disable=missing-module-docstring
             2→from py3xui.api.api_client import ClientApi
             3→from py3xui.api.api_database import DatabaseApi
             4→from py3xui.api.api_inbound import InboundApi
@@ -121,6 +123,7 @@ py3xui/
             5→This module contains the InboundApi class which provides methods to interact with the
             6→clients in the XUI API asynchronously.
         __init__.py
+            1→# pylint: disable=missing-module-docstring
             2→from py3xui.async_api.async_api_client import AsyncClientApi
             3→from py3xui.async_api.async_api_database import AsyncDatabaseApi
             4→from py3xui.async_api.async_api_inbound import AsyncInboundApi
@@ -165,6 +168,7 @@ py3xui/
             19→## Client Objects
             …
         __init__.py
+            1→# pylint: disable=missing-module-docstring
             2→from py3xui.client.client import Client
         client.py
             7→class ClientFields:
@@ -178,6 +182,7 @@ py3xui/
             5→This module contains the Settings class, which is used to parse the JSON response
             6→from the XUI API.
         __init__.py
+            1→# pylint: disable=missing-module-docstring
             2→from py3xui.inbound.inbound import Inbound
             3→from py3xui.inbound.settings import Settings
             4→from py3xui.inbound.sniffing import Sniffing
@@ -186,19 +191,14 @@ py3xui/
             9→class JsonStringModel(BaseModel):
             10→    """Base class for models that have a JSON string as a field."""
             12→    @model_validator(mode="before")
-            13→    def model_validate(
-            14→        cls,
-            15→        values,
-            16→    ):  # pylint: disable=no-self-argument, arguments-differ
+            …
         inbound.py
             15→class InboundFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
             38→class Inbound(BaseModel):
             39→    """Represents an inbound connection in the XUI API.
             88→    @field_validator("stream_settings")
-            89→    def validate_stream_settings(  # pylint: disable=no-self-argument
-            90→        cls, value: StreamSettings | str
-            91→    ) -> StreamSettings | str:
+            …
             114→    def to_json(self) -> dict[str, Any]:
             …
         settings.py
@@ -234,11 +234,6 @@ py3xui/
             7→<a id="server.server.ServerFields"></a>
             9→## ServerFields Objects
             …
-            11→```python
-            12→class ServerFields()
-            13→```
-            15→Stores fields returned by XUI API for parsing.
-            17→<a id="server.server.MemoryInfo"></a>
             19→## MemoryInfo Objects
             …
             34→## XRayInfo Objects
@@ -256,6 +251,7 @@ py3xui/
             132→## Server Objects
             …
         __init__.py
+            1→# pylint: disable=missing-module-docstring
             2→from py3xui.server.server import RealityKeyPair, Server
         server.py
     utils/
@@ -265,6 +261,7 @@ py3xui/
             5→This module contains utility functions for parsing environment variables.
             7→<a id="utils.env.parse_env"></a>
         __init__.py
+            1→# pylint: disable=consider-using-from-import, missing-module-docstring
             2→from py3xui.utils import env
             4→COOKIE_NAMES = ["3x-ui", "session"]
         env.py

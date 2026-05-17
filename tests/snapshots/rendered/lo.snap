@@ -53,6 +53,55 @@ errors.go
 errors_test.go
 exp/
     simd/
+        BENCHMARK.md
+            1→# Benchmark
+            …
+            3→## Summary
+            …
+            23→## Run
+            …
+            36→## Result
+            …
+        README.md
+            1→# SIMD experiment (Go 1.26+)
+            3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
+            5→See [benchmarks](./BENCHMARK.md).
+            7→## CPU compatibility (avoiding SIGILL)
+            …
+            9→If you see **SIGILL: illegal instruction** when running tests, the CPU or VM does not support the SIMD instructions used by that code.
+            11→### Check support on Linux
+            …
+            21→**Rough mapping:**
+            29→### What the tests do
+            …
+            37→### Run only AVX tests
+            …
+        cpu_amd64.go
+        cpu_amd64_test.go
+        go.mod
+            1→module github.com/samber/lo/exp/simd
+            3→go 1.26.0
+            5→require github.com/samber/lo v0.0.0
+            7→require golang.org/x/text v0.22.0 // indirect
+            9→replace github.com/samber/lo => ../../
+        go.sum
+        intersect_avx512.go
+        intersect_avx512_test.go
+        intersect_bench_test.go
+        math.go
+        math_avx.go
+        math_avx2.go
+        math_avx2_test.go
+        math_avx512.go
+        math_avx512_test.go
+        math_avx_test.go
+        math_bench_test.go
+        simd.go
+            1→package simd
+        simd_test.go
+        unsafe.go
+            3→package simd
+            5→import "unsafe"
 find.go
     1→package lo
     3→import (
@@ -86,13 +135,7 @@ find.go
     70→// Find searches for an element in a slice based on a predicate. Returns element and true if element was found.
     71→// Play: https://go.dev/play/p/Eo7W0lvKTky
     72→func Find[T any](collection []T, predicate func(item T) bool) (T, bool) {
-    73→	for i := range collection {
-    74→		if predicate(collection[i]) {
-    75→			return collection[i], true
-    76→		}
-    77→	}
-    79→	var result T
-    80→	return result, false
+    …
     83→// FindErr searches for an element in a slice based on a predicate that can return an error.
     84→// Returns the element and nil error if the element is found.
     85→// Returns zero value and nil error if the element is not found.
@@ -180,11 +223,6 @@ intersect.go
 intersect_test.go
 it/
     channel.go
-        3→package it
-        5→import (
-        6→	"iter"
-        8→	"github.com/samber/lo"
-        9→)
         11→// SeqToChannel returns a read-only channel of collection elements.
         12→// Play: https://go.dev/play/p/id3jqJPffT6
         13→func SeqToChannel[T any](bufferSize int, collection iter.Seq[T]) <-chan T {
@@ -202,11 +240,6 @@ it/
     find_example_test.go
     find_test.go
     intersect.go
-        3→package it
-        5→import (
-        6→	"iter"
-        8→	"github.com/samber/lo"
-        9→)
     intersect_example_test.go
     intersect_test.go
     lo_test.go
@@ -232,19 +265,9 @@ it/
     string_example_test.go
     string_test.go
     tuples.go
-        3→package it
-        5→import (
-        6→	"iter"
-        8→	"github.com/samber/lo"
-        9→)
     tuples_example_test.go
     tuples_test.go
     type_manipulation.go
-        3→package it
-        5→import (
-        6→	"iter"
-        8→	"github.com/samber/lo"
-        9→)
     type_manipulation_test.go
 lo_example_test.go
 lo_test.go
@@ -268,16 +291,6 @@ parallel/
     slice.go
         1→package parallel
         3→import "sync"
-        8→func Map[T, R any](collection []T, transform func(item T, index int) R) []R {
-        …
-        32→func ForEach[T any](collection []T, callback func(item T, index int)) {
-        …
-        50→func Times[T any](count int, iteratee func(index int) T) []T {
-        …
-        75→func GroupBy[T any, U comparable, Slice ~[]T](collection Slice, iteratee func(item T) U) map[U]Slice {
-        …
-        95→func PartitionBy[T any, K comparable, Slice ~[]T](collection Slice, iteratee func(item T) K) []Slice {
-        …
     slice_test.go
 retry.go
     1→package lo

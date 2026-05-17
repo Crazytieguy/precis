@@ -39,53 +39,53 @@ Score(3000)=0.471 I=0.698 C=0.317 ns_rows≤3K=17/39 (reached=5 partial=2 missin
 | walker |  | 579 | 11 | export member at src/screen.js:18 member 132 |  |  | 0.511 |
 | walker |  | 590 | 11 | export member at src/screen.js:18 member 138 |  |  | 0.511 |
 | walker |  | 601 | 11 | export member at src/screen.js:18 member 152 |  |  | 0.511 |
-| walker |  | 613 | 12 | export member at src/dockerUtil.js:5 member 33 |  |  | 0.511 |
-| walker |  | 625 | 12 | export member at src/screen.js:18 member 114 |  |  | 0.511 |
-| walker |  | 637 | 12 | export member at src/screen.js:18 member 120 |  |  | 0.511 |
-| walker |  | 649 | 12 | export member at src/screen.js:18 member 126 |  |  | 0.511 |
-| walker |  | 662 | 13 | export member at src/dockerUtil.js:5 member 43 |  |  | 0.511 |
-| walker |  | 675 | 13 | export member at src/dockerUtil.js:5 member 55 |  |  | 0.511 |
-| walker |  | 688 | 13 | export member at src/dockerUtil.js:5 member 65 |  |  | 0.429 |
-| ns | 688 |  | 185 | index.js: top-level flow | 2.2 |  | 0.429 |
-| walker |  | 701 | 13 | export member at src/dockerUtil.js:5 member 78 |  |  | 0.430 |
-| walker |  | 714 | 13 | export member at src/dockerUtil.js:5 member 124 |  |  | 0.430 |
-| walker |  | 727 | 13 | export member at src/screen.js:18 member 19 |  |  | 0.430 |
-| walker |  | 741 | 14 | export member at src/dockerUtil.js:5 member 88 |  |  | 0.430 |
-| walker |  | 755 | 14 | export member at src/dockerUtil.js:5 member 100 |  |  | 0.431 |
-| walker |  | 769 | 14 | export member at src/dockerUtil.js:5 member 112 |  |  | 0.431 |
-| walker |  | 776 | 7 | export body at src/screen.js:18 body 193 |  |  | 0.431 |
-| walker |  | 792 | 16 | export member at src/dockerUtil.js:5 member 155 |  |  | 0.432 |
-| walker |  | 808 | 16 | export member at src/dockerUtil.js:5 member 160 |  |  | 0.432 |
-| walker |  | 824 | 16 | export member at src/dockerUtil.js:5 member 165 |  |  | 0.433 |
-| walker |  | 840 | 16 | export member at src/dockerUtil.js:5 member 170 |  |  | 0.433 |
-| walker |  | 856 | 16 | export member at src/dockerUtil.js:5 member 175 |  |  | 0.434 |
+| walker |  | 632 | 31 | listing of 'src/widgetsTemplates' |  |  | 0.513 |
+| walker |  | 644 | 12 | export member at src/dockerUtil.js:5 member 33 |  |  | 0.513 |
+| walker |  | 656 | 12 | export member at src/screen.js:18 member 114 |  |  | 0.513 |
+| walker |  | 668 | 12 | export member at src/screen.js:18 member 120 |  |  | 0.513 |
+| walker |  | 680 | 12 | export member at src/screen.js:18 member 126 |  |  | 0.513 |
+| ns | 688 |  | 185 | index.js: top-level flow | 2.2 |  | 0.430 |
+| walker |  | 693 | 13 | export member at src/dockerUtil.js:5 member 43 |  |  | 0.431 |
+| walker |  | 706 | 13 | export member at src/dockerUtil.js:5 member 55 |  |  | 0.431 |
+| walker |  | 719 | 13 | export member at src/dockerUtil.js:5 member 65 |  |  | 0.431 |
+| walker |  | 732 | 13 | export member at src/dockerUtil.js:5 member 78 |  |  | 0.431 |
+| walker |  | 745 | 13 | export member at src/dockerUtil.js:5 member 124 |  |  | 0.431 |
+| walker |  | 758 | 13 | export member at src/screen.js:18 member 19 |  |  | 0.431 |
+| walker |  | 772 | 14 | export member at src/dockerUtil.js:5 member 88 |  |  | 0.432 |
+| walker |  | 786 | 14 | export member at src/dockerUtil.js:5 member 100 |  |  | 0.432 |
+| walker |  | 800 | 14 | export member at src/dockerUtil.js:5 member 112 |  |  | 0.433 |
+| walker |  | 807 | 7 | export body at src/screen.js:18 body 193 |  |  | 0.433 |
+| walker |  | 823 | 16 | export member at src/dockerUtil.js:5 member 155 |  |  | 0.433 |
+| walker |  | 839 | 16 | export member at src/dockerUtil.js:5 member 160 |  |  | 0.434 |
+| walker |  | 855 | 16 | export member at src/dockerUtil.js:5 member 165 |  |  | 0.434 |
 | ns | 862 |  | 174 | assetsLoader: the glob convention (config + glob calls) | 2.3 |  | 0.389 |
-| walker |  | 872 | 16 | export member at src/dockerUtil.js:5 member 180 |  |  | 0.389 |
-| walker |  | 888 | 16 | export member at src/dockerUtil.js:5 member 187 |  |  | 0.390 |
-| walker |  | 905 | 17 | export member at src/dockerUtil.js:5 member 194 |  |  | 0.391 |
-| walker |  | 922 | 17 | export member at src/dockerUtil.js:5 member 208 |  |  | 0.391 |
-| walker |  | 939 | 17 | export member at src/dockerUtil.js:5 member 220 |  |  | 0.392 |
-| walker |  | 969 | 30 | export body at src/screen.js:18 body 127 |  |  | 0.392 |
-| walker |  | 999 | 30 | export body at src/screen.js:18 body 133 |  |  | 0.392 |
-| walker |  | 1036 | 37 | listing of 'widgets' |  |  | 0.392 |
-| walker |  | 1070 | 34 | export body at src/screen.js:18 body 121 |  |  | 0.392 |
-| ns | 1138 |  | 276 | Grid config: containers mode layout | 2.4 |  | 0.360 |
-| walker |  | 1170 | 100 | headings outline in README.md |  |  | 0.360 |
-| walker |  | 1194 | 24 | README.md section #0 |  |  | 0.360 |
-| walker |  | 1227 | 33 | export at lib/modes.js:3 |  |  | 0.478 |
-| walker |  | 1262 | 35 | export body at src/screen.js:18 body 115 |  |  | 0.478 |
-| walker |  | 1286 | 24 | export body at src/dockerUtil.js:5 body 166 |  |  | 0.478 |
-| walker |  | 1310 | 24 | export body at src/dockerUtil.js:5 body 171 |  |  | 0.478 |
-| walker |  | 1334 | 24 | export body at src/dockerUtil.js:5 body 176 |  |  | 0.478 |
-| walker |  | 1359 | 25 | export body at src/dockerUtil.js:5 body 156 |  |  | 0.478 |
-| walker |  | 1384 | 25 | export body at src/dockerUtil.js:5 body 161 |  |  | 0.478 |
-| walker |  | 1424 | 40 | export body at src/dockerUtil.js:5 body 181 |  |  | 0.478 |
-| walker |  | 1464 | 40 | export body at src/dockerUtil.js:5 body 188 |  |  | 0.478 |
-| walker |  | 1472 | 8 | imports in lib/modes.js |  |  | 0.478 |
-| walker |  | 1521 | 49 | export body at src/screen.js:18 body 108 |  |  | 0.478 |
-| ns | 1535 |  | 397 | Grid config: services + images layouts | 2.5 | 2.4 | 0.427 |
-| walker |  | 1573 | 52 | export body at src/screen.js:18 body 80 |  |  | 0.427 |
-| walker |  | 1604 | 31 | listing of 'src/widgetsTemplates' |  |  | 0.428 |
+| walker |  | 871 | 16 | export member at src/dockerUtil.js:5 member 170 |  |  | 0.390 |
+| walker |  | 887 | 16 | export member at src/dockerUtil.js:5 member 175 |  |  | 0.390 |
+| walker |  | 903 | 16 | export member at src/dockerUtil.js:5 member 180 |  |  | 0.391 |
+| walker |  | 919 | 16 | export member at src/dockerUtil.js:5 member 187 |  |  | 0.391 |
+| walker |  | 936 | 17 | export member at src/dockerUtil.js:5 member 194 |  |  | 0.392 |
+| walker |  | 953 | 17 | export member at src/dockerUtil.js:5 member 208 |  |  | 0.393 |
+| walker |  | 970 | 17 | export member at src/dockerUtil.js:5 member 220 |  |  | 0.393 |
+| walker |  | 1000 | 30 | export body at src/screen.js:18 body 127 |  |  | 0.393 |
+| walker |  | 1030 | 30 | export body at src/screen.js:18 body 133 |  |  | 0.393 |
+| walker |  | 1067 | 37 | listing of 'widgets' |  |  | 0.394 |
+| walker |  | 1101 | 34 | export body at src/screen.js:18 body 121 |  |  | 0.394 |
+| ns | 1138 |  | 276 | Grid config: containers mode layout | 2.4 |  | 0.361 |
+| walker |  | 1201 | 100 | headings outline in README.md |  |  | 0.361 |
+| walker |  | 1225 | 24 | README.md section #0 |  |  | 0.361 |
+| walker |  | 1258 | 33 | export at lib/modes.js:3 |  |  | 0.479 |
+| walker |  | 1293 | 35 | export body at src/screen.js:18 body 115 |  |  | 0.479 |
+| walker |  | 1317 | 24 | export body at src/dockerUtil.js:5 body 166 |  |  | 0.479 |
+| walker |  | 1341 | 24 | export body at src/dockerUtil.js:5 body 171 |  |  | 0.479 |
+| walker |  | 1365 | 24 | export body at src/dockerUtil.js:5 body 176 |  |  | 0.479 |
+| walker |  | 1390 | 25 | export body at src/dockerUtil.js:5 body 156 |  |  | 0.479 |
+| walker |  | 1415 | 25 | export body at src/dockerUtil.js:5 body 161 |  |  | 0.479 |
+| walker |  | 1455 | 40 | export body at src/dockerUtil.js:5 body 181 |  |  | 0.479 |
+| walker |  | 1495 | 40 | export body at src/dockerUtil.js:5 body 188 |  |  | 0.479 |
+| walker |  | 1503 | 8 | imports in lib/modes.js |  |  | 0.479 |
+| ns | 1535 |  | 397 | Grid config: services + images layouts | 2.5 | 2.4 | 0.428 |
+| walker |  | 1552 | 49 | export body at src/screen.js:18 body 108 |  |  | 0.428 |
+| walker |  | 1604 | 52 | export body at src/screen.js:18 body 80 |  |  | 0.428 |
 | walker |  | 1635 | 31 | listing of 'widgets/services' |  |  | 0.428 |
 | ns | 1687 |  | 152 | Screen: constructor (state shape) | 2.6 |  | 0.401 |
 | walker |  | 1691 | 56 | export body at src/dockerUtil.js:5 body 56 |  |  | 0.401 |

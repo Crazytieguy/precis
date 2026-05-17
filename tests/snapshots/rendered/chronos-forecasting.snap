@@ -74,6 +74,8 @@ src/
         __about__.py
             1→__version__ = "2.2.2"
         __init__.py
+            1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+            2→# SPDX-License-Identifier: Apache-2.0
             4→from .__about__ import __version__
             5→from .base import BaseChronosPipeline, ForecastType
             6→from .chronos import (
@@ -160,6 +162,9 @@ src/
         chronos.py
         chronos2/
             __init__.py
+                1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+                2→# SPDX-License-Identifier: Apache-2.0
+                4→# Authors: Abdul Fatir Ansari <ansarnd@amazon.com>
                 6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
                 7→from .model import Chronos2Model
                 8→from .pipeline import Chronos2Pipeline
@@ -212,15 +217,7 @@ src/
                 …
         chronos_bolt.py
         df_utils.py
-            7→import warnings
-            8→from typing import TYPE_CHECKING
-            10→import numpy as np
-            12→if TYPE_CHECKING:
-            13→    import pandas as pd
         utils.py
-            5→from typing import List
-            7→import torch
-            8→from einops import repeat
 test/
     __init__.py
     dummy-chronos-bolt-model/

@@ -576,7 +576,18 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
                 }
                 first_real_statement_seen = true;
             }
-            "comment" => {}
+            "comment" => {
+                // Leading-comment block before any real statement: shebang
+                // (`#!/usr/bin/env python`), file-level directive (`# ruff:
+                // noqa`, `# type: ignore`), or a brief "what this module
+                // is" header. Same shape as the module docstring slot —
+                // module-prelude context that orients the file alongside
+                // imports / `__all__`. Trailing comments between imports
+                // stay out.
+                if !first_real_statement_seen {
+                    extend_span(&mut lines, child, source);
+                }
+            }
             _ => {
                 first_real_statement_seen = true;
             }

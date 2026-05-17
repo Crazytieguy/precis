@@ -1,7 +1,7 @@
 fixture = "chronos-forecasting"
 budget = 10000
-cumulative_tokens = 9672
-batch_count = 196
+cumulative_tokens = 9823
+batch_count = 193
 
 [[batches]]
 position = 1
@@ -67,11 +67,19 @@ entries = ["__about__.py", "__init__.py", "base.py", "boto_utils.py", "chronos.p
 position = 5
 key = 'Python(Imports { file: "src/chronos/__init__.py" })'
 descriptor = "python imports in src/chronos/__init__.py"
-cost_tokens = 289
-cum_tokens = 407
+cost_tokens = 323
+cum_tokens = 441
 
 [batches.content]
 kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
 path = "src/chronos/__init__.py"
@@ -94,7 +102,7 @@ position = 6
 key = 'Fs(DirListing { dir: "src/chronos/chronos2" })'
 descriptor = "listing of 'src/chronos/chronos2'"
 cost_tokens = 30
-cum_tokens = 437
+cum_tokens = 471
 
 [batches.content]
 kind = "fs"
@@ -108,7 +116,7 @@ position = 7
 key = 'Fs(DirListing { dir: "notebooks" })'
 descriptor = "listing of 'notebooks'"
 cost_tokens = 27
-cum_tokens = 464
+cum_tokens = 498
 
 [batches.content]
 kind = "fs"
@@ -119,36 +127,10 @@ entries = ["chronos-2-quickstart.ipynb", "deploy-chronos-to-amazon-sagemaker.ipy
 
 [[batches]]
 position = 8
-key = 'Python(Imports { file: "src/chronos/chronos2/__init__.py" })'
-descriptor = "python imports in src/chronos/chronos2/__init__.py"
-cost_tokens = 101
-cum_tokens = 565
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/__init__.py"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/__init__.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 99
-cum_tokens = 664
+cum_tokens = 597
 
 [batches.content]
 kind = "lines"
@@ -298,11 +280,11 @@ end = 158
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 9
 key = 'Markdown(Section { file: "README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 17
-cum_tokens = 681
+cum_tokens = 614
 
 [batches.content]
 kind = "lines"
@@ -324,11 +306,53 @@ end = 159
 kind = "full"
 
 [[batches]]
+position = 10
+key = 'Python(Imports { file: "src/chronos/chronos2/__init__.py" })'
+descriptor = "python imports in src/chronos/chronos2/__init__.py"
+cost_tokens = 155
+cum_tokens = 769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/chronos2/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/chronos2/__init__.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/chronos2/__init__.py"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/chronos2/__init__.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 11
 key = 'Markdown(Section { file: "README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 27
-cum_tokens = 708
+cum_tokens = 796
 
 [batches.content]
 kind = "lines"
@@ -354,7 +378,7 @@ position = 12
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 106
-cum_tokens = 814
+cum_tokens = 902
 
 [batches.content]
 kind = "lines"
@@ -372,7 +396,7 @@ position = 13
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 62
-cum_tokens = 876
+cum_tokens = 964
 
 [batches.content]
 kind = "lines"
@@ -406,7 +430,7 @@ position = 14
 key = 'Python(DeclNames { file: "src/chronos/base.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/base.py"
 cost_tokens = 40
-cum_tokens = 916
+cum_tokens = 1004
 
 [batches.content]
 kind = "lines"
@@ -464,7 +488,7 @@ position = 15
 key = 'Python(Decl { file: "src/chronos/base.py", start_line: 27 })'
 descriptor = "python decl at src/chronos/base.py:27"
 cost_tokens = 0
-cum_tokens = 916
+cum_tokens = 1004
 
 [batches.content]
 kind = "lines"
@@ -482,7 +506,7 @@ position = 16
 key = 'Python(Decl { file: "src/chronos/base.py", start_line: 32 })'
 descriptor = "python decl at src/chronos/base.py:32"
 cost_tokens = 0
-cum_tokens = 916
+cum_tokens = 1004
 
 [batches.content]
 kind = "lines"
@@ -500,7 +524,7 @@ position = 17
 key = 'Python(Decl { file: "src/chronos/base.py", start_line: 44 })'
 descriptor = "python decl at src/chronos/base.py:44"
 cost_tokens = 0
-cum_tokens = 916
+cum_tokens = 1004
 
 [batches.content]
 kind = "lines"
@@ -518,7 +542,7 @@ position = 18
 key = 'Python(ClassBody { file: "src/chronos/base.py", start_line: 32 })'
 descriptor = "python class body at src/chronos/base.py:32"
 cost_tokens = 15
-cum_tokens = 931
+cum_tokens = 1019
 
 [batches.content]
 kind = "lines"
@@ -536,7 +560,7 @@ position = 19
 key = 'Python(ClassBody { file: "src/chronos/base.py", start_line: 27 })'
 descriptor = "python class body at src/chronos/base.py:27"
 cost_tokens = 22
-cum_tokens = 953
+cum_tokens = 1041
 
 [batches.content]
 kind = "lines"
@@ -554,7 +578,7 @@ position = 20
 key = 'Python(ClassBody { file: "src/chronos/base.py", start_line: 44 })'
 descriptor = "python class body at src/chronos/base.py:44"
 cost_tokens = 35
-cum_tokens = 988
+cum_tokens = 1076
 
 [batches.content]
 kind = "lines"
@@ -572,7 +596,7 @@ position = 21
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 16
-cum_tokens = 1004
+cum_tokens = 1092
 
 [batches.content]
 kind = "fs"
@@ -586,7 +610,7 @@ position = 22
 key = 'Python(MethodSigs { file: "src/chronos/base.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/chronos/base.py"
 cost_tokens = 166
-cum_tokens = 1170
+cum_tokens = 1258
 
 [batches.content]
 kind = "lines"
@@ -756,7 +780,7 @@ position = 23
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 35 })'
 descriptor = "python method at src/chronos/base.py:35"
 cost_tokens = 0
-cum_tokens = 1170
+cum_tokens = 1258
 
 [batches.content]
 kind = "lines"
@@ -774,7 +798,7 @@ position = 24
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 48 })'
 descriptor = "python method at src/chronos/base.py:48"
 cost_tokens = 0
-cum_tokens = 1170
+cum_tokens = 1258
 
 [batches.content]
 kind = "lines"
@@ -792,7 +816,7 @@ position = 25
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 66 })'
 descriptor = "python method at src/chronos/base.py:66"
 cost_tokens = 0
-cum_tokens = 1170
+cum_tokens = 1258
 
 [batches.content]
 kind = "lines"
@@ -810,7 +834,7 @@ position = 26
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 76 })'
 descriptor = "python method at src/chronos/base.py:76"
 cost_tokens = 0
-cum_tokens = 1170
+cum_tokens = 1258
 
 [batches.content]
 kind = "lines"
@@ -828,7 +852,7 @@ position = 27
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 58 })'
 descriptor = "python method at src/chronos/base.py:58"
 cost_tokens = 12
-cum_tokens = 1182
+cum_tokens = 1270
 
 [batches.content]
 kind = "lines"
@@ -846,7 +870,7 @@ position = 28
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 62 })'
 descriptor = "python method at src/chronos/base.py:62"
 cost_tokens = 12
-cum_tokens = 1194
+cum_tokens = 1282
 
 [batches.content]
 kind = "lines"
@@ -864,7 +888,7 @@ position = 29
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 252 })'
 descriptor = "python method at src/chronos/base.py:252"
 cost_tokens = 39
-cum_tokens = 1233
+cum_tokens = 1321
 
 [batches.content]
 kind = "lines"
@@ -882,7 +906,7 @@ position = 30
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 336 })'
 descriptor = "python method at src/chronos/base.py:336"
 cost_tokens = 65
-cum_tokens = 1298
+cum_tokens = 1386
 
 [batches.content]
 kind = "lines"
@@ -900,7 +924,7 @@ position = 31
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 58, body_start_line: 60 })'
 descriptor = "python method body at src/chronos/base.py:58 body 60"
 cost_tokens = 10
-cum_tokens = 1308
+cum_tokens = 1396
 
 [batches.content]
 kind = "lines"
@@ -918,7 +942,7 @@ position = 32
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 62, body_start_line: 64 })'
 descriptor = "python method body at src/chronos/base.py:62 body 64"
 cost_tokens = 10
-cum_tokens = 1318
+cum_tokens = 1406
 
 [batches.content]
 kind = "lines"
@@ -936,7 +960,7 @@ position = 33
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 76, body_start_line: 98 })'
 descriptor = "python method body at src/chronos/base.py:76 body 98"
 cost_tokens = 10
-cum_tokens = 1328
+cum_tokens = 1416
 
 [batches.content]
 kind = "lines"
@@ -954,7 +978,7 @@ position = 34
 key = 'Python(MethodDoc { file: "src/chronos/base.py", start_line: 35 })'
 descriptor = "python method doc at src/chronos/base.py:35"
 cost_tokens = 16
-cum_tokens = 1344
+cum_tokens = 1432
 
 [batches.content]
 kind = "lines"
@@ -972,7 +996,7 @@ position = 35
 key = 'Python(Imports { file: "src/chronos/__about__.py" })'
 descriptor = "python imports in src/chronos/__about__.py"
 cost_tokens = 15
-cum_tokens = 1359
+cum_tokens = 1447
 
 [batches.content]
 kind = "lines"
@@ -990,7 +1014,7 @@ position = 36
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 465
-cum_tokens = 1824
+cum_tokens = 1912
 
 [batches.content]
 kind = "lines"
@@ -1016,7 +1040,7 @@ position = 37
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 78
-cum_tokens = 1902
+cum_tokens = 1990
 
 [batches.content]
 kind = "fs"
@@ -1030,7 +1054,7 @@ position = 38
 key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 39
-cum_tokens = 1941
+cum_tokens = 2029
 
 [batches.content]
 kind = "lines"
@@ -1048,7 +1072,7 @@ position = 39
 key = 'Python(DeclNames { file: "src/chronos/chronos2/config.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/chronos2/config.py"
 cost_tokens = 27
-cum_tokens = 1968
+cum_tokens = 2056
 
 [batches.content]
 kind = "lines"
@@ -1090,7 +1114,7 @@ position = 40
 key = 'Python(Decl { file: "src/chronos/chronos2/config.py", start_line: 102 })'
 descriptor = "python decl at src/chronos/chronos2/config.py:102"
 cost_tokens = 10
-cum_tokens = 1978
+cum_tokens = 2066
 
 [batches.content]
 kind = "lines"
@@ -1108,7 +1132,7 @@ position = 41
 key = 'Python(Decl { file: "src/chronos/chronos2/config.py", start_line: 12 })'
 descriptor = "python decl at src/chronos/chronos2/config.py:12"
 cost_tokens = 25
-cum_tokens = 2003
+cum_tokens = 2091
 
 [batches.content]
 kind = "lines"
@@ -1134,7 +1158,7 @@ position = 42
 key = 'Python(MethodSigs { file: "src/chronos/chronos2/config.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/chronos/chronos2/config.py"
 cost_tokens = 21
-cum_tokens = 2024
+cum_tokens = 2112
 
 [batches.content]
 kind = "lines"
@@ -1176,7 +1200,7 @@ position = 43
 key = 'Python(Method { file: "src/chronos/chronos2/config.py", start_line: 114 })'
 descriptor = "python method at src/chronos/chronos2/config.py:114"
 cost_tokens = 12
-cum_tokens = 2036
+cum_tokens = 2124
 
 [batches.content]
 kind = "lines"
@@ -1194,7 +1218,7 @@ position = 44
 key = 'Python(DeclNames { file: "src/chronos/chronos2/pipeline.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/chronos2/pipeline.py"
 cost_tokens = 28
-cum_tokens = 2064
+cum_tokens = 2152
 
 [batches.content]
 kind = "lines"
@@ -1228,7 +1252,7 @@ position = 45
 key = 'Python(Decl { file: "src/chronos/chronos2/pipeline.py", start_line: 39 })'
 descriptor = "python decl at src/chronos/chronos2/pipeline.py:39"
 cost_tokens = 0
-cum_tokens = 2064
+cum_tokens = 2152
 
 [batches.content]
 kind = "lines"
@@ -1246,7 +1270,7 @@ position = 46
 key = 'Python(ClassBody { file: "src/chronos/chronos2/pipeline.py", start_line: 39 })'
 descriptor = "python class body at src/chronos/chronos2/pipeline.py:39"
 cost_tokens = 31
-cum_tokens = 2095
+cum_tokens = 2183
 
 [batches.content]
 kind = "lines"
@@ -1264,7 +1288,7 @@ position = 47
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 100 })'
 descriptor = "python method at src/chronos/base.py:100"
 cost_tokens = 118
-cum_tokens = 2213
+cum_tokens = 2301
 
 [batches.content]
 kind = "lines"
@@ -1282,7 +1306,7 @@ position = 48
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 100, body_start_line: 133 })'
 descriptor = "python method body at src/chronos/base.py:100 body 133"
 cost_tokens = 10
-cum_tokens = 2223
+cum_tokens = 2311
 
 [batches.content]
 kind = "lines"
@@ -1300,7 +1324,7 @@ position = 49
 key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 33
-cum_tokens = 2256
+cum_tokens = 2344
 
 [batches.content]
 kind = "lines"
@@ -1315,36 +1339,10 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'Python(Imports { file: "src/chronos/utils.py" })'
-descriptor = "python imports in src/chronos/utils.py"
-cost_tokens = 26
-cum_tokens = 2282
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/utils.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/utils.py"
-start = 7
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
 key = 'Fs(DirListing { dir: "ci" })'
 descriptor = "listing of 'ci'"
 cost_tokens = 3
-cum_tokens = 2285
+cum_tokens = 2347
 
 [batches.content]
 kind = "fs"
@@ -1354,11 +1352,11 @@ parent = "ci"
 entries = ["evaluate"]
 
 [[batches]]
-position = 52
+position = 51
 key = 'Markdown(ReadmeHeadline { file: "scripts/README.md" })'
 descriptor = "README headline in scripts/README.md"
 cost_tokens = 8
-cum_tokens = 2293
+cum_tokens = 2355
 
 [batches.content]
 kind = "lines"
@@ -1372,11 +1370,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 53
+position = 52
 key = 'Python(MethodBody { file: "src/chronos/chronos2/config.py", start_line: 114, body_start_line: 119 })'
 descriptor = "python method body at src/chronos/chronos2/config.py:114 body 119"
 cost_tokens = 16
-cum_tokens = 2309
+cum_tokens = 2371
 
 [batches.content]
 kind = "lines"
@@ -1390,11 +1388,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 54
+position = 53
 key = 'Python(DeclNames { file: "src/chronos/chronos2/trainer.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/chronos2/trainer.py"
 cost_tokens = 45
-cum_tokens = 2354
+cum_tokens = 2416
 
 [batches.content]
 kind = "lines"
@@ -1448,11 +1446,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 54
 key = 'Python(Decl { file: "src/chronos/chronos2/trainer.py", start_line: 17 })'
 descriptor = "python decl at src/chronos/chronos2/trainer.py:17"
 cost_tokens = 0
-cum_tokens = 2354
+cum_tokens = 2416
 
 [batches.content]
 kind = "lines"
@@ -1466,11 +1464,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 56
+position = 55
 key = 'Python(Decl { file: "src/chronos/chronos2/trainer.py", start_line: 30 })'
 descriptor = "python decl at src/chronos/chronos2/trainer.py:30"
 cost_tokens = 0
-cum_tokens = 2354
+cum_tokens = 2416
 
 [batches.content]
 kind = "lines"
@@ -1484,11 +1482,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 57
+position = 56
 key = 'Python(Decl { file: "src/chronos/chronos2/trainer.py", start_line: 40 })'
 descriptor = "python decl at src/chronos/chronos2/trainer.py:40"
 cost_tokens = 0
-cum_tokens = 2354
+cum_tokens = 2416
 
 [batches.content]
 kind = "lines"
@@ -1502,11 +1500,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 58
+position = 57
 key = 'Python(DeclDoc { file: "src/chronos/chronos2/trainer.py", start_line: 30 })'
 descriptor = "python decl doc at src/chronos/chronos2/trainer.py:30"
 cost_tokens = 16
-cum_tokens = 2370
+cum_tokens = 2432
 
 [batches.content]
 kind = "lines"
@@ -1520,11 +1518,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 59
+position = 58
 key = 'Python(MethodSigs { file: "src/chronos/chronos2/trainer.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/chronos/chronos2/trainer.py"
 cost_tokens = 69
-cum_tokens = 2439
+cum_tokens = 2501
 
 [batches.content]
 kind = "lines"
@@ -1578,11 +1576,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 59
 key = 'Python(Method { file: "src/chronos/chronos2/trainer.py", start_line: 33 })'
 descriptor = "python method at src/chronos/chronos2/trainer.py:33"
 cost_tokens = 0
-cum_tokens = 2439
+cum_tokens = 2501
 
 [batches.content]
 kind = "lines"
@@ -1596,11 +1594,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 61
+position = 60
 key = 'Python(Method { file: "src/chronos/chronos2/trainer.py", start_line: 46 })'
 descriptor = "python method at src/chronos/chronos2/trainer.py:46"
 cost_tokens = 0
-cum_tokens = 2439
+cum_tokens = 2501
 
 [batches.content]
 kind = "lines"
@@ -1614,11 +1612,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 62
+position = 61
 key = 'Python(Method { file: "src/chronos/chronos2/trainer.py", start_line: 77 })'
 descriptor = "python method at src/chronos/chronos2/trainer.py:77"
 cost_tokens = 0
-cum_tokens = 2439
+cum_tokens = 2501
 
 [batches.content]
 kind = "lines"
@@ -1632,11 +1630,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 63
+position = 62
 key = 'Python(DeclDoc { file: "src/chronos/chronos2/trainer.py", start_line: 40 })'
 descriptor = "python decl doc at src/chronos/chronos2/trainer.py:40"
 cost_tokens = 56
-cum_tokens = 2495
+cum_tokens = 2557
 
 [batches.content]
 kind = "lines"
@@ -1650,11 +1648,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 64
+position = 63
 key = 'Python(MethodDoc { file: "src/chronos/chronos2/config.py", start_line: 114 })'
 descriptor = "python method doc at src/chronos/chronos2/config.py:114"
 cost_tokens = 28
-cum_tokens = 2523
+cum_tokens = 2585
 
 [batches.content]
 kind = "lines"
@@ -1668,11 +1666,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 65
+position = 64
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 135 })'
 descriptor = "python method at src/chronos/base.py:135"
 cost_tokens = 181
-cum_tokens = 2704
+cum_tokens = 2766
 
 [batches.content]
 kind = "lines"
@@ -1686,11 +1684,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 66
+position = 65
 key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 67
-cum_tokens = 2771
+cum_tokens = 2833
 
 [batches.content]
 kind = "lines"
@@ -1704,11 +1702,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 67
+position = 66
 key = 'Python(ClassBody { file: "src/chronos/chronos2/config.py", start_line: 12 })'
 descriptor = "python class body at src/chronos/chronos2/config.py:12"
 cost_tokens = 82
-cum_tokens = 2853
+cum_tokens = 2915
 
 [batches.content]
 kind = "lines"
@@ -1722,11 +1720,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 68
+position = 67
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 75
-cum_tokens = 2928
+cum_tokens = 2990
 
 [batches.content]
 kind = "lines"
@@ -1740,45 +1738,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Python(Imports { file: "src/chronos/df_utils.py" })'
-descriptor = "python imports in src/chronos/df_utils.py"
-cost_tokens = 46
-cum_tokens = 2974
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/df_utils.py"
-start = 7
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/df_utils.py"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/df_utils.py"
-start = 12
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
+position = 68
 key = 'Python(MethodDoc { file: "src/chronos/base.py", start_line: 48 })'
 descriptor = "python method doc at src/chronos/base.py:48"
 cost_tokens = 59
-cum_tokens = 3033
+cum_tokens = 3049
 
 [batches.content]
 kind = "lines"
@@ -1792,11 +1756,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 71
+position = 69
 key = 'Python(MethodDoc { file: "src/chronos/base.py", start_line: 336 })'
 descriptor = "python method doc at src/chronos/base.py:336"
 cost_tokens = 64
-cum_tokens = 3097
+cum_tokens = 3113
 
 [batches.content]
 kind = "lines"
@@ -1810,11 +1774,11 @@ end = 347
 kind = "full"
 
 [[batches]]
-position = 72
+position = 70
 key = 'Python(ClassBody { file: "src/chronos/chronos2/config.py", start_line: 102 })'
 descriptor = "python class body at src/chronos/chronos2/config.py:102"
 cost_tokens = 112
-cum_tokens = 3209
+cum_tokens = 3225
 
 [batches.content]
 kind = "lines"
@@ -1828,37 +1792,45 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 73
-key = 'Python(Imports { file: "src/chronos/chronos2/config.py" })'
-descriptor = "python imports in src/chronos/chronos2/config.py"
-cost_tokens = 35
-cum_tokens = 3244
+position = 71
+key = 'Python(Imports { file: "src/chronos/utils.py" })'
+descriptor = "python imports in src/chronos/utils.py"
+cost_tokens = 60
+cum_tokens = 3285
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/chronos/chronos2/config.py"
-start = 6
-end = 7
+path = "src/chronos/utils.py"
+start = 1
+end = 2
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/chronos/chronos2/config.py"
-start = 9
-end = 9
+path = "src/chronos/utils.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/utils.py"
+start = 7
+end = 8
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 74
+position = 72
 key = 'Python(DeclNames { file: "src/chronos/chronos2/model.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/chronos2/model.py"
 cost_tokens = 76
-cum_tokens = 3320
+cum_tokens = 3361
 
 [batches.content]
 kind = "lines"
@@ -1960,11 +1932,11 @@ end = 199
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 73
 key = 'Python(Decl { file: "src/chronos/chronos2/model.py", start_line: 38 })'
 descriptor = "python decl at src/chronos/chronos2/model.py:38"
 cost_tokens = 0
-cum_tokens = 3320
+cum_tokens = 3361
 
 [batches.content]
 kind = "lines"
@@ -1978,11 +1950,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 76
+position = 74
 key = 'Python(Decl { file: "src/chronos/chronos2/model.py", start_line: 89 })'
 descriptor = "python decl at src/chronos/chronos2/model.py:89"
 cost_tokens = 0
-cum_tokens = 3320
+cum_tokens = 3361
 
 [batches.content]
 kind = "lines"
@@ -1996,11 +1968,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 77
+position = 75
 key = 'Python(Decl { file: "src/chronos/chronos2/model.py", start_line: 198 })'
 descriptor = "python decl at src/chronos/chronos2/model.py:198"
 cost_tokens = 0
-cum_tokens = 3320
+cum_tokens = 3361
 
 [batches.content]
 kind = "lines"
@@ -2014,11 +1986,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 78
+position = 76
 key = 'Python(Decl { file: "src/chronos/chronos2/model.py", start_line: 190 })'
 descriptor = "python decl at src/chronos/chronos2/model.py:190"
 cost_tokens = 10
-cum_tokens = 3330
+cum_tokens = 3371
 
 [batches.content]
 kind = "lines"
@@ -2032,11 +2004,11 @@ end = 191
 kind = "full"
 
 [[batches]]
-position = 79
+position = 77
 key = 'Python(Decl { file: "src/chronos/chronos2/model.py", start_line: 82 })'
 descriptor = "python decl at src/chronos/chronos2/model.py:82"
 cost_tokens = 11
-cum_tokens = 3341
+cum_tokens = 3382
 
 [batches.content]
 kind = "lines"
@@ -2050,11 +2022,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 80
+position = 78
 key = 'Python(Decl { file: "src/chronos/chronos2/model.py", start_line: 31 })'
 descriptor = "python decl at src/chronos/chronos2/model.py:31"
 cost_tokens = 12
-cum_tokens = 3353
+cum_tokens = 3394
 
 [batches.content]
 kind = "lines"
@@ -2068,11 +2040,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 81
+position = 79
 key = 'Python(ClassBody { file: "src/chronos/chronos2/model.py", start_line: 31 })'
 descriptor = "python class body at src/chronos/chronos2/model.py:31"
 cost_tokens = 51
-cum_tokens = 3404
+cum_tokens = 3445
 
 [batches.content]
 kind = "lines"
@@ -2086,11 +2058,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 82
+position = 80
 key = 'Python(ClassBody { file: "src/chronos/chronos2/model.py", start_line: 82 })'
 descriptor = "python class body at src/chronos/chronos2/model.py:82"
 cost_tokens = 64
-cum_tokens = 3468
+cum_tokens = 3509
 
 [batches.content]
 kind = "lines"
@@ -2104,11 +2076,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 83
+position = 81
 key = 'Python(ClassBody { file: "src/chronos/chronos2/model.py", start_line: 198 })'
 descriptor = "python class body at src/chronos/chronos2/model.py:198"
 cost_tokens = 64
-cum_tokens = 3532
+cum_tokens = 3573
 
 [batches.content]
 kind = "lines"
@@ -2122,11 +2094,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 84
+position = 82
 key = 'Python(ClassBody { file: "src/chronos/chronos2/model.py", start_line: 190 })'
 descriptor = "python class body at src/chronos/chronos2/model.py:190"
 cost_tokens = 78
-cum_tokens = 3610
+cum_tokens = 3651
 
 [batches.content]
 kind = "lines"
@@ -2140,11 +2112,11 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 85
+position = 83
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
-cum_tokens = 3617
+cum_tokens = 3658
 
 [batches.content]
 kind = "fs"
@@ -2154,11 +2126,11 @@ parent = ".github"
 entries = ["ISSUE_TEMPLATE", "workflows"]
 
 [[batches]]
-position = 86
+position = 84
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 17
-cum_tokens = 3634
+cum_tokens = 3675
 
 [batches.content]
 kind = "fs"
@@ -2168,11 +2140,11 @@ parent = ".github/workflows"
 entries = ["ci.yml", "eval-model.yml", "publish-to-pypi.yml"]
 
 [[batches]]
-position = 87
+position = 85
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 96
-cum_tokens = 3730
+cum_tokens = 3771
 
 [batches.content]
 kind = "lines"
@@ -2186,11 +2158,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 88
+position = 86
 key = 'Python(MethodSigs { file: "src/chronos/chronos2/model.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/chronos/chronos2/model.py"
 cost_tokens = 186
-cum_tokens = 3916
+cum_tokens = 3957
 
 [batches.content]
 kind = "lines"
@@ -2420,11 +2392,11 @@ end = 619
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 87
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 39 })'
 descriptor = "python method at src/chronos/chronos2/model.py:39"
 cost_tokens = 0
-cum_tokens = 3916
+cum_tokens = 3957
 
 [batches.content]
 kind = "lines"
@@ -2438,11 +2410,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 90
+position = 88
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 90 })'
 descriptor = "python method at src/chronos/chronos2/model.py:90"
 cost_tokens = 0
-cum_tokens = 3916
+cum_tokens = 3957
 
 [batches.content]
 kind = "lines"
@@ -2456,11 +2428,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 91
+position = 89
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 204 })'
 descriptor = "python method at src/chronos/chronos2/model.py:204"
 cost_tokens = 0
-cum_tokens = 3916
+cum_tokens = 3957
 
 [batches.content]
 kind = "lines"
@@ -2474,11 +2446,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 92
+position = 90
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 266 })'
 descriptor = "python method at src/chronos/chronos2/model.py:266"
 cost_tokens = 0
-cum_tokens = 3916
+cum_tokens = 3957
 
 [batches.content]
 kind = "lines"
@@ -2492,11 +2464,11 @@ end = 266
 kind = "full"
 
 [[batches]]
-position = 93
+position = 91
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 134 })'
 descriptor = "python method at src/chronos/chronos2/model.py:134"
 cost_tokens = 90
-cum_tokens = 4006
+cum_tokens = 4047
 
 [batches.content]
 kind = "lines"
@@ -2510,11 +2482,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 94
+position = 92
 key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 115
-cum_tokens = 4121
+cum_tokens = 4162
 
 [batches.content]
 kind = "lines"
@@ -2528,11 +2500,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 95
+position = 93
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 48 })'
 descriptor = "python method at src/chronos/chronos2/model.py:48"
 cost_tokens = 93
-cum_tokens = 4214
+cum_tokens = 4255
 
 [batches.content]
 kind = "lines"
@@ -2546,11 +2518,29 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 96
+position = 94
+key = 'Python(Imports { file: "test/__init__.py" })'
+descriptor = "python imports in test/__init__.py"
+cost_tokens = 34
+cum_tokens = 4289
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
 key = 'Python(DeclNames { file: "src/chronos/df_utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/df_utils.py"
 cost_tokens = 42
-cum_tokens = 4256
+cum_tokens = 4331
 
 [batches.content]
 kind = "lines"
@@ -2604,11 +2594,11 @@ end = 200
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 98 })'
 descriptor = "python method at src/chronos/chronos2/model.py:98"
 cost_tokens = 40
-cum_tokens = 4296
+cum_tokens = 4371
 
 [batches.content]
 kind = "lines"
@@ -2622,11 +2612,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 98
+position = 97
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 373 })'
 descriptor = "python method at src/chronos/chronos2/model.py:373"
 cost_tokens = 43
-cum_tokens = 4339
+cum_tokens = 4414
 
 [batches.content]
 kind = "lines"
@@ -2640,37 +2630,11 @@ end = 375
 kind = "full"
 
 [[batches]]
-position = 99
-key = 'Python(Imports { file: "src/chronos/boto_utils.py" })'
-descriptor = "python imports in src/chronos/boto_utils.py"
-cost_tokens = 98
-cum_tokens = 4437
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/boto_utils.py"
-start = 6
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/boto_utils.py"
-start = 12
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
+position = 98
 key = 'Python(DeclNames { file: "src/chronos/utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/utils.py"
 cost_tokens = 48
-cum_tokens = 4485
+cum_tokens = 4462
 
 [batches.content]
 kind = "lines"
@@ -2724,11 +2688,11 @@ end = 136
 kind = "ellipsis"
 
 [[batches]]
-position = 101
+position = 99
 key = 'Python(Decl { file: "src/chronos/utils.py", start_line: 11 })'
 descriptor = "python decl at src/chronos/utils.py:11"
 cost_tokens = 0
-cum_tokens = 4485
+cum_tokens = 4462
 
 [batches.content]
 kind = "lines"
@@ -2742,11 +2706,61 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 102
+position = 100
+key = 'Python(Imports { file: "src/chronos/df_utils.py" })'
+descriptor = "python imports in src/chronos/df_utils.py"
+cost_tokens = 100
+cum_tokens = 4562
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/df_utils.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/df_utils.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/df_utils.py"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/df_utils.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/df_utils.py"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
 key = 'Python(DeclNames { file: "src/chronos/chronos2/layers.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/chronos2/layers.py"
 cost_tokens = 125
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -2912,11 +2926,11 @@ end = 370
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 102
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 18 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:18"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -2930,11 +2944,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 104
+position = 103
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 86 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:86"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2962,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 105
+position = 104
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 110 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:110"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +2980,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 106
+position = 105
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 126 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:126"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +2998,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 107
+position = 106
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 148 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:148"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +3016,11 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 108
+position = 107
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 294 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:294"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -3020,11 +3034,11 @@ end = 294
 kind = "full"
 
 [[batches]]
-position = 109
+position = 108
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 317 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:317"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -3038,11 +3052,11 @@ end = 317
 kind = "full"
 
 [[batches]]
-position = 110
+position = 109
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 343 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:343"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +3070,11 @@ end = 343
 kind = "full"
 
 [[batches]]
-position = 111
+position = 110
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 369 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:369"
 cost_tokens = 0
-cum_tokens = 4610
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +3088,11 @@ end = 369
 kind = "full"
 
 [[batches]]
-position = 112
+position = 111
 key = 'Python(Decl { file: "src/chronos/chronos2/layers.py", start_line: 142 })'
 descriptor = "python decl at src/chronos/chronos2/layers.py:142"
 cost_tokens = 8
-cum_tokens = 4618
+cum_tokens = 4695
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +3106,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 113
+position = 112
 key = 'Python(DeclDoc { file: "src/chronos/chronos2/layers.py", start_line: 148 })'
 descriptor = "python decl doc at src/chronos/chronos2/layers.py:148"
 cost_tokens = 9
-cum_tokens = 4627
+cum_tokens = 4704
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +3124,11 @@ end = 149
 kind = "full"
 
 [[batches]]
-position = 114
+position = 113
 key = 'Python(DeclDoc { file: "src/chronos/chronos2/layers.py", start_line: 343 })'
 descriptor = "python decl doc at src/chronos/chronos2/layers.py:343"
 cost_tokens = 19
-cum_tokens = 4646
+cum_tokens = 4723
 
 [batches.content]
 kind = "lines"
@@ -3128,11 +3142,11 @@ end = 344
 kind = "full"
 
 [[batches]]
-position = 115
+position = 114
 key = 'Python(DeclDoc { file: "src/chronos/chronos2/layers.py", start_line: 369 })'
 descriptor = "python decl doc at src/chronos/chronos2/layers.py:369"
 cost_tokens = 19
-cum_tokens = 4665
+cum_tokens = 4742
 
 [batches.content]
 kind = "lines"
@@ -3146,11 +3160,11 @@ end = 370
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'Python(ClassBody { file: "src/chronos/chronos2/layers.py", start_line: 142 })'
 descriptor = "python class body at src/chronos/chronos2/layers.py:142"
 cost_tokens = 31
-cum_tokens = 4696
+cum_tokens = 4773
 
 [batches.content]
 kind = "lines"
@@ -3164,11 +3178,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 117
+position = 116
 key = 'Python(DeclDoc { file: "src/chronos/chronos2/layers.py", start_line: 18 })'
 descriptor = "python decl doc at src/chronos/chronos2/layers.py:18"
 cost_tokens = 85
-cum_tokens = 4781
+cum_tokens = 4858
 
 [batches.content]
 kind = "lines"
@@ -3190,11 +3204,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 118
+position = 117
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 48, body_start_line: 56 })'
 descriptor = "python method body at src/chronos/base.py:48 body 56"
 cost_tokens = 12
-cum_tokens = 4793
+cum_tokens = 4870
 
 [batches.content]
 kind = "lines"
@@ -3208,11 +3222,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 119
+position = 118
 key = 'Python(DeclBody { file: "src/chronos/utils.py", start_line: 11, body_start_line: 12 })'
 descriptor = "python decl body at src/chronos/utils.py:11 body 12"
 cost_tokens = 114
-cum_tokens = 4907
+cum_tokens = 4984
 
 [batches.content]
 kind = "lines"
@@ -3226,11 +3240,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 120
+position = 119
 key = 'Python(MethodSigs { file: "src/chronos/chronos2/pipeline.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/chronos/chronos2/pipeline.py"
 cost_tokens = 281
-cum_tokens = 5188
+cum_tokens = 5265
 
 [batches.content]
 kind = "lines"
@@ -3572,11 +3586,11 @@ end = 1225
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 43 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:43"
 cost_tokens = 0
-cum_tokens = 5188
+cum_tokens = 5265
 
 [batches.content]
 kind = "lines"
@@ -3590,11 +3604,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 1224 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:1224"
 cost_tokens = 0
-cum_tokens = 5188
+cum_tokens = 5265
 
 [batches.content]
 kind = "lines"
@@ -3608,11 +3622,11 @@ end = 1224
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 76 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:76"
 cost_tokens = 12
-cum_tokens = 5200
+cum_tokens = 5277
 
 [batches.content]
 kind = "lines"
@@ -3626,11 +3640,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 84 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:84"
 cost_tokens = 12
-cum_tokens = 5212
+cum_tokens = 5289
 
 [batches.content]
 kind = "lines"
@@ -3644,11 +3658,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 80 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:80"
 cost_tokens = 13
-cum_tokens = 5225
+cum_tokens = 5302
 
 [batches.content]
 kind = "lines"
@@ -3662,11 +3676,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 126
+position = 125
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 88 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:88"
 cost_tokens = 13
-cum_tokens = 5238
+cum_tokens = 5315
 
 [batches.content]
 kind = "lines"
@@ -3680,11 +3694,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 127
+position = 126
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 92 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:92"
 cost_tokens = 13
-cum_tokens = 5251
+cum_tokens = 5328
 
 [batches.content]
 kind = "lines"
@@ -3698,11 +3712,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 128
+position = 127
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 1185 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:1185"
 cost_tokens = 22
-cum_tokens = 5273
+cum_tokens = 5350
 
 [batches.content]
 kind = "lines"
@@ -3716,11 +3730,11 @@ end = 1186
 kind = "full"
 
 [[batches]]
-position = 129
+position = 128
 key = 'Python(MethodBody { file: "src/chronos/chronos2/pipeline.py", start_line: 76, body_start_line: 78 })'
 descriptor = "python method body at src/chronos/chronos2/pipeline.py:76 body 78"
 cost_tokens = 15
-cum_tokens = 5288
+cum_tokens = 5365
 
 [batches.content]
 kind = "lines"
@@ -3734,11 +3748,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 130
+position = 129
 key = 'Python(MethodBody { file: "src/chronos/chronos2/pipeline.py", start_line: 88, body_start_line: 90 })'
 descriptor = "python method body at src/chronos/chronos2/pipeline.py:88 body 90"
 cost_tokens = 15
-cum_tokens = 5303
+cum_tokens = 5380
 
 [batches.content]
 kind = "lines"
@@ -3752,11 +3766,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 131
+position = 130
 key = 'Python(MethodBody { file: "src/chronos/chronos2/pipeline.py", start_line: 80, body_start_line: 82 })'
 descriptor = "python method body at src/chronos/chronos2/pipeline.py:80 body 82"
 cost_tokens = 16
-cum_tokens = 5319
+cum_tokens = 5396
 
 [batches.content]
 kind = "lines"
@@ -3770,11 +3784,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 132
+position = 131
 key = 'Python(MethodBody { file: "src/chronos/chronos2/pipeline.py", start_line: 92, body_start_line: 94 })'
 descriptor = "python method body at src/chronos/chronos2/pipeline.py:92 body 94"
 cost_tokens = 17
-cum_tokens = 5336
+cum_tokens = 5413
 
 [batches.content]
 kind = "lines"
@@ -3788,11 +3802,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'Python(MethodDoc { file: "src/chronos/chronos2/pipeline.py", start_line: 1224 })'
 descriptor = "python method doc at src/chronos/chronos2/pipeline.py:1224"
 cost_tokens = 33
-cum_tokens = 5369
+cum_tokens = 5446
 
 [batches.content]
 kind = "lines"
@@ -3806,11 +3820,11 @@ end = 1227
 kind = "full"
 
 [[batches]]
-position = 134
+position = 133
 key = 'Python(MethodBody { file: "src/chronos/chronos2/pipeline.py", start_line: 1224, body_start_line: 1228 })'
 descriptor = "python method body at src/chronos/chronos2/pipeline.py:1224 body 1228"
 cost_tokens = 20
-cum_tokens = 5389
+cum_tokens = 5466
 
 [batches.content]
 kind = "lines"
@@ -3824,11 +3838,11 @@ end = 1228
 kind = "full"
 
 [[batches]]
-position = 135
+position = 134
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 47 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:47"
 cost_tokens = 24
-cum_tokens = 5413
+cum_tokens = 5490
 
 [batches.content]
 kind = "lines"
@@ -3842,11 +3856,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 136
+position = 135
 key = 'Python(MethodBody { file: "src/chronos/chronos2/pipeline.py", start_line: 43, body_start_line: 44 })'
 descriptor = "python method body at src/chronos/chronos2/pipeline.py:43 body 44"
 cost_tokens = 21
-cum_tokens = 5434
+cum_tokens = 5511
 
 [batches.content]
 kind = "lines"
@@ -3860,11 +3874,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 137
+position = 136
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 1105 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:1105"
 cost_tokens = 69
-cum_tokens = 5503
+cum_tokens = 5580
 
 [batches.content]
 kind = "lines"
@@ -3878,11 +3892,11 @@ end = 1108
 kind = "full"
 
 [[batches]]
-position = 138
+position = 137
 key = 'Python(MethodBody { file: "src/chronos/chronos2/pipeline.py", start_line: 84, body_start_line: 86 })'
 descriptor = "python method body at src/chronos/chronos2/pipeline.py:84 body 86"
 cost_tokens = 27
-cum_tokens = 5530
+cum_tokens = 5607
 
 [batches.content]
 kind = "lines"
@@ -3896,11 +3910,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 139
+position = 138
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 1027 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:1027"
 cost_tokens = 90
-cum_tokens = 5620
+cum_tokens = 5697
 
 [batches.content]
 kind = "lines"
@@ -3914,11 +3928,11 @@ end = 1034
 kind = "full"
 
 [[batches]]
-position = 140
+position = 139
 key = 'Python(MethodDoc { file: "src/chronos/chronos2/pipeline.py", start_line: 1185 })'
 descriptor = "python method doc at src/chronos/chronos2/pipeline.py:1185"
 cost_tokens = 67
-cum_tokens = 5687
+cum_tokens = 5764
 
 [batches.content]
 kind = "lines"
@@ -3932,11 +3946,11 @@ end = 1190
 kind = "full"
 
 [[batches]]
-position = 141
+position = 140
 key = 'Python(Decl { file: "src/chronos/utils.py", start_line: 135 })'
 descriptor = "python decl at src/chronos/utils.py:135"
 cost_tokens = 92
-cum_tokens = 5779
+cum_tokens = 5856
 
 [batches.content]
 kind = "lines"
@@ -3958,53 +3972,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 142
-key = 'Python(Imports { file: "src/chronos/base.py" })'
-descriptor = "python imports in src/chronos/base.py"
-cost_tokens = 127
-cum_tokens = 5906
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 9
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 14
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 17
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 143
+position = 141
 key = 'Python(DeclBody { file: "src/chronos/chronos2/trainer.py", start_line: 17, body_start_line: 18 })'
 descriptor = "python decl body at src/chronos/chronos2/trainer.py:17 body 18"
 cost_tokens = 85
-cum_tokens = 5991
+cum_tokens = 5941
 
 [batches.content]
 kind = "lines"
@@ -4034,11 +4006,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 144
+position = 142
 key = 'Python(DeclDoc { file: "src/chronos/utils.py", start_line: 135 })'
 descriptor = "python decl doc at src/chronos/utils.py:135"
 cost_tokens = 282
-cum_tokens = 6273
+cum_tokens = 6223
 
 [batches.content]
 kind = "lines"
@@ -4068,11 +4040,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 145
+position = 143
 key = 'Python(MethodBody { file: "src/chronos/chronos2/trainer.py", start_line: 33, body_start_line: 34 })'
 descriptor = "python method body at src/chronos/chronos2/trainer.py:33 body 34"
 cost_tokens = 46
-cum_tokens = 6319
+cum_tokens = 6269
 
 [batches.content]
 kind = "lines"
@@ -4086,11 +4058,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 146
+position = 144
 key = 'Python(Decl { file: "src/chronos/utils.py", start_line: 22 })'
 descriptor = "python decl at src/chronos/utils.py:22"
 cost_tokens = 99
-cum_tokens = 6418
+cum_tokens = 6368
 
 [batches.content]
 kind = "lines"
@@ -4112,11 +4084,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 147
+position = 145
 key = 'Python(DeclDoc { file: "src/chronos/utils.py", start_line: 22 })'
 descriptor = "python decl doc at src/chronos/utils.py:22"
 cost_tokens = 276
-cum_tokens = 6694
+cum_tokens = 6644
 
 [batches.content]
 kind = "lines"
@@ -4146,45 +4118,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 148
-key = 'Python(Imports { file: "src/chronos/chronos2/trainer.py" })'
-descriptor = "python imports in src/chronos/chronos2/trainer.py"
-cost_tokens = 86
-cum_tokens = 6780
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/trainer.py"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/trainer.py"
-start = 9
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/trainer.py"
-start = 13
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 149
+position = 146
 key = 'Python(MethodDoc { file: "src/chronos/base.py", start_line: 252 })'
 descriptor = "python method doc at src/chronos/base.py:252"
 cost_tokens = 176
-cum_tokens = 6956
+cum_tokens = 6820
 
 [batches.content]
 kind = "lines"
@@ -4214,11 +4152,11 @@ end = 273
 kind = "full"
 
 [[batches]]
-position = 150
+position = 147
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 550 })'
 descriptor = "python method at src/chronos/chronos2/model.py:550"
 cost_tokens = 145
-cum_tokens = 7101
+cum_tokens = 6965
 
 [batches.content]
 kind = "lines"
@@ -4232,11 +4170,11 @@ end = 561
 kind = "full"
 
 [[batches]]
-position = 151
+position = 148
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 455 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:455"
 cost_tokens = 145
-cum_tokens = 7246
+cum_tokens = 7110
 
 [batches.content]
 kind = "lines"
@@ -4250,11 +4188,53 @@ end = 467
 kind = "full"
 
 [[batches]]
-position = 152
+position = 149
+key = 'Python(Imports { file: "src/chronos/chronos2/config.py" })'
+descriptor = "python imports in src/chronos/chronos2/config.py"
+cost_tokens = 89
+cum_tokens = 7199
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/chronos2/config.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/chronos2/config.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/chronos2/config.py"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/chronos2/config.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
 key = 'Python(MethodSigs { file: "src/chronos/chronos2/layers.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/chronos/chronos2/layers.py"
 cost_tokens = 362
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4612,11 +4592,11 @@ end = 394
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 151
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 25 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:25"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4630,11 +4610,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 154
+position = 152
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 87 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:87"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4648,11 +4628,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 155
+position = 153
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 95 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:95"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4666,11 +4646,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 156
+position = 154
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 111 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:111"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4684,11 +4664,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 157
+position = 155
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 118 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:118"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4702,11 +4682,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 158
+position = 156
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 127 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:127"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4720,11 +4700,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 159
+position = 157
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 135 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:135"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4738,11 +4718,11 @@ end = 135
 kind = "full"
 
 [[batches]]
-position = 160
+position = 158
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 151 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:151"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4756,11 +4736,11 @@ end = 151
 kind = "full"
 
 [[batches]]
-position = 161
+position = 159
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 295 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:295"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4774,11 +4754,11 @@ end = 295
 kind = "full"
 
 [[batches]]
-position = 162
+position = 160
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 318 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:318"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4792,11 +4772,11 @@ end = 318
 kind = "full"
 
 [[batches]]
-position = 163
+position = 161
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 346 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:346"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4810,11 +4790,11 @@ end = 346
 kind = "full"
 
 [[batches]]
-position = 164
+position = 162
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 393 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:393"
 cost_tokens = 0
-cum_tokens = 7608
+cum_tokens = 7561
 
 [batches.content]
 kind = "lines"
@@ -4828,11 +4808,11 @@ end = 393
 kind = "full"
 
 [[batches]]
-position = 165
+position = 163
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 51 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:51"
 cost_tokens = 8
-cum_tokens = 7616
+cum_tokens = 7569
 
 [batches.content]
 kind = "lines"
@@ -4846,11 +4826,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 166
+position = 164
 key = 'Python(MethodDoc { file: "src/chronos/chronos2/layers.py", start_line: 51 })'
 descriptor = "python method doc at src/chronos/chronos2/layers.py:51"
 cost_tokens = 16
-cum_tokens = 7632
+cum_tokens = 7585
 
 [batches.content]
 kind = "lines"
@@ -4864,11 +4844,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 167
+position = 165
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 34 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:34"
 cost_tokens = 48
-cum_tokens = 7680
+cum_tokens = 7633
 
 [batches.content]
 kind = "lines"
@@ -4882,11 +4862,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 168
+position = 166
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 353 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:353"
 cost_tokens = 54
-cum_tokens = 7734
+cum_tokens = 7687
 
 [batches.content]
 kind = "lines"
@@ -4900,11 +4880,11 @@ end = 356
 kind = "full"
 
 [[batches]]
-position = 169
+position = 167
 key = 'Python(MethodDoc { file: "src/chronos/chronos2/layers.py", start_line: 87 })'
 descriptor = "python method doc at src/chronos/chronos2/layers.py:87"
 cost_tokens = 34
-cum_tokens = 7768
+cum_tokens = 7721
 
 [batches.content]
 kind = "lines"
@@ -4918,11 +4898,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 170
+position = 168
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 58 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:58"
 cost_tokens = 59
-cum_tokens = 7827
+cum_tokens = 7780
 
 [batches.content]
 kind = "lines"
@@ -4936,11 +4916,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 171
+position = 169
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 301 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:301"
 cost_tokens = 61
-cum_tokens = 7888
+cum_tokens = 7841
 
 [batches.content]
 kind = "lines"
@@ -4954,11 +4934,11 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 172
+position = 170
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 324 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:324"
 cost_tokens = 61
-cum_tokens = 7949
+cum_tokens = 7902
 
 [batches.content]
 kind = "lines"
@@ -4972,11 +4952,11 @@ end = 330
 kind = "full"
 
 [[batches]]
-position = 173
+position = 171
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 227 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:227"
 cost_tokens = 79
-cum_tokens = 8028
+cum_tokens = 7981
 
 [batches.content]
 kind = "lines"
@@ -4990,11 +4970,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 174
+position = 172
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 372 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:372"
 cost_tokens = 83
-cum_tokens = 8111
+cum_tokens = 8064
 
 [batches.content]
 kind = "lines"
@@ -5008,11 +4988,11 @@ end = 380
 kind = "full"
 
 [[batches]]
-position = 175
+position = 173
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 48, body_start_line: 55 })'
 descriptor = "python method body at src/chronos/base.py:48 body 55"
 cost_tokens = 16
-cum_tokens = 8127
+cum_tokens = 8080
 
 [batches.content]
 kind = "lines"
@@ -5026,11 +5006,53 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 176
+position = 174
+key = 'Python(Imports { file: "src/chronos/boto_utils.py" })'
+descriptor = "python imports in src/chronos/boto_utils.py"
+cost_tokens = 152
+cum_tokens = 8232
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chronos/boto_utils.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/boto_utils.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/boto_utils.py"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chronos/boto_utils.py"
+start = 12
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
 key = 'Python(Method { file: "src/chronos/chronos2/model.py", start_line: 618 })'
 descriptor = "python method at src/chronos/chronos2/model.py:618"
 cost_tokens = 151
-cum_tokens = 8278
+cum_tokens = 8383
 
 [batches.content]
 kind = "lines"
@@ -5044,11 +5066,11 @@ end = 629
 kind = "full"
 
 [[batches]]
-position = 177
+position = 176
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 763 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:763"
 cost_tokens = 151
-cum_tokens = 8429
+cum_tokens = 8534
 
 [batches.content]
 kind = "lines"
@@ -5062,45 +5084,11 @@ end = 771
 kind = "full"
 
 [[batches]]
-position = 178
-key = 'Python(Imports { file: "src/chronos/chronos2/layers.py" })'
-descriptor = "python imports in src/chronos/chronos2/layers.py"
-cost_tokens = 95
-cum_tokens = 8524
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 8
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 179
+position = 177
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 197 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:197"
 cost_tokens = 62
-cum_tokens = 8586
+cum_tokens = 8596
 
 [batches.content]
 kind = "lines"
@@ -5114,11 +5102,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 180
+position = 178
 key = 'Python(Decl { file: "src/chronos/df_utils.py", start_line: 59 })'
 descriptor = "python decl at src/chronos/df_utils.py:59"
 cost_tokens = 112
-cum_tokens = 8698
+cum_tokens = 8708
 
 [batches.content]
 kind = "lines"
@@ -5140,11 +5128,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 181
+position = 179
 key = 'Python(Method { file: "src/chronos/chronos2/layers.py", start_line: 169 })'
 descriptor = "python method at src/chronos/chronos2/layers.py:169"
 cost_tokens = 63
-cum_tokens = 8761
+cum_tokens = 8771
 
 [batches.content]
 kind = "lines"
@@ -5158,11 +5146,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 182
+position = 180
 key = 'Python(Method { file: "src/chronos/chronos2/pipeline.py", start_line: 720 })'
 descriptor = "python method at src/chronos/chronos2/pipeline.py:720"
 cost_tokens = 63
-cum_tokens = 8824
+cum_tokens = 8834
 
 [batches.content]
 kind = "lines"
@@ -5176,45 +5164,11 @@ end = 726
 kind = "full"
 
 [[batches]]
-position = 183
-key = 'Python(Imports { file: "src/chronos/chronos.py" })'
-descriptor = "python imports in src/chronos/chronos.py"
-cost_tokens = 162
-cum_tokens = 8986
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos.py"
-start = 6
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos.py"
-start = 10
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos.py"
-start = 20
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 184
+position = 181
 key = 'Python(DeclNames { file: "src/chronos/chronos.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/chronos.py"
 cost_tokens = 77
-cum_tokens = 9063
+cum_tokens = 8911
 
 [batches.content]
 kind = "lines"
@@ -5308,11 +5262,11 @@ end = 356
 kind = "ellipsis"
 
 [[batches]]
-position = 185
+position = 182
 key = 'Python(Decl { file: "src/chronos/chronos.py", start_line: 59 })'
 descriptor = "python decl at src/chronos/chronos.py:59"
 cost_tokens = 0
-cum_tokens = 9063
+cum_tokens = 8911
 
 [batches.content]
 kind = "lines"
@@ -5326,11 +5280,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 186
+position = 183
 key = 'Python(Decl { file: "src/chronos/chronos.py", start_line: 154 })'
 descriptor = "python decl at src/chronos/chronos.py:154"
 cost_tokens = 0
-cum_tokens = 9063
+cum_tokens = 8911
 
 [batches.content]
 kind = "lines"
@@ -5344,11 +5298,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 187
+position = 184
 key = 'Python(Decl { file: "src/chronos/chronos.py", start_line: 243 })'
 descriptor = "python decl at src/chronos/chronos.py:243"
 cost_tokens = 0
-cum_tokens = 9063
+cum_tokens = 8911
 
 [batches.content]
 kind = "lines"
@@ -5362,11 +5316,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 188
+position = 185
 key = 'Python(Decl { file: "src/chronos/chronos.py", start_line: 27 })'
 descriptor = "python decl at src/chronos/chronos.py:27"
 cost_tokens = 7
-cum_tokens = 9070
+cum_tokens = 8918
 
 [batches.content]
 kind = "lines"
@@ -5380,11 +5334,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 189
+position = 186
 key = 'Python(DeclDoc { file: "src/chronos/chronos.py", start_line: 27 })'
 descriptor = "python decl doc at src/chronos/chronos.py:27"
 cost_tokens = 46
-cum_tokens = 9116
+cum_tokens = 8964
 
 [batches.content]
 kind = "lines"
@@ -5398,11 +5352,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 190
+position = 187
 key = 'Python(Decl { file: "src/chronos/chronos.py", start_line: 355 })'
 descriptor = "python decl at src/chronos/chronos.py:355"
 cost_tokens = 29
-cum_tokens = 9145
+cum_tokens = 8993
 
 [batches.content]
 kind = "lines"
@@ -5424,11 +5378,11 @@ end = 358
 kind = "full"
 
 [[batches]]
-position = 191
+position = 188
 key = 'Python(DeclDoc { file: "src/chronos/chronos.py", start_line: 59 })'
 descriptor = "python decl doc at src/chronos/chronos.py:59"
 cost_tokens = 71
-cum_tokens = 9216
+cum_tokens = 9064
 
 [batches.content]
 kind = "lines"
@@ -5450,11 +5404,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 192
+position = 189
 key = 'Python(DeclDoc { file: "src/chronos/chronos.py", start_line: 355 })'
 descriptor = "python decl doc at src/chronos/chronos.py:355"
 cost_tokens = 92
-cum_tokens = 9308
+cum_tokens = 9156
 
 [batches.content]
 kind = "lines"
@@ -5484,11 +5438,11 @@ end = 369
 kind = "full"
 
 [[batches]]
-position = 193
+position = 190
 key = 'Python(DeclDoc { file: "src/chronos/chronos.py", start_line: 243 })'
 descriptor = "python decl doc at src/chronos/chronos.py:243"
 cost_tokens = 101
-cum_tokens = 9409
+cum_tokens = 9257
 
 [batches.content]
 kind = "lines"
@@ -5510,11 +5464,11 @@ end = 254
 kind = "full"
 
 [[batches]]
-position = 194
+position = 191
 key = 'Python(ClassBody { file: "src/chronos/chronos.py", start_line: 355 })'
 descriptor = "python class body at src/chronos/chronos.py:355"
 cost_tokens = 38
-cum_tokens = 9447
+cum_tokens = 9295
 
 [batches.content]
 kind = "lines"
@@ -5528,11 +5482,11 @@ end = 373
 kind = "full"
 
 [[batches]]
-position = 195
+position = 192
 key = 'Python(MethodBody { file: "src/chronos/chronos2/layers.py", start_line: 135, body_start_line: 136 })'
 descriptor = "python method body at src/chronos/chronos2/layers.py:135 body 136"
 cost_tokens = 55
-cum_tokens = 9502
+cum_tokens = 9350
 
 [batches.content]
 kind = "lines"
@@ -5546,35 +5500,43 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 196
-key = 'Python(Imports { file: "src/chronos/chronos_bolt.py" })'
-descriptor = "python imports in src/chronos/chronos_bolt.py"
-cost_tokens = 170
-cum_tokens = 9672
+position = 193
+key = 'Markdown(Section { file: "README.md", section_index: 10 })'
+descriptor = "README.md section #10"
+cost_tokens = 473
+cum_tokens = 9823
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 8
-end = 12
+path = "README.md"
+start = 130
+end = 130
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 14
-end = 24
+path = "README.md"
+start = 132
+end = 132
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 26
-end = 26
+path = "README.md"
+start = 134
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 144
+end = 151
 
 [batches.content.spans.render]
 kind = "full"

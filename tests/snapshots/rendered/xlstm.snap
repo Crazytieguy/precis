@@ -59,9 +59,6 @@ experiments/
                     …
         utils.py
     lr_scheduler.py
-        3→import math
-        4→from abc import abstractmethod
-        6→from torch.optim import lr_scheduler
         9→class BaseLRScheduler(lr_scheduler._LRScheduler):
         10→    def __init__(self, optimizer, last_epoch=-1):
         11→        super().__init__(optimizer, last_epoch)
@@ -187,6 +184,8 @@ xlstm/
                 util/
                 vanilla/
                     __init__.py
+                        1→# Copyright (c) NXAI GmbH and its affiliates 2023
+                        2→# Korbininan Pöppel
                         4→from typing import Callable
                         5→import torch
                         7→from .slstm import slstm_forward_pointwise as slstm_forward_pointwise_slstm
@@ -231,13 +230,15 @@ xlstm/
             12→@dataclass
             13→class CausalConv1dConfig:
             24→def conv1d_step(
-            …
+            25→    x: torch.Tensor,
+            26→    conv_state: torch.Tensor,
+            27→    conv1d_weight: torch.Tensor,
+            28→    conv1d_bias: torch.Tensor = None,
+            29→) -> tuple[torch.Tensor, torch.Tensor]:
             55→class CausalConv1d(nn.Module):
             …
         feedforward.py
         init.py
-            3→import math
-            5→import torch
         linear_headwise.py
             12→@dataclass
             13→class LinearHeadwiseExpandConfig:
@@ -250,8 +251,6 @@ xlstm/
             51→class MultiHeadLayerNorm(LayerNorm):
             …
         util.py
-            3→import torch
-            4→from typing import Callable
     utils.py
         11→@dataclass
         12→class UpProjConfigMixin:

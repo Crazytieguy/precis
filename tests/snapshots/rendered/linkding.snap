@@ -129,12 +129,10 @@ bookmarks/
         commands/
             backup.py
                 7→class Command(BaseCommand):
-                8→    help = "Creates a backup of the linkding database"
+                …
             create_initial_superuser.py
             enable_wal.py
             ensure_superuser.py
-                5→class Command(BaseCommand):
-                …
             full_backup.py
             generate_secret_key.py
             import_netscape.py
@@ -179,6 +177,8 @@ bookmarks/
         website_loader.py
     settings/
         __init__.py
+            1→# Use dev settings as default, use production if dev settings do not exist
+            2→# ruff: noqa
             3→try:
             4→    from .dev import *
             5→except:
@@ -211,7 +211,6 @@ bookmarks/
         theme-dark.css
         theme-light.css
     tasks.py
-        3→import bookmarks.services.tasks  # noqa: F401
     templates/
         admin/
         bookmarks/
@@ -346,6 +345,7 @@ docs/
     tsconfig.json
 install-linkding.sh
 manage.py
+    1→#!/usr/bin/env python
     2→"""Django's command-line utility for administrative tasks."""
     3→import os
     4→import sys

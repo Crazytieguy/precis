@@ -193,7 +193,6 @@ rich/
         33→    def __rich_measure__(
         34→        self, console: "Console", options: ConsoleOptions
         35→    ) -> Measurement:
-        36→        return Measurement(1, options.max_width)
         39→def make_test_card() -> Table:
         40→    """Get a renderable that demonstrates a number of features."""
     _emoji_codes.py
@@ -237,7 +236,6 @@ rich/
     _timer.py
         12→@contextlib.contextmanager
         13→def timer(subject: str = "time") -> Generator[None, None, None]:
-        14→    """print the elapsed time. (only used in debugging)"""
     _unicode_data/
     _win32_console.py
     _windows.py
@@ -367,6 +365,8 @@ rich/
     traceback.py
     tree.py
 setup.py
+    1→#!/usr/bin/env python
+    3→# This is a shim to hopefully allow Github to detect the package, build is done with poetry
     5→import setuptools
 tests/
 tools/
