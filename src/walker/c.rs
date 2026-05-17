@@ -200,12 +200,12 @@ fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
 use super::{
     FileLines, WalkCtx, build_per_file_content, collect_blank_line_groups,
     collect_doc_comments_above_bounded, dedup_sorted, extend_span, file_depth_factor,
-    file_lines_covered_by, fs::files_with_any_extension, node_end_row_trimmed, push_rows,
-    signature_end_row, single_file_lines_content, trim_end_before_next_decl,
+    file_lines_covered_by, node_end_row_trimmed, push_rows, signature_end_row,
+    single_file_lines_content, trim_end_before_next_decl,
 };
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let c_files = files_with_any_extension(dir, &["c", "h"]);
+    let c_files = c_source_files(dir);
     if c_files.is_empty() {
         return Vec::new();
     }
@@ -903,10 +903,44 @@ fn declarator_is_function(node: Node) -> bool {
 
 // --- value functions ----------------------------------------------------
 
+/// C source files this walker owns: `.c`, `.h`, and `.h.tmpl` (a
+/// template that compiles down to a public header at release time —
+/// sqlite-vec's `sqlite-vec.h.tmpl` is the canonical example, with the
+/// VERSION/DATE/SOURCE placeholders substituted by the build). Treated
+/// as headers structurally: the same `#ifdef` / `#define` / extern-C
+/// shape, and NSes anchor on them with the same value profile.
+fn c_source_files(dir: &Path) -> Vec<PathBuf> {
+    let Ok(read_dir) = std::fs::read_dir(dir) else {
+        return Vec::new();
+    };
+    let mut out: Vec<PathBuf> = read_dir
+        .flatten()
+        .filter_map(|e| {
+            let path = e.path();
+            if !path.is_file() {
+                return None;
+            }
+            let name = path.file_name().and_then(|n| n.to_str())?;
+            is_c_source_file_name(name).then_some(path)
+        })
+        .collect();
+    out.sort();
+    out
+}
+
+/// True for `.c`, `.h`, and `.h.tmpl` filenames (case-insensitive on
+/// the extension; the literal `.tmpl` suffix must follow `.h`).
+fn is_c_source_file_name(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    lower.ends_with(".c") || lower.ends_with(".h") || lower.ends_with(".h.tmpl")
+}
+
 fn is_header_file(path: &Path) -> bool {
-    path.extension()
-        .and_then(|e| e.to_str())
-        .is_some_and(|e| e.eq_ignore_ascii_case("h"))
+    let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+        return false;
+    };
+    let lower = name.to_ascii_lowercase();
+    lower.ends_with(".h") || lower.ends_with(".h.tmpl")
 }
 
 /// Multiplier applied to header-file batches that an autotools
@@ -974,7 +1008,7 @@ fn secondary_root_pair_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if ctx.depth_from_root(file) != 1 {
         return 1.0;
     }
-    let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
+    let Some(stem) = c_source_stem(file) else {
         return 1.0;
     };
     let Some(repo) = ctx.root().file_name().and_then(|n| n.to_str()) else {
@@ -987,7 +1021,7 @@ fn secondary_root_pair_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     // the root — otherwise this is a single-pair flat project (sds
     // structure) where every depth-1 file is part of the project's
     // own surface.
-    let primary_present = ["c", "h"]
+    let primary_present = ["c", "h", "h.tmpl"]
         .iter()
         .any(|ext| ctx.root().join(format!("{repo}.{ext}")).is_file());
     if primary_present {
@@ -995,6 +1029,18 @@ fn secondary_root_pair_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     } else {
         1.0
     }
+}
+
+/// Project-name stem of a C source file, treating `.h.tmpl` as a
+/// header variant whose stem is everything before `.h.tmpl`
+/// (`sqlite-vec.h.tmpl` → `sqlite-vec`). Plain `.c` / `.h` files use
+/// `file_stem()`.
+fn c_source_stem(file: &Path) -> Option<&str> {
+    let name = file.file_name().and_then(|n| n.to_str())?;
+    if name.to_ascii_lowercase().ends_with(".h.tmpl") {
+        return Some(&name[..name.len() - ".h.tmpl".len()]);
+    }
+    file.file_stem().and_then(|s| s.to_str())
 }
 
 fn header_banner_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -1068,7 +1114,7 @@ fn stdlib_shim_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if !is_header_file(file) || ctx.depth_from_root(file) < 2 {
         return 1.0;
     }
-    let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
+    let Some(stem) = c_source_stem(file) else {
         return 1.0;
     };
     if is_known_c_stdlib_stem(stem) {
