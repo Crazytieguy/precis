@@ -282,7 +282,10 @@ fn is_go_module_subpackage(dir: &Path) -> bool {
     let Some(parent) = dir.parent() else {
         return false;
     };
-    if !parent.join("go.mod").is_file() && !is_go_pkg_wrapper(parent) {
+    let has_outer_module = parent.join("go.mod").is_file();
+    let has_own_module = dir.join("go.mod").is_file();
+    let under_pkg_wrapper = is_go_pkg_wrapper(parent);
+    if !has_outer_module && !has_own_module && !under_pkg_wrapper {
         return false;
     }
     count_go_package_source(dir, MIN_GO_FILES) >= MIN_GO_FILES
