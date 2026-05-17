@@ -12,6 +12,7 @@ History.md
 LICENSE
 Readme.md
     3→**Fast, unopinionated, minimalist web framework for [Node.js](https://nodejs.org).**
+    5→**This project has a [Code of Conduct].**
     7→## Table of contents
     9→- [Table of contents](#table-of-contents)
     10→- [Installation](#installation)
@@ -29,11 +30,6 @@ Readme.md
     22→  - [Triagers](#triagers)
     23→    - [Emeritus Triagers](#emeritus-triagers)
     24→- [License](#license)
-    27→[![NPM Version][npm-version-image]][npm-url]
-    28→[![NPM Downloads][npm-downloads-image]][npm-downloads-url]
-    29→[![Linux Build][github-actions-ci-image]][github-actions-ci-url]
-    30→[![Test Coverage][coveralls-image]][coveralls-url]
-    31→[![OpenSSF Scorecard Badge][ossf-scorecard-badge]][ossf-scorecard-visualizer]
     34→```js
     35→import express from 'express'
     37→const app = express()
@@ -129,6 +125,13 @@ lib/
         …
         439→app.disabled = function disabled(setting) {
         …
+        443→/**
+        444→ * Enable `setting`.
+        445→ *
+        446→ * @param {String} setting
+        447→ * @return {app} for chaining
+        448→ * @public
+        449→ */
         451→app.enable = function enable(setting) {
         …
         463→app.disable = function disable(setting) {

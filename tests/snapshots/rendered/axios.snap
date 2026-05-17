@@ -3,6 +3,20 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    CODEOWNERS
+    FUNDING.yml
+    ISSUE_TEMPLATE.md
+    PULL_REQUEST_TEMPLATE.md
+    copilot-instructions.md
+    dependabot.yml
+    workflows/
+        lockfile-lint.yml
+        moderator.yml
+        publish.yml
+        release-branch.yml
+        run-ci.yml
+        verify-build-reproducibility.yml
+        zizmor.yml
 .gitignore
 .husky/
 .npmignore
@@ -19,6 +33,7 @@ COLLABORATOR_GUIDE.md
     3→As a collaborator you share in the administrative responsibility for axios. This guide covers what we expect from you and how we keep the project healthy. For the technical bar (architecture, lifecycle, security-sensitive code, conventions), see [AGENTS.md](./AGENTS.md) — it is the canonical contributor guide.
     5→## Code of Conduct
     …
+    7→You are expected to have read the [Code of Conduct](./CODE_OF_CONDUCT.md) and to help enforce it. This community should be friendly and welcoming.
     9→## Triage Issues
     …
     16→## Answer Questions
@@ -121,6 +136,8 @@ lib/
         fetch.js
         http.js
         xhr.js
+            15→export default isXHRAdapterSupported &&
+            …
     axios.js
         89→export default axios;
     cancel/
@@ -129,6 +146,8 @@ lib/
         CanceledError.js
             22→export default CanceledError;
         isCancel.js
+            3→export default function isCancel(value) {
+            …
     core/
         Axios.js
             281→export default Axios;
@@ -147,11 +166,21 @@ lib/
             8→- Handling config
         buildFullPath.js
         dispatchRequest.js
+            34→export default function dispatchRequest(config) {
+            …
         mergeConfig.js
         settle.js
         transformData.js
     defaults/
         index.js
+            1→'use strict';
+            3→import utils from '../utils.js';
+            4→import AxiosError from '../core/AxiosError.js';
+            5→import transitionalDefaults from './transitional.js';
+            6→import toFormData from '../helpers/toFormData.js';
+            7→import toURLEncodedForm from '../helpers/toURLEncodedForm.js';
+            8→import platform from '../platform/index.js';
+            9→import formDataToJSON from '../helpers/formDataToJSON.js';
             11→const own = (obj, key) => (obj != null && utils.hasOwnProp(obj, key) ? obj[key] : undefined);
             23→function stringifySafely(rawValue, parser, encoder) {
             24→  if (utils.isString(rawValue)) {
@@ -167,16 +196,20 @@ lib/
             35→  return (encoder || JSON.stringify)(rawValue);
             177→export default defaults;
         transitional.js
+            3→export default {
+            …
     env/
         README.md
             1→# axios // env
             3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
         classes/
+            FormData.js
         data.js
     helpers/
         AxiosTransformStream.js
             156→export default AxiosTransformStream;
         AxiosURLSearchParams.js
+            61→export default AxiosURLSearchParams;
         HttpStatusCode.js
             77→export default HttpStatusCode;
         README.md
@@ -186,6 +219,7 @@ lib/
             6→- Managing cookies
             7→- Parsing HTTP headers
         ZlibHeaderTransformStream.js
+            29→export default ZlibHeaderTransformStream;
         bind.js
         buildURL.js
         callbackify.js
@@ -194,27 +228,41 @@ lib/
         composeSignals.js
             57→export default composeSignals;
         cookies.js
+            4→export default platform.hasStandardBrowserEnv
+            …
         deprecatedMethod.js
         estimateDataURLDecodedBytes.js
         formDataToJSON.js
+            97→export default formDataToJSON;
         formDataToStream.js
+            119→export default formDataToStream;
         fromDataURI.js
         isAbsoluteURL.js
         isAxiosError.js
         isURLSameOrigin.js
+            3→export default platform.hasStandardBrowserEnv
+            …
         null.js
             2→export default null;
         parseHeaders.js
+            41→export default (rawHeaders) => {
+            …
         parseProtocol.js
+            3→export default function parseProtocol(url) {
+            …
         progressEventReducer.js
         readBlob.js
             15→export default readBlob;
         resolveConfig.js
+            38→export default (config) => {
+            …
         sanitizeHeaderValue.js
         shouldBypassProxy.js
         speedometer.js
             55→export default speedometer;
         spread.js
+            24→export default function spread(callback) {
+            …
         throttle.js
             44→export default throttle;
         toFormData.js
@@ -246,6 +294,9 @@ lib/
                 12→  protocols: ['http', 'https', 'file', 'blob', 'url', 'data'],
                 13→};
         common/
+            utils.js
+                46→export {
+                …
         index.js
             1→import platform from './node/index.js';
             2→import * as utils from './common/utils.js';
@@ -312,8 +363,21 @@ tests/
         cjs/
         deno/
         esm/
+            package-lock.json
+            package.json
+            tests/
+            vitest.config.js
     unit/
 tsconfig.json
+    1→{
+    2→  "compilerOptions": {
+    3→    "module": "node16",
+    4→    "lib": ["dom", "es2015"],
+    5→    "types": [],
+    6→    "strict": true,
+    7→    "noEmit": true
+    8→  }
+    9→}
 tslint.json
 vitest.config.js
 webpack.config.js

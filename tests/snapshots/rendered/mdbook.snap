@@ -55,6 +55,7 @@ crates/
         README.md
             1→# mdbook-compare
             3→This is a simple utility to compare the output of two different versions of mdbook.
+            5→To use this:
         src/
     mdbook-core/
         Cargo.toml
@@ -112,8 +113,6 @@ crates/
                 toml_ext.rs
     mdbook-driver/
         Cargo.toml
-            31→[features]
-            32→search = ["mdbook-html/search"]
         README.md
         src/
     mdbook-html/
@@ -230,6 +229,9 @@ guide/
             README.md
                 1→# User guide
                 3→This user guide provides an introduction to basic concepts of using mdBook.
+                5→- [Installation](installation.md)
+                6→- [Reading Books](reading.md)
+                7→- [Creating a Book](creating.md)
             creating.md
             installation.md
             reading.md

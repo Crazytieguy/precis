@@ -26,145 +26,144 @@ Score(3000)=0.508 I=0.595 C=0.433 ns_rows≤3K=20/46 (reached=5 partial=1 missin
 | walker |  | 364 | 7 | go package + imports in version.go |  |  | 0.420 |
 | walker |  | 379 | 15 | listing of 'ginS' |  |  | 0.421 |
 | ns | 383 |  | 162 | Minimal handler example (doc.go body) | 1.7 |  | 0.253 |
-| walker |  | 399 | 20 | README headline in ginS/README.md |  |  | 0.253 |
-| walker |  | 414 | 15 | listing of 'testdata' |  |  | 0.253 |
-| walker |  | 428 | 14 | go decl doc at version.go:8 |  |  | 0.356 |
-| walker |  | 503 | 75 | listing of 'render' |  |  | 0.372 |
-| walker |  | 512 | 9 | docs/doc.md section #0 |  |  | 0.372 |
-| walker |  | 528 | 16 | go package + imports in doc.go |  |  | 0.379 |
+| walker |  | 394 | 15 | listing of 'testdata' |  |  | 0.253 |
+| walker |  | 408 | 14 | go decl doc at version.go:8 |  |  | 0.356 |
+| walker |  | 483 | 75 | listing of 'render' |  |  | 0.372 |
+| walker |  | 492 | 9 | docs/doc.md section #0 |  |  | 0.372 |
+| walker |  | 508 | 16 | go package + imports in doc.go |  |  | 0.379 |
 | ns | 539 |  | 156 | binding/ directory listing | 1.8 |  | 0.245 |
-| walker |  | 597 | 69 | go decl names surface in path.go |  |  | 0.245 |
-| walker |  | 597 | 0 | go decl at path.go:23 |  |  | 0.245 |
-| walker |  | 597 | 0 | go decl at path.go:128 |  |  | 0.245 |
-| walker |  | 597 | 0 | go decl at path.go:155 |  |  | 0.245 |
-| walker |  | 607 | 10 | go decl body at context_appengine.go:9 |  |  | 0.245 |
-| ns | 614 |  | 75 | render/ directory listing | 1.9 |  | 0.422 |
-| walker |  | 629 | 22 | listing of 'codec/json' |  |  | 0.426 |
+| walker |  | 577 | 69 | go decl names surface in path.go |  |  | 0.245 |
+| walker |  | 577 | 0 | go decl at path.go:23 |  |  | 0.245 |
+| walker |  | 577 | 0 | go decl at path.go:128 |  |  | 0.245 |
+| walker |  | 577 | 0 | go decl at path.go:155 |  |  | 0.245 |
+| walker |  | 587 | 10 | go decl body at context_appengine.go:9 |  |  | 0.245 |
+| walker |  | 609 | 22 | listing of 'codec/json' |  |  | 0.247 |
+| ns | 614 |  | 75 | render/ directory listing | 1.9 |  | 0.426 |
 | ns | 671 |  | 57 | Subpackages — codec/json, internal, ginS | 1.10 |  | 0.434 |
-| walker |  | 726 | 97 | go decl names surface in fs.go |  |  | 0.434 |
-| walker |  | 726 | 0 | go decl at fs.go:18 |  |  | 0.434 |
-| walker |  | 726 | 0 | go decl at fs.go:33 |  |  | 0.434 |
-| walker |  | 726 | 0 | go decl at fs.go:42 |  |  | 0.434 |
-| walker |  | 739 | 13 | go decl at fs.go:13 |  |  | 0.434 |
-| walker |  | 749 | 10 | go decl at fs.go:28 |  |  | 0.434 |
-| walker |  | 769 | 20 | go decl doc at fs.go:13 |  |  | 0.434 |
-| walker |  | 790 | 21 | go decl doc at fs.go:18 |  |  | 0.434 |
-| walker |  | 836 | 46 | go decl names surface in render/redirect.go |  |  | 0.434 |
-| walker |  | 836 | 0 | go decl at render/redirect.go:20 |  |  | 0.434 |
-| walker |  | 836 | 0 | go decl at render/redirect.go:29 |  |  | 0.434 |
-| walker |  | 865 | 29 | go decl at render/redirect.go:13 |  |  | 0.434 |
-| walker |  | 883 | 18 | go decl doc at render/redirect.go:13 |  |  | 0.434 |
+| walker |  | 706 | 97 | go decl names surface in fs.go |  |  | 0.434 |
+| walker |  | 706 | 0 | go decl at fs.go:18 |  |  | 0.434 |
+| walker |  | 706 | 0 | go decl at fs.go:33 |  |  | 0.434 |
+| walker |  | 706 | 0 | go decl at fs.go:42 |  |  | 0.434 |
+| walker |  | 719 | 13 | go decl at fs.go:13 |  |  | 0.434 |
+| walker |  | 729 | 10 | go decl at fs.go:28 |  |  | 0.434 |
+| walker |  | 749 | 20 | go decl doc at fs.go:13 |  |  | 0.434 |
+| walker |  | 770 | 21 | go decl doc at fs.go:18 |  |  | 0.434 |
+| walker |  | 816 | 46 | go decl names surface in render/redirect.go |  |  | 0.434 |
+| walker |  | 816 | 0 | go decl at render/redirect.go:20 |  |  | 0.434 |
+| walker |  | 816 | 0 | go decl at render/redirect.go:29 |  |  | 0.434 |
+| walker |  | 845 | 29 | go decl at render/redirect.go:13 |  |  | 0.434 |
+| walker |  | 863 | 18 | go decl doc at render/redirect.go:13 |  |  | 0.434 |
 | ns | 900 |  | 229 | Repo root listing | 1.11 |  | 0.567 |
-| walker |  | 935 | 52 | go decl names surface in render/data.go |  |  | 0.567 |
-| walker |  | 935 | 0 | go decl at render/data.go:19 |  |  | 0.567 |
-| walker |  | 935 | 0 | go decl at render/data.go:29 |  |  | 0.567 |
-| walker |  | 955 | 20 | go decl at render/data.go:13 |  |  | 0.567 |
-| walker |  | 968 | 13 | go decl doc at render/data.go:13 |  |  | 0.567 |
-| walker |  | 984 | 16 | go decl doc at render/data.go:19 |  |  | 0.567 |
-| walker |  | 1000 | 16 | go decl doc at render/data.go:29 |  |  | 0.567 |
-| walker |  | 1017 | 17 | go decl doc at render/redirect.go:29 |  |  | 0.567 |
-| walker |  | 1031 | 14 | go decl body at render/data.go:29 |  |  | 0.567 |
-| walker |  | 1187 | 156 | listing of 'binding' |  |  | 0.727 |
-| walker |  | 1194 | 7 | go package + imports in binding/uri.go |  |  | 0.727 |
-| ns | 1203 |  | 303 | go.mod direct requires | 1.12 |  | 0.683 |
-| walker |  | 1242 | 48 | go decl names surface in binding/query.go |  |  | 0.683 |
-| walker |  | 1242 | 0 | go decl at binding/query.go:11 |  |  | 0.683 |
-| walker |  | 1242 | 0 | go decl at binding/query.go:15 |  |  | 0.683 |
-| walker |  | 1248 | 6 | go decl body at binding/query.go:11 |  |  | 0.683 |
-| ns | 1277 |  | 74 | docs/doc.md H2 outline | 1.13 |  | 0.662 |
-| walker |  | 1298 | 50 | go decl names surface in binding/uri.go |  |  | 0.662 |
-| walker |  | 1298 | 0 | go decl at binding/uri.go:9 |  |  | 0.662 |
-| walker |  | 1298 | 0 | go decl at binding/uri.go:13 |  |  | 0.662 |
-| walker |  | 1304 | 6 | go decl body at binding/uri.go:9 |  |  | 0.662 |
-| walker |  | 1326 | 22 | go decl doc at fs.go:28 |  |  | 0.662 |
+| walker |  | 988 | 125 | README headline in ginS/README.md |  |  | 0.567 |
+| walker |  | 1040 | 52 | go decl names surface in render/data.go |  |  | 0.567 |
+| walker |  | 1040 | 0 | go decl at render/data.go:19 |  |  | 0.567 |
+| walker |  | 1040 | 0 | go decl at render/data.go:29 |  |  | 0.567 |
+| walker |  | 1060 | 20 | go decl at render/data.go:13 |  |  | 0.567 |
+| walker |  | 1073 | 13 | go decl doc at render/data.go:13 |  |  | 0.567 |
+| walker |  | 1089 | 16 | go decl doc at render/data.go:19 |  |  | 0.567 |
+| walker |  | 1105 | 16 | go decl doc at render/data.go:29 |  |  | 0.567 |
+| walker |  | 1122 | 17 | go decl doc at render/redirect.go:29 |  |  | 0.567 |
+| walker |  | 1136 | 14 | go decl body at render/data.go:29 |  |  | 0.567 |
+| ns | 1203 |  | 303 | go.mod direct requires | 1.12 |  | 0.533 |
+| ns | 1277 |  | 74 | docs/doc.md H2 outline | 1.13 |  | 0.517 |
+| walker |  | 1292 | 156 | listing of 'binding' |  |  | 0.663 |
+| walker |  | 1299 | 7 | go package + imports in binding/uri.go |  |  | 0.663 |
 | ns | 1327 |  | 50 | testdata + docs + examples listings | 1.14 |  | 0.643 |
-| walker |  | 1359 | 33 | go package + imports in fs.go |  |  | 0.643 |
-| walker |  | 1377 | 18 | go decl doc at fs.go:33 |  |  | 0.643 |
-| walker |  | 1393 | 16 | go package + imports in binding/binding.go |  |  | 0.643 |
-| walker |  | 1409 | 16 | go package + imports in binding/binding_nomsgpack.go |  |  | 0.643 |
-| ns | 1419 |  | 92 | HandlerFunc / HandlersChain / OptionFunc types | 2.1 |  | 0.627 |
-| walker |  | 1425 | 16 | go package + imports in binding/query.go |  |  | 0.627 |
-| walker |  | 1441 | 16 | go package + imports in render/pdf.go |  |  | 0.627 |
-| walker |  | 1457 | 16 | go package + imports in render/render.go |  |  | 0.627 |
-| walker |  | 1478 | 21 | go decl doc at render/redirect.go:20 |  |  | 0.627 |
+| walker |  | 1347 | 48 | go decl names surface in binding/query.go |  |  | 0.643 |
+| walker |  | 1347 | 0 | go decl at binding/query.go:11 |  |  | 0.643 |
+| walker |  | 1347 | 0 | go decl at binding/query.go:15 |  |  | 0.643 |
+| walker |  | 1353 | 6 | go decl body at binding/query.go:11 |  |  | 0.643 |
+| walker |  | 1403 | 50 | go decl names surface in binding/uri.go |  |  | 0.643 |
+| walker |  | 1403 | 0 | go decl at binding/uri.go:9 |  |  | 0.643 |
+| walker |  | 1403 | 0 | go decl at binding/uri.go:13 |  |  | 0.643 |
+| walker |  | 1409 | 6 | go decl body at binding/uri.go:9 |  |  | 0.643 |
+| ns | 1419 |  | 92 | HandlerFunc / HandlersChain / OptionFunc types | 2.1 |  | 0.628 |
+| walker |  | 1431 | 22 | go decl doc at fs.go:28 |  |  | 0.628 |
+| walker |  | 1464 | 33 | go package + imports in fs.go |  |  | 0.628 |
+| walker |  | 1482 | 18 | go decl doc at fs.go:33 |  |  | 0.628 |
+| walker |  | 1498 | 16 | go package + imports in binding/binding.go |  |  | 0.628 |
 | ns | 1504 |  | 85 | RouterGroup struct | 2.2 |  | 0.613 |
-| walker |  | 1544 | 66 | go decl names surface in render/pdf.go |  |  | 0.613 |
-| walker |  | 1544 | 0 | go decl at render/pdf.go:17 |  |  | 0.613 |
-| walker |  | 1544 | 0 | go decl at render/pdf.go:24 |  |  | 0.613 |
-| walker |  | 1555 | 11 | go decl at render/pdf.go:10 |  |  | 0.613 |
-| walker |  | 1568 | 13 | go decl doc at render/pdf.go:10 |  |  | 0.613 |
-| walker |  | 1579 | 11 | go decl body at render/pdf.go:24 |  |  | 0.613 |
-| walker |  | 1596 | 17 | go decl doc at render/pdf.go:17 |  |  | 0.613 |
-| walker |  | 1614 | 18 | go decl doc at render/pdf.go:24 |  |  | 0.613 |
-| walker |  | 1681 | 67 | go decl names surface in render/bson.go |  |  | 0.613 |
-| walker |  | 1681 | 0 | go decl at render/bson.go:21 |  |  | 0.613 |
-| walker |  | 1681 | 0 | go decl at render/bson.go:32 |  |  | 0.613 |
-| walker |  | 1691 | 10 | go decl at render/bson.go:14 |  |  | 0.613 |
-| walker |  | 1703 | 12 | go decl doc at render/bson.go:14 |  |  | 0.613 |
-| walker |  | 1714 | 11 | go decl body at render/bson.go:32 |  |  | 0.613 |
-| walker |  | 1733 | 19 | go decl doc at render/bson.go:32 |  |  | 0.613 |
-| walker |  | 1772 | 39 | go package + imports in deprecated.go |  |  | 0.613 |
-| ns | 1831 |  | 327 | IRouter / IRoutes interfaces | 2.3 |  | 0.571 |
-| walker |  | 1843 | 71 | go decl names surface in binding/protobuf.go |  |  | 0.571 |
-| walker |  | 1843 | 0 | go decl at binding/protobuf.go:17 |  |  | 0.571 |
-| walker |  | 1843 | 0 | go decl at binding/protobuf.go:21 |  |  | 0.571 |
-| walker |  | 1843 | 0 | go decl at binding/protobuf.go:29 |  |  | 0.571 |
-| walker |  | 1849 | 6 | go decl body at binding/protobuf.go:17 |  |  | 0.571 |
-| walker |  | 1920 | 71 | go decl names surface in render/protobuf.go |  |  | 0.571 |
-| walker |  | 1920 | 0 | go decl at render/protobuf.go:21 |  |  | 0.571 |
-| walker |  | 1920 | 0 | go decl at render/protobuf.go:34 |  |  | 0.571 |
-| walker |  | 1930 | 10 | go decl at render/protobuf.go:14 |  |  | 0.571 |
-| walker |  | 1943 | 13 | go decl doc at render/protobuf.go:14 |  |  | 0.571 |
-| walker |  | 1954 | 11 | go decl body at render/protobuf.go:34 |  |  | 0.571 |
-| walker |  | 1972 | 18 | go decl doc at render/protobuf.go:34 |  |  | 0.571 |
-| walker |  | 2043 | 71 | go decl names surface in render/reader.go |  |  | 0.571 |
-| walker |  | 2043 | 0 | go decl at render/reader.go:22 |  |  | 0.571 |
-| walker |  | 2043 | 0 | go decl at render/reader.go:36 |  |  | 0.571 |
-| walker |  | 2043 | 0 | go decl at render/reader.go:41 |  |  | 0.571 |
-| walker |  | 2059 | 16 | go decl doc at render/reader.go:36 |  |  | 0.571 |
-| ns | 2079 |  | 248 | RouterGroup verb-shortcut signatures | 2.4 |  | 0.557 |
-| walker |  | 2101 | 42 | go decl at render/reader.go:14 |  |  | 0.557 |
-| walker |  | 2123 | 22 | go decl doc at render/reader.go:14 |  |  | 0.557 |
-| walker |  | 2137 | 14 | go decl body at render/reader.go:36 |  |  | 0.557 |
-| walker |  | 2155 | 18 | go decl doc at render/reader.go:22 |  |  | 0.557 |
-| walker |  | 2226 | 71 | go decl names surface in render/xml.go |  |  | 0.557 |
-| walker |  | 2226 | 0 | go decl at render/xml.go:20 |  |  | 0.557 |
-| walker |  | 2226 | 0 | go decl at render/xml.go:26 |  |  | 0.557 |
-| walker |  | 2236 | 10 | go decl at render/xml.go:13 |  |  | 0.557 |
+| walker |  | 1514 | 16 | go package + imports in binding/binding_nomsgpack.go |  |  | 0.613 |
+| walker |  | 1530 | 16 | go package + imports in binding/query.go |  |  | 0.613 |
+| walker |  | 1546 | 16 | go package + imports in render/pdf.go |  |  | 0.613 |
+| walker |  | 1562 | 16 | go package + imports in render/render.go |  |  | 0.613 |
+| walker |  | 1583 | 21 | go decl doc at render/redirect.go:20 |  |  | 0.613 |
+| walker |  | 1649 | 66 | go decl names surface in render/pdf.go |  |  | 0.613 |
+| walker |  | 1649 | 0 | go decl at render/pdf.go:17 |  |  | 0.613 |
+| walker |  | 1649 | 0 | go decl at render/pdf.go:24 |  |  | 0.613 |
+| walker |  | 1660 | 11 | go decl at render/pdf.go:10 |  |  | 0.613 |
+| walker |  | 1673 | 13 | go decl doc at render/pdf.go:10 |  |  | 0.613 |
+| walker |  | 1684 | 11 | go decl body at render/pdf.go:24 |  |  | 0.613 |
+| walker |  | 1701 | 17 | go decl doc at render/pdf.go:17 |  |  | 0.613 |
+| walker |  | 1719 | 18 | go decl doc at render/pdf.go:24 |  |  | 0.613 |
+| walker |  | 1786 | 67 | go decl names surface in render/bson.go |  |  | 0.613 |
+| walker |  | 1786 | 0 | go decl at render/bson.go:21 |  |  | 0.613 |
+| walker |  | 1786 | 0 | go decl at render/bson.go:32 |  |  | 0.613 |
+| walker |  | 1796 | 10 | go decl at render/bson.go:14 |  |  | 0.613 |
+| walker |  | 1808 | 12 | go decl doc at render/bson.go:14 |  |  | 0.613 |
+| walker |  | 1819 | 11 | go decl body at render/bson.go:32 |  |  | 0.613 |
+| ns | 1831 |  | 327 | IRouter / IRoutes interfaces | 2.3 |  | 0.572 |
+| walker |  | 1838 | 19 | go decl doc at render/bson.go:32 |  |  | 0.572 |
+| walker |  | 1877 | 39 | go package + imports in deprecated.go |  |  | 0.572 |
+| walker |  | 1948 | 71 | go decl names surface in binding/protobuf.go |  |  | 0.572 |
+| walker |  | 1948 | 0 | go decl at binding/protobuf.go:17 |  |  | 0.572 |
+| walker |  | 1948 | 0 | go decl at binding/protobuf.go:21 |  |  | 0.572 |
+| walker |  | 1948 | 0 | go decl at binding/protobuf.go:29 |  |  | 0.572 |
+| walker |  | 1954 | 6 | go decl body at binding/protobuf.go:17 |  |  | 0.572 |
+| walker |  | 2025 | 71 | go decl names surface in render/protobuf.go |  |  | 0.572 |
+| walker |  | 2025 | 0 | go decl at render/protobuf.go:21 |  |  | 0.572 |
+| walker |  | 2025 | 0 | go decl at render/protobuf.go:34 |  |  | 0.572 |
+| walker |  | 2035 | 10 | go decl at render/protobuf.go:14 |  |  | 0.572 |
+| walker |  | 2048 | 13 | go decl doc at render/protobuf.go:14 |  |  | 0.572 |
+| walker |  | 2059 | 11 | go decl body at render/protobuf.go:34 |  |  | 0.572 |
+| walker |  | 2077 | 18 | go decl doc at render/protobuf.go:34 |  |  | 0.572 |
+| ns | 2079 |  | 248 | RouterGroup verb-shortcut signatures | 2.4 |  | 0.558 |
+| walker |  | 2148 | 71 | go decl names surface in render/reader.go |  |  | 0.558 |
+| walker |  | 2148 | 0 | go decl at render/reader.go:22 |  |  | 0.558 |
+| walker |  | 2148 | 0 | go decl at render/reader.go:36 |  |  | 0.558 |
+| walker |  | 2148 | 0 | go decl at render/reader.go:41 |  |  | 0.558 |
+| walker |  | 2164 | 16 | go decl doc at render/reader.go:36 |  |  | 0.558 |
+| walker |  | 2206 | 42 | go decl at render/reader.go:14 |  |  | 0.558 |
+| walker |  | 2228 | 22 | go decl doc at render/reader.go:14 |  |  | 0.558 |
 | ns | 2237 |  | 158 | RouterGroup Use / Group / Static* signatures | 2.5 |  | 0.548 |
-| walker |  | 2248 | 12 | go decl doc at render/xml.go:13 |  |  | 0.548 |
-| walker |  | 2259 | 11 | go decl body at render/xml.go:26 |  |  | 0.548 |
-| walker |  | 2277 | 18 | go decl doc at render/xml.go:26 |  |  | 0.548 |
-| walker |  | 2300 | 23 | go decl doc at render/xml.go:20 |  |  | 0.548 |
-| walker |  | 2349 | 49 | go decl doc at deprecated.go:17 |  |  | 0.548 |
-| walker |  | 2421 | 72 | go decl names surface in render/yaml.go |  |  | 0.548 |
-| walker |  | 2421 | 0 | go decl at render/yaml.go:21 |  |  | 0.548 |
-| walker |  | 2421 | 0 | go decl at render/yaml.go:34 |  |  | 0.548 |
-| walker |  | 2431 | 10 | go decl at render/yaml.go:14 |  |  | 0.548 |
-| walker |  | 2443 | 12 | go decl doc at render/yaml.go:14 |  |  | 0.548 |
-| walker |  | 2454 | 11 | go decl body at render/yaml.go:34 |  |  | 0.548 |
-| walker |  | 2473 | 19 | go decl doc at render/yaml.go:34 |  |  | 0.548 |
-| walker |  | 2513 | 40 | go decl names surface in codec/json/api.go |  |  | 0.548 |
-| walker |  | 2513 | 0 | go decl at codec/json/api.go:10 |  |  | 0.548 |
-| walker |  | 2586 | 73 | go decl names surface in binding/bson.go |  |  | 0.548 |
-| walker |  | 2586 | 0 | go decl at binding/bson.go:16 |  |  | 0.548 |
-| walker |  | 2586 | 0 | go decl at binding/bson.go:20 |  |  | 0.548 |
-| walker |  | 2586 | 0 | go decl at binding/bson.go:28 |  |  | 0.548 |
-| walker |  | 2593 | 7 | go decl body at binding/bson.go:16 |  |  | 0.548 |
-| walker |  | 2617 | 24 | go decl doc at render/bson.go:21 |  |  | 0.548 |
-| walker |  | 2641 | 24 | go decl doc at render/protobuf.go:21 |  |  | 0.548 |
-| walker |  | 2665 | 24 | go decl doc at render/yaml.go:21 |  |  | 0.548 |
+| walker |  | 2242 | 14 | go decl body at render/reader.go:36 |  |  | 0.548 |
+| walker |  | 2260 | 18 | go decl doc at render/reader.go:22 |  |  | 0.548 |
+| walker |  | 2331 | 71 | go decl names surface in render/xml.go |  |  | 0.548 |
+| walker |  | 2331 | 0 | go decl at render/xml.go:20 |  |  | 0.548 |
+| walker |  | 2331 | 0 | go decl at render/xml.go:26 |  |  | 0.548 |
+| walker |  | 2341 | 10 | go decl at render/xml.go:13 |  |  | 0.548 |
+| walker |  | 2353 | 12 | go decl doc at render/xml.go:13 |  |  | 0.548 |
+| walker |  | 2364 | 11 | go decl body at render/xml.go:26 |  |  | 0.548 |
+| walker |  | 2382 | 18 | go decl doc at render/xml.go:26 |  |  | 0.548 |
+| walker |  | 2405 | 23 | go decl doc at render/xml.go:20 |  |  | 0.548 |
+| walker |  | 2454 | 49 | go decl doc at deprecated.go:17 |  |  | 0.548 |
+| walker |  | 2526 | 72 | go decl names surface in render/yaml.go |  |  | 0.548 |
+| walker |  | 2526 | 0 | go decl at render/yaml.go:21 |  |  | 0.548 |
+| walker |  | 2526 | 0 | go decl at render/yaml.go:34 |  |  | 0.548 |
+| walker |  | 2536 | 10 | go decl at render/yaml.go:14 |  |  | 0.548 |
+| walker |  | 2548 | 12 | go decl doc at render/yaml.go:14 |  |  | 0.548 |
+| walker |  | 2559 | 11 | go decl body at render/yaml.go:34 |  |  | 0.548 |
+| walker |  | 2578 | 19 | go decl doc at render/yaml.go:34 |  |  | 0.548 |
+| walker |  | 2618 | 40 | go decl names surface in codec/json/api.go |  |  | 0.548 |
+| walker |  | 2618 | 0 | go decl at codec/json/api.go:10 |  |  | 0.548 |
+| walker |  | 2691 | 73 | go decl names surface in binding/bson.go |  |  | 0.548 |
+| walker |  | 2691 | 0 | go decl at binding/bson.go:16 |  |  | 0.548 |
+| walker |  | 2691 | 0 | go decl at binding/bson.go:20 |  |  | 0.548 |
+| walker |  | 2691 | 0 | go decl at binding/bson.go:28 |  |  | 0.548 |
+| walker |  | 2698 | 7 | go decl body at binding/bson.go:16 |  |  | 0.548 |
+| walker |  | 2722 | 24 | go decl doc at render/bson.go:21 |  |  | 0.548 |
+| walker |  | 2746 | 24 | go decl doc at render/protobuf.go:21 |  |  | 0.548 |
+| walker |  | 2770 | 24 | go decl doc at render/yaml.go:21 |  |  | 0.548 |
 | ns | 2787 |  | 550 | Engine struct identity + config-field doc | 2.6 |  | 0.508 |
-| walker |  | 2854 | 189 | headings outline in README.md |  |  | 0.508 |
-| walker |  | 2931 | 77 | go decl names surface in render/toml.go |  |  | 0.508 |
-| walker |  | 2931 | 0 | go decl at render/toml.go:21 |  |  | 0.508 |
-| walker |  | 2931 | 0 | go decl at render/toml.go:34 |  |  | 0.508 |
-| walker |  | 2941 | 10 | go decl at render/toml.go:14 |  |  | 0.508 |
-| walker |  | 2954 | 13 | go decl doc at render/toml.go:14 |  |  | 0.508 |
-| walker |  | 2966 | 12 | go decl body at render/toml.go:34 |  |  | 0.508 |
-| walker |  | 2987 | 21 | go decl doc at render/toml.go:34 |  |  | 0.508 |
-| walker |  | 3012 | 25 | go decl doc at render/toml.go:21 |  |  | 0.508 |
-| walker |  | 3117 | 105 | ginS/README.md section #0 |  |  | 0.508 |
+| walker |  | 2959 | 189 | headings outline in README.md |  |  | 0.508 |
+| walker |  | 3036 | 77 | go decl names surface in render/toml.go |  |  | 0.508 |
+| walker |  | 3036 | 0 | go decl at render/toml.go:21 |  |  | 0.508 |
+| walker |  | 3036 | 0 | go decl at render/toml.go:34 |  |  | 0.508 |
+| walker |  | 3046 | 10 | go decl at render/toml.go:14 |  |  | 0.508 |
+| walker |  | 3059 | 13 | go decl doc at render/toml.go:14 |  |  | 0.508 |
+| walker |  | 3071 | 12 | go decl body at render/toml.go:34 |  |  | 0.508 |
+| walker |  | 3092 | 21 | go decl doc at render/toml.go:34 |  |  | 0.508 |
+| walker |  | 3117 | 25 | go decl doc at render/toml.go:21 |  |  | 0.508 |
 | walker |  | 3126 | 9 | go decl body at binding/bson.go:28 |  |  | 0.508 |
 | walker |  | 3138 | 12 | go decl doc at codec/json/api.go:10 |  |  | 0.508 |
 | walker |  | 3314 | 176 | go decl names surface in auth.go |  |  | 0.508 |

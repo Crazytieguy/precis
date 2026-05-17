@@ -91,7 +91,17 @@ cmd/
             4→var Version = "dev"
 database/
     cassandra/
+        README.md
+        cassandra.go
+        cassandra_test.go
+        examples/
     clickhouse/
+        README.md
+            1→# ClickHouse
+            3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
+        clickhouse.go
+        clickhouse_test.go
+        examples/
     cockroachdb/
     crate/
     driver.go
@@ -110,8 +120,6 @@ database/
     multistmt/
     mysql/
         README.md
-            1→# MySQL
-            3→`mysql://user:password@tcp(host:port)/dbname?query`
         examples/
         mysql.go
         mysql_test.go
@@ -128,8 +136,6 @@ database/
     sqlcipher/
     sqlite/
         README.md
-            1→# sqlite
-            3→`sqlite://path/to/database?query`
         examples/
         sqlite.go
         sqlite_test.go
@@ -289,8 +295,6 @@ source/
     gitlab/
         .gitignore
         README.md
-            1→# gitlab
-            3→`gitlab://user:personal-access-token@gitlab_url/project_id/path#ref`
         examples/
         gitlab.go
         gitlab_test.go

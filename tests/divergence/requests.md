@@ -6,36 +6,36 @@ Score(3000)=0.636 I=0.866 C=0.468 ns_rows≤3K=19/48 (reached=8 partial=0 missin
 | ns | 74 |  | 74 | Root listing | 1.1 |  | 1.000 |
 | walker |  | 77 | 3 | listing of 'src' |  |  | 1.000 |
 | ns | 98 |  | 24 | README one-line description | 1.2 |  | 0.944 |
-| walker |  | 101 | 24 | README headline in README.md |  |  | 1.000 |
-| ns | 124 |  | 26 | Package title + version | 1.3 |  | 0.949 |
-| walker |  | 141 | 40 | headings outline in README.md |  |  | 0.949 |
-| ns | 214 |  | 90 | src/requests/ listing | 1.4 |  | 0.659 |
-| walker |  | 231 | 90 | listing of 'src/requests' |  |  | 0.968 |
-| ns | 354 |  | 140 | pyproject: name, description, Python floor, deps | 1.5 |  | 0.838 |
-| ns | 496 |  | 142 | README usage snippet | 1.6 |  | 0.734 |
-| ns | 722 |  | 226 | Public re-exports (__all__) from package __init__ | 1.7 |  | 0.605 |
-| ns | 881 |  | 159 | Package import wiring (api, exceptions, models, sessions, status_codes) | 1.8 |  | 0.553 |
-| ns | 1229 |  | 348 | Crate-doc lede (package docstring) | 1.9 |  | 0.474 |
-| walker |  | 1261 | 1030 | python imports in src/requests/__init__.py |  |  | 0.830 |
-| walker |  | 1295 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.830 |
-| ns | 1308 |  | 79 | api.py module docstring | 2.1 |  | 0.801 |
-| walker |  | 1309 | 14 | python decl at src/requests/__init__.py:99 |  |  | 0.801 |
-| walker |  | 1354 | 45 | python decl at src/requests/__init__.py:60 |  |  | 0.801 |
-| walker |  | 1388 | 34 | listing of 'ext' |  |  | 0.801 |
-| ns | 1424 |  | 116 | api.py: all eight verb names | 2.2 |  | 0.778 |
-| ns | 1459 |  | 35 | api.request() full signature | 2.3 | 2.2 | 0.770 |
-| walker |  | 1460 | 72 | [dependencies] in pyproject.toml |  |  | 0.783 |
-| walker |  | 1476 | 16 | python imports in setup.py |  |  | 0.783 |
-| walker |  | 1528 | 52 | [package] in pyproject.toml |  |  | 0.817 |
-| ns | 1549 |  | 90 | api.request() body — delegates to a one-shot Session | 2.4 | 2.3 | 0.803 |
-| walker |  | 1582 | 54 | listing of 'docs' |  |  | 0.803 |
-| walker |  | 1603 | 21 | listing of 'docs/user' |  |  | 0.803 |
-| walker |  | 1653 | 50 | README.md section #1 |  |  | 0.803 |
-| walker |  | 1691 | 38 | listing of 'docs/community' |  |  | 0.803 |
-| walker |  | 1705 | 14 | listing of 'docs/_themes' |  |  | 0.770 |
-| ns | 1705 |  | 156 | Session class header + attribute declarations | 2.5 |  | 0.770 |
-| walker |  | 1709 | 4 | listing of 'docs/_templates' |  |  | 0.770 |
-| walker |  | 1995 | 286 | README.md section #0 |  |  | 0.829 |
+| ns | 124 |  | 26 | Package title + version | 1.3 |  | 0.896 |
+| ns | 214 |  | 90 | src/requests/ listing | 1.4 |  | 0.622 |
+| walker |  | 243 | 166 | README headline in README.md |  |  | 0.678 |
+| walker |  | 283 | 40 | headings outline in README.md |  |  | 0.678 |
+| ns | 354 |  | 140 | pyproject: name, description, Python floor, deps | 1.5 |  | 0.587 |
+| walker |  | 373 | 90 | listing of 'src/requests' |  |  | 0.859 |
+| ns | 496 |  | 142 | README usage snippet | 1.6 |  | 0.866 |
+| ns | 722 |  | 226 | Public re-exports (__all__) from package __init__ | 1.7 |  | 0.714 |
+| ns | 881 |  | 159 | Package import wiring (api, exceptions, models, sessions, status_codes) | 1.8 |  | 0.653 |
+| ns | 1229 |  | 348 | Crate-doc lede (package docstring) | 1.9 |  | 0.559 |
+| ns | 1308 |  | 79 | api.py module docstring | 2.1 |  | 0.540 |
+| walker |  | 1403 | 1030 | python imports in src/requests/__init__.py |  |  | 0.868 |
+| ns | 1424 |  | 116 | api.py: all eight verb names | 2.2 |  | 0.843 |
+| walker |  | 1437 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.843 |
+| walker |  | 1451 | 14 | python decl at src/requests/__init__.py:99 |  |  | 0.843 |
+| ns | 1459 |  | 35 | api.request() full signature | 2.3 | 2.2 | 0.834 |
+| walker |  | 1496 | 45 | python decl at src/requests/__init__.py:60 |  |  | 0.834 |
+| walker |  | 1530 | 34 | listing of 'ext' |  |  | 0.834 |
+| ns | 1549 |  | 90 | api.request() body — delegates to a one-shot Session | 2.4 | 2.3 | 0.820 |
+| walker |  | 1602 | 72 | [dependencies] in pyproject.toml |  |  | 0.832 |
+| walker |  | 1618 | 16 | python imports in setup.py |  |  | 0.832 |
+| walker |  | 1670 | 52 | [package] in pyproject.toml |  |  | 0.865 |
+| ns | 1705 |  | 156 | Session class header + attribute declarations | 2.5 |  | 0.829 |
+| walker |  | 1814 | 144 | README.md section #0 |  |  | 0.829 |
+| walker |  | 1868 | 54 | listing of 'docs' |  |  | 0.829 |
+| walker |  | 1889 | 21 | listing of 'docs/user' |  |  | 0.829 |
+| walker |  | 1939 | 50 | README.md section #1 |  |  | 0.829 |
+| walker |  | 1977 | 38 | listing of 'docs/community' |  |  | 0.829 |
+| walker |  | 1991 | 14 | listing of 'docs/_themes' |  |  | 0.829 |
+| walker |  | 1995 | 4 | listing of 'docs/_templates' |  |  | 0.829 |
 | walker |  | 2029 | 34 | python decl names surface in src/requests/help.py |  |  | 0.829 |
 | walker |  | 2029 | 0 | python decl at src/requests/help.py:37 |  |  | 0.829 |
 | walker |  | 2029 | 0 | python decl at src/requests/help.py:69 |  |  | 0.829 |

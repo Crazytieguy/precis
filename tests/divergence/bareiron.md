@@ -4,36 +4,36 @@ Score(3000)=0.595 I=0.809 C=0.437 ns_rows≤3K=21/42 (reached=8 partial=4 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 29 | 29 | listing of '.' |  |  | 1.000 |
 | ns | 29 |  | 29 | Top-level fixture tree | 1.1 |  | 1.000 |
-| walker |  | 53 | 24 | README headline in README.md |  |  | 1.000 |
-| ns | 53 |  | 24 | README title + tagline | 1.2 |  | 1.000 |
-| ns | 79 |  | 26 | README — Minecraft + protocol versions | 1.3 |  | 0.896 |
-| walker |  | 104 | 51 | headings outline in README.md |  |  | 0.896 |
-| ns | 146 |  | 67 | README — project priorities | 1.4 |  | 0.854 |
-| walker |  | 152 | 48 | listing of 'src' |  |  | 0.886 |
-| walker |  | 159 | 7 | listing of '.github' |  |  | 0.886 |
-| ns | 194 |  | 48 | src/ listing | 2.1 |  | 0.909 |
-| walker |  | 197 | 38 | listing of 'include' |  |  | 0.938 |
-| walker |  | 219 | 22 | c decl names surface in include/structures.h |  |  | 0.938 |
-| ns | 232 |  | 38 | include/ listing | 2.2 |  | 0.928 |
-| walker |  | 263 | 44 | c decl names surface in include/crafting.h |  |  | 0.933 |
-| walker |  | 281 | 18 | c decl names surface #1 in include/tools.h |  |  | 0.933 |
-| walker |  | 291 | 10 | c includes in include/crafting.h |  |  | 0.935 |
-| ns | 298 |  | 66 | Connection state-machine constants (STATE_*) | 3.1 |  | 0.846 |
-| walker |  | 301 | 10 | c includes in include/serialize.h |  |  | 0.846 |
-| walker |  | 311 | 10 | c includes in include/varnum.h |  |  | 0.846 |
-| walker |  | 321 | 10 | c includes in include/worldgen.h |  |  | 0.846 |
-| ns | 384 |  | 86 | Tools — mod_abs / div_floor inline helpers | 3.2 |  | 0.777 |
-| walker |  | 416 | 95 | c decl names surface in include/varnum.h |  |  | 0.786 |
-| walker |  | 436 | 20 | c includes in include/globals.h |  |  | 0.786 |
-| walker |  | 456 | 20 | c includes in include/procedures.h |  |  | 0.786 |
-| walker |  | 476 | 20 | c includes in include/tools.h |  |  | 0.786 |
-| ns | 500 |  | 116 | Core runtime config: PORT / MAX_PLAYERS / MAX_MOBS | 3.3 |  | 0.705 |
-| ns | 653 |  | 153 | structures.h + crafting.h — full (tiny) | 3.4 |  | 0.648 |
-| walker |  | 665 | 189 | c decl names surface in include/worldgen.h |  |  | 0.652 |
-| walker |  | 707 | 42 | c decl at include/worldgen.h:6 |  |  | 0.653 |
-| walker |  | 749 | 42 | c decl at include/worldgen.h:13 |  |  | 0.656 |
-| ns | 803 |  | 150 | varnum.h — full | 3.5 |  | 0.648 |
-| walker |  | 876 | 127 | README.md section #0 |  |  | 0.689 |
+| ns | 53 |  | 24 | README title + tagline | 1.2 |  | 0.875 |
+| ns | 79 |  | 26 | README — Minecraft + protocol versions | 1.3 |  | 0.785 |
+| walker |  | 120 | 91 | README headline in README.md |  |  | 0.907 |
+| ns | 146 |  | 67 | README — project priorities | 1.4 |  | 0.903 |
+| walker |  | 171 | 51 | headings outline in README.md |  |  | 0.903 |
+| ns | 194 |  | 48 | src/ listing | 2.1 |  | 0.624 |
+| walker |  | 231 | 60 | README.md section #0 |  |  | 0.691 |
+| ns | 232 |  | 38 | include/ listing | 2.2 |  | 0.570 |
+| walker |  | 279 | 48 | listing of 'src' |  |  | 0.825 |
+| walker |  | 286 | 7 | listing of '.github' |  |  | 0.825 |
+| ns | 298 |  | 66 | Connection state-machine constants (STATE_*) | 3.1 |  | 0.747 |
+| walker |  | 324 | 38 | listing of 'include' |  |  | 0.905 |
+| walker |  | 346 | 22 | c decl names surface in include/structures.h |  |  | 0.905 |
+| ns | 384 |  | 86 | Tools — mod_abs / div_floor inline helpers | 3.2 |  | 0.831 |
+| walker |  | 390 | 44 | c decl names surface in include/crafting.h |  |  | 0.835 |
+| walker |  | 408 | 18 | c decl names surface #1 in include/tools.h |  |  | 0.835 |
+| walker |  | 418 | 10 | c includes in include/crafting.h |  |  | 0.837 |
+| walker |  | 428 | 10 | c includes in include/serialize.h |  |  | 0.837 |
+| walker |  | 438 | 10 | c includes in include/varnum.h |  |  | 0.837 |
+| walker |  | 448 | 10 | c includes in include/worldgen.h |  |  | 0.837 |
+| ns | 500 |  | 116 | Core runtime config: PORT / MAX_PLAYERS / MAX_MOBS | 3.3 |  | 0.750 |
+| walker |  | 543 | 95 | c decl names surface in include/varnum.h |  |  | 0.759 |
+| walker |  | 563 | 20 | c includes in include/globals.h |  |  | 0.759 |
+| walker |  | 583 | 20 | c includes in include/procedures.h |  |  | 0.759 |
+| walker |  | 603 | 20 | c includes in include/tools.h |  |  | 0.759 |
+| ns | 653 |  | 153 | structures.h + crafting.h — full (tiny) | 3.4 |  | 0.694 |
+| walker |  | 792 | 189 | c decl names surface in include/worldgen.h |  |  | 0.698 |
+| ns | 803 |  | 150 | varnum.h — full | 3.5 |  | 0.685 |
+| walker |  | 834 | 42 | c decl at include/worldgen.h:6 |  |  | 0.687 |
+| walker |  | 876 | 42 | c decl at include/worldgen.h:13 |  |  | 0.689 |
 | ns | 899 |  | 96 | README — Configuration intro paragraph | 3.6 |  | 0.671 |
 | walker |  | 901 | 25 | c decl names surface in src/main.c |  |  | 0.671 |
 | walker |  | 901 | 0 | c decl at src/main.c:68 |  |  | 0.671 |

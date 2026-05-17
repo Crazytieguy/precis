@@ -7,29 +7,29 @@ Score(3000)=0.604 I=0.727 C=0.502 ns_rows≤3K=18/40 (reached=6 partial=6 missin
 | walker |  | 62 | 12 | lua decl names surface in make.lua |  |  | 0.828 |
 | walker |  | 62 | 0 | lua decl at make.lua:4 |  |  | 0.828 |
 | ns | 62 |  | 50 | Repo top-level listing | 1.2 |  | 0.828 |
-| walker |  | 96 | 34 | README headline in README.md |  |  | 1.000 |
-| walker |  | 107 | 11 | listing of 'bin' |  |  | 1.000 |
-| walker |  | 121 | 14 | listing of 'asset' |  |  | 1.000 |
-| walker |  | 138 | 17 | listing of 'web' |  |  | 1.000 |
+| walker |  | 114 | 52 | README headline in README.md |  |  | 1.000 |
+| walker |  | 125 | 11 | listing of 'bin' |  |  | 1.000 |
+| walker |  | 139 | 14 | listing of 'asset' |  |  | 1.000 |
 | ns | 143 |  | 81 | README one-line description | 1.3 |  | 0.915 |
-| walker |  | 159 | 21 | listing of 'clibs' |  |  | 0.915 |
+| walker |  | 156 | 17 | listing of 'web' |  |  | 0.915 |
+| walker |  | 177 | 21 | listing of 'clibs' |  |  | 0.915 |
 | ns | 181 |  | 38 | test/hello.lua + hello.game — smallest viable entry | 1.4 |  | 0.828 |
-| walker |  | 182 | 23 | listing of 'script' |  |  | 0.828 |
-| walker |  | 193 | 11 | lua decl names surface in script/hashversion.lua |  |  | 0.828 |
-| walker |  | 193 | 0 | lua decl at script/hashversion.lua:1 |  |  | 0.828 |
-| walker |  | 205 | 12 | lua decl names surface in script/datalist2c.lua |  |  | 0.828 |
-| walker |  | 205 | 0 | lua decl at script/datalist2c.lua:14 |  |  | 0.828 |
-| walker |  | 217 | 12 | lua decl names surface in script/lua2c.lua |  |  | 0.828 |
-| walker |  | 217 | 0 | lua decl at script/lua2c.lua:13 |  |  | 0.828 |
+| walker |  | 200 | 23 | listing of 'script' |  |  | 0.828 |
+| walker |  | 211 | 11 | lua decl names surface in script/hashversion.lua |  |  | 0.828 |
+| walker |  | 211 | 0 | lua decl at script/hashversion.lua:1 |  |  | 0.828 |
+| walker |  | 223 | 12 | lua decl names surface in script/datalist2c.lua |  |  | 0.828 |
+| walker |  | 223 | 0 | lua decl at script/datalist2c.lua:14 |  |  | 0.828 |
+| walker |  | 235 | 12 | lua decl names surface in script/lua2c.lua |  |  | 0.828 |
+| walker |  | 235 | 0 | lua decl at script/lua2c.lua:13 |  |  | 0.828 |
 | ns | 262 |  | 81 | src/lualib/ + src/service/ listings | 2.1 |  | 0.603 |
-| walker |  | 286 | 69 | headings outline in README.md |  |  | 0.603 |
-| walker |  | 302 | 16 | listing of 'web/content' |  |  | 0.603 |
-| walker |  | 321 | 19 | listing of 'web/assets' |  |  | 0.603 |
-| walker |  | 344 | 23 | README.md section #5 |  |  | 0.603 |
+| walker |  | 304 | 69 | headings outline in README.md |  |  | 0.603 |
+| walker |  | 320 | 16 | listing of 'web/content' |  |  | 0.603 |
 | ns | 353 |  | 91 | docs/ listing | 2.2 |  | 0.482 |
-| walker |  | 386 | 42 | README.md section #1 |  |  | 0.482 |
-| ns | 441 |  | 88 | test/ listing | 2.3 |  | 0.408 |
-| walker |  | 510 | 124 | README.md section #0 |  |  | 0.433 |
+| walker |  | 426 | 106 | README.md section #0 |  |  | 0.512 |
+| ns | 441 |  | 88 | test/ listing | 2.3 |  | 0.433 |
+| walker |  | 445 | 19 | listing of 'web/assets' |  |  | 0.433 |
+| walker |  | 468 | 23 | README.md section #5 |  |  | 0.433 |
+| walker |  | 510 | 42 | README.md section #1 |  |  | 0.433 |
 | walker |  | 538 | 28 | README.md section #4 |  |  | 0.433 |
 | walker |  | 575 | 37 | README.md section #2 |  |  | 0.433 |
 | walker |  | 601 | 26 | listing of 'clibs/soluna' |  |  | 0.433 |

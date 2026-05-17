@@ -73,8 +73,8 @@ kind = "ellipsis"
 position = 4
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
-cost_tokens = 34
-cum_tokens = 96
+cost_tokens = 52
+cum_tokens = 114
 
 [batches.content]
 kind = "lines"
@@ -103,12 +103,20 @@ end = 9
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
 [[batches]]
 position = 5
 key = 'Fs(DirListing { dir: "bin" })'
 descriptor = "listing of 'bin'"
 cost_tokens = 11
-cum_tokens = 107
+cum_tokens = 125
 
 [batches.content]
 kind = "fs"
@@ -122,7 +130,7 @@ position = 6
 key = 'Fs(DirListing { dir: "asset" })'
 descriptor = "listing of 'asset'"
 cost_tokens = 14
-cum_tokens = 121
+cum_tokens = 139
 
 [batches.content]
 kind = "fs"
@@ -136,7 +144,7 @@ position = 7
 key = 'Fs(DirListing { dir: "web" })'
 descriptor = "listing of 'web'"
 cost_tokens = 17
-cum_tokens = 138
+cum_tokens = 156
 
 [batches.content]
 kind = "fs"
@@ -150,7 +158,7 @@ position = 8
 key = 'Fs(DirListing { dir: "clibs" })'
 descriptor = "listing of 'clibs'"
 cost_tokens = 21
-cum_tokens = 159
+cum_tokens = 177
 
 [batches.content]
 kind = "fs"
@@ -164,7 +172,7 @@ position = 9
 key = 'Fs(DirListing { dir: "script" })'
 descriptor = "listing of 'script'"
 cost_tokens = 23
-cum_tokens = 182
+cum_tokens = 200
 
 [batches.content]
 kind = "fs"
@@ -178,7 +186,7 @@ position = 10
 key = 'Lua(DeclNames { file: "script/hashversion.lua", chunk_index: 0 })'
 descriptor = "lua decl names surface in script/hashversion.lua"
 cost_tokens = 11
-cum_tokens = 193
+cum_tokens = 211
 
 [batches.content]
 kind = "lines"
@@ -204,7 +212,7 @@ position = 11
 key = 'Lua(Decl { file: "script/hashversion.lua", start_line: 1 })'
 descriptor = "lua decl at script/hashversion.lua:1"
 cost_tokens = 0
-cum_tokens = 193
+cum_tokens = 211
 
 [batches.content]
 kind = "lines"
@@ -230,7 +238,7 @@ position = 12
 key = 'Lua(DeclNames { file: "script/datalist2c.lua", chunk_index: 0 })'
 descriptor = "lua decl names surface in script/datalist2c.lua"
 cost_tokens = 12
-cum_tokens = 205
+cum_tokens = 223
 
 [batches.content]
 kind = "lines"
@@ -256,7 +264,7 @@ position = 13
 key = 'Lua(Decl { file: "script/datalist2c.lua", start_line: 14 })'
 descriptor = "lua decl at script/datalist2c.lua:14"
 cost_tokens = 0
-cum_tokens = 205
+cum_tokens = 223
 
 [batches.content]
 kind = "lines"
@@ -282,7 +290,7 @@ position = 14
 key = 'Lua(DeclNames { file: "script/lua2c.lua", chunk_index: 0 })'
 descriptor = "lua decl names surface in script/lua2c.lua"
 cost_tokens = 12
-cum_tokens = 217
+cum_tokens = 235
 
 [batches.content]
 kind = "lines"
@@ -308,7 +316,7 @@ position = 15
 key = 'Lua(Decl { file: "script/lua2c.lua", start_line: 13 })'
 descriptor = "lua decl at script/lua2c.lua:13"
 cost_tokens = 0
-cum_tokens = 217
+cum_tokens = 235
 
 [batches.content]
 kind = "lines"
@@ -334,7 +342,7 @@ position = 16
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 69
-cum_tokens = 286
+cum_tokens = 304
 
 [batches.content]
 kind = "lines"
@@ -440,7 +448,7 @@ position = 17
 key = 'Fs(DirListing { dir: "web/content" })'
 descriptor = "listing of 'web/content'"
 cost_tokens = 16
-cum_tokens = 302
+cum_tokens = 320
 
 [batches.content]
 kind = "fs"
@@ -451,87 +459,13 @@ entries = ["_index.md", "docs", "examples", "playframe.md"]
 
 [[batches]]
 position = 18
-key = 'Fs(DirListing { dir: "web/assets" })'
-descriptor = "listing of 'web/assets'"
-cost_tokens = 19
-cum_tokens = 321
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/assets"
-entries = ["htmx.js", "play.js", "playframe.js", "site.css"]
-
-[[batches]]
-position = 19
-key = 'Markdown(Section { file: "README.md", section_index: 5 })'
-descriptor = "README.md section #5"
-cost_tokens = 23
-cum_tokens = 344
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Markdown(Section { file: "README.md", section_index: 1 })'
-descriptor = "README.md section #1"
-cost_tokens = 42
-cum_tokens = 386
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 21
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
-cost_tokens = 124
-cum_tokens = 510
+cost_tokens = 106
+cum_tokens = 426
 
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches.content.spans]]
 path = "README.md"
@@ -553,6 +487,72 @@ kind = "full"
 path = "README.md"
 start = 17
 end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "web/assets" })'
+descriptor = "listing of 'web/assets'"
+cost_tokens = 19
+cum_tokens = 445
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/assets"
+entries = ["htmx.js", "play.js", "playframe.js", "site.css"]
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "README.md", section_index: 5 })'
+descriptor = "README.md section #5"
+cost_tokens = 23
+cum_tokens = 468
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 42
+cum_tokens = 510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 21
+end = 23
 
 [batches.content.spans.render]
 kind = "full"

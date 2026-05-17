@@ -191,6 +191,17 @@ ginS/
     README.md
         1→# Gin Default Server
         3→This is API experiment for Gin.
+        5→```go
+        6→package main
+        8→import (
+        9→	"github.com/gin-gonic/gin"
+        10→	"github.com/gin-gonic/gin/ginS"
+        11→)
+        13→func main() {
+        14→	ginS.GET("/", func(c *gin.Context) { c.String(200, "Hello World") })
+        15→	ginS.Run()
+        16→}
+        17→```
     gins.go
     gins_test.go
 gin_integration_test.go
@@ -314,17 +325,6 @@ render/
     render_test.go
     text.go
     toml.go
-        13→// TOML contains the given interface object.
-        14→type TOML struct {
-        15→	Data any
-        16→}
-        18→var tomlContentType = []string{"application/toml; charset=utf-8"}
-        …
-        21→func (r TOML) Render(w http.ResponseWriter) error {
-        …
-        33→// WriteContentType (TOML) writes TOML ContentType for response.
-        34→func (r TOML) WriteContentType(w http.ResponseWriter) {
-        35→	writeContentType(w, tomlContentType)
     xml.go
         12→// XML contains the given interface object.
         13→type XML struct {

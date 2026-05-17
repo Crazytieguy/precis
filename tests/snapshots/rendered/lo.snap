@@ -10,6 +10,7 @@ Makefile
 README.md
     2→# lo - Iterate over slices, maps, channels...
     13→✨ **`samber/lo` is a Lodash-style Go library based on Go 1.18+ Generics.**
+    15→A utility library based on Go 1.18+ generics that makes it easier to work with slices, maps, strings, channels, and functions. It provides dozens of handy methods to simplify common coding tasks and improve code readability. It may look like [Lodash](https://github.com/lodash/lodash) in some aspects.
     5093→## 👤 Contributors
     5095→![Contributors](https://contrib.rocks/image?repo=samber/lo)
     5103→## 📝 License
@@ -136,11 +137,6 @@ find.go
     71→// Play: https://go.dev/play/p/Eo7W0lvKTky
     72→func Find[T any](collection []T, predicate func(item T) bool) (T, bool) {
     …
-    83→// FindErr searches for an element in a slice based on a predicate that can return an error.
-    84→// Returns the element and nil error if the element is found.
-    85→// Returns zero value and nil error if the element is not found.
-    86→// If the predicate returns an error, iteration stops immediately and returns zero value and the error.
-    87→// Play: https://go.dev/play/p/XK-qtpQWXJ9
     88→func FindErr[T any](collection []T, predicate func(item T) (bool, error)) (T, error) {
     …
     104→// FindIndexOf searches for an element in a slice based on a predicate and returns the index and true.

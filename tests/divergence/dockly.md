@@ -193,44 +193,44 @@ Score(3000)=0.471 I=0.698 C=0.317 ns_rows≤3K=17/39 (reached=5 partial=2 missin
 | walker |  | 6538 | 265 | README.md section #5 |  |  | 0.436 |
 | walker |  | 6645 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.437 |
 | walker |  | 6685 | 40 | export body at src/screen.js:18 body 165 |  |  | 0.442 |
-| walker |  | 6714 | 29 | README headline in docs/README.md |  |  | 0.442 |
-| walker |  | 6833 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.442 |
-| walker |  | 6900 | 67 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.442 |
-| walker |  | 6985 | 85 | export body at src/widgetsTemplates/list.widget.template.js:8 body 10 |  |  | 0.442 |
-| walker |  | 7015 | 30 | imports in src/assetsLoader.js |  |  | 0.442 |
-| walker |  | 7049 | 34 | headings outline in SECURITY.md |  |  | 0.442 |
-| walker |  | 7049 | 0 | SECURITY.md section #0 |  |  | 0.442 |
-| walker |  | 7138 | 89 | export body at src/widgetsTemplates/list.widget.template.js:8 body 108 |  |  | 0.442 |
+| walker |  | 6804 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.442 |
+| walker |  | 6871 | 67 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.442 |
+| walker |  | 6956 | 85 | export body at src/widgetsTemplates/list.widget.template.js:8 body 10 |  |  | 0.442 |
+| walker |  | 6986 | 30 | imports in src/assetsLoader.js |  |  | 0.442 |
+| walker |  | 7020 | 34 | headings outline in SECURITY.md |  |  | 0.442 |
+| walker |  | 7020 | 0 | SECURITY.md section #0 |  |  | 0.442 |
+| walker |  | 7109 | 89 | export body at src/widgetsTemplates/list.widget.template.js:8 body 108 |  |  | 0.442 |
 | ns | 7183 |  | 653 | images.hook: use/unuse partition + removeImage | 6.3 |  | 0.418 |
-| walker |  | 7305 | 167 | export body at src/screen.js:18 body 88 |  |  | 0.440 |
-| walker |  | 7323 | 18 | headings outline in docs/README.md |  |  | 0.440 |
-| walker |  | 7383 | 60 | package identity in docs/package.json |  |  | 0.440 |
-| walker |  | 7587 | 204 | export body at src/assetsLoader.js:10 body 12 |  |  | 0.449 |
+| walker |  | 7276 | 167 | export body at src/screen.js:18 body 88 |  |  | 0.440 |
+| walker |  | 7336 | 60 | package identity in docs/package.json |  |  | 0.440 |
+| walker |  | 7540 | 204 | export body at src/assetsLoader.js:10 body 12 |  |  | 0.449 |
 | ns | 7650 |  | 467 | services.hook: init + emitted events | 6.4 |  | 0.434 |
-| walker |  | 7751 | 164 | export body at src/baseWidget.js:4 body 5 |  |  | 0.458 |
-| walker |  | 7773 | 22 | imports in src/widgetsTemplates/help.widget.template.js |  |  | 0.458 |
-| walker |  | 7795 | 22 | imports in src/widgetsTemplates/logs.widget.template.js |  |  | 0.458 |
-| walker |  | 7814 | 19 | listing of '.github' |  |  | 0.458 |
-| walker |  | 7834 | 20 | listing of '.github/workflows' |  |  | 0.458 |
-| walker |  | 7841 | 7 | plaintext config .nvmrc |  |  | 0.458 |
-| walker |  | 7892 | 51 | headings outline in CONTRIBUTING.md |  |  | 0.458 |
-| walker |  | 7905 | 13 | docs/README.md section #1 |  |  | 0.458 |
+| walker |  | 7704 | 164 | export body at src/baseWidget.js:4 body 5 |  |  | 0.458 |
+| walker |  | 7726 | 22 | imports in src/widgetsTemplates/help.widget.template.js |  |  | 0.458 |
+| walker |  | 7748 | 22 | imports in src/widgetsTemplates/logs.widget.template.js |  |  | 0.458 |
+| walker |  | 7767 | 19 | listing of '.github' |  |  | 0.458 |
+| walker |  | 7787 | 20 | listing of '.github/workflows' |  |  | 0.458 |
+| walker |  | 7794 | 7 | plaintext config .nvmrc |  |  | 0.458 |
+| walker |  | 7845 | 51 | README headline in docs/README.md |  |  | 0.458 |
+| walker |  | 7863 | 18 | headings outline in docs/README.md |  |  | 0.458 |
+| walker |  | 7914 | 51 | headings outline in CONTRIBUTING.md |  |  | 0.458 |
+| walker |  | 7927 | 13 | docs/README.md section #1 |  |  | 0.458 |
 | ns | 8121 |  | 471 | shell.hook: openShell | 6.5 |  | 0.444 |
-| walker |  | 8436 | 531 | README.md section #3 |  |  | 0.444 |
-| walker |  | 8464 | 28 | imports in src/themes/theme.selector.js |  |  | 0.444 |
-| walker |  | 8738 | 274 | export body at src/dockerUtil.js:5 body 126 |  |  | 0.471 |
-| walker |  | 8825 | 87 | export body at src/screen.js:18 body 170 |  |  | 0.482 |
+| walker |  | 8458 | 531 | README.md section #3 |  |  | 0.444 |
+| walker |  | 8486 | 28 | imports in src/themes/theme.selector.js |  |  | 0.444 |
+| walker |  | 8760 | 274 | export body at src/dockerUtil.js:5 body 126 |  |  | 0.471 |
+| walker |  | 8847 | 87 | export body at src/screen.js:18 body 170 |  |  | 0.482 |
 | ns | 8899 |  | 778 | toolbar.widget: command dicts (every keybinding) | 7.1 |  | 0.458 |
-| walker |  | 8984 | 159 | export body at src/widgetsTemplates/list.widget.template.js:8 body 89 |  |  | 0.458 |
-| walker |  | 9082 | 98 | export body at src/screen.js:18 body 153 |  |  | 0.473 |
-| walker |  | 9115 | 33 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.474 |
+| walker |  | 9006 | 159 | export body at src/widgetsTemplates/list.widget.template.js:8 body 89 |  |  | 0.458 |
+| walker |  | 9104 | 98 | export body at src/screen.js:18 body 153 |  |  | 0.473 |
+| walker |  | 9137 | 33 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.474 |
 | ns | 9169 |  | 270 | containerList: overrides + getSelectedContainer | 8.1 |  | 0.465 |
-| walker |  | 9290 | 175 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.481 |
-| walker |  | 9361 | 71 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.481 |
-| walker |  | 9361 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.481 |
-| walker |  | 9399 | 38 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.487 |
-| walker |  | 9443 | 44 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.494 |
-| walker |  | 9508 | 65 | docs/README.md section #0 |  |  | 0.494 |
+| walker |  | 9312 | 175 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.481 |
+| walker |  | 9383 | 71 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.481 |
+| walker |  | 9383 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.481 |
+| walker |  | 9421 | 38 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.487 |
+| walker |  | 9464 | 43 | docs/README.md section #0 |  |  | 0.487 |
+| walker |  | 9508 | 44 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.494 |
 | walker |  | 9521 | 13 | listing of 'docs/src/assets' |  |  | 0.483 |
 | ns | 9521 |  | 352 | imageList + servicesList: headers + Selected getters | 8.2 |  | 0.483 |
 | walker |  | 9597 | 76 | CONTRIBUTING.md section #0 |  |  | 0.483 |

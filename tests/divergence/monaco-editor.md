@@ -32,10 +32,9 @@ Score(3000)=0.501 I=0.773 C=0.325 ns_rows≤3K=23/40 (reached=8 partial=1 missin
 | walker |  | 820 | 176 | export names surface in src/languages/features/json/register.ts |  |  | 0.692 |
 | walker |  | 852 | 32 | listing of 'src/languages/features/typescript' |  |  | 0.695 |
 | walker |  | 879 | 27 | listing of 'monaco-lsp-client' |  |  | 0.720 |
-| walker |  | 908 | 29 | README headline in monaco-lsp-client/README.md |  |  | 0.720 |
-| walker |  | 950 | 42 | package identity in monaco-lsp-client/package.json |  |  | 0.720 |
+| walker |  | 921 | 42 | package identity in monaco-lsp-client/package.json |  |  | 0.720 |
 | ns | 960 |  | 212 | README — Providers and Disposables concepts | 1.12 |  | 0.672 |
-| walker |  | 966 | 16 | monaco-lsp-client/README.md section #0 |  |  | 0.672 |
+| walker |  | 966 | 45 | README headline in monaco-lsp-client/README.md |  |  | 0.672 |
 | walker |  | 981 | 15 | listing of 'monaco-lsp-client/src' |  |  | 0.672 |
 | walker |  | 993 | 12 | package identity metadata in monaco-lsp-client/package.json |  |  | 0.672 |
 | walker |  | 999 | 6 | listing of 'scripts' |  |  | 0.672 |

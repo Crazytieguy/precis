@@ -18,7 +18,6 @@ README.md
     5→# Tomli
     7→> A lil' TOML parser
     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
-    11→<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
     13→- [Intro](#intro)
     14→- [Installation](#installation)
     15→- [Usage](#usage)
@@ -166,6 +165,13 @@ src/
             64→    """
             98→@lru_cache(maxsize=None)
             99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
+            100→    sign = 1 if sign_str == "+" else -1
+            101→    return timezone(
+            102→        timedelta(
+            103→            hours=sign * int(hour_str),
+            104→            minutes=sign * int(minute_str),
+            105→        )
+            106→    )
             109→def match_to_localtime(match: re.Match[str]) -> time:
             …
             116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:

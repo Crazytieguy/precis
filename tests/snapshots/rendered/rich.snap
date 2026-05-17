@@ -39,24 +39,8 @@ README.it.md
 README.ja.md
 README.kr.md
 README.md
-    10→[English readme](https://github.com/textualize/rich/blob/master/README.md)
-    11→ • [简体中文 readme](https://github.com/textualize/rich/blob/master/README.cn.md)
-    12→ • [正體中文 readme](https://github.com/textualize/rich/blob/master/README.zh-tw.md)
-    13→ • [Lengua española readme](https://github.com/textualize/rich/blob/master/README.es.md)
-    14→ • [Deutsche readme](https://github.com/textualize/rich/blob/master/README.de.md)
-    15→ • [Läs på svenska](https://github.com/textualize/rich/blob/master/README.sv.md)
-    16→ • [日本語 readme](https://github.com/textualize/rich/blob/master/README.ja.md)
-    17→ • [한국어 readme](https://github.com/textualize/rich/blob/master/README.kr.md)
-    18→ • [Français readme](https://github.com/textualize/rich/blob/master/README.fr.md)
-    19→ • [Schwizerdütsch readme](https://github.com/textualize/rich/blob/master/README.de-ch.md)
-    20→ • [हिन्दी readme](https://github.com/textualize/rich/blob/master/README.hi.md)
-    21→ • [Português brasileiro readme](https://github.com/textualize/rich/blob/master/README.pt-br.md)
-    22→ • [Italian readme](https://github.com/textualize/rich/blob/master/README.it.md)
-    23→ • [Русский readme](https://github.com/textualize/rich/blob/master/README.ru.md)
-    24→ • [Indonesian readme](https://github.com/textualize/rich/blob/master/README.id.md)
-    25→ • [فارسی readme](https://github.com/textualize/rich/blob/master/README.fa.md)
-    26→ • [Türkçe readme](https://github.com/textualize/rich/blob/master/README.tr.md)
-    27→ • [Polskie readme](https://github.com/textualize/rich/blob/master/README.pl.md)
+    30→Rich is a Python library for _rich_ text and beautiful formatting in the terminal.
+    32→The [Rich API](https://rich.readthedocs.io/en/latest/) makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more — out of the box.
     40→## Compatibility
     42→Rich works with Linux, macOS and Windows. True color / emoji works with new Windows Terminal, classic terminal is limited to 16 colors. Rich requires Python 3.8 or later.
     44→Rich works with [Jupyter notebooks](https://jupyter.org/) with no additional configuration required.
@@ -180,7 +164,12 @@ rich/
         39→def reconfigure(*args: Any, **kwargs: Any) -> None:
         …
         53→def print(
-        …
+        54→    *objects: Any,
+        55→    sep: str = " ",
+        56→    end: str = "\n",
+        57→    file: Optional[IO[str]] = None,
+        58→    flush: bool = False,
+        59→) -> None:
         77→def print_json(
         …
         120→def inspect(
@@ -193,6 +182,7 @@ rich/
         33→    def __rich_measure__(
         34→        self, console: "Console", options: ConsoleOptions
         35→    ) -> Measurement:
+        36→        return Measurement(1, options.max_width)
         39→def make_test_card() -> Table:
         40→    """Get a renderable that demonstrates a number of features."""
     _emoji_codes.py
@@ -200,6 +190,7 @@ rich/
     _emoji_replace.py
     _export_format.py
     _extension.py
+        1→from typing import Any
         4→def load_ipython_extension(ip: Any) -> None:  # pragma: no cover
         5→    # prevent circular import
     _fileno.py
@@ -220,6 +211,7 @@ rich/
         69→NULL_FILE = NullFile()
     _palettes.py
     _pick.py
+        1→from typing import Optional
         4→def pick_bool(*values: Optional[bool]) -> bool:
         …
     _ratio.py
@@ -231,11 +223,13 @@ rich/
         7→    """A small shim over builtin list."""
         9→    @property
         10→    def top(self) -> T:
+        11→        """Get top of stack."""
         14→    def push(self, item: T) -> None:
         …
     _timer.py
         12→@contextlib.contextmanager
         13→def timer(subject: str = "time") -> Generator[None, None, None]:
+        14→    """print the elapsed time. (only used in debugging)"""
     _unicode_data/
     _win32_console.py
     _windows.py
@@ -247,6 +241,7 @@ rich/
         …
     _wrap.py
     abc.py
+        1→from abc import ABC
         4→class RichRenderable(ABC):
         …
         15→    @classmethod
@@ -274,6 +269,11 @@ rich/
         10→class Constrain(JupyterMixin):
         …
     containers.py
+        27→T = TypeVar("T")
+        30→class Renderables:
+        31→    """A list subclass which renders its contents to the console."""
+        66→class Lines:
+        67→    """A list subclass which can render to the console."""
     control.py
     default_styles.py
         5→DEFAULT_STYLES: Dict[str, Style] = {
@@ -284,19 +284,33 @@ rich/
     errors.py
     file_proxy.py
         11→class FileProxy(io.TextIOBase):
-        …
+        12→    """Wraps a file (e.g. sys.stdout) and redirects writes to a console."""
     filesize.py
     highlighter.py
     json.py
         9→class JSON:
         10→    """A renderable which pretty prints JSON.
+        25→    def __init__(
+        …
+        53→    @classmethod
+        …
+        101→    def __rich__(self) -> Text:
+        102→        return self.text
     jupyter.py
     layout.py
     live.py
+        22→class _RefreshThread(Thread):
+        …
+        41→class Live(JupyterMixin, RenderHook):
+        42→    """Renders an auto-updating live display of any given renderable.
     live_render.py
+        10→VerticalOverflowMethod = Literal["crop", "ellipsis", "visible"]
+        13→class LiveRender:
+        …
     logging.py
         24→class RichHandler(Handler):
-        …
+        25→    """A logging handler that renders output with Rich. The time / level / message and file are displayed in columns.
+        26→    The level is color coded, and the message is syntax highlighted.
     markdown.py
     markup.py
     measure.py
@@ -364,6 +378,9 @@ rich/
         5→DEFAULT = Theme(DEFAULT_STYLES)
     traceback.py
     tree.py
+        11→GuideType = Tuple[str, str, str, str]
+        14→class Tree(JupyterMixin):
+        15→    """A renderable for a tree structure.
 setup.py
     1→#!/usr/bin/env python
     3→# This is a shim to hopefully allow Github to detect the package, build is done with poetry

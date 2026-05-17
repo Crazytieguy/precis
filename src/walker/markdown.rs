@@ -818,8 +818,10 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     // Walk siblings after the heading, skipping leading decorative
     // paragraphs / image-only HTML blocks / admin block_quotes
     // (`> [!WARNING]` callouts, long deprecation notices); then include
-    // subsequent blocks until we hit a non-decorative paragraph or a
-    // section boundary.
+    // subsequent blocks until we hit the first substantive paragraph.
+    // If that paragraph is a short tagline under an H1 (posting's
+    // bold-tagline shape), take one more non-decorative block — the
+    // prose lede that follows it.
     let post: Vec<Node> = children_after(section, heading);
     let mut i = 0;
     while i < post.len() {
@@ -836,12 +838,19 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         }
         i += 1;
     }
+    let mut state = HeadlineExtend::SeekFirst;
     while i < post.len() {
         let block = post[i];
         if is_section_boundary(block.kind()) {
             break;
         }
-        if block.kind() == "block_quote" && is_admin_block_quote(block, source) {
+        let is_decorative_block = match block.kind() {
+            "paragraph" => is_decorative_paragraph(block, source),
+            "html_block" => is_decorative_html_block(block, source),
+            "block_quote" => is_admin_block_quote(block, source),
+            _ => false,
+        };
+        if is_decorative_block {
             i += 1;
             continue;
         }
@@ -850,8 +859,22 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
             continue;
         }
         extend_rows_inclusive(&mut covered, block, source);
-        if block.kind() == "paragraph" && !is_decorative_paragraph(block, source) {
-            break;
+        match state {
+            HeadlineExtend::SeekFirst => {
+                if block.kind() == "paragraph" {
+                    // The "tagline + lede" extension only fires under
+                    // the project's title heading (H1). For non-H1
+                    // first-headed sections (`### Usage`, `## About`)
+                    // the first substantive paragraph IS the section
+                    // body and shouldn't pull in further content.
+                    if heading_level(heading) == 1 && is_short_substantive_block(block, source) {
+                        state = HeadlineExtend::SeekExtension;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            HeadlineExtend::SeekExtension => break,
         }
         i += 1;
     }
@@ -1070,6 +1093,149 @@ fn is_admin_block_quote(block: Node, source: &str) -> bool {
     let start = block.start_position().row;
     let end = block.end_position().row;
     end.saturating_sub(start) >= 3
+}
+
+/// A "navigation paragraph" is a paragraph whose substantive content is
+/// nothing but cross-reference links separated by separator punctuation
+/// (`•`, `·`, `|`, `/`, `,`, dashes). Common in multi-language READMEs
+/// (`[English](url) • [中文](url) • ...`) and in tagline-rich docs that
+/// list related projects. The links carry no orientation value at the
+/// budget where the headline lives — treat as decorative so the
+/// headline walker doesn't burn its prelude on them.
+fn is_nav_link_paragraph(para: Node, source: &str) -> bool {
+    let Some(inline_block) = first_child_of_kind(para, "inline") else {
+        return false;
+    };
+    let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
+    let Some(tree) = parse_inline(inline_text) else {
+        return false;
+    };
+    let root = tree.root_node();
+    let named = named_decorative_candidates(root, inline_text);
+    if named.len() < 3 {
+        return false;
+    }
+    if !named.iter().all(|n| {
+        matches!(
+            n.kind(),
+            "inline_link" | "full_reference_link" | "collapsed_reference_link" | "shortcut_link"
+        )
+    }) {
+        return false;
+    }
+    let mut cursor = 0usize;
+    for n in &named {
+        if !is_separator_gap(&inline_text[cursor..n.start_byte()]) {
+            return false;
+        }
+        cursor = n.end_byte();
+    }
+    is_separator_gap(&inline_text[cursor..])
+}
+
+fn is_separator_gap(s: &str) -> bool {
+    s.chars().all(|c| {
+        c.is_whitespace()
+            || matches!(
+                c,
+                '\u{2022}' | '\u{00B7}' | '|' | '/' | '\\' | ',' | '-' | '\u{2014}' | '\u{2013}'
+            )
+    })
+}
+
+/// True iff the headline block reads as a "tagline" — short enough
+/// that the next non-decorative block is plausibly the actual prose
+/// lede the reader needs (posting's `**A powerful HTTP client...**`,
+/// ts-pattern's `<h1 align="center">TS-Pattern</h1>`). Bounded by the
+/// stripped-text length of the block: row count alone treats a single
+/// long sentence ("D2TS is a TypeScript implementation of differential
+/// dataflow ...") as short, but its ~250 chars of prose is the lede
+/// itself, not a tagline preceding one.
+fn is_short_substantive_block(block: Node, source: &str) -> bool {
+    let raw = &source[block.start_byte()..block.end_byte()];
+    let stripped = strip_block_for_length(raw);
+    stripped.chars().count() <= HEADLINE_TAGLINE_MAX_CHARS
+}
+
+/// Maximum character count for the stripped content of a "tagline"
+/// block, beyond which the extension is suppressed because the block
+/// is itself the substantive lede.
+const HEADLINE_TAGLINE_MAX_CHARS: usize = 90;
+
+/// Strip markdown / HTML markup from a block's raw source for the
+/// purposes of measuring its "content length". Removes `<...>` HTML
+/// tags, leading `>` block-quote markers, and common emphasis markup
+/// (`**`, `*`, `_`, `` ` ``) so a bolded tagline measures by its
+/// underlying prose rather than its punctuation.
+fn strip_block_for_length(raw: &str) -> String {
+    let mut out = String::with_capacity(raw.len());
+    let bytes = raw.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        let b = bytes[i];
+        if b == b'<' {
+            while i < bytes.len() && bytes[i] != b'>' {
+                i += 1;
+            }
+            if i < bytes.len() {
+                i += 1;
+            }
+            continue;
+        }
+        if matches!(b, b'>' | b'*' | b'_' | b'`') {
+            i += 1;
+            continue;
+        }
+        out.push(b as char);
+        i += 1;
+    }
+    out
+}
+
+/// State for the post-heading walk inside [`headline_spec`].
+/// Transitions: `SeekFirst` (taking blocks until the first substantive
+/// paragraph) → `SeekExtension` (only if that paragraph was a short
+/// tagline under an H1, take one more non-decorative block then stop).
+#[derive(Copy, Clone)]
+enum HeadlineExtend {
+    SeekFirst,
+    SeekExtension,
+}
+
+/// An html_block is a "navigation block" iff it contains 3+ anchor
+/// tags AND the text between them (after stripping all tags) is
+/// dominantly separator punctuation. Matches superstruct's
+/// `<p align="center"> <a href="#usage">Usage</a> • ...</p>` shape.
+/// Decorative for headline purposes — the link labels alone add no
+/// orientation value the FS listing doesn't already imply.
+fn is_nav_link_html_block(block: Node, source: &str) -> bool {
+    let raw = &source[block.start_byte()..block.end_byte()];
+    let anchor_count = raw.matches("<a ").count();
+    if anchor_count < 3 {
+        return false;
+    }
+    let stripped = strip_html_tags(raw);
+    let separator_tokens = stripped
+        .split_whitespace()
+        .filter(|w| {
+            !w.is_empty()
+                && w.chars().all(|c| {
+                    matches!(
+                        c,
+                        '\u{2022}'
+                            | '\u{00B7}'
+                            | '|'
+                            | '/'
+                            | '\\'
+                            | ','
+                            | '-'
+                            | '\u{2014}'
+                            | '\u{2013}'
+                    )
+                })
+        })
+        .count();
+    separator_tokens + 1 >= anchor_count
 }
 
 fn strip_html_tags(s: &str) -> String {
@@ -1894,20 +2060,46 @@ fn extend_prelude_lede(
     while i < prelude_blocks.len() {
         let block = prelude_blocks[i];
         match block.kind() {
-            "paragraph" if is_decorative_paragraph(block, source) => {}
-            "paragraph" if is_admin_emoji_paragraph(block, source) => {}
-            "html_block" if is_decorative_html_block(block, source) => {}
+            "paragraph"
+                if is_decorative_paragraph(block, source)
+                    || is_nav_link_paragraph(block, source) => {}
+            "html_block"
+                if is_decorative_html_block(block, source)
+                    || is_nav_link_html_block(block, source) => {}
             "block_quote" if is_admin_block_quote(block, source) => {}
             _ => break,
         }
         i += 1;
     }
-    // Include exactly ONE substantive prelude block (a paragraph,
-    // block_quote tagline, or code-block lede) and stop. Larger preludes
-    // are rare; capping at one block keeps the headline batch size
-    // bounded so it still schedules early.
+    // Include the first substantive prelude block. If it's a short
+    // tagline (ts-pattern's `<h1>TS-Pattern</h1>`, microbootstrap's
+    // `<b>name</b> assists you...`), also include the next non-
+    // decorative block — the actual prose lede or the canonical code
+    // example. Decoratives are skipped between the two without being
+    // included. Larger preludes stop at one block to keep batch size
+    // bounded.
     if let Some(block) = prelude_blocks.get(i) {
         extend_rows_inclusive(covered, *block, source);
+        if is_short_substantive_block(*block, source) {
+            let mut j = i + 1;
+            while j < prelude_blocks.len() {
+                let next = prelude_blocks[j];
+                match next.kind() {
+                    "paragraph"
+                        if is_decorative_paragraph(next, source)
+                            || is_nav_link_paragraph(next, source) => {}
+                    "html_block"
+                        if is_decorative_html_block(next, source)
+                            || is_nav_link_html_block(next, source) => {}
+                    "block_quote" if is_admin_block_quote(next, source) => {}
+                    _ => break,
+                }
+                j += 1;
+            }
+            if let Some(extra) = prelude_blocks.get(j) {
+                extend_rows_inclusive(covered, *extra, source);
+            }
+        }
     }
 }
 
@@ -2200,6 +2392,84 @@ mod tests {
                    Tagline.\n";
         let rows = covered(src);
         assert!(rows.contains(&3), "autolink paragraph must be kept");
+    }
+
+    /// Multi-language nav paragraph (`[English](url) • ...`) is
+    /// decorative — the headline must not burn its prelude on it.
+    #[test]
+    fn markdown_nav_link_paragraph_is_decorative() {
+        let src = "[English](https://e.x/a) • [中文](https://e.x/b) • [Fr](https://e.x/c)\n\
+                   \n\
+                   # Project\n\
+                   \n\
+                   Actual lede paragraph.\n";
+        let rows = covered(src);
+        assert!(rows.contains(&3), "H1 row must be present");
+        assert!(rows.contains(&5), "actual lede must be present");
+        assert!(
+            !rows.contains(&1),
+            "nav-link prelude paragraph must be skipped as decorative"
+        );
+    }
+
+    /// Short bold tagline followed by a prose lede: the extension
+    /// takes the prose paragraph so the headline carries the full
+    /// "what is this" snippet (posting shape).
+    #[test]
+    fn markdown_post_h1_short_tagline_extends_to_prose_lede() {
+        let src = "# Posting\n\
+                   \n\
+                   **A powerful HTTP client that lives in your terminal.**\n\
+                   \n\
+                   Posting is an HTTP client, not unlike Postman.\n\
+                   \n\
+                   ## Install\n";
+        let rows = covered(src);
+        assert!(rows.contains(&1), "H1 missing");
+        assert!(rows.contains(&3), "bold tagline missing");
+        assert!(
+            rows.contains(&5),
+            "prose-lede paragraph must be picked up by extension"
+        );
+    }
+
+    /// A long first paragraph (stripped content > tagline threshold)
+    /// is the lede itself — the extension must NOT pull in a
+    /// second paragraph.
+    #[test]
+    fn markdown_post_h1_long_first_paragraph_no_extension() {
+        let src = "# D2TS\n\
+                   \n\
+                   D2TS is a TypeScript implementation of differential dataflow with a long prose lede that runs past the tagline threshold.\n\
+                   \n\
+                   A second paragraph the headline must NOT pull in.\n\
+                   \n\
+                   ## Install\n";
+        let rows = covered(src);
+        assert!(rows.contains(&1), "H1 missing");
+        assert!(rows.contains(&3), "first paragraph missing");
+        assert!(!rows.contains(&5), "second paragraph must NOT be pulled in");
+    }
+
+    /// Sub-section heading (`### Usage`) is NOT the project's
+    /// title — extension must not fire under non-H1 first-headed
+    /// sections (superstruct shape).
+    #[test]
+    fn markdown_non_h1_first_section_no_extension() {
+        let src = "<p>tagline html block</p>\n\
+                   \n\
+                   ### Usage\n\
+                   \n\
+                   Short body para.\n\
+                   \n\
+                   A second body para that must NOT land in headline.\n";
+        let rows = covered(src);
+        assert!(rows.contains(&3), "heading missing");
+        assert!(rows.contains(&5), "first paragraph missing");
+        assert!(
+            !rows.contains(&7),
+            "second paragraph must NOT be pulled in under non-H1 first heading"
+        );
     }
 
     // --- HeadingsOutline tests ---

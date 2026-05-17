@@ -197,28 +197,26 @@ Score(3000)=0.702 I=0.852 C=0.578 ns_rows≤3K=15/36 (reached=11 partial=1 missi
 | walker |  | 8590 | 14 | docs/assets/API_head.md section #10 |  |  | 0.565 |
 | walker |  | 8604 | 14 | docs/assets/API_head.md section #13 |  |  | 0.565 |
 | walker |  | 8618 | 14 | docs/assets/API_head.md section #19 |  |  | 0.565 |
-| walker |  | 8639 | 21 | README headline in tests/README.md |  |  | 0.565 |
-| walker |  | 8712 | 73 | docs/API.md section #121 |  |  | 0.565 |
-| walker |  | 8727 | 15 | docs/assets/API_head.md section #12 |  |  | 0.565 |
-| walker |  | 8742 | 15 | docs/assets/API_head.md section #18 |  |  | 0.565 |
-| walker |  | 8817 | 75 | docs/API.md section #135 |  |  | 0.565 |
-| walker |  | 8893 | 76 | docs/API.md section #33 |  |  | 0.565 |
+| walker |  | 8691 | 73 | docs/API.md section #121 |  |  | 0.565 |
+| walker |  | 8706 | 15 | docs/assets/API_head.md section #12 |  |  | 0.565 |
+| walker |  | 8721 | 15 | docs/assets/API_head.md section #18 |  |  | 0.565 |
+| walker |  | 8796 | 75 | docs/API.md section #135 |  |  | 0.565 |
+| walker |  | 8872 | 76 | docs/API.md section #33 |  |  | 0.565 |
 | ns | 8915 |  | 414 | neco.c — Public neco_* fn location index (part 2: I/O, net, chan, mutex, wg, cond) | 4.4 |  | 0.549 |
-| walker |  | 8916 | 23 | README headline in examples/README.md |  |  | 0.549 |
-| walker |  | 8994 | 78 | docs/API.md section #86 |  |  | 0.549 |
-| walker |  | 9072 | 78 | docs/API.md section #87 |  |  | 0.549 |
-| walker |  | 9088 | 16 | docs/assets/API_head.md section #1 |  |  | 0.549 |
-| walker |  | 9167 | 79 | docs/API.md section #90 |  |  | 0.549 |
+| walker |  | 8950 | 78 | docs/API.md section #86 |  |  | 0.549 |
+| walker |  | 9028 | 78 | docs/API.md section #87 |  |  | 0.549 |
+| walker |  | 9044 | 16 | docs/assets/API_head.md section #1 |  |  | 0.549 |
+| walker |  | 9123 | 79 | docs/API.md section #90 |  |  | 0.549 |
+| walker |  | 9202 | 79 | docs/API.md section #124 |  |  | 0.549 |
 | ns | 9221 |  | 306 | neco.c — Public neco_* fn location index (part 3: stream, gen, rand, suspend, work, join) | 4.5 |  | 0.538 |
-| walker |  | 9246 | 79 | docs/API.md section #124 |  |  | 0.538 |
-| walker |  | 9325 | 79 | docs/API.md section #161 |  |  | 0.538 |
-| walker |  | 9405 | 80 | docs/API.md section #99 |  |  | 0.538 |
-| walker |  | 9486 | 81 | docs/API.md section #97 |  |  | 0.538 |
+| walker |  | 9281 | 79 | docs/API.md section #161 |  |  | 0.538 |
+| walker |  | 9361 | 80 | docs/API.md section #99 |  |  | 0.538 |
+| walker |  | 9442 | 81 | docs/API.md section #97 |  |  | 0.538 |
 | ns | 9503 |  | 282 | neco.c — rt_scheduler core loop | 4.6 |  | 0.528 |
-| walker |  | 9567 | 81 | docs/API.md section #100 |  |  | 0.528 |
-| walker |  | 9648 | 81 | docs/API.md section #101 |  |  | 0.528 |
-| walker |  | 9729 | 81 | docs/API.md section #122 |  |  | 0.528 |
+| walker |  | 9523 | 81 | docs/API.md section #100 |  |  | 0.528 |
+| walker |  | 9604 | 81 | docs/API.md section #101 |  |  | 0.528 |
+| walker |  | 9685 | 81 | docs/API.md section #122 |  |  | 0.528 |
+| walker |  | 9786 | 101 | c decl body at neco.c:2094 |  |  | 0.528 |
 | ns | 9808 |  | 305 | tests/README.md — how to run tests | 5.1 |  | 0.518 |
-| walker |  | 9830 | 101 | c decl body at neco.c:2094 |  |  | 0.518 |
-| walker |  | 9912 | 82 | docs/API.md section #89 |  |  | 0.518 |
-| walker |  | 9994 | 82 | docs/API.md section #96 |  |  | 0.518 |
+| walker |  | 9868 | 82 | docs/API.md section #89 |  |  | 0.518 |
+| walker |  | 9950 | 82 | docs/API.md section #96 |  |  | 0.518 |
