@@ -1015,7 +1015,7 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     } else {
         (0.25, 0.45)
     };
-    mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx)) * top_level_package_init_factor(file)
 }
 
 fn imports_chunk_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
@@ -1024,6 +1024,39 @@ fn imports_chunk_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_cou
 
 fn is_init_py(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()) == Some("__init__.py")
+}
+
+/// True iff `file` is the top-level package's `__init__.py` — the
+/// `__init__.py` at the root of its package hierarchy (e.g. `flask/__init__.py`
+/// or `src/flask/__init__.py`), not a sub-package's (e.g. `flask/json/__init__.py`).
+/// Detected by walking up: the file is top-level when its grandparent does
+/// not contain `__init__.py` — i.e. the package isn't nested inside another
+/// Python package. Namespace packages (no parent `__init__.py`) also qualify.
+fn is_top_level_package_init(file: &Path) -> bool {
+    if !is_init_py(file) {
+        return false;
+    }
+    let Some(parent) = file.parent() else {
+        return false;
+    };
+    let Some(grandparent) = parent.parent() else {
+        return true;
+    };
+    !grandparent.join("__init__.py").is_file()
+}
+
+/// Boost the top-level package's `__init__.py` over sub-package
+/// `__init__.py`s. The top-level init is the canonical public API surface
+/// (`from .submod import Public` re-exports + `__all__`); sub-package
+/// inits expose intermediate-tier APIs that are secondary. Without this
+/// boost, smaller sub-package inits win the cost^0.35-penalised ratio
+/// race and the top-level init lands much later in the schedule.
+fn top_level_package_init_factor(file: &Path) -> f64 {
+    if is_top_level_package_init(file) {
+        2.0
+    } else {
+        1.0
+    }
 }
 
 fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {

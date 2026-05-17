@@ -91,10 +91,28 @@ kind = "full"
 
 [[batches]]
 position = 6
+key = 'Python(Imports { file: "src/pluggy/__init__.py" })'
+descriptor = "python imports in src/pluggy/__init__.py"
+cost_tokens = 316
+cum_tokens = 477
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/pluggy/__init__.py"
+start = 1
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
 key = 'Markdown(ReadmeHeadline { file: "README.rst" })'
 descriptor = "README headline in README.rst"
 cost_tokens = 102
-cum_tokens = 263
+cum_tokens = 579
 
 [batches.content]
 kind = "lines"
@@ -132,11 +150,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Fs(DirListing { dir: "changelog" })'
 descriptor = "listing of 'changelog'"
 cost_tokens = 19
-cum_tokens = 282
+cum_tokens = 598
 
 [batches.content]
 kind = "fs"
@@ -146,11 +164,11 @@ parent = "changelog"
 entries = ["590.trivial.rst", "README.rst", "_template.rst"]
 
 [[batches]]
-position = 8
+position = 9
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 32
-cum_tokens = 314
+cum_tokens = 630
 
 [batches.content]
 kind = "fs"
@@ -160,11 +178,11 @@ parent = "docs"
 entries = ["_static", "api_reference.rst", "changelog.rst", "conf.py", "examples", "index.rst", "requirements.txt"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Fs(DirListing { dir: "downstream" })'
 descriptor = "listing of 'downstream'"
 cost_tokens = 43
-cum_tokens = 357
+cum_tokens = 673
 
 [batches.content]
 kind = "fs"
@@ -174,11 +192,11 @@ parent = "downstream"
 entries = [".gitignore", "README.md", "conda.sh", "datasette.sh", "devpi.sh", "hatch.sh", "pytest.sh", "python-lsp-server.sh", "tox.sh"]
 
 [[batches]]
-position = 10
+position = 11
 key = 'Fs(DirListing { dir: "docs/_static" })'
 descriptor = "listing of 'docs/_static'"
 cost_tokens = 3
-cum_tokens = 360
+cum_tokens = 676
 
 [batches.content]
 kind = "fs"
@@ -186,24 +204,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "docs/_static"
 entries = ["img"]
-
-[[batches]]
-position = 11
-key = 'Python(Imports { file: "src/pluggy/__init__.py" })'
-descriptor = "python imports in src/pluggy/__init__.py"
-cost_tokens = 316
-cum_tokens = 676
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/pluggy/__init__.py"
-start = 1
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 12

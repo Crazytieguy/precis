@@ -101,31 +101,6 @@ docs/
     logging.rst
     make.bat
     patterns/
-        appdispatch.rst
-        appfactories.rst
-        caching.rst
-        celery.rst
-        deferredcallbacks.rst
-        favicon.rst
-        fileuploads.rst
-        flashing.rst
-        index.rst
-        javascript.rst
-        jquery.rst
-        lazyloading.rst
-        methodoverrides.rst
-        mongoengine.rst
-        packages.rst
-        requestchecksum.rst
-        singlepageapplications.rst
-        sqlalchemy.rst
-        sqlite3.rst
-        streaming.rst
-        subclassing.rst
-        templateinheritance.rst
-        urlprocessors.rst
-        viewdecorators.rst
-        wtforms.rst
     quickstart.rst
     reqcontext.rst
     server.rst
@@ -164,6 +139,8 @@ examples/
         README.rst
         js_example/
             __init__.py
+                1→from flask import Flask
+                5→from js_example import views  # noqa: E402, F401
             templates/
             views.py
         pyproject.toml
@@ -174,6 +151,8 @@ examples/
         README.rst
         flaskr/
             __init__.py
+                1→import os
+                3→from flask import Flask
             auth.py
             blog.py
             db.py
@@ -219,7 +198,31 @@ src/
             10→from .globals import g as g
             11→from .globals import request as request
             12→from .globals import session as session
+            13→from .helpers import abort as abort
+            14→from .helpers import flash as flash
+            15→from .helpers import get_flashed_messages as get_flashed_messages
+            16→from .helpers import get_template_attribute as get_template_attribute
+            17→from .helpers import make_response as make_response
+            18→from .helpers import redirect as redirect
+            19→from .helpers import send_file as send_file
+            20→from .helpers import send_from_directory as send_from_directory
+            21→from .helpers import stream_with_context as stream_with_context
+            22→from .helpers import url_for as url_for
             23→from .json import jsonify as jsonify
+            24→from .signals import appcontext_popped as appcontext_popped
+            25→from .signals import appcontext_pushed as appcontext_pushed
+            26→from .signals import appcontext_tearing_down as appcontext_tearing_down
+            27→from .signals import before_render_template as before_render_template
+            28→from .signals import got_request_exception as got_request_exception
+            29→from .signals import message_flashed as message_flashed
+            30→from .signals import request_finished as request_finished
+            31→from .signals import request_started as request_started
+            32→from .signals import request_tearing_down as request_tearing_down
+            33→from .signals import template_rendered as template_rendered
+            34→from .templating import render_template as render_template
+            35→from .templating import render_template_string as render_template_string
+            36→from .templating import stream_template as stream_template
+            37→from .templating import stream_template_string as stream_template_string
             38→from .wrappers import Request as Request
             39→from .wrappers import Response as Response
         __main__.py
@@ -259,23 +262,7 @@ src/
                 13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
                 …
                 47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
-                48→    """Serialize data as JSON and write to a file.
-                50→    If :data:`~flask.current_app` is available, it will use its
-                51→    :meth:`app.json.dump() <flask.json.provider.JSONProvider.dump>`
-                52→    method, otherwise it will use :func:`json.dump`.
-                54→    :param obj: The data to serialize.
-                55→    :param fp: A file opened for writing text. Should use the UTF-8
-                56→        encoding to be valid JSON.
-                57→    :param kwargs: Arguments passed to the ``dump`` implementation.
-                59→    .. versionchanged:: 2.3
-                60→        The ``app`` parameter was removed.
-                62→    .. versionchanged:: 2.2
-                63→        Calls ``current_app.json.dump``, allowing an app to override
-                64→        the behavior.
-                66→    .. versionchanged:: 2.0
-                67→        Writing to a binary file, and the ``encoding`` argument, will be
-                68→        removed in Flask 2.1.
-                69→    """
+                …
                 70→    if current_app:
                 71→        current_app.json.dump(obj, fp, **kwargs)
                 72→    else:
@@ -283,17 +270,12 @@ src/
                 74→        _json.dump(obj, fp, **kwargs)
                 77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
                 …
-                102→    if current_app:
-                103→        return current_app.json.loads(s, **kwargs)
                 105→    return _json.loads(s, **kwargs)
                 108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
                 …
-                132→    if current_app:
-                133→        return current_app.json.load(fp, **kwargs)
                 135→    return _json.load(fp, **kwargs)
                 138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
                 …
-                170→    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
             provider.py
             tag.py
         logging.py
@@ -318,9 +300,6 @@ src/
         templating.py
         testing.py
         typing.py
-            1→from __future__ import annotations
-            3→import collections.abc as cabc
-            4→import typing as t
         views.py
             9→F = t.TypeVar("F", bound=t.Callable[..., t.Any])
             11→http_method_funcs = frozenset(

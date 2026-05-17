@@ -175,30 +175,13 @@ src/
             51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
             52→    return cache_from_source(path, debug_override, optimization=OPTIMIZATION)
             55→class TypeguardLoader(SourceFileLoader):
-            56→    @staticmethod
-            …
-            99→    def exec_module(self, module: ModuleType) -> None:
             …
             109→class TypeguardFinder(MetaPathFinder):
-            …
-            120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
-            …
-            124→    def find_spec(
-            …
-            138→    def should_instrument(self, module_name: str) -> bool:
             …
             156→class ImportHookManager:
             157→    """
             158→    A handle that can be used to uninstall the Typeguard import hook.
             159→    """
-            161→    def __init__(self, hook: MetaPathFinder):
-            …
-            164→    def __enter__(self) -> None:
-            …
-            167→    def __exit__(
-            …
-            175→    def uninstall(self) -> None:
-            …
             183→def install_import_hook(
             184→    packages: Iterable[str] | None = None,
             185→    *,
@@ -243,6 +226,17 @@ src/
         py.typed
 tests/
     __init__.py
+        1→from typing import (
+        2→    AbstractSet,
+        3→    Collection,
+        4→    Dict,
+        5→    Generic,
+        6→    List,
+        7→    NamedTuple,
+        8→    NewType,
+        9→    TypeVar,
+        10→    Union,
+        11→)
     conftest.py
     deferredannos.py
     dummymodule.py

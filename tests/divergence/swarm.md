@@ -7,10 +7,10 @@ Score(3000)=0.673 I=0.843 C=0.538 ns_rows≤3K=25/62 (reached=12 partial=3 missi
 | walker |  | 49 | 12 | README headline in README.md |  |  | 1.000 |
 | ns | 60 |  | 23 | README title and Python-version line | 1.2 |  | 0.935 |
 | walker |  | 70 | 21 | listing of 'swarm' |  |  | 0.950 |
-| walker |  | 80 | 10 | listing of 'swarm/repl' |  |  | 0.950 |
-| ns | 91 |  | 31 | swarm/ package + repl subdir listings | 1.3 |  | 0.953 |
-| walker |  | 93 | 13 | python imports in swarm/repl/__init__.py |  |  | 0.953 |
-| walker |  | 134 | 41 | python imports in swarm/__init__.py |  |  | 0.967 |
+| ns | 91 |  | 31 | swarm/ package + repl subdir listings | 1.3 |  | 0.843 |
+| walker |  | 111 | 41 | python imports in swarm/__init__.py |  |  | 0.859 |
+| walker |  | 121 | 10 | listing of 'swarm/repl' |  |  | 0.967 |
+| walker |  | 134 | 13 | python imports in swarm/repl/__init__.py |  |  | 0.967 |
 | ns | 137 |  | 46 | swarm/__init__.py — public re-exports | 1.4 |  | 0.933 |
 | walker |  | 148 | 14 | listing of 'assets' |  |  | 0.933 |
 | walker |  | 158 | 10 | python decl names surface in swarm/core.py |  |  | 0.933 |

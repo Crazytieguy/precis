@@ -10,14 +10,14 @@ Score(3000)=0.605 I=0.804 C=0.455 ns_rows≤3K=15/40 (reached=7 partial=3 missin
 | walker |  | 161 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 1.000 |
 | ns | 213 |  | 117 | README lede + tagline | 1.2 |  | 0.848 |
 | ns | 256 |  | 43 | Source package layout (src/pluggy/) | 1.3 |  | 0.855 |
-| walker |  | 263 | 102 | README headline in README.rst |  |  | 0.952 |
-| walker |  | 282 | 19 | listing of 'changelog' |  |  | 0.952 |
-| walker |  | 314 | 32 | listing of 'docs' |  |  | 0.953 |
-| walker |  | 357 | 43 | listing of 'downstream' |  |  | 0.954 |
-| walker |  | 360 | 3 | listing of 'docs/_static' |  |  | 0.954 |
-| ns | 406 |  | 150 | __all__ — full public-name list | 1.4 |  | 0.784 |
-| ns | 624 |  | 218 | Toy example — first half (spec + plugin classes) | 2.1 |  | 0.641 |
-| walker |  | 676 | 316 | python imports in src/pluggy/__init__.py |  |  | 0.800 |
+| ns | 406 |  | 150 | __all__ — full public-name list | 1.4 |  | 0.702 |
+| walker |  | 477 | 316 | python imports in src/pluggy/__init__.py |  |  | 0.901 |
+| walker |  | 579 | 102 | README headline in README.rst |  |  | 0.973 |
+| walker |  | 598 | 19 | listing of 'changelog' |  |  | 0.973 |
+| ns | 624 |  | 218 | Toy example — first half (spec + plugin classes) | 2.1 |  | 0.798 |
+| walker |  | 630 | 32 | listing of 'docs' |  |  | 0.798 |
+| walker |  | 673 | 43 | listing of 'downstream' |  |  | 0.800 |
+| walker |  | 676 | 3 | listing of 'docs/_static' |  |  | 0.800 |
 | walker |  | 685 | 9 | python imports in src/pluggy/_warnings.py |  |  | 0.800 |
 | walker |  | 707 | 22 | python decl names surface in src/pluggy/_warnings.py |  |  | 0.800 |
 | walker |  | 707 | 0 | python decl at src/pluggy/_warnings.py:4 |  |  | 0.800 |

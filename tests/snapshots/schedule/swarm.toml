@@ -51,42 +51,10 @@ entries = ["__init__.py", "core.py", "repl", "types.py", "util.py"]
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "swarm/repl" })'
-descriptor = "listing of 'swarm/repl'"
-cost_tokens = 10
-cum_tokens = 80
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "swarm/repl"
-entries = ["__init__.py", "repl.py"]
-
-[[batches]]
-position = 5
-key = 'Python(Imports { file: "swarm/repl/__init__.py" })'
-descriptor = "python imports in swarm/repl/__init__.py"
-cost_tokens = 13
-cum_tokens = 93
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/repl/__init__.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
 key = 'Python(Imports { file: "swarm/__init__.py" })'
 descriptor = "python imports in swarm/__init__.py"
 cost_tokens = 41
-cum_tokens = 134
+cum_tokens = 111
 
 [batches.content]
 kind = "lines"
@@ -103,6 +71,38 @@ kind = "full"
 path = "swarm/__init__.py"
 start = 4
 end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "swarm/repl" })'
+descriptor = "listing of 'swarm/repl'"
+cost_tokens = 10
+cum_tokens = 121
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "swarm/repl"
+entries = ["__init__.py", "repl.py"]
+
+[[batches]]
+position = 6
+key = 'Python(Imports { file: "swarm/repl/__init__.py" })'
+descriptor = "python imports in swarm/repl/__init__.py"
+cost_tokens = 13
+cum_tokens = 134
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/repl/__init__.py"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"

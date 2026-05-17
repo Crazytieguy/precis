@@ -5,26 +5,26 @@ Score(3000)=0.440 I=0.614 C=0.315 ns_rows≤3K=31/58 (reached=9 partial=3 missin
 | ns | 19 |  | 19 | README lede — one-line domain statement | 1.1 |  | 0.000 |
 | walker |  | 56 | 56 | listing of '.' |  |  | 0.000 |
 | walker |  | 81 | 25 | listing of 'py3xui' |  |  | 0.000 |
-| walker |  | 95 | 14 | listing of 'py3xui/client' |  |  | 0.000 |
 | ns | 100 |  | 81 | Top-level package layout | 1.2 |  | 0.837 |
-| walker |  | 109 | 14 | python imports in py3xui/client/__init__.py |  |  | 0.837 |
-| walker |  | 123 | 14 | listing of 'py3xui/server' |  |  | 0.839 |
-| walker |  | 141 | 18 | python imports in py3xui/server/__init__.py |  |  | 0.839 |
-| walker |  | 155 | 14 | listing of 'py3xui/utils' |  |  | 0.842 |
-| walker |  | 168 | 13 | python imports in py3xui/utils/__init__.py |  |  | 0.842 |
-| walker |  | 183 | 15 | python decl names surface in py3xui/utils/__init__.py |  |  | 0.842 |
-| ns | 194 |  | 94 | Public re-exports from py3xui/__init__.py | 1.3 |  | 0.728 |
-| walker |  | 215 | 32 | listing of 'py3xui/inbound' |  |  | 0.738 |
-| ns | 241 |  | 47 | pyproject.toml — name, version, description | 1.4 |  | 0.694 |
-| walker |  | 255 | 40 | listing of 'py3xui/api' |  |  | 0.715 |
-| ns | 298 |  | 57 | pyproject.toml — runtime dependencies | 1.5 |  | 0.654 |
-| walker |  | 301 | 46 | listing of 'py3xui/async_api' |  |  | 0.678 |
-| walker |  | 367 | 66 | python imports in py3xui/api/__init__.py |  |  | 0.686 |
-| ns | 378 |  | 80 | Sync sub-API exports | 1.6 |  | 0.680 |
-| walker |  | 435 | 68 | python imports in py3xui/inbound/__init__.py |  |  | 0.680 |
-| ns | 469 |  | 91 | Async sub-API exports | 1.7 |  | 0.635 |
-| walker |  | 512 | 77 | python imports in py3xui/async_api/__init__.py |  |  | 0.684 |
-| walker |  | 592 | 80 | python imports in py3xui/__init__.py |  |  | 0.749 |
+| walker |  | 161 | 80 | python imports in py3xui/__init__.py |  |  | 0.860 |
+| walker |  | 175 | 14 | listing of 'py3xui/client' |  |  | 0.861 |
+| walker |  | 189 | 14 | python imports in py3xui/client/__init__.py |  |  | 0.861 |
+| ns | 194 |  | 94 | Public re-exports from py3xui/__init__.py | 1.3 |  | 0.812 |
+| walker |  | 203 | 14 | listing of 'py3xui/server' |  |  | 0.814 |
+| walker |  | 221 | 18 | python imports in py3xui/server/__init__.py |  |  | 0.814 |
+| walker |  | 235 | 14 | listing of 'py3xui/utils' |  |  | 0.816 |
+| ns | 241 |  | 47 | pyproject.toml — name, version, description | 1.4 |  | 0.768 |
+| walker |  | 248 | 13 | python imports in py3xui/utils/__init__.py |  |  | 0.768 |
+| walker |  | 263 | 15 | python decl names surface in py3xui/utils/__init__.py |  |  | 0.768 |
+| walker |  | 295 | 32 | listing of 'py3xui/inbound' |  |  | 0.778 |
+| ns | 298 |  | 57 | pyproject.toml — runtime dependencies | 1.5 |  | 0.711 |
+| walker |  | 335 | 40 | listing of 'py3xui/api' |  |  | 0.731 |
+| ns | 378 |  | 80 | Sync sub-API exports | 1.6 |  | 0.676 |
+| walker |  | 381 | 46 | listing of 'py3xui/async_api' |  |  | 0.700 |
+| walker |  | 447 | 66 | python imports in py3xui/api/__init__.py |  |  | 0.751 |
+| ns | 469 |  | 91 | Async sub-API exports | 1.7 |  | 0.701 |
+| walker |  | 515 | 68 | python imports in py3xui/inbound/__init__.py |  |  | 0.701 |
+| walker |  | 592 | 77 | python imports in py3xui/async_api/__init__.py |  |  | 0.749 |
 | walker |  | 627 | 35 | README headline in py3xui/utils/README.md |  |  | 0.749 |
 | ns | 629 |  | 160 | Inner-package directory listings | 1.8 |  | 0.768 |
 | walker |  | 642 | 15 | py3xui/utils/README.md section #0 |  |  | 0.768 |

@@ -10,29 +10,29 @@ Score(3000)=0.607 I=0.855 C=0.431 ns_rows≤3K=21/53 (reached=12 partial=1 missi
 | ns | 95 |  | 28 | Version + package name | 1.3 |  | 0.927 |
 | walker |  | 118 | 47 | listing of 'src/chronos' |  |  | 0.943 |
 | ns | 142 |  | 47 | src/chronos directory listing | 1.4 |  | 0.948 |
-| walker |  | 148 | 30 | listing of 'src/chronos/chronos2' |  |  | 0.962 |
-| ns | 172 |  | 30 | src/chronos/chronos2 directory listing | 1.5 |  | 0.957 |
-| walker |  | 175 | 27 | listing of 'notebooks' |  |  | 0.957 |
-| ns | 262 |  | 90 | Package public API — first half of __init__ re-exports | 1.6 |  | 0.828 |
-| walker |  | 276 | 101 | python imports in src/chronos/chronos2/__init__.py |  |  | 0.828 |
-| ns | 310 |  | 48 | Package public API — second half of __init__ re-exports | 1.7 |  | 0.805 |
-| walker |  | 375 | 99 | headings outline in README.md |  |  | 0.819 |
-| walker |  | 392 | 17 | README.md section #12 |  |  | 0.819 |
-| walker |  | 419 | 27 | README.md section #11 |  |  | 0.819 |
-| walker |  | 481 | 62 | [package] in pyproject.toml |  |  | 0.830 |
-| ns | 490 |  | 180 | README — introduction sentence + Chronos-2 paragraph | 1.8 |  | 0.779 |
-| walker |  | 521 | 40 | python decl names surface in src/chronos/base.py |  |  | 0.780 |
-| walker |  | 521 | 0 | python decl at src/chronos/base.py:27 |  |  | 0.780 |
-| walker |  | 521 | 0 | python decl at src/chronos/base.py:32 |  |  | 0.780 |
-| walker |  | 521 | 0 | python decl at src/chronos/base.py:44 |  |  | 0.780 |
-| walker |  | 536 | 15 | python class body at src/chronos/base.py:32 |  |  | 0.780 |
-| walker |  | 558 | 22 | python class body at src/chronos/base.py:27 |  |  | 0.784 |
-| walker |  | 593 | 35 | python class body at src/chronos/base.py:44 |  |  | 0.785 |
-| walker |  | 609 | 16 | listing of 'scripts' |  |  | 0.786 |
-| ns | 737 |  | 247 | README — Chronos-Bolt and Chronos paragraphs | 1.9 |  | 0.767 |
-| ns | 809 |  | 72 | README H2/H3 headings catalog | 1.10 |  | 0.785 |
-| ns | 842 |  | 33 | ForecastType enum | 2.1 |  | 0.789 |
-| walker |  | 898 | 289 | python imports in src/chronos/__init__.py |  |  | 0.912 |
+| ns | 172 |  | 30 | src/chronos/chronos2 directory listing | 1.5 |  | 0.821 |
+| ns | 262 |  | 90 | Package public API — first half of __init__ re-exports | 1.6 |  | 0.711 |
+| ns | 310 |  | 48 | Package public API — second half of __init__ re-exports | 1.7 |  | 0.691 |
+| walker |  | 407 | 289 | python imports in src/chronos/__init__.py |  |  | 0.859 |
+| walker |  | 437 | 30 | listing of 'src/chronos/chronos2' |  |  | 0.965 |
+| walker |  | 464 | 27 | listing of 'notebooks' |  |  | 0.965 |
+| ns | 490 |  | 180 | README — introduction sentence + Chronos-2 paragraph | 1.8 |  | 0.905 |
+| walker |  | 565 | 101 | python imports in src/chronos/chronos2/__init__.py |  |  | 0.905 |
+| walker |  | 664 | 99 | headings outline in README.md |  |  | 0.920 |
+| walker |  | 681 | 17 | README.md section #12 |  |  | 0.920 |
+| walker |  | 708 | 27 | README.md section #11 |  |  | 0.920 |
+| ns | 737 |  | 247 | README — Chronos-Bolt and Chronos paragraphs | 1.9 |  | 0.898 |
+| walker |  | 770 | 62 | [package] in pyproject.toml |  |  | 0.908 |
+| ns | 809 |  | 72 | README H2/H3 headings catalog | 1.10 |  | 0.905 |
+| walker |  | 810 | 40 | python decl names surface in src/chronos/base.py |  |  | 0.906 |
+| walker |  | 810 | 0 | python decl at src/chronos/base.py:27 |  |  | 0.906 |
+| walker |  | 810 | 0 | python decl at src/chronos/base.py:32 |  |  | 0.906 |
+| walker |  | 810 | 0 | python decl at src/chronos/base.py:44 |  |  | 0.906 |
+| walker |  | 825 | 15 | python class body at src/chronos/base.py:32 |  |  | 0.906 |
+| ns | 842 |  | 33 | ForecastType enum | 2.1 |  | 0.883 |
+| walker |  | 847 | 22 | python class body at src/chronos/base.py:27 |  |  | 0.910 |
+| walker |  | 882 | 35 | python class body at src/chronos/base.py:44 |  |  | 0.911 |
+| walker |  | 898 | 16 | listing of 'scripts' |  |  | 0.912 |
 | ns | 964 |  | 122 | BaseChronosPipeline — class + properties | 2.2 |  | 0.844 |
 | walker |  | 1004 | 106 | [dependencies] in pyproject.toml |  |  | 0.844 |
 | ns | 1124 |  | 160 | BaseChronosPipeline — predict / predict_quantiles signatures | 2.3 |  | 0.793 |

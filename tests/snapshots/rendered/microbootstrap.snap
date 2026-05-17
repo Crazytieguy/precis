@@ -94,6 +94,12 @@ microbootstrap/
         15→from microbootstrap.instruments.pyroscope_instrument import PyroscopeConfig
         16→from microbootstrap.instruments.sentry_instrument import SentryConfig
         17→from microbootstrap.instruments.swagger_instrument import SwaggerConfig
+        18→from microbootstrap.settings import (
+        19→    FastApiSettings,
+        20→    FastStreamSettings,
+        21→    InstrumentsSetupperSettings,
+        22→    LitestarSettings,
+        23→)
         26→__all__ = (
         27→    "CorsConfig",
         28→    "FastApiPrometheusConfig",
@@ -258,22 +264,6 @@ microbootstrap/
         19→class InstrumentsSetupper:
         20→    console_writer: ConsoleWriter
         21→    instrument_box: InstrumentBox
-        23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
-        …
-        28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
-        …
-        32→    def configure_instruments(
-        …
-        40→    @classmethod
-        …
-        51→    def setup(self) -> None:
-        …
-        57→    def teardown(self) -> None:
-        …
-        62→    def __enter__(self) -> None:
-        63→        self.setup()
-        65→    def __exit__(self, *args: object) -> None:
-        66→        self.teardown()
     middlewares/
         __init__.py
         fastapi.py

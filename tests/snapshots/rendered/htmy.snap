@@ -112,9 +112,6 @@ docs/
             3→    options:
             4→        show_root_heading: true
         typing.md
-            1→# ::: htmy.typing
-            3→    options:
-            4→        show_root_heading: true
         utils.md
             1→# ::: htmy.utils
             3→    options:
@@ -142,7 +139,6 @@ docs/
         …
         150→### Methods
         …
-        230→That's it!
     index.md
 examples/
     internationalization/
@@ -180,6 +176,13 @@ htmy/
         19→from .tag import Tag as Tag
         20→from .tag import TagWithProps as TagWithProps
         21→from .tag import wildcard_tag as wildcard_tag
+        38→from .utils import as_component_sequence as as_component_sequence
+        39→from .utils import as_component_type as as_component_type
+        40→from .utils import is_component_sequence as is_component_sequence
+        41→from .utils import is_component_type as is_component_type
+        42→from .utils import is_htmy_component_type as is_htmy_component_type
+        43→from .utils import join
+        44→from .utils import join_components as join_components
         46→join_classes = join
         48→HTMY = Renderer
     core.py
@@ -229,9 +232,6 @@ htmy/
         core.py
             20→class MarkdownParser(ContextAware):
             …
-            28→    __slots__ = ("_md",)
-            30→    _default: ClassVar[MarkdownParser | None] = None
-            31→    """The default instance or `None` if one hasn't been created already."""
             81→class MD(Snippet):
             …
             98→    __slots__ = (

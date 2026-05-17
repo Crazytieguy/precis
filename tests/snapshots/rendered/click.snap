@@ -160,19 +160,6 @@ docs/
         10→### Shell Variable Expansion On Windows
         …
     handling-files.md
-        3→# Handling Files
-        …
-        5→```{currentmodule} click
-        6→```
-        8→Click has built in features to support file and file path handling. The examples use arguments but the same principle
-        9→applies to options as well.
-        11→(file-args)=
-        13→## File Arguments
-        …
-        47→## File Path Arguments
-        …
-        81→## File Opening Behaviors
-        …
     index.rst
     license.md
         1→# BSD-3-Clause License
@@ -182,38 +169,9 @@ docs/
         6→---
         7→```
     option-decorators.md
-        1→# Options Shortcut Decorators
-        …
-        3→```{currentmodule} click
-        4→```
-        6→For convenience commonly used combinations of options arguments are available as their own decorators.
-        8→```{contents}
-        9→---
-        10→depth: 2
-        11→local: true
-        12→---
-        13→```
-        15→## Password Option
-        …
-        47→## Confirmation Option
-        …
-        84→## Version Option
-        …
-        86→{func}`version_option` adds a `--version` option which immediately prints the version number and exits the program.
     options.md
     parameter-types.md
     parameters.md
-        3→# Parameters
-        …
-        5→```{currentmodule} click
-        6→```
-        8→Click supports only two principle types of parameters for scripts (by design): options and arguments.
-        10→## Options
-        …
-        20→## Arguments
-        …
-        32→## Parameter Names
-        …
     prompts.md
     quickstart.md
     setuptools.md
@@ -231,21 +189,10 @@ docs/
     upgrade-guides.md
     utils.md
     virtualenv.md
-        3→# Virtualenv
-        …
-        5→## Why Use Virtualenv?
-        …
-        13→## How to Use Virtualenv
-        …
     why.md
     wincmd.md
         1→# Windows Console Notes
         …
-        3→```{versionadded} 6.0
-        4→```
-        6→Click emulates output streams on Windows to support unicode to the Windows console through separate APIs and we perform
-        7→different decoding of parameters.
-        9→Here is a brief overview of how this works and what it means to you.
         11→## Unicode Arguments
         …
         24→## Unicode Output and Input
@@ -324,6 +271,39 @@ src/
             39→from .formatting import HelpFormatter as HelpFormatter
             40→from .formatting import wrap_text as wrap_text
             41→from .globals import get_current_context as get_current_context
+            42→from .termui import clear as clear
+            43→from .termui import confirm as confirm
+            44→from .termui import echo_via_pager as echo_via_pager
+            45→from .termui import edit as edit
+            46→from .termui import get_pager_file as get_pager_file
+            47→from .termui import getchar as getchar
+            48→from .termui import launch as launch
+            49→from .termui import pause as pause
+            50→from .termui import progressbar as progressbar
+            51→from .termui import prompt as prompt
+            52→from .termui import secho as secho
+            53→from .termui import style as style
+            54→from .termui import unstyle as unstyle
+            55→from .types import BOOL as BOOL
+            56→from .types import Choice as Choice
+            57→from .types import DateTime as DateTime
+            58→from .types import File as File
+            59→from .types import FLOAT as FLOAT
+            60→from .types import FloatRange as FloatRange
+            61→from .types import INT as INT
+            62→from .types import IntRange as IntRange
+            63→from .types import ParamType as ParamType
+            64→from .types import Path as Path
+            65→from .types import STRING as STRING
+            66→from .types import Tuple as Tuple
+            67→from .types import UNPROCESSED as UNPROCESSED
+            68→from .types import UUID as UUID
+            69→from .utils import echo as echo
+            70→from .utils import format_filename as format_filename
+            71→from .utils import get_app_dir as get_app_dir
+            72→from .utils import get_binary_stream as get_binary_stream
+            73→from .utils import get_text_stream as get_text_stream
+            74→from .utils import open_file as open_file
             77→def __getattr__(name: str) -> object:
             …
         _compat.py

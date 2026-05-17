@@ -6,19 +6,19 @@ Score(3000)=0.510 I=0.402 C=0.648 ns_rows≤3K=17/50 (reached=7 partial=2 missin
 | ns | 98 |  | 98 | README lede + tagline | 1.1 |  | 0.000 |
 | walker |  | 102 | 19 | listing of 'extra' |  |  | 0.000 |
 | walker |  | 169 | 67 | listing of 'beets' |  |  | 0.000 |
-| walker |  | 178 | 9 | listing of 'beets/ui' |  |  | 0.000 |
-| ns | 181 |  | 83 | Top-level repo listing | 1.2 |  | 0.505 |
-| walker |  | 196 | 18 | listing of 'beets/autotag' |  |  | 0.506 |
-| ns | 211 |  | 30 | Entry-point scripts (`beet = beets.ui:main`) | 1.3 |  | 0.475 |
-| walker |  | 218 | 22 | listing of 'beets/importer' |  |  | 0.479 |
-| walker |  | 233 | 15 | python decl names surface in beets/autotag/__init__.py |  |  | 0.479 |
-| walker |  | 233 | 0 | python decl at beets/autotag/__init__.py:28 |  |  | 0.479 |
-| walker |  | 261 | 28 | listing of 'beets/dbcore' |  |  | 0.490 |
-| walker |  | 291 | 30 | listing of 'beets/library' |  |  | 0.508 |
-| ns | 303 |  | 92 | `python -m beets` shim | 1.4 |  | 0.428 |
-| walker |  | 319 | 28 | python decl names surface in beets/library/__init__.py |  |  | 0.428 |
-| walker |  | 319 | 0 | python decl at beets/library/__init__.py:15 |  |  | 0.428 |
-| walker |  | 387 | 68 | python imports in beets/__init__.py |  |  | 0.430 |
+| ns | 181 |  | 83 | Top-level repo listing | 1.2 |  | 0.504 |
+| ns | 211 |  | 30 | Entry-point scripts (`beet = beets.ui:main`) | 1.3 |  | 0.473 |
+| walker |  | 237 | 68 | python imports in beets/__init__.py |  |  | 0.476 |
+| walker |  | 246 | 9 | listing of 'beets/ui' |  |  | 0.476 |
+| walker |  | 264 | 18 | listing of 'beets/autotag' |  |  | 0.477 |
+| walker |  | 286 | 22 | listing of 'beets/importer' |  |  | 0.482 |
+| walker |  | 301 | 15 | python decl names surface in beets/autotag/__init__.py |  |  | 0.482 |
+| walker |  | 301 | 0 | python decl at beets/autotag/__init__.py:28 |  |  | 0.482 |
+| ns | 303 |  | 92 | `python -m beets` shim | 1.4 |  | 0.405 |
+| walker |  | 329 | 28 | listing of 'beets/dbcore' |  |  | 0.414 |
+| walker |  | 359 | 30 | listing of 'beets/library' |  |  | 0.430 |
+| walker |  | 387 | 28 | python decl names surface in beets/library/__init__.py |  |  | 0.430 |
+| walker |  | 387 | 0 | python decl at beets/library/__init__.py:15 |  |  | 0.430 |
 | ns | 390 |  | 87 | Package version + global config singleton | 1.5 |  | 0.407 |
 | walker |  | 454 | 67 | listing of 'beets/ui/commands' |  |  | 0.415 |
 | walker |  | 468 | 14 | listing of 'beets/ui/commands/import_' |  |  | 0.418 |

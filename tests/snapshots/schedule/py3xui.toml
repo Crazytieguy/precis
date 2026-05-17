@@ -33,10 +33,28 @@ entries = ["__init__.py", "api", "async_api", "client", "inbound", "server", "ut
 
 [[batches]]
 position = 3
+key = 'Python(Imports { file: "py3xui/__init__.py" })'
+descriptor = "python imports in py3xui/__init__.py"
+cost_tokens = 80
+cum_tokens = 161
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "py3xui/__init__.py"
+start = 2
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
 key = 'Fs(DirListing { dir: "py3xui/client" })'
 descriptor = "listing of 'py3xui/client'"
 cost_tokens = 14
-cum_tokens = 95
+cum_tokens = 175
 
 [batches.content]
 kind = "fs"
@@ -46,11 +64,11 @@ parent = "py3xui/client"
 entries = ["README.md", "__init__.py", "client.py"]
 
 [[batches]]
-position = 4
+position = 5
 key = 'Python(Imports { file: "py3xui/client/__init__.py" })'
 descriptor = "python imports in py3xui/client/__init__.py"
 cost_tokens = 14
-cum_tokens = 109
+cum_tokens = 189
 
 [batches.content]
 kind = "lines"
@@ -64,11 +82,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 5
+position = 6
 key = 'Fs(DirListing { dir: "py3xui/server" })'
 descriptor = "listing of 'py3xui/server'"
 cost_tokens = 14
-cum_tokens = 123
+cum_tokens = 203
 
 [batches.content]
 kind = "fs"
@@ -78,11 +96,11 @@ parent = "py3xui/server"
 entries = ["README.md", "__init__.py", "server.py"]
 
 [[batches]]
-position = 6
+position = 7
 key = 'Python(Imports { file: "py3xui/server/__init__.py" })'
 descriptor = "python imports in py3xui/server/__init__.py"
 cost_tokens = 18
-cum_tokens = 141
+cum_tokens = 221
 
 [batches.content]
 kind = "lines"
@@ -96,11 +114,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Fs(DirListing { dir: "py3xui/utils" })'
 descriptor = "listing of 'py3xui/utils'"
 cost_tokens = 14
-cum_tokens = 155
+cum_tokens = 235
 
 [batches.content]
 kind = "fs"
@@ -110,11 +128,11 @@ parent = "py3xui/utils"
 entries = ["README.md", "__init__.py", "env.py"]
 
 [[batches]]
-position = 8
+position = 9
 key = 'Python(Imports { file: "py3xui/utils/__init__.py" })'
 descriptor = "python imports in py3xui/utils/__init__.py"
 cost_tokens = 13
-cum_tokens = 168
+cum_tokens = 248
 
 [batches.content]
 kind = "lines"
@@ -128,11 +146,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Python(DeclNames { file: "py3xui/utils/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/utils/__init__.py"
 cost_tokens = 15
-cum_tokens = 183
+cum_tokens = 263
 
 [batches.content]
 kind = "lines"
@@ -146,11 +164,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Fs(DirListing { dir: "py3xui/inbound" })'
 descriptor = "listing of 'py3xui/inbound'"
 cost_tokens = 32
-cum_tokens = 215
+cum_tokens = 295
 
 [batches.content]
 kind = "fs"
@@ -160,11 +178,11 @@ parent = "py3xui/inbound"
 entries = ["README.md", "__init__.py", "bases.py", "inbound.py", "settings.py", "sniffing.py", "stream_settings.py"]
 
 [[batches]]
-position = 11
+position = 12
 key = 'Fs(DirListing { dir: "py3xui/api" })'
 descriptor = "listing of 'py3xui/api'"
 cost_tokens = 40
-cum_tokens = 255
+cum_tokens = 335
 
 [batches.content]
 kind = "fs"
@@ -174,11 +192,11 @@ parent = "py3xui/api"
 entries = ["README.md", "__init__.py", "api.py", "api_base.py", "api_client.py", "api_database.py", "api_inbound.py", "api_server.py"]
 
 [[batches]]
-position = 12
+position = 13
 key = 'Fs(DirListing { dir: "py3xui/async_api" })'
 descriptor = "listing of 'py3xui/async_api'"
 cost_tokens = 46
-cum_tokens = 301
+cum_tokens = 381
 
 [batches.content]
 kind = "fs"
@@ -188,11 +206,11 @@ parent = "py3xui/async_api"
 entries = ["README.md", "__init__.py", "async_api.py", "async_api_base.py", "async_api_client.py", "async_api_database.py", "async_api_inbound.py", "async_api_server.py"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Python(Imports { file: "py3xui/api/__init__.py" })'
 descriptor = "python imports in py3xui/api/__init__.py"
 cost_tokens = 66
-cum_tokens = 367
+cum_tokens = 447
 
 [batches.content]
 kind = "lines"
@@ -206,11 +224,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Python(Imports { file: "py3xui/inbound/__init__.py" })'
 descriptor = "python imports in py3xui/inbound/__init__.py"
 cost_tokens = 68
-cum_tokens = 435
+cum_tokens = 515
 
 [batches.content]
 kind = "lines"
@@ -224,11 +242,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Python(Imports { file: "py3xui/async_api/__init__.py" })'
 descriptor = "python imports in py3xui/async_api/__init__.py"
 cost_tokens = 77
-cum_tokens = 512
+cum_tokens = 592
 
 [batches.content]
 kind = "lines"
@@ -237,24 +255,6 @@ kind = "lines"
 path = "py3xui/async_api/__init__.py"
 start = 2
 end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Python(Imports { file: "py3xui/__init__.py" })'
-descriptor = "python imports in py3xui/__init__.py"
-cost_tokens = 80
-cum_tokens = 592
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "py3xui/__init__.py"
-start = 2
-end = 6
 
 [batches.content.spans.render]
 kind = "full"

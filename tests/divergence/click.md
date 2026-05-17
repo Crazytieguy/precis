@@ -1,4 +1,4 @@
-Score(3000)=0.523 I=0.810 C=0.337 ns_rows≤3K=20/52 (reached=8 partial=1 missing=11)
+Score(3000)=0.640 I=0.863 C=0.475 ns_rows≤3K=20/52 (reached=11 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -13,277 +13,275 @@ Score(3000)=0.523 I=0.810 C=0.337 ns_rows≤3K=20/52 (reached=8 partial=1 missin
 | ns | 209 |  | 40 | Python version floor + runtime dep | 1.4 | 1.2 | 0.834 |
 | walker |  | 268 | 86 | listing of 'src/click' |  |  | 0.834 |
 | walker |  | 279 | 11 | python imports #1 in src/click/__init__.py |  |  | 0.834 |
-| walker |  | 297 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.834 |
-| walker |  | 297 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.834 |
 | ns | 310 |  | 101 | README differentiators (three-bullet pitch) | 1.5 | 1.3 | 0.705 |
-| walker |  | 370 | 73 | python imports in src/click/__init__.py |  |  | 0.705 |
-| ns | 410 |  | 100 | __init__.py: core-class re-exports | 1.6 |  | 0.627 |
-| walker |  | 461 | 91 | README.md section #0 |  |  | 0.739 |
-| walker |  | 477 | 16 | python imports #6 in src/click/__init__.py |  |  | 0.739 |
-| walker |  | 490 | 13 | listing of '.github' |  |  | 0.739 |
-| walker |  | 513 | 23 | listing of '.github/workflows' |  |  | 0.739 |
-| walker |  | 527 | 14 | python decl names surface in src/click/_textwrap.py |  |  | 0.739 |
-| walker |  | 527 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.739 |
-| walker |  | 557 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.740 |
-| ns | 578 |  | 168 | README hello-world example | 1.7 | 1.3 | 0.618 |
-| walker |  | 635 | 78 | [package] in pyproject.toml |  |  | 0.704 |
-| walker |  | 735 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.798 |
-| ns | 739 |  | 161 | __init__.py: decorator re-exports | 1.8 | 1.6 | 0.723 |
-| walker |  | 776 | 41 | python method sigs in src/click/_textwrap.py |  |  | 0.723 |
-| walker |  | 776 | 0 | python method at src/click/_textwrap.py:40 |  |  | 0.723 |
-| walker |  | 795 | 19 | python method at src/click/_textwrap.py:27 |  |  | 0.723 |
-| walker |  | 862 | 67 | README.md section #3 |  |  | 0.723 |
-| ns | 931 |  | 192 | __init__.py: exception + formatting + globals re-exports | 1.9 | 1.8 | 0.660 |
-| walker |  | 944 | 82 | README.md section #2 |  |  | 0.660 |
-| walker |  | 980 | 36 | listing of 'examples' |  |  | 0.662 |
-| ns | 1120 |  | 189 | __init__.py: termui re-exports | 1.10 | 1.9 | 0.608 |
-| walker |  | 1172 | 192 | listing of 'docs' |  |  | 0.608 |
-| walker |  | 1194 | 22 | docs/setuptools.md section #0 |  |  | 0.608 |
-| walker |  | 1209 | 15 | listing of 'docs/_static' |  |  | 0.608 |
-| walker |  | 1257 | 48 | docs/license.md section #0 |  |  | 0.608 |
-| walker |  | 1278 | 21 | headings outline in docs/click-concepts.md |  |  | 0.608 |
-| ns | 1302 |  | 182 | __init__.py: built-in type re-exports | 1.11 | 1.10 | 0.562 |
-| walker |  | 1343 | 65 | docs/click-concepts.md section #0 |  |  | 0.562 |
-| walker |  | 1364 | 21 | headings outline in docs/unicode-support.md |  |  | 0.562 |
-| ns | 1395 |  | 93 | __init__.py: utils re-exports | 1.12 | 1.11 | 0.543 |
-| walker |  | 1525 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.618 |
-| walker |  | 1547 | 22 | headings outline in docs/command-line-reference.md |  |  | 0.618 |
-| walker |  | 1615 | 68 | docs/command-line-reference.md section #0 |  |  | 0.618 |
-| walker |  | 1637 | 22 | headings outline in docs/contrib.md |  |  | 0.618 |
-| ns | 1647 |  | 252 | Deprecation shim: BaseCommand → Command, MultiCommand → Group | 1.13 | 1.12 | 0.555 |
-| walker |  | 1659 | 22 | headings outline in docs/design-opinions.md |  |  | 0.555 |
-| walker |  | 1719 | 60 | docs/design-opinions.md section #0 |  |  | 0.555 |
-| walker |  | 1865 | 146 | python imports #4 in src/click/__init__.py |  |  | 0.625 |
-| walker |  | 1887 | 22 | python decl names surface #1 in src/click/exceptions.py |  |  | 0.625 |
-| walker |  | 1887 | 0 | python decl at src/click/exceptions.py:330 |  |  | 0.625 |
-| walker |  | 1887 | 0 | python decl at src/click/exceptions.py:334 |  |  | 0.625 |
-| walker |  | 1901 | 14 | python class body at src/click/exceptions.py:334 |  |  | 0.625 |
-| walker |  | 1915 | 14 | python decl doc at src/click/exceptions.py:330 |  |  | 0.625 |
-| ns | 1916 |  | 269 | Deprecation shim: OptionParser, __version__ | 1.14 | 1.13 | 0.569 |
-| walker |  | 1938 | 23 | python method sigs #1 in src/click/exceptions.py |  |  | 0.569 |
-| walker |  | 1938 | 0 | python method at src/click/exceptions.py:343 |  |  | 0.569 |
-| walker |  | 1949 | 11 | python method body at src/click/exceptions.py:343 body 344 |  |  | 0.569 |
-| walker |  | 1995 | 46 | python decl doc at src/click/exceptions.py:334 |  |  | 0.569 |
-| walker |  | 2022 | 27 | python imports in src/click/_utils.py |  |  | 0.569 |
-| walker |  | 2052 | 30 | headings outline in docs/entry-points.md |  |  | 0.569 |
-| walker |  | 2064 | 12 | listing of 'examples/complex' |  |  | 0.569 |
-| walker |  | 2077 | 13 | listing of 'examples/complex/complex' |  |  | 0.569 |
-| walker |  | 2093 | 16 | listing of 'examples/complex/complex/commands' |  |  | 0.569 |
-| ns | 2121 |  | 205 | decorators.py: location of every public decorator | 2.1 |  | 0.546 |
-| ns | 2209 |  | 88 | @command: signature + 1-liner | 2.2 | 2.1 | 0.536 |
-| walker |  | 2295 | 202 | README.md section #1 |  |  | 0.605 |
-| walker |  | 2327 | 32 | headings outline in docs/extending-click.md |  |  | 0.605 |
-| ns | 2367 |  | 158 | @option: signature + 1-liner | 2.3 | 2.1 | 0.586 |
-| walker |  | 2433 | 106 | docs/extending-click.md section #0 |  |  | 0.586 |
-| walker |  | 2466 | 33 | headings outline in docs/faqs.md |  |  | 0.586 |
-| walker |  | 2499 | 33 | docs/faqs.md section #0 |  |  | 0.586 |
-| ns | 2525 |  | 158 | @argument: signature + 1-liner | 2.4 | 2.1 | 0.570 |
-| walker |  | 2532 | 33 | headings outline in docs/wincmd.md |  |  | 0.570 |
-| walker |  | 2606 | 74 | docs/wincmd.md section #0 |  |  | 0.570 |
-| walker |  | 2641 | 35 | headings outline in docs/virtualenv.md |  |  | 0.570 |
-| walker |  | 2641 | 0 | docs/virtualenv.md section #0 |  |  | 0.570 |
-| walker |  | 2678 | 37 | headings outline in docs/parameters.md |  |  | 0.570 |
-| ns | 2688 |  | 163 | @group: signature + 1-liner | 2.5 | 2.1 | 0.551 |
-| walker |  | 2717 | 39 | docs/parameters.md section #0 |  |  | 0.551 |
-| walker |  | 2759 | 42 | headings outline in docs/option-decorators.md |  |  | 0.551 |
-| walker |  | 2787 | 28 | docs/option-decorators.md section #3 |  |  | 0.551 |
-| walker |  | 2864 | 77 | docs/option-decorators.md section #0 |  |  | 0.551 |
-| walker |  | 2907 | 43 | headings outline in docs/handling-files.md |  |  | 0.551 |
-| ns | 2923 |  | 235 | @pass_context / @pass_obj signatures + docstrings | 2.6 | 2.1 | 0.523 |
-| walker |  | 2971 | 64 | docs/handling-files.md section #0 |  |  | 0.523 |
-| walker |  | 3013 | 42 | python imports in src/click/_textwrap.py |  |  | 0.523 |
-| walker |  | 3106 | 93 | python decl names surface in src/click/formatting.py |  |  | 0.523 |
-| walker |  | 3106 | 0 | python decl at src/click/formatting.py:14 |  |  | 0.523 |
-| walker |  | 3106 | 0 | python decl at src/click/formatting.py:104 |  |  | 0.523 |
-| walker |  | 3106 | 0 | python decl at src/click/formatting.py:283 |  |  | 0.523 |
-| walker |  | 3141 | 35 | python decl at src/click/formatting.py:24 |  |  | 0.523 |
-| walker |  | 3204 | 63 | python decl at src/click/formatting.py:31 |  |  | 0.523 |
-| walker |  | 3233 | 29 | python decl body at src/click/formatting.py:24 body 27 |  |  | 0.523 |
-| ns | 3240 |  | 317 | @make_pass_decorator: signature + docstring + how-it-works | 2.7 | 2.1 | 0.493 |
-| walker |  | 3314 | 81 | python decl doc at src/click/formatting.py:283 |  |  | 0.493 |
-| walker |  | 3409 | 95 | python decl names surface in src/click/testing.py |  |  | 0.494 |
-| walker |  | 3409 | 0 | python decl at src/click/testing.py:26 |  |  | 0.494 |
-| walker |  | 3409 | 0 | python decl at src/click/testing.py:70 |  |  | 0.494 |
-| walker |  | 3409 | 0 | python decl at src/click/testing.py:89 |  |  | 0.494 |
-| walker |  | 3409 | 0 | python decl at src/click/testing.py:103 |  |  | 0.494 |
-| walker |  | 3409 | 0 | python decl at src/click/testing.py:183 |  |  | 0.494 |
-| walker |  | 3409 | 0 | python decl at src/click/testing.py:261 |  |  | 0.494 |
-| walker |  | 3452 | 43 | python decl at src/click/testing.py:163 |  |  | 0.494 |
-| walker |  | 3474 | 22 | python decl at src/click/testing.py:60 |  |  | 0.494 |
-| ns | 3498 |  | 258 | @confirmation_option / @password_option full bodies | 2.8 | 2.1 | 0.469 |
-| walker |  | 3514 | 40 | python decl doc at src/click/testing.py:70 |  |  | 0.469 |
-| walker |  | 3565 | 51 | python decl doc at src/click/testing.py:89 |  |  | 0.469 |
-| walker |  | 3616 | 51 | headings outline in docs/arguments.md |  |  | 0.469 |
-| ns | 3738 |  | 240 | @version_option signature + key kwargs | 2.9 | 2.1 | 0.453 |
-| walker |  | 3750 | 134 | docs/arguments.md section #0 |  |  | 0.453 |
-| walker |  | 3875 | 125 | python decl doc at src/click/formatting.py:104 |  |  | 0.453 |
-| walker |  | 4067 | 192 | python method sigs in src/click/formatting.py |  |  | 0.453 |
-| walker |  | 4067 | 0 | python method at src/click/formatting.py:135 |  |  | 0.453 |
-| walker |  | 4067 | 0 | python method at src/click/formatting.py:139 |  |  | 0.453 |
-| walker |  | 4067 | 0 | python method at src/click/formatting.py:143 |  |  | 0.453 |
-| walker |  | 4067 | 0 | python method at src/click/formatting.py:147 |  |  | 0.453 |
-| walker |  | 4067 | 0 | python method at src/click/formatting.py:185 |  |  | 0.453 |
-| walker |  | 4067 | 0 | python method at src/click/formatting.py:189 |  |  | 0.453 |
-| walker |  | 4067 | 0 | python method at src/click/formatting.py:194 |  |  | 0.453 |
-| walker |  | 4067 | 0 | python method at src/click/formatting.py:278 |  |  | 0.453 |
-| walker |  | 4081 | 14 | python method at src/click/formatting.py:269 |  |  | 0.453 |
-| ns | 4085 |  | 347 | quickstart.md: 'Basic Concepts - Creating a Command' section | 2.10 |  | 0.427 |
-| walker |  | 4099 | 18 | python method at src/click/formatting.py:254 |  |  | 0.427 |
-| walker |  | 4108 | 9 | python method doc at src/click/formatting.py:139 |  |  | 0.427 |
-| walker |  | 4117 | 9 | python method doc at src/click/formatting.py:143 |  |  | 0.427 |
-| walker |  | 4126 | 9 | python method doc at src/click/formatting.py:278 |  |  | 0.427 |
-| walker |  | 4137 | 11 | python method doc at src/click/formatting.py:185 |  |  | 0.427 |
-| walker |  | 4148 | 11 | python method doc at src/click/formatting.py:189 |  |  | 0.427 |
-| walker |  | 4161 | 13 | python method doc at src/click/formatting.py:135 |  |  | 0.427 |
-| walker |  | 4175 | 14 | python method doc at src/click/formatting.py:269 |  |  | 0.427 |
-| walker |  | 4185 | 10 | python method body at src/click/formatting.py:135 body 137 |  |  | 0.427 |
-| walker |  | 4196 | 11 | python method body at src/click/formatting.py:278 body 280 |  |  | 0.427 |
-| ns | 4205 |  | 120 | core.py: every class header (top-level inventory) | 3.1 |  | 0.420 |
-| walker |  | 4210 | 14 | python method body at src/click/formatting.py:139 body 141 |  |  | 0.420 |
-| walker |  | 4224 | 14 | python method body at src/click/formatting.py:143 body 145 |  |  | 0.420 |
-| walker |  | 4278 | 54 | python method at src/click/formatting.py:116 |  |  | 0.420 |
-| walker |  | 4297 | 19 | python method body at src/click/formatting.py:189 body 191 |  |  | 0.420 |
-| ns | 4349 |  | 144 | Context: one-paragraph lede | 3.2 | 3.1 | 0.411 |
-| walker |  | 4353 | 56 | python method at src/click/formatting.py:210 |  |  | 0.411 |
-| walker |  | 4387 | 34 | python method doc at src/click/formatting.py:194 |  |  | 0.411 |
-| walker |  | 4409 | 22 | python method body at src/click/formatting.py:185 body 187 |  |  | 0.411 |
-| walker |  | 4460 | 51 | python method doc at src/click/formatting.py:254 |  |  | 0.411 |
-| walker |  | 4512 | 52 | headings outline in docs/support-multiple-versions.md |  |  | 0.411 |
-| ns | 4618 |  | 269 | Context.__init__ signature | 3.3 | 3.2 | 0.400 |
-| walker |  | 4629 | 117 | docs/support-multiple-versions.md section #0 |  |  | 0.400 |
-| walker |  | 4679 | 50 | python imports in src/click/globals.py |  |  | 0.400 |
-| walker |  | 4806 | 127 | listing of 'tests' |  |  | 0.400 |
-| walker |  | 4862 | 56 | listing of 'tests/typing' |  |  | 0.400 |
-| walker |  | 4950 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.416 |
-| ns | 5031 |  | 413 | Context: location of every method | 3.4 | 3.2 | 0.402 |
-| walker |  | 5055 | 105 | python decl names surface in src/click/_utils.py |  |  | 0.402 |
-| walker |  | 5055 | 0 | python decl at src/click/_utils.py:7 |  |  | 0.402 |
-| walker |  | 5071 | 16 | python method sigs in src/click/_utils.py |  |  | 0.402 |
-| walker |  | 5071 | 0 | python method at src/click/_utils.py:18 |  |  | 0.402 |
-| walker |  | 5093 | 22 | python class body at src/click/_utils.py:7 |  |  | 0.402 |
-| walker |  | 5109 | 16 | python method body at src/click/_utils.py:18 body 19 |  |  | 0.402 |
-| ns | 5156 |  | 125 | Command: one-paragraph lede + headline kwargs | 3.5 | 3.1 | 0.397 |
-| walker |  | 5164 | 55 | python decl doc at src/click/_utils.py:7 |  |  | 0.397 |
-| walker |  | 5269 | 105 | python decl names surface in src/click/globals.py |  |  | 0.397 |
-| walker |  | 5269 | 0 | python decl at src/click/globals.py:12 |  |  | 0.397 |
-| walker |  | 5269 | 0 | python decl at src/click/globals.py:16 |  |  | 0.397 |
-| walker |  | 5269 | 0 | python decl at src/click/globals.py:20 |  |  | 0.397 |
-| walker |  | 5269 | 0 | python decl at src/click/globals.py:44 |  |  | 0.397 |
-| walker |  | 5269 | 0 | python decl at src/click/globals.py:49 |  |  | 0.397 |
-| walker |  | 5269 | 0 | python decl at src/click/globals.py:54 |  |  | 0.397 |
-| walker |  | 5279 | 10 | python decl body at src/click/globals.py:49 body 51 |  |  | 0.397 |
-| walker |  | 5292 | 13 | python decl doc at src/click/globals.py:49 |  |  | 0.397 |
-| walker |  | 5306 | 14 | python decl doc at src/click/globals.py:44 |  |  | 0.397 |
-| walker |  | 5324 | 18 | python decl body at src/click/globals.py:16 body 17 |  |  | 0.397 |
-| walker |  | 5343 | 19 | python decl body at src/click/globals.py:44 body 46 |  |  | 0.397 |
-| ns | 5357 |  | 201 | Command.__init__ signature | 3.6 | 3.5 | 0.389 |
-| walker |  | 5365 | 22 | python decl body at src/click/globals.py:12 body 13 |  |  | 0.389 |
-| walker |  | 5418 | 53 | python decl doc at src/click/globals.py:54 |  |  | 0.389 |
-| walker |  | 5426 | 8 | python decl body at src/click/globals.py:20 body 41 |  |  | 0.389 |
-| walker |  | 5484 | 58 | headings outline in docs/shell-completion.md |  |  | 0.389 |
-| walker |  | 5677 | 193 | docs/shell-completion.md section #0 |  |  | 0.389 |
-| ns | 5745 |  | 388 | Command: location of every method | 3.7 | 3.5 | 0.380 |
-| walker |  | 5874 | 197 | docs/contrib.md section #0 |  |  | 0.380 |
-| walker |  | 5935 | 61 | headings outline in docs/why.md |  |  | 0.380 |
-| walker |  | 5997 | 62 | headings outline in docs/standalone-apps.md |  |  | 0.380 |
-| walker |  | 6031 | 34 | docs/standalone-apps.md section #1 |  |  | 0.380 |
-| walker |  | 6095 | 64 | headings outline in docs/exceptions.md |  |  | 0.380 |
-| walker |  | 6194 | 99 | docs/exceptions.md section #0 |  |  | 0.380 |
-| ns | 6201 |  | 456 | Group: lede + __init__ signature | 3.8 | 3.1 | 0.366 |
-| walker |  | 6403 | 209 | docs/entry-points.md section #0 |  |  | 0.366 |
-| ns | 6415 |  | 214 | Group: method-locations + decorator-style command/group registrars | 3.9 | 3.8 | 0.362 |
-| walker |  | 6480 | 77 | python method doc at src/click/formatting.py:147 |  |  | 0.362 |
-| ns | 6567 |  | 152 | Parameter (ABC): lede + key kwargs paragraph | 3.10 | 3.1 | 0.357 |
-| walker |  | 6700 | 220 | docs/standalone-apps.md section #0 |  |  | 0.357 |
-| walker |  | 6827 | 127 | python decl names surface in src/click/parser.py |  |  | 0.357 |
-| walker |  | 6827 | 0 | python decl at src/click/parser.py:111 |  |  | 0.357 |
-| walker |  | 6827 | 0 | python decl at src/click/parser.py:120 |  |  | 0.357 |
-| walker |  | 6827 | 0 | python decl at src/click/parser.py:127 |  |  | 0.357 |
-| walker |  | 6827 | 0 | python decl at src/click/parser.py:185 |  |  | 0.357 |
-| walker |  | 6827 | 0 | python decl at src/click/parser.py:216 |  |  | 0.357 |
-| walker |  | 6827 | 0 | python decl at src/click/parser.py:224 |  |  | 0.357 |
-| walker |  | 6827 | 0 | python decl at src/click/parser.py:503 |  |  | 0.357 |
-| ns | 6856 |  | 289 | Parameter.__init__ signature | 3.11 | 3.10 | 0.349 |
-| walker |  | 6874 | 47 | python decl at src/click/parser.py:51 |  |  | 0.349 |
-| walker |  | 6943 | 69 | headings outline in docs/parameter-types.md |  |  | 0.349 |
-| walker |  | 6953 | 10 | docs/parameter-types.md section #1 |  |  | 0.349 |
-| walker |  | 6961 | 8 | docs/parameter-types.md section #8 |  |  | 0.349 |
-| walker |  | 7074 | 113 | docs/parameter-types.md section #0 |  |  | 0.349 |
-| walker |  | 7143 | 69 | headings outline in docs/prompts.md |  |  | 0.349 |
-| ns | 7202 |  | 346 | Option: lede + __init__ signature | 3.12 | 3.10 | 0.340 |
-| walker |  | 7303 | 160 | docs/prompts.md section #0 |  |  | 0.340 |
-| ns | 7355 |  | 153 | Argument: lede + __init__ signature + required-by-default logic | 3.13 | 3.10 | 0.335 |
-| walker |  | 7378 | 75 | python decl body at src/click/formatting.py:14 body 15 |  |  | 0.335 |
-| walker |  | 7446 | 68 | python imports in src/click/formatting.py |  |  | 0.335 |
-| walker |  | 7455 | 9 | python method body at src/click/formatting.py:269 body 272 |  |  | 0.335 |
-| walker |  | 7533 | 78 | headings outline in docs/testing.md |  |  | 0.335 |
-| walker |  | 7682 | 149 | docs/testing.md section #0 |  |  | 0.335 |
-| ns | 7722 |  | 367 | Parameter/Option/Argument: method locations | 3.14 | 3.11 | 0.329 |
-| walker |  | 7871 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.358 |
-| walker |  | 7947 | 76 | docs/virtualenv.md section #1 |  |  | 0.358 |
-| ns | 8019 |  | 297 | types.py: every ParamType subclass header | 4.1 |  | 0.352 |
-| ns | 8250 |  | 231 | ParamType: the subclassing recipe | 4.2 | 4.1 | 0.346 |
-| walker |  | 8257 | 310 | python method sigs in src/click/parser.py |  |  | 0.346 |
-| walker |  | 8257 | 0 | python method at src/click/parser.py:169 |  |  | 0.346 |
-| walker |  | 8257 | 0 | python method at src/click/parser.py:186 |  |  | 0.346 |
-| walker |  | 8257 | 0 | python method at src/click/parser.py:217 |  |  | 0.346 |
-| walker |  | 8257 | 0 | python method at src/click/parser.py:290 |  |  | 0.346 |
-| walker |  | 8257 | 0 | python method at src/click/parser.py:316 |  |  | 0.346 |
-| walker |  | 8257 | 0 | python method at src/click/parser.py:327 |  |  | 0.346 |
-| walker |  | 8257 | 0 | python method at src/click/parser.py:390 |  |  | 0.346 |
-| walker |  | 8257 | 0 | python method at src/click/parser.py:470 |  |  | 0.346 |
-| walker |  | 8268 | 11 | python method at src/click/parser.py:165 |  |  | 0.346 |
-| walker |  | 8301 | 33 | python method at src/click/parser.py:298 |  |  | 0.346 |
-| walker |  | 8337 | 36 | python method at src/click/parser.py:241 |  |  | 0.346 |
-| walker |  | 8352 | 15 | python method body at src/click/parser.py:165 body 167 |  |  | 0.346 |
-| walker |  | 8400 | 48 | python method at src/click/parser.py:191 |  |  | 0.346 |
-| walker |  | 8421 | 21 | python method body at src/click/parser.py:290 body 296 |  |  | 0.346 |
-| ns | 8431 |  | 181 | ParamType.convert + ParamType.shell_complete signatures | 4.3 | 4.2 | 0.342 |
-| walker |  | 8452 | 31 | python method at src/click/parser.py:363 |  |  | 0.342 |
-| walker |  | 8535 | 83 | python method at src/click/parser.py:128 |  |  | 0.342 |
-| ns | 8564 |  | 133 | exceptions.py: every class header | 4.4 |  | 0.339 |
-| walker |  | 8590 | 55 | python method doc at src/click/parser.py:290 |  |  | 0.339 |
-| walker |  | 8619 | 29 | python method body at src/click/parser.py:186 body 187 |  |  | 0.339 |
-| walker |  | 8705 | 86 | python method at src/click/parser.py:265 |  |  | 0.339 |
-| walker |  | 8751 | 46 | python method at src/click/parser.py:430 |  |  | 0.339 |
-| ns | 8790 |  | 226 | ClickException + UsageError ledes + exit_code | 4.5 | 4.4 | 0.333 |
-| ns | 8844 |  | 54 | testing.py: CliRunner, Result, helper class locations | 5.1 |  | 0.341 |
-| walker |  | 8850 | 99 | python method doc at src/click/parser.py:298 |  |  | 0.341 |
-| ns | 8975 |  | 131 | CliRunner.invoke signature | 5.2 | 5.1 | 0.338 |
-| walker |  | 9006 | 156 | python decl names surface in src/click/_termui_impl.py |  |  | 0.338 |
-| walker |  | 9006 | 0 | python decl at src/click/_termui_impl.py:43 |  |  | 0.338 |
-| walker |  | 9006 | 0 | python decl at src/click/_termui_impl.py:375 |  |  | 0.338 |
-| walker |  | 9006 | 0 | python decl at src/click/_termui_impl.py:608 |  |  | 0.338 |
-| walker |  | 9006 | 0 | python decl at src/click/_termui_impl.py:724 |  |  | 0.338 |
-| walker |  | 9006 | 0 | python decl at src/click/_termui_impl.py:794 |  |  | 0.338 |
-| walker |  | 9033 | 27 | python decl at src/click/_termui_impl.py:417 |  |  | 0.338 |
-| walker |  | 9076 | 43 | python class body at src/click/_termui_impl.py:608 |  |  | 0.338 |
-| walker |  | 9110 | 34 | python decl at src/click/_termui_impl.py:386 |  |  | 0.338 |
-| walker |  | 9127 | 17 | python decl doc at src/click/_termui_impl.py:386 |  |  | 0.338 |
-| ns | 9163 |  | 188 | Result: attribute documentation | 5.3 | 5.1 | 0.335 |
-| walker |  | 9171 | 44 | python decl at src/click/_termui_impl.py:597 |  |  | 0.335 |
-| walker |  | 9190 | 19 | python decl doc at src/click/_termui_impl.py:597 |  |  | 0.335 |
-| ns | 9224 |  | 61 | tests/conftest.py: the canonical 'runner' fixture | 5.4 | 5.1 | 0.332 |
-| walker |  | 9272 | 82 | python decl doc at src/click/_termui_impl.py:417 |  |  | 0.332 |
-| walker |  | 9320 | 48 | python decl at src/click/_termui_impl.py:442 |  |  | 0.332 |
-| walker |  | 9369 | 49 | python decl at src/click/_termui_impl.py:546 |  |  | 0.332 |
-| ns | 9391 |  | 167 | termui.py: every public function location | 5.5 |  | 0.329 |
-| walker |  | 9424 | 55 | python method at src/click/_textwrap.py:9 |  |  | 0.329 |
-| ns | 9472 |  | 81 | utils.py: echo() signature + key kwargs | 5.6 |  | 0.327 |
-| ns | 9508 |  | 36 | examples/ subdirectory listing | 6.1 |  | 0.340 |
-| walker |  | 9527 | 103 | python method doc at src/click/formatting.py:210 |  |  | 0.340 |
-| walker |  | 9594 | 67 | python decl names surface #1 in src/click/utils.py |  |  | 0.340 |
-| walker |  | 9594 | 0 | python decl at src/click/utils.py:453 |  |  | 0.340 |
-| walker |  | 9594 | 0 | python decl at src/click/utils.py:502 |  |  | 0.340 |
-| walker |  | 9653 | 59 | python method sigs #1 in src/click/utils.py |  |  | 0.340 |
-| walker |  | 9653 | 0 | python method at src/click/utils.py:511 |  |  | 0.340 |
-| walker |  | 9653 | 0 | python method at src/click/utils.py:514 |  |  | 0.340 |
-| walker |  | 9653 | 0 | python method at src/click/utils.py:523 |  |  | 0.340 |
-| walker |  | 9662 | 9 | python method body at src/click/utils.py:511 body 512 |  |  | 0.340 |
-| walker |  | 9673 | 11 | python method body at src/click/utils.py:523 body 524 |  |  | 0.340 |
-| walker |  | 9702 | 29 | python decl at src/click/utils.py:527 |  |  | 0.340 |
-| ns | 9715 |  | 207 | examples/naval/naval.py: canonical nested-group example | 6.2 |  | 0.334 |
-| walker |  | 9831 | 129 | python decl doc at src/click/utils.py:502 |  |  | 0.334 |
-| walker |  | 9891 | 60 | python decl at src/click/utils.py:582 |  |  | 0.334 |
-| ns | 9915 |  | 200 | docs/index.rst: General Reference toctree | 6.3 |  | 0.328 |
-| walker |  | 9983 | 92 | headings outline in docs/advanced.md |  |  | 0.328 |
+| walker |  | 352 | 73 | python imports in src/click/__init__.py |  |  | 0.705 |
+| walker |  | 368 | 16 | python imports #6 in src/click/__init__.py |  |  | 0.705 |
+| walker |  | 398 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.706 |
+| ns | 410 |  | 100 | __init__.py: core-class re-exports | 1.6 |  | 0.628 |
+| walker |  | 416 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.628 |
+| walker |  | 416 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.628 |
+| walker |  | 516 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.752 |
+| ns | 578 |  | 168 | README hello-world example | 1.7 | 1.3 | 0.628 |
+| walker |  | 677 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.641 |
+| ns | 739 |  | 161 | __init__.py: decorator re-exports | 1.8 | 1.6 | 0.678 |
+| walker |  | 768 | 91 | README.md section #0 |  |  | 0.752 |
+| walker |  | 914 | 146 | python imports #4 in src/click/__init__.py |  |  | 0.766 |
+| walker |  | 927 | 13 | listing of '.github' |  |  | 0.766 |
+| ns | 931 |  | 192 | __init__.py: exception + formatting + globals re-exports | 1.9 | 1.8 | 0.782 |
+| walker |  | 950 | 23 | listing of '.github/workflows' |  |  | 0.782 |
+| walker |  | 964 | 14 | python decl names surface in src/click/_textwrap.py |  |  | 0.782 |
+| walker |  | 964 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.782 |
+| walker |  | 1042 | 78 | [package] in pyproject.toml |  |  | 0.847 |
+| ns | 1120 |  | 189 | __init__.py: termui re-exports | 1.10 | 1.9 | 0.779 |
+| walker |  | 1130 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.783 |
+| walker |  | 1171 | 41 | python method sigs in src/click/_textwrap.py |  |  | 0.783 |
+| walker |  | 1171 | 0 | python method at src/click/_textwrap.py:40 |  |  | 0.783 |
+| walker |  | 1190 | 19 | python method at src/click/_textwrap.py:27 |  |  | 0.783 |
+| ns | 1302 |  | 182 | __init__.py: built-in type re-exports | 1.11 | 1.10 | 0.724 |
+| walker |  | 1379 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.802 |
+| ns | 1395 |  | 93 | __init__.py: utils re-exports | 1.12 | 1.11 | 0.803 |
+| walker |  | 1446 | 67 | README.md section #3 |  |  | 0.803 |
+| walker |  | 1528 | 82 | README.md section #2 |  |  | 0.803 |
+| ns | 1647 |  | 252 | Deprecation shim: BaseCommand → Command, MultiCommand → Group | 1.13 | 1.12 | 0.721 |
+| walker |  | 1710 | 182 | python imports #8 in src/click/__init__.py |  |  | 0.788 |
+| walker |  | 1746 | 36 | listing of 'examples' |  |  | 0.789 |
+| ns | 1916 |  | 269 | Deprecation shim: OptionParser, __version__ | 1.14 | 1.13 | 0.718 |
+| walker |  | 1938 | 192 | listing of 'docs' |  |  | 0.718 |
+| walker |  | 1960 | 22 | docs/setuptools.md section #0 |  |  | 0.718 |
+| walker |  | 1975 | 15 | listing of 'docs/_static' |  |  | 0.718 |
+| walker |  | 2023 | 48 | docs/license.md section #0 |  |  | 0.718 |
+| walker |  | 2044 | 21 | headings outline in docs/click-concepts.md |  |  | 0.718 |
+| walker |  | 2109 | 65 | docs/click-concepts.md section #0 |  |  | 0.718 |
+| ns | 2121 |  | 205 | decorators.py: location of every public decorator | 2.1 |  | 0.690 |
+| walker |  | 2130 | 21 | headings outline in docs/unicode-support.md |  |  | 0.690 |
+| walker |  | 2152 | 22 | headings outline in docs/command-line-reference.md |  |  | 0.690 |
+| ns | 2209 |  | 88 | @command: signature + 1-liner | 2.2 | 2.1 | 0.677 |
+| walker |  | 2220 | 68 | docs/command-line-reference.md section #0 |  |  | 0.677 |
+| walker |  | 2242 | 22 | headings outline in docs/contrib.md |  |  | 0.677 |
+| walker |  | 2264 | 22 | headings outline in docs/design-opinions.md |  |  | 0.677 |
+| walker |  | 2324 | 60 | docs/design-opinions.md section #0 |  |  | 0.677 |
+| walker |  | 2346 | 22 | python decl names surface #1 in src/click/exceptions.py |  |  | 0.677 |
+| walker |  | 2346 | 0 | python decl at src/click/exceptions.py:330 |  |  | 0.677 |
+| walker |  | 2346 | 0 | python decl at src/click/exceptions.py:334 |  |  | 0.677 |
+| walker |  | 2360 | 14 | python class body at src/click/exceptions.py:334 |  |  | 0.677 |
+| ns | 2367 |  | 158 | @option: signature + 1-liner | 2.3 | 2.1 | 0.657 |
+| walker |  | 2374 | 14 | python decl doc at src/click/exceptions.py:330 |  |  | 0.657 |
+| walker |  | 2397 | 23 | python method sigs #1 in src/click/exceptions.py |  |  | 0.657 |
+| walker |  | 2397 | 0 | python method at src/click/exceptions.py:343 |  |  | 0.657 |
+| walker |  | 2408 | 11 | python method body at src/click/exceptions.py:343 body 344 |  |  | 0.657 |
+| walker |  | 2454 | 46 | python decl doc at src/click/exceptions.py:334 |  |  | 0.657 |
+| walker |  | 2481 | 27 | python imports in src/click/_utils.py |  |  | 0.657 |
+| walker |  | 2511 | 30 | headings outline in docs/entry-points.md |  |  | 0.657 |
+| walker |  | 2523 | 12 | listing of 'examples/complex' |  |  | 0.657 |
+| ns | 2525 |  | 158 | @argument: signature + 1-liner | 2.4 | 2.1 | 0.638 |
+| walker |  | 2536 | 13 | listing of 'examples/complex/complex' |  |  | 0.638 |
+| walker |  | 2552 | 16 | listing of 'examples/complex/complex/commands' |  |  | 0.638 |
+| ns | 2688 |  | 163 | @group: signature + 1-liner | 2.5 | 2.1 | 0.617 |
+| walker |  | 2754 | 202 | README.md section #1 |  |  | 0.675 |
+| walker |  | 2786 | 32 | headings outline in docs/extending-click.md |  |  | 0.675 |
+| walker |  | 2892 | 106 | docs/extending-click.md section #0 |  |  | 0.675 |
+| ns | 2923 |  | 235 | @pass_context / @pass_obj signatures + docstrings | 2.6 | 2.1 | 0.640 |
+| walker |  | 2925 | 33 | headings outline in docs/faqs.md |  |  | 0.640 |
+| walker |  | 2958 | 33 | docs/faqs.md section #0 |  |  | 0.640 |
+| walker |  | 2991 | 33 | headings outline in docs/wincmd.md |  |  | 0.640 |
+| walker |  | 3065 | 74 | docs/wincmd.md section #0 |  |  | 0.640 |
+| walker |  | 3100 | 35 | headings outline in docs/virtualenv.md |  |  | 0.640 |
+| walker |  | 3100 | 0 | docs/virtualenv.md section #0 |  |  | 0.640 |
+| walker |  | 3137 | 37 | headings outline in docs/parameters.md |  |  | 0.640 |
+| walker |  | 3176 | 39 | docs/parameters.md section #0 |  |  | 0.640 |
+| walker |  | 3218 | 42 | headings outline in docs/option-decorators.md |  |  | 0.640 |
+| ns | 3240 |  | 317 | @make_pass_decorator: signature + docstring + how-it-works | 2.7 | 2.1 | 0.604 |
+| walker |  | 3246 | 28 | docs/option-decorators.md section #3 |  |  | 0.604 |
+| walker |  | 3323 | 77 | docs/option-decorators.md section #0 |  |  | 0.604 |
+| walker |  | 3366 | 43 | headings outline in docs/handling-files.md |  |  | 0.604 |
+| walker |  | 3430 | 64 | docs/handling-files.md section #0 |  |  | 0.604 |
+| walker |  | 3472 | 42 | python imports in src/click/_textwrap.py |  |  | 0.604 |
+| ns | 3498 |  | 258 | @confirmation_option / @password_option full bodies | 2.8 | 2.1 | 0.575 |
+| walker |  | 3565 | 93 | python decl names surface in src/click/formatting.py |  |  | 0.575 |
+| walker |  | 3565 | 0 | python decl at src/click/formatting.py:14 |  |  | 0.575 |
+| walker |  | 3565 | 0 | python decl at src/click/formatting.py:104 |  |  | 0.575 |
+| walker |  | 3565 | 0 | python decl at src/click/formatting.py:283 |  |  | 0.575 |
+| walker |  | 3600 | 35 | python decl at src/click/formatting.py:24 |  |  | 0.575 |
+| walker |  | 3663 | 63 | python decl at src/click/formatting.py:31 |  |  | 0.575 |
+| walker |  | 3692 | 29 | python decl body at src/click/formatting.py:24 body 27 |  |  | 0.575 |
+| ns | 3738 |  | 240 | @version_option signature + key kwargs | 2.9 | 2.1 | 0.555 |
+| walker |  | 3773 | 81 | python decl doc at src/click/formatting.py:283 |  |  | 0.555 |
+| walker |  | 3868 | 95 | python decl names surface in src/click/testing.py |  |  | 0.555 |
+| walker |  | 3868 | 0 | python decl at src/click/testing.py:26 |  |  | 0.555 |
+| walker |  | 3868 | 0 | python decl at src/click/testing.py:70 |  |  | 0.555 |
+| walker |  | 3868 | 0 | python decl at src/click/testing.py:89 |  |  | 0.555 |
+| walker |  | 3868 | 0 | python decl at src/click/testing.py:103 |  |  | 0.555 |
+| walker |  | 3868 | 0 | python decl at src/click/testing.py:183 |  |  | 0.555 |
+| walker |  | 3868 | 0 | python decl at src/click/testing.py:261 |  |  | 0.555 |
+| walker |  | 3911 | 43 | python decl at src/click/testing.py:163 |  |  | 0.555 |
+| walker |  | 3933 | 22 | python decl at src/click/testing.py:60 |  |  | 0.555 |
+| walker |  | 3973 | 40 | python decl doc at src/click/testing.py:70 |  |  | 0.555 |
+| walker |  | 4024 | 51 | python decl doc at src/click/testing.py:89 |  |  | 0.555 |
+| walker |  | 4075 | 51 | headings outline in docs/arguments.md |  |  | 0.555 |
+| ns | 4085 |  | 347 | quickstart.md: 'Basic Concepts - Creating a Command' section | 2.10 |  | 0.523 |
+| ns | 4205 |  | 120 | core.py: every class header (top-level inventory) | 3.1 |  | 0.514 |
+| walker |  | 4209 | 134 | docs/arguments.md section #0 |  |  | 0.514 |
+| walker |  | 4334 | 125 | python decl doc at src/click/formatting.py:104 |  |  | 0.514 |
+| ns | 4349 |  | 144 | Context: one-paragraph lede | 3.2 | 3.1 | 0.504 |
+| walker |  | 4526 | 192 | python method sigs in src/click/formatting.py |  |  | 0.504 |
+| walker |  | 4526 | 0 | python method at src/click/formatting.py:135 |  |  | 0.504 |
+| walker |  | 4526 | 0 | python method at src/click/formatting.py:139 |  |  | 0.504 |
+| walker |  | 4526 | 0 | python method at src/click/formatting.py:143 |  |  | 0.504 |
+| walker |  | 4526 | 0 | python method at src/click/formatting.py:147 |  |  | 0.504 |
+| walker |  | 4526 | 0 | python method at src/click/formatting.py:185 |  |  | 0.504 |
+| walker |  | 4526 | 0 | python method at src/click/formatting.py:189 |  |  | 0.504 |
+| walker |  | 4526 | 0 | python method at src/click/formatting.py:194 |  |  | 0.504 |
+| walker |  | 4526 | 0 | python method at src/click/formatting.py:278 |  |  | 0.504 |
+| walker |  | 4540 | 14 | python method at src/click/formatting.py:269 |  |  | 0.504 |
+| walker |  | 4558 | 18 | python method at src/click/formatting.py:254 |  |  | 0.504 |
+| walker |  | 4567 | 9 | python method doc at src/click/formatting.py:139 |  |  | 0.504 |
+| walker |  | 4576 | 9 | python method doc at src/click/formatting.py:143 |  |  | 0.504 |
+| walker |  | 4585 | 9 | python method doc at src/click/formatting.py:278 |  |  | 0.504 |
+| walker |  | 4596 | 11 | python method doc at src/click/formatting.py:185 |  |  | 0.504 |
+| walker |  | 4607 | 11 | python method doc at src/click/formatting.py:189 |  |  | 0.504 |
+| ns | 4618 |  | 269 | Context.__init__ signature | 3.3 | 3.2 | 0.489 |
+| walker |  | 4620 | 13 | python method doc at src/click/formatting.py:135 |  |  | 0.489 |
+| walker |  | 4634 | 14 | python method doc at src/click/formatting.py:269 |  |  | 0.489 |
+| walker |  | 4644 | 10 | python method body at src/click/formatting.py:135 body 137 |  |  | 0.489 |
+| walker |  | 4655 | 11 | python method body at src/click/formatting.py:278 body 280 |  |  | 0.489 |
+| walker |  | 4669 | 14 | python method body at src/click/formatting.py:139 body 141 |  |  | 0.489 |
+| walker |  | 4683 | 14 | python method body at src/click/formatting.py:143 body 145 |  |  | 0.489 |
+| walker |  | 4737 | 54 | python method at src/click/formatting.py:116 |  |  | 0.489 |
+| walker |  | 4756 | 19 | python method body at src/click/formatting.py:189 body 191 |  |  | 0.489 |
+| walker |  | 4812 | 56 | python method at src/click/formatting.py:210 |  |  | 0.489 |
+| walker |  | 4846 | 34 | python method doc at src/click/formatting.py:194 |  |  | 0.489 |
+| walker |  | 4868 | 22 | python method body at src/click/formatting.py:185 body 187 |  |  | 0.489 |
+| walker |  | 4919 | 51 | python method doc at src/click/formatting.py:254 |  |  | 0.489 |
+| walker |  | 4971 | 52 | headings outline in docs/support-multiple-versions.md |  |  | 0.489 |
+| ns | 5031 |  | 413 | Context: location of every method | 3.4 | 3.2 | 0.473 |
+| walker |  | 5088 | 117 | docs/support-multiple-versions.md section #0 |  |  | 0.473 |
+| walker |  | 5138 | 50 | python imports in src/click/globals.py |  |  | 0.473 |
+| ns | 5156 |  | 125 | Command: one-paragraph lede + headline kwargs | 3.5 | 3.1 | 0.467 |
+| walker |  | 5265 | 127 | listing of 'tests' |  |  | 0.467 |
+| walker |  | 5321 | 56 | listing of 'tests/typing' |  |  | 0.467 |
+| ns | 5357 |  | 201 | Command.__init__ signature | 3.6 | 3.5 | 0.458 |
+| walker |  | 5426 | 105 | python decl names surface in src/click/_utils.py |  |  | 0.458 |
+| walker |  | 5426 | 0 | python decl at src/click/_utils.py:7 |  |  | 0.458 |
+| walker |  | 5442 | 16 | python method sigs in src/click/_utils.py |  |  | 0.458 |
+| walker |  | 5442 | 0 | python method at src/click/_utils.py:18 |  |  | 0.458 |
+| walker |  | 5464 | 22 | python class body at src/click/_utils.py:7 |  |  | 0.458 |
+| walker |  | 5480 | 16 | python method body at src/click/_utils.py:18 body 19 |  |  | 0.458 |
+| walker |  | 5535 | 55 | python decl doc at src/click/_utils.py:7 |  |  | 0.458 |
+| walker |  | 5640 | 105 | python decl names surface in src/click/globals.py |  |  | 0.458 |
+| walker |  | 5640 | 0 | python decl at src/click/globals.py:12 |  |  | 0.458 |
+| walker |  | 5640 | 0 | python decl at src/click/globals.py:16 |  |  | 0.458 |
+| walker |  | 5640 | 0 | python decl at src/click/globals.py:20 |  |  | 0.458 |
+| walker |  | 5640 | 0 | python decl at src/click/globals.py:44 |  |  | 0.458 |
+| walker |  | 5640 | 0 | python decl at src/click/globals.py:49 |  |  | 0.458 |
+| walker |  | 5640 | 0 | python decl at src/click/globals.py:54 |  |  | 0.458 |
+| walker |  | 5650 | 10 | python decl body at src/click/globals.py:49 body 51 |  |  | 0.458 |
+| walker |  | 5663 | 13 | python decl doc at src/click/globals.py:49 |  |  | 0.458 |
+| walker |  | 5677 | 14 | python decl doc at src/click/globals.py:44 |  |  | 0.458 |
+| walker |  | 5695 | 18 | python decl body at src/click/globals.py:16 body 17 |  |  | 0.458 |
+| walker |  | 5714 | 19 | python decl body at src/click/globals.py:44 body 46 |  |  | 0.458 |
+| walker |  | 5736 | 22 | python decl body at src/click/globals.py:12 body 13 |  |  | 0.458 |
+| ns | 5745 |  | 388 | Command: location of every method | 3.7 | 3.5 | 0.446 |
+| walker |  | 5789 | 53 | python decl doc at src/click/globals.py:54 |  |  | 0.446 |
+| walker |  | 5797 | 8 | python decl body at src/click/globals.py:20 body 41 |  |  | 0.446 |
+| walker |  | 5855 | 58 | headings outline in docs/shell-completion.md |  |  | 0.446 |
+| walker |  | 6048 | 193 | docs/shell-completion.md section #0 |  |  | 0.446 |
+| ns | 6201 |  | 456 | Group: lede + __init__ signature | 3.8 | 3.1 | 0.431 |
+| walker |  | 6245 | 197 | docs/contrib.md section #0 |  |  | 0.431 |
+| walker |  | 6306 | 61 | headings outline in docs/why.md |  |  | 0.431 |
+| walker |  | 6368 | 62 | headings outline in docs/standalone-apps.md |  |  | 0.431 |
+| walker |  | 6402 | 34 | docs/standalone-apps.md section #1 |  |  | 0.431 |
+| ns | 6415 |  | 214 | Group: method-locations + decorator-style command/group registrars | 3.9 | 3.8 | 0.425 |
+| walker |  | 6466 | 64 | headings outline in docs/exceptions.md |  |  | 0.425 |
+| walker |  | 6565 | 99 | docs/exceptions.md section #0 |  |  | 0.425 |
+| ns | 6567 |  | 152 | Parameter (ABC): lede + key kwargs paragraph | 3.10 | 3.1 | 0.420 |
+| walker |  | 6774 | 209 | docs/entry-points.md section #0 |  |  | 0.420 |
+| walker |  | 6851 | 77 | python method doc at src/click/formatting.py:147 |  |  | 0.420 |
+| ns | 6856 |  | 289 | Parameter.__init__ signature | 3.11 | 3.10 | 0.411 |
+| walker |  | 7071 | 220 | docs/standalone-apps.md section #0 |  |  | 0.411 |
+| walker |  | 7198 | 127 | python decl names surface in src/click/parser.py |  |  | 0.411 |
+| walker |  | 7198 | 0 | python decl at src/click/parser.py:111 |  |  | 0.411 |
+| walker |  | 7198 | 0 | python decl at src/click/parser.py:120 |  |  | 0.411 |
+| walker |  | 7198 | 0 | python decl at src/click/parser.py:127 |  |  | 0.411 |
+| walker |  | 7198 | 0 | python decl at src/click/parser.py:185 |  |  | 0.411 |
+| walker |  | 7198 | 0 | python decl at src/click/parser.py:216 |  |  | 0.411 |
+| walker |  | 7198 | 0 | python decl at src/click/parser.py:224 |  |  | 0.411 |
+| walker |  | 7198 | 0 | python decl at src/click/parser.py:503 |  |  | 0.411 |
+| ns | 7202 |  | 346 | Option: lede + __init__ signature | 3.12 | 3.10 | 0.399 |
+| walker |  | 7245 | 47 | python decl at src/click/parser.py:51 |  |  | 0.399 |
+| walker |  | 7314 | 69 | headings outline in docs/parameter-types.md |  |  | 0.399 |
+| walker |  | 7324 | 10 | docs/parameter-types.md section #1 |  |  | 0.399 |
+| walker |  | 7332 | 8 | docs/parameter-types.md section #8 |  |  | 0.399 |
+| ns | 7355 |  | 153 | Argument: lede + __init__ signature + required-by-default logic | 3.13 | 3.10 | 0.394 |
+| walker |  | 7445 | 113 | docs/parameter-types.md section #0 |  |  | 0.394 |
+| walker |  | 7514 | 69 | headings outline in docs/prompts.md |  |  | 0.394 |
+| walker |  | 7674 | 160 | docs/prompts.md section #0 |  |  | 0.394 |
+| ns | 7722 |  | 367 | Parameter/Option/Argument: method locations | 3.14 | 3.11 | 0.387 |
+| walker |  | 7749 | 75 | python decl body at src/click/formatting.py:14 body 15 |  |  | 0.387 |
+| walker |  | 7817 | 68 | python imports in src/click/formatting.py |  |  | 0.387 |
+| walker |  | 7826 | 9 | python method body at src/click/formatting.py:269 body 272 |  |  | 0.387 |
+| walker |  | 7904 | 78 | headings outline in docs/testing.md |  |  | 0.387 |
+| ns | 8019 |  | 297 | types.py: every ParamType subclass header | 4.1 |  | 0.380 |
+| walker |  | 8053 | 149 | docs/testing.md section #0 |  |  | 0.380 |
+| walker |  | 8129 | 76 | docs/virtualenv.md section #1 |  |  | 0.380 |
+| ns | 8250 |  | 231 | ParamType: the subclassing recipe | 4.2 | 4.1 | 0.374 |
+| ns | 8431 |  | 181 | ParamType.convert + ParamType.shell_complete signatures | 4.3 | 4.2 | 0.370 |
+| walker |  | 8439 | 310 | python method sigs in src/click/parser.py |  |  | 0.370 |
+| walker |  | 8439 | 0 | python method at src/click/parser.py:169 |  |  | 0.370 |
+| walker |  | 8439 | 0 | python method at src/click/parser.py:186 |  |  | 0.370 |
+| walker |  | 8439 | 0 | python method at src/click/parser.py:217 |  |  | 0.370 |
+| walker |  | 8439 | 0 | python method at src/click/parser.py:290 |  |  | 0.370 |
+| walker |  | 8439 | 0 | python method at src/click/parser.py:316 |  |  | 0.370 |
+| walker |  | 8439 | 0 | python method at src/click/parser.py:327 |  |  | 0.370 |
+| walker |  | 8439 | 0 | python method at src/click/parser.py:390 |  |  | 0.370 |
+| walker |  | 8439 | 0 | python method at src/click/parser.py:470 |  |  | 0.370 |
+| walker |  | 8450 | 11 | python method at src/click/parser.py:165 |  |  | 0.370 |
+| walker |  | 8483 | 33 | python method at src/click/parser.py:298 |  |  | 0.370 |
+| walker |  | 8519 | 36 | python method at src/click/parser.py:241 |  |  | 0.370 |
+| walker |  | 8534 | 15 | python method body at src/click/parser.py:165 body 167 |  |  | 0.370 |
+| ns | 8564 |  | 133 | exceptions.py: every class header | 4.4 |  | 0.366 |
+| walker |  | 8582 | 48 | python method at src/click/parser.py:191 |  |  | 0.366 |
+| walker |  | 8603 | 21 | python method body at src/click/parser.py:290 body 296 |  |  | 0.366 |
+| walker |  | 8634 | 31 | python method at src/click/parser.py:363 |  |  | 0.366 |
+| walker |  | 8717 | 83 | python method at src/click/parser.py:128 |  |  | 0.366 |
+| walker |  | 8772 | 55 | python method doc at src/click/parser.py:290 |  |  | 0.366 |
+| ns | 8790 |  | 226 | ClickException + UsageError ledes + exit_code | 4.5 | 4.4 | 0.360 |
+| walker |  | 8801 | 29 | python method body at src/click/parser.py:186 body 187 |  |  | 0.360 |
+| ns | 8844 |  | 54 | testing.py: CliRunner, Result, helper class locations | 5.1 |  | 0.368 |
+| walker |  | 8887 | 86 | python method at src/click/parser.py:265 |  |  | 0.368 |
+| walker |  | 8933 | 46 | python method at src/click/parser.py:430 |  |  | 0.368 |
+| ns | 8975 |  | 131 | CliRunner.invoke signature | 5.2 | 5.1 | 0.364 |
+| walker |  | 9032 | 99 | python method doc at src/click/parser.py:298 |  |  | 0.364 |
+| ns | 9163 |  | 188 | Result: attribute documentation | 5.3 | 5.1 | 0.361 |
+| walker |  | 9188 | 156 | python decl names surface in src/click/_termui_impl.py |  |  | 0.361 |
+| walker |  | 9188 | 0 | python decl at src/click/_termui_impl.py:43 |  |  | 0.361 |
+| walker |  | 9188 | 0 | python decl at src/click/_termui_impl.py:375 |  |  | 0.361 |
+| walker |  | 9188 | 0 | python decl at src/click/_termui_impl.py:608 |  |  | 0.361 |
+| walker |  | 9188 | 0 | python decl at src/click/_termui_impl.py:724 |  |  | 0.361 |
+| walker |  | 9188 | 0 | python decl at src/click/_termui_impl.py:794 |  |  | 0.361 |
+| walker |  | 9215 | 27 | python decl at src/click/_termui_impl.py:417 |  |  | 0.361 |
+| ns | 9224 |  | 61 | tests/conftest.py: the canonical 'runner' fixture | 5.4 | 5.1 | 0.358 |
+| walker |  | 9258 | 43 | python class body at src/click/_termui_impl.py:608 |  |  | 0.358 |
+| walker |  | 9292 | 34 | python decl at src/click/_termui_impl.py:386 |  |  | 0.358 |
+| walker |  | 9309 | 17 | python decl doc at src/click/_termui_impl.py:386 |  |  | 0.358 |
+| walker |  | 9353 | 44 | python decl at src/click/_termui_impl.py:597 |  |  | 0.358 |
+| walker |  | 9372 | 19 | python decl doc at src/click/_termui_impl.py:597 |  |  | 0.358 |
+| ns | 9391 |  | 167 | termui.py: every public function location | 5.5 |  | 0.354 |
+| walker |  | 9454 | 82 | python decl doc at src/click/_termui_impl.py:417 |  |  | 0.354 |
+| ns | 9472 |  | 81 | utils.py: echo() signature + key kwargs | 5.6 |  | 0.352 |
+| walker |  | 9502 | 48 | python decl at src/click/_termui_impl.py:442 |  |  | 0.352 |
+| ns | 9508 |  | 36 | examples/ subdirectory listing | 6.1 |  | 0.365 |
+| walker |  | 9551 | 49 | python decl at src/click/_termui_impl.py:546 |  |  | 0.365 |
+| walker |  | 9606 | 55 | python method at src/click/_textwrap.py:9 |  |  | 0.365 |
+| walker |  | 9709 | 103 | python method doc at src/click/formatting.py:210 |  |  | 0.365 |
+| ns | 9715 |  | 207 | examples/naval/naval.py: canonical nested-group example | 6.2 |  | 0.358 |
+| walker |  | 9776 | 67 | python decl names surface #1 in src/click/utils.py |  |  | 0.358 |
+| walker |  | 9776 | 0 | python decl at src/click/utils.py:453 |  |  | 0.358 |
+| walker |  | 9776 | 0 | python decl at src/click/utils.py:502 |  |  | 0.358 |
+| walker |  | 9835 | 59 | python method sigs #1 in src/click/utils.py |  |  | 0.358 |
+| walker |  | 9835 | 0 | python method at src/click/utils.py:511 |  |  | 0.358 |
+| walker |  | 9835 | 0 | python method at src/click/utils.py:514 |  |  | 0.358 |
+| walker |  | 9835 | 0 | python method at src/click/utils.py:523 |  |  | 0.358 |
+| walker |  | 9844 | 9 | python method body at src/click/utils.py:511 body 512 |  |  | 0.358 |
+| walker |  | 9855 | 11 | python method body at src/click/utils.py:523 body 524 |  |  | 0.358 |
+| walker |  | 9884 | 29 | python decl at src/click/utils.py:527 |  |  | 0.358 |
+| ns | 9915 |  | 200 | docs/index.rst: General Reference toctree | 6.3 |  | 0.351 |

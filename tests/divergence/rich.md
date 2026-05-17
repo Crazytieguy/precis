@@ -30,60 +30,60 @@ Score(3000)=0.476 I=0.472 C=0.480 ns_rows≤3K=16/58 (reached=4 partial=0 missin
 | ns | 1302 |  | 24 | Console class declaration | 2.1 |  | 0.228 |
 | ns | 1588 |  | 286 | ConsoleRenderable / RichCast / RenderableType / RenderResult | 2.2 |  | 0.211 |
 | walker |  | 1613 | 361 | listing of 'rich' |  |  | 0.413 |
-| walker |  | 1622 | 9 | python decl names surface in rich/_emoji_codes.py |  |  | 0.413 |
-| walker |  | 1631 | 9 | python decl names surface in rich/_spinners.py |  |  | 0.413 |
-| walker |  | 1640 | 9 | python decl names surface in rich/json.py |  |  | 0.413 |
-| walker |  | 1640 | 0 | python decl at rich/json.py:9 |  |  | 0.413 |
-| walker |  | 1649 | 9 | python decl names surface in rich/palette.py |  |  | 0.413 |
-| walker |  | 1649 | 0 | python decl at rich/palette.py:11 |  |  | 0.413 |
-| walker |  | 1658 | 9 | python decl names surface in rich/screen.py |  |  | 0.413 |
-| walker |  | 1658 | 0 | python decl at rich/screen.py:18 |  |  | 0.413 |
-| walker |  | 1667 | 9 | python decl names surface in rich/spinner.py |  |  | 0.413 |
-| walker |  | 1667 | 0 | python decl at rich/spinner.py:13 |  |  | 0.413 |
-| walker |  | 1676 | 9 | python decl names surface in rich/styled.py |  |  | 0.413 |
-| walker |  | 1676 | 0 | python decl at rich/styled.py:11 |  |  | 0.413 |
-| walker |  | 1686 | 10 | python decl names surface in rich/_windows.py |  |  | 0.413 |
-| walker |  | 1693 | 7 | python decl at rich/_windows.py:5 |  |  | 0.413 |
-| walker |  | 1703 | 10 | python decl names surface in rich/scope.py |  |  | 0.413 |
-| walker |  | 1715 | 12 | python class body at rich/screen.py:18 |  |  | 0.413 |
-| walker |  | 1739 | 24 | python decl names surface in rich/__main__.py |  |  | 0.413 |
-| walker |  | 1739 | 0 | python decl at rich/__main__.py:18 |  |  | 0.413 |
-| walker |  | 1739 | 0 | python decl at rich/__main__.py:39 |  |  | 0.413 |
-| walker |  | 1761 | 22 | python method sigs in rich/__main__.py |  |  | 0.413 |
-| walker |  | 1776 | 15 | python decl doc at rich/__main__.py:39 |  |  | 0.413 |
-| walker |  | 1788 | 12 | python decl names surface in rich/_timer.py |  |  | 0.413 |
-| walker |  | 1800 | 12 | python decl names surface in rich/abc.py |  |  | 0.413 |
-| walker |  | 1800 | 0 | python decl at rich/abc.py:4 |  |  | 0.413 |
-| walker |  | 1810 | 10 | python method sigs in rich/abc.py |  |  | 0.413 |
-| walker |  | 1822 | 12 | python decl names surface in rich/columns.py |  |  | 0.413 |
-| walker |  | 1822 | 0 | python decl at rich/columns.py:16 |  |  | 0.413 |
-| walker |  | 1834 | 12 | python decl names surface in rich/logging.py |  |  | 0.413 |
-| walker |  | 1834 | 0 | python decl at rich/logging.py:24 |  |  | 0.413 |
-| walker |  | 1846 | 12 | python decl names surface in rich/panel.py |  |  | 0.413 |
-| walker |  | 1846 | 0 | python decl at rich/panel.py:17 |  |  | 0.413 |
-| walker |  | 1858 | 12 | python decl names surface in rich/region.py |  |  | 0.413 |
-| walker |  | 1858 | 0 | python decl at rich/region.py:4 |  |  | 0.413 |
-| walker |  | 1870 | 12 | python decl names surface in rich/rule.py |  |  | 0.413 |
-| walker |  | 1870 | 0 | python decl at rich/rule.py:12 |  |  | 0.413 |
-| walker |  | 1882 | 12 | python decl names surface in rich/status.py |  |  | 0.413 |
-| walker |  | 1882 | 0 | python decl at rich/status.py:11 |  |  | 0.413 |
-| walker |  | 1894 | 12 | python decl names surface in rich/themes.py |  |  | 0.413 |
-| walker |  | 1904 | 10 | python decl doc at rich/_windows.py:5 |  |  | 0.413 |
-| walker |  | 1914 | 10 | python decl doc at rich/palette.py:11 |  |  | 0.413 |
-| walker |  | 1934 | 20 | python decl at rich/_timer.py:12 |  |  | 0.413 |
-| ns | 1936 |  | 348 | ConsoleOptions dataclass fields | 2.3 |  | 0.383 |
-| walker |  | 1947 | 13 | python decl names surface in rich/constrain.py |  |  | 0.383 |
-| walker |  | 1947 | 0 | python decl at rich/constrain.py:10 |  |  | 0.383 |
-| walker |  | 1971 | 24 | python method at rich/__main__.py:19 |  |  | 0.383 |
-| walker |  | 1995 | 24 | python method at rich/__main__.py:33 |  |  | 0.383 |
-| walker |  | 2009 | 14 | python class body at rich/palette.py:11 |  |  | 0.383 |
-| walker |  | 2023 | 14 | python decl names surface in rich/color_triplet.py |  |  | 0.383 |
-| walker |  | 2023 | 0 | python decl at rich/color_triplet.py:4 |  |  | 0.383 |
-| walker |  | 2037 | 14 | python decl names surface in rich/file_proxy.py |  |  | 0.383 |
-| walker |  | 2037 | 0 | python decl at rich/file_proxy.py:11 |  |  | 0.383 |
-| walker |  | 2049 | 12 | python decl doc at rich/region.py:4 |  |  | 0.383 |
-| ns | 2055 |  | 119 | ConsoleOptions method def lines | 2.4 | 2.3 | 0.376 |
-| walker |  | 2157 | 108 | python imports in rich/__init__.py |  |  | 0.463 |
+| walker |  | 1721 | 108 | python imports in rich/__init__.py |  |  | 0.508 |
+| walker |  | 1730 | 9 | python decl names surface in rich/_emoji_codes.py |  |  | 0.508 |
+| walker |  | 1739 | 9 | python decl names surface in rich/_spinners.py |  |  | 0.508 |
+| walker |  | 1748 | 9 | python decl names surface in rich/json.py |  |  | 0.508 |
+| walker |  | 1748 | 0 | python decl at rich/json.py:9 |  |  | 0.508 |
+| walker |  | 1757 | 9 | python decl names surface in rich/palette.py |  |  | 0.508 |
+| walker |  | 1757 | 0 | python decl at rich/palette.py:11 |  |  | 0.508 |
+| walker |  | 1766 | 9 | python decl names surface in rich/screen.py |  |  | 0.508 |
+| walker |  | 1766 | 0 | python decl at rich/screen.py:18 |  |  | 0.508 |
+| walker |  | 1775 | 9 | python decl names surface in rich/spinner.py |  |  | 0.508 |
+| walker |  | 1775 | 0 | python decl at rich/spinner.py:13 |  |  | 0.508 |
+| walker |  | 1784 | 9 | python decl names surface in rich/styled.py |  |  | 0.508 |
+| walker |  | 1784 | 0 | python decl at rich/styled.py:11 |  |  | 0.508 |
+| walker |  | 1794 | 10 | python decl names surface in rich/_windows.py |  |  | 0.508 |
+| walker |  | 1801 | 7 | python decl at rich/_windows.py:5 |  |  | 0.508 |
+| walker |  | 1811 | 10 | python decl names surface in rich/scope.py |  |  | 0.508 |
+| walker |  | 1823 | 12 | python class body at rich/screen.py:18 |  |  | 0.508 |
+| walker |  | 1847 | 24 | python decl names surface in rich/__main__.py |  |  | 0.508 |
+| walker |  | 1847 | 0 | python decl at rich/__main__.py:18 |  |  | 0.508 |
+| walker |  | 1847 | 0 | python decl at rich/__main__.py:39 |  |  | 0.508 |
+| walker |  | 1869 | 22 | python method sigs in rich/__main__.py |  |  | 0.508 |
+| walker |  | 1884 | 15 | python decl doc at rich/__main__.py:39 |  |  | 0.508 |
+| walker |  | 1896 | 12 | python decl names surface in rich/_timer.py |  |  | 0.508 |
+| walker |  | 1908 | 12 | python decl names surface in rich/abc.py |  |  | 0.508 |
+| walker |  | 1908 | 0 | python decl at rich/abc.py:4 |  |  | 0.508 |
+| walker |  | 1918 | 10 | python method sigs in rich/abc.py |  |  | 0.508 |
+| walker |  | 1930 | 12 | python decl names surface in rich/columns.py |  |  | 0.508 |
+| walker |  | 1930 | 0 | python decl at rich/columns.py:16 |  |  | 0.508 |
+| ns | 1936 |  | 348 | ConsoleOptions dataclass fields | 2.3 |  | 0.471 |
+| walker |  | 1942 | 12 | python decl names surface in rich/logging.py |  |  | 0.471 |
+| walker |  | 1942 | 0 | python decl at rich/logging.py:24 |  |  | 0.471 |
+| walker |  | 1954 | 12 | python decl names surface in rich/panel.py |  |  | 0.471 |
+| walker |  | 1954 | 0 | python decl at rich/panel.py:17 |  |  | 0.471 |
+| walker |  | 1966 | 12 | python decl names surface in rich/region.py |  |  | 0.471 |
+| walker |  | 1966 | 0 | python decl at rich/region.py:4 |  |  | 0.471 |
+| walker |  | 1978 | 12 | python decl names surface in rich/rule.py |  |  | 0.471 |
+| walker |  | 1978 | 0 | python decl at rich/rule.py:12 |  |  | 0.471 |
+| walker |  | 1990 | 12 | python decl names surface in rich/status.py |  |  | 0.471 |
+| walker |  | 1990 | 0 | python decl at rich/status.py:11 |  |  | 0.471 |
+| walker |  | 2002 | 12 | python decl names surface in rich/themes.py |  |  | 0.471 |
+| walker |  | 2012 | 10 | python decl doc at rich/_windows.py:5 |  |  | 0.471 |
+| walker |  | 2022 | 10 | python decl doc at rich/palette.py:11 |  |  | 0.471 |
+| walker |  | 2042 | 20 | python decl at rich/_timer.py:12 |  |  | 0.471 |
+| walker |  | 2055 | 13 | python decl names surface in rich/constrain.py |  |  | 0.463 |
+| walker |  | 2055 | 0 | python decl at rich/constrain.py:10 |  |  | 0.463 |
+| ns | 2055 |  | 119 | ConsoleOptions method def lines | 2.4 | 2.3 | 0.463 |
+| walker |  | 2079 | 24 | python method at rich/__main__.py:19 |  |  | 0.463 |
+| walker |  | 2103 | 24 | python method at rich/__main__.py:33 |  |  | 0.463 |
+| walker |  | 2117 | 14 | python class body at rich/palette.py:11 |  |  | 0.463 |
+| walker |  | 2131 | 14 | python decl names surface in rich/color_triplet.py |  |  | 0.463 |
+| walker |  | 2131 | 0 | python decl at rich/color_triplet.py:4 |  |  | 0.463 |
+| walker |  | 2145 | 14 | python decl names surface in rich/file_proxy.py |  |  | 0.463 |
+| walker |  | 2145 | 0 | python decl at rich/file_proxy.py:11 |  |  | 0.463 |
+| walker |  | 2157 | 12 | python decl doc at rich/region.py:4 |  |  | 0.463 |
 | walker |  | 2173 | 16 | python decl names surface in rich/default_styles.py |  |  | 0.463 |
 | walker |  | 2196 | 23 | python method sigs in rich/screen.py |  |  | 0.463 |
 | walker |  | 2215 | 19 | python decl names surface in rich/_pick.py |  |  | 0.463 |
