@@ -223,28 +223,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'Typescript(ExportBody { file: "src/match.ts", start_line: 32, body_start_line: 35 })'
-descriptor = "export body at src/match.ts:32 body 35"
-cost_tokens = 14
-cum_tokens = 319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 26
-cum_tokens = 345
+cum_tokens = 331
 
 [batches.content]
 kind = "fs"
@@ -254,43 +236,11 @@ parent = "docs"
 entries = ["roadmap.md", "v3-to-v4-migration-guide.md", "v4-to-v5-migration-guide.md"]
 
 [[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "src/types" })'
-descriptor = "listing of 'src/types'"
-cost_tokens = 56
-cum_tokens = 401
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/types"
-entries = ["BuildMany.ts", "DeepExclude.ts", "DistributeUnions.ts", "ExtractPreciseValue.ts", "FindSelected.ts", "InvertPattern.ts", "IsMatching.ts", "Match.ts", "Pattern.ts", "helpers.ts", "index.ts"]
-
-[[batches]]
-position = 13
-key = 'Typescript(Imports { file: "src/types/index.ts" })'
-descriptor = "imports in src/types/index.ts"
-cost_tokens = 10
-cum_tokens = 411
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/types/index.ts"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
+position = 11
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 104
-cum_tokens = 515
+cum_tokens = 435
 
 [batches.content]
 kind = "lines"
@@ -312,11 +262,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 15
+position = 12
 key = 'Typescript(Imports { file: "src/index.ts" })'
 descriptor = "imports in src/index.ts"
 cost_tokens = 39
-cum_tokens = 554
+cum_tokens = 474
 
 [batches.content]
 kind = "lines"
@@ -338,7 +288,25 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 16
+position = 13
+key = 'Typescript(ExportBody { file: "src/match.ts", start_line: 32, body_start_line: 35 })'
+descriptor = "export body at src/match.ts:32 body 35"
+cost_tokens = 14
+cum_tokens = 488
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/match.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 10

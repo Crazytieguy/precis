@@ -568,6 +568,7 @@ fn emit_export_body_parts(
         let Some(body_start_line) = part.start_line() else {
             continue;
         };
+        let part_line_count = part.lines.len();
         let Some(content) =
             single_file_lines_content(emit.file, emit.source, FileLines::new(part.lines))
         else {
@@ -590,11 +591,29 @@ fn emit_export_body_parts(
             value: export_body_value(emit.file, item.kind, emit.ctx, emit.js_factor)
                 * emit.per_export_factor
                 * part_value_factor
-                * segment_factor,
+                * segment_factor
+                * tiny_body_value_factor(part_line_count),
         });
         if !is_class_peer {
             *emit.body_segment_index += 1;
         }
+    }
+}
+
+/// Damping factor for very small body batches. One-line method
+/// bodies in JS/TS are typically pass-through delegation
+/// (`return x.f()`, `this.x = x`), not load-bearing implementation —
+/// the signature alone tells callers what the method does. Without
+/// damping, these tiny bodies (cost 5–8 tokens) win the V/C race
+/// against substantial method bodies (constructor / boot ordering)
+/// that NS authors anchor on. Two-line bodies sit on the boundary
+/// and keep most of their weight; bodies of three or more lines are
+/// substantive enough to keep their full weight.
+fn tiny_body_value_factor(line_count: usize) -> f64 {
+    match line_count {
+        0 | 1 => 0.65,
+        2 => 0.85,
+        _ => 1.0,
     }
 }
 

@@ -88,8 +88,8 @@ Score(3000)=0.823 I=0.771 C=0.878 ns_rows≤3K=14/33 (reached=10 partial=1 missi
 | walker |  | 7668 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.504 |
 | walker |  | 7668 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.504 |
 | walker |  | 7668 | 0 | export at src/use-prevent-scroll.ts:294 |  |  | 0.504 |
-| walker |  | 7707 | 39 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.504 |
-| walker |  | 7767 | 60 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.504 |
+| walker |  | 7728 | 60 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.504 |
+| walker |  | 7767 | 39 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.504 |
 | walker |  | 7847 | 80 | export body at src/use-prevent-scroll.ts:34 body 35 |  |  | 0.504 |
 | walker |  | 7959 | 112 | export names surface in src/browser.ts |  |  | 0.508 |
 | walker |  | 7959 | 0 | export at src/browser.ts:1 |  |  | 0.508 |

@@ -1661,28 +1661,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 49
-key = 'Typescript(ExportBody { file: "src/node.js", start_line: 193, body_start_line: 194 })'
-descriptor = "export body at src/node.js:193 body 194"
-cost_tokens = 21
-cum_tokens = 2550
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/node.js"
-start = 194
-end = 194
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
 key = 'Typescript(ExportBody { file: "src/node.js", start_line: 155, body_start_line: 156 })'
 descriptor = "export body at src/node.js:155 body 156"
 cost_tokens = 37
-cum_tokens = 2587
+cum_tokens = 2566
 
 [batches.content]
 kind = "lines"
@@ -1696,11 +1678,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 51
+position = 50
 key = 'Typescript(Export { file: "src/node.js", start_line: 18 })'
 descriptor = "export at src/node.js:18"
 cost_tokens = 45
-cum_tokens = 2632
+cum_tokens = 2611
 
 [batches.content]
 kind = "lines"
@@ -1714,11 +1696,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 52
+position = 51
 key = 'Typescript(ExportDoc { file: "src/node.js", start_line: 27 })'
 descriptor = "export doc at src/node.js:27"
 cost_tokens = 17
-cum_tokens = 2649
+cum_tokens = 2628
 
 [batches.content]
 kind = "lines"
@@ -1727,6 +1709,24 @@ kind = "lines"
 path = "src/node.js"
 start = 23
 end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Typescript(ExportBody { file: "src/node.js", start_line: 193, body_start_line: 194 })'
+descriptor = "export body at src/node.js:193 body 194"
+cost_tokens = 21
+cum_tokens = 2649
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/node.js"
+start = 194
+end = 194
 
 [batches.content.spans.render]
 kind = "full"

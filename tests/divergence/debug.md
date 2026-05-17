@@ -71,10 +71,10 @@ Score(3000)=0.440 I=0.750 C=0.258 ns_rows≤3K=23/44 (reached=9 partial=2 missin
 | walker |  | 2529 | 0 | export at src/node.js:155 |  |  | 0.479 |
 | walker |  | 2529 | 0 | export at src/node.js:167 |  |  | 0.479 |
 | walker |  | 2529 | 0 | export at src/node.js:193 |  |  | 0.479 |
-| walker |  | 2550 | 21 | export body at src/node.js:193 body 194 |  |  | 0.479 |
-| walker |  | 2587 | 37 | export body at src/node.js:155 body 156 |  |  | 0.480 |
-| walker |  | 2632 | 45 | export at src/node.js:18 |  |  | 0.505 |
-| walker |  | 2649 | 17 | export doc at src/node.js:27 |  |  | 0.505 |
+| walker |  | 2566 | 37 | export body at src/node.js:155 body 156 |  |  | 0.479 |
+| walker |  | 2611 | 45 | export at src/node.js:18 |  |  | 0.505 |
+| walker |  | 2628 | 17 | export doc at src/node.js:27 |  |  | 0.505 |
+| walker |  | 2649 | 21 | export body at src/node.js:193 body 194 |  |  | 0.505 |
 | walker |  | 2678 | 29 | export doc at src/node.js:155 |  |  | 0.505 |
 | walker |  | 2704 | 26 | export doc at src/node.js:12 |  |  | 0.506 |
 | walker |  | 2736 | 32 | export doc at src/node.js:193 |  |  | 0.506 |

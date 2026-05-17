@@ -36,10 +36,10 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | walker |  | 1043 | 79 | imports in src/index.ts |  |  | 0.604 |
 | walker |  | 1099 | 56 | export names surface in src/structs/coercions.ts |  |  | 0.605 |
 | walker |  | 1099 | 0 | export at src/structs/coercions.ts:79 |  |  | 0.605 |
-| walker |  | 1116 | 17 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.605 |
-| walker |  | 1163 | 47 | export at src/structs/coercions.ts:16 |  |  | 0.605 |
+| walker |  | 1146 | 47 | export at src/structs/coercions.ts:16 |  |  | 0.605 |
 | ns | 1168 |  | 317 | docs/summary.md (the GitBook TOC) | 2.6 |  | 0.534 |
-| walker |  | 1220 | 57 | export at src/structs/coercions.ts:38 |  |  | 0.534 |
+| walker |  | 1203 | 57 | export at src/structs/coercions.ts:38 |  |  | 0.534 |
+| walker |  | 1220 | 17 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.534 |
 | ns | 1448 |  | 280 | structs/types.ts — all 24 type-factory names | 3.1 |  | 0.482 |
 | walker |  | 1507 | 287 | mdBook SUMMARY at docs/summary.md |  |  | 0.568 |
 | walker |  | 1532 | 25 | export names surface #1 in src/structs/utilities.ts |  |  | 0.568 |
@@ -111,10 +111,10 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | ns | 4064 |  | 189 | coercions.md — `defaulted` worked example | 4.6 | 4.2 | 0.558 |
 | walker |  | 4094 | 32 | export at src/struct.ts:221 |  |  | 0.566 |
 | walker |  | 4133 | 39 | export at src/struct.ts:243 |  |  | 0.577 |
-| walker |  | 4155 | 22 | export body at src/struct.ts:175 body 176 |  |  | 0.577 |
-| walker |  | 4192 | 37 | export at src/struct.ts:139 |  |  | 0.577 |
-| walker |  | 4229 | 37 | export at src/struct.ts:157 |  |  | 0.577 |
-| walker |  | 4269 | 40 | export at src/struct.ts:123 |  |  | 0.577 |
+| walker |  | 4170 | 37 | export at src/struct.ts:139 |  |  | 0.577 |
+| walker |  | 4207 | 37 | export at src/struct.ts:157 |  |  | 0.577 |
+| walker |  | 4247 | 40 | export at src/struct.ts:123 |  |  | 0.577 |
+| walker |  | 4269 | 22 | export body at src/struct.ts:175 body 176 |  |  | 0.577 |
 | walker |  | 4311 | 42 | export body at src/struct.ts:123 body 128 |  |  | 0.577 |
 | walker |  | 4394 | 83 | export at src/struct.ts:185 |  |  | 0.578 |
 | walker |  | 4459 | 65 | export body at src/struct.ts:139 body 144 |  |  | 0.578 |
@@ -164,13 +164,13 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | walker |  | 8343 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.517 |
 | walker |  | 8343 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.517 |
 | walker |  | 8343 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.517 |
-| walker |  | 8360 | 17 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.517 |
-| walker |  | 8393 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.517 |
-| walker |  | 8430 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.517 |
-| walker |  | 8468 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.517 |
-| walker |  | 8511 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.517 |
-| walker |  | 8555 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.517 |
-| walker |  | 8600 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.517 |
+| walker |  | 8376 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.517 |
+| walker |  | 8413 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.517 |
+| walker |  | 8451 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.517 |
+| walker |  | 8494 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.517 |
+| walker |  | 8538 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.517 |
+| walker |  | 8583 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.517 |
+| walker |  | 8600 | 17 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.517 |
 | walker |  | 8702 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.517 |
 | walker |  | 8767 | 65 | export body at src/structs/utilities.ts:60 body 61 |  |  | 0.517 |
 | walker |  | 8793 | 26 | export doc at src/structs/utilities.ts:71 |  |  | 0.517 |
