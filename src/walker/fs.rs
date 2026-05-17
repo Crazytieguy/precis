@@ -258,10 +258,16 @@ fn has_module_entrypoint(dir: &Path) -> bool {
 /// the early budget — the parent listing already names them.
 fn is_go_module_subpackage(dir: &Path) -> bool {
     const MIN_GO_FILES: usize = 5;
+    // Either the parent has a go.mod (subpackage of an outer Go module —
+    // gin's `binding`, lo's `it`), or the dir itself does (nested Go
+    // module — lo's `exp/simd`, bubbletea's `examples`/`tutorials`).
+    // Both shapes carry an API-surface listing NS authors anchor on.
     let Some(parent) = dir.parent() else {
         return false;
     };
-    if !parent.join("go.mod").is_file() {
+    let has_outer_module = parent.join("go.mod").is_file();
+    let has_own_module = dir.join("go.mod").is_file();
+    if !has_outer_module && !has_own_module {
         return false;
     }
     count_go_package_source(dir, MIN_GO_FILES) >= MIN_GO_FILES
