@@ -10,9 +10,6 @@ expression: rendered
     CONTRIBUTING.md
     FUNDING.yml
     ISSUE_TEMPLATE/
-        Bug_report.md
-        Custom.md
-        Feature_request.md
     ISSUE_TEMPLATE.md
     SECURITY.md
     dependabot.yml
@@ -62,20 +59,6 @@ README.md
     38→Requests officially supports Python 3.10+.
     40→## Supported Features & Best–Practices
     …
-    42→Requests is ready for the demands of building robust and reliable HTTP–speaking applications, for the needs of today.
-    44→- Keep-Alive & Connection Pooling
-    45→- International Domains and URLs
-    46→- Sessions with Cookie Persistence
-    47→- Browser-style TLS/SSL Verification
-    48→- Basic & Digest Authentication
-    49→- Familiar `dict`–like Cookies
-    50→- Automatic Content Decompression and Decoding
-    51→- Multi-part File Uploads
-    52→- SOCKS Proxy Support
-    53→- Connection Timeouts
-    54→- Streaming Downloads
-    55→- Automatic honoring of `.netrc`
-    56→- Chunked HTTP Requests
     58→## Cloning the repository
     …
 docs/
@@ -120,6 +103,11 @@ ext/
     requests-logo.png
     requests-logo.svg
 pyproject.toml
+    5→[project]
+    6→name = "requests"
+    7→description = "Python HTTP for Humans."
+    8→readme = "README.md"
+    17→requires-python = ">=3.10"
     18→dependencies = [
     19→    "charset_normalizer>=2,<4",
     20→    "idna>=2.5,<4",

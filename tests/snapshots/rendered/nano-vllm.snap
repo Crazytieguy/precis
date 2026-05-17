@@ -277,13 +277,7 @@ nanovllm/
             161→class Qwen3Model(nn.Module):
             …
             185→class Qwen3ForCausalLM(nn.Module):
-            186→    packed_modules_mapping = {
-            187→        "q_proj": ("qkv_proj", "q"),
-            188→        "k_proj": ("qkv_proj", "k"),
-            189→        "v_proj": ("qkv_proj", "v"),
-            190→        "gate_proj": ("gate_up_proj", 0),
-            191→        "up_proj": ("gate_up_proj", 1),
-            192→    }
+            …
     sampling_params.py
         1→from dataclasses import dataclass
         4→@dataclass
@@ -303,6 +297,13 @@ nanovllm/
             12→def load_model(model: nn.Module, path: str):
             …
 pyproject.toml
+    5→[project]
+    6→name = "nano-vllm"
+    7→version = "0.2.0"
+    9→license = "MIT"
+    11→readme = "README.md"
+    12→description = "a lightweight vLLM implementation built from scratch"
+    13→requires-python = ">=3.10,<3.13"
     14→dependencies = [
     15→    "torch>=2.4.0",
     16→    "triton>=3.0.0",

@@ -61,6 +61,10 @@ downstream/
     python-lsp-server.sh
     tox.sh
 pyproject.toml
+    8→[project]
+    9→name = "pluggy"
+    33→description = "plugin and hook calling mechanisms for python"
+    35→requires-python = ">=3.10"
 scripts/
 src/
     pluggy/
@@ -233,11 +237,7 @@ src/
             48→    def setwriter(self, writer: _Writer | None) -> None:
             49→        self._writer = writer
             51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
-            52→        if isinstance(tags, str):
-            53→            tags = tuple(tags.split(":"))
-            54→        else:
-            55→            assert isinstance(tags, tuple)
-            56→        self._tags2proc[tags] = processor
+            …
             59→class TagTracerSub:
             60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
             61→        self.root = root

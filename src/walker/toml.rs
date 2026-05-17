@@ -269,9 +269,10 @@ fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
     {
         return None;
     }
-    let project_is_lede = sections
-        .first()
-        .is_some_and(|(name, _, _)| is_pyproject_identity_table(name));
+    let project_is_lede = is_pyproject_filename(file)
+        || sections
+            .first()
+            .is_some_and(|(name, _, _)| is_pyproject_identity_table(name));
     if !project_is_lede {
         return Some(PYPROJECT_NON_LEDE_IDENTITY_FACTOR);
     }

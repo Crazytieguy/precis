@@ -43,6 +43,12 @@ docs/
     userguide.rst
     versionhistory.rst
 pyproject.toml
+    8→[project]
+    9→name = "typeguard"
+    10→description = "Run-time type checker for Python"
+    11→readme = "README.rst"
+    13→license = "MIT"
+    26→requires-python = ">= 3.9"
     27→dependencies = [
     28→    "importlib_metadata >= 3.6; python_version < '3.10'",
     29→    "typing_extensions >= 4.14.0",
@@ -185,15 +191,13 @@ src/
             45→def _call_with_frames_removed(
             …
             51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
-            52→    return cache_from_source(path, debug_override, optimization=OPTIMIZATION)
+            …
             55→class TypeguardLoader(SourceFileLoader):
             …
             109→class TypeguardFinder(MetaPathFinder):
             …
             156→class ImportHookManager:
-            157→    """
-            158→    A handle that can be used to uninstall the Typeguard import hook.
-            159→    """
+            …
             183→def install_import_hook(
             …
         _memo.py

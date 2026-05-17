@@ -117,6 +117,12 @@ notebooks/
         xLSTM_test_notebook.ipynb
     xlstm_large/
 pyproject.toml
+    5→[project]
+    6→name = "xlstm"
+    7→version = "2.0.5"
+    13→description = "A novel LSTM variant with promising performance compared to Transformers or State Space Models."
+    14→readme = "README.md"
+    16→requires-python = ">=3.9"
     22→dependencies = [
     23→    "torch",
     24→    "einops",
@@ -168,10 +174,6 @@ xlstm/
             backends.py
             block.py
             cell.py
-                13→@dataclass
-                14→class mLSTMCellConfig:
-                20→class mLSTMCell(nn.Module):
-                21→    config_class = mLSTMCellConfig
             layer.py
         slstm/
             __init__.py
@@ -229,11 +231,7 @@ xlstm/
             12→@dataclass
             13→class CausalConv1dConfig:
             24→def conv1d_step(
-            25→    x: torch.Tensor,
-            26→    conv_state: torch.Tensor,
-            27→    conv1d_weight: torch.Tensor,
-            28→    conv1d_bias: torch.Tensor = None,
-            29→) -> tuple[torch.Tensor, torch.Tensor]:
+            …
             55→class CausalConv1d(nn.Module):
             …
         feedforward.py
