@@ -162,6 +162,20 @@ fixture survey is via shell — see the survey commands in the
   files (otree's `src/config/colors.rs` with 7 color sub-structs)
   look structurally identical. `is_entrypoint_file` doesn't reliably
   distinguish them; a working version needs a signal that does.
+  A second variant — devaluing the per-file *names surface* (rather
+  than per-decl) by `sqrt(K / n_siblings_in_dir)` across C / Python /
+  Go / Lua / Rust / TS walkers — was tested at K=5, K=10, K=20 with
+  matching floors. All three regressed the corpus average: K=5
+  delivered htop +nothing / cobra -0.118 / bubbletea -0.093 / vaul
+  -0.231; K=10 still hit bubbletea -0.100; K=20 was flat with no
+  meaningful wins. The "uniform demotion across all surfaces in a
+  dir" doesn't change the *relative* order among those surfaces, but
+  it lets non-surface batches (`package.json`, `tsconfig.json`,
+  README sections) jump ahead of the dir's load-bearing primary
+  (vaul's `src/index.tsx`, bubbletea's `tea.go`). The same dir-shape
+  hosts both "wide-but-shallow sweep" patterns (htop's `darwin/`)
+  and "one primary surrounded by helpers" patterns (vaul's `src/`);
+  sibling count alone can't distinguish them.
 - **Prefix-stop tail effects on calibration tweaks**: any change that
   shifts a big batch's rank can leave it stuck near the budget tail
   where it no longer fits. The scheduler's prefix-monotone stop then
