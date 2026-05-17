@@ -165,6 +165,14 @@ src/
             43→import warnings
             45→import urllib3
             47→from .exceptions import RequestsDependencyWarning
+            49→try:
+            50→    from charset_normalizer import __version__ as charset_normalizer_version
+            51→except ImportError:
+            52→    charset_normalizer_version = None
+            54→try:
+            55→    from chardet import __version__ as chardet_version  # type: ignore[import-not-found]
+            56→except ImportError:
+            57→    chardet_version = None
             60→def check_compatibility(
             61→    urllib3_version: str,
             62→    chardet_version: str | None,
@@ -235,16 +243,6 @@ src/
         _internal_utils.py
         _types.py
         adapters.py
-            79→DEFAULT_POOLBLOCK = False
-            80→DEFAULT_POOLSIZE = 10
-            81→DEFAULT_RETRIES = 0
-            82→DEFAULT_POOL_TIMEOUT = None
-            85→def _urllib3_request_context(
-            …
-            122→class BaseAdapter:
-            123→    """The Base Transport Adapter"""
-            158→class HTTPAdapter(BaseAdapter):
-            159→    """The built-in HTTP Adapter for urllib3.
         api.py
         auth.py
         certs.py

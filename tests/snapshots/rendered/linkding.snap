@@ -136,12 +136,8 @@ bookmarks/
                 5→class Command(BaseCommand):
                 …
             full_backup.py
-                9→class Command(BaseCommand):
-                10→    help = "Creates a backup of the linkding data folder"
             generate_secret_key.py
             import_netscape.py
-                7→class Command(BaseCommand):
-                …
             migrate_tasks.py
     middlewares.py
         7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
@@ -183,6 +179,10 @@ bookmarks/
         website_loader.py
     settings/
         __init__.py
+            3→try:
+            4→    from .dev import *
+            5→except:
+            6→    from .prod import *
         base.py
         custom.py
         dev.py

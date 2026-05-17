@@ -570,6 +570,12 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
                 }
                 first_real_statement_seen = true;
             }
+            "try_statement" => {
+                if is_optional_import_try_block(child, source) {
+                    extend_span(&mut lines, child, source);
+                }
+                first_real_statement_seen = true;
+            }
             "comment" => {}
             _ => {
                 first_real_statement_seen = true;
@@ -664,6 +670,17 @@ fn collect_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> 
                 }
                 first_real_statement_seen = true;
             }
+            "try_statement" => {
+                if is_optional_import_try_block(child, source) {
+                    if imports_prefix_ended {
+                        return None;
+                    }
+                    push_import_group(&mut groups, "try_import".to_string(), false, child, source);
+                } else {
+                    imports_prefix_ended = true;
+                }
+                first_real_statement_seen = true;
+            }
             "comment" => {}
             _ if !tolerate_reexport_wall_other(child, &mut other_statements, &mut other_lines) => {
                 imports_prefix_ended = true;
@@ -745,6 +762,117 @@ fn is_type_checking_import_block(if_stmt: Node, source: &str) -> bool {
         }
     }
     any
+}
+
+/// True iff `try_stmt` is shaped like an optional-import probe: the
+/// `try:` body and every `except:` body contain only imports, simple
+/// fallback constants (`X = None / False / True / "" / [] / {}`),
+/// trivial scaffolding (`pass`, `raise …`), or comments. No `else:` /
+/// `finally:` clauses. Catches three common Python idioms:
+///
+/// * Django-style settings dispatch (`try: from .dev import *; except:
+///   from .prod import *`) where the file is itself an import wall.
+/// * Optional-dep version probes (`try: from chardet import __version__;
+///   except ImportError: chardet_version = None`).
+/// * Hard requirement guards (`try: from . import gst; except
+///   ImportError: raise ImportError("install gstreamer")`).
+///
+/// Restricting to this shape rules out procedural try-blocks (logging
+/// init, side-effecting probes) that happen to start with an import.
+fn is_optional_import_try_block(try_stmt: Node, source: &str) -> bool {
+    let Some(body) = try_stmt.child_by_field_name("body") else {
+        return false;
+    };
+    if !suite_is_optional_import_only(body, source) {
+        return false;
+    }
+    let mut cursor = try_stmt.walk();
+    let mut any_except = false;
+    for child in try_stmt.children(&mut cursor) {
+        match child.kind() {
+            "else_clause" | "finally_clause" => return false,
+            "except_clause" => {
+                let mut clause_cursor = child.walk();
+                let Some(block) = child
+                    .children(&mut clause_cursor)
+                    .find(|c| c.kind() == "block")
+                else {
+                    return false;
+                };
+                if !suite_is_optional_import_only(block, source) {
+                    return false;
+                }
+                any_except = true;
+            }
+            _ => {}
+        }
+    }
+    any_except
+}
+
+/// Body (a `block` node) of a try / except clause is "optional-import
+/// shaped" — see [`is_optional_import_try_block`].
+fn suite_is_optional_import_only(block: Node, source: &str) -> bool {
+    let mut cursor = block.walk();
+    let mut any = false;
+    for child in block.named_children(&mut cursor) {
+        any = true;
+        match child.kind() {
+            "import_statement"
+            | "import_from_statement"
+            | "future_import_statement"
+            | "raise_statement"
+            | "pass_statement"
+            | "comment" => {}
+            "expression_statement" => {
+                if !is_simple_fallback_assignment(child, source) {
+                    return false;
+                }
+            }
+            _ => return false,
+        }
+    }
+    any
+}
+
+/// `NAME = None | True | False | "" | [] | {}` — the constant fallback
+/// shapes seen at module scope after an `except ImportError:` clause.
+/// Rejects anything more complex (function calls, attribute access,
+/// expressions) so we don't accidentally classify side-effecting probes
+/// as imports.
+fn is_simple_fallback_assignment(node: Node, source: &str) -> bool {
+    let mut cursor = node.walk();
+    let Some(assignment) = node
+        .children(&mut cursor)
+        .find(|c| c.kind() == "assignment")
+    else {
+        return false;
+    };
+    let Some(left) = assignment.child_by_field_name("left") else {
+        return false;
+    };
+    if left.kind() != "identifier" {
+        return false;
+    }
+    let Some(right) = assignment.child_by_field_name("right") else {
+        return false;
+    };
+    match right.kind() {
+        "none" | "true" | "false" => true,
+        "string" => {
+            let text = &source[right.start_byte()..right.end_byte()];
+            // Empty-string literal — rejects f-strings / multi-line
+            // docstrings used as side-effecting expressions.
+            matches!(text, "\"\"" | "''" | "\"\"\"\"\"\"" | "''''''")
+        }
+        "list" | "dictionary" | "set" => {
+            // Empty literal only — `[item]` carries content that may be
+            // load-bearing elsewhere; conservative reject.
+            let text = &source[right.start_byte()..right.end_byte()];
+            matches!(text, "[]" | "{}")
+        }
+        _ => false,
+    }
 }
 
 /// Match `TYPE_CHECKING` and `typing.TYPE_CHECKING` (the two forms
@@ -1604,6 +1732,95 @@ else:
         assert!(
             !lines.full.contains(&3),
             "runtime version-dispatch must not be in Imports: {:?}",
+            lines.full,
+        );
+    }
+
+    #[test]
+    fn python_optional_import_try_block_in_imports() {
+        // Django-style settings dispatch.
+        let src_django = "\
+try:
+    from .dev import *
+except:
+    from .prod import *
+";
+        let (source, tree) = parse(src_django);
+        let lines = collect_imports(&tree, &source);
+        for r in [1, 2, 3, 4] {
+            assert!(
+                lines.full.contains(&r),
+                "django dispatch missing line {r}: {:?}",
+                lines.full,
+            );
+        }
+
+        // Version probe with `X = None` fallback.
+        let src_probe = "\
+try:
+    from chardet import __version__ as chardet_version
+except ImportError:
+    chardet_version = None
+";
+        let (source, tree) = parse(src_probe);
+        let lines = collect_imports(&tree, &source);
+        for r in [1, 2, 3, 4] {
+            assert!(
+                lines.full.contains(&r),
+                "optional-dep probe missing line {r}: {:?}",
+                lines.full,
+            );
+        }
+
+        // Hard requirement with `raise ImportError(...)` fallback.
+        let src_required = "\
+try:
+    from . import gstplayer
+except ImportError as e:
+    raise ImportError(\"Install gstreamer.\") from e
+";
+        let (source, tree) = parse(src_required);
+        let lines = collect_imports(&tree, &source);
+        for r in [1, 2, 3, 4] {
+            assert!(
+                lines.full.contains(&r),
+                "raise-fallback missing line {r}: {:?}",
+                lines.full,
+            );
+        }
+
+        // Procedural try with a side-effecting call must NOT be folded
+        // in (rich's `_IMPORT_CWD = os.path.abspath(os.getcwd())`).
+        let src_procedural = "\
+import os
+
+try:
+    _IMPORT_CWD = os.path.abspath(os.getcwd())
+except FileNotFoundError:
+    _IMPORT_CWD = \"\"
+";
+        let (source, tree) = parse(src_procedural);
+        let lines = collect_imports(&tree, &source);
+        assert!(
+            !lines.full.contains(&3),
+            "procedural try must not be in Imports: {:?}",
+            lines.full,
+        );
+
+        // `else:` / `finally:` clauses signal procedural intent — reject.
+        let src_with_else = "\
+try:
+    from foo import bar
+except ImportError:
+    bar = None
+else:
+    do_something()
+";
+        let (source, tree) = parse(src_with_else);
+        let lines = collect_imports(&tree, &source);
+        assert!(
+            !lines.full.contains(&1),
+            "try-with-else must not be in Imports: {:?}",
             lines.full,
         );
     }
