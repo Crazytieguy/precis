@@ -209,7 +209,8 @@ use super::{
 };
 
 /// Partition the in-source-order `decls` of a single C source file into
-/// chunks for the decl-names surface. Two strategies:
+/// chunks for the decl-names surface, along with the chunking
+/// strategy. Two strategies:
 ///
 /// 1. **Section-banner chunking** (preferred for amalgamation-style
 ///    headers): when `file` is a header at a canonical entry location
@@ -229,11 +230,29 @@ fn compute_decl_chunk_ranges(
     source: &str,
     file: &Path,
     ctx: &WalkCtx,
-) -> Vec<Range<usize>> {
+) -> (Vec<Range<usize>>, DeclChunkingStrategy) {
     if let Some(ranges) = section_banner_chunk_ranges(decls, tree, source, file, ctx) {
-        return ranges;
+        return (ranges, DeclChunkingStrategy::SectionBanner);
     }
-    count_based_chunk_ranges(decls.len())
+    (
+        count_based_chunk_ranges(decls.len()),
+        DeclChunkingStrategy::CountBased,
+    )
+}
+
+/// Which chunking strategy produced the ranges. The decl-names value
+/// model treats section-banner chunks differently from count-based
+/// chunks: a banner-delimited chunk is its own subject (the strings.c
+/// section of an amalgamation header), so the source-order falloff
+/// that count-based chunking carries (later chunks are less load-bearing
+/// summaries of the same catalog) shouldn't apply.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum DeclChunkingStrategy {
+    /// Fixed-size source-order chunks; later chunks decay in value.
+    CountBased,
+    /// Chunks delimited by `// <stem>.c` banner comments; each chunk
+    /// stands alone, so no source-order decay.
+    SectionBanner,
 }
 
 /// Section-banner chunking — see [`compute_decl_chunk_ranges`].
@@ -394,7 +413,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // "Public fn declarations — utility fns" across chunks. Chunk
         // only when the surface is large enough that the unified batch
         // would lose the value/cost race against per-decl batches.
-        let chunk_ranges = compute_decl_chunk_ranges(&decls, &tree, &source, file, ctx);
+        let (chunk_ranges, chunk_strategy) =
+            compute_decl_chunk_ranges(&decls, &tree, &source, file, ctx);
         let names_chunk_count = chunk_ranges.len();
         let names_predecessors: Vec<_> = (0..names_chunk_count)
             .map(|chunk_index| {
@@ -437,7 +457,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
+                value: decl_names_value(file, ctx, chunk_index, names_chunk_count, chunk_strategy),
             });
         }
         for (decl_index, (node, info)) in decls.iter().enumerate() {
@@ -1252,10 +1272,27 @@ fn includes_value(file: &Path, ctx: &WalkCtx, conditional_include_count: usize) 
     base + extra * c_depth_factor(file, ctx).max(0.0)
 }
 
-fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
+fn decl_names_value(
+    file: &Path,
+    ctx: &WalkCtx,
+    chunk_index: usize,
+    chunk_count: usize,
+    strategy: DeclChunkingStrategy,
+) -> f64 {
     let cat = (0.80 * header_cat_factor(file)).min(1.0);
-    mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx))
-        * names_surface_chunk_factor(chunk_index, chunk_count)
+    let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
+    // Section-banner chunks are independent subjects (one per module
+    // in an amalgamation header), not source-order summaries of the
+    // same catalog — so the chunk-index falloff that's appropriate
+    // for count-based chunking would unfairly suppress tail-module
+    // sections. Flatten to the same per-chunk multiplier the first
+    // count-based chunk would carry, so each section competes on its
+    // own cost.
+    let chunk_factor = match strategy {
+        DeclChunkingStrategy::CountBased => names_surface_chunk_factor(chunk_index, chunk_count),
+        DeclChunkingStrategy::SectionBanner => names_surface_chunk_factor(0, chunk_count.max(2)),
+    };
+    base * chunk_factor
 }
 
 /// Vendored / shim standard-library headers (`include/stdarg.h`,
@@ -2468,6 +2505,143 @@ typedef int x;
             !has_group,
             "small enum must not chunk; keys: {:?}",
             report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>(),
+        );
+    }
+
+    #[test]
+    fn c_section_banner_comment_recognizer() {
+        for text in [
+            "// strings.c",
+            "//  tokenize.c",
+            "//tokenize.c ",
+            "/* preprocess.c */",
+            "/*  parse.c  */",
+            "// aho_corasick.c",
+            "// foo-bar.c",
+        ] {
+            assert!(
+                is_module_section_banner_comment(text),
+                "expected banner match for {text:?}",
+            );
+        }
+        for text in [
+            "//",
+            "// just a comment",
+            "// foo.h",
+            "// strings.cpp",
+            "// 12 lines below",
+            "/* license boilerplate */",
+            "// .c",
+            "// strings.c extra",
+        ] {
+            assert!(
+                !is_module_section_banner_comment(text),
+                "unexpected banner match for {text:?}",
+            );
+        }
+    }
+
+    #[test]
+    fn c_section_banner_chunking_partitions_decls_by_module() {
+        // chibicc-style amalgamation header at the canonical entry
+        // location: each `// stem.c` banner partitions the following
+        // decls into a chunk. The preamble decls form chunk 0; the
+        // tail-module banners get their own chunks even when those
+        // sections carry only a handful of prototypes.
+        let src = "\
+typedef struct Type Type;
+typedef struct Node Node;
+
+//
+// strings.c
+//
+
+void strarray_push(int x);
+void format(int x);
+
+//
+// tokenize.c
+//
+
+void tokenize(int x);
+
+//
+// codegen.c
+//
+
+void codegen(int x);
+
+//
+// main.c
+//
+
+int file_exists(int x);
+";
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("chibicc.h"), src).unwrap();
+        // The walker runs against the directory; we read decls through
+        // the public path so canonical-entry gating is observed.
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 20_000, None);
+        let report = scheduler.run_with_report();
+        let chunk_indices: Vec<usize> = report
+            .scheduled
+            .iter()
+            .filter_map(|r| match &r.key {
+                BatchKey::C(CKey::DeclNames { file, chunk_index })
+                    if file.ends_with("chibicc.h") =>
+                {
+                    Some(*chunk_index)
+                }
+                _ => None,
+            })
+            .collect();
+        // 4 banners + 1 preamble = 5 chunks, all with decls so all
+        // emitted.
+        let mut sorted = chunk_indices.clone();
+        sorted.sort();
+        assert_eq!(
+            sorted,
+            vec![0, 1, 2, 3, 4],
+            "expected 5 section chunks, got {chunk_indices:?}",
+        );
+    }
+
+    #[test]
+    fn c_section_banner_chunking_falls_back_below_minimum_count() {
+        // Only 2 banners — below SECTION_BANNER_MIN_COUNT (= 3). Should
+        // fall back to count-based chunking; with this small a surface
+        // (3 decls) a single unchunked DeclNames batch is emitted.
+        let src = "\
+//
+// strings.c
+//
+void foo(int x);
+
+//
+// tokenize.c
+//
+void bar(int x);
+void baz(int x);
+";
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("small.h"), src).unwrap();
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 20_000, None);
+        let report = scheduler.run_with_report();
+        let chunk_count = report
+            .scheduled
+            .iter()
+            .filter(|r| {
+                matches!(
+                    &r.key,
+                    BatchKey::C(CKey::DeclNames { file, .. }) if file.ends_with("small.h")
+                )
+            })
+            .count();
+        assert_eq!(
+            chunk_count, 1,
+            "below SECTION_BANNER_MIN_COUNT banners → single count-based chunk",
         );
     }
 

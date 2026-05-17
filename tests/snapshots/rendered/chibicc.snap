@@ -20,33 +20,10 @@ README.md
     …
     180→## About the Author
     …
-    182→I'm Rui Ueyama. I'm the creator of [8cc](https://github.com/rui314/8cc),
-    183→which is a hobby C compiler, and also the original creator of the current
-    184→version of [LLVM lld](https://lld.llvm.org) linker, which is a
-    185→production-quality linker used by various operating systems and large-scale
-    186→build systems.
     188→## References
     …
 chibicc.h
     1→#define _POSIX_C_SOURCE 200809L
-    2→#include <assert.h>
-    3→#include <ctype.h>
-    4→#include <errno.h>
-    5→#include <glob.h>
-    6→#include <libgen.h>
-    7→#include <stdarg.h>
-    8→#include <stdbool.h>
-    9→#include <stdint.h>
-    10→#include <stdio.h>
-    11→#include <stdlib.h>
-    12→#include <stdnoreturn.h>
-    13→#include <string.h>
-    14→#include <strings.h>
-    15→#include <sys/stat.h>
-    16→#include <sys/types.h>
-    17→#include <sys/wait.h>
-    18→#include <time.h>
-    19→#include <unistd.h>
     21→#define MAX(x, y) ((x) < (y) ? (y) : (x))
     22→#define MIN(x, y) ((x) < (y) ? (x) : (y))
     …
@@ -111,12 +88,7 @@ chibicc.h
     125→// Variable or function
     126→typedef struct Obj Obj;
     127→struct Obj {
-    128→  Obj *next;
-    129→  char *name;    // Variable name
-    130→  Type *ty;      // Type
-    131→  Token *tok;    // representative token
-    132→  bool is_local; // local or global/function
-    133→  int align;     // alignment
+    …
     135→  // Local variable
     136→  int offset;
     138→  // Global variable or function
@@ -128,14 +100,6 @@ chibicc.h
     145→  bool is_tls;
     146→  char *init_data;
     147→  Relocation *rel;
-    149→  // Function
-    150→  bool is_inline;
-    151→  Obj *params;
-    152→  Node *body;
-    153→  Obj *locals;
-    154→  Obj *va_area;
-    155→  Obj *alloca_bottom;
-    156→  int stack_size;
     158→  // Static inline function
     159→  bool is_live;
     160→  bool is_root;
@@ -153,42 +117,7 @@ chibicc.h
     173→};
     175→// AST node
     176→typedef enum {
-    177→  ND_NULL_EXPR, // Do nothing
-    178→  ND_ADD,       // +
-    179→  ND_SUB,       // -
-    180→  ND_MUL,       // *
-    181→  ND_DIV,       // /
-    182→  ND_NEG,       // unary -
-    183→  ND_MOD,       // %
-    184→  ND_BITAND,    // &
-    185→  ND_BITOR,     // |
-    186→  ND_BITXOR,    // ^
-    187→  ND_SHL,       // <<
-    188→  ND_SHR,       // >>
-    189→  ND_EQ,        // ==
-    190→  ND_NE,        // !=
-    191→  ND_LT,        // <
-    192→  ND_LE,        // <=
-    193→  ND_ASSIGN,    // =
-    194→  ND_COND,      // ?:
-    195→  ND_COMMA,     // ,
-    196→  ND_MEMBER,    // . (struct member access)
-    197→  ND_ADDR,      // unary &
-    198→  ND_DEREF,     // unary *
-    199→  ND_NOT,       // !
-    200→  ND_BITNOT,    // ~
-    201→  ND_LOGAND,    // &&
-    202→  ND_LOGOR,     // ||
-    203→  ND_RETURN,    // "return"
-    204→  ND_IF,        // "if"
-    205→  ND_FOR,       // "for" or "while"
-    206→  ND_DO,        // "do"
-    207→  ND_SWITCH,    // "switch"
-    208→  ND_CASE,      // "case"
-    209→  ND_BLOCK,     // { ... }
-    210→  ND_GOTO,      // "goto"
-    211→  ND_GOTO_EXPR, // "goto" labels-as-values
-    212→  ND_LABEL,     // Labeled statement
+    …
     225→} NodeKind;
     227→// AST node type
     228→struct Node {
@@ -245,9 +174,105 @@ chibicc.h
     294→int64_t const_expr(Token **rest, Token *tok);
     295→Obj *parse(Token *tok);
     …
+    301→typedef enum {
+    …
+    320→struct Type {
+    …
+    338→  // Declaration
+    339→  Token *name;
+    340→  Token *name_pos;
+    342→  // Array
+    343→  int array_len;
+    345→  // Variable-length array
+    346→  Node *vla_len; // # of elements
+    347→  Obj *vla_size; // sizeof() value
+    349→  // Struct
+    350→  Member *members;
+    351→  bool is_flexible;
+    352→  bool is_packed;
+    354→  // Function type
+    355→  Type *return_ty;
+    356→  Type *params;
+    357→  bool is_variadic;
+    358→  Type *next;
+    359→};
+    361→// Struct member
+    362→struct Member {
+    363→  Member *next;
+    364→  Type *ty;
+    365→  Token *tok; // for error message
+    366→  Token *name;
+    367→  int idx;
+    368→  int align;
+    369→  int offset;
+    371→  // Bitfield
+    372→  bool is_bitfield;
+    373→  int bit_offset;
+    374→  int bit_width;
+    375→};
+    377→extern Type *ty_void;
+    378→extern Type *ty_bool;
+    …
+    380→extern Type *ty_char;
+    381→extern Type *ty_short;
+    382→extern Type *ty_int;
+    383→extern Type *ty_long;
+    …
+    385→extern Type *ty_uchar;
+    386→extern Type *ty_ushort;
+    387→extern Type *ty_uint;
+    388→extern Type *ty_ulong;
+    …
+    390→extern Type *ty_float;
+    391→extern Type *ty_double;
+    392→extern Type *ty_ldouble;
+    …
+    394→bool is_integer(Type *ty);
+    395→bool is_flonum(Type *ty);
+    396→bool is_numeric(Type *ty);
+    397→bool is_compatible(Type *t1, Type *t2);
+    398→Type *copy_type(Type *ty);
+    399→Type *pointer_to(Type *base);
+    400→Type *func_type(Type *return_ty);
+    401→Type *array_of(Type *base, int size);
+    402→Type *vla_of(Type *base, Node *expr);
+    403→Type *enum_type(void);
+    404→Type *struct_type(void);
+    405→void add_type(Node *node);
+    …
     411→void codegen(Obj *prog, FILE *out);
     412→int align_to(int n, int align);
     …
+    418→int encode_utf8(char *buf, uint32_t c);
+    419→uint32_t decode_utf8(char **new_pos, char *p);
+    420→bool is_ident1(uint32_t c);
+    421→bool is_ident2(uint32_t c);
+    422→int display_width(char *p, int len);
+    …
+    428→typedef struct {
+    429→  char *key;
+    430→  int keylen;
+    431→  void *val;
+    432→} HashEntry;
+    434→typedef struct {
+    435→  HashEntry *buckets;
+    436→  int capacity;
+    437→  int used;
+    438→} HashMap;
+    440→void *hashmap_get(HashMap *map, char *key);
+    441→void *hashmap_get2(HashMap *map, char *key, int keylen);
+    442→void hashmap_put(HashMap *map, char *key, void *val);
+    443→void hashmap_put2(HashMap *map, char *key, int keylen, void *val);
+    444→void hashmap_delete(HashMap *map, char *key);
+    445→void hashmap_delete2(HashMap *map, char *key, int keylen);
+    446→void hashmap_test(void);
+    …
+    452→bool file_exists(char *path);
+    …
+    454→extern StringArray include_paths;
+    455→extern bool opt_fpic;
+    456→extern bool opt_fcommon;
+    457→extern char *base_file;
 codegen.c
 hashmap.c
 include/
@@ -258,19 +283,11 @@ include/
     stdbool.h
     stddef.h
     stdnoreturn.h
-        4→#define noreturn _Noreturn
-        …
 main.c
 parse.c
 preprocess.c
 strings.c
-    3→void strarray_push(StringArray *arr, char *s) {
-    …
-    20→char *format(char *fmt, ...) {
-    …
 test/
 tokenize.c
 type.c
-    176→void add_type(Node *node) {
-    …
 unicode.c

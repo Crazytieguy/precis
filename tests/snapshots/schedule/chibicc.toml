@@ -19,10 +19,36 @@ entries = [".gitignore", "LICENSE", "Makefile", "README.md", "chibicc.h", "codeg
 
 [[batches]]
 position = 2
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 6 })'
+descriptor = "c decl names surface #6 in chibicc.h"
+cost_tokens = 31
+cum_tokens = 82
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 411
+end = 412
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 413
+end = 413
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 70
-cum_tokens = 121
+cum_tokens = 152
 
 [batches.content]
 kind = "lines"
@@ -44,11 +70,131 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 3
+position = 4
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in chibicc.h"
+cost_tokens = 53
+cum_tokens = 205
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 44
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 5
+key = 'C(Decl { file: "chibicc.h", start_line: 38 })'
+descriptor = "c decl at chibicc.h:38"
+cost_tokens = 31
+cum_tokens = 236
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 38
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 9 })'
+descriptor = "c decl names surface #9 in chibicc.h"
+cost_tokens = 53
+cum_tokens = 289
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 452
+end = 452
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 454
+end = 457
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 453
+end = 453
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 3 })'
+descriptor = "c decl names surface #3 in chibicc.h"
+cost_tokens = 63
+cum_tokens = 352
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 115
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 8
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 59
-cum_tokens = 180
+cum_tokens = 411
 
 [batches.content]
 kind = "lines"
@@ -150,307 +296,37 @@ end = 189
 kind = "ellipsis"
 
 [[batches]]
-position = 4
-key = 'C(DeclNames { file: "chibicc.h", chunk_index: 1 })'
-descriptor = "c decl names surface #1 in chibicc.h"
-cost_tokens = 53
-cum_tokens = 233
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 44
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 5
-key = 'C(Decl { file: "chibicc.h", start_line: 38 })'
-descriptor = "c decl at chibicc.h:38"
-cost_tokens = 31
-cum_tokens = 264
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 38
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "include" })'
-descriptor = "listing of 'include'"
-cost_tokens = 36
-cum_tokens = 300
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "include"
-entries = ["float.h", "stdalign.h", "stdarg.h", "stdatomic.h", "stdbool.h", "stddef.h", "stdnoreturn.h"]
-
-[[batches]]
-position = 7
-key = 'C(DeclNames { file: "chibicc.h", chunk_index: 0 })'
-descriptor = "c decl names surface in chibicc.h"
-cost_tokens = 123
-cum_tokens = 423
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 21
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 28
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 8
-key = 'C(DeclNames { file: "chibicc.h", chunk_index: 3 })'
-descriptor = "c decl names surface #3 in chibicc.h"
-cost_tokens = 63
-cum_tokens = 486
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 115
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 9
-key = 'C(DeclNames { file: "chibicc.h", chunk_index: 6 })'
-descriptor = "c decl names surface #6 in chibicc.h"
-cost_tokens = 31
-cum_tokens = 517
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 7 })'
+descriptor = "c decl names surface #7 in chibicc.h"
+cost_tokens = 78
+cum_tokens = 489
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "chibicc.h"
-start = 411
-end = 412
+start = 418
+end = 422
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
 path = "chibicc.h"
-start = 413
-end = 413
+start = 423
+end = 423
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'C(DeclNames { file: "include/stdnoreturn.h", chunk_index: 0 })'
-descriptor = "c decl names surface in include/stdnoreturn.h"
-cost_tokens = 15
-cum_tokens = 532
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/stdnoreturn.h"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/stdnoreturn.h"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 11
-key = 'C(DeclNames { file: "strings.c", chunk_index: 0 })'
-descriptor = "c decl names surface in strings.c"
-cost_tokens = 35
-cum_tokens = 567
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 12
-key = 'C(Decl { file: "strings.c", start_line: 3 })'
-descriptor = "c decl at strings.c:3"
-cost_tokens = 0
-cum_tokens = 567
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 13
-key = 'C(Decl { file: "strings.c", start_line: 20 })'
-descriptor = "c decl at strings.c:20"
-cost_tokens = 0
-cum_tokens = 567
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
 key = 'C(DeclNames { file: "chibicc.h", chunk_index: 4 })'
 descriptor = "c decl names surface #4 in chibicc.h"
 cost_tokens = 103
-cum_tokens = 670
+cum_tokens = 592
 
 [batches.content]
 kind = "lines"
@@ -536,11 +412,11 @@ end = 296
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 11
 key = 'C(Decl { file: "chibicc.h", start_line: 126 })'
 descriptor = "c decl at chibicc.h:126"
 cost_tokens = 0
-cum_tokens = 670
+cum_tokens = 592
 
 [batches.content]
 kind = "lines"
@@ -554,11 +430,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 16
+position = 12
 key = 'C(Decl { file: "chibicc.h", start_line: 167 })'
 descriptor = "c decl at chibicc.h:167"
 cost_tokens = 0
-cum_tokens = 670
+cum_tokens = 592
 
 [batches.content]
 kind = "lines"
@@ -572,11 +448,11 @@ end = 167
 kind = "full"
 
 [[batches]]
-position = 17
+position = 13
 key = 'C(Decl { file: "chibicc.h", start_line: 127 })'
 descriptor = "c decl at chibicc.h:127"
 cost_tokens = 5
-cum_tokens = 675
+cum_tokens = 597
 
 [batches.content]
 kind = "lines"
@@ -598,11 +474,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 18
+position = 14
 key = 'C(Decl { file: "chibicc.h", start_line: 228 })'
 descriptor = "c decl at chibicc.h:228"
 cost_tokens = 5
-cum_tokens = 680
+cum_tokens = 602
 
 [batches.content]
 kind = "lines"
@@ -624,11 +500,11 @@ end = 291
 kind = "full"
 
 [[batches]]
-position = 19
+position = 15
 key = 'C(Decl { file: "chibicc.h", start_line: 176 })'
 descriptor = "c decl at chibicc.h:176"
 cost_tokens = 8
-cum_tokens = 688
+cum_tokens = 610
 
 [batches.content]
 kind = "lines"
@@ -650,11 +526,11 @@ end = 225
 kind = "full"
 
 [[batches]]
-position = 20
+position = 16
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 176 })'
 descriptor = "c decl doc at chibicc.h:176"
 cost_tokens = 8
-cum_tokens = 696
+cum_tokens = 618
 
 [batches.content]
 kind = "lines"
@@ -668,11 +544,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 21
+position = 17
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 126 })'
 descriptor = "c decl doc at chibicc.h:126"
 cost_tokens = 9
-cum_tokens = 705
+cum_tokens = 627
 
 [batches.content]
 kind = "lines"
@@ -686,11 +562,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 22
+position = 18
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 228 })'
 descriptor = "c decl doc at chibicc.h:228"
 cost_tokens = 9
-cum_tokens = 714
+cum_tokens = 636
 
 [batches.content]
 kind = "lines"
@@ -704,11 +580,11 @@ end = 227
 kind = "full"
 
 [[batches]]
-position = 23
+position = 19
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 135 })'
 descriptor = "c aggregate member group at chibicc.h:127 group 135"
 cost_tokens = 17
-cum_tokens = 731
+cum_tokens = 653
 
 [batches.content]
 kind = "lines"
@@ -722,11 +598,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 24
+position = 20
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 285 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 285"
 cost_tokens = 17
-cum_tokens = 748
+cum_tokens = 670
 
 [batches.content]
 kind = "lines"
@@ -740,11 +616,11 @@ end = 286
 kind = "full"
 
 [[batches]]
-position = 25
+position = 21
 key = 'C(Decl { file: "chibicc.h", start_line: 168 })'
 descriptor = "c decl at chibicc.h:168"
 cost_tokens = 39
-cum_tokens = 787
+cum_tokens = 709
 
 [batches.content]
 kind = "lines"
@@ -758,11 +634,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 26
+position = 22
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 251 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 251"
 cost_tokens = 19
-cum_tokens = 806
+cum_tokens = 728
 
 [batches.content]
 kind = "lines"
@@ -776,11 +652,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 27
+position = 23
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 248 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 248"
 cost_tokens = 20
-cum_tokens = 826
+cum_tokens = 748
 
 [batches.content]
 kind = "lines"
@@ -794,11 +670,11 @@ end = 249
 kind = "full"
 
 [[batches]]
-position = 28
+position = 24
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 273 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 273"
 cost_tokens = 22
-cum_tokens = 848
+cum_tokens = 770
 
 [batches.content]
 kind = "lines"
@@ -812,11 +688,11 @@ end = 274
 kind = "full"
 
 [[batches]]
-position = 29
+position = 25
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 269 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 269"
 cost_tokens = 24
-cum_tokens = 872
+cum_tokens = 794
 
 [batches.content]
 kind = "lines"
@@ -830,11 +706,11 @@ end = 271
 kind = "full"
 
 [[batches]]
-position = 30
+position = 26
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 265 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 265"
 cost_tokens = 28
-cum_tokens = 900
+cum_tokens = 822
 
 [batches.content]
 kind = "lines"
@@ -848,11 +724,11 @@ end = 267
 kind = "full"
 
 [[batches]]
-position = 31
+position = 27
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 288 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 288"
 cost_tokens = 29
-cum_tokens = 929
+cum_tokens = 851
 
 [batches.content]
 kind = "lines"
@@ -866,11 +742,11 @@ end = 290
 kind = "full"
 
 [[batches]]
-position = 32
+position = 28
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 234 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 234"
 cost_tokens = 30
-cum_tokens = 959
+cum_tokens = 881
 
 [batches.content]
 kind = "lines"
@@ -884,11 +760,11 @@ end = 235
 kind = "full"
 
 [[batches]]
-position = 33
+position = 29
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 281 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 281"
 cost_tokens = 31
-cum_tokens = 990
+cum_tokens = 912
 
 [batches.content]
 kind = "lines"
@@ -902,11 +778,75 @@ end = 283
 kind = "full"
 
 [[batches]]
-position = 34
+position = 30
+key = 'Fs(DirListing { dir: "include" })'
+descriptor = "listing of 'include'"
+cost_tokens = 36
+cum_tokens = 948
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "include"
+entries = ["float.h", "stdalign.h", "stdarg.h", "stdatomic.h", "stdbool.h", "stddef.h", "stdnoreturn.h"]
+
+[[batches]]
+position = 31
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 0 })'
+descriptor = "c decl names surface in chibicc.h"
+cost_tokens = 123
+cum_tokens = 1071
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 21
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 28
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 32
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 167 })'
 descriptor = "c decl doc at chibicc.h:167"
 cost_tokens = 41
-cum_tokens = 1031
+cum_tokens = 1112
 
 [batches.content]
 kind = "lines"
@@ -920,11 +860,11 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 35
+position = 33
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 244 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 244"
 cost_tokens = 36
-cum_tokens = 1067
+cum_tokens = 1148
 
 [batches.content]
 kind = "lines"
@@ -938,11 +878,11 @@ end = 246
 kind = "full"
 
 [[batches]]
-position = 36
+position = 34
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 158 })'
 descriptor = "c aggregate member group at chibicc.h:127 group 158"
 cost_tokens = 37
-cum_tokens = 1104
+cum_tokens = 1185
 
 [batches.content]
 kind = "lines"
@@ -956,11 +896,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 37
+position = 35
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 138 })'
 descriptor = "c aggregate member group at chibicc.h:127 group 138"
 cost_tokens = 38
-cum_tokens = 1142
+cum_tokens = 1223
 
 [batches.content]
 kind = "lines"
@@ -974,11 +914,105 @@ end = 141
 kind = "full"
 
 [[batches]]
+position = 36
+key = 'C(DeclNames { file: "chibicc.h", chunk_index: 8 })'
+descriptor = "c decl names surface #8 in chibicc.h"
+cost_tokens = 152
+cum_tokens = 1375
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 428
+end = 428
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 434
+end = 434
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 440
+end = 446
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 429
+end = 429
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 435
+end = 435
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 447
+end = 447
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 37
+key = 'C(Decl { file: "chibicc.h", start_line: 428 })'
+descriptor = "c decl at chibicc.h:428"
+cost_tokens = 33
+cum_tokens = 1408
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 428
+end = 432
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 38
+key = 'C(Decl { file: "chibicc.h", start_line: 434 })'
+descriptor = "c decl at chibicc.h:434"
+cost_tokens = 33
+cum_tokens = 1441
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 434
+end = 438
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 276 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 276"
 cost_tokens = 42
-cum_tokens = 1184
+cum_tokens = 1483
 
 [batches.content]
 kind = "lines"
@@ -992,11 +1026,11 @@ end = 279
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 260 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 260"
 cost_tokens = 46
-cum_tokens = 1230
+cum_tokens = 1529
 
 [batches.content]
 kind = "lines"
@@ -1010,11 +1044,11 @@ end = 263
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 254 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 254"
 cost_tokens = 48
-cum_tokens = 1278
+cum_tokens = 1577
 
 [batches.content]
 kind = "lines"
@@ -1028,11 +1062,11 @@ end = 258
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 143 })'
 descriptor = "c aggregate member group at chibicc.h:127 group 143"
 cost_tokens = 49
-cum_tokens = 1327
+cum_tokens = 1626
 
 [batches.content]
 kind = "lines"
@@ -1046,11 +1080,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 237 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 237"
 cost_tokens = 60
-cum_tokens = 1387
+cum_tokens = 1686
 
 [batches.content]
 kind = "lines"
@@ -1064,11 +1098,11 @@ end = 242
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 228, group_start_line: 229 })'
 descriptor = "c aggregate member group at chibicc.h:228 group 229"
 cost_tokens = 61
-cum_tokens = 1448
+cum_tokens = 1747
 
 [batches.content]
 kind = "lines"
@@ -1082,197 +1116,11 @@ end = 232
 kind = "full"
 
 [[batches]]
-position = 44
-key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 149 })'
-descriptor = "c aggregate member group at chibicc.h:127 group 149"
-cost_tokens = 74
-cum_tokens = 1522
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 149
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 45
-key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 128 })'
-descriptor = "c aggregate member group at chibicc.h:127 group 128"
-cost_tokens = 75
-cum_tokens = 1597
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 128
-end = 133
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'C(DeclNames { file: "type.c", chunk_index: 1 })'
-descriptor = "c decl names surface #1 in type.c"
-cost_tokens = 14
-cum_tokens = 1611
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 177
-end = 177
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 47
-key = 'C(Decl { file: "type.c", start_line: 176 })'
-descriptor = "c decl at type.c:176"
-cost_tokens = 0
-cum_tokens = 1611
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 177
-end = 177
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 48
-key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 176, group_start_line: 177 })'
-descriptor = "c aggregate member group at chibicc.h:176 group 177"
-cost_tokens = 140
-cum_tokens = 1751
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 177
-end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
-key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 176, group_start_line: 189 })'
-descriptor = "c aggregate member group at chibicc.h:176 group 189"
-cost_tokens = 148
-cum_tokens = 1899
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 189
-end = 200
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Markdown(Section { file: "README.md", section_index: 5 })'
-descriptor = "README.md section #5"
-cost_tokens = 96
-cum_tokens = 1995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 182
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
-key = 'C(Includes { file: "chibicc.h" })'
-descriptor = "c includes in chibicc.h"
-cost_tokens = 189
-cum_tokens = 2184
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 2
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 52
-key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 176, group_start_line: 201 })'
-descriptor = "c aggregate member group at chibicc.h:176 group 201"
-cost_tokens = 165
-cum_tokens = 2349
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 201
-end = 212
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 53
 key = 'C(DeclNames { file: "chibicc.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in chibicc.h"
 cost_tokens = 303
-cum_tokens = 2652
+cum_tokens = 2050
 
 [batches.content]
 kind = "lines"
@@ -1358,11 +1206,11 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 54
+position = 46
 key = 'C(Decl { file: "chibicc.h", start_line: 73 })'
 descriptor = "c decl at chibicc.h:73"
 cost_tokens = 0
-cum_tokens = 2652
+cum_tokens = 2050
 
 [batches.content]
 kind = "lines"
@@ -1376,11 +1224,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 55
+position = 47
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 73 })'
 descriptor = "c decl doc at chibicc.h:73"
 cost_tokens = 8
-cum_tokens = 2660
+cum_tokens = 2058
 
 [batches.content]
 kind = "lines"
@@ -1394,11 +1242,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 56
+position = 48
 key = 'C(Decl { file: "chibicc.h", start_line: 108 })'
 descriptor = "c decl at chibicc.h:108"
 cost_tokens = 19
-cum_tokens = 2679
+cum_tokens = 2077
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1260,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 57
+position = 49
 key = 'C(Decl { file: "chibicc.h", start_line: 62 })'
 descriptor = "c decl at chibicc.h:62"
 cost_tokens = 62
-cum_tokens = 2741
+cum_tokens = 2139
 
 [batches.content]
 kind = "lines"
@@ -1438,11 +1286,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 58
+position = 50
 key = 'C(Decl { file: "chibicc.h", start_line: 52 })'
 descriptor = "c decl at chibicc.h:52"
 cost_tokens = 105
-cum_tokens = 2846
+cum_tokens = 2244
 
 [batches.content]
 kind = "lines"
@@ -1456,11 +1304,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 59
+position = 51
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 52 })'
 descriptor = "c decl doc at chibicc.h:52"
 cost_tokens = 7
-cum_tokens = 2853
+cum_tokens = 2251
 
 [batches.content]
 kind = "lines"
@@ -1474,1791 +1322,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 60
-key = 'C(Decl { file: "chibicc.h", start_line: 74 })'
-descriptor = "c decl at chibicc.h:74"
-cost_tokens = 275
-cum_tokens = 3128
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 74
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 84
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
-key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 176, group_start_line: 213 })'
-descriptor = "c aggregate member group at chibicc.h:176 group 213"
-cost_tokens = 175
-cum_tokens = 3303
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 213
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 62
-key = 'C(Includes { file: "codegen.c" })'
-descriptor = "c includes in codegen.c"
-cost_tokens = 12
-cum_tokens = 3315
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 63
-key = 'C(Includes { file: "hashmap.c" })'
-descriptor = "c includes in hashmap.c"
-cost_tokens = 12
-cum_tokens = 3327
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'C(Includes { file: "main.c" })'
-descriptor = "c includes in main.c"
-cost_tokens = 12
-cum_tokens = 3339
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 65
-key = 'C(Includes { file: "parse.c" })'
-descriptor = "c includes in parse.c"
-cost_tokens = 12
-cum_tokens = 3351
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'C(Includes { file: "preprocess.c" })'
-descriptor = "c includes in preprocess.c"
-cost_tokens = 12
-cum_tokens = 3363
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "preprocess.c"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
-key = 'C(Includes { file: "strings.c" })'
-descriptor = "c includes in strings.c"
-cost_tokens = 12
-cum_tokens = 3375
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
-key = 'C(Includes { file: "tokenize.c" })'
-descriptor = "c includes in tokenize.c"
-cost_tokens = 12
-cum_tokens = 3387
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tokenize.c"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 69
-key = 'C(Includes { file: "type.c" })'
-descriptor = "c includes in type.c"
-cost_tokens = 12
-cum_tokens = 3399
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "type.c"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
-key = 'C(Includes { file: "unicode.c" })'
-descriptor = "c includes in unicode.c"
-cost_tokens = 12
-cum_tokens = 3411
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 71
-key = 'Markdown(Section { file: "README.md", section_index: 0 })'
-descriptor = "README.md section #0"
-cost_tokens = 936
-cum_tokens = 4347
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 7
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 29
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 43
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 52
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'Markdown(Section { file: "README.md", section_index: 2 })'
-descriptor = "README.md section #2"
-cost_tokens = 164
-cum_tokens = 4511
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 95
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 97
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 100
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 104
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 108
-end = 108
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
-key = 'C(DeclNames { file: "chibicc.h", chunk_index: 7 })'
-descriptor = "c decl names surface #7 in chibicc.h"
-cost_tokens = 78
-cum_tokens = 4589
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 418
-end = 422
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 423
-end = 423
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 74
-key = 'C(DeclDoc { file: "strings.c", start_line: 20 })'
-descriptor = "c decl doc at strings.c:20"
-cost_tokens = 17
-cum_tokens = 4606
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "strings.c"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
-key = 'C(DeclNames { file: "chibicc.h", chunk_index: 9 })'
-descriptor = "c decl names surface #9 in chibicc.h"
-cost_tokens = 53
-cum_tokens = 4659
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 452
-end = 452
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 454
-end = 457
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "chibicc.h"
-start = 453
-end = 453
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 76
-key = 'C(DeclNames { file: "main.c", chunk_index: 0 })'
-descriptor = "c decl names surface in main.c"
-cost_tokens = 81
-cum_tokens = 4740
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 7
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 586
-end = 586
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 700
-end = 700
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 587
-end = 587
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 701
-end = 701
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 77
-key = 'C(Decl { file: "main.c", start_line: 586 })'
-descriptor = "c decl at main.c:586"
-cost_tokens = 0
-cum_tokens = 4740
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 586
-end = 586
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 587
-end = 587
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 78
-key = 'C(Decl { file: "main.c", start_line: 700 })'
-descriptor = "c decl at main.c:700"
-cost_tokens = 0
-cum_tokens = 4740
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 700
-end = 700
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 701
-end = 701
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 79
-key = 'C(DeclDoc { file: "main.c", start_line: 586 })'
-descriptor = "c decl doc at main.c:586"
-cost_tokens = 13
-cum_tokens = 4753
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 585
-end = 585
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
-key = 'C(Decl { file: "main.c", start_line: 3 })'
-descriptor = "c decl at main.c:3"
-cost_tokens = 31
-cum_tokens = 4784
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 81
-key = 'C(DeclNames { file: "include/stdbool.h", chunk_index: 0 })'
-descriptor = "c decl names surface in include/stdbool.h"
-cost_tokens = 47
-cum_tokens = 4831
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/stdbool.h"
-start = 4
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/stdbool.h"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 82
-key = 'C(DeclNames { file: "unicode.c", chunk_index: 0 })'
-descriptor = "c decl names surface in unicode.c"
-cost_tokens = 91
-cum_tokens = 4922
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 110
-end = 110
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 182
-end = 182
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 83
-key = 'C(Decl { file: "unicode.c", start_line: 4 })'
-descriptor = "c decl at unicode.c:4"
-cost_tokens = 0
-cum_tokens = 4922
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 84
-key = 'C(Decl { file: "unicode.c", start_line: 37 })'
-descriptor = "c decl at unicode.c:37"
-cost_tokens = 0
-cum_tokens = 4922
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 85
-key = 'C(Decl { file: "unicode.c", start_line: 87 })'
-descriptor = "c decl at unicode.c:87"
-cost_tokens = 0
-cum_tokens = 4922
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 86
-key = 'C(Decl { file: "unicode.c", start_line: 110 })'
-descriptor = "c decl at unicode.c:110"
-cost_tokens = 0
-cum_tokens = 4922
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 110
-end = 110
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 87
-key = 'C(Decl { file: "unicode.c", start_line: 181 })'
-descriptor = "c decl at unicode.c:181"
-cost_tokens = 0
-cum_tokens = 4922
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 182
-end = 182
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 88
-key = 'C(DeclDoc { file: "unicode.c", start_line: 4 })'
-descriptor = "c decl doc at unicode.c:4"
-cost_tokens = 14
-cum_tokens = 4936
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'C(DeclNames { file: "include/stdalign.h", chunk_index: 0 })'
-descriptor = "c decl names surface in include/stdalign.h"
-cost_tokens = 54
-cum_tokens = 4990
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/stdalign.h"
-start = 4
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/stdalign.h"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 90
-key = 'C(HeaderBanner { file: "hashmap.c" })'
-descriptor = "c header banner in hashmap.c"
-cost_tokens = 17
-cum_tokens = 5007
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "hashmap.c"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 91
-key = 'Markdown(Section { file: "README.md", section_index: 3 })'
-descriptor = "README.md section #3"
-cost_tokens = 247
-cum_tokens = 5254
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 110
-end = 110
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 112
-end = 115
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 117
-end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 123
-end = 126
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
-key = 'C(DeclDoc { file: "unicode.c", start_line: 110 })'
-descriptor = "c decl doc at unicode.c:110"
-cost_tokens = 28
-cum_tokens = 5282
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 108
-end = 109
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 93
-key = 'C(DeclDoc { file: "unicode.c", start_line: 181 })'
-descriptor = "c decl doc at unicode.c:181"
-cost_tokens = 28
-cum_tokens = 5310
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "unicode.c"
-start = 179
-end = 180
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
-key = 'C(DeclBody { file: "main.c", start_line: 586 })'
-descriptor = "c decl body at main.c:586"
-cost_tokens = 20
-cum_tokens = 5330
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "main.c"
-start = 587
-end = 588
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 95
-key = 'Markdown(Section { file: "README.md", section_index: 1 })'
-descriptor = "README.md section #1"
-cost_tokens = 428
-cum_tokens = 5758
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 57
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 60
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 63
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 77
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 81
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 84
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 88
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
-key = 'C(DeclNames { file: "parse.c", chunk_index: 0 })'
-descriptor = "c decl names surface in parse.c"
-cost_tokens = 136
-cum_tokens = 5894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 31
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 54
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 75
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 244
-end = 244
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1987
-end = 1987
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3337
-end = 3337
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 245
-end = 245
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1988
-end = 1988
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3338
-end = 3338
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 97
-key = 'C(Decl { file: "parse.c", start_line: 31 })'
-descriptor = "c decl at parse.c:31"
-cost_tokens = 0
-cum_tokens = 5894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'C(Decl { file: "parse.c", start_line: 54 })'
-descriptor = "c decl at parse.c:54"
-cost_tokens = 0
-cum_tokens = 5894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
-key = 'C(Decl { file: "parse.c", start_line: 75 })'
-descriptor = "c decl at parse.c:75"
-cost_tokens = 0
-cum_tokens = 5894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'C(Decl { file: "parse.c", start_line: 244 })'
-descriptor = "c decl at parse.c:244"
-cost_tokens = 0
-cum_tokens = 5894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 244
-end = 244
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 245
-end = 245
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 101
-key = 'C(Decl { file: "parse.c", start_line: 1987 })'
-descriptor = "c decl at parse.c:1987"
-cost_tokens = 0
-cum_tokens = 5894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1987
-end = 1987
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1988
-end = 1988
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'C(Decl { file: "parse.c", start_line: 3337 })'
-descriptor = "c decl at parse.c:3337"
-cost_tokens = 0
-cum_tokens = 5894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3337
-end = 3337
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3338
-end = 3338
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 103
-key = 'C(DeclDoc { file: "parse.c", start_line: 31 })'
-descriptor = "c decl doc at parse.c:31"
-cost_tokens = 10
-cum_tokens = 5904
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'C(DeclDoc { file: "parse.c", start_line: 75 })'
-descriptor = "c decl doc at parse.c:75"
-cost_tokens = 10
-cum_tokens = 5914
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'C(DeclDoc { file: "parse.c", start_line: 3337 })'
-descriptor = "c decl doc at parse.c:3337"
-cost_tokens = 18
-cum_tokens = 5932
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 3336
-end = 3336
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'C(Decl { file: "parse.c", start_line: 76 })'
-descriptor = "c decl at parse.c:76"
-cost_tokens = 40
-cum_tokens = 5972
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 76
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'C(Decl { file: "parse.c", start_line: 23 })'
-descriptor = "c decl at parse.c:23"
-cost_tokens = 44
-cum_tokens = 6016
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 23
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'C(DeclDoc { file: "parse.c", start_line: 23 })'
-descriptor = "c decl doc at parse.c:23"
-cost_tokens = 25
-cum_tokens = 6041
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 21
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'C(DeclNames { file: "codegen.c", chunk_index: 0 })'
-descriptor = "c decl names surface in codegen.c"
-cost_tokens = 143
-cum_tokens = 6184
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 356
-end = 356
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 360
-end = 360
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1585
-end = 1585
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 285
-end = 285
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 357
-end = 357
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 361
-end = 361
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1586
-end = 1586
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 110
-key = 'C(Decl { file: "codegen.c", start_line: 55 })'
-descriptor = "c decl at codegen.c:55"
-cost_tokens = 0
-cum_tokens = 6184
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 111
-key = 'C(Decl { file: "codegen.c", start_line: 1585 })'
-descriptor = "c decl at codegen.c:1585"
-cost_tokens = 0
-cum_tokens = 6184
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1585
-end = 1585
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 1586
-end = 1586
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 112
-key = 'C(DeclBody { file: "codegen.c", start_line: 55 })'
-descriptor = "c decl body at codegen.c:55"
-cost_tokens = 17
-cum_tokens = 6201
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "codegen.c"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 211
-cum_tokens = 6412
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["alignof.c", "alloca.c", "arith.c", "asm.c", "atomic.c", "attribute.c", "bitfield.c", "builtin.c", "cast.c", "common", "commonsym.c", "compat.c", "complit.c", "const.c", "constexpr.c", "control.c", "decl.c", "driver.sh", "enum.c", "extern.c", "float.c", "function.c", "generic.c", "include1.h", "include2.h", "include3.h", "include4.h", "initializer.c", "line.c", "literal.c", "macro.c", "offsetof.c", "pointer.c", "pragma-once.c", "sizeof.c", "stdhdr.c", "string.c", "struct.c", "test.h", "thirdparty", "tls.c", "typedef.c", "typeof.c", "unicode.c", "union.c", "usualconv.c", "varargs.c", "variable.c", "vla.c"]
-
-[[batches]]
-position = 114
-key = 'C(DeclNames { file: "test/include3.h", chunk_index: 0 })'
-descriptor = "c decl names surface in test/include3.h"
-cost_tokens = 10
-cum_tokens = 6422
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/include3.h"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'C(DeclNames { file: "test/include4.h", chunk_index: 0 })'
-descriptor = "c decl names surface in test/include4.h"
-cost_tokens = 10
-cum_tokens = 6432
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/include4.h"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'C(DeclNames { file: "test/include2.h", chunk_index: 0 })'
-descriptor = "c decl names surface in test/include2.h"
-cost_tokens = 11
-cum_tokens = 6443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/include2.h"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'C(DeclNames { file: "test/include1.h", chunk_index: 0 })'
-descriptor = "c decl names surface in test/include1.h"
-cost_tokens = 38
-cum_tokens = 6481
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/include1.h"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "test/include1.h"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "test/include1.h"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 118
-key = 'C(DeclNames { file: "include/stddef.h", chunk_index: 0 })'
-descriptor = "c decl names surface in include/stddef.h"
-cost_tokens = 80
-cum_tokens = 6561
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/stddef.h"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/stddef.h"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/stddef.h"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/stddef.h"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "include/stddef.h"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "include/stddef.h"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 119
-key = 'C(DeclBody { file: "parse.c", start_line: 1987 })'
-descriptor = "c decl body at parse.c:1987"
-cost_tokens = 23
-cum_tokens = 6584
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "parse.c"
-start = 1988
-end = 1989
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
+position = 52
 key = 'C(DeclNames { file: "chibicc.h", chunk_index: 5 })'
 descriptor = "c decl names surface #5 in chibicc.h"
 cost_tokens = 323
-cum_tokens = 6907
+cum_tokens = 2574
 
 [batches.content]
 kind = "lines"
@@ -3392,11 +1460,11 @@ end = 406
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 53
 key = 'C(Decl { file: "chibicc.h", start_line: 320 })'
 descriptor = "c decl at chibicc.h:320"
 cost_tokens = 5
-cum_tokens = 6912
+cum_tokens = 2579
 
 [batches.content]
 kind = "lines"
@@ -3418,11 +1486,11 @@ end = 359
 kind = "full"
 
 [[batches]]
-position = 122
+position = 54
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 342 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 342"
 cost_tokens = 17
-cum_tokens = 6929
+cum_tokens = 2596
 
 [batches.content]
 kind = "lines"
@@ -3436,11 +1504,11 @@ end = 343
 kind = "full"
 
 [[batches]]
-position = 123
+position = 55
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 338 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 338"
 cost_tokens = 27
-cum_tokens = 6956
+cum_tokens = 2623
 
 [batches.content]
 kind = "lines"
@@ -3454,11 +1522,11 @@ end = 340
 kind = "full"
 
 [[batches]]
-position = 124
+position = 56
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 349 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 349"
 cost_tokens = 37
-cum_tokens = 6993
+cum_tokens = 2660
 
 [batches.content]
 kind = "lines"
@@ -3472,11 +1540,11 @@ end = 352
 kind = "full"
 
 [[batches]]
-position = 125
+position = 57
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 345 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 345"
 cost_tokens = 42
-cum_tokens = 7035
+cum_tokens = 2702
 
 [batches.content]
 kind = "lines"
@@ -3490,11 +1558,11 @@ end = 347
 kind = "full"
 
 [[batches]]
-position = 126
+position = 58
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 354 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 354"
 cost_tokens = 47
-cum_tokens = 7082
+cum_tokens = 2749
 
 [batches.content]
 kind = "lines"
@@ -3508,11 +1576,11 @@ end = 358
 kind = "full"
 
 [[batches]]
-position = 127
+position = 59
 key = 'C(Decl { file: "chibicc.h", start_line: 362 })'
 descriptor = "c decl at chibicc.h:362"
 cost_tokens = 105
-cum_tokens = 7187
+cum_tokens = 2854
 
 [batches.content]
 kind = "lines"
@@ -3534,11 +1602,11 @@ end = 375
 kind = "full"
 
 [[batches]]
-position = 128
+position = 60
 key = 'C(DeclDoc { file: "chibicc.h", start_line: 362 })'
 descriptor = "c decl doc at chibicc.h:362"
 cost_tokens = 8
-cum_tokens = 7195
+cum_tokens = 2862
 
 [batches.content]
 kind = "lines"
@@ -3552,11 +1620,11 @@ end = 361
 kind = "full"
 
 [[batches]]
-position = 129
+position = 61
 key = 'C(Decl { file: "chibicc.h", start_line: 301 })'
 descriptor = "c decl at chibicc.h:301"
 cost_tokens = 142
-cum_tokens = 7337
+cum_tokens = 3004
 
 [batches.content]
 kind = "lines"
@@ -3570,11 +1638,47 @@ end = 318
 kind = "full"
 
 [[batches]]
-position = 130
+position = 62
+key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 149 })'
+descriptor = "c aggregate member group at chibicc.h:127 group 149"
+cost_tokens = 74
+cum_tokens = 3078
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 149
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 127, group_start_line: 128 })'
+descriptor = "c aggregate member group at chibicc.h:127 group 128"
+cost_tokens = 75
+cum_tokens = 3153
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 128
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 321 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 321"
 cost_tokens = 80
-cum_tokens = 7417
+cum_tokens = 3233
 
 [batches.content]
 kind = "lines"
@@ -3588,11 +1692,227 @@ end = 326
 kind = "full"
 
 [[batches]]
-position = 131
+position = 65
+key = 'C(DeclNames { file: "include/stdnoreturn.h", chunk_index: 0 })'
+descriptor = "c decl names surface in include/stdnoreturn.h"
+cost_tokens = 15
+cum_tokens = 3248
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/stdnoreturn.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "include/stdnoreturn.h"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 66
+key = 'C(Decl { file: "chibicc.h", start_line: 74 })'
+descriptor = "c decl at chibicc.h:74"
+cost_tokens = 275
+cum_tokens = 3523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 74
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 84
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'C(DeclNames { file: "strings.c", chunk_index: 0 })'
+descriptor = "c decl names surface in strings.c"
+cost_tokens = 35
+cum_tokens = 3558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 68
+key = 'C(Decl { file: "strings.c", start_line: 3 })'
+descriptor = "c decl at strings.c:3"
+cost_tokens = 0
+cum_tokens = 3558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 69
+key = 'C(Decl { file: "strings.c", start_line: 20 })'
+descriptor = "c decl at strings.c:20"
+cost_tokens = 0
+cum_tokens = 3558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 70
+key = 'C(DeclNames { file: "type.c", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in type.c"
+cost_tokens = 14
+cum_tokens = 3572
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "type.c"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "type.c"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 71
+key = 'C(Decl { file: "type.c", start_line: 176 })'
+descriptor = "c decl at type.c:176"
+cost_tokens = 0
+cum_tokens = 3572
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "type.c"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "type.c"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 72
+key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 176, group_start_line: 177 })'
+descriptor = "c aggregate member group at chibicc.h:176 group 177"
+cost_tokens = 140
+cum_tokens = 3712
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 177
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
 key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 320, group_start_line: 328 })'
 descriptor = "c aggregate member group at chibicc.h:320 group 328"
 cost_tokens = 145
-cum_tokens = 7562
+cum_tokens = 3857
 
 [batches.content]
 kind = "lines"
@@ -3606,95 +1926,1775 @@ end = 336
 kind = "full"
 
 [[batches]]
-position = 132
-key = 'C(DeclNames { file: "chibicc.h", chunk_index: 8 })'
-descriptor = "c decl names surface #8 in chibicc.h"
-cost_tokens = 152
-cum_tokens = 7714
+position = 74
+key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 176, group_start_line: 189 })'
+descriptor = "c aggregate member group at chibicc.h:176 group 189"
+cost_tokens = 148
+cum_tokens = 4005
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "chibicc.h"
-start = 428
-end = 428
+start = 189
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Markdown(Section { file: "README.md", section_index: 5 })'
+descriptor = "README.md section #5"
+cost_tokens = 96
+cum_tokens = 4101
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 180
+end = 180
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
+path = "README.md"
+start = 182
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'C(Includes { file: "chibicc.h" })'
+descriptor = "c includes in chibicc.h"
+cost_tokens = 189
+cum_tokens = 4290
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
 path = "chibicc.h"
-start = 434
-end = 434
+start = 2
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 176, group_start_line: 201 })'
+descriptor = "c aggregate member group at chibicc.h:176 group 201"
+cost_tokens = 165
+cum_tokens = 4455
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 201
+end = 212
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'C(AggregateMemberGroup { file: "chibicc.h", start_line: 176, group_start_line: 213 })'
+descriptor = "c aggregate member group at chibicc.h:176 group 213"
+cost_tokens = 175
+cum_tokens = 4630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "chibicc.h"
+start = 213
+end = 224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'C(Includes { file: "codegen.c" })'
+descriptor = "c includes in codegen.c"
+cost_tokens = 12
+cum_tokens = 4642
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'C(Includes { file: "hashmap.c" })'
+descriptor = "c includes in hashmap.c"
+cost_tokens = 12
+cum_tokens = 4654
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "hashmap.c"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'C(Includes { file: "main.c" })'
+descriptor = "c includes in main.c"
+cost_tokens = 12
+cum_tokens = 4666
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'C(Includes { file: "parse.c" })'
+descriptor = "c includes in parse.c"
+cost_tokens = 12
+cum_tokens = 4678
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'C(Includes { file: "preprocess.c" })'
+descriptor = "c includes in preprocess.c"
+cost_tokens = 12
+cum_tokens = 4690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "preprocess.c"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'C(Includes { file: "strings.c" })'
+descriptor = "c includes in strings.c"
+cost_tokens = 12
+cum_tokens = 4702
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'C(Includes { file: "tokenize.c" })'
+descriptor = "c includes in tokenize.c"
+cost_tokens = 12
+cum_tokens = 4714
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tokenize.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'C(Includes { file: "type.c" })'
+descriptor = "c includes in type.c"
+cost_tokens = 12
+cum_tokens = 4726
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "type.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'C(Includes { file: "unicode.c" })'
+descriptor = "c includes in unicode.c"
+cost_tokens = 12
+cum_tokens = 4738
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 936
+cum_tokens = 5674
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 7
+end = 17
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "chibicc.h"
-start = 440
-end = 446
+path = "README.md"
+start = 19
+end = 27
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "chibicc.h"
-start = 429
-end = 429
+path = "README.md"
+start = 29
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 43
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 52
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Markdown(Section { file: "README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 164
+cum_tokens = 5838
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 97
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 100
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 104
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'C(DeclDoc { file: "strings.c", start_line: 20 })'
+descriptor = "c decl doc at strings.c:20"
+cost_tokens = 17
+cum_tokens = 5855
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "strings.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'C(DeclNames { file: "main.c", chunk_index: 0 })'
+descriptor = "c decl names surface in main.c"
+cost_tokens = 81
+cum_tokens = 5936
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 586
+end = 586
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 700
+end = 700
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "chibicc.h"
-start = 435
-end = 435
+path = "main.c"
+start = 10
+end = 10
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "chibicc.h"
-start = 447
-end = 447
+path = "main.c"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 587
+end = 587
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 701
+end = 701
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 92
+key = 'C(Decl { file: "main.c", start_line: 586 })'
+descriptor = "c decl at main.c:586"
+cost_tokens = 0
+cum_tokens = 5936
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 586
+end = 586
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 587
+end = 587
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 93
+key = 'C(Decl { file: "main.c", start_line: 700 })'
+descriptor = "c decl at main.c:700"
+cost_tokens = 0
+cum_tokens = 5936
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 700
+end = 700
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 701
+end = 701
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 94
+key = 'C(DeclDoc { file: "main.c", start_line: 586 })'
+descriptor = "c decl doc at main.c:586"
+cost_tokens = 13
+cum_tokens = 5949
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 585
+end = 585
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'C(Decl { file: "main.c", start_line: 3 })'
+descriptor = "c decl at main.c:3"
+cost_tokens = 31
+cum_tokens = 5980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'C(DeclNames { file: "include/stdbool.h", chunk_index: 0 })'
+descriptor = "c decl names surface in include/stdbool.h"
+cost_tokens = 47
+cum_tokens = 6027
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/stdbool.h"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "include/stdbool.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 97
+key = 'C(DeclNames { file: "unicode.c", chunk_index: 0 })'
+descriptor = "c decl names surface in unicode.c"
+cost_tokens = 91
+cum_tokens = 6118
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 98
+key = 'C(Decl { file: "unicode.c", start_line: 4 })'
+descriptor = "c decl at unicode.c:4"
+cost_tokens = 0
+cum_tokens = 6118
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 99
+key = 'C(Decl { file: "unicode.c", start_line: 37 })'
+descriptor = "c decl at unicode.c:37"
+cost_tokens = 0
+cum_tokens = 6118
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 100
+key = 'C(Decl { file: "unicode.c", start_line: 87 })'
+descriptor = "c decl at unicode.c:87"
+cost_tokens = 0
+cum_tokens = 6118
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 101
+key = 'C(Decl { file: "unicode.c", start_line: 110 })'
+descriptor = "c decl at unicode.c:110"
+cost_tokens = 0
+cum_tokens = 6118
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
+key = 'C(Decl { file: "unicode.c", start_line: 181 })'
+descriptor = "c decl at unicode.c:181"
+cost_tokens = 0
+cum_tokens = 6118
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 103
+key = 'C(DeclDoc { file: "unicode.c", start_line: 4 })'
+descriptor = "c decl doc at unicode.c:4"
+cost_tokens = 14
+cum_tokens = 6132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'C(DeclNames { file: "include/stdalign.h", chunk_index: 0 })'
+descriptor = "c decl names surface in include/stdalign.h"
+cost_tokens = 54
+cum_tokens = 6186
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/stdalign.h"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "include/stdalign.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 105
+key = 'C(HeaderBanner { file: "hashmap.c" })'
+descriptor = "c header banner in hashmap.c"
+cost_tokens = 17
+cum_tokens = 6203
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "hashmap.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Markdown(Section { file: "README.md", section_index: 3 })'
+descriptor = "README.md section #3"
+cost_tokens = 247
+cum_tokens = 6450
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 112
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 117
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 123
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'C(DeclDoc { file: "unicode.c", start_line: 110 })'
+descriptor = "c decl doc at unicode.c:110"
+cost_tokens = 28
+cum_tokens = 6478
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 108
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'C(DeclDoc { file: "unicode.c", start_line: 181 })'
+descriptor = "c decl doc at unicode.c:181"
+cost_tokens = 28
+cum_tokens = 6506
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "unicode.c"
+start = 179
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'C(DeclBody { file: "main.c", start_line: 586 })'
+descriptor = "c decl body at main.c:586"
+cost_tokens = 20
+cum_tokens = 6526
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "main.c"
+start = 587
+end = 588
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 428
+cum_tokens = 6954
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 57
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 60
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 63
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 77
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 81
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 84
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 88
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'C(DeclNames { file: "parse.c", chunk_index: 0 })'
+descriptor = "c decl names surface in parse.c"
+cost_tokens = 136
+cum_tokens = 7090
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 54
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 75
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 244
+end = 244
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 1987
+end = 1987
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 3337
+end = 3337
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 245
+end = 245
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 1988
+end = 1988
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 3338
+end = 3338
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'C(Decl { file: "parse.c", start_line: 31 })'
+descriptor = "c decl at parse.c:31"
+cost_tokens = 0
+cum_tokens = 7090
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'C(Decl { file: "parse.c", start_line: 54 })'
+descriptor = "c decl at parse.c:54"
+cost_tokens = 0
+cum_tokens = 7090
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'C(Decl { file: "parse.c", start_line: 75 })'
+descriptor = "c decl at parse.c:75"
+cost_tokens = 0
+cum_tokens = 7090
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'C(Decl { file: "parse.c", start_line: 244 })'
+descriptor = "c decl at parse.c:244"
+cost_tokens = 0
+cum_tokens = 7090
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 244
+end = 244
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 245
+end = 245
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 116
+key = 'C(Decl { file: "parse.c", start_line: 1987 })'
+descriptor = "c decl at parse.c:1987"
+cost_tokens = 0
+cum_tokens = 7090
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 1987
+end = 1987
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 1988
+end = 1988
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 117
+key = 'C(Decl { file: "parse.c", start_line: 3337 })'
+descriptor = "c decl at parse.c:3337"
+cost_tokens = 0
+cum_tokens = 7090
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 3337
+end = 3337
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 3338
+end = 3338
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 118
+key = 'C(DeclDoc { file: "parse.c", start_line: 31 })'
+descriptor = "c decl doc at parse.c:31"
+cost_tokens = 10
+cum_tokens = 7100
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'C(DeclDoc { file: "parse.c", start_line: 75 })'
+descriptor = "c decl doc at parse.c:75"
+cost_tokens = 10
+cum_tokens = 7110
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'C(DeclDoc { file: "parse.c", start_line: 3337 })'
+descriptor = "c decl doc at parse.c:3337"
+cost_tokens = 18
+cum_tokens = 7128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 3336
+end = 3336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'C(Decl { file: "parse.c", start_line: 76 })'
+descriptor = "c decl at parse.c:76"
+cost_tokens = 40
+cum_tokens = 7168
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 76
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'C(Decl { file: "parse.c", start_line: 23 })'
+descriptor = "c decl at parse.c:23"
+cost_tokens = 44
+cum_tokens = 7212
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 23
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'C(DeclDoc { file: "parse.c", start_line: 23 })'
+descriptor = "c decl doc at parse.c:23"
+cost_tokens = 25
+cum_tokens = 7237
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "parse.c"
+start = 21
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'C(DeclNames { file: "codegen.c", chunk_index: 0 })'
+descriptor = "c decl names surface in codegen.c"
+cost_tokens = 143
+cum_tokens = 7380
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 356
+end = 356
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 360
+end = 360
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 1585
+end = 1585
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 285
+end = 285
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 357
+end = 357
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 361
+end = 361
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 1586
+end = 1586
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 125
+key = 'C(Decl { file: "codegen.c", start_line: 55 })'
+descriptor = "c decl at codegen.c:55"
+cost_tokens = 0
+cum_tokens = 7380
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 126
+key = 'C(Decl { file: "codegen.c", start_line: 1585 })'
+descriptor = "c decl at codegen.c:1585"
+cost_tokens = 0
+cum_tokens = 7380
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 1585
+end = 1585
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 1586
+end = 1586
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'C(DeclBody { file: "codegen.c", start_line: 55 })'
+descriptor = "c decl body at codegen.c:55"
+cost_tokens = 17
+cum_tokens = 7397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "codegen.c"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 211
+cum_tokens = 7608
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["alignof.c", "alloca.c", "arith.c", "asm.c", "atomic.c", "attribute.c", "bitfield.c", "builtin.c", "cast.c", "common", "commonsym.c", "compat.c", "complit.c", "const.c", "constexpr.c", "control.c", "decl.c", "driver.sh", "enum.c", "extern.c", "float.c", "function.c", "generic.c", "include1.h", "include2.h", "include3.h", "include4.h", "initializer.c", "line.c", "literal.c", "macro.c", "offsetof.c", "pointer.c", "pragma-once.c", "sizeof.c", "stdhdr.c", "string.c", "struct.c", "test.h", "thirdparty", "tls.c", "typedef.c", "typeof.c", "unicode.c", "union.c", "usualconv.c", "varargs.c", "variable.c", "vla.c"]
+
+[[batches]]
+position = 129
+key = 'C(DeclNames { file: "test/include3.h", chunk_index: 0 })'
+descriptor = "c decl names surface in test/include3.h"
+cost_tokens = 10
+cum_tokens = 7618
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/include3.h"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'C(DeclNames { file: "test/include4.h", chunk_index: 0 })'
+descriptor = "c decl names surface in test/include4.h"
+cost_tokens = 10
+cum_tokens = 7628
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/include4.h"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'C(DeclNames { file: "test/include2.h", chunk_index: 0 })'
+descriptor = "c decl names surface in test/include2.h"
+cost_tokens = 11
+cum_tokens = 7639
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/include2.h"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'C(DeclNames { file: "test/include1.h", chunk_index: 0 })'
+descriptor = "c decl names surface in test/include1.h"
+cost_tokens = 38
+cum_tokens = 7677
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/include1.h"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "test/include1.h"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "test/include1.h"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 133
-key = 'C(Decl { file: "chibicc.h", start_line: 428 })'
-descriptor = "c decl at chibicc.h:428"
-cost_tokens = 33
-cum_tokens = 7747
+key = 'C(DeclNames { file: "include/stddef.h", chunk_index: 0 })'
+descriptor = "c decl names surface in include/stddef.h"
+cost_tokens = 80
+cum_tokens = 7757
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "chibicc.h"
-start = 428
-end = 432
+path = "include/stddef.h"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "include/stddef.h"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "include/stddef.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "include/stddef.h"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "include/stddef.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "include/stddef.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
 position = 134
-key = 'C(Decl { file: "chibicc.h", start_line: 434 })'
-descriptor = "c decl at chibicc.h:434"
-cost_tokens = 33
+key = 'C(DeclBody { file: "parse.c", start_line: 1987 })'
+descriptor = "c decl body at parse.c:1987"
+cost_tokens = 23
 cum_tokens = 7780
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "chibicc.h"
-start = 434
-end = 438
+path = "parse.c"
+start = 1988
+end = 1989
 
 [batches.content.spans.render]
 kind = "full"
