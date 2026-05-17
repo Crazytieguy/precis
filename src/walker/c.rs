@@ -37,7 +37,9 @@
 //!
 //! Parse trees are cached in [`WalkCtx`].
 
-use std::path::Path;
+use std::cell::{OnceCell, RefCell};
+use std::collections::{HashMap, HashSet};
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
@@ -57,6 +59,136 @@ const C_DECL_NAMES_CHUNK_SIZE: usize = 24;
 
 fn c_names_surface_chunk_index(decl_index: usize) -> usize {
     decl_index / C_DECL_NAMES_CHUNK_SIZE
+}
+
+/// Per-run C-walker state. Caches the seed-root's autotools
+/// `include_HEADERS` declaration (parsed from `Makefile.am` once per
+/// run), which lists the public-API headers an autotools project
+/// installs. When present, internal headers — everything else under
+/// `src/` — get demoted in early budget so the public surface ranks
+/// first.
+#[derive(Default)]
+pub(in crate::walker) struct CState {
+    /// `Some(set)` iff a `Makefile.am` exists at the seed root and
+    /// declares at least one public header via `include_HEADERS` /
+    /// `nobase_include_HEADERS`. The set holds canonicalized absolute
+    /// paths. `None` means no information is available, in which case
+    /// no public/private distinction is enforced and the walker falls
+    /// back to treating every header equally.
+    public_headers: OnceCell<Option<HashSet<PathBuf>>>,
+    /// Memoized `is-public` lookup per header path. Mirrors the
+    /// `workspace_member_lookup` pattern in `RustState`: every value
+    /// signal on a header (`Decl`, `DeclDoc`, `DeclBody`, `DeclNames`
+    /// chunks) reads visibility, so a single canonicalize per file
+    /// rather than per call matters when a header carries 50+ decls.
+    visibility_lookup: RefCell<HashMap<PathBuf, bool>>,
+}
+
+impl CState {
+    /// Public-API header set for the seed root, computed once per run.
+    /// Returns `None` when no `Makefile.am` with `include_HEADERS` is
+    /// found — callers must treat that as "no information", not as
+    /// "no headers are public".
+    fn public_headers(&self, root: &Path) -> Option<&HashSet<PathBuf>> {
+        self.public_headers
+            .get_or_init(|| parse_include_headers(root))
+            .as_ref()
+    }
+
+    /// `Some(true)` iff `header` is in the public-API set, `Some(false)`
+    /// iff a public set exists but `header` isn't in it, `None` iff no
+    /// public-API declaration is available. Canonicalize result is
+    /// memoized per file.
+    fn is_public_header(&self, header: &Path, root: &Path) -> Option<bool> {
+        let public = self.public_headers(root)?;
+        if let Some(&hit) = self.visibility_lookup.borrow().get(header) {
+            return Some(hit);
+        }
+        let canonical = header.canonicalize();
+        let target = canonical.as_deref().unwrap_or(header);
+        let hit = public.contains(target);
+        self.visibility_lookup
+            .borrow_mut()
+            .insert(header.to_path_buf(), hit);
+        Some(hit)
+    }
+}
+
+/// Parse `Makefile.am` at `root` for the `include_HEADERS` /
+/// `nobase_include_HEADERS` / `pkginclude_HEADERS` declarations.
+/// Returns the canonical paths of every listed `.h` file, or `None`
+/// if the file is missing / unreadable / declares no public headers.
+/// Line-continuation `\` is honored.
+///
+/// **Fails open** on any installing `*_HEADERS` line whose value
+/// cannot be statically resolved to a literal list of `.h`
+/// filenames — `+=` appends, variable-expanded values like
+/// `$(MY_HEADERS)`, conditional `if FOO` arms with their own
+/// assignments. Returning `None` in those cases is safer than
+/// returning an incomplete set, since a partial public set would
+/// silently demote any installed-but-missed header to internal.
+fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
+    let manifest = root.join("Makefile.am");
+    let text = std::fs::read_to_string(&manifest).ok()?;
+    let mut out = HashSet::new();
+    let mut iter = text.lines();
+    while let Some(line) = iter.next() {
+        let trimmed = line.trim_start();
+        // The three installing variables this walker understands.
+        // Any other `*_HEADERS` we accept literally — `noinst_HEADERS`,
+        // `EXTRA_HEADERS`, etc. are not installed into the include
+        // path, so they aren't part of the public-API surface and we
+        // ignore them. Only the three below add to the public set.
+        let after_name = [
+            "include_HEADERS",
+            "nobase_include_HEADERS",
+            "pkginclude_HEADERS",
+        ]
+        .iter()
+        .find_map(|name| trimmed.strip_prefix(name));
+        let Some(after_name) = after_name else {
+            continue;
+        };
+        let after_name = after_name.trim_start();
+        // Fail open on `+=` appends, conditional-assignment operators
+        // (`?=`, `:=`), or any operator other than plain `=`. A `+=`
+        // adds entries that this parser would silently miss, leaving
+        // an incomplete public set; better to drop the signal entirely
+        // than to demote a real public header.
+        let mut rest = after_name.strip_prefix('=')?;
+        // Collect the assignment value, honoring `\` line continuations.
+        let mut value = String::new();
+        loop {
+            let (head, continued) = match rest.strip_suffix('\\') {
+                Some(head) => (head, true),
+                None => (rest, false),
+            };
+            value.push_str(head);
+            if !continued {
+                break;
+            }
+            value.push(' ');
+            let Some(next) = iter.next() else { break };
+            rest = next;
+        }
+        for tok in value.split_whitespace() {
+            // Strip automake variable references like `$(srcdir)/foo.h`
+            // — we only need the path component for canonicalization.
+            let tok = tok.trim_start_matches("$(srcdir)/");
+            // A `$(...)` token (variable expansion to an opaque value)
+            // means the value list isn't statically known. Fail open.
+            if tok.contains("$(") || tok.contains("${") {
+                return None;
+            }
+            if !tok.ends_with(".h") {
+                continue;
+            }
+            let resolved = root.join(tok);
+            let canonical = resolved.canonicalize().unwrap_or(resolved);
+            out.insert(canonical);
+        }
+    }
+    if out.is_empty() { None } else { Some(out) }
 }
 
 use super::{
@@ -621,6 +753,30 @@ fn is_header_file(path: &Path) -> bool {
         .is_some_and(|e| e.eq_ignore_ascii_case("h"))
 }
 
+/// Multiplier applied to header-file batches that an autotools
+/// `Makefile.am` *explicitly* marks as internal (a public set exists,
+/// but the header isn't in it). Public headers and headers in projects
+/// without an `include_HEADERS` declaration are unaffected. Gentle
+/// enough to keep internal headers schedulable at deeper budgets while
+/// letting the public surface win the early-budget race against the
+/// dozen-odd implementation headers an autotools library typically
+/// ships alongside its `.c` files.
+const INTERNAL_HEADER_FACTOR: f64 = 0.4;
+
+/// `INTERNAL_HEADER_FACTOR` when `file` is a `.h` known-internal under
+/// the seed root's autotools manifest, `1.0` otherwise (including `.c`
+/// files, projects without a public-header manifest, and the public
+/// headers themselves).
+fn explicit_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if !is_header_file(file) {
+        return 1.0;
+    }
+    match ctx.c_state().is_public_header(file, ctx.root()) {
+        Some(false) => INTERNAL_HEADER_FACTOR,
+        Some(true) | None => 1.0,
+    }
+}
+
 /// Catastrophic-axis multiplier for header (boost) vs `.c` (demote).
 /// Headers carry the public API; `.c` content is implementation detail
 /// that an agent reading a C library usually wants in less depth.
@@ -645,6 +801,7 @@ fn c_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     file_depth_factor(file, ctx, is_header_file(file))
         * secondary_root_pair_factor(file, ctx)
         * stdlib_shim_factor(file, ctx)
+        * explicit_visibility_factor(file, ctx)
 }
 
 /// Damp depth-1 `.c/.h` files whose stem doesn't match the repo's
@@ -1709,5 +1866,62 @@ typedef int x;
             src.push_str(&format!("#define CONST_{i} {i}\n"));
         }
         assert_c_walker_overlap_free("macros.h", &src);
+    }
+
+    /// `Makefile.am`'s `include_HEADERS` line, with `$(srcdir)/` refs
+    /// and `\` line continuations, parses to the set of declared
+    /// public-API header paths.
+    #[test]
+    fn c_include_headers_parsed_from_makefile_am() {
+        let tmp = tempfile::tempdir().expect("tmpdir");
+        let root = tmp.path();
+        std::fs::create_dir_all(root.join("src")).expect("mkdir");
+        for name in ["jv.h", "jq.h", "jv_private.h"] {
+            std::fs::write(root.join("src").join(name), "").expect("write header");
+        }
+        std::fs::write(
+            root.join("Makefile.am"),
+            "AM_CFLAGS = -Wall\n\
+             include_HEADERS = src/jv.h \\\n\
+                               src/jq.h\n\
+             nobase_include_HEADERS = $(srcdir)/src/jv.h\n",
+        )
+        .expect("write Makefile.am");
+        let set = parse_include_headers(root).expect("set");
+        assert_eq!(set.len(), 2);
+        assert!(set.contains(&root.join("src/jv.h").canonicalize().unwrap()));
+        assert!(set.contains(&root.join("src/jq.h").canonicalize().unwrap()));
+        assert!(!set.contains(&root.join("src/jv_private.h").canonicalize().unwrap()));
+    }
+
+    /// No `Makefile.am`, or one without an `include_HEADERS` line,
+    /// returns `None` — internal-header demotion must not fire on
+    /// projects with no public-API declaration.
+    #[test]
+    fn c_include_headers_absent_returns_none() {
+        let tmp = tempfile::tempdir().expect("tmpdir");
+        assert!(parse_include_headers(tmp.path()).is_none());
+        std::fs::write(tmp.path().join("Makefile.am"), "AM_CFLAGS = -Wall\n").expect("write");
+        assert!(parse_include_headers(tmp.path()).is_none());
+    }
+
+    /// `+=` appends and `$(VAR)` expansions would leave an incomplete
+    /// public set if parsed naively; both must fail open so a real
+    /// public header isn't silently demoted to internal.
+    #[test]
+    fn c_include_headers_fail_open_on_unsupported_syntax() {
+        for body in [
+            "include_HEADERS = src/jv.h\ninclude_HEADERS += src/jq.h\n",
+            "include_HEADERS = src/jv.h $(EXTRA_API_HEADERS)\n",
+            "include_HEADERS = src/jv.h ${EXTRA_API_HEADERS}\n",
+            "include_HEADERS += src/jv.h\n",
+        ] {
+            let tmp = tempfile::tempdir().expect("tmpdir");
+            std::fs::write(tmp.path().join("Makefile.am"), body).expect("write");
+            assert!(
+                parse_include_headers(tmp.path()).is_none(),
+                "expected fail-open for:\n{body}",
+            );
+        }
     }
 }

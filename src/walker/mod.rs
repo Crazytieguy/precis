@@ -114,6 +114,9 @@ pub struct WalkCtx {
     /// Per-run state owned by `walker::typescript` — project's public
     /// surface (entrypoint-reachable TS/JS files).
     typescript_state: typescript::TypescriptState,
+    /// Per-run state owned by `walker::c` — autotools `include_HEADERS`
+    /// declarations marking public-API headers vs internal ones.
+    c_state: c::CState,
     /// Files explicitly hyperlinked from the root README. Resolved lazily
     /// on first access by scanning the root README for relative path links
     /// to source files. Used to opt examples/ files mentioned in the
@@ -135,6 +138,7 @@ impl WalkCtx {
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
             typescript_state: typescript::TypescriptState::new(),
+            c_state: c::CState::default(),
             readme_cited_paths: OnceCell::new(),
         }
     }
@@ -243,6 +247,10 @@ impl WalkCtx {
 
     pub(in crate::walker) fn fs_state(&self) -> &fs::FsState {
         &self.fs_state
+    }
+
+    pub(in crate::walker) fn c_state(&self) -> &c::CState {
+        &self.c_state
     }
 
     /// `true` iff `file` is a `Cargo.toml` declared (or auto-promoted) as
