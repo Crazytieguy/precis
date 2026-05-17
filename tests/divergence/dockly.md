@@ -143,45 +143,45 @@ Score(3000)=0.353 I=0.669 C=0.186 ns_rows≤3K=17/39 (reached=3 partial=2 missin
 | ns | 4404 |  | 300 | base.hook.template: copyItemIdToClipboard | 4.6 |  | 0.401 |
 | walker |  | 4493 | 265 | README.md section #5 |  |  | 0.401 |
 | walker |  | 4600 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.403 |
-| walker |  | 4719 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.403 |
+| walker |  | 4629 | 29 | README headline in docs/README.md |  |  | 0.403 |
 | ns | 4740 |  | 336 | help.widget.template: key reference | 4.7 |  | 0.389 |
+| walker |  | 4748 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.389 |
 | ns | 4764 |  | 24 | hooks/ listing | 5.1 |  | 0.395 |
-| walker |  | 4786 | 67 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.395 |
-| walker |  | 4871 | 85 | export body at src/widgetsTemplates/list.widget.template.js:8 body 10 |  |  | 0.395 |
+| walker |  | 4815 | 67 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.395 |
 | ns | 4896 |  | 132 | widgets/ tree listing (top-level + 3 mode subdirs) | 5.2 |  | 0.427 |
-| walker |  | 4901 | 30 | imports in src/assetsLoader.js |  |  | 0.427 |
-| walker |  | 4935 | 34 | headings outline in SECURITY.md |  |  | 0.438 |
-| walker |  | 4935 | 0 | SECURITY.md section #0 |  |  | 0.438 |
+| walker |  | 4900 | 85 | export body at src/widgetsTemplates/list.widget.template.js:8 body 10 |  |  | 0.427 |
+| walker |  | 4930 | 30 | imports in src/assetsLoader.js |  |  | 0.427 |
 | ns | 4935 |  | 39 | src/ listing | 5.3 |  | 0.438 |
-| walker |  | 4995 | 60 | package identity in docs/package.json |  |  | 0.438 |
+| walker |  | 4964 | 34 | headings outline in SECURITY.md |  |  | 0.438 |
+| walker |  | 4964 | 0 | SECURITY.md section #0 |  |  | 0.438 |
+| walker |  | 4982 | 18 | headings outline in docs/README.md |  |  | 0.438 |
+| walker |  | 5042 | 60 | package identity in docs/package.json |  |  | 0.438 |
 | ns | 5135 |  | 200 | Screen: initWidgets (widget construction args) | 5.4 | 2.6 | 0.428 |
-| walker |  | 5199 | 204 | export body at src/assetsLoader.js:10 body 12 |  |  | 0.440 |
-| walker |  | 5363 | 164 | export body at src/baseWidget.js:4 body 5 |  |  | 0.474 |
-| walker |  | 5385 | 22 | imports in src/widgetsTemplates/help.widget.template.js |  |  | 0.474 |
-| walker |  | 5407 | 22 | imports in src/widgetsTemplates/logs.widget.template.js |  |  | 0.474 |
-| walker |  | 5426 | 19 | listing of '.github' |  |  | 0.474 |
-| walker |  | 5446 | 20 | listing of '.github/workflows' |  |  | 0.474 |
-| walker |  | 5453 | 7 | plaintext config .nvmrc |  |  | 0.474 |
-| walker |  | 5504 | 51 | headings outline in CONTRIBUTING.md |  |  | 0.474 |
+| walker |  | 5246 | 204 | export body at src/assetsLoader.js:10 body 12 |  |  | 0.440 |
+| walker |  | 5410 | 164 | export body at src/baseWidget.js:4 body 5 |  |  | 0.474 |
+| walker |  | 5432 | 22 | imports in src/widgetsTemplates/help.widget.template.js |  |  | 0.474 |
+| walker |  | 5454 | 22 | imports in src/widgetsTemplates/logs.widget.template.js |  |  | 0.474 |
+| walker |  | 5473 | 19 | listing of '.github' |  |  | 0.474 |
+| walker |  | 5493 | 20 | listing of '.github/workflows' |  |  | 0.474 |
+| walker |  | 5500 | 7 | plaintext config .nvmrc |  |  | 0.474 |
 | ns | 5550 |  | 415 | Screen: mode toggle + global keys (v, q) | 5.5 | 2.6 | 0.453 |
+| walker |  | 5551 | 51 | headings outline in CONTRIBUTING.md |  |  | 0.453 |
+| walker |  | 5564 | 13 | docs/README.md section #1 |  |  | 0.453 |
 | ns | 5954 |  | 404 | containers.hook: key dispatch + emitted events | 6.1 |  | 0.434 |
-| walker |  | 6035 | 531 | README.md section #3 |  |  | 0.434 |
-| walker |  | 6063 | 28 | imports in src/themes/theme.selector.js |  |  | 0.434 |
-| walker |  | 6115 | 52 | imports in src/cli.js |  |  | 0.434 |
-| walker |  | 6148 | 33 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.436 |
-| walker |  | 6323 | 175 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.460 |
-| walker |  | 6394 | 71 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.460 |
-| walker |  | 6394 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.460 |
-| walker |  | 6432 | 38 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.469 |
-| walker |  | 6476 | 44 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.474 |
-| ns | 6530 |  | 576 | containers.hook: 500ms polling + restart pattern | 6.2 | 6.1 | 0.451 |
-| walker |  | 6580 | 104 | imports in src/screen.js |  |  | 0.451 |
-| walker |  | 6593 | 13 | listing of 'docs/src/assets' |  |  | 0.451 |
-| walker |  | 6669 | 76 | CONTRIBUTING.md section #0 |  |  | 0.451 |
-| walker |  | 6698 | 29 | README headline in docs/README.md |  |  | 0.451 |
-| walker |  | 6716 | 18 | headings outline in docs/README.md |  |  | 0.451 |
-| walker |  | 6729 | 13 | docs/README.md section #1 |  |  | 0.451 |
-| walker |  | 6794 | 65 | docs/README.md section #0 |  |  | 0.451 |
+| walker |  | 6095 | 531 | README.md section #3 |  |  | 0.434 |
+| walker |  | 6123 | 28 | imports in src/themes/theme.selector.js |  |  | 0.434 |
+| walker |  | 6175 | 52 | imports in src/cli.js |  |  | 0.434 |
+| walker |  | 6208 | 33 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.436 |
+| walker |  | 6383 | 175 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.460 |
+| walker |  | 6454 | 71 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.460 |
+| walker |  | 6454 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.460 |
+| walker |  | 6492 | 38 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.469 |
+| ns | 6530 |  | 576 | containers.hook: 500ms polling + restart pattern | 6.2 | 6.1 | 0.447 |
+| walker |  | 6536 | 44 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.451 |
+| walker |  | 6640 | 104 | imports in src/screen.js |  |  | 0.451 |
+| walker |  | 6705 | 65 | docs/README.md section #0 |  |  | 0.451 |
+| walker |  | 6718 | 13 | listing of 'docs/src/assets' |  |  | 0.451 |
+| walker |  | 6794 | 76 | CONTRIBUTING.md section #0 |  |  | 0.451 |
 | ns | 7183 |  | 653 | images.hook: use/unuse partition + removeImage | 6.3 |  | 0.426 |
 | walker |  | 7418 | 624 | export body at src/widgetsTemplates/logs.widget.template.js:7 body 9 |  |  | 0.451 |
 | walker |  | 7423 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.451 |
