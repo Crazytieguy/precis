@@ -128,7 +128,7 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
     let sibling_module_dir = is_sibling_module_source_dir(dir, has_module_sibling_file(dir));
     let module_source_dir = is_module_source_dir(dir, sibling_module_dir);
-    let source_dir = is_source_dir(dir);
+    let source_dir = is_source_dir(dir) || is_go_pkg_wrapper(dir);
     let src_of_sibling_modules = source_dir
         && module_sibling_child_dir_count(
             dir,
@@ -238,6 +238,21 @@ pub(crate) fn is_source_dir(dir: &Path) -> bool {
         .is_some_and(|name| matches!(name, "src" | "lib"))
 }
 
+/// The Go module convention for primary library code: a `pkg/` directory
+/// sitting next to a `go.mod`. Equivalent in role to `lib/`/`src/` in
+/// JS/TS — its listing is the API-surface entry, and its flat
+/// subpackages are the partition NS authors anchor on (act's
+/// `pkg/lookpath`, `pkg/runner`; helm's `pkg/action`, `pkg/cli`, etc.).
+/// Gated on the parent `go.mod` to keep the lift Go-specific — a
+/// directory literally named `pkg` in a non-Go project has no
+/// equivalent convention.
+fn is_go_pkg_wrapper(dir: &Path) -> bool {
+    dir.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|name| name == "pkg")
+        && dir.parent().is_some_and(|p| p.join("go.mod").is_file())
+}
+
 fn has_module_entrypoint(dir: &Path) -> bool {
     JS_MODULE_ENTRYPOINT_FILES
         .iter()
@@ -251,11 +266,13 @@ fn has_module_entrypoint(dir: &Path) -> bool {
 /// usually plumbing rather than an API-surface partition; the file-
 /// count threshold is calibrated against the divergence corpus). The
 /// module-tier promotion is restricted to **root-level** subpackages
-/// (the dir's parent contains a `go.mod`): NS authors anchor on these
-/// as the package's API-surface partition (gin's `binding`/`render`,
-/// lo's `it`, beszel's `agent`), on par with Rust's `mod.rs`-bearing
-/// subdirs. Deeper Go subdirs and small helper dirs shouldn't crowd
-/// the early budget — the parent listing already names them.
+/// (the dir's parent contains a `go.mod`) and subpackages directly
+/// under a root-level `pkg/` wrapper (act's `pkg/lookpath`, helm's
+/// `pkg/action`): NS authors anchor on these as the package's
+/// API-surface partition (gin's `binding`/`render`, lo's `it`,
+/// beszel's `agent`), on par with Rust's `mod.rs`-bearing subdirs.
+/// Deeper Go subdirs and small helper dirs shouldn't crowd the early
+/// budget — the parent listing already names them.
 fn is_go_module_subpackage(dir: &Path) -> bool {
     const MIN_GO_FILES: usize = 5;
     // Either the parent has a go.mod (subpackage of an outer Go module —
@@ -265,9 +282,7 @@ fn is_go_module_subpackage(dir: &Path) -> bool {
     let Some(parent) = dir.parent() else {
         return false;
     };
-    let has_outer_module = parent.join("go.mod").is_file();
-    let has_own_module = dir.join("go.mod").is_file();
-    if !has_outer_module && !has_own_module {
+    if !parent.join("go.mod").is_file() && !is_go_pkg_wrapper(parent) {
         return false;
     }
     count_go_package_source(dir, MIN_GO_FILES) >= MIN_GO_FILES
@@ -390,7 +405,7 @@ fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
         if p == root || !p.starts_with(root) {
             return false;
         }
-        if is_source_dir(p) && p.parent() == Some(root) {
+        if (is_source_dir(p) || is_go_pkg_wrapper(p)) && p.parent() == Some(root) {
             return true;
         }
         parent = p.parent();
