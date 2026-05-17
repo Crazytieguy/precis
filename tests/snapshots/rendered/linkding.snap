@@ -130,27 +130,19 @@ bookmarks/
             backup.py
                 7→class Command(BaseCommand):
                 8→    help = "Creates a backup of the linkding database"
-                10→    def add_arguments(self, parser):
-                …
-                13→    def handle(self, *args, **options):
-                …
             create_initial_superuser.py
             enable_wal.py
             ensure_superuser.py
                 5→class Command(BaseCommand):
-                6→    help = "Creates an admin user non-interactively if it doesn't exist"
+                …
             full_backup.py
                 9→class Command(BaseCommand):
                 10→    help = "Creates a backup of the linkding data folder"
             generate_secret_key.py
             import_netscape.py
                 7→class Command(BaseCommand):
-                8→    help = "Import Netscape HTML bookmark file"
-            migrate_tasks.py
-                9→class Command(BaseCommand):
-                10→    help = "Migrate tasks from django-background-tasks to Huey"
-                12→    def handle(self, *args, **options):
                 …
+            migrate_tasks.py
     middlewares.py
         7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
         8→    header = settings.LD_AUTH_PROXY_USERNAME_HEADER
@@ -327,6 +319,17 @@ docker/
     alpine.Dockerfile
     default.Dockerfile
 docker-compose.yml
+    1→services:
+    2→  linkding:
+    3→    container_name: "${LD_CONTAINER_NAME:-linkding}"
+    4→    image: sissbruecker/linkding:latest
+    5→    ports:
+    6→      - "${LD_HOST_PORT:-9090}:9090"
+    7→    volumes:
+    8→      - "${LD_HOST_DATA_DIR:-./data}:/etc/linkding/data"
+    9→    env_file:
+    10→      - .env
+    11→    restart: unless-stopped
 docs/
     .gitignore
     README.md

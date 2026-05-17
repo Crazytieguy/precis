@@ -34,6 +34,7 @@ pub mod python;
 pub mod rust;
 pub mod toml;
 pub mod typescript;
+pub mod yaml;
 
 /// Walker contract. The associated `Key` type is walker-private: scheduler +
 /// renderer never name it, and adding a new walker doesn't change
@@ -85,6 +86,7 @@ impl Walker for FsWalker {
         out.extend(go::expand_in_dir(dir, ctx));
         out.extend(python::expand_in_dir(dir, ctx));
         out.extend(lua::expand_in_dir(dir, ctx));
+        out.extend(yaml::expand_in_dir(dir, ctx));
         out
     }
 }

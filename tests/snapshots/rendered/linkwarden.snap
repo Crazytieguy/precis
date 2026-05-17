@@ -10,10 +10,6 @@ expression: rendered
     CODE_OF_CONDUCT.md
     FUNDING.yml
     ISSUE_TEMPLATE/
-        ask-a-question.md
-        bug-report.md
-        feature-request.md
-        installation-problem.yml
     SECURITY.md
     pull_request_template.md
     workflows/
@@ -44,7 +40,6 @@ README.md
     …
     43→- 📸 Auto capture a screenshot, PDF, and single html file of each webpage
     44→- 📖 Reader view of the webpage, with the ability to highlight and annotate text
-    45→- 🏛️ Send your webpage to Wayback Machine ([archive.org](https://archive.org)) for a snapshot (optional)
     46→- ✨ Local AI Tagging to automatically tag your links based on their content (optional)
     47→- 📂 Organize links by collection, sub-collection, name, description and multiple tags
     48→- 👥 Collaborate on gathering links in a collection
@@ -55,7 +50,6 @@ README.md
     53→- 🌓 Dark/Light mode support
     54→- 🧩 Browser extension (star it [here](https://github.com/linkwarden/browser-extension)!)
     55→- 🔄 Browser Synchronization (using [Floccus](https://floccus.org)!)
-    56→- ⬆️ Upload from SingleFile (check out the [guide](https://docs.linkwarden.app/Usage/upload-from-singlefile))
     57→- 🔐 SSO integration (Enterprise and Self-hosted users only)
     58→- 🍎 iOS Shortcut to save links to Linkwarden
     59→- 🔑 API keys
@@ -113,35 +107,8 @@ apps/
             login.tsx
         app.json
         assets/
-            fonts/
-            images/
-                favicon.png
-                icon.png
-                linkwarden.png
-                maskable_logo.png
-                splash-icon.png
         babel.config.js
         components/
-            ActionSheets/
-                AddLinkSheet.tsx
-                EditLinkSheet.tsx
-                NewCollectionSheet.tsx
-                Sheets.tsx
-                SupportSheet.tsx
-            CollectionListing.tsx
-            DashboardItem.tsx
-            DashboardSection.tsx
-            ElementNotSupported.tsx
-            Formats/
-                ImageFormat.tsx
-                PdfFormat.tsx
-                ReadableFormat.tsx
-                WebpageFormat.tsx
-            HapticTab.tsx
-            LinkListing.tsx
-            Links.tsx
-            TagListing.tsx
-            ui/
         eas.json
         lib/
             cache.ts
@@ -166,21 +133,8 @@ apps/
         components/
         components.json
         e2e/
-            .env.example
-            data/
-            fixtures/
-                base/
-                index.ts
-                login-page.ts
-                registration-page.ts
-            index.ts
-            tests/
         hooks/
         layouts/
-            AdminLayout.tsx
-            AuthRedirect.tsx
-            MainLayout.tsx
-            SettingsLayout.tsx
         lib/
             api/
             client/
@@ -196,7 +150,6 @@ apps/
         scripts/
         store/
         styles/
-            globals.css
         tailwind.config.js
         templates/
             acceptInvitation.html
@@ -221,7 +174,6 @@ apps/
             protectPageRequests.ts
         package.json
         templates/
-            trialEnded.html
         tsconfig.json
         worker.ts
         workers/
@@ -241,6 +193,34 @@ assets/
     star_repo.gif
 crowdin.yml
 docker-compose.yml
+    1→services:
+    2→  postgres:
+    3→    image: postgres:16-alpine
+    4→    env_file: .env
+    5→    restart: always
+    6→    volumes:
+    7→      - ./pgdata:/var/lib/postgresql/data
+    8→  linkwarden:
+    9→    env_file: .env
+    10→    environment:
+    11→      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres
+    12→    restart: always
+    13→    # build: . # uncomment to build from source
+    14→    image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
+    15→    ports:
+    16→      - 3000:3000
+    17→    volumes:
+    18→      - ./data:/data/data
+    19→    depends_on:
+    20→      - postgres
+    21→      - meilisearch
+    22→  meilisearch:
+    23→    image: getmeili/meilisearch:v1.12.8
+    24→    restart: always
+    25→    env_file:
+    26→      - .env
+    27→    volumes:
+    28→      - ./meili_data:/meili_data
 package.json
     2→  "name": "linkwarden",
     3→  "packageManager": "yarn@4.12.0+sha512.f45ab632439a67f8bc759bf32ead036a1f413287b9042726b7cc4818b7b49e14e9423ba49b18f9e06ea4941c1ad062385b1d8760a8d5091a1a31e5f6219afca8",

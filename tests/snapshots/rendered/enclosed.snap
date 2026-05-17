@@ -76,6 +76,17 @@ README.md
     …
     196→Please use the issue tracker on GitHub for any questions or feedback.
 docker-compose.yml
+    1→services:
+    2→  enclosed:
+    3→    image: corentinth/enclosed
+    4→    ports:
+    5→      - 8787:8787
+    6→    volumes:
+    7→      - enclosed-data:/app/.data
+    8→    restart: unless-stopped
+    10→volumes:
+    11→  enclosed-data:
+    12→    driver: local
 package.json
     2→  "name": "@enclosed/root",
     3→  "version": "1.16.0",
@@ -141,7 +152,6 @@ packages/
         src/
             app.css
             assets/
-                favicon.ico
             index.tsx
             locales/
             modules/
@@ -292,16 +302,6 @@ packages/
             integrations/
                 cli.md
                 npm-package.md
-                    1→# NPM Package
-                    …
-                    9→## Installation
-                    …
-                    13→### Using npm
-                    …
-                    19→### Using yarn
-                    …
-                    25→### Using pnpm
-                    …
                 versioning.md
             public/
             resources/

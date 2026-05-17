@@ -47,6 +47,7 @@ pub enum BatchKey {
     Go(GoKey),
     Python(PythonKey),
     Lua(LuaKey),
+    Yaml(YamlKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -113,6 +114,11 @@ impl From<PythonKey> for BatchKey {
 impl From<LuaKey> for BatchKey {
     fn from(k: LuaKey) -> Self {
         BatchKey::Lua(k)
+    }
+}
+impl From<YamlKey> for BatchKey {
+    fn from(k: YamlKey) -> Self {
+        BatchKey::Yaml(k)
     }
 }
 
@@ -343,6 +349,26 @@ pub enum PlaintextKey {
     /// Whole-file render of a small, known-plaintext config or license
     /// file. Skipped when the file's line count or rendered token cost
     /// exceeds the walker's caps.
+    Whole { file: PathBuf },
+}
+
+/// YAML batches. Narrowly scoped to `docker-compose.{yml,yaml}` —
+/// the only YAML file shape NS authors consistently anchor on
+/// (deployment topology: which services exist, what images they run,
+/// which ports / volumes / env they wire). Other YAML configs
+/// (GitHub workflow files, CI configs, application config) are out
+/// of scope for now; precis surfaces them via their parent directory
+/// listing and the agent can `Read` them if needed.
+///
+/// Emitted as a single whole-file `Whole` batch — docker-compose
+/// files are typically short (≤30 lines) and their structure is
+/// already best read top-to-bottom. A line-count cap keeps a
+/// pathological multi-stack compose file from displacing richer
+/// per-file batches.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum YamlKey {
+    /// Whole-file render of a `docker-compose.{yml,yaml}` file. Skipped
+    /// when the source exceeds the walker's line cap.
     Whole { file: PathBuf },
 }
 
@@ -713,6 +739,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Go(k) => k.describe(fixture_root),
             BatchKey::Python(k) => k.describe(fixture_root),
             BatchKey::Lua(k) => k.describe(fixture_root),
+            BatchKey::Yaml(k) => k.describe(fixture_root),
         }
     }
 
@@ -726,9 +753,11 @@ impl WalkerKey for BatchKey {
             BatchKey::Rust(k) => k.concavity_exponent(),
             BatchKey::Typescript(k) => k.concavity_exponent(),
             BatchKey::Lua(k) => k.concavity_exponent(),
-            BatchKey::Fs(_) | BatchKey::Toml(_) | BatchKey::Plaintext(_) | BatchKey::Prisma(_) => {
-                crate::value::DEFAULT_CONCAVITY_EXPONENT
-            }
+            BatchKey::Fs(_)
+            | BatchKey::Toml(_)
+            | BatchKey::Plaintext(_)
+            | BatchKey::Prisma(_)
+            | BatchKey::Yaml(_) => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 
@@ -1101,6 +1130,16 @@ impl PrismaKey {
         match self {
             PrismaKey::Toc { file } => {
                 format!("Prisma schema TOC in {}", display_path(file, fixture_root))
+            }
+        }
+    }
+}
+
+impl YamlKey {
+    pub fn describe(&self, fixture_root: &Path) -> String {
+        match self {
+            YamlKey::Whole { file } => {
+                format!("docker-compose at {}", display_path(file, fixture_root))
             }
         }
     }
