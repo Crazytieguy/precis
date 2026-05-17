@@ -12,6 +12,13 @@ CONTRIBUTING.md
 LICENSE.md
 README.md
     7→Sync and Async Object-oriented Python SDK for the 3x-ui API.
+    9→<p align="center">
+    10→    <a href="#Overview">Overview</a> •
+    11→    <a href="#Quick-Start">Quick Start</a> •
+    12→    <a href="#Examples">Examples</a> •
+    13→    <a href="#Bugs-and-Feature-Requests">Bugs and Feature Requests</a> •
+    14→    <a href="https://pypi.org/project/py3xui/">PyPI</a>
+    15→</p>
     29→## Overview
     30→This SDK is designed to interact with the [3x-ui](https://github.com/MHSanaei/3x-ui) app in a more object-oriented way. It provides both synchronous and asynchronous methods to interact with the app. The SDK is designed to be as simple as possible to use, while still providing a lot of flexibility and uses `Pydantic` models to validate the data.<br>
     31→Used dependencies:
@@ -190,10 +197,7 @@ py3xui/
             9→class JsonStringModel(BaseModel):
             10→    """Base class for models that have a JSON string as a field."""
             12→    @model_validator(mode="before")
-            13→    def model_validate(
-            14→        cls,
-            15→        values,
-            16→    ):  # pylint: disable=no-self-argument, arguments-differ
+            …
         inbound.py
             15→class InboundFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
@@ -217,10 +221,6 @@ py3xui/
         sniffing.py
             9→class SniffingFields:
             10→    """Stores the fields returned by the XUI API for parsing."""
-            12→    ENABLED = "enabled"
-            14→    DEST_OVERRIDE = "destOverride"
-            16→    METADATA_ONLY = "metadataOnly"
-            17→    ROUTE_ONLY = "routeOnly"
             20→class Sniffing(JsonStringModel):
             …
         stream_settings.py
@@ -236,11 +236,6 @@ py3xui/
             7→<a id="server.server.ServerFields"></a>
             9→## ServerFields Objects
             …
-            11→```python
-            12→class ServerFields()
-            13→```
-            15→Stores fields returned by XUI API for parsing.
-            17→<a id="server.server.MemoryInfo"></a>
             19→## MemoryInfo Objects
             …
             34→## XRayInfo Objects

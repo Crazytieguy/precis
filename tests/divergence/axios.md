@@ -251,55 +251,39 @@ Score(3000)=0.531 I=0.551 C=0.512 ns_rows≤3K=15/40 (reached=6 partial=1 missin
 | walker |  | 9087 | 33 | ECOSYSTEM.md section #3 |  |  | 0.330 |
 | walker |  | 9120 | 33 | ECOSYSTEM.md section #4 |  |  | 0.330 |
 | walker |  | 9153 | 33 | ECOSYSTEM.md section #18 |  |  | 0.330 |
-| walker |  | 9159 | 6 | listing of 'scripts' |  |  | 0.330 |
-| walker |  | 9206 | 47 | module item at lib/helpers/formDataToStream.js:15 |  |  | 0.330 |
-| walker |  | 9216 | 10 | module item body at lib/helpers/formDataToStream.js:15 body 37 |  |  | 0.330 |
-| walker |  | 9226 | 10 | module item body at lib/helpers/formDataToStream.js:15 body 38 |  |  | 0.330 |
-| walker |  | 9238 | 12 | module item body at lib/helpers/formDataToStream.js:15 body 17 |  |  | 0.330 |
-| walker |  | 9253 | 15 | module item body at lib/helpers/formDataToStream.js:15 body 18 |  |  | 0.330 |
-| walker |  | 9269 | 16 | module item body at lib/helpers/formDataToStream.js:15 body 31 |  |  | 0.330 |
-| walker |  | 9289 | 20 | module item body at lib/helpers/formDataToStream.js:15 body 33 |  |  | 0.330 |
-| walker |  | 9311 | 22 | module item body at lib/helpers/formDataToStream.js:15 body 35 |  |  | 0.330 |
-| walker |  | 9345 | 34 | ECOSYSTEM.md section #8 |  |  | 0.330 |
-| walker |  | 9379 | 34 | ECOSYSTEM.md section #29 |  |  | 0.330 |
-| walker |  | 9417 | 38 | module item body at lib/adapters/http.js:137 body 232 |  |  | 0.330 |
-| walker |  | 9436 | 19 | export names surface in lib/platform/browser/classes/FormData.js |  |  | 0.330 |
-| walker |  | 9471 | 35 | THREATMODEL.md section #5 |  |  | 0.330 |
-| walker |  | 9479 | 8 | imports in lib/cancel/isCancel.js |  |  | 0.330 |
-| walker |  | 9487 | 8 | imports in lib/defaults/transitional.js |  |  | 0.332 |
-| walker |  | 9495 | 8 | imports in lib/helpers/bind.js |  |  | 0.332 |
-| walker |  | 9503 | 8 | imports in lib/helpers/combineURLs.js |  |  | 0.332 |
-| walker |  | 9511 | 8 | imports in lib/helpers/deprecatedMethod.js |  |  | 0.332 |
-| walker |  | 9519 | 8 | imports in lib/helpers/isAbsoluteURL.js |  |  | 0.332 |
-| walker |  | 9527 | 8 | imports in lib/helpers/parseProtocol.js |  |  | 0.332 |
-| walker |  | 9535 | 8 | imports in lib/helpers/speedometer.js |  |  | 0.332 |
-| walker |  | 9543 | 8 | imports in lib/helpers/spread.js |  |  | 0.332 |
-| walker |  | 9594 | 51 | module item at lib/helpers/AxiosTransformStream.js:8 |  |  | 0.332 |
-| walker |  | 9606 | 12 | module item body at lib/helpers/AxiosTransformStream.js:8 body 63 |  |  | 0.332 |
-| walker |  | 9620 | 14 | module item body at lib/helpers/AxiosTransformStream.js:8 body 64 |  |  | 0.332 |
-| walker |  | 9634 | 14 | module item body at lib/helpers/AxiosTransformStream.js:8 body 68 |  |  | 0.332 |
-| walker |  | 9648 | 14 | module item body at lib/helpers/AxiosTransformStream.js:8 body 71 |  |  | 0.332 |
-| walker |  | 9663 | 15 | module item body at lib/helpers/AxiosTransformStream.js:8 body 70 |  |  | 0.332 |
-| walker |  | 9681 | 18 | module item body at lib/helpers/AxiosTransformStream.js:8 body 66 |  |  | 0.332 |
-| walker |  | 9708 | 27 | module item body at lib/helpers/AxiosTransformStream.js:8 body 26 |  |  | 0.332 |
-| walker |  | 9715 | 7 | listing of 'docs/es' |  |  | 0.332 |
-| walker |  | 9726 | 11 | listing of 'docs/es/pages' |  |  | 0.332 |
-| walker |  | 9744 | 18 | listing of 'docs/es/pages/getting-started' |  |  | 0.332 |
-| walker |  | 9757 | 13 | listing of 'docs/es/pages/misc' |  |  | 0.332 |
-| walker |  | 9764 | 7 | listing of 'docs/fr' |  |  | 0.332 |
-| walker |  | 9775 | 11 | listing of 'docs/fr/pages' |  |  | 0.332 |
-| walker |  | 9793 | 18 | listing of 'docs/fr/pages/getting-started' |  |  | 0.332 |
-| walker |  | 9806 | 13 | listing of 'docs/fr/pages/misc' |  |  | 0.332 |
-| walker |  | 9813 | 7 | listing of 'docs/zh' |  |  | 0.332 |
-| walker |  | 9824 | 11 | listing of 'docs/zh/pages' |  |  | 0.332 |
+| walker |  | 9428 | 275 | lib/adapters/README.md section #1 |  |  | 0.330 |
+| walker |  | 9434 | 6 | listing of 'scripts' |  |  | 0.330 |
+| walker |  | 9481 | 47 | module item at lib/helpers/formDataToStream.js:15 |  |  | 0.330 |
+| walker |  | 9491 | 10 | module item body at lib/helpers/formDataToStream.js:15 body 37 |  |  | 0.330 |
+| walker |  | 9501 | 10 | module item body at lib/helpers/formDataToStream.js:15 body 38 |  |  | 0.330 |
+| walker |  | 9513 | 12 | module item body at lib/helpers/formDataToStream.js:15 body 17 |  |  | 0.330 |
+| walker |  | 9528 | 15 | module item body at lib/helpers/formDataToStream.js:15 body 18 |  |  | 0.330 |
+| walker |  | 9544 | 16 | module item body at lib/helpers/formDataToStream.js:15 body 31 |  |  | 0.330 |
+| walker |  | 9564 | 20 | module item body at lib/helpers/formDataToStream.js:15 body 33 |  |  | 0.330 |
+| walker |  | 9586 | 22 | module item body at lib/helpers/formDataToStream.js:15 body 35 |  |  | 0.330 |
+| walker |  | 9620 | 34 | ECOSYSTEM.md section #8 |  |  | 0.330 |
+| walker |  | 9654 | 34 | ECOSYSTEM.md section #29 |  |  | 0.330 |
+| walker |  | 9692 | 38 | module item body at lib/adapters/http.js:137 body 232 |  |  | 0.330 |
+| walker |  | 9711 | 19 | export names surface in lib/platform/browser/classes/FormData.js |  |  | 0.330 |
+| walker |  | 9746 | 35 | THREATMODEL.md section #5 |  |  | 0.330 |
+| walker |  | 9754 | 8 | imports in lib/cancel/isCancel.js |  |  | 0.330 |
+| walker |  | 9762 | 8 | imports in lib/defaults/transitional.js |  |  | 0.332 |
+| walker |  | 9770 | 8 | imports in lib/helpers/bind.js |  |  | 0.332 |
+| walker |  | 9778 | 8 | imports in lib/helpers/combineURLs.js |  |  | 0.332 |
+| walker |  | 9786 | 8 | imports in lib/helpers/deprecatedMethod.js |  |  | 0.332 |
+| walker |  | 9794 | 8 | imports in lib/helpers/isAbsoluteURL.js |  |  | 0.332 |
+| walker |  | 9802 | 8 | imports in lib/helpers/parseProtocol.js |  |  | 0.332 |
+| walker |  | 9810 | 8 | imports in lib/helpers/speedometer.js |  |  | 0.332 |
+| walker |  | 9818 | 8 | imports in lib/helpers/spread.js |  |  | 0.332 |
 | ns | 9832 |  | 765 | lib/adapters/adapters.js — getAdapter() body | 4.5 | 4.4 | 0.316 |
-| walker |  | 9842 | 18 | listing of 'docs/zh/pages/getting-started' |  |  | 0.316 |
-| walker |  | 9855 | 13 | listing of 'docs/zh/pages/misc' |  |  | 0.316 |
-| walker |  | 9862 | 7 | listing of 'tests/module' |  |  | 0.316 |
-| walker |  | 9880 | 18 | listing of 'tests/module/esm' |  |  | 0.316 |
-| walker |  | 9903 | 23 | listing of 'tests/module/esm/tests' |  |  | 0.316 |
-| walker |  | 9922 | 19 | listing of 'tests/module/esm/tests/helpers' |  |  | 0.316 |
+| walker |  | 9869 | 51 | module item at lib/helpers/AxiosTransformStream.js:8 |  |  | 0.316 |
+| walker |  | 9881 | 12 | module item body at lib/helpers/AxiosTransformStream.js:8 body 63 |  |  | 0.316 |
+| walker |  | 9895 | 14 | module item body at lib/helpers/AxiosTransformStream.js:8 body 64 |  |  | 0.316 |
+| walker |  | 9909 | 14 | module item body at lib/helpers/AxiosTransformStream.js:8 body 68 |  |  | 0.316 |
 | ns | 9922 |  | 90 | AGENTS.md — Security-Sensitive Code | 5.1 |  | 0.316 |
-| walker |  | 9934 | 12 | listing of 'tests/module/cjs' |  |  | 0.316 |
-| walker |  | 9972 | 38 | listing of 'tests/module/cjs/tests' |  |  | 0.318 |
+| walker |  | 9923 | 14 | module item body at lib/helpers/AxiosTransformStream.js:8 body 71 |  |  | 0.316 |
+| walker |  | 9938 | 15 | module item body at lib/helpers/AxiosTransformStream.js:8 body 70 |  |  | 0.316 |
+| walker |  | 9956 | 18 | module item body at lib/helpers/AxiosTransformStream.js:8 body 66 |  |  | 0.316 |
 | ns | 9972 |  | 50 | URL-building helper signatures (buildFullPath, isAbsoluteURL, combineURLs) | 5.2 |  | 0.318 |
+| walker |  | 9983 | 27 | module item body at lib/helpers/AxiosTransformStream.js:8 body 26 |  |  | 0.318 |
+| walker |  | 9990 | 7 | listing of 'docs/es' |  |  | 0.318 |

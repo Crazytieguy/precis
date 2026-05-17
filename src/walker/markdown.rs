@@ -2062,7 +2062,8 @@ fn extend_prelude_lede(
         match block.kind() {
             "paragraph"
                 if is_decorative_paragraph(block, source)
-                    || is_nav_link_paragraph(block, source) => {}
+                    || is_nav_link_paragraph(block, source)
+                    || is_admin_emoji_paragraph(block, source) => {}
             "html_block"
                 if is_decorative_html_block(block, source)
                     || is_nav_link_html_block(block, source) => {}
@@ -2087,7 +2088,8 @@ fn extend_prelude_lede(
                 match next.kind() {
                     "paragraph"
                         if is_decorative_paragraph(next, source)
-                            || is_nav_link_paragraph(next, source) => {}
+                            || is_nav_link_paragraph(next, source)
+                            || is_admin_emoji_paragraph(next, source) => {}
                     "html_block"
                         if is_decorative_html_block(next, source)
                             || is_nav_link_html_block(next, source) => {}

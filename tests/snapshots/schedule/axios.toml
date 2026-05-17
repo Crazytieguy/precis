@@ -1,7 +1,7 @@
 fixture = "axios"
 budget = 10000
-cumulative_tokens = 9972
-batch_count = 261
+cumulative_tokens = 9990
+batch_count = 245
 
 [[batches]]
 position = 1
@@ -5557,10 +5557,76 @@ kind = "full"
 
 [[batches]]
 position = 213
+key = 'Markdown(Section { file: "lib/adapters/README.md", section_index: 1 })'
+descriptor = "lib/adapters/README.md section #1"
+cost_tokens = 275
+cum_tokens = 9428
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 10
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 19
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 31
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 214
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 6
-cum_tokens = 9159
+cum_tokens = 9434
 
 [batches.content]
 kind = "fs"
@@ -5570,11 +5636,11 @@ parent = "scripts"
 entries = ["axios-build-instance.js"]
 
 [[batches]]
-position = 214
+position = 215
 key = 'Typescript(ModuleItem { file: "lib/helpers/formDataToStream.js", start_line: 15 })'
 descriptor = "module item at lib/helpers/formDataToStream.js:15"
 cost_tokens = 47
-cum_tokens = 9206
+cum_tokens = 9481
 
 [batches.content]
 kind = "lines"
@@ -5628,11 +5694,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 215
+position = 216
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/formDataToStream.js", start_line: 15, body_start_line: 37 })'
 descriptor = "module item body at lib/helpers/formDataToStream.js:15 body 37"
 cost_tokens = 10
-cum_tokens = 9216
+cum_tokens = 9491
 
 [batches.content]
 kind = "lines"
@@ -5646,11 +5712,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 216
+position = 217
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/formDataToStream.js", start_line: 15, body_start_line: 38 })'
 descriptor = "module item body at lib/helpers/formDataToStream.js:15 body 38"
 cost_tokens = 10
-cum_tokens = 9226
+cum_tokens = 9501
 
 [batches.content]
 kind = "lines"
@@ -5664,11 +5730,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 217
+position = 218
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/formDataToStream.js", start_line: 15, body_start_line: 17 })'
 descriptor = "module item body at lib/helpers/formDataToStream.js:15 body 17"
 cost_tokens = 12
-cum_tokens = 9238
+cum_tokens = 9513
 
 [batches.content]
 kind = "lines"
@@ -5682,11 +5748,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 218
+position = 219
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/formDataToStream.js", start_line: 15, body_start_line: 18 })'
 descriptor = "module item body at lib/helpers/formDataToStream.js:15 body 18"
 cost_tokens = 15
-cum_tokens = 9253
+cum_tokens = 9528
 
 [batches.content]
 kind = "lines"
@@ -5700,11 +5766,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 219
+position = 220
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/formDataToStream.js", start_line: 15, body_start_line: 31 })'
 descriptor = "module item body at lib/helpers/formDataToStream.js:15 body 31"
 cost_tokens = 16
-cum_tokens = 9269
+cum_tokens = 9544
 
 [batches.content]
 kind = "lines"
@@ -5718,11 +5784,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 220
+position = 221
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/formDataToStream.js", start_line: 15, body_start_line: 33 })'
 descriptor = "module item body at lib/helpers/formDataToStream.js:15 body 33"
 cost_tokens = 20
-cum_tokens = 9289
+cum_tokens = 9564
 
 [batches.content]
 kind = "lines"
@@ -5736,11 +5802,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 221
+position = 222
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/formDataToStream.js", start_line: 15, body_start_line: 35 })'
 descriptor = "module item body at lib/helpers/formDataToStream.js:15 body 35"
 cost_tokens = 22
-cum_tokens = 9311
+cum_tokens = 9586
 
 [batches.content]
 kind = "lines"
@@ -5754,11 +5820,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 222
+position = 223
 key = 'Markdown(Section { file: "ECOSYSTEM.md", section_index: 8 })'
 descriptor = "ECOSYSTEM.md section #8"
 cost_tokens = 34
-cum_tokens = 9345
+cum_tokens = 9620
 
 [batches.content]
 kind = "lines"
@@ -5772,11 +5838,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 223
+position = 224
 key = 'Markdown(Section { file: "ECOSYSTEM.md", section_index: 29 })'
 descriptor = "ECOSYSTEM.md section #29"
 cost_tokens = 34
-cum_tokens = 9379
+cum_tokens = 9654
 
 [batches.content]
 kind = "lines"
@@ -5790,11 +5856,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 224
+position = 225
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 232 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 232"
 cost_tokens = 38
-cum_tokens = 9417
+cum_tokens = 9692
 
 [batches.content]
 kind = "lines"
@@ -5808,11 +5874,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 225
+position = 226
 key = 'Typescript(ExportNames { file: "lib/platform/browser/classes/FormData.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/platform/browser/classes/FormData.js"
 cost_tokens = 19
-cum_tokens = 9436
+cum_tokens = 9711
 
 [batches.content]
 kind = "lines"
@@ -5826,11 +5892,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 226
+position = 227
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 5 })'
 descriptor = "THREATMODEL.md section #5"
 cost_tokens = 35
-cum_tokens = 9471
+cum_tokens = 9746
 
 [batches.content]
 kind = "lines"
@@ -5844,11 +5910,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 227
+position = 228
 key = 'Typescript(Imports { file: "lib/cancel/isCancel.js" })'
 descriptor = "imports in lib/cancel/isCancel.js"
 cost_tokens = 8
-cum_tokens = 9479
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -5862,11 +5928,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 228
+position = 229
 key = 'Typescript(Imports { file: "lib/defaults/transitional.js" })'
 descriptor = "imports in lib/defaults/transitional.js"
 cost_tokens = 8
-cum_tokens = 9487
+cum_tokens = 9762
 
 [batches.content]
 kind = "lines"
@@ -5880,11 +5946,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 229
+position = 230
 key = 'Typescript(Imports { file: "lib/helpers/bind.js" })'
 descriptor = "imports in lib/helpers/bind.js"
 cost_tokens = 8
-cum_tokens = 9495
+cum_tokens = 9770
 
 [batches.content]
 kind = "lines"
@@ -5898,11 +5964,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 230
+position = 231
 key = 'Typescript(Imports { file: "lib/helpers/combineURLs.js" })'
 descriptor = "imports in lib/helpers/combineURLs.js"
 cost_tokens = 8
-cum_tokens = 9503
+cum_tokens = 9778
 
 [batches.content]
 kind = "lines"
@@ -5916,11 +5982,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 231
+position = 232
 key = 'Typescript(Imports { file: "lib/helpers/deprecatedMethod.js" })'
 descriptor = "imports in lib/helpers/deprecatedMethod.js"
 cost_tokens = 8
-cum_tokens = 9511
+cum_tokens = 9786
 
 [batches.content]
 kind = "lines"
@@ -5934,11 +6000,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 232
+position = 233
 key = 'Typescript(Imports { file: "lib/helpers/isAbsoluteURL.js" })'
 descriptor = "imports in lib/helpers/isAbsoluteURL.js"
 cost_tokens = 8
-cum_tokens = 9519
+cum_tokens = 9794
 
 [batches.content]
 kind = "lines"
@@ -5952,11 +6018,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 233
+position = 234
 key = 'Typescript(Imports { file: "lib/helpers/parseProtocol.js" })'
 descriptor = "imports in lib/helpers/parseProtocol.js"
 cost_tokens = 8
-cum_tokens = 9527
+cum_tokens = 9802
 
 [batches.content]
 kind = "lines"
@@ -5970,11 +6036,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 234
+position = 235
 key = 'Typescript(Imports { file: "lib/helpers/speedometer.js" })'
 descriptor = "imports in lib/helpers/speedometer.js"
 cost_tokens = 8
-cum_tokens = 9535
+cum_tokens = 9810
 
 [batches.content]
 kind = "lines"
@@ -5988,11 +6054,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 235
+position = 236
 key = 'Typescript(Imports { file: "lib/helpers/spread.js" })'
 descriptor = "imports in lib/helpers/spread.js"
 cost_tokens = 8
-cum_tokens = 9543
+cum_tokens = 9818
 
 [batches.content]
 kind = "lines"
@@ -6006,11 +6072,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 236
+position = 237
 key = 'Typescript(ModuleItem { file: "lib/helpers/AxiosTransformStream.js", start_line: 8 })'
 descriptor = "module item at lib/helpers/AxiosTransformStream.js:8"
 cost_tokens = 51
-cum_tokens = 9594
+cum_tokens = 9869
 
 [batches.content]
 kind = "lines"
@@ -6064,11 +6130,11 @@ end = 63
 kind = "ellipsis"
 
 [[batches]]
-position = 237
+position = 238
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/AxiosTransformStream.js", start_line: 8, body_start_line: 63 })'
 descriptor = "module item body at lib/helpers/AxiosTransformStream.js:8 body 63"
 cost_tokens = 12
-cum_tokens = 9606
+cum_tokens = 9881
 
 [batches.content]
 kind = "lines"
@@ -6082,11 +6148,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 238
+position = 239
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/AxiosTransformStream.js", start_line: 8, body_start_line: 64 })'
 descriptor = "module item body at lib/helpers/AxiosTransformStream.js:8 body 64"
 cost_tokens = 14
-cum_tokens = 9620
+cum_tokens = 9895
 
 [batches.content]
 kind = "lines"
@@ -6100,11 +6166,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 239
+position = 240
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/AxiosTransformStream.js", start_line: 8, body_start_line: 68 })'
 descriptor = "module item body at lib/helpers/AxiosTransformStream.js:8 body 68"
 cost_tokens = 14
-cum_tokens = 9634
+cum_tokens = 9909
 
 [batches.content]
 kind = "lines"
@@ -6118,11 +6184,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 240
+position = 241
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/AxiosTransformStream.js", start_line: 8, body_start_line: 71 })'
 descriptor = "module item body at lib/helpers/AxiosTransformStream.js:8 body 71"
 cost_tokens = 14
-cum_tokens = 9648
+cum_tokens = 9923
 
 [batches.content]
 kind = "lines"
@@ -6136,11 +6202,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 241
+position = 242
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/AxiosTransformStream.js", start_line: 8, body_start_line: 70 })'
 descriptor = "module item body at lib/helpers/AxiosTransformStream.js:8 body 70"
 cost_tokens = 15
-cum_tokens = 9663
+cum_tokens = 9938
 
 [batches.content]
 kind = "lines"
@@ -6154,11 +6220,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 242
+position = 243
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/AxiosTransformStream.js", start_line: 8, body_start_line: 66 })'
 descriptor = "module item body at lib/helpers/AxiosTransformStream.js:8 body 66"
 cost_tokens = 18
-cum_tokens = 9681
+cum_tokens = 9956
 
 [batches.content]
 kind = "lines"
@@ -6172,11 +6238,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 243
+position = 244
 key = 'Typescript(ModuleItemBody { file: "lib/helpers/AxiosTransformStream.js", start_line: 8, body_start_line: 26 })'
 descriptor = "module item body at lib/helpers/AxiosTransformStream.js:8 body 26"
 cost_tokens = 27
-cum_tokens = 9708
+cum_tokens = 9983
 
 [batches.content]
 kind = "lines"
@@ -6190,11 +6256,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 244
+position = 245
 key = 'Fs(DirListing { dir: "docs/es" })'
 descriptor = "listing of 'docs/es'"
 cost_tokens = 7
-cum_tokens = 9715
+cum_tokens = 9990
 
 [batches.content]
 kind = "fs"
@@ -6202,241 +6268,3 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "docs/es"
 entries = ["index.md", "pages"]
-
-[[batches]]
-position = 245
-key = 'Fs(DirListing { dir: "docs/es/pages" })'
-descriptor = "listing of 'docs/es/pages'"
-cost_tokens = 11
-cum_tokens = 9726
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/es/pages"
-entries = ["advanced", "getting-started", "misc"]
-
-[[batches]]
-position = 246
-key = 'Fs(DirListing { dir: "docs/es/pages/getting-started" })'
-descriptor = "listing of 'docs/es/pages/getting-started'"
-cost_tokens = 18
-cum_tokens = 9744
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/es/pages/getting-started"
-entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
-
-[[batches]]
-position = 247
-key = 'Fs(DirListing { dir: "docs/es/pages/misc" })'
-descriptor = "listing of 'docs/es/pages/misc'"
-cost_tokens = 13
-cum_tokens = 9757
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/es/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 248
-key = 'Fs(DirListing { dir: "docs/fr" })'
-descriptor = "listing of 'docs/fr'"
-cost_tokens = 7
-cum_tokens = 9764
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/fr"
-entries = ["index.md", "pages"]
-
-[[batches]]
-position = 249
-key = 'Fs(DirListing { dir: "docs/fr/pages" })'
-descriptor = "listing of 'docs/fr/pages'"
-cost_tokens = 11
-cum_tokens = 9775
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/fr/pages"
-entries = ["advanced", "getting-started", "misc"]
-
-[[batches]]
-position = 250
-key = 'Fs(DirListing { dir: "docs/fr/pages/getting-started" })'
-descriptor = "listing of 'docs/fr/pages/getting-started'"
-cost_tokens = 18
-cum_tokens = 9793
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/fr/pages/getting-started"
-entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
-
-[[batches]]
-position = 251
-key = 'Fs(DirListing { dir: "docs/fr/pages/misc" })'
-descriptor = "listing of 'docs/fr/pages/misc'"
-cost_tokens = 13
-cum_tokens = 9806
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/fr/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 252
-key = 'Fs(DirListing { dir: "docs/zh" })'
-descriptor = "listing of 'docs/zh'"
-cost_tokens = 7
-cum_tokens = 9813
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh"
-entries = ["index.md", "pages"]
-
-[[batches]]
-position = 253
-key = 'Fs(DirListing { dir: "docs/zh/pages" })'
-descriptor = "listing of 'docs/zh/pages'"
-cost_tokens = 11
-cum_tokens = 9824
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh/pages"
-entries = ["advanced", "getting-started", "misc"]
-
-[[batches]]
-position = 254
-key = 'Fs(DirListing { dir: "docs/zh/pages/getting-started" })'
-descriptor = "listing of 'docs/zh/pages/getting-started'"
-cost_tokens = 18
-cum_tokens = 9842
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh/pages/getting-started"
-entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
-
-[[batches]]
-position = 255
-key = 'Fs(DirListing { dir: "docs/zh/pages/misc" })'
-descriptor = "listing of 'docs/zh/pages/misc'"
-cost_tokens = 13
-cum_tokens = 9855
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 256
-key = 'Fs(DirListing { dir: "tests/module" })'
-descriptor = "listing of 'tests/module'"
-cost_tokens = 7
-cum_tokens = 9862
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/module"
-entries = ["cjs", "esm"]
-
-[[batches]]
-position = 257
-key = 'Fs(DirListing { dir: "tests/module/esm" })'
-descriptor = "listing of 'tests/module/esm'"
-cost_tokens = 18
-cum_tokens = 9880
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/module/esm"
-entries = ["package-lock.json", "package.json", "tests", "vitest.config.js"]
-
-[[batches]]
-position = 258
-key = 'Fs(DirListing { dir: "tests/module/esm/tests" })'
-descriptor = "listing of 'tests/module/esm/tests'"
-cost_tokens = 23
-cum_tokens = 9903
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/module/esm/tests"
-entries = ["fixture-cleanup.module.test.js", "helpers", "ts.module.test.js", "typings.module.test.js"]
-
-[[batches]]
-position = 259
-key = 'Fs(DirListing { dir: "tests/module/esm/tests/helpers" })'
-descriptor = "listing of 'tests/module/esm/tests/helpers'"
-cost_tokens = 19
-cum_tokens = 9922
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/module/esm/tests/helpers"
-entries = ["esm-functions.ts", "esm-index.ts", "fixture.js", "run-command.js"]
-
-[[batches]]
-position = 260
-key = 'Fs(DirListing { dir: "tests/module/cjs" })'
-descriptor = "listing of 'tests/module/cjs'"
-cost_tokens = 12
-cum_tokens = 9934
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/module/cjs"
-entries = ["package-lock.json", "package.json", "tests"]
-
-[[batches]]
-position = 261
-key = 'Fs(DirListing { dir: "tests/module/cjs/tests" })'
-descriptor = "listing of 'tests/module/cjs/tests'"
-cost_tokens = 38
-cum_tokens = 9972
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/module/cjs/tests"
-entries = ["fixture-cleanup.module.test.cjs", "helpers", "ts-require-default.module.test.cjs", "ts-require.module.test.cjs", "typings.module.test.cjs"]
