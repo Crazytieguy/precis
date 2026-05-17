@@ -138,6 +138,21 @@ src/
             34→    "Posting",
             35→]
         __main__.py
+            1→"""The main entry point for the Posting CLI."""
+            3→from pathlib import Path
+            4→import click
+            5→import os
+            7→from click_default_group import DefaultGroup
+            8→from rich.console import Console
+            10→from posting.app import Posting
+            11→from posting.collection import Collection
+            12→from posting.config import Settings
+            13→from posting.locations import (
+            14→    config_file,
+            15→    default_collection_directory,
+            16→    theme_directory,
+            17→)
+            18→from posting.variables import load_variables
             21→def create_config_file() -> None:
             22→    f = config_file()
             23→    if f.exists():
@@ -208,16 +223,7 @@ src/
         commands.py
             11→CommandType = tuple[str, IgnoreReturnCallbackType, str, bool]
             14→class PostingProvider(Provider):
-            15→    @property
-            16→    def commands(
-            17→        self,
-            18→    ) -> tuple[tuple[str, IgnoreReturnCallbackType, str, bool], ...]:
-            204→    async def discover(self) -> Hits:
             …
-            218→    async def search(self, query: str) -> Hits:
-            …
-            237→    @property
-            238→    def posting(self) -> "Posting":
         config.py
         exit_codes.py
             1→GENERAL_ERROR = 1
@@ -262,7 +268,6 @@ src/
         themes.py
         tuple_to_multidict.py
         types.py
-            1→from typing import Literal, Optional, Tuple, Union
             3→PostingLayout = Literal["horizontal", "vertical"]
             6→CertTypes = Union[
         urls.py

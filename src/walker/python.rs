@@ -1006,10 +1006,14 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // import Y as Y` re-exports + `__all__` + `__version__`) — both
     // catastrophic-omission and follow-up axes are pinned high so a
     // hundreds-of-tokens import block still beats individual per-decl
-    // batches in cost^0.35-penalised ratio. `__main__.py` is not boosted
-    // (its imports are plumbing for a CLI body, not a re-export
-    // anchor); the depth pin in `python_depth_factor` already keeps it
-    // visible at small budgets.
+    // batches in cost^0.35-penalised ratio. A top-level `__main__.py`
+    // gets a smaller secondary boost via
+    // [`top_level_app_main_factor`]: its imports name the CLI entry
+    // function (`from .ui import main`, `from .cli import main`) and
+    // sit alongside the module docstring inside the same Imports
+    // batch, so the whole batch is a `python -m <pkg>` orientation
+    // anchor — even when the imports themselves aren't a re-export
+    // wall.
     let (cat, fu) = if is_init_py(file) {
         (0.70, 1.0)
     } else {
@@ -1017,6 +1021,7 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     };
     mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx))
         * top_level_package_init_factor(file, ctx)
+        * top_level_app_main_factor(file, ctx)
 }
 
 fn imports_chunk_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
@@ -1063,6 +1068,48 @@ fn is_top_level_package_init(file: &Path, ctx: &WalkCtx) -> bool {
 fn top_level_package_init_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if is_top_level_package_init(file, ctx) {
         3.0
+    } else {
+        1.0
+    }
+}
+
+/// True iff `file` is the top-level package's `__main__.py` — the
+/// `python -m <pkg>` entry point sitting next to a top-level
+/// `__init__.py` (e.g. `posting/__main__.py`, `beets/__main__.py`).
+/// Same scoping rule as [`is_top_level_package_init`]: top-level when
+/// the file's grandparent does not contain `__init__.py`, with the
+/// `non_essential_factor` gate so `examples/<topic>/<pkg>/__main__.py`
+/// doesn't get the same treatment.
+fn is_top_level_app_main(file: &Path, ctx: &WalkCtx) -> bool {
+    if file.file_name().and_then(|n| n.to_str()) != Some("__main__.py") {
+        return false;
+    }
+    let Some(parent) = file.parent() else {
+        return false;
+    };
+    let Some(grandparent) = parent.parent() else {
+        return true;
+    };
+    if grandparent.join("__init__.py").is_file() {
+        return false;
+    }
+    ctx.non_essential_factor(file) >= 1.0
+}
+
+/// Boost the top-level `__main__.py`'s [`PythonKey::Imports`] batch.
+/// Mirror of [`top_level_package_init_factor`] for the script-
+/// entrypoint shape: `__init__.py` is the import-time public surface
+/// (re-exports), and the sibling `__main__.py` is the runtime entry
+/// shim — its imports name the CLI dispatch function (`from .ui
+/// import main`, `from .cli import main`) and sit alongside the
+/// module docstring inside the same batch, so the whole batch is the
+/// `python -m <pkg>` orientation anchor. Smaller factor than the
+/// init factor because the imports aren't a re-export wall, and the
+/// per-decl content of `__main__.py` (`if __name__ == "__main__":`
+/// trampoline, occasional CLI defs) is left at the default values.
+fn top_level_app_main_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if is_top_level_app_main(file, ctx) {
+        1.5
     } else {
         1.0
     }

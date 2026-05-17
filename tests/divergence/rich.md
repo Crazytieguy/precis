@@ -353,135 +353,133 @@ Score(3000)=0.476 I=0.472 C=0.480 ns_rows≤3K=16/58 (reached=4 partial=0 missin
 | walker |  | 6900 | 21 | python imports in rich/pager.py |  |  | 0.320 |
 | ns | 6928 |  | 193 | JupyterMixin + Highlighter hierarchy | 4.5 |  | 0.316 |
 | ns | 6979 |  | 51 | Table + Column class lines | 5.1 |  | 0.321 |
-| walker |  | 6986 | 86 | python method sigs in rich/live_render.py |  |  | 0.321 |
-| walker |  | 6986 | 0 | python method at rich/live_render.py:43 |  |  | 0.321 |
-| walker |  | 6986 | 0 | python method at rich/live_render.py:51 |  |  | 0.321 |
-| walker |  | 6986 | 0 | python method at rich/live_render.py:72 |  |  | 0.321 |
-| walker |  | 6998 | 12 | python method at rich/live_render.py:32 |  |  | 0.321 |
-| walker |  | 7022 | 24 | python method at rich/live_render.py:86 |  |  | 0.321 |
-| walker |  | 7034 | 12 | python method body at rich/live_render.py:43 body 49 |  |  | 0.321 |
-| walker |  | 7120 | 86 | python method sigs in rich/logging.py |  |  | 0.321 |
-| walker |  | 7120 | 0 | python method at rich/logging.py:123 |  |  | 0.321 |
-| walker |  | 7120 | 0 | python method at rich/logging.py:138 |  |  | 0.321 |
-| walker |  | 7120 | 0 | python method at rich/logging.py:190 |  |  | 0.321 |
-| walker |  | 7129 | 9 | python method doc at rich/logging.py:138 |  |  | 0.321 |
-| walker |  | 7151 | 22 | python imports in rich/_fileno.py |  |  | 0.321 |
-| walker |  | 7238 | 87 | python method sigs in rich/measure.py |  |  | 0.322 |
-| walker |  | 7238 | 0 | python method at rich/measure.py:24 |  |  | 0.322 |
-| walker |  | 7238 | 0 | python method at rich/measure.py:34 |  |  | 0.322 |
-| walker |  | 7238 | 0 | python method at rich/measure.py:46 |  |  | 0.322 |
-| walker |  | 7248 | 10 | python method at rich/measure.py:19 |  |  | 0.322 |
-| walker |  | 7261 | 13 | python method doc at rich/measure.py:19 |  |  | 0.322 |
-| walker |  | 7294 | 33 | python method at rich/measure.py:59 |  |  | 0.322 |
-| walker |  | 7306 | 12 | python method body at rich/measure.py:19 body 22 |  |  | 0.322 |
-| walker |  | 7347 | 41 | python method at rich/measure.py:78 |  |  | 0.328 |
-| ns | 7383 |  | 404 | Table.__init__ kwargs | 5.2 | 5.1 | 0.320 |
-| walker |  | 7422 | 75 | python class body at rich/color_triplet.py:4 |  |  | 0.320 |
-| ns | 7444 |  | 61 | Table method def lines | 5.3 | 5.1 | 0.318 |
-| walker |  | 7559 | 137 | python decl at rich/__init__.py:120 |  |  | 0.339 |
-| ns | 7566 |  | 122 | Tree class + __init__ + add() | 5.4 |  | 0.336 |
-| walker |  | 7576 | 17 | python method body at rich/emoji.py:70 body 73 |  |  | 0.336 |
-| walker |  | 7643 | 67 | python decl names surface in rich/_wrap.py |  |  | 0.336 |
-| walker |  | 7643 | 0 | python decl at rich/_wrap.py:12 |  |  | 0.336 |
-| walker |  | 7643 | 0 | python decl at rich/_wrap.py:26 |  |  | 0.336 |
-| walker |  | 7703 | 60 | python decl doc at rich/styled.py:11 |  |  | 0.336 |
-| walker |  | 7772 | 69 | python decl names surface in rich/ansi.py |  |  | 0.336 |
-| walker |  | 7772 | 0 | python decl at rich/ansi.py:20 |  |  | 0.336 |
-| walker |  | 7772 | 0 | python decl at rich/ansi.py:28 |  |  | 0.336 |
-| walker |  | 7772 | 0 | python decl at rich/ansi.py:120 |  |  | 0.336 |
-| walker |  | 7784 | 12 | python decl doc at rich/ansi.py:120 |  |  | 0.336 |
-| walker |  | 7795 | 11 | python decl doc at rich/ansi.py:20 |  |  | 0.336 |
+| walker |  | 7047 | 147 | python imports in rich/__main__.py |  |  | 0.321 |
+| walker |  | 7133 | 86 | python method sigs in rich/live_render.py |  |  | 0.321 |
+| walker |  | 7133 | 0 | python method at rich/live_render.py:43 |  |  | 0.321 |
+| walker |  | 7133 | 0 | python method at rich/live_render.py:51 |  |  | 0.321 |
+| walker |  | 7133 | 0 | python method at rich/live_render.py:72 |  |  | 0.321 |
+| walker |  | 7145 | 12 | python method at rich/live_render.py:32 |  |  | 0.321 |
+| walker |  | 7169 | 24 | python method at rich/live_render.py:86 |  |  | 0.321 |
+| walker |  | 7181 | 12 | python method body at rich/live_render.py:43 body 49 |  |  | 0.321 |
+| walker |  | 7267 | 86 | python method sigs in rich/logging.py |  |  | 0.321 |
+| walker |  | 7267 | 0 | python method at rich/logging.py:123 |  |  | 0.321 |
+| walker |  | 7267 | 0 | python method at rich/logging.py:138 |  |  | 0.321 |
+| walker |  | 7267 | 0 | python method at rich/logging.py:190 |  |  | 0.321 |
+| walker |  | 7276 | 9 | python method doc at rich/logging.py:138 |  |  | 0.321 |
+| walker |  | 7298 | 22 | python imports in rich/_fileno.py |  |  | 0.321 |
+| ns | 7383 |  | 404 | Table.__init__ kwargs | 5.2 | 5.1 | 0.313 |
+| walker |  | 7385 | 87 | python method sigs in rich/measure.py |  |  | 0.314 |
+| walker |  | 7385 | 0 | python method at rich/measure.py:24 |  |  | 0.314 |
+| walker |  | 7385 | 0 | python method at rich/measure.py:34 |  |  | 0.314 |
+| walker |  | 7385 | 0 | python method at rich/measure.py:46 |  |  | 0.314 |
+| walker |  | 7395 | 10 | python method at rich/measure.py:19 |  |  | 0.314 |
+| walker |  | 7408 | 13 | python method doc at rich/measure.py:19 |  |  | 0.314 |
+| walker |  | 7441 | 33 | python method at rich/measure.py:59 |  |  | 0.314 |
+| ns | 7444 |  | 61 | Table method def lines | 5.3 | 5.1 | 0.312 |
+| walker |  | 7453 | 12 | python method body at rich/measure.py:19 body 22 |  |  | 0.312 |
+| walker |  | 7494 | 41 | python method at rich/measure.py:78 |  |  | 0.318 |
+| ns | 7566 |  | 122 | Tree class + __init__ + add() | 5.4 |  | 0.315 |
+| walker |  | 7569 | 75 | python class body at rich/color_triplet.py:4 |  |  | 0.315 |
+| walker |  | 7706 | 137 | python decl at rich/__init__.py:120 |  |  | 0.336 |
+| walker |  | 7723 | 17 | python method body at rich/emoji.py:70 body 73 |  |  | 0.336 |
+| walker |  | 7790 | 67 | python decl names surface in rich/_wrap.py |  |  | 0.336 |
+| walker |  | 7790 | 0 | python decl at rich/_wrap.py:12 |  |  | 0.336 |
+| walker |  | 7790 | 0 | python decl at rich/_wrap.py:26 |  |  | 0.336 |
 | ns | 7812 |  | 246 | Panel class + __init__ | 5.5 |  | 0.331 |
-| walker |  | 7851 | 56 | python method sigs in rich/ansi.py |  |  | 0.331 |
-| walker |  | 7851 | 0 | python method at rich/ansi.py:123 |  |  | 0.331 |
-| walker |  | 7851 | 0 | python method at rich/ansi.py:126 |  |  | 0.331 |
-| walker |  | 7851 | 0 | python method at rich/ansi.py:138 |  |  | 0.331 |
-| walker |  | 7860 | 9 | python method body at rich/ansi.py:123 body 124 |  |  | 0.331 |
+| walker |  | 7850 | 60 | python decl doc at rich/styled.py:11 |  |  | 0.331 |
+| walker |  | 7919 | 69 | python decl names surface in rich/ansi.py |  |  | 0.331 |
+| walker |  | 7919 | 0 | python decl at rich/ansi.py:20 |  |  | 0.331 |
+| walker |  | 7919 | 0 | python decl at rich/ansi.py:28 |  |  | 0.331 |
+| walker |  | 7919 | 0 | python decl at rich/ansi.py:120 |  |  | 0.331 |
+| walker |  | 7931 | 12 | python decl doc at rich/ansi.py:120 |  |  | 0.331 |
+| walker |  | 7942 | 11 | python decl doc at rich/ansi.py:20 |  |  | 0.331 |
 | ns | 7959 |  | 147 | Padding / Align / Columns / Rule / Bar / Group class lines | 5.6 |  | 0.333 |
 | ns | 7978 |  | 19 | Styled / Constrain / Screen wrappers | 5.7 |  | 0.333 |
-| walker |  | 8005 | 145 | python decl at rich/__init__.py:77 |  |  | 0.360 |
-| walker |  | 8029 | 24 | python imports in rich/themes.py |  |  | 0.360 |
-| walker |  | 8100 | 71 | python decl names surface in rich/protocol.py |  |  | 0.361 |
-| walker |  | 8100 | 0 | python decl at rich/protocol.py:9 |  |  | 0.361 |
-| walker |  | 8100 | 0 | python decl at rich/protocol.py:18 |  |  | 0.361 |
-| walker |  | 8114 | 14 | python decl doc at rich/protocol.py:9 |  |  | 0.362 |
-| walker |  | 8167 | 53 | python method at rich/live_render.py:21 |  |  | 0.362 |
-| ns | 8208 |  | 230 | Progress + track() + TaskID | 6.1 |  | 0.357 |
-| walker |  | 8231 | 64 | python decl doc at rich/screen.py:18 |  |  | 0.357 |
-| walker |  | 8285 | 54 | python method at rich/emoji.py:25 |  |  | 0.357 |
-| walker |  | 8339 | 54 | python method at rich/screen.py:28 |  |  | 0.357 |
-| walker |  | 8394 | 55 | python method at rich/logging.py:215 |  |  | 0.357 |
+| walker |  | 7998 | 56 | python method sigs in rich/ansi.py |  |  | 0.333 |
+| walker |  | 7998 | 0 | python method at rich/ansi.py:123 |  |  | 0.333 |
+| walker |  | 7998 | 0 | python method at rich/ansi.py:126 |  |  | 0.333 |
+| walker |  | 7998 | 0 | python method at rich/ansi.py:138 |  |  | 0.333 |
+| walker |  | 8007 | 9 | python method body at rich/ansi.py:123 body 124 |  |  | 0.333 |
+| walker |  | 8152 | 145 | python decl at rich/__init__.py:77 |  |  | 0.360 |
+| walker |  | 8176 | 24 | python imports in rich/themes.py |  |  | 0.360 |
+| ns | 8208 |  | 230 | Progress + track() + TaskID | 6.1 |  | 0.355 |
+| walker |  | 8247 | 71 | python decl names surface in rich/protocol.py |  |  | 0.356 |
+| walker |  | 8247 | 0 | python decl at rich/protocol.py:9 |  |  | 0.356 |
+| walker |  | 8247 | 0 | python decl at rich/protocol.py:18 |  |  | 0.356 |
+| walker |  | 8261 | 14 | python decl doc at rich/protocol.py:9 |  |  | 0.357 |
+| walker |  | 8314 | 53 | python method at rich/live_render.py:21 |  |  | 0.357 |
+| walker |  | 8378 | 64 | python decl doc at rich/screen.py:18 |  |  | 0.357 |
+| walker |  | 8432 | 54 | python method at rich/emoji.py:25 |  |  | 0.357 |
 | ns | 8454 |  | 246 | Progress + column hierarchy def lines | 6.2 | 6.1 | 0.351 |
-| walker |  | 8495 | 101 | python method sigs in rich/theme.py |  |  | 0.353 |
-| walker |  | 8495 | 0 | python method at rich/theme.py:88 |  |  | 0.353 |
-| walker |  | 8495 | 0 | python method at rich/theme.py:92 |  |  | 0.353 |
-| walker |  | 8495 | 0 | python method at rich/theme.py:106 |  |  | 0.353 |
-| walker |  | 8505 | 10 | python method at rich/theme.py:29 |  |  | 0.353 |
-| walker |  | 8519 | 14 | python method doc at rich/theme.py:106 |  |  | 0.353 |
-| walker |  | 8549 | 30 | python method at rich/theme.py:17 |  |  | 0.355 |
-| walker |  | 8565 | 16 | python method doc at rich/theme.py:29 |  |  | 0.355 |
-| walker |  | 8606 | 41 | python method at rich/theme.py:59 |  |  | 0.358 |
-| walker |  | 8650 | 44 | python method at rich/theme.py:37 |  |  | 0.360 |
-| ns | 8673 |  | 219 | Live + Layout + Status + Spinner class lines | 6.3 |  | 0.355 |
-| walker |  | 8718 | 68 | python decl doc at rich/live_render.py:13 |  |  | 0.355 |
-| ns | 8794 |  | 121 | Markdown + element hierarchy | 7.1 |  | 0.352 |
-| walker |  | 8797 | 79 | python decl names surface in rich/style.py |  |  | 0.353 |
-| walker |  | 8797 | 0 | python decl at rich/style.py:25 |  |  | 0.353 |
-| walker |  | 8797 | 0 | python decl at rich/style.py:765 |  |  | 0.353 |
-| walker |  | 8802 | 5 | python decl at rich/style.py:39 |  |  | 0.353 |
-| walker |  | 8811 | 9 | python decl doc at rich/style.py:765 |  |  | 0.353 |
-| walker |  | 8824 | 13 | python class body at rich/style.py:765 |  |  | 0.353 |
-| walker |  | 8836 | 12 | python class body at rich/style.py:25 |  |  | 0.353 |
-| walker |  | 8850 | 14 | python decl doc at rich/style.py:25 |  |  | 0.353 |
-| walker |  | 8870 | 20 | python method body at rich/constrain.py:18 body 19 |  |  | 0.353 |
-| walker |  | 8890 | 20 | python method body at rich/rule.py:46 body 47 |  |  | 0.353 |
-| walker |  | 8910 | 20 | python method body at rich/styled.py:19 body 20 |  |  | 0.353 |
-| walker |  | 8971 | 61 | python decl doc at rich/_wrap.py:12 |  |  | 0.353 |
-| walker |  | 9054 | 83 | python decl names surface in rich/_loop.py |  |  | 0.353 |
-| walker |  | 9054 | 0 | python decl at rich/_loop.py:6 |  |  | 0.353 |
-| walker |  | 9054 | 0 | python decl at rich/_loop.py:18 |  |  | 0.353 |
-| walker |  | 9054 | 0 | python decl at rich/_loop.py:31 |  |  | 0.353 |
-| walker |  | 9071 | 17 | python decl doc at rich/_loop.py:6 |  |  | 0.353 |
+| walker |  | 8486 | 54 | python method at rich/screen.py:28 |  |  | 0.351 |
+| walker |  | 8541 | 55 | python method at rich/logging.py:215 |  |  | 0.351 |
+| walker |  | 8642 | 101 | python method sigs in rich/theme.py |  |  | 0.353 |
+| walker |  | 8642 | 0 | python method at rich/theme.py:88 |  |  | 0.353 |
+| walker |  | 8642 | 0 | python method at rich/theme.py:92 |  |  | 0.353 |
+| walker |  | 8642 | 0 | python method at rich/theme.py:106 |  |  | 0.353 |
+| walker |  | 8652 | 10 | python method at rich/theme.py:29 |  |  | 0.353 |
+| walker |  | 8666 | 14 | python method doc at rich/theme.py:106 |  |  | 0.353 |
+| ns | 8673 |  | 219 | Live + Layout + Status + Spinner class lines | 6.3 |  | 0.348 |
+| walker |  | 8696 | 30 | python method at rich/theme.py:17 |  |  | 0.351 |
+| walker |  | 8712 | 16 | python method doc at rich/theme.py:29 |  |  | 0.351 |
+| walker |  | 8753 | 41 | python method at rich/theme.py:59 |  |  | 0.354 |
+| ns | 8794 |  | 121 | Markdown + element hierarchy | 7.1 |  | 0.351 |
+| walker |  | 8797 | 44 | python method at rich/theme.py:37 |  |  | 0.352 |
+| walker |  | 8865 | 68 | python decl doc at rich/live_render.py:13 |  |  | 0.352 |
+| walker |  | 8944 | 79 | python decl names surface in rich/style.py |  |  | 0.353 |
+| walker |  | 8944 | 0 | python decl at rich/style.py:25 |  |  | 0.353 |
+| walker |  | 8944 | 0 | python decl at rich/style.py:765 |  |  | 0.353 |
+| walker |  | 8949 | 5 | python decl at rich/style.py:39 |  |  | 0.353 |
+| walker |  | 8958 | 9 | python decl doc at rich/style.py:765 |  |  | 0.353 |
+| walker |  | 8971 | 13 | python class body at rich/style.py:765 |  |  | 0.353 |
+| walker |  | 8983 | 12 | python class body at rich/style.py:25 |  |  | 0.353 |
+| walker |  | 8997 | 14 | python decl doc at rich/style.py:25 |  |  | 0.353 |
+| walker |  | 9017 | 20 | python method body at rich/constrain.py:18 body 19 |  |  | 0.353 |
+| walker |  | 9037 | 20 | python method body at rich/rule.py:46 body 47 |  |  | 0.353 |
+| walker |  | 9057 | 20 | python method body at rich/styled.py:19 body 20 |  |  | 0.353 |
 | ns | 9081 |  | 287 | Syntax + theme classes | 7.2 |  | 0.347 |
-| walker |  | 9088 | 17 | python decl doc at rich/_loop.py:18 |  |  | 0.347 |
-| walker |  | 9107 | 19 | python decl doc at rich/_loop.py:31 |  |  | 0.347 |
 | ns | 9117 |  | 36 | Traceback + install | 7.3 |  | 0.346 |
+| walker |  | 9118 | 61 | python decl doc at rich/_wrap.py:12 |  |  | 0.346 |
 | ns | 9136 |  | 19 | RichHandler (logging) | 7.4 |  | 0.347 |
 | ns | 9175 |  | 39 | Pretty + pprint + JSON | 7.5 |  | 0.346 |
-| walker |  | 9181 | 74 | python decl doc at rich/constrain.py:10 |  |  | 0.346 |
+| walker |  | 9201 | 83 | python decl names surface in rich/_loop.py |  |  | 0.346 |
+| walker |  | 9201 | 0 | python decl at rich/_loop.py:6 |  |  | 0.346 |
+| walker |  | 9201 | 0 | python decl at rich/_loop.py:18 |  |  | 0.346 |
+| walker |  | 9201 | 0 | python decl at rich/_loop.py:31 |  |  | 0.346 |
+| walker |  | 9218 | 17 | python decl doc at rich/_loop.py:6 |  |  | 0.346 |
+| walker |  | 9235 | 17 | python decl doc at rich/_loop.py:18 |  |  | 0.346 |
+| walker |  | 9254 | 19 | python decl doc at rich/_loop.py:31 |  |  | 0.346 |
 | ns | 9255 |  | 80 | Prompt hierarchy | 7.6 |  | 0.344 |
-| walker |  | 9265 | 84 | python decl names surface in rich/_emoji_replace.py |  |  | 0.344 |
 | ns | 9275 |  | 20 | Emoji + Inspect | 7.7 |  | 0.344 |
-| walker |  | 9349 | 84 | python decl names surface in rich/control.py |  |  | 0.344 |
-| walker |  | 9349 | 0 | python decl at rich/control.py:48 |  |  | 0.344 |
-| ns | 9355 |  | 80 | Small support: filesize / cells / control / containers | 8.1 |  | 0.346 |
-| walker |  | 9361 | 12 | python class body at rich/control.py:48 |  |  | 0.346 |
-| ns | 9390 |  | 35 | @rich_repr / @auto decorators | 8.2 |  | 0.345 |
-| walker |  | 9393 | 32 | python decl at rich/control.py:181 |  |  | 0.345 |
-| walker |  | 9405 | 12 | python decl body at rich/control.py:181 body 192 |  |  | 0.345 |
-| walker |  | 9438 | 33 | python decl at rich/control.py:195 |  |  | 0.345 |
-| walker |  | 9450 | 12 | python decl body at rich/control.py:195 body 208 |  |  | 0.345 |
-| walker |  | 9510 | 60 | python decl at rich/control.py:20 |  |  | 0.345 |
-| walker |  | 9535 | 25 | python decl at rich/control.py:16 |  |  | 0.345 |
+| walker |  | 9328 | 74 | python decl doc at rich/constrain.py:10 |  |  | 0.344 |
+| ns | 9355 |  | 80 | Small support: filesize / cells / control / containers | 8.1 |  | 0.345 |
+| ns | 9390 |  | 35 | @rich_repr / @auto decorators | 8.2 |  | 0.344 |
+| walker |  | 9412 | 84 | python decl names surface in rich/_emoji_replace.py |  |  | 0.344 |
+| walker |  | 9496 | 84 | python decl names surface in rich/control.py |  |  | 0.345 |
+| walker |  | 9496 | 0 | python decl at rich/control.py:48 |  |  | 0.345 |
+| walker |  | 9508 | 12 | python class body at rich/control.py:48 |  |  | 0.345 |
+| walker |  | 9540 | 32 | python decl at rich/control.py:181 |  |  | 0.345 |
+| walker |  | 9552 | 12 | python decl body at rich/control.py:181 body 192 |  |  | 0.345 |
 | ns | 9556 |  | 166 | examples/ listing | 8.3 |  | 0.337 |
-| walker |  | 9596 | 61 | python decl doc at rich/control.py:181 |  |  | 0.337 |
-| walker |  | 9711 | 115 | python method sigs in rich/status.py |  |  | 0.337 |
-| walker |  | 9711 | 0 | python method at rich/status.py:85 |  |  | 0.337 |
-| walker |  | 9711 | 0 | python method at rich/status.py:89 |  |  | 0.337 |
-| walker |  | 9711 | 0 | python method at rich/status.py:93 |  |  | 0.337 |
-| walker |  | 9711 | 0 | python method at rich/status.py:96 |  |  | 0.337 |
-| walker |  | 9722 | 11 | python method at rich/status.py:44 |  |  | 0.337 |
-| walker |  | 9733 | 11 | python method at rich/status.py:48 |  |  | 0.337 |
-| walker |  | 9742 | 9 | python method doc at rich/status.py:85 |  |  | 0.337 |
-| walker |  | 9751 | 9 | python method doc at rich/status.py:89 |  |  | 0.337 |
-| walker |  | 9759 | 8 | python method body at rich/status.py:93 body 94 |  |  | 0.337 |
-| walker |  | 9769 | 10 | python method body at rich/status.py:44 body 46 |  |  | 0.337 |
-| walker |  | 9779 | 10 | python method body at rich/status.py:85 body 87 |  |  | 0.337 |
-| walker |  | 9789 | 10 | python method body at rich/status.py:89 body 91 |  |  | 0.337 |
-| walker |  | 9804 | 15 | python method doc at rich/status.py:48 |  |  | 0.337 |
-| walker |  | 9815 | 11 | python method body at rich/status.py:48 body 51 |  |  | 0.337 |
-| walker |  | 9829 | 14 | python method body at rich/status.py:96 body 97 |  |  | 0.337 |
-| walker |  | 9885 | 56 | python method at rich/status.py:100 |  |  | 0.337 |
-| walker |  | 9893 | 8 | python method body at rich/status.py:100 body 106 |  |  | 0.337 |
+| walker |  | 9585 | 33 | python decl at rich/control.py:195 |  |  | 0.337 |
+| walker |  | 9597 | 12 | python decl body at rich/control.py:195 body 208 |  |  | 0.337 |
+| walker |  | 9657 | 60 | python decl at rich/control.py:20 |  |  | 0.337 |
+| walker |  | 9682 | 25 | python decl at rich/control.py:16 |  |  | 0.337 |
+| walker |  | 9743 | 61 | python decl doc at rich/control.py:181 |  |  | 0.337 |
+| walker |  | 9858 | 115 | python method sigs in rich/status.py |  |  | 0.337 |
+| walker |  | 9858 | 0 | python method at rich/status.py:85 |  |  | 0.337 |
+| walker |  | 9858 | 0 | python method at rich/status.py:89 |  |  | 0.337 |
+| walker |  | 9858 | 0 | python method at rich/status.py:93 |  |  | 0.337 |
+| walker |  | 9858 | 0 | python method at rich/status.py:96 |  |  | 0.337 |
+| walker |  | 9869 | 11 | python method at rich/status.py:44 |  |  | 0.337 |
+| walker |  | 9880 | 11 | python method at rich/status.py:48 |  |  | 0.337 |
+| walker |  | 9889 | 9 | python method doc at rich/status.py:85 |  |  | 0.337 |
+| walker |  | 9898 | 9 | python method doc at rich/status.py:89 |  |  | 0.337 |
+| walker |  | 9906 | 8 | python method body at rich/status.py:93 body 94 |  |  | 0.337 |
+| walker |  | 9916 | 10 | python method body at rich/status.py:44 body 46 |  |  | 0.337 |
+| walker |  | 9926 | 10 | python method body at rich/status.py:85 body 87 |  |  | 0.337 |
 | ns | 9932 |  | 376 | tests/ listing | 8.4 |  | 0.322 |
-| walker |  | 9963 | 70 | python decl at rich/control.py:9 |  |  | 0.322 |
+| walker |  | 9936 | 10 | python method body at rich/status.py:89 body 91 |  |  | 0.322 |
+| walker |  | 9951 | 15 | python method doc at rich/status.py:48 |  |  | 0.322 |
+| walker |  | 9962 | 11 | python method body at rich/status.py:48 body 51 |  |  | 0.322 |
+| walker |  | 9976 | 14 | python method body at rich/status.py:96 body 97 |  |  | 0.322 |

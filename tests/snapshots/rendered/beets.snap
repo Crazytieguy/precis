@@ -30,6 +30,11 @@ beets/
         …
         52→config = IncludeLazyConfig("beets", __name__)
     __main__.py
+        15→"""The __main__ module lets you run the beets CLI interface by typing
+        16→`python -m beets`.
+        17→"""
+        19→import sys
+        21→from .ui import main
     autotag/
         __init__.py
             15→"""Facilities for automatically determining files' correct metadata."""
