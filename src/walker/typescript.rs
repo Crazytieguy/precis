@@ -2697,9 +2697,49 @@ fn function_body_parts(body: Option<Node>, source: &str, src_lines: &[&str]) -> 
         if let Some(tail) = factory_post_helper_tail_part(b, src_lines) {
             parts.push(tail);
         }
+        // Per-inner-function body parts — each named helper's body
+        // interior emitted as its own sibling BodyPart so small ones
+        // (`disable`, `coerce`, `destroy`, `extend`) can schedule into
+        // the auto-injection budget on their own merit. Without this
+        // pass NS rows anchored on inner-helper bodies (debug's 3.x
+        // tier) have no walker atoms at all.
+        parts.extend(factory_inner_function_body_parts(b, src_lines));
         return parts;
     }
     statement_block_parts(body, src_lines, "statement_block")
+}
+
+/// Body slices for each nested `function_declaration` inside a factory
+/// body. Returns one `BodyPart` per inner function, each covering the
+/// function's interior (mirrors `statement_block_parts` logic, but
+/// scoped to the inner function's own body rather than its enclosing
+/// factory). Caller emits each as a sibling `ExportBody` batch.
+fn factory_inner_function_body_parts(body: Node, src_lines: &[&str]) -> Vec<BodyPart> {
+    let mut cursor = body.walk();
+    let mut out = Vec::new();
+    for child in body.named_children(&mut cursor) {
+        if child.kind() != "function_declaration" {
+            continue;
+        }
+        let Some(inner_body) = child.child_by_field_name("body") else {
+            continue;
+        };
+        if inner_body.kind() != "statement_block" {
+            continue;
+        }
+        let body_start = inner_body.start_position().row;
+        let body_end = inner_body.end_position().row;
+        if body_end <= body_start + 1 {
+            continue;
+        }
+        let mut lines = Vec::new();
+        extend_nonblank_rows(&mut lines, src_lines, body_start + 1, body_end - 1);
+        let lines = dedup_sorted(lines);
+        if !lines.is_empty() {
+            out.push(BodyPart { lines });
+        }
+    }
+    out
 }
 
 /// True when `function_body_parts` would split a top-level function
@@ -3503,11 +3543,13 @@ module.exports = setup;
     #[test]
     fn walker_typescript_factory_inner_function_locations_emitted_as_sibling_part() {
         // CommonJS factory with 3+ inner function declarations: the
-        // receiver-table fold fires (3 R.x assignments at lines 2-4)
-        // AND a second body part lists the inner-function start lines
-        // (5, 6, 7). NS authors anchor on the helper-locations catalog
-        // (debug NS 2.2 = "common.js inner-function name locations")
-        // distinct from the receiver-table contract.
+        // receiver-table fold fires (3 R.x assignments at lines 2-4),
+        // a locations surface lists the inner-function start lines
+        // (5, 6, 7), a bootstrap-and-return tail emits the
+        // post-helpers statements (line 8), and each inner helper's
+        // body interior emits as its own sibling part. NS authors
+        // anchor on each surface independently (debug NS 2.1, 2.2,
+        // 2.3, 3.x).
         let src = "\
 function setup(env) {
   createDebug.debug = createDebug;
@@ -3525,18 +3567,62 @@ module.exports = setup;
         let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
         let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
         assert!(setup.factory_sibling_body_parts);
-        // Three parts: receiver table, inner-function locations,
-        // bootstrap-and-return tail.
+        // Three pre-existing parts (table, locations, tail) plus three
+        // single-line bodies for each inner helper (lines 5/6/7 are
+        // each one-statement bodies, so their interior is also their
+        // sole line) — but the inner-body extractor skips bodies that
+        // collapse to ≤ 1 line, so only nontrivial bodies emit. With
+        // single-line bodies, no inner-body parts emit.
         assert_eq!(setup.body_parts.len(), 3);
         // First part: receiver-table prefix.
         assert_eq!(setup.body_parts[0].lines, vec![2, 3, 4]);
-        // Second part: inner-function start lines, NOT merged with the
-        // table (would inflate the table's cost and lose the V/C race).
+        // Second part: inner-function start lines.
         assert_eq!(setup.body_parts[1].lines, vec![5, 6, 7]);
-        // Third part: post-helper return (no bootstrap call in this
-        // synthetic body, but `return createDebug;` at line 8 still
-        // qualifies).
+        // Third part: post-helper return.
         assert_eq!(setup.body_parts[2].lines, vec![8]);
+    }
+
+    #[test]
+    fn walker_typescript_factory_inner_function_bodies_emitted_as_sibling_parts() {
+        // Each inner helper with a multi-line body emits its body
+        // interior as a separate sibling BodyPart. NS authors anchor
+        // on inner-helper bodies (debug NS 3.x) as the meaningful
+        // semantic unit inside the factory; this lets small bodies
+        // schedule into the auto-injection budget independently.
+        let src = "\
+function setup(env) {
+  R.a = 1;
+  R.b = 2;
+  R.c = 3;
+  function selectColor(namespace) {
+    let hash = 0;
+    return hash;
+  }
+  function enable(namespaces) {
+    R.namespaces = namespaces;
+    return true;
+  }
+  function disable() {
+    R.namespaces = '';
+    return '';
+  }
+  return R;
+}
+module.exports = setup;
+";
+        let tree = parse(src);
+        let src_lines: Vec<&str> = src.lines().collect();
+        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
+        // 3 receiver table + 1 locations + 1 tail + 3 inner-fn bodies = 6 parts.
+        assert_eq!(setup.body_parts.len(), 6);
+        assert_eq!(setup.body_parts[0].lines, vec![2, 3, 4]); // table
+        assert_eq!(setup.body_parts[1].lines, vec![5, 9, 13]); // locations
+        assert_eq!(setup.body_parts[2].lines, vec![17]); // tail
+        // Inner-function bodies (lines inside braces, blank-line-filtered).
+        assert_eq!(setup.body_parts[3].lines, vec![6, 7]); // selectColor body
+        assert_eq!(setup.body_parts[4].lines, vec![10, 11]); // enable body
+        assert_eq!(setup.body_parts[5].lines, vec![14, 15]); // disable body
     }
 
     #[test]

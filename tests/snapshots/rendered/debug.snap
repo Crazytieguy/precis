@@ -191,6 +191,12 @@ src/
         14→	createDebug.humanize = require('ms');
         15→	createDebug.destroy = destroy;
         41→	function selectColor(namespace) {
+        42→		let hash = 0;
+        44→		for (let i = 0; i < namespace.length; i++) {
+        45→			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
+        46→			hash |= 0; // Convert to 32bit integer
+        47→		}
+        49→		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
         60→	function createDebug(namespace) {
         149→	function extend(namespace, delimiter) {
         162→	function enable(namespaces) {
