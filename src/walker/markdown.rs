@@ -286,6 +286,7 @@ fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -
         0.4,
         super::file_depth_factor(file, ctx, is_orientation_doc(file)),
     ) * dense_md_sibling_factor(file, sibling_md_count)
+        * non_anchor_outline_factor(file, ctx)
 }
 
 /// Saturate the per-file outline value when the file sits in a dir
@@ -302,6 +303,35 @@ fn dense_md_sibling_factor(file: &Path, sibling_md_count: usize) -> f64 {
         return 1.0;
     }
     ((DENSE_THRESHOLD as f64) / (sibling_md_count as f64)).sqrt()
+}
+
+/// Damp the outline value for loose `docs/<file>.md` pages — markdown
+/// files at depth 2 that aren't README or orientation docs
+/// (ARCHITECTURE / OVERVIEW / DESIGN / STRUCTURE). NS authors anchor
+/// the outline batch on the README, on a project-orientation doc, or
+/// on the entries of a curated docs site (a `docs/guides/`,
+/// `docs/reference/`, `site/content/`, or `guide/src/` subdirectory);
+/// standalone pages like `docs/installation.md`, `docs/usage.md`, or
+/// `docs/index.md` rarely appear in NSes yet still consume budget at
+/// the per-file outline rank.
+///
+/// Depth-based gating distinguishes the two cases. Depth 1
+/// (CONTRIBUTING.md, IMAGES.md) keeps full value — root-level admin /
+/// topical docs are rare and occasionally NS-anchored. Depth ≥ 3
+/// (docs/reference/X.md, docs/guides/X.md, guide/src/Y.md) also keeps
+/// full value — a subdirectory under `docs/` is a curation signal
+/// that NS authors do reference. The damp targets exactly the
+/// in-between case: `docs/X.md` with no further organization.
+const NON_ANCHOR_OUTLINE_FACTOR: f64 = 0.4;
+
+fn non_anchor_outline_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if is_readme(file) || is_orientation_doc(file) {
+        return 1.0;
+    }
+    if ctx.depth_from_root(file) != 2 {
+        return 1.0;
+    }
+    NON_ANCHOR_OUTLINE_FACTOR
 }
 
 fn readme_section_value(

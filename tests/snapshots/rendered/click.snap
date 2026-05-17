@@ -75,90 +75,19 @@ docs/
     arguments.md
     changes.rst
     click-concepts.md
-        1→# Click Concepts
-        …
-        3→This section covers concepts about Click's design.
-        5→```{contents}
-        6→---
-        7→depth: 1
-        8→local: true
-        9→---
-        10→```
-        12→(callback-evaluation-order)=
-        14→## Callback Evaluation Order
-        …
     command-line-reference.md
-        1→# General Command Line Topics
-        …
-        3→```{currentmodule} click
-        4→```
-        6→```{contents}
-        7→---
-        8→depth: 1
-        9→local: true
-        10→---
-        11→```
-        13→(exit-codes)=
-        14→## Exit Codes
-        …
     commands-and-groups.md
     commands.md
     complex.md
     conf.py
     contrib.md
-        3→# click-contrib
-        …
-        19→## Third-party projects
-        …
     contributing.md
     design-opinions.md
-        1→# CLI Design Opinions
-        …
-        3→```{currentmodule} click
-        4→```
-        5→A penny for your thoughts...
-        7→```{contents}
-        8→:depth: 1
-        9→:local: true
-        10→```
-        12→## Options over arguments
-        …
     documentation.md
     entry-points.md
-        1→# Packaging Entry Points
-        …
-        20→## Project Files
-        …
-        71→## Installation
-        …
     exceptions.md
     extending-click.md
-        1→# Extending Click
-        …
-        3→```{currentmodule} click
-        4→```
-        6→In addition to common functionality that is implemented in the library itself, there are countless patterns that can be
-        7→implemented by extending Click. This page should give some insight into what can be accomplished.
-        9→```{contents}
-        10→:depth: 2
-        11→:local: true
-        12→```
-        14→(custom-groups)=
-        16→## Custom Groups
-        …
-        73→## Command Aliases
-        …
     faqs.md
-        1→# Frequently Asked Questions
-        …
-        3→```{contents}
-        4→:depth: 2
-        5→:local: true
-        6→```
-        8→## General
-        …
-        10→### Shell Variable Expansion On Windows
-        …
     handling-files.md
     index.rst
     license.md
@@ -182,21 +111,11 @@ docs/
     support-multiple-versions.md
     testing.md
     unicode-support.md
-        1→# Unicode Support
-        …
-        51→## Surrogate Handling
-        …
     upgrade-guides.md
     utils.md
     virtualenv.md
     why.md
     wincmd.md
-        1→# Windows Console Notes
-        …
-        11→## Unicode Arguments
-        …
-        24→## Unicode Output and Input
-        …
 examples/
     README
     aliases/
@@ -309,6 +228,10 @@ src/
         _compat.py
         _termui_impl.py
         _textwrap.py
+            1→from __future__ import annotations
+            3→import collections.abc as cabc
+            4→import textwrap
+            5→from contextlib import contextmanager
             8→class TextWrapper(textwrap.TextWrapper):
             9→    def _handle_long_word(
             …
@@ -335,12 +258,55 @@ src/
             343→    def __init__(self, code: int = 0) -> None:
             344→        self.exit_code: int = code
         formatting.py
+            11→FORCED_WIDTH: int | None = None
+            14→def measure_table(rows: cabc.Iterable[tuple[str, str]]) -> tuple[int, ...]:
+            …
+            24→def iter_rows(
+            25→    rows: cabc.Iterable[tuple[str, str]], col_count: int
+            26→) -> cabc.Iterator[tuple[str, ...]]:
+            27→    for row in rows:
+            28→        yield row + ("",) * (col_count - len(row))
+            31→def wrap_text(
+            32→    text: str,
+            33→    width: int = 78,
+            34→    initial_indent: str = "",
+            35→    subsequent_indent: str = "",
+            36→    preserve_paragraphs: bool = False,
+            37→) -> str:
+            104→class HelpFormatter:
+            …
+            283→def join_options(options: cabc.Sequence[str]) -> tuple[str, bool]:
+            284→    """Given a list of option strings this joins them in the most appropriate
+            285→    way and returns them in the form ``(formatted_string,
+            286→    any_prefix_is_slash)`` where the second item in the tuple is a flag that
+            287→    indicates if any of the option prefixes was a slash.
+            288→    """
         globals.py
         parser.py
         py.typed
         shell_completion.py
         termui.py
         testing.py
+            26→class EchoingStdin:
+            …
+            60→@contextlib.contextmanager
+            61→def _pause_echo(stream: EchoingStdin | None) -> cabc.Iterator[None]:
+            70→class BytesIOCopy(io.BytesIO):
+            71→    """Patch ``io.BytesIO`` to let the written stream be copied to another.
+            73→    .. versionadded:: 8.2
+            74→    """
+            89→class StreamMixer:
+            …
+            103→class _NamedTextIOWrapper(io.TextIOWrapper):
+            …
+            163→def make_input_stream(
+            164→    input: str | bytes | t.IO[t.Any] | None, charset: str
+            165→) -> t.BinaryIO:
+            166→    # Is already an input stream.
+            183→class Result:
+            …
+            261→class CliRunner:
+            …
         types.py
         utils.py
 tests/

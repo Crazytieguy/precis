@@ -171,35 +171,33 @@ Score(3000)=0.353 I=0.669 C=0.186 ns_rows≤3K=17/39 (reached=3 partial=2 missin
 | walker |  | 6095 | 531 | README.md section #3 |  |  | 0.434 |
 | walker |  | 6123 | 28 | imports in src/themes/theme.selector.js |  |  | 0.434 |
 | walker |  | 6175 | 52 | imports in src/cli.js |  |  | 0.434 |
-| walker |  | 6203 | 28 | headings outline in .github/PULL_REQUEST_TEMPLATE.md |  |  | 0.434 |
-| walker |  | 6203 | 0 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.434 |
-| walker |  | 6236 | 33 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.436 |
-| walker |  | 6411 | 175 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.460 |
-| walker |  | 6482 | 71 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.460 |
-| walker |  | 6482 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.460 |
-| walker |  | 6520 | 38 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.469 |
+| walker |  | 6208 | 33 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.436 |
+| walker |  | 6383 | 175 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.460 |
+| walker |  | 6454 | 71 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.460 |
+| walker |  | 6454 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.460 |
+| walker |  | 6492 | 38 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.469 |
 | ns | 6530 |  | 576 | containers.hook: 500ms polling + restart pattern | 6.2 | 6.1 | 0.447 |
-| walker |  | 6564 | 44 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.451 |
-| walker |  | 6668 | 104 | imports in src/screen.js |  |  | 0.451 |
-| walker |  | 6733 | 65 | docs/README.md section #0 |  |  | 0.451 |
-| walker |  | 6746 | 13 | listing of 'docs/src/assets' |  |  | 0.451 |
-| walker |  | 6822 | 76 | CONTRIBUTING.md section #0 |  |  | 0.451 |
+| walker |  | 6536 | 44 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.451 |
+| walker |  | 6640 | 104 | imports in src/screen.js |  |  | 0.451 |
+| walker |  | 6705 | 65 | docs/README.md section #0 |  |  | 0.451 |
+| walker |  | 6718 | 13 | listing of 'docs/src/assets' |  |  | 0.451 |
+| walker |  | 6794 | 76 | CONTRIBUTING.md section #0 |  |  | 0.451 |
 | ns | 7183 |  | 653 | images.hook: use/unuse partition + removeImage | 6.3 |  | 0.426 |
-| walker |  | 7446 | 624 | export body at src/widgetsTemplates/logs.widget.template.js:7 body 9 |  |  | 0.451 |
-| walker |  | 7451 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.451 |
-| walker |  | 7469 | 18 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.451 |
-| walker |  | 7507 | 38 | CONTRIBUTING.md section #1 |  |  | 0.451 |
+| walker |  | 7418 | 624 | export body at src/widgetsTemplates/logs.widget.template.js:7 body 9 |  |  | 0.451 |
+| walker |  | 7423 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.451 |
+| walker |  | 7461 | 38 | CONTRIBUTING.md section #1 |  |  | 0.451 |
 | ns | 7650 |  | 467 | services.hook: init + emitted events | 6.4 |  | 0.435 |
 | ns | 8121 |  | 471 | shell.hook: openShell | 6.5 |  | 0.421 |
-| walker |  | 8424 | 917 | export body at src/widgetsTemplates/info.widget.template.js:6 body 8 |  |  | 0.443 |
-| walker |  | 8450 | 26 | listing of 'docs/src/assets/scss' |  |  | 0.443 |
-| walker |  | 8533 | 83 | package identity metadata in docs/package.json |  |  | 0.443 |
-| walker |  | 8652 | 119 | package scripts in docs/package.json |  |  | 0.443 |
+| walker |  | 8378 | 917 | export body at src/widgetsTemplates/info.widget.template.js:6 body 8 |  |  | 0.443 |
+| walker |  | 8404 | 26 | listing of 'docs/src/assets/scss' |  |  | 0.443 |
+| walker |  | 8487 | 83 | package identity metadata in docs/package.json |  |  | 0.443 |
+| walker |  | 8606 | 119 | package scripts in docs/package.json |  |  | 0.443 |
 | ns | 8899 |  | 778 | toolbar.widget: command dicts (every keybinding) | 7.1 |  | 0.421 |
 | ns | 9169 |  | 270 | containerList: overrides + getSelectedContainer | 8.1 |  | 0.413 |
 | ns | 9521 |  | 352 | imageList + servicesList: headers + Selected getters | 8.2 |  | 0.404 |
 | ns | 9630 |  | 109 | actionStatus + searchInput + actionsMenu: identity anchors | 9.1 |  | 0.402 |
 | ns | 9705 |  | 75 | containerInfo + servicesInfo + imageInfo: identity anchors | 9.2 |  | 0.400 |
-| walker |  | 9886 | 1234 | export body at src/widgetsTemplates/help.widget.template.js:5 body 7 |  |  | 0.418 |
-| walker |  | 9908 | 22 | listing of 'docs/src/assets/scss/libs' |  |  | 0.418 |
-| walker |  | 9933 | 25 | listing of 'docs/src/assets/scss/layout' |  |  | 0.418 |
+| walker |  | 9840 | 1234 | export body at src/widgetsTemplates/help.widget.template.js:5 body 7 |  |  | 0.418 |
+| walker |  | 9862 | 22 | listing of 'docs/src/assets/scss/libs' |  |  | 0.418 |
+| walker |  | 9887 | 25 | listing of 'docs/src/assets/scss/layout' |  |  | 0.418 |
+| walker |  | 9958 | 71 | docs/README.md section #2 |  |  | 0.418 |

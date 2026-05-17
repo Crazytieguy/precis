@@ -80,9 +80,15 @@ README.md
 docs/
     api/
         core.md
+            1→# ::: htmy.core
+            3→    options:
+            4→        show_root_heading: true
         etree.md
         function_component.md
         html.md
+            1→# ::: htmy.html
+            3→    options:
+            4→        show_root_heading: true
         i18n.md
         md.md
             1→# ::: htmy.md.core
@@ -99,28 +105,8 @@ docs/
         typing.md
         utils.md
     components-guide.md
-        1→# Components guide
-        …
-        3→## What is a component?
-        …
-        142→## What is a component factory?
-        …
-        184→## When to use components, when to use component factories?
-        …
     examples/
     function-components.md
-        1→# Function components
-        …
-        9→## Function component types
-        …
-        26→## Creating function components
-        …
-        41→## Examples
-        …
-        80→### Functions
-        …
-        150→### Methods
-        …
     index.md
 examples/
     internationalization/
@@ -205,6 +191,12 @@ htmy/
     etree.py
         23→class ETreeConverter:
         …
+        38→    __slots__ = ("_rules",)
+        40→    _htmy_fragment: ClassVar[str] = "htmy_fragment"
+        41→    """
+        42→    Placeholder tag name that's used to wrap possibly multi-root XML snippets into a valid
+        43→    XML document with a single root that can be processed by standard tools.
+        44→    """
     function_component.py
     html.py
     i18n.py

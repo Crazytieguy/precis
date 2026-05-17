@@ -35,161 +35,161 @@ Score(3000)=0.561 I=0.664 C=0.474 ns_rows≤3K=20/41 (reached=7 partial=3 missin
 | walker |  | 536 | 17 | export member at lib/option.js:3 member 144 |  |  | 0.713 |
 | ns | 542 |  | 159 | index.js — imports, program, factories | 2.2 |  | 0.643 |
 | walker |  | 572 | 36 | listing of 'docs' |  |  | 0.643 |
-| walker |  | 614 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.643 |
-| walker |  | 655 | 41 | export names surface in lib/help.js |  |  | 0.643 |
-| walker |  | 655 | 0 | export at lib/help.js:740 |  |  | 0.643 |
+| walker |  | 613 | 41 | export names surface in lib/help.js |  |  | 0.643 |
+| walker |  | 613 | 0 | export at lib/help.js:740 |  |  | 0.643 |
 | ns | 710 |  | 168 | Terminology doc — definitions | 2.3 |  | 0.589 |
-| ns | 791 |  | 81 | Terminology doc — example | 2.4 |  | 0.561 |
-| walker |  | 805 | 150 | export names surface in index.js |  |  | 0.644 |
-| walker |  | 805 | 0 | export at index.js:17 |  |  | 0.644 |
-| walker |  | 824 | 19 | export doc at index.js:17 |  |  | 0.644 |
-| walker |  | 872 | 48 | export names surface in lib/argument.js |  |  | 0.645 |
-| walker |  | 872 | 0 | export at lib/argument.js:143 |  |  | 0.645 |
-| walker |  | 923 | 51 | export names surface in lib/command.js |  |  | 0.645 |
-| walker |  | 923 | 0 | export at lib/command.js:2752 |  |  | 0.645 |
-| walker |  | 974 | 51 | export names surface in lib/error.js |  |  | 0.646 |
-| walker |  | 985 | 11 | export at lib/error.js:25 |  |  | 0.646 |
-| walker |  | 1001 | 16 | export at lib/error.js:4 |  |  | 0.646 |
-| ns | 1040 |  | 249 | Quick Start — split subcommand | 2.5 |  | 0.568 |
-| walker |  | 1068 | 67 | headings outline in docs/options-in-depth.md |  |  | 0.569 |
-| walker |  | 1123 | 55 | export body at lib/error.js:25 body 31 |  |  | 0.570 |
-| walker |  | 1219 | 96 | export at lib/argument.js:3 |  |  | 0.573 |
-| ns | 1240 |  | 200 | Quick Start — join subcommand and parse | 2.6 |  | 0.526 |
-| walker |  | 1267 | 48 | export body at lib/argument.js:143 body 144 |  |  | 0.526 |
-| walker |  | 1317 | 50 | export body at lib/help.js:740 body 741 |  |  | 0.526 |
-| walker |  | 1336 | 19 | export doc at lib/error.js:4 |  |  | 0.527 |
-| walker |  | 1356 | 20 | export doc at lib/error.js:25 |  |  | 0.528 |
-| ns | 1376 |  | 136 | esm.mjs wrapper | 2.7 |  | 0.492 |
-| walker |  | 1436 | 80 | export body at lib/error.js:4 body 12 |  |  | 0.495 |
-| walker |  | 1452 | 16 | imports in lib/argument.js |  |  | 0.495 |
-| walker |  | 1468 | 16 | imports in lib/option.js |  |  | 0.495 |
-| walker |  | 1485 | 17 | imports in lib/help.js |  |  | 0.495 |
-| walker |  | 1568 | 83 | imports in index.js |  |  | 0.538 |
-| walker |  | 1577 | 9 | export names surface in esm.mjs |  |  | 0.538 |
-| walker |  | 1588 | 11 | imports in esm.mjs |  |  | 0.540 |
-| ns | 1655 |  | 279 | package.json — exports / main / files | 2.8 |  | 0.487 |
-| walker |  | 1685 | 97 | export at esm.mjs:4 |  |  | 0.538 |
-| walker |  | 1710 | 25 | listing of 'docs/zh-CN' |  |  | 0.538 |
-| walker |  | 1947 | 237 | listing of 'examples' |  |  | 0.543 |
+| walker |  | 763 | 150 | export names surface in index.js |  |  | 0.677 |
+| walker |  | 763 | 0 | export at index.js:17 |  |  | 0.677 |
+| walker |  | 782 | 19 | export doc at index.js:17 |  |  | 0.677 |
+| ns | 791 |  | 81 | Terminology doc — example | 2.4 |  | 0.644 |
+| walker |  | 830 | 48 | export names surface in lib/argument.js |  |  | 0.645 |
+| walker |  | 830 | 0 | export at lib/argument.js:143 |  |  | 0.645 |
+| walker |  | 881 | 51 | export names surface in lib/command.js |  |  | 0.645 |
+| walker |  | 881 | 0 | export at lib/command.js:2752 |  |  | 0.645 |
+| walker |  | 932 | 51 | export names surface in lib/error.js |  |  | 0.645 |
+| walker |  | 943 | 11 | export at lib/error.js:25 |  |  | 0.646 |
+| walker |  | 959 | 16 | export at lib/error.js:4 |  |  | 0.646 |
+| walker |  | 1014 | 55 | export body at lib/error.js:25 body 31 |  |  | 0.647 |
+| ns | 1040 |  | 249 | Quick Start — split subcommand | 2.5 |  | 0.569 |
+| walker |  | 1110 | 96 | export at lib/argument.js:3 |  |  | 0.573 |
+| walker |  | 1158 | 48 | export body at lib/argument.js:143 body 144 |  |  | 0.574 |
+| walker |  | 1208 | 50 | export body at lib/help.js:740 body 741 |  |  | 0.574 |
+| walker |  | 1227 | 19 | export doc at lib/error.js:4 |  |  | 0.574 |
+| ns | 1240 |  | 200 | Quick Start — join subcommand and parse | 2.6 |  | 0.527 |
+| walker |  | 1247 | 20 | export doc at lib/error.js:25 |  |  | 0.528 |
+| walker |  | 1327 | 80 | export body at lib/error.js:4 body 12 |  |  | 0.531 |
+| walker |  | 1343 | 16 | imports in lib/argument.js |  |  | 0.531 |
+| walker |  | 1359 | 16 | imports in lib/option.js |  |  | 0.531 |
+| walker |  | 1376 | 17 | imports in lib/help.js |  |  | 0.494 |
+| ns | 1376 |  | 136 | esm.mjs wrapper | 2.7 |  | 0.494 |
+| walker |  | 1459 | 83 | imports in index.js |  |  | 0.538 |
+| walker |  | 1468 | 9 | export names surface in esm.mjs |  |  | 0.538 |
+| walker |  | 1479 | 11 | imports in esm.mjs |  |  | 0.540 |
+| walker |  | 1576 | 97 | export at esm.mjs:4 |  |  | 0.596 |
+| walker |  | 1601 | 25 | listing of 'docs/zh-CN' |  |  | 0.596 |
+| ns | 1655 |  | 279 | package.json — exports / main / files | 2.8 |  | 0.538 |
+| walker |  | 1838 | 237 | listing of 'examples' |  |  | 0.543 |
+| walker |  | 1989 | 151 | package identity metadata in package.json |  |  | 0.543 |
 | ns | 2067 |  | 412 | CommanderError + InvalidArgumentError class shapes | 3.1 |  | 0.529 |
-| walker |  | 2098 | 151 | package identity metadata in package.json |  |  | 0.529 |
 | ns | 2170 |  | 103 | Argument class — method names | 3.2 |  | 0.547 |
-| ns | 2360 |  | 190 | Option class — method names | 3.3 |  | 0.563 |
-| walker |  | 2380 | 282 | package entrypoints in package.json |  |  | 0.638 |
-| walker |  | 2408 | 28 | package runtime metadata in package.json |  |  | 0.638 |
-| walker |  | 2442 | 34 | export doc at lib/command.js:2752 |  |  | 0.638 |
+| walker |  | 2271 | 282 | package entrypoints in package.json |  |  | 0.631 |
+| walker |  | 2299 | 28 | package runtime metadata in package.json |  |  | 0.631 |
+| walker |  | 2333 | 34 | export doc at lib/command.js:2752 |  |  | 0.631 |
+| ns | 2360 |  | 190 | Option class — method names | 3.3 |  | 0.637 |
 | ns | 2477 |  | 117 | Command class — registration & options method names | 3.4 |  | 0.616 |
+| walker |  | 2592 | 259 | package scripts in package.json |  |  | 0.616 |
+| walker |  | 2616 | 24 | module item at examples/custom-command-class.js:6 |  |  | 0.616 |
 | ns | 2641 |  | 164 | Command class — config & option-value method names | 3.5 |  | 0.594 |
-| walker |  | 2701 | 259 | package scripts in package.json |  |  | 0.594 |
-| walker |  | 2725 | 24 | module item at examples/custom-command-class.js:6 |  |  | 0.594 |
-| walker |  | 2751 | 26 | export names surface in lib/suggestSimilar.js |  |  | 0.582 |
-| walker |  | 2751 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.582 |
+| walker |  | 2642 | 26 | export names surface in lib/suggestSimilar.js |  |  | 0.594 |
+| walker |  | 2642 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.594 |
 | ns | 2751 |  | 110 | Command class — parsing & action method names | 3.6 |  | 0.582 |
-| walker |  | 2878 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.582 |
-| ns | 2925 |  | 174 | Command class — help/usage/info method names | 3.7 |  | 0.560 |
-| walker |  | 2956 | 78 | Readme.md section #7 |  |  | 0.561 |
-| walker |  | 3119 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.561 |
-| walker |  | 3131 | 12 | module item at examples/configure-output.js:4 |  |  | 0.561 |
-| walker |  | 3143 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.561 |
-| walker |  | 3155 | 12 | module item at examples/nestedCommands.js:21 |  |  | 0.561 |
-| walker |  | 3165 | 10 | module item at examples/action-this.js:6 |  |  | 0.561 |
-| walker |  | 3175 | 10 | module item at examples/alias.js:6 |  |  | 0.561 |
-| walker |  | 3185 | 10 | module item at examples/argument.js:6 |  |  | 0.561 |
-| walker |  | 3195 | 10 | module item at examples/help-groups.js:5 |  |  | 0.561 |
-| walker |  | 3205 | 10 | module item at examples/hook.js:4 |  |  | 0.530 |
+| walker |  | 2769 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.582 |
+| walker |  | 2847 | 78 | Readme.md section #7 |  |  | 0.583 |
+| ns | 2925 |  | 174 | Command class — help/usage/info method names | 3.7 |  | 0.561 |
+| walker |  | 3010 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.561 |
+| walker |  | 3022 | 12 | module item at examples/configure-output.js:4 |  |  | 0.561 |
+| walker |  | 3034 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.561 |
+| walker |  | 3046 | 12 | module item at examples/nestedCommands.js:21 |  |  | 0.561 |
+| walker |  | 3056 | 10 | module item at examples/action-this.js:6 |  |  | 0.561 |
+| walker |  | 3066 | 10 | module item at examples/alias.js:6 |  |  | 0.561 |
+| walker |  | 3076 | 10 | module item at examples/argument.js:6 |  |  | 0.561 |
+| walker |  | 3086 | 10 | module item at examples/help-groups.js:5 |  |  | 0.561 |
+| walker |  | 3096 | 10 | module item at examples/hook.js:4 |  |  | 0.561 |
+| walker |  | 3106 | 10 | module item at examples/options-boolean-or-value.js:14 |  |  | 0.561 |
+| walker |  | 3116 | 10 | module item at examples/options-common.js:16 |  |  | 0.561 |
+| walker |  | 3126 | 10 | module item at examples/options-conflicts.js:3 |  |  | 0.561 |
+| walker |  | 3136 | 10 | module item at examples/options-custom-processing.js:45 |  |  | 0.561 |
+| walker |  | 3146 | 10 | module item at examples/options-env.js:3 |  |  | 0.561 |
+| walker |  | 3156 | 10 | module item at examples/options-extra.js:8 |  |  | 0.561 |
+| walker |  | 3166 | 10 | module item at examples/options-implies.js:3 |  |  | 0.561 |
+| walker |  | 3176 | 10 | module item at examples/options-negatable.js:17 |  |  | 0.561 |
+| walker |  | 3186 | 10 | module item at examples/pass-through-options.js:4 |  |  | 0.561 |
+| walker |  | 3196 | 10 | module item at examples/positional-options.js:4 |  |  | 0.561 |
 | ns | 3205 |  | 280 | Help class — public method names | 3.8 |  | 0.530 |
-| walker |  | 3215 | 10 | module item at examples/options-boolean-or-value.js:14 |  |  | 0.530 |
-| walker |  | 3225 | 10 | module item at examples/options-common.js:16 |  |  | 0.530 |
-| walker |  | 3235 | 10 | module item at examples/options-conflicts.js:3 |  |  | 0.530 |
-| walker |  | 3245 | 10 | module item at examples/options-custom-processing.js:45 |  |  | 0.530 |
-| walker |  | 3255 | 10 | module item at examples/options-env.js:3 |  |  | 0.530 |
-| walker |  | 3265 | 10 | module item at examples/options-extra.js:8 |  |  | 0.530 |
-| walker |  | 3275 | 10 | module item at examples/options-implies.js:3 |  |  | 0.530 |
-| walker |  | 3285 | 10 | module item at examples/options-negatable.js:17 |  |  | 0.530 |
-| walker |  | 3295 | 10 | module item at examples/pass-through-options.js:4 |  |  | 0.530 |
-| walker |  | 3305 | 10 | module item at examples/positional-options.js:4 |  |  | 0.530 |
-| walker |  | 3315 | 10 | module item at examples/split.js:9 |  |  | 0.530 |
-| walker |  | 3325 | 10 | module item at examples/string-util.js:2 |  |  | 0.530 |
-| walker |  | 3335 | 10 | module item at examples/thank.js:6 |  |  | 0.530 |
-| walker |  | 3348 | 13 | module item at examples/arguments-custom-processing.js:10 |  |  | 0.530 |
-| walker |  | 3361 | 13 | module item at examples/options-custom-processing.js:10 |  |  | 0.530 |
-| walker |  | 3374 | 13 | module item at examples/options-custom-processing.js:23 |  |  | 0.530 |
-| walker |  | 3383 | 9 | module item body at examples/options-custom-processing.js:23 body 24 |  |  | 0.530 |
-| walker |  | 3396 | 13 | module item at examples/options-custom-processing.js:27 |  |  | 0.530 |
-| walker |  | 3403 | 7 | module item body at examples/options-custom-processing.js:27 body 28 |  |  | 0.530 |
+| walker |  | 3206 | 10 | module item at examples/split.js:9 |  |  | 0.530 |
+| walker |  | 3216 | 10 | module item at examples/string-util.js:2 |  |  | 0.530 |
+| walker |  | 3226 | 10 | module item at examples/thank.js:6 |  |  | 0.530 |
+| walker |  | 3239 | 13 | module item at examples/arguments-custom-processing.js:10 |  |  | 0.530 |
+| walker |  | 3252 | 13 | module item at examples/options-custom-processing.js:10 |  |  | 0.530 |
+| walker |  | 3265 | 13 | module item at examples/options-custom-processing.js:23 |  |  | 0.530 |
+| walker |  | 3274 | 9 | module item body at examples/options-custom-processing.js:23 body 24 |  |  | 0.530 |
+| walker |  | 3287 | 13 | module item at examples/options-custom-processing.js:27 |  |  | 0.530 |
+| walker |  | 3294 | 7 | module item body at examples/options-custom-processing.js:27 body 28 |  |  | 0.530 |
 | ns | 3497 |  | 292 | Argument constructor body | 4.1 | 3.2 | 0.507 |
 | ns | 3559 |  | 62 | humanReadableArgName | 4.2 | 3.2 | 0.508 |
 | ns | 3964 |  | 405 | Option constructor body | 4.3 | 3.3 | 0.488 |
-| walker |  | 4228 | 825 | Readme.md section #0 |  |  | 0.488 |
-| walker |  | 4242 | 14 | module item at examples/arguments-custom-processing.js:20 |  |  | 0.488 |
-| walker |  | 4253 | 11 | module item body at examples/arguments-custom-processing.js:20 body 21 |  |  | 0.488 |
-| walker |  | 4264 | 11 | module item at examples/arguments-custom-processing.js:8 |  |  | 0.488 |
-| walker |  | 4275 | 11 | module item at examples/arguments-extra.js:6 |  |  | 0.488 |
+| walker |  | 4119 | 825 | Readme.md section #0 |  |  | 0.488 |
+| walker |  | 4133 | 14 | module item at examples/arguments-custom-processing.js:20 |  |  | 0.488 |
+| walker |  | 4144 | 11 | module item body at examples/arguments-custom-processing.js:20 body 21 |  |  | 0.488 |
+| walker |  | 4155 | 11 | module item at examples/arguments-custom-processing.js:8 |  |  | 0.488 |
+| walker |  | 4166 | 11 | module item at examples/arguments-extra.js:6 |  |  | 0.488 |
+| walker |  | 4177 | 11 | module item at examples/configure-output.js:2 |  |  | 0.488 |
+| walker |  | 4188 | 11 | module item at examples/defaultCommand.js:4 |  |  | 0.488 |
+| walker |  | 4199 | 11 | module item at examples/nestedCommands.js:4 |  |  | 0.488 |
+| walker |  | 4210 | 11 | module item at examples/options-boolean-or-value.js:8 |  |  | 0.488 |
+| walker |  | 4221 | 11 | module item at examples/options-common.js:7 |  |  | 0.488 |
+| walker |  | 4232 | 11 | module item at examples/options-custom-processing.js:8 |  |  | 0.488 |
+| walker |  | 4243 | 11 | module item at examples/options-defaults.js:7 |  |  | 0.488 |
+| walker |  | 4254 | 11 | module item at examples/options-negatable.js:8 |  |  | 0.488 |
+| walker |  | 4265 | 11 | module item at examples/options-required.js:9 |  |  | 0.488 |
+| walker |  | 4276 | 11 | module item at examples/options-variadic.js:6 |  |  | 0.488 |
 | ns | 4284 |  | 320 | splitOptionFlags — flag-parser core | 4.4 | 3.3 | 0.472 |
-| walker |  | 4286 | 11 | module item at examples/configure-output.js:2 |  |  | 0.472 |
-| walker |  | 4297 | 11 | module item at examples/defaultCommand.js:4 |  |  | 0.472 |
-| walker |  | 4308 | 11 | module item at examples/nestedCommands.js:4 |  |  | 0.472 |
-| walker |  | 4319 | 11 | module item at examples/options-boolean-or-value.js:8 |  |  | 0.472 |
-| walker |  | 4330 | 11 | module item at examples/options-common.js:7 |  |  | 0.472 |
-| walker |  | 4341 | 11 | module item at examples/options-custom-processing.js:8 |  |  | 0.472 |
-| walker |  | 4352 | 11 | module item at examples/options-defaults.js:7 |  |  | 0.472 |
-| walker |  | 4363 | 11 | module item at examples/options-negatable.js:8 |  |  | 0.472 |
-| walker |  | 4374 | 11 | module item at examples/options-required.js:9 |  |  | 0.472 |
-| walker |  | 4385 | 11 | module item at examples/options-variadic.js:6 |  |  | 0.472 |
-| walker |  | 4448 | 63 | export doc at lib/argument.js:143 |  |  | 0.472 |
-| walker |  | 4460 | 12 | module item at examples/hook.js:8 |  |  | 0.472 |
-| walker |  | 4472 | 12 | module item at examples/nestedCommands.js:11 |  |  | 0.472 |
-| walker |  | 4488 | 16 | module item at examples/options-custom-processing.js:19 |  |  | 0.472 |
-| walker |  | 4497 | 9 | module item body at examples/options-custom-processing.js:19 body 20 |  |  | 0.472 |
-| walker |  | 4569 | 72 | export doc at lib/help.js:740 |  |  | 0.458 |
+| walker |  | 4339 | 63 | export doc at lib/argument.js:143 |  |  | 0.472 |
+| walker |  | 4351 | 12 | module item at examples/hook.js:8 |  |  | 0.472 |
+| walker |  | 4363 | 12 | module item at examples/nestedCommands.js:11 |  |  | 0.472 |
+| walker |  | 4379 | 16 | module item at examples/options-custom-processing.js:19 |  |  | 0.472 |
+| walker |  | 4388 | 9 | module item body at examples/options-custom-processing.js:19 body 20 |  |  | 0.472 |
+| walker |  | 4460 | 72 | export doc at lib/help.js:740 |  |  | 0.472 |
+| walker |  | 4474 | 14 | module item at examples/help-groups.js:6 |  |  | 0.472 |
+| walker |  | 4488 | 14 | module item at examples/help-groups.js:7 |  |  | 0.472 |
 | ns | 4569 |  | 285 | parsing-and-hooks doc | 5.1 |  | 0.458 |
-| walker |  | 4583 | 14 | module item at examples/help-groups.js:6 |  |  | 0.458 |
-| walker |  | 4597 | 14 | module item at examples/help-groups.js:7 |  |  | 0.458 |
 | ns | 5020 |  | 451 | _parseCommand body — option pass + subcommand routing | 5.2 | 3.6 | 0.439 |
-| walker |  | 5152 | 555 | export at lib/help.js:12 |  |  | 0.490 |
-| walker |  | 5167 | 15 | module item at examples/split.js:10 |  |  | 0.490 |
-| walker |  | 5279 | 112 | export doc at lib/option.js:268 |  |  | 0.490 |
-| ns | 5411 |  | 391 | _parseCommand body — action handler + hooks | 5.2b | 5.2 | 0.474 |
-| walker |  | 5639 | 360 | export body at lib/command.js:2752 body 2753 |  |  | 0.474 |
-| walker |  | 5698 | 59 | module item body at examples/custom-command-class.js:6 body 8 |  |  | 0.474 |
-| walker |  | 5710 | 12 | imports in examples/arguments-custom-processing.js |  |  | 0.474 |
-| walker |  | 5722 | 12 | imports in examples/arguments-extra.js |  |  | 0.474 |
-| walker |  | 5734 | 12 | imports in examples/configure-output.js |  |  | 0.474 |
-| walker |  | 5746 | 12 | imports in examples/custom-command-class.js |  |  | 0.474 |
-| walker |  | 5758 | 12 | imports in examples/defaultCommand.js |  |  | 0.474 |
-| walker |  | 5770 | 12 | imports in examples/nestedCommands.js |  |  | 0.474 |
-| walker |  | 5782 | 12 | imports in examples/options-boolean-or-value.js |  |  | 0.474 |
-| walker |  | 5794 | 12 | imports in examples/options-common.js |  |  | 0.474 |
-| walker |  | 5806 | 12 | imports in examples/options-custom-processing.js |  |  | 0.474 |
-| walker |  | 5818 | 12 | imports in examples/options-defaults.js |  |  | 0.474 |
-| walker |  | 5830 | 12 | imports in examples/options-negatable.js |  |  | 0.474 |
-| walker |  | 5842 | 12 | imports in examples/options-required.js |  |  | 0.474 |
-| walker |  | 5854 | 12 | imports in examples/options-variadic.js |  |  | 0.474 |
-| walker |  | 5875 | 21 | module item at examples/options-negatable.js:18 |  |  | 0.474 |
+| walker |  | 5043 | 555 | export at lib/help.js:12 |  |  | 0.490 |
+| walker |  | 5058 | 15 | module item at examples/split.js:10 |  |  | 0.490 |
+| walker |  | 5170 | 112 | export doc at lib/option.js:268 |  |  | 0.490 |
+| walker |  | 5212 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.490 |
+| ns | 5411 |  | 391 | _parseCommand body — action handler + hooks | 5.2b | 5.2 | 0.473 |
+| walker |  | 5572 | 360 | export body at lib/command.js:2752 body 2753 |  |  | 0.473 |
+| walker |  | 5631 | 59 | module item body at examples/custom-command-class.js:6 body 8 |  |  | 0.473 |
+| walker |  | 5643 | 12 | imports in examples/arguments-custom-processing.js |  |  | 0.473 |
+| walker |  | 5655 | 12 | imports in examples/arguments-extra.js |  |  | 0.473 |
+| walker |  | 5667 | 12 | imports in examples/configure-output.js |  |  | 0.473 |
+| walker |  | 5679 | 12 | imports in examples/custom-command-class.js |  |  | 0.473 |
+| walker |  | 5691 | 12 | imports in examples/defaultCommand.js |  |  | 0.473 |
+| walker |  | 5703 | 12 | imports in examples/nestedCommands.js |  |  | 0.473 |
+| walker |  | 5715 | 12 | imports in examples/options-boolean-or-value.js |  |  | 0.473 |
+| walker |  | 5727 | 12 | imports in examples/options-common.js |  |  | 0.473 |
+| walker |  | 5739 | 12 | imports in examples/options-custom-processing.js |  |  | 0.473 |
+| walker |  | 5751 | 12 | imports in examples/options-defaults.js |  |  | 0.473 |
+| walker |  | 5763 | 12 | imports in examples/options-negatable.js |  |  | 0.473 |
+| walker |  | 5775 | 12 | imports in examples/options-required.js |  |  | 0.473 |
+| walker |  | 5787 | 12 | imports in examples/options-variadic.js |  |  | 0.473 |
+| walker |  | 5808 | 21 | module item at examples/options-negatable.js:18 |  |  | 0.473 |
+| walker |  | 6000 | 192 | docs/help-in-depth.md section #0 |  |  | 0.473 |
+| walker |  | 6014 | 14 | imports in examples/action-this.js |  |  | 0.473 |
 | ns | 6016 |  | 605 | parseOptions body — entry + main loop frame | 5.3 | 3.6 | 0.449 |
-| walker |  | 6067 | 192 | docs/help-in-depth.md section #0 |  |  | 0.449 |
-| walker |  | 6081 | 14 | imports in examples/action-this.js |  |  | 0.449 |
-| walker |  | 6095 | 14 | imports in examples/alias.js |  |  | 0.449 |
-| walker |  | 6109 | 14 | imports in examples/argument.js |  |  | 0.449 |
-| walker |  | 6123 | 14 | imports in examples/pass-through-options.js |  |  | 0.449 |
-| walker |  | 6137 | 14 | imports in examples/positional-options.js |  |  | 0.449 |
-| walker |  | 6151 | 14 | imports in examples/split.js |  |  | 0.449 |
-| walker |  | 6165 | 14 | imports in examples/string-util.js |  |  | 0.449 |
-| walker |  | 6179 | 14 | imports in examples/thank.js |  |  | 0.449 |
-| walker |  | 6721 | 542 | export body at lib/argument.js:3 body 14 |  |  | 0.483 |
+| walker |  | 6028 | 14 | imports in examples/alias.js |  |  | 0.449 |
+| walker |  | 6042 | 14 | imports in examples/argument.js |  |  | 0.449 |
+| walker |  | 6056 | 14 | imports in examples/pass-through-options.js |  |  | 0.449 |
+| walker |  | 6070 | 14 | imports in examples/positional-options.js |  |  | 0.449 |
+| walker |  | 6084 | 14 | imports in examples/split.js |  |  | 0.449 |
+| walker |  | 6098 | 14 | imports in examples/string-util.js |  |  | 0.449 |
+| walker |  | 6112 | 14 | imports in examples/thank.js |  |  | 0.449 |
+| walker |  | 6654 | 542 | export body at lib/argument.js:3 body 14 |  |  | 0.483 |
 | ns | 6799 |  | 783 | parseOptions body — flag dispatch branches | 5.3b | 5.3 | 0.455 |
-| walker |  | 6949 | 228 | package dependencies in package.json |  |  | 0.455 |
-| walker |  | 7164 | 215 | docs/options-in-depth.md section #0 |  |  | 0.456 |
-| walker |  | 7180 | 16 | imports in examples/help-groups.js |  |  | 0.456 |
-| walker |  | 7196 | 16 | imports in examples/hook.js |  |  | 0.456 |
-| walker |  | 7212 | 16 | imports in examples/options-conflicts.js |  |  | 0.456 |
+| walker |  | 6882 | 228 | package dependencies in package.json |  |  | 0.455 |
+| walker |  | 6898 | 16 | imports in examples/help-groups.js |  |  | 0.455 |
+| walker |  | 6914 | 16 | imports in examples/hook.js |  |  | 0.455 |
+| walker |  | 6930 | 16 | imports in examples/options-conflicts.js |  |  | 0.455 |
+| walker |  | 6946 | 16 | imports in examples/options-env.js |  |  | 0.455 |
+| walker |  | 6962 | 16 | imports in examples/options-extra.js |  |  | 0.455 |
+| walker |  | 6978 | 16 | imports in examples/options-implies.js |  |  | 0.455 |
 | ns | 7221 |  | 422 | addOption body — defaults + listener registration | 5.4 | 3.4 | 0.441 |
-| walker |  | 7228 | 16 | imports in examples/options-env.js |  |  | 0.441 |
-| walker |  | 7244 | 16 | imports in examples/options-extra.js |  |  | 0.441 |
-| walker |  | 7260 | 16 | imports in examples/options-implies.js |  |  | 0.441 |
-| walker |  | 7518 | 258 | Readme.md section #3 |  |  | 0.443 |
-| ns | 7597 |  | 376 | addOption body — handleOptionValue closure | 5.4b | 5.4 | 0.433 |
-| walker |  | 7742 | 224 | docs/terminology.md section #0 |  |  | 0.454 |
+| walker |  | 7236 | 258 | Readme.md section #3 |  |  | 0.443 |
+| walker |  | 7460 | 224 | docs/terminology.md section #0 |  |  | 0.465 |
+| walker |  | 7527 | 67 | headings outline in docs/options-in-depth.md |  |  | 0.465 |
+| ns | 7597 |  | 376 | addOption body — handleOptionValue closure | 5.4b | 5.4 | 0.454 |
+| walker |  | 7742 | 215 | docs/options-in-depth.md section #0 |  |  | 0.454 |
 | walker |  | 7780 | 38 | module item body at examples/configure-output.js:4 body 5 |  |  | 0.454 |
 | ns | 7964 |  | 367 | Help formatHelp — usage + description + arguments | 6.1 | 3.8 | 0.441 |
 | walker |  | 8040 | 260 | docs/parsing-and-hooks.md section #0 |  |  | 0.461 |

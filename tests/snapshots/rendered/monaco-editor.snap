@@ -70,21 +70,6 @@ docs/
     debugging-core.gif
     debugging-languages.gif
     integrate-esm.md
-        1→## Integrating the ESM version of the Monaco Editor
-        …
-        9→### Using webpack
-        …
-        17→### Option 1: Using the Monaco Editor WebPack Plugin
-        …
-        60→---
-        62→### Option 2: Using plain webpack
-        …
-        133→---
-        135→### Using parcel
-        …
-        187→---
-        189→### Using Vite
-        …
     launch config.png
     out-folders.dio.svg
 editor.code-workspace
@@ -112,6 +97,12 @@ monaco-lsp-client/
     rolldown.config.mjs
     src/
         adapters/
+            ITextModelBridge.ts
+            LspCapabilitiesRegistry.ts
+            LspClient.ts
+            LspConnection.ts
+            TextDocumentSynchronizer.ts
+            languageFeatures/
         index.ts
             5→export { MonacoLspClient, WebSocketTransport, createTransportToWorker, createTransportToIFrame };
         types.ts

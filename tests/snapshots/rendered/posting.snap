@@ -81,16 +81,6 @@ docs/
     overrides/
         home.html
     roadmap.md
-        1→## About this document
-        …
-        47→## Next planned features 🚀
-        …
-        57→## Longer Term 🔮
-        …
-        89→## Completed ✓
-        …
-        117→## Legend
-        …
     stylesheets/
         extra.css
 mkdocs.yml
@@ -219,7 +209,9 @@ src/
             11→CommandType = tuple[str, IgnoreReturnCallbackType, str, bool]
             14→class PostingProvider(Provider):
             15→    @property
-            …
+            16→    def commands(
+            17→        self,
+            18→    ) -> tuple[tuple[str, IgnoreReturnCallbackType, str, bool], ...]:
             204→    async def discover(self) -> Hits:
             …
             218→    async def search(self, query: str) -> Hits:
@@ -270,6 +262,7 @@ src/
         themes.py
         tuple_to_multidict.py
         types.py
+            1→from typing import Literal, Optional, Tuple, Union
             3→PostingLayout = Literal["horizontal", "vertical"]
             6→CertTypes = Union[
         urls.py

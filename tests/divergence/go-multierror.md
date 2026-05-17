@@ -112,22 +112,22 @@ Score(3000)=0.746 I=0.949 C=0.585 ns_rows≤3K=19/39 (reached=15 partial=0 missi
 | ns | 4319 |  | 383 | Error.Unwrap body + chain methods | 5.2 | 3.2 | 0.680 |
 | ns | 4466 |  | 147 | Group.Go and Group.Wait bodies | 5.3 | 3.3 | 0.684 |
 | walker |  | 4541 | 898 | README.md section #1 |  |  | 0.794 |
-| walker |  | 4573 | 32 | headings outline in .github/pull_request_template.md |  |  | 0.794 |
 | ns | 4669 |  | 203 | Flatten body (Flatten + flatten recursion) | 5.4 | 3.4 | 0.795 |
 | ns | 4872 |  | 203 | Prefix body | 5.5 | 3.4 | 0.795 |
 | ns | 5019 |  | 147 | ListFormatFunc body | 5.6 | 3.5 | 0.794 |
 | ns | 5197 |  | 178 | Error.Error / ErrorOrNil / WrappedErrors / GoString bodies | 5.7 | 3.6 | 0.792 |
 | ns | 5271 |  | 74 | sort.Interface bodies | 5.8 | 3.7 | 0.790 |
 | ns | 5514 |  | 243 | Test function name inventory across all _test.go files | 6.1 |  | 0.769 |
-| walker |  | 5552 | 979 | README.md section #3 |  |  | 0.880 |
-| walker |  | 5567 | 15 | go test names surface in group_test.go |  |  | 0.880 |
-| walker |  | 5588 | 21 | .github/pull_request_template.md section #0 |  |  | 0.880 |
-| walker |  | 5620 | 32 | go test names surface in flatten_test.go |  |  | 0.880 |
-| ns | 5622 |  | 108 | Format expected-output strings from tests | 6.2 |  | 0.866 |
-| walker |  | 5652 | 32 | go test names surface in sort_test.go |  |  | 0.867 |
-| walker |  | 5688 | 36 | go test names surface in format_test.go |  |  | 0.868 |
-| walker |  | 5708 | 20 | .github/pull_request_template.md section #2 |  |  | 0.868 |
-| walker |  | 5760 | 52 | go test names surface in prefix_test.go |  |  | 0.870 |
+| walker |  | 5520 | 979 | README.md section #3 |  |  | 0.880 |
+| walker |  | 5535 | 15 | go test names surface in group_test.go |  |  | 0.880 |
+| walker |  | 5567 | 32 | go test names surface in flatten_test.go |  |  | 0.880 |
+| walker |  | 5599 | 32 | go test names surface in sort_test.go |  |  | 0.881 |
+| ns | 5622 |  | 108 | Format expected-output strings from tests | 6.2 |  | 0.867 |
+| walker |  | 5635 | 36 | go test names surface in format_test.go |  |  | 0.868 |
+| walker |  | 5687 | 52 | go test names surface in prefix_test.go |  |  | 0.870 |
+| walker |  | 5719 | 32 | headings outline in .github/pull_request_template.md |  |  | 0.870 |
+| walker |  | 5740 | 21 | .github/pull_request_template.md section #0 |  |  | 0.870 |
+| walker |  | 5760 | 20 | .github/pull_request_template.md section #2 |  |  | 0.870 |
 | walker |  | 5794 | 34 | .github/pull_request_template.md section #1 |  |  | 0.870 |
 | walker |  | 5904 | 110 | go test names surface in append_test.go |  |  | 0.878 |
 | ns | 5988 |  | 366 | TestErrorUnwrap — chain semantics in action | 6.3 | 6.1 | 0.847 |
