@@ -482,15 +482,15 @@ Homepage = "https://example.com"
 "#;
 
         let broad = project_identity_lines(source, 1, 9, true);
-        // Broad set (pyproject.toml): name, version (dynamic stays here only
-        // because it isn't in the narrow set; description, requires-python).
-        // dynamic = ["version"] excluded by the `!= '['` value check.
-        // authors / classifiers are array-valued — excluded. requires-python
-        // is a scalar in the broad set.
-        assert_eq!(broad, vec![1, 2, 4, 7]);
+        // Broad set: header + name (line 2) + description (line 4) +
+        // requires-python (line 9). Array-valued pairs (dynamic /
+        // authors / classifiers) and array-interior rows are excluded
+        // by the `!= '['` value check and the "must contain `=`"
+        // split, respectively.
+        assert_eq!(broad, vec![1, 2, 4, 9]);
 
         let narrow = project_identity_lines(source, 1, 9, false);
-        // Narrow set: name + description only.
+        // Narrow set: header + name + description.
         assert_eq!(narrow, vec![1, 2, 4]);
     }
 
