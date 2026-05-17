@@ -573,6 +573,12 @@ fn emit_export_body_parts(
     } else {
         body_part_value_factor(parts.len())
     };
+    // Class method bodies are peer units (one body batch per method) —
+    // the late-body decay targets long function-body chains in catalog
+    // files where later segments are redundant detail, but each class
+    // method is its own semantic unit. Mirrors the ModuleItem class-
+    // body path which already bypasses the decay.
+    let is_class_peer = matches!(item.kind, ItemKind::Class | ItemKind::Default);
     for part in parts {
         let Some(body_start_line) = part.start_line() else {
             continue;
@@ -588,7 +594,7 @@ fn emit_export_body_parts(
         // that targets catalog files' long body chains. Without this
         // exempt, the inner-helper bodies (segments 5+) collapse to
         // 5% value and lose every budget race.
-        let segment_factor = if item.factory_sibling_body_parts {
+        let segment_factor = if item.factory_sibling_body_parts || is_class_peer {
             1.0
         } else {
             body_segment_value_factor(*emit.body_segment_index)
@@ -605,7 +611,8 @@ fn emit_export_body_parts(
             value: export_body_value(emit.file, item.kind, emit.ctx, emit.js_factor)
                 * emit.per_export_factor
                 * part_value_factor
-                * segment_factor,
+                * segment_factor
+                * tiny_body_value_factor(part_line_count),
         });
         if !is_class_peer {
             *emit.body_segment_index += 1;
