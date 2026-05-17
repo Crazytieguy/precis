@@ -1015,7 +1015,8 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     } else {
         (0.25, 0.45)
     };
-    mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx)) * top_level_package_init_factor(file)
+    mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx))
+        * top_level_package_init_factor(file, ctx)
 }
 
 fn imports_chunk_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
@@ -1032,7 +1033,12 @@ fn is_init_py(file: &Path) -> bool {
 /// Detected by walking up: the file is top-level when its grandparent does
 /// not contain `__init__.py` — i.e. the package isn't nested inside another
 /// Python package. Namespace packages (no parent `__init__.py`) also qualify.
-fn is_top_level_package_init(file: &Path) -> bool {
+///
+/// Non-essential-path gate: an `examples/<topic>/<pkg>/__init__.py` likewise
+/// has no `__init__.py` two dirs up, but its package surface is sample code,
+/// not the project's canonical API. Excluded via `non_essential_factor` so
+/// the top-level boost stays scoped to real public-API anchors.
+fn is_top_level_package_init(file: &Path, ctx: &WalkCtx) -> bool {
     if !is_init_py(file) {
         return false;
     }
@@ -1042,7 +1048,10 @@ fn is_top_level_package_init(file: &Path) -> bool {
     let Some(grandparent) = parent.parent() else {
         return true;
     };
-    !grandparent.join("__init__.py").is_file()
+    if grandparent.join("__init__.py").is_file() {
+        return false;
+    }
+    ctx.non_essential_factor(file) >= 1.0
 }
 
 /// Boost the top-level package's `__init__.py` over sub-package
@@ -1051,8 +1060,8 @@ fn is_top_level_package_init(file: &Path) -> bool {
 /// inits expose intermediate-tier APIs that are secondary. Without this
 /// boost, smaller sub-package inits win the cost^0.35-penalised ratio
 /// race and the top-level init lands much later in the schedule.
-fn top_level_package_init_factor(file: &Path) -> f64 {
-    if is_top_level_package_init(file) {
+fn top_level_package_init_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if is_top_level_package_init(file, ctx) {
         3.0
     } else {
         1.0

@@ -14,106 +14,106 @@ Score(3000)=0.640 I=0.824 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | walker |  | 265 | 26 | listing of 'packages/lib' |  |  | 0.918 |
 | walker |  | 281 | 16 | listing of 'packages/lib/src' |  |  | 0.923 |
 | walker |  | 289 | 8 | export names surface in packages/lib/src/index.ts |  |  | 0.923 |
-| walker |  | 341 | 52 | README headline in packages/lib/README.md |  |  | 0.923 |
-| ns | 357 |  | 107 | Root package.json — author + repo + engines | 1.6 | 1.5 | 0.816 |
-| walker |  | 358 | 17 | listing of 'packages/docs' |  |  | 0.816 |
-| walker |  | 381 | 23 | listing of 'packages/app-server' |  |  | 0.819 |
-| walker |  | 402 | 21 | listing of 'packages/app-server/src' |  |  | 0.821 |
-| walker |  | 427 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.821 |
-| walker |  | 453 | 26 | listing of 'packages/crypto' |  |  | 0.824 |
-| ns | 497 |  | 140 | pnpm-workspace.yaml — catalog versions | 1.7 | 1.4 | 0.736 |
-| walker |  | 517 | 64 | README headline in packages/crypto/README.md |  |  | 0.736 |
-| walker |  | 548 | 31 | headings outline in packages/crypto/README.md |  |  | 0.736 |
-| walker |  | 588 | 40 | headings outline in packages/lib/README.md |  |  | 0.736 |
-| walker |  | 617 | 29 | listing of 'packages/cli' |  |  | 0.742 |
-| walker |  | 667 | 50 | README headline in packages/cli/README.md |  |  | 0.742 |
-| walker |  | 688 | 21 | listing of 'packages/cli/src' |  |  | 0.742 |
-| ns | 694 |  | 197 | Root package.json — scripts + keywords + devDeps | 1.8 | 1.6 | 0.616 |
-| walker |  | 719 | 31 | listing of 'packages/docs/src' |  |  | 0.616 |
-| walker |  | 751 | 32 | listing of 'packages/crypto/src' |  |  | 0.616 |
+| walker |  | 306 | 17 | listing of 'packages/docs' |  |  | 0.923 |
+| walker |  | 329 | 23 | listing of 'packages/app-server' |  |  | 0.927 |
+| walker |  | 350 | 21 | listing of 'packages/app-server/src' |  |  | 0.929 |
+| ns | 357 |  | 107 | Root package.json — author + repo + engines | 1.6 | 1.5 | 0.821 |
+| walker |  | 375 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.821 |
+| walker |  | 401 | 26 | listing of 'packages/crypto' |  |  | 0.824 |
+| walker |  | 430 | 29 | listing of 'packages/cli' |  |  | 0.830 |
+| walker |  | 451 | 21 | listing of 'packages/cli/src' |  |  | 0.830 |
+| walker |  | 482 | 31 | listing of 'packages/docs/src' |  |  | 0.830 |
+| ns | 497 |  | 140 | pnpm-workspace.yaml — catalog versions | 1.7 | 1.4 | 0.741 |
+| walker |  | 514 | 32 | listing of 'packages/crypto/src' |  |  | 0.741 |
+| ns | 694 |  | 197 | Root package.json — scripts + keywords + devDeps | 1.8 | 1.6 | 0.615 |
+| walker |  | 709 | 195 | headings outline in README.md |  |  | 0.616 |
+| walker |  | 807 | 98 | README.md section #0 |  |  | 0.616 |
+| walker |  | 825 | 18 | README.md section #32 |  |  | 0.616 |
+| walker |  | 856 | 31 | README.md section #18 |  |  | 0.616 |
 | ns | 872 |  | 178 | README — project structure (per-package one-liners) | 1.9 |  | 0.570 |
-| walker |  | 946 | 195 | headings outline in README.md |  |  | 0.571 |
-| walker |  | 1044 | 98 | README.md section #0 |  |  | 0.571 |
-| walker |  | 1062 | 18 | README.md section #32 |  |  | 0.571 |
-| walker |  | 1093 | 31 | README.md section #18 |  |  | 0.571 |
-| walker |  | 1123 | 30 | README.md section #25 |  |  | 0.571 |
-| walker |  | 1140 | 17 | README.md section #6 |  |  | 0.571 |
-| walker |  | 1157 | 17 | README.md section #7 |  |  | 0.571 |
-| walker |  | 1175 | 18 | README.md section #2 |  |  | 0.571 |
-| walker |  | 1194 | 19 | README.md section #8 |  |  | 0.572 |
-| walker |  | 1209 | 15 | listing of 'packages/app-server/src/modules' |  |  | 0.572 |
-| ns | 1225 |  | 353 | README — features list | 1.10 |  | 0.525 |
-| walker |  | 1229 | 20 | README.md section #12 |  |  | 0.530 |
-| walker |  | 1270 | 41 | headings outline in packages/docs/src/index.md |  |  | 0.530 |
-| walker |  | 1291 | 21 | README.md section #5 |  |  | 0.537 |
-| walker |  | 1312 | 21 | README.md section #9 |  |  | 0.545 |
-| walker |  | 1324 | 12 | listing of 'packages/app-server/src/modules/shared' |  |  | 0.545 |
-| walker |  | 1347 | 23 | README.md section #11 |  |  | 0.554 |
-| walker |  | 1371 | 24 | README.md section #10 |  |  | 0.564 |
-| walker |  | 1394 | 23 | packages/crypto/README.md section #3 |  |  | 0.564 |
-| walker |  | 1419 | 25 | README.md section #3 |  |  | 0.576 |
-| walker |  | 1440 | 21 | listing of 'packages/cli/src/config' |  |  | 0.576 |
-| walker |  | 1461 | 21 | listing of 'packages/lib/src/api' |  |  | 0.576 |
-| ns | 1499 |  | 274 | README — how-it-works (creator side) | 1.11 |  | 0.543 |
-| walker |  | 1524 | 63 | listing of 'packages/app-client' |  |  | 0.549 |
-| walker |  | 1560 | 36 | README headline in packages/app-client/README.md |  |  | 0.549 |
-| walker |  | 1586 | 26 | listing of 'packages/app-client/src' |  |  | 0.549 |
-| walker |  | 1616 | 30 | packages/crypto/README.md section #2 |  |  | 0.549 |
-| walker |  | 1639 | 23 | packages/lib/README.md section #4 |  |  | 0.549 |
-| walker |  | 1664 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.549 |
-| ns | 1700 |  | 201 | README — how-it-works (recipient side) | 1.12 | 1.11 | 0.529 |
-| ns | 1726 |  | 26 | Top-level lib package contents | 2.1 |  | 0.551 |
-| ns | 1742 |  | 16 | lib/src — top-level source modules | 2.2 |  | 0.568 |
-| walker |  | 1766 | 102 | headings outline in packages/cli/README.md |  |  | 0.568 |
-| walker |  | 1791 | 25 | packages/cli/README.md section #2 |  |  | 0.568 |
-| walker |  | 1814 | 23 | packages/cli/README.md section #7 |  |  | 0.568 |
-| walker |  | 1971 | 157 | package identity metadata in package.json |  |  | 0.622 |
-| walker |  | 2022 | 51 | package runtime metadata in package.json |  |  | 0.663 |
-| walker |  | 2100 | 78 | package scripts in package.json |  |  | 0.722 |
-| ns | 2101 |  | 359 | @enclosed/lib public API — index.ts re-exports | 2.3 |  | 0.641 |
-| ns | 2124 |  | 23 | Top-level app-server package contents | 2.4 |  | 0.651 |
-| walker |  | 2132 | 32 | package dependencies in package.json |  |  | 0.676 |
-| walker |  | 2159 | 27 | listing of 'packages/lib/src/notes' |  |  | 0.676 |
-| ns | 2187 |  | 63 | Top-level app-client package contents | 2.5 |  | 0.696 |
-| ns | 2259 |  | 72 | Top-level cli + crypto + docs package contents | 2.6 |  | 0.714 |
-| walker |  | 2271 | 112 | headings outline in packages/app-client/README.md |  |  | 0.714 |
-| walker |  | 2271 | 0 | packages/app-client/README.md section #3 |  |  | 0.714 |
-| walker |  | 2340 | 69 | packages/app-client/README.md section #0 |  |  | 0.714 |
-| walker |  | 2367 | 27 | packages/app-client/README.md section #2 |  |  | 0.714 |
-| walker |  | 2398 | 31 | README.md section #4 |  |  | 0.722 |
-| walker |  | 2428 | 30 | packages/cli/README.md section #6 |  |  | 0.722 |
-| walker |  | 2457 | 29 | listing of 'packages/app-client/src/modules' |  |  | 0.722 |
-| walker |  | 2472 | 15 | listing of 'packages/app-client/src/modules/shared' |  |  | 0.722 |
-| walker |  | 2490 | 18 | listing of 'packages/app-client/src/modules/auth' |  |  | 0.722 |
-| ns | 2545 |  | 286 | @enclosed/lib README — install + usage example | 2.7 |  | 0.668 |
-| walker |  | 2654 | 164 | export at packages/lib/src/index.ts:10 |  |  | 0.689 |
-| ns | 2657 |  | 112 | lib package.json — runtime dependencies | 2.8 |  | 0.675 |
-| walker |  | 2659 | 5 | listing of 'packages/cli/bin' |  |  | 0.675 |
-| ns | 2678 |  | 21 | app-server/src — top-level entry layout | 3.1 |  | 0.680 |
-| walker |  | 2690 | 31 | listing of 'packages/docs/src/self-hosting' |  |  | 0.680 |
-| walker |  | 2717 | 27 | headings outline in packages/docs/src/self-hosting/troubleshooting.md |  |  | 0.680 |
-| walker |  | 2717 | 0 | packages/docs/src/self-hosting/troubleshooting.md section #0 |  |  | 0.680 |
-| walker |  | 2747 | 30 | packages/lib/README.md section #3 |  |  | 0.680 |
-| walker |  | 2769 | 22 | listing of 'packages/app-server/src/modules/app' |  |  | 0.681 |
-| walker |  | 2791 | 22 | listing of 'packages/app-server/src/modules/tasks' |  |  | 0.682 |
-| walker |  | 2847 | 56 | headings outline in packages/docs/src/self-hosting/configuration.md |  |  | 0.682 |
-| ns | 2851 |  | 173 | app-server/src/modules — module map | 3.2 |  | 0.644 |
-| walker |  | 2885 | 38 | README.md section #1 |  |  | 0.651 |
-| walker |  | 2899 | 14 | listing of 'packages/docs/src/integrations' |  |  | 0.651 |
+| walker |  | 886 | 30 | README.md section #25 |  |  | 0.570 |
+| walker |  | 903 | 17 | README.md section #6 |  |  | 0.570 |
+| walker |  | 920 | 17 | README.md section #7 |  |  | 0.570 |
+| walker |  | 938 | 18 | README.md section #2 |  |  | 0.571 |
+| walker |  | 957 | 19 | README.md section #8 |  |  | 0.571 |
+| walker |  | 972 | 15 | listing of 'packages/app-server/src/modules' |  |  | 0.571 |
+| walker |  | 992 | 20 | README.md section #12 |  |  | 0.572 |
+| walker |  | 1033 | 41 | headings outline in packages/docs/src/index.md |  |  | 0.572 |
+| walker |  | 1054 | 21 | README.md section #5 |  |  | 0.572 |
+| walker |  | 1075 | 21 | README.md section #9 |  |  | 0.573 |
+| walker |  | 1087 | 12 | listing of 'packages/app-server/src/modules/shared' |  |  | 0.573 |
+| walker |  | 1110 | 23 | README.md section #11 |  |  | 0.574 |
+| walker |  | 1134 | 24 | README.md section #10 |  |  | 0.575 |
+| walker |  | 1159 | 25 | README.md section #3 |  |  | 0.576 |
+| walker |  | 1180 | 21 | listing of 'packages/cli/src/config' |  |  | 0.576 |
+| walker |  | 1201 | 21 | listing of 'packages/lib/src/api' |  |  | 0.576 |
+| ns | 1225 |  | 353 | README — features list | 1.10 |  | 0.575 |
+| walker |  | 1264 | 63 | listing of 'packages/app-client' |  |  | 0.580 |
+| walker |  | 1290 | 26 | listing of 'packages/app-client/src' |  |  | 0.580 |
+| walker |  | 1315 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.580 |
+| walker |  | 1472 | 157 | package identity metadata in package.json |  |  | 0.648 |
+| ns | 1499 |  | 274 | README — how-it-works (creator side) | 1.11 |  | 0.612 |
+| walker |  | 1523 | 51 | package runtime metadata in package.json |  |  | 0.659 |
+| walker |  | 1601 | 78 | package scripts in package.json |  |  | 0.728 |
+| walker |  | 1633 | 32 | package dependencies in package.json |  |  | 0.762 |
+| walker |  | 1660 | 27 | listing of 'packages/lib/src/notes' |  |  | 0.762 |
+| walker |  | 1691 | 31 | README.md section #4 |  |  | 0.774 |
+| ns | 1700 |  | 201 | README — how-it-works (recipient side) | 1.12 | 1.11 | 0.746 |
+| ns | 1726 |  | 26 | Top-level lib package contents | 2.1 |  | 0.755 |
+| walker |  | 1727 | 36 | README headline in packages/app-client/README.md |  |  | 0.755 |
+| ns | 1742 |  | 16 | lib/src — top-level source modules | 2.2 |  | 0.761 |
+| walker |  | 1839 | 112 | headings outline in packages/app-client/README.md |  |  | 0.761 |
+| walker |  | 1839 | 0 | packages/app-client/README.md section #3 |  |  | 0.761 |
+| walker |  | 1908 | 69 | packages/app-client/README.md section #0 |  |  | 0.761 |
+| walker |  | 1935 | 27 | packages/app-client/README.md section #2 |  |  | 0.761 |
+| walker |  | 1964 | 29 | listing of 'packages/app-client/src/modules' |  |  | 0.761 |
+| walker |  | 1979 | 15 | listing of 'packages/app-client/src/modules/shared' |  |  | 0.761 |
+| walker |  | 1997 | 18 | listing of 'packages/app-client/src/modules/auth' |  |  | 0.761 |
+| ns | 2101 |  | 359 | @enclosed/lib public API — index.ts re-exports | 2.3 |  | 0.676 |
+| ns | 2124 |  | 23 | Top-level app-server package contents | 2.4 |  | 0.684 |
+| walker |  | 2161 | 164 | export at packages/lib/src/index.ts:10 |  |  | 0.714 |
+| walker |  | 2166 | 5 | listing of 'packages/cli/bin' |  |  | 0.714 |
+| ns | 2187 |  | 63 | Top-level app-client package contents | 2.5 |  | 0.730 |
+| walker |  | 2197 | 31 | listing of 'packages/docs/src/self-hosting' |  |  | 0.730 |
+| walker |  | 2224 | 27 | headings outline in packages/docs/src/self-hosting/troubleshooting.md |  |  | 0.730 |
+| walker |  | 2224 | 0 | packages/docs/src/self-hosting/troubleshooting.md section #0 |  |  | 0.730 |
+| walker |  | 2246 | 22 | listing of 'packages/app-server/src/modules/app' |  |  | 0.731 |
+| ns | 2259 |  | 72 | Top-level cli + crypto + docs package contents | 2.6 |  | 0.746 |
+| walker |  | 2268 | 22 | listing of 'packages/app-server/src/modules/tasks' |  |  | 0.747 |
+| walker |  | 2324 | 56 | headings outline in packages/docs/src/self-hosting/configuration.md |  |  | 0.747 |
+| walker |  | 2362 | 38 | README.md section #1 |  |  | 0.755 |
+| walker |  | 2376 | 14 | listing of 'packages/docs/src/integrations' |  |  | 0.756 |
+| walker |  | 2427 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.756 |
+| walker |  | 2431 | 4 | listing of 'packages/app-client/src/assets' |  |  | 0.756 |
+| walker |  | 2495 | 64 | listing of 'packages/app-client/public' |  |  | 0.756 |
+| walker |  | 2521 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.756 |
+| ns | 2545 |  | 286 | @enclosed/lib README — install + usage example | 2.7 |  | 0.692 |
+| walker |  | 2571 | 50 | README headline in packages/cli/README.md |  |  | 0.692 |
+| ns | 2657 |  | 112 | lib package.json — runtime dependencies | 2.8 |  | 0.678 |
+| walker |  | 2673 | 102 | headings outline in packages/cli/README.md |  |  | 0.678 |
+| ns | 2678 |  | 21 | app-server/src — top-level entry layout | 3.1 |  | 0.683 |
+| walker |  | 2698 | 25 | packages/cli/README.md section #2 |  |  | 0.683 |
+| walker |  | 2721 | 23 | packages/cli/README.md section #7 |  |  | 0.683 |
+| walker |  | 2751 | 30 | packages/cli/README.md section #6 |  |  | 0.683 |
+| walker |  | 2803 | 52 | README headline in packages/lib/README.md |  |  | 0.685 |
+| walker |  | 2843 | 40 | headings outline in packages/lib/README.md |  |  | 0.690 |
+| ns | 2851 |  | 173 | app-server/src/modules — module map | 3.2 |  | 0.651 |
+| walker |  | 2866 | 23 | packages/lib/README.md section #4 |  |  | 0.651 |
+| walker |  | 2896 | 30 | packages/lib/README.md section #3 |  |  | 0.651 |
+| walker |  | 2907 | 11 | export names surface in packages/lib/src/notes/notes.usecases.ts |  |  | 0.651 |
 | ns | 2947 |  | 96 | Cloudflare Workers entrypoint (full) | 3.3 |  | 0.640 |
-| walker |  | 2950 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.640 |
-| walker |  | 2954 | 4 | listing of 'packages/app-client/src/assets' |  |  | 0.640 |
-| walker |  | 3018 | 64 | listing of 'packages/app-client/public' |  |  | 0.640 |
-| walker |  | 3044 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.640 |
-| walker |  | 3055 | 11 | export names surface in packages/lib/src/notes/notes.usecases.ts |  |  | 0.640 |
-| walker |  | 3115 | 60 | json config renovate.json |  |  | 0.640 |
-| walker |  | 3126 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.640 |
-| walker |  | 3155 | 29 | README.md section #31 |  |  | 0.640 |
-| walker |  | 3160 | 5 | listing of 'packages/lib/src/files' |  |  | 0.640 |
-| walker |  | 3242 | 82 | headings outline in packages/docs/src/self-hosting/other-platforms.md |  |  | 0.640 |
-| walker |  | 3242 | 0 | packages/docs/src/self-hosting/other-platforms.md section #0 |  |  | 0.640 |
-| walker |  | 3292 | 50 | listing of 'packages/crypto/src/encryption-algorithms' |  |  | 0.640 |
-| walker |  | 3315 | 23 | listing of 'packages/app-client/src/modules/shared/http' |  |  | 0.640 |
+| walker |  | 2967 | 60 | json config renovate.json |  |  | 0.640 |
+| walker |  | 2978 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.640 |
+| walker |  | 3007 | 29 | README.md section #31 |  |  | 0.640 |
+| walker |  | 3012 | 5 | listing of 'packages/lib/src/files' |  |  | 0.640 |
+| walker |  | 3094 | 82 | headings outline in packages/docs/src/self-hosting/other-platforms.md |  |  | 0.640 |
+| walker |  | 3094 | 0 | packages/docs/src/self-hosting/other-platforms.md section #0 |  |  | 0.640 |
+| walker |  | 3144 | 50 | listing of 'packages/crypto/src/encryption-algorithms' |  |  | 0.640 |
+| walker |  | 3167 | 23 | listing of 'packages/app-client/src/modules/shared/http' |  |  | 0.640 |
+| walker |  | 3231 | 64 | README headline in packages/crypto/README.md |  |  | 0.640 |
+| walker |  | 3262 | 31 | headings outline in packages/crypto/README.md |  |  | 0.640 |
+| walker |  | 3285 | 23 | packages/crypto/README.md section #3 |  |  | 0.640 |
+| walker |  | 3315 | 30 | packages/crypto/README.md section #2 |  |  | 0.640 |
 | walker |  | 3367 | 52 | listing of 'packages/docs/src/public' |  |  | 0.640 |
 | walker |  | 3398 | 31 | README.md section #30 |  |  | 0.640 |
 | walker |  | 3411 | 13 | listing of 'packages/app-server/src/modules/storage' |  |  | 0.648 |
@@ -156,18 +156,18 @@ Score(3000)=0.640 I=0.824 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | walker |  | 5186 | 4 | listing of 'packages/app-client/src/modules/shared/style' |  |  | 0.557 |
 | walker |  | 5190 | 4 | listing of 'packages/app-server/src/modules/shared/utils' |  |  | 0.557 |
 | walker |  | 5277 | 87 | listing of 'packages/app-client/src/locales' |  |  | 0.557 |
-| walker |  | 5326 | 49 | README headline in packages/app-client/src/locales/README.md |  |  | 0.557 |
-| walker |  | 5350 | 24 | headings outline in packages/app-client/src/locales/README.md |  |  | 0.557 |
-| walker |  | 5385 | 35 | README.md section #16 |  |  | 0.557 |
-| walker |  | 5442 | 57 | packages/docs/src/how-it-works.md section #0 |  |  | 0.557 |
-| walker |  | 5448 | 6 | listing of 'packages/app-client/src/modules/ui' |  |  | 0.557 |
+| walker |  | 5312 | 35 | README.md section #16 |  |  | 0.557 |
+| walker |  | 5369 | 57 | packages/docs/src/how-it-works.md section #0 |  |  | 0.557 |
+| walker |  | 5375 | 6 | listing of 'packages/app-client/src/modules/ui' |  |  | 0.557 |
+| walker |  | 5522 | 147 | headings outline in packages/docs/src/self-hosting/docker-compose.md |  |  | 0.557 |
+| walker |  | 5537 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.557 |
+| walker |  | 5579 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.557 |
 | ns | 5587 |  | 532 | Config — defaults for the most-asked-about env vars | 4.2 | 4.1 | 0.530 |
-| walker |  | 5595 | 147 | headings outline in packages/docs/src/self-hosting/docker-compose.md |  |  | 0.530 |
-| walker |  | 5610 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.530 |
-| walker |  | 5652 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.530 |
-| walker |  | 5715 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.563 |
+| walker |  | 5642 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.563 |
+| walker |  | 5694 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.563 |
 | ns | 5731 |  | 144 | Config — getConfig export + figue setup | 4.3 | 4.1 | 0.554 |
-| walker |  | 5767 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.554 |
+| walker |  | 5743 | 49 | README headline in packages/app-client/src/locales/README.md |  |  | 0.554 |
+| walker |  | 5767 | 24 | headings outline in packages/app-client/src/locales/README.md |  |  | 0.554 |
 | walker |  | 5790 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.554 |
 | walker |  | 5800 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.554 |
 | walker |  | 5810 | 10 | listing of 'packages/docs/src/components' |  |  | 0.554 |

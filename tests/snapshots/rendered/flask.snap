@@ -139,8 +139,6 @@ examples/
         README.rst
         js_example/
             __init__.py
-                1→from flask import Flask
-                5→from js_example import views  # noqa: E402, F401
             templates/
             views.py
         pyproject.toml
@@ -151,8 +149,6 @@ examples/
         README.rst
         flaskr/
             __init__.py
-                1→import os
-                3→from flask import Flask
             auth.py
             blog.py
             db.py

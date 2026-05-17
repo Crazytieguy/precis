@@ -138,6 +138,16 @@ packages/
         package.json
         playwright.config.ts
         public/
+            android-chrome-192x192.png
+            android-chrome-512x512.png
+            apple-touch-icon.png
+            favicon-16x16.png
+            favicon-32x32.png
+            favicon.ico
+            humans.txt
+            og-image.png
+            robots.txt
+            site.webmanifest
         src/
             app.css
             assets/
@@ -244,16 +254,6 @@ packages/
         tsconfig.json
     crypto/
         README.md
-            1→# Enclosed crypto library
-            3→This package contains the natives crypto primitives used by the [Enclosed lib and project](https://enclosed.cc). It is a standalone package built to provide compatibility between different environments by exposing the same API for node:crypto and web SubtleCrypto.
-            5→## Installation
-            …
-            18→## License
-            …
-            20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
-            22→## Credits and Acknowledgements
-            …
-            24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
         eslint.config.js
         package.json
@@ -274,6 +274,9 @@ packages/
         wrangler.toml
     docs/
         .vitepress/
+            config.ts
+            plausible.ts
+            theme/
         eslint.config.js
         package.json
         src/
@@ -355,6 +358,11 @@ packages/
                 crypto.usecases.ts
                 encryption-algorithms/
                 serialization/
+                    cbor-array/
+                    serialization.models.ts
+                    serialization.registry.ts
+                    serialization.test-utils.ts
+                    serialization.types.ts
             files/
             index.ts
                 10→export {
@@ -382,7 +390,15 @@ packages/
                 notes.services.ts
                 notes.types.ts
                 notes.usecases.ts
+                    8→export { createNote };
+                    …
         tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml
 renovate.json
+    1→{
+    2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    3→  "extends": [
+    4→    "config:recommended"
+    5→  ]
+    6→}

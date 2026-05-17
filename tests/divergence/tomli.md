@@ -15,43 +15,43 @@ Score(3000)=0.504 I=0.753 C=0.337 ns_rows≤3K=18/40 (reached=6 partial=3 missin
 | ns | 279 |  | 87 | loads / load signatures + docstrings | 1.5 |  | 0.870 |
 | walker |  | 297 | 25 | python imports in setup.py |  |  | 0.870 |
 | walker |  | 327 | 30 | listing of 'tests' |  |  | 0.883 |
-| walker |  | 351 | 24 | python imports in tests/__init__.py |  |  | 0.883 |
-| walker |  | 364 | 13 | python imports in src/tomli/_types.py |  |  | 0.884 |
+| walker |  | 340 | 13 | python imports in src/tomli/_types.py |  |  | 0.884 |
 | ns | 403 |  | 124 | TOMLDecodeError class + docstring | 1.6 |  | 0.760 |
 | ns | 433 |  | 30 | tests/ directory listing | 2.1 |  | 0.775 |
 | ns | 491 |  | 58 | _types.py — full | 2.2 |  | 0.729 |
 | ns | 697 |  | 206 | _parser.py: state-class headers + Flags constants | 2.3 |  | 0.624 |
-| walker |  | 743 | 379 | headings outline in README.md |  |  | 0.625 |
-| walker |  | 765 | 22 | README.md section #2 |  |  | 0.625 |
-| walker |  | 771 | 6 | README.md section #19 |  |  | 0.625 |
-| walker |  | 779 | 8 | README.md section #13 |  |  | 0.625 |
-| walker |  | 790 | 11 | README.md section #14 |  |  | 0.625 |
-| walker |  | 804 | 14 | README.md section #18 |  |  | 0.625 |
+| walker |  | 719 | 379 | headings outline in README.md |  |  | 0.625 |
+| walker |  | 741 | 22 | README.md section #2 |  |  | 0.625 |
+| walker |  | 747 | 6 | README.md section #19 |  |  | 0.625 |
+| walker |  | 755 | 8 | README.md section #13 |  |  | 0.625 |
+| walker |  | 766 | 11 | README.md section #14 |  |  | 0.625 |
+| walker |  | 780 | 14 | README.md section #18 |  |  | 0.625 |
 | ns | 844 |  | 147 | _re.py: regex constants + match-helper locations | 2.4 |  | 0.588 |
-| ns | 1160 |  | 316 | README intro paragraph | 2.5 |  | 0.526 |
-| walker |  | 1166 | 362 | README.md section #0 |  |  | 0.536 |
-| walker |  | 1198 | 32 | python decl names surface in src/tomli/_types.py |  |  | 0.562 |
-| walker |  | 1273 | 75 | README.md section #25 |  |  | 0.562 |
-| walker |  | 1299 | 26 | README.md section #16 |  |  | 0.562 |
-| walker |  | 1330 | 31 | README.md section #23 |  |  | 0.562 |
+| walker |  | 1142 | 362 | README.md section #0 |  |  | 0.598 |
+| ns | 1160 |  | 316 | README intro paragraph | 2.5 |  | 0.536 |
+| walker |  | 1174 | 32 | python decl names surface in src/tomli/_types.py |  |  | 0.562 |
+| walker |  | 1249 | 75 | README.md section #25 |  |  | 0.562 |
+| walker |  | 1275 | 26 | README.md section #16 |  |  | 0.562 |
+| walker |  | 1306 | 31 | README.md section #23 |  |  | 0.562 |
+| walker |  | 1468 | 162 | tomllib.md section #0 |  |  | 0.562 |
 | ns | 1486 |  | 326 | README table of contents | 2.6 |  | 0.613 |
-| walker |  | 1492 | 162 | tomllib.md section #0 |  |  | 0.613 |
-| walker |  | 1525 | 33 | README.md section #21 |  |  | 0.613 |
-| walker |  | 1565 | 40 | README.md section #9 |  |  | 0.613 |
-| walker |  | 1568 | 3 | listing of '.github' |  |  | 0.613 |
-| walker |  | 1572 | 4 | listing of '.github/workflows' |  |  | 0.613 |
-| walker |  | 1613 | 41 | README.md section #22 |  |  | 0.613 |
-| walker |  | 1668 | 55 | README.md section #4 |  |  | 0.614 |
-| walker |  | 1724 | 56 | README.md section #5 |  |  | 0.616 |
-| walker |  | 1780 | 56 | README.md section #8 |  |  | 0.616 |
-| walker |  | 1831 | 51 | README.md section #17 |  |  | 0.616 |
-| walker |  | 1859 | 28 | tomllib.md section #3 |  |  | 0.616 |
+| walker |  | 1501 | 33 | README.md section #21 |  |  | 0.613 |
+| walker |  | 1541 | 40 | README.md section #9 |  |  | 0.613 |
+| walker |  | 1544 | 3 | listing of '.github' |  |  | 0.613 |
+| walker |  | 1548 | 4 | listing of '.github/workflows' |  |  | 0.613 |
+| walker |  | 1589 | 41 | README.md section #22 |  |  | 0.613 |
+| walker |  | 1644 | 55 | README.md section #4 |  |  | 0.614 |
+| walker |  | 1700 | 56 | README.md section #5 |  |  | 0.616 |
+| walker |  | 1756 | 56 | README.md section #8 |  |  | 0.616 |
+| walker |  | 1807 | 51 | README.md section #17 |  |  | 0.616 |
+| walker |  | 1835 | 28 | tomllib.md section #3 |  |  | 0.616 |
 | ns | 1904 |  | 418 | _parser.py: parse_* and skip_* function locations | 2.7 |  | 0.556 |
 | ns | 2100 |  | 196 | README usage: parse a TOML string | 2.8 |  | 0.515 |
-| walker |  | 2147 | 288 | README.md section #1 |  |  | 0.592 |
-| walker |  | 2155 | 8 | CHANGELOG.md section #0 |  |  | 0.592 |
-| walker |  | 2226 | 71 | README.md section #10 |  |  | 0.592 |
-| walker |  | 2260 | 34 | tomllib.md section #2 |  |  | 0.592 |
+| walker |  | 2123 | 288 | README.md section #1 |  |  | 0.592 |
+| walker |  | 2131 | 8 | CHANGELOG.md section #0 |  |  | 0.592 |
+| walker |  | 2202 | 71 | README.md section #10 |  |  | 0.592 |
+| walker |  | 2236 | 34 | tomllib.md section #2 |  |  | 0.592 |
+| walker |  | 2260 | 24 | python imports in tests/__init__.py |  |  | 0.592 |
 | walker |  | 2333 | 73 | README.md section #20 |  |  | 0.592 |
 | ns | 2392 |  | 292 | README usage: parse a file + handle errors | 2.9 |  | 0.568 |
 | walker |  | 2408 | 75 | README.md section #15 |  |  | 0.568 |

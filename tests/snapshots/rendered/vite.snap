@@ -6,6 +6,14 @@ expression: rendered
 .git-blame-ignore-revs
 .gitattributes
 .github/
+    ISSUE_TEMPLATE/
+    PULL_REQUEST_TEMPLATE.md
+    SECURITY.md
+    commit-convention.md
+    copilot-instructions.md
+    renovate.json5
+    workflows/
+    zizmor.yml
 .gitignore
 .oxfmtrc.json
 CODE_OF_CONDUCT.md
@@ -50,8 +58,6 @@ packages/
         CHANGELOG.md
         LICENSE
         README.md
-            1→# @vitejs/plugin-legacy…
-            3→Vite's minimum browser support target is [native ESM dynamic import](https://caniuse.com/es6-module-dynamic-import), and [`import.meta`](https://caniuse.com/mdn-javascript_operators_import_meta). This plugin provides support for legacy browsers that do not support those features when building for production.
         package.json
         src/
             __tests__/

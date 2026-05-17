@@ -82,211 +82,210 @@ Score(3000)=0.630 I=0.887 C=0.448 ns_rows≤3K=17/45 (reached=9 partial=1 missin
 | walker |  | 2519 | 12 | python class body at src/flask/sansio/blueprints.py:119 |  |  | 0.678 |
 | walker |  | 2546 | 27 | listing of 'examples/javascript' |  |  | 0.678 |
 | walker |  | 2559 | 13 | listing of 'examples/javascript/js_example' |  |  | 0.678 |
-| walker |  | 2587 | 28 | python imports in examples/javascript/js_example/__init__.py |  |  | 0.678 |
-| walker |  | 2614 | 27 | listing of 'examples/tutorial' |  |  | 0.679 |
-| walker |  | 2642 | 28 | listing of 'examples/tutorial/flaskr' |  |  | 0.680 |
-| walker |  | 2658 | 16 | python imports in examples/tutorial/flaskr/__init__.py |  |  | 0.680 |
-| walker |  | 2710 | 52 | python decl names surface in src/flask/views.py |  |  | 0.680 |
-| walker |  | 2710 | 0 | python decl at src/flask/views.py:16 |  |  | 0.680 |
-| walker |  | 2710 | 0 | python decl at src/flask/views.py:138 |  |  | 0.680 |
-| walker |  | 2744 | 34 | python decl at src/flask/views.py:11 |  |  | 0.680 |
-| walker |  | 2820 | 76 | python method sigs in src/flask/views.py |  |  | 0.681 |
-| walker |  | 2820 | 0 | python method at src/flask/views.py:78 |  |  | 0.681 |
-| walker |  | 2820 | 0 | python method at src/flask/views.py:165 |  |  | 0.681 |
-| walker |  | 2820 | 0 | python method at src/flask/views.py:182 |  |  | 0.681 |
-| walker |  | 2830 | 10 | python method body at src/flask/views.py:78 body 83 |  |  | 0.681 |
-| walker |  | 2873 | 43 | python method at src/flask/views.py:85 |  |  | 0.681 |
-| walker |  | 2903 | 30 | listing of 'examples/tutorial/tests' |  |  | 0.681 |
+| walker |  | 2586 | 27 | listing of 'examples/tutorial' |  |  | 0.679 |
+| walker |  | 2614 | 28 | listing of 'examples/tutorial/flaskr' |  |  | 0.680 |
+| walker |  | 2666 | 52 | python decl names surface in src/flask/views.py |  |  | 0.680 |
+| walker |  | 2666 | 0 | python decl at src/flask/views.py:16 |  |  | 0.680 |
+| walker |  | 2666 | 0 | python decl at src/flask/views.py:138 |  |  | 0.680 |
+| walker |  | 2700 | 34 | python decl at src/flask/views.py:11 |  |  | 0.680 |
+| walker |  | 2776 | 76 | python method sigs in src/flask/views.py |  |  | 0.681 |
+| walker |  | 2776 | 0 | python method at src/flask/views.py:78 |  |  | 0.681 |
+| walker |  | 2776 | 0 | python method at src/flask/views.py:165 |  |  | 0.681 |
+| walker |  | 2776 | 0 | python method at src/flask/views.py:182 |  |  | 0.681 |
+| walker |  | 2786 | 10 | python method body at src/flask/views.py:78 body 83 |  |  | 0.681 |
+| walker |  | 2829 | 43 | python method at src/flask/views.py:85 |  |  | 0.681 |
+| walker |  | 2859 | 30 | listing of 'examples/tutorial/tests' |  |  | 0.681 |
 | ns | 2927 |  | 461 | Blueprint constructor param docs | 2.8 | 2.7 | 0.630 |
-| walker |  | 3048 | 145 | listing of 'docs/patterns' |  |  | 0.633 |
-| walker |  | 3072 | 24 | python decl body at src/flask/json/__init__.py:77 body 102 |  |  | 0.633 |
-| walker |  | 3096 | 24 | python decl body at src/flask/json/__init__.py:108 body 132 |  |  | 0.633 |
-| walker |  | 3121 | 25 | python decl body at src/flask/json/__init__.py:138 body 170 |  |  | 0.633 |
+| walker |  | 3004 | 145 | listing of 'docs/patterns' |  |  | 0.633 |
+| walker |  | 3028 | 24 | python decl body at src/flask/json/__init__.py:77 body 102 |  |  | 0.633 |
+| walker |  | 3052 | 24 | python decl body at src/flask/json/__init__.py:108 body 132 |  |  | 0.633 |
+| walker |  | 3077 | 25 | python decl body at src/flask/json/__init__.py:138 body 170 |  |  | 0.633 |
+| walker |  | 3340 | 263 | python decl doc at src/flask/json/__init__.py:47 |  |  | 0.633 |
 | ns | 3355 |  | 428 | App default_config — the config-key catalog | 2.9 | 2.4 | 0.586 |
-| walker |  | 3384 | 263 | python decl doc at src/flask/json/__init__.py:47 |  |  | 0.586 |
-| walker |  | 3416 | 32 | python imports in src/flask/typing.py |  |  | 0.586 |
-| walker |  | 3457 | 41 | python decl names surface in src/flask/json/provider.py |  |  | 0.587 |
-| walker |  | 3457 | 0 | python decl at src/flask/json/provider.py:19 |  |  | 0.587 |
-| walker |  | 3457 | 0 | python decl at src/flask/json/provider.py:108 |  |  | 0.587 |
-| walker |  | 3457 | 0 | python decl at src/flask/json/provider.py:124 |  |  | 0.587 |
-| walker |  | 3523 | 66 | python decl names surface in src/flask/logging.py |  |  | 0.587 |
-| walker |  | 3523 | 0 | python decl at src/flask/logging.py:31 |  |  | 0.587 |
-| walker |  | 3523 | 0 | python decl at src/flask/logging.py:58 |  |  | 0.587 |
-| walker |  | 3536 | 13 | python decl at src/flask/logging.py:15 |  |  | 0.587 |
-| walker |  | 3583 | 47 | python decl doc at src/flask/logging.py:31 |  |  | 0.587 |
+| walker |  | 3372 | 32 | python imports in src/flask/typing.py |  |  | 0.586 |
+| walker |  | 3413 | 41 | python decl names surface in src/flask/json/provider.py |  |  | 0.587 |
+| walker |  | 3413 | 0 | python decl at src/flask/json/provider.py:19 |  |  | 0.587 |
+| walker |  | 3413 | 0 | python decl at src/flask/json/provider.py:108 |  |  | 0.587 |
+| walker |  | 3413 | 0 | python decl at src/flask/json/provider.py:124 |  |  | 0.587 |
+| walker |  | 3479 | 66 | python decl names surface in src/flask/logging.py |  |  | 0.587 |
+| walker |  | 3479 | 0 | python decl at src/flask/logging.py:31 |  |  | 0.587 |
+| walker |  | 3479 | 0 | python decl at src/flask/logging.py:58 |  |  | 0.587 |
+| walker |  | 3492 | 13 | python decl at src/flask/logging.py:15 |  |  | 0.587 |
+| walker |  | 3539 | 47 | python decl doc at src/flask/logging.py:31 |  |  | 0.587 |
+| walker |  | 3548 | 9 | python decl body at src/flask/logging.py:15 body 28 |  |  | 0.587 |
 | ns | 3586 |  | 231 | signals.py — all 10 Flask signal names | 3.1 |  | 0.566 |
-| walker |  | 3592 | 9 | python decl body at src/flask/logging.py:15 body 28 |  |  | 0.566 |
-| walker |  | 3864 | 272 | python decl doc at src/flask/json/__init__.py:77 |  |  | 0.566 |
+| walker |  | 3820 | 272 | python decl doc at src/flask/json/__init__.py:77 |  |  | 0.566 |
 | ns | 3993 |  | 407 | globals.py — ContextVar + LocalProxy bindings | 3.2 |  | 0.534 |
-| walker |  | 4139 | 275 | python decl doc at src/flask/json/__init__.py:108 |  |  | 0.534 |
-| walker |  | 4143 | 4 | listing of 'examples/celery/src' |  |  | 0.534 |
-| walker |  | 4160 | 17 | listing of 'examples/celery/src/task_app' |  |  | 0.535 |
-| walker |  | 4198 | 38 | python imports in examples/celery/src/task_app/__init__.py |  |  | 0.535 |
-| ns | 4203 |  | 210 | Scaffold method-name catalog | 3.3 | 2.3 | 0.513 |
-| walker |  | 4268 | 70 | python decl names surface in src/flask/testing.py |  |  | 0.514 |
-| walker |  | 4268 | 0 | python decl at src/flask/testing.py:27 |  |  | 0.514 |
-| walker |  | 4268 | 0 | python decl at src/flask/testing.py:100 |  |  | 0.514 |
-| walker |  | 4268 | 0 | python decl at src/flask/testing.py:109 |  |  | 0.514 |
-| walker |  | 4268 | 0 | python decl at src/flask/testing.py:265 |  |  | 0.514 |
-| walker |  | 4277 | 9 | python class body at src/flask/testing.py:109 |  |  | 0.514 |
-| walker |  | 4341 | 64 | python decl doc at src/flask/testing.py:265 |  |  | 0.514 |
+| walker |  | 4095 | 275 | python decl doc at src/flask/json/__init__.py:108 |  |  | 0.534 |
+| walker |  | 4099 | 4 | listing of 'examples/celery/src' |  |  | 0.534 |
+| walker |  | 4116 | 17 | listing of 'examples/celery/src/task_app' |  |  | 0.535 |
+| walker |  | 4186 | 70 | python decl names surface in src/flask/testing.py |  |  | 0.535 |
+| walker |  | 4186 | 0 | python decl at src/flask/testing.py:27 |  |  | 0.535 |
+| walker |  | 4186 | 0 | python decl at src/flask/testing.py:100 |  |  | 0.535 |
+| walker |  | 4186 | 0 | python decl at src/flask/testing.py:109 |  |  | 0.535 |
+| walker |  | 4186 | 0 | python decl at src/flask/testing.py:265 |  |  | 0.535 |
+| walker |  | 4195 | 9 | python class body at src/flask/testing.py:109 |  |  | 0.535 |
+| ns | 4203 |  | 210 | Scaffold method-name catalog | 3.3 | 2.3 | 0.514 |
+| walker |  | 4259 | 64 | python decl doc at src/flask/testing.py:265 |  |  | 0.514 |
+| walker |  | 4547 | 288 | python decl doc at src/flask/json/__init__.py:13 |  |  | 0.514 |
 | ns | 4552 |  | 349 | Flask method-name catalog (app.py) | 3.4 | 2.4 | 0.486 |
-| walker |  | 4629 | 288 | python decl doc at src/flask/json/__init__.py:13 |  |  | 0.486 |
-| walker |  | 4788 | 159 | python method sigs in src/flask/wrappers.py |  |  | 0.486 |
-| walker |  | 4788 | 0 | python method at src/flask/wrappers.py:197 |  |  | 0.486 |
-| walker |  | 4788 | 0 | python method at src/flask/wrappers.py:212 |  |  | 0.486 |
-| walker |  | 4800 | 12 | python method at src/flask/wrappers.py:146 |  |  | 0.486 |
-| walker |  | 4812 | 12 | python method at src/flask/wrappers.py:161 |  |  | 0.487 |
-| ns | 4817 |  | 265 | App method-name catalog (sansio/app.py) | 3.5 | 2.2 | 0.467 |
-| walker |  | 4824 | 12 | python method at src/flask/wrappers.py:180 |  |  | 0.467 |
-| walker |  | 4838 | 14 | python method at src/flask/wrappers.py:59 |  |  | 0.468 |
-| walker |  | 4852 | 14 | python method at src/flask/wrappers.py:119 |  |  | 0.468 |
-| walker |  | 4867 | 15 | python method at src/flask/wrappers.py:92 |  |  | 0.468 |
-| walker |  | 4885 | 18 | python method at src/flask/wrappers.py:88 |  |  | 0.468 |
-| walker |  | 4903 | 18 | python method at src/flask/wrappers.py:142 |  |  | 0.468 |
-| walker |  | 4921 | 18 | python method at src/flask/wrappers.py:246 |  |  | 0.468 |
-| walker |  | 4940 | 19 | python method at src/flask/wrappers.py:115 |  |  | 0.468 |
-| walker |  | 4953 | 13 | python method body at src/flask/wrappers.py:88 body 90 |  |  | 0.468 |
-| walker |  | 4966 | 13 | python method body at src/flask/wrappers.py:142 body 144 |  |  | 0.468 |
-| walker |  | 4980 | 14 | python method body at src/flask/wrappers.py:115 body 117 |  |  | 0.468 |
-| walker |  | 5031 | 51 | python method doc at src/flask/views.py:78 |  |  | 0.468 |
+| walker |  | 4563 | 16 | python imports in examples/tutorial/flaskr/__init__.py |  |  | 0.486 |
+| walker |  | 4722 | 159 | python method sigs in src/flask/wrappers.py |  |  | 0.486 |
+| walker |  | 4722 | 0 | python method at src/flask/wrappers.py:197 |  |  | 0.486 |
+| walker |  | 4722 | 0 | python method at src/flask/wrappers.py:212 |  |  | 0.486 |
+| walker |  | 4734 | 12 | python method at src/flask/wrappers.py:146 |  |  | 0.486 |
+| walker |  | 4746 | 12 | python method at src/flask/wrappers.py:161 |  |  | 0.487 |
+| walker |  | 4758 | 12 | python method at src/flask/wrappers.py:180 |  |  | 0.487 |
+| walker |  | 4772 | 14 | python method at src/flask/wrappers.py:59 |  |  | 0.487 |
+| walker |  | 4786 | 14 | python method at src/flask/wrappers.py:119 |  |  | 0.487 |
+| walker |  | 4801 | 15 | python method at src/flask/wrappers.py:92 |  |  | 0.487 |
+| ns | 4817 |  | 265 | App method-name catalog (sansio/app.py) | 3.5 | 2.2 | 0.468 |
+| walker |  | 4819 | 18 | python method at src/flask/wrappers.py:88 |  |  | 0.468 |
+| walker |  | 4837 | 18 | python method at src/flask/wrappers.py:142 |  |  | 0.468 |
+| walker |  | 4855 | 18 | python method at src/flask/wrappers.py:246 |  |  | 0.468 |
+| walker |  | 4874 | 19 | python method at src/flask/wrappers.py:115 |  |  | 0.468 |
+| walker |  | 4887 | 13 | python method body at src/flask/wrappers.py:88 body 90 |  |  | 0.468 |
+| walker |  | 4900 | 13 | python method body at src/flask/wrappers.py:142 body 144 |  |  | 0.468 |
+| walker |  | 4914 | 14 | python method body at src/flask/wrappers.py:115 body 117 |  |  | 0.468 |
+| walker |  | 4965 | 51 | python method doc at src/flask/views.py:78 |  |  | 0.468 |
+| walker |  | 4978 | 13 | python decl body at src/flask/json/__init__.py:13 body 43 |  |  | 0.468 |
+| walker |  | 5021 | 43 | python imports in src/flask/globals.py |  |  | 0.468 |
 | ns | 5039 |  | 222 | Blueprint method-name catalog (sansio/blueprints.py) | 3.6 | 2.7 | 0.454 |
-| walker |  | 5044 | 13 | python decl body at src/flask/json/__init__.py:13 body 43 |  |  | 0.454 |
-| walker |  | 5087 | 43 | python imports in src/flask/globals.py |  |  | 0.454 |
 | ns | 5159 |  | 120 | helpers.py — module-level function catalog | 3.7 |  | 0.445 |
+| walker |  | 5395 | 374 | python decl doc at src/flask/json/__init__.py:138 |  |  | 0.445 |
 | ns | 5398 |  | 239 | ctx.py — _AppCtxGlobals + AppContext method catalog | 3.8 | 2.2 | 0.432 |
-| walker |  | 5461 | 374 | python decl doc at src/flask/json/__init__.py:138 |  |  | 0.432 |
-| walker |  | 5519 | 58 | python method doc at src/flask/wrappers.py:246 |  |  | 0.432 |
-| walker |  | 5533 | 14 | python decl body at src/flask/json/__init__.py:13 body 44 |  |  | 0.432 |
-| walker |  | 5543 | 10 | python decl names surface in examples/javascript/js_example/__init__.py |  |  | 0.432 |
+| walker |  | 5453 | 58 | python method doc at src/flask/wrappers.py:246 |  |  | 0.432 |
+| walker |  | 5467 | 14 | python decl body at src/flask/json/__init__.py:13 body 44 |  |  | 0.432 |
+| walker |  | 5477 | 10 | python decl names surface in examples/javascript/js_example/__init__.py |  |  | 0.432 |
 | ns | 5628 |  | 230 | wrappers.py — Request and Response method catalog | 3.10 |  | 0.457 |
-| walker |  | 5741 | 198 | python method sigs in src/flask/testing.py |  |  | 0.458 |
-| walker |  | 5741 | 0 | python method at src/flask/testing.py:88 |  |  | 0.458 |
-| walker |  | 5741 | 0 | python method at src/flask/testing.py:125 |  |  | 0.458 |
-| walker |  | 5741 | 0 | python method at src/flask/testing.py:185 |  |  | 0.458 |
-| walker |  | 5741 | 0 | python method at src/flask/testing.py:249 |  |  | 0.458 |
-| walker |  | 5741 | 0 | python method at src/flask/testing.py:271 |  |  | 0.458 |
-| walker |  | 5775 | 34 | python method at src/flask/testing.py:275 |  |  | 0.458 |
-| walker |  | 5814 | 39 | python method at src/flask/testing.py:135 |  |  | 0.458 |
-| walker |  | 5829 | 15 | python method body at src/flask/testing.py:88 body 94 |  |  | 0.458 |
-| walker |  | 5881 | 52 | python method at src/flask/testing.py:255 |  |  | 0.458 |
-| walker |  | 5901 | 20 | python method body at src/flask/testing.py:271 body 272 |  |  | 0.458 |
+| walker |  | 5675 | 198 | python method sigs in src/flask/testing.py |  |  | 0.458 |
+| walker |  | 5675 | 0 | python method at src/flask/testing.py:88 |  |  | 0.458 |
+| walker |  | 5675 | 0 | python method at src/flask/testing.py:125 |  |  | 0.458 |
+| walker |  | 5675 | 0 | python method at src/flask/testing.py:185 |  |  | 0.458 |
+| walker |  | 5675 | 0 | python method at src/flask/testing.py:249 |  |  | 0.458 |
+| walker |  | 5675 | 0 | python method at src/flask/testing.py:271 |  |  | 0.458 |
+| walker |  | 5709 | 34 | python method at src/flask/testing.py:275 |  |  | 0.458 |
+| walker |  | 5748 | 39 | python method at src/flask/testing.py:135 |  |  | 0.458 |
+| walker |  | 5763 | 15 | python method body at src/flask/testing.py:88 body 94 |  |  | 0.458 |
+| walker |  | 5815 | 52 | python method at src/flask/testing.py:255 |  |  | 0.458 |
+| walker |  | 5835 | 20 | python method body at src/flask/testing.py:271 body 272 |  |  | 0.458 |
+| walker |  | 5896 | 61 | python method at src/flask/testing.py:204 |  |  | 0.458 |
 | ns | 5917 |  | 289 | sessions.py — session classes + SessionInterface method catalog | 3.11 |  | 0.447 |
-| walker |  | 5962 | 61 | python method at src/flask/testing.py:204 |  |  | 0.447 |
-| walker |  | 5985 | 23 | python method body at src/flask/testing.py:255 body 261 |  |  | 0.447 |
-| walker |  | 6016 | 31 | python method at src/flask/testing.py:193 |  |  | 0.447 |
-| walker |  | 6068 | 52 | python method doc at src/flask/testing.py:88 |  |  | 0.447 |
+| walker |  | 5919 | 23 | python method body at src/flask/testing.py:255 body 261 |  |  | 0.447 |
+| walker |  | 5950 | 31 | python method at src/flask/testing.py:193 |  |  | 0.447 |
+| walker |  | 6002 | 52 | python method doc at src/flask/testing.py:88 |  |  | 0.447 |
+| walker |  | 6054 | 52 | python imports in src/flask/views.py |  |  | 0.447 |
 | ns | 6105 |  | 188 | cli.py — module-level function and class catalog | 3.12 |  | 0.437 |
-| walker |  | 6120 | 52 | python imports in src/flask/views.py |  |  | 0.437 |
-| walker |  | 6224 | 104 | python decl names surface in src/flask/debughelpers.py |  |  | 0.437 |
-| walker |  | 6224 | 0 | python decl at src/flask/debughelpers.py:17 |  |  | 0.437 |
-| walker |  | 6224 | 0 | python decl at src/flask/debughelpers.py:23 |  |  | 0.437 |
-| walker |  | 6224 | 0 | python decl at src/flask/debughelpers.py:50 |  |  | 0.437 |
-| walker |  | 6224 | 0 | python decl at src/flask/debughelpers.py:81 |  |  | 0.437 |
-| walker |  | 6224 | 0 | python decl at src/flask/debughelpers.py:107 |  |  | 0.437 |
-| walker |  | 6257 | 33 | python decl doc at src/flask/debughelpers.py:17 |  |  | 0.437 |
+| walker |  | 6158 | 104 | python decl names surface in src/flask/debughelpers.py |  |  | 0.437 |
+| walker |  | 6158 | 0 | python decl at src/flask/debughelpers.py:17 |  |  | 0.437 |
+| walker |  | 6158 | 0 | python decl at src/flask/debughelpers.py:23 |  |  | 0.437 |
+| walker |  | 6158 | 0 | python decl at src/flask/debughelpers.py:50 |  |  | 0.437 |
+| walker |  | 6158 | 0 | python decl at src/flask/debughelpers.py:81 |  |  | 0.437 |
+| walker |  | 6158 | 0 | python decl at src/flask/debughelpers.py:107 |  |  | 0.437 |
+| walker |  | 6191 | 33 | python decl doc at src/flask/debughelpers.py:17 |  |  | 0.437 |
+| walker |  | 6251 | 60 | python method sigs in src/flask/debughelpers.py |  |  | 0.437 |
+| walker |  | 6251 | 0 | python method at src/flask/debughelpers.py:28 |  |  | 0.437 |
+| walker |  | 6251 | 0 | python method at src/flask/debughelpers.py:46 |  |  | 0.437 |
+| walker |  | 6251 | 0 | python method at src/flask/debughelpers.py:57 |  |  | 0.437 |
+| walker |  | 6258 | 7 | python method body at src/flask/debughelpers.py:46 body 47 |  |  | 0.437 |
 | ns | 6261 |  | 156 | templating.py — class + function catalog | 3.13 |  | 0.431 |
-| walker |  | 6317 | 60 | python method sigs in src/flask/debughelpers.py |  |  | 0.431 |
-| walker |  | 6317 | 0 | python method at src/flask/debughelpers.py:28 |  |  | 0.431 |
-| walker |  | 6317 | 0 | python method at src/flask/debughelpers.py:46 |  |  | 0.431 |
-| walker |  | 6317 | 0 | python method at src/flask/debughelpers.py:57 |  |  | 0.431 |
-| walker |  | 6324 | 7 | python method body at src/flask/debughelpers.py:46 body 47 |  |  | 0.431 |
-| walker |  | 6369 | 45 | python decl doc at src/flask/debughelpers.py:23 |  |  | 0.431 |
+| walker |  | 6303 | 45 | python decl doc at src/flask/debughelpers.py:23 |  |  | 0.431 |
 | ns | 6381 |  | 120 | testing.py — EnvironBuilder, FlaskClient, FlaskCliRunner catalog | 3.14 |  | 0.445 |
-| walker |  | 6461 | 92 | python decl at src/flask/debughelpers.py:124 |  |  | 0.445 |
-| walker |  | 6475 | 14 | python decl doc at src/flask/debughelpers.py:124 |  |  | 0.445 |
+| walker |  | 6395 | 92 | python decl at src/flask/debughelpers.py:124 |  |  | 0.445 |
+| walker |  | 6409 | 14 | python decl doc at src/flask/debughelpers.py:124 |  |  | 0.445 |
+| walker |  | 6482 | 73 | python decl doc at src/flask/debughelpers.py:50 |  |  | 0.455 |
 | ns | 6482 |  | 101 | views.py — View, MethodView class + methods | 3.15 |  | 0.455 |
-| walker |  | 6548 | 73 | python decl doc at src/flask/debughelpers.py:50 |  |  | 0.455 |
-| walker |  | 6610 | 62 | python decl doc at src/flask/debughelpers.py:81 |  |  | 0.455 |
+| walker |  | 6544 | 62 | python decl doc at src/flask/debughelpers.py:81 |  |  | 0.455 |
+| walker |  | 6642 | 98 | python method at src/flask/testing.py:49 |  |  | 0.455 |
 | ns | 6674 |  | 192 | json/__init__ + provider + tag — module-level surface | 3.16 |  | 0.448 |
-| walker |  | 6708 | 98 | python method at src/flask/testing.py:49 |  |  | 0.448 |
-| walker |  | 6818 | 110 | python decl names surface in src/flask/sessions.py |  |  | 0.450 |
-| walker |  | 6818 | 0 | python decl at src/flask/sessions.py:24 |  |  | 0.450 |
-| walker |  | 6818 | 0 | python decl at src/flask/sessions.py:57 |  |  | 0.450 |
-| walker |  | 6818 | 0 | python decl at src/flask/sessions.py:83 |  |  | 0.450 |
-| walker |  | 6818 | 0 | python decl at src/flask/sessions.py:100 |  |  | 0.450 |
-| walker |  | 6818 | 0 | python decl at src/flask/sessions.py:276 |  |  | 0.450 |
-| walker |  | 6818 | 0 | python decl at src/flask/sessions.py:284 |  |  | 0.450 |
-| walker |  | 6831 | 13 | python decl doc at src/flask/sessions.py:24 |  |  | 0.450 |
-| walker |  | 6870 | 39 | python class body at src/flask/sessions.py:83 |  |  | 0.450 |
+| walker |  | 6752 | 110 | python decl names surface in src/flask/sessions.py |  |  | 0.450 |
+| walker |  | 6752 | 0 | python decl at src/flask/sessions.py:24 |  |  | 0.450 |
+| walker |  | 6752 | 0 | python decl at src/flask/sessions.py:57 |  |  | 0.450 |
+| walker |  | 6752 | 0 | python decl at src/flask/sessions.py:83 |  |  | 0.450 |
+| walker |  | 6752 | 0 | python decl at src/flask/sessions.py:100 |  |  | 0.450 |
+| walker |  | 6752 | 0 | python decl at src/flask/sessions.py:276 |  |  | 0.450 |
+| walker |  | 6752 | 0 | python decl at src/flask/sessions.py:284 |  |  | 0.450 |
+| walker |  | 6765 | 13 | python decl doc at src/flask/sessions.py:24 |  |  | 0.450 |
+| walker |  | 6804 | 39 | python class body at src/flask/sessions.py:83 |  |  | 0.450 |
+| walker |  | 6841 | 37 | python decl doc at src/flask/sessions.py:284 |  |  | 0.450 |
+| walker |  | 6852 | 11 | python decl body at src/flask/sessions.py:276 body 281 |  |  | 0.450 |
 | ns | 6890 |  | 216 | logging.py + debughelpers.py — surface | 3.17 |  | 0.452 |
-| walker |  | 6907 | 37 | python decl doc at src/flask/sessions.py:284 |  |  | 0.452 |
-| walker |  | 6918 | 11 | python decl body at src/flask/sessions.py:276 body 281 |  |  | 0.452 |
-| walker |  | 6969 | 51 | python decl doc at src/flask/sessions.py:83 |  |  | 0.452 |
-| walker |  | 7078 | 109 | python class body at src/flask/sessions.py:57 |  |  | 0.452 |
-| walker |  | 7168 | 90 | python decl doc at src/flask/sessions.py:57 |  |  | 0.452 |
-| walker |  | 7336 | 168 | python class body at src/flask/sessions.py:100 |  |  | 0.452 |
+| walker |  | 6903 | 51 | python decl doc at src/flask/sessions.py:83 |  |  | 0.452 |
+| walker |  | 7012 | 109 | python class body at src/flask/sessions.py:57 |  |  | 0.452 |
+| walker |  | 7102 | 90 | python decl doc at src/flask/sessions.py:57 |  |  | 0.452 |
+| walker |  | 7270 | 168 | python class body at src/flask/sessions.py:100 |  |  | 0.452 |
+| walker |  | 7416 | 146 | python decl doc at src/flask/wrappers.py:18 |  |  | 0.452 |
 | ns | 7439 |  | 549 | typing.py — response/request value types | 3.18 |  | 0.433 |
-| walker |  | 7482 | 146 | python decl doc at src/flask/wrappers.py:18 |  |  | 0.433 |
-| walker |  | 7712 | 230 | python method sigs in src/flask/config.py |  |  | 0.433 |
-| walker |  | 7712 | 0 | python method at src/flask/config.py:29 |  |  | 0.433 |
-| walker |  | 7712 | 0 | python method at src/flask/config.py:32 |  |  | 0.433 |
-| walker |  | 7712 | 0 | python method at src/flask/config.py:35 |  |  | 0.433 |
-| walker |  | 7712 | 0 | python method at src/flask/config.py:46 |  |  | 0.433 |
-| walker |  | 7712 | 0 | python method at src/flask/config.py:102 |  |  | 0.433 |
-| walker |  | 7712 | 0 | python method at src/flask/config.py:218 |  |  | 0.433 |
-| walker |  | 7712 | 0 | python method at src/flask/config.py:366 |  |  | 0.433 |
-| walker |  | 7741 | 29 | python method at src/flask/config.py:187 |  |  | 0.433 |
-| walker |  | 7775 | 34 | python method at src/flask/config.py:304 |  |  | 0.433 |
-| walker |  | 7810 | 35 | python method at src/flask/config.py:23 |  |  | 0.433 |
-| walker |  | 7845 | 35 | python method at src/flask/config.py:323 |  |  | 0.433 |
-| walker |  | 7883 | 38 | python method at src/flask/config.py:126 |  |  | 0.433 |
-| walker |  | 7896 | 13 | python method body at src/flask/config.py:46 body 47 |  |  | 0.433 |
-| walker |  | 7943 | 47 | python method at src/flask/config.py:94 |  |  | 0.433 |
-| walker |  | 7964 | 21 | python method body at src/flask/config.py:366 body 367 |  |  | 0.433 |
-| walker |  | 7987 | 23 | python method body at src/flask/config.py:29 body 30 |  |  | 0.433 |
-| walker |  | 8010 | 23 | python method body at src/flask/config.py:32 body 33 |  |  | 0.433 |
+| walker |  | 7646 | 230 | python method sigs in src/flask/config.py |  |  | 0.433 |
+| walker |  | 7646 | 0 | python method at src/flask/config.py:29 |  |  | 0.433 |
+| walker |  | 7646 | 0 | python method at src/flask/config.py:32 |  |  | 0.433 |
+| walker |  | 7646 | 0 | python method at src/flask/config.py:35 |  |  | 0.433 |
+| walker |  | 7646 | 0 | python method at src/flask/config.py:46 |  |  | 0.433 |
+| walker |  | 7646 | 0 | python method at src/flask/config.py:102 |  |  | 0.433 |
+| walker |  | 7646 | 0 | python method at src/flask/config.py:218 |  |  | 0.433 |
+| walker |  | 7646 | 0 | python method at src/flask/config.py:366 |  |  | 0.433 |
+| walker |  | 7675 | 29 | python method at src/flask/config.py:187 |  |  | 0.433 |
+| walker |  | 7709 | 34 | python method at src/flask/config.py:304 |  |  | 0.433 |
+| walker |  | 7744 | 35 | python method at src/flask/config.py:23 |  |  | 0.433 |
+| walker |  | 7779 | 35 | python method at src/flask/config.py:323 |  |  | 0.433 |
+| walker |  | 7817 | 38 | python method at src/flask/config.py:126 |  |  | 0.433 |
+| walker |  | 7830 | 13 | python method body at src/flask/config.py:46 body 47 |  |  | 0.433 |
+| walker |  | 7877 | 47 | python method at src/flask/config.py:94 |  |  | 0.433 |
+| walker |  | 7898 | 21 | python method body at src/flask/config.py:366 body 367 |  |  | 0.433 |
+| walker |  | 7921 | 23 | python method body at src/flask/config.py:29 body 30 |  |  | 0.433 |
+| walker |  | 7944 | 23 | python method body at src/flask/config.py:32 body 33 |  |  | 0.433 |
+| walker |  | 7968 | 24 | python method body at src/flask/config.py:23 body 26 |  |  | 0.433 |
+| walker |  | 7992 | 24 | python method body at src/flask/config.py:94 body 99 |  |  | 0.433 |
 | ns | 8027 |  | 588 | typing.py — callable aliases (Route/Error/Teardown/Template/…) | 3.19 | 3.18 | 0.419 |
-| walker |  | 8034 | 24 | python method body at src/flask/config.py:23 body 26 |  |  | 0.419 |
-| walker |  | 8058 | 24 | python method body at src/flask/config.py:94 body 99 |  |  | 0.419 |
-| walker |  | 8131 | 73 | python method at src/flask/config.py:256 |  |  | 0.419 |
-| walker |  | 8193 | 62 | python method doc at src/flask/config.py:304 |  |  | 0.419 |
+| walker |  | 8065 | 73 | python method at src/flask/config.py:256 |  |  | 0.419 |
+| walker |  | 8127 | 62 | python method doc at src/flask/config.py:304 |  |  | 0.419 |
 | ns | 8203 |  | 176 | docs/ top-level listing | 4.1 |  | 0.451 |
-| walker |  | 8319 | 126 | python decl doc at src/flask/logging.py:15 |  |  | 0.451 |
+| walker |  | 8253 | 126 | python decl doc at src/flask/logging.py:15 |  |  | 0.451 |
 | ns | 8348 |  | 145 | tests/ top-level listing (test_* per source module) | 4.2 |  | 0.441 |
-| walker |  | 8464 | 145 | listing of 'tests' |  |  | 0.474 |
-| walker |  | 8493 | 29 | listing of 'tests/test_apps' |  |  | 0.497 |
+| walker |  | 8398 | 145 | listing of 'tests' |  |  | 0.474 |
+| walker |  | 8427 | 29 | listing of 'tests/test_apps' |  |  | 0.474 |
+| walker |  | 8436 | 9 | listing of 'tests/test_apps/blueprintapp' |  |  | 0.474 |
+| walker |  | 8445 | 9 | listing of 'tests/test_apps/subdomaintestmodule' |  |  | 0.474 |
+| walker |  | 8457 | 12 | listing of 'tests/test_apps/blueprintapp/apps' |  |  | 0.474 |
+| walker |  | 8466 | 9 | listing of 'tests/test_apps/blueprintapp/apps/frontend' |  |  | 0.474 |
+| walker |  | 8478 | 12 | listing of 'tests/test_apps/blueprintapp/apps/admin' |  |  | 0.474 |
 | ns | 8493 |  | 145 | examples/ + each example's listing | 4.3 |  | 0.497 |
-| walker |  | 8502 | 9 | listing of 'tests/test_apps/blueprintapp' |  |  | 0.497 |
-| walker |  | 8511 | 9 | listing of 'tests/test_apps/subdomaintestmodule' |  |  | 0.497 |
-| walker |  | 8520 | 9 | python imports in tests/test_apps/subdomaintestmodule/__init__.py |  |  | 0.497 |
-| walker |  | 8566 | 46 | python imports in tests/test_apps/blueprintapp/__init__.py |  |  | 0.497 |
-| walker |  | 8578 | 12 | listing of 'tests/test_apps/blueprintapp/apps' |  |  | 0.497 |
-| walker |  | 8587 | 9 | listing of 'tests/test_apps/blueprintapp/apps/frontend' |  |  | 0.497 |
-| walker |  | 8599 | 12 | listing of 'tests/test_apps/blueprintapp/apps/admin' |  |  | 0.497 |
-| walker |  | 8632 | 33 | listing of 'tests/test_apps/cliapp' |  |  | 0.497 |
-| walker |  | 8642 | 10 | listing of 'tests/test_apps/cliapp/inner1' |  |  | 0.497 |
-| walker |  | 8652 | 10 | listing of 'tests/test_apps/cliapp/inner1/inner2' |  |  | 0.497 |
-| walker |  | 8661 | 9 | python imports in tests/test_apps/cliapp/inner1/__init__.py |  |  | 0.497 |
-| walker |  | 8680 | 19 | listing of 'tests/type_check' |  |  | 0.497 |
-| walker |  | 8699 | 19 | python imports in tests/test_apps/blueprintapp/apps/admin/__init__.py |  |  | 0.497 |
-| walker |  | 8718 | 19 | python imports in tests/test_apps/blueprintapp/apps/frontend/__init__.py |  |  | 0.497 |
-| walker |  | 8728 | 10 | python decl names surface in tests/test_apps/blueprintapp/__init__.py |  |  | 0.497 |
-| walker |  | 8738 | 10 | python decl names surface in tests/test_apps/cliapp/inner1/__init__.py |  |  | 0.497 |
+| walker |  | 8511 | 33 | listing of 'tests/test_apps/cliapp' |  |  | 0.497 |
+| walker |  | 8521 | 10 | listing of 'tests/test_apps/cliapp/inner1' |  |  | 0.497 |
+| walker |  | 8531 | 10 | listing of 'tests/test_apps/cliapp/inner1/inner2' |  |  | 0.497 |
+| walker |  | 8540 | 9 | python imports in tests/test_apps/cliapp/inner1/__init__.py |  |  | 0.497 |
+| walker |  | 8549 | 9 | python imports in tests/test_apps/subdomaintestmodule/__init__.py |  |  | 0.497 |
+| walker |  | 8568 | 19 | listing of 'tests/type_check' |  |  | 0.497 |
+| walker |  | 8587 | 19 | python imports in tests/test_apps/blueprintapp/apps/admin/__init__.py |  |  | 0.497 |
+| walker |  | 8606 | 19 | python imports in tests/test_apps/blueprintapp/apps/frontend/__init__.py |  |  | 0.497 |
+| walker |  | 8616 | 10 | python decl names surface in tests/test_apps/blueprintapp/__init__.py |  |  | 0.497 |
+| walker |  | 8626 | 10 | python decl names surface in tests/test_apps/cliapp/inner1/__init__.py |  |  | 0.497 |
 | ns | 8780 |  | 287 | docs/patterns + docs/deploying + docs/tutorial listings | 4.4 |  | 0.526 |
-| walker |  | 8937 | 199 | python class body at src/flask/sessions.py:284 |  |  | 0.526 |
-| walker |  | 8945 | 8 | python method body at src/flask/wrappers.py:146 body 159 |  |  | 0.526 |
+| walker |  | 8825 | 199 | python class body at src/flask/sessions.py:284 |  |  | 0.526 |
+| walker |  | 8833 | 8 | python method body at src/flask/wrappers.py:146 body 159 |  |  | 0.526 |
 | ns | 8983 |  | 203 | docs/index.rst — User's Guide TOC | 4.5 |  | 0.516 |
-| walker |  | 9105 | 160 | python decl doc at src/flask/testing.py:109 |  |  | 0.516 |
-| walker |  | 9182 | 77 | python method doc at src/flask/wrappers.py:180 |  |  | 0.516 |
-| walker |  | 9195 | 13 | python decl names surface in examples/tutorial/flaskr/__init__.py |  |  | 0.516 |
-| walker |  | 9195 | 0 | python decl at examples/tutorial/flaskr/__init__.py:6 |  |  | 0.516 |
-| ns | 9267 |  | 284 | wsgi_app body — the canonical request flow | 5.1 | 3.4 | 0.508 |
-| walker |  | 9323 | 128 | python decl names surface in src/flask/ctx.py |  |  | 0.509 |
-| walker |  | 9323 | 0 | python decl at src/flask/ctx.py:30 |  |  | 0.509 |
-| walker |  | 9323 | 0 | python decl at src/flask/ctx.py:154 |  |  | 0.509 |
-| walker |  | 9323 | 0 | python decl at src/flask/ctx.py:209 |  |  | 0.509 |
-| walker |  | 9323 | 0 | python decl at src/flask/ctx.py:235 |  |  | 0.509 |
-| walker |  | 9323 | 0 | python decl at src/flask/ctx.py:260 |  |  | 0.509 |
-| walker |  | 9323 | 0 | python decl at src/flask/ctx.py:528 |  |  | 0.509 |
-| walker |  | 9348 | 25 | python decl at src/flask/ctx.py:118 |  |  | 0.509 |
-| walker |  | 9364 | 16 | python decl body at src/flask/ctx.py:235 body 257 |  |  | 0.509 |
-| walker |  | 9387 | 23 | python decl body at src/flask/ctx.py:209 body 232 |  |  | 0.509 |
-| walker |  | 9418 | 31 | python class body at src/flask/ctx.py:30 |  |  | 0.509 |
-| walker |  | 9499 | 81 | python method doc at src/flask/wrappers.py:146 |  |  | 0.509 |
-| walker |  | 9562 | 63 | python decl doc at src/flask/sessions.py:276 |  |  | 0.509 |
+| walker |  | 8993 | 160 | python decl doc at src/flask/testing.py:109 |  |  | 0.516 |
+| walker |  | 9070 | 77 | python method doc at src/flask/wrappers.py:180 |  |  | 0.516 |
+| walker |  | 9083 | 13 | python decl names surface in examples/tutorial/flaskr/__init__.py |  |  | 0.516 |
+| walker |  | 9083 | 0 | python decl at examples/tutorial/flaskr/__init__.py:6 |  |  | 0.516 |
+| walker |  | 9211 | 128 | python decl names surface in src/flask/ctx.py |  |  | 0.518 |
+| walker |  | 9211 | 0 | python decl at src/flask/ctx.py:30 |  |  | 0.518 |
+| walker |  | 9211 | 0 | python decl at src/flask/ctx.py:154 |  |  | 0.518 |
+| walker |  | 9211 | 0 | python decl at src/flask/ctx.py:209 |  |  | 0.518 |
+| walker |  | 9211 | 0 | python decl at src/flask/ctx.py:235 |  |  | 0.518 |
+| walker |  | 9211 | 0 | python decl at src/flask/ctx.py:260 |  |  | 0.518 |
+| walker |  | 9211 | 0 | python decl at src/flask/ctx.py:528 |  |  | 0.518 |
+| walker |  | 9236 | 25 | python decl at src/flask/ctx.py:118 |  |  | 0.518 |
+| walker |  | 9252 | 16 | python decl body at src/flask/ctx.py:235 body 257 |  |  | 0.518 |
+| ns | 9267 |  | 284 | wsgi_app body — the canonical request flow | 5.1 | 3.4 | 0.509 |
+| walker |  | 9275 | 23 | python decl body at src/flask/ctx.py:209 body 232 |  |  | 0.509 |
+| walker |  | 9306 | 31 | python class body at src/flask/ctx.py:30 |  |  | 0.509 |
+| walker |  | 9387 | 81 | python method doc at src/flask/wrappers.py:146 |  |  | 0.509 |
+| walker |  | 9415 | 28 | python imports in examples/javascript/js_example/__init__.py |  |  | 0.509 |
+| walker |  | 9478 | 63 | python decl doc at src/flask/sessions.py:276 |  |  | 0.509 |
 | ns | 9568 |  | 301 | Tutorial flaskr create_app — factory + config | 5.2 |  | 0.500 |
-| walker |  | 9716 | 154 | python decl doc at src/flask/logging.py:58 |  |  | 0.500 |
+| walker |  | 9632 | 154 | python decl doc at src/flask/logging.py:58 |  |  | 0.500 |
 | ns | 9780 |  | 212 | Tutorial flaskr create_app — blueprint registration | 5.3 | 5.2 | 0.494 |
+| walker |  | 9874 | 242 | python class body at src/flask/sessions.py:24 |  |  | 0.494 |
+| walker |  | 9918 | 44 | python method body at src/flask/testing.py:249 body 250 |  |  | 0.494 |
 | ns | 9940 |  | 160 | CHANGES.rst — 3.2.0 unreleased changes | 5.4 |  | 0.491 |
-| walker |  | 9958 | 242 | python class body at src/flask/sessions.py:24 |  |  | 0.491 |
