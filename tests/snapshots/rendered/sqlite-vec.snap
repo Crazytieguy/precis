@@ -177,17 +177,6 @@ site/
     public/
     sqlite.tmlanguage.json
     using/
-        android-ios.md
-        c.md
-        datasette.md
-        go.md
-        js.md
-        python.md
-        rqlite.md
-        ruby.md
-        rust.md
-        sqlite-utils.md
-        wasm.md
     versioning.md
 sqlite-dist.toml
     1→[package]
@@ -228,11 +217,7 @@ sqlite-vec.c
     589→#define JSON_SUBTYPE 74
     …
     591→void vtab_set_error(sqlite3_vtab *pVTab, const char *zFormat, ...) {
-    592→  va_list args;
-    593→  sqlite3_free(pVTab->zErrMsg);
-    594→  va_start(args, zFormat);
-    595→  pVTab->zErrMsg = sqlite3_vmprintf(zFormat, args);
-    596→  va_end(args);
+    …
     598→struct Array {
     599→  size_t element_size;
     600→  size_t length;
@@ -263,6 +248,22 @@ sqlite-vec.c
     9807→    {"vec0",          &vec0Module,          NULL, NULL},
     9808→    {"vec_each",      &vec_eachModule,      NULL, NULL},
 sqlite-vec.h.tmpl
+    4→#ifndef SQLITE_CORE
+    5→#include "sqlite3ext.h"
+    6→#else
+    7→#include "sqlite3.h"
+    8→#endif
+    20→#define SQLITE_VEC_VERSION "v${VERSION}"
+    21→// TODO rm
+    22→#define SQLITE_VEC_DATE "${DATE}"
+    23→#define SQLITE_VEC_SOURCE "${SOURCE}"
+    …
+    26→#define SQLITE_VEC_VERSION_MAJOR ${VERSION_MAJOR}
+    27→#define SQLITE_VEC_VERSION_MINOR ${VERSION_MINOR}
+    28→#define SQLITE_VEC_VERSION_PATCH ${VERSION_PATCH}
+    …
+    34→SQLITE_VEC_API int sqlite3_vec_init(sqlite3 *db, char **pzErrMsg,
+    35→                  const sqlite3_api_routines *pApi);
 test.sql
 tests/
 tmp-static.py
