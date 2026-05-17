@@ -26,22 +26,6 @@ README.rst
     4→|Build Status| |CircleCI Status| |Documentation Status| |Static Analysis| |Fuzzing Status| |Membrowse| |License|
 SConscript
 docs/
-    _static/
-    assets/
-    conf.py
-    faq.rst
-    getting_started.rst
-    index.rst
-    info/
-        changelog.rst
-        code_of_conduct.rst
-        contributors.rst
-        index.rst
-    integration.rst
-    porting.rst
-    reference/
-    requirements.txt
-    troubleshooting.rst
 examples/
 hw/
     bsp/
@@ -58,11 +42,46 @@ lib/
             1→RTT
             2→===
             4→SEGGER RTT Sources
-            6→https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer
-            7→https://wiki.segger.com/RTT
         RTT/
+            SEGGER_RTT.c
+            SEGGER_RTT.h
+                56→#include "../Config/SEGGER_RTT_Conf.h"
+            SEGGER_RTT_ASM_ARMv7M.S
+            SEGGER_RTT_printf.c
     embedded-cli/
     networking/
+        dhserver.c
+        dhserver.h
+            42→typedef struct dhcp_entry
+            43→{
+            44→	uint8_t    mac[6];
+            45→	ip4_addr_t addr;
+            46→	uint32_t   lease;
+            47→} dhcp_entry_t;
+            49→typedef struct dhcp_config
+            50→{
+            51→	ip4_addr_t    router;
+            52→	uint16_t      port;
+            53→	ip4_addr_t    dns;
+            54→	const char   *domain;
+            55→	int           num_entry;
+            56→	dhcp_entry_t *entries;
+            57→} dhcp_config_t;
+            62→err_t dhserv_init(const dhcp_config_t *c);
+            63→void dhserv_free(void);
+            …
+        dnserver.c
+        dnserver.h
+            42→typedef bool (*dns_query_proc_t)(const char *name, ip4_addr_t *addr);
+            …
+            47→err_t dnserv_init(const ip_addr_t *bind, uint16_t port, dns_query_proc_t query_proc);
+            48→void  dnserv_free(void);
+            …
+        ndis.h
+        rndis_protocol.h
+            47→#include <stdint.h>
+            290→#include "ndis.h"
+        rndis_reports.c
     rt-thread/
         SConscript
         port/
@@ -78,16 +97,10 @@ src/
     common/
     device/
         dcd.h
-            30→#include "common/tusb_common.h"
-            31→#include "osal/osal.h"
-            32→#include "common/tusb_fifo.h"
         usbd.c
         usbd.h
             30→#include "common/tusb_common.h"
         usbd_pvt.h
-            29→#include "osal/osal.h"
-            30→#include "common/tusb_fifo.h"
-            31→#include "common/tusb_private.h"
             131→void usbd_defer_func(osal_task_func_t func, void *param, bool in_isr);
             …
     host/
@@ -100,7 +113,9 @@ src/
             197→TU_ATTR_ALWAYS_INLINE static inline
             198→void hcd_event_device_remove(uint8_t rhport, bool in_isr) {
             …
+            208→// Helper to send USB transfer event
             209→TU_ATTR_ALWAYS_INLINE static inline
+            210→void hcd_event_xfer_complete(uint8_t dev_addr, uint8_t ep_addr, uint32_t xferred_bytes, xfer_result_t result, bool in_isr) {
             …
         hub.c
         hub.h
@@ -195,9 +210,6 @@ src/
     tusb_option.h
     typec/
         pd_types.h
-            34→#include <stdbool.h>
-            35→#include <stdint.h>
-            36→#include "common/tusb_compiler.h"
             38→// Start of all packed definitions for compiler without per-type packed
             39→TU_ATTR_PACKED_BEGIN
             40→TU_ATTR_BIT_FIELD_ORDER_BEGIN
@@ -229,12 +241,7 @@ src/
             115→typedef struct TU_ATTR_PACKED {
             …
             126→typedef struct TU_ATTR_PACKED {
-            127→  uint16_t data_size     : 9; // [0:8]
-            128→  uint16_t reserved      : 1; // [9]
-            129→  uint16_t request_chunk : 1; // [10]
-            130→  uint16_t chunk_number  : 4; // [11:14]
-            131→  uint16_t chunked       : 1; // [15]
-            132→} pd_header_extended_t;
+            …
             139→// All table references are from USBPD Specification rev3.1 version 1.8
             140→enum {
             141→  PD_PDO_TYPE_FIXED = 0, // Vmin = Vmax
@@ -258,11 +265,7 @@ src/
             230→TU_ATTR_BIT_FIELD_ORDER_END
         tcd.h
             44→enum {
-            45→  TCD_EVENT_INVALID = 0,
-            46→  TCD_EVENT_CC_CHANGED,
-            47→  TCD_EVENT_RX_COMPLETE,
-            48→  TCD_EVENT_TX_COMPLETE,
-            49→};
+            …
             51→typedef struct TU_ATTR_PACKED {
             …
             72→// Initialize controller
@@ -289,7 +292,6 @@ src/
             112→void tcd_event_rx_complete(uint8_t rhport, uint16_t xferred_bytes, uint8_t result, bool in_isr) {
             …
             125→TU_ATTR_ALWAYS_INLINE static inline
-            126→void tcd_event_tx_complete(uint8_t rhport, uint16_t xferred_bytes, uint8_t result, bool in_isr) {
             …
         usbc.c
         usbc.h

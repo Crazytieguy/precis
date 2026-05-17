@@ -13,11 +13,11 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | walker |  | 294 | 25 | export names surface in src/error.ts |  |  | 0.730 |
 | ns | 306 |  | 66 | Readme runtime-errors paragraph | 1.4 |  | 0.713 |
 | walker |  | 348 | 54 | headings outline in Readme.md |  |  | 0.721 |
-| walker |  | 364 | 16 | Readme.md section #10 |  |  | 0.721 |
-| ns | 394 |  | 88 | package.json — name, version, license | 1.5 |  | 0.695 |
-| walker |  | 419 | 55 | listing of 'examples' |  |  | 0.703 |
-| ns | 431 |  | 37 | src/ tree (flat layout) | 2.1 |  | 0.640 |
-| walker |  | 437 | 18 | listing of 'src/structs' |  |  | 0.736 |
+| walker |  | 366 | 18 | listing of 'src/structs' |  |  | 0.741 |
+| walker |  | 382 | 16 | Readme.md section #10 |  |  | 0.741 |
+| ns | 394 |  | 88 | package.json — name, version, license | 1.5 |  | 0.715 |
+| ns | 431 |  | 37 | src/ tree (flat layout) | 2.1 |  | 0.729 |
+| walker |  | 437 | 55 | listing of 'examples' |  |  | 0.736 |
 | walker |  | 516 | 79 | export at src/error.ts:5 |  |  | 0.740 |
 | ns | 583 |  | 152 | package.json — module shape & engines | 2.2 |  | 0.619 |
 | walker |  | 607 | 91 | export at src/error.ts:25 |  |  | 0.624 |

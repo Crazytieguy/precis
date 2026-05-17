@@ -30,12 +30,12 @@ Score(3000)=0.520 I=0.507 C=0.534 ns_rows≤3K=19/45 (reached=7 partial=5 missin
 | walker |  | 651 | 39 | export at src/is-matching.ts:48 |  |  | 0.391 |
 | ns | 706 |  | 103 | isMatching() — both overload signatures | 2.2 |  | 0.410 |
 | walker |  | 724 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.413 |
-| walker |  | 744 | 20 | README.md section #2 |  |  | 0.415 |
-| ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.390 |
-| walker |  | 786 | 42 | export doc at src/errors.ts:5 |  |  | 0.393 |
-| walker |  | 812 | 26 | listing of 'benchmarks' |  |  | 0.393 |
-| walker |  | 868 | 56 | listing of 'src/types' |  |  | 0.503 |
-| walker |  | 878 | 10 | imports in src/types/index.ts |  |  | 0.503 |
+| ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.388 |
+| walker |  | 780 | 56 | listing of 'src/types' |  |  | 0.498 |
+| walker |  | 790 | 10 | imports in src/types/index.ts |  |  | 0.498 |
+| walker |  | 810 | 20 | README.md section #2 |  |  | 0.500 |
+| walker |  | 852 | 42 | export doc at src/errors.ts:5 |  |  | 0.503 |
+| walker |  | 878 | 26 | listing of 'benchmarks' |  |  | 0.503 |
 | walker |  | 903 | 25 | README.md section #7 |  |  | 0.504 |
 | walker |  | 918 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.504 |
 | ns | 981 |  | 209 | match() JSDoc | 2.4 | 2.1 | 0.453 |

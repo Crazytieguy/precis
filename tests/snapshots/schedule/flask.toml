@@ -385,10 +385,24 @@ kind = "full"
 
 [[batches]]
 position = 19
+key = 'Fs(DirListing { dir: "src/flask/sansio" })'
+descriptor = "listing of 'src/flask/sansio'"
+cost_tokens = 17
+cum_tokens = 801
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/flask/sansio"
+entries = ["README.md", "app.py", "blueprints.py", "scaffold.py"]
+
+[[batches]]
+position = 20
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 9
-cum_tokens = 793
+cum_tokens = 810
 
 [batches.content]
 kind = "fs"
@@ -398,11 +412,11 @@ parent = "examples"
 entries = ["celery", "javascript", "tutorial"]
 
 [[batches]]
-position = 20
+position = 21
 key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 8 })'
 descriptor = "python imports #8 in src/flask/__init__.py"
 cost_tokens = 168
-cum_tokens = 961
+cum_tokens = 978
 
 [batches.content]
 kind = "lines"
@@ -416,11 +430,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 119
-cum_tokens = 1080
+cum_tokens = 1097
 
 [batches.content]
 kind = "lines"
@@ -442,11 +456,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 104
-cum_tokens = 1184
+cum_tokens = 1201
 
 [batches.content]
 kind = "lines"
@@ -460,11 +474,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 13
-cum_tokens = 1197
+cum_tokens = 1214
 
 [batches.content]
 kind = "fs"
@@ -474,11 +488,11 @@ parent = ".github"
 entries = ["ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
 
 [[batches]]
-position = 24
+position = 25
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 23
-cum_tokens = 1220
+cum_tokens = 1237
 
 [batches.content]
 kind = "fs"
@@ -488,11 +502,11 @@ parent = ".github/workflows"
 entries = ["lock.yaml", "pre-commit.yaml", "publish.yaml", "tests.yaml", "zizmor.yaml"]
 
 [[batches]]
-position = 25
+position = 26
 key = 'Python(DeclNames { file: "src/flask/blueprints.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/flask/blueprints.py"
 cost_tokens = 13
-cum_tokens = 1233
+cum_tokens = 1250
 
 [batches.content]
 kind = "lines"
@@ -514,11 +528,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Python(Decl { file: "src/flask/blueprints.py", start_line: 18 })'
 descriptor = "python decl at src/flask/blueprints.py:18"
 cost_tokens = 0
-cum_tokens = 1233
+cum_tokens = 1250
 
 [batches.content]
 kind = "lines"
@@ -530,20 +544,6 @@ end = 18
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "src/flask/sansio" })'
-descriptor = "listing of 'src/flask/sansio'"
-cost_tokens = 17
-cum_tokens = 1250
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/flask/sansio"
-entries = ["README.md", "app.py", "blueprints.py", "scaffold.py"]
 
 [[batches]]
 position = 28

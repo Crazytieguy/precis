@@ -167,20 +167,7 @@ src/
             46→def cli() -> None:
             47→    """A TUI for testing HTTP APIs."""
             50→@cli.command()
-            51→@click.option(
-            52→    "--collection",
-            53→    "-c",
-            54→    type=click.Path(exists=True),
-            55→    help="Path to the collection directory",
-            56→)
-            57→@click.option(
-            58→    "--env",
-            59→    "-e",
-            60→    type=click.Path(exists=True),
-            61→    help="Path to the .env environment file(s)",
-            62→    multiple=True,
-            63→)
-            64→def default(collection: str | None = None, env: tuple[str, ...] = ()) -> None:
+            …
             76→@cli.command()
             77→@click.argument(
             78→    "thing_to_locate",
@@ -221,9 +208,6 @@ src/
             …
         collection.py
         commands.py
-            11→CommandType = tuple[str, IgnoreReturnCallbackType, str, bool]
-            14→class PostingProvider(Provider):
-            …
         config.py
         exit_codes.py
             1→GENERAL_ERROR = 1
@@ -315,6 +299,14 @@ src/
                 request_scripts.py
                 url_bar.py
             response/
+                cookies_table.py
+                    9→class CookiesSection(Vertical):
+                    …
+                response_area.py
+                response_body.py
+                response_headers.py
+                response_trace.py
+                script_output.py
             rich_log.py
             select.py
             tabbed_content.py

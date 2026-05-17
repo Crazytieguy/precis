@@ -70,8 +70,8 @@ Score(3000)=0.412 I=0.688 C=0.247 ns_rows≤3K=17/39 (reached=4 partial=2 missin
 | walker |  | 1115 | 24 | README.md section #0 |  |  | 0.392 |
 | ns | 1138 |  | 276 | Grid config: containers mode layout | 2.4 |  | 0.360 |
 | walker |  | 1148 | 33 | export at lib/modes.js:3 |  |  | 0.478 |
-| walker |  | 1156 | 8 | imports in lib/modes.js |  |  | 0.478 |
-| walker |  | 1187 | 31 | listing of 'src/widgetsTemplates' |  |  | 0.479 |
+| walker |  | 1179 | 31 | listing of 'src/widgetsTemplates' |  |  | 0.479 |
+| walker |  | 1187 | 8 | imports in lib/modes.js |  |  | 0.479 |
 | walker |  | 1218 | 31 | listing of 'widgets/services' |  |  | 0.480 |
 | walker |  | 1228 | 10 | export names surface in src/enum.js |  |  | 0.480 |
 | walker |  | 1316 | 88 | module item body at index.js:72 body 73 |  |  | 0.480 |

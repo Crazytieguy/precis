@@ -3,20 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
-    CODEOWNERS
-    FUNDING.yml
-    ISSUE_TEMPLATE.md
-    PULL_REQUEST_TEMPLATE.md
-    copilot-instructions.md
-    dependabot.yml
-    workflows/
-        lockfile-lint.yml
-        moderator.yml
-        publish.yml
-        release-branch.yml
-        run-ci.yml
-        verify-build-reproducibility.yml
-        zizmor.yml
 .gitignore
 .husky/
 .npmignore
@@ -33,7 +19,6 @@ COLLABORATOR_GUIDE.md
     3→As a collaborator you share in the administrative responsibility for axios. This guide covers what we expect from you and how we keep the project healthy. For the technical bar (architecture, lifecycle, security-sensitive code, conventions), see [AGENTS.md](./AGENTS.md) — it is the canonical contributor guide.
     5→## Code of Conduct
     …
-    7→You are expected to have read the [Code of Conduct](./CODE_OF_CONDUCT.md) and to help enforce it. This community should be friendly and welcoming.
     9→## Triage Issues
     …
     16→## Answer Questions
@@ -126,41 +111,13 @@ README.md
     379→- [Resources](#resources)
     380→- [Credits](#credits)
     381→- [License](#license)
-    386→- **Node.js Requests:** Make [http](https://nodejs.org/api/http.html) requests from Node.js environments.
-    388→- **Interceptors:** Intercept requests and responses to add custom logic or transform data.
     389→- **Data Transformation:** Transform request and response data automatically.
     390→- **Request Cancellation:** Cancel requests using built-in mechanisms.
 SECURITY.md
 THREATMODEL.md
 docs/
-    .vitepress/
-    data/
-    es/
-    favicon.ico
-    fr/
-    index.md
-    package-lock.json
-    package.json
-    pages/
-    patches/
-    public/
-    scripts/
-    site.webmanifest
-    zh/
 eslint.config.js
 examples/
-    README.md
-    abort-controller/
-    all/
-    amd/
-    get/
-    improved-network-errors.md
-    network_enhanced.js
-    post/
-    postMultipartFormData/
-    server.js
-    transform-response/
-    upload/
 gulpfile.js
     79→export { env, clear, version, packageJSON };
 index.d.cts
@@ -217,8 +174,6 @@ lib/
         fetch.js
         http.js
         xhr.js
-            15→export default isXHRAdapterSupported &&
-            …
     axios.js
         89→export default axios;
     cancel/
@@ -227,8 +182,6 @@ lib/
         CanceledError.js
             22→export default CanceledError;
         isCancel.js
-            3→export default function isCancel(value) {
-            4→  return !!(value && value.__CANCEL__);
     core/
         Axios.js
             281→export default Axios;
@@ -247,25 +200,11 @@ lib/
             8→- Handling config
         buildFullPath.js
         dispatchRequest.js
-            34→export default function dispatchRequest(config) {
-            …
         mergeConfig.js
         settle.js
-            14→export default function settle(resolve, reject, response) {
-            …
         transformData.js
-            15→export default function transformData(fns, response) {
-            …
     defaults/
         index.js
-            1→'use strict';
-            3→import utils from '../utils.js';
-            4→import AxiosError from '../core/AxiosError.js';
-            5→import transitionalDefaults from './transitional.js';
-            6→import toFormData from '../helpers/toFormData.js';
-            7→import toURLEncodedForm from '../helpers/toURLEncodedForm.js';
-            8→import platform from '../platform/index.js';
-            9→import formDataToJSON from '../helpers/formDataToJSON.js';
             11→const own = (obj, key) => (obj != null && utils.hasOwnProp(obj, key) ? obj[key] : undefined);
             23→function stringifySafely(rawValue, parser, encoder) {
             24→  if (utils.isString(rawValue)) {
@@ -281,23 +220,34 @@ lib/
             35→  return (encoder || JSON.stringify)(rawValue);
             177→export default defaults;
         transitional.js
-            3→export default {
-            …
     env/
         README.md
             1→# axios // env
             3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
         classes/
-            FormData.js
         data.js
-            1→export const VERSION = "1.16.1";
     helpers/
     platform/
         browser/
+            classes/
+                Blob.js
+                FormData.js
+                URLSearchParams.js
+            index.js
+                1→import URLSearchParams from './classes/URLSearchParams.js';
+                2→import FormData from './classes/FormData.js';
+                3→import Blob from './classes/Blob.js';
+                5→export default {
+                6→  isBrowser: true,
+                7→  classes: {
+                8→    URLSearchParams,
+                9→    FormData,
+                10→    Blob,
+                11→  },
+                12→  protocols: ['http', 'https', 'file', 'blob', 'url', 'data'],
+                13→};
         common/
             utils.js
-                46→export {
-                …
         index.js
             1→import platform from './node/index.js';
             2→import * as utils from './common/utils.js';
@@ -306,6 +256,38 @@ lib/
             6→  ...platform,
             7→};
         node/
+            classes/
+            index.js
+                1→import crypto from 'crypto';
+                2→import URLSearchParams from './classes/URLSearchParams.js';
+                3→import FormData from './classes/FormData.js';
+                5→const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
+                7→const DIGIT = '0123456789';
+                9→const ALPHABET = {
+                10→  DIGIT,
+                11→  ALPHA,
+                12→  ALPHA_DIGIT: ALPHA + ALPHA.toUpperCase() + DIGIT,
+                13→};
+                15→const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
+                16→  let str = '';
+                17→  const { length } = alphabet;
+                18→  const randomValues = new Uint32Array(size);
+                19→  crypto.randomFillSync(randomValues);
+                20→  for (let i = 0; i < size; i++) {
+                21→    str += alphabet[randomValues[i] % length];
+                22→  }
+                24→  return str;
+                27→export default {
+                28→  isNode: true,
+                29→  classes: {
+                30→    URLSearchParams,
+                31→    FormData,
+                32→    Blob: (typeof Blob !== 'undefined' && Blob) || null,
+                33→  },
+                34→  ALPHABET,
+                35→  generateString,
+                36→  protocols: ['http', 'https', 'file', 'data'],
+                37→};
     utils.js
         872→export default {
         …
@@ -332,10 +314,6 @@ tests/
         cjs/
         deno/
         esm/
-            package-lock.json
-            package.json
-            tests/
-            vitest.config.js
     unit/
 tsconfig.json
     1→{

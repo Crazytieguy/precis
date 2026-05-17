@@ -136,13 +136,25 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
             MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT,
         ) >= MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT;
     let non_essential = ctx.non_essential_factor(dir);
-    // Inventory promotion is only for supporting corpora. Source/module dirs
-    // inside those corpora already qualify structurally, so they get the
-    // supporting-inventory depth treatment without a recursive probe.
+    // Inventory promotion: covers two cases.
+    //   1. Supporting corpora (`tests/`, `examples/`, `docs/`): the
+    //      `non_essential < 1.0` gate keeps "inventories" outside source
+    //      orientation. Source/module dirs inside those corpora already
+    //      qualify structurally via the sibling-module / module-source
+    //      checks.
+    //   2. Flat source partitions under a real source ancestor (`lib/`,
+    //      `src/`): directories like axios's `lib/helpers` (34 JS files,
+    //      no `index.js`) or generic `src/utils/` are the package's API
+    //      partition. They lack a structural anchor (no entrypoint file,
+    //      no sibling module), so the inventory probe is what surfaces
+    //      them — without it they fall to the catch-all listing tier and
+    //      their (legitimately) large listing loses every V/C race to
+    //      tiny sibling dirs.
     let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
-    let source_inventory_dir = non_essential < 1.0
-        && !source_dir
+    let under_root_source_ancestor = has_root_adjacent_source_ancestor(dir, ctx);
+    let source_inventory_dir = !source_dir
         && !module_source_dir
+        && (non_essential < 1.0 || under_root_source_ancestor)
         && is_source_inventory_dir(dir, ctx);
     let readme_cited = ctx.is_readme_cited(dir);
     let (cat, fu, ztu) = if dir == ctx.root() {
@@ -342,6 +354,34 @@ impl FsState {
 fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     const MIN_SOURCE_FILES: usize = 3;
     ctx.fs_state().source_inventory_count(dir, MIN_SOURCE_FILES) >= MIN_SOURCE_FILES
+}
+
+/// True when `dir` has an ancestor whose basename is a recognized
+/// source directory (`src` / `lib`) sitting directly under the seed
+/// root. Used to promote flat source partitions (no entrypoint, no
+/// sibling module) into the inventory tier when their listing is
+/// what names the package's API.
+///
+/// The shallowness gate matters: in a single-package layout (`./lib/…`,
+/// `./src/…`), every descendant is part of the one declared API
+/// partition the parent listing has already named, and inventory
+/// promotion surfaces the leaf partitions that lack their own anchor.
+/// In multi-package layouts (`./crate-a/src/…`, deep CUDA shims) the
+/// outer crate / shim already gates its own contents — promoting
+/// internal leaves crowds higher-priority orientation.
+fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
+    let root = ctx.root();
+    let mut parent = dir.parent();
+    while let Some(p) = parent {
+        if p == root || !p.starts_with(root) {
+            return false;
+        }
+        if is_source_dir(p) && p.parent() == Some(root) {
+            return true;
+        }
+        parent = p.parent();
+    }
+    false
 }
 
 fn source_inventory_count_uncached(state: &FsState, dir: &Path, target: usize) -> usize {

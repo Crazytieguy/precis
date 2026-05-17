@@ -113,36 +113,24 @@ entries = ["adapters", "app.test.ts", "app.ts", "bin.ts", "matches-where.test.ts
 
 [[batches]]
 position = 7
-key = 'Typescript(ExportNames { file: "src/random-id.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in src/random-id.ts"
-cost_tokens = 13
-cum_tokens = 210
+key = 'Fs(DirListing { dir: "src/adapters" })'
+descriptor = "listing of 'src/adapters'"
+cost_tokens = 17
+cum_tokens = 214
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "src/random-id.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/random-id.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
+[[batches.content.groups]]
+parent = "src/adapters"
+entries = ["normalized-adapter.test.ts", "normalized-adapter.ts", "observer.ts"]
 
 [[batches]]
 position = 8
-key = 'Typescript(Export { file: "src/random-id.ts", start_line: 3 })'
-descriptor = "export at src/random-id.ts:3"
-cost_tokens = 0
-cum_tokens = 210
+key = 'Typescript(ExportNames { file: "src/random-id.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in src/random-id.ts"
+cost_tokens = 13
+cum_tokens = 227
 
 [batches.content]
 kind = "lines"
@@ -165,10 +153,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
+key = 'Typescript(Export { file: "src/random-id.ts", start_line: 3 })'
+descriptor = "export at src/random-id.ts:3"
+cost_tokens = 0
+cum_tokens = 227
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/random-id.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/random-id.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 10
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 192
-cum_tokens = 402
+cum_tokens = 419
 
 [batches.content]
 kind = "lines"
@@ -478,11 +492,11 @@ end = 255
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 22
-cum_tokens = 424
+cum_tokens = 441
 
 [batches.content]
 kind = "lines"
@@ -504,11 +518,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 143
-cum_tokens = 567
+cum_tokens = 584
 
 [batches.content]
 kind = "lines"
@@ -538,11 +552,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 27
-cum_tokens = 594
+cum_tokens = 611
 
 [batches.content]
 kind = "lines"
@@ -564,11 +578,11 @@ end = 239
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 11
-cum_tokens = 605
+cum_tokens = 622
 
 [batches.content]
 kind = "lines"
@@ -580,20 +594,6 @@ end = 161
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "src/adapters" })'
-descriptor = "listing of 'src/adapters'"
-cost_tokens = 17
-cum_tokens = 622
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/adapters"
-entries = ["normalized-adapter.test.ts", "normalized-adapter.ts", "observer.ts"]
 
 [[batches]]
 position = 15

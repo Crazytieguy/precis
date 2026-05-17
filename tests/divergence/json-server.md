@@ -11,17 +11,17 @@ Score(3000)=0.636 I=0.830 C=0.487 ns_rows≤3K=21/51 (reached=9 partial=2 missin
 | walker |  | 126 | 61 | package identity in package.json |  |  | 0.659 |
 | ns | 196 |  | 88 | src/ tree | 1.3 |  | 0.434 |
 | walker |  | 197 | 71 | listing of 'src' |  |  | 0.646 |
-| walker |  | 210 | 13 | export names surface in src/random-id.ts |  |  | 0.646 |
-| walker |  | 210 | 0 | export at src/random-id.ts:3 |  |  | 0.646 |
-| ns | 237 |  | 41 | package.json name + version + ESM type | 1.4 |  | 0.648 |
-| ns | 338 |  | 101 | package.json bin + files + engines | 1.5 |  | 0.554 |
-| walker |  | 402 | 192 | headings outline in README.md |  |  | 0.558 |
-| walker |  | 424 | 22 | README.md section #1 |  |  | 0.560 |
-| ns | 511 |  | 173 | Install + start command from README | 1.6 |  | 0.462 |
-| walker |  | 567 | 143 | README.md section #0 |  |  | 0.640 |
-| walker |  | 594 | 27 | README.md section #18 |  |  | 0.641 |
-| walker |  | 605 | 11 | README.md section #9 |  |  | 0.641 |
-| walker |  | 622 | 17 | listing of 'src/adapters' |  |  | 0.707 |
+| walker |  | 214 | 17 | listing of 'src/adapters' |  |  | 0.738 |
+| walker |  | 227 | 13 | export names surface in src/random-id.ts |  |  | 0.738 |
+| walker |  | 227 | 0 | export at src/random-id.ts:3 |  |  | 0.738 |
+| ns | 237 |  | 41 | package.json name + version + ESM type | 1.4 |  | 0.734 |
+| ns | 338 |  | 101 | package.json bin + files + engines | 1.5 |  | 0.628 |
+| walker |  | 419 | 192 | headings outline in README.md |  |  | 0.631 |
+| walker |  | 441 | 22 | README.md section #1 |  |  | 0.634 |
+| ns | 511 |  | 173 | Install + start command from README | 1.6 |  | 0.521 |
+| walker |  | 584 | 143 | README.md section #0 |  |  | 0.706 |
+| walker |  | 611 | 27 | README.md section #18 |  |  | 0.706 |
+| walker |  | 622 | 11 | README.md section #9 |  |  | 0.707 |
 | walker |  | 639 | 17 | export names surface in src/parse-where.ts |  |  | 0.707 |
 | walker |  | 639 | 0 | export at src/parse-where.ts:58 |  |  | 0.707 |
 | walker |  | 655 | 16 | export body at src/random-id.ts:3 body 4 |  |  | 0.707 |

@@ -1573,10 +1573,24 @@ kind = "full"
 
 [[batches]]
 position = 59
+key = 'Fs(DirListing { dir: "src/widgetsTemplates" })'
+descriptor = "listing of 'src/widgetsTemplates'"
+cost_tokens = 31
+cum_tokens = 1179
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/widgetsTemplates"
+entries = ["base.hook.template.js", "help.widget.template.js", "info.widget.template.js", "list.widget.template.js", "logs.widget.template.js"]
+
+[[batches]]
+position = 60
 key = 'Typescript(Imports { file: "lib/modes.js" })'
 descriptor = "imports in lib/modes.js"
 cost_tokens = 8
-cum_tokens = 1156
+cum_tokens = 1187
 
 [batches.content]
 kind = "lines"
@@ -1588,20 +1602,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 60
-key = 'Fs(DirListing { dir: "src/widgetsTemplates" })'
-descriptor = "listing of 'src/widgetsTemplates'"
-cost_tokens = 31
-cum_tokens = 1187
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/widgetsTemplates"
-entries = ["base.hook.template.js", "help.widget.template.js", "info.widget.template.js", "list.widget.template.js", "logs.widget.template.js"]
 
 [[batches]]
 position = 61

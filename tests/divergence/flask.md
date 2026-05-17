@@ -27,19 +27,19 @@ Score(3000)=0.631 I=0.885 C=0.450 ns_rows≤3K=17/45 (reached=9 partial=1 missin
 | ns | 606 |  | 146 | Public re-exports — helpers (url_for, redirect, abort, flash, send_file, …) | 1.7 |  | 0.843 |
 | walker |  | 703 | 146 | python imports #6 in src/flask/__init__.py |  |  | 0.930 |
 | walker |  | 784 | 81 | python imports in src/flask/json/__init__.py |  |  | 0.930 |
-| walker |  | 793 | 9 | listing of 'examples' |  |  | 0.930 |
-| ns | 838 |  | 232 | Public re-exports — templating + signals | 1.8 |  | 0.844 |
-| walker |  | 961 | 168 | python imports #8 in src/flask/__init__.py |  |  | 0.938 |
-| ns | 970 |  | 132 | Minimal Flask app example (README) | 1.9 |  | 0.853 |
-| ns | 1047 |  | 77 | Sansio README — what the sansio split is for | 2.1 |  | 0.824 |
-| walker |  | 1080 | 119 | README.md section #0 |  |  | 0.824 |
-| ns | 1093 |  | 46 | Class hierarchy headers — Scaffold, App, Blueprint, Flask | 2.2 |  | 0.802 |
-| walker |  | 1184 | 104 | [dependencies] in pyproject.toml |  |  | 0.802 |
-| walker |  | 1197 | 13 | listing of '.github' |  |  | 0.802 |
-| walker |  | 1220 | 23 | listing of '.github/workflows' |  |  | 0.802 |
-| walker |  | 1233 | 13 | python decl names surface in src/flask/blueprints.py |  |  | 0.804 |
-| walker |  | 1233 | 0 | python decl at src/flask/blueprints.py:18 |  |  | 0.804 |
-| walker |  | 1250 | 17 | listing of 'src/flask/sansio' |  |  | 0.857 |
+| walker |  | 801 | 17 | listing of 'src/flask/sansio' |  |  | 1.000 |
+| walker |  | 810 | 9 | listing of 'examples' |  |  | 1.000 |
+| ns | 838 |  | 232 | Public re-exports — templating + signals | 1.8 |  | 0.909 |
+| ns | 970 |  | 132 | Minimal Flask app example (README) | 1.9 |  | 0.826 |
+| walker |  | 978 | 168 | python imports #8 in src/flask/__init__.py |  |  | 0.909 |
+| ns | 1047 |  | 77 | Sansio README — what the sansio split is for | 2.1 |  | 0.879 |
+| ns | 1093 |  | 46 | Class hierarchy headers — Scaffold, App, Blueprint, Flask | 2.2 |  | 0.856 |
+| walker |  | 1097 | 119 | README.md section #0 |  |  | 0.856 |
+| walker |  | 1201 | 104 | [dependencies] in pyproject.toml |  |  | 0.856 |
+| walker |  | 1214 | 13 | listing of '.github' |  |  | 0.856 |
+| walker |  | 1237 | 23 | listing of '.github/workflows' |  |  | 0.856 |
+| walker |  | 1250 | 13 | python decl names surface in src/flask/blueprints.py |  |  | 0.857 |
+| walker |  | 1250 | 0 | python decl at src/flask/blueprints.py:18 |  |  | 0.857 |
 | ns | 1345 |  | 252 | Scaffold docstring — common behavior of Flask + Blueprint | 2.3 | 2.2 | 0.793 |
 | walker |  | 1373 | 123 | python decl names surface in src/flask/json/__init__.py |  |  | 0.793 |
 | walker |  | 1382 | 9 | python decl at src/flask/json/__init__.py:13 |  |  | 0.793 |

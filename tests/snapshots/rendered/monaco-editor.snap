@@ -48,7 +48,6 @@ README.md
     56→### Providers
     …
     58→Providers provide smart editor features. For example, this includes completion and hover information. It is not the same as, but often maps to [language server protocol](https://microsoft.github.io/language-server-protocol) features.
-    60→Providers work on models. Some smart features depends on the file URI. For example, for TypeScript to resolve imports, or for JSON IntelliSense to determine which JSON schema to apply to which model. So it's important to choose proper model URIs.
     62→### Disposables
     …
     66→## Documentation
@@ -92,11 +91,6 @@ monaco-lsp-client/
         5→	"version": "0.1.0",
         6→	"main": "out/index.js",
         7→	"types": "out/index.d.ts",
-        21→	"scripts": {
-        22→		"build": "npx rolldown -c rolldown.config.mjs",
-        23→		"dev": "npx rolldown -c rolldown.config.mjs --watch",
-        24→		"generate": "tsx generator/index.ts"
-        25→	}
     rolldown.config.mjs
     src/
         adapters/
@@ -143,118 +137,18 @@ samples/
         …
         36→MIT
     browser-esm-esbuild/
-        .gitignore
-        build.js
-        dist/
-        index.html
-        index.js
-        package.json
-            2→	"name": "helloworld",
-            3→	"scripts": {
-            4→		"build": "node ./build.js"
-            5→	}
     browser-esm-parcel/
-        .gitignore
-        index.html
-        package-lock.json
-        package.json
-            2→	"name": "helloworld",
-            3→	"scripts": {
-            4→		"start": "parcel ./src/index.html"
-            5→	},
-        src/
     browser-esm-vite/
-        .gitignore
-        index.html
-        main.ts
-        package-lock.json
-        package.json
-            2→	"name": "browser-esm-vite",
-            3→	"scripts": {
-            4→		"dev": "vite",
-            5→		"build": "tsc && vite build",
-            6→		"serve": "vite preview"
-            7→	},
-        style.css
-        tsconfig.json
-        vite.config.ts
     browser-esm-vite-react/
-        .gitignore
-        index.html
-        package-lock.json
-        package.json
-            2→	"name": "browser-esm-vite-react",
-        src/
-            components/
-            main.tsx
-            userWorker.ts
-            vite-env.d.ts
-        tsconfig.json
-        vite.config.ts
     browser-esm-webpack/
-        .gitignore
-        dist/
-        index.html
-        index.js
-        package.json
-            2→	"name": "browser-esm-webpack",
-            3→	"scripts": {
-            4→		"build": "node ../node_modules/webpack/bin/webpack.js --progress"
-            5→	}
-        webpack.config.js
     browser-esm-webpack-monaco-plugin/
-        .gitignore
-        dist/
-        index.html
-        index.js
-        package.json
-            2→	"name": "browser-esm-webpack-monaco-plugin",
-            3→	"scripts": {
-            4→		"build": "node ../node_modules/webpack/bin/webpack.js --progress"
-            5→	}
-        webpack.config.js
     browser-esm-webpack-small/
-        .gitignore
-        dist/
-        generate-imports.js
-        index.html
-        index.js
-        package.json
-            2→	"name": "browser-esm-webpack-small",
-        webpack.config.js
     browser-esm-webpack-typescript/
-        .gitignore
-        package.json
-            2→	"name": "monaco-esm-webpack-typescript",
-        src/
-        tsconfig.json
-        webpack.config.js
     browser-esm-webpack-typescript-react/
-        .gitignore
-        package-lock.json
-        package.json
-            2→	"name": "monaco-esm-webpack-typescript",
-        src/
-            components/
-            index.css
-            index.html
-            index.tsx
-        tsconfig.json
-        webpack.config.js
     electron-esm-webpack/
-        .gitignore
-        dist/
-        index.js
-        main.js
-        package.json
-            2→	"name": "electron-esm-webpack",
-            3→	"main": "./main",
-        webpack.config.js
     legacy/
     nwjs-amd/
-        index.html
     nwjs-amd-v2/
-        index.html
     package-lock.json
     package.json
         2→	"name": "monaco-editor-samples",
@@ -296,11 +190,111 @@ src/
         features/
             common/
             css/
+                css.worker.ts
+                cssMode.ts
+                cssWorker.ts
+                register.ts
+                    9→export interface CSSFormatConfiguration {
+                    …
+                    24→export interface Options {
+                    …
+                    57→export interface ModeConfiguration {
+                    …
+                    124→export interface LanguageServiceDefaults {
+                    …
+                    140→export type DiagnosticsOptions = Options;
+                    …
+                    240→export const cssDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
+                    241→	'css',
+                    242→	optionsDefault,
+                    243→	modeConfigurationDefault
+                    244→);
+                    245→export const scssDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
+                    246→	'scss',
+                    247→	optionsDefault,
+                    248→	modeConfigurationDefault
+                    249→);
+                    250→export const lessDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
+                    251→	'less',
+                    252→	optionsDefault,
+                    253→	modeConfigurationDefault
+                    254→);
+                    276→export interface CSSDataConfiguration {
+                    …
+                    291→export interface CSSDataV1 {
+                    …
+                    299→export type EntryStatus = 'standard' | 'experimental' | 'nonstandard' | 'obsolete';
+                    …
+                    301→export interface IReference {
+                    302→	name: string;
+                    303→	url: string;
+                    304→}
+                workerManager.ts
             html/
+                html.worker.ts
+                htmlMode.ts
+                htmlWorker.ts
+                register.ts
+                workerManager.ts
             json/
+                json.worker.ts
+                jsonMode.ts
+                jsonWorker.ts
+                register.ts
+                    10→export interface BaseASTNode {
+                    …
+                    18→export interface ObjectASTNode extends BaseASTNode {
+                    19→	readonly type: 'object';
+                    20→	readonly properties: PropertyASTNode[];
+                    21→	readonly children: ASTNode[];
+                    22→}
+                    23→export interface PropertyASTNode extends BaseASTNode {
+                    …
+                    30→export interface ArrayASTNode extends BaseASTNode {
+                    31→	readonly type: 'array';
+                    32→	readonly items: ASTNode[];
+                    33→	readonly children: ASTNode[];
+                    34→}
+                    35→export interface StringASTNode extends BaseASTNode {
+                    36→	readonly type: 'string';
+                    37→	readonly value: string;
+                    38→}
+                    39→export interface NumberASTNode extends BaseASTNode {
+                    40→	readonly type: 'number';
+                    41→	readonly value: number;
+                    42→	readonly isInteger: boolean;
+                    43→}
+                    44→export interface BooleanASTNode extends BaseASTNode {
+                    45→	readonly type: 'boolean';
+                    46→	readonly value: boolean;
+                    47→}
+                    48→export interface NullASTNode extends BaseASTNode {
+                    49→	readonly type: 'null';
+                    50→	readonly value: null;
+                    51→}
+                    53→export type ASTNode =
+                    …
+                    62→export type JSONDocument = {
+                    63→	root: ASTNode | undefined;
+                    64→	getNodeFromOffset(offset: number, includeRightBound?: boolean): ASTNode | undefined;
+                    65→};
+                    67→export type JSONSchemaRef = JSONSchema | boolean;
+                    …
+                    69→export interface JSONSchemaMap {
+                    70→	[name: string]: JSONSchemaRef;
+                    71→}
+                tokenization.ts
+                workerManager.ts
             register.all.ts
                 6→export { css, html, json, typescript };
             typescript/
+                languageFeatures.ts
+                lib/
+                register.ts
+                ts.worker.ts
+                tsMode.ts
+                tsWorker.ts
+                workerManager.ts
         register.all.ts
     tsconfig.json
 test/
