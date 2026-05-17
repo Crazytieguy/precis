@@ -11,57 +11,10 @@ CODE_OF_CONDUCT.rst
 CONTRIBUTING.rst
 LICENSE
 README.rst
-    13→beets
-    14→=====
-    16→Beets is the media library management system for obsessive music geeks.
-    18→The purpose of beets is to get your music collection right once and for all. It
-    19→catalogs your collection, automatically improving its metadata as it goes. It
-    20→then provides a suite of tools for manipulating and accessing your music.
-    22→Here's an example of beets' brainy tag corrector doing its thing:
-    24→::
-    26→    $ beet import ~/music/ladytron
-    27→    Tagging:
-    28→        Ladytron - Witching Hour
-    29→    (Similarity: 98.4%)
-    30→     * Last One Standing      -> The Last One Standing
-    31→     * Beauty                 -> Beauty*2
-    32→     * White Light Generation -> Whitelightgenerator
-    33→     * All the Way            -> All the Way...
-    35→Because beets is designed as a library, it can do almost anything you can
-    36→imagine for your music collection. Via plugins_, beets becomes a panacea:
-    38→- Fetch or calculate all the metadata you could possibly need: `album art`_,
-    39→  lyrics_, genres_, tempos_, ReplayGain_ levels, or `acoustic fingerprints`_.
-    40→- Get metadata from MusicBrainz_, Discogs_, and Beatport_. Or guess metadata
-    41→  using songs' filenames or their acoustic fingerprints.
-    42→- `Transcode audio`_ to any format you like.
-    43→- Check your library for `duplicate tracks and albums`_ or for `albums that are
-    44→  missing tracks`_.
-    45→- Clean up crufty tags left behind by other, less-awesome tools.
-    46→- Embed and extract album art from files' metadata.
-    47→- Browse your music library graphically through a Web browser and play it in any
-    48→  browser that supports `HTML5 Audio`_.
-    49→- Analyze music files' metadata from the command line.
-    50→- Listen to your library with a music player that speaks the MPD_ protocol and
-    51→  works with a staggering variety of interfaces.
-    53→If beets doesn't do what you want yet, `writing your own plugin`_ is shockingly
-    54→simple if you know a little Python.
 README_kr.rst
 SECURITY.md
 beets/
     __init__.py
-        1→# This file is part of beets.
-        2→# Copyright 2016, Adrian Sampson.
-        3→#
-        4→# Permission is hereby granted, free of charge, to any person obtaining
-        5→# a copy of this software and associated documentation files (the
-        6→# "Software"), to deal in the Software without restriction, including
-        7→# without limitation the rights to use, copy, modify, merge, publish,
-        8→# distribute, sublicense, and/or sell copies of the Software, and to
-        9→# permit persons to whom the Software is furnished to do so, subject to
-        10→# the following conditions:
-        11→#
-        12→# The above copyright notice and this permission notice shall be
-        13→# included in all copies or substantial portions of the Software.
         16→from sys import stderr
         18→import confuse
         20→from .util.deprecation import deprecate_imports
@@ -77,21 +30,13 @@ beets/
         …
         52→config = IncludeLazyConfig("beets", __name__)
     __main__.py
+        15→"""The __main__ module lets you run the beets CLI interface by typing
+        16→`python -m beets`.
+        17→"""
+        19→import sys
+        21→from .ui import main
     autotag/
         __init__.py
-            1→# This file is part of beets.
-            2→# Copyright 2016, Adrian Sampson.
-            3→#
-            4→# Permission is hereby granted, free of charge, to any person obtaining
-            5→# a copy of this software and associated documentation files (the
-            6→# "Software"), to deal in the Software without restriction, including
-            7→# without limitation the rights to use, copy, modify, merge, publish,
-            8→# distribute, sublicense, and/or sell copies of the Software, and to
-            9→# permit persons to whom the Software is furnished to do so, subject to
-            10→# the following conditions:
-            11→#
-            12→# The above copyright notice and this permission notice shall be
-            13→# included in all copies or substantial portions of the Software.
             15→"""Facilities for automatically determining files' correct metadata."""
             17→from __future__ import annotations
             19→from importlib import import_module
@@ -117,6 +62,40 @@ beets/
     context.py
     dbcore/
         __init__.py
+            15→"""DBCore is an abstract database package that forms the basis for beets'
+            16→Library.
+            17→"""
+            19→from .db import Database, Index, Model, Results
+            20→from .query import (
+            21→    AndQuery,
+            22→    FieldQuery,
+            23→    InvalidQueryError,
+            24→    MatchQuery,
+            25→    OrQuery,
+            26→    Query,
+            27→)
+            28→from .queryparse import (
+            29→    parse_sorted_query,
+            30→    query_from_strings,
+            31→    sort_from_strings,
+            32→)
+            33→from .types import Type
+            35→__all__ = [
+            36→    "AndQuery",
+            37→    "Database",
+            38→    "FieldQuery",
+            39→    "Index",
+            40→    "InvalidQueryError",
+            41→    "MatchQuery",
+            42→    "Model",
+            43→    "OrQuery",
+            44→    "Query",
+            45→    "Results",
+            46→    "Type",
+            47→    "parse_sorted_query",
+            48→    "query_from_strings",
+            49→    "sort_from_strings",
+            50→]
         db.py
         pathutils.py
         query.py
@@ -124,6 +103,26 @@ beets/
         types.py
     importer/
         __init__.py
+            15→"""Provides the basic, interface-agnostic workflow for importing and
+            16→autotagging music files.
+            17→"""
+            19→from .session import ImportAbortError, ImportSession
+            20→from .tasks import (
+            21→    Action,
+            22→    ArchiveImportTask,
+            23→    ImportTask,
+            24→    SentinelImportTask,
+            25→    SingletonImportTask,
+            26→)
+            30→__all__ = [
+            31→    "Action",
+            32→    "ArchiveImportTask",
+            33→    "ImportAbortError",
+            34→    "ImportSession",
+            35→    "ImportTask",
+            36→    "SentinelImportTask",
+            37→    "SingletonImportTask",
+            38→]
         session.py
         stages.py
         state.py
@@ -173,11 +172,56 @@ beets/
         helper.py
     ui/
         __init__.py
+            15→"""This module contains all of the core logic for beets' command-line
+            16→interface. To invoke the CLI, just call beets.ui.main(). The actual
+            17→CLI commands are implemented in the ui.commands module.
+            18→"""
+            20→from __future__ import annotations
+            22→import errno
+            23→import optparse
+            24→import os.path
+            25→import re
+            26→import shutil
+            27→import sqlite3
+            28→import sys
+            29→import textwrap
+            30→import traceback
+            31→from functools import cache
+            32→from typing import TYPE_CHECKING, Any
+            34→import confuse
+            36→from beets import config, library, logging, plugins, util
+            37→from beets.dbcore import db
+            38→from beets.dbcore import query as db_query
+            39→from beets.util import as_string
+            40→from beets.util.color import colorize
+            41→from beets.util.deprecation import deprecate_for_maintainers
+            42→from beets.util.diff import get_model_changes
+            43→from beets.util.functemplate import template
+            45→if TYPE_CHECKING:
+            46→    from collections.abc import Callable, Iterable
         commands/
             __init__.py
+                15→"""This module provides the default commands for beets' command-line
+                16→interface.
+                17→"""
+                19→from beets.util.deprecation import deprecate_imports
+                21→from .completion import completion_cmd
+                22→from .config import config_cmd
+                23→from .fields import fields_cmd
+                24→from .help import HelpCommand
+                25→from .import_ import import_cmd
+                26→from .list import list_cmd
+                27→from .modify import modify_cmd
+                28→from .move import move_cmd
+                29→from .remove import remove_cmd
+                30→from .stats import stats_cmd
+                31→from .update import update_cmd
+                32→from .version import version_cmd
+                33→from .write import write_cmd
                 36→def __getattr__(name: str):
                 37→    """Handle deprecated imports."""
                 50→default_commands = [
+                67→__all__ = ["default_commands"]
             completion.py
             completion_base.sh
             config.py
