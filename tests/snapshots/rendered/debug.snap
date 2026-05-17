@@ -199,6 +199,8 @@ src/
         249→	function enabled(name) {
         272→	function coerce(val) {
         283→	function destroy() {
+        287→	createDebug.enable(createDebug.load());
+        289→	return createDebug;
         292→module.exports = setup;
     index.js
         1→/**

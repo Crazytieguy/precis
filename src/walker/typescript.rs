@@ -2681,15 +2681,21 @@ fn function_body_parts(body: Option<Node>, source: &str, src_lines: &[&str]) -> 
         && let Some(table) = factory_receiver_table_part(b, source, src_lines)
     {
         let mut parts = vec![table];
-        // The inner-function locations surface is shipped as a sibling
-        // BodyPart (NOT merged with the receiver table). NS authors
-        // anchor on the two surfaces independently — the table is the
-        // contract between this module and its host, the locations
-        // catalog is the entry-point list for nested helpers. Caller
-        // must keep these parts un-merged; see
-        // `is_factory_body_match` below.
+        // Inner-function locations surface — the catalog of nested
+        // helpers the factory closes over. Distinct from the table
+        // (the host contract); NS authors anchor on each separately.
         if let Some(locations) = factory_inner_function_locations_part(b, src_lines) {
             parts.push(locations);
+        }
+        // Bootstrap-and-return tail — statements after the last inner
+        // function_declaration that wire the factory to its host
+        // (`createDebug.enable(createDebug.load());`) and return the
+        // receiver (`return createDebug;`). These line(s) carry the
+        // "how is this called at module load time?" signal NS authors
+        // ship as a separate batch ("setup() signature + bootstrap +
+        // module.exports").
+        if let Some(tail) = factory_post_helper_tail_part(b, src_lines) {
+            parts.push(tail);
         }
         return parts;
     }
@@ -2804,6 +2810,45 @@ fn factory_inner_function_locations_part(body: Node, src_lines: &[&str]) -> Opti
 /// below this floor the function body is unlikely to be the
 /// CommonJS-style factory whose body is a small set of named helpers.
 const FACTORY_INNER_FUNCTION_LOCATIONS_MIN: usize = 3;
+
+/// Bootstrap-and-return tail for a factory body. Returns the lines of
+/// every `expression_statement` and `return_statement` that follows
+/// the LAST inner `function_declaration` in the body's named children.
+/// In the CommonJS factory idiom this is typically the
+/// `someReceiver.init(...)` call that wires the factory to its host
+/// plus the trailing `return receiver;`. NS authors anchor on this
+/// as the "how is this consumed at module load?" signal, distinct
+/// from the receiver-table contract and the helper-locations catalog.
+///
+/// Only fires when the inner-function locations part also fires
+/// (the body has ≥3 helpers): without the helpers there's no
+/// meaningful "before / after helpers" split and the tail
+/// would collapse with the receiver table.
+fn factory_post_helper_tail_part(body: Node, src_lines: &[&str]) -> Option<BodyPart> {
+    let mut cursor = body.walk();
+    let named: Vec<Node> = body.named_children(&mut cursor).collect();
+    let helper_count = named
+        .iter()
+        .filter(|n| n.kind() == "function_declaration")
+        .count();
+    if helper_count < FACTORY_INNER_FUNCTION_LOCATIONS_MIN {
+        return None;
+    }
+    let last_helper_index = named
+        .iter()
+        .rposition(|n| n.kind() == "function_declaration")?;
+    let mut lines: Vec<usize> = Vec::new();
+    for child in &named[last_helper_index + 1..] {
+        if !matches!(child.kind(), "expression_statement" | "return_statement") {
+            continue;
+        }
+        let start_row = child.start_position().row;
+        let end_row = child.end_position().row;
+        extend_nonblank_rows(&mut lines, src_lines, start_row, end_row);
+    }
+    let lines = dedup_sorted(lines);
+    (!lines.is_empty()).then_some(BodyPart { lines })
+}
 
 /// Return the identifier text of the first top-level `return
 /// <Identifier>;` statement in `named` (the function body's named
@@ -3480,12 +3525,18 @@ module.exports = setup;
         let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
         let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
         assert!(setup.factory_sibling_body_parts);
-        assert_eq!(setup.body_parts.len(), 2);
+        // Three parts: receiver table, inner-function locations,
+        // bootstrap-and-return tail.
+        assert_eq!(setup.body_parts.len(), 3);
         // First part: receiver-table prefix.
         assert_eq!(setup.body_parts[0].lines, vec![2, 3, 4]);
         // Second part: inner-function start lines, NOT merged with the
         // table (would inflate the table's cost and lose the V/C race).
         assert_eq!(setup.body_parts[1].lines, vec![5, 6, 7]);
+        // Third part: post-helper return (no bootstrap call in this
+        // synthetic body, but `return createDebug;` at line 8 still
+        // qualifies).
+        assert_eq!(setup.body_parts[2].lines, vec![8]);
     }
 
     #[test]
