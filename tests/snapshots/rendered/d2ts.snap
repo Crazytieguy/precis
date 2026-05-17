@@ -164,7 +164,6 @@ packages/
                     222→export class OutputElectricMessagesOperator<K, V> extends UnaryOperator<
                     223→  [K, V]
                     224→> {
-                    225→  #fn: (data: ChangeMessage<Row<V>>[]) => void
                     227→  constructor(
                     228→    id: number,
                     229→    inputA: DifferenceStreamReader<[K, V]>,
@@ -235,6 +234,14 @@ packages/
                 topK.ts
                 topKWithFractionalIndex.ts
             order.ts
+                10→export function v(version: number | number[]): Version {
+                …
+                29→export class Version {
+                …
+                138→export class Antichain {
+                …
+                277→export class Frontier extends Antichain {
+                …
             sqlite/
                 context.ts
                     65→export function withSQLite(db: SQLiteDb) {

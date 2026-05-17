@@ -341,7 +341,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 let export_lines = if split_js_class {
                     class_header_surface_lines(item.anchor, item.decl, &source)
                 } else {
-                    decl_surface_lines(item.kind, item.anchor, item.decl, &source)
+                    decl_surface_lines(item.kind, item.anchor, item.decl, &source, true)
                 };
                 let mut doc_lines = Vec::new();
                 collect_jsdoc_above(
@@ -2226,11 +2226,20 @@ fn collect_export_lines(tree: &Tree, source: &str, start_line: usize) -> FileLin
     let Some(located) = locate_export_decl(tree, source, start_line) else {
         return FileLines::new(Vec::new());
     };
-    decl_surface_lines(located.kind(), located.anchor(), located.decl(), source)
+    decl_surface_lines(
+        located.kind(),
+        located.anchor(),
+        located.decl(),
+        source,
+        true,
+    )
 }
 
 fn module_item_lines(kind: ItemKind, decl: Node, source: &str) -> FileLines {
-    let mut lines = decl_surface_lines(kind, decl, decl, source);
+    // Module-private items aren't part of the public API surface; their
+    // private-vs-public split inside the declaration isn't load-bearing
+    // for orientation, so the full member surface stays.
+    let mut lines = decl_surface_lines(kind, decl, decl, source, false);
     // Module-private classes commonly carry the type's documentation
     // ("This class represents X. It follows the builder pattern...") in
     // a JSDoc block immediately above. NS authors anchor on the doc +
@@ -2247,7 +2256,13 @@ fn module_item_lines(kind: ItemKind, decl: Node, source: &str) -> FileLines {
     lines
 }
 
-fn decl_surface_lines(kind: ItemKind, anchor: Node, decl: Node, source: &str) -> FileLines {
+fn decl_surface_lines(
+    kind: ItemKind,
+    anchor: Node,
+    decl: Node,
+    source: &str,
+    public_surface: bool,
+) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     let export_start_row = anchor.start_position().row;
@@ -2285,7 +2300,9 @@ fn decl_surface_lines(kind: ItemKind, anchor: Node, decl: Node, source: &str) ->
             if let Some(b) = body {
                 let mut bcur = b.walk();
                 for member in b.children(&mut bcur) {
-                    if class_surface_member_kind(member.kind()) {
+                    if class_surface_member_kind(member.kind())
+                        && !(public_surface && is_non_public_class_member(member, source))
+                    {
                         let member_lines = member_header_lines(member).0;
                         full.extend(member_lines.full);
                         ellipses.extend(member_lines.ellipses);
@@ -2377,6 +2394,32 @@ fn class_surface_member_kind(kind: &str) -> bool {
             | "public_field_definition"
             | "property_signature"
     )
+}
+
+/// True when a class member is intentionally non-public — either an
+/// ECMAScript `#privateName` (runtime-enforced, syntactically inaccessible
+/// from outside) or a TypeScript `private`/`protected` modifier. Such
+/// members aren't part of the class's public API, so they don't belong
+/// in the orientation surface NS authors anchor on ("public method
+/// signatures"). Filtering them shrinks dense classes like `PQueue`
+/// (~50 members, most `#private`) from a budget-blocking signature
+/// dump to a focused public-surface listing.
+fn is_non_public_class_member(member: Node, source: &str) -> bool {
+    if let Some(name) = name_of(member, source)
+        && name.starts_with('#')
+    {
+        return true;
+    }
+    let mut cursor = member.walk();
+    for child in member.children(&mut cursor) {
+        if child.kind() == "accessibility_modifier" {
+            let text = &source[child.start_byte()..child.end_byte()];
+            if matches!(text, "private" | "protected") {
+                return true;
+            }
+        }
+    }
+    false
 }
 
 fn js_split_class_member_kind(kind: &str) -> bool {

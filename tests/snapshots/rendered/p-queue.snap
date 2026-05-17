@@ -14,7 +14,49 @@ package.json
     3→	"version": "9.2.0",
     4→	"description": "Promise queue with concurrency control",
     5→	"license": "MIT",
+    6→	"repository": "sindresorhus/p-queue",
+    7→	"funding": "https://github.com/sponsors/sindresorhus",
     8→	"type": "module",
+    9→	"exports": {
+    10→		"types": "./dist/index.d.ts",
+    11→		"default": "./dist/index.js"
+    12→	},
+    13→	"sideEffects": false,
+    14→	"engines": {
+    15→		"node": ">=20"
+    16→	},
+    17→	"scripts": {
+    18→		"build": "del-cli dist && tsc",
+    19→		"test": "xo && node --import=tsx/esm --test test/*.ts && del-cli dist && tsc && tsd",
+    20→		"bench": "node --import=tsx/esm bench.ts",
+    21→		"prepublishOnly": "del-cli dist && tsc"
+    22→	},
+    23→	"files": [
+    24→		"dist"
+    25→	],
+    26→	"types": "dist/index.d.ts",
+    27→	"keywords": [
+    28→		"promise",
+    29→		"queue",
+    30→		"enqueue",
+    31→		"limit",
+    32→		"limited",
+    33→		"concurrency",
+    34→		"throttle",
+    35→		"throat",
+    36→		"rate",
+    37→		"batch",
+    38→		"ratelimit",
+    39→		"priority",
+    40→		"priorityqueue",
+    41→		"fifo",
+    42→		"job",
+    43→		"task",
+    44→		"async",
+    45→		"await",
+    46→		"promises",
+    47→		"bluebird"
+    48→	],
 readme.md
     1→# p-queue
     3→> Promise queue with concurrency control
@@ -54,6 +96,20 @@ readme.md
     45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
     47→## Usage
     …
+    49→Here we run only one promise at a time. For example, set `concurrency` to 4 to run four promises at the same time.
+    51→```js
+    52→import PQueue from 'p-queue';
+    53→import got from 'got';
+    55→const queue = new PQueue({concurrency: 1});
+    57→(async () => {
+    58→	await queue.add(() => got('https://sindresorhus.com'));
+    59→	console.log('Done: sindresorhus.com');
+    60→})();
+    62→(async () => {
+    63→	await queue.add(() => got('https://avajs.dev'));
+    64→	console.log('Done: avajs.dev');
+    65→})();
+    66→```
     68→## API
     …
     70→### PQueue(options?)
@@ -62,8 +118,13 @@ readme.md
     162→### queue
     …
     164→`PQueue` instance.
+    236→#### .addAll(fns, options?)
+    238→Same as `.add()`, but accepts an array of sync or async functions and returns a promise that resolves when all functions are resolved.
     240→#### .pause()
     242→Put queue execution on hold.
+    244→#### .start()
+    246→Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
+    248→Returns `this` (the instance).
     355→#### .size
     357→Size of the queue, the number of queued items waiting to run.
     419→#### .pending
@@ -71,6 +132,8 @@ readme.md
     440→#### [.concurrency](#concurrency)
     442→#### .isPaused
     444→Whether the queue is currently paused.
+    446→#### .isRateLimited
+    448→Whether the queue is currently rate-limited due to `intervalCap`. Returns `true` when the number of tasks executed in the current interval has reached the `intervalCap` and there are still tasks waiting to be processed.
     512→## Events
     …
     698→## Advanced example
@@ -98,67 +161,9 @@ source/
         14→Promise queue with concurrency control.
         15→*/
         16→export default class PQueue<QueueType extends Queue<RunFunction, EnqueueOptionsType> = PriorityQueue, EnqueueOptionsType extends QueueAddOptions = QueueAddOptions> extends EventEmitter<EventName> { // eslint-disable-line @typescript-eslint/naming-convention
-        17→	readonly #carryoverIntervalCount: boolean;
-        19→	readonly #isIntervalIgnored: boolean;
-        21→	#intervalCount = 0;
-        23→	readonly #intervalCap: number;
-        25→	#rateLimitedInInterval = false;
-        26→	#rateLimitFlushScheduled = false;
-        28→	readonly #interval: number;
-        30→	#intervalEnd = 0;
-        32→	#lastExecutionTime = 0;
-        34→	#intervalId?: NodeJS.Timeout;
-        36→	#timeoutId?: NodeJS.Timeout;
-        38→	readonly #strict: boolean;
-        41→	#strictTicks: number[] = [];
-        42→	#strictTicksStartIndex = 0;
-        44→	#queue: QueueType;
-        46→	readonly #queueClass: new () => QueueType;
-        48→	#pending = 0;
-        51→	#concurrency!: number;
-        53→	#isPaused: boolean;
-        56→	#idAssigner = 1n;
-        59→	readonly #runningTasks = new Map<symbol, {
-        60→		id?: string;
-        61→		priority: number;
-        62→		startTime: number;
-        63→		timeout?: number;
-        64→	}>();
-        66→	readonly #queueAbortListenerCleanupFunctions = new Set<() => void>();
+        …
         83→	timeout?: number;
         85→	constructor(options?: Options<QueueType, EnqueueOptionsType>) {
-        …
-        137→	#cleanupStrictTicks(now: number): void {
-        …
-        160→	#consumeIntervalSlot(now: number): void {
-        …
-        168→	#rollbackIntervalSlot(): void {
-        …
-        179→	#getActiveTicksCount(): number {
-        …
-        183→	get #doesIntervalAllowAnother(): boolean {
-        …
-        196→	get #doesConcurrentAllowAnother(): boolean {
-        …
-        200→	#next(): void {
-        …
-        211→	#onResumeInterval(): void {
-        …
-        219→	#isIntervalPausedAt(now: number): boolean {
-        …
-        265→	#createIntervalTimeout(delay: number): void {
-        …
-        275→	#clearIntervalTimer(): void {
-        …
-        282→	#clearTimeoutTimer(): void {
-        …
-        289→	#tryToStartAnother(): boolean {
-        …
-        340→	#initializeIntervalIfNeeded(): void {
-        …
-        360→	#onInterval(): void {
-        …
-        377→	#processQueue(): void {
         …
         382→	get concurrency(): number {
         …
@@ -198,8 +203,6 @@ source/
         …
         756→	onError(): Promise<never> {
         …
-        767→	async #onEvent(event: EventName, filter?: () => boolean): Promise<void> {
-        …
         785→	get size(): number {
         …
         794→	sizeBy(options: Readonly<Partial<EnqueueOptionsType>>): number {
@@ -207,14 +210,6 @@ source/
         802→	get pending(): number {
         …
         809→	get isPaused(): boolean {
-        …
-        813→	#setupRateLimitTracking(): void {
-        …
-        832→	#scheduleRateLimitUpdate(): void {
-        …
-        845→	#rollbackIntervalConsumption(): void {
-        …
-        854→	#updateRateLimitState(): void {
         …
         888→	get isRateLimited(): boolean {
         …
@@ -240,8 +235,7 @@ source/
         8→	priority?: number;
         9→} & QueueAddOptions;
         11→export default class PriorityQueue implements Queue<RunFunction, PriorityQueueOptions> {
-        12→	readonly #queue: Array<PriorityQueueOptions & {run: RunFunction}> = [];
-        15→	#head = 0;
+        …
         17→	enqueue(run: RunFunction, options?: Partial<PriorityQueueOptions>): void {
         …
         50→	setPriority(id: string, priority: number) {
@@ -256,9 +250,11 @@ source/
         …
         115→	get size(): number {
         …
-        119→	#compact(): void {
-        …
     queue.ts
+        1→export type RunFunction = () => Promise<unknown>;
+        …
+        3→export type Queue<Element, Options> = {
+        …
 test/
     advanced.ts
     basic.ts

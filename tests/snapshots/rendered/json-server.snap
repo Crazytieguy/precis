@@ -187,7 +187,7 @@ src/
             8→  $schema?: string
             9→}
             11→export class NormalizedAdapter implements Adapter<Data> {
-            12→  #adapter: Adapter<RawData>
+            …
             14→  constructor(adapter: Adapter<RawData>) {
             …
             18→  async read(): Promise<Data | null> {
@@ -197,7 +197,7 @@ src/
         observer.ts
             1→import type { Adapter } from 'lowdb'
             4→export class Observer<T> {
-            5→  #adapter: Adapter<T>
+            …
             7→  onReadStart = function () {
             8→    return
             9→  }

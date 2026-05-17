@@ -206,120 +206,121 @@ Score(3000)=0.449 I=0.754 C=0.267 ns_rows≤3K=23/40 (reached=7 partial=0 missin
 | ns | 6959 |  | 190 | registerLanguage / loadLanguage signatures | 3.1 |  | 0.399 |
 | walker |  | 6974 | 48 | MAINTAINING.md section #2 |  |  | 0.399 |
 | walker |  | 6987 | 13 | export names surface in monaco-lsp-client/src/adapters/LspClient.ts |  |  | 0.399 |
-| walker |  | 7076 | 89 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.399 |
+| walker |  | 7002 | 15 | export at monaco-lsp-client/src/adapters/LspClient.ts:30 |  |  | 0.399 |
+| walker |  | 7091 | 89 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.399 |
 | ns | 7119 |  | 160 | internal/common/initialize.ts (worker bootstrap) | 3.2 |  | 0.394 |
-| walker |  | 7149 | 73 | README.md section #20 |  |  | 0.394 |
-| walker |  | 7280 | 131 | export at src/languages/features/css/register.ts:124 |  |  | 0.394 |
-| walker |  | 7372 | 92 | samples/README.md section #1 |  |  | 0.394 |
+| walker |  | 7164 | 73 | README.md section #20 |  |  | 0.394 |
+| walker |  | 7295 | 131 | export at src/languages/features/css/register.ts:124 |  |  | 0.394 |
+| walker |  | 7387 | 92 | samples/README.md section #1 |  |  | 0.394 |
 | ns | 7494 |  | 375 | TS register.ts — exported instances + onLanguage wiring | 3.3 |  | 0.385 |
-| walker |  | 7525 | 153 | module item body at webpack-plugin/src/index.ts:159 body 163 |  |  | 0.385 |
-| walker |  | 7532 | 7 | listing of 'src/deprecated/basic-languages' |  |  | 0.386 |
+| walker |  | 7540 | 153 | module item body at webpack-plugin/src/index.ts:159 body 163 |  |  | 0.385 |
+| walker |  | 7547 | 7 | listing of 'src/deprecated/basic-languages' |  |  | 0.386 |
 | ns | 7640 |  | 146 | TS register.ts — top-level interface/enum locations | 3.4 |  | 0.382 |
-| walker |  | 7666 | 134 | README.md section #2 |  |  | 0.382 |
-| walker |  | 7726 | 60 | listing of 'website' |  |  | 0.382 |
-| walker |  | 7752 | 26 | listing of 'website/src' |  |  | 0.382 |
-| walker |  | 7764 | 12 | listing of 'website/src/runner' |  |  | 0.382 |
-| walker |  | 7810 | 46 | listing of 'website/src/website' |  |  | 0.382 |
-| walker |  | 7837 | 27 | listing of 'website/src/website/pages' |  |  | 0.382 |
-| walker |  | 7848 | 11 | export names surface in src/languages/features/css/workerManager.ts |  |  | 0.382 |
-| walker |  | 7859 | 11 | export names surface in src/languages/features/html/workerManager.ts |  |  | 0.382 |
-| walker |  | 7870 | 11 | export names surface in src/languages/features/json/workerManager.ts |  |  | 0.382 |
-| walker |  | 7881 | 11 | export names surface in src/languages/features/typescript/workerManager.ts |  |  | 0.382 |
+| walker |  | 7681 | 134 | README.md section #2 |  |  | 0.382 |
+| walker |  | 7741 | 60 | listing of 'website' |  |  | 0.382 |
+| walker |  | 7767 | 26 | listing of 'website/src' |  |  | 0.382 |
+| walker |  | 7779 | 12 | listing of 'website/src/runner' |  |  | 0.382 |
+| walker |  | 7825 | 46 | listing of 'website/src/website' |  |  | 0.382 |
+| walker |  | 7852 | 27 | listing of 'website/src/website/pages' |  |  | 0.382 |
+| walker |  | 7863 | 11 | export names surface in src/languages/features/css/workerManager.ts |  |  | 0.382 |
+| walker |  | 7874 | 11 | export names surface in src/languages/features/html/workerManager.ts |  |  | 0.382 |
+| walker |  | 7885 | 11 | export names surface in src/languages/features/json/workerManager.ts |  |  | 0.382 |
+| walker |  | 7896 | 11 | export names surface in src/languages/features/typescript/workerManager.ts |  |  | 0.382 |
 | ns | 8009 |  | 369 | TS tsMode.ts — setup functions + setupMode body | 3.5 |  | 0.374 |
-| walker |  | 8122 | 241 | module item at monaco-lsp-client/generator/index.ts:259 |  |  | 0.374 |
-| walker |  | 8131 | 9 | module item body at monaco-lsp-client/generator/index.ts:259 body 631 |  |  | 0.374 |
-| walker |  | 8141 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 357 |  |  | 0.374 |
-| walker |  | 8151 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 359 |  |  | 0.374 |
-| walker |  | 8161 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 372 |  |  | 0.374 |
-| walker |  | 8171 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 374 |  |  | 0.374 |
-| walker |  | 8181 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 388 |  |  | 0.374 |
-| walker |  | 8191 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 406 |  |  | 0.374 |
-| walker |  | 8201 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 408 |  |  | 0.374 |
-| walker |  | 8211 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 448 |  |  | 0.374 |
-| walker |  | 8221 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 452 |  |  | 0.374 |
-| walker |  | 8231 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 487 |  |  | 0.374 |
-| walker |  | 8241 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 489 |  |  | 0.374 |
-| walker |  | 8251 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 515 |  |  | 0.374 |
-| walker |  | 8261 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 520 |  |  | 0.374 |
-| walker |  | 8271 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 557 |  |  | 0.374 |
-| walker |  | 8281 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 559 |  |  | 0.374 |
-| walker |  | 8291 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 578 |  |  | 0.374 |
-| walker |  | 8301 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 581 |  |  | 0.374 |
-| walker |  | 8311 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 583 |  |  | 0.374 |
-| walker |  | 8321 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 602 |  |  | 0.374 |
-| walker |  | 8331 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 605 |  |  | 0.374 |
-| walker |  | 8341 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 607 |  |  | 0.374 |
-| walker |  | 8351 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 635 |  |  | 0.374 |
-| walker |  | 8361 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 639 |  |  | 0.374 |
-| walker |  | 8371 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 644 |  |  | 0.374 |
-| walker |  | 8381 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 646 |  |  | 0.374 |
-| walker |  | 8391 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 658 |  |  | 0.374 |
-| walker |  | 8401 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 664 |  |  | 0.374 |
-| walker |  | 8412 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 373 |  |  | 0.374 |
-| walker |  | 8423 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 407 |  |  | 0.374 |
-| walker |  | 8434 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 475 |  |  | 0.374 |
-| walker |  | 8445 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 603 |  |  | 0.374 |
-| walker |  | 8456 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 648 |  |  | 0.374 |
-| walker |  | 8467 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 653 |  |  | 0.374 |
-| walker |  | 8478 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 663 |  |  | 0.374 |
-| walker |  | 8489 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 666 |  |  | 0.374 |
-| walker |  | 8500 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 669 |  |  | 0.374 |
-| walker |  | 8511 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 672 |  |  | 0.374 |
-| walker |  | 8523 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 450 |  |  | 0.374 |
-| walker |  | 8535 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 488 |  |  | 0.374 |
-| walker |  | 8547 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 517 |  |  | 0.374 |
-| walker |  | 8559 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 579 |  |  | 0.374 |
-| walker |  | 8571 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 606 |  |  | 0.374 |
-| walker |  | 8583 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 629 |  |  | 0.374 |
-| walker |  | 8595 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 667 |  |  | 0.374 |
-| walker |  | 8607 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 670 |  |  | 0.374 |
-| walker |  | 8620 | 13 | module item body at monaco-lsp-client/generator/index.ts:259 body 344 |  |  | 0.374 |
-| walker |  | 8633 | 13 | module item body at monaco-lsp-client/generator/index.ts:259 body 638 |  |  | 0.374 |
-| walker |  | 8646 | 13 | module item body at monaco-lsp-client/generator/index.ts:259 body 640 |  |  | 0.374 |
-| walker |  | 8659 | 13 | module item body at monaco-lsp-client/generator/index.ts:259 body 641 |  |  | 0.374 |
-| walker |  | 8673 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 524 |  |  | 0.374 |
-| walker |  | 8687 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 542 |  |  | 0.374 |
-| walker |  | 8701 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 558 |  |  | 0.374 |
+| walker |  | 8137 | 241 | module item at monaco-lsp-client/generator/index.ts:259 |  |  | 0.374 |
+| walker |  | 8146 | 9 | module item body at monaco-lsp-client/generator/index.ts:259 body 631 |  |  | 0.374 |
+| walker |  | 8156 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 357 |  |  | 0.374 |
+| walker |  | 8166 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 359 |  |  | 0.374 |
+| walker |  | 8176 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 372 |  |  | 0.374 |
+| walker |  | 8186 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 374 |  |  | 0.374 |
+| walker |  | 8196 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 388 |  |  | 0.374 |
+| walker |  | 8206 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 406 |  |  | 0.374 |
+| walker |  | 8216 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 408 |  |  | 0.374 |
+| walker |  | 8226 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 448 |  |  | 0.374 |
+| walker |  | 8236 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 452 |  |  | 0.374 |
+| walker |  | 8246 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 487 |  |  | 0.374 |
+| walker |  | 8256 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 489 |  |  | 0.374 |
+| walker |  | 8266 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 515 |  |  | 0.374 |
+| walker |  | 8276 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 520 |  |  | 0.374 |
+| walker |  | 8286 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 557 |  |  | 0.374 |
+| walker |  | 8296 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 559 |  |  | 0.374 |
+| walker |  | 8306 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 578 |  |  | 0.374 |
+| walker |  | 8316 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 581 |  |  | 0.374 |
+| walker |  | 8326 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 583 |  |  | 0.374 |
+| walker |  | 8336 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 602 |  |  | 0.374 |
+| walker |  | 8346 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 605 |  |  | 0.374 |
+| walker |  | 8356 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 607 |  |  | 0.374 |
+| walker |  | 8366 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 635 |  |  | 0.374 |
+| walker |  | 8376 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 639 |  |  | 0.374 |
+| walker |  | 8386 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 644 |  |  | 0.374 |
+| walker |  | 8396 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 646 |  |  | 0.374 |
+| walker |  | 8406 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 658 |  |  | 0.374 |
+| walker |  | 8416 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 664 |  |  | 0.374 |
+| walker |  | 8427 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 373 |  |  | 0.374 |
+| walker |  | 8438 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 407 |  |  | 0.374 |
+| walker |  | 8449 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 475 |  |  | 0.374 |
+| walker |  | 8460 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 603 |  |  | 0.374 |
+| walker |  | 8471 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 648 |  |  | 0.374 |
+| walker |  | 8482 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 653 |  |  | 0.374 |
+| walker |  | 8493 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 663 |  |  | 0.374 |
+| walker |  | 8504 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 666 |  |  | 0.374 |
+| walker |  | 8515 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 669 |  |  | 0.374 |
+| walker |  | 8526 | 11 | module item body at monaco-lsp-client/generator/index.ts:259 body 672 |  |  | 0.374 |
+| walker |  | 8538 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 450 |  |  | 0.374 |
+| walker |  | 8550 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 488 |  |  | 0.374 |
+| walker |  | 8562 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 517 |  |  | 0.374 |
+| walker |  | 8574 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 579 |  |  | 0.374 |
+| walker |  | 8586 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 606 |  |  | 0.374 |
+| walker |  | 8598 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 629 |  |  | 0.374 |
+| walker |  | 8610 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 667 |  |  | 0.374 |
+| walker |  | 8622 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 670 |  |  | 0.374 |
+| walker |  | 8635 | 13 | module item body at monaco-lsp-client/generator/index.ts:259 body 344 |  |  | 0.374 |
+| walker |  | 8648 | 13 | module item body at monaco-lsp-client/generator/index.ts:259 body 638 |  |  | 0.374 |
+| walker |  | 8661 | 13 | module item body at monaco-lsp-client/generator/index.ts:259 body 640 |  |  | 0.374 |
+| walker |  | 8674 | 13 | module item body at monaco-lsp-client/generator/index.ts:259 body 641 |  |  | 0.374 |
+| walker |  | 8688 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 524 |  |  | 0.374 |
+| walker |  | 8702 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 542 |  |  | 0.374 |
 | ns | 8709 |  | 700 | TS tsWorker.ts — class header + ICreateData + create() factory | 3.6 |  | 0.360 |
-| walker |  | 8715 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 582 |  |  | 0.360 |
-| walker |  | 8729 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 585 |  |  | 0.360 |
-| walker |  | 8744 | 15 | module item body at monaco-lsp-client/generator/index.ts:259 body 642 |  |  | 0.360 |
-| walker |  | 8759 | 15 | module item body at monaco-lsp-client/generator/index.ts:259 body 643 |  |  | 0.360 |
-| walker |  | 8775 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 343 |  |  | 0.360 |
-| walker |  | 8791 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 451 |  |  | 0.360 |
-| walker |  | 8807 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 454 |  |  | 0.360 |
-| walker |  | 8823 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 516 |  |  | 0.360 |
-| walker |  | 8839 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 561 |  |  | 0.360 |
-| walker |  | 8855 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 568 |  |  | 0.360 |
-| walker |  | 8871 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 592 |  |  | 0.360 |
-| walker |  | 8888 | 17 | module item body at monaco-lsp-client/generator/index.ts:259 body 519 |  |  | 0.360 |
-| walker |  | 8905 | 17 | module item body at monaco-lsp-client/generator/index.ts:259 body 522 |  |  | 0.360 |
-| walker |  | 8923 | 18 | module item body at monaco-lsp-client/generator/index.ts:259 body 632 |  |  | 0.360 |
-| walker |  | 8941 | 18 | module item body at monaco-lsp-client/generator/index.ts:259 body 637 |  |  | 0.360 |
-| walker |  | 8959 | 18 | module item body at monaco-lsp-client/generator/index.ts:259 body 679 |  |  | 0.360 |
-| walker |  | 8978 | 19 | module item body at monaco-lsp-client/generator/index.ts:259 body 387 |  |  | 0.360 |
-| walker |  | 8997 | 19 | module item body at monaco-lsp-client/generator/index.ts:259 body 673 |  |  | 0.360 |
-| walker |  | 9017 | 20 | module item body at monaco-lsp-client/generator/index.ts:259 body 645 |  |  | 0.360 |
-| walker |  | 9038 | 21 | module item body at monaco-lsp-client/generator/index.ts:259 body 356 |  |  | 0.360 |
-| walker |  | 9059 | 21 | module item body at monaco-lsp-client/generator/index.ts:259 body 633 |  |  | 0.360 |
-| walker |  | 9080 | 21 | module item body at monaco-lsp-client/generator/index.ts:259 body 634 |  |  | 0.360 |
-| walker |  | 9102 | 22 | module item body at monaco-lsp-client/generator/index.ts:259 body 449 |  |  | 0.360 |
-| walker |  | 9125 | 23 | module item body at monaco-lsp-client/generator/index.ts:259 body 455 |  |  | 0.360 |
-| walker |  | 9148 | 23 | module item body at monaco-lsp-client/generator/index.ts:259 body 677 |  |  | 0.360 |
-| walker |  | 9175 | 27 | module item body at monaco-lsp-client/generator/index.ts:259 body 354 |  |  | 0.360 |
+| walker |  | 8716 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 558 |  |  | 0.360 |
+| walker |  | 8730 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 582 |  |  | 0.360 |
+| walker |  | 8744 | 14 | module item body at monaco-lsp-client/generator/index.ts:259 body 585 |  |  | 0.360 |
+| walker |  | 8759 | 15 | module item body at monaco-lsp-client/generator/index.ts:259 body 642 |  |  | 0.360 |
+| walker |  | 8774 | 15 | module item body at monaco-lsp-client/generator/index.ts:259 body 643 |  |  | 0.360 |
+| walker |  | 8790 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 343 |  |  | 0.360 |
+| walker |  | 8806 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 451 |  |  | 0.360 |
+| walker |  | 8822 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 454 |  |  | 0.360 |
+| walker |  | 8838 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 516 |  |  | 0.360 |
+| walker |  | 8854 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 561 |  |  | 0.360 |
+| walker |  | 8870 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 568 |  |  | 0.360 |
+| walker |  | 8886 | 16 | module item body at monaco-lsp-client/generator/index.ts:259 body 592 |  |  | 0.360 |
+| walker |  | 8903 | 17 | module item body at monaco-lsp-client/generator/index.ts:259 body 519 |  |  | 0.360 |
+| walker |  | 8920 | 17 | module item body at monaco-lsp-client/generator/index.ts:259 body 522 |  |  | 0.360 |
+| walker |  | 8938 | 18 | module item body at monaco-lsp-client/generator/index.ts:259 body 632 |  |  | 0.360 |
+| walker |  | 8956 | 18 | module item body at monaco-lsp-client/generator/index.ts:259 body 637 |  |  | 0.360 |
+| walker |  | 8974 | 18 | module item body at monaco-lsp-client/generator/index.ts:259 body 679 |  |  | 0.360 |
+| walker |  | 8993 | 19 | module item body at monaco-lsp-client/generator/index.ts:259 body 387 |  |  | 0.360 |
+| walker |  | 9012 | 19 | module item body at monaco-lsp-client/generator/index.ts:259 body 673 |  |  | 0.360 |
+| walker |  | 9032 | 20 | module item body at monaco-lsp-client/generator/index.ts:259 body 645 |  |  | 0.360 |
+| walker |  | 9053 | 21 | module item body at monaco-lsp-client/generator/index.ts:259 body 356 |  |  | 0.360 |
+| walker |  | 9074 | 21 | module item body at monaco-lsp-client/generator/index.ts:259 body 633 |  |  | 0.360 |
+| walker |  | 9095 | 21 | module item body at monaco-lsp-client/generator/index.ts:259 body 634 |  |  | 0.360 |
+| walker |  | 9117 | 22 | module item body at monaco-lsp-client/generator/index.ts:259 body 449 |  |  | 0.360 |
+| walker |  | 9140 | 23 | module item body at monaco-lsp-client/generator/index.ts:259 body 455 |  |  | 0.360 |
+| walker |  | 9163 | 23 | module item body at monaco-lsp-client/generator/index.ts:259 body 677 |  |  | 0.360 |
+| walker |  | 9190 | 27 | module item body at monaco-lsp-client/generator/index.ts:259 body 354 |  |  | 0.360 |
 | ns | 9191 |  | 482 | TS tsWorker.ts — method-header locations | 3.7 | 3.6 | 0.352 |
-| walker |  | 9209 | 34 | module item body at monaco-lsp-client/generator/index.ts:259 body 659 |  |  | 0.352 |
-| walker |  | 9244 | 35 | module item body at monaco-lsp-client/generator/index.ts:259 body 649 |  |  | 0.352 |
-| walker |  | 9280 | 36 | module item body at monaco-lsp-client/generator/index.ts:259 body 654 |  |  | 0.352 |
-| walker |  | 9317 | 37 | module item body at monaco-lsp-client/generator/index.ts:259 body 674 |  |  | 0.352 |
-| walker |  | 9368 | 51 | module item body at monaco-lsp-client/generator/index.ts:259 body 346 |  |  | 0.352 |
-| walker |  | 9419 | 51 | module item body at monaco-lsp-client/generator/index.ts:259 body 350 |  |  | 0.352 |
-| walker |  | 9474 | 55 | module item body at monaco-lsp-client/generator/index.ts:259 body 266 |  |  | 0.352 |
-| walker |  | 9538 | 64 | module item body at monaco-lsp-client/generator/index.ts:259 body 337 |  |  | 0.352 |
-| walker |  | 9602 | 64 | module item body at monaco-lsp-client/generator/index.ts:259 body 562 |  |  | 0.352 |
-| walker |  | 9668 | 66 | module item body at monaco-lsp-client/generator/index.ts:259 body 381 |  |  | 0.352 |
-| walker |  | 9742 | 74 | module item body at monaco-lsp-client/generator/index.ts:259 body 586 |  |  | 0.352 |
-| walker |  | 9821 | 79 | module item body at monaco-lsp-client/generator/index.ts:259 body 326 |  |  | 0.352 |
-| walker |  | 9902 | 81 | module item body at monaco-lsp-client/generator/index.ts:259 body 457 |  |  | 0.352 |
+| walker |  | 9224 | 34 | module item body at monaco-lsp-client/generator/index.ts:259 body 659 |  |  | 0.352 |
+| walker |  | 9259 | 35 | module item body at monaco-lsp-client/generator/index.ts:259 body 649 |  |  | 0.352 |
+| walker |  | 9295 | 36 | module item body at monaco-lsp-client/generator/index.ts:259 body 654 |  |  | 0.352 |
+| walker |  | 9332 | 37 | module item body at monaco-lsp-client/generator/index.ts:259 body 674 |  |  | 0.352 |
+| walker |  | 9383 | 51 | module item body at monaco-lsp-client/generator/index.ts:259 body 346 |  |  | 0.352 |
+| walker |  | 9434 | 51 | module item body at monaco-lsp-client/generator/index.ts:259 body 350 |  |  | 0.352 |
+| walker |  | 9489 | 55 | module item body at monaco-lsp-client/generator/index.ts:259 body 266 |  |  | 0.352 |
+| walker |  | 9553 | 64 | module item body at monaco-lsp-client/generator/index.ts:259 body 337 |  |  | 0.352 |
+| walker |  | 9617 | 64 | module item body at monaco-lsp-client/generator/index.ts:259 body 562 |  |  | 0.352 |
+| walker |  | 9683 | 66 | module item body at monaco-lsp-client/generator/index.ts:259 body 381 |  |  | 0.352 |
+| walker |  | 9757 | 74 | module item body at monaco-lsp-client/generator/index.ts:259 body 586 |  |  | 0.352 |
+| walker |  | 9836 | 79 | module item body at monaco-lsp-client/generator/index.ts:259 body 326 |  |  | 0.352 |
+| walker |  | 9917 | 81 | module item body at monaco-lsp-client/generator/index.ts:259 body 457 |  |  | 0.352 |
 | ns | 9972 |  | 781 | monaco-lsp-client/src/adapters/LspClient.ts — feature catalog | 3.8 |  | 0.339 |
-| walker |  | 9983 | 81 | module item body at monaco-lsp-client/generator/index.ts:259 body 466 |  |  | 0.339 |
+| walker |  | 9998 | 81 | module item body at monaco-lsp-client/generator/index.ts:259 body 466 |  |  | 0.339 |
