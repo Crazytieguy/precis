@@ -342,6 +342,29 @@ fn readme_section_value(
 ) -> f64 {
     mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
         * readme_index_decay(range, total_h2_count)
+        * canonical_usage_section_factor(range)
+}
+
+/// Multiplier applied to README H2 sections whose title is one of the
+/// canonical-usage markers (see [`is_canonical_usage_h2_title`]).
+/// The canonical-demo snippet inside these sections is consistently
+/// the highest-value follow-up to the README headline — NS authors
+/// pin three rows (CREATE / INSERT / KNN-SELECT in sqlite-vec) to the
+/// same code fence — but a single mid-sized section pays a steep
+/// `value / cost^k` penalty against cheaper sibling sections that
+/// only carry boilerplate (`## See Also`, `## License`). The boost
+/// lifts the V/C ratio enough to clear that cost gap. Only applies
+/// to a `Whole` section so split bullet / H3 children stay on their
+/// existing scales; non-matching titles and non-README files are
+/// unaffected.
+const CANONICAL_USAGE_SECTION_FACTOR: f64 = 1.5;
+
+fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
+    if range.parent_is_canonical_usage_h2 && matches!(range.kind, SectionKind::Whole) {
+        CANONICAL_USAGE_SECTION_FACTOR
+    } else {
+        1.0
+    }
 }
 
 /// Index decay for README sections. Long READMEs (>= 18 H2s) switch
@@ -1154,6 +1177,17 @@ struct SectionRange {
     /// concept H3 — paragraphs of a long concept H3 like Providers
     /// are still concept content.
     parent_is_concept_h2: bool,
+    /// True when this range's parent H2 is a README canonical-usage
+    /// section: a `## Usage` / `## Sample usage` / `## Example(s)` /
+    /// `## Quick start` / `## Getting started` / `## Basic usage` /
+    /// `## Demo` header (see [`is_canonical_usage_h2_title`]). NS
+    /// authors anchor on the canonical demo snippet inside these
+    /// sections (sqlite-vec's `## Sample usage` covers NS 1.5, 1.9,
+    /// 1.10); the section's value gets a boost so it competes with
+    /// the cheaper trailing `## See Also`-style bullet sections that
+    /// otherwise displace it on pure cost. Always false for non-README
+    /// files.
+    parent_is_canonical_usage_h2: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1219,6 +1253,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     parent_index: parent_idx,
                     synthetic_intro_present,
                     parent_is_concept_h2: false,
+                    parent_is_canonical_usage_h2: false,
                 });
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -1226,6 +1261,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                 let structural_split_gate =
                     split_eligible_file && outline_will_emit && bytes >= H2_SPLIT_BYTES;
                 let body_block_split_gate = split_eligible_file && bytes >= H2_SPLIT_BYTES;
+                let usage_h2 = readme && is_canonical_usage_h2(*node, source);
 
                 let bullet_items = structural_split_gate
                     .then(|| should_split_by_bullets(*node, source))
@@ -1250,6 +1286,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             parent_index: parent_idx,
                             synthetic_intro_present,
                             parent_is_concept_h2: false,
+                            parent_is_canonical_usage_h2: false,
                         });
                     }
                     continue;
@@ -1298,6 +1335,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             parent_index: parent_idx,
                             synthetic_intro_present,
                             parent_is_concept_h2: false,
+                            parent_is_canonical_usage_h2: usage_h2,
                         });
                     }
                 }
@@ -1336,6 +1374,7 @@ fn push_intro<'a>(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_concept_h2: false,
+        parent_is_canonical_usage_h2: false,
     });
 }
 
@@ -1375,6 +1414,7 @@ fn push_h3_child_or_body_blocks(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_concept_h2,
+        parent_is_canonical_usage_h2: false,
     });
 }
 
@@ -1395,6 +1435,7 @@ fn push_body_block_ranges(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_concept_h2,
+        parent_is_canonical_usage_h2: false,
     }));
     true
 }
@@ -1674,24 +1715,11 @@ fn direct_h3_children<'a>(h2_section: Node<'a>) -> Vec<Node<'a>> {
 /// "Getting Started" / "Installation" H3s tend to be procedural steps,
 /// not concepts, so they are excluded.
 fn is_concept_h2_title(h2_section: Node<'_>, source: &str) -> bool {
-    let Some(heading) = first_heading_child(h2_section) else {
+    let Some(core) = h2_title_core(h2_section, source) else {
         return false;
     };
-    let Some(inline) = first_child_of_kind(heading, "inline") else {
-        return false;
-    };
-    let text = source[inline.start_byte()..inline.end_byte()]
-        .trim()
-        .to_ascii_lowercase();
-    // Strip a trailing emoji / decoration run by keeping the
-    // alphanumeric-and-space prefix.
-    let core: String = text
-        .chars()
-        .take_while(|c| c.is_ascii_alphanumeric() || c.is_ascii_whitespace())
-        .collect();
-    let core = core.trim();
     matches!(
-        core,
+        core.as_str(),
         "concepts"
             | "core concepts"
             | "key concepts"
@@ -1704,6 +1732,86 @@ fn is_concept_h2_title(h2_section: Node<'_>, source: &str) -> bool {
             | "terminology"
             | "theory of operation"
     )
+}
+
+/// README H2 sections worth a canonical-usage boost: title is one of
+/// the canonical-demo markers (`## Usage` / `## Sample usage` /
+/// `## Example(s)` / `## Quick start` / `## Getting started` /
+/// `## Basic usage` / `## Demo`), AND the body is dominated by code
+/// blocks. The body-shape gate matters: a bullet-list-of-links
+/// `### Examples` (superstruct) shares the title pattern but isn't a
+/// canonical demo — boosting it displaces NS-anchored content for no
+/// gain. Gated on the READMEs-only call site, so unrelated `## Usage`
+/// headings inside a changelog or docs page don't trigger.
+fn is_canonical_usage_h2(h2_section: Node<'_>, source: &str) -> bool {
+    is_canonical_usage_h2_title(h2_section, source) && section_is_code_dominant(h2_section, source)
+}
+
+fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
+    let Some(core) = h2_title_core(h2_section, source) else {
+        return false;
+    };
+    matches!(
+        core.as_str(),
+        "usage"
+            | "sample usage"
+            | "basic usage"
+            | "example"
+            | "examples"
+            | "usage example"
+            | "usage examples"
+            | "quick start"
+            | "quickstart"
+            | "getting started"
+            | "demo"
+    )
+}
+
+/// True iff `section`'s direct children include at least one
+/// `fenced_code_block` whose source bytes are at least
+/// [`CANONICAL_USAGE_CODE_MIN_FRACTION`] of the section's total body
+/// bytes (the heading is excluded from the denominator since titles
+/// are tiny and would otherwise tilt every section toward "code
+/// dominant"). The fraction threshold is conservative — well above
+/// what a "few code snippets among prose" tutorial section can clear,
+/// but below the typical "headline + one code fence + a paragraph"
+/// canonical-demo shape (sqlite-vec's `## Sample usage` is ~75 % code
+/// by source bytes).
+const CANONICAL_USAGE_CODE_MIN_FRACTION: f64 = 0.85;
+
+fn section_is_code_dominant(section: Node<'_>, _source: &str) -> bool {
+    let Some(heading) = first_heading_child(section) else {
+        return false;
+    };
+    let heading_bytes = heading.end_byte() - heading.start_byte();
+    let body_bytes = (section.end_byte() - section.start_byte()).saturating_sub(heading_bytes);
+    if body_bytes == 0 {
+        return false;
+    }
+    let mut cur = section.walk();
+    let code_bytes: usize = section
+        .children(&mut cur)
+        .filter(|c| is_code_block(c.kind()))
+        .map(|c| c.end_byte() - c.start_byte())
+        .sum();
+    (code_bytes as f64 / body_bytes as f64) >= CANONICAL_USAGE_CODE_MIN_FRACTION
+}
+
+/// Plain-text core of an H2's title (lowercased, alphanumeric +
+/// whitespace prefix only). Returns `None` when no `inline` child is
+/// found. Shared by [`is_concept_h2_title`] and
+/// [`is_canonical_usage_h2_title`].
+fn h2_title_core(h2_section: Node<'_>, source: &str) -> Option<String> {
+    let heading = first_heading_child(h2_section)?;
+    let inline = first_child_of_kind(heading, "inline")?;
+    let text = source[inline.start_byte()..inline.end_byte()]
+        .trim()
+        .to_ascii_lowercase();
+    let core: String = text
+        .chars()
+        .take_while(|c| c.is_ascii_alphanumeric() || c.is_ascii_whitespace())
+        .collect();
+    Some(core.trim().to_string())
 }
 
 /// True iff the source-row range `[start, end]` of `section` has any

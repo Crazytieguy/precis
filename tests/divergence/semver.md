@@ -91,44 +91,40 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 4375 | 133 | README.md section #49 |  |  | 0.622 |
 | walker |  | 4532 | 157 | README.md section #43 |  |  | 0.622 |
 | ns | 4873 |  | 848 | README — Caret Ranges desugaring (the most complex) | 3.7 | 2.6 | 0.578 |
-| walker |  | 5092 | 560 | README.md section #4 |  |  | 0.633 |
-| ns | 5124 |  | 251 | README — Functions section preface (options doc) | 3.8 | 2.6 | 0.614 |
-| walker |  | 5264 | 172 | README.md section #45 |  |  | 0.614 |
-| walker |  | 5451 | 187 | README.md section #6 |  |  | 0.639 |
-| walker |  | 5590 | 139 | README.md section #55 |  |  | 0.639 |
-| walker |  | 5618 | 28 | listing of '.github' |  |  | 0.639 |
-| walker |  | 5659 | 41 | listing of '.github/workflows' |  |  | 0.639 |
-| ns | 5681 |  | 557 | README — Coercion semantics | 3.9 | 2.6 | 0.622 |
-| ns | 5749 |  | 68 | SemVer class — method signatures (locations) | 4.1 |  | 0.614 |
-| ns | 5809 |  | 60 | Range class — method signatures (locations) | 4.2 |  | 0.607 |
-| ns | 5992 |  | 183 | Range module — internal helpers (locations) | 4.3 |  | 0.595 |
-| walker |  | 6009 | 350 | json config release-please-config.json |  |  | 0.595 |
-| ns | 6069 |  | 77 | Comparator class — method signatures (locations) | 4.4 |  | 0.588 |
-| walker |  | 6233 | 224 | README.md section #53 |  |  | 0.588 |
-| ns | 6460 |  | 391 | internal/constants.js — full file | 4.5 |  | 0.562 |
-| walker |  | 6963 | 730 | README.md section #19 |  |  | 0.585 |
-| ns | 7003 |  | 543 | internal/re.js — every token name (locations) | 5.1 |  | 0.557 |
-| walker |  | 7218 | 255 | README.md section #14 |  |  | 0.577 |
-| ns | 7475 |  | 472 | internal/re.js — section comments and exports header | 5.2 | 5.1 | 0.554 |
-| walker |  | 7494 | 276 | README.md section #10 |  |  | 0.557 |
-| walker |  | 7602 | 108 | headings outline in CONTRIBUTING.md |  |  | 0.557 |
-| walker |  | 7602 | 0 | CONTRIBUTING.md section #0 |  |  | 0.557 |
-| ns | 7628 |  | 153 | SemVer.compare — body (entry into compareMain \|\| comparePre) | 5.3 | 4.1 | 0.549 |
-| ns | 7934 |  | 306 | internal/identifiers.js — full file | 5.4 |  | 0.534 |
-| ns | 8148 |  | 214 | bin/semver.js — CLI flag case lines (truncated) | 5.5 |  | 0.526 |
-| walker |  | 8359 | 757 | README.md section #57 |  |  | 0.526 |
-| ns | 8372 |  | 224 | functions/ — module.exports lines (locations of every public function) | 6.1 |  | 0.515 |
-| ns | 8490 |  | 118 | ranges/ — module.exports lines (locations of every range function) | 6.2 |  | 0.510 |
-| walker |  | 8657 | 298 | README.md section #11 |  |  | 0.513 |
-| ns | 8897 |  | 407 | functions/cmp.js — operator switch body | 6.3 |  | 0.494 |
-| walker |  | 8952 | 295 | README.md section #48 |  |  | 0.514 |
-| walker |  | 9268 | 316 | README.md section #15 |  |  | 0.532 |
-| walker |  | 9271 | 3 | listing of 'tap-snapshots/test' |  |  | 0.532 |
-| ns | 9449 |  | 552 | functions/diff.js — release-type comparison body | 6.4 |  | 0.512 |
-| walker |  | 9579 | 308 | README.md section #18 |  |  | 0.512 |
-| ns | 9601 |  | 152 | internal/parse-options.js — full file | 7.1 |  | 0.506 |
-| ns | 9711 |  | 110 | internal/debug.js — full file | 7.2 |  | 0.501 |
-| ns | 9778 |  | 67 | internal/lrucache.js — class signature + max constant | 7.3 |  | 0.499 |
-| ns | 9852 |  | 74 | ranges/min-version.js — function signature + 0.0.0 fast path | 7.4 |  | 0.496 |
-| ns | 9924 |  | 72 | LICENSE first line + CONTRIBUTING.md headings | 7.5 |  | 0.499 |
-| ns | 9977 |  | 53 | bin/semver.js — entry skeleton (shebang, version load, main call) | 7.6 |  | 0.497 |
+| ns | 5124 |  | 251 | README — Functions section preface (options doc) | 3.8 | 2.6 | 0.561 |
+| ns | 5681 |  | 557 | README — Coercion semantics | 3.9 | 2.6 | 0.548 |
+| ns | 5749 |  | 68 | SemVer class — method signatures (locations) | 4.1 |  | 0.541 |
+| ns | 5809 |  | 60 | Range class — method signatures (locations) | 4.2 |  | 0.535 |
+| ns | 5992 |  | 183 | Range module — internal helpers (locations) | 4.3 |  | 0.524 |
+| ns | 6069 |  | 77 | Comparator class — method signatures (locations) | 4.4 |  | 0.518 |
+| walker |  | 6129 | 1597 | README.md section #2 |  |  | 0.537 |
+| ns | 6460 |  | 391 | internal/constants.js — full file | 4.5 |  | 0.513 |
+| walker |  | 6689 | 560 | README.md section #4 |  |  | 0.558 |
+| walker |  | 6861 | 172 | README.md section #45 |  |  | 0.558 |
+| ns | 7003 |  | 543 | internal/re.js — every token name (locations) | 5.1 |  | 0.532 |
+| walker |  | 7048 | 187 | README.md section #6 |  |  | 0.552 |
+| walker |  | 7187 | 139 | README.md section #55 |  |  | 0.552 |
+| walker |  | 7215 | 28 | listing of '.github' |  |  | 0.552 |
+| walker |  | 7256 | 41 | listing of '.github/workflows' |  |  | 0.552 |
+| ns | 7475 |  | 472 | internal/re.js — section comments and exports header | 5.2 | 5.1 | 0.530 |
+| walker |  | 7606 | 350 | json config release-please-config.json |  |  | 0.530 |
+| ns | 7628 |  | 153 | SemVer.compare — body (entry into compareMain \|\| comparePre) | 5.3 | 4.1 | 0.522 |
+| walker |  | 7830 | 224 | README.md section #53 |  |  | 0.522 |
+| ns | 7934 |  | 306 | internal/identifiers.js — full file | 5.4 |  | 0.508 |
+| ns | 8148 |  | 214 | bin/semver.js — CLI flag case lines (truncated) | 5.5 |  | 0.501 |
+| ns | 8372 |  | 224 | functions/ — module.exports lines (locations of every public function) | 6.1 |  | 0.490 |
+| ns | 8490 |  | 118 | ranges/ — module.exports lines (locations of every range function) | 6.2 |  | 0.485 |
+| walker |  | 8560 | 730 | README.md section #19 |  |  | 0.505 |
+| walker |  | 8815 | 255 | README.md section #14 |  |  | 0.522 |
+| ns | 8897 |  | 407 | functions/cmp.js — operator switch body | 6.3 |  | 0.503 |
+| walker |  | 9091 | 276 | README.md section #10 |  |  | 0.505 |
+| walker |  | 9199 | 108 | headings outline in CONTRIBUTING.md |  |  | 0.505 |
+| walker |  | 9199 | 0 | CONTRIBUTING.md section #0 |  |  | 0.505 |
+| ns | 9449 |  | 552 | functions/diff.js — release-type comparison body | 6.4 |  | 0.486 |
+| ns | 9601 |  | 152 | internal/parse-options.js — full file | 7.1 |  | 0.480 |
+| ns | 9711 |  | 110 | internal/debug.js — full file | 7.2 |  | 0.476 |
+| ns | 9778 |  | 67 | internal/lrucache.js — class signature + max constant | 7.3 |  | 0.473 |
+| ns | 9852 |  | 74 | ranges/min-version.js — function signature + 0.0.0 fast path | 7.4 |  | 0.471 |
+| ns | 9924 |  | 72 | LICENSE first line + CONTRIBUTING.md headings | 7.5 |  | 0.474 |
+| walker |  | 9956 | 757 | README.md section #57 |  |  | 0.474 |
+| ns | 9977 |  | 53 | bin/semver.js — entry skeleton (shebang, version load, main call) | 7.6 |  | 0.473 |

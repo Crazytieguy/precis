@@ -50,6 +50,15 @@ README.md
     …
     84→## Usage
     …
+    86→```bash
+    87→krep [OPTIONS] PATTERN [FILE | DIRECTORY]
+    88→krep [OPTIONS] -e PATTERN [FILE | DIRECTORY]
+    89→krep [OPTIONS] -f FILE [FILE | DIRECTORY]
+    90→krep [OPTIONS] -s PATTERN STRING_TO_SEARCH
+    91→krep [OPTIONS] PATTERN < FILE
+    92→cat FILE | krep [OPTIONS] PATTERN
+    93→echo 'pattern' | krep -f - [FILE | DIRECTORY]
+    94→```
     96→## Usage Examples
     …
     134→## Command Line Options
@@ -57,13 +66,10 @@ README.md
     136→- `-i, --ignore-case` Case-insensitive search
     137→- `-c, --count` Count matching lines only
     138→- `-o, --only-matching` Print only the matched parts of lines
-    139→- `-e PATTERN, --pattern=PATTERN` Specify pattern(s). Can be used multiple times.
     141→- `-m NUM, --max-count=NUM` Stop searching each file after finding NUM matching lines.
     142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
-    143→- `-F, --fixed-strings` Interpret pattern as fixed string(s) (default unless -E is used)
     144→- `-r, --recursive` Recursively search directories
     145→- `--gitignore` Respect `.gitignore` files during recursive search
-    147→- `-t NUM, --threads=NUM` Use NUM threads for file search (default: auto)
     148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
     149→- `-w, --word-regexp` Match only whole words
     150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')

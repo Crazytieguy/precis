@@ -27,22 +27,22 @@ Score(3000)=0.678 I=0.843 C=0.545 ns_rows≤3K=12/27 (reached=6 partial=3 missin
 | walker |  | 1133 | 128 | mod/use plumbing in impl/src/lib.rs |  |  | 0.747 |
 | walker |  | 1182 | 49 | [dependencies] in impl/Cargo.toml |  |  | 0.747 |
 | walker |  | 1289 | 107 | [dependencies] in Cargo.toml |  |  | 0.773 |
-| walker |  | 1315 | 26 | pub-item names surface in src/provide.rs |  |  | 0.773 |
 | ns | 1319 |  | 358 | Crate-doc bullets — Display + format-shorthand summary | 2.6 |  | 0.696 |
-| walker |  | 1343 | 28 | README.md section #3 |  |  | 0.696 |
-| walker |  | 1369 | 26 | pub-item names surface in impl/src/unraw.rs |  |  | 0.696 |
-| walker |  | 1392 | 23 | pub item at impl/src/unraw.rs:82 |  |  | 0.696 |
-| walker |  | 1419 | 27 | pub-item names surface in src/display.rs |  |  | 0.696 |
-| walker |  | 1446 | 27 | pub-item names surface in impl/src/generics.rs |  |  | 0.696 |
-| walker |  | 1462 | 16 | pub item at impl/src/generics.rs:8 |  |  | 0.696 |
-| walker |  | 1501 | 39 | pub item at impl/src/generics.rs:48 |  |  | 0.696 |
-| walker |  | 1529 | 28 | pub-item names surface in src/aserror.rs |  |  | 0.696 |
-| walker |  | 1601 | 72 | listing of 'tests' |  |  | 0.697 |
-| ns | 1606 |  | 287 | Crate-doc bullets — From + source headlines | 2.7 |  | 0.648 |
-| walker |  | 1643 | 42 | pub-item names surface in impl/src/expand.rs |  |  | 0.648 |
-| walker |  | 1643 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.648 |
-| walker |  | 1643 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.648 |
-| walker |  | 1826 | 183 | README.md section #1 |  |  | 0.747 |
+| walker |  | 1472 | 183 | README.md section #1 |  |  | 0.802 |
+| walker |  | 1498 | 26 | pub-item names surface in src/provide.rs |  |  | 0.802 |
+| walker |  | 1526 | 28 | README.md section #3 |  |  | 0.802 |
+| walker |  | 1552 | 26 | pub-item names surface in impl/src/unraw.rs |  |  | 0.802 |
+| walker |  | 1575 | 23 | pub item at impl/src/unraw.rs:82 |  |  | 0.802 |
+| walker |  | 1602 | 27 | pub-item names surface in src/display.rs |  |  | 0.802 |
+| ns | 1606 |  | 287 | Crate-doc bullets — From + source headlines | 2.7 |  | 0.746 |
+| walker |  | 1629 | 27 | pub-item names surface in impl/src/generics.rs |  |  | 0.746 |
+| walker |  | 1645 | 16 | pub item at impl/src/generics.rs:8 |  |  | 0.746 |
+| walker |  | 1684 | 39 | pub item at impl/src/generics.rs:48 |  |  | 0.746 |
+| walker |  | 1712 | 28 | pub-item names surface in src/aserror.rs |  |  | 0.746 |
+| walker |  | 1784 | 72 | listing of 'tests' |  |  | 0.747 |
+| walker |  | 1826 | 42 | pub-item names surface in impl/src/expand.rs |  |  | 0.747 |
+| walker |  | 1826 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.747 |
+| walker |  | 1826 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.747 |
 | walker |  | 1875 | 49 | mod/use plumbing in impl/src/valid.rs |  |  | 0.747 |
 | ns | 1983 |  | 377 | Crate-doc bullets — Backtrace + transparent headlines | 2.8 |  | 0.691 |
 | walker |  | 1997 | 122 | [package] in impl/Cargo.toml |  |  | 0.691 |

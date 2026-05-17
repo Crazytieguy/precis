@@ -106,108 +106,108 @@ Score(3000)=0.640 I=0.824 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | walker |  | 3055 | 4 | listing of 'packages/app-client/src/assets' |  |  | 0.640 |
 | walker |  | 3119 | 64 | listing of 'packages/app-client/public' |  |  | 0.640 |
 | walker |  | 3145 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.640 |
-| walker |  | 3156 | 11 | export names surface in packages/lib/src/notes/notes.usecases.ts |  |  | 0.640 |
-| walker |  | 3216 | 60 | json config renovate.json |  |  | 0.640 |
-| walker |  | 3227 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.640 |
-| walker |  | 3256 | 29 | README.md section #31 |  |  | 0.640 |
-| walker |  | 3261 | 5 | listing of 'packages/lib/src/files' |  |  | 0.640 |
-| walker |  | 3296 | 35 | README.md section #16 |  |  | 0.640 |
-| walker |  | 3378 | 82 | headings outline in packages/docs/src/self-hosting/other-platforms.md |  |  | 0.640 |
-| walker |  | 3378 | 0 | packages/docs/src/self-hosting/other-platforms.md section #0 |  |  | 0.640 |
-| walker |  | 3428 | 50 | listing of 'packages/crypto/src/encryption-algorithms' |  |  | 0.640 |
-| walker |  | 3451 | 23 | listing of 'packages/app-client/src/modules/shared/http' |  |  | 0.591 |
-| ns | 3451 |  | 504 | Hono createServer factory + middleware stack | 3.4 |  | 0.591 |
-| walker |  | 3503 | 52 | listing of 'packages/docs/src/public' |  |  | 0.591 |
-| walker |  | 3534 | 31 | README.md section #30 |  |  | 0.591 |
-| walker |  | 3547 | 13 | listing of 'packages/app-server/src/modules/storage' |  |  | 0.598 |
-| walker |  | 3572 | 25 | listing of 'packages/app-server/src/modules/app/config' |  |  | 0.598 |
-| walker |  | 3684 | 112 | README.md section #24 |  |  | 0.598 |
-| ns | 3749 |  | 298 | Notes routes — endpoint registrations (locations only) | 3.5 |  | 0.577 |
-| walker |  | 3760 | 76 | packages/crypto/README.md section #1 |  |  | 0.577 |
-| walker |  | 3781 | 21 | listing of 'packages/cli/src/create-note' |  |  | 0.577 |
-| walker |  | 3802 | 21 | listing of 'packages/crypto/src/node' |  |  | 0.577 |
-| walker |  | 3823 | 21 | listing of 'packages/crypto/src/web' |  |  | 0.577 |
-| walker |  | 3837 | 14 | export names surface in packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.577 |
-| walker |  | 3851 | 14 | export names surface in packages/lib/src/notes/notes.services.ts |  |  | 0.577 |
-| walker |  | 3890 | 39 | listing of 'packages/app-client/src/modules/notes' |  |  | 0.577 |
-| walker |  | 4004 | 114 | README.md section #26 |  |  | 0.577 |
-| walker |  | 4015 | 11 | listing of 'packages/app-client/e2e-tests' |  |  | 0.577 |
-| walker |  | 4059 | 44 | listing of 'packages/docs/src/public/logos' |  |  | 0.577 |
-| walker |  | 4121 | 62 | README.md section #13 |  |  | 0.587 |
-| walker |  | 4137 | 16 | listing of 'packages/app-client/src/modules/config' |  |  | 0.587 |
-| walker |  | 4199 | 62 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.587 |
-| ns | 4200 |  | 451 | Notes routes — POST /api/notes payload schema + validation handler | 3.6 | 3.5 | 0.549 |
-| walker |  | 4355 | 156 | plaintext config pnpm-workspace.yaml |  |  | 0.583 |
-| walker |  | 4395 | 40 | README.md section #29 |  |  | 0.583 |
-| walker |  | 4468 | 73 | packages/lib/README.md section #1 |  |  | 0.596 |
-| walker |  | 4473 | 5 | listing of 'packages/app-client/src/modules/theme' |  |  | 0.596 |
-| walker |  | 4542 | 69 | package identity in packages/app-client/package.json |  |  | 0.596 |
-| walker |  | 4611 | 69 | package identity in packages/app-server/package.json |  |  | 0.596 |
-| ns | 4659 |  | 459 | Notes routes — GET /api/notes/:noteId + private-note auth gating | 3.7 | 3.5 | 0.557 |
-| walker |  | 4680 | 69 | package identity in packages/docs/package.json |  |  | 0.557 |
-| ns | 4821 |  | 162 | Notes routes — GET /api/notes/:noteId/exists | 3.8 | 3.5 | 0.546 |
-| walker |  | 4871 | 191 | headings outline in packages/docs/src/how-it-works.md |  |  | 0.546 |
-| walker |  | 4942 | 71 | package identity in packages/crypto/package.json |  |  | 0.546 |
-| walker |  | 5013 | 71 | package identity in packages/lib/package.json |  |  | 0.546 |
-| walker |  | 5049 | 36 | listing of 'packages/app-server/src/modules/app/middlewares' |  |  | 0.546 |
-| ns | 5055 |  | 234 | Config — env var name catalog (locations only) | 4.1 |  | 0.529 |
-| walker |  | 5121 | 72 | package identity in packages/cli/package.json |  |  | 0.529 |
-| walker |  | 5276 | 155 | README.md section #23 |  |  | 0.547 |
-| walker |  | 5314 | 38 | listing of 'packages/app-server/src/modules/storage/factories' |  |  | 0.557 |
-| walker |  | 5318 | 4 | listing of 'packages/app-client/src/modules/shared/hooks' |  |  | 0.557 |
-| walker |  | 5322 | 4 | listing of 'packages/app-client/src/modules/shared/style' |  |  | 0.557 |
-| walker |  | 5326 | 4 | listing of 'packages/app-server/src/modules/shared/utils' |  |  | 0.557 |
-| walker |  | 5413 | 87 | listing of 'packages/app-client/src/locales' |  |  | 0.557 |
-| walker |  | 5462 | 49 | README headline in packages/app-client/src/locales/README.md |  |  | 0.557 |
-| walker |  | 5486 | 24 | headings outline in packages/app-client/src/locales/README.md |  |  | 0.557 |
-| walker |  | 5543 | 57 | packages/docs/src/how-it-works.md section #0 |  |  | 0.557 |
-| ns | 5587 |  | 532 | Config — defaults for the most-asked-about env vars | 4.2 | 4.1 | 0.530 |
-| walker |  | 5590 | 47 | README.md section #22 |  |  | 0.530 |
-| walker |  | 5596 | 6 | listing of 'packages/app-client/src/modules/ui' |  |  | 0.530 |
-| ns | 5731 |  | 144 | Config — getConfig export + figue setup | 4.3 | 4.1 | 0.521 |
-| walker |  | 5743 | 147 | headings outline in packages/docs/src/self-hosting/docker-compose.md |  |  | 0.521 |
-| walker |  | 5799 | 56 | README.md section #14 |  |  | 0.521 |
-| walker |  | 5814 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.521 |
-| walker |  | 5856 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.521 |
-| ns | 5875 |  | 144 | Node.js entrypoint — config + storage + server build | 4.4 |  | 0.515 |
-| walker |  | 5919 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.547 |
-| walker |  | 5971 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.547 |
-| walker |  | 5994 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.547 |
-| walker |  | 6004 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.547 |
-| walker |  | 6014 | 10 | listing of 'packages/docs/src/components' |  |  | 0.547 |
-| walker |  | 6176 | 162 | headings outline in packages/docs/src/self-hosting/docker.md |  |  | 0.547 |
-| ns | 6202 |  | 327 | Node.js entrypoint — static + SPA fallback + cron + listen | 4.5 | 4.4 | 0.527 |
-| walker |  | 6216 | 40 | packages/docs/src/self-hosting/docker.md section #0 |  |  | 0.527 |
-| walker |  | 6239 | 23 | export names surface in packages/lib/src/api/api.models.ts |  |  | 0.527 |
-| walker |  | 6263 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.527 |
-| walker |  | 6311 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.527 |
-| walker |  | 6316 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.527 |
-| walker |  | 6321 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.527 |
-| walker |  | 6332 | 11 | listing of 'packages/cli/src/files' |  |  | 0.527 |
-| walker |  | 6343 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.527 |
-| walker |  | 6378 | 35 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.527 |
-| walker |  | 6400 | 22 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.527 |
-| ns | 6457 |  | 255 | Storage drivers — memory + fs-lite | 4.6 |  | 0.515 |
-| walker |  | 6504 | 104 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.515 |
-| walker |  | 6532 | 28 | packages/docs/src/how-it-works.md section #13 |  |  | 0.515 |
-| walker |  | 6580 | 48 | packages/docs/src/self-hosting/docker-compose.md section #0 |  |  | 0.515 |
-| walker |  | 6592 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.515 |
-| walker |  | 6604 | 12 | listing of 'packages/docs/src/data' |  |  | 0.515 |
-| walker |  | 6655 | 51 | packages/docs/src/resources/brand-kit.md section #0 |  |  | 0.515 |
-| walker |  | 6764 | 109 | json config packages/lib/tsconfig.json |  |  | 0.515 |
-| walker |  | 6813 | 49 | README.md section #28 |  |  | 0.515 |
-| walker |  | 6865 | 52 | packages/docs/src/integrations/npm-package.md section #0 |  |  | 0.515 |
-| ns | 6892 |  | 435 | Storage driver — Cloudflare KV (with 413 translation) | 4.7 |  | 0.500 |
-| walker |  | 6893 | 28 | export names surface in packages/lib/src/files/files.models.ts |  |  | 0.500 |
-| walker |  | 6921 | 28 | export names surface in packages/lib/src/notes/notes.models.ts |  |  | 0.500 |
-| walker |  | 6927 | 6 | listing of 'packages/app-client/src/modules/auth/pages' |  |  | 0.500 |
-| walker |  | 6933 | 6 | listing of 'packages/app-client/src/modules/ui/layouts' |  |  | 0.500 |
-| walker |  | 7019 | 86 | packages/docs/src/index.md section #0 |  |  | 0.500 |
-| walker |  | 7030 | 11 | export names surface in packages/app-client/playwright.config.ts |  |  | 0.500 |
-| walker |  | 7041 | 11 | export names surface in packages/app-client/uno.config.ts |  |  | 0.500 |
-| walker |  | 7052 | 11 | export names surface in packages/app-client/vite.config.ts |  |  | 0.500 |
-| walker |  | 7109 | 57 | packages/docs/src/self-hosting/configuration.md section #0 |  |  | 0.500 |
-| walker |  | 7211 | 102 | packages/lib/README.md section #2 |  |  | 0.523 |
+| walker |  | 3247 | 102 | packages/lib/README.md section #2 |  |  | 0.667 |
+| walker |  | 3258 | 11 | export names surface in packages/lib/src/notes/notes.usecases.ts |  |  | 0.667 |
+| walker |  | 3318 | 60 | json config renovate.json |  |  | 0.667 |
+| walker |  | 3329 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.667 |
+| walker |  | 3358 | 29 | README.md section #31 |  |  | 0.667 |
+| walker |  | 3363 | 5 | listing of 'packages/lib/src/files' |  |  | 0.667 |
+| walker |  | 3398 | 35 | README.md section #16 |  |  | 0.667 |
+| ns | 3451 |  | 504 | Hono createServer factory + middleware stack | 3.4 |  | 0.616 |
+| walker |  | 3480 | 82 | headings outline in packages/docs/src/self-hosting/other-platforms.md |  |  | 0.616 |
+| walker |  | 3480 | 0 | packages/docs/src/self-hosting/other-platforms.md section #0 |  |  | 0.616 |
+| walker |  | 3530 | 50 | listing of 'packages/crypto/src/encryption-algorithms' |  |  | 0.616 |
+| walker |  | 3553 | 23 | listing of 'packages/app-client/src/modules/shared/http' |  |  | 0.616 |
+| walker |  | 3605 | 52 | listing of 'packages/docs/src/public' |  |  | 0.616 |
+| walker |  | 3636 | 31 | README.md section #30 |  |  | 0.616 |
+| walker |  | 3649 | 13 | listing of 'packages/app-server/src/modules/storage' |  |  | 0.622 |
+| walker |  | 3674 | 25 | listing of 'packages/app-server/src/modules/app/config' |  |  | 0.622 |
+| ns | 3749 |  | 298 | Notes routes — endpoint registrations (locations only) | 3.5 |  | 0.601 |
+| walker |  | 3786 | 112 | README.md section #24 |  |  | 0.601 |
+| walker |  | 3862 | 76 | packages/crypto/README.md section #1 |  |  | 0.601 |
+| walker |  | 3883 | 21 | listing of 'packages/cli/src/create-note' |  |  | 0.601 |
+| walker |  | 3904 | 21 | listing of 'packages/crypto/src/node' |  |  | 0.601 |
+| walker |  | 3925 | 21 | listing of 'packages/crypto/src/web' |  |  | 0.601 |
+| walker |  | 3939 | 14 | export names surface in packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.601 |
+| walker |  | 3953 | 14 | export names surface in packages/lib/src/notes/notes.services.ts |  |  | 0.601 |
+| walker |  | 3992 | 39 | listing of 'packages/app-client/src/modules/notes' |  |  | 0.601 |
+| walker |  | 4106 | 114 | README.md section #26 |  |  | 0.601 |
+| walker |  | 4117 | 11 | listing of 'packages/app-client/e2e-tests' |  |  | 0.601 |
+| walker |  | 4161 | 44 | listing of 'packages/docs/src/public/logos' |  |  | 0.601 |
+| ns | 4200 |  | 451 | Notes routes — POST /api/notes payload schema + validation handler | 3.6 | 3.5 | 0.562 |
+| walker |  | 4223 | 62 | README.md section #13 |  |  | 0.571 |
+| walker |  | 4239 | 16 | listing of 'packages/app-client/src/modules/config' |  |  | 0.571 |
+| walker |  | 4301 | 62 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.571 |
+| walker |  | 4457 | 156 | plaintext config pnpm-workspace.yaml |  |  | 0.605 |
+| walker |  | 4497 | 40 | README.md section #29 |  |  | 0.605 |
+| walker |  | 4570 | 73 | packages/lib/README.md section #1 |  |  | 0.628 |
+| walker |  | 4575 | 5 | listing of 'packages/app-client/src/modules/theme' |  |  | 0.628 |
+| walker |  | 4644 | 69 | package identity in packages/app-client/package.json |  |  | 0.628 |
+| ns | 4659 |  | 459 | Notes routes — GET /api/notes/:noteId + private-note auth gating | 3.7 | 3.5 | 0.587 |
+| walker |  | 4713 | 69 | package identity in packages/app-server/package.json |  |  | 0.587 |
+| walker |  | 4782 | 69 | package identity in packages/docs/package.json |  |  | 0.587 |
+| ns | 4821 |  | 162 | Notes routes — GET /api/notes/:noteId/exists | 3.8 | 3.5 | 0.576 |
+| walker |  | 4973 | 191 | headings outline in packages/docs/src/how-it-works.md |  |  | 0.576 |
+| walker |  | 5044 | 71 | package identity in packages/crypto/package.json |  |  | 0.576 |
+| ns | 5055 |  | 234 | Config — env var name catalog (locations only) | 4.1 |  | 0.557 |
+| walker |  | 5115 | 71 | package identity in packages/lib/package.json |  |  | 0.557 |
+| walker |  | 5151 | 36 | listing of 'packages/app-server/src/modules/app/middlewares' |  |  | 0.557 |
+| walker |  | 5223 | 72 | package identity in packages/cli/package.json |  |  | 0.557 |
+| walker |  | 5378 | 155 | README.md section #23 |  |  | 0.575 |
+| walker |  | 5416 | 38 | listing of 'packages/app-server/src/modules/storage/factories' |  |  | 0.585 |
+| walker |  | 5420 | 4 | listing of 'packages/app-client/src/modules/shared/hooks' |  |  | 0.585 |
+| walker |  | 5424 | 4 | listing of 'packages/app-client/src/modules/shared/style' |  |  | 0.585 |
+| walker |  | 5428 | 4 | listing of 'packages/app-server/src/modules/shared/utils' |  |  | 0.585 |
+| walker |  | 5515 | 87 | listing of 'packages/app-client/src/locales' |  |  | 0.585 |
+| walker |  | 5564 | 49 | README headline in packages/app-client/src/locales/README.md |  |  | 0.585 |
+| ns | 5587 |  | 532 | Config — defaults for the most-asked-about env vars | 4.2 | 4.1 | 0.556 |
+| walker |  | 5588 | 24 | headings outline in packages/app-client/src/locales/README.md |  |  | 0.556 |
+| walker |  | 5645 | 57 | packages/docs/src/how-it-works.md section #0 |  |  | 0.556 |
+| walker |  | 5692 | 47 | README.md section #22 |  |  | 0.556 |
+| walker |  | 5698 | 6 | listing of 'packages/app-client/src/modules/ui' |  |  | 0.556 |
+| ns | 5731 |  | 144 | Config — getConfig export + figue setup | 4.3 | 4.1 | 0.547 |
+| walker |  | 5845 | 147 | headings outline in packages/docs/src/self-hosting/docker-compose.md |  |  | 0.547 |
+| ns | 5875 |  | 144 | Node.js entrypoint — config + storage + server build | 4.4 |  | 0.540 |
+| walker |  | 5901 | 56 | README.md section #14 |  |  | 0.540 |
+| walker |  | 5916 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.540 |
+| walker |  | 5958 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.540 |
+| walker |  | 6021 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.572 |
+| walker |  | 6073 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.572 |
+| walker |  | 6096 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.572 |
+| walker |  | 6106 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.572 |
+| walker |  | 6116 | 10 | listing of 'packages/docs/src/components' |  |  | 0.572 |
+| ns | 6202 |  | 327 | Node.js entrypoint — static + SPA fallback + cron + listen | 4.5 | 4.4 | 0.551 |
+| walker |  | 6278 | 162 | headings outline in packages/docs/src/self-hosting/docker.md |  |  | 0.551 |
+| walker |  | 6318 | 40 | packages/docs/src/self-hosting/docker.md section #0 |  |  | 0.551 |
+| walker |  | 6341 | 23 | export names surface in packages/lib/src/api/api.models.ts |  |  | 0.551 |
+| walker |  | 6365 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.551 |
+| walker |  | 6413 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.551 |
+| walker |  | 6418 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.551 |
+| walker |  | 6423 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.551 |
+| walker |  | 6434 | 11 | listing of 'packages/cli/src/files' |  |  | 0.551 |
+| walker |  | 6445 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.551 |
+| ns | 6457 |  | 255 | Storage drivers — memory + fs-lite | 4.6 |  | 0.539 |
+| walker |  | 6480 | 35 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.539 |
+| walker |  | 6502 | 22 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.539 |
+| walker |  | 6606 | 104 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.539 |
+| walker |  | 6634 | 28 | packages/docs/src/how-it-works.md section #13 |  |  | 0.539 |
+| walker |  | 6682 | 48 | packages/docs/src/self-hosting/docker-compose.md section #0 |  |  | 0.539 |
+| walker |  | 6694 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.539 |
+| walker |  | 6706 | 12 | listing of 'packages/docs/src/data' |  |  | 0.539 |
+| walker |  | 6757 | 51 | packages/docs/src/resources/brand-kit.md section #0 |  |  | 0.539 |
+| walker |  | 6866 | 109 | json config packages/lib/tsconfig.json |  |  | 0.539 |
+| ns | 6892 |  | 435 | Storage driver — Cloudflare KV (with 413 translation) | 4.7 |  | 0.523 |
+| walker |  | 6915 | 49 | README.md section #28 |  |  | 0.523 |
+| walker |  | 6967 | 52 | packages/docs/src/integrations/npm-package.md section #0 |  |  | 0.523 |
+| walker |  | 6995 | 28 | export names surface in packages/lib/src/files/files.models.ts |  |  | 0.523 |
+| walker |  | 7023 | 28 | export names surface in packages/lib/src/notes/notes.models.ts |  |  | 0.523 |
+| walker |  | 7029 | 6 | listing of 'packages/app-client/src/modules/auth/pages' |  |  | 0.523 |
+| walker |  | 7035 | 6 | listing of 'packages/app-client/src/modules/ui/layouts' |  |  | 0.523 |
+| walker |  | 7121 | 86 | packages/docs/src/index.md section #0 |  |  | 0.523 |
+| walker |  | 7132 | 11 | export names surface in packages/app-client/playwright.config.ts |  |  | 0.523 |
+| walker |  | 7143 | 11 | export names surface in packages/app-client/uno.config.ts |  |  | 0.523 |
+| walker |  | 7154 | 11 | export names surface in packages/app-client/vite.config.ts |  |  | 0.523 |
+| walker |  | 7211 | 57 | packages/docs/src/self-hosting/configuration.md section #0 |  |  | 0.523 |
 | walker |  | 7359 | 148 | packages/cli/README.md section #1 |  |  | 0.523 |
 | walker |  | 7392 | 33 | packages/docs/src/how-it-works.md section #11 |  |  | 0.523 |
 | ns | 7406 |  | 514 | Notes — models + types + constants | 5.1 |  | 0.504 |
