@@ -437,10 +437,28 @@ kind = "full"
 
 [[batches]]
 position = 23
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 61
+cum_tokens = 769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 9
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
 key = 'Python(ClassBody { file: "htmy/error_boundary.py", start_line: 15 })'
 descriptor = "python class body at htmy/error_boundary.py:15"
 cost_tokens = 19
-cum_tokens = 727
+cum_tokens = 788
 
 [batches.content]
 kind = "lines"
@@ -454,11 +472,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Python(DeclNames { file: "htmy/snippet.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/snippet.py"
 cost_tokens = 19
-cum_tokens = 746
+cum_tokens = 807
 
 [batches.content]
 kind = "lines"
@@ -496,11 +514,11 @@ end = 159
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Python(Decl { file: "htmy/snippet.py", start_line: 27 })'
 descriptor = "python decl at htmy/snippet.py:27"
 cost_tokens = 0
-cum_tokens = 746
+cum_tokens = 807
 
 [batches.content]
 kind = "lines"
@@ -514,11 +532,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Python(Decl { file: "htmy/snippet.py", start_line: 158 })'
 descriptor = "python decl at htmy/snippet.py:158"
 cost_tokens = 0
-cum_tokens = 746
+cum_tokens = 807
 
 [batches.content]
 kind = "lines"
@@ -532,11 +550,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Python(DeclNames { file: "htmy/io.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/io.py"
 cost_tokens = 20
-cum_tokens = 766
+cum_tokens = 827
 
 [batches.content]
 kind = "lines"
@@ -558,11 +576,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Python(Decl { file: "htmy/io.py", start_line: 11 })'
 descriptor = "python decl at htmy/io.py:11"
 cost_tokens = 0
-cum_tokens = 766
+cum_tokens = 827
 
 [batches.content]
 kind = "lines"
@@ -576,11 +594,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Python(DeclDoc { file: "htmy/io.py", start_line: 11 })'
 descriptor = "python decl doc at htmy/io.py:11"
 cost_tokens = 13
-cum_tokens = 779
+cum_tokens = 840
 
 [batches.content]
 kind = "lines"
@@ -594,11 +612,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Python(ClassBody { file: "htmy/snippet.py", start_line: 158 })'
 descriptor = "python class body at htmy/snippet.py:158"
 cost_tokens = 24
-cum_tokens = 803
+cum_tokens = 864
 
 [batches.content]
 kind = "lines"
@@ -612,11 +630,11 @@ end = 216
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Python(DeclNames { file: "htmy/renderer/baseline.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/baseline.py"
 cost_tokens = 9
-cum_tokens = 812
+cum_tokens = 873
 
 [batches.content]
 kind = "lines"
@@ -638,11 +656,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Python(Decl { file: "htmy/renderer/baseline.py", start_line: 18 })'
 descriptor = "python decl at htmy/renderer/baseline.py:18"
 cost_tokens = 0
-cum_tokens = 812
+cum_tokens = 873
 
 [batches.content]
 kind = "lines"
@@ -656,11 +674,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Markdown(HeadingsOutline { file: "docs/components-guide.md" })'
 descriptor = "headings outline in docs/components-guide.md"
 cost_tokens = 53
-cum_tokens = 865
+cum_tokens = 926
 
 [batches.content]
 kind = "lines"
@@ -730,11 +748,11 @@ end = 185
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Markdown(Section { file: "docs/components-guide.md", section_index: 0 })'
 descriptor = "docs/components-guide.md section #0"
 cost_tokens = 0
-cum_tokens = 865
+cum_tokens = 926
 
 [batches.content]
 kind = "lines"
@@ -748,11 +766,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Python(DeclNames { file: "htmy/renderer/context.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/context.py"
 cost_tokens = 10
-cum_tokens = 875
+cum_tokens = 936
 
 [batches.content]
 kind = "lines"
@@ -774,11 +792,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Python(Decl { file: "htmy/renderer/context.py", start_line: 6 })'
 descriptor = "python decl at htmy/renderer/context.py:6"
 cost_tokens = 0
-cum_tokens = 875
+cum_tokens = 936
 
 [batches.content]
 kind = "lines"
@@ -792,11 +810,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Python(MethodSigs { file: "htmy/renderer/context.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/renderer/context.py"
 cost_tokens = 10
-cum_tokens = 885
+cum_tokens = 946
 
 [batches.content]
 kind = "lines"
@@ -818,11 +836,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Markdown(HeadingsOutline { file: "docs/function-components.md" })'
 descriptor = "headings outline in docs/function-components.md"
 cost_tokens = 59
-cum_tokens = 944
+cum_tokens = 1005
 
 [batches.content]
 kind = "lines"
@@ -922,24 +940,6 @@ end = 151
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 39
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 61
-cum_tokens = 1005
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 9
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 40

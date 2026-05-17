@@ -22,19 +22,19 @@ Score(3000)=0.607 I=0.855 C=0.431 ns_rows≤3K=21/53 (reached=12 partial=1 missi
 | walker |  | 681 | 17 | README.md section #12 |  |  | 0.920 |
 | walker |  | 708 | 27 | README.md section #11 |  |  | 0.920 |
 | ns | 737 |  | 247 | README — Chronos-Bolt and Chronos paragraphs | 1.9 |  | 0.898 |
-| walker |  | 770 | 62 | [package] in pyproject.toml |  |  | 0.908 |
-| ns | 809 |  | 72 | README H2/H3 headings catalog | 1.10 |  | 0.905 |
-| walker |  | 810 | 40 | python decl names surface in src/chronos/base.py |  |  | 0.906 |
-| walker |  | 810 | 0 | python decl at src/chronos/base.py:27 |  |  | 0.906 |
-| walker |  | 810 | 0 | python decl at src/chronos/base.py:32 |  |  | 0.906 |
-| walker |  | 810 | 0 | python decl at src/chronos/base.py:44 |  |  | 0.906 |
-| walker |  | 825 | 15 | python class body at src/chronos/base.py:32 |  |  | 0.906 |
-| ns | 842 |  | 33 | ForecastType enum | 2.1 |  | 0.883 |
-| walker |  | 847 | 22 | python class body at src/chronos/base.py:27 |  |  | 0.910 |
-| walker |  | 882 | 35 | python class body at src/chronos/base.py:44 |  |  | 0.911 |
-| walker |  | 898 | 16 | listing of 'scripts' |  |  | 0.912 |
-| ns | 964 |  | 122 | BaseChronosPipeline — class + properties | 2.2 |  | 0.844 |
-| walker |  | 1004 | 106 | [dependencies] in pyproject.toml |  |  | 0.844 |
+| ns | 809 |  | 72 | README H2/H3 headings catalog | 1.10 |  | 0.897 |
+| walker |  | 814 | 106 | [dependencies] in pyproject.toml |  |  | 0.897 |
+| ns | 842 |  | 33 | ForecastType enum | 2.1 |  | 0.871 |
+| walker |  | 876 | 62 | [package] in pyproject.toml |  |  | 0.879 |
+| walker |  | 916 | 40 | python decl names surface in src/chronos/base.py |  |  | 0.883 |
+| walker |  | 916 | 0 | python decl at src/chronos/base.py:27 |  |  | 0.883 |
+| walker |  | 916 | 0 | python decl at src/chronos/base.py:32 |  |  | 0.883 |
+| walker |  | 916 | 0 | python decl at src/chronos/base.py:44 |  |  | 0.883 |
+| walker |  | 931 | 15 | python class body at src/chronos/base.py:32 |  |  | 0.883 |
+| walker |  | 953 | 22 | python class body at src/chronos/base.py:27 |  |  | 0.910 |
+| ns | 964 |  | 122 | BaseChronosPipeline — class + properties | 2.2 |  | 0.833 |
+| walker |  | 988 | 35 | python class body at src/chronos/base.py:44 |  |  | 0.844 |
+| walker |  | 1004 | 16 | listing of 'scripts' |  |  | 0.844 |
 | ns | 1124 |  | 160 | BaseChronosPipeline — predict / predict_quantiles signatures | 2.3 |  | 0.793 |
 | walker |  | 1170 | 166 | python method sigs in src/chronos/base.py |  |  | 0.811 |
 | walker |  | 1170 | 0 | python method at src/chronos/base.py:35 |  |  | 0.811 |

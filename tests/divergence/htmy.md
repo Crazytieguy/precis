@@ -32,25 +32,25 @@ Score(3000)=0.583 I=0.795 C=0.427 ns_rows≤3K=17/40 (reached=8 partial=2 missin
 | walker |  | 620 | 42 | python imports #7 in htmy/__init__.py |  |  | 0.732 |
 | ns | 671 |  | 155 | README key features (bottom half) | 1.8 |  | 0.661 |
 | walker |  | 708 | 88 | python imports in htmy/md/__init__.py |  |  | 0.661 |
-| walker |  | 727 | 19 | python class body at htmy/error_boundary.py:15 |  |  | 0.661 |
 | ns | 739 |  | 68 | Public exports — Snippet/Tag | 1.9 |  | 0.681 |
-| walker |  | 746 | 19 | python decl names surface in htmy/snippet.py |  |  | 0.681 |
-| walker |  | 746 | 0 | python decl at htmy/snippet.py:27 |  |  | 0.681 |
-| walker |  | 746 | 0 | python decl at htmy/snippet.py:158 |  |  | 0.681 |
-| walker |  | 766 | 20 | python decl names surface in htmy/io.py |  |  | 0.681 |
-| walker |  | 766 | 0 | python decl at htmy/io.py:11 |  |  | 0.681 |
-| walker |  | 779 | 13 | python decl doc at htmy/io.py:11 |  |  | 0.681 |
-| walker |  | 803 | 24 | python class body at htmy/snippet.py:158 |  |  | 0.681 |
-| walker |  | 812 | 9 | python decl names surface in htmy/renderer/baseline.py |  |  | 0.682 |
-| walker |  | 812 | 0 | python decl at htmy/renderer/baseline.py:18 |  |  | 0.682 |
-| walker |  | 865 | 53 | headings outline in docs/components-guide.md |  |  | 0.682 |
-| walker |  | 865 | 0 | docs/components-guide.md section #0 |  |  | 0.682 |
-| walker |  | 875 | 10 | python decl names surface in htmy/renderer/context.py |  |  | 0.682 |
-| walker |  | 875 | 0 | python decl at htmy/renderer/context.py:6 |  |  | 0.682 |
-| walker |  | 885 | 10 | python method sigs in htmy/renderer/context.py |  |  | 0.682 |
-| walker |  | 944 | 59 | headings outline in docs/function-components.md |  |  | 0.682 |
+| walker |  | 769 | 61 | [dependencies] in pyproject.toml |  |  | 0.681 |
+| walker |  | 788 | 19 | python class body at htmy/error_boundary.py:15 |  |  | 0.681 |
+| walker |  | 807 | 19 | python decl names surface in htmy/snippet.py |  |  | 0.681 |
+| walker |  | 807 | 0 | python decl at htmy/snippet.py:27 |  |  | 0.681 |
+| walker |  | 807 | 0 | python decl at htmy/snippet.py:158 |  |  | 0.681 |
+| walker |  | 827 | 20 | python decl names surface in htmy/io.py |  |  | 0.681 |
+| walker |  | 827 | 0 | python decl at htmy/io.py:11 |  |  | 0.681 |
+| walker |  | 840 | 13 | python decl doc at htmy/io.py:11 |  |  | 0.681 |
+| walker |  | 864 | 24 | python class body at htmy/snippet.py:158 |  |  | 0.681 |
+| walker |  | 873 | 9 | python decl names surface in htmy/renderer/baseline.py |  |  | 0.682 |
+| walker |  | 873 | 0 | python decl at htmy/renderer/baseline.py:18 |  |  | 0.682 |
+| walker |  | 926 | 53 | headings outline in docs/components-guide.md |  |  | 0.682 |
+| walker |  | 926 | 0 | docs/components-guide.md section #0 |  |  | 0.682 |
+| walker |  | 936 | 10 | python decl names surface in htmy/renderer/context.py |  |  | 0.682 |
+| walker |  | 936 | 0 | python decl at htmy/renderer/context.py:6 |  |  | 0.682 |
+| walker |  | 946 | 10 | python method sigs in htmy/renderer/context.py |  |  | 0.682 |
 | ns | 967 |  | 228 | Public exports — typing aliases | 1.10 |  | 0.587 |
-| walker |  | 1005 | 61 | [dependencies] in pyproject.toml |  |  | 0.587 |
+| walker |  | 1005 | 59 | headings outline in docs/function-components.md |  |  | 0.587 |
 | walker |  | 1021 | 16 | python method at htmy/renderer/context.py:11 |  |  | 0.587 |
 | walker |  | 1039 | 18 | python class body at htmy/renderer/baseline.py:18 |  |  | 0.587 |
 | walker |  | 1106 | 67 | [package] in pyproject.toml |  |  | 0.609 |

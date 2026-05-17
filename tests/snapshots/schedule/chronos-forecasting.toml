@@ -351,10 +351,28 @@ kind = "full"
 
 [[batches]]
 position = 12
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 106
+cum_tokens = 814
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 16
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 62
-cum_tokens = 770
+cum_tokens = 876
 
 [batches.content]
 kind = "lines"
@@ -384,11 +402,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Python(DeclNames { file: "src/chronos/base.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/base.py"
 cost_tokens = 40
-cum_tokens = 810
+cum_tokens = 916
 
 [batches.content]
 kind = "lines"
@@ -442,11 +460,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Python(Decl { file: "src/chronos/base.py", start_line: 27 })'
 descriptor = "python decl at src/chronos/base.py:27"
 cost_tokens = 0
-cum_tokens = 810
+cum_tokens = 916
 
 [batches.content]
 kind = "lines"
@@ -460,11 +478,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Python(Decl { file: "src/chronos/base.py", start_line: 32 })'
 descriptor = "python decl at src/chronos/base.py:32"
 cost_tokens = 0
-cum_tokens = 810
+cum_tokens = 916
 
 [batches.content]
 kind = "lines"
@@ -478,11 +496,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Python(Decl { file: "src/chronos/base.py", start_line: 44 })'
 descriptor = "python decl at src/chronos/base.py:44"
 cost_tokens = 0
-cum_tokens = 810
+cum_tokens = 916
 
 [batches.content]
 kind = "lines"
@@ -496,11 +514,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Python(ClassBody { file: "src/chronos/base.py", start_line: 32 })'
 descriptor = "python class body at src/chronos/base.py:32"
 cost_tokens = 15
-cum_tokens = 825
+cum_tokens = 931
 
 [batches.content]
 kind = "lines"
@@ -514,11 +532,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Python(ClassBody { file: "src/chronos/base.py", start_line: 27 })'
 descriptor = "python class body at src/chronos/base.py:27"
 cost_tokens = 22
-cum_tokens = 847
+cum_tokens = 953
 
 [batches.content]
 kind = "lines"
@@ -532,11 +550,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Python(ClassBody { file: "src/chronos/base.py", start_line: 44 })'
 descriptor = "python class body at src/chronos/base.py:44"
 cost_tokens = 35
-cum_tokens = 882
+cum_tokens = 988
 
 [batches.content]
 kind = "lines"
@@ -550,11 +568,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 16
-cum_tokens = 898
+cum_tokens = 1004
 
 [batches.content]
 kind = "fs"
@@ -562,24 +580,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "scripts"
 entries = ["README.md", "evaluation", "kernel-synth.py", "training"]
-
-[[batches]]
-position = 21
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 106
-cum_tokens = 1004
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 16
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 22

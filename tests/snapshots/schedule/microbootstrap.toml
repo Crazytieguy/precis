@@ -2969,10 +2969,28 @@ kind = "full"
 
 [[batches]]
 position = 113
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 507
+cum_tokens = 3709
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 32
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
 key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 93
-cum_tokens = 3295
+cum_tokens = 3802
 
 [batches.content]
 kind = "lines"
@@ -3010,11 +3028,11 @@ end = 268
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Markdown(Section { file: "README.md", section_index: 42 })'
 descriptor = "README.md section #42"
 cost_tokens = 29
-cum_tokens = 3324
+cum_tokens = 3831
 
 [batches.content]
 kind = "lines"
@@ -3028,11 +3046,11 @@ end = 744
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Python(ClassBody { file: "microbootstrap/config/litestar.py", start_line: 13 })'
 descriptor = "python class body at microbootstrap/config/litestar.py:13"
 cost_tokens = 84
-cum_tokens = 3408
+cum_tokens = 3915
 
 [batches.content]
 kind = "lines"
@@ -3046,11 +3064,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 3411
+cum_tokens = 3918
 
 [batches.content]
 kind = "fs"
@@ -3060,11 +3078,11 @@ parent = ".github"
 entries = ["workflows"]
 
 [[batches]]
-position = 117
+position = 118
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 3420
+cum_tokens = 3927
 
 [batches.content]
 kind = "fs"
@@ -3074,11 +3092,11 @@ parent = ".github/workflows"
 entries = ["release_docs.yml", "workflow.yml"]
 
 [[batches]]
-position = 118
+position = 119
 key = 'Python(MethodBody { file: "microbootstrap/instruments_setupper.py", start_line: 57, body_start_line: 58 })'
 descriptor = "python method body at microbootstrap/instruments_setupper.py:57 body 58"
 cost_tokens = 31
-cum_tokens = 3451
+cum_tokens = 3958
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +3110,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Markdown(Section { file: "README.md", section_index: 15 })'
 descriptor = "README.md section #15"
 cost_tokens = 34
-cum_tokens = 3485
+cum_tokens = 3992
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +3128,11 @@ end = 396
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 34
-cum_tokens = 3519
+cum_tokens = 4026
 
 [batches.content]
 kind = "lines"
@@ -3128,11 +3146,11 @@ end = 434
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Python(MethodBody { file: "microbootstrap/instruments_setupper.py", start_line: 32, body_start_line: 36 })'
 descriptor = "python method body at microbootstrap/instruments_setupper.py:32 body 36"
 cost_tokens = 33
-cum_tokens = 3552
+cum_tokens = 4059
 
 [batches.content]
 kind = "lines"
@@ -3146,11 +3164,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Python(DeclNames { file: "microbootstrap/helpers.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/helpers.py"
 cost_tokens = 150
-cum_tokens = 3702
+cum_tokens = 4209
 
 [batches.content]
 kind = "lines"
@@ -3260,11 +3278,11 @@ end = 101
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Python(Decl { file: "microbootstrap/helpers.py", start_line: 19 })'
 descriptor = "python decl at microbootstrap/helpers.py:19"
 cost_tokens = 0
-cum_tokens = 3702
+cum_tokens = 4209
 
 [batches.content]
 kind = "lines"
@@ -3278,11 +3296,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Python(Decl { file: "microbootstrap/helpers.py", start_line: 96 })'
 descriptor = "python decl at microbootstrap/helpers.py:96"
 cost_tokens = 0
-cum_tokens = 3702
+cum_tokens = 4209
 
 [batches.content]
 kind = "lines"
@@ -3296,11 +3314,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Python(Decl { file: "microbootstrap/helpers.py", start_line: 48 })'
 descriptor = "python decl at microbootstrap/helpers.py:48"
 cost_tokens = 37
-cum_tokens = 3739
+cum_tokens = 4246
 
 [batches.content]
 kind = "lines"
@@ -3314,11 +3332,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Python(Decl { file: "microbootstrap/helpers.py", start_line: 60 })'
 descriptor = "python decl at microbootstrap/helpers.py:60"
 cost_tokens = 38
-cum_tokens = 3777
+cum_tokens = 4284
 
 [batches.content]
 kind = "lines"
@@ -3332,11 +3350,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Python(DeclBody { file: "microbootstrap/helpers.py", start_line: 96, body_start_line: 97 })'
 descriptor = "python decl body at microbootstrap/helpers.py:96 body 97"
 cost_tokens = 16
-cum_tokens = 3793
+cum_tokens = 4300
 
 [batches.content]
 kind = "lines"
@@ -3350,11 +3368,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Python(Decl { file: "microbootstrap/helpers.py", start_line: 35 })'
 descriptor = "python decl at microbootstrap/helpers.py:35"
 cost_tokens = 40
-cum_tokens = 3833
+cum_tokens = 4340
 
 [batches.content]
 kind = "lines"
@@ -3368,11 +3386,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Python(Decl { file: "microbootstrap/helpers.py", start_line: 100 })'
 descriptor = "python decl at microbootstrap/helpers.py:100"
 cost_tokens = 40
-cum_tokens = 3873
+cum_tokens = 4380
 
 [batches.content]
 kind = "lines"
@@ -3386,11 +3404,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Python(DeclBody { file: "microbootstrap/helpers.py", start_line: 60, body_start_line: 93 })'
 descriptor = "python decl body at microbootstrap/helpers.py:60 body 93"
 cost_tokens = 9
-cum_tokens = 3882
+cum_tokens = 4389
 
 [batches.content]
 kind = "lines"
@@ -3404,11 +3422,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Python(MethodBody { file: "microbootstrap/instruments/base.py", start_line: 29, body_start_line: 33 })'
 descriptor = "python method body at microbootstrap/instruments/base.py:29 body 33"
 cost_tokens = 21
-cum_tokens = 3903
+cum_tokens = 4410
 
 [batches.content]
 kind = "lines"
@@ -3422,11 +3440,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 36
-cum_tokens = 3939
+cum_tokens = 4446
 
 [batches.content]
 kind = "lines"
@@ -3440,11 +3458,11 @@ end = 296
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Python(Imports { file: "microbootstrap/console_writer.py" })'
 descriptor = "python imports in microbootstrap/console_writer.py"
 cost_tokens = 56
-cum_tokens = 3995
+cum_tokens = 4502
 
 [batches.content]
 kind = "lines"
@@ -3466,11 +3484,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Fs(DirListing { dir: "tests/instruments" })'
 descriptor = "listing of 'tests/instruments'"
 cost_tokens = 62
-cum_tokens = 4057
+cum_tokens = 4564
 
 [batches.content]
 kind = "fs"
@@ -3480,11 +3498,11 @@ parent = "tests/instruments"
 entries = ["__init__.py", "test_cors.py", "test_health_checks.py", "test_instrument_box.py", "test_logging.py", "test_opentelemetry.py", "test_prometheus.py", "test_pyroscope.py", "test_sentry.py", "test_swagger.py"]
 
 [[batches]]
-position = 135
+position = 136
 key = 'Python(DeclNames { file: "microbootstrap/settings.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/settings.py"
 cost_tokens = 159
-cum_tokens = 4216
+cum_tokens = 4723
 
 [batches.content]
 kind = "lines"
@@ -3594,11 +3612,11 @@ end = 106
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Python(Decl { file: "microbootstrap/settings.py", start_line: 53 })'
 descriptor = "python decl at microbootstrap/settings.py:53"
 cost_tokens = 0
-cum_tokens = 4216
+cum_tokens = 4723
 
 [batches.content]
 kind = "lines"
@@ -3612,11 +3630,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Python(Decl { file: "microbootstrap/settings.py", start_line: 29 })'
 descriptor = "python decl at microbootstrap/settings.py:29"
 cost_tokens = 15
-cum_tokens = 4231
+cum_tokens = 4738
 
 [batches.content]
 kind = "lines"
@@ -3630,11 +3648,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'Python(Decl { file: "microbootstrap/settings.py", start_line: 105 })'
 descriptor = "python decl at microbootstrap/settings.py:105"
 cost_tokens = 49
-cum_tokens = 4280
+cum_tokens = 4787
 
 [batches.content]
 kind = "lines"
@@ -3648,11 +3666,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'Python(DeclDoc { file: "microbootstrap/settings.py", start_line: 105 })'
 descriptor = "python decl doc at microbootstrap/settings.py:105"
 cost_tokens = 12
-cum_tokens = 4292
+cum_tokens = 4799
 
 [batches.content]
 kind = "lines"
@@ -3666,11 +3684,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Python(Decl { file: "microbootstrap/settings.py", start_line: 90 })'
 descriptor = "python decl at microbootstrap/settings.py:90"
 cost_tokens = 79
-cum_tokens = 4371
+cum_tokens = 4878
 
 [batches.content]
 kind = "lines"
@@ -3684,11 +3702,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Python(DeclDoc { file: "microbootstrap/settings.py", start_line: 90 })'
 descriptor = "python decl doc at microbootstrap/settings.py:90"
 cost_tokens = 13
-cum_tokens = 4384
+cum_tokens = 4891
 
 [batches.content]
 kind = "lines"
@@ -3702,11 +3720,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Python(ClassBody { file: "microbootstrap/settings.py", start_line: 90 })'
 descriptor = "python class body at microbootstrap/settings.py:90"
 cost_tokens = 17
-cum_tokens = 4401
+cum_tokens = 4908
 
 [batches.content]
 kind = "lines"
@@ -3720,11 +3738,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 143
+position = 144
 key = 'Python(ClassBody { file: "microbootstrap/settings.py", start_line: 53 })'
 descriptor = "python class body at microbootstrap/settings.py:53"
 cost_tokens = 64
-cum_tokens = 4465
+cum_tokens = 4972
 
 [batches.content]
 kind = "lines"
@@ -3738,11 +3756,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 144
+position = 145
 key = 'Python(Decl { file: "microbootstrap/settings.py", start_line: 60 })'
 descriptor = "python decl at microbootstrap/settings.py:60"
 cost_tokens = 93
-cum_tokens = 4558
+cum_tokens = 5065
 
 [batches.content]
 kind = "lines"
@@ -3756,11 +3774,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 145
+position = 146
 key = 'Python(DeclDoc { file: "microbootstrap/settings.py", start_line: 60 })'
 descriptor = "python decl doc at microbootstrap/settings.py:60"
 cost_tokens = 14
-cum_tokens = 4572
+cum_tokens = 5079
 
 [batches.content]
 kind = "lines"
@@ -3774,11 +3792,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 146
+position = 147
 key = 'Python(Decl { file: "microbootstrap/settings.py", start_line: 75 })'
 descriptor = "python decl at microbootstrap/settings.py:75"
 cost_tokens = 93
-cum_tokens = 4665
+cum_tokens = 5172
 
 [batches.content]
 kind = "lines"
@@ -3792,11 +3810,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Python(DeclDoc { file: "microbootstrap/settings.py", start_line: 75 })'
 descriptor = "python decl doc at microbootstrap/settings.py:75"
 cost_tokens = 14
-cum_tokens = 4679
+cum_tokens = 5186
 
 [batches.content]
 kind = "lines"
@@ -3810,11 +3828,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 170
-cum_tokens = 4849
+cum_tokens = 5356
 
 [batches.content]
 kind = "lines"
@@ -3900,11 +3918,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Python(MethodBody { file: "microbootstrap/bootstrappers/base.py", start_line: 46, body_start_line: 50 })'
 descriptor = "python method body at microbootstrap/bootstrappers/base.py:46 body 50"
 cost_tokens = 23
-cum_tokens = 4872
+cum_tokens = 5379
 
 [batches.content]
 kind = "lines"
@@ -3918,11 +3936,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Python(MethodBody { file: "microbootstrap/instruments_setupper.py", start_line: 23, body_start_line: 24 })'
 descriptor = "python method body at microbootstrap/instruments_setupper.py:23 body 24"
 cost_tokens = 37
-cum_tokens = 4909
+cum_tokens = 5416
 
 [batches.content]
 kind = "lines"
@@ -3936,11 +3954,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Python(Imports { file: "microbootstrap/instruments/health_checks_instrument.py" })'
 descriptor = "python imports in microbootstrap/instruments/health_checks_instrument.py"
 cost_tokens = 36
-cum_tokens = 4945
+cum_tokens = 5452
 
 [batches.content]
 kind = "lines"
@@ -3970,11 +3988,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 152
+position = 153
 key = 'Python(MethodBody { file: "microbootstrap/instruments_setupper.py", start_line: 40, body_start_line: 47 })'
 descriptor = "python method body at microbootstrap/instruments_setupper.py:40 body 47"
 cost_tokens = 39
-cum_tokens = 4984
+cum_tokens = 5491
 
 [batches.content]
 kind = "lines"
@@ -3988,11 +4006,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'Python(Imports { file: "microbootstrap/instruments/cors_instrument.py" })'
 descriptor = "python imports in microbootstrap/instruments/cors_instrument.py"
 cost_tokens = 37
-cum_tokens = 5021
+cum_tokens = 5528
 
 [batches.content]
 kind = "lines"
@@ -4022,11 +4040,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Python(ClassBody { file: "microbootstrap/settings.py", start_line: 29 })'
 descriptor = "python class body at microbootstrap/settings.py:29"
 cost_tokens = 231
-cum_tokens = 5252
+cum_tokens = 5759
 
 [batches.content]
 kind = "lines"
@@ -4043,24 +4061,6 @@ kind = "full"
 path = "microbootstrap/settings.py"
 start = 44
 end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 507
-cum_tokens = 5759
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 32
-end = 58
 
 [batches.content.spans.render]
 kind = "full"

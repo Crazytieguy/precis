@@ -278,7 +278,17 @@ fn features_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.4, 0.7, 0.4, path_depth_factor(file, ctx))
+    // Pyproject `[project].dependencies` is more anchor-shaped than Cargo
+    // `[dependencies]`: PEP 621 NS authors regularly anchor on it as a
+    // tier-1 row, whereas Cargo authors more often defer dep listings to
+    // the deeper budget. The pyproject lede signal already partitions
+    // these files — reuse it as a cat-axis bump so pyproject deps win
+    // their value/cost race against root-listing ratios.
+    let cat = match pyproject_identity_factor(file, ctx) {
+        Some(PYPROJECT_LEDE_IDENTITY_FACTOR | PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR) => 0.55,
+        _ => 0.4,
+    };
+    mix_signals(cat, 0.7, 0.4, path_depth_factor(file, ctx))
 }
 
 // --- parser ---

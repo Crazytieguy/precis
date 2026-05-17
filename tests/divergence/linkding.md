@@ -76,43 +76,43 @@ Score(3000)=0.478 I=0.710 C=0.322 ns_rows≤3K=16/40 (reached=5 partial=1 missin
 | walker |  | 1273 | 0 | python method at bookmarks/middlewares.py:18 |  |  | 0.524 |
 | walker |  | 1283 | 10 | python method at bookmarks/middlewares.py:21 |  |  | 0.524 |
 | walker |  | 1293 | 10 | python method body at bookmarks/middlewares.py:18 body 19 |  |  | 0.525 |
-| walker |  | 1320 | 27 | listing of 'bookmarks/frontend/utils' |  |  | 0.525 |
-| walker |  | 1347 | 27 | listing of 'bookmarks/templates/settings' |  |  | 0.525 |
-| walker |  | 1368 | 21 | python decl names surface in bookmarks/templatetags/bookmarks.py |  |  | 0.525 |
-| walker |  | 1401 | 33 | python class body at bookmarks/api/auth.py:8 |  |  | 0.525 |
-| walker |  | 1420 | 19 | python imports in bookmarks/context_processors.py |  |  | 0.525 |
-| walker |  | 1437 | 17 | README.md section #11 |  |  | 0.525 |
-| walker |  | 1454 | 17 | README.md section #20 |  |  | 0.525 |
-| walker |  | 1497 | 43 | python decl at bookmarks/templatetags/bookmarks.py:9 |  |  | 0.525 |
-| ns | 1511 |  | 356 | README Development setup | 1.10 |  | 0.463 |
-| ns | 1573 |  | 62 | settings/__init__.py — env-vs-prod selector | 2.1 |  | 0.454 |
-| walker |  | 1834 | 337 | README.md section #0 |  |  | 0.508 |
-| ns | 1851 |  | 278 | settings/base.py — INSTALLED_APPS + MIDDLEWARE | 2.2 |  | 0.469 |
-| walker |  | 1885 | 51 | python decl doc at bookmarks/validators.py:5 |  |  | 0.469 |
-| walker |  | 1896 | 11 | python imports in bookmarks/views/custom_css.py |  |  | 0.469 |
-| walker |  | 1916 | 20 | python imports in bookmarks/validators.py |  |  | 0.469 |
-| walker |  | 1975 | 59 | README.md section #3 |  |  | 0.469 |
-| walker |  | 1993 | 18 | README.md section #16 |  |  | 0.469 |
-| walker |  | 2009 | 16 | python method body at bookmarks/apps.py:7 body 10 |  |  | 0.469 |
-| walker |  | 2037 | 28 | python decl names surface #1 in bookmarks/admin.py |  |  | 0.469 |
-| walker |  | 2037 | 0 | python decl at bookmarks/admin.py:324 |  |  | 0.469 |
-| ns | 2047 |  | 196 | .env.sample — LD_* var names | 2.3 |  | 0.443 |
-| walker |  | 2106 | 69 | python class body at bookmarks/admin.py:324 |  |  | 0.443 |
-| walker |  | 2175 | 69 | listing of 'bookmarks/styles' |  |  | 0.443 |
-| walker |  | 2204 | 29 | python decl names surface in bookmarks/services/monolith.py |  |  | 0.443 |
-| walker |  | 2204 | 0 | python decl at bookmarks/services/monolith.py:9 |  |  | 0.443 |
-| walker |  | 2204 | 0 | python decl at bookmarks/services/monolith.py:16 |  |  | 0.443 |
-| walker |  | 2209 | 5 | python class body at bookmarks/services/monolith.py:9 |  |  | 0.443 |
-| walker |  | 2293 | 84 | [package] in pyproject.toml |  |  | 0.508 |
-| walker |  | 2334 | 41 | listing of 'bookmarks/templates/shared' |  |  | 0.508 |
-| ns | 2359 |  | 312 | options.md — section headings (all LD_*) | 2.4 |  | 0.474 |
-| walker |  | 2369 | 35 | listing of 'docs' |  |  | 0.474 |
-| walker |  | 2400 | 31 | python decl names surface in bookmarks/views/custom_css.py |  |  | 0.474 |
-| walker |  | 2400 | 0 | python decl at bookmarks/views/custom_css.py:6 |  |  | 0.474 |
-| walker |  | 2417 | 17 | listing of 'docs/src' |  |  | 0.474 |
-| ns | 2434 |  | 75 | settings/base.py — LD_CONTEXT_PATH + LOGIN URLs | 2.5 |  | 0.469 |
-| walker |  | 2486 | 69 | README.md section #4 |  |  | 0.477 |
-| walker |  | 2684 | 198 | [dependencies] in pyproject.toml |  |  | 0.527 |
+| walker |  | 1491 | 198 | [dependencies] in pyproject.toml |  |  | 0.599 |
+| ns | 1511 |  | 356 | README Development setup | 1.10 |  | 0.527 |
+| walker |  | 1518 | 27 | listing of 'bookmarks/frontend/utils' |  |  | 0.527 |
+| walker |  | 1545 | 27 | listing of 'bookmarks/templates/settings' |  |  | 0.527 |
+| walker |  | 1566 | 21 | python decl names surface in bookmarks/templatetags/bookmarks.py |  |  | 0.527 |
+| ns | 1573 |  | 62 | settings/__init__.py — env-vs-prod selector | 2.1 |  | 0.516 |
+| walker |  | 1599 | 33 | python class body at bookmarks/api/auth.py:8 |  |  | 0.516 |
+| walker |  | 1618 | 19 | python imports in bookmarks/context_processors.py |  |  | 0.516 |
+| walker |  | 1635 | 17 | README.md section #11 |  |  | 0.518 |
+| walker |  | 1652 | 17 | README.md section #20 |  |  | 0.518 |
+| walker |  | 1695 | 43 | python decl at bookmarks/templatetags/bookmarks.py:9 |  |  | 0.518 |
+| ns | 1851 |  | 278 | settings/base.py — INSTALLED_APPS + MIDDLEWARE | 2.2 |  | 0.478 |
+| walker |  | 2032 | 337 | README.md section #0 |  |  | 0.526 |
+| ns | 2047 |  | 196 | .env.sample — LD_* var names | 2.3 |  | 0.497 |
+| walker |  | 2083 | 51 | python decl doc at bookmarks/validators.py:5 |  |  | 0.497 |
+| walker |  | 2094 | 11 | python imports in bookmarks/views/custom_css.py |  |  | 0.497 |
+| walker |  | 2114 | 20 | python imports in bookmarks/validators.py |  |  | 0.497 |
+| walker |  | 2173 | 59 | README.md section #3 |  |  | 0.497 |
+| walker |  | 2191 | 18 | README.md section #16 |  |  | 0.497 |
+| walker |  | 2207 | 16 | python method body at bookmarks/apps.py:7 body 10 |  |  | 0.497 |
+| walker |  | 2235 | 28 | python decl names surface #1 in bookmarks/admin.py |  |  | 0.497 |
+| walker |  | 2235 | 0 | python decl at bookmarks/admin.py:324 |  |  | 0.497 |
+| walker |  | 2304 | 69 | python class body at bookmarks/admin.py:324 |  |  | 0.497 |
+| ns | 2359 |  | 312 | options.md — section headings (all LD_*) | 2.4 |  | 0.464 |
+| walker |  | 2373 | 69 | listing of 'bookmarks/styles' |  |  | 0.464 |
+| walker |  | 2402 | 29 | python decl names surface in bookmarks/services/monolith.py |  |  | 0.464 |
+| walker |  | 2402 | 0 | python decl at bookmarks/services/monolith.py:9 |  |  | 0.464 |
+| walker |  | 2402 | 0 | python decl at bookmarks/services/monolith.py:16 |  |  | 0.464 |
+| walker |  | 2407 | 5 | python class body at bookmarks/services/monolith.py:9 |  |  | 0.464 |
+| ns | 2434 |  | 75 | settings/base.py — LD_CONTEXT_PATH + LOGIN URLs | 2.5 |  | 0.459 |
+| walker |  | 2491 | 84 | [package] in pyproject.toml |  |  | 0.520 |
+| walker |  | 2532 | 41 | listing of 'bookmarks/templates/shared' |  |  | 0.520 |
+| walker |  | 2567 | 35 | listing of 'docs' |  |  | 0.520 |
+| walker |  | 2598 | 31 | python decl names surface in bookmarks/views/custom_css.py |  |  | 0.520 |
+| walker |  | 2598 | 0 | python decl at bookmarks/views/custom_css.py:6 |  |  | 0.520 |
+| walker |  | 2615 | 17 | listing of 'docs/src' |  |  | 0.520 |
+| walker |  | 2684 | 69 | README.md section #4 |  |  | 0.527 |
 | walker |  | 2723 | 39 | python decl doc at bookmarks/api/auth.py:8 |  |  | 0.528 |
 | walker |  | 2739 | 16 | listing of 'bookmarks/templates/registration' |  |  | 0.528 |
 | walker |  | 2785 | 46 | listing of 'bookmarks/management/commands' |  |  | 0.528 |
