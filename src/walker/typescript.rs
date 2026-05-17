@@ -2111,7 +2111,11 @@ fn collect_module_doc_lede(tree: &Tree, source: &str) -> FileLines {
 
 /// Collect all `import` and bare-`export … from` lines at the top of the
 /// file. Stops at the first declaration node (so trailing re-exports
-/// after real code don't get folded in).
+/// after real code don't get folded in). Top-of-file side-effect
+/// expression statements (`EventEmitter.defaultMaxListeners = 50`,
+/// `process.env.X = …`, `Sentry.init(…)`) are skipped without
+/// breaking — CommonJS entrypoints commonly interleave such setup
+/// between requires.
 fn collect_imports(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -2121,6 +2125,7 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
             "expression_statement" if is_string_directive(child) => {
                 extend_span(&mut lines, child, source)
             }
+            "expression_statement" => {}
             "import_statement" => extend_span(&mut lines, child, source),
             "lexical_declaration" | "variable_declaration"
                 if is_require_declaration(child, source) =>
