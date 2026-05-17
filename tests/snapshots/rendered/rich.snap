@@ -270,7 +270,7 @@ rich/
         31→    def normalized(self) -> Tuple[float, float, float]:
     columns.py
         16→class Columns(JupyterMixin):
-        …
+        17→    """Display renderables in neat columns.
     console.py
     constrain.py
         10→class Constrain(JupyterMixin):
@@ -286,12 +286,12 @@ rich/
     errors.py
     file_proxy.py
         11→class FileProxy(io.TextIOBase):
-        12→    """Wraps a file (e.g. sys.stdout) and redirects writes to a console."""
+        …
     filesize.py
     highlighter.py
     json.py
         9→class JSON:
-        …
+        10→    """A renderable which pretty prints JSON.
     jupyter.py
     layout.py
     live.py
@@ -318,13 +318,13 @@ rich/
         43→    # This is somewhat inefficient and needs caching
     panel.py
         17→class Panel(JupyterMixin):
-        …
+        18→    """A console renderable that draws a border around its contents.
     pretty.py
     progress.py
     progress_bar.py
         15→PULSE_SIZE = 20
         18→class ProgressBar(JupyterMixin):
-        …
+        19→    """Renders a (progress) bar. Used by rich.progress.
     prompt.py
     protocol.py
     py.typed

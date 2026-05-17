@@ -525,10 +525,13 @@ pub enum PythonKey {
     /// Catastrophic-omission hedge. Priority 1.x.
     DeclNames { file: PathBuf, chunk_index: usize },
     /// One top-level item. For class, the `class Foo(Base):` header
-    /// (decorator lines included if decorated). For def, signature
-    /// with body marker. For constant, the assignment line(s). Keyed
-    /// by start line (the decorator row when decorated). Priority
-    /// 1.x–4.x.
+    /// (decorator lines included if decorated) plus up to two non-blank
+    /// rows of the docstring's first paragraph — PEP 257's "summary
+    /// line" alongside the header so the per-decl batch carries the
+    /// usual NS anchor as one cognitive unit. For def, signature with
+    /// body marker plus the same lede. For constant, the assignment
+    /// line(s). Keyed by start line (the decorator row when
+    /// decorated). Priority 1.x–4.x.
     Decl { file: PathBuf, start_line: usize },
     /// Docstring of a top-level def or class — the
     /// `expression_statement(string)` at the start of its body, after

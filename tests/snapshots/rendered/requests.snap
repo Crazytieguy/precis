@@ -244,18 +244,12 @@ src/
             122→class BaseAdapter:
             123→    """The Base Transport Adapter"""
             158→class HTTPAdapter(BaseAdapter):
-            …
+            159→    """The built-in HTTP Adapter for urllib3.
         api.py
         auth.py
         certs.py
         compat.py
         cookies.py
-            571→@overload
-            …
-            579→def cookiejar_from_dict(
-            …
-            604→def merge_cookies(
-            …
         exceptions.py
             161→class RequestsDependencyWarning(RequestsWarning):
             162→    """An imported dependency doesn't match the expected version range."""
@@ -305,7 +299,7 @@ src/
             129→    trust_env: bool
             130→    cookies: RequestsCookieJar
             395→class Session(SessionRedirectMixin):
-            …
+            396→    """A Requests session.
             908→def session() -> Session:
             …
             920→    return Session()
@@ -318,7 +312,7 @@ src/
             16→_VT = TypeVar("_VT")
             17→_D = TypeVar("_D")
             20→class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]):
-            …
+            21→    """A case-insensitive ``dict``-like object.
             47→    _store: OrderedDict[str, tuple[str, _VT]]
             88→    # Copy is required
             96→class LookupDict(dict[str, _VT]):

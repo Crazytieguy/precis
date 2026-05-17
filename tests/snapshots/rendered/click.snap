@@ -273,6 +273,8 @@ src/
             35→    subsequent_indent: str = "",
             36→    preserve_paragraphs: bool = False,
             37→) -> str:
+            38→    """A helper function that intelligently wraps text.  By default, it
+            39→    assumes that it operates on a single paragraph of text but if the
             104→class HelpFormatter:
             …
             283→def join_options(options: cabc.Sequence[str]) -> tuple[str, bool]:
@@ -290,11 +292,9 @@ src/
             26→class EchoingStdin:
             …
             60→@contextlib.contextmanager
-            61→def _pause_echo(stream: EchoingStdin | None) -> cabc.Iterator[None]:
+            …
             70→class BytesIOCopy(io.BytesIO):
-            71→    """Patch ``io.BytesIO`` to let the written stream be copied to another.
-            73→    .. versionadded:: 8.2
-            74→    """
+            …
             89→class StreamMixer:
             …
             103→class _NamedTextIOWrapper(io.TextIOWrapper):
@@ -304,9 +304,10 @@ src/
             165→) -> t.BinaryIO:
             166→    # Is already an input stream.
             183→class Result:
-            …
+            184→    """Holds the captured result of an invoked CLI script.
             261→class CliRunner:
-            …
+            262→    """The CLI runner provides functionality to invoke a Click command line
+            263→    script for unittesting purposes in a isolated environment.  This only
         types.py
         utils.py
 tests/

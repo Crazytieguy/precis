@@ -96,13 +96,26 @@ src/
             26→    WARN = auto()
             27→    IGNORE = auto()
             30→class CollectionCheckStrategy(Enum):
-            …
+            31→    """
+            32→    Specifies how thoroughly the contents of collections are type checked.
+            34→    This has an effect on the following built-in checkers:
+            36→    * ``AbstractSet``
+            37→    * ``Dict``
+            38→    * ``List``
+            39→    * ``Mapping``
+            40→    * ``Set``
+            41→    * ``Tuple[<type>, ...]`` (arbitrarily sized tuples)
+            43→    Members:
+            45→    * ``FIRST_ITEM``: check only the first item
+            46→    * ``ALL_ITEMS``: check all items
+            47→    """
             49→    FIRST_ITEM = auto()
             50→    ALL_ITEMS = auto()
             52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
             …
             62→@dataclass
             63→class TypeCheckConfiguration:
+            65→     You can change Typeguard's behavior with these settings.
             98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
             99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
             100→    collection_check_strategy: CollectionCheckStrategy = (
@@ -137,6 +150,7 @@ src/
             155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
             156→    debug_instrumentation: bool | Unset = unset,
             157→) -> Any:
+            159→    Instrument the target function to perform run-time type checking.
         _exceptions.py
             1→from collections import deque
             2→from typing import Deque
@@ -169,47 +183,26 @@ src/
             40→P = ParamSpec("P")
             41→T = TypeVar("T")
             45→def _call_with_frames_removed(
-            46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
-            47→) -> T:
-            48→    return f(*args, **kwargs)
+            …
             51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
             52→    return cache_from_source(path, debug_override, optimization=OPTIMIZATION)
             55→class TypeguardLoader(SourceFileLoader):
-            56→    @staticmethod
-            …
-            99→    def exec_module(self, module: ModuleType) -> None:
             …
             109→class TypeguardFinder(MetaPathFinder):
-            …
-            120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
-            …
-            124→    def find_spec(
-            …
-            138→    def should_instrument(self, module_name: str) -> bool:
             …
             156→class ImportHookManager:
             157→    """
             158→    A handle that can be used to uninstall the Typeguard import hook.
             159→    """
-            161→    def __init__(self, hook: MetaPathFinder):
-            …
-            164→    def __enter__(self) -> None:
-            …
-            167→    def __exit__(
-            …
-            175→    def uninstall(self) -> None:
-            …
             183→def install_import_hook(
-            184→    packages: Iterable[str] | None = None,
-            185→    *,
-            186→    cls: type[TypeguardFinder] = TypeguardFinder,
-            187→) -> ImportHookManager:
+            …
         _memo.py
             1→from __future__ import annotations
             3→from typing import Any
             5→from typeguard._config import TypeCheckConfiguration, global_config
             8→class TypeCheckMemo:
             …
+            10→    Contains information necessary for type checkers to do their work.
             35→    __slots__ = "globals", "locals", "self_type", "config"
             37→    def __init__(
             38→        self,
@@ -236,6 +229,7 @@ src/
             30→def suppress_type_checks(
             31→    func: Callable[P, T] | None = None,
             32→) -> Callable[P, T] | ContextManager[None]:
+            34→    Temporarily suppress all type checking.
         _transformer.py
             488→class TypeguardTransformer(NodeTransformer):
             …

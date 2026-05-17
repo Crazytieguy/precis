@@ -157,12 +157,6 @@ examples/
             templates/
         pyproject.toml
         tests/
-            conftest.py
-            data.sql
-            test_auth.py
-            test_blog.py
-            test_db.py
-            test_factory.py
 pyproject.toml
     1→[project]
     2→name = "Flask"
@@ -241,7 +235,8 @@ src/
             20→class ConfigAttribute(t.Generic[T]):
             21→    """Makes an attribute forward to the config"""
             50→class Config(dict):  # type: ignore[type-arg]
-            …
+            51→    """Works exactly like a dict but provides ways to fill it from files
+            52→    or special dictionaries.  There are two common patterns to populate the
         ctx.py
         debughelpers.py
         globals.py
@@ -256,22 +251,23 @@ src/
                 9→if t.TYPE_CHECKING:  # pragma: no cover
                 10→    from ..wrappers import Response
                 13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
-                …
+                14→    """Serialize data as JSON.
                 47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
-                …
+                48→    """Serialize data as JSON and write to a file.
                 70→    if current_app:
                 71→        current_app.json.dump(obj, fp, **kwargs)
                 72→    else:
                 73→        kwargs.setdefault("default", _default)
                 74→        _json.dump(obj, fp, **kwargs)
                 77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
-                …
+                78→    """Deserialize data as JSON.
                 105→    return _json.loads(s, **kwargs)
                 108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
-                …
+                109→    """Deserialize data as JSON read from a file.
                 135→    return _json.load(fp, **kwargs)
                 138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
-                …
+                139→    """Serialize the given arguments as JSON, and return a
+                140→    :class:`~flask.Response` object with the ``application/json``
             provider.py
             tag.py
         logging.py
@@ -286,7 +282,8 @@ src/
             app.py
             blueprints.py
                 119→class Blueprint(Scaffold):
-                …
+                120→    """Represents a blueprint, a collection of routes and other
+                121→    app-related functions that can be registered on a real application
                 172→    _got_registered_once = False
             scaffold.py
         sessions.py
@@ -302,25 +299,17 @@ src/
             12→    ["get", "post", "head", "options", "delete", "put", "trace", "patch"]
             13→)
             16→class View:
-            …
-            78→    def dispatch_request(self) -> ft.ResponseReturnValue:
-            …
-            83→        raise NotImplementedError()
-            85→    @classmethod
-            86→    def as_view(
-            87→        cls, name: str, *class_args: t.Any, **class_kwargs: t.Any
-            88→    ) -> ft.RouteCallable:
+            17→    """Subclass this class and override :meth:`dispatch_request` to
+            18→    create a generic class-based view. Call :meth:`as_view` to create a
             138→class MethodView(View):
-            …
-            165→    def __init_subclass__(cls, **kwargs: t.Any) -> None:
-            …
-            182→    def dispatch_request(self, **kwargs: t.Any) -> ft.ResponseReturnValue:
-            …
+            139→    """Dispatches request methods to the corresponding instance methods.
+            140→    For example, if you implement a ``get`` method, it will be used to
         wrappers.py
             18→class Request(RequestBase):
             …
             222→class Response(ResponseBase):
-            …
+            223→    """The response object that is used by default in Flask.  Works like the
+            224→    response object from Werkzeug but is set to have an HTML mimetype by
             240→    default_mimetype: str | None = "text/html"
             242→    json_module = json
             244→    autocorrect_location_header = False

@@ -20,8 +20,13 @@
 //! Per-decl keys (keyed by start line):
 //! - [`PythonKey::Decl`]: one top-level class / def / non-dunder
 //!   constant. For decorated forms, the span starts at the
-//!   `@decorator` row.
-//! - [`PythonKey::DeclDoc`]: top-level def / class docstring.
+//!   `@decorator` row. Class and def decls pull in up to two
+//!   non-blank rows of their docstring's first paragraph so the
+//!   per-decl batch carries the PEP 257 summary alongside the
+//!   header.
+//! - [`PythonKey::DeclDoc`]: top-level def / class docstring (full;
+//!   the first-paragraph rows are also covered by [`PythonKey::Decl`]
+//!   and are skipped at render time as ancestor-covered).
 //! - [`PythonKey::DeclBody`]: top-level def body slices, sans
 //!   leading docstring.
 //! - [`PythonKey::ClassBody`]: top-level class body excluding methods
@@ -213,7 +218,11 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 file: file.clone(),
                 start_line: decl.start_line,
             };
-            let decl_lines = collect_decl(decl);
+            let mut decl_lines = collect_decl(decl);
+            if matches!(decl.kind, DeclKind::Class | DeclKind::Function) {
+                let lede = collect_doc_lede(decl.inner_node, &src_lines);
+                merge_file_lines(&mut decl_lines, lede);
+            }
             if (!matches!(decl.kind, DeclKind::Const)
                 || !file_lines_covered_by(&decl_lines, &names_lines_by_chunk[chunk_index]))
                 && let Some(content) = single_file_lines_content(file, &source, decl_lines)
@@ -806,6 +815,104 @@ fn collect_decl(info: &DeclInfo) -> FileLines {
     let mut lines = Vec::new();
     push_rows(&mut lines, unit_start, end_row);
     FileLines::new(dedup_sorted(lines))
+}
+
+/// Rows of the docstring's first paragraph — the opening row of the
+/// docstring's string node plus any contiguous non-blank rows that follow,
+/// up to but not including the first blank row. Returns empty when no
+/// docstring. Capped at [`DOC_LEDE_MAX_ROWS`] to keep the
+/// [`PythonKey::Decl`] batch small when a class summary spans many lines
+/// without a paragraph break (the rest is delivered by
+/// [`PythonKey::DeclDoc`]).
+///
+/// Lets the per-decl batch carry the PEP 257 "summary line" alongside the
+/// `class X:` / `def f(...)` header — NS rows typically pair the header
+/// with the docstring's first sentence as a single cognitive anchor, and
+/// without this the full docstring (which can run dozens of lines) is the
+/// only path to that summary.
+fn collect_doc_lede(inner: Node, src_lines: &[&str]) -> FileLines {
+    let Some(body) = inner.child_by_field_name("body") else {
+        return FileLines::new(Vec::new());
+    };
+    let Some(doc_stmt) = first_docstring_statement(body) else {
+        return FileLines::new(Vec::new());
+    };
+    let start_row = doc_stmt.start_position().row;
+    let end_row = doc_stmt.end_position().row;
+    // Only emit a lede when the docstring is large enough that DeclDoc can
+    // plausibly slip past the small-budget tier — for short docstrings the
+    // whole DeclDoc lands cheap anyway and the lede is just noise.
+    if end_row.saturating_sub(start_row) < DOC_LEDE_MIN_DOC_ROWS {
+        return FileLines::new(Vec::new());
+    }
+    let mut rows = Vec::new();
+    let mut content_seen = false;
+    for row in start_row..=end_row {
+        let Some(line) = src_lines.get(row) else {
+            break;
+        };
+        let trimmed = line.trim();
+        // A blank or delimiter-only row (`"""` / `'''`, optionally with
+        // an `r` / `b` / `f` / `u` string prefix) is scaffolding, not
+        // content. Captures the `"""\n    Summary.\n` shape as well as
+        // `"""Summary.` openings; the post-summary paragraph break is a
+        // blank row and terminates the lede.
+        if trimmed.is_empty() || is_docstring_delimiter_line(trimmed) {
+            if content_seen {
+                break;
+            }
+            continue;
+        }
+        rows.push(row + 1);
+        content_seen = true;
+        if rows.len() >= DOC_LEDE_MAX_ROWS {
+            break;
+        }
+    }
+    FileLines::new(dedup_sorted(rows))
+}
+
+/// True iff `trimmed` (a row with leading/trailing whitespace already
+/// stripped) is only a docstring delimiter — `"""`, `'''`, or one of
+/// those preceded by Python's `r` / `b` / `f` / `u` string prefix
+/// (case-insensitive, possibly combined like `rb`/`Rf`). Rejects lines
+/// with any other character so a docstring whose first line begins with
+/// `R` (e.g. `"""Real-world example.`) isn't misread as scaffolding.
+fn is_docstring_delimiter_line(trimmed: &str) -> bool {
+    let bytes = trimmed.as_bytes();
+    let mut i = 0;
+    while i < bytes.len()
+        && matches!(
+            bytes[i],
+            b'r' | b'R' | b'b' | b'B' | b'f' | b'F' | b'u' | b'U'
+        )
+    {
+        i += 1;
+    }
+    let rest = &bytes[i..];
+    rest.iter().all(|&b| matches!(b, b'"' | b'\''))
+        && (rest.first() == Some(&b'"') || rest.first() == Some(&b'\''))
+}
+
+/// Cap on the number of docstring content rows pulled into
+/// [`PythonKey::Decl`]. Two rows covers PEP 257's "one-line summary" plus
+/// the common single-wrap case without blowing the per-class Decl batch
+/// up when a class summary runs many lines without a paragraph break.
+const DOC_LEDE_MAX_ROWS: usize = 2;
+
+/// Minimum docstring row span (0-based row difference between opening and
+/// closing `"""`) required before [`PythonKey::Decl`] absorbs the
+/// docstring lede. Short docstrings already fit cheaply through
+/// [`PythonKey::DeclDoc`]; the lede earns its keep only when the rest of
+/// the docstring is too expensive for the small-budget tier.
+const DOC_LEDE_MIN_DOC_ROWS: usize = 12;
+
+fn merge_file_lines(into: &mut FileLines, other: FileLines) {
+    let mut full = std::mem::take(&mut into.full);
+    full.extend(other.full);
+    into.full = dedup_sorted(full);
+    // Drop any ellipsis that is now covered by a real line.
+    into.ellipses.retain(|line| !into.full.contains(line));
 }
 
 /// Rows of the docstring inside a `function_definition` / `class_definition`
@@ -1547,6 +1654,30 @@ def f():
         let body = def_body_parts(f.inner_node, &src_lines);
         assert_eq!(body.len(), 1);
         assert_eq!(body[0].lines, vec![3], "body skips docstring on row 2");
+    }
+
+    #[test]
+    fn python_doc_lede_delimiter_line_classifier() {
+        // Scaffold rows — must be classified as delimiter-only.
+        assert!(is_docstring_delimiter_line("\"\"\""));
+        assert!(is_docstring_delimiter_line("'''"));
+        assert!(is_docstring_delimiter_line("r\"\"\""));
+        assert!(is_docstring_delimiter_line("R\"\"\""));
+        assert!(is_docstring_delimiter_line("f\"\"\""));
+        assert!(is_docstring_delimiter_line("b'''"));
+        assert!(is_docstring_delimiter_line("rb\"\"\""));
+        assert!(is_docstring_delimiter_line("Rf'''"));
+        assert!(is_docstring_delimiter_line("\"\"\"\"\"\""));
+
+        // Content rows — must NOT be classified as delimiter-only.
+        assert!(!is_docstring_delimiter_line("Real-world summary."));
+        assert!(!is_docstring_delimiter_line("\"\"\"Summary."));
+        assert!(!is_docstring_delimiter_line("r\"\"\"Summary."));
+        assert!(!is_docstring_delimiter_line("Returns:"));
+        assert!(!is_docstring_delimiter_line("Foo"));
+        assert!(!is_docstring_delimiter_line(""));
+        // A `'` paired with non-quote content stays content.
+        assert!(!is_docstring_delimiter_line("don't"));
     }
 
     #[test]
