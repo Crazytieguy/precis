@@ -49,7 +49,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TsKey};
 use crate::value::{
     NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
-    names_surface_chunk_index, reexport_import_chunk_factor,
+    reexport_import_chunk_factor,
 };
 
 use super::import_chunks::{
@@ -82,6 +82,19 @@ const JS_CLASS_MEMBER_SPLIT_MIN: usize = 12;
 /// auto-injection budget too, but the freed budget slots reliably
 /// land NS-aligned package.json / README / sibling-file content.
 const JS_CLASS_MEMBER_SPLIT_MAX: usize = 40;
+/// Minimum prototype-method assignments in a JS file for the synthesized
+/// per-method exports to fire. Below this floor the file is almost
+/// certainly *not* a "prototype-style class" — a single `module.exports
+/// = thing` plus an incidental `thing.helper = function …` shouldn't
+/// hijack the file's emission shape. Express's three prototype files
+/// each have 8+ method assignments, so 3 is comfortably below the
+/// signal floor.
+const JS_PROTOTYPE_METHOD_MIN: usize = 3;
+/// Value multiplier for a prototype-style JS file's names surface. The
+/// catalog of `app.X` / `req.X` / `res.X` method names IS the public
+/// API; NS authors rank it priority 2.x — well above per-section
+/// README slices that otherwise win small-batch ranking races.
+const JS_PROTOTYPE_NAMES_VALUE_BOOST: f64 = 1.5;
 
 /// Per-run TypeScript-walker state. Caches the project's "public
 /// surface" — the set of TS/JS files transitively reachable from any
@@ -253,7 +266,22 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
         let mut body_segment_index = 0usize;
         if !exports.is_empty() {
-            let chunk_count = names_surface_chunk_count(exports.len());
+            // Prototype-style JS files surface their public API as one
+            // catalog ("Application prototype — method names"); the
+            // method assignments are semantically a single class. Skip
+            // chunking so the catalog lands as one orientation batch
+            // rather than splitting an inherently-coherent name list.
+            let has_prototype_method = exports.iter().any(|item| item.is_prototype_method);
+            let chunk_count = if has_prototype_method {
+                1
+            } else {
+                names_surface_chunk_count(exports.len())
+            };
+            let chunk_size = if has_prototype_method {
+                exports.len().max(NAMES_SURFACE_CHUNK_SIZE)
+            } else {
+                NAMES_SURFACE_CHUNK_SIZE
+            };
             let export_count = exports.len();
             let type_only_export_count = exports.iter().filter(|item| item.is_type_only).count();
             let has_split_js_class_export = is_js_file(file)
@@ -271,13 +299,21 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 })
                 .collect();
             let names_lines_by_chunk: Vec<_> = exports
-                .chunks(NAMES_SURFACE_CHUNK_SIZE)
+                .chunks(chunk_size)
                 .map(|chunk| collect_export_names_from(chunk, &export_start_lines))
                 .collect();
             for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
                 let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
                 else {
                     continue;
+                };
+                // Prototype-style files: the names surface IS the file's
+                // public API answer. Boost so it outranks unrelated body
+                // / README slices competing in the same prefix.
+                let prototype_boost = if has_prototype_method {
+                    JS_PROTOTYPE_NAMES_VALUE_BOOST
+                } else {
+                    1.0
                 };
                 out.push(Batch {
                     key: names_predecessors[chunk_index].clone(),
@@ -290,12 +326,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         chunk_count,
                         js_factor,
                         has_split_js_class_export,
-                    ) * per_export_factor,
+                    ) * per_export_factor
+                        * prototype_boost,
                 });
             }
             for (item_index, item) in exports.iter().enumerate() {
-                let names_predecessor =
-                    names_predecessors[names_surface_chunk_index(item_index)].clone();
+                let chunk_index = item_index / chunk_size;
+                let names_predecessor = names_predecessors[chunk_index].clone();
                 let export_key = TsKey::Export {
                     file: file.clone(),
                     start_line: item.start_line,
@@ -316,10 +353,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 let export_has_descendants = !doc_lines.is_empty()
                     || (split_js_class && !item.class_members.is_empty())
                     || (!split_js_class && !item.body_parts.is_empty());
-                if (!file_lines_covered_by(
-                    &export_lines,
-                    &names_lines_by_chunk[names_surface_chunk_index(item_index)],
-                ) || export_has_descendants)
+                if (!file_lines_covered_by(&export_lines, &names_lines_by_chunk[chunk_index])
+                    || export_has_descendants)
                     && let Some(content) = single_file_lines_content(file, &source, export_lines)
                 {
                     out.push(Batch {
@@ -628,6 +663,14 @@ struct ExportInfo<'a> {
     /// damped on those files. `Enum` is *not* type-only (TS enums emit
     /// runtime objects).
     is_type_only: bool,
+    /// True when this export was synthesized from a CommonJS prototype-
+    /// style method assignment (`receiver.X = function …` /
+    /// `Ctor.prototype.X = function …`). The receiver and its methods
+    /// form one semantic unit ("the App / Req / Res prototype"); NS
+    /// authors anchor on the *combined* method-name catalog as a single
+    /// surface, so the file-level names surface stays unchunked when
+    /// these are present.
+    is_prototype_method: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -682,6 +725,7 @@ fn find_export_starts<'a>(
             file,
             src_lines,
             is_type_only,
+            false,
         ));
     }
 
@@ -706,16 +750,50 @@ fn find_export_starts<'a>(
 
             let Some(kind) = kind else { continue };
             out.push(make_export_info(
-                start_line, kind, child, child, file, src_lines, false,
+                start_line, kind, child, child, file, src_lines, false, false,
             ));
             emitted_lines.insert(start_line);
         }
         out.sort_by_key(|e| e.start_line);
     }
 
+    // CommonJS prototype-style method assignments (`app.X = function …`,
+    // `Request.prototype.X = function …`). Express / Connect-style JS
+    // libraries assemble their public surface this way; without this
+    // synthesis the method-name catalogs NS authors anchor on are
+    // entirely absent from the walker output. Only JS files participate
+    // — TS / TSX use real class syntax for the same shape.
+    if is_js_file(file) {
+        let receivers = collect_module_exports_receivers(tree, source);
+        if !receivers.is_empty() {
+            let methods = collect_prototype_method_assignments(tree, source, &receivers);
+            if methods.len() >= JS_PROTOTYPE_METHOD_MIN {
+                let mut emitted_lines: HashSet<usize> = out.iter().map(|e| e.start_line).collect();
+                for method in methods {
+                    if emitted_lines.contains(&method.start_line) {
+                        continue;
+                    }
+                    out.push(make_export_info(
+                        method.start_line,
+                        ItemKind::Function,
+                        method.anchor,
+                        method.fn_expr,
+                        file,
+                        src_lines,
+                        false,
+                        true,
+                    ));
+                    emitted_lines.insert(method.start_line);
+                }
+                out.sort_by_key(|e| e.start_line);
+            }
+        }
+    }
+
     out
 }
 
+#[allow(clippy::too_many_arguments)]
 fn make_export_info<'a>(
     start_line: usize,
     kind: ItemKind,
@@ -724,6 +802,7 @@ fn make_export_info<'a>(
     file: &Path,
     src_lines: &[&str],
     is_type_only: bool,
+    is_prototype_method: bool,
 ) -> ExportInfo<'a> {
     let collect_class_members = is_js_file(file)
         && matches!(kind, ItemKind::Class | ItemKind::Default)
@@ -751,6 +830,7 @@ fn make_export_info<'a>(
         body_parts,
         class_members,
         is_type_only,
+        is_prototype_method,
     }
 }
 
@@ -949,6 +1029,213 @@ fn collect_object_export_names(node: Node, source: &str, out: &mut HashSet<Strin
             _ => {}
         }
     }
+}
+
+/// Identifier names bound to `module.exports` at file scope. Captures the
+/// CommonJS / prototype-style "receiver" idiom — `var app = exports =
+/// module.exports = {};`, `module.exports = req;`, or `var req = …;
+/// module.exports = req;`. Subsequent `app.X = function …` /
+/// `req.X = function …` / `Application.prototype.X = function …`
+/// statements are then synthesized as exported methods so NS authors who
+/// anchor on "Application prototype — method names" find the surface.
+///
+/// Empty when no such binding exists. Both the receiver name and any
+/// constructor whose `.prototype` is the receiver value are included.
+fn collect_module_exports_receivers(tree: &Tree, source: &str) -> HashSet<String> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut receivers: HashSet<String> = HashSet::new();
+    for stmt in root.children(&mut cursor) {
+        match stmt.kind() {
+            "expression_statement" => {
+                if let Some(expr) = stmt.named_child(0)
+                    && expr.kind() == "assignment_expression"
+                {
+                    collect_module_exports_receivers_from_assignment(expr, source, &mut receivers);
+                }
+            }
+            "lexical_declaration" | "variable_declaration" => {
+                let mut dc = stmt.walk();
+                for declarator in stmt.children(&mut dc) {
+                    if !matches!(declarator.kind(), "variable_declarator" | "lexical_binding") {
+                        continue;
+                    }
+                    let Some(value) = declarator.child_by_field_name("value") else {
+                        continue;
+                    };
+                    if !chain_contains_module_exports(value, source) {
+                        continue;
+                    }
+                    let Some(name) = declarator
+                        .child_by_field_name("name")
+                        .and_then(|n| identifier_text(n, source))
+                    else {
+                        continue;
+                    };
+                    receivers.insert(name.to_string());
+                }
+            }
+            _ => {}
+        }
+    }
+    receivers
+}
+
+/// Extract receiver-name additions from a top-level
+/// `assignment_expression`. A right-deep chain like `X = exports =
+/// module.exports = {}` lets every left identifier whose right-tail
+/// reaches `module.exports` be a receiver — same as `module.exports = X`
+/// (then `X` is the receiver) or `module.exports.X = …` (no receiver
+/// added, the existing CJS path handles that).
+fn collect_module_exports_receivers_from_assignment(
+    assignment: Node,
+    source: &str,
+    receivers: &mut HashSet<String>,
+) {
+    let Some((left, right)) = assignment_sides(assignment) else {
+        return;
+    };
+    // `module.exports = X` — X is the receiver.
+    if matches!(
+        commonjs_export_target(left, source),
+        Some(CommonJsExportTarget::Namespace)
+    ) && let Some(name) = identifier_text(right, source)
+    {
+        receivers.insert(name.to_string());
+        return;
+    }
+    // `X = …` chain where `…` eventually assigns to `module.exports`.
+    if chain_contains_module_exports(right, source)
+        && let Some(name) = identifier_text(left, source)
+    {
+        receivers.insert(name.to_string());
+        if right.kind() == "assignment_expression" {
+            collect_module_exports_receivers_from_assignment(right, source, receivers);
+        }
+    }
+}
+
+/// True if `node` is `module.exports` or an assignment chain whose right
+/// recursively contains `module.exports` (the LHS of an inner
+/// assignment).
+fn chain_contains_module_exports(node: Node, source: &str) -> bool {
+    if is_module_exports_member(node, source) {
+        return true;
+    }
+    if node.kind() != "assignment_expression" {
+        return false;
+    }
+    let Some((left, right)) = assignment_sides(node) else {
+        return false;
+    };
+    is_module_exports_member(left, source) || chain_contains_module_exports(right, source)
+}
+
+/// One top-level `Receiver.member = function …` (or `.prototype.member =
+/// function …`) assignment whose receiver is a tracked
+/// `module.exports`-aliased name. The captured `anchor` is the wrapping
+/// `expression_statement`; `fn_expr` is the function-valued RHS used as
+/// the synthesized declaration node (so `decl_surface_lines` /
+/// `body_parts` see the function shape directly).
+#[derive(Debug, Clone)]
+struct PrototypeMethodAssignment<'a> {
+    start_line: usize,
+    anchor: Node<'a>,
+    fn_expr: Node<'a>,
+}
+
+/// Scan top-level statements for prototype-style method assignments on
+/// any receiver in `receivers`. Both `receiver.member = function …` and
+/// `receiver.prototype.member = function …` count. Chained assignments
+/// (`receiver.get = receiver.header = function …`) surface once at the
+/// statement's start line — the shared signature line is what NS authors
+/// cite for both names.
+fn collect_prototype_method_assignments<'a>(
+    tree: &'a Tree,
+    source: &str,
+    receivers: &HashSet<String>,
+) -> Vec<PrototypeMethodAssignment<'a>> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = Vec::new();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() != "expression_statement" {
+            continue;
+        }
+        let Some(expr) = stmt.named_child(0) else {
+            continue;
+        };
+        if expr.kind() != "assignment_expression" {
+            continue;
+        }
+        let Some(fn_expr) = prototype_method_fn_value(expr, source, receivers) else {
+            continue;
+        };
+        out.push(PrototypeMethodAssignment {
+            start_line: stmt.start_position().row + 1,
+            anchor: stmt,
+            fn_expr,
+        });
+    }
+    out
+}
+
+/// If `assignment` is `R.m = function …` (or `R.prototype.m = function
+/// …`, or a chain whose RHS ultimately resolves to a function expression
+/// and whose innermost left targets a receiver), return that
+/// function-valued node. Walks the right-spine across chained
+/// assignments. Conservative: only function/arrow/generator expressions
+/// count — pure-data assignments aren't methods.
+fn prototype_method_fn_value<'a>(
+    assignment: Node<'a>,
+    source: &str,
+    receivers: &HashSet<String>,
+) -> Option<Node<'a>> {
+    let (left, right) = assignment_sides(assignment)?;
+    if !is_prototype_method_target(left, source, receivers) {
+        return None;
+    }
+    let mut current = right;
+    while current.kind() == "assignment_expression" {
+        // Each intermediate left must also be a receiver-targeted member.
+        // `req.get = req.header = function …` — both lefts qualify.
+        // `app.x = somethingElse = function …` — bail unless the
+        // something-else also looks like a receiver method target.
+        let (inner_left, inner_right) = assignment_sides(current)?;
+        if !is_prototype_method_target(inner_left, source, receivers) {
+            return None;
+        }
+        current = inner_right;
+    }
+    matches!(
+        current.kind(),
+        "function_expression" | "arrow_function" | "generator_function"
+    )
+    .then_some(current)
+}
+
+/// True if `node` is a member-expression chain targeting one of the
+/// tracked receivers — either `R.member` directly or `R.prototype.member`.
+fn is_prototype_method_target(node: Node, source: &str, receivers: &HashSet<String>) -> bool {
+    if node.kind() != "member_expression" {
+        return false;
+    }
+    let Some((object, _property)) = member_object_property(node) else {
+        return false;
+    };
+    if let Some(name) = identifier_text(object, source) {
+        return receivers.contains(name);
+    }
+    // `R.prototype.member` — `object` is the inner `R.prototype`
+    // member_expression.
+    if object.kind() == "member_expression"
+        && let Some((inner_object, inner_property)) = member_object_property(object)
+        && identifier_eq(inner_property, source, "prototype")
+        && let Some(name) = identifier_text(inner_object, source)
+    {
+        return receivers.contains(name);
+    }
+    false
 }
 
 /// True when `export_statement` carries a statement-level `type`

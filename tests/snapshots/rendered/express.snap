@@ -46,19 +46,6 @@ Readme.md
     46→```
     48→## Installation
     …
-    50→This is a [Node.js](https://nodejs.org/en/) module available through the
-    51→[npm registry](https://www.npmjs.com/).
-    53→Before installing, [download and install Node.js](https://nodejs.org/en/download/).
-    54→Node.js 18 or higher is required.
-    56→If this is a brand new project, make sure to create a `package.json` first with
-    57→the [`npm init` command](https://docs.npmjs.com/creating-a-package-json-file).
-    59→Installation is done using the
-    60→[`npm install` command](https://docs.npmjs.com/downloading-and-installing-packages-locally):
-    62→```bash
-    63→npm install express
-    64→```
-    66→Follow [our installing guide](https://expressjs.com/en/starter/installing.html)
-    67→for more information.
     69→## Features
     …
     71→  * Robust routing
@@ -198,15 +185,37 @@ lib/
     request.js
         37→module.exports = req
         …
-    response.js
-        49→module.exports = res
+        63→req.get =
+        64→req.header = function header(name) {
         …
+        127→req.accepts = function(){
+        128→  var accept = accepts(this);
+        129→  return accept.types.apply(accept, arguments);
+        140→req.acceptsEncodings = function(){
+        141→  var accept = accepts(this);
+        142→  return accept.encodings.apply(accept, arguments);
+        171→req.acceptsCharsets = function(...charsets) {
+        172→  const accept = accepts(this);
+        173→  return accept.charsets(...charsets);
+        185→req.acceptsLanguages = function(...languages) {
+        …
+        214→req.range = function range(size, options) {
+        …
+        269→req.is = function is(types) {
+        …
+    response.js
     utils.js
     view.js
         9→'use strict';
         36→module.exports = View;
         …
         52→function View(name, options) {
+        …
+        104→View.prototype.lookup = function lookup(name) {
+        …
+        133→View.prototype.render = function render(options, callback) {
+        …
+        169→View.prototype.resolve = function resolve(dir, file) {
         …
 package.json
     2→  "name": "express",

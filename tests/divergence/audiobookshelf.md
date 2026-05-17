@@ -349,18 +349,14 @@ Score(3000)=0.492 I=0.804 C=0.301 ns_rows≤3K=18/45 (reached=4 partial=2 missin
 | walker |  | 9703 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.499 |
 | ns | 9709 |  | 147 | client/pages + client/components listings | 7.7 |  | 0.520 |
 | walker |  | 9710 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.520 |
-| walker |  | 9739 | 29 | export names surface in server/libs/archiver/lib/core.js |  |  | 0.520 |
-| walker |  | 9739 | 0 | export at server/libs/archiver/lib/core.js:25 |  |  | 0.520 |
-| walker |  | 9768 | 29 | export names surface in server/libs/jsonwebtoken/lib/NotBeforeError.js |  |  | 0.520 |
-| walker |  | 9768 | 0 | export at server/libs/jsonwebtoken/lib/NotBeforeError.js:3 |  |  | 0.520 |
+| walker |  | 9739 | 29 | export names surface in server/libs/jsonwebtoken/lib/NotBeforeError.js |  |  | 0.520 |
+| walker |  | 9739 | 0 | export at server/libs/jsonwebtoken/lib/NotBeforeError.js:3 |  |  | 0.520 |
+| walker |  | 9789 | 50 | readme.md section #43 |  |  | 0.520 |
 | ns | 9799 |  | 90 | client/store + plugins + players listings | 7.8 |  | 0.529 |
-| walker |  | 9818 | 50 | readme.md section #43 |  |  | 0.529 |
-| walker |  | 9848 | 30 | export names surface in server/libs/jsonwebtoken/lib/TokenExpiredError.js |  |  | 0.529 |
-| walker |  | 9848 | 0 | export at server/libs/jsonwebtoken/lib/TokenExpiredError.js:3 |  |  | 0.529 |
-| walker |  | 9879 | 31 | export names surface in server/libs/jsonwebtoken/lib/JsonWebTokenError.js |  |  | 0.529 |
-| walker |  | 9879 | 0 | export at server/libs/jsonwebtoken/lib/JsonWebTokenError.js:1 |  |  | 0.529 |
-| walker |  | 9904 | 25 | export names surface in server/libs/archiver/lib/plugins/json.js |  |  | 0.529 |
-| walker |  | 9904 | 0 | export at server/libs/archiver/lib/plugins/json.js:18 |  |  | 0.529 |
+| walker |  | 9819 | 30 | export names surface in server/libs/jsonwebtoken/lib/TokenExpiredError.js |  |  | 0.529 |
+| walker |  | 9819 | 0 | export at server/libs/jsonwebtoken/lib/TokenExpiredError.js:3 |  |  | 0.529 |
+| walker |  | 9850 | 31 | export names surface in server/libs/jsonwebtoken/lib/JsonWebTokenError.js |  |  | 0.529 |
+| walker |  | 9850 | 0 | export at server/libs/jsonwebtoken/lib/JsonWebTokenError.js:1 |  |  | 0.529 |
 | ns | 9928 |  | 129 | test/server tree + docs/ + .github/workflows + build/ listings | 7.9 |  | 0.526 |
-| walker |  | 9929 | 25 | export names surface in server/libs/archiver/lib/plugins/zip.js |  |  | 0.526 |
-| walker |  | 9929 | 0 | export at server/libs/archiver/lib/plugins/zip.js:21 |  |  | 0.526 |
+| walker |  | 9948 | 98 | readme.md section #62 |  |  | 0.526 |
+| walker |  | 9961 | 13 | listing of '.github' |  |  | 0.526 |
