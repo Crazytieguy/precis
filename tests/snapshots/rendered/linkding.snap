@@ -120,41 +120,49 @@ bookmarks/
         shortcuts.js
         utils/
             element.js
+                12→export class HeadlessElement extends HTMLElement {
+                13→  connectedCallback() {
+                …
+                27→  init() {
+                …
+                53→export class TurboLitElement extends LitElement {
+                54→  constructor() {
+                …
+                59→  createRenderRoot() {
+                …
+                63→  connectedCallback() {
+                …
+                68→  disconnectedCallback() {
+                …
+                73→  __prepareForCache() {
+                …
             focus.js
+                19→export function isKeyboardActive() {
+                20→  return keyboardActive;
+                23→export class FocusTrapController {
+                24→  constructor(element) {
+                …
+                39→  destroy() {
+                …
+                43→  onKeyDown(event) {
+                …
+                64→export function setAfterPageLoadFocusTarget(...targets) {
+                65→  afterPageLoadFocusTarget = targets;
             input.js
             position-controller.js
+                10→export class PositionController {
+                11→  constructor(options) {
+                …
+                21→  enable() {
+                …
+                29→  disable() {
+                …
+                36→  updatePosition() {
+                …
             search-history.js
             tag-cache.js
     management/
         commands/
-            backup.py
-                7→class Command(BaseCommand):
-                8→    help = "Creates a backup of the linkding database"
-                10→    def add_arguments(self, parser):
-                …
-                13→    def handle(self, *args, **options):
-                …
-            create_initial_superuser.py
-            enable_wal.py
-            ensure_superuser.py
-                5→class Command(BaseCommand):
-                6→    help = "Creates an admin user non-interactively if it doesn't exist"
-                8→    def add_arguments(self, parser):
-                …
-                13→    def handle(self, *args, **options):
-                …
-            full_backup.py
-                9→class Command(BaseCommand):
-                10→    help = "Creates a backup of the linkding data folder"
-            generate_secret_key.py
-            import_netscape.py
-                7→class Command(BaseCommand):
-                8→    help = "Import Netscape HTML bookmark file"
-            migrate_tasks.py
-                9→class Command(BaseCommand):
-                10→    help = "Migrate tasks from django-background-tasks to Huey"
-                12→    def handle(self, *args, **options):
-                …
     middlewares.py
         7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
         8→    header = settings.LD_AUTH_PROXY_USERNAME_HEADER
