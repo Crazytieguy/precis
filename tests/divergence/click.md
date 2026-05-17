@@ -18,32 +18,32 @@ Score(3000)=0.640 I=0.863 C=0.475 ns_rows≤3K=20/52 (reached=11 partial=1 missi
 | walker |  | 368 | 16 | python imports #6 in src/click/__init__.py |  |  | 0.705 |
 | walker |  | 398 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.706 |
 | ns | 410 |  | 100 | __init__.py: core-class re-exports | 1.6 |  | 0.628 |
-| walker |  | 416 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.628 |
-| walker |  | 416 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.628 |
-| walker |  | 516 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.752 |
+| walker |  | 498 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.752 |
 | ns | 578 |  | 168 | README hello-world example | 1.7 | 1.3 | 0.628 |
-| walker |  | 677 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.641 |
+| walker |  | 659 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.641 |
+| walker |  | 677 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.641 |
+| walker |  | 677 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.641 |
 | ns | 739 |  | 161 | __init__.py: decorator re-exports | 1.8 | 1.6 | 0.678 |
-| walker |  | 768 | 91 | README.md section #0 |  |  | 0.752 |
-| walker |  | 914 | 146 | python imports #4 in src/click/__init__.py |  |  | 0.766 |
-| walker |  | 927 | 13 | listing of '.github' |  |  | 0.766 |
-| ns | 931 |  | 192 | __init__.py: exception + formatting + globals re-exports | 1.9 | 1.8 | 0.782 |
-| walker |  | 950 | 23 | listing of '.github/workflows' |  |  | 0.782 |
-| walker |  | 964 | 14 | python decl names surface in src/click/_textwrap.py |  |  | 0.782 |
-| walker |  | 964 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.782 |
-| walker |  | 1042 | 78 | [package] in pyproject.toml |  |  | 0.847 |
-| ns | 1120 |  | 189 | __init__.py: termui re-exports | 1.10 | 1.9 | 0.779 |
-| walker |  | 1130 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.783 |
-| walker |  | 1171 | 41 | python method sigs in src/click/_textwrap.py |  |  | 0.783 |
-| walker |  | 1171 | 0 | python method at src/click/_textwrap.py:40 |  |  | 0.783 |
-| walker |  | 1190 | 19 | python method at src/click/_textwrap.py:27 |  |  | 0.783 |
-| ns | 1302 |  | 182 | __init__.py: built-in type re-exports | 1.11 | 1.10 | 0.724 |
-| walker |  | 1379 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.802 |
-| ns | 1395 |  | 93 | __init__.py: utils re-exports | 1.12 | 1.11 | 0.803 |
-| walker |  | 1446 | 67 | README.md section #3 |  |  | 0.803 |
-| walker |  | 1528 | 82 | README.md section #2 |  |  | 0.803 |
-| ns | 1647 |  | 252 | Deprecation shim: BaseCommand → Command, MultiCommand → Group | 1.13 | 1.12 | 0.721 |
-| walker |  | 1710 | 182 | python imports #8 in src/click/__init__.py |  |  | 0.788 |
+| walker |  | 823 | 146 | python imports #4 in src/click/__init__.py |  |  | 0.691 |
+| walker |  | 911 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.696 |
+| ns | 931 |  | 192 | __init__.py: exception + formatting + globals re-exports | 1.9 | 1.8 | 0.723 |
+| walker |  | 1002 | 91 | README.md section #0 |  |  | 0.787 |
+| ns | 1120 |  | 189 | __init__.py: termui re-exports | 1.10 | 1.9 | 0.723 |
+| walker |  | 1191 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.809 |
+| ns | 1302 |  | 182 | __init__.py: built-in type re-exports | 1.11 | 1.10 | 0.748 |
+| walker |  | 1373 | 182 | python imports #8 in src/click/__init__.py |  |  | 0.827 |
+| walker |  | 1386 | 13 | listing of '.github' |  |  | 0.827 |
+| ns | 1395 |  | 93 | __init__.py: utils re-exports | 1.12 | 1.11 | 0.825 |
+| walker |  | 1409 | 23 | listing of '.github/workflows' |  |  | 0.825 |
+| walker |  | 1423 | 14 | python decl names surface in src/click/_textwrap.py |  |  | 0.825 |
+| walker |  | 1423 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.825 |
+| walker |  | 1501 | 78 | [package] in pyproject.toml |  |  | 0.877 |
+| walker |  | 1542 | 41 | python method sigs in src/click/_textwrap.py |  |  | 0.877 |
+| walker |  | 1542 | 0 | python method at src/click/_textwrap.py:40 |  |  | 0.877 |
+| walker |  | 1561 | 19 | python method at src/click/_textwrap.py:27 |  |  | 0.877 |
+| walker |  | 1628 | 67 | README.md section #3 |  |  | 0.877 |
+| ns | 1647 |  | 252 | Deprecation shim: BaseCommand → Command, MultiCommand → Group | 1.13 | 1.12 | 0.788 |
+| walker |  | 1710 | 82 | README.md section #2 |  |  | 0.788 |
 | walker |  | 1746 | 36 | listing of 'examples' |  |  | 0.789 |
 | ns | 1916 |  | 269 | Deprecation shim: OptionParser, __version__ | 1.14 | 1.13 | 0.718 |
 | walker |  | 1938 | 192 | listing of 'docs' |  |  | 0.718 |

@@ -11,14 +11,14 @@ Score(3000)=0.613 I=0.845 C=0.444 ns_rows≤3K=19/48 (reached=7 partial=0 missin
 | walker |  | 141 | 40 | headings outline in README.md |  |  | 0.949 |
 | ns | 214 |  | 90 | src/requests/ listing | 1.4 |  | 0.659 |
 | walker |  | 231 | 90 | listing of 'src/requests' |  |  | 0.968 |
-| walker |  | 265 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.968 |
-| walker |  | 279 | 14 | python decl at src/requests/__init__.py:99 |  |  | 0.968 |
-| walker |  | 324 | 45 | python decl at src/requests/__init__.py:60 |  |  | 0.968 |
 | ns | 354 |  | 140 | pyproject: name, description, Python floor, deps | 1.5 |  | 0.838 |
 | ns | 496 |  | 142 | README usage snippet | 1.6 |  | 0.734 |
 | ns | 722 |  | 226 | Public re-exports (__all__) from package __init__ | 1.7 |  | 0.605 |
 | ns | 881 |  | 159 | Package import wiring (api, exceptions, models, sessions, status_codes) | 1.8 |  | 0.553 |
-| walker |  | 1202 | 878 | python imports in src/requests/__init__.py |  |  | 0.842 |
+| walker |  | 1109 | 878 | python imports in src/requests/__init__.py |  |  | 0.842 |
+| walker |  | 1143 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.842 |
+| walker |  | 1157 | 14 | python decl at src/requests/__init__.py:99 |  |  | 0.842 |
+| walker |  | 1202 | 45 | python decl at src/requests/__init__.py:60 |  |  | 0.842 |
 | ns | 1229 |  | 348 | Crate-doc lede (package docstring) | 1.9 |  | 0.830 |
 | walker |  | 1236 | 34 | listing of 'ext' |  |  | 0.830 |
 | walker |  | 1252 | 16 | python imports in setup.py |  |  | 0.830 |
@@ -49,8 +49,8 @@ Score(3000)=0.613 I=0.845 C=0.444 ns_rows≤3K=19/48 (reached=7 partial=0 missin
 | walker |  | 1995 | 41 | listing of '.github/workflows' |  |  | 0.797 |
 | ns | 2053 |  | 348 | Session method names + module-level helpers | 2.6 |  | 0.743 |
 | walker |  | 2072 | 77 | listing of 'tests' |  |  | 0.744 |
-| walker |  | 2082 | 10 | listing of 'tests/testserver' |  |  | 0.744 |
-| walker |  | 2100 | 18 | python imports in tests/__init__.py |  |  | 0.744 |
+| walker |  | 2090 | 18 | python imports in tests/__init__.py |  |  | 0.744 |
+| walker |  | 2100 | 10 | listing of 'tests/testserver' |  |  | 0.744 |
 | walker |  | 2114 | 14 | listing of 'tests/certs' |  |  | 0.744 |
 | walker |  | 2124 | 10 | listing of 'docs/dev' |  |  | 0.744 |
 | walker |  | 2143 | 19 | python imports in src/requests/packages.py |  |  | 0.744 |

@@ -9,29 +9,29 @@ Score(3000)=0.586 I=0.743 C=0.462 ns_rows≤3K=23/50 (reached=11 partial=1 missi
 | walker |  | 105 | 17 | python imports #1 in microbootstrap/__init__.py |  |  | 0.830 |
 | walker |  | 123 | 18 | python imports #2 in microbootstrap/__init__.py |  |  | 0.830 |
 | walker |  | 139 | 16 | python imports #3 in microbootstrap/__init__.py |  |  | 0.830 |
-| walker |  | 155 | 16 | listing of 'microbootstrap/middlewares' |  |  | 0.849 |
-| ns | 158 |  | 99 | README — list of supported instruments | 1.3 |  | 0.592 |
-| walker |  | 173 | 18 | python imports #6 in microbootstrap/__init__.py |  |  | 0.592 |
-| walker |  | 194 | 21 | listing of 'microbootstrap/config' |  |  | 0.615 |
-| walker |  | 219 | 25 | listing of 'microbootstrap/bootstrappers' |  |  | 0.618 |
-| ns | 223 |  | 65 | README — list of target frameworks | 1.4 |  | 0.528 |
-| walker |  | 237 | 18 | python imports #7 in microbootstrap/__init__.py |  |  | 0.528 |
-| ns | 315 |  | 92 | Package top-level files + small subdirs | 1.5 |  | 0.627 |
-| ns | 410 |  | 95 | Bootstrappers + instruments subdir contents | 1.6 |  | 0.536 |
-| walker |  | 437 | 200 | python imports in microbootstrap/__init__.py |  |  | 0.562 |
-| walker |  | 453 | 16 | python imports #8 in microbootstrap/__init__.py |  |  | 0.562 |
-| walker |  | 510 | 57 | python imports #4 in microbootstrap/__init__.py |  |  | 0.562 |
-| walker |  | 521 | 11 | python decl names surface in microbootstrap/instruments_setupper.py |  |  | 0.562 |
-| walker |  | 521 | 0 | python decl at microbootstrap/instruments_setupper.py:19 |  |  | 0.562 |
-| walker |  | 586 | 65 | python imports #5 in microbootstrap/__init__.py |  |  | 0.562 |
-| walker |  | 598 | 12 | python decl names surface in microbootstrap/console_writer.py |  |  | 0.562 |
-| walker |  | 604 | 6 | python decl at microbootstrap/console_writer.py:10 |  |  | 0.562 |
+| walker |  | 157 | 18 | python imports #6 in microbootstrap/__init__.py |  |  | 0.830 |
+| ns | 158 |  | 99 | README — list of supported instruments | 1.3 |  | 0.579 |
+| walker |  | 175 | 18 | python imports #7 in microbootstrap/__init__.py |  |  | 0.579 |
+| ns | 223 |  | 65 | README — list of target frameworks | 1.4 |  | 0.494 |
+| ns | 315 |  | 92 | Package top-level files + small subdirs | 1.5 |  | 0.462 |
+| walker |  | 375 | 200 | python imports in microbootstrap/__init__.py |  |  | 0.487 |
+| walker |  | 391 | 16 | python imports #8 in microbootstrap/__init__.py |  |  | 0.487 |
+| ns | 410 |  | 95 | Bootstrappers + instruments subdir contents | 1.6 |  | 0.406 |
+| walker |  | 448 | 57 | python imports #4 in microbootstrap/__init__.py |  |  | 0.406 |
+| walker |  | 464 | 16 | listing of 'microbootstrap/middlewares' |  |  | 0.460 |
+| walker |  | 529 | 65 | python imports #5 in microbootstrap/__init__.py |  |  | 0.460 |
+| walker |  | 550 | 21 | listing of 'microbootstrap/config' |  |  | 0.545 |
+| walker |  | 575 | 25 | listing of 'microbootstrap/bootstrappers' |  |  | 0.562 |
 | ns | 610 |  | 200 | Public API re-exports (__all__) | 1.7 |  | 0.606 |
-| walker |  | 674 | 70 | listing of 'microbootstrap/instruments' |  |  | 0.717 |
-| walker |  | 694 | 20 | python class body at microbootstrap/instruments_setupper.py:19 |  |  | 0.717 |
+| walker |  | 627 | 52 | python imports #9 in microbootstrap/__init__.py |  |  | 0.606 |
+| walker |  | 638 | 11 | python decl names surface in microbootstrap/instruments_setupper.py |  |  | 0.606 |
+| walker |  | 638 | 0 | python decl at microbootstrap/instruments_setupper.py:19 |  |  | 0.606 |
+| walker |  | 650 | 12 | python decl names surface in microbootstrap/console_writer.py |  |  | 0.606 |
+| walker |  | 656 | 6 | python decl at microbootstrap/console_writer.py:10 |  |  | 0.606 |
+| walker |  | 726 | 70 | listing of 'microbootstrap/instruments' |  |  | 0.717 |
+| walker |  | 746 | 20 | python class body at microbootstrap/instruments_setupper.py:19 |  |  | 0.717 |
 | ns | 795 |  | 185 | README — canonical Litestar quickstart snippet | 1.8 |  | 0.625 |
-| walker |  | 942 | 248 | README headline in README.md |  |  | 0.734 |
-| walker |  | 994 | 52 | python imports #9 in microbootstrap/__init__.py |  |  | 0.734 |
+| walker |  | 994 | 248 | README headline in README.md |  |  | 0.734 |
 | walker |  | 1019 | 25 | python decl names surface in microbootstrap/granian_server.py |  |  | 0.735 |
 | ns | 1027 |  | 232 | README table-of-contents (H2/H3 outline) | 1.9 |  | 0.744 |
 | walker |  | 1031 | 12 | python decl names surface in microbootstrap/config/fastapi.py |  |  | 0.744 |

@@ -47,10 +47,28 @@ entries = ["__init__.py", "_callers.py", "_hooks.py", "_manager.py", "_result.py
 
 [[batches]]
 position = 4
+key = 'Python(Imports { file: "src/pluggy/__init__.py" })'
+descriptor = "python imports in src/pluggy/__init__.py"
+cost_tokens = 316
+cum_tokens = 459
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/pluggy/__init__.py"
+start = 1
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
 key = 'Python(DeclNames { file: "src/pluggy/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/pluggy/__init__.py"
 cost_tokens = 18
-cum_tokens = 161
+cum_tokens = 477
 
 [batches.content]
 kind = "lines"
@@ -72,11 +90,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 5
+position = 6
 key = 'Python(Decl { file: "src/pluggy/__init__.py", start_line: 32 })'
 descriptor = "python decl at src/pluggy/__init__.py:32"
 cost_tokens = 0
-cum_tokens = 161
+cum_tokens = 477
 
 [batches.content]
 kind = "lines"
@@ -85,24 +103,6 @@ kind = "lines"
 path = "src/pluggy/__init__.py"
 start = 32
 end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
-key = 'Python(Imports { file: "src/pluggy/__init__.py" })'
-descriptor = "python imports in src/pluggy/__init__.py"
-cost_tokens = 316
-cum_tokens = 477
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/pluggy/__init__.py"
-start = 1
-end = 29
 
 [batches.content.spans.render]
 kind = "full"

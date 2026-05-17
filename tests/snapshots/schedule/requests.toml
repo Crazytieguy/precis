@@ -131,88 +131,10 @@ entries = ["__init__.py", "__version__.py", "_internal_utils.py", "_types.py", "
 
 [[batches]]
 position = 6
-key = 'Python(DeclNames { file: "src/requests/__init__.py", chunk_index: 0 })'
-descriptor = "python decl names surface in src/requests/__init__.py"
-cost_tokens = 34
-cum_tokens = 265
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 99
-end = 99
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 7
-key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 99 })'
-descriptor = "python decl at src/requests/__init__.py:99"
-cost_tokens = 14
-cum_tokens = 279
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 99
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
-key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 60 })'
-descriptor = "python decl at src/requests/__init__.py:60"
-cost_tokens = 45
-cum_tokens = 324
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 60
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
 key = 'Python(Imports { file: "src/requests/__init__.py" })'
 descriptor = "python imports in src/requests/__init__.py"
 cost_tokens = 878
-cum_tokens = 1202
+cum_tokens = 1109
 
 [batches.content]
 kind = "lines"
@@ -333,6 +255,84 @@ kind = "full"
 path = "src/requests/__init__.py"
 start = 188
 end = 214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Python(DeclNames { file: "src/requests/__init__.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/requests/__init__.py"
+cost_tokens = 34
+cum_tokens = 1143
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 8
+key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 99 })'
+descriptor = "python decl at src/requests/__init__.py:99"
+cost_tokens = 14
+cum_tokens = 1157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 99
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 60 })'
+descriptor = "python decl at src/requests/__init__.py:60"
+cost_tokens = 45
+cum_tokens = 1202
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 60
+end = 64
 
 [batches.content.spans.render]
 kind = "full"
@@ -825,24 +825,10 @@ entries = ["__init__.py", "certs", "compat.py", "conftest.py", "test_adapters.py
 
 [[batches]]
 position = 33
-key = 'Fs(DirListing { dir: "tests/testserver" })'
-descriptor = "listing of 'tests/testserver'"
-cost_tokens = 10
-cum_tokens = 2082
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/testserver"
-entries = ["__init__.py", "server.py"]
-
-[[batches]]
-position = 34
 key = 'Python(Imports { file: "tests/__init__.py" })'
 descriptor = "python imports in tests/__init__.py"
 cost_tokens = 18
-cum_tokens = 2100
+cum_tokens = 2090
 
 [batches.content]
 kind = "lines"
@@ -862,6 +848,20 @@ end = 3
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 34
+key = 'Fs(DirListing { dir: "tests/testserver" })'
+descriptor = "listing of 'tests/testserver'"
+cost_tokens = 10
+cum_tokens = 2100
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/testserver"
+entries = ["__init__.py", "server.py"]
 
 [[batches]]
 position = 35

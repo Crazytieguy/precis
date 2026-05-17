@@ -80,21 +80,9 @@ README.md
 docs/
     api/
         core.md
-            1→# ::: htmy.core
-            3→    options:
-            4→        show_root_heading: true
         etree.md
-            1→# ::: htmy.etree
-            3→    options:
-            4→        show_root_heading: true
         function_component.md
-            1→# ::: htmy.function_component
-            3→    options:
-            4→        show_root_heading: true
         html.md
-            1→# ::: htmy.html
-            3→    options:
-            4→        show_root_heading: true
         i18n.md
         md.md
             1→# ::: htmy.md.core
@@ -108,14 +96,8 @@ docs/
             default.md
             typing.md
         snippet.md
-            1→# ::: htmy.snippet
-            3→    options:
-            4→        show_root_heading: true
         typing.md
         utils.md
-            1→# ::: htmy.utils
-            3→    options:
-            4→        show_root_heading: true
     components-guide.md
         1→# Components guide
         …
@@ -176,6 +158,22 @@ htmy/
         19→from .tag import Tag as Tag
         20→from .tag import TagWithProps as TagWithProps
         21→from .tag import wildcard_tag as wildcard_tag
+        22→from .typing import AsyncComponent as AsyncComponent
+        23→from .typing import AsyncContextProvider as AsyncContextProvider
+        24→from .typing import Component as Component
+        25→from .typing import ComponentSequence as ComponentSequence
+        26→from .typing import ComponentType as ComponentType
+        27→from .typing import Context as Context
+        28→from .typing import ContextKey as ContextKey
+        29→from .typing import ContextProvider as ContextProvider
+        30→from .typing import ContextValue as ContextValue
+        31→from .typing import HTMYComponentType as HTMYComponentType
+        32→from .typing import MutableContext as MutableContext
+        33→from .typing import Properties as Properties
+        34→from .typing import PropertyValue as PropertyValue
+        35→from .typing import StrictComponentType as StrictComponentType
+        36→from .typing import SyncComponent as SyncComponent
+        37→from .typing import SyncContextProvider as SyncContextProvider
         38→from .utils import as_component_sequence as as_component_sequence
         39→from .utils import as_component_type as as_component_type
         40→from .utils import is_component_sequence as is_component_sequence
@@ -207,12 +205,6 @@ htmy/
     etree.py
         23→class ETreeConverter:
         …
-        38→    __slots__ = ("_rules",)
-        40→    _htmy_fragment: ClassVar[str] = "htmy_fragment"
-        41→    """
-        42→    Placeholder tag name that's used to wrap possibly multi-root XML snippets into a valid
-        43→    XML document with a single root that can be processed by standard tools.
-        44→    """
     function_component.py
     html.py
     i18n.py

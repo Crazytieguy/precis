@@ -1053,7 +1053,7 @@ fn is_top_level_package_init(file: &Path) -> bool {
 /// race and the top-level init lands much later in the schedule.
 fn top_level_package_init_factor(file: &Path) -> f64 {
     if is_top_level_package_init(file) {
-        2.0
+        3.0
     } else {
         1.0
     }

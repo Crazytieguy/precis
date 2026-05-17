@@ -14,47 +14,47 @@ Score(3000)=0.630 I=0.887 C=0.448 ns_rows≤3K=17/45 (reached=9 partial=1 missin
 | walker |  | 290 | 12 | python imports #1 in src/flask/__init__.py |  |  | 0.831 |
 | walker |  | 303 | 13 | python imports #2 in src/flask/__init__.py |  |  | 0.833 |
 | walker |  | 315 | 12 | python imports #3 in src/flask/__init__.py |  |  | 0.835 |
-| walker |  | 329 | 14 | listing of 'src/flask/json' |  |  | 0.904 |
-| ns | 332 |  | 74 | Public re-exports — Flask, Blueprint, Config, Request, Response | 1.4 |  | 0.867 |
-| walker |  | 341 | 12 | python imports #7 in src/flask/__init__.py |  |  | 0.867 |
+| walker |  | 327 | 12 | python imports #7 in src/flask/__init__.py |  |  | 0.835 |
+| ns | 332 |  | 74 | Public re-exports — Flask, Blueprint, Config, Request, Response | 1.4 |  | 0.804 |
+| walker |  | 341 | 14 | listing of 'src/flask/json' |  |  | 0.867 |
 | ns | 382 |  | 50 | Public re-exports — globals proxies (current_app, g, request, session) | 1.5 |  | 0.831 |
 | walker |  | 407 | 66 | python imports #4 in src/flask/__init__.py |  |  | 0.838 |
 | walker |  | 457 | 50 | python imports #5 in src/flask/__init__.py |  |  | 0.883 |
 | ns | 460 |  | 78 | Public re-exports — ctx helpers and jsonify | 1.6 |  | 0.884 |
-| walker |  | 538 | 81 | python imports in src/flask/json/__init__.py |  |  | 0.884 |
-| walker |  | 564 | 26 | python imports #10 in src/flask/__init__.py |  |  | 0.919 |
-| walker |  | 574 | 10 | python imports in src/flask/__main__.py |  |  | 0.919 |
-| walker |  | 583 | 9 | listing of 'examples' |  |  | 0.919 |
-| ns | 606 |  | 146 | Public re-exports — helpers (url_for, redirect, abort, flash, send_file, …) | 1.7 |  | 0.841 |
-| walker |  | 702 | 119 | README.md section #0 |  |  | 0.841 |
-| walker |  | 806 | 104 | [dependencies] in pyproject.toml |  |  | 0.841 |
-| ns | 838 |  | 232 | Public re-exports — templating + signals | 1.8 |  | 0.757 |
-| walker |  | 870 | 64 | python imports #9 in src/flask/__init__.py |  |  | 0.766 |
-| walker |  | 883 | 13 | listing of '.github' |  |  | 0.766 |
-| walker |  | 906 | 23 | listing of '.github/workflows' |  |  | 0.766 |
-| walker |  | 919 | 13 | python decl names surface in src/flask/blueprints.py |  |  | 0.767 |
-| walker |  | 919 | 0 | python decl at src/flask/blueprints.py:18 |  |  | 0.767 |
-| walker |  | 936 | 17 | listing of 'src/flask/sansio' |  |  | 0.833 |
-| ns | 970 |  | 132 | Minimal Flask app example (README) | 1.9 |  | 0.757 |
-| ns | 1047 |  | 77 | Sansio README — what the sansio split is for | 2.1 |  | 0.732 |
-| walker |  | 1082 | 146 | python imports #6 in src/flask/__init__.py |  |  | 0.799 |
-| ns | 1093 |  | 46 | Class hierarchy headers — Scaffold, App, Blueprint, Flask | 2.2 |  | 0.779 |
-| walker |  | 1205 | 123 | python decl names surface in src/flask/json/__init__.py |  |  | 0.779 |
-| walker |  | 1205 | 0 | python decl at src/flask/json/__init__.py:13 |  |  | 0.779 |
-| walker |  | 1205 | 0 | python decl at src/flask/json/__init__.py:47 |  |  | 0.779 |
-| walker |  | 1205 | 0 | python decl at src/flask/json/__init__.py:77 |  |  | 0.779 |
-| walker |  | 1205 | 0 | python decl at src/flask/json/__init__.py:108 |  |  | 0.779 |
-| walker |  | 1205 | 0 | python decl at src/flask/json/__init__.py:138 |  |  | 0.779 |
-| walker |  | 1288 | 83 | [package] in pyproject.toml |  |  | 0.779 |
-| ns | 1345 |  | 252 | Scaffold docstring — common behavior of Flask + Blueprint | 2.3 | 2.2 | 0.721 |
-| walker |  | 1360 | 72 | README headline in src/flask/sansio/README.md |  |  | 0.748 |
-| walker |  | 1382 | 22 | python decl names surface in src/flask/wrappers.py |  |  | 0.748 |
-| walker |  | 1382 | 0 | python decl at src/flask/wrappers.py:18 |  |  | 0.748 |
-| walker |  | 1382 | 0 | python decl at src/flask/wrappers.py:222 |  |  | 0.748 |
-| walker |  | 1449 | 67 | README.md section #3 |  |  | 0.748 |
-| walker |  | 1488 | 39 | python class body at src/flask/wrappers.py:222 |  |  | 0.748 |
-| ns | 1622 |  | 277 | Flask class docstring lede | 2.4 | 2.2 | 0.692 |
-| walker |  | 1656 | 168 | python imports #8 in src/flask/__init__.py |  |  | 0.758 |
+| walker |  | 483 | 26 | python imports #10 in src/flask/__init__.py |  |  | 0.919 |
+| walker |  | 547 | 64 | python imports #9 in src/flask/__init__.py |  |  | 0.921 |
+| ns | 606 |  | 146 | Public re-exports — helpers (url_for, redirect, abort, flash, send_file, …) | 1.7 |  | 0.843 |
+| walker |  | 693 | 146 | python imports #6 in src/flask/__init__.py |  |  | 0.930 |
+| walker |  | 774 | 81 | python imports in src/flask/json/__init__.py |  |  | 0.930 |
+| walker |  | 784 | 10 | python imports in src/flask/__main__.py |  |  | 0.930 |
+| walker |  | 793 | 9 | listing of 'examples' |  |  | 0.930 |
+| ns | 838 |  | 232 | Public re-exports — templating + signals | 1.8 |  | 0.844 |
+| walker |  | 961 | 168 | python imports #8 in src/flask/__init__.py |  |  | 0.938 |
+| ns | 970 |  | 132 | Minimal Flask app example (README) | 1.9 |  | 0.853 |
+| ns | 1047 |  | 77 | Sansio README — what the sansio split is for | 2.1 |  | 0.824 |
+| walker |  | 1080 | 119 | README.md section #0 |  |  | 0.824 |
+| ns | 1093 |  | 46 | Class hierarchy headers — Scaffold, App, Blueprint, Flask | 2.2 |  | 0.802 |
+| walker |  | 1184 | 104 | [dependencies] in pyproject.toml |  |  | 0.802 |
+| walker |  | 1197 | 13 | listing of '.github' |  |  | 0.802 |
+| walker |  | 1220 | 23 | listing of '.github/workflows' |  |  | 0.802 |
+| walker |  | 1233 | 13 | python decl names surface in src/flask/blueprints.py |  |  | 0.804 |
+| walker |  | 1233 | 0 | python decl at src/flask/blueprints.py:18 |  |  | 0.804 |
+| walker |  | 1250 | 17 | listing of 'src/flask/sansio' |  |  | 0.857 |
+| ns | 1345 |  | 252 | Scaffold docstring — common behavior of Flask + Blueprint | 2.3 | 2.2 | 0.793 |
+| walker |  | 1373 | 123 | python decl names surface in src/flask/json/__init__.py |  |  | 0.793 |
+| walker |  | 1373 | 0 | python decl at src/flask/json/__init__.py:13 |  |  | 0.793 |
+| walker |  | 1373 | 0 | python decl at src/flask/json/__init__.py:47 |  |  | 0.793 |
+| walker |  | 1373 | 0 | python decl at src/flask/json/__init__.py:77 |  |  | 0.793 |
+| walker |  | 1373 | 0 | python decl at src/flask/json/__init__.py:108 |  |  | 0.793 |
+| walker |  | 1373 | 0 | python decl at src/flask/json/__init__.py:138 |  |  | 0.793 |
+| walker |  | 1456 | 83 | [package] in pyproject.toml |  |  | 0.793 |
+| walker |  | 1528 | 72 | README headline in src/flask/sansio/README.md |  |  | 0.819 |
+| walker |  | 1550 | 22 | python decl names surface in src/flask/wrappers.py |  |  | 0.819 |
+| walker |  | 1550 | 0 | python decl at src/flask/wrappers.py:18 |  |  | 0.819 |
+| walker |  | 1550 | 0 | python decl at src/flask/wrappers.py:222 |  |  | 0.819 |
+| walker |  | 1617 | 67 | README.md section #3 |  |  | 0.819 |
+| ns | 1622 |  | 277 | Flask class docstring lede | 2.4 | 2.2 | 0.758 |
+| walker |  | 1656 | 39 | python class body at src/flask/wrappers.py:222 |  |  | 0.758 |
 | walker |  | 1738 | 82 | README.md section #2 |  |  | 0.758 |
 | walker |  | 1798 | 60 | python decl body at src/flask/json/__init__.py:47 body 70 |  |  | 0.758 |
 | walker |  | 1915 | 117 | README.md section #1 |  |  | 0.815 |
@@ -250,10 +250,10 @@ Score(3000)=0.630 I=0.887 C=0.448 ns_rows≤3K=17/45 (reached=9 partial=1 missin
 | walker |  | 8502 | 9 | listing of 'tests/test_apps/blueprintapp' |  |  | 0.497 |
 | walker |  | 8511 | 9 | listing of 'tests/test_apps/subdomaintestmodule' |  |  | 0.497 |
 | walker |  | 8520 | 9 | python imports in tests/test_apps/subdomaintestmodule/__init__.py |  |  | 0.497 |
-| walker |  | 8532 | 12 | listing of 'tests/test_apps/blueprintapp/apps' |  |  | 0.497 |
-| walker |  | 8541 | 9 | listing of 'tests/test_apps/blueprintapp/apps/frontend' |  |  | 0.497 |
-| walker |  | 8553 | 12 | listing of 'tests/test_apps/blueprintapp/apps/admin' |  |  | 0.497 |
-| walker |  | 8599 | 46 | python imports in tests/test_apps/blueprintapp/__init__.py |  |  | 0.497 |
+| walker |  | 8566 | 46 | python imports in tests/test_apps/blueprintapp/__init__.py |  |  | 0.497 |
+| walker |  | 8578 | 12 | listing of 'tests/test_apps/blueprintapp/apps' |  |  | 0.497 |
+| walker |  | 8587 | 9 | listing of 'tests/test_apps/blueprintapp/apps/frontend' |  |  | 0.497 |
+| walker |  | 8599 | 12 | listing of 'tests/test_apps/blueprintapp/apps/admin' |  |  | 0.497 |
 | walker |  | 8632 | 33 | listing of 'tests/test_apps/cliapp' |  |  | 0.497 |
 | walker |  | 8642 | 10 | listing of 'tests/test_apps/cliapp/inner1' |  |  | 0.497 |
 | walker |  | 8652 | 10 | listing of 'tests/test_apps/cliapp/inner1/inner2' |  |  | 0.497 |
