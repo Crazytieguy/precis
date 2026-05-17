@@ -176,15 +176,6 @@ apps/
             index.ts
             tests/
         hooks/
-            useArchivalTags.ts
-            useCollectivePermissions.ts
-            useDetectPageBottom.tsx
-            useInitialData.tsx
-            useMediaQuery.tsx
-            useOnScreen.tsx
-            usePermissions.tsx
-            useSort.tsx
-            useWindowDimensions.tsx
         layouts/
             AdminLayout.tsx
             AuthRedirect.tsx
@@ -325,6 +316,28 @@ packages/
         migrations/
         package.json
         schema.prisma
+            1→generator client {
+            5→datasource db {
+            10→model Account {
+            28→model User {
+            77→enum Theme {
+            83→enum AiTaggingMethod {
+            90→enum LinksRouteTo {
+            99→model WhitelistedUser {
+            108→model VerificationToken {
+            118→model PasswordResetToken {
+            126→model Collection {
+            151→model UsersAndCollections {
+            166→model Link {
+            200→model Tag {
+            220→model Subscription {
+            234→model AccessToken {
+            248→model RssSubscription {
+            260→model Highlight {
+            275→model DashboardSection {
+            289→enum DashboardSectionType {
+            296→model AppMigration {
+            304→enum AppMigrationStatus {
         seed.js
     router/
         collections.tsx

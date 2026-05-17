@@ -42,6 +42,7 @@ pub enum BatchKey {
     Typescript(TsKey),
     Json(JsonKey),
     Plaintext(PlaintextKey),
+    Prisma(PrismaKey),
     C(CKey),
     Go(GoKey),
     Python(PythonKey),
@@ -87,6 +88,11 @@ impl From<JsonKey> for BatchKey {
 impl From<PlaintextKey> for BatchKey {
     fn from(k: PlaintextKey) -> Self {
         BatchKey::Plaintext(k)
+    }
+}
+impl From<PrismaKey> for BatchKey {
+    fn from(k: PrismaKey) -> Self {
+        BatchKey::Prisma(k)
     }
 }
 impl From<CKey> for BatchKey {
@@ -338,6 +344,19 @@ pub enum PlaintextKey {
     /// file. Skipped when the file's line count or rendered token cost
     /// exceeds the walker's caps.
     Whole { file: PathBuf },
+}
+
+/// Prisma schema batches. A `schema.prisma` file is the canonical
+/// data-model anchor for any Node/TS app using the Prisma ORM; the
+/// walker emits one `Toc` batch listing every top-level declaration's
+/// opening line so the catalog of models/enums/datasources/generators
+/// is reachable without delivering each declaration's body.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum PrismaKey {
+    /// One line per top-level `model` / `enum` / `datasource` /
+    /// `generator` declaration in a `schema.prisma`. Catastrophic-
+    /// omission hedge analogous to the Rust walker's `PubItemNames`.
+    Toc { file: PathBuf },
 }
 
 /// C / C-header batches. Mirrors the Rust walker shape: per-file
@@ -671,6 +690,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Typescript(k) => k.describe(fixture_root),
             BatchKey::Json(k) => k.describe(fixture_root),
             BatchKey::Plaintext(k) => k.describe(fixture_root),
+            BatchKey::Prisma(k) => k.describe(fixture_root),
             BatchKey::C(k) => k.describe(fixture_root),
             BatchKey::Go(k) => k.describe(fixture_root),
             BatchKey::Python(k) => k.describe(fixture_root),
@@ -688,7 +708,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Rust(k) => k.concavity_exponent(),
             BatchKey::Typescript(k) => k.concavity_exponent(),
             BatchKey::Lua(k) => k.concavity_exponent(),
-            BatchKey::Fs(_) | BatchKey::Toml(_) | BatchKey::Plaintext(_) => {
+            BatchKey::Fs(_) | BatchKey::Toml(_) | BatchKey::Plaintext(_) | BatchKey::Prisma(_) => {
                 crate::value::DEFAULT_CONCAVITY_EXPONENT
             }
         }
@@ -1053,6 +1073,16 @@ impl PlaintextKey {
         match self {
             PlaintextKey::Whole { file } => {
                 format!("plaintext config {}", display_path(file, fixture_root))
+            }
+        }
+    }
+}
+
+impl PrismaKey {
+    pub fn describe(&self, fixture_root: &Path) -> String {
+        match self {
+            PrismaKey::Toc { file } => {
+                format!("Prisma schema TOC in {}", display_path(file, fixture_root))
             }
         }
     }
