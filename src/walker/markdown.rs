@@ -829,6 +829,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         }
         match block.kind() {
             "paragraph" if is_decorative_paragraph(block, source) => {}
+            "paragraph" if is_admin_emoji_paragraph(block, source) => {}
             "html_block" if is_decorative_html_block(block, source) => {}
             "block_quote" if is_admin_block_quote(block, source) => {}
             _ => break,
@@ -841,6 +842,10 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
             break;
         }
         if block.kind() == "block_quote" && is_admin_block_quote(block, source) {
+            i += 1;
+            continue;
+        }
+        if block.kind() == "paragraph" && is_admin_emoji_paragraph(block, source) {
             i += 1;
             continue;
         }
@@ -1890,6 +1895,7 @@ fn extend_prelude_lede(
         let block = prelude_blocks[i];
         match block.kind() {
             "paragraph" if is_decorative_paragraph(block, source) => {}
+            "paragraph" if is_admin_emoji_paragraph(block, source) => {}
             "html_block" if is_decorative_html_block(block, source) => {}
             "block_quote" if is_admin_block_quote(block, source) => {}
             _ => break,
@@ -1903,6 +1909,31 @@ fn extend_prelude_lede(
     if let Some(block) = prelude_blocks.get(i) {
         extend_rows_inclusive(covered, *block, source);
     }
+}
+
+/// True when a paragraph opens with a callout-style emoji
+/// (⚠️ / 🚨 / ⛔ / ❗) — the prose-equivalent of a
+/// `> [!WARNING]` block_quote. NS authors anchor on the project
+/// lede, not on a deprecation / migration / security notice typeset
+/// as a plain paragraph; treating it as admin lets the
+/// prelude-skip phase keep looking for the substantive lede when a
+/// project uses emoji callouts instead of GitHub-flavored block
+/// quotes.
+fn is_admin_emoji_paragraph(para: Node, source: &str) -> bool {
+    let raw = source[para.start_byte()..para.end_byte()].trim_start();
+    starts_with_admin_emoji(raw)
+}
+
+fn starts_with_admin_emoji(s: &str) -> bool {
+    // ⚠ U+26A0 (with or without U+FE0F variation selector), 🚨 U+1F6A8,
+    // ⛔ U+26D4, ❗ U+2757. Match the codepoint, not the byte sequence,
+    // so the variation selector (`⚠️` = U+26A0 U+FE0F) and the bare
+    // form both classify the same.
+    let mut chars = s.chars();
+    matches!(
+        chars.next(),
+        Some('\u{26A0}' | '\u{1F6A8}' | '\u{26D4}' | '\u{2757}')
+    )
 }
 
 /// Top-level `section` children of `node` that have a heading. Tree-sitter-md
@@ -1996,6 +2027,28 @@ mod tests {
         assert!(rows.contains(&1), "heading row missing");
         assert!(rows.contains(&5), "tagline row missing");
         assert!(!rows.contains(&3), "image-only paragraph should be skipped");
+    }
+
+    /// py3xui shape: prelude HTML wrapper, ⚠️-led admin notice
+    /// paragraph (a plain-paragraph callout instead of `> [!WARNING]`),
+    /// then the real lede. The admin paragraph must be skipped so the
+    /// substantive lede gets surfaced.
+    #[test]
+    fn markdown_admin_emoji_paragraph_skipped_py3xui_shape() {
+        let src = "\u{26A0}\u{FE0F} The secret token feature was removed in v2.6.0. \u{26A0}\u{FE0F}\n\
+                   \n\
+                   Sync and Async Object-oriented Python SDK for the 3x-ui API.\n\
+                   \n\
+                   ## Overview\n";
+        let rows = covered(src);
+        assert!(
+            rows.contains(&3),
+            "lede row 3 missing — admin emoji paragraph should have been skipped"
+        );
+        assert!(
+            !rows.contains(&1),
+            "admin emoji paragraph row 1 should be skipped"
+        );
     }
 
     /// soluna shape: H1 + blank + plain text-link paragraph + blank +
