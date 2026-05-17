@@ -1,4 +1,4 @@
-Score(3000)=0.452 I=0.776 C=0.263 ns_rows≤3K=18/45 (reached=4 partial=1 missing=13)
+Score(3000)=0.492 I=0.804 C=0.301 ns_rows≤3K=18/45 (reached=4 partial=2 missing=12)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -58,83 +58,83 @@ Score(3000)=0.452 I=0.776 C=0.263 ns_rows≤3K=18/45 (reached=4 partial=1 missin
 | walker |  | 1418 | 49 | listing of 'server/providers' |  |  | 0.585 |
 | ns | 1447 |  | 62 | Server.js — class method index (names only) | 2.2 | 2.1 | 0.566 |
 | walker |  | 1469 | 51 | listing of 'client/pages' |  |  | 0.567 |
-| walker |  | 1521 | 52 | listing of 'server/objects' |  |  | 0.568 |
-| walker |  | 1542 | 21 | listing of 'server/objects/files' |  |  | 0.568 |
-| walker |  | 1561 | 19 | listing of 'server/auth' |  |  | 0.569 |
-| ns | 1610 |  | 163 | Server.js — globals from ctor args | 2.3 | 2.1 | 0.543 |
-| walker |  | 1615 | 54 | listing of 'client/static' |  |  | 0.543 |
-| walker |  | 1639 | 24 | listing of 'client/static/fonts' |  |  | 0.543 |
-| walker |  | 1642 | 3 | listing of 'client/static/libs' |  |  | 0.543 |
-| walker |  | 1672 | 30 | listing of 'client/components/covers' |  |  | 0.543 |
-| walker |  | 1684 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.543 |
-| ns | 1900 |  | 290 | Server.js — manager + router instantiations | 2.4 | 2.1 | 0.496 |
-| walker |  | 2002 | 318 | headings outline in readme.md |  |  | 0.496 |
-| walker |  | 2002 | 0 | readme.md section #49 |  |  | 0.496 |
-| walker |  | 2022 | 20 | readme.md section #50 |  |  | 0.496 |
-| walker |  | 2034 | 12 | readme.md section #9 |  |  | 0.497 |
-| walker |  | 2060 | 26 | readme.md section #24 |  |  | 0.497 |
-| walker |  | 2073 | 13 | readme.md section #2 |  |  | 0.498 |
-| walker |  | 2086 | 13 | readme.md section #4 |  |  | 0.501 |
-| walker |  | 2099 | 13 | readme.md section #8 |  |  | 0.505 |
-| walker |  | 2113 | 14 | readme.md section #11 |  |  | 0.506 |
-| walker |  | 2127 | 14 | readme.md section #16 |  |  | 0.508 |
-| walker |  | 2142 | 15 | readme.md section #5 |  |  | 0.513 |
-| walker |  | 2157 | 15 | readme.md section #10 |  |  | 0.519 |
-| walker |  | 2172 | 15 | readme.md section #14 |  |  | 0.522 |
-| walker |  | 2197 | 25 | readme.md section #71 |  |  | 0.522 |
-| walker |  | 2213 | 16 | readme.md section #13 |  |  | 0.527 |
-| walker |  | 2230 | 17 | readme.md section #3 |  |  | 0.535 |
-| walker |  | 2248 | 18 | readme.md section #7 |  |  | 0.544 |
-| walker |  | 2267 | 19 | readme.md section #6 |  |  | 0.552 |
-| walker |  | 2279 | 12 | readme.md section #63 |  |  | 0.552 |
-| ns | 2299 |  | 399 | Server.js — init() lifecycle body | 2.5 | 2.2 | 0.496 |
-| walker |  | 2301 | 22 | readme.md section #18 |  |  | 0.496 |
-| walker |  | 2362 | 61 | readme.md section #23 |  |  | 0.496 |
-| walker |  | 2388 | 26 | readme.md section #12 |  |  | 0.503 |
-| walker |  | 2408 | 20 | readme.md section #46 |  |  | 0.503 |
-| walker |  | 2430 | 22 | listing of 'client/static/fonts/absicons' |  |  | 0.503 |
-| walker |  | 2443 | 13 | listing of 'client/assets/ebooks' |  |  | 0.503 |
-| walker |  | 2456 | 13 | listing of 'docs/objects/entities' |  |  | 0.503 |
-| walker |  | 2496 | 40 | docs/README.md section #3 |  |  | 0.503 |
-| walker |  | 2517 | 21 | readme.md section #39 |  |  | 0.503 |
-| walker |  | 2551 | 34 | readme.md section #17 |  |  | 0.503 |
-| walker |  | 2589 | 38 | listing of 'client/components/controls' |  |  | 0.503 |
-| walker |  | 2593 | 4 | listing of 'client/pages/audiobook' |  |  | 0.503 |
-| walker |  | 2597 | 4 | listing of 'client/pages/batch' |  |  | 0.503 |
-| walker |  | 2601 | 4 | listing of 'client/pages/item' |  |  | 0.503 |
-| walker |  | 2605 | 4 | listing of 'client/pages/library' |  |  | 0.503 |
-| walker |  | 2609 | 4 | listing of 'client/pages/upload' |  |  | 0.503 |
-| ns | 2625 |  | 326 | Server.js — start() head: middleware + router mounts | 2.6 | 2.2 | 0.463 |
-| walker |  | 2632 | 23 | readme.md section #44 |  |  | 0.463 |
-| walker |  | 2707 | 75 | listing of 'server/scanner' |  |  | 0.464 |
-| ns | 2746 |  | 121 | controllers/ directory listing | 3.1 |  | 0.439 |
-| walker |  | 2779 | 72 | readme.md section #25 |  |  | 0.439 |
-| walker |  | 2794 | 15 | listing of 'server/objects/settings' |  |  | 0.439 |
-| walker |  | 2820 | 26 | listing of 'client/pages/library/_library' |  |  | 0.439 |
-| walker |  | 2863 | 43 | listing of 'client/components/stats' |  |  | 0.439 |
-| walker |  | 2901 | 38 | readme.md section #1 |  |  | 0.452 |
-| walker |  | 2917 | 16 | listing of 'docs/objects/files' |  |  | 0.452 |
-| walker |  | 2945 | 28 | listing of 'client/static/fonts/Source_Sans_Pro' |  |  | 0.452 |
-| walker |  | 2970 | 25 | readme.md section #34 |  |  | 0.452 |
-| walker |  | 3040 | 70 | docs/README.md section #1 |  |  | 0.452 |
-| walker |  | 3057 | 17 | listing of 'client/components/player' |  |  | 0.452 |
-| walker |  | 3062 | 5 | listing of 'client/pages/author' |  |  | 0.452 |
-| walker |  | 3067 | 5 | listing of 'client/pages/collection' |  |  | 0.452 |
-| walker |  | 3072 | 5 | listing of 'client/pages/playlist' |  |  | 0.452 |
-| walker |  | 3077 | 5 | listing of 'client/pages/share' |  |  | 0.452 |
-| walker |  | 3082 | 5 | listing of 'client/static/textures' |  |  | 0.452 |
-| walker |  | 3087 | 5 | listing of 'docs/objects/settings' |  |  | 0.452 |
-| walker |  | 3260 | 173 | module item at index.js:1 |  |  | 0.489 |
-| walker |  | 3320 | 60 | docs/README.md section #2 |  |  | 0.489 |
-| walker |  | 3372 | 52 | listing of 'client/components/app' |  |  | 0.489 |
-| walker |  | 3469 | 97 | listing of 'server/managers' |  |  | 0.492 |
-| ns | 3488 |  | 742 | ApiRouter — Library + Item route paths | 3.2 |  | 0.447 |
-| walker |  | 3514 | 45 | readme.md section #15 |  |  | 0.461 |
-| walker |  | 3526 | 12 | listing of 'client/pages/audiobook/_id' |  |  | 0.461 |
-| walker |  | 3582 | 56 | listing of 'client/pages/config' |  |  | 0.462 |
-| walker |  | 3602 | 20 | listing of 'client/pages/config/item-metadata-utils' |  |  | 0.462 |
-| walker |  | 3608 | 6 | listing of 'client/components/content' |  |  | 0.462 |
-| walker |  | 3961 | 353 | package scripts in package.json |  |  | 0.509 |
+| ns | 1610 |  | 163 | Server.js — globals from ctor args | 2.3 | 2.1 | 0.541 |
+| walker |  | 1822 | 353 | package scripts in package.json |  |  | 0.621 |
+| walker |  | 1874 | 52 | listing of 'server/objects' |  |  | 0.622 |
+| walker |  | 1895 | 21 | listing of 'server/objects/files' |  |  | 0.622 |
+| ns | 1900 |  | 290 | Server.js — manager + router instantiations | 2.4 | 2.1 | 0.568 |
+| walker |  | 1914 | 19 | listing of 'server/auth' |  |  | 0.569 |
+| walker |  | 1968 | 54 | listing of 'client/static' |  |  | 0.569 |
+| walker |  | 1992 | 24 | listing of 'client/static/fonts' |  |  | 0.569 |
+| walker |  | 1995 | 3 | listing of 'client/static/libs' |  |  | 0.569 |
+| walker |  | 2025 | 30 | listing of 'client/components/covers' |  |  | 0.569 |
+| walker |  | 2037 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.569 |
+| ns | 2299 |  | 399 | Server.js — init() lifecycle body | 2.5 | 2.2 | 0.510 |
+| walker |  | 2355 | 318 | headings outline in readme.md |  |  | 0.511 |
+| walker |  | 2355 | 0 | readme.md section #49 |  |  | 0.511 |
+| walker |  | 2375 | 20 | readme.md section #50 |  |  | 0.511 |
+| walker |  | 2387 | 12 | readme.md section #9 |  |  | 0.511 |
+| walker |  | 2413 | 26 | readme.md section #24 |  |  | 0.511 |
+| walker |  | 2426 | 13 | readme.md section #2 |  |  | 0.513 |
+| walker |  | 2439 | 13 | readme.md section #4 |  |  | 0.515 |
+| walker |  | 2452 | 13 | readme.md section #8 |  |  | 0.518 |
+| walker |  | 2466 | 14 | readme.md section #11 |  |  | 0.519 |
+| walker |  | 2480 | 14 | readme.md section #16 |  |  | 0.521 |
+| walker |  | 2495 | 15 | readme.md section #5 |  |  | 0.525 |
+| walker |  | 2510 | 15 | readme.md section #10 |  |  | 0.530 |
+| walker |  | 2525 | 15 | readme.md section #14 |  |  | 0.533 |
+| walker |  | 2550 | 25 | readme.md section #71 |  |  | 0.533 |
+| walker |  | 2566 | 16 | readme.md section #13 |  |  | 0.537 |
+| walker |  | 2583 | 17 | readme.md section #3 |  |  | 0.543 |
+| walker |  | 2601 | 18 | readme.md section #7 |  |  | 0.551 |
+| walker |  | 2620 | 19 | readme.md section #6 |  |  | 0.558 |
+| ns | 2625 |  | 326 | Server.js — start() head: middleware + router mounts | 2.6 | 2.2 | 0.514 |
+| walker |  | 2632 | 12 | readme.md section #63 |  |  | 0.514 |
+| walker |  | 2654 | 22 | readme.md section #18 |  |  | 0.514 |
+| walker |  | 2715 | 61 | readme.md section #23 |  |  | 0.514 |
+| walker |  | 2741 | 26 | readme.md section #12 |  |  | 0.520 |
+| ns | 2746 |  | 121 | controllers/ directory listing | 3.1 |  | 0.492 |
+| walker |  | 2761 | 20 | readme.md section #46 |  |  | 0.492 |
+| walker |  | 2783 | 22 | listing of 'client/static/fonts/absicons' |  |  | 0.492 |
+| walker |  | 2796 | 13 | listing of 'client/assets/ebooks' |  |  | 0.492 |
+| walker |  | 2809 | 13 | listing of 'docs/objects/entities' |  |  | 0.492 |
+| walker |  | 2849 | 40 | docs/README.md section #3 |  |  | 0.492 |
+| walker |  | 2870 | 21 | readme.md section #39 |  |  | 0.492 |
+| walker |  | 2904 | 34 | readme.md section #17 |  |  | 0.492 |
+| walker |  | 2942 | 38 | listing of 'client/components/controls' |  |  | 0.492 |
+| walker |  | 2946 | 4 | listing of 'client/pages/audiobook' |  |  | 0.492 |
+| walker |  | 2950 | 4 | listing of 'client/pages/batch' |  |  | 0.492 |
+| walker |  | 2954 | 4 | listing of 'client/pages/item' |  |  | 0.492 |
+| walker |  | 2958 | 4 | listing of 'client/pages/library' |  |  | 0.492 |
+| walker |  | 2962 | 4 | listing of 'client/pages/upload' |  |  | 0.492 |
+| walker |  | 2985 | 23 | readme.md section #44 |  |  | 0.492 |
+| walker |  | 3060 | 75 | listing of 'server/scanner' |  |  | 0.493 |
+| walker |  | 3132 | 72 | readme.md section #25 |  |  | 0.493 |
+| walker |  | 3147 | 15 | listing of 'server/objects/settings' |  |  | 0.494 |
+| walker |  | 3173 | 26 | listing of 'client/pages/library/_library' |  |  | 0.494 |
+| walker |  | 3216 | 43 | listing of 'client/components/stats' |  |  | 0.494 |
+| walker |  | 3254 | 38 | readme.md section #1 |  |  | 0.506 |
+| walker |  | 3270 | 16 | listing of 'docs/objects/files' |  |  | 0.506 |
+| walker |  | 3298 | 28 | listing of 'client/static/fonts/Source_Sans_Pro' |  |  | 0.506 |
+| walker |  | 3323 | 25 | readme.md section #34 |  |  | 0.506 |
+| walker |  | 3393 | 70 | docs/README.md section #1 |  |  | 0.506 |
+| walker |  | 3410 | 17 | listing of 'client/components/player' |  |  | 0.506 |
+| walker |  | 3415 | 5 | listing of 'client/pages/author' |  |  | 0.506 |
+| walker |  | 3420 | 5 | listing of 'client/pages/collection' |  |  | 0.506 |
+| walker |  | 3425 | 5 | listing of 'client/pages/playlist' |  |  | 0.506 |
+| walker |  | 3430 | 5 | listing of 'client/pages/share' |  |  | 0.506 |
+| walker |  | 3435 | 5 | listing of 'client/static/textures' |  |  | 0.506 |
+| walker |  | 3440 | 5 | listing of 'docs/objects/settings' |  |  | 0.506 |
+| ns | 3488 |  | 742 | ApiRouter — Library + Item route paths | 3.2 |  | 0.460 |
+| walker |  | 3613 | 173 | module item at index.js:1 |  |  | 0.492 |
+| walker |  | 3673 | 60 | docs/README.md section #2 |  |  | 0.492 |
+| walker |  | 3725 | 52 | listing of 'client/components/app' |  |  | 0.492 |
+| walker |  | 3822 | 97 | listing of 'server/managers' |  |  | 0.494 |
+| walker |  | 3867 | 45 | readme.md section #15 |  |  | 0.508 |
+| walker |  | 3879 | 12 | listing of 'client/pages/audiobook/_id' |  |  | 0.508 |
+| walker |  | 3935 | 56 | listing of 'client/pages/config' |  |  | 0.509 |
+| walker |  | 3955 | 20 | listing of 'client/pages/config/item-metadata-utils' |  |  | 0.509 |
+| walker |  | 3961 | 6 | listing of 'client/components/content' |  |  | 0.509 |
 | walker |  | 4072 | 111 | listing of 'server/utils' |  |  | 0.510 |
 | walker |  | 4117 | 45 | listing of 'server/utils/queries' |  |  | 0.511 |
 | walker |  | 4136 | 19 | listing of 'server/utils/generators' |  |  | 0.511 |
@@ -297,70 +297,70 @@ Score(3000)=0.452 I=0.776 C=0.263 ns_rows≤3K=18/45 (reached=4 partial=1 missin
 | walker |  | 7978 | 55 | readme.md section #64 |  |  | 0.470 |
 | walker |  | 8041 | 63 | readme.md section #35 |  |  | 0.470 |
 | ns | 8107 |  | 155 | LibraryScanner.js — class signature + scan entry | 6.5 |  | 0.465 |
-| walker |  | 8195 | 154 | listing of 'client/components/ui' |  |  | 0.465 |
-| walker |  | 8252 | 57 | readme.md section #55 |  |  | 0.465 |
-| walker |  | 8275 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.465 |
-| walker |  | 8285 | 10 | listing of 'client/components/tables/library' |  |  | 0.465 |
-| walker |  | 8320 | 35 | readme.md section #33 |  |  | 0.465 |
-| walker |  | 8379 | 59 | readme.md section #56 |  |  | 0.465 |
 | ns | 8380 |  | 273 | PlaybackSessionManager.js — class head + getSession / getStream | 6.6 |  | 0.456 |
-| walker |  | 8436 | 57 | readme.md section #19 |  |  | 0.456 |
-| walker |  | 8443 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.456 |
-| walker |  | 8450 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.456 |
-| walker |  | 8457 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.456 |
-| walker |  | 8464 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.456 |
-| walker |  | 8471 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.456 |
-| walker |  | 8478 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.456 |
-| walker |  | 8485 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.456 |
-| walker |  | 8492 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.456 |
-| walker |  | 8499 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.456 |
-| walker |  | 8506 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.456 |
-| walker |  | 8513 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.456 |
-| walker |  | 8574 | 61 | readme.md section #66 |  |  | 0.456 |
-| ns | 8609 |  | 229 | utils/ + utils/queries/ + utils/parsers/ listings | 7.1 |  | 0.486 |
-| walker |  | 8633 | 59 | readme.md section #21 |  |  | 0.486 |
-| walker |  | 8704 | 71 | readme.md section #37 |  |  | 0.486 |
-| walker |  | 8715 | 11 | listing of 'client/static/fonts/Ubuntu_Mono' |  |  | 0.486 |
-| walker |  | 8726 | 11 | listing of 'client/static/libarchive/wasm-gen' |  |  | 0.486 |
-| walker |  | 8748 | 22 | export names surface in server/libs/jws/lib/data-stream.js |  |  | 0.486 |
-| walker |  | 8748 | 0 | export at server/libs/jws/lib/data-stream.js:6 |  |  | 0.486 |
-| walker |  | 8770 | 22 | export names surface in server/libs/jws/lib/sign-stream.js |  |  | 0.486 |
-| walker |  | 8770 | 0 | export at server/libs/jws/lib/sign-stream.js:36 |  |  | 0.486 |
-| walker |  | 8792 | 22 | export names surface in server/libs/jws/lib/verify-stream.js |  |  | 0.486 |
-| walker |  | 8792 | 0 | export at server/libs/jws/lib/verify-stream.js:80 |  |  | 0.486 |
-| walker |  | 8804 | 12 | listing of 'client/components/modals/player' |  |  | 0.486 |
-| walker |  | 8816 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.486 |
-| walker |  | 8819 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.486 |
-| walker |  | 8837 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.486 |
-| walker |  | 8845 | 8 | listing of 'client/pages/config/users/_id' |  |  | 0.486 |
-| walker |  | 8853 | 8 | listing of 'server/libs/archiver/lib/plugins' |  |  | 0.486 |
-| ns | 8927 |  | 318 | utils/constants.js — non-mime enums + AudioMimeType reference | 7.2 |  | 0.474 |
-| walker |  | 8931 | 78 | readme.md section #29 |  |  | 0.474 |
-| ns | 8974 |  | 47 | objects/settings/ + objects/files/ + objects/metadata/ listings | 7.3 |  | 0.480 |
-| walker |  | 9000 | 69 | readme.md section #69 |  |  | 0.480 |
-| walker |  | 9079 | 79 | readme.md section #42 |  |  | 0.480 |
-| walker |  | 9147 | 68 | readme.md section #22 |  |  | 0.480 |
-| walker |  | 9162 | 15 | listing of 'client/components/modals/emails' |  |  | 0.480 |
-| walker |  | 9253 | 91 | readme.md section #38 |  |  | 0.480 |
-| walker |  | 9263 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.480 |
-| walker |  | 9270 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.480 |
-| ns | 9289 |  | 315 | ServerSettings.js — scanner / backup / sorting / auth field declarations | 7.4 |  | 0.472 |
-| walker |  | 9299 | 29 | export names surface in server/libs/archiver/lib/core.js |  |  | 0.472 |
-| walker |  | 9299 | 0 | export at server/libs/archiver/lib/core.js:25 |  |  | 0.472 |
-| walker |  | 9328 | 29 | export names surface in server/libs/jsonwebtoken/lib/NotBeforeError.js |  |  | 0.472 |
-| walker |  | 9328 | 0 | export at server/libs/jsonwebtoken/lib/NotBeforeError.js:3 |  |  | 0.472 |
-| walker |  | 9378 | 50 | readme.md section #43 |  |  | 0.472 |
-| walker |  | 9408 | 30 | export names surface in server/libs/jsonwebtoken/lib/TokenExpiredError.js |  |  | 0.472 |
-| walker |  | 9408 | 0 | export at server/libs/jsonwebtoken/lib/TokenExpiredError.js:3 |  |  | 0.472 |
-| walker |  | 9439 | 31 | export names surface in server/libs/jsonwebtoken/lib/JsonWebTokenError.js |  |  | 0.472 |
-| walker |  | 9439 | 0 | export at server/libs/jsonwebtoken/lib/JsonWebTokenError.js:1 |  |  | 0.472 |
-| walker |  | 9464 | 25 | export names surface in server/libs/archiver/lib/plugins/json.js |  |  | 0.472 |
-| walker |  | 9464 | 0 | export at server/libs/archiver/lib/plugins/json.js:18 |  |  | 0.472 |
-| walker |  | 9489 | 25 | export names surface in server/libs/archiver/lib/plugins/zip.js |  |  | 0.472 |
-| walker |  | 9489 | 0 | export at server/libs/archiver/lib/plugins/zip.js:21 |  |  | 0.472 |
-| ns | 9497 |  | 208 | migrations/ directory listing | 7.5 |  | 0.467 |
-| ns | 9562 |  | 65 | client/ directory listing | 7.6 |  | 0.477 |
-| walker |  | 9587 | 98 | readme.md section #62 |  |  | 0.477 |
-| ns | 9709 |  | 147 | client/pages + client/components listings | 7.7 |  | 0.499 |
-| ns | 9799 |  | 90 | client/store + plugins + players listings | 7.8 |  | 0.508 |
-| ns | 9928 |  | 129 | test/server tree + docs/ + .github/workflows + build/ listings | 7.9 |  | 0.506 |
+| walker |  | 8481 | 440 | package dependencies in package.json |  |  | 0.481 |
+| ns | 8609 |  | 229 | utils/ + utils/queries/ + utils/parsers/ listings | 7.1 |  | 0.509 |
+| walker |  | 8635 | 154 | listing of 'client/components/ui' |  |  | 0.509 |
+| walker |  | 8692 | 57 | readme.md section #55 |  |  | 0.509 |
+| walker |  | 8715 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.509 |
+| walker |  | 8725 | 10 | listing of 'client/components/tables/library' |  |  | 0.509 |
+| walker |  | 8760 | 35 | readme.md section #33 |  |  | 0.509 |
+| walker |  | 8819 | 59 | readme.md section #56 |  |  | 0.509 |
+| walker |  | 8876 | 57 | readme.md section #19 |  |  | 0.509 |
+| walker |  | 8883 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.509 |
+| walker |  | 8890 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.509 |
+| walker |  | 8897 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.509 |
+| walker |  | 8904 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.509 |
+| walker |  | 8911 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.509 |
+| walker |  | 8918 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.509 |
+| walker |  | 8925 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.509 |
+| ns | 8927 |  | 318 | utils/constants.js — non-mime enums + AudioMimeType reference | 7.2 |  | 0.497 |
+| walker |  | 8932 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.497 |
+| walker |  | 8939 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.497 |
+| walker |  | 8946 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.497 |
+| walker |  | 8953 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.497 |
+| ns | 8974 |  | 47 | objects/settings/ + objects/files/ + objects/metadata/ listings | 7.3 |  | 0.503 |
+| walker |  | 9014 | 61 | readme.md section #66 |  |  | 0.503 |
+| walker |  | 9073 | 59 | readme.md section #21 |  |  | 0.503 |
+| walker |  | 9144 | 71 | readme.md section #37 |  |  | 0.503 |
+| walker |  | 9155 | 11 | listing of 'client/static/fonts/Ubuntu_Mono' |  |  | 0.503 |
+| walker |  | 9166 | 11 | listing of 'client/static/libarchive/wasm-gen' |  |  | 0.503 |
+| walker |  | 9188 | 22 | export names surface in server/libs/jws/lib/data-stream.js |  |  | 0.503 |
+| walker |  | 9188 | 0 | export at server/libs/jws/lib/data-stream.js:6 |  |  | 0.503 |
+| walker |  | 9210 | 22 | export names surface in server/libs/jws/lib/sign-stream.js |  |  | 0.503 |
+| walker |  | 9210 | 0 | export at server/libs/jws/lib/sign-stream.js:36 |  |  | 0.503 |
+| walker |  | 9232 | 22 | export names surface in server/libs/jws/lib/verify-stream.js |  |  | 0.503 |
+| walker |  | 9232 | 0 | export at server/libs/jws/lib/verify-stream.js:80 |  |  | 0.503 |
+| walker |  | 9244 | 12 | listing of 'client/components/modals/player' |  |  | 0.503 |
+| walker |  | 9256 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.503 |
+| walker |  | 9259 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.503 |
+| walker |  | 9277 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.503 |
+| walker |  | 9285 | 8 | listing of 'client/pages/config/users/_id' |  |  | 0.503 |
+| ns | 9289 |  | 315 | ServerSettings.js — scanner / backup / sorting / auth field declarations | 7.4 |  | 0.494 |
+| walker |  | 9293 | 8 | listing of 'server/libs/archiver/lib/plugins' |  |  | 0.494 |
+| walker |  | 9371 | 78 | readme.md section #29 |  |  | 0.494 |
+| walker |  | 9440 | 69 | readme.md section #69 |  |  | 0.494 |
+| ns | 9497 |  | 208 | migrations/ directory listing | 7.5 |  | 0.489 |
+| walker |  | 9519 | 79 | readme.md section #42 |  |  | 0.489 |
+| ns | 9562 |  | 65 | client/ directory listing | 7.6 |  | 0.499 |
+| walker |  | 9587 | 68 | readme.md section #22 |  |  | 0.499 |
+| walker |  | 9602 | 15 | listing of 'client/components/modals/emails' |  |  | 0.499 |
+| walker |  | 9693 | 91 | readme.md section #38 |  |  | 0.499 |
+| walker |  | 9703 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.499 |
+| ns | 9709 |  | 147 | client/pages + client/components listings | 7.7 |  | 0.520 |
+| walker |  | 9710 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.520 |
+| walker |  | 9739 | 29 | export names surface in server/libs/archiver/lib/core.js |  |  | 0.520 |
+| walker |  | 9739 | 0 | export at server/libs/archiver/lib/core.js:25 |  |  | 0.520 |
+| walker |  | 9768 | 29 | export names surface in server/libs/jsonwebtoken/lib/NotBeforeError.js |  |  | 0.520 |
+| walker |  | 9768 | 0 | export at server/libs/jsonwebtoken/lib/NotBeforeError.js:3 |  |  | 0.520 |
+| ns | 9799 |  | 90 | client/store + plugins + players listings | 7.8 |  | 0.529 |
+| walker |  | 9818 | 50 | readme.md section #43 |  |  | 0.529 |
+| walker |  | 9848 | 30 | export names surface in server/libs/jsonwebtoken/lib/TokenExpiredError.js |  |  | 0.529 |
+| walker |  | 9848 | 0 | export at server/libs/jsonwebtoken/lib/TokenExpiredError.js:3 |  |  | 0.529 |
+| walker |  | 9879 | 31 | export names surface in server/libs/jsonwebtoken/lib/JsonWebTokenError.js |  |  | 0.529 |
+| walker |  | 9879 | 0 | export at server/libs/jsonwebtoken/lib/JsonWebTokenError.js:1 |  |  | 0.529 |
+| walker |  | 9904 | 25 | export names surface in server/libs/archiver/lib/plugins/json.js |  |  | 0.529 |
+| walker |  | 9904 | 0 | export at server/libs/archiver/lib/plugins/json.js:18 |  |  | 0.529 |
+| ns | 9928 |  | 129 | test/server tree + docs/ + .github/workflows + build/ listings | 7.9 |  | 0.526 |
+| walker |  | 9929 | 25 | export names surface in server/libs/archiver/lib/plugins/zip.js |  |  | 0.526 |
+| walker |  | 9929 | 0 | export at server/libs/archiver/lib/plugins/zip.js:21 |  |  | 0.526 |

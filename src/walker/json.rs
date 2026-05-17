@@ -148,6 +148,18 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         } else {
             1.0
         };
+    // App-style `package.json`s describe an application's workflow
+    // rather than a publishable library API: `scripts` is the
+    // operate-this-thing surface (start/dev/migrate/seed) and
+    // `dependencies` is the framework stack NS authors anchor on.
+    // Library manifests publish `exports`/`module` and put scripts in
+    // dev-tooling territory, so the boost is opt-in by signal — see
+    // `is_app_package_json` for the predicate.
+    let app_factor = if is_app_package_json(&source) {
+        APP_SCRIPTS_DEPS_FACTOR
+    } else {
+        1.0
+    };
     let mut prev: Option<BatchKey> = None;
     let mut push = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
         let Some(content) = section_content(file, &source, &pairs, name_match) else {
@@ -185,14 +197,75 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     );
     push(
         JsonKey::Scripts { file: f.clone() },
-        scripts_value(file, ctx),
+        scripts_value(file, ctx) * app_factor,
         is_scripts_key,
     );
     push(
         JsonKey::Dependencies { file: f },
-        dependencies_value(file, ctx),
+        dependencies_value(file, ctx) * app_factor,
         is_dependencies_key,
     );
+}
+
+/// Boost factor for `scripts` / `dependencies` on app-style
+/// `package.json`s (see [`is_app_package_json`]).
+const APP_SCRIPTS_DEPS_FACTOR: f64 = 1.3;
+
+/// True for `package.json` files that describe an application rather
+/// than a publishable library — checked by source-string scan since
+/// the parse tree has already been threaded through `emit_package_json`
+/// and these are local, non-recursive keys. Signals are conservative
+/// (need at least one positive indicator):
+/// - `"private": true` — never published to a registry, so the
+///   manifest's authority is the operate-this-thing axis rather than
+///   the public-API axis.
+/// - `"bin"` field present AND no `"files"` allowlist — ships an
+///   executable but isn't packaging a library payload for npm. A
+///   manifest that lists `files` (or `private:true` aside) is
+///   publishable; its `scripts` is conventionally dev-tooling and its
+///   NS rank lives below the Entry/identity block.
+///
+/// Library-shaped manifests (no `private`, no `bin`, only
+/// `exports`/`main`/`module`) return false. Hybrid library+CLI
+/// packages (json-server, semver) keep the library default because
+/// their `files` allowlist signals a publishable payload.
+fn is_app_package_json(source: &str) -> bool {
+    if has_private_true(source) {
+        return true;
+    }
+    has_top_level_key(source, "bin") && !has_top_level_key(source, "files")
+}
+
+/// `true` iff the source contains a top-level `"private": true` pair.
+/// Cheap scan — sufficient for well-formed JSON.
+fn has_private_true(source: &str) -> bool {
+    let Some(idx) = source.find("\"private\"") else {
+        return false;
+    };
+    let rest = &source[idx + "\"private\"".len()..];
+    let Some(colon) = rest.find(':') else {
+        return false;
+    };
+    rest[colon + 1..].trim_start().starts_with("true")
+}
+
+/// `true` iff the source declares a top-level key named `key`. Looks
+/// for `"key"` followed (after whitespace) by `:` — sufficient to
+/// distinguish `"bin": …` from a `bin` substring inside a script body
+/// or path. Doesn't validate that the key is at the document's top
+/// level; well-formed `package.json` manifests don't reuse these
+/// reserved names in nested objects.
+fn has_top_level_key(source: &str, key: &str) -> bool {
+    let needle = format!("\"{key}\"");
+    let mut cursor = source;
+    while let Some(idx) = cursor.find(&needle) {
+        let after = &cursor[idx + needle.len()..];
+        if after.trim_start().starts_with(':') {
+            return true;
+        }
+        cursor = &cursor[idx + needle.len()..];
+    }
+    false
 }
 
 /// Look up the `"name"` field's string value in a parsed package.json

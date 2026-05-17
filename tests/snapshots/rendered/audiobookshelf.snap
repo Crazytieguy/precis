@@ -56,13 +56,6 @@ client/
             PdfReader.vue
             Reader.vue
         stats/
-            DailyListeningChart.vue
-            Heatmap.vue
-            PreviewIcons.vue
-            YearInReview.vue
-            YearInReviewBanner.vue
-            YearInReviewServer.vue
-            YearInReviewShort.vue
         tables/
         ui/
         widgets/
@@ -102,13 +95,6 @@ client/
             _id/
         library/
             _library/
-                bookshelf/
-                index.vue
-                narrators.vue
-                podcast/
-                search.vue
-                series/
-                stats.vue
         login.vue
         oops.vue
         playlist/
@@ -138,10 +124,6 @@ client/
         fonts/
             MaterialSymbolsRounded.woff2
             Source_Sans_Pro/
-                OFL.txt
-                SourceSansPro-Light.ttf
-                SourceSansPro-Regular.ttf
-                SourceSansPro-SemiBold.ttf
             Ubuntu_Mono/
             absicons/
                 absicons.eot
@@ -202,9 +184,6 @@ docs/
             PodcastEpisode.yaml
             Series.yaml
         files/
-            AudioFile.yaml
-            AudioTrack.yaml
-            EBookFile.yaml
         mediaTypes/
             Book.yaml
             Podcast.yaml
@@ -240,6 +219,22 @@ package.json
     3→  "version": "2.34.0",
     5→  "description": "Self-hosted audiobook and podcast server",
     6→  "main": "index.js",
+    7→  "scripts": {
+    8→    "dev": "nodemon --watch server index.js -- --dev",
+    9→    "start": "node index.js",
+    10→    "start-dev": "node index.js --prod-with-dev-env",
+    11→    "client": "cd client && npm ci && npm run generate",
+    12→    "prod": "npm run client && npm ci && node index.js",
+    13→    "build-win": "npm run client && pkg -t node20-win-x64 -o ./dist/win/audiobookshelf -C GZip .",
+    14→    "build-win-no-compress": "npm run client && pkg -t node20-win-x64 -o ./dist/win/audiobookshelf .",
+    15→    "build-linux": "build/linuxpackager",
+    16→    "docker": "docker buildx build --platform linux/amd64,linux/arm64 --push .  -t advplyr/audiobookshelf",
+    17→    "docker-amd64-local": "docker buildx build --platform linux/amd64 --load .  -t advplyr/audiobookshelf-amd64-local",
+    18→    "docker-arm64-local": "docker buildx build --platform linux/arm64 --load .  -t advplyr/audiobookshelf-arm64-local",
+    19→    "deploy-linux": "node deploy/linux",
+    20→    "test": "mocha",
+    21→    "coverage": "nyc mocha"
+    22→  },
     23→  "bin": "index.js",
     38→  "author": "advplyr",
     39→  "license": "GPL-3.0",
@@ -258,7 +253,6 @@ readme.md
     17→Audiobookshelf is a self-hosted audiobook and podcast server.
     19→### Features
     …
-    21→- Fully **open-source**, including the [android & iOS app](https://github.com/advplyr/audiobookshelf-app) _(in beta)_
     22→- Stream all audio formats on the fly
     23→- Search and add podcasts to download episodes w/ auto-download
     24→- Multi-user support w/ custom permissions
@@ -294,8 +288,6 @@ readme.md
     82→<br />
     84→# Reverse Proxy Set Up
     …
-    86→#### Important! Audiobookshelf requires a websocket connection.
-    88→#### Note: Using a subfolder is supported with no additional changes but the path must be `/audiobookshelf` (this is not changeable). See [discussion](https://github.com/advplyr/audiobookshelf/discussions/3535)
     90→### NGINX Proxy Manager
     …
     96→### NGINX Reverse Proxy
@@ -306,8 +298,6 @@ readme.md
     …
     200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
     …
-    202→1. **Open Control Panel**
-    204→   - Navigate to `Login Portal > Advanced`.
     243→6. **Advanced Settings Tab**
     244→   - Leave as is.
     246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)
@@ -374,9 +364,6 @@ server/
             LibraryFile.js
         metadata/
         settings/
-            EmailSettings.js
-            NotificationSettings.js
-            ServerSettings.js
     providers/
         Audible.js
         AudiobookCovers.js
@@ -392,19 +379,6 @@ server/
         HlsRouter.js
         PublicRouter.js
     scanner/
-        AbsMetadataFileScanner.js
-        AudioFileScanner.js
-        BookScanner.js
-        LibraryItemScanData.js
-        LibraryItemScanner.js
-        LibraryScan.js
-        LibraryScanner.js
-        MediaProbeData.js
-        NfoFileScanner.js
-        OpfFileScanner.js
-        PodcastScanner.js
-        ScanLogger.js
-        Scanner.js
     utils/
 tailwind.config.js
 test/
