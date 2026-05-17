@@ -199,7 +199,14 @@ src/
         4→ * implementations of `debug()`.
         5→ */
         7→function setup(env) {
-        …
+        8→	createDebug.debug = createDebug;
+        9→	createDebug.default = createDebug;
+        10→	createDebug.coerce = coerce;
+        11→	createDebug.disable = disable;
+        12→	createDebug.enable = enable;
+        13→	createDebug.enabled = enabled;
+        14→	createDebug.humanize = require('ms');
+        15→	createDebug.destroy = destroy;
         292→module.exports = setup;
     index.js
         1→/**
@@ -248,12 +255,6 @@ src/
         191→ */
         193→function log(...args) {
         194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
-        197→/**
-        198→ * Save `namespaces`.
-        199→ *
-        200→ * @param {String} namespaces
-        201→ * @api private
-        202→ */
         203→function save(namespaces) {
         204→	if (namespaces) {
         205→		process.env.DEBUG = namespaces;

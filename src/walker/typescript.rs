@@ -58,7 +58,7 @@ use super::import_chunks::{
 };
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, build_per_file_content, dedup_sorted,
-    extend_span, file_depth_factor, file_lines_covered_by,
+    extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
     fs::{JS_MODULE_ENTRYPOINT_FILES, files_with_any_extension, is_source_dir},
     name_of, node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
     statement_block_parts,
@@ -723,6 +723,7 @@ fn find_export_starts<'a>(
             child,
             decl_node,
             file,
+            source,
             src_lines,
             is_type_only,
             false,
@@ -750,7 +751,7 @@ fn find_export_starts<'a>(
 
             let Some(kind) = kind else { continue };
             out.push(make_export_info(
-                start_line, kind, child, child, file, src_lines, false, false,
+                start_line, kind, child, child, file, source, src_lines, false, false,
             ));
             emitted_lines.insert(start_line);
         }
@@ -779,6 +780,7 @@ fn find_export_starts<'a>(
                         method.anchor,
                         method.fn_expr,
                         file,
+                        source,
                         src_lines,
                         false,
                         true,
@@ -800,6 +802,7 @@ fn make_export_info<'a>(
     anchor: Node<'a>,
     decl: Node<'a>,
     file: &Path,
+    source: &str,
     src_lines: &[&str],
     is_type_only: bool,
     is_prototype_method: bool,
@@ -820,7 +823,7 @@ fn make_export_info<'a>(
                 .collect(),
         )
     } else {
-        merged_body_parts(body_parts(decl, kind, src_lines))
+        merged_body_parts(body_parts(decl, kind, source, src_lines))
     };
     ExportInfo {
         start_line,
@@ -861,7 +864,7 @@ fn find_module_items(
             continue;
         }
         let lines = module_item_lines(kind, child, source);
-        let body_parts = body_parts(child, kind, src_lines);
+        let body_parts = body_parts(child, kind, source, src_lines);
         out.push(ModuleItemInfo {
             start_line,
             kind,
@@ -2460,7 +2463,12 @@ fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> 
         return Vec::new();
     };
     let src_lines: Vec<&str> = source.lines().collect();
-    merged_body_parts(body_parts(located.decl(), located.kind(), &src_lines))
+    merged_body_parts(body_parts(
+        located.decl(),
+        located.kind(),
+        source,
+        &src_lines,
+    ))
 }
 
 /// Body slices that the materializer emits for a declaration, after applying
@@ -2468,20 +2476,18 @@ fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> 
 /// split by top-level statement so regions can schedule independently; small
 /// blocks stay merged because per-slice atom overhead dominates their benefit.
 /// For classes, each method body is considered independently.
-fn body_parts(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<BodyPart> {
+fn body_parts(decl: Node, kind: ItemKind, source: &str, src_lines: &[&str]) -> Vec<BodyPart> {
     match kind {
-        ItemKind::Function => statement_block_parts(
-            decl.child_by_field_name("body"),
-            src_lines,
-            "statement_block",
-        ),
+        ItemKind::Function => {
+            function_body_parts(decl.child_by_field_name("body"), source, src_lines)
+        }
         ItemKind::Class => class_method_body_parts(decl, src_lines),
         ItemKind::Const => {
             // Const fn-init: arrow / function expression direct, or wrapped
             // through `forwardRef(props => {...})` / `memo(...)`. Pure-data
             // consts (object/array/primitive) yield no body.
             if let Some(body) = find_fn_init_body(decl) {
-                statement_block_parts(Some(body), src_lines, "statement_block")
+                function_body_parts(Some(body), source, src_lines)
             } else {
                 Vec::new()
             }
@@ -2490,18 +2496,16 @@ fn body_parts(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<BodyPart> {
             "function_declaration"
             | "function_expression"
             | "arrow_function"
-            | "generator_function" => statement_block_parts(
-                decl.child_by_field_name("body"),
-                src_lines,
-                "statement_block",
-            ),
+            | "generator_function" => {
+                function_body_parts(decl.child_by_field_name("body"), source, src_lines)
+            }
             "class" | "class_declaration" | "abstract_class_declaration" => {
                 class_method_body_parts(decl, src_lines)
             }
             "call_expression" | "parenthesized_expression" => {
                 // `export default forwardRef(props => {...})` etc.
                 if let Some(body) = descend_for_fn_body(decl, FN_BODY_DESCEND_DEPTH) {
-                    statement_block_parts(Some(body), src_lines, "statement_block")
+                    function_body_parts(Some(body), source, src_lines)
                 } else {
                     Vec::new()
                 }
@@ -2510,6 +2514,120 @@ fn body_parts(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<BodyPart> {
         },
         _ => Vec::new(),
     }
+}
+
+/// Body slices for a function/arrow body. Recognises the CommonJS factory
+/// idiom — `function setup(...) { R.foo = ...; R.bar = ...; ...; return
+/// R; }` — and substitutes the receiver-table prefix as the single
+/// `BodyPart`, in place of the standard per-statement split.
+///
+/// Without this hook all body lines go through `statement_block_parts`
+/// and `merged_body_parts` collapses them into one `BodyPart` carrying
+/// the entire body interior — a 200-300-line ExportBody for `debug`'s
+/// `src/common.js` (~750 tokens) that loses every budget race. The
+/// factory match swaps that whole-body slice for the table-only slice
+/// (~30 tokens), which DOES schedule into the auto-injection budget
+/// and is exactly the surface NS authors anchor on for this idiom
+/// (the `module.exports = setup` shape where `setup` returns and
+/// wires a shared receiver).
+///
+/// **Tradeoff**: the post-table interior (nested fn declarations,
+/// bootstrap call, return) no longer surfaces through ExportBody on
+/// matched factories. In practice the unsplit whole-body slice also
+/// fails to schedule (too expensive against typical budgets and
+/// later-segment damping), so this is an honest trade: ship the small
+/// table or ship nothing. If a future fixture wants both the table
+/// and post-table content as scheduled atoms, split this into a
+/// separate `FactoryExportsTable` BatchKey instead of folding into
+/// `ExportBody`.
+fn function_body_parts(body: Option<Node>, source: &str, src_lines: &[&str]) -> Vec<BodyPart> {
+    if let Some(b) = body
+        && let Some(part) = factory_receiver_table_part(b, source, src_lines)
+    {
+        return vec![part];
+    }
+    statement_block_parts(body, src_lines, "statement_block")
+}
+
+/// Minimum receiver-property assignments at the head of a function body
+/// for the factory-table fold to fire. Mirrors `JS_PROTOTYPE_METHOD_MIN`
+/// — below this floor the pattern is just two incidental property
+/// assignments, not a public-API wiring table.
+const FACTORY_RECEIVER_TABLE_MIN: usize = 3;
+
+/// If `body` is a `statement_block` matching the factory-table idiom
+/// — its tail contains `return R;` and its head is a run of
+/// `R.<prop> = <expr>` assignments to the same identifier `R` —
+/// return the head-run lines as a single `BodyPart`. Otherwise `None`.
+///
+/// The return-identifier gate keeps the fold tied to actual factories
+/// (the receiver IS the returned value): regular handlers that happen
+/// to start with property assignments on some object don't match
+/// because their return shape doesn't name that object.
+fn factory_receiver_table_part(body: Node, source: &str, src_lines: &[&str]) -> Option<BodyPart> {
+    if body.kind() != "statement_block" {
+        return None;
+    }
+    let mut cursor = body.walk();
+    let named: Vec<Node> = body.named_children(&mut cursor).collect();
+    let receiver = factory_return_identifier(&named, source)?;
+
+    let mut table_rows: Vec<usize> = Vec::new();
+    let mut count = 0usize;
+    for child in &named {
+        if !is_receiver_property_assignment(*child, source, receiver) {
+            break;
+        }
+        // BodyPart lines are 1-based; `extend_nonblank_rows` does the
+        // 0-based → 1-based conversion and applies the blank-line filter.
+        let start_row = child.start_position().row;
+        let end_row = child.end_position().row;
+        extend_nonblank_rows(&mut table_rows, src_lines, start_row, end_row);
+        count += 1;
+    }
+    if count < FACTORY_RECEIVER_TABLE_MIN {
+        return None;
+    }
+    let lines = dedup_sorted(table_rows);
+    (!lines.is_empty()).then_some(BodyPart { lines })
+}
+
+/// Return the identifier text of the first top-level `return
+/// <Identifier>;` statement in `named` (the function body's named
+/// children). Real factory bodies have exactly one bottom return;
+/// the gate also rejects `return obj.foo;` and `return;` (no
+/// argument or non-identifier argument).
+fn factory_return_identifier<'a>(named: &[Node<'a>], source: &'a str) -> Option<&'a str> {
+    named
+        .iter()
+        .find(|child| child.kind() == "return_statement")
+        .and_then(|ret| ret.named_child(0))
+        .and_then(|arg| identifier_text(arg, source))
+}
+
+/// True when `stmt` is a top-level `<receiver>.<prop> = <expr>;`
+/// assignment. Member-expression LHSs only — subscript and computed
+/// keys don't count toward the factory-table fold.
+fn is_receiver_property_assignment(stmt: Node, source: &str, receiver: &str) -> bool {
+    if stmt.kind() != "expression_statement" {
+        return false;
+    }
+    let Some(expr) = stmt.named_child(0) else {
+        return false;
+    };
+    if expr.kind() != "assignment_expression" {
+        return false;
+    }
+    let Some((left, _right)) = assignment_sides(expr) else {
+        return false;
+    };
+    if left.kind() != "member_expression" {
+        return false;
+    }
+    let Some((object, _property)) = member_object_property(left) else {
+        return false;
+    };
+    identifier_text(object, source).is_some_and(|name| name == receiver)
 }
 
 fn merged_body_parts(parts: Vec<BodyPart>) -> Vec<BodyPart> {
@@ -3094,6 +3212,79 @@ mod tests {
         // Body interior rows = 2..3 (line numbers 2, 3); brace rows 1, 4
         // skipped.
         assert_eq!(rows, vec![2, 3]);
+    }
+
+    #[test]
+    fn walker_typescript_factory_receiver_table_part_matches() {
+        // CommonJS factory idiom: `function setup(env) { R.x = ...; R.y =
+        // ...; R.z = ...; return R; }`. Without the factory-table fold
+        // body_parts splits per-statement and `body_part_value_factor`
+        // damps each one by `1 / parts.len()`; the merged single-part
+        // form keeps the table at full value so the ExportBody can
+        // schedule into the auto-injection budget.
+        let src = "\
+function setup(env) {
+  createDebug.debug = createDebug;
+  createDebug.default = createDebug;
+  createDebug.coerce = coerce;
+  function helper() { return 1; }
+  return createDebug;
+}
+module.exports = setup;
+";
+        let tree = parse(src);
+        let src_lines: Vec<&str> = src.lines().collect();
+        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
+        // One merged body part = the three R.x assignments (lines 2..4),
+        // *not* the rest of the body (helper line 5).
+        assert_eq!(setup.body_parts.len(), 1);
+        assert_eq!(setup.body_parts[0].lines, vec![2, 3, 4]);
+    }
+
+    #[test]
+    fn walker_typescript_factory_receiver_table_no_match_below_floor() {
+        // Two assignments is below `FACTORY_RECEIVER_TABLE_MIN` — fall
+        // back to the standard split (regular body interior emit).
+        let src = "\
+function setup() {
+  createDebug.a = 1;
+  createDebug.b = 2;
+  return createDebug;
+}
+module.exports = setup;
+";
+        let tree = parse(src);
+        let src_lines: Vec<&str> = src.lines().collect();
+        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
+        // Falls back to statement_block_parts — merged via
+        // `merged_body_parts` in `make_export_info` to a single part
+        // containing every interior line.
+        let lines = &setup.body_parts[0].lines;
+        assert!(lines.contains(&4), "fallback should include return line");
+    }
+
+    #[test]
+    fn walker_typescript_factory_receiver_table_no_match_no_return() {
+        // No `return <Identifier>;` — the fold requires the receiver IS
+        // the returned value.
+        let src = "\
+function init() {
+  obj.a = 1;
+  obj.b = 2;
+  obj.c = 3;
+}
+module.exports = init;
+";
+        let tree = parse(src);
+        let src_lines: Vec<&str> = src.lines().collect();
+        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let init = exports.iter().find(|e| e.start_line == 1).unwrap();
+        let lines = &init.body_parts[0].lines;
+        // Without a return-identifier the fold doesn't fire — fallback
+        // covers every interior line.
+        assert!(lines.contains(&2) && lines.contains(&3) && lines.contains(&4));
     }
 
     #[test]
