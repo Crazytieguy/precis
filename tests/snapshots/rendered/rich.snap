@@ -139,6 +139,17 @@ imgs/
 make.bat
 poetry.lock
 pyproject.toml
+    1→[tool.poetry]
+    2→name = "rich"
+    5→version = "15.0.0"
+    6→description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
+    8→license = "MIT"
+    9→readme = "README.md"
+    29→[tool.poetry.dependencies]
+    30→python = ">=3.9.0"
+    31→pygments = "^2.13.0"
+    32→ipywidgets = { version = ">=7.5.1,<9", optional = true }
+    33→markdown-it-py = ">=2.2.0"
 questions/
     README.md
         2→# Questions
@@ -169,12 +180,7 @@ rich/
         39→def reconfigure(*args: Any, **kwargs: Any) -> None:
         …
         53→def print(
-        54→    *objects: Any,
-        55→    sep: str = " ",
-        56→    end: str = "\n",
-        57→    file: Optional[IO[str]] = None,
-        58→    flush: bool = False,
-        59→) -> None:
+        …
         77→def print_json(
         …
         120→def inspect(
@@ -195,7 +201,6 @@ rich/
     _emoji_replace.py
     _export_format.py
     _extension.py
-        1→from typing import Any
         4→def load_ipython_extension(ip: Any) -> None:  # pragma: no cover
         5→    # prevent circular import
     _fileno.py
@@ -216,7 +221,6 @@ rich/
         69→NULL_FILE = NullFile()
     _palettes.py
     _pick.py
-        1→from typing import Optional
         4→def pick_bool(*values: Optional[bool]) -> bool:
         …
     _ratio.py
@@ -228,7 +232,6 @@ rich/
         7→    """A small shim over builtin list."""
         9→    @property
         10→    def top(self) -> T:
-        11→        """Get top of stack."""
         14→    def push(self, item: T) -> None:
         …
     _timer.py
@@ -246,7 +249,6 @@ rich/
         …
     _wrap.py
     abc.py
-        1→from abc import ABC
         4→class RichRenderable(ABC):
         …
         15→    @classmethod
@@ -293,14 +295,7 @@ rich/
     jupyter.py
     layout.py
     live.py
-        22→class _RefreshThread(Thread):
-        …
-        41→class Live(JupyterMixin, RenderHook):
-        …
     live_render.py
-        10→VerticalOverflowMethod = Literal["crop", "ellipsis", "visible"]
-        13→class LiveRender:
-        …
     logging.py
         24→class RichHandler(Handler):
         …
@@ -371,9 +366,6 @@ rich/
         5→DEFAULT = Theme(DEFAULT_STYLES)
     traceback.py
     tree.py
-        11→GuideType = Tuple[str, str, str, str]
-        14→class Tree(JupyterMixin):
-        …
 setup.py
     5→import setuptools
 tests/

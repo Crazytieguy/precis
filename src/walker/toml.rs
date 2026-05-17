@@ -41,7 +41,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in toml_files {
         if let Some(content) = build_section_content(&file, ctx, |n| {
-            matches!(n, "package" | "workspace" | "workspace.package" | "project")
+            matches!(
+                n,
+                "package" | "workspace" | "workspace.package" | "project" | "tool.poetry"
+            )
         }) {
             out.push(Batch {
                 key: TomlKey::Identity { file: file.clone() }.into(),
@@ -81,7 +84,11 @@ fn build_dependencies_content(file: &Path, ctx: &WalkCtx) -> Option<crate::conte
     for (name, start, end) in collect_sections(&tree, &source) {
         if matches!(
             name.as_str(),
-            "dependencies" | "dev-dependencies" | "build-dependencies" | "workspace.dependencies"
+            "dependencies"
+                | "dev-dependencies"
+                | "build-dependencies"
+                | "workspace.dependencies"
+                | "tool.poetry.dependencies"
         ) {
             line_numbers.extend(start..=end);
         }
@@ -170,7 +177,7 @@ fn build_section_content(
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start_line, end_line) in sections {
         if name_match(&name) {
-            if name == "project" {
+            if is_pyproject_identity_table(&name) {
                 line_numbers.extend(project_identity_lines(
                     &source, start_line, end_line, pyproject,
                 ));
@@ -248,18 +255,23 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
-    // Pyproject *shape* — any TOML file with a `[project]` table follows
-    // the PEP 621 layout convention regardless of filename. Catches
-    // alternatives like peepdb's `project.toml` alongside the standard
-    // `pyproject.toml`. Cargo.toml never matches (it uses `[package]`).
+    // Pyproject *shape* — any TOML file with a `[project]` (PEP 621) or
+    // `[tool.poetry]` (Poetry, predates PEP 621 and still widely used)
+    // table follows the pyproject layout convention regardless of
+    // filename. Catches alternatives like peepdb's `project.toml`
+    // alongside the standard `pyproject.toml`. Cargo.toml never matches
+    // (it uses `[package]`).
     let (source, tree) = parse_toml(ctx, file)?;
     let sections = collect_sections(&tree, &source);
-    if !sections.iter().any(|(name, _, _)| name == "project") {
+    if !sections
+        .iter()
+        .any(|(name, _, _)| is_pyproject_identity_table(name))
+    {
         return None;
     }
     let project_is_lede = sections
         .first()
-        .is_some_and(|(name, _, _)| name == "project");
+        .is_some_and(|(name, _, _)| is_pyproject_identity_table(name));
     if !project_is_lede {
         return Some(PYPROJECT_NON_LEDE_IDENTITY_FACTOR);
     }
@@ -271,6 +283,15 @@ fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
     } else {
         PYPROJECT_LEDE_IDENTITY_FACTOR
     })
+}
+
+/// `[project]` (PEP 621) and `[tool.poetry]` (Poetry) are the two TOML
+/// identity tables a pyproject file can lead with. Both carry the same
+/// `name` / `version` / `description` / `license` / `readme` scalars
+/// at the head of the table, so the lede-detection and scalar-filter
+/// logic treats them identically.
+fn is_pyproject_identity_table(name: &str) -> bool {
+    matches!(name, "project" | "tool.poetry")
 }
 
 fn features_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -502,6 +523,37 @@ Homepage = "https://example.com"
         let narrow = project_identity_lines(source, 1, 9, false);
         // Narrow set: header + name + description.
         assert_eq!(narrow, vec![1, 2, 4]);
+    }
+
+    /// Poetry-style pyproject (`[tool.poetry]` as lede table) is
+    /// classified the same as PEP 621 `[project]`: same scalar filter,
+    /// same lede-detection signal. Both rich and beets ship Poetry
+    /// pyprojects in the corpus.
+    #[test]
+    fn walker_toml_poetry_table_treated_as_pyproject_identity() {
+        assert!(is_pyproject_identity_table("tool.poetry"));
+        assert!(is_pyproject_identity_table("project"));
+        assert!(!is_pyproject_identity_table("tool.poetry.dependencies"));
+        assert!(!is_pyproject_identity_table("package"));
+
+        // The same scalar filter applies to a `[tool.poetry]` table —
+        // name / version / description / license / readme are the broad
+        // set in both layouts.
+        let source = r#"[tool.poetry]
+name = "rich"
+homepage = "https://github.com/Textualize/rich"
+documentation = "https://rich.readthedocs.io/en/latest/"
+version = "15.0.0"
+description = "Render rich text"
+authors = ["Will McGugan <willmcgugan@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+"#;
+        let broad = project_identity_lines(source, 1, 9, true);
+        // Header (1) + name (2) + version (5) + description (6) +
+        // license (8) + readme (9). homepage / documentation are not
+        // in the broad set; authors is array-valued.
+        assert_eq!(broad, vec![1, 2, 5, 6, 8, 9]);
     }
 
     /// mdbook fixture: explicit `crates/*` glob, three literal entries
