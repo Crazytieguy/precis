@@ -2563,6 +2563,9 @@ const TS_JS_EXTS: &[&str] = &["ts", "tsx", "js", "mjs", "cjs", "d.ts", "d.mts", 
 
 /// Recursively walk `dir` for files whose basename `is_entrypoint_file`
 /// recognizes. Skips heavy / generated trees via [`fs::should_skip_dir`].
+/// Results are sorted so the BFS frontier in [`compute_public_surface`]
+/// processes files in a stable order regardless of `read_dir`'s
+/// OS-dependent listing.
 fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
     fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
         let Ok(read_dir) = std::fs::read_dir(dir) else {
@@ -2587,6 +2590,7 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
     }
     let mut out = Vec::new();
     walk(root, &mut out);
+    out.sort();
     out
 }
 
