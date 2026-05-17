@@ -428,14 +428,22 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
     } else {
         heading_slab_value(file, range.parent_index, ctx)
     };
-    let sub_scale = if is_readme(file) {
+    let h3_scale = if range.parent_is_concept_h2 {
+        README_CONCEPT_H3_SIGNAL_SCALE
+    } else if is_readme(file) {
+        README_SUB_SECTION_SIGNAL_SCALE
+    } else {
+        SUB_SECTION_SIGNAL_SCALE
+    };
+    let bullet_scale = if is_readme(file) {
         README_SUB_SECTION_SIGNAL_SCALE
     } else {
         SUB_SECTION_SIGNAL_SCALE
     };
     match range.kind {
         SectionKind::Whole | SectionKind::Intro => parent,
-        SectionKind::H3Child | SectionKind::BulletItem => parent * sub_scale,
+        SectionKind::H3Child => parent * h3_scale,
+        SectionKind::BulletItem => parent * bullet_scale,
         SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
     }
 }
@@ -447,6 +455,16 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
 /// body fragments in the early budget. Non-README docs (CHANGELOG,
 /// ARCHITECTURE, /docs pages) keep the conservative discount.
 const README_SUB_SECTION_SIGNAL_SCALE: f64 = 0.55;
+
+/// Stronger scale for H3 children under a README H2 whose title is an
+/// orientation-concept marker (`## Concepts`, `## Architecture`, …; see
+/// [`is_concept_h2_title`]). Such H3s are the named concept definitions
+/// NS authors anchor on; the generic
+/// `README_SUB_SECTION_SIGNAL_SCALE` keeps them behind per-decl
+/// surfaces in the early budget. The boost only applies when the
+/// parent H2 title matches the marker set, so it doesn't lift
+/// elaboration H3s under arbitrary topical H2s.
+const README_CONCEPT_H3_SIGNAL_SCALE: f64 = 1.0;
 
 fn is_changelog_class(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
@@ -1102,6 +1120,15 @@ struct SectionRange {
     kind: SectionKind,
     parent_index: usize,
     synthetic_intro_present: bool,
+    /// True when this range's parent H2's title is an orientation-concept
+    /// marker (`Concepts`, `Architecture`, `Overview`, …; see
+    /// [`is_concept_h2_title`]). Lets `section_value` boost `H3Child`
+    /// ranges under such H2s — the H3s there are the canonical concept
+    /// definitions NS authors anchor on. Always false for non-README
+    /// files. Always false for `BulletItem` / `BodyBlock` / `Whole` /
+    /// `Intro` because those kinds aren't H3 concept rows even when
+    /// they live under a matching H2.
+    parent_is_concept_h2: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1155,6 +1182,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
     let synthetic_intro_present =
         matches!(entries.first(), Some(TopLevelEntry::SyntheticIntro { .. }));
 
+    let readme = is_readme(file);
     let mut out = Vec::with_capacity(entries.len());
     for (parent_idx, entry) in entries.iter().enumerate() {
         match entry {
@@ -1165,6 +1193,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     kind: SectionKind::Whole,
                     parent_index: parent_idx,
                     synthetic_intro_present,
+                    parent_is_concept_h2: false,
                 });
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -1195,6 +1224,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             kind: SectionKind::BulletItem,
                             parent_index: parent_idx,
                             synthetic_intro_present,
+                            parent_is_concept_h2: false,
                         });
                     }
                     continue;
@@ -1215,12 +1245,14 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                         synthetic_intro_present,
                         source,
                     );
+                    let concept_h2 = readme && is_concept_h2_title(*node, source);
                     for h3 in &h3s {
                         push_h3_child_or_body_blocks(
                             &mut out,
                             *h3,
                             parent_idx,
                             synthetic_intro_present,
+                            concept_h2,
                             source,
                         );
                     }
@@ -1240,6 +1272,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             kind: SectionKind::Whole,
                             parent_index: parent_idx,
                             synthetic_intro_present,
+                            parent_is_concept_h2: false,
                         });
                     }
                 }
@@ -1277,6 +1310,7 @@ fn push_intro<'a>(
         kind: SectionKind::Intro,
         parent_index: parent_idx,
         synthetic_intro_present,
+        parent_is_concept_h2: false,
     });
 }
 
@@ -1285,6 +1319,7 @@ fn push_h3_child_or_body_blocks(
     h3_section: Node<'_>,
     parent_idx: usize,
     synthetic_intro_present: bool,
+    parent_is_concept_h2: bool,
     source: &str,
 ) {
     let (h3_start, h3_end) = node_row_range(h3_section, source);
@@ -1303,6 +1338,7 @@ fn push_h3_child_or_body_blocks(
         kind: SectionKind::H3Child,
         parent_index: parent_idx,
         synthetic_intro_present,
+        parent_is_concept_h2,
     });
 }
 
@@ -1321,6 +1357,7 @@ fn push_body_block_ranges(
         kind: SectionKind::BodyBlock,
         parent_index: parent_idx,
         synthetic_intro_present,
+        parent_is_concept_h2: false,
     }));
     true
 }
@@ -1581,6 +1618,53 @@ fn direct_h3_children<'a>(h2_section: Node<'a>) -> Vec<Node<'a>> {
         .filter(|c| c.kind() == "section")
         .filter(|c| first_heading_child(*c).is_some_and(|h| heading_level(h) == 3))
         .collect()
+}
+
+/// True iff the H2 section's heading text is an orientation-concept
+/// marker. The H3 children of such an H2 are typically the canonical
+/// concept definitions an NS author would anchor on (monaco-editor's
+/// `## Concepts` → Models / URIs / Editors / Providers / Disposables)
+/// rather than elaboration sub-sections of a longer topic. Used by
+/// `section_value` to lift those H3 rows above the generic
+/// `README_SUB_SECTION_SIGNAL_SCALE` so they compete with per-decl
+/// surfaces in the early budget.
+///
+/// Matching is case-insensitive and on the heading's plain text only
+/// (badges / decorative inlines are tolerated because the title is
+/// matched as a prefix word). The set is intentionally narrow:
+/// "Getting Started" / "Installation" H3s tend to be procedural steps,
+/// not concepts, so they are excluded.
+fn is_concept_h2_title(h2_section: Node<'_>, source: &str) -> bool {
+    let Some(heading) = first_heading_child(h2_section) else {
+        return false;
+    };
+    let Some(inline) = first_child_of_kind(heading, "inline") else {
+        return false;
+    };
+    let text = source[inline.start_byte()..inline.end_byte()]
+        .trim()
+        .to_ascii_lowercase();
+    // Strip a trailing emoji / decoration run by keeping the
+    // alphanumeric-and-space prefix.
+    let core: String = text
+        .chars()
+        .take_while(|c| c.is_ascii_alphanumeric() || c.is_ascii_whitespace())
+        .collect();
+    let core = core.trim();
+    matches!(
+        core,
+        "concepts"
+            | "core concepts"
+            | "key concepts"
+            | "architecture"
+            | "overview"
+            | "fundamentals"
+            | "primitives"
+            | "building blocks"
+            | "glossary"
+            | "terminology"
+            | "theory of operation"
+    )
 }
 
 /// True iff the source-row range `[start, end]` of `section` has any
