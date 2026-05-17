@@ -558,6 +558,12 @@ fn emit_export_body_parts(
     predecessor: &BatchKey,
 ) {
     let part_value_factor = body_part_value_factor(parts.len());
+    // Class method bodies are peer units (one body batch per method) —
+    // the late-body decay targets long function-body chains in catalog
+    // files where later segments are redundant detail, but each class
+    // method is its own semantic unit. Mirrors the ModuleItem class-
+    // body path which already bypasses the decay.
+    let is_class_peer = matches!(item.kind, ItemKind::Class | ItemKind::Default);
     for part in parts {
         let Some(body_start_line) = part.start_line() else {
             continue;
@@ -566,6 +572,11 @@ fn emit_export_body_parts(
             single_file_lines_content(emit.file, emit.source, FileLines::new(part.lines))
         else {
             continue;
+        };
+        let segment_factor = if is_class_peer {
+            1.0
+        } else {
+            body_segment_value_factor(*emit.body_segment_index)
         };
         out.push(Batch {
             key: TsKey::ExportBody {
@@ -579,9 +590,11 @@ fn emit_export_body_parts(
             value: export_body_value(emit.file, item.kind, emit.ctx, emit.js_factor)
                 * emit.per_export_factor
                 * part_value_factor
-                * body_segment_value_factor(*emit.body_segment_index),
+                * segment_factor,
         });
-        *emit.body_segment_index += 1;
+        if !is_class_peer {
+            *emit.body_segment_index += 1;
+        }
     }
 }
 

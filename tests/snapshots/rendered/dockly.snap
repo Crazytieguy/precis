@@ -8,7 +8,6 @@ expression: rendered
 .npmrc
 .nvmrc
 .vscode/
-    launch.json
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Dockerfile
@@ -35,90 +34,29 @@ README.md
     …
     65→## Run from docker
     …
-    67→You can run dockly using docker:
-    69→```
-    70→docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock lirantal/dockly
-    71→```
     74→## Build
     …
-    76→If you wish to build dockly as a docker image yourself, you can run the following:
-    78→```
-    79→$ docker build -t dockly .
-    81→$ docker run -it --rm --name dockly -v /var/run/docker.sock:/var/run/docker.sock dockly
-    82→```
     84→# FAQ
     …
     125→## Alternatives
     …
     129→# In the news
     …
-    131→- Admin Magazine article: [Visualizing containers with clarity
-    132→](https://www.admin-magazine.com/Articles/Visualizing-containers-with-clarity)
-    133→- [A learnk8s tweet](https://twitter.com/learnk8s/status/1075677503782563840)
-    134→- [Dockly – Manage Docker Containers From Terminal](https://ostechnix.com/dockly-manage-docker-containers-from-terminal/)
-    135→- [Clever cloud CEO, Quentin Adam, tweeting about dockly](https://twitter.com/waxzce/status/1123886351924043777)
     137→# Author
     …
 SECURITY.md
 codefresh.yml
 dockerRunScript.sh
 docs/
-    .gitignore
-    .prettierrc
-    LICENSE
-    README.md
-    gatsby-browser.js
-    gatsby-config.js
-    gatsby-node.js
-    gatsby-ssr.js
-    package.json
-    src/
-        assets/
-        components/
-            Footer.js
-            Header.js
-            HeaderGeneric.js
-            Nav.js
-            Scroll.js
-            layout.js
-        pages/
-            404.js
-            generic.js
-            index.js
 hooks/
     containers.hook.js
     images.hook.js
     services.hook.js
     shell.hook.js
 index.js
-    2→'use strict'
-    4→const { EventEmitter } = require('events')
-    10→const semver = require('semver')
-    11→const chalk = require('chalk')
-    12→const nodeVersion = require('./lib/node.version')
-    13→const Screen = require('./src/screen')
-    14→const DockerUtil = require('./src/dockerUtil')
-    15→const cli = require('./src/cli')
     17→const cliOptions = cli.cliParse()
     47→function initDockerConnection () {
-    48→  return new Promise((resolve, reject) => {
-    49→    let utils
-    50→    let docker
-    52→    try {
-    53→      docker = new DockerUtil(cli.cliParse())
-    54→    } catch (err) {
-    55→      return exitError(err)
-    56→    }
-    58→    docker.ping((err) => {
-    59→      if (err) {
-    60→        return reject(err)
-    61→      }
-    63→      utils = new Map([
-    64→        ['docker', docker]
-    65→      ])
-    67→      return resolve(utils)
-    68→    })
-    69→  })
+    …
     72→function initScreens (utils) {
     73→  return new Promise((resolve, reject) => {
     74→    let screen
@@ -161,67 +99,140 @@ package.json
     63→  "license": "MIT",
 src/
     assetsLoader.js
-        10→class assetsLoader {
-        11→  static load () {
-        …
-        16→  static resolveAssetFiles () {
-        …
-        39→  static formatAsset (assetPath) {
-        …
-        44→module.exports = assetsLoader
     baseWidget.js
         4→module.exports = (extendsClass = class {}) => {
         …
     cli.js
-        1→'use strict'
-        3→const commandLineArgs = require('command-line-args')
-        4→const commandLineUsage = require('command-line-usage')
-        6→const pkg = require('../package.json')
         97→module.exports = new Cli()
     dockerUtil.js
-        1→'use strict'
-        3→const DockerLib = require('dockerode')
         5→class Util {
         6→  constructor (config) {
         …
         33→  ping (cb) {
-        …
+        34→    this.dockerCon.ping(function (err, data) {
+        35→      if (err) {
+        36→        return cb(err, {})
+        37→      }
+        39→      return cb(null, data)
+        40→    })
         43→  listImages (cb) {
-        …
+        44→    this.dockerCon.listImages(function (err, images) {
+        45→      if (err) {
+        46→        return cb(err, {})
+        47→      }
+        49→      if (images) {
+        50→        return cb(null, images)
+        51→      }
+        52→    })
         55→  systemDf (cb) {
-        …
+        56→    this.dockerCon.df((err, data) => {
+        57→      if (err) {
+        58→        return cb(err, {})
+        59→      }
+        61→      return cb(data)
+        62→    })
         65→  listContainers (cb) {
-        …
+        66→    this.dockerCon.listContainers({
+        67→      'all': true,
+        68→      'filters': this.containerFilters
+        69→    }, function (err, containers) {
+        70→      if (err) {
+        71→        return cb(err, {})
+        72→      }
+        74→      return cb(null, containers)
+        75→    })
         78→  listServices (cb) {
-        …
+        79→    this.dockerCon.listServices({ 'all': true }, function (err, containers) {
+        80→      if (err) {
+        81→        return cb(err, {})
+        82→      }
+        84→      return cb(null, containers)
+        85→    })
         88→  stopAllContainers (cb) {
-        …
+        89→    this.listContainers((err, containers) => {
+        90→      if (err) {
+        91→        return cb(err, {})
+        92→      }
+        94→      containers.forEach((containerInfo) => {
+        95→        this.stopContainer(containerInfo.Id, cb)
+        96→      })
+        97→    })
         100→  removeAllContainers (cb) {
-        …
+        101→    this.listContainers((err, containers) => {
+        102→      if (err) {
+        103→        return cb(err, {})
+        104→      }
+        106→      containers.forEach((containerInfo) => {
+        107→        this.removeContainer(containerInfo.Id, cb)
+        108→      })
+        109→    })
         112→  removeAllImages (cb) {
-        …
+        113→    this.listImages((err, images) => {
+        114→      if (err) {
+        115→        return cb(err, {})
+        116→      }
+        118→      images.forEach((imageInfo) => {
+        119→        this.removeImage(imageInfo.Id, cb)
+        120→      })
+        121→    })
         124→  getInfo (cb) {
-        …
+        125→    const host = {}
         155→  getContainer (containerId, cb) {
-        …
+        156→    const container = this.dockerCon.getContainer(containerId)
+        157→    return container.inspect(cb)
         160→  getService (serviceId, cb) {
-        …
+        161→    const service = this.dockerCon.getService(serviceId)
+        162→    return service.inspect(cb)
         165→  getImage (imageId, cb) {
-        …
+        166→    const image = this.dockerCon.getImage(imageId)
+        167→    image.inspect(cb)
         170→  restartContainer (containerId, cb) {
-        …
+        171→    const container = this.dockerCon.getContainer(containerId)
+        172→    container.restart(cb)
         175→  stopContainer (containerId, cb) {
-        …
+        176→    const container = this.dockerCon.getContainer(containerId)
+        177→    container.stop(cb)
         180→  removeContainer (containerId, cb) {
-        …
+        181→    const container = this.dockerCon.getContainer(containerId)
+        182→    container.remove({
+        183→      force: true
+        184→    }, cb)
         187→  removeImage (imageId, cb) {
-        …
+        188→    const image = this.dockerCon.getImage(imageId)
+        189→    image.remove({
+        190→      force: true
+        191→    }, cb)
         194→  getContainerStats (containerId, cb) {
-        …
+        195→    if (!containerId) {
+        196→      return cb(null)
+        197→    }
+        199→    const container = this.dockerCon.getContainer(containerId)
+        200→    container.stats({ stream: false }, function (err, stream) {
+        201→      if (err) {
+        202→        return cb(null)
+        203→      }
+        204→      return cb(stream)
+        205→    })
         208→  getContainerLogs (containerId, cb) {
-        …
+        209→    const container = this.dockerCon.getContainer(containerId)
+        210→    return container.logs({
+        211→      follow: true,
+        212→      stdout: true,
+        213→      stderr: true,
+        214→      details: false,
+        215→      tail: 50,
+        216→      timestamps: true
+        217→    }, cb)
         220→  getServiceLogs (serviceId, cb) {
-        …
+        221→    const service = this.dockerCon.getService(serviceId)
+        222→    return service.logs({
+        223→      follow: true,
+        224→      stdout: true,
+        225→      stderr: true,
+        226→      details: false,
+        227→      tail: 50,
+        228→      timestamps: true
+        229→    }, cb)
         233→module.exports = Util
     enum.js
         1→module.exports = {
@@ -241,33 +252,43 @@ src/
         31→    this.hooks = new Map()
         32→    this.widgets = new Map()
         35→  initScreen () {
-        36→    this.screen = blessed.screen({
-        37→      title: this.title,
-        38→      fullUnicode: true,
-        39→      dockBorders: true,
-        40→      smartCSR: true
-        41→    })
-        43→    // initialize 12x12 grid
-        44→    // eslint-disable-next-line new-cap
-        45→    this.grid = new contrib.grid({ rows: 12, cols: 12, hideBorder: true, screen: this.screen })
+        …
         48→  init () {
         …
         71→  initHooks () {
-        …
+        72→    for (let [hookName, HookObject] of this.assets.get('hooks').entries()) {
+        73→      let hook = new HookObject()
+        74→      this.hooks.set(hookName, hook)
+        75→      this.widgetsRepository.set(hookName, hook)
+        76→    }
         79→  clearHooks () {
-        …
+        80→    for (let [hookName] of this.assets.get('hooks').entries()) {
+        81→      this.hooks.delete(hookName)
+        82→      this.widgetsRepository.delete(hookName)
+        83→    }
         86→  initWidgets () {
-        …
+        87→    const layout = GRID_LAYOUT[this.mode]
         107→  clearWidgets () {
-        …
+        108→    for (let [widgetName] of this.assets.get('widgets').entries()) {
+        109→      this.widgets.delete(widgetName)
+        110→      this.widgetsRepository.delete(widgetName)
+        111→    }
         114→  setWidgetsRepo () {
-        …
+        115→    for (let widgetObject of this.widgetsRepository.values()) {
+        116→      widgetObject.setWidgetsRepo(this.widgetsRepository)
+        117→    }
         120→  setWidgetsUtils () {
-        …
+        121→    for (let widgetObject of this.widgetsRepository.values()) {
+        122→      widgetObject.setUtilsRepo(this.utils)
+        123→    }
         126→  setWidgetsInit () {
-        …
+        127→    for (let widgetObject of this.widgetsRepository.values()) {
+        128→      widgetObject.init()
+        129→    }
         132→  renderWidgets () {
-        …
+        133→    for (let widgetObject of this.widgets.values()) {
+        134→      widgetObject.renderWidget()
+        135→    }
         138→  toggleMode () {
         …
         152→  registerEvents () {
@@ -275,65 +296,15 @@ src/
         180→  render () {
         …
         192→  teardown () {
-        …
+        193→    this.screen.destroy()
         197→module.exports = screen
     themes/
-        styles.js
-            55→module.exports = {
-            56→  darkStyle,
-            57→  lightStyle
-            58→}
-        theme.selector.js
-            13→module.exports = () => {
-            …
     widgetsTemplates/
         base.hook.template.js
-            6→class myWidget extends baseWidget(EventEmitter) {
-            7→  copyItemIdToClipboard () {
-            …
-            29→  getSelectedItem () {
-            …
-            34→module.exports = myWidget
         help.widget.template.js
-            5→class myWidget extends baseWidget() {
-            …
-            144→module.exports = myWidget
         info.widget.template.js
-            6→class myWidget extends baseWidget() {
-            …
-            121→module.exports = myWidget
         list.widget.template.js
-            8→class myWidget extends baseWidget(EventEmitter) {
-            …
-            21→  init () {
-            …
-            88→  getWidget () {
-            …
-            107→  refreshList () {
-            …
-            119→  getItemId (item) {
-            …
-            127→  getLabel () {
-            …
-            131→  getListItems (cb) {
-            …
-            135→  getItemLogs (cb) {
-            …
-            139→  updateItemLogs (str) {
-            …
-            143→  clearItemLogs (str) {
-            …
-            147→  filterList (data) {
-            …
-            151→  formatList (data) {
-            …
-            155→  update (data) {
-            …
-            161→module.exports = myWidget
         logs.widget.template.js
-            7→class myWidget extends baseWidget() {
-            …
-            89→module.exports = myWidget
 widgets/
     actionStatus.widget.js
     actionsMenu.widget.js
