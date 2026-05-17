@@ -57,34 +57,12 @@ Readme.md
     77→  * Executable for generating applications quickly
     79→## Docs & Community
     …
-    81→  * [Website and Documentation](https://expressjs.com/) - [[website repo](https://github.com/expressjs/expressjs.com)]
-    82→  * [GitHub Organization](https://github.com/expressjs) for Official Middleware & Modules
-    83→  * [Github Discussions](https://github.com/expressjs/discussions) for discussion on the development and usage of Express
-    85→**PROTIP** Be sure to read the [migration guide to v5](https://expressjs.com/en/guide/migrating-5)
     87→## Quick Start
     …
     117→## Philosophy
     …
-    119→  The Express philosophy is to provide small, robust tooling for HTTP servers, making
-    120→  it a great solution for single page applications, websites, hybrids, or public
-    121→  HTTP APIs.
-    123→  Express does not force you to use any specific ORM or template engine. With support for over
-    124→  14 template engines via [@ladjs/consolidate](https://github.com/ladjs/consolidate),
-    125→  you can quickly craft your perfect framework.
     127→## Examples
     …
-    129→  To view the examples, clone the Express repository:
-    131→```bash
-    132→git clone https://github.com/expressjs/express.git --depth 1 && cd express
-    133→```
-    135→  Then install the dependencies:
-    137→```bash
-    138→npm install
-    139→```
-    141→  Then run whichever example you want:
-    143→```bash
-    144→node examples/content-negotiation
-    145→```
     147→## Contributing
     …
     149→The Express.js project welcomes all constructive contributions. Contributions take many forms,
@@ -97,12 +75,8 @@ Readme.md
     …
     173→## Current project team members
     …
-    175→For information about the governance of the express.js project, see [GOVERNANCE.md](https://github.com/expressjs/discussions/blob/HEAD/docs/GOVERNANCE.md).
-    177→The original author of Express is [TJ Holowaychuk](https://github.com/tj)
-    179→[List of all contributors](https://github.com/expressjs/express/graphs/contributors)
     181→### TC (Technical Committee)
     …
-    183→* [UlisesGascon](https://github.com/UlisesGascon) - **Ulises Gascón** (he/him)
     184→* [jonchurch](https://github.com/jonchurch) - **Jon Church**
     185→* [wesleytodd](https://github.com/wesleytodd) - **Wes Todd**
     186→* [LinusU](https://github.com/LinusU) - **Linus Unnebäck**
@@ -114,80 +88,107 @@ Readme.md
     193→<summary>TC emeriti members</summary>
     205→### Triagers
     …
-    207→* [aravindvnair99](https://github.com/aravindvnair99) - **Aravind Nair**
-    208→* [bjohansebas](https://github.com/bjohansebas) - **Sebastian Beltran**
     209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
     210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
-    211→* [UlisesGascon](https://github.com/UlisesGascon) - **Ulises Gascón** (he/him)
-    212→* [IamLizu](https://github.com/IamLizu) - **S M Mahmudul Hasan** (he/him)
-    213→* [Phillip9587](https://github.com/Phillip9587) - **Phillip Barta**
-    214→* [efekrskl](https://github.com/efekrskl) - **Efe Karasakal**
-    215→* [rxmarbles](https://github.com/rxmarbles) - **Rick Markins** (he/him)
     216→* [krzysdz](https://github.com/krzysdz)
-    217→* [GroophyLifefor](https://github.com/GroophyLifefor) - **Murat Kirazkaya**
     219→<details>
     220→<summary>Triagers emeriti members</summary>
     263→## License
     …
 examples/
-    README.md
-    auth/
-    content-negotiation/
-        db.js
-        index.js
-        users.js
-    cookie-sessions/
-    cookies/
-    downloads/
-    ejs/
-    error/
-    error-pages/
-    hello-world/
-    markdown/
-    multi-router/
-    mvc/
-        controllers/
-            main/
-            pet/
-            user/
-            user-pet/
-        db.js
-        index.js
-        lib/
-            boot.js
-        public/
-        views/
-    online/
-    params/
-    resource/
-    route-map/
-    route-middleware/
-    route-separation/
-        index.js
-        post.js
-        public/
-        site.js
-        user.js
-        views/
-    search/
-    session/
-    static-files/
-    vhost/
-    view-constructor/
-    view-locals/
-    web-service/
 index.js
     9→'use strict';
     11→module.exports = require('./lib/express');
 lib/
     application.js
+        9→'use strict';
+        16→var finalhandler = require('finalhandler');
+        59→app.init = function init() {
+        …
+        85→/**
+        86→ * Initialize application configuration.
+        87→ * @private
+        88→ */
+        90→app.defaultConfiguration = function defaultConfiguration() {
+        …
+        152→app.handle = function handle(req, res, callback) {
+        …
+        190→app.use = function use(fn) {
+        …
+        256→app.route = function route(path) {
+        …
+        294→app.engine = function engine(ext, fn) {
+        …
+        322→app.param = function param(name, fn) {
+        …
+        351→app.set = function set(setting, val) {
+        …
+        399→app.path = function path() {
+        …
+        420→app.enabled = function enabled(setting) {
+        …
+        439→app.disabled = function disabled(setting) {
+        …
+        451→app.enable = function enable(setting) {
+        …
+        463→app.disable = function disable(setting) {
+        …
+        494→app.all = function all(path) {
+        …
+        522→app.render = function render(name, options, callback) {
+        …
+        598→app.listen = function listen() {
+        …
     express.js
+        9→'use strict';
+        15→var bodyParser = require('body-parser')
+        58→/**
+        59→ * Expose the prototypes.
+        60→ */
+        62→exports.application = proto;
+        63→exports.request = req;
+        64→exports.response = res;
+        …
+        66→/**
+        67→ * Expose constructors.
+        68→ */
+        70→exports.Route = Router.Route;
+        71→exports.Router = Router;
+        …
+        73→/**
+        74→ * Expose middleware
+        75→ */
+        77→exports.json = bodyParser.json
+        78→exports.raw = bodyParser.raw
+        79→exports.static = require('serve-static');
+        80→exports.text = bodyParser.text
+        81→exports.urlencoded = bodyParser.urlencoded
     request.js
+        9→'use strict';
+        16→var accepts = require('accepts');
+        32→/**
+        33→ * Module exports.
+        34→ * @public
+        35→ */
         37→module.exports = req
         …
         63→req.get =
         64→req.header = function header(name) {
-        …
+        65→  if (!name) {
+        66→    throw new TypeError('name argument is required to req.get');
+        67→  }
+        69→  if (typeof name !== 'string') {
+        70→    throw new TypeError('name must be a string to req.get');
+        71→  }
+        73→  var lc = name.toLowerCase();
+        75→  switch (lc) {
+        76→    case 'referer':
+        77→    case 'referrer':
+        78→      return this.headers.referrer
+        79→        || this.headers.referer;
+        80→    default:
+        81→      return this.headers[lc];
+        82→  }
         127→req.accepts = function(){
         128→  var accept = accepts(this);
         129→  return accept.types.apply(accept, arguments);
@@ -204,9 +205,89 @@ lib/
         269→req.is = function is(types) {
         …
     response.js
+        8→'use strict';
+        15→var contentDisposition = require('content-disposition');
+        16→var createError = require('http-errors')
+        44→/**
+        45→ * Module exports.
+        46→ * @public
+        47→ */
+        49→module.exports = res
+        …
+        64→res.status = function status(code) {
+        65→  // Check if the status code is not an integer
+        66→  if (!Number.isInteger(code)) {
+        67→    throw new TypeError(`Invalid status code: ${JSON.stringify(code)}. Status code must be an integer.`);
+        68→  }
+        69→  // Check if the status code is outside of Node's valid range
+        70→  if (code < 100 || code > 999) {
+        71→    throw new RangeError(`Invalid status code: ${JSON.stringify(code)}. Status code must be greater than 99 and less than 1000.`);
+        72→  }
+        74→  this.statusCode = code;
+        75→  return this;
+        97→res.links = function(links) {
+        98→  var link = this.get('Link') || '';
+        99→  if (link) link += ', ';
+        100→  return this.set('Link', link + Object.keys(links).map(function(rel) {
+        101→    // Allow multiple links if links[rel] is an array
+        102→    if (Array.isArray(links[rel])) {
+        103→      return links[rel].map(function (singleLink) {
+        104→        return `<${singleLink}>; rel="${rel}"`;
+        105→      }).join(', ');
+        106→    } else {
+        107→      return `<${links[rel]}>; rel="${rel}"`;
+        108→    }
+        109→  }).join(', '));
+        125→res.send = function send(body) {
+        …
+        232→res.json = function json(obj) {
+        233→  // settings
+        234→  var app = this.app;
+        235→  var escape = app.get('json escape')
+        236→  var replacer = app.get('json replacer');
+        237→  var spaces = app.get('json spaces');
+        238→  var body = stringify(obj, replacer, spaces, escape)
+        240→  // content-type
+        241→  if (!this.get('Content-Type')) {
+        242→    this.set('Content-Type', 'application/json');
+        243→  }
+        245→  return this.send(body);
+        260→res.jsonp = function jsonp(obj) {
+        …
+        321→res.sendStatus = function sendStatus(statusCode) {
+        …
+        371→res.sendFile = function sendFile(path, options, callback) {
+        …
+        433→res.download = function download (path, filename, options, callback) {
+        …
+        503→res.contentType =
+        504→res.type = function contentType(type) {
+        …
+        569→res.format = function(obj){
+        …
+        604→res.attachment = function attachment(filename) {
+        …
+        629→res.append = function append(field, val) {
+        …
+        664→res.set =
+        665→res.header = function header(field, val) {
+        …
+        696→res.get = function(field){
+        …
+        709→res.clearCookie = function clearCookie(name, options) {
+        …
+        742→res.cookie = function (name, value, options) {
+        …
+        794→res.location = function location(url) {
+        …
+        812→res.redirect = function redirect(url) {
+        …
+        875→res.vary = function(field){
+        …
+        894→res.render = function render(view, options, callback) {
+        …
     utils.js
     view.js
-        9→'use strict';
         36→module.exports = View;
         …
         52→function View(name, options) {
@@ -221,50 +302,5 @@ package.json
     2→  "name": "express",
     3→  "description": "Fast, unopinionated, minimalist web framework",
     4→  "version": "5.2.1",
-    5→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
-    6→  "contributors": [
-    7→    "Aaron Heckmann <aaron.heckmann+github@gmail.com>",
-    8→    "Ciaran Jessup <ciaranj@gmail.com>",
-    9→    "Douglas Christopher Wilson <doug@somethingdoug.com>",
-    10→    "Guillermo Rauch <rauchg@gmail.com>",
-    11→    "Jonathan Ong <me@jongleberry.com>",
-    12→    "Roman Shtylman <shtylman+expressjs@gmail.com>",
-    13→    "Young Jae Sim <hanul@hanul.me>"
-    14→  ],
     15→  "license": "MIT",
-    16→  "repository": "expressjs/express",
-    17→  "homepage": "https://expressjs.com/",
-    18→  "funding": {
-    19→    "type": "opencollective",
-    20→    "url": "https://opencollective.com/express"
-    21→  },
-    22→  "keywords": [
-    23→    "express",
-    24→    "framework",
-    25→    "sinatra",
-    26→    "web",
-    27→    "http",
-    28→    "rest",
-    29→    "restful",
-    30→    "router",
-    31→    "app",
-    32→    "api"
-    33→  ],
-    82→  "engines": {
-    83→    "node": ">= 18"
-    84→  },
-    85→  "files": [
-    86→    "LICENSE",
-    87→    "Readme.md",
-    88→    "index.js",
-    89→    "lib/"
-    90→  ],
-    91→  "scripts": {
-    92→    "lint": "eslint .",
-    93→    "lint:fix": "eslint . --fix",
-    94→    "test": "mocha --require test/support/env --reporter spec --check-leaks test/ test/acceptance/",
-    95→    "test-ci": "nyc --exclude examples --exclude test --exclude benchmarks --reporter=lcovonly --reporter=text npm test",
-    96→    "test-cov": "nyc --exclude examples --exclude test --exclude benchmarks --reporter=html --reporter=text npm test",
-    97→    "test-tap": "mocha --require test/support/env --reporter tap --check-leaks test/ test/acceptance/"
-    98→  }
 test/

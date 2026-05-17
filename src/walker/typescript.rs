@@ -2604,6 +2604,7 @@ fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
     let entrypoints = find_all_entrypoints(ctx.root());
     let mut surface: HashSet<PathBuf> = HashSet::new();
     let mut frontier: VecDeque<PathBuf> = VecDeque::new();
+    let mut from_app_entrypoint: HashSet<PathBuf> = HashSet::new();
     for ep in entrypoints {
         let canonical = ep.canonicalize().unwrap_or_else(|_| ep.clone());
         if surface.insert(canonical) {
@@ -2615,11 +2616,35 @@ fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
             continue;
         };
         let dir = file.parent().unwrap_or_else(|| Path::new(""));
-        for rel in collect_reexported_source_paths(&tree, &source) {
+        let is_entrypoint = is_entrypoint_file(&file);
+        let canonical_self = file.canonicalize().unwrap_or_else(|_| file.clone());
+        let app_seed = is_entrypoint || from_app_entrypoint.contains(&canonical_self);
+        let mut rel_paths = collect_reexported_source_paths(&tree, &source);
+        // App-style entrypoint fallback: a script entrypoint that has no
+        // named exports (no `export const/function/class`, no
+        // `exports.X = …`, no `module.exports = { … }` namespace) still
+        // defines the project's runtime surface via its `require` /
+        // `import` chain. Treat its imported source paths as surface so
+        // internal modules — which a library entrypoint would re-export,
+        // but an app entrypoint just invokes — rank as public rather
+        // than internal. A `module.exports = local-identifier` (CLI
+        // default-style) doesn't count as named: the file exposes one
+        // thing, and its imports are still part of the runtime chain.
+        // Propagates one hop along the chain so the app's immediate
+        // collaborators expand by the same rule.
+        let used_app_fallback =
+            rel_paths.is_empty() && app_seed && !file_has_named_exports(&tree, &source);
+        if used_app_fallback {
+            rel_paths = collect_import_source_paths(&tree, &source);
+        }
+        for rel in rel_paths {
             let Some(target) = resolve_ts_relative_path(dir, &rel) else {
                 continue;
             };
             let canonical = target.canonicalize().unwrap_or_else(|_| target.clone());
+            if used_app_fallback {
+                from_app_entrypoint.insert(canonical.clone());
+            }
             if surface.insert(canonical) {
                 frontier.push_back(target);
             }
@@ -2711,6 +2736,65 @@ fn collect_reexported_source_paths(tree: &Tree, source: &str) -> Vec<String> {
         }
     }
 
+    out
+}
+
+/// `true` when this file emits any *named* export: an `export …`
+/// statement (`export const Foo`, `export function Foo`,
+/// `export { Foo }`, `export default …`), an `exports.X = …`
+/// property assignment, or a `module.exports = { … }` object-literal
+/// namespace. The library signal used by `compute_public_surface`:
+/// a library entrypoint has at least one named export; a script /
+/// app entrypoint typically has none, or has only the "default-style"
+/// `module.exports = local-identifier` (which doesn't count as named —
+/// the file exposes a single thing and its imports are still part of
+/// the runtime chain).
+fn file_has_named_exports(tree: &Tree, source: &str) -> bool {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() == "export_statement" {
+            return true;
+        }
+        let Some((left, right)) = commonjs_assignment_sides(stmt, source) else {
+            continue;
+        };
+        match commonjs_export_target(left, source) {
+            // `exports.X = …` always names a key.
+            Some(CommonJsExportTarget::Property) => return true,
+            // `module.exports = { … }` declares a namespace; a single
+            // `module.exports = local-identifier` is default-style and
+            // doesn't.
+            Some(CommonJsExportTarget::Namespace) if right.kind() == "object" => return true,
+            _ => {}
+        }
+    }
+    false
+}
+
+/// Source paths from this file's top-level `import` / `require`
+/// declarations. Used as a fallback by `compute_public_surface` when
+/// the file is a script-style (app) entrypoint that re-exports
+/// nothing — the imported modules ARE the runtime surface even though
+/// the entrypoint doesn't name them as a public API.
+fn collect_import_source_paths(tree: &Tree, source: &str) -> Vec<String> {
+    let root = tree.root_node();
+    let mut out: Vec<String> = Vec::new();
+    let mut bindings: HashMap<String, String> = HashMap::new();
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() == "import_statement" {
+            if let Some(src) = source_literal(stmt, source) {
+                out.push(strip_quotes(&src).to_string());
+            }
+        } else if is_require_declaration(stmt, source) {
+            bindings.clear();
+            collect_require_bindings(stmt, source, &mut bindings);
+            for src in bindings.values() {
+                out.push(src.clone());
+            }
+        }
+    }
     out
 }
 

@@ -152,51 +152,7 @@ package.json
     2→  "name": "dockly",
     3→  "version": "0.0.0-development",
     4→  "description": "Immersive terminal interface for managing docker containers and services",
-    27→  "repository": {
-    28→    "type": "git",
-    29→    "url": "git+https://github.com/lirantal/dockly.git"
-    30→  },
-    31→  "keywords": [
-    32→    "docker",
-    33→    "container",
-    34→    "swarm",
-    35→    "cli",
-    36→    "shell",
-    37→    "blessed",
-    38→    "command",
-    39→    "command line",
-    40→    "console",
-    41→    "terminal"
-    42→  ],
-    43→  "author": {
-    44→    "name": "Liran Tal",
-    45→    "email": "liran.tal@gmail.com"
-    46→  },
-    47→  "contributors": [
-    48→    {
-    49→      "name": "Matan Avneri",
-    50→      "email": "Matan.av@gmail.com",
-    51→      "url": "https://github.com/MatanAvneri"
-    52→    },
-    53→    {
-    54→      "name": "Trevor Farlow",
-    55→      "url": "https://github.com/trevdor"
-    56→    },
-    57→    {
-    58→      "name": "Israel Roldan",
-    59→      "url": "https://github.com/israelroldan",
-    60→      "email": "oss@isro.me"
-    61→    }
-    62→  ],
     63→  "license": "MIT",
-    64→  "bugs": {
-    65→    "url": "https://github.com/lirantal/dockly/issues"
-    66→  },
-    67→  "homepage": "https://github.com/lirantal/dockly#readme",
-    89→  "publishConfig": {
-    90→    "provenance": true,
-    91→    "access": "public"
-    92→  }
 src/
     assetsLoader.js
         10→class assetsLoader {
@@ -211,8 +167,14 @@ src/
         4→module.exports = (extendsClass = class {}) => {
         …
     cli.js
+        1→'use strict'
+        3→const commandLineArgs = require('command-line-args')
+        4→const commandLineUsage = require('command-line-usage')
+        6→const pkg = require('../package.json')
         97→module.exports = new Cli()
     dockerUtil.js
+        1→'use strict'
+        3→const DockerLib = require('dockerode')
         5→class Util {
         6→  constructor (config) {
         …
@@ -262,9 +224,26 @@ src/
     screen.js
         18→class screen {
         19→  constructor (utils = new Map()) {
-        …
+        20→    this.mode = MODES.container
+        21→    this.screen = undefined
+        22→    this.grid = undefined
+        23→    this.title = 'Dockly'
+        25→    this.utils = utils
+        27→    // toggle widgets focus
+        28→    this.toggleWidgetFocus = true
+        30→    this.widgetsRepository = new Map()
+        31→    this.hooks = new Map()
+        32→    this.widgets = new Map()
         35→  initScreen () {
-        …
+        36→    this.screen = blessed.screen({
+        37→      title: this.title,
+        38→      fullUnicode: true,
+        39→      dockBorders: true,
+        40→      smartCSR: true
+        41→    })
+        43→    // initialize 12x12 grid
+        44→    // eslint-disable-next-line new-cap
+        45→    this.grid = new contrib.grid({ rows: 12, cols: 12, hideBorder: true, screen: this.screen })
         48→  init () {
         …
         71→  initHooks () {

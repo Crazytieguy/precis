@@ -208,155 +208,142 @@ Score(3000)=0.492 I=0.804 C=0.301 ns_rows≤3K=18/45 (reached=4 partial=2 missin
 | walker |  | 5737 | 7 | listing of 'server/libs/which' |  |  | 0.463 |
 | walker |  | 5780 | 43 | listing of 'server/libs/nodeCron/convert-expression' |  |  | 0.463 |
 | walker |  | 5796 | 16 | listing of 'server/libs/jwa/ecdsa-sig-formatter' |  |  | 0.463 |
-| walker |  | 5830 | 34 | readme.md section #61 |  |  | 0.463 |
-| walker |  | 5863 | 33 | listing of 'test/server/utils' |  |  | 0.463 |
-| walker |  | 5898 | 35 | readme.md section #67 |  |  | 0.463 |
+| walker |  | 5807 | 11 | imports in server/libs/archiver/lib/error.js |  |  | 0.463 |
+| walker |  | 5841 | 34 | readme.md section #61 |  |  | 0.463 |
+| walker |  | 5874 | 33 | listing of 'test/server/utils' |  |  | 0.463 |
 | ns | 5900 |  | 182 | Auth.js — middleware contract (gate every /api request) | 4.3 | 4.2 | 0.453 |
-| walker |  | 5935 | 37 | readme.md section #54 |  |  | 0.453 |
-| walker |  | 6102 | 167 | listing of 'client/strings' |  |  | 0.453 |
-| walker |  | 6107 | 5 | json config client/strings/eu.json |  |  | 0.453 |
-| walker |  | 6112 | 5 | json config client/strings/is.json |  |  | 0.453 |
-| walker |  | 6126 | 14 | listing of 'client/pages/library/_library/podcast' |  |  | 0.453 |
-| walker |  | 6140 | 14 | listing of 'server/libs/archiver/compress-commons/archivers' |  |  | 0.453 |
+| walker |  | 5909 | 35 | readme.md section #67 |  |  | 0.453 |
+| walker |  | 5946 | 37 | readme.md section #54 |  |  | 0.453 |
+| walker |  | 6113 | 167 | listing of 'client/strings' |  |  | 0.453 |
+| walker |  | 6118 | 5 | json config client/strings/eu.json |  |  | 0.453 |
+| walker |  | 6123 | 5 | json config client/strings/is.json |  |  | 0.453 |
+| walker |  | 6137 | 14 | listing of 'client/pages/library/_library/podcast' |  |  | 0.453 |
+| walker |  | 6151 | 14 | listing of 'server/libs/archiver/compress-commons/archivers' |  |  | 0.453 |
 | ns | 6173 |  | 273 | Auth.js — passport JWT strategy | 4.4 | 4.2 | 0.440 |
-| walker |  | 6237 | 97 | listing of 'client/components/tables' |  |  | 0.440 |
-| walker |  | 6255 | 18 | listing of 'client/components/tables/podcast' |  |  | 0.440 |
-| walker |  | 6261 | 6 | listing of 'client/components/tables/collection' |  |  | 0.440 |
-| walker |  | 6267 | 6 | listing of 'client/components/tables/playlist' |  |  | 0.440 |
-| walker |  | 6271 | 4 | listing of 'server/libs/archiver/compress-commons/util' |  |  | 0.440 |
-| walker |  | 6281 | 10 | listing of 'client/static/libarchive' |  |  | 0.440 |
-| walker |  | 6379 | 98 | listing of 'client/components/widgets' |  |  | 0.440 |
-| walker |  | 6460 | 81 | docs/README.md section #4 |  |  | 0.440 |
+| walker |  | 6248 | 97 | listing of 'client/components/tables' |  |  | 0.440 |
+| walker |  | 6266 | 18 | listing of 'client/components/tables/podcast' |  |  | 0.440 |
+| walker |  | 6272 | 6 | listing of 'client/components/tables/collection' |  |  | 0.440 |
+| walker |  | 6278 | 6 | listing of 'client/components/tables/playlist' |  |  | 0.440 |
+| walker |  | 6282 | 4 | listing of 'server/libs/archiver/compress-commons/util' |  |  | 0.440 |
+| walker |  | 6292 | 10 | listing of 'client/static/libarchive' |  |  | 0.440 |
+| walker |  | 6390 | 98 | listing of 'client/components/widgets' |  |  | 0.440 |
 | ns | 6461 |  | 288 | TokenManager.js — class head + secret + expiry constants | 4.5 |  | 0.432 |
-| walker |  | 6563 | 103 | listing of 'server/libs/watcher' |  |  | 0.432 |
-| walker |  | 6575 | 12 | listing of 'server/libs/watcher/atomically' |  |  | 0.432 |
+| walker |  | 6471 | 81 | docs/README.md section #4 |  |  | 0.432 |
+| walker |  | 6574 | 103 | listing of 'server/libs/watcher' |  |  | 0.432 |
 | ns | 6577 |  | 116 | models/ directory listing | 5.1 |  | 0.461 |
-| walker |  | 6588 | 13 | listing of 'server/libs/watcher/ripstat' |  |  | 0.461 |
-| walker |  | 6625 | 37 | listing of 'server/libs/watcher/atomically/utils' |  |  | 0.461 |
-| walker |  | 6636 | 11 | listing of 'server/objects/metadata' |  |  | 0.462 |
-| walker |  | 6680 | 44 | listing of 'test/server/managers/migrations' |  |  | 0.462 |
-| walker |  | 6687 | 7 | listing of 'client/static/libs/marked' |  |  | 0.462 |
-| walker |  | 6694 | 7 | listing of 'server/libs/archiver/buffer-crc32' |  |  | 0.462 |
-| walker |  | 6701 | 7 | listing of 'server/libs/archiver/crc32' |  |  | 0.462 |
-| walker |  | 6708 | 7 | listing of 'server/libs/archiver/normalize-path' |  |  | 0.462 |
-| walker |  | 6715 | 7 | listing of 'server/libs/archiver/readdir-glob' |  |  | 0.462 |
-| walker |  | 6722 | 7 | listing of 'server/libs/archiver/zip-stream' |  |  | 0.462 |
-| walker |  | 6729 | 7 | listing of 'server/libs/jwa/buffer-equal-constant-time' |  |  | 0.462 |
-| walker |  | 6773 | 44 | readme.md section #53 |  |  | 0.462 |
+| walker |  | 6586 | 12 | listing of 'server/libs/watcher/atomically' |  |  | 0.461 |
+| walker |  | 6599 | 13 | listing of 'server/libs/watcher/ripstat' |  |  | 0.461 |
+| walker |  | 6636 | 37 | listing of 'server/libs/watcher/atomically/utils' |  |  | 0.461 |
+| walker |  | 6647 | 11 | listing of 'server/objects/metadata' |  |  | 0.462 |
+| walker |  | 6691 | 44 | listing of 'test/server/managers/migrations' |  |  | 0.462 |
+| walker |  | 6698 | 7 | listing of 'client/static/libs/marked' |  |  | 0.462 |
+| walker |  | 6705 | 7 | listing of 'server/libs/archiver/buffer-crc32' |  |  | 0.462 |
+| walker |  | 6712 | 7 | listing of 'server/libs/archiver/crc32' |  |  | 0.462 |
+| walker |  | 6719 | 7 | listing of 'server/libs/archiver/normalize-path' |  |  | 0.462 |
+| walker |  | 6726 | 7 | listing of 'server/libs/archiver/readdir-glob' |  |  | 0.462 |
+| walker |  | 6733 | 7 | listing of 'server/libs/archiver/zip-stream' |  |  | 0.462 |
+| walker |  | 6740 | 7 | listing of 'server/libs/jwa/buffer-equal-constant-time' |  |  | 0.462 |
+| walker |  | 6784 | 44 | readme.md section #53 |  |  | 0.462 |
 | ns | 6833 |  | 256 | Database.js — constructor + singleton export | 5.2 |  | 0.451 |
-| walker |  | 6887 | 114 | listing of 'client/components/cards' |  |  | 0.451 |
-| walker |  | 6932 | 45 | readme.md section #52 |  |  | 0.451 |
-| walker |  | 7004 | 72 | listing of 'server/libs/archiver/archiverUtils' |  |  | 0.451 |
-| walker |  | 7019 | 15 | listing of 'server/libs/archiver/archiverUtils/glob' |  |  | 0.451 |
-| walker |  | 7030 | 11 | listing of 'server/libs/archiver/archiverUtils/fsRealpath' |  |  | 0.451 |
-| walker |  | 7041 | 11 | listing of 'server/libs/archiver/archiverUtils/lazystream' |  |  | 0.451 |
-| walker |  | 7058 | 17 | listing of 'server/utils/migrations' |  |  | 0.451 |
-| walker |  | 7063 | 5 | listing of 'client/pages/library/_library/bookshelf' |  |  | 0.451 |
-| walker |  | 7068 | 5 | listing of 'client/pages/library/_library/series' |  |  | 0.451 |
+| walker |  | 6898 | 114 | listing of 'client/components/cards' |  |  | 0.451 |
+| walker |  | 6943 | 45 | readme.md section #52 |  |  | 0.451 |
+| walker |  | 7015 | 72 | listing of 'server/libs/archiver/archiverUtils' |  |  | 0.451 |
+| walker |  | 7030 | 15 | listing of 'server/libs/archiver/archiverUtils/glob' |  |  | 0.451 |
+| walker |  | 7041 | 11 | listing of 'server/libs/archiver/archiverUtils/fsRealpath' |  |  | 0.451 |
+| walker |  | 7052 | 11 | listing of 'server/libs/archiver/archiverUtils/lazystream' |  |  | 0.451 |
+| walker |  | 7069 | 17 | listing of 'server/utils/migrations' |  |  | 0.451 |
+| walker |  | 7074 | 5 | listing of 'client/pages/library/_library/bookshelf' |  |  | 0.451 |
+| walker |  | 7079 | 5 | listing of 'client/pages/library/_library/series' |  |  | 0.451 |
 | ns | 7089 |  | 256 | Database.js — typed model accessor names | 5.3 | 5.2 | 0.440 |
-| walker |  | 7102 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.440 |
-| walker |  | 7149 | 47 | readme.md section #57 |  |  | 0.440 |
-| walker |  | 7196 | 47 | readme.md section #58 |  |  | 0.440 |
+| walker |  | 7113 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.440 |
+| walker |  | 7160 | 47 | readme.md section #57 |  |  | 0.440 |
 | ns | 7202 |  | 113 | Database.js — public method index (names only) | 5.5 | 5.2 | 0.435 |
-| walker |  | 7204 | 8 | listing of 'client/pages/config/users' |  |  | 0.435 |
-| walker |  | 7212 | 8 | listing of 'server/libs/nodeCron/background-scheduled-task' |  |  | 0.435 |
-| walker |  | 7220 | 8 | listing of 'server/libs/watcher/aborter' |  |  | 0.435 |
-| walker |  | 7233 | 13 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream' |  |  | 0.435 |
-| walker |  | 7271 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.435 |
-| walker |  | 7320 | 49 | readme.md section #65 |  |  | 0.435 |
-| walker |  | 7335 | 15 | export names surface in server/libs/jws/lib/tostring.js |  |  | 0.435 |
-| walker |  | 7335 | 0 | export at server/libs/jws/lib/tostring.js:4 |  |  | 0.435 |
-| walker |  | 7390 | 55 | listing of 'server/libs/archiver/archiverUtils/readableStream' |  |  | 0.435 |
-| walker |  | 7408 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.435 |
-| walker |  | 7460 | 52 | readme.md section #60 |  |  | 0.435 |
-| walker |  | 7464 | 4 | listing of 'server/libs/archiver/archiverUtils/readableStream/stream' |  |  | 0.435 |
+| walker |  | 7207 | 47 | readme.md section #58 |  |  | 0.435 |
+| walker |  | 7215 | 8 | listing of 'client/pages/config/users' |  |  | 0.435 |
+| walker |  | 7223 | 8 | listing of 'server/libs/nodeCron/background-scheduled-task' |  |  | 0.435 |
+| walker |  | 7231 | 8 | listing of 'server/libs/watcher/aborter' |  |  | 0.435 |
+| walker |  | 7244 | 13 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream' |  |  | 0.435 |
+| walker |  | 7282 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.435 |
+| walker |  | 7331 | 49 | readme.md section #65 |  |  | 0.435 |
+| walker |  | 7346 | 15 | export names surface in server/libs/jws/lib/tostring.js |  |  | 0.435 |
+| walker |  | 7346 | 0 | export at server/libs/jws/lib/tostring.js:4 |  |  | 0.435 |
+| walker |  | 7401 | 55 | listing of 'server/libs/archiver/archiverUtils/readableStream' |  |  | 0.435 |
+| walker |  | 7419 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.435 |
+| walker |  | 7471 | 52 | readme.md section #60 |  |  | 0.435 |
+| walker |  | 7475 | 4 | listing of 'server/libs/archiver/archiverUtils/readableStream/stream' |  |  | 0.435 |
 | ns | 7490 |  | 288 | managers/ + scanner/ + finders/ + providers/ + objects/ directory listings | 6.1 |  | 0.485 |
-| walker |  | 7524 | 60 | readme.md section #41 |  |  | 0.485 |
-| walker |  | 7533 | 9 | listing of 'server/libs/busboy/types' |  |  | 0.485 |
-| walker |  | 7542 | 9 | listing of 'server/libs/fsExtra/remove' |  |  | 0.485 |
-| walker |  | 7551 | 9 | listing of 'server/libs/fsExtra/util' |  |  | 0.485 |
-| walker |  | 7557 | 6 | listing of 'client/cypress/tests' |  |  | 0.485 |
-| walker |  | 7560 | 3 | listing of 'client/cypress/tests/components' |  |  | 0.485 |
-| walker |  | 7593 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.485 |
+| walker |  | 7535 | 60 | readme.md section #41 |  |  | 0.485 |
+| walker |  | 7544 | 9 | listing of 'server/libs/busboy/types' |  |  | 0.485 |
+| walker |  | 7553 | 9 | listing of 'server/libs/fsExtra/remove' |  |  | 0.485 |
+| walker |  | 7562 | 9 | listing of 'server/libs/fsExtra/util' |  |  | 0.485 |
+| walker |  | 7568 | 6 | listing of 'client/cypress/tests' |  |  | 0.485 |
+| walker |  | 7571 | 3 | listing of 'client/cypress/tests/components' |  |  | 0.485 |
+| walker |  | 7604 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.485 |
 | ns | 7687 |  | 197 | SocketAuthority.js — class + emitter helpers + singleton export | 6.2 |  | 0.478 |
-| walker |  | 7740 | 147 | listing of 'client/components/modals' |  |  | 0.478 |
-| walker |  | 7775 | 35 | listing of 'client/components/modals/podcast' |  |  | 0.478 |
-| walker |  | 7812 | 37 | listing of 'client/components/modals/libraries' |  |  | 0.478 |
-| walker |  | 7828 | 16 | listing of 'client/components/modals/collections' |  |  | 0.478 |
-| walker |  | 7845 | 17 | listing of 'client/components/modals/playlists' |  |  | 0.478 |
-| walker |  | 7850 | 5 | listing of 'client/components/modals/authors' |  |  | 0.478 |
-| walker |  | 7855 | 5 | listing of 'client/components/modals/bookmarks' |  |  | 0.478 |
+| walker |  | 7751 | 147 | listing of 'client/components/modals' |  |  | 0.478 |
+| walker |  | 7786 | 35 | listing of 'client/components/modals/podcast' |  |  | 0.478 |
+| walker |  | 7823 | 37 | listing of 'client/components/modals/libraries' |  |  | 0.478 |
+| walker |  | 7839 | 16 | listing of 'client/components/modals/collections' |  |  | 0.478 |
+| walker |  | 7856 | 17 | listing of 'client/components/modals/playlists' |  |  | 0.478 |
 | ns | 7859 |  | 172 | SocketAuthority — socket event names (subscribe sites) | 6.3 | 6.2 | 0.474 |
-| walker |  | 7860 | 5 | listing of 'client/components/modals/changelog' |  |  | 0.474 |
-| walker |  | 7866 | 6 | listing of 'client/components/modals/notification' |  |  | 0.474 |
-| walker |  | 7874 | 8 | listing of 'client/components/modals/item' |  |  | 0.474 |
-| walker |  | 7906 | 32 | listing of 'client/components/modals/item/tabs' |  |  | 0.474 |
-| walker |  | 7923 | 17 | export names surface in server/libs/jsonwebtoken/lib/timespan.js |  |  | 0.474 |
-| walker |  | 7923 | 0 | export at server/libs/jsonwebtoken/lib/timespan.js:3 |  |  | 0.474 |
+| walker |  | 7861 | 5 | listing of 'client/components/modals/authors' |  |  | 0.474 |
+| walker |  | 7866 | 5 | listing of 'client/components/modals/bookmarks' |  |  | 0.474 |
+| walker |  | 7871 | 5 | listing of 'client/components/modals/changelog' |  |  | 0.474 |
+| walker |  | 7877 | 6 | listing of 'client/components/modals/notification' |  |  | 0.474 |
+| walker |  | 7885 | 8 | listing of 'client/components/modals/item' |  |  | 0.474 |
+| walker |  | 7917 | 32 | listing of 'client/components/modals/item/tabs' |  |  | 0.474 |
+| walker |  | 7934 | 17 | export names surface in server/libs/jsonwebtoken/lib/timespan.js |  |  | 0.474 |
+| walker |  | 7934 | 0 | export at server/libs/jsonwebtoken/lib/timespan.js:3 |  |  | 0.474 |
 | ns | 7952 |  | 93 | Watcher.js — class head + singleton export | 6.4 |  | 0.470 |
-| walker |  | 7978 | 55 | readme.md section #64 |  |  | 0.470 |
-| walker |  | 8041 | 63 | readme.md section #35 |  |  | 0.470 |
+| walker |  | 7989 | 55 | readme.md section #64 |  |  | 0.470 |
+| walker |  | 8052 | 63 | readme.md section #35 |  |  | 0.470 |
 | ns | 8107 |  | 155 | LibraryScanner.js — class signature + scan entry | 6.5 |  | 0.465 |
 | ns | 8380 |  | 273 | PlaybackSessionManager.js — class head + getSession / getStream | 6.6 |  | 0.456 |
-| walker |  | 8481 | 440 | package dependencies in package.json |  |  | 0.481 |
+| walker |  | 8492 | 440 | package dependencies in package.json |  |  | 0.481 |
 | ns | 8609 |  | 229 | utils/ + utils/queries/ + utils/parsers/ listings | 7.1 |  | 0.509 |
-| walker |  | 8635 | 154 | listing of 'client/components/ui' |  |  | 0.509 |
-| walker |  | 8692 | 57 | readme.md section #55 |  |  | 0.509 |
-| walker |  | 8715 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.509 |
-| walker |  | 8725 | 10 | listing of 'client/components/tables/library' |  |  | 0.509 |
-| walker |  | 8760 | 35 | readme.md section #33 |  |  | 0.509 |
-| walker |  | 8819 | 59 | readme.md section #56 |  |  | 0.509 |
-| walker |  | 8876 | 57 | readme.md section #19 |  |  | 0.509 |
-| walker |  | 8883 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.509 |
-| walker |  | 8890 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.509 |
-| walker |  | 8897 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.509 |
-| walker |  | 8904 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.509 |
-| walker |  | 8911 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.509 |
-| walker |  | 8918 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.509 |
-| walker |  | 8925 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.509 |
+| walker |  | 8646 | 154 | listing of 'client/components/ui' |  |  | 0.509 |
+| walker |  | 8703 | 57 | readme.md section #55 |  |  | 0.509 |
+| walker |  | 8726 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.509 |
+| walker |  | 8736 | 10 | listing of 'client/components/tables/library' |  |  | 0.509 |
+| walker |  | 8771 | 35 | readme.md section #33 |  |  | 0.509 |
+| walker |  | 8830 | 59 | readme.md section #56 |  |  | 0.509 |
+| walker |  | 8887 | 57 | readme.md section #19 |  |  | 0.509 |
+| walker |  | 8894 | 7 | listing of 'server/libs/archiver/archiverUtils/balancedMatch' |  |  | 0.509 |
+| walker |  | 8901 | 7 | listing of 'server/libs/archiver/archiverUtils/braceExpansion' |  |  | 0.509 |
+| walker |  | 8908 | 7 | listing of 'server/libs/archiver/archiverUtils/inflight' |  |  | 0.509 |
+| walker |  | 8915 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.difference' |  |  | 0.509 |
+| walker |  | 8922 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.flatten' |  |  | 0.509 |
 | ns | 8927 |  | 318 | utils/constants.js — non-mime enums + AudioMimeType reference | 7.2 |  | 0.497 |
-| walker |  | 8932 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.497 |
-| walker |  | 8939 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.497 |
-| walker |  | 8946 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.497 |
-| walker |  | 8953 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.497 |
+| walker |  | 8929 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject' |  |  | 0.497 |
+| walker |  | 8936 | 7 | listing of 'server/libs/archiver/archiverUtils/lodash.union' |  |  | 0.497 |
+| walker |  | 8943 | 7 | listing of 'server/libs/archiver/archiverUtils/minimatch' |  |  | 0.497 |
+| walker |  | 8950 | 7 | listing of 'server/libs/archiver/archiverUtils/safeBuffer' |  |  | 0.497 |
+| walker |  | 8957 | 7 | listing of 'server/libs/archiver/archiverUtils/stringDecoder' |  |  | 0.497 |
+| walker |  | 8964 | 7 | listing of 'server/libs/archiver/archiverUtils/wrappy' |  |  | 0.497 |
 | ns | 8974 |  | 47 | objects/settings/ + objects/files/ + objects/metadata/ listings | 7.3 |  | 0.503 |
-| walker |  | 9014 | 61 | readme.md section #66 |  |  | 0.503 |
-| walker |  | 9073 | 59 | readme.md section #21 |  |  | 0.503 |
-| walker |  | 9144 | 71 | readme.md section #37 |  |  | 0.503 |
-| walker |  | 9155 | 11 | listing of 'client/static/fonts/Ubuntu_Mono' |  |  | 0.503 |
-| walker |  | 9166 | 11 | listing of 'client/static/libarchive/wasm-gen' |  |  | 0.503 |
-| walker |  | 9188 | 22 | export names surface in server/libs/jws/lib/data-stream.js |  |  | 0.503 |
-| walker |  | 9188 | 0 | export at server/libs/jws/lib/data-stream.js:6 |  |  | 0.503 |
-| walker |  | 9210 | 22 | export names surface in server/libs/jws/lib/sign-stream.js |  |  | 0.503 |
-| walker |  | 9210 | 0 | export at server/libs/jws/lib/sign-stream.js:36 |  |  | 0.503 |
-| walker |  | 9232 | 22 | export names surface in server/libs/jws/lib/verify-stream.js |  |  | 0.503 |
-| walker |  | 9232 | 0 | export at server/libs/jws/lib/verify-stream.js:80 |  |  | 0.503 |
-| walker |  | 9244 | 12 | listing of 'client/components/modals/player' |  |  | 0.503 |
-| walker |  | 9256 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.503 |
-| walker |  | 9259 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.503 |
-| walker |  | 9277 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.503 |
-| walker |  | 9285 | 8 | listing of 'client/pages/config/users/_id' |  |  | 0.503 |
+| walker |  | 9025 | 61 | readme.md section #66 |  |  | 0.503 |
+| walker |  | 9084 | 59 | readme.md section #21 |  |  | 0.503 |
+| walker |  | 9155 | 71 | readme.md section #37 |  |  | 0.503 |
+| walker |  | 9166 | 11 | listing of 'client/static/fonts/Ubuntu_Mono' |  |  | 0.503 |
+| walker |  | 9177 | 11 | listing of 'client/static/libarchive/wasm-gen' |  |  | 0.503 |
+| walker |  | 9199 | 22 | export names surface in server/libs/jws/lib/data-stream.js |  |  | 0.503 |
+| walker |  | 9199 | 0 | export at server/libs/jws/lib/data-stream.js:6 |  |  | 0.503 |
+| walker |  | 9221 | 22 | export names surface in server/libs/jws/lib/sign-stream.js |  |  | 0.503 |
+| walker |  | 9221 | 0 | export at server/libs/jws/lib/sign-stream.js:36 |  |  | 0.503 |
+| walker |  | 9243 | 22 | export names surface in server/libs/jws/lib/verify-stream.js |  |  | 0.503 |
+| walker |  | 9243 | 0 | export at server/libs/jws/lib/verify-stream.js:80 |  |  | 0.503 |
+| walker |  | 9255 | 12 | listing of 'client/components/modals/player' |  |  | 0.503 |
+| walker |  | 9267 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.503 |
+| walker |  | 9270 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.503 |
+| walker |  | 9288 | 18 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.503 |
 | ns | 9289 |  | 315 | ServerSettings.js — scanner / backup / sorting / auth field declarations | 7.4 |  | 0.494 |
-| walker |  | 9293 | 8 | listing of 'server/libs/archiver/lib/plugins' |  |  | 0.494 |
-| walker |  | 9371 | 78 | readme.md section #29 |  |  | 0.494 |
-| walker |  | 9440 | 69 | readme.md section #69 |  |  | 0.494 |
+| walker |  | 9296 | 8 | listing of 'client/pages/config/users/_id' |  |  | 0.494 |
+| walker |  | 9304 | 8 | listing of 'server/libs/archiver/lib/plugins' |  |  | 0.494 |
+| walker |  | 9382 | 78 | readme.md section #29 |  |  | 0.494 |
+| walker |  | 9451 | 69 | readme.md section #69 |  |  | 0.494 |
 | ns | 9497 |  | 208 | migrations/ directory listing | 7.5 |  | 0.489 |
-| walker |  | 9519 | 79 | readme.md section #42 |  |  | 0.489 |
+| walker |  | 9530 | 79 | readme.md section #42 |  |  | 0.489 |
 | ns | 9562 |  | 65 | client/ directory listing | 7.6 |  | 0.499 |
-| walker |  | 9587 | 68 | readme.md section #22 |  |  | 0.499 |
-| walker |  | 9602 | 15 | listing of 'client/components/modals/emails' |  |  | 0.499 |
-| walker |  | 9693 | 91 | readme.md section #38 |  |  | 0.499 |
-| walker |  | 9703 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.499 |
 | ns | 9709 |  | 147 | client/pages + client/components listings | 7.7 |  | 0.520 |
-| walker |  | 9710 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.520 |
-| walker |  | 9739 | 29 | export names surface in server/libs/jsonwebtoken/lib/NotBeforeError.js |  |  | 0.520 |
-| walker |  | 9739 | 0 | export at server/libs/jsonwebtoken/lib/NotBeforeError.js:3 |  |  | 0.520 |
-| walker |  | 9789 | 50 | readme.md section #43 |  |  | 0.520 |
 | ns | 9799 |  | 90 | client/store + plugins + players listings | 7.8 |  | 0.529 |
-| walker |  | 9819 | 30 | export names surface in server/libs/jsonwebtoken/lib/TokenExpiredError.js |  |  | 0.529 |
-| walker |  | 9819 | 0 | export at server/libs/jsonwebtoken/lib/TokenExpiredError.js:3 |  |  | 0.529 |
-| walker |  | 9850 | 31 | export names surface in server/libs/jsonwebtoken/lib/JsonWebTokenError.js |  |  | 0.529 |
-| walker |  | 9850 | 0 | export at server/libs/jsonwebtoken/lib/JsonWebTokenError.js:1 |  |  | 0.529 |
 | ns | 9928 |  | 129 | test/server tree + docs/ + .github/workflows + build/ listings | 7.9 |  | 0.526 |
-| walker |  | 9948 | 98 | readme.md section #62 |  |  | 0.526 |
-| walker |  | 9961 | 13 | listing of '.github' |  |  | 0.526 |

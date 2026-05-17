@@ -190,65 +190,66 @@ Score(3000)=0.470 I=0.727 C=0.304 ns_rows≤3K=14/42 (reached=6 partial=1 missin
 | walker |  | 6586 | 85 | README headline in packages/create-vite/template-vue-ts/README.md |  |  | 0.286 |
 | walker |  | 6626 | 40 | packages/create-vite/template-vue-ts/README.md section #0 |  |  | 0.286 |
 | walker |  | 6682 | 56 | package scripts in packages/create-vite/template-vue-ts/package.json |  |  | 0.286 |
+| walker |  | 6690 | 8 | export names surface in packages/create-vite/template-react-ts/src/App.tsx |  |  | 0.286 |
 | ns | 6747 |  | 194 | DevEnvironment class header | 4.8 |  | 0.282 |
-| walker |  | 6766 | 84 | headings outline in packages/create-vite/template-solid/README.md |  |  | 0.282 |
-| walker |  | 6766 | 0 | packages/create-vite/template-solid/README.md section #0 |  |  | 0.282 |
-| walker |  | 6850 | 84 | headings outline in packages/create-vite/template-solid-ts/README.md |  |  | 0.282 |
-| walker |  | 6850 | 0 | packages/create-vite/template-solid-ts/README.md section #0 |  |  | 0.282 |
-| walker |  | 6906 | 56 | listing of 'packages/create-vite/template-svelte-ts' |  |  | 0.282 |
-| walker |  | 6941 | 35 | README headline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.282 |
-| walker |  | 6993 | 52 | package identity in packages/create-vite/template-svelte-ts/package.json |  |  | 0.282 |
-| walker |  | 7012 | 19 | listing of 'packages/create-vite/template-svelte-ts/src' |  |  | 0.282 |
-| walker |  | 7020 | 8 | export names surface in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.282 |
-| walker |  | 7055 | 35 | headings outline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.282 |
-| walker |  | 7135 | 80 | package scripts in packages/create-vite/template-svelte-ts/package.json |  |  | 0.282 |
+| walker |  | 6774 | 84 | headings outline in packages/create-vite/template-solid/README.md |  |  | 0.282 |
+| walker |  | 6774 | 0 | packages/create-vite/template-solid/README.md section #0 |  |  | 0.282 |
+| walker |  | 6858 | 84 | headings outline in packages/create-vite/template-solid-ts/README.md |  |  | 0.282 |
+| walker |  | 6858 | 0 | packages/create-vite/template-solid-ts/README.md section #0 |  |  | 0.282 |
+| walker |  | 6914 | 56 | listing of 'packages/create-vite/template-svelte-ts' |  |  | 0.282 |
+| walker |  | 6949 | 35 | README headline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.282 |
+| walker |  | 7001 | 52 | package identity in packages/create-vite/template-svelte-ts/package.json |  |  | 0.282 |
+| walker |  | 7020 | 19 | listing of 'packages/create-vite/template-svelte-ts/src' |  |  | 0.282 |
+| walker |  | 7028 | 8 | export names surface in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.282 |
+| walker |  | 7063 | 35 | headings outline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.282 |
+| walker |  | 7143 | 80 | package scripts in packages/create-vite/template-svelte-ts/package.json |  |  | 0.282 |
 | ns | 7179 |  | 432 | module-runner/index.ts re-exports | 5.1 |  | 0.281 |
-| walker |  | 7231 | 96 | packages/create-vite/template-react/README.md section #0 |  |  | 0.281 |
-| walker |  | 7327 | 96 | packages/create-vite/template-react-ts/README.md section #0 |  |  | 0.281 |
-| walker |  | 7365 | 38 | packages/create-vite/template-svelte/README.md section #1 |  |  | 0.281 |
-| walker |  | 7403 | 38 | packages/create-vite/template-svelte-ts/README.md section #1 |  |  | 0.281 |
-| walker |  | 7430 | 27 | packages/create-vite/template-solid/README.md section #2 |  |  | 0.281 |
-| walker |  | 7457 | 27 | packages/create-vite/template-solid-ts/README.md section #2 |  |  | 0.281 |
+| walker |  | 7239 | 96 | packages/create-vite/template-react/README.md section #0 |  |  | 0.281 |
+| walker |  | 7335 | 96 | packages/create-vite/template-react-ts/README.md section #0 |  |  | 0.281 |
+| walker |  | 7373 | 38 | packages/create-vite/template-svelte/README.md section #1 |  |  | 0.281 |
+| walker |  | 7411 | 38 | packages/create-vite/template-svelte-ts/README.md section #1 |  |  | 0.281 |
+| walker |  | 7438 | 27 | packages/create-vite/template-solid/README.md section #2 |  |  | 0.281 |
+| walker |  | 7465 | 27 | packages/create-vite/template-solid-ts/README.md section #2 |  |  | 0.275 |
 | ns | 7465 |  | 286 | ModuleRunner class — header + public methods | 5.2 | 5.1 | 0.275 |
-| walker |  | 7488 | 31 | module item at packages/create-vite/template-svelte/src/main.js:5 |  |  | 0.275 |
-| walker |  | 7519 | 31 | package dependencies in packages/create-vite/template-vanilla/package.json |  |  | 0.275 |
-| walker |  | 7552 | 33 | imports in packages/create-vite/template-vue-ts/src/main.ts |  |  | 0.275 |
-| walker |  | 7586 | 34 | imports in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.275 |
+| walker |  | 7496 | 31 | module item at packages/create-vite/template-svelte/src/main.js:5 |  |  | 0.275 |
+| walker |  | 7527 | 31 | package dependencies in packages/create-vite/template-vanilla/package.json |  |  | 0.275 |
+| walker |  | 7560 | 33 | imports in packages/create-vite/template-vue-ts/src/main.ts |  |  | 0.275 |
+| walker |  | 7594 | 34 | imports in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.275 |
 | ns | 7608 |  | 143 | vite/src/shared/ + client/ + module-runner/ | 5.3 |  | 0.286 |
 | ns | 7686 |  | 78 | vite/src/node/ssr/ + optimizer/ listings | 5.4 |  | 0.283 |
-| walker |  | 7764 | 178 | headings outline in packages/plugin-legacy/README.md |  |  | 0.283 |
-| walker |  | 7775 | 11 | packages/plugin-legacy/README.md section #12 |  |  | 0.283 |
-| walker |  | 7786 | 11 | packages/plugin-legacy/README.md section #15 |  |  | 0.283 |
-| walker |  | 7800 | 14 | packages/plugin-legacy/README.md section #4 |  |  | 0.283 |
-| walker |  | 7814 | 14 | packages/plugin-legacy/README.md section #6 |  |  | 0.283 |
-| walker |  | 7828 | 14 | packages/plugin-legacy/README.md section #10 |  |  | 0.283 |
-| walker |  | 8013 | 185 | packages/plugin-legacy/README.md section #0 |  |  | 0.283 |
+| walker |  | 7772 | 178 | headings outline in packages/plugin-legacy/README.md |  |  | 0.283 |
+| walker |  | 7783 | 11 | packages/plugin-legacy/README.md section #12 |  |  | 0.283 |
+| walker |  | 7794 | 11 | packages/plugin-legacy/README.md section #15 |  |  | 0.283 |
+| walker |  | 7808 | 14 | packages/plugin-legacy/README.md section #4 |  |  | 0.283 |
+| walker |  | 7822 | 14 | packages/plugin-legacy/README.md section #6 |  |  | 0.283 |
+| walker |  | 7836 | 14 | packages/plugin-legacy/README.md section #10 |  |  | 0.283 |
+| walker |  | 8021 | 185 | packages/plugin-legacy/README.md section #0 |  |  | 0.283 |
 | ns | 8022 |  | 336 | Key default constants — ports + paths + regexes | 6.1 |  | 0.278 |
-| walker |  | 8042 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.281 |
-| walker |  | 8199 | 157 | export names surface in packages/vite/src/node/optimizer/index.ts |  |  | 0.281 |
-| walker |  | 8218 | 19 | export at packages/vite/src/node/optimizer/index.ts:195 |  |  | 0.281 |
-| walker |  | 8239 | 21 | export at packages/vite/src/node/optimizer/index.ts:324 |  |  | 0.281 |
-| walker |  | 8266 | 27 | export at packages/vite/src/node/optimizer/index.ts:349 |  |  | 0.281 |
+| walker |  | 8050 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.281 |
+| walker |  | 8207 | 157 | export names surface in packages/vite/src/node/optimizer/index.ts |  |  | 0.281 |
+| walker |  | 8226 | 19 | export at packages/vite/src/node/optimizer/index.ts:195 |  |  | 0.281 |
+| walker |  | 8247 | 21 | export at packages/vite/src/node/optimizer/index.ts:324 |  |  | 0.281 |
+| walker |  | 8274 | 27 | export at packages/vite/src/node/optimizer/index.ts:349 |  |  | 0.281 |
 | ns | 8295 |  | 273 | ROLLUP_HOOKS list | 6.2 |  | 0.275 |
-| walker |  | 8315 | 49 | export at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.275 |
-| walker |  | 8368 | 53 | export at packages/vite/src/node/optimizer/index.ts:366 |  |  | 0.275 |
-| walker |  | 8442 | 74 | export at packages/vite/src/node/optimizer/index.ts:49 |  |  | 0.275 |
+| walker |  | 8323 | 49 | export at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.275 |
+| walker |  | 8376 | 53 | export at packages/vite/src/node/optimizer/index.ts:366 |  |  | 0.275 |
+| walker |  | 8450 | 74 | export at packages/vite/src/node/optimizer/index.ts:49 |  |  | 0.275 |
 | ns | 8456 |  | 161 | utils.ts — top-asked function locations | 6.3 |  | 0.273 |
-| walker |  | 8545 | 103 | export at packages/vite/src/node/optimizer/index.ts:205 |  |  | 0.273 |
-| walker |  | 8600 | 55 | export body at packages/vite/src/node/optimizer/index.ts:195 body 198 |  |  | 0.273 |
+| walker |  | 8553 | 103 | export at packages/vite/src/node/optimizer/index.ts:205 |  |  | 0.273 |
+| walker |  | 8608 | 55 | export body at packages/vite/src/node/optimizer/index.ts:195 body 198 |  |  | 0.273 |
 | ns | 8609 |  | 153 | create-vite + plugin-legacy package layouts | 6.4 |  | 0.307 |
-| walker |  | 8756 | 156 | export at packages/vite/src/node/optimizer/index.ts:57 |  |  | 0.307 |
+| walker |  | 8764 | 156 | export at packages/vite/src/node/optimizer/index.ts:57 |  |  | 0.307 |
 | ns | 8803 |  | 194 | create-vite — helpMessage + init() signature | 6.5 | 6.4 | 0.304 |
 | ns | 8897 |  | 94 | plugin-legacy — exports + key helpers | 6.6 | 6.4 | 0.307 |
-| walker |  | 8954 | 198 | export at packages/vite/src/node/optimizer/index.ts:216 |  |  | 0.307 |
-| walker |  | 9063 | 109 | export body at packages/vite/src/node/optimizer/index.ts:349 body 353 |  |  | 0.307 |
+| walker |  | 8962 | 198 | export at packages/vite/src/node/optimizer/index.ts:216 |  |  | 0.307 |
+| walker |  | 9071 | 109 | export body at packages/vite/src/node/optimizer/index.ts:349 body 353 |  |  | 0.307 |
 | ns | 9081 |  | 184 | docs/guide/ + docs/config/ listings | 7.1 |  | 0.301 |
-| walker |  | 9296 | 233 | export at packages/vite/src/node/optimizer/index.ts:176 |  |  | 0.301 |
+| walker |  | 9304 | 233 | export at packages/vite/src/node/optimizer/index.ts:176 |  |  | 0.301 |
 | ns | 9336 |  | 255 | vite package.json — exports map + runtime deps | 7.2 |  | 0.297 |
-| walker |  | 9454 | 158 | export body at packages/vite/src/node/optimizer/index.ts:324 body 327 |  |  | 0.297 |
+| walker |  | 9462 | 158 | export body at packages/vite/src/node/optimizer/index.ts:324 body 327 |  |  | 0.297 |
 | ns | 9742 |  | 406 | playground/ E2E fixture directory listing | 7.3 |  | 0.284 |
-| walker |  | 9863 | 409 | export at packages/vite/src/node/optimizer/index.ts:236 |  |  | 0.284 |
+| walker |  | 9871 | 409 | export at packages/vite/src/node/optimizer/index.ts:236 |  |  | 0.281 |
 | ns | 9871 |  | 129 | docs/guide/features.md — H2 headings | 7.4 |  | 0.281 |
-| walker |  | 9927 | 64 | export doc at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.281 |
-| walker |  | 9989 | 62 | export names surface #2 in packages/vite/src/node/optimizer/index.ts |  |  | 0.281 |
+| walker |  | 9935 | 64 | export doc at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.281 |
+| walker |  | 9997 | 62 | export names surface #2 in packages/vite/src/node/optimizer/index.ts |  |  | 0.281 |
 | ns | 9999 |  | 128 | docs/guide/api-plugin.md — H2 headings | 7.5 |  | 0.279 |

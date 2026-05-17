@@ -1,7 +1,7 @@
 fixture = "enclosed"
 budget = 10000
-cumulative_tokens = 9552
-batch_count = 215
+cumulative_tokens = 9673
+batch_count = 225
 
 [[batches]]
 position = 1
@@ -6159,36 +6159,88 @@ entries = ["convert.ts", "download.ts"]
 
 [[batches]]
 position = 190
-key = 'Typescript(ExportNames { file: "packages/crypto/src/index.node.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/crypto/src/index.node.ts"
-cost_tokens = 9
-cum_tokens = 8147
+key = 'Typescript(ExportNames { file: "packages/app-client/src/modules/ui/components/sonner.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/app-client/src/modules/ui/components/sonner.tsx"
+cost_tokens = 20
+cum_tokens = 8158
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "packages/crypto/src/index.node.ts"
-start = 8
-end = 8
+path = "packages/app-client/src/modules/ui/components/sonner.tsx"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "packages/crypto/src/index.node.ts"
-start = 9
-end = 9
+path = "packages/app-client/src/modules/ui/components/sonner.tsx"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 191
+key = 'Typescript(Export { file: "packages/app-client/src/modules/ui/components/sonner.tsx", start_line: 5 })'
+descriptor = "export at packages/app-client/src/modules/ui/components/sonner.tsx:5"
+cost_tokens = 0
+cum_tokens = 8158
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/ui/components/sonner.tsx"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/ui/components/sonner.tsx"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 192
+key = 'Typescript(ExportNames { file: "packages/crypto/src/index.node.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/crypto/src/index.node.ts"
+cost_tokens = 9
+cum_tokens = 8167
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/crypto/src/index.node.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/crypto/src/index.node.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 193
 key = 'Typescript(ExportNames { file: "packages/crypto/src/index.web.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/crypto/src/index.web.ts"
 cost_tokens = 9
-cum_tokens = 8156
+cum_tokens = 8176
 
 [batches.content]
 kind = "lines"
@@ -6210,11 +6262,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 192
+position = 194
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules/shared/errors" })'
 descriptor = "listing of 'packages/app-server/src/modules/shared/errors'"
 cost_tokens = 9
-cum_tokens = 8165
+cum_tokens = 8185
 
 [batches.content]
 kind = "fs"
@@ -6224,11 +6276,11 @@ parent = "packages/app-server/src/modules/shared/errors"
 entries = ["errors.test.ts", "errors.ts"]
 
 [[batches]]
-position = 193
+position = 195
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules/shared/validation" })'
 descriptor = "listing of 'packages/app-server/src/modules/shared/validation'"
 cost_tokens = 9
-cum_tokens = 8174
+cum_tokens = 8194
 
 [batches.content]
 kind = "fs"
@@ -6238,11 +6290,11 @@ parent = "packages/app-server/src/modules/shared/validation"
 entries = ["validation.test.ts", "validation.ts"]
 
 [[batches]]
-position = 194
+position = 196
 key = 'Markdown(Section { file: "packages/docs/src/how-it-works.md", section_index: 1 })'
 descriptor = "packages/docs/src/how-it-works.md section #1"
 cost_tokens = 45
-cum_tokens = 8219
+cum_tokens = 8239
 
 [batches.content]
 kind = "lines"
@@ -6264,11 +6316,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 195
+position = 197
 key = 'Typescript(Imports { file: "packages/app-client/src/index.tsx" })'
 descriptor = "imports in packages/app-client/src/index.tsx"
 cost_tokens = 166
-cum_tokens = 8385
+cum_tokens = 8405
 
 [batches.content]
 kind = "lines"
@@ -6282,11 +6334,63 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 196
+position = 198
+key = 'Typescript(ExportNames { file: "packages/app-client/src/routes.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/app-client/src/routes.tsx"
+cost_tokens = 15
+cum_tokens = 8420
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/routes.tsx"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/routes.tsx"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 199
+key = 'Typescript(Export { file: "packages/app-client/src/routes.tsx", start_line: 11 })'
+descriptor = "export at packages/app-client/src/routes.tsx:11"
+cost_tokens = 0
+cum_tokens = 8420
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/routes.tsx"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/routes.tsx"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 200
 key = 'Markdown(Section { file: "README.md", section_index: 28 })'
 descriptor = "README.md section #28"
 cost_tokens = 49
-cum_tokens = 8434
+cum_tokens = 8469
 
 [batches.content]
 kind = "lines"
@@ -6308,11 +6412,105 @@ end = 186
 kind = "full"
 
 [[batches]]
-position = 197
+position = 201
+key = 'Typescript(ExportNames { file: "packages/app-client/src/modules/notes/notes.context.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/app-client/src/modules/notes/notes.context.tsx"
+cost_tokens = 33
+cum_tokens = 8502
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/notes/notes.context.tsx"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/notes/notes.context.tsx"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/notes/notes.context.tsx"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/notes/notes.context.tsx"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 202
+key = 'Typescript(Export { file: "packages/app-client/src/modules/notes/notes.context.tsx", start_line: 11 })'
+descriptor = "export at packages/app-client/src/modules/notes/notes.context.tsx:11"
+cost_tokens = 0
+cum_tokens = 8502
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/notes/notes.context.tsx"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/notes/notes.context.tsx"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 203
+key = 'Typescript(Export { file: "packages/app-client/src/modules/notes/notes.context.tsx", start_line: 27 })'
+descriptor = "export at packages/app-client/src/modules/notes/notes.context.tsx:27"
+cost_tokens = 0
+cum_tokens = 8502
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/notes/notes.context.tsx"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/notes/notes.context.tsx"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 204
 key = 'Markdown(Section { file: "packages/docs/src/self-hosting/docker.md", section_index: 3 })'
 descriptor = "packages/docs/src/self-hosting/docker.md section #3"
 cost_tokens = 34
-cum_tokens = 8468
+cum_tokens = 8536
 
 [batches.content]
 kind = "lines"
@@ -6334,11 +6532,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 198
+position = 205
 key = 'Json(Whole { file: "packages/app-server/tsconfig.json" })'
 descriptor = "json config packages/app-server/tsconfig.json"
 cost_tokens = 172
-cum_tokens = 8640
+cum_tokens = 8708
 
 [batches.content]
 kind = "lines"
@@ -6352,11 +6550,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 199
+position = 206
 key = 'Markdown(Section { file: "packages/docs/src/how-it-works.md", section_index: 9 })'
 descriptor = "packages/docs/src/how-it-works.md section #9"
 cost_tokens = 48
-cum_tokens = 8688
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -6378,11 +6576,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 200
+position = 207
 key = 'Markdown(Section { file: "packages/docs/src/how-it-works.md", section_index: 12 })'
 descriptor = "packages/docs/src/how-it-works.md section #12"
 cost_tokens = 48
-cum_tokens = 8736
+cum_tokens = 8804
 
 [batches.content]
 kind = "lines"
@@ -6404,11 +6602,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 201
+position = 208
 key = 'Typescript(Imports { file: "packages/lib/src/index.ts" })'
 descriptor = "imports in packages/lib/src/index.ts"
 cost_tokens = 182
-cum_tokens = 8918
+cum_tokens = 8986
 
 [batches.content]
 kind = "lines"
@@ -6422,11 +6620,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 202
+position = 209
 key = 'Typescript(ExportNames { file: "packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts"
 cost_tokens = 8
-cum_tokens = 8926
+cum_tokens = 8994
 
 [batches.content]
 kind = "lines"
@@ -6448,11 +6646,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 203
+position = 210
 key = 'Markdown(Section { file: "packages/docs/src/how-it-works.md", section_index: 2 })'
 descriptor = "packages/docs/src/how-it-works.md section #2"
 cost_tokens = 51
-cum_tokens = 8977
+cum_tokens = 9045
 
 [batches.content]
 kind = "lines"
@@ -6474,11 +6672,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 204
+position = 211
 key = 'Markdown(Section { file: "packages/docs/src/how-it-works.md", section_index: 4 })'
 descriptor = "packages/docs/src/how-it-works.md section #4"
 cost_tokens = 51
-cum_tokens = 9028
+cum_tokens = 9096
 
 [batches.content]
 kind = "lines"
@@ -6500,11 +6698,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 205
+position = 212
 key = 'Markdown(Section { file: "packages/docs/src/how-it-works.md", section_index: 6 })'
 descriptor = "packages/docs/src/how-it-works.md section #6"
 cost_tokens = 52
-cum_tokens = 9080
+cum_tokens = 9148
 
 [batches.content]
 kind = "lines"
@@ -6526,11 +6724,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 206
+position = 213
 key = 'Markdown(Section { file: "packages/docs/src/index.md", section_index: 6 })'
 descriptor = "packages/docs/src/index.md section #6"
 cost_tokens = 17
-cum_tokens = 9097
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -6544,11 +6742,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 207
+position = 214
 key = 'Markdown(Section { file: "packages/docs/src/index.md", section_index: 7 })'
 descriptor = "packages/docs/src/index.md section #7"
 cost_tokens = 17
-cum_tokens = 9114
+cum_tokens = 9182
 
 [batches.content]
 kind = "lines"
@@ -6562,11 +6760,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 208
+position = 215
 key = 'Markdown(Section { file: "packages/docs/src/integrations/versioning.md", section_index: 0 })'
 descriptor = "packages/docs/src/integrations/versioning.md section #0"
 cost_tokens = 111
-cum_tokens = 9225
+cum_tokens = 9293
 
 [batches.content]
 kind = "lines"
@@ -6596,11 +6794,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 209
+position = 216
 key = 'Plaintext(Whole { file: ".nvmrc" })'
 descriptor = "plaintext config .nvmrc"
 cost_tokens = 6
-cum_tokens = 9231
+cum_tokens = 9299
 
 [batches.content]
 kind = "lines"
@@ -6614,11 +6812,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 210
+position = 217
 key = 'Typescript(ExportNames { file: "packages/cli/src/config/config.usecases.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/cli/src/config/config.usecases.ts"
 cost_tokens = 9
-cum_tokens = 9240
+cum_tokens = 9308
 
 [batches.content]
 kind = "lines"
@@ -6640,11 +6838,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 211
+position = 218
 key = 'Typescript(ExportNames { file: "packages/docs/src/data/configuration.data.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/docs/src/data/configuration.data.ts"
 cost_tokens = 9
-cum_tokens = 9249
+cum_tokens = 9317
 
 [batches.content]
 kind = "lines"
@@ -6666,11 +6864,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 212
+position = 219
 key = 'Typescript(ExportNames { file: "packages/docs/src/data/i18n.data.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/docs/src/data/i18n.data.ts"
 cost_tokens = 9
-cum_tokens = 9258
+cum_tokens = 9326
 
 [batches.content]
 kind = "lines"
@@ -6692,11 +6890,113 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 213
+position = 220
+key = 'Typescript(ExportNames { file: "packages/app-client/src/modules/i18n/i18n.provider.tsx", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
+descriptor = "export names surface in packages/app-client/src/modules/i18n/i18n.provider.tsx"
+cost_tokens = 40
+cum_tokens = 9366
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 221
+key = 'Typescript(Export { file: "packages/app-client/src/modules/i18n/i18n.provider.tsx", start_line: 44 })'
+descriptor = "export at packages/app-client/src/modules/i18n/i18n.provider.tsx:44"
+cost_tokens = 0
+cum_tokens = 9366
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 222
+key = 'Typescript(Export { file: "packages/app-client/src/modules/i18n/i18n.provider.tsx", start_line: 10 })'
+descriptor = "export at packages/app-client/src/modules/i18n/i18n.provider.tsx:10"
+cost_tokens = 13
+cum_tokens = 9379
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/app-client/src/modules/i18n/i18n.provider.tsx"
+start = 10
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 223
 key = 'Markdown(Section { file: "README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 71
-cum_tokens = 9329
+cum_tokens = 9450
 
 [batches.content]
 kind = "lines"
@@ -6726,11 +7026,11 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 214
+position = 224
 key = 'Markdown(Section { file: "packages/docs/src/index.md", section_index: 2 })'
 descriptor = "packages/docs/src/index.md section #2"
 cost_tokens = 18
-cum_tokens = 9347
+cum_tokens = 9468
 
 [batches.content]
 kind = "lines"
@@ -6744,11 +7044,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 215
+position = 225
 key = 'Json(Whole { file: "packages/cli/tsconfig.json" })'
 descriptor = "json config packages/cli/tsconfig.json"
 cost_tokens = 205
-cum_tokens = 9552
+cum_tokens = 9673
 
 [batches.content]
 kind = "lines"

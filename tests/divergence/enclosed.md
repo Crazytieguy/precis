@@ -229,36 +229,46 @@ Score(3000)=0.640 I=0.824 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | ns | 8111 |  | 276 | Auth catalog — errors + models + services signatures | 5.3 |  | 0.475 |
 | walker |  | 8130 | 28 | packages/docs/src/integrations/cli.md section #2 |  |  | 0.475 |
 | walker |  | 8138 | 8 | listing of 'packages/app-client/src/modules/shared/files' |  |  | 0.475 |
-| walker |  | 8147 | 9 | export names surface in packages/crypto/src/index.node.ts |  |  | 0.475 |
-| walker |  | 8156 | 9 | export names surface in packages/crypto/src/index.web.ts |  |  | 0.475 |
-| walker |  | 8165 | 9 | listing of 'packages/app-server/src/modules/shared/errors' |  |  | 0.475 |
-| walker |  | 8174 | 9 | listing of 'packages/app-server/src/modules/shared/validation' |  |  | 0.475 |
-| walker |  | 8219 | 45 | packages/docs/src/how-it-works.md section #1 |  |  | 0.475 |
-| walker |  | 8385 | 166 | imports in packages/app-client/src/index.tsx |  |  | 0.475 |
+| walker |  | 8158 | 20 | export names surface in packages/app-client/src/modules/ui/components/sonner.tsx |  |  | 0.475 |
+| walker |  | 8158 | 0 | export at packages/app-client/src/modules/ui/components/sonner.tsx:5 |  |  | 0.475 |
+| walker |  | 8167 | 9 | export names surface in packages/crypto/src/index.node.ts |  |  | 0.475 |
+| walker |  | 8176 | 9 | export names surface in packages/crypto/src/index.web.ts |  |  | 0.475 |
+| walker |  | 8185 | 9 | listing of 'packages/app-server/src/modules/shared/errors' |  |  | 0.475 |
+| walker |  | 8194 | 9 | listing of 'packages/app-server/src/modules/shared/validation' |  |  | 0.475 |
+| walker |  | 8239 | 45 | packages/docs/src/how-it-works.md section #1 |  |  | 0.475 |
+| walker |  | 8405 | 166 | imports in packages/app-client/src/index.tsx |  |  | 0.475 |
+| walker |  | 8420 | 15 | export names surface in packages/app-client/src/routes.tsx |  |  | 0.475 |
+| walker |  | 8420 | 0 | export at packages/app-client/src/routes.tsx:11 |  |  | 0.475 |
 | ns | 8429 |  | 318 | Auth middleware — gating + protected-route guard | 5.4 |  | 0.465 |
-| walker |  | 8434 | 49 | README.md section #28 |  |  | 0.465 |
-| walker |  | 8468 | 34 | packages/docs/src/self-hosting/docker.md section #3 |  |  | 0.465 |
-| walker |  | 8640 | 172 | json config packages/app-server/tsconfig.json |  |  | 0.465 |
-| walker |  | 8688 | 48 | packages/docs/src/how-it-works.md section #9 |  |  | 0.465 |
-| walker |  | 8736 | 48 | packages/docs/src/how-it-works.md section #12 |  |  | 0.465 |
+| walker |  | 8469 | 49 | README.md section #28 |  |  | 0.465 |
+| walker |  | 8502 | 33 | export names surface in packages/app-client/src/modules/notes/notes.context.tsx |  |  | 0.465 |
+| walker |  | 8502 | 0 | export at packages/app-client/src/modules/notes/notes.context.tsx:11 |  |  | 0.465 |
+| walker |  | 8502 | 0 | export at packages/app-client/src/modules/notes/notes.context.tsx:27 |  |  | 0.465 |
+| walker |  | 8536 | 34 | packages/docs/src/self-hosting/docker.md section #3 |  |  | 0.465 |
+| walker |  | 8708 | 172 | json config packages/app-server/tsconfig.json |  |  | 0.465 |
+| walker |  | 8756 | 48 | packages/docs/src/how-it-works.md section #9 |  |  | 0.465 |
+| walker |  | 8804 | 48 | packages/docs/src/how-it-works.md section #12 |  |  | 0.465 |
 | ns | 8821 |  | 392 | Auth login route — handler body (timing-safe bcrypt + JWT issue) | 5.5 |  | 0.452 |
-| walker |  | 8918 | 182 | imports in packages/lib/src/index.ts |  |  | 0.480 |
-| walker |  | 8926 | 8 | export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts |  |  | 0.480 |
-| walker |  | 8977 | 51 | packages/docs/src/how-it-works.md section #2 |  |  | 0.480 |
-| walker |  | 9028 | 51 | packages/docs/src/how-it-works.md section #4 |  |  | 0.480 |
-| walker |  | 9080 | 52 | packages/docs/src/how-it-works.md section #6 |  |  | 0.480 |
-| walker |  | 9097 | 17 | packages/docs/src/index.md section #6 |  |  | 0.480 |
-| walker |  | 9114 | 17 | packages/docs/src/index.md section #7 |  |  | 0.480 |
+| walker |  | 8986 | 182 | imports in packages/lib/src/index.ts |  |  | 0.480 |
+| walker |  | 8994 | 8 | export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts |  |  | 0.480 |
+| walker |  | 9045 | 51 | packages/docs/src/how-it-works.md section #2 |  |  | 0.480 |
+| walker |  | 9096 | 51 | packages/docs/src/how-it-works.md section #4 |  |  | 0.480 |
 | ns | 9134 |  | 313 | Lib — encryptNote body (crypto.usecases) | 6.1 |  | 0.471 |
-| walker |  | 9225 | 111 | packages/docs/src/integrations/versioning.md section #0 |  |  | 0.471 |
-| walker |  | 9231 | 6 | plaintext config .nvmrc |  |  | 0.471 |
+| walker |  | 9148 | 52 | packages/docs/src/how-it-works.md section #6 |  |  | 0.471 |
+| walker |  | 9165 | 17 | packages/docs/src/index.md section #6 |  |  | 0.471 |
+| walker |  | 9182 | 17 | packages/docs/src/index.md section #7 |  |  | 0.471 |
 | ns | 9232 |  | 98 | Lib — note URL hash-fragment markers (`pw` / `dar`) | 6.2 |  | 0.469 |
-| walker |  | 9240 | 9 | export names surface in packages/cli/src/config/config.usecases.ts |  |  | 0.469 |
-| walker |  | 9249 | 9 | export names surface in packages/docs/src/data/configuration.data.ts |  |  | 0.469 |
-| walker |  | 9258 | 9 | export names surface in packages/docs/src/data/i18n.data.ts |  |  | 0.469 |
-| walker |  | 9329 | 71 | README.md section #21 |  |  | 0.469 |
-| walker |  | 9347 | 18 | packages/docs/src/index.md section #2 |  |  | 0.469 |
+| walker |  | 9293 | 111 | packages/docs/src/integrations/versioning.md section #0 |  |  | 0.469 |
+| walker |  | 9299 | 6 | plaintext config .nvmrc |  |  | 0.469 |
+| walker |  | 9308 | 9 | export names surface in packages/cli/src/config/config.usecases.ts |  |  | 0.469 |
+| walker |  | 9317 | 9 | export names surface in packages/docs/src/data/configuration.data.ts |  |  | 0.469 |
+| walker |  | 9326 | 9 | export names surface in packages/docs/src/data/i18n.data.ts |  |  | 0.469 |
+| walker |  | 9366 | 40 | export names surface in packages/app-client/src/modules/i18n/i18n.provider.tsx |  |  | 0.469 |
+| walker |  | 9366 | 0 | export at packages/app-client/src/modules/i18n/i18n.provider.tsx:44 |  |  | 0.469 |
+| walker |  | 9379 | 13 | export at packages/app-client/src/modules/i18n/i18n.provider.tsx:10 |  |  | 0.469 |
+| walker |  | 9450 | 71 | README.md section #21 |  |  | 0.469 |
+| walker |  | 9468 | 18 | packages/docs/src/index.md section #2 |  |  | 0.469 |
 | ns | 9539 |  | 307 | CLI dispatcher + create-note args | 6.3 |  | 0.460 |
-| walker |  | 9552 | 205 | json config packages/cli/tsconfig.json |  |  | 0.460 |
+| walker |  | 9673 | 205 | json config packages/cli/tsconfig.json |  |  | 0.460 |
 | ns | 9903 |  | 364 | App-client — Solid Router routes | 6.4 |  | 0.451 |
 | ns | 9990 |  | 87 | Docs site — page map (VitePress src layout) | 6.5 |  | 0.463 |
