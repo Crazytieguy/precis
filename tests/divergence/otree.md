@@ -133,19 +133,19 @@ Score(3000)=0.550 I=0.837 C=0.362 ns_rows≤3K=20/50 (reached=8 partial=3 missin
 | walker |  | 6813 | 295 | pub item at src/config/colors.rs:162 |  |  | 0.529 |
 | walker |  | 6931 | 118 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.529 |
 | ns | 6976 |  | 398 | Default key bindings | 5.4 |  | 0.515 |
-| walker |  | 7118 | 187 | README.md section #4 |  |  | 0.515 |
+| walker |  | 6987 | 56 | README.md section #3 |  |  | 0.515 |
+| walker |  | 7174 | 187 | README.md section #4 |  |  | 0.520 |
 | ns | 7174 |  | 198 | Key enum + KeyAction | 5.5 |  | 0.520 |
+| walker |  | 7244 | 70 | README.md section #2 |  |  | 0.520 |
 | ns | 7644 |  | 470 | Per-branch struct fields (Tree / Layout / Filter / Data) | 5.6 |  | 0.528 |
 | ns | 7894 |  | 250 | Editor + Header + Footer struct fields | 5.7 |  | 0.531 |
-| walker |  | 8034 | 916 | pub item at src/cmd.rs:13 |  |  | 0.533 |
-| walker |  | 8090 | 56 | README.md section #3 |  |  | 0.533 |
-| walker |  | 8098 | 8 | listing of '.github' |  |  | 0.533 |
-| walker |  | 8114 | 16 | listing of '.github/workflows' |  |  | 0.533 |
+| walker |  | 8160 | 916 | pub item at src/cmd.rs:13 |  |  | 0.533 |
+| walker |  | 8168 | 8 | listing of '.github' |  |  | 0.533 |
+| walker |  | 8184 | 16 | listing of '.github/workflows' |  |  | 0.533 |
 | ns | 8331 |  | 437 | Config::load + Config::parse | 5.8 |  | 0.519 |
 | ns | 8613 |  | 282 | Config::get_path resolution | 5.9 |  | 0.511 |
-| walker |  | 8984 | 870 | pub item at src/config/keys.rs:195 |  |  | 0.511 |
 | ns | 8986 |  | 373 | Color struct + Colors namespaces | 5.10 |  | 0.517 |
-| walker |  | 9054 | 70 | README.md section #2 |  |  | 0.517 |
+| walker |  | 9054 | 870 | pub item at src/config/keys.rs:195 |  |  | 0.517 |
 | walker |  | 9061 | 7 | pub item body at src/ui/mod.rs:35 body 60 |  |  | 0.517 |
 | walker |  | 9068 | 7 | pub item body at src/parse/json.rs:26 body 80 |  |  | 0.517 |
 | walker |  | 9078 | 10 | pub item body at src/ui/mod.rs:35 body 59 |  |  | 0.517 |

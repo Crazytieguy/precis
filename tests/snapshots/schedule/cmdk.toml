@@ -1,7 +1,7 @@
 fixture = "cmdk"
 budget = 10000
-cumulative_tokens = 8548
-batch_count = 121
+cumulative_tokens = 8540
+batch_count = 120
 
 [[batches]]
 position = 1
@@ -722,10 +722,36 @@ kind = "full"
 
 [[batches]]
 position = 15
+key = 'Markdown(Section { file: "README.md", section_index: 24 })'
+descriptor = "README.md section #24"
+cost_tokens = 16
+cum_tokens = 898
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 260
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 262
+end = 262
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 4 })'
 descriptor = "ARCHITECTURE.md section #4"
 cost_tokens = 29
-cum_tokens = 911
+cum_tokens = 927
 
 [batches.content]
 kind = "lines"
@@ -747,11 +773,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Fs(DirListing { dir: "cmdk/src" })'
 descriptor = "listing of 'cmdk/src'"
 cost_tokens = 10
-cum_tokens = 921
+cum_tokens = 937
 
 [batches.content]
 kind = "fs"
@@ -761,11 +787,11 @@ parent = "cmdk/src"
 entries = ["command-score.ts", "index.tsx"]
 
 [[batches]]
-position = 17
+position = 18
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 10 })'
 descriptor = "module item at cmdk/src/index.tsx:10"
 cost_tokens = 14
-cum_tokens = 935
+cum_tokens = 951
 
 [batches.content]
 kind = "lines"
@@ -779,11 +805,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 160 })'
 descriptor = "module item at cmdk/src/index.tsx:160"
 cost_tokens = 12
-cum_tokens = 947
+cum_tokens = 963
 
 [batches.content]
 kind = "lines"
@@ -797,11 +823,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 981 })'
 descriptor = "module item at cmdk/src/index.tsx:981"
 cost_tokens = 17
-cum_tokens = 964
+cum_tokens = 980
 
 [batches.content]
 kind = "lines"
@@ -823,11 +849,11 @@ end = 982
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 1061 })'
 descriptor = "module item at cmdk/src/index.tsx:1061"
 cost_tokens = 17
-cum_tokens = 981
+cum_tokens = 997
 
 [batches.content]
 kind = "lines"
@@ -849,11 +875,11 @@ end = 1062
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 159 })'
 descriptor = "module item at cmdk/src/index.tsx:159"
 cost_tokens = 14
-cum_tokens = 995
+cum_tokens = 1011
 
 [batches.content]
 kind = "lines"
@@ -867,11 +893,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 963 })'
 descriptor = "module item at cmdk/src/index.tsx:963"
 cost_tokens = 19
-cum_tokens = 1014
+cum_tokens = 1030
 
 [batches.content]
 kind = "lines"
@@ -893,11 +919,11 @@ end = 964
 kind = "ellipsis"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 972 })'
 descriptor = "module item at cmdk/src/index.tsx:972"
 cost_tokens = 19
-cum_tokens = 1033
+cum_tokens = 1049
 
 [batches.content]
 kind = "lines"
@@ -919,11 +945,11 @@ end = 973
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 993 })'
 descriptor = "module item at cmdk/src/index.tsx:993"
 cost_tokens = 19
-cum_tokens = 1052
+cum_tokens = 1068
 
 [batches.content]
 kind = "lines"
@@ -945,11 +971,11 @@ end = 994
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 154 })'
 descriptor = "module item at cmdk/src/index.tsx:154"
 cost_tokens = 15
-cum_tokens = 1067
+cum_tokens = 1083
 
 [batches.content]
 kind = "lines"
@@ -963,11 +989,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 157 })'
 descriptor = "module item at cmdk/src/index.tsx:157"
 cost_tokens = 15
-cum_tokens = 1082
+cum_tokens = 1098
 
 [batches.content]
 kind = "lines"
@@ -981,11 +1007,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 167 })'
 descriptor = "module item at cmdk/src/index.tsx:167"
 cost_tokens = 15
-cum_tokens = 1097
+cum_tokens = 1113
 
 [batches.content]
 kind = "lines"
@@ -999,11 +1025,11 @@ end = 167
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 163 })'
 descriptor = "module item at cmdk/src/index.tsx:163"
 cost_tokens = 16
-cum_tokens = 1113
+cum_tokens = 1129
 
 [batches.content]
 kind = "lines"
@@ -1017,11 +1043,11 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 164 })'
 descriptor = "module item at cmdk/src/index.tsx:164"
 cost_tokens = 16
-cum_tokens = 1129
+cum_tokens = 1145
 
 [batches.content]
 kind = "lines"
@@ -1035,11 +1061,11 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 165 })'
 descriptor = "module item at cmdk/src/index.tsx:165"
 cost_tokens = 16
-cum_tokens = 1145
+cum_tokens = 1161
 
 [batches.content]
 kind = "lines"
@@ -1053,11 +1079,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 166 })'
 descriptor = "module item at cmdk/src/index.tsx:166"
 cost_tokens = 16
-cum_tokens = 1161
+cum_tokens = 1177
 
 [batches.content]
 kind = "lines"
@@ -1071,11 +1097,11 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 1046 })'
 descriptor = "module item at cmdk/src/index.tsx:1046"
 cost_tokens = 16
-cum_tokens = 1177
+cum_tokens = 1193
 
 [batches.content]
 kind = "lines"
@@ -1097,11 +1123,11 @@ end = 1047
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 79 })'
 descriptor = "module item at cmdk/src/index.tsx:79"
 cost_tokens = 24
-cum_tokens = 1201
+cum_tokens = 1217
 
 [batches.content]
 kind = "lines"
@@ -1115,11 +1141,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 155 })'
 descriptor = "module item at cmdk/src/index.tsx:155"
 cost_tokens = 17
-cum_tokens = 1218
+cum_tokens = 1234
 
 [batches.content]
 kind = "lines"
@@ -1133,11 +1159,11 @@ end = 155
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 156 })'
 descriptor = "module item at cmdk/src/index.tsx:156"
 cost_tokens = 18
-cum_tokens = 1236
+cum_tokens = 1252
 
 [batches.content]
 kind = "lines"
@@ -1151,11 +1177,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 1004 })'
 descriptor = "module item at cmdk/src/index.tsx:1004"
 cost_tokens = 27
-cum_tokens = 1263
+cum_tokens = 1279
 
 [batches.content]
 kind = "lines"
@@ -1177,11 +1203,11 @@ end = 1005
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 158 })'
 descriptor = "module item at cmdk/src/index.tsx:158"
 cost_tokens = 21
-cum_tokens = 1284
+cum_tokens = 1300
 
 [batches.content]
 kind = "lines"
@@ -1195,11 +1221,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 149 })'
 descriptor = "module item at cmdk/src/index.tsx:149"
 cost_tokens = 32
-cum_tokens = 1316
+cum_tokens = 1332
 
 [batches.content]
 kind = "lines"
@@ -1213,11 +1239,11 @@ end = 152
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 991 })'
 descriptor = "module item at cmdk/src/index.tsx:991"
 cost_tokens = 25
-cum_tokens = 1341
+cum_tokens = 1357
 
 [batches.content]
 kind = "lines"
@@ -1231,11 +1257,11 @@ end = 991
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 161 })'
 descriptor = "module item at cmdk/src/index.tsx:161"
 cost_tokens = 27
-cum_tokens = 1368
+cum_tokens = 1384
 
 [batches.content]
 kind = "lines"
@@ -1249,11 +1275,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 137 })'
 descriptor = "module item at cmdk/src/index.tsx:137"
 cost_tokens = 67
-cum_tokens = 1435
+cum_tokens = 1451
 
 [batches.content]
 kind = "lines"
@@ -1267,11 +1293,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 1071 })'
 descriptor = "module item at cmdk/src/index.tsx:1071"
 cost_tokens = 65
-cum_tokens = 1500
+cum_tokens = 1516
 
 [batches.content]
 kind = "lines"
@@ -1293,11 +1319,11 @@ end = 1075
 kind = "ellipsis"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 143 })'
 descriptor = "module item at cmdk/src/index.tsx:143"
 cost_tokens = 84
-cum_tokens = 1584
+cum_tokens = 1600
 
 [batches.content]
 kind = "lines"
@@ -1311,11 +1337,11 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 1010 })'
 descriptor = "module item at cmdk/src/index.tsx:1010"
 cost_tokens = 76
-cum_tokens = 1660
+cum_tokens = 1676
 
 [batches.content]
 kind = "lines"
@@ -1337,11 +1363,11 @@ end = 1016
 kind = "ellipsis"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 930 })'
 descriptor = "module item at cmdk/src/index.tsx:930"
 cost_tokens = 73
-cum_tokens = 1733
+cum_tokens = 1749
 
 [batches.content]
 kind = "lines"
@@ -1355,11 +1381,11 @@ end = 939
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Typescript(ExportNames { file: "cmdk/src/index.tsx", chunk_index: 1, export_count: 21, type_only_export_count: 0 })'
 descriptor = "export names surface #1 in cmdk/src/index.tsx"
 cost_tokens = 101
-cum_tokens = 1834
+cum_tokens = 1850
 
 [batches.content]
 kind = "lines"
@@ -1381,11 +1407,11 @@ end = 954
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 123 })'
 descriptor = "module item at cmdk/src/index.tsx:123"
 cost_tokens = 175
-cum_tokens = 2009
+cum_tokens = 2025
 
 [batches.content]
 kind = "lines"
@@ -1399,11 +1425,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Typescript(ModuleItem { file: "cmdk/src/index.tsx", start_line: 1081 })'
 descriptor = "module item at cmdk/src/index.tsx:1081"
 cost_tokens = 135
-cum_tokens = 2144
+cum_tokens = 2160
 
 [batches.content]
 kind = "lines"
@@ -1417,11 +1443,11 @@ end = 1091
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Typescript(ExportNames { file: "cmdk/src/index.tsx", chunk_index: 0, export_count: 21, type_only_export_count: 0 })'
 descriptor = "export names surface in cmdk/src/index.tsx"
 cost_tokens = 268
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1587,11 +1613,11 @@ end = 944
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 169 })'
 descriptor = "export at cmdk/src/index.tsx:169"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1613,11 +1639,11 @@ end = 170
 kind = "ellipsis"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 664 })'
 descriptor = "export at cmdk/src/index.tsx:664"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1639,11 +1665,11 @@ end = 665
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 729 })'
 descriptor = "export at cmdk/src/index.tsx:729"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1665,11 +1691,11 @@ end = 730
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 774 })'
 descriptor = "export at cmdk/src/index.tsx:774"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1691,11 +1717,11 @@ end = 775
 kind = "ellipsis"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 787 })'
 descriptor = "export at cmdk/src/index.tsx:787"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1717,11 +1743,11 @@ end = 788
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 833 })'
 descriptor = "export at cmdk/src/index.tsx:833"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1743,11 +1769,11 @@ end = 834
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 882 })'
 descriptor = "export at cmdk/src/index.tsx:882"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1769,11 +1795,11 @@ end = 883
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 899 })'
 descriptor = "export at cmdk/src/index.tsx:899"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1795,11 +1821,11 @@ end = 900
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Typescript(Export { file: "cmdk/src/index.tsx", start_line: 909 })'
 descriptor = "export at cmdk/src/index.tsx:909"
 cost_tokens = 0
-cum_tokens = 2412
+cum_tokens = 2428
 
 [batches.content]
 kind = "lines"
@@ -1821,11 +1847,11 @@ end = 910
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Typescript(ExportBody { file: "cmdk/src/index.tsx", start_line: 774, body_start_line: 775 })'
 descriptor = "export body at cmdk/src/index.tsx:774 body 775"
 cost_tokens = 97
-cum_tokens = 2509
+cum_tokens = 2525
 
 [batches.content]
 kind = "lines"
@@ -1847,11 +1873,11 @@ end = 780
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Typescript(ExportDoc { file: "cmdk/src/index.tsx", start_line: 882 })'
 descriptor = "export doc at cmdk/src/index.tsx:882"
 cost_tokens = 26
-cum_tokens = 2535
+cum_tokens = 2551
 
 [batches.content]
 kind = "lines"
@@ -1865,11 +1891,11 @@ end = 881
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Typescript(ExportDoc { file: "cmdk/src/index.tsx", start_line: 899 })'
 descriptor = "export doc at cmdk/src/index.tsx:899"
 cost_tokens = 27
-cum_tokens = 2562
+cum_tokens = 2578
 
 [batches.content]
 kind = "lines"
@@ -1883,11 +1909,11 @@ end = 898
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Typescript(ExportDoc { file: "cmdk/src/index.tsx", start_line: 909 })'
 descriptor = "export doc at cmdk/src/index.tsx:909"
 cost_tokens = 30
-cum_tokens = 2592
+cum_tokens = 2608
 
 [batches.content]
 kind = "lines"
@@ -1901,11 +1927,11 @@ end = 908
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Typescript(ExportDoc { file: "cmdk/src/index.tsx", start_line: 729 })'
 descriptor = "export doc at cmdk/src/index.tsx:729"
 cost_tokens = 37
-cum_tokens = 2629
+cum_tokens = 2645
 
 [batches.content]
 kind = "lines"
@@ -1919,11 +1945,11 @@ end = 728
 kind = "full"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Typescript(ExportDoc { file: "cmdk/src/index.tsx", start_line: 787 })'
 descriptor = "export doc at cmdk/src/index.tsx:787"
 cost_tokens = 38
-cum_tokens = 2667
+cum_tokens = 2683
 
 [batches.content]
 kind = "lines"
@@ -1937,11 +1963,11 @@ end = 786
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Typescript(ExportDoc { file: "cmdk/src/index.tsx", start_line: 774 })'
 descriptor = "export doc at cmdk/src/index.tsx:774"
 cost_tokens = 48
-cum_tokens = 2715
+cum_tokens = 2731
 
 [batches.content]
 kind = "lines"
@@ -1955,11 +1981,11 @@ end = 773
 kind = "full"
 
 [[batches]]
-position = 66
+position = 67
 key = 'Typescript(ExportDoc { file: "cmdk/src/index.tsx", start_line: 833 })'
 descriptor = "export doc at cmdk/src/index.tsx:833"
 cost_tokens = 52
-cum_tokens = 2767
+cum_tokens = 2783
 
 [batches.content]
 kind = "lines"
@@ -1973,11 +1999,11 @@ end = 832
 kind = "full"
 
 [[batches]]
-position = 67
+position = 68
 key = 'Typescript(ExportDoc { file: "cmdk/src/index.tsx", start_line: 664 })'
 descriptor = "export doc at cmdk/src/index.tsx:664"
 cost_tokens = 66
-cum_tokens = 2833
+cum_tokens = 2849
 
 [batches.content]
 kind = "lines"
@@ -1991,11 +2017,11 @@ end = 663
 kind = "full"
 
 [[batches]]
-position = 68
+position = 69
 key = 'Typescript(Imports { file: "cmdk/src/index.tsx" })'
 descriptor = "imports in cmdk/src/index.tsx"
 cost_tokens = 105
-cum_tokens = 2938
+cum_tokens = 2954
 
 [batches.content]
 kind = "lines"
@@ -2017,11 +2043,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 69
+position = 70
 key = 'Json(Identity { file: "cmdk/package.json" })'
 descriptor = "package identity in cmdk/package.json"
 cost_tokens = 38
-cum_tokens = 2976
+cum_tokens = 2992
 
 [batches.content]
 kind = "lines"
@@ -2035,11 +2061,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 114
-cum_tokens = 3090
+cum_tokens = 3106
 
 [batches.content]
 kind = "lines"
@@ -2053,11 +2079,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Typescript(ExportBody { file: "cmdk/src/index.tsx", start_line: 729, body_start_line: 730 })'
 descriptor = "export body at cmdk/src/index.tsx:729 body 730"
 cost_tokens = 435
-cum_tokens = 3525
+cum_tokens = 3541
 
 [batches.content]
 kind = "lines"
@@ -2103,11 +2129,11 @@ end = 767
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Markdown(Section { file: "README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 26
-cum_tokens = 3551
+cum_tokens = 3567
 
 [batches.content]
 kind = "lines"
@@ -2121,11 +2147,11 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Markdown(Section { file: "README.md", section_index: 22 })'
 descriptor = "README.md section #22"
 cost_tokens = 26
-cum_tokens = 3577
+cum_tokens = 3593
 
 [batches.content]
 kind = "lines"
@@ -2139,11 +2165,37 @@ end = 254
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
+key = 'Markdown(Section { file: "README.md", section_index: 23 })'
+descriptor = "README.md section #23"
+cost_tokens = 22
+cum_tokens = 3615
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 258
+end = 258
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
 key = 'Typescript(Export { file: "cmdk/tsup.config.ts", start_line: 3 })'
 descriptor = "export at cmdk/tsup.config.ts:3"
 cost_tokens = 73
-cum_tokens = 3650
+cum_tokens = 3688
 
 [batches.content]
 kind = "lines"
@@ -2157,37 +2209,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 75
-key = 'Markdown(Section { file: "README.md", section_index: 24 })'
-descriptor = "README.md section #24"
-cost_tokens = 16
-cum_tokens = 3666
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 260
-end = 260
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 262
-end = 262
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 76
+position = 77
 key = 'Typescript(ExportBody { file: "cmdk/src/index.tsx", start_line: 664, body_start_line: 665 })'
 descriptor = "export body at cmdk/src/index.tsx:664 body 665"
 cost_tokens = 636
-cum_tokens = 4302
+cum_tokens = 4324
 
 [batches.content]
 kind = "lines"
@@ -2273,11 +2299,11 @@ end = 722
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Markdown(Section { file: "README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 35
-cum_tokens = 4337
+cum_tokens = 4359
 
 [batches.content]
 kind = "lines"
@@ -2291,11 +2317,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Fs(DirListing { dir: "website" })'
 descriptor = "listing of 'website'"
 cost_tokens = 54
-cum_tokens = 4391
+cum_tokens = 4413
 
 [batches.content]
 kind = "fs"
@@ -2305,11 +2331,11 @@ parent = "website"
 entries = [".eslintrc.json", ".gitignore", "README.md", "components", "next-env.d.ts", "next.config.js", "package.json", "pages", "public", "styles", "tsconfig.json", "vercel.json"]
 
 [[batches]]
-position = 79
+position = 80
 key = 'Fs(DirListing { dir: "website/components" })'
 descriptor = "listing of 'website/components'"
 cost_tokens = 14
-cum_tokens = 4405
+cum_tokens = 4427
 
 [batches.content]
 kind = "fs"
@@ -2319,11 +2345,11 @@ parent = "website/components"
 entries = ["cmdk", "code", "icons", "index.ts"]
 
 [[batches]]
-position = 80
+position = 81
 key = 'Fs(DirListing { dir: "website/components/cmdk" })'
 descriptor = "listing of 'website/components/cmdk'"
 cost_tokens = 23
-cum_tokens = 4428
+cum_tokens = 4450
 
 [batches.content]
 kind = "fs"
@@ -2333,11 +2359,11 @@ parent = "website/components/cmdk"
 entries = ["framer.tsx", "linear.tsx", "raycast.tsx", "vercel.tsx"]
 
 [[batches]]
-position = 81
+position = 82
 key = 'Typescript(Imports { file: "playwright.config.ts" })'
 descriptor = "imports in playwright.config.ts"
 cost_tokens = 19
-cum_tokens = 4447
+cum_tokens = 4469
 
 [batches.content]
 kind = "lines"
@@ -2351,11 +2377,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 58
-cum_tokens = 4505
+cum_tokens = 4527
 
 [batches.content]
 kind = "fs"
@@ -2365,37 +2391,11 @@ parent = "test"
 entries = ["basic.test.ts", "dialog.test.ts", "group.test.ts", "item.test.ts", "keybind.test.ts", "next-env.d.ts", "numeric.test.ts", "package.json", "pages", "props.test.ts", "style.css", "tsconfig.json"]
 
 [[batches]]
-position = 83
+position = 84
 key = 'Typescript(ExportNames { file: "cmdk/src/command-score.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in cmdk/src/command-score.ts"
 cost_tokens = 24
-cum_tokens = 4529
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmdk/src/command-score.ts"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "cmdk/src/command-score.ts"
-start = 156
-end = 156
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 84
-key = 'Typescript(Export { file: "cmdk/src/command-score.ts", start_line: 155 })'
-descriptor = "export at cmdk/src/command-score.ts:155"
-cost_tokens = 0
-cum_tokens = 4529
+cum_tokens = 4551
 
 [batches.content]
 kind = "lines"
@@ -2418,29 +2418,29 @@ kind = "ellipsis"
 
 [[batches]]
 position = 85
-key = 'Markdown(Section { file: "README.md", section_index: 23 })'
-descriptor = "README.md section #23"
-cost_tokens = 22
+key = 'Typescript(Export { file: "cmdk/src/command-score.ts", start_line: 155 })'
+descriptor = "export at cmdk/src/command-score.ts:155"
+cost_tokens = 0
 cum_tokens = 4551
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 256
-end = 256
+path = "cmdk/src/command-score.ts"
+start = 155
+end = 155
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 258
-end = 258
+path = "cmdk/src/command-score.ts"
+start = 156
+end = 156
 
 [batches.content.spans.render]
-kind = "full"
+kind = "ellipsis"
 
 [[batches]]
 position = 86
@@ -2536,10 +2536,36 @@ kind = "full"
 
 [[batches]]
 position = 88
+key = 'Markdown(Section { file: "README.md", section_index: 34 })'
+descriptor = "README.md section #34"
+cost_tokens = 37
+cum_tokens = 4766
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 426
+end = 426
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 428
+end = 428
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
 key = 'Typescript(Imports { file: "cmdk/tsup.config.ts" })'
 descriptor = "imports in cmdk/tsup.config.ts"
 cost_tokens = 14
-cum_tokens = 4743
+cum_tokens = 4780
 
 [batches.content]
 kind = "lines"
@@ -2553,11 +2579,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 52
-cum_tokens = 4795
+cum_tokens = 4832
 
 [batches.content]
 kind = "lines"
@@ -2571,11 +2597,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 52
-cum_tokens = 4847
+cum_tokens = 4884
 
 [batches.content]
 kind = "lines"
@@ -2589,11 +2615,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Markdown(Section { file: "README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 56
-cum_tokens = 4903
+cum_tokens = 4940
 
 [batches.content]
 kind = "lines"
@@ -2615,11 +2641,11 @@ end = 229
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Fs(DirListing { dir: "website/pages" })'
 descriptor = "listing of 'website/pages'"
 cost_tokens = 17
-cum_tokens = 4920
+cum_tokens = 4957
 
 [batches.content]
 kind = "fs"
@@ -2629,11 +2655,11 @@ parent = "website/pages"
 entries = ["_app.tsx", "_document.tsx", "index.tsx"]
 
 [[batches]]
-position = 93
+position = 94
 key = 'Markdown(Section { file: "README.md", section_index: 36 })'
 descriptor = "README.md section #36"
 cost_tokens = 143
-cum_tokens = 5063
+cum_tokens = 5100
 
 [batches.content]
 kind = "lines"
@@ -2663,11 +2689,11 @@ end = 460
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Markdown(Section { file: "README.md", section_index: 10 })'
 descriptor = "README.md section #10"
 cost_tokens = 58
-cum_tokens = 5121
+cum_tokens = 5158
 
 [batches.content]
 kind = "lines"
@@ -2689,11 +2715,11 @@ end = 151
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Fs(DirListing { dir: ".husky" })'
 descriptor = "listing of '.husky'"
 cost_tokens = 5
-cum_tokens = 5126
+cum_tokens = 5163
 
 [batches.content]
 kind = "fs"
@@ -2703,11 +2729,11 @@ parent = ".husky"
 entries = ["pre-commit"]
 
 [[batches]]
-position = 96
+position = 97
 key = 'Markdown(Section { file: "README.md", section_index: 26 })'
 descriptor = "README.md section #26"
 cost_tokens = 66
-cum_tokens = 5192
+cum_tokens = 5229
 
 [batches.content]
 kind = "lines"
@@ -2721,11 +2747,11 @@ end = 276
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 242
-cum_tokens = 5434
+cum_tokens = 5471
 
 [batches.content]
 kind = "lines"
@@ -2739,11 +2765,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Markdown(Section { file: "README.md", section_index: 20 })'
 descriptor = "README.md section #20"
 cost_tokens = 68
-cum_tokens = 5502
+cum_tokens = 5539
 
 [batches.content]
 kind = "lines"
@@ -2765,11 +2791,11 @@ end = 250
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Fs(DirListing { dir: "test/pages" })'
 descriptor = "listing of 'test/pages'"
 cost_tokens = 60
-cum_tokens = 5562
+cum_tokens = 5599
 
 [batches.content]
 kind = "fs"
@@ -2779,11 +2805,11 @@ parent = "test/pages"
 entries = ["_app.tsx", "dialog.tsx", "group.tsx", "huge.tsx", "index.tsx", "item-advanced.tsx", "item.tsx", "keybinds.tsx", "numeric.tsx", "portal.tsx", "props.tsx"]
 
 [[batches]]
-position = 100
+position = 101
 key = 'Markdown(Section { file: "README.md", section_index: 27 })'
 descriptor = "README.md section #27"
 cost_tokens = 70
-cum_tokens = 5632
+cum_tokens = 5669
 
 [batches.content]
 kind = "lines"
@@ -2805,11 +2831,11 @@ end = 283
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 0 })'
 descriptor = "ARCHITECTURE.md section #0"
 cost_tokens = 386
-cum_tokens = 6018
+cum_tokens = 6055
 
 [batches.content]
 kind = "lines"
@@ -2911,11 +2937,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Markdown(Section { file: "README.md", section_index: 15 })'
 descriptor = "README.md section #15"
 cost_tokens = 77
-cum_tokens = 6095
+cum_tokens = 6132
 
 [batches.content]
 kind = "lines"
@@ -2932,32 +2958,6 @@ kind = "full"
 path = "README.md"
 start = 205
 end = 210
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Markdown(Section { file: "README.md", section_index: 34 })'
-descriptor = "README.md section #34"
-cost_tokens = 37
-cum_tokens = 6132
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 426
-end = 426
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 428
-end = 428
 
 [batches.content.spans.render]
 kind = "full"
@@ -3010,10 +3010,52 @@ entries = ["test.yml"]
 
 [[batches]]
 position = 107
+key = 'Markdown(Section { file: "README.md", section_index: 25 })'
+descriptor = "README.md section #25"
+cost_tokens = 76
+cum_tokens = 6299
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 264
+end = 264
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 266
+end = 266
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 268
+end = 269
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 271
+end = 272
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
 key = 'Markdown(Section { file: "README.md", section_index: 32 })'
 descriptor = "README.md section #32"
 cost_tokens = 87
-cum_tokens = 6310
+cum_tokens = 6386
 
 [batches.content]
 kind = "lines"
@@ -3035,11 +3077,11 @@ end = 403
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 97
-cum_tokens = 6407
+cum_tokens = 6483
 
 [batches.content]
 kind = "lines"
@@ -3061,11 +3103,53 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 109
+position = 110
+key = 'Markdown(Section { file: "README.md", section_index: 13 })'
+descriptor = "README.md section #13"
+cost_tokens = 81
+cum_tokens = 6564
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 184
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 187
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
 key = 'Markdown(Section { file: "README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 102
-cum_tokens = 6509
+cum_tokens = 6666
 
 [batches.content]
 kind = "lines"
@@ -3087,11 +3171,11 @@ end = 201
 kind = "full"
 
 [[batches]]
-position = 110
+position = 112
 key = 'Markdown(Section { file: "README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 115
-cum_tokens = 6624
+cum_tokens = 6781
 
 [batches.content]
 kind = "lines"
@@ -3113,11 +3197,11 @@ end = 223
 kind = "full"
 
 [[batches]]
-position = 111
+position = 113
 key = 'Markdown(Section { file: "README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 123
-cum_tokens = 6747
+cum_tokens = 6904
 
 [batches.content]
 kind = "lines"
@@ -3139,11 +3223,11 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 112
+position = 114
 key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 126
-cum_tokens = 6873
+cum_tokens = 7030
 
 [batches.content]
 kind = "lines"
@@ -3165,11 +3249,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 113
+position = 115
 key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 132
-cum_tokens = 7005
+cum_tokens = 7162
 
 [batches.content]
 kind = "lines"
@@ -3191,29 +3275,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 114
-key = 'Typescript(ExportNames { file: "test/pages/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in test/pages/index.tsx"
-cost_tokens = 8
-cum_tokens = 7013
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/pages/index.tsx"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
+position = 116
 key = 'Markdown(Section { file: "README.md", section_index: 35 })'
 descriptor = "README.md section #35"
 cost_tokens = 375
-cum_tokens = 7388
+cum_tokens = 7537
 
 [batches.content]
 kind = "lines"
@@ -3323,53 +3389,11 @@ end = 454
 kind = "full"
 
 [[batches]]
-position = 116
-key = 'Markdown(Section { file: "README.md", section_index: 25 })'
-descriptor = "README.md section #25"
-cost_tokens = 76
-cum_tokens = 7464
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 264
-end = 264
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 266
-end = 266
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 268
-end = 269
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 271
-end = 272
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 117
 key = 'Markdown(Section { file: "README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 146
-cum_tokens = 7610
+cum_tokens = 7683
 
 [batches.content]
 kind = "lines"
@@ -3403,7 +3427,7 @@ position = 118
 key = 'Typescript(ExportBody { file: "cmdk/src/command-score.ts", start_line: 155, body_start_line: 156 })'
 descriptor = "export body at cmdk/src/command-score.ts:155 body 156"
 cost_tokens = 126
-cum_tokens = 7736
+cum_tokens = 7809
 
 [batches.content]
 kind = "lines"
@@ -3421,7 +3445,7 @@ position = 119
 key = 'Markdown(Section { file: "README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 148
-cum_tokens = 7884
+cum_tokens = 7957
 
 [batches.content]
 kind = "lines"
@@ -3452,52 +3476,10 @@ kind = "full"
 
 [[batches]]
 position = 120
-key = 'Markdown(Section { file: "README.md", section_index: 13 })'
-descriptor = "README.md section #13"
-cost_tokens = 81
-cum_tokens = 7965
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 182
-end = 182
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 184
-end = 185
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 187
-end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
 key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 583
-cum_tokens = 8548
+cum_tokens = 8540
 
 [batches.content]
 kind = "lines"

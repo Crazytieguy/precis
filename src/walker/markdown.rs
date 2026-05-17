@@ -428,12 +428,25 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
     } else {
         heading_slab_value(file, range.parent_index, ctx)
     };
+    let sub_scale = if is_readme(file) {
+        README_SUB_SECTION_SIGNAL_SCALE
+    } else {
+        SUB_SECTION_SIGNAL_SCALE
+    };
     match range.kind {
         SectionKind::Whole | SectionKind::Intro => parent,
-        SectionKind::H3Child | SectionKind::BulletItem => parent * SUB_SECTION_SIGNAL_SCALE,
+        SectionKind::H3Child | SectionKind::BulletItem => parent * sub_scale,
         SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
     }
 }
+
+/// README H3 children often ARE the canonical concept rows NS authors
+/// anchor on ("Models", "URIs", "Editors" in monaco-editor), not
+/// elaboration sub-sections of a larger H2. Bump above the generic
+/// `SUB_SECTION_SIGNAL_SCALE` so these compete with per-method class
+/// body fragments in the early budget. Non-README docs (CHANGELOG,
+/// ARCHITECTURE, /docs pages) keep the conservative discount.
+const README_SUB_SECTION_SIGNAL_SCALE: f64 = 0.55;
 
 fn is_changelog_class(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {

@@ -20,6 +20,9 @@ client/
         defaultStyles.css
         draggable.css
         ebooks/
+            basic.js
+            htmlParser.js
+            mobi.js
         fonts.css
         tailwind.css
         transitions.css
@@ -29,7 +32,20 @@ client/
         cards/
         content/
         controls/
+            FilterSelect.vue
+            GlobalSearch.vue
+            LibraryFilterSelect.vue
+            LibrarySortSelect.vue
+            PlaybackSpeedControl.vue
+            SortSelect.vue
+            VolumeControl.vue
         covers/
+            AuthorImage.vue
+            BookCover.vue
+            CollectionCover.vue
+            GroupCover.vue
+            PlaylistCover.vue
+            PreviewCover.vue
         modals/
         player/
         prompt/
@@ -67,19 +83,24 @@ client/
     pages/
         account.vue
         audiobook/
+            _id/
         author/
         batch/
+            index.vue
         collection/
         config/
         config.vue
         index.vue
         item/
+            _id/
         library/
+            _library/
         login.vue
         oops.vue
         playlist/
         share/
         upload/
+            index.vue
     players/
         AudioTrack.js
         CastPlayer.js
@@ -97,6 +118,28 @@ client/
         version.js
     postcss.config.js
     static/
+        Logo.png
+        book_placeholder.jpg
+        favicon.ico
+        fonts/
+            MaterialSymbolsRounded.woff2
+            Source_Sans_Pro/
+            Ubuntu_Mono/
+            absicons/
+                absicons.eot
+                absicons.svg
+                absicons.ttf
+                absicons.woff
+        icon.svg
+        icon192.png
+        icon48.png
+        icon64.png
+        ios_icon.png
+        libarchive/
+        libs/
+            marked/
+        robots.txt
+        textures/
     store/
         globals.js
         index.js
@@ -121,6 +164,7 @@ docs/
         …
         21→### Generating documentation
         …
+        23→Redocly allows for creating a static HTML page to document the API. This is done by using `redocly build-docs [file]` and supports exploded specs.
         25→### Putting it all together
         …
     controllers/
@@ -136,8 +180,14 @@ docs/
         LibraryItem.yaml
         Notification.yaml
         entities/
+            Author.yaml
+            PodcastEpisode.yaml
+            Series.yaml
         files/
         mediaTypes/
+            Book.yaml
+            Podcast.yaml
+            media.yaml
         metadata/
             AudioMetaTags.yaml
             BookMetadata.yaml
@@ -201,94 +251,98 @@ readme.md
     13→</div>
     15→# About
     17→Audiobookshelf is a self-hosted audiobook and podcast server.
+    19→### Features
+    …
+    22→- Stream all audio formats on the fly
+    23→- Search and add podcasts to download episodes w/ auto-download
+    24→- Multi-user support w/ custom permissions
+    25→- Keeps progress per user and syncs across devices
+    26→- Auto-detects library updates, no need to re-scan
+    27→- Upload books and podcasts w/ bulk upload drag and drop folders
+    28→- Backup your metadata + automated daily backups
+    29→- Progressive Web App (PWA)
+    30→- Chromecast support on the web app and android app
+    31→- Fetch metadata and cover art from several sources
+    32→- Chapter editor and chapter lookup (using [Audnexus API](https://audnex.us/))
+    33→- Merge your audio files into a single m4b
+    34→- Embed metadata and cover image into your audio files
+    38→- Open RSS feeds for podcasts and audiobooks
+    40→Is there a feature you are looking for? [Suggest it](https://github.com/advplyr/audiobookshelf/issues/new/choose)
+    42→Join us on [Discord](https://discord.gg/HQgCbd6E75)
+    44→### Demo
+    …
+    50→### Android App (beta)
+    …
+    52→Try it out on the [Google Play Store](https://play.google.com/store/apps/details?id=com.audiobookshelf.app)
+    54→### iOS App (beta)
+    …
+    60→### Build your own tools & clients
+    …
+    70→# Organizing your audiobooks
+    …
+    72→#### Directory structure and folder names are important to Audiobookshelf!
+    74→See [documentation](https://audiobookshelf.org/docs#book-directory-structure) for supported directory structure, folder naming conventions, and audio file metadata usage.
+    76→<br />
+    78→# Installation
+    …
+    80→See [install docs](https://www.audiobookshelf.org/docs)
+    82→<br />
+    84→# Reverse Proxy Set Up
+    …
+    90→### NGINX Proxy Manager
+    …
+    96→### NGINX Reverse Proxy
+    …
+    131→### Apache Reverse Proxy
+    …
+    196→### SWAG Reverse Proxy
+    …
+    200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
+    …
+    243→6. **Advanced Settings Tab**
+    244→   - Leave as is.
+    246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)
+    …
+    258→### Example Caddyfile - [Caddy Reverse Proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
+    …
+    267→### HAProxy
+    …
+    310→### pfSense and HAProxy
+    …
+    312→For pfSense the inputs are graphical, and `Health checking` is enabled.
+    350→# Run from source
+    …
+    352→# Contributing
+    …
+    354→This application is built using [NodeJs](https://nodejs.org/).
+    356→### Localization
+    …
+    360→### Dev Container Setup
+    …
+    418→You are now ready to start development!
+    420→### Manual Environment Setup
+    …
+    436→### Development Commands
+    …
+    450→# How to Support
+    …
+    452→[See the incomplete "How to Support" page](https://www.audiobookshelf.org/support)
 server/
     Auth.js
-        15→/**
-        16→ * @class Class for handling all the authentication related functionality.
-        17→ */
-        18→class Auth {
-        19→  constructor() {
-        …
-        36→  authNotNeeded(req) {
-        37→    return req.method === 'GET' && this.ignorePatterns.some((pattern) => pattern.test(req.path))
-        45→  ifAuthNeeded(middleware) {
-        46→    return (req, res, next) => {
-        47→      if (this.authNotNeeded(req)) {
-        48→        return next()
-        49→      }
-        50→      middleware(req, res, next)
-        51→    }
-        61→  isAuthenticated(req, res, next) {
-        62→    return passport.authenticate('jwt', { session: false })(req, res, next)
-        73→  generateAccessToken(user) {
-        …
-        86→  async invalidateJwtSessionsForUser(user, req, res) {
-        …
-        96→  async getUserLoginResponsePayload(user) {
-        …
-        111→  async initPassportJs() {
-        …
-        169→  unuseAuthStrategy(name) {
-        …
-        184→  useAuthStrategy(name) {
-        …
-        200→  isAuthMethodAPIBased(authMethod) {
-        …
-        218→  paramsToCookies(req, res, authMethod = 'local') {
-        …
-        258→  async handleLoginSuccessBasedOnCookie(req, res) {
-        …
-        294→  async handleLoginSuccess(req, res, returnTokens = false) {
-        …
-        318→  async initAuthRoutes(router) {
-        …
-        516→module.exports = Auth
     Database.js
-        999→module.exports = new Database()
     Logger.js
-        146→module.exports = new Logger()
     Server.js
-        48→class Server {
-        49→  constructor(SOURCE, PORT, HOST, CONFIG_PATH, METADATA_PATH, ROUTER_BASE_PATH) {
-        …
-        129→  authMiddleware(req, res, next) {
-        …
-        134→  cancelLibraryScan(libraryId) {
-        …
-        142→  async init() {
-        …
-        190→  initProcessEventListeners() {
-        …
-        219→  async start() {
-        …
-        431→  async initializeServer(req, res) {
-        …
-        445→  async cleanUserData() {
-        …
-        504→  async stop() {
-        …
-        514→module.exports = Server
     SocketAuthority.js
-        428→module.exports = new SocketAuthority()
     Watcher.js
-        429→module.exports = new FolderWatcher()
     auth/
+        LocalAuthStrategy.js
+        OidcAuthStrategy.js
+        TokenManager.js
     controllers/
     finders/
         AuthorFinder.js
-            68→module.exports = new AuthorFinder()
         BookFinder.js
-            646→module.exports = new BookFinder()
-            …
         PodcastFinder.js
-            4→class PodcastFinder {
-            5→  constructor() {
-            6→    this.iTunesApi = new iTunes()
-            15→  async search(term, options = {}) {
-            …
-            27→  async findCovers(term) {
-            …
-            35→module.exports = new PodcastFinder()
     libs/
     managers/
     migrations/
@@ -301,86 +355,29 @@ server/
         PlaybackSession.js
         PodcastEpisodeDownload.js
         Stream.js
-            15→class Stream extends EventEmitter {
-            …
-            426→module.exports = Stream
         Task.js
         TrackProgressMonitor.js
         files/
+            AudioFile.js
+            AudioTrack.js
+            EBookFile.js
+            LibraryFile.js
         metadata/
         settings/
     providers/
         Audible.js
-            5→class Audible {
-            …
-            174→module.exports = Audible
         AudiobookCovers.js
-            4→class AudiobookCovers {
-            …
-            7→  constructor() {}
-            15→  async search(search, timeout = this.#responseTimeout) {
-            …
-            33→module.exports = AudiobookCovers
         Audnexus.js
-            15→class Audnexus {
-            …
-            187→module.exports = Audnexus
         CustomProviderAdapter.js
-            6→class CustomProviderAdapter {
-            …
-            9→  constructor() {}
-            21→  async search(title, author, isbn, providerSlug, mediaType, timeout = this.#responseTimeout) {
-            …
-            148→module.exports = CustomProviderAdapter
         FantLab.js
-            4→class FantLab {
-            …
-            204→module.exports = FantLab
         GoogleBooks.js
-            4→class GoogleBooks {
-            …
-            7→  constructor() {}
-            9→  extractIsbn(industryIdentifiers) {
-            …
-            17→  cleanResult(item) {
-            …
-            50→  async search(title, author, timeout = this.#responseTimeout) {
-            …
-            77→module.exports = GoogleBooks
         MusicBrainz.js
         OpenLibrary.js
-            3→class OpenLibrary {
-            …
-            121→module.exports = OpenLibrary
         iTunes.js
-            30→class iTunes {
-            …
-            170→module.exports = iTunes
     routers/
         ApiRouter.js
-            39→class ApiRouter {
-            …
-            576→module.exports = ApiRouter
         HlsRouter.js
-            10→class HlsRouter {
-            11→  constructor(auth, playbackSessionManager) {
-            …
-            20→  init() {
-            …
-            24→  parseSegmentFilename(filename) {
-            …
-            39→  validateStreamFilePath(streamDir, filepath) {
-            …
-            51→  async streamFileRequest(req, res) {
-            …
-            100→module.exports = HlsRouter
         PublicRouter.js
-            5→class PublicRouter {
-            6→  constructor(playbackSessionManager) {
-            …
-            15→  init() {
-            …
-            24→module.exports = PublicRouter
     scanner/
     utils/
 tailwind.config.js

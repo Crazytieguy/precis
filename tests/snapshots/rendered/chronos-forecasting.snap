@@ -22,7 +22,8 @@ README.md
     12→[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
     14→</div>
     17→## 🚀 News
-    …
+    18→- **30 Dec 2025**: ☁️ Deploy Chronos-2 to AWS with Amazon SageMaker: new guide covers real-time inference (GPU/CPU), serverless endpoints with automatic scaling, and batch transform for large-scale forecasting. See the [deployment tutorial](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb).
+    20→- **12 Dec 2024**: 📊 We released [`fev`](https://github.com/autogluon/fev), a lightweight package for benchmarking time series forecasting models based on the [Hugging Face `datasets`](https://huggingface.co/docs/datasets/en/index) library.
     22→- **13 Mar 2024**: 🚀 Chronos [paper](https://arxiv.org/abs/2403.07815) and inference code released.
     24→## ✨ Introduction
     …
@@ -111,12 +112,7 @@ src/
             45→    forecast_type: ForecastType
             46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
             48→    def __init__(self, inner_model: "PreTrainedModel"):
-            49→        """
-            50→        Parameters
-            51→        ----------
-            52→        inner_model : PreTrainedModel
-            53→            A hugging-face transformers PreTrainedModel, e.g., T5ForConditionalGeneration
-            54→        """
+            …
             58→    @property
             59→    def model_context_length(self) -> int:
             60→        raise NotImplementedError()
@@ -160,10 +156,6 @@ src/
             341→        force_s3_download=False,
             342→        **kwargs,
             343→    ):
-            344→        """
-            345→        Load the model, either from a local path, S3 prefix, or from the HuggingFace Hub.
-            346→        Supports the same arguments as ``AutoConfig`` and ``AutoModel`` from ``transformers``.
-            347→        """
         boto_utils.py
         chronos.py
         chronos2/

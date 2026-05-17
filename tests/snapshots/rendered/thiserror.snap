@@ -78,28 +78,17 @@ README.md
     42→<br>
     44→## Details
     …
+    46→- Thiserror deliberately does not appear in your public API. You get the same
+    47→  thing as if you had written an implementation of `std::error::Error` by hand,
+    48→  and switching from handwritten impls to thiserror or vice versa is not a
+    49→  breaking change.
     51→- Errors may be enums, structs with named fields, tuple structs, or unit
     52→  structs.
+    204→- See also the [`anyhow`] library for a convenient single error type to use in
+    205→  application code.
+    207→  [`anyhow`]: https://github.com/dtolnay/anyhow
     211→## Comparison to anyhow
     …
-    213→Use thiserror if you care about designing your own dedicated error type(s) so
-    214→that the caller receives exactly the information that you choose in the event of
-    215→failure. This most often applies to library-like code. Use [Anyhow] if you don't
-    216→care what error type your functions return, you just want it to be easy. This is
-    217→common in application-like code.
-    219→[Anyhow]: https://github.com/dtolnay/anyhow
-    221→<br>
-    223→#### License
-    225→<sup>
-    226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
-    227→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
-    228→</sup>
-    230→<br>
-    232→<sub>
-    233→Unless you explicitly state otherwise, any contribution intentionally submitted
-    234→for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
-    235→be dual licensed as above, without any additional terms or conditions.
-    236→</sub>
 build/
 build.rs
 impl/

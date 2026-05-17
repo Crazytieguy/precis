@@ -83,32 +83,32 @@ Score(3000)=0.625 I=0.834 C=0.468 ns_rows≤3K=18/44 (reached=9 partial=2 missin
 | walker |  | 5414 | 1564 | crate-doc body in src/lib.rs |  |  | 0.447 |
 | ns | 5548 |  | 316 | ptr.rs internal pointer newtypes | 3.7 |  | 0.453 |
 | walker |  | 5673 | 259 | README.md section #9 |  |  | 0.453 |
-| walker |  | 5697 | 24 | pub item at src/ensure.rs:10 |  |  | 0.453 |
-| walker |  | 5721 | 24 | pub item at src/ensure.rs:25 |  |  | 0.453 |
-| walker |  | 5872 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.453 |
-| walker |  | 5996 | 124 | pub-item doc body at src/lib.rs:468 |  |  | 0.453 |
+| walker |  | 5793 | 120 | README.md section #6 |  |  | 0.453 |
+| walker |  | 5931 | 138 | README.md section #3 |  |  | 0.453 |
+| walker |  | 5955 | 24 | pub item at src/ensure.rs:10 |  |  | 0.453 |
+| walker |  | 5979 | 24 | pub item at src/ensure.rs:25 |  |  | 0.453 |
 | ns | 6006 |  | 458 | backtrace.rs cfg landscape (locations) | 3.8 |  | 0.435 |
-| walker |  | 6116 | 120 | README.md section #6 |  |  | 0.435 |
-| walker |  | 6154 | 38 | pub item at src/kind.rs:80 |  |  | 0.437 |
-| ns | 6235 |  | 229 | nightly.rs locations + signatures | 3.9 |  | 0.436 |
-| walker |  | 6292 | 138 | README.md section #3 |  |  | 0.436 |
-| walker |  | 6332 | 40 | pub item at src/kind.rs:58 |  |  | 0.439 |
-| walker |  | 6372 | 40 | pub item at src/kind.rs:104 |  |  | 0.443 |
-| walker |  | 6571 | 199 | README.md section #1 |  |  | 0.443 |
-| ns | 6577 |  | 342 | ensure.rs orientation header (locations) | 3.10 |  | 0.434 |
-| walker |  | 6640 | 69 | pub-item names surface in tests/test_ffi.rs |  |  | 0.434 |
-| walker |  | 6640 | 0 | pub item at tests/test_ffi.rs:7 |  |  | 0.434 |
-| walker |  | 6640 | 0 | pub item at tests/test_ffi.rs:12 |  |  | 0.434 |
-| walker |  | 6640 | 0 | pub item at tests/test_ffi.rs:17 |  |  | 0.434 |
-| walker |  | 6649 | 9 | pub item body at tests/test_ffi.rs:7 body 8 |  |  | 0.434 |
-| walker |  | 6659 | 10 | pub item body at tests/test_ffi.rs:17 body 18 |  |  | 0.434 |
-| walker |  | 6672 | 13 | pub item body at tests/test_ffi.rs:12 body 13 |  |  | 0.434 |
-| ns | 6817 |  | 240 | tests/common + drop helpers | 4.1 |  | 0.423 |
-| walker |  | 6877 | 205 | README.md section #5 |  |  | 0.423 |
-| walker |  | 7092 | 215 | README.md section #4 |  |  | 0.423 |
+| walker |  | 6130 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.435 |
+| ns | 6235 |  | 229 | nightly.rs locations + signatures | 3.9 |  | 0.434 |
+| walker |  | 6254 | 124 | pub-item doc body at src/lib.rs:468 |  |  | 0.434 |
+| walker |  | 6453 | 199 | README.md section #1 |  |  | 0.434 |
+| ns | 6577 |  | 342 | ensure.rs orientation header (locations) | 3.10 |  | 0.425 |
+| walker |  | 6658 | 205 | README.md section #5 |  |  | 0.425 |
+| walker |  | 6696 | 38 | pub item at src/kind.rs:80 |  |  | 0.427 |
+| ns | 6817 |  | 240 | tests/common + drop helpers | 4.1 |  | 0.417 |
+| walker |  | 6911 | 215 | README.md section #4 |  |  | 0.417 |
+| walker |  | 6951 | 40 | pub item at src/kind.rs:58 |  |  | 0.420 |
+| walker |  | 6991 | 40 | pub item at src/kind.rs:104 |  |  | 0.423 |
 | ns | 7104 |  | 287 | test_context: Low/Mid/High chain helper + fns | 4.2 |  | 0.412 |
+| walker |  | 7232 | 241 | README.md section #2 |  |  | 0.412 |
+| walker |  | 7301 | 69 | pub-item names surface in tests/test_ffi.rs |  |  | 0.412 |
+| walker |  | 7301 | 0 | pub item at tests/test_ffi.rs:7 |  |  | 0.412 |
+| walker |  | 7301 | 0 | pub item at tests/test_ffi.rs:12 |  |  | 0.412 |
+| walker |  | 7301 | 0 | pub item at tests/test_ffi.rs:17 |  |  | 0.412 |
 | ns | 7307 |  | 203 | test_downcast / test_repr / test_convert fns (locations) | 4.3 |  | 0.405 |
-| walker |  | 7333 | 241 | README.md section #2 |  |  | 0.405 |
+| walker |  | 7310 | 9 | pub item body at tests/test_ffi.rs:7 body 8 |  |  | 0.405 |
+| walker |  | 7320 | 10 | pub item body at tests/test_ffi.rs:17 body 18 |  |  | 0.405 |
+| walker |  | 7333 | 13 | pub item body at tests/test_ffi.rs:12 body 13 |  |  | 0.405 |
 | walker |  | 7347 | 14 | listing of 'tests/crate' |  |  | 0.405 |
 | walker |  | 7414 | 67 | [package] in tests/crate/Cargo.toml |  |  | 0.405 |
 | ns | 7450 |  | 143 | test_macros + test_chain + test_source fns | 4.4 |  | 0.399 |

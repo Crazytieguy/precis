@@ -31,38 +31,38 @@ Score(3000)=0.690 I=0.835 C=0.571 ns_rows≤3K=22/43 (reached=14 partial=3 missi
 | walker |  | 1045 | 80 | README.md section #1 |  |  | 0.680 |
 | ns | 1096 |  | 107 | EventHandlerMap type | 2.6 | 2.1 | 0.670 |
 | walker |  | 1160 | 115 | package identity metadata in package.json |  |  | 0.670 |
-| walker |  | 1177 | 17 | README.md section #13 |  |  | 0.671 |
-| ns | 1302 |  | 206 | README API one-line method descriptions | 2.7 |  | 0.618 |
-| walker |  | 1389 | 212 | package entrypoints in package.json |  |  | 0.669 |
-| ns | 1401 |  | 99 | mitt() body — Map default + return-shape skeleton | 3.1 | 2.4 | 0.635 |
-| ns | 1606 |  | 205 | emit() body — the only non-trivial method | 3.2 | 2.2 | 0.587 |
-| ns | 1717 |  | 111 | on() body | 3.3 | 2.2 | 0.570 |
-| ns | 1844 |  | 127 | off() body | 3.4 | 2.2 | 0.550 |
-| ns | 1981 |  | 137 | emit() JSDoc | 3.5 | 2.2 | 0.532 |
-| walker |  | 2260 | 871 | export body at src/index.ts:46 body 49 |  |  | 0.753 |
-| ns | 2294 |  | 313 | README TypeScript usage section | 3.6 |  | 0.686 |
-| walker |  | 2495 | 235 | package scripts in package.json |  |  | 0.689 |
-| walker |  | 2509 | 14 | README.md section #7 |  |  | 0.695 |
+| walker |  | 1174 | 14 | README.md section #7 |  |  | 0.671 |
+| walker |  | 1191 | 17 | README.md section #13 |  |  | 0.672 |
+| ns | 1302 |  | 206 | README API one-line method descriptions | 2.7 |  | 0.628 |
+| ns | 1401 |  | 99 | mitt() body — Map default + return-shape skeleton | 3.1 | 2.4 | 0.597 |
+| walker |  | 1403 | 212 | package entrypoints in package.json |  |  | 0.645 |
+| ns | 1606 |  | 205 | emit() body — the only non-trivial method | 3.2 | 2.2 | 0.596 |
+| ns | 1717 |  | 111 | on() body | 3.3 | 2.2 | 0.578 |
+| ns | 1844 |  | 127 | off() body | 3.4 | 2.2 | 0.558 |
+| ns | 1981 |  | 137 | emit() JSDoc | 3.5 | 2.2 | 0.539 |
+| walker |  | 2274 | 871 | export body at src/index.ts:46 body 49 |  |  | 0.760 |
+| ns | 2294 |  | 313 | README TypeScript usage section | 3.6 |  | 0.692 |
+| walker |  | 2509 | 235 | package scripts in package.json |  |  | 0.695 |
 | walker |  | 2612 | 103 | README.md section #4 |  |  | 0.696 |
 | ns | 2626 |  | 332 | test/index_test.ts test labels — all describe + it titles | 3.7 |  | 0.652 |
 | walker |  | 2644 | 32 | README.md section #12 |  |  | 0.665 |
-| walker |  | 2677 | 33 | README.md section #10 |  |  | 0.681 |
-| walker |  | 2826 | 149 | json config tsconfig.json |  |  | 0.685 |
-| ns | 2829 |  | 203 | on() / off() JSDoc | 3.8 | 2.2 | 0.696 |
-| ns | 2949 |  | 120 | compressed-size CI workflow | 4.1 |  | 0.677 |
-| walker |  | 2958 | 132 | README.md section #5 |  |  | 0.677 |
-| walker |  | 2985 | 27 | README.md section #6 |  |  | 0.690 |
+| walker |  | 2671 | 27 | README.md section #6 |  |  | 0.677 |
+| walker |  | 2704 | 33 | README.md section #10 |  |  | 0.696 |
+| ns | 2829 |  | 203 | on() / off() JSDoc | 3.8 | 2.2 | 0.706 |
+| walker |  | 2853 | 149 | json config tsconfig.json |  |  | 0.709 |
+| ns | 2949 |  | 120 | compressed-size CI workflow | 4.1 |  | 0.690 |
+| walker |  | 2985 | 132 | README.md section #5 |  |  | 0.690 |
 | ns | 3089 |  | 140 | package.json mocha + prettier blocks | 4.2 |  | 0.667 |
 | walker |  | 3227 | 242 | README.md section #2 |  |  | 0.669 |
-| walker |  | 3237 | 10 | listing of '.github' |  |  | 0.669 |
 | ns | 3238 |  | 149 | tsconfig.json — full | 4.3 |  | 0.681 |
-| walker |  | 3246 | 9 | listing of '.github/workflows' |  |  | 0.681 |
-| ns | 3455 |  | 217 | CI workflow (main.yml) | 4.4 |  | 0.649 |
-| walker |  | 3612 | 366 | package dependencies in package.json |  |  | 0.651 |
-| ns | 3690 |  | 235 | package.json scripts | 4.5 |  | 0.660 |
-| walker |  | 3708 | 96 | README.md section #14 |  |  | 0.661 |
-| walker |  | 3720 | 12 | listing of 'test' |  |  | 0.675 |
-| walker |  | 3772 | 52 | README.md section #16 |  |  | 0.675 |
+| walker |  | 3279 | 52 | README.md section #16 |  |  | 0.681 |
+| walker |  | 3289 | 10 | listing of '.github' |  |  | 0.681 |
+| walker |  | 3298 | 9 | listing of '.github/workflows' |  |  | 0.681 |
+| ns | 3455 |  | 217 | CI workflow (main.yml) | 4.4 |  | 0.650 |
+| walker |  | 3664 | 366 | package dependencies in package.json |  |  | 0.652 |
+| ns | 3690 |  | 235 | package.json scripts | 4.5 |  | 0.661 |
+| walker |  | 3760 | 96 | README.md section #14 |  |  | 0.661 |
+| walker |  | 3772 | 12 | listing of 'test' |  |  | 0.675 |
 | walker |  | 3885 | 113 | README.md section #11 |  |  | 0.676 |
 | ns | 3890 |  | 200 | test-types-compilation.ts preamble — Events type + handler decls | 4.6 |  | 0.653 |
 | walker |  | 4002 | 117 | README.md section #9 |  |  | 0.653 |

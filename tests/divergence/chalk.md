@@ -1,4 +1,4 @@
-Score(3000)=0.555 I=0.799 C=0.385 ns_rows≤3K=18/46 (reached=7 partial=1 missing=10)
+Score(3000)=0.562 I=0.801 C=0.394 ns_rows≤3K=18/46 (reached=7 partial=1 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -63,43 +63,43 @@ Score(3000)=0.555 I=0.799 C=0.385 ns_rows≤3K=18/46 (reached=7 partial=1 missin
 | walker |  | 2289 | 98 | code-of-conduct.md section #1 |  |  | 0.557 |
 | walker |  | 2335 | 46 | readme.md section #36 |  |  | 0.557 |
 | ns | 2376 |  | 140 | index.js imports + private symbols | 3.2 |  | 0.538 |
-| walker |  | 2443 | 108 | code-of-conduct.md section #4 |  |  | 0.538 |
-| ns | 2445 |  | 69 | levelMapping (color level → ansi style name) | 3.3 |  | 0.527 |
-| walker |  | 2506 | 63 | readme.md section #9 |  |  | 0.545 |
-| walker |  | 2562 | 56 | readme.md section #32 |  |  | 0.545 |
-| walker |  | 2570 | 8 | listing of 'examples' |  |  | 0.545 |
-| ns | 2639 |  | 194 | Style-attach loop (chalk.red etc as getters) | 3.4 |  | 0.521 |
-| walker |  | 2705 | 135 | code-of-conduct.md section #3 |  |  | 0.521 |
-| walker |  | 2770 | 65 | readme.md section #34 |  |  | 0.521 |
-| walker |  | 2853 | 83 | readme.md section #10 |  |  | 0.555 |
-| walker |  | 2920 | 67 | readme.md section #35 |  |  | 0.555 |
-| walker |  | 2990 | 70 | readme.md section #33 |  |  | 0.555 |
-| ns | 3051 |  | 412 | applyStyle body (nested styles + newline fix) | 3.5 | 3.1 | 0.513 |
-| walker |  | 3145 | 155 | code-of-conduct.md section #5 |  |  | 0.513 |
-| ns | 3199 |  | 148 | createStyler body (parent linkage) | 3.6 | 3.1 | 0.492 |
-| walker |  | 3237 | 92 | readme.md section #16 |  |  | 0.492 |
-| walker |  | 3248 | 11 | listing of '.github' |  |  | 0.492 |
-| walker |  | 3252 | 4 | listing of '.github/workflows' |  |  | 0.492 |
-| walker |  | 3303 | 51 | readme.md section #14 |  |  | 0.499 |
+| walker |  | 2386 | 51 | readme.md section #14 |  |  | 0.546 |
+| ns | 2445 |  | 69 | levelMapping (color level → ansi style name) | 3.3 |  | 0.535 |
+| walker |  | 2494 | 108 | code-of-conduct.md section #4 |  |  | 0.535 |
+| walker |  | 2557 | 63 | readme.md section #9 |  |  | 0.553 |
+| walker |  | 2613 | 56 | readme.md section #32 |  |  | 0.553 |
+| walker |  | 2621 | 8 | listing of 'examples' |  |  | 0.553 |
+| ns | 2639 |  | 194 | Style-attach loop (chalk.red etc as getters) | 3.4 |  | 0.529 |
+| walker |  | 2756 | 135 | code-of-conduct.md section #3 |  |  | 0.529 |
+| walker |  | 2821 | 65 | readme.md section #34 |  |  | 0.529 |
+| walker |  | 2904 | 83 | readme.md section #10 |  |  | 0.562 |
+| walker |  | 2971 | 67 | readme.md section #35 |  |  | 0.562 |
+| walker |  | 3041 | 70 | readme.md section #33 |  |  | 0.562 |
+| ns | 3051 |  | 412 | applyStyle body (nested styles + newline fix) | 3.5 | 3.1 | 0.519 |
+| walker |  | 3196 | 155 | code-of-conduct.md section #5 |  |  | 0.519 |
+| ns | 3199 |  | 148 | createStyler body (parent linkage) | 3.6 | 3.1 | 0.498 |
+| walker |  | 3288 | 92 | readme.md section #16 |  |  | 0.498 |
+| walker |  | 3299 | 11 | listing of '.github' |  |  | 0.499 |
+| walker |  | 3303 | 4 | listing of '.github/workflows' |  |  | 0.499 |
+| walker |  | 3367 | 64 | readme.md section #38 |  |  | 0.499 |
 | ns | 3392 |  | 193 | createBuilder body (function with proto) | 3.7 | 3.1 | 0.484 |
-| walker |  | 3413 | 110 | readme.md section #12 |  |  | 0.495 |
-| walker |  | 3619 | 206 | code-of-conduct.md section #2 |  |  | 0.495 |
+| walker |  | 3477 | 110 | readme.md section #12 |  |  | 0.495 |
+| walker |  | 3683 | 206 | code-of-conduct.md section #2 |  |  | 0.495 |
 | ns | 3904 |  | 512 | rgb/hex/ansi256 attach loop + getModelAnsi | 3.8 | 3.1 | 0.458 |
-| walker |  | 4004 | 385 | readme.md section #29 |  |  | 0.495 |
-| ns | 4059 |  | 155 | Chalk class + chalkFactory + createChalk | 3.9 | 3.1 | 0.478 |
-| walker |  | 4068 | 64 | readme.md section #38 |  |  | 0.478 |
+| ns | 4059 |  | 155 | Chalk class + chalkFactory + createChalk | 3.9 | 3.1 | 0.442 |
+| walker |  | 4068 | 385 | readme.md section #29 |  |  | 0.478 |
 | ns | 4304 |  | 245 | applyOptions + proto definition | 3.10 | 3.1 | 0.461 |
 | ns | 4334 |  | 30 | index.js finalization (defineProperties + chalk = createChalk()) | 3.11 | 2.2 | 0.458 |
 | ns | 4504 |  | 170 | ansi-styles: modifier table | 4.1 |  | 0.449 |
 | walker |  | 4662 | 594 | readme.md section #3 |  |  | 0.471 |
 | ns | 4808 |  | 304 | ansi-styles: color table | 4.2 |  | 0.457 |
-| ns | 5122 |  | 314 | ansi-styles: bgColor table | 4.3 |  | 0.443 |
-| walker |  | 5134 | 472 | readme.md section #39 |  |  | 0.443 |
-| walker |  | 5182 | 48 | contributing.md section #0 |  |  | 0.443 |
-| ns | 5212 |  | 90 | ansi-styles: name arrays + default export | 4.4 |  | 0.439 |
-| walker |  | 5329 | 147 | readme.md section #27 |  |  | 0.479 |
+| walker |  | 4809 | 147 | readme.md section #27 |  |  | 0.498 |
+| ns | 5122 |  | 314 | ansi-styles: bgColor table | 4.3 |  | 0.483 |
+| ns | 5212 |  | 90 | ansi-styles: name arrays + default export | 4.4 |  | 0.479 |
+| walker |  | 5281 | 472 | readme.md section #39 |  |  | 0.479 |
 | ns | 5355 |  | 143 | ansi-styles: wrapAnsi16 / 256 / 16m + ANSI_BACKGROUND_OFFSET | 4.5 |  | 0.475 |
-| walker |  | 5496 | 167 | readme.md section #28 |  |  | 0.512 |
+| walker |  | 5448 | 167 | readme.md section #28 |  |  | 0.512 |
+| walker |  | 5496 | 48 | contributing.md section #0 |  |  | 0.512 |
 | walker |  | 5541 | 45 | .github/security.md section #0 |  |  | 0.512 |
 | ns | 5565 |  | 210 | ansi-styles: assembleStyles + ansi/ansi256/ansi16m installation | 4.6 |  | 0.503 |
 | walker |  | 5571 | 30 | plaintext config .gitignore |  |  | 0.503 |

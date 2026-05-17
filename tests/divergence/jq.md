@@ -110,48 +110,48 @@ Score(3000)=0.430 I=0.653 C=0.282 ns_rows≤3K=16/40 (reached=2 partial=1 missin
 | walker |  | 5132 | 80 | README.md section #7 |  |  | 0.347 |
 | walker |  | 5175 | 43 | listing of 'docs/content/manual' |  |  | 0.347 |
 | walker |  | 5206 | 31 | README.md section #3 |  |  | 0.347 |
-| walker |  | 5211 | 5 | listing of 'docs/public/js' |  |  | 0.347 |
 | ns | 5215 |  | 476 | Parser %token list (parser.y) — every terminal | 3.3 |  | 0.325 |
-| walker |  | 5293 | 82 | README.md section #8 |  |  | 0.325 |
-| walker |  | 5397 | 104 | c decl names surface in src/jv_print.c |  |  | 0.325 |
-| walker |  | 5397 | 0 | c decl at src/jv_print.c:40 |  |  | 0.325 |
+| walker |  | 5233 | 27 | README.md section #2 |  |  | 0.325 |
+| walker |  | 5238 | 5 | listing of 'docs/public/js' |  |  | 0.325 |
+| walker |  | 5320 | 82 | README.md section #8 |  |  | 0.325 |
+| walker |  | 5424 | 104 | c decl names surface in src/jv_print.c |  |  | 0.325 |
+| walker |  | 5424 | 0 | c decl at src/jv_print.c:40 |  |  | 0.325 |
 | ns | 5549 |  | 334 | Parser %left/%right/%precedence — operator precedence table | 3.4 |  | 0.313 |
 | ns | 5740 |  | 191 | Parser grammar non-terminal locations (production header lines) | 3.5 |  | 0.302 |
-| walker |  | 5761 | 364 | c decl names surface #1 in src/compile.h |  |  | 0.302 |
-| walker |  | 5782 | 21 | listing of 'docs/templates/shared' |  |  | 0.302 |
-| walker |  | 5901 | 119 | c decl names surface in src/locfile.c |  |  | 0.302 |
-| walker |  | 5901 | 0 | c decl at src/locfile.c:12 |  |  | 0.302 |
-| walker |  | 5901 | 0 | c decl at src/locfile.c:37 |  |  | 0.302 |
-| walker |  | 5901 | 0 | c decl at src/locfile.c:41 |  |  | 0.302 |
-| walker |  | 5901 | 0 | c decl at src/locfile.c:50 |  |  | 0.302 |
-| walker |  | 5901 | 0 | c decl at src/locfile.c:63 |  |  | 0.302 |
-| walker |  | 5917 | 16 | c decl body at src/locfile.c:37 |  |  | 0.302 |
+| walker |  | 5788 | 364 | c decl names surface #1 in src/compile.h |  |  | 0.302 |
+| walker |  | 5809 | 21 | listing of 'docs/templates/shared' |  |  | 0.302 |
 | ns | 5920 |  | 180 | BINOPS macro — arithmetic/comparison binop family | 4.1 |  | 0.320 |
-| walker |  | 6217 | 300 | docs/README.md section #0 |  |  | 0.320 |
-| walker |  | 6256 | 39 | README.md section #5 |  |  | 0.320 |
-| walker |  | 6260 | 4 | listing of 'docs/content/manual/dev' |  |  | 0.320 |
-| walker |  | 6264 | 4 | listing of 'docs/content/manual/v1.3' |  |  | 0.320 |
-| walker |  | 6268 | 4 | listing of 'docs/content/manual/v1.4' |  |  | 0.320 |
-| walker |  | 6272 | 4 | listing of 'docs/content/manual/v1.5' |  |  | 0.320 |
-| walker |  | 6276 | 4 | listing of 'docs/content/manual/v1.6' |  |  | 0.320 |
-| walker |  | 6280 | 4 | listing of 'docs/content/manual/v1.7' |  |  | 0.312 |
+| walker |  | 5928 | 119 | c decl names surface in src/locfile.c |  |  | 0.320 |
+| walker |  | 5928 | 0 | c decl at src/locfile.c:12 |  |  | 0.320 |
+| walker |  | 5928 | 0 | c decl at src/locfile.c:37 |  |  | 0.320 |
+| walker |  | 5928 | 0 | c decl at src/locfile.c:41 |  |  | 0.320 |
+| walker |  | 5928 | 0 | c decl at src/locfile.c:50 |  |  | 0.320 |
+| walker |  | 5928 | 0 | c decl at src/locfile.c:63 |  |  | 0.320 |
+| walker |  | 5944 | 16 | c decl body at src/locfile.c:37 |  |  | 0.320 |
+| walker |  | 6244 | 300 | docs/README.md section #0 |  |  | 0.320 |
 | ns | 6280 |  | 360 | C builtin registration — CFUNC macro + function_list[] opener + builtins_bind closer | 4.2 |  | 0.312 |
-| walker |  | 6284 | 4 | listing of 'docs/content/manual/v1.8' |  |  | 0.312 |
-| walker |  | 6317 | 33 | c decl doc at src/linker.c:409 |  |  | 0.312 |
-| walker |  | 6832 | 515 | c header banner in src/parser.h |  |  | 0.312 |
-| walker |  | 7351 | 519 | c decl names surface #1 in src/lexer.h |  |  | 0.312 |
+| walker |  | 6283 | 39 | README.md section #5 |  |  | 0.312 |
+| walker |  | 6287 | 4 | listing of 'docs/content/manual/dev' |  |  | 0.312 |
+| walker |  | 6291 | 4 | listing of 'docs/content/manual/v1.3' |  |  | 0.312 |
+| walker |  | 6295 | 4 | listing of 'docs/content/manual/v1.4' |  |  | 0.312 |
+| walker |  | 6299 | 4 | listing of 'docs/content/manual/v1.5' |  |  | 0.312 |
+| walker |  | 6303 | 4 | listing of 'docs/content/manual/v1.6' |  |  | 0.312 |
+| walker |  | 6307 | 4 | listing of 'docs/content/manual/v1.7' |  |  | 0.312 |
+| walker |  | 6311 | 4 | listing of 'docs/content/manual/v1.8' |  |  | 0.312 |
+| walker |  | 6344 | 33 | c decl doc at src/linker.c:409 |  |  | 0.312 |
+| walker |  | 6859 | 515 | c header banner in src/parser.h |  |  | 0.312 |
 | ns | 7355 |  | 1075 | function_list[] body — every C-coded builtin name (truncated arities) | 4.3 | 4.2 | 0.292 |
-| walker |  | 7512 | 161 | c decl names surface in src/jv_unicode.c |  |  | 0.292 |
-| walker |  | 7512 | 0 | c decl at src/jv_unicode.c:11 |  |  | 0.292 |
-| walker |  | 7512 | 0 | c decl at src/jv_unicode.c:29 |  |  | 0.292 |
-| walker |  | 7512 | 0 | c decl at src/jv_unicode.c:77 |  |  | 0.292 |
-| walker |  | 7512 | 0 | c decl at src/jv_unicode.c:86 |  |  | 0.292 |
-| walker |  | 7512 | 0 | c decl at src/jv_unicode.c:93 |  |  | 0.292 |
-| walker |  | 7512 | 0 | c decl at src/jv_unicode.c:100 |  |  | 0.292 |
-| walker |  | 7512 | 0 | c decl at src/jv_unicode.c:124 |  |  | 0.292 |
-| walker |  | 7531 | 19 | c decl doc at src/jv_unicode.c:86 |  |  | 0.292 |
-| walker |  | 7567 | 36 | c decl doc at src/jv_unicode.c:124 |  |  | 0.292 |
-| walker |  | 7594 | 27 | README.md section #2 |  |  | 0.292 |
+| walker |  | 7378 | 519 | c decl names surface #1 in src/lexer.h |  |  | 0.292 |
+| walker |  | 7539 | 161 | c decl names surface in src/jv_unicode.c |  |  | 0.292 |
+| walker |  | 7539 | 0 | c decl at src/jv_unicode.c:11 |  |  | 0.292 |
+| walker |  | 7539 | 0 | c decl at src/jv_unicode.c:29 |  |  | 0.292 |
+| walker |  | 7539 | 0 | c decl at src/jv_unicode.c:77 |  |  | 0.292 |
+| walker |  | 7539 | 0 | c decl at src/jv_unicode.c:86 |  |  | 0.292 |
+| walker |  | 7539 | 0 | c decl at src/jv_unicode.c:93 |  |  | 0.292 |
+| walker |  | 7539 | 0 | c decl at src/jv_unicode.c:100 |  |  | 0.292 |
+| walker |  | 7539 | 0 | c decl at src/jv_unicode.c:124 |  |  | 0.292 |
+| walker |  | 7558 | 19 | c decl doc at src/jv_unicode.c:86 |  |  | 0.292 |
+| walker |  | 7594 | 36 | c decl doc at src/jv_unicode.c:124 |  |  | 0.292 |
 | ns | 7708 |  | 353 | bind_bytecoded_builtins — names of bytecode-emitted builtins | 4.4 | 4.2 | 0.286 |
 | walker |  | 7768 | 174 | c decl names surface in src/jv_alloc.c |  |  | 0.286 |
 | walker |  | 7768 | 0 | c decl at src/jv_alloc.c:141 |  |  | 0.286 |

@@ -122,51 +122,51 @@ Score(3000)=0.609 I=0.760 C=0.488 ns_rows≤3K=20/46 (reached=8 partial=3 missin
 | walker |  | 4803 | 15 | imports in lib/svgo/plugins.js |  |  | 0.574 |
 | walker |  | 4896 | 93 | export body at lib/style.js:195 body 196 |  |  | 0.574 |
 | walker |  | 4915 | 19 | imports in lib/svgo/tools.js |  |  | 0.574 |
-| walker |  | 4951 | 36 | export doc at lib/path.js:302 |  |  | 0.574 |
-| walker |  | 4989 | 38 | imports in lib/xast.js |  |  | 0.574 |
-| walker |  | 5029 | 40 | export doc at lib/path.js:141 |  |  | 0.574 |
-| walker |  | 5051 | 22 | imports in lib/svgo/css-select-adapter.js |  |  | 0.574 |
-| ns | 5345 |  | 778 | lib/svgo/plugins.js — invokePlugins + createPreset | 3.2 |  | 0.533 |
-| walker |  | 5700 | 649 | package dependencies in package.json |  |  | 0.533 |
-| ns | 5742 |  | 397 | lib/util/visit.js — visitor loop | 3.3 |  | 0.514 |
-| ns | 5780 |  | 38 | lib/xast.js — exports list (locations) | 3.4 |  | 0.518 |
-| walker |  | 5862 | 162 | README.md section #9 |  |  | 0.518 |
-| ns | 5870 |  | 90 | lib/svgo/tools.js — exports list (locations) | 3.5 |  | 0.513 |
-| ns | 5909 |  | 39 | lib/style.js — exports list (locations) | 3.6 |  | 0.516 |
-| walker |  | 6048 | 186 | export names surface in lib/types.ts |  |  | 0.517 |
-| walker |  | 6057 | 9 | export at lib/types.ts:108 |  |  | 0.517 |
-| ns | 6061 |  | 152 | lib/builtin.js — builtinPlugins registry frame | 3.7 |  | 0.512 |
-| walker |  | 6079 | 22 | export at lib/types.ts:175 |  |  | 0.512 |
-| walker |  | 6103 | 24 | export at lib/types.ts:67 |  |  | 0.512 |
-| ns | 6217 |  | 156 | Plugin name+description: doctype/proc-inst/comments/metadata/deprecatedAttrs | 3.8 |  | 0.507 |
-| walker |  | 6267 | 164 | README.md section #6 |  |  | 0.543 |
-| walker |  | 6312 | 45 | export doc at lib/style.js:211 |  |  | 0.543 |
-| ns | 6447 |  | 230 | Plugin name+description: cleanup* attrs/ids/numeric + style group | 3.9 |  | 0.535 |
-| walker |  | 6462 | 150 | export body at lib/svgo-node.js:83 body 84 |  |  | 0.535 |
-| walker |  | 6511 | 49 | export doc at lib/version.js:7 |  |  | 0.535 |
-| walker |  | 6560 | 49 | export doc at lib/xast.js:50 |  |  | 0.535 |
-| ns | 6717 |  | 270 | Plugin name+description: convertColors + unknowns/non-inheritable/stroke-fill | 3.10 |  | 0.526 |
-| walker |  | 6723 | 163 | export names surface in lib/svgo/tools.js |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:21 |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:43 |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:78 |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:134 |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:163 |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:194 |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:206 |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:215 |  |  | 0.537 |
-| walker |  | 6723 | 0 | export at lib/svgo/tools.js:250 |  |  | 0.537 |
-| walker |  | 6754 | 31 | export at lib/types.ts:111 |  |  | 0.539 |
-| walker |  | 6785 | 31 | export at lib/types.ts:169 |  |  | 0.539 |
-| walker |  | 6842 | 57 | imports in lib/svgo-node.js |  |  | 0.539 |
-| walker |  | 6954 | 112 | export body at lib/svgo/tools.js:134 body 135 |  |  | 0.539 |
-| walker |  | 7017 | 63 | export doc at lib/style.js:253 |  |  | 0.539 |
-| walker |  | 7122 | 105 | README.md section #11 |  |  | 0.550 |
-| ns | 7165 |  | 448 | Plugin name+description: shape/transform/path/sort/etc. — remaining preset | 3.11 |  | 0.536 |
-| walker |  | 7331 | 209 | export body at lib/style.js:253 body 254 |  |  | 0.536 |
-| walker |  | 7369 | 38 | export at lib/types.ts:155 |  |  | 0.537 |
-| walker |  | 7489 | 120 | export body at lib/svgo/plugins.js:14 body 21 |  |  | 0.542 |
-| walker |  | 7601 | 112 | README.md section #12 |  |  | 0.565 |
+| walker |  | 5020 | 105 | README.md section #11 |  |  | 0.588 |
+| walker |  | 5056 | 36 | export doc at lib/path.js:302 |  |  | 0.588 |
+| walker |  | 5094 | 38 | imports in lib/xast.js |  |  | 0.588 |
+| walker |  | 5206 | 112 | README.md section #12 |  |  | 0.617 |
+| walker |  | 5246 | 40 | export doc at lib/path.js:141 |  |  | 0.618 |
+| walker |  | 5268 | 22 | imports in lib/svgo/css-select-adapter.js |  |  | 0.618 |
+| ns | 5345 |  | 778 | lib/svgo/plugins.js — invokePlugins + createPreset | 3.2 |  | 0.573 |
+| ns | 5742 |  | 397 | lib/util/visit.js — visitor loop | 3.3 |  | 0.553 |
+| ns | 5780 |  | 38 | lib/xast.js — exports list (locations) | 3.4 |  | 0.556 |
+| ns | 5870 |  | 90 | lib/svgo/tools.js — exports list (locations) | 3.5 |  | 0.551 |
+| ns | 5909 |  | 39 | lib/style.js — exports list (locations) | 3.6 |  | 0.554 |
+| walker |  | 5917 | 649 | package dependencies in package.json |  |  | 0.554 |
+| ns | 6061 |  | 152 | lib/builtin.js — builtinPlugins registry frame | 3.7 |  | 0.548 |
+| walker |  | 6079 | 162 | README.md section #9 |  |  | 0.548 |
+| ns | 6217 |  | 156 | Plugin name+description: doctype/proc-inst/comments/metadata/deprecatedAttrs | 3.8 |  | 0.542 |
+| walker |  | 6265 | 186 | export names surface in lib/types.ts |  |  | 0.543 |
+| walker |  | 6274 | 9 | export at lib/types.ts:108 |  |  | 0.543 |
+| walker |  | 6296 | 22 | export at lib/types.ts:175 |  |  | 0.543 |
+| walker |  | 6320 | 24 | export at lib/types.ts:67 |  |  | 0.543 |
+| ns | 6447 |  | 230 | Plugin name+description: cleanup* attrs/ids/numeric + style group | 3.9 |  | 0.536 |
+| walker |  | 6484 | 164 | README.md section #6 |  |  | 0.571 |
+| walker |  | 6529 | 45 | export doc at lib/style.js:211 |  |  | 0.571 |
+| walker |  | 6679 | 150 | export body at lib/svgo-node.js:83 body 84 |  |  | 0.571 |
+| ns | 6717 |  | 270 | Plugin name+description: convertColors + unknowns/non-inheritable/stroke-fill | 3.10 |  | 0.562 |
+| walker |  | 6728 | 49 | export doc at lib/version.js:7 |  |  | 0.562 |
+| walker |  | 6777 | 49 | export doc at lib/xast.js:50 |  |  | 0.562 |
+| walker |  | 6940 | 163 | export names surface in lib/svgo/tools.js |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:21 |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:43 |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:78 |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:134 |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:163 |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:194 |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:206 |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:215 |  |  | 0.572 |
+| walker |  | 6940 | 0 | export at lib/svgo/tools.js:250 |  |  | 0.572 |
+| walker |  | 6971 | 31 | export at lib/types.ts:111 |  |  | 0.573 |
+| walker |  | 7002 | 31 | export at lib/types.ts:169 |  |  | 0.573 |
+| walker |  | 7059 | 57 | imports in lib/svgo-node.js |  |  | 0.573 |
+| ns | 7165 |  | 448 | Plugin name+description: shape/transform/path/sort/etc. — remaining preset | 3.11 |  | 0.558 |
+| walker |  | 7171 | 112 | export body at lib/svgo/tools.js:134 body 135 |  |  | 0.558 |
+| walker |  | 7234 | 63 | export doc at lib/style.js:253 |  |  | 0.558 |
+| walker |  | 7443 | 209 | export body at lib/style.js:253 body 254 |  |  | 0.558 |
+| walker |  | 7481 | 38 | export at lib/types.ts:155 |  |  | 0.560 |
+| walker |  | 7601 | 120 | export body at lib/svgo/plugins.js:14 body 21 |  |  | 0.565 |
 | walker |  | 7671 | 70 | export doc at lib/svgo.js:81 |  |  | 0.574 |
 | ns | 7798 |  | 633 | Plugin name+description: opt-in plugins (not in preset-default) | 3.12 |  | 0.555 |
 | walker |  | 7833 | 162 | export body at lib/util/map-nodes-to-parents.js:9 body 10 |  |  | 0.555 |

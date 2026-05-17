@@ -3757,10 +3757,44 @@ kind = "full"
 
 [[batches]]
 position = 95
+key = 'Markdown(Section { file: "README.md", section_index: 3 })'
+descriptor = "README.md section #3"
+cost_tokens = 56
+cum_tokens = 6987
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 29
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 187
-cum_tokens = 7118
+cum_tokens = 7174
 
 [batches.content]
 kind = "lines"
@@ -3822,11 +3856,45 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
+key = 'Markdown(Section { file: "README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 70
+cum_tokens = 7244
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 21
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
 key = 'Rust(PubItem { file: "src/cmd.rs", start_line: 13 })'
 descriptor = "pub item at src/cmd.rs:13"
 cost_tokens = 916
-cum_tokens = 8034
+cum_tokens = 8160
 
 [batches.content]
 kind = "lines"
@@ -4024,45 +4092,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 97
-key = 'Markdown(Section { file: "README.md", section_index: 3 })'
-descriptor = "README.md section #3"
-cost_tokens = 56
-cum_tokens = 8090
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 29
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
+position = 99
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 8098
+cum_tokens = 8168
 
 [batches.content]
 kind = "fs"
@@ -4072,11 +4106,11 @@ parent = ".github"
 entries = ["dependabot.yml", "workflows"]
 
 [[batches]]
-position = 99
+position = 100
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 16
-cum_tokens = 8114
+cum_tokens = 8184
 
 [batches.content]
 kind = "fs"
@@ -4086,11 +4120,11 @@ parent = ".github/workflows"
 entries = ["cargo-check.yml", "release-binary.yml", "spell-check.yml"]
 
 [[batches]]
-position = 100
+position = 101
 key = 'Rust(PubItem { file: "src/config/keys.rs", start_line: 195 })'
 descriptor = "pub item at src/config/keys.rs:195"
 cost_tokens = 870
-cum_tokens = 8984
+cum_tokens = 9054
 
 [batches.content]
 kind = "lines"
@@ -4291,40 +4325,6 @@ kind = "full"
 path = "src/config/keys.rs"
 start = 280
 end = 282
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Markdown(Section { file: "README.md", section_index: 2 })'
-descriptor = "README.md section #2"
-cost_tokens = 70
-cum_tokens = 9054
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 21
-end = 23
 
 [batches.content.spans.render]
 kind = "full"

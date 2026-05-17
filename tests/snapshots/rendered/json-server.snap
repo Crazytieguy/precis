@@ -75,6 +75,11 @@ README.md
     161→Use `field:operator=value`.
     186→### Sort
     …
+    188→```http
+    189→GET /posts?_sort=title
+    190→GET /posts?_sort=-views
+    191→GET /posts?_sort=author.name,-views
+    192→```
     194→### Pagination
     …
     196→```http
@@ -91,6 +96,10 @@ README.md
     225→```
     227→### Complex filter with `_where`
     …
+    229→`_where` accepts a JSON object and overrides normal query params when valid.
+    231→```http
+    232→GET /posts?_where={"or":[{"views":{"gt":100}},{"author":{"name":{"lt":"m"}}}]}
+    233→```
     235→## Delete dependents
     …
     237→```http
@@ -197,24 +206,6 @@ src/
         observer.ts
             1→import type { Adapter } from 'lowdb'
             4→export class Observer<T> {
-            …
-            7→  onReadStart = function () {
-            8→    return
-            9→  }
-            10→  onReadEnd: (data: T | null) => void = function () {
-            11→    return
-            12→  }
-            13→  onWriteStart = function () {
-            14→    return
-            15→  }
-            16→  onWriteEnd = function () {
-            17→    return
-            18→  }
-            20→  constructor(adapter: Adapter<T>) {
-            …
-            24→  async read() {
-            …
-            31→  async write(arg: T) {
             …
     app.test.ts
     app.ts
