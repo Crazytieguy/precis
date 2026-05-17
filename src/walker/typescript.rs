@@ -557,13 +557,16 @@ fn emit_export_body_parts(
     parts: Vec<BodyPart>,
     predecessor: &BatchKey,
 ) {
-    let part_value_factor = body_part_value_factor(parts.len());
-    // Class method bodies are peer units (one body batch per method) —
-    // the late-body decay targets long function-body chains in catalog
-    // files where later segments are redundant detail, but each class
-    // method is its own semantic unit. Mirrors the ModuleItem class-
-    // body path which already bypasses the decay.
-    let is_class_peer = matches!(item.kind, ItemKind::Class | ItemKind::Default);
+    // Factory body parts are sibling anchors (receiver table +
+    // inner-function locations), not alternative slices of one body —
+    // each is independently NS-relevant. Bypass `body_part_value_factor`
+    // so the partition doesn't tank each part's V/C the way it does
+    // for per-statement split alternatives.
+    let part_value_factor = if item.factory_sibling_body_parts {
+        1.0
+    } else {
+        body_part_value_factor(parts.len())
+    };
     for part in parts {
         let Some(body_start_line) = part.start_line() else {
             continue;
@@ -711,6 +714,13 @@ struct ExportInfo<'a> {
     /// surface, so the file-level names surface stays unchunked when
     /// these are present.
     is_prototype_method: bool,
+    /// True when `body_parts` came from a CommonJS factory match —
+    /// the receiver table plus inner-function locations. Body parts
+    /// are *sibling* anchors (each NS-relevant on its own merit),
+    /// not alternative slices of one body, so the emitter must skip
+    /// the per-part value damping that targets long function-body
+    /// chains in catalog files.
+    factory_sibling_body_parts: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -855,6 +865,8 @@ fn make_export_info<'a>(
     } else {
         Vec::new()
     };
+    let factory_sibling_body_parts =
+        !collect_class_members && is_factory_body_match(decl, kind, source, src_lines);
     let body_parts = if collect_class_members {
         merged_body_parts(
             class_members
@@ -863,7 +875,17 @@ fn make_export_info<'a>(
                 .collect(),
         )
     } else {
-        merged_body_parts(body_parts(decl, kind, source, src_lines))
+        let parts = body_parts(decl, kind, source, src_lines);
+        // Factory bodies expose their public surface as two distinct
+        // anchors (receiver table + inner-function locations); keep
+        // those parts as separate ExportBody batches rather than
+        // merging the table into the catalog (which would inflate the
+        // body cost out of the auto-injection budget).
+        if factory_sibling_body_parts {
+            parts
+        } else {
+            merged_body_parts(parts)
+        }
     };
     ExportInfo {
         start_line,
@@ -874,6 +896,7 @@ fn make_export_info<'a>(
         class_members,
         is_type_only,
         is_prototype_method,
+        factory_sibling_body_parts,
     }
 }
 
@@ -2632,35 +2655,73 @@ fn body_parts(decl: Node, kind: ItemKind, source: &str, src_lines: &[&str]) -> V
 
 /// Body slices for a function/arrow body. Recognises the CommonJS factory
 /// idiom — `function setup(...) { R.foo = ...; R.bar = ...; ...; return
-/// R; }` — and substitutes the receiver-table prefix as the single
-/// `BodyPart`, in place of the standard per-statement split.
+/// R; }` — and substitutes two purpose-built `BodyPart`s for the standard
+/// per-statement split: the receiver-table prefix, and an inner-function
+/// locations surface (first line of every nested `function X(…)`
+/// declaration in the factory body).
 ///
 /// Without this hook all body lines go through `statement_block_parts`
 /// and `merged_body_parts` collapses them into one `BodyPart` carrying
 /// the entire body interior — a 200-300-line ExportBody for `debug`'s
 /// `src/common.js` (~750 tokens) that loses every budget race. The
-/// factory match swaps that whole-body slice for the table-only slice
-/// (~30 tokens), which DOES schedule into the auto-injection budget
-/// and is exactly the surface NS authors anchor on for this idiom
-/// (the `module.exports = setup` shape where `setup` returns and
-/// wires a shared receiver).
+/// factory parts ship the small contract slices that NS authors anchor
+/// on (the `module.exports = setup` shape where `setup` returns and
+/// wires a shared receiver, and the catalog of inner helpers the
+/// factory declares).
 ///
-/// **Tradeoff**: the post-table interior (nested fn declarations,
-/// bootstrap call, return) no longer surfaces through ExportBody on
-/// matched factories. In practice the unsplit whole-body slice also
-/// fails to schedule (too expensive against typical budgets and
-/// later-segment damping), so this is an honest trade: ship the small
-/// table or ship nothing. If a future fixture wants both the table
-/// and post-table content as scheduled atoms, split this into a
-/// separate `FactoryExportsTable` BatchKey instead of folding into
-/// `ExportBody`.
+/// **Tradeoff**: the inner-function *bodies* still don't surface
+/// through ExportBody on matched factories — only their location
+/// lines do. In practice the unsplit whole-body slice also fails to
+/// schedule (too expensive against typical budgets and later-segment
+/// damping), so this is an honest trade: ship the small location
+/// catalog or ship nothing. Inner-function bodies remain follow-up
+/// reads off the location pointers.
 fn function_body_parts(body: Option<Node>, source: &str, src_lines: &[&str]) -> Vec<BodyPart> {
     if let Some(b) = body
-        && let Some(part) = factory_receiver_table_part(b, source, src_lines)
+        && let Some(table) = factory_receiver_table_part(b, source, src_lines)
     {
-        return vec![part];
+        let mut parts = vec![table];
+        // The inner-function locations surface is shipped as a sibling
+        // BodyPart (NOT merged with the receiver table). NS authors
+        // anchor on the two surfaces independently — the table is the
+        // contract between this module and its host, the locations
+        // catalog is the entry-point list for nested helpers. Caller
+        // must keep these parts un-merged; see
+        // `is_factory_body_match` below.
+        if let Some(locations) = factory_inner_function_locations_part(b, src_lines) {
+            parts.push(locations);
+        }
+        return parts;
     }
     statement_block_parts(body, src_lines, "statement_block")
+}
+
+/// True when `function_body_parts` would split a top-level function
+/// body into multiple purpose-built parts (the factory case). The
+/// caller uses this to bypass `merged_body_parts` and emit each part
+/// as its own `ExportBody` batch. Other function bodies route through
+/// the merge so a single ExportBody covers the interior — the
+/// existing materializer contract.
+fn is_factory_body_match(decl: Node, kind: ItemKind, source: &str, src_lines: &[&str]) -> bool {
+    let body_opt = match kind {
+        ItemKind::Function => decl.child_by_field_name("body"),
+        ItemKind::Const => find_fn_init_body(decl),
+        ItemKind::Default => match decl.kind() {
+            "function_declaration"
+            | "function_expression"
+            | "arrow_function"
+            | "generator_function" => decl.child_by_field_name("body"),
+            "call_expression" | "parenthesized_expression" => {
+                descend_for_fn_body(decl, FN_BODY_DESCEND_DEPTH)
+            }
+            _ => None,
+        },
+        _ => None,
+    };
+    let Some(body) = body_opt else {
+        return false;
+    };
+    factory_receiver_table_part(body, source, src_lines).is_some()
 }
 
 /// Minimum receiver-property assignments at the head of a function body
@@ -2705,6 +2766,44 @@ fn factory_receiver_table_part(body: Node, source: &str, src_lines: &[&str]) -> 
     let lines = dedup_sorted(table_rows);
     (!lines.is_empty()).then_some(BodyPart { lines })
 }
+
+/// Inner-function locations surface for a factory body. Returns the
+/// first-line list of every `function_declaration` directly nested in
+/// the factory's `statement_block`, packed as one `BodyPart`. NS
+/// authors anchor on this surface ("debug's `setup()` declares
+/// selectColor, createDebug, debug, extend, enable, matchesTemplate,
+/// disable, enabled, coerce, destroy") as the catalog of helpers the
+/// factory closes over, distinct from the receiver-table contract.
+///
+/// Only `function_declaration` children count — `lexical_declaration`
+/// arrow-init helpers don't carry the same "named inner helper"
+/// semantics, and surfacing them would dilute the catalog. Below the
+/// floor it's not a true catalog and the part is suppressed.
+fn factory_inner_function_locations_part(body: Node, src_lines: &[&str]) -> Option<BodyPart> {
+    let mut cursor = body.walk();
+    let lines: Vec<usize> = body
+        .named_children(&mut cursor)
+        .filter(|child| child.kind() == "function_declaration")
+        .map(|child| child.start_position().row + 1)
+        .filter(|&line| {
+            // Blank lines never have content; `extend_nonblank_rows` would
+            // skip them too. Cheap guard against degenerate parses.
+            line.saturating_sub(1) < src_lines.len() && !src_lines[line - 1].trim().is_empty()
+        })
+        .collect();
+    if lines.len() < FACTORY_INNER_FUNCTION_LOCATIONS_MIN {
+        return None;
+    }
+    Some(BodyPart {
+        lines: dedup_sorted(lines),
+    })
+}
+
+/// Minimum nested-function-declaration count for the inner-function
+/// locations surface to fire. Mirrors `FACTORY_RECEIVER_TABLE_MIN` —
+/// below this floor the function body is unlikely to be the
+/// CommonJS-style factory whose body is a small set of named helpers.
+const FACTORY_INNER_FUNCTION_LOCATIONS_MIN: usize = 3;
 
 /// Return the identifier text of the first top-level `return
 /// <Identifier>;` statement in `named` (the function body's named
@@ -3354,6 +3453,39 @@ module.exports = setup;
         // *not* the rest of the body (helper line 5).
         assert_eq!(setup.body_parts.len(), 1);
         assert_eq!(setup.body_parts[0].lines, vec![2, 3, 4]);
+    }
+
+    #[test]
+    fn walker_typescript_factory_inner_function_locations_emitted_as_sibling_part() {
+        // CommonJS factory with 3+ inner function declarations: the
+        // receiver-table fold fires (3 R.x assignments at lines 2-4)
+        // AND a second body part lists the inner-function start lines
+        // (5, 6, 7). NS authors anchor on the helper-locations catalog
+        // (debug NS 2.2 = "common.js inner-function name locations")
+        // distinct from the receiver-table contract.
+        let src = "\
+function setup(env) {
+  createDebug.debug = createDebug;
+  createDebug.default = createDebug;
+  createDebug.coerce = coerce;
+  function selectColor() { return 1; }
+  function enable() { return 2; }
+  function disable() { return 3; }
+  return createDebug;
+}
+module.exports = setup;
+";
+        let tree = parse(src);
+        let src_lines: Vec<&str> = src.lines().collect();
+        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
+        assert!(setup.factory_sibling_body_parts);
+        assert_eq!(setup.body_parts.len(), 2);
+        // First part: receiver-table prefix.
+        assert_eq!(setup.body_parts[0].lines, vec![2, 3, 4]);
+        // Second part: inner-function start lines, NOT merged with the
+        // table (would inflate the table's cost and lose the V/C race).
+        assert_eq!(setup.body_parts[1].lines, vec![5, 6, 7]);
     }
 
     #[test]

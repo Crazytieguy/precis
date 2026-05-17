@@ -161,12 +161,6 @@ src/
         …
         192→exports.log = console.debug || console.log || (() => {});
         …
-        194→/**
-        195→ * Save `namespaces`.
-        196→ *
-        197→ * @param {String} namespaces
-        198→ * @api private
-        199→ */
         200→function save(namespaces) {
         201→	try {
         202→		if (namespaces) {
@@ -179,18 +173,7 @@ src/
         209→		// XXX (@Qix-) should we be logging these?
         210→	}
         219→function load() {
-        220→	let r;
-        221→	try {
-        222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
-        223→	} catch (error) {
-        224→		// Swallow
-        225→		// XXX (@Qix-) should we be logging these?
-        226→	}
-        228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-        229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
-        230→		r = process.env.DEBUG;
-        231→	}
-        233→	return r;
+        …
         258→module.exports = require('./common')(exports);
         …
     common.js
@@ -207,6 +190,15 @@ src/
         13→	createDebug.enabled = enabled;
         14→	createDebug.humanize = require('ms');
         15→	createDebug.destroy = destroy;
+        41→	function selectColor(namespace) {
+        60→	function createDebug(namespace) {
+        149→	function extend(namespace, delimiter) {
+        162→	function enable(namespaces) {
+        192→	function matchesTemplate(search, template) {
+        233→	function disable() {
+        249→	function enabled(name) {
+        272→	function coerce(val) {
+        283→	function destroy() {
         292→module.exports = setup;
     index.js
         1→/**
