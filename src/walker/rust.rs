@@ -263,11 +263,14 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
         if ep || is_workspace_member_source_file(file, ctx) {
             if let Some(content) = build_per_file_content(file, ctx, parse_rust, collect_mod_use) {
+                let mod_decl_count = parse_rust(ctx, file)
+                    .map(|(source, tree)| count_top_level_mod_items(&tree, &source))
+                    .unwrap_or(0);
                 out.push(batch(
                     RustKey::ModUse { file: file.clone() },
                     None,
                     content,
-                    mod_use_value(file, ctx),
+                    mod_use_value(file, ctx, mod_decl_count),
                 ));
             }
             if let Some(content) =
@@ -814,9 +817,38 @@ fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx)) * secondary
 }
 
-fn mod_use_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let cat = (0.42 * entrypoint_boost(file)).min(1.0);
+fn mod_use_value(file: &Path, ctx: &WalkCtx, mod_decl_count: usize) -> f64 {
+    // Crate entrypoints (lib.rs / main.rs) with ≥3 `mod foo;` top-level
+    // declarations carry the crate's module table — the canonical list
+    // of every top-level submodule. NS authors anchor on this list as
+    // the crate's "module declarations" row; it's the structural analog
+    // of `PubItemNames` but at the whole-crate level. The `≥3` gate
+    // excludes use-heavy entrypoints (e.g. a workspace's primary
+    // `main.rs` that's mostly `use` of sibling crates plus one or two
+    // `mod`s); for those, the ModUse batch is plumbing-shaped and
+    // anchoring on its prefix slot displaces NS-anchored content
+    // elsewhere in the workspace. `mod.rs` and non-entrypoints stay
+    // unboosted regardless of mod count.
+    let is_crate_entry = file
+        .file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|n| n == "lib.rs" || n == "main.rs");
+    let crate_module_table = is_crate_entry && mod_decl_count >= 3;
+    let cat_axis = if crate_module_table { 0.65 } else { 0.42 };
+    let cat = (cat_axis * entrypoint_boost(file)).min(1.0);
     mix_signals(cat, 0.65, 0.38, rust_depth_factor(file, ctx))
+}
+
+/// Count top-level `mod_item` nodes — the `mod foo;` declarations that
+/// list the crate's submodule tree. Used by `mod_use_value` to
+/// distinguish a module-table entrypoint (NS-anchor-shaped) from a
+/// use-heavy entrypoint (plumbing-shaped).
+fn count_top_level_mod_items(tree: &Tree, _source: &str) -> usize {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    root.children(&mut cursor)
+        .filter(|child| child.kind() == "mod_item")
+        .count()
 }
 
 fn pub_item_names_value(file: &Path, ctx: &WalkCtx) -> f64 {

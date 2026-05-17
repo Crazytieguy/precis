@@ -117,58 +117,10 @@ entries = ["aserror.rs", "display.rs", "lib.rs", "private.rs", "provide.rs", "va
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "impl" })'
-descriptor = "listing of 'impl'"
-cost_tokens = 19
-cum_tokens = 154
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "impl"
-entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
-
-[[batches]]
-position = 6
-key = 'Markdown(Section { file: "README.md", section_index: 0 })'
-descriptor = "README.md section #0"
-cost_tokens = 64
-cum_tokens = 218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 14
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'Rust(ModUse { file: "src/lib.rs" })'
 descriptor = "mod/use plumbing in src/lib.rs"
 cost_tokens = 46
-cum_tokens = 264
+cum_tokens = 181
 
 [batches.content]
 kind = "lines"
@@ -201,6 +153,54 @@ kind = "full"
 path = "src/lib.rs"
 start = 289
 end = 289
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "impl" })'
+descriptor = "listing of 'impl'"
+cost_tokens = 19
+cum_tokens = 200
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "impl"
+entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
+
+[[batches]]
+position = 7
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 64
+cum_tokens = 264
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 14
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 19
 
 [batches.content.spans.render]
 kind = "full"

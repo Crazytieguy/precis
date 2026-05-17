@@ -2049,262 +2049,10 @@ entries = ["delete_by_key.rs", "find_pk_by_index.rs", "get_by_key.rs", "insert.r
 
 [[batches]]
 position = 95
-key = 'Fs(DirListing { dir: "crates/toasty-core/src/schema/app" })'
-descriptor = "listing of 'crates/toasty-core/src/schema/app'"
-cost_tokens = 53
-cum_tokens = 3544
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/schema/app"
-entries = ["arg.rs", "auto.rs", "constraint", "constraint.rs", "embedded.rs", "field", "field.rs", "fk.rs", "index.rs", "model.rs", "pk.rs", "relation", "relation.rs", "schema.rs"]
-
-[[batches]]
-position = 96
-key = 'Fs(DirListing { dir: "crates/toasty-core/src/schema/app/constraint" })'
-descriptor = "listing of 'crates/toasty-core/src/schema/app/constraint'"
-cost_tokens = 4
-cum_tokens = 3548
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/schema/app/constraint"
-entries = ["length.rs"]
-
-[[batches]]
-position = 97
-key = 'Fs(DirListing { dir: "crates/toasty-core/src/schema/app/field" })'
-descriptor = "listing of 'crates/toasty-core/src/schema/app/field'"
-cost_tokens = 4
-cum_tokens = 3552
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/schema/app/field"
-entries = ["primitive.rs"]
-
-[[batches]]
-position = 98
-key = 'Fs(DirListing { dir: "crates/toasty-core/src/schema/app/relation" })'
-descriptor = "listing of 'crates/toasty-core/src/schema/app/relation'"
-cost_tokens = 15
-cum_tokens = 3567
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/schema/app/relation"
-entries = ["belongs_to.rs", "has_many.rs", "has_one.rs"]
-
-[[batches]]
-position = 99
-key = 'Rust(PubItemDocLede { file: "crates/toasty-core/src/lib.rs", start_line: 16 })'
-descriptor = "pub-item doc lede at crates/toasty-core/src/lib.rs:16"
-cost_tokens = 18
-cum_tokens = 3585
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-core/src/lib.rs"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Fs(DirListing { dir: "crates/toasty-core/src/error" })'
-descriptor = "listing of 'crates/toasty-core/src/error'"
-cost_tokens = 82
-cum_tokens = 3667
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-core/src/error"
-entries = ["adhoc.rs", "condition_failed.rs", "connection_pool.rs", "driver_operation_failed.rs", "expression_evaluation_failed.rs", "invalid_connection_url.rs", "invalid_driver_configuration.rs", "invalid_record_count.rs", "invalid_result.rs", "invalid_schema.rs", "invalid_statement.rs", "invalid_type_conversion.rs", "record_not_found.rs", "unsupported_feature.rs", "validation.rs"]
-
-[[batches]]
-position = 101
-key = 'Fs(DirListing { dir: "crates/toasty-sql" })'
-descriptor = "listing of 'crates/toasty-sql'"
-cost_tokens = 16
-cum_tokens = 3683
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-sql"
-entries = ["CONTEXT.md", "Cargo.toml", "src", "tests"]
-
-[[batches]]
-position = 102
-key = 'Fs(DirListing { dir: "crates/toasty-sql/src" })'
-descriptor = "listing of 'crates/toasty-sql/src'"
-cost_tokens = 22
-cum_tokens = 3705
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-sql/src"
-entries = ["lib.rs", "migration.rs", "serializer", "serializer.rs", "stmt", "stmt.rs"]
-
-[[batches]]
-position = 103
-key = 'Fs(DirListing { dir: "crates/toasty-sql/src/serializer" })'
-descriptor = "listing of 'crates/toasty-sql/src/serializer'"
-cost_tokens = 54
-cum_tokens = 3759
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-sql/src/serializer"
-entries = ["column.rs", "column_def.rs", "cte.rs", "delim.rs", "expr.rs", "flavor.rs", "fmt.rs", "ident.rs", "name.rs", "params.rs", "statement.rs", "ty.rs", "value.rs"]
-
-[[batches]]
-position = 104
-key = 'Fs(DirListing { dir: "crates/toasty-sql/src/stmt" })'
-descriptor = "listing of 'crates/toasty-sql/src/stmt'"
-cost_tokens = 71
-cum_tokens = 3830
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-sql/src/stmt"
-entries = ["add_column.rs", "alter_column.rs", "alter_table.rs", "column_def.rs", "copy_table.rs", "create_index.rs", "create_table.rs", "drop_column.rs", "drop_index.rs", "drop_table.rs", "ident.rs", "name.rs", "pragma.rs", "table_name.rs", "ty.rs"]
-
-[[batches]]
-position = 105
-key = 'Rust(ModUse { file: "crates/toasty-sql/src/lib.rs" })'
-descriptor = "mod/use plumbing in crates/toasty-sql/src/lib.rs"
-cost_tokens = 57
-cum_tokens = 3887
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-sql/src/lib.rs"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-sql/src/lib.rs"
-start = 4
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-sql/src/lib.rs"
-start = 7
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Fs(DirListing { dir: "crates/toasty/src/engine/simplify" })'
-descriptor = "listing of 'crates/toasty/src/engine/simplify'"
-cost_tokens = 103
-cum_tokens = 3990
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty/src/engine/simplify"
-entries = ["association.rs", "expr_and.rs", "expr_any.rs", "expr_binary_op.rs", "expr_cast.rs", "expr_concat_str.rs", "expr_exists.rs", "expr_in_list.rs", "expr_is_null.rs", "expr_list.rs", "expr_map.rs", "expr_not.rs", "expr_or.rs", "expr_project.rs", "expr_record.rs", "lift_in_subquery.rs", "lift_pk_select.rs", "rewrite_root_path_expr.rs", "stmt_query.rs"]
-
-[[batches]]
-position = 107
-key = 'Rust(PubItemNames { file: "crates/toasty/src/apply_update.rs" })'
-descriptor = "pub-item names surface in crates/toasty/src/apply_update.rs"
-cost_tokens = 21
-cum_tokens = 4011
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/apply_update.rs"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/apply_update.rs"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/apply_update.rs"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/apply_update.rs"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 108
-key = 'Rust(PubItem { file: "crates/toasty/src/apply_update.rs", start_line: 19 })'
-descriptor = "pub item at crates/toasty/src/apply_update.rs:19"
-cost_tokens = 0
-cum_tokens = 4011
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/apply_update.rs"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
 key = 'Rust(ModUse { file: "crates/toasty-core/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty-core/src/lib.rs"
 cost_tokens = 80
-cum_tokens = 4091
+cum_tokens = 3571
 
 [batches.content]
 kind = "lines"
@@ -2358,6 +2106,258 @@ end = 18
 kind = "full"
 
 [[batches]]
+position = 96
+key = 'Fs(DirListing { dir: "crates/toasty-core/src/schema/app" })'
+descriptor = "listing of 'crates/toasty-core/src/schema/app'"
+cost_tokens = 53
+cum_tokens = 3624
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-core/src/schema/app"
+entries = ["arg.rs", "auto.rs", "constraint", "constraint.rs", "embedded.rs", "field", "field.rs", "fk.rs", "index.rs", "model.rs", "pk.rs", "relation", "relation.rs", "schema.rs"]
+
+[[batches]]
+position = 97
+key = 'Fs(DirListing { dir: "crates/toasty-core/src/schema/app/constraint" })'
+descriptor = "listing of 'crates/toasty-core/src/schema/app/constraint'"
+cost_tokens = 4
+cum_tokens = 3628
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-core/src/schema/app/constraint"
+entries = ["length.rs"]
+
+[[batches]]
+position = 98
+key = 'Fs(DirListing { dir: "crates/toasty-core/src/schema/app/field" })'
+descriptor = "listing of 'crates/toasty-core/src/schema/app/field'"
+cost_tokens = 4
+cum_tokens = 3632
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-core/src/schema/app/field"
+entries = ["primitive.rs"]
+
+[[batches]]
+position = 99
+key = 'Fs(DirListing { dir: "crates/toasty-core/src/schema/app/relation" })'
+descriptor = "listing of 'crates/toasty-core/src/schema/app/relation'"
+cost_tokens = 15
+cum_tokens = 3647
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-core/src/schema/app/relation"
+entries = ["belongs_to.rs", "has_many.rs", "has_one.rs"]
+
+[[batches]]
+position = 100
+key = 'Rust(PubItemDocLede { file: "crates/toasty-core/src/lib.rs", start_line: 16 })'
+descriptor = "pub-item doc lede at crates/toasty-core/src/lib.rs:16"
+cost_tokens = 18
+cum_tokens = 3665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-core/src/lib.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Fs(DirListing { dir: "crates/toasty-core/src/error" })'
+descriptor = "listing of 'crates/toasty-core/src/error'"
+cost_tokens = 82
+cum_tokens = 3747
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-core/src/error"
+entries = ["adhoc.rs", "condition_failed.rs", "connection_pool.rs", "driver_operation_failed.rs", "expression_evaluation_failed.rs", "invalid_connection_url.rs", "invalid_driver_configuration.rs", "invalid_record_count.rs", "invalid_result.rs", "invalid_schema.rs", "invalid_statement.rs", "invalid_type_conversion.rs", "record_not_found.rs", "unsupported_feature.rs", "validation.rs"]
+
+[[batches]]
+position = 102
+key = 'Fs(DirListing { dir: "crates/toasty-sql" })'
+descriptor = "listing of 'crates/toasty-sql'"
+cost_tokens = 16
+cum_tokens = 3763
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-sql"
+entries = ["CONTEXT.md", "Cargo.toml", "src", "tests"]
+
+[[batches]]
+position = 103
+key = 'Fs(DirListing { dir: "crates/toasty-sql/src" })'
+descriptor = "listing of 'crates/toasty-sql/src'"
+cost_tokens = 22
+cum_tokens = 3785
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-sql/src"
+entries = ["lib.rs", "migration.rs", "serializer", "serializer.rs", "stmt", "stmt.rs"]
+
+[[batches]]
+position = 104
+key = 'Rust(ModUse { file: "crates/toasty-sql/src/lib.rs" })'
+descriptor = "mod/use plumbing in crates/toasty-sql/src/lib.rs"
+cost_tokens = 57
+cum_tokens = 3842
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-sql/src/lib.rs"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-sql/src/lib.rs"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-sql/src/lib.rs"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Fs(DirListing { dir: "crates/toasty-sql/src/serializer" })'
+descriptor = "listing of 'crates/toasty-sql/src/serializer'"
+cost_tokens = 54
+cum_tokens = 3896
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-sql/src/serializer"
+entries = ["column.rs", "column_def.rs", "cte.rs", "delim.rs", "expr.rs", "flavor.rs", "fmt.rs", "ident.rs", "name.rs", "params.rs", "statement.rs", "ty.rs", "value.rs"]
+
+[[batches]]
+position = 106
+key = 'Fs(DirListing { dir: "crates/toasty-sql/src/stmt" })'
+descriptor = "listing of 'crates/toasty-sql/src/stmt'"
+cost_tokens = 71
+cum_tokens = 3967
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-sql/src/stmt"
+entries = ["add_column.rs", "alter_column.rs", "alter_table.rs", "column_def.rs", "copy_table.rs", "create_index.rs", "create_table.rs", "drop_column.rs", "drop_index.rs", "drop_table.rs", "ident.rs", "name.rs", "pragma.rs", "table_name.rs", "ty.rs"]
+
+[[batches]]
+position = 107
+key = 'Fs(DirListing { dir: "crates/toasty/src/engine/simplify" })'
+descriptor = "listing of 'crates/toasty/src/engine/simplify'"
+cost_tokens = 103
+cum_tokens = 4070
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty/src/engine/simplify"
+entries = ["association.rs", "expr_and.rs", "expr_any.rs", "expr_binary_op.rs", "expr_cast.rs", "expr_concat_str.rs", "expr_exists.rs", "expr_in_list.rs", "expr_is_null.rs", "expr_list.rs", "expr_map.rs", "expr_not.rs", "expr_or.rs", "expr_project.rs", "expr_record.rs", "lift_in_subquery.rs", "lift_pk_select.rs", "rewrite_root_path_expr.rs", "stmt_query.rs"]
+
+[[batches]]
+position = 108
+key = 'Rust(PubItemNames { file: "crates/toasty/src/apply_update.rs" })'
+descriptor = "pub-item names surface in crates/toasty/src/apply_update.rs"
+cost_tokens = 21
+cum_tokens = 4091
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/apply_update.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/apply_update.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/apply_update.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/apply_update.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 109
+key = 'Rust(PubItem { file: "crates/toasty/src/apply_update.rs", start_line: 19 })'
+descriptor = "pub item at crates/toasty/src/apply_update.rs:19"
+cost_tokens = 0
+cum_tokens = 4091
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/apply_update.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 110
 key = 'Rust(PubItem { file: "crates/toasty/src/schema.rs", start_line: 5 })'
 descriptor = "pub item at crates/toasty/src/schema.rs:5"
@@ -2403,1134 +2403,10 @@ kind = "full"
 
 [[batches]]
 position = 112
-key = 'Rust(PubItemNames { file: "crates/toasty/src/cursor.rs" })'
-descriptor = "pub-item names surface in crates/toasty/src/cursor.rs"
-cost_tokens = 30
-cum_tokens = 4157
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/cursor.rs"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/cursor.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/cursor.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/cursor.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 113
-key = 'Rust(PubItem { file: "crates/toasty/src/db/connect.rs", start_line: 14 })'
-descriptor = "pub item at crates/toasty/src/db/connect.rs:14"
-cost_tokens = 25
-cum_tokens = 4182
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/connect.rs"
-start = 14
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Toml(Dependencies { file: "crates/toasty-sql/Cargo.toml" })'
-descriptor = "[dependencies] in crates/toasty-sql/Cargo.toml"
-cost_tokens = 18
-cum_tokens = 4200
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-sql/Cargo.toml"
-start = 7
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Rust(PubItem { file: "crates/toasty/src/relation/has_many.rs", start_line: 8 })'
-descriptor = "pub item at crates/toasty/src/relation/has_many.rs:8"
-cost_tokens = 27
-cum_tokens = 4227
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/relation/has_many.rs"
-start = 8
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'Rust(PubItem { file: "crates/toasty/src/relation/has_one.rs", start_line: 8 })'
-descriptor = "pub item at crates/toasty/src/relation/has_one.rs:8"
-cost_tokens = 27
-cum_tokens = 4254
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/relation/has_one.rs"
-start = 8
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/to_statement.rs", start_line: 3 })'
-descriptor = "pub item at crates/toasty/src/stmt/to_statement.rs:3"
-cost_tokens = 38
-cum_tokens = 4292
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/to_statement.rs"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/to_statement.rs"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt.rs", start_line: 51 })'
-descriptor = "pub item at crates/toasty/src/stmt.rs:51"
-cost_tokens = 42
-cum_tokens = 4334
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt.rs"
-start = 51
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Rust(PubItem { file: "crates/toasty/src/relation/belongs_to.rs", start_line: 8 })'
-descriptor = "pub item at crates/toasty/src/relation/belongs_to.rs:8"
-cost_tokens = 28
-cum_tokens = 4362
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/relation/belongs_to.rs"
-start = 8
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
-key = 'Rust(PubItem { file: "crates/toasty/src/cursor.rs", start_line: 6 })'
-descriptor = "pub item at crates/toasty/src/cursor.rs:6"
-cost_tokens = 43
-cum_tokens = 4405
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/cursor.rs"
-start = 6
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/into_insert.rs", start_line: 4 })'
-descriptor = "pub item at crates/toasty/src/stmt/into_insert.rs:4"
-cost_tokens = 40
-cum_tokens = 4445
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/into_insert.rs"
-start = 4
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/into_insert.rs"
-start = 7
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/into_select.rs", start_line: 4 })'
-descriptor = "pub item at crates/toasty/src/stmt/into_select.rs:4"
-cost_tokens = 40
-cum_tokens = 4485
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/into_select.rs"
-start = 4
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/into_select.rs"
-start = 7
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 123
-key = 'Rust(PubItemNames { file: "crates/toasty/src/stmt/primitive.rs" })'
-descriptor = "pub-item names surface in crates/toasty/src/stmt/primitive.rs"
-cost_tokens = 24
-cum_tokens = 4509
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/primitive.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/primitive.rs"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/primitive.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/primitive.rs"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 124
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/primitive.rs", start_line: 78 })'
-descriptor = "pub item at crates/toasty/src/stmt/primitive.rs:78"
-cost_tokens = 16
-cum_tokens = 4525
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/primitive.rs"
-start = 78
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
-key = 'Rust(ModUse { file: "crates/toasty/src/stmt/to_statement.rs" })'
-descriptor = "mod/use plumbing in crates/toasty/src/stmt/to_statement.rs"
-cost_tokens = 9
-cum_tokens = 4534
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/to_statement.rs"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 126
-key = 'Fs(DirListing { dir: "crates/toasty-codegen" })'
-descriptor = "listing of 'crates/toasty-codegen'"
-cost_tokens = 13
-cum_tokens = 4547
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-codegen"
-entries = ["CONTEXT.md", "Cargo.toml", "src"]
-
-[[batches]]
-position = 127
-key = 'Fs(DirListing { dir: "crates/toasty-codegen/src" })'
-descriptor = "listing of 'crates/toasty-codegen/src'"
-cost_tokens = 18
-cum_tokens = 4565
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-codegen/src"
-entries = ["expand", "expand.rs", "lib.rs", "schema", "schema.rs"]
-
-[[batches]]
-position = 128
-key = 'Rust(ModUse { file: "crates/toasty-codegen/src/lib.rs" })'
-descriptor = "mod/use plumbing in crates/toasty-codegen/src/lib.rs"
-cost_tokens = 26
-cum_tokens = 4591
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'Fs(DirListing { dir: "crates/toasty-codegen/src/expand" })'
-descriptor = "listing of 'crates/toasty-codegen/src/expand'"
-cost_tokens = 36
-cum_tokens = 4627
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-codegen/src/expand"
-entries = ["create.rs", "fields.rs", "filters.rs", "model.rs", "query.rs", "relation.rs", "schema.rs", "update.rs", "util.rs"]
-
-[[batches]]
-position = 130
-key = 'Fs(DirListing { dir: "crates/toasty-codegen/src/schema" })'
-descriptor = "listing of 'crates/toasty-codegen/src/schema'"
-cost_tokens = 61
-cum_tokens = 4688
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-codegen/src/schema"
-entries = ["auto.rs", "belongs_to.rs", "column.rs", "error.rs", "field.rs", "fk.rs", "has_many.rs", "has_one.rs", "index.rs", "key_attr.rs", "model.rs", "model_attr.rs", "name.rs", "pk.rs"]
-
-[[batches]]
-position = 131
-key = 'Rust(PubItemNames { file: "crates/toasty-codegen/src/lib.rs" })'
-descriptor = "pub-item names surface in crates/toasty-codegen/src/lib.rs"
-cost_tokens = 46
-cum_tokens = 4734
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 132
-key = 'Rust(PubItem { file: "crates/toasty-codegen/src/lib.rs", start_line: 6 })'
-descriptor = "pub item at crates/toasty-codegen/src/lib.rs:6"
-cost_tokens = 0
-cum_tokens = 4734
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 133
-key = 'Rust(PubItem { file: "crates/toasty-codegen/src/lib.rs", start_line: 13 })'
-descriptor = "pub item at crates/toasty-codegen/src/lib.rs:13"
-cost_tokens = 0
-cum_tokens = 4734
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 134
-key = 'Rust(PubItemBody { file: "crates/toasty-codegen/src/lib.rs", start_line: 6, body_start_line: 7 })'
-descriptor = "pub item body at crates/toasty-codegen/src/lib.rs:6 body 7"
-cost_tokens = 50
-cum_tokens = 4784
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 7
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 135
-key = 'Rust(PubItemBody { file: "crates/toasty-codegen/src/lib.rs", start_line: 13, body_start_line: 14 })'
-descriptor = "pub item body at crates/toasty-codegen/src/lib.rs:13 body 14"
-cost_tokens = 50
-cum_tokens = 4834
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 14
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty-codegen/src/lib.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 136
-key = 'Fs(DirListing { dir: "crates/toasty-driver-sqlite" })'
-descriptor = "listing of 'crates/toasty-driver-sqlite'"
-cost_tokens = 13
-cum_tokens = 4847
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "crates/toasty-driver-sqlite"
-entries = ["CONTEXT.md", "Cargo.toml", "src"]
-
-[[batches]]
-position = 137
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/into_expr.rs", start_line: 6 })'
-descriptor = "pub item at crates/toasty/src/stmt/into_expr.rs:6"
-cost_tokens = 48
-cum_tokens = 4895
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/into_expr.rs"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/into_expr.rs"
-start = 9
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
-key = 'Markdown(Section { file: "crates/toasty-driver-sqlite/CONTEXT.md", section_index: 0 })'
-descriptor = "crates/toasty-driver-sqlite/CONTEXT.md section #0"
-cost_tokens = 14
-cum_tokens = 4909
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-driver-sqlite/CONTEXT.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 139
-key = 'Rust(PubItem { file: "crates/toasty/src/apply_update.rs", start_line: 9 })'
-descriptor = "pub item at crates/toasty/src/apply_update.rs:9"
-cost_tokens = 80
-cum_tokens = 4989
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/apply_update.rs"
-start = 9
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 140
-key = 'Markdown(Section { file: "docs/ARCHITECTURE.md", section_index: 6 })'
-descriptor = "docs/ARCHITECTURE.md section #6"
-cost_tokens = 20
-cum_tokens = 5009
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/ARCHITECTURE.md"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 141
-key = 'Rust(PubItemNames { file: "crates/toasty/src/db/pool.rs" })'
-descriptor = "pub-item names surface in crates/toasty/src/db/pool.rs"
-cost_tokens = 32
-cum_tokens = 5041
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 142
-key = 'Rust(PubItem { file: "crates/toasty/src/db/pool.rs", start_line: 119 })'
-descriptor = "pub item at crates/toasty/src/db/pool.rs:119"
-cost_tokens = 19
-cum_tokens = 5060
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 119
-end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 143
-key = 'Rust(PubItem { file: "crates/toasty/src/db/pool.rs", start_line: 18 })'
-descriptor = "pub item at crates/toasty/src/db/pool.rs:18"
-cost_tokens = 26
-cum_tokens = 5086
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 18
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 144
-key = 'Rust(PubItem { file: "crates/toasty/src/db/pool.rs", start_line: 41 })'
-descriptor = "pub item at crates/toasty/src/db/pool.rs:41"
-cost_tokens = 30
-cum_tokens = 5116
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/db/pool.rs"
-start = 41
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 145
-key = 'Rust(ModUse { file: "crates/toasty/src/batch.rs" })'
-descriptor = "mod/use plumbing in crates/toasty/src/batch.rs"
-cost_tokens = 18
-cum_tokens = 5134
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/batch.rs"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 146
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/update.rs", start_line: 6 })'
-descriptor = "pub item at crates/toasty/src/stmt/update.rs:6"
-cost_tokens = 42
-cum_tokens = 5176
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/update.rs"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 147
-key = 'Rust(PubItemNames { file: "crates/toasty/src/model.rs" })'
-descriptor = "pub-item names surface in crates/toasty/src/model.rs"
-cost_tokens = 52
-cum_tokens = 5228
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 148
-key = 'Rust(PubItem { file: "crates/toasty/src/model.rs", start_line: 12 })'
-descriptor = "pub item at crates/toasty/src/model.rs:12"
-cost_tokens = 0
-cum_tokens = 5228
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 149
-key = 'Rust(PubItem { file: "crates/toasty/src/model.rs", start_line: 65 })'
-descriptor = "pub item at crates/toasty/src/model.rs:65"
-cost_tokens = 30
-cum_tokens = 5258
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 65
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 150
-key = 'Rust(PubItem { file: "crates/toasty/src/model.rs", start_line: 26 })'
-descriptor = "pub item at crates/toasty/src/model.rs:26"
-cost_tokens = 79
-cum_tokens = 5337
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 26
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/model.rs"
-start = 32
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 151
-key = 'Toml(Features { file: "crates/toasty-core/Cargo.toml" })'
-descriptor = "[features] in crates/toasty-core/Cargo.toml"
-cost_tokens = 84
-cum_tokens = 5421
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-core/Cargo.toml"
-start = 20
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 152
-key = 'Fs(DirListing { dir: "examples/hello-toasty" })'
-descriptor = "listing of 'examples/hello-toasty'"
-cost_tokens = 8
-cum_tokens = 5429
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/hello-toasty"
-entries = ["Cargo.toml", "src"]
-
-[[batches]]
-position = 153
-key = 'Fs(DirListing { dir: "examples/hello-toasty/src" })'
-descriptor = "listing of 'examples/hello-toasty/src'"
-cost_tokens = 4
-cum_tokens = 5433
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/hello-toasty/src"
-entries = ["main.rs"]
-
-[[batches]]
-position = 154
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/association.rs", start_line: 6 })'
-descriptor = "pub item at crates/toasty/src/stmt/association.rs:6"
-cost_tokens = 45
-cum_tokens = 5478
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/association.rs"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/delete.rs", start_line: 6 })'
-descriptor = "pub item at crates/toasty/src/stmt/delete.rs:6"
-cost_tokens = 45
-cum_tokens = 5523
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/delete.rs"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/insert.rs", start_line: 6 })'
-descriptor = "pub item at crates/toasty/src/stmt/insert.rs:6"
-cost_tokens = 45
-cum_tokens = 5568
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/insert.rs"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
-key = 'Rust(PubItem { file: "crates/toasty/src/stmt/path.rs", start_line: 6 })'
-descriptor = "pub item at crates/toasty/src/stmt/path.rs:6"
-cost_tokens = 45
-cum_tokens = 5613
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/stmt/path.rs"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
-key = 'Rust(PubItemNames { file: "crates/toasty/src/engine/exec/exec_statement.rs" })'
-descriptor = "pub-item names surface in crates/toasty/src/engine/exec/exec_statement.rs"
-cost_tokens = 27
-cum_tokens = 5640
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/engine/exec/exec_statement.rs"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/engine/exec/exec_statement.rs"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/engine/exec/exec_statement.rs"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/engine/exec/exec_statement.rs"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 159
-key = 'Rust(ModUse { file: "crates/toasty/src/schema.rs" })'
-descriptor = "mod/use plumbing in crates/toasty/src/schema.rs"
-cost_tokens = 21
-cum_tokens = 5661
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/schema.rs"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/toasty/src/schema.rs"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
 key = 'Rust(ModUse { file: "crates/toasty/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/lib.rs"
 cost_tokens = 228
-cum_tokens = 5889
+cum_tokens = 4355
 
 [batches.content]
 kind = "lines"
@@ -3662,6 +2538,1130 @@ end = 58
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 113
+key = 'Rust(PubItemNames { file: "crates/toasty/src/cursor.rs" })'
+descriptor = "pub-item names surface in crates/toasty/src/cursor.rs"
+cost_tokens = 30
+cum_tokens = 4385
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/cursor.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/cursor.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/cursor.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/cursor.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 114
+key = 'Rust(PubItem { file: "crates/toasty/src/db/connect.rs", start_line: 14 })'
+descriptor = "pub item at crates/toasty/src/db/connect.rs:14"
+cost_tokens = 25
+cum_tokens = 4410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/connect.rs"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Toml(Dependencies { file: "crates/toasty-sql/Cargo.toml" })'
+descriptor = "[dependencies] in crates/toasty-sql/Cargo.toml"
+cost_tokens = 18
+cum_tokens = 4428
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-sql/Cargo.toml"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Rust(PubItem { file: "crates/toasty/src/relation/has_many.rs", start_line: 8 })'
+descriptor = "pub item at crates/toasty/src/relation/has_many.rs:8"
+cost_tokens = 27
+cum_tokens = 4455
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/relation/has_many.rs"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Rust(PubItem { file: "crates/toasty/src/relation/has_one.rs", start_line: 8 })'
+descriptor = "pub item at crates/toasty/src/relation/has_one.rs:8"
+cost_tokens = 27
+cum_tokens = 4482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/relation/has_one.rs"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/to_statement.rs", start_line: 3 })'
+descriptor = "pub item at crates/toasty/src/stmt/to_statement.rs:3"
+cost_tokens = 38
+cum_tokens = 4520
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/to_statement.rs"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/to_statement.rs"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt.rs", start_line: 51 })'
+descriptor = "pub item at crates/toasty/src/stmt.rs:51"
+cost_tokens = 42
+cum_tokens = 4562
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt.rs"
+start = 51
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Rust(PubItem { file: "crates/toasty/src/relation/belongs_to.rs", start_line: 8 })'
+descriptor = "pub item at crates/toasty/src/relation/belongs_to.rs:8"
+cost_tokens = 28
+cum_tokens = 4590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/relation/belongs_to.rs"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Rust(PubItem { file: "crates/toasty/src/cursor.rs", start_line: 6 })'
+descriptor = "pub item at crates/toasty/src/cursor.rs:6"
+cost_tokens = 43
+cum_tokens = 4633
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/cursor.rs"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/into_insert.rs", start_line: 4 })'
+descriptor = "pub item at crates/toasty/src/stmt/into_insert.rs:4"
+cost_tokens = 40
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/into_insert.rs"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/into_insert.rs"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/into_select.rs", start_line: 4 })'
+descriptor = "pub item at crates/toasty/src/stmt/into_select.rs:4"
+cost_tokens = 40
+cum_tokens = 4713
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/into_select.rs"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/into_select.rs"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Rust(PubItemNames { file: "crates/toasty/src/stmt/primitive.rs" })'
+descriptor = "pub-item names surface in crates/toasty/src/stmt/primitive.rs"
+cost_tokens = 24
+cum_tokens = 4737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/primitive.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/primitive.rs"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/primitive.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/primitive.rs"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 125
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/primitive.rs", start_line: 78 })'
+descriptor = "pub item at crates/toasty/src/stmt/primitive.rs:78"
+cost_tokens = 16
+cum_tokens = 4753
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/primitive.rs"
+start = 78
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Rust(ModUse { file: "crates/toasty/src/stmt/to_statement.rs" })'
+descriptor = "mod/use plumbing in crates/toasty/src/stmt/to_statement.rs"
+cost_tokens = 9
+cum_tokens = 4762
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/to_statement.rs"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Fs(DirListing { dir: "crates/toasty-codegen" })'
+descriptor = "listing of 'crates/toasty-codegen'"
+cost_tokens = 13
+cum_tokens = 4775
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-codegen"
+entries = ["CONTEXT.md", "Cargo.toml", "src"]
+
+[[batches]]
+position = 128
+key = 'Fs(DirListing { dir: "crates/toasty-codegen/src" })'
+descriptor = "listing of 'crates/toasty-codegen/src'"
+cost_tokens = 18
+cum_tokens = 4793
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-codegen/src"
+entries = ["expand", "expand.rs", "lib.rs", "schema", "schema.rs"]
+
+[[batches]]
+position = 129
+key = 'Rust(ModUse { file: "crates/toasty-codegen/src/lib.rs" })'
+descriptor = "mod/use plumbing in crates/toasty-codegen/src/lib.rs"
+cost_tokens = 26
+cum_tokens = 4819
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Fs(DirListing { dir: "crates/toasty-codegen/src/expand" })'
+descriptor = "listing of 'crates/toasty-codegen/src/expand'"
+cost_tokens = 36
+cum_tokens = 4855
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-codegen/src/expand"
+entries = ["create.rs", "fields.rs", "filters.rs", "model.rs", "query.rs", "relation.rs", "schema.rs", "update.rs", "util.rs"]
+
+[[batches]]
+position = 131
+key = 'Fs(DirListing { dir: "crates/toasty-codegen/src/schema" })'
+descriptor = "listing of 'crates/toasty-codegen/src/schema'"
+cost_tokens = 61
+cum_tokens = 4916
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-codegen/src/schema"
+entries = ["auto.rs", "belongs_to.rs", "column.rs", "error.rs", "field.rs", "fk.rs", "has_many.rs", "has_one.rs", "index.rs", "key_attr.rs", "model.rs", "model_attr.rs", "name.rs", "pk.rs"]
+
+[[batches]]
+position = 132
+key = 'Rust(PubItemNames { file: "crates/toasty-codegen/src/lib.rs" })'
+descriptor = "pub-item names surface in crates/toasty-codegen/src/lib.rs"
+cost_tokens = 46
+cum_tokens = 4962
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'Rust(PubItem { file: "crates/toasty-codegen/src/lib.rs", start_line: 6 })'
+descriptor = "pub item at crates/toasty-codegen/src/lib.rs:6"
+cost_tokens = 0
+cum_tokens = 4962
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 134
+key = 'Rust(PubItem { file: "crates/toasty-codegen/src/lib.rs", start_line: 13 })'
+descriptor = "pub item at crates/toasty-codegen/src/lib.rs:13"
+cost_tokens = 0
+cum_tokens = 4962
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 135
+key = 'Rust(PubItemBody { file: "crates/toasty-codegen/src/lib.rs", start_line: 6, body_start_line: 7 })'
+descriptor = "pub item body at crates/toasty-codegen/src/lib.rs:6 body 7"
+cost_tokens = 50
+cum_tokens = 5012
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Rust(PubItemBody { file: "crates/toasty-codegen/src/lib.rs", start_line: 13, body_start_line: 14 })'
+descriptor = "pub item body at crates/toasty-codegen/src/lib.rs:13 body 14"
+cost_tokens = 50
+cum_tokens = 5062
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty-codegen/src/lib.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Fs(DirListing { dir: "crates/toasty-driver-sqlite" })'
+descriptor = "listing of 'crates/toasty-driver-sqlite'"
+cost_tokens = 13
+cum_tokens = 5075
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/toasty-driver-sqlite"
+entries = ["CONTEXT.md", "Cargo.toml", "src"]
+
+[[batches]]
+position = 138
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/into_expr.rs", start_line: 6 })'
+descriptor = "pub item at crates/toasty/src/stmt/into_expr.rs:6"
+cost_tokens = 48
+cum_tokens = 5123
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/into_expr.rs"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/into_expr.rs"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Markdown(Section { file: "crates/toasty-driver-sqlite/CONTEXT.md", section_index: 0 })'
+descriptor = "crates/toasty-driver-sqlite/CONTEXT.md section #0"
+cost_tokens = 14
+cum_tokens = 5137
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-driver-sqlite/CONTEXT.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Rust(PubItem { file: "crates/toasty/src/apply_update.rs", start_line: 9 })'
+descriptor = "pub item at crates/toasty/src/apply_update.rs:9"
+cost_tokens = 80
+cum_tokens = 5217
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/apply_update.rs"
+start = 9
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Markdown(Section { file: "docs/ARCHITECTURE.md", section_index: 6 })'
+descriptor = "docs/ARCHITECTURE.md section #6"
+cost_tokens = 20
+cum_tokens = 5237
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/ARCHITECTURE.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Rust(PubItemNames { file: "crates/toasty/src/db/pool.rs" })'
+descriptor = "pub-item names surface in crates/toasty/src/db/pool.rs"
+cost_tokens = 32
+cum_tokens = 5269
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 143
+key = 'Rust(PubItem { file: "crates/toasty/src/db/pool.rs", start_line: 119 })'
+descriptor = "pub item at crates/toasty/src/db/pool.rs:119"
+cost_tokens = 19
+cum_tokens = 5288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 119
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Rust(PubItem { file: "crates/toasty/src/db/pool.rs", start_line: 18 })'
+descriptor = "pub item at crates/toasty/src/db/pool.rs:18"
+cost_tokens = 26
+cum_tokens = 5314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 18
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Rust(PubItem { file: "crates/toasty/src/db/pool.rs", start_line: 41 })'
+descriptor = "pub item at crates/toasty/src/db/pool.rs:41"
+cost_tokens = 30
+cum_tokens = 5344
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/db/pool.rs"
+start = 41
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Rust(ModUse { file: "crates/toasty/src/batch.rs" })'
+descriptor = "mod/use plumbing in crates/toasty/src/batch.rs"
+cost_tokens = 18
+cum_tokens = 5362
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/batch.rs"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/update.rs", start_line: 6 })'
+descriptor = "pub item at crates/toasty/src/stmt/update.rs:6"
+cost_tokens = 42
+cum_tokens = 5404
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/update.rs"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Rust(PubItemNames { file: "crates/toasty/src/model.rs" })'
+descriptor = "pub-item names surface in crates/toasty/src/model.rs"
+cost_tokens = 52
+cum_tokens = 5456
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 149
+key = 'Rust(PubItem { file: "crates/toasty/src/model.rs", start_line: 12 })'
+descriptor = "pub item at crates/toasty/src/model.rs:12"
+cost_tokens = 0
+cum_tokens = 5456
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 150
+key = 'Rust(PubItem { file: "crates/toasty/src/model.rs", start_line: 65 })'
+descriptor = "pub item at crates/toasty/src/model.rs:65"
+cost_tokens = 30
+cum_tokens = 5486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 65
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Rust(PubItem { file: "crates/toasty/src/model.rs", start_line: 26 })'
+descriptor = "pub item at crates/toasty/src/model.rs:26"
+cost_tokens = 79
+cum_tokens = 5565
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 26
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/model.rs"
+start = 32
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
+key = 'Toml(Features { file: "crates/toasty-core/Cargo.toml" })'
+descriptor = "[features] in crates/toasty-core/Cargo.toml"
+cost_tokens = 84
+cum_tokens = 5649
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-core/Cargo.toml"
+start = 20
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Fs(DirListing { dir: "examples/hello-toasty" })'
+descriptor = "listing of 'examples/hello-toasty'"
+cost_tokens = 8
+cum_tokens = 5657
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/hello-toasty"
+entries = ["Cargo.toml", "src"]
+
+[[batches]]
+position = 154
+key = 'Fs(DirListing { dir: "examples/hello-toasty/src" })'
+descriptor = "listing of 'examples/hello-toasty/src'"
+cost_tokens = 4
+cum_tokens = 5661
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/hello-toasty/src"
+entries = ["main.rs"]
+
+[[batches]]
+position = 155
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/association.rs", start_line: 6 })'
+descriptor = "pub item at crates/toasty/src/stmt/association.rs:6"
+cost_tokens = 45
+cum_tokens = 5706
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/association.rs"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/delete.rs", start_line: 6 })'
+descriptor = "pub item at crates/toasty/src/stmt/delete.rs:6"
+cost_tokens = 45
+cum_tokens = 5751
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/delete.rs"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/insert.rs", start_line: 6 })'
+descriptor = "pub item at crates/toasty/src/stmt/insert.rs:6"
+cost_tokens = 45
+cum_tokens = 5796
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/insert.rs"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Rust(PubItem { file: "crates/toasty/src/stmt/path.rs", start_line: 6 })'
+descriptor = "pub item at crates/toasty/src/stmt/path.rs:6"
+cost_tokens = 45
+cum_tokens = 5841
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/stmt/path.rs"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Rust(PubItemNames { file: "crates/toasty/src/engine/exec/exec_statement.rs" })'
+descriptor = "pub-item names surface in crates/toasty/src/engine/exec/exec_statement.rs"
+cost_tokens = 27
+cum_tokens = 5868
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/engine/exec/exec_statement.rs"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/engine/exec/exec_statement.rs"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/engine/exec/exec_statement.rs"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/engine/exec/exec_statement.rs"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 160
+key = 'Rust(ModUse { file: "crates/toasty/src/schema.rs" })'
+descriptor = "mod/use plumbing in crates/toasty/src/schema.rs"
+cost_tokens = 21
+cum_tokens = 5889
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/schema.rs"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/toasty/src/schema.rs"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 161
@@ -4485,28 +4485,10 @@ entries = ["apply.rs", "config.rs", "drop.rs", "generate.rs", "history_file.rs",
 
 [[batches]]
 position = 195
-key = 'Rust(PubItemDocLede { file: "crates/toasty-cli/src/lib.rs", start_line: 13 })'
-descriptor = "pub-item doc lede at crates/toasty-cli/src/lib.rs:13"
-cost_tokens = 16
-cum_tokens = 7553
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-cli/src/lib.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 196
 key = 'Rust(ModUse { file: "crates/toasty-cli/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty-cli/src/lib.rs"
 cost_tokens = 65
-cum_tokens = 7618
+cum_tokens = 7602
 
 [batches.content]
 kind = "lines"
@@ -4531,6 +4513,24 @@ kind = "full"
 path = "crates/toasty-cli/src/lib.rs"
 start = 8
 end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'Rust(PubItemDocLede { file: "crates/toasty-cli/src/lib.rs", start_line: 13 })'
+descriptor = "pub-item doc lede at crates/toasty-cli/src/lib.rs:13"
+cost_tokens = 16
+cum_tokens = 7618
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-cli/src/lib.rs"
+start = 12
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
@@ -5527,28 +5527,10 @@ kind = "full"
 
 [[batches]]
 position = 224
-key = 'Toml(Features { file: "crates/toasty-driver-postgresql/Cargo.toml" })'
-descriptor = "[features] in crates/toasty-driver-postgresql/Cargo.toml"
-cost_tokens = 80
-cum_tokens = 9440
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/toasty-driver-postgresql/Cargo.toml"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 225
 key = 'Rust(ModUse { file: "crates/toasty-driver-postgresql/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty-driver-postgresql/src/lib.rs"
 cost_tokens = 209
-cum_tokens = 9649
+cum_tokens = 9569
 
 [batches.content]
 kind = "lines"
@@ -5581,6 +5563,24 @@ kind = "full"
 path = "crates/toasty-driver-postgresql/src/lib.rs"
 start = 21
 end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 225
+key = 'Toml(Features { file: "crates/toasty-driver-postgresql/Cargo.toml" })'
+descriptor = "[features] in crates/toasty-driver-postgresql/Cargo.toml"
+cost_tokens = 80
+cum_tokens = 9649
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-driver-postgresql/Cargo.toml"
+start = 6
+end = 9
 
 [batches.content.spans.render]
 kind = "full"

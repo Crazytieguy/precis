@@ -53,8 +53,8 @@ Score(3000)=0.552 I=0.762 C=0.400 ns_rows≤3K=22/49 (reached=6 partial=5 missin
 | walker |  | 1095 | 10 | crate-doc lede in crates/mdbook-html/src/theme/mod.rs |  |  | 0.710 |
 | walker |  | 1117 | 22 | listing of 'crates/mdbook-html/src/html_handlebars' |  |  | 0.712 |
 | ns | 1121 |  | 74 | mdbook-summary crate lede | 2.3 |  | 0.694 |
-| walker |  | 1151 | 34 | listing of 'crates/mdbook-html/src/html' |  |  | 0.699 |
-| walker |  | 1199 | 48 | mod/use plumbing in crates/mdbook-html/src/lib.rs |  |  | 0.702 |
+| walker |  | 1165 | 48 | mod/use plumbing in crates/mdbook-html/src/lib.rs |  |  | 0.697 |
+| walker |  | 1199 | 34 | listing of 'crates/mdbook-html/src/html' |  |  | 0.702 |
 | ns | 1229 |  | 108 | mdbook-markdown crate lede | 2.4 |  | 0.679 |
 | walker |  | 1246 | 47 | mod/use plumbing in crates/mdbook-html/src/html_handlebars/mod.rs |  |  | 0.679 |
 | walker |  | 1323 | 77 | impl method sigs in crates/mdbook-html/src/html/mod.rs |  |  | 0.679 |
@@ -95,8 +95,8 @@ Score(3000)=0.552 I=0.762 C=0.400 ns_rows≤3K=22/49 (reached=6 partial=5 missin
 | walker |  | 2425 | 18 | listing of 'crates/mdbook-core/src/utils' |  |  | 0.567 |
 | walker |  | 2442 | 17 | pub item at crates/mdbook-core/src/utils/mod.rs:29 |  |  | 0.567 |
 | walker |  | 2452 | 10 | crate-doc lede in crates/mdbook-core/src/utils/mod.rs |  |  | 0.567 |
-| walker |  | 2471 | 19 | crate-doc lede in crates/mdbook-core/src/lib.rs |  |  | 0.569 |
-| walker |  | 2505 | 34 | mod/use plumbing in crates/mdbook-core/src/lib.rs |  |  | 0.576 |
+| walker |  | 2486 | 34 | mod/use plumbing in crates/mdbook-core/src/lib.rs |  |  | 0.571 |
+| walker |  | 2505 | 19 | crate-doc lede in crates/mdbook-core/src/lib.rs |  |  | 0.576 |
 | walker |  | 2521 | 16 | pub-item doc lede at crates/mdbook-core/src/utils/mod.rs:29 |  |  | 0.576 |
 | walker |  | 2533 | 12 | macro_export names across crates/mdbook-core/src/utils |  |  | 0.576 |
 | walker |  | 2597 | 64 | pub item body at crates/mdbook-core/src/utils/mod.rs:29 body 30 |  |  | 0.576 |
@@ -135,14 +135,14 @@ Score(3000)=0.552 I=0.762 C=0.400 ns_rows≤3K=22/49 (reached=6 partial=5 missin
 | walker |  | 4116 | 10 | crate-doc lede in crates/mdbook-driver/src/builtin_preprocessors/mod.rs |  |  | 0.520 |
 | ns | 4133 |  | 122 | Config method names + Config::set | 3.8 |  | 0.514 |
 | walker |  | 4152 | 36 | crate-doc lede in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.514 |
-| walker |  | 4230 | 78 | impl method sigs in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.514 |
-| walker |  | 4293 | 63 | mod/use plumbing in crates/mdbook-driver/src/builtin_preprocessors/mod.rs |  |  | 0.515 |
-| walker |  | 4302 | 9 | pub item at crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs:10 |  |  | 0.515 |
-| walker |  | 4449 | 147 | crate-doc lede in crates/mdbook-driver/src/lib.rs |  |  | 0.539 |
-| walker |  | 4538 | 89 | mod/use plumbing in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.539 |
-| walker |  | 4548 | 10 | pub item at crates/mdbook-driver/src/builtin_preprocessors/index.rs:12 |  |  | 0.539 |
-| walker |  | 4558 | 10 | pub item at crates/mdbook-driver/src/builtin_preprocessors/links.rs:32 |  |  | 0.539 |
-| walker |  | 4689 | 131 | mod/use plumbing in crates/mdbook-driver/src/lib.rs |  |  | 0.539 |
+| walker |  | 4283 | 131 | mod/use plumbing in crates/mdbook-driver/src/lib.rs |  |  | 0.514 |
+| walker |  | 4361 | 78 | impl method sigs in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.514 |
+| walker |  | 4424 | 63 | mod/use plumbing in crates/mdbook-driver/src/builtin_preprocessors/mod.rs |  |  | 0.515 |
+| walker |  | 4433 | 9 | pub item at crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs:10 |  |  | 0.515 |
+| walker |  | 4580 | 147 | crate-doc lede in crates/mdbook-driver/src/lib.rs |  |  | 0.539 |
+| walker |  | 4669 | 89 | mod/use plumbing in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.539 |
+| walker |  | 4679 | 10 | pub item at crates/mdbook-driver/src/builtin_preprocessors/index.rs:12 |  |  | 0.539 |
+| walker |  | 4689 | 10 | pub item at crates/mdbook-driver/src/builtin_preprocessors/links.rs:32 |  |  | 0.539 |
 | walker |  | 4748 | 59 | pub-item doc lede at crates/mdbook-driver/src/builtin_renderers/mod.rs:20 |  |  | 0.539 |
 | ns | 4753 |  | 620 | BookConfig + BuildConfig + RustConfig + RustEdition fields | 3.9 |  | 0.503 |
 | walker |  | 4768 | 20 | listing of 'guide/src/for_developers' |  |  | 0.503 |

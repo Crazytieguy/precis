@@ -1,4 +1,4 @@
-Score(3000)=0.512 I=0.795 C=0.329 ns_rows≤3K=20/50 (reached=7 partial=3 missing=10)
+Score(3000)=0.550 I=0.837 C=0.362 ns_rows≤3K=20/50 (reached=8 partial=3 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -75,37 +75,37 @@ Score(3000)=0.512 I=0.795 C=0.329 ns_rows≤3K=20/50 (reached=7 partial=3 missin
 | ns | 2206 |  | 35 | ui/ module layout | 3.1 |  | 0.549 |
 | walker |  | 2374 | 303 | pub item at src/parse/mod.rs:36 |  |  | 0.579 |
 | walker |  | 2422 | 48 | pub item at src/ui/header.rs:11 |  |  | 0.580 |
-| walker |  | 2463 | 41 | pub-item names surface in src/parse/json.rs |  |  | 0.580 |
-| walker |  | 2463 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.580 |
 | ns | 2495 |  | 289 | App struct fields | 3.2 |  | 0.536 |
-| walker |  | 2506 | 43 | pub-item names surface in src/ui/filter.rs |  |  | 0.536 |
-| walker |  | 2530 | 24 | pub item at src/ui/filter.rs:34 |  |  | 0.536 |
-| walker |  | 2561 | 31 | pub item at src/ui/filter.rs:20 |  |  | 0.536 |
-| walker |  | 2596 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.537 |
-| walker |  | 2643 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.538 |
-| ns | 2739 |  | 244 | ElementInFocus + Refresh + ShowResult | 3.3 |  | 0.509 |
-| walker |  | 2915 | 272 | pub item at src/config/mod.rs:17 |  |  | 0.511 |
-| walker |  | 2975 | 60 | pub-item names surface in src/parse/syntax.rs |  |  | 0.511 |
-| walker |  | 2975 | 0 | pub item at src/parse/syntax.rs:139 |  |  | 0.511 |
-| walker |  | 2975 | 0 | pub item at src/parse/syntax.rs:201 |  |  | 0.511 |
-| walker |  | 2997 | 22 | pub item at src/parse/syntax.rs:151 |  |  | 0.512 |
-| ns | 3020 |  | 281 | ui::start event loop | 3.4 |  | 0.485 |
-| walker |  | 3090 | 93 | pub item at src/parse/syntax.rs:11 |  |  | 0.486 |
-| walker |  | 3205 | 115 | mod/use plumbing in src/parse/mod.rs |  |  | 0.469 |
-| ns | 3205 |  | 185 | App method names | 3.5 |  | 0.469 |
-| walker |  | 3314 | 109 | pub item at src/config/keys.rs:54 |  |  | 0.470 |
-| walker |  | 3433 | 119 | mod/use plumbing in src/config/mod.rs |  |  | 0.470 |
-| walker |  | 3508 | 75 | pub-item names surface in src/config/colors.rs |  |  | 0.470 |
-| walker |  | 3537 | 29 | pub item at src/config/colors.rs:324 |  |  | 0.470 |
-| ns | 3560 |  | 355 | TreeOverview struct + impl method names | 3.6 |  | 0.444 |
-| walker |  | 3602 | 65 | pub item at src/config/colors.rs:251 |  |  | 0.444 |
-| walker |  | 3689 | 87 | pub item at src/config/colors.rs:286 |  |  | 0.444 |
-| walker |  | 3781 | 92 | pub item at src/config/colors.rs:342 |  |  | 0.444 |
-| ns | 3838 |  | 278 | TreeOverview::on_key action dispatch | 3.7 | 3.6 | 0.431 |
-| walker |  | 3855 | 74 | README.md section #1 |  |  | 0.431 |
-| walker |  | 3946 | 91 | macro_export body at src/debug.rs:8 |  |  | 0.431 |
-| ns | 4084 |  | 246 | DataBlock struct + method names | 3.8 |  | 0.415 |
-| walker |  | 4159 | 213 | mod/use plumbing in src/main.rs |  |  | 0.447 |
+| walker |  | 2635 | 213 | mod/use plumbing in src/main.rs |  |  | 0.579 |
+| walker |  | 2676 | 41 | pub-item names surface in src/parse/json.rs |  |  | 0.579 |
+| walker |  | 2676 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.579 |
+| walker |  | 2719 | 43 | pub-item names surface in src/ui/filter.rs |  |  | 0.579 |
+| ns | 2739 |  | 244 | ElementInFocus + Refresh + ShowResult | 3.3 |  | 0.548 |
+| walker |  | 2743 | 24 | pub item at src/ui/filter.rs:34 |  |  | 0.548 |
+| walker |  | 2774 | 31 | pub item at src/ui/filter.rs:20 |  |  | 0.549 |
+| walker |  | 2809 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.549 |
+| walker |  | 2856 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.550 |
+| ns | 3020 |  | 281 | ui::start event loop | 3.4 |  | 0.521 |
+| walker |  | 3128 | 272 | pub item at src/config/mod.rs:17 |  |  | 0.523 |
+| walker |  | 3188 | 60 | pub-item names surface in src/parse/syntax.rs |  |  | 0.523 |
+| walker |  | 3188 | 0 | pub item at src/parse/syntax.rs:139 |  |  | 0.523 |
+| walker |  | 3188 | 0 | pub item at src/parse/syntax.rs:201 |  |  | 0.523 |
+| ns | 3205 |  | 185 | App method names | 3.5 |  | 0.505 |
+| walker |  | 3210 | 22 | pub item at src/parse/syntax.rs:151 |  |  | 0.505 |
+| walker |  | 3303 | 93 | pub item at src/parse/syntax.rs:11 |  |  | 0.506 |
+| walker |  | 3418 | 115 | mod/use plumbing in src/parse/mod.rs |  |  | 0.506 |
+| walker |  | 3527 | 109 | pub item at src/config/keys.rs:54 |  |  | 0.507 |
+| ns | 3560 |  | 355 | TreeOverview struct + impl method names | 3.6 |  | 0.479 |
+| walker |  | 3646 | 119 | mod/use plumbing in src/config/mod.rs |  |  | 0.479 |
+| walker |  | 3721 | 75 | pub-item names surface in src/config/colors.rs |  |  | 0.479 |
+| walker |  | 3750 | 29 | pub item at src/config/colors.rs:324 |  |  | 0.479 |
+| walker |  | 3815 | 65 | pub item at src/config/colors.rs:251 |  |  | 0.479 |
+| ns | 3838 |  | 278 | TreeOverview::on_key action dispatch | 3.7 | 3.6 | 0.465 |
+| walker |  | 3902 | 87 | pub item at src/config/colors.rs:286 |  |  | 0.465 |
+| walker |  | 3994 | 92 | pub item at src/config/colors.rs:342 |  |  | 0.465 |
+| walker |  | 4068 | 74 | README.md section #1 |  |  | 0.465 |
+| ns | 4084 |  | 246 | DataBlock struct + method names | 3.8 |  | 0.447 |
+| walker |  | 4159 | 91 | macro_export body at src/debug.rs:8 |  |  | 0.447 |
 | walker |  | 4283 | 124 | pub item at src/ui/data_block.rs:16 |  |  | 0.464 |
 | ns | 4359 |  | 275 | Filter widget surface | 3.9 |  | 0.473 |
 | walker |  | 4471 | 188 | mod/use plumbing in src/ui/mod.rs |  |  | 0.473 |

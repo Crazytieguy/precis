@@ -111,6 +111,16 @@ src/
         24→//! though that default may be overridden. Logger implementations typically use
         25→//! the target to filter requests based on some user configuration.
         26→//!
+        399→use std::cfg;
+        401→use std::error;
+        402→use std::str::FromStr;
+        403→use std::{cmp, fmt, mem};
+        406→mod macros;
+        407→mod serde;
+        410→pub mod kv;
+        413→use std::sync::atomic::{AtomicUsize, Ordering};
+        416→use std::cell::Cell;
+        418→use std::sync::atomic::Ordering;
         475→pub enum Level {
         476→    /// The "error" level.
         477→    ///
@@ -242,20 +252,11 @@ src/
         1580→/// If a logger has not been set, a no-op implementation is returned.
         1581→pub fn logger() -> &'static dyn Log {
         …
+        1600→pub mod __private_api;
         1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
-        1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-        1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
-        1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-        1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
-        1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
-        1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
-        1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
-        1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-        1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
-        1621→    _ if cfg!(feature = "max_level_info") => LevelFilter::Info,
-        1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
-        1623→    _ => LevelFilter::Trace,
-        1624→};
+        …
+        1627→mod tests {
+        …
     macros.rs
     serde.rs
 test_max_level_features/

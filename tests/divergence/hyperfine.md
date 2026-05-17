@@ -65,40 +65,40 @@ Score(3000)=0.486 I=0.770 C=0.307 ns_rows≤3K=23/42 (reached=6 partial=1 missin
 | walker |  | 1609 | 44 | mod/use plumbing in src/util/mod.rs |  |  | 0.524 |
 | walker |  | 1640 | 31 | pub item at src/output/progress_bar.rs:13 |  |  | 0.524 |
 | ns | 1666 |  | 240 | Options struct field list — second half | 2.5 | 2.4 | 0.489 |
-| walker |  | 1692 | 52 | pub item at src/output/warnings.rs:13 |  |  | 0.489 |
-| walker |  | 1760 | 68 | pub item at src/cli.rs:8 |  |  | 0.489 |
-| walker |  | 1780 | 20 | pub item body at src/cli.rs:8 body 13 |  |  | 0.489 |
 | ns | 1798 |  | 132 | Options sibling enum/struct headers | 2.6 |  | 0.470 |
-| walker |  | 1815 | 35 | pub-item names surface in src/util/units.rs |  |  | 0.470 |
-| walker |  | 1815 | 0 | pub item at src/util/units.rs:6 |  |  | 0.470 |
-| ns | 1825 |  | 27 | Options::from_cli_arguments + validate_against_command_list signatures | 2.7 |  | 0.468 |
-| walker |  | 1841 | 26 | pub item at src/util/units.rs:10 |  |  | 0.468 |
-| walker |  | 1850 | 9 | pub-item doc lede at src/util/units.rs:10 |  |  | 0.468 |
-| walker |  | 1865 | 15 | pub-item doc lede at src/command.rs:134 |  |  | 0.468 |
-| walker |  | 1903 | 38 | pub-item names surface in src/util/min_max.rs |  |  | 0.468 |
-| walker |  | 1903 | 0 | pub item at src/util/min_max.rs:2 |  |  | 0.468 |
-| walker |  | 1903 | 0 | pub item at src/util/min_max.rs:10 |  |  | 0.468 |
-| ns | 1984 |  | 159 | Command + Commands type headers + public method names | 2.8 |  | 0.451 |
-| walker |  | 1989 | 86 | pub item at src/command.rs:22 |  |  | 0.451 |
-| walker |  | 2002 | 13 | pub-item doc lede at src/command.rs:22 |  |  | 0.451 |
-| walker |  | 2021 | 19 | pub item body at src/util/randomized_environment_offset.rs:6 body 7 |  |  | 0.451 |
-| walker |  | 2091 | 70 | pub-item names surface in src/outlier_detection.rs |  |  | 0.451 |
-| walker |  | 2091 | 0 | pub item at src/outlier_detection.rs:13 |  |  | 0.451 |
-| walker |  | 2091 | 0 | pub item at src/outlier_detection.rs:21 |  |  | 0.451 |
-| walker |  | 2091 | 0 | pub item at src/outlier_detection.rs:43 |  |  | 0.451 |
-| walker |  | 2135 | 44 | pub-item names surface in src/util/exit_code.rs |  |  | 0.451 |
-| walker |  | 2135 | 0 | pub item at src/util/exit_code.rs:4 |  |  | 0.451 |
-| walker |  | 2135 | 0 | pub item at src/util/exit_code.rs:20 |  |  | 0.451 |
-| walker |  | 2141 | 6 | pub item body at src/util/exit_code.rs:20 body 21 |  |  | 0.451 |
-| walker |  | 2196 | 55 | pub item at src/timer/unix_timer.rs:10 |  |  | 0.451 |
-| walker |  | 2208 | 12 | pub-item doc lede at src/output/warnings.rs:13 |  |  | 0.451 |
-| ns | 2254 |  | 270 | BenchmarkResult fields (the in-memory result row) | 2.9 |  | 0.428 |
-| walker |  | 2332 | 124 | impl method sigs in src/export/mod.rs |  |  | 0.429 |
-| walker |  | 2364 | 32 | README.md section #4 |  |  | 0.429 |
-| walker |  | 2461 | 97 | pub item at src/parameter/range_step.rs:7 |  |  | 0.429 |
-| walker |  | 2474 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.429 |
-| ns | 2570 |  | 316 | ExportType + Exporter trait + ExportManager headers | 2.10 |  | 0.449 |
-| walker |  | 2639 | 165 | mod/use plumbing in src/main.rs |  |  | 0.495 |
+| walker |  | 1805 | 165 | mod/use plumbing in src/main.rs |  |  | 0.528 |
+| ns | 1825 |  | 27 | Options::from_cli_arguments + validate_against_command_list signatures | 2.7 |  | 0.525 |
+| walker |  | 1857 | 52 | pub item at src/output/warnings.rs:13 |  |  | 0.526 |
+| walker |  | 1925 | 68 | pub item at src/cli.rs:8 |  |  | 0.526 |
+| walker |  | 1945 | 20 | pub item body at src/cli.rs:8 body 13 |  |  | 0.526 |
+| walker |  | 1980 | 35 | pub-item names surface in src/util/units.rs |  |  | 0.526 |
+| walker |  | 1980 | 0 | pub item at src/util/units.rs:6 |  |  | 0.526 |
+| ns | 1984 |  | 159 | Command + Commands type headers + public method names | 2.8 |  | 0.507 |
+| walker |  | 2006 | 26 | pub item at src/util/units.rs:10 |  |  | 0.507 |
+| walker |  | 2015 | 9 | pub-item doc lede at src/util/units.rs:10 |  |  | 0.507 |
+| walker |  | 2030 | 15 | pub-item doc lede at src/command.rs:134 |  |  | 0.507 |
+| walker |  | 2068 | 38 | pub-item names surface in src/util/min_max.rs |  |  | 0.507 |
+| walker |  | 2068 | 0 | pub item at src/util/min_max.rs:2 |  |  | 0.507 |
+| walker |  | 2068 | 0 | pub item at src/util/min_max.rs:10 |  |  | 0.507 |
+| walker |  | 2154 | 86 | pub item at src/command.rs:22 |  |  | 0.507 |
+| walker |  | 2167 | 13 | pub-item doc lede at src/command.rs:22 |  |  | 0.507 |
+| walker |  | 2186 | 19 | pub item body at src/util/randomized_environment_offset.rs:6 body 7 |  |  | 0.507 |
+| ns | 2254 |  | 270 | BenchmarkResult fields (the in-memory result row) | 2.9 |  | 0.480 |
+| walker |  | 2256 | 70 | pub-item names surface in src/outlier_detection.rs |  |  | 0.480 |
+| walker |  | 2256 | 0 | pub item at src/outlier_detection.rs:13 |  |  | 0.480 |
+| walker |  | 2256 | 0 | pub item at src/outlier_detection.rs:21 |  |  | 0.480 |
+| walker |  | 2256 | 0 | pub item at src/outlier_detection.rs:43 |  |  | 0.480 |
+| walker |  | 2300 | 44 | pub-item names surface in src/util/exit_code.rs |  |  | 0.480 |
+| walker |  | 2300 | 0 | pub item at src/util/exit_code.rs:4 |  |  | 0.480 |
+| walker |  | 2300 | 0 | pub item at src/util/exit_code.rs:20 |  |  | 0.480 |
+| walker |  | 2306 | 6 | pub item body at src/util/exit_code.rs:20 body 21 |  |  | 0.480 |
+| walker |  | 2361 | 55 | pub item at src/timer/unix_timer.rs:10 |  |  | 0.480 |
+| walker |  | 2373 | 12 | pub-item doc lede at src/output/warnings.rs:13 |  |  | 0.481 |
+| walker |  | 2497 | 124 | impl method sigs in src/export/mod.rs |  |  | 0.481 |
+| walker |  | 2529 | 32 | README.md section #4 |  |  | 0.481 |
+| ns | 2570 |  | 316 | ExportType + Exporter trait + ExportManager headers | 2.10 |  | 0.495 |
+| walker |  | 2626 | 97 | pub item at src/parameter/range_step.rs:7 |  |  | 0.495 |
+| walker |  | 2639 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.495 |
 | walker |  | 2651 | 12 | pub-item doc lede at src/util/units.rs:6 |  |  | 0.495 |
 | ns | 2696 |  | 126 | Benchmark module-level helpers + MIN_EXECUTION_TIME | 2.11 |  | 0.483 |
 | walker |  | 2727 | 76 | pub-item names surface in src/output/format.rs |  |  | 0.483 |

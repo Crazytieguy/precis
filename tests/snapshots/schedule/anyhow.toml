@@ -523,64 +523,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 16
-key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 415 })'
-descriptor = "pub-item doc lede at src/lib.rs:415"
-cost_tokens = 41
-cum_tokens = 848
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 394
-end = 397
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Rust(CrateDocLede { file: "src/lib.rs" })'
-descriptor = "crate-doc lede in src/lib.rs"
-cost_tokens = 274
-cum_tokens = 1122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 1
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 616 })'
-descriptor = "pub-item doc lede at src/lib.rs:616"
-cost_tokens = 65
-cum_tokens = 1187
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 470
-end = 476
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
 key = 'Rust(ModUse { file: "src/lib.rs" })'
 descriptor = "mod/use plumbing in src/lib.rs"
 cost_tokens = 173
-cum_tokens = 1360
+cum_tokens = 980
 
 [batches.content]
 kind = "lines"
@@ -656,6 +602,60 @@ end = 657
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 415 })'
+descriptor = "pub-item doc lede at src/lib.rs:415"
+cost_tokens = 41
+cum_tokens = 1021
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 394
+end = 397
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Rust(CrateDocLede { file: "src/lib.rs" })'
+descriptor = "crate-doc lede in src/lib.rs"
+cost_tokens = 274
+cum_tokens = 1295
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 1
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 616 })'
+descriptor = "pub-item doc lede at src/lib.rs:616"
+cost_tokens = 65
+cum_tokens = 1360
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 470
+end = 476
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 20

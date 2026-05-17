@@ -27,14 +27,14 @@ Score(3000)=0.625 I=0.834 C=0.468 ns_rows≤3K=18/44 (reached=9 partial=2 missin
 | ns | 697 |  | 156 | Error vs Box<dyn Error>: three differences | 2.5 | 2.2 | 0.529 |
 | walker |  | 729 | 153 | pub item at src/lib.rs:616 |  |  | 0.537 |
 | walker |  | 807 | 78 | macro_export names across src |  |  | 0.537 |
-| walker |  | 848 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.537 |
 | ns | 858 |  | 161 | Error::* method signatures (locations) | 2.6 |  | 0.492 |
-| ns | 1036 |  | 178 | Context trait signature | 2.7 |  | 0.536 |
-| walker |  | 1122 | 274 | crate-doc lede in src/lib.rs |  |  | 0.571 |
-| ns | 1130 |  | 94 | Crate-level public items (locations) | 2.8 |  | 0.547 |
-| walker |  | 1187 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.547 |
-| ns | 1302 |  | 172 | Macro export locations | 2.9 |  | 0.512 |
-| walker |  | 1360 | 173 | mod/use plumbing in src/lib.rs |  |  | 0.554 |
+| walker |  | 980 | 173 | mod/use plumbing in src/lib.rs |  |  | 0.540 |
+| walker |  | 1021 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.540 |
+| ns | 1036 |  | 178 | Context trait signature | 2.7 |  | 0.576 |
+| ns | 1130 |  | 94 | Crate-level public items (locations) | 2.8 |  | 0.558 |
+| walker |  | 1295 | 274 | crate-doc lede in src/lib.rs |  |  | 0.592 |
+| ns | 1302 |  | 172 | Macro export locations | 2.9 |  | 0.554 |
+| walker |  | 1360 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.554 |
 | walker |  | 1496 | 136 | macro_export body at src/macros.rs:58 |  |  | 0.554 |
 | ns | 1542 |  | 240 | Cargo features + dev-deps | 2.10 | 1.4 | 0.519 |
 | walker |  | 1670 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.572 |

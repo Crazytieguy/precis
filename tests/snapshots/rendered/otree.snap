@@ -62,29 +62,7 @@ src/
             354→}
         mod.rs
             17→pub struct Config {
-            18→    #[serde(default = "Tree::default")]
-            19→    pub tree: Tree,
-            21→    #[serde(default = "Editor::default")]
-            22→    pub editor: Editor,
-            24→    #[serde(default = "Data::default")]
-            25→    pub data: Data,
-            27→    #[serde(default = "Layout::default")]
-            28→    pub layout: Layout,
-            30→    #[serde(default = "Header::default")]
-            31→    pub header: Header,
-            33→    #[serde(default = "Footer::default")]
-            34→    pub footer: Footer,
-            36→    #[serde(default = "Filter::default")]
-            37→    pub filter: Filter,
-            39→    #[serde(default = "Config::empty_map")]
-            40→    pub palette: HashMap<String, String>,
-            42→    #[serde(default = "Colors::default")]
-            43→    pub colors: Colors,
-            45→    #[serde(default = "Types::default")]
-            46→    pub types: Types,
-            48→    #[serde(default = "Keys::default")]
-            49→    pub keys: Keys,
-            50→}
+            …
             53→pub struct Tree {
             54→    #[serde(default = "Config::disable")]
             55→    pub disable_selected_highlight: bool,
@@ -160,6 +138,28 @@ src/
         24→    data: Arc<Mutex<Data>>,
         25→}
     main.rs
+        1→mod clipboard;
+        2→mod cmd;
+        3→mod config;
+        4→mod debug;
+        5→mod edit;
+        6→mod live_reload;
+        7→mod parse;
+        8→mod tree;
+        9→mod ui;
+        11→use std::fs;
+        12→use std::io;
+        13→use std::io::Read;
+        14→use std::path::PathBuf;
+        15→use std::process;
+        16→use std::rc::Rc;
+        18→use anyhow::{bail, Context, Result};
+        19→use live_reload::FileWatcher;
+        21→use crate::cmd::CommandArgs;
+        22→use crate::config::Config;
+        23→use crate::parse::{ContentType, SyntaxToken};
+        24→use crate::tree::Tree;
+        25→use crate::ui::{App, HeaderContext};
         111→fn main() {
         112→    if let Err(err) = run() {
         113→        eprintln!("Error: {err:#}");
@@ -219,16 +219,6 @@ src/
             67→    pub fn new_parser(self) -> Box<dyn Parser> {
             …
         syntax.rs
-            11→pub enum SyntaxToken {
-            …
-            139→pub fn quote_field_name(name: &str) -> String {
-            …
-            151→pub enum StringValue {
-            152→    String(String),
-            153→    MultiLines(Vec<String>),
-            154→}
-            201→pub fn is_value_complex(value: &Value) -> bool {
-            …
         test_cases/
         toml.rs
         xml.rs

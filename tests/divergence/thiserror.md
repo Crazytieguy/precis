@@ -8,11 +8,11 @@ Score(3000)=0.678 I=0.843 C=0.545 ns_rows≤3K=12/27 (reached=6 partial=3 missin
 | ns | 86 |  | 38 | Top-level repo listing | 1.2 |  | 0.938 |
 | walker |  | 110 | 29 | headings outline in README.md |  |  | 0.938 |
 | walker |  | 135 | 25 | listing of 'src' |  |  | 0.953 |
-| walker |  | 154 | 19 | listing of 'impl' |  |  | 0.953 |
 | ns | 158 |  | 72 | src/ + impl/src/ listings | 1.3 |  | 0.656 |
-| walker |  | 218 | 64 | README.md section #0 |  |  | 0.656 |
-| ns | 245 |  | 87 | README example — enum head + first variant | 2.1 |  | 0.575 |
-| walker |  | 264 | 46 | mod/use plumbing in src/lib.rs |  |  | 0.576 |
+| walker |  | 181 | 46 | mod/use plumbing in src/lib.rs |  |  | 0.656 |
+| walker |  | 200 | 19 | listing of 'impl' |  |  | 0.656 |
+| ns | 245 |  | 87 | README example — enum head + first variant | 2.1 |  | 0.576 |
+| walker |  | 264 | 64 | README.md section #0 |  |  | 0.576 |
 | ns | 339 |  | 94 | README example — remaining variants | 2.2 |  | 0.505 |
 | walker |  | 447 | 183 | [package] in Cargo.toml |  |  | 0.521 |
 | ns | 500 |  | 161 | Cargo.toml — package head | 2.3 |  | 0.592 |

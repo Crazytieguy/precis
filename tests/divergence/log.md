@@ -1,4 +1,4 @@
-Score(3000)=0.607 I=0.843 C=0.437 ns_rows≤3K=17/44 (reached=9 partial=0 missing=8)
+Score(3000)=0.610 I=0.839 C=0.443 ns_rows≤3K=17/44 (reached=9 partial=0 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -15,60 +15,60 @@ Score(3000)=0.607 I=0.843 C=0.437 ns_rows≤3K=17/44 (reached=9 partial=0 missin
 | walker |  | 278 | 53 | headings outline in README.md |  |  | 0.777 |
 | ns | 381 |  | 150 | Crate-doc target/level/body model | 1.5 | 1.3 | 0.669 |
 | walker |  | 462 | 184 | [package] in Cargo.toml |  |  | 0.751 |
-| walker |  | 486 | 24 | pub-item names surface in src/kv/key.rs |  |  | 0.751 |
-| walker |  | 515 | 29 | pub item at src/kv/key.rs:7 |  |  | 0.752 |
-| walker |  | 540 | 25 | pub-item names surface in src/kv/source.rs |  |  | 0.752 |
-| ns | 545 |  | 164 | Five-macro user-facing summary | 1.6 |  | 0.660 |
-| walker |  | 572 | 32 | pub item at src/kv/key.rs:37 |  |  | 0.660 |
-| walker |  | 618 | 46 | pub item at src/kv/source.rs:235 |  |  | 0.660 |
+| ns | 545 |  | 164 | Five-macro user-facing summary | 1.6 |  | 0.659 |
+| walker |  | 589 | 127 | mod/use plumbing in src/lib.rs |  |  | 0.659 |
+| walker |  | 613 | 24 | pub-item names surface in src/kv/key.rs |  |  | 0.659 |
+| walker |  | 642 | 29 | pub item at src/kv/key.rs:7 |  |  | 0.660 |
+| walker |  | 667 | 25 | pub-item names surface in src/kv/source.rs |  |  | 0.660 |
+| walker |  | 699 | 32 | pub item at src/kv/key.rs:37 |  |  | 0.660 |
 | ns | 735 |  | 190 | Public-item map of lib.rs | 2.1 |  | 0.556 |
+| walker |  | 745 | 46 | pub item at src/kv/source.rs:235 |  |  | 0.557 |
 | ns | 831 |  | 96 | Macro names (src/macros.rs) | 2.2 |  | 0.513 |
-| walker |  | 862 | 244 | crate-doc lede in src/lib.rs |  |  | 0.683 |
-| ns | 883 |  | 52 | Log trait method signatures | 2.3 | 2.1 | 0.663 |
-| walker |  | 900 | 38 | pub-item names surface in src/kv/value.rs |  |  | 0.663 |
-| walker |  | 916 | 16 | pub item at src/kv/value.rs:119 |  |  | 0.663 |
-| walker |  | 945 | 29 | pub item at src/kv/value.rs:11 |  |  | 0.663 |
-| walker |  | 1012 | 67 | macro_export names across src/kv |  |  | 0.663 |
+| ns | 883 |  | 52 | Log trait method signatures | 2.3 | 2.1 | 0.498 |
+| walker |  | 989 | 244 | crate-doc lede in src/lib.rs |  |  | 0.663 |
+| walker |  | 1027 | 38 | pub-item names surface in src/kv/value.rs |  |  | 0.663 |
+| walker |  | 1043 | 16 | pub item at src/kv/value.rs:119 |  |  | 0.663 |
+| walker |  | 1072 | 29 | pub item at src/kv/value.rs:11 |  |  | 0.663 |
+| walker |  | 1139 | 67 | macro_export names across src/kv |  |  | 0.663 |
 | ns | 1153 |  | 270 | Level enum body | 2.4 | 2.1 | 0.570 |
 | ns | 1294 |  | 141 | LevelFilter enum body | 2.5 | 2.1 | 0.532 |
-| walker |  | 1312 | 300 | pub-item names surface in src/lib.rs |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1351 |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1375 |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1396 |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1420 |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1478 |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1529 |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1549 |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1566 |  |  | 0.641 |
-| walker |  | 1312 | 0 | pub item at src/lib.rs:1581 |  |  | 0.641 |
-| walker |  | 1328 | 16 | pub item at src/lib.rs:1003 |  |  | 0.641 |
-| walker |  | 1344 | 16 | pub item at src/lib.rs:1200 |  |  | 0.641 |
-| walker |  | 1370 | 26 | pub item at src/lib.rs:1158 |  |  | 0.641 |
-| walker |  | 1380 | 10 | pub item body at src/lib.rs:1478 body 1479 |  |  | 0.641 |
-| walker |  | 1394 | 14 | pub item body at src/lib.rs:1420 body 1421 |  |  | 0.641 |
-| walker |  | 1412 | 18 | pub item body at src/lib.rs:1351 body 1352 |  |  | 0.642 |
-| walker |  | 1506 | 94 | pub item at src/lib.rs:842 |  |  | 0.642 |
-| ns | 1531 |  | 237 | Logger installation entry-point signatures | 2.6 | 2.1 | 0.605 |
-| walker |  | 1645 | 139 | pub item at src/lib.rs:636 |  |  | 0.678 |
-| walker |  | 1663 | 18 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.678 |
-| walker |  | 1682 | 19 | pub-item doc lede at src/lib.rs:842 |  |  | 0.678 |
-| walker |  | 1950 | 268 | pub item at src/lib.rs:475 |  |  | 0.804 |
-| ns | 2033 |  | 502 | log! macro shapes (4 forms) | 2.7 | 2.2 | 0.690 |
-| walker |  | 2040 | 90 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.690 |
-| walker |  | 2080 | 40 | pub-item doc lede at src/lib.rs:1581 |  |  | 0.690 |
-| walker |  | 2126 | 46 | pub-item doc lede at src/lib.rs:1549 |  |  | 0.690 |
-| ns | 2481 |  | 448 | Record struct + accessor signatures | 3.1 | 2.1 | 0.621 |
-| walker |  | 2527 | 401 | pub item at src/lib.rs:1249 |  |  | 0.637 |
-| walker |  | 2544 | 17 | pub-item doc lede at src/lib.rs:1249 |  |  | 0.637 |
-| ns | 2587 |  | 106 | Metadata struct + accessors | 3.2 | 2.1 | 0.623 |
-| ns | 2682 |  | 95 | Level public-method index | 3.3 | 2.4 | 0.613 |
-| walker |  | 2691 | 147 | pub item body at src/lib.rs:1529 body 1530 |  |  | 0.613 |
-| ns | 2779 |  | 97 | LevelFilter public-method index | 3.4 | 2.5 | 0.604 |
-| walker |  | 2967 | 276 | pub item at src/lib.rs:1611 |  |  | 0.607 |
-| walker |  | 3030 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.607 |
-| ns | 3082 |  | 303 | Global state + ordering constants | 3.5 |  | 0.578 |
-| walker |  | 3193 | 163 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.607 |
-| walker |  | 3320 | 127 | mod/use plumbing in src/lib.rs |  |  | 0.613 |
+| walker |  | 1439 | 300 | pub-item names surface in src/lib.rs |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1351 |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1375 |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1396 |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1420 |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1478 |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1529 |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1549 |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1566 |  |  | 0.651 |
+| walker |  | 1439 | 0 | pub item at src/lib.rs:1581 |  |  | 0.651 |
+| walker |  | 1455 | 16 | pub item at src/lib.rs:1003 |  |  | 0.651 |
+| walker |  | 1471 | 16 | pub item at src/lib.rs:1200 |  |  | 0.651 |
+| walker |  | 1497 | 26 | pub item at src/lib.rs:1158 |  |  | 0.651 |
+| walker |  | 1507 | 10 | pub item body at src/lib.rs:1478 body 1479 |  |  | 0.651 |
+| walker |  | 1521 | 14 | pub item body at src/lib.rs:1420 body 1421 |  |  | 0.651 |
+| ns | 1531 |  | 237 | Logger installation entry-point signatures | 2.6 | 2.1 | 0.611 |
+| walker |  | 1539 | 18 | pub item body at src/lib.rs:1351 body 1352 |  |  | 0.614 |
+| walker |  | 1633 | 94 | pub item at src/lib.rs:842 |  |  | 0.615 |
+| walker |  | 1772 | 139 | pub item at src/lib.rs:636 |  |  | 0.686 |
+| walker |  | 1790 | 18 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.686 |
+| walker |  | 1809 | 19 | pub-item doc lede at src/lib.rs:842 |  |  | 0.686 |
+| ns | 2033 |  | 502 | log! macro shapes (4 forms) | 2.7 | 2.2 | 0.589 |
+| walker |  | 2077 | 268 | pub item at src/lib.rs:475 |  |  | 0.697 |
+| walker |  | 2167 | 90 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.697 |
+| walker |  | 2207 | 40 | pub-item doc lede at src/lib.rs:1581 |  |  | 0.697 |
+| walker |  | 2253 | 46 | pub-item doc lede at src/lib.rs:1549 |  |  | 0.697 |
+| ns | 2481 |  | 448 | Record struct + accessor signatures | 3.1 | 2.1 | 0.627 |
+| ns | 2587 |  | 106 | Metadata struct + accessors | 3.2 | 2.1 | 0.614 |
+| walker |  | 2654 | 401 | pub item at src/lib.rs:1249 |  |  | 0.629 |
+| walker |  | 2671 | 17 | pub-item doc lede at src/lib.rs:1249 |  |  | 0.629 |
+| ns | 2682 |  | 95 | Level public-method index | 3.3 | 2.4 | 0.619 |
+| ns | 2779 |  | 97 | LevelFilter public-method index | 3.4 | 2.5 | 0.610 |
+| walker |  | 2818 | 147 | pub item body at src/lib.rs:1529 body 1530 |  |  | 0.610 |
+| ns | 3082 |  | 303 | Global state + ordering constants | 3.5 |  | 0.580 |
+| walker |  | 3094 | 276 | pub item at src/lib.rs:1611 |  |  | 0.583 |
+| walker |  | 3157 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.583 |
+| walker |  | 3320 | 163 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.613 |
 | ns | 3382 |  | 300 | STATIC_MAX_LEVEL compile-time match | 3.6 |  | 0.630 |
 | walker |  | 3518 | 198 | README.md section #0 |  |  | 0.630 |
 | walker |  | 3532 | 14 | pub-item doc lede at src/kv/error.rs:5 |  |  | 0.630 |
