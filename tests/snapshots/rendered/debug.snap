@@ -30,14 +30,6 @@ README.md
     147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
     149→## Wildcards
     …
-    151→The `*` character may be used as a wildcard. Suppose for example your library has
-    152→debuggers named "connect:bodyParser", "connect:compress", "connect:session",
-    153→instead of listing all three with
-    154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
-    155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
-    157→You can also exclude specific debuggers by prefixing them with a "-" character.
-    158→For example, `DEBUG=*,-connect:*` would include all debuggers except those
-    159→starting with "connect:".
     161→## Environment Variables
     …
     181→## Formatters
@@ -131,47 +123,23 @@ package.json
     58→  },
 src/
     browser.js
-        3→/**
-        4→ * This is the web browser implementation of `debug()`.
-        5→ */
         7→exports.formatArgs = formatArgs;
         8→exports.save = save;
         9→exports.load = load;
         10→exports.useColors = useColors;
         11→exports.storage = localstorage();
         12→exports.destroy = (() => {
-        13→	let warned = false;
-        15→	return () => {
-        16→		if (!warned) {
-        17→			warned = true;
-        18→			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
-        19→		}
-        20→	};
-        21→})();
+        …
         27→exports.colors = [
         …
         115→function useColors() {
         …
-        143→/**
-        144→ * Colorize log arguments if enabled.
-        145→ *
-        146→ * @api public
-        147→ */
         149→function formatArgs(args) {
         …
         192→exports.log = console.debug || console.log || (() => {});
         …
         200→function save(namespaces) {
-        201→	try {
-        202→		if (namespaces) {
-        203→			exports.storage.setItem('debug', namespaces);
-        204→		} else {
-        205→			exports.storage.removeItem('debug');
-        206→		}
-        207→	} catch (error) {
-        208→		// Swallow
-        209→		// XXX (@Qix-) should we be logging these?
-        210→	}
+        …
         219→function load() {
         …
         247→function localstorage() {
@@ -180,10 +148,6 @@ src/
         …
         260→const {formatters} = module.exports;
     common.js
-        2→/**
-        3→ * This is the common logic for both the Node.js and web browser
-        4→ * implementations of `debug()`.
-        5→ */
         7→function setup(env) {
         8→	createDebug.debug = createDebug;
         9→	createDebug.default = createDebug;
@@ -201,12 +165,51 @@ src/
         47→		}
         49→		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
         60→	function createDebug(namespace) {
+        61→		let prevTime;
+        62→		let enableOverride = null;
+        63→		let namespacesCache;
+        64→		let enabledCache;
+        116→		debug.namespace = namespace;
+        117→		debug.useColors = createDebug.useColors();
+        118→		debug.color = createDebug.selectColor(namespace);
+        119→		debug.extend = extend;
+        120→		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
+        141→		// Env-specific initialization logic for debug instances
+        142→		if (typeof createDebug.init === 'function') {
+        143→			createDebug.init(debug);
+        144→		}
+        146→		return debug;
         149→	function extend(namespace, delimiter) {
         150→		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
         151→		newDebug.log = this.log;
         152→		return newDebug;
         162→	function enable(namespaces) {
+        163→		createDebug.save(namespaces);
+        164→		createDebug.namespaces = namespaces;
+        166→		createDebug.names = [];
+        167→		createDebug.skips = [];
+        169→		const split = (typeof namespaces === 'string' ? namespaces : '')
+        170→			.trim()
+        171→			.replace(/\s+/g, ',')
+        172→			.split(',')
+        173→			.filter(Boolean);
+        175→		for (const ns of split) {
+        176→			if (ns[0] === '-') {
+        177→				createDebug.skips.push(ns.slice(1));
+        178→			} else {
+        179→				createDebug.names.push(ns);
+        180→			}
+        181→		}
         192→	function matchesTemplate(search, template) {
+        193→		let searchIndex = 0;
+        194→		let templateIndex = 0;
+        195→		let starIndex = -1;
+        196→		let matchIndex = 0;
+        219→		// Handle trailing '*' in template
+        220→		while (templateIndex < template.length && template[templateIndex] === '*') {
+        221→			templateIndex++;
+        222→		}
+        224→		return templateIndex === template.length;
         233→	function disable() {
         234→		const namespaces = [
         235→			...createDebug.names,

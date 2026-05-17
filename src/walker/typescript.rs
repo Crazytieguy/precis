@@ -2747,10 +2747,12 @@ fn function_body_parts(body: Option<Node>, source: &str, src_lines: &[&str]) -> 
 }
 
 /// Body slices for each nested `function_declaration` inside a factory
-/// body. Returns one `BodyPart` per inner function, each covering the
-/// function's interior (mirrors `statement_block_parts` logic, but
-/// scoped to the inner function's own body rather than its enclosing
-/// factory). Caller emits each as a sibling `ExportBody` batch.
+/// body. Reuses [`statement_block_parts`] so large inner-helper bodies
+/// (createDebug's 88-line interior with its own nested `function
+/// debug(...)` plus per-instance setup) split per top-level statement,
+/// letting small regions schedule independently — same rule the
+/// per-statement split uses for top-level function bodies. Caller
+/// emits each part as its own sibling `ExportBody` batch.
 fn factory_inner_function_body_parts(body: Node, src_lines: &[&str]) -> Vec<BodyPart> {
     let mut cursor = body.walk();
     let mut out = Vec::new();
@@ -2758,23 +2760,12 @@ fn factory_inner_function_body_parts(body: Node, src_lines: &[&str]) -> Vec<Body
         if child.kind() != "function_declaration" {
             continue;
         }
-        let Some(inner_body) = child.child_by_field_name("body") else {
-            continue;
-        };
-        if inner_body.kind() != "statement_block" {
-            continue;
-        }
-        let body_start = inner_body.start_position().row;
-        let body_end = inner_body.end_position().row;
-        if body_end <= body_start + 1 {
-            continue;
-        }
-        let mut lines = Vec::new();
-        extend_nonblank_rows(&mut lines, src_lines, body_start + 1, body_end - 1);
-        let lines = dedup_sorted(lines);
-        if !lines.is_empty() {
-            out.push(BodyPart { lines });
-        }
+        let inner_body = child.child_by_field_name("body");
+        out.extend(statement_block_parts(
+            inner_body,
+            src_lines,
+            "statement_block",
+        ));
     }
     out
 }
