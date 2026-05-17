@@ -2729,28 +2729,10 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'Go(DeclBody { file: "dynamic/plugin.go", start_line: 26 })'
-descriptor = "go decl body at dynamic/plugin.go:26"
-cost_tokens = 274
-cum_tokens = 5147
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "dynamic/plugin.go"
-start = 27
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
 key = 'Go(DeclBody { file: "xxhsum/xxhsum.go", start_line: 11 })'
 descriptor = "go decl body at xxhsum/xxhsum.go:11"
 cost_tokens = 231
-cum_tokens = 5378
+cum_tokens = 5104
 
 [batches.content]
 kind = "lines"
@@ -2759,6 +2741,24 @@ kind = "lines"
 path = "xxhsum/xxhsum.go"
 start = 12
 end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Go(DeclBody { file: "dynamic/plugin.go", start_line: 26 })'
+descriptor = "go decl body at dynamic/plugin.go:26"
+cost_tokens = 274
+cum_tokens = 5378
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "dynamic/plugin.go"
+start = 27
+end = 46
 
 [batches.content.spans.render]
 kind = "full"

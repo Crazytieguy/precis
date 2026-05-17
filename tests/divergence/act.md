@@ -28,36 +28,36 @@ Score(3000)=0.494 I=0.767 C=0.318 ns_rows≤3K=20/41 (reached=5 partial=2 missin
 | walker |  | 491 | 32 | go decl names surface in cmd/dir.go |  |  | 0.631 |
 | walker |  | 491 | 0 | go decl at cmd/dir.go:15 |  |  | 0.631 |
 | walker |  | 500 | 9 | go decl at cmd/dir.go:10 |  |  | 0.631 |
-| walker |  | 525 | 25 | README.md section #2 |  |  | 0.631 |
-| walker |  | 582 | 57 | go package + imports in main.go |  |  | 0.668 |
-| walker |  | 601 | 19 | listing of 'cmd/testdata' |  |  | 0.668 |
-| walker |  | 626 | 25 | README.md section #3 |  |  | 0.668 |
-| ns | 635 |  | 192 | CLAUDE.md architecture: execution flow | 1.7 |  | 0.626 |
-| walker |  | 667 | 41 | listing of 'pkg' |  |  | 0.806 |
-| walker |  | 686 | 19 | listing of 'pkg/schema' |  |  | 0.806 |
-| walker |  | 708 | 22 | listing of 'pkg/exprparser' |  |  | 0.806 |
-| walker |  | 754 | 46 | go decl names surface in cmd/secrets.go |  |  | 0.806 |
-| walker |  | 754 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.806 |
-| walker |  | 754 | 0 | go decl at cmd/secrets.go:40 |  |  | 0.806 |
-| ns | 758 |  | 123 | CLAUDE.md: Executor pattern + combinators | 1.8 |  | 0.765 |
-| walker |  | 759 | 5 | go decl body at cmd/secrets.go:40 |  |  | 0.765 |
-| walker |  | 783 | 24 | listing of 'pkg/artifacts' |  |  | 0.765 |
-| walker |  | 808 | 25 | listing of 'pkg/artifactcache' |  |  | 0.765 |
-| walker |  | 816 | 8 | go package + imports in pkg/artifactcache/doc.go |  |  | 0.765 |
-| walker |  | 824 | 8 | go package + imports in pkg/artifactcache/model.go |  |  | 0.765 |
-| walker |  | 857 | 33 | listing of 'pkg/lookpath' |  |  | 0.765 |
-| walker |  | 883 | 26 | go decl names surface in pkg/lookpath/error.go |  |  | 0.765 |
-| walker |  | 883 | 0 | go decl at pkg/lookpath/error.go:8 |  |  | 0.765 |
-| walker |  | 901 | 18 | go decl at pkg/lookpath/error.go:3 |  |  | 0.765 |
-| walker |  | 908 | 7 | go decl body at pkg/lookpath/error.go:8 |  |  | 0.765 |
-| walker |  | 916 | 8 | go package + imports in pkg/lookpath/error.go |  |  | 0.765 |
-| ns | 930 |  | 172 | CLAUDE.md: Key Packages | 1.9 |  | 0.729 |
-| walker |  | 954 | 38 | go decl names surface in pkg/artifactcache/model.go |  |  | 0.729 |
-| walker |  | 954 | 0 | go decl at pkg/artifactcache/model.go:9 |  |  | 0.729 |
-| walker |  | 1000 | 46 | IMAGES.md section #0 |  |  | 0.729 |
-| walker |  | 1016 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.729 |
-| walker |  | 1059 | 43 | go decl at pkg/artifactcache/model.go:3 |  |  | 0.729 |
-| walker |  | 1100 | 41 | go decl body at main.go:13 |  |  | 0.785 |
+| walker |  | 541 | 41 | go decl body at main.go:13 |  |  | 0.665 |
+| walker |  | 566 | 25 | README.md section #2 |  |  | 0.665 |
+| walker |  | 623 | 57 | go package + imports in main.go |  |  | 0.732 |
+| ns | 635 |  | 192 | CLAUDE.md architecture: execution flow | 1.7 |  | 0.686 |
+| walker |  | 642 | 19 | listing of 'cmd/testdata' |  |  | 0.686 |
+| walker |  | 667 | 25 | README.md section #3 |  |  | 0.686 |
+| walker |  | 708 | 41 | listing of 'pkg' |  |  | 0.868 |
+| walker |  | 727 | 19 | listing of 'pkg/schema' |  |  | 0.868 |
+| walker |  | 749 | 22 | listing of 'pkg/exprparser' |  |  | 0.868 |
+| ns | 758 |  | 123 | CLAUDE.md: Executor pattern + combinators | 1.8 |  | 0.824 |
+| walker |  | 795 | 46 | go decl names surface in cmd/secrets.go |  |  | 0.824 |
+| walker |  | 795 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.824 |
+| walker |  | 795 | 0 | go decl at cmd/secrets.go:40 |  |  | 0.824 |
+| walker |  | 800 | 5 | go decl body at cmd/secrets.go:40 |  |  | 0.824 |
+| walker |  | 824 | 24 | listing of 'pkg/artifacts' |  |  | 0.824 |
+| walker |  | 849 | 25 | listing of 'pkg/artifactcache' |  |  | 0.824 |
+| walker |  | 857 | 8 | go package + imports in pkg/artifactcache/doc.go |  |  | 0.824 |
+| walker |  | 865 | 8 | go package + imports in pkg/artifactcache/model.go |  |  | 0.824 |
+| walker |  | 898 | 33 | listing of 'pkg/lookpath' |  |  | 0.824 |
+| walker |  | 924 | 26 | go decl names surface in pkg/lookpath/error.go |  |  | 0.824 |
+| walker |  | 924 | 0 | go decl at pkg/lookpath/error.go:8 |  |  | 0.824 |
+| ns | 930 |  | 172 | CLAUDE.md: Key Packages | 1.9 |  | 0.785 |
+| walker |  | 942 | 18 | go decl at pkg/lookpath/error.go:3 |  |  | 0.785 |
+| walker |  | 949 | 7 | go decl body at pkg/lookpath/error.go:8 |  |  | 0.785 |
+| walker |  | 957 | 8 | go package + imports in pkg/lookpath/error.go |  |  | 0.785 |
+| walker |  | 995 | 38 | go decl names surface in pkg/artifactcache/model.go |  |  | 0.785 |
+| walker |  | 995 | 0 | go decl at pkg/artifactcache/model.go:9 |  |  | 0.785 |
+| walker |  | 1041 | 46 | IMAGES.md section #0 |  |  | 0.785 |
+| walker |  | 1057 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.785 |
+| walker |  | 1100 | 43 | go decl at pkg/artifactcache/model.go:3 |  |  | 0.785 |
 | ns | 1112 |  | 182 | CLAUDE.md: build/test commands | 1.10 |  | 0.740 |
 | walker |  | 1125 | 25 | go package + imports in cmd/platforms.go |  |  | 0.740 |
 | ns | 1314 |  | 202 | README rationale bullets (Fast Feedback / Local Task Runner) | 1.11 |  | 0.732 |

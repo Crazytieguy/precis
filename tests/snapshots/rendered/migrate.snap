@@ -71,6 +71,7 @@ cli/
         1→# Deprecated
         3→Use [cmd/migrate](../cmd/migrate) instead
     main.go
+        5→// Deprecated, please use cmd/migrate
         6→func main() {
         7→	cli.Main(Version)
     version.go
@@ -84,16 +85,12 @@ cmd/
         examples/
         main.go
             5→func main() {
-            …
+            6→	cli.Main(Version)
         version.go
             1→package main
             4→var Version = "dev"
 database/
     cassandra/
-        README.md
-        cassandra.go
-        cassandra_test.go
-        examples/
     clickhouse/
     cockroachdb/
     crate/

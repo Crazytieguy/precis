@@ -40,8 +40,6 @@ README.md
     126→```bash
     127→go install github.com/mark3labs/mcphost@latest
     128→```
-    967→## MCP Server Compatibility 🔌
-    969→MCPHost can work with any MCP-compliant server. For examples and reference implementations, see the [MCP Servers Repository](https://github.com/modelcontextprotocol/servers).
     981→## License 📄
     983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 cmd/
@@ -193,8 +191,6 @@ internal/
             …
             37→type Cost struct {
             …
-            48→// Limit represents the context and output limits for a model.
-            49→// Used during code generation to parse token limit data from models.dev.
             50→type Limit struct {
             51→	// Context is the maximum number of input tokens
             52→	Context int `json:"context"`
@@ -266,7 +262,16 @@ main.go
     12→var version = "dev"
     …
     14→func main() {
-    …
+    15→	for _, arg := range os.Args[1:] {
+    16→		if arg == "--version" || arg == "-v" {
+    17→			fmt.Printf("mcphost version %s\n", version)
+    18→			os.Exit(0)
+    19→		}
+    20→	}
+    22→	rootCmd := cmd.GetRootCommand(version)
+    23→	if err := fang.Execute(context.Background(), rootCmd); err != nil {
+    24→		os.Exit(1)
+    25→	}
 sdk/
     README.md
         1→# MCPHost SDK
