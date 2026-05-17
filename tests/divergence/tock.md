@@ -7,16 +7,17 @@ Score(3000)=0.655 I=0.806 C=0.532 ns_rows≤3K=18/43 (reached=6 partial=5 missin
 | walker |  | 56 | 4 | listing of 'cmd' |  |  | 0.000 |
 | walker |  | 60 | 4 | listing of 'docs' |  |  | 0.821 |
 | ns | 60 |  | 52 | Repo top-level listing | 1.2 |  | 0.821 |
-| ns | 134 |  | 74 | README feature lede (first half) | 1.3 |  | 0.703 |
-| walker |  | 147 | 87 | README headline in README.md |  |  | 0.856 |
-| walker |  | 166 | 19 | listing of 'internal' |  |  | 0.868 |
-| ns | 178 |  | 44 | internal/ subpackage listing | 1.4 |  | 0.689 |
-| walker |  | 186 | 20 | listing of 'assets' |  |  | 0.689 |
-| walker |  | 198 | 12 | listing of 'internal/core' |  |  | 0.779 |
-| walker |  | 218 | 20 | README.md section #11 |  |  | 0.779 |
-| ns | 316 |  | 138 | README feature lede (rest) | 1.5 | 1.3 | 0.710 |
-| ns | 435 |  | 119 | go.mod module + Go version + UI deps | 1.6 |  | 0.639 |
-| walker |  | 492 | 274 | go module file go.mod |  |  | 0.738 |
+| walker |  | 86 | 26 | go module identity in go.mod |  |  | 0.823 |
+| ns | 134 |  | 74 | README feature lede (first half) | 1.3 |  | 0.704 |
+| walker |  | 173 | 87 | README headline in README.md |  |  | 0.857 |
+| ns | 178 |  | 44 | internal/ subpackage listing | 1.4 |  | 0.637 |
+| walker |  | 192 | 19 | listing of 'internal' |  |  | 0.690 |
+| walker |  | 212 | 20 | listing of 'assets' |  |  | 0.690 |
+| walker |  | 224 | 12 | listing of 'internal/core' |  |  | 0.780 |
+| walker |  | 244 | 20 | README.md section #11 |  |  | 0.780 |
+| ns | 316 |  | 138 | README feature lede (rest) | 1.5 | 1.3 | 0.711 |
+| ns | 435 |  | 119 | go.mod module + Go version + UI deps | 1.6 |  | 0.645 |
+| walker |  | 492 | 248 | go module file go.mod |  |  | 0.738 |
 | walker |  | 496 | 4 | listing of 'cmd/tock' |  |  | 0.738 |
 | walker |  | 506 | 10 | go decl names surface in cmd/tock/main.go |  |  | 0.738 |
 | walker |  | 506 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.738 |

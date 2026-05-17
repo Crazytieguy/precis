@@ -6,14 +6,15 @@ Score(3000)=0.598 I=0.752 C=0.476 ns_rows≤3K=16/45 (reached=5 partial=3 missin
 | ns | 146 |  | 79 | Package root sources listing | 1.2 |  | 0.000 |
 | walker |  | 191 | 191 | listing of '.' |  |  | 0.611 |
 | walker |  | 194 | 3 | listing of 'site' |  |  | 0.611 |
-| walker |  | 199 | 5 | listing of 'assets' |  |  | 0.611 |
-| walker |  | 243 | 44 | go package doc lede in command.go |  |  | 0.743 |
-| ns | 281 |  | 135 | Feature bullets — subcommand/flag/help capabilities | 1.3 |  | 0.599 |
-| walker |  | 305 | 62 | README headline in README.md |  |  | 0.758 |
-| walker |  | 368 | 63 | headings outline in README.md |  |  | 0.758 |
-| ns | 379 |  | 98 | Feature bullets — completion/docs/aliases/viper | 1.4 | 1.3 | 0.691 |
-| walker |  | 382 | 14 | README.md section #0 |  |  | 0.691 |
-| walker |  | 501 | 119 | go module file go.mod |  |  | 0.700 |
+| walker |  | 217 | 23 | go module identity in go.mod |  |  | 0.612 |
+| walker |  | 222 | 5 | listing of 'assets' |  |  | 0.612 |
+| walker |  | 266 | 44 | go package doc lede in command.go |  |  | 0.744 |
+| ns | 281 |  | 135 | Feature bullets — subcommand/flag/help capabilities | 1.3 |  | 0.600 |
+| walker |  | 328 | 62 | README headline in README.md |  |  | 0.759 |
+| ns | 379 |  | 98 | Feature bullets — completion/docs/aliases/viper | 1.4 | 1.3 | 0.692 |
+| walker |  | 391 | 63 | headings outline in README.md |  |  | 0.692 |
+| walker |  | 405 | 14 | README.md section #0 |  |  | 0.692 |
+| walker |  | 501 | 96 | go module file go.mod |  |  | 0.700 |
 | ns | 575 |  | 196 | Tests + meta files + subdir listings | 1.5 |  | 0.468 |
 | walker |  | 592 | 91 | headings outline in CONDUCT.md |  |  | 0.468 |
 | ns | 704 |  | 129 | go.mod (module path + deps) | 1.6 |  | 0.502 |

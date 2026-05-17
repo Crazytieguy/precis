@@ -143,6 +143,8 @@ cmd/
         split.actrc
 codecov.yml
 go.mod
+    1→module github.com/nektos/act
+    3→go 1.25.0
 go.sum
 install.sh
 main.go
@@ -238,9 +240,7 @@ pkg/
             14→}
             16→// NewLineWriter creates a new instance of a line writer
             17→func NewLineWriter(handlers ...LineHandler) io.Writer {
-            18→	w := new(lineWriter)
-            19→	w.handlers = handlers
-            20→	return w
+            …
             23→func (lw *lineWriter) Write(p []byte) (n int, err error) {
             …
             43→func (lw *lineWriter) handleLine(line string) {

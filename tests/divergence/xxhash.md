@@ -4,7 +4,8 @@ Score(3000)=0.700 I=0.880 C=0.557 ns_rows≤3K=20/40 (reached=10 partial=6 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 83 | 83 | listing of '.' |  |  | 1.000 |
 | ns | 83 |  | 83 | Fixture top-level listing | 1.1 |  | 1.000 |
-| walker |  | 109 | 26 | go module file go.mod |  |  | 1.000 |
+| walker |  | 109 | 26 | go module identity in go.mod |  |  | 1.000 |
+| walker |  | 109 | 0 | go module file go.mod |  |  | 1.000 |
 | ns | 145 |  | 62 | README — title and one-sentence positioning | 1.2 |  | 0.889 |
 | walker |  | 146 | 37 | go package doc lede in xxhash.go |  |  | 0.903 |
 | walker |  | 157 | 11 | listing of 'xxhsum' |  |  | 0.903 |
@@ -15,37 +16,38 @@ Score(3000)=0.700 I=0.880 C=0.557 ns_rows≤3K=20/40 (reached=10 partial=6 missi
 | walker |  | 272 | 8 | go package + imports in xxhash_asm.go |  |  | 0.950 |
 | walker |  | 280 | 8 | go package + imports in xxhash_safe.go |  |  | 0.950 |
 | walker |  | 295 | 15 | listing of 'xxhashbench' |  |  | 0.953 |
-| walker |  | 328 | 33 | go decl names surface in xxhash_asm.go |  |  | 0.954 |
-| walker |  | 328 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.954 |
-| walker |  | 328 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.954 |
-| walker |  | 369 | 41 | go decl names surface in xxhash_safe.go |  |  | 0.955 |
-| walker |  | 369 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.955 |
-| walker |  | 369 | 0 | go decl at xxhash_safe.go:14 |  |  | 0.955 |
-| walker |  | 378 | 9 | go decl body at xxhash_safe.go:9 |  |  | 0.955 |
-| walker |  | 387 | 9 | go decl body at xxhash_safe.go:14 |  |  | 0.728 |
-| ns | 387 |  | 166 | README — public API code-fence sketch | 1.4 |  | 0.728 |
-| walker |  | 439 | 52 | go decl names surface in xxhash_unsafe.go |  |  | 0.728 |
-| walker |  | 439 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.728 |
-| walker |  | 439 | 0 | go decl at xxhash_unsafe.go:45 |  |  | 0.728 |
-| walker |  | 458 | 19 | go decl at xxhash_unsafe.go:55 |  |  | 0.728 |
-| ns | 463 |  | 76 | README — purego/asm note | 1.5 |  | 0.683 |
-| walker |  | 467 | 9 | go decl doc at xxhash_asm.go:15 |  |  | 0.683 |
-| walker |  | 490 | 23 | go decl doc at xxhash_safe.go:9 |  |  | 0.683 |
-| walker |  | 511 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.684 |
-| walker |  | 556 | 45 | go package + imports in xxhash.go |  |  | 0.705 |
-| walker |  | 600 | 44 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.705 |
-| walker |  | 600 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.705 |
-| walker |  | 600 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.705 |
-| walker |  | 600 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.705 |
+| walker |  | 323 | 28 | go module identity in xxhashbench/go.mod |  |  | 0.953 |
+| walker |  | 356 | 33 | go decl names surface in xxhash_asm.go |  |  | 0.954 |
+| walker |  | 356 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.954 |
+| walker |  | 356 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.954 |
+| ns | 387 |  | 166 | README — public API code-fence sketch | 1.4 |  | 0.727 |
+| walker |  | 397 | 41 | go decl names surface in xxhash_safe.go |  |  | 0.728 |
+| walker |  | 397 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.728 |
+| walker |  | 397 | 0 | go decl at xxhash_safe.go:14 |  |  | 0.728 |
+| walker |  | 406 | 9 | go decl body at xxhash_safe.go:9 |  |  | 0.728 |
+| walker |  | 415 | 9 | go decl body at xxhash_safe.go:14 |  |  | 0.728 |
+| ns | 463 |  | 76 | README — purego/asm note | 1.5 |  | 0.682 |
+| walker |  | 467 | 52 | go decl names surface in xxhash_unsafe.go |  |  | 0.683 |
+| walker |  | 467 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.683 |
+| walker |  | 467 | 0 | go decl at xxhash_unsafe.go:45 |  |  | 0.683 |
+| walker |  | 486 | 19 | go decl at xxhash_unsafe.go:55 |  |  | 0.683 |
+| walker |  | 495 | 9 | go decl doc at xxhash_asm.go:15 |  |  | 0.683 |
+| walker |  | 518 | 23 | go decl doc at xxhash_safe.go:9 |  |  | 0.683 |
+| walker |  | 539 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.684 |
+| walker |  | 584 | 45 | go package + imports in xxhash.go |  |  | 0.705 |
 | ns | 603 |  | 140 | Digest struct + zero-value caveat | 2.1 |  | 0.613 |
-| walker |  | 636 | 36 | go decl doc at xxhash_asm.go:12 |  |  | 0.615 |
-| walker |  | 663 | 27 | go package + imports in xxhash_unsafe.go |  |  | 0.615 |
-| walker |  | 692 | 29 | go decl body at xxhash_unsafe.go:38 |  |  | 0.615 |
+| walker |  | 628 | 44 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.613 |
+| walker |  | 628 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.613 |
+| walker |  | 628 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.613 |
+| walker |  | 628 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.613 |
+| walker |  | 664 | 36 | go decl doc at xxhash_asm.go:12 |  |  | 0.615 |
+| walker |  | 691 | 27 | go package + imports in xxhash_unsafe.go |  |  | 0.615 |
 | ns | 712 |  | 109 | Constructors — New and NewWithSeed | 2.2 | 2.1 | 0.558 |
-| walker |  | 736 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.559 |
-| walker |  | 777 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.561 |
-| ns | 907 |  | 195 | Reset / ResetWithSeed — full bodies | 2.3 | 2.1 | 0.499 |
-| walker |  | 910 | 133 | go module file xxhashbench/go.mod |  |  | 0.499 |
+| walker |  | 720 | 29 | go decl body at xxhash_unsafe.go:38 |  |  | 0.558 |
+| walker |  | 764 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.559 |
+| walker |  | 869 | 105 | go module file xxhashbench/go.mod |  |  | 0.559 |
+| ns | 907 |  | 195 | Reset / ResetWithSeed — full bodies | 2.3 | 2.1 | 0.497 |
+| walker |  | 910 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.499 |
 | walker |  | 988 | 78 | go decl names surface in dynamic/plugin.go |  |  | 0.499 |
 | walker |  | 988 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.499 |
 | walker |  | 988 | 0 | go decl at dynamic/plugin.go:26 |  |  | 0.499 |

@@ -13,10 +13,15 @@
 //! - `TestNames { file }`: in `_test.go` files only, surface listing of
 //!   `Test*` / `Benchmark*` / `Example*` first lines (Go's `go test`
 //!   lookup contract). No bodies / docs from test files.
+//! - `GoModIdentity { file }`: small (~25–40 tok) identity slice of
+//!   `go.mod` / `go.work` covering the `module`, `go`, and `toolchain`
+//!   directive lines. Predecessor of the whole-file `GoMod` batch so
+//!   the cheap lede can land first at small budgets.
 //! - `GoMod { file }`: line-set batch for `go.mod` / `go.work`. Drops
 //!   `// indirect` lines from inside `require ( … )` blocks; module /
 //!   `go` / `toolchain` / `replace` / `exclude` / `retract` / `use`
-//!   directives stay.
+//!   directives stay. Predecessor: matching `GoModIdentity` (identity
+//!   lines are an ancestor subset).
 //!
 //! Per-decl keys (keyed by start line):
 //! - `Decl { file, start_line }`: one top-level declaration's
@@ -84,17 +89,71 @@ fn expand_gomod(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
         let path = dir.join(name);
+        let identity_emitted = if let Some(content) = build_gomod_identity_content(&path, ctx) {
+            out.push(Batch {
+                key: GoKey::GoModIdentity { file: path.clone() }.into(),
+                predecessor: None,
+                content,
+                value: gomod_identity_value(&path, ctx),
+            });
+            true
+        } else {
+            false
+        };
         let Some(content) = build_gomod_content(&path, ctx) else {
             continue;
         };
+        // Only declare the identity batch as predecessor when it was
+        // actually emitted — otherwise the GoMod batch would orphan
+        // itself on a never-resolved predecessor key.
+        let predecessor =
+            identity_emitted.then(|| BatchKey::Go(GoKey::GoModIdentity { file: path.clone() }));
         out.push(Batch {
             key: GoKey::GoMod { file: path.clone() }.into(),
-            predecessor: None,
+            predecessor,
             content,
             value: gomod_value(&path, ctx),
         });
     }
     out
+}
+
+/// Build the identity-only content for `go.mod` / `go.work`: the
+/// `module`, `go`, and `toolchain` directive lines at the top of the
+/// file. Returns `None` if the file has none of these (in practice
+/// `go.work` may legitimately have only a `go` directive, which still
+/// counts). NS authors anchor on this slice as a small high-value
+/// orientation atom ("Module name + Go version"); emitting it
+/// independently of the heavier require-block batch lets the cheap
+/// slice land first at small budgets.
+fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
+    let source = ctx.read_source(file)?;
+    let mut lines = Vec::new();
+    let mut in_block = false;
+    for (i, raw) in source.lines().enumerate() {
+        let trimmed = raw.trim();
+        // Once any block (`require ( … )`, etc.) opens we stop
+        // collecting identity lines — module/go/toolchain are
+        // top-level directives that appear before the block bodies.
+        if trimmed.ends_with('(') && !trimmed.starts_with("//") {
+            in_block = true;
+            continue;
+        }
+        if in_block {
+            if trimmed == ")" {
+                in_block = false;
+            }
+            continue;
+        }
+        let first = trimmed.split_whitespace().next().unwrap_or("");
+        if matches!(first, "module" | "go" | "toolchain") {
+            lines.push(i + 1);
+        }
+    }
+    if lines.is_empty() {
+        return None;
+    }
+    single_file_lines_content(file, &source, FileLines::new(lines))
 }
 
 /// Build `GoMod` content as a line set. Drops `// indirect` lines
@@ -948,7 +1007,26 @@ fn test_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn gomod_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.85, 0.65, 0.5, go_depth_factor(file, ctx))
+    // Identity directives (module / go / toolchain) split off into
+    // [`GoKey::GoModIdentity`] — this batch's value reflects the
+    // residual require / replace / exclude / retract content, not the
+    // top-level identity lede. Catastrophic-omission stays high (NS
+    // authors anchor on the dep list) but follow-up minimization drops
+    // a notch versus the pre-split value, since the lede is no longer
+    // bundled in.
+    mix_signals(0.80, 0.60, 0.5, go_depth_factor(file, ctx))
+}
+
+/// Identity slice of a `go.mod` is a small, high-value orientation
+/// atom (module path + Go version, ~25–40 tok). Catastrophic-omission
+/// dominates — knowing the module path is identity-level info on par
+/// with the package-doc lede; without it the agent can't even name
+/// the package. Follow-up minimization is high too (no further work
+/// needed to learn the import root); zero-tool-call understanding sits
+/// below the full module batch because the identity slice alone
+/// doesn't list deps.
+fn gomod_identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.90, 0.75, 0.35, go_depth_factor(file, ctx))
 }
 
 // --- parser -------------------------------------------------------------
@@ -1230,6 +1308,67 @@ retract v0.1.0
         assert!(lines.contains(&8), "require ) kept");
         assert!(lines.contains(&10), "replace kept");
         assert!(lines.contains(&12), "retract kept");
+    }
+
+    #[test]
+    fn go_mod_identity_collects_module_go_and_toolchain_directives() {
+        let src = "\
+module example.com/foo
+
+go 1.22
+
+toolchain go1.22.5
+
+require (
+\tgithub.com/x/y v1.0.0
+)
+
+replace github.com/x/y => github.com/forked/y v2.0.0
+";
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("go.mod");
+        std::fs::write(&path, src).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let content = build_gomod_identity_content(&path, &ctx).expect("emits content");
+        let BatchContent::Lines { spans } = content else {
+            panic!("expected Lines content");
+        };
+        let mut lines = Vec::new();
+        for span in &spans {
+            for l in span.start..=span.end {
+                lines.push(l);
+            }
+        }
+        assert!(lines.contains(&1), "module clause kept");
+        assert!(lines.contains(&3), "go version kept");
+        assert!(lines.contains(&5), "toolchain kept");
+        assert!(!lines.contains(&7), "require ( excluded from identity");
+        assert!(!lines.contains(&8), "require body excluded from identity");
+        assert!(
+            !lines.contains(&11),
+            "replace excluded from identity (post-block directive)"
+        );
+    }
+
+    #[test]
+    fn go_mod_identity_handles_minimal_module() {
+        let src = "module example.com/foo\n\ngo 1.22\n";
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("go.mod");
+        std::fs::write(&path, src).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let content = build_gomod_identity_content(&path, &ctx).expect("emits content");
+        let BatchContent::Lines { spans } = content else {
+            panic!("expected Lines content");
+        };
+        let mut lines = Vec::new();
+        for span in &spans {
+            for l in span.start..=span.end {
+                lines.push(l);
+            }
+        }
+        assert!(lines.contains(&1));
+        assert!(lines.contains(&3));
     }
 
     #[test]

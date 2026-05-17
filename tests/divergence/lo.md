@@ -7,24 +7,25 @@ Score(3000)=0.477 I=0.648 C=0.351 ns_rows≤3K=16/51 (reached=4 partial=2 missin
 | ns | 164 |  | 43 | README — vs stdlib slices/maps | 1.3 |  | 0.000 |
 | walker |  | 175 | 175 | listing of '.' |  |  | 0.000 |
 | walker |  | 179 | 4 | listing of 'exp' |  |  | 0.000 |
-| walker |  | 194 | 15 | go decl names surface in constraints.go |  |  | 0.000 |
-| walker |  | 206 | 12 | go decl at constraints.go:4 |  |  | 0.000 |
-| walker |  | 252 | 46 | README headline in README.md |  |  | 0.707 |
-| walker |  | 261 | 9 | listing of 'parallel' |  |  | 0.707 |
-| walker |  | 272 | 11 | listing of 'internal' |  |  | 0.707 |
-| walker |  | 279 | 7 | go package + imports in condition.go |  |  | 0.707 |
-| walker |  | 286 | 7 | go package + imports in constraints.go |  |  | 0.707 |
-| walker |  | 293 | 7 | go package + imports in func.go |  |  | 0.707 |
-| walker |  | 300 | 7 | go package + imports in intersect.go |  |  | 0.707 |
-| walker |  | 307 | 7 | go package + imports in map.go |  |  | 0.707 |
-| ns | 308 |  | 144 | go.mod — module path, Go floor, deps | 2.1 |  | 0.288 |
-| walker |  | 314 | 7 | go package + imports in tuples.go |  |  | 0.288 |
-| walker |  | 321 | 7 | go package + imports in types.go |  |  | 0.288 |
-| walker |  | 336 | 15 | listing of 'mutable' |  |  | 0.289 |
-| walker |  | 355 | 19 | go decl doc at constraints.go:4 |  |  | 0.291 |
-| walker |  | 370 | 15 | go package + imports in type_manipulation.go |  |  | 0.291 |
-| ns | 386 |  | 78 | Canonical four-package import block | 2.2 |  | 0.236 |
-| walker |  | 510 | 140 | go module file go.mod |  |  | 0.705 |
+| walker |  | 201 | 22 | go module identity in go.mod |  |  | 0.000 |
+| walker |  | 216 | 15 | go decl names surface in constraints.go |  |  | 0.000 |
+| walker |  | 228 | 12 | go decl at constraints.go:4 |  |  | 0.000 |
+| walker |  | 274 | 46 | README headline in README.md |  |  | 0.707 |
+| walker |  | 283 | 9 | listing of 'parallel' |  |  | 0.707 |
+| walker |  | 294 | 11 | listing of 'internal' |  |  | 0.707 |
+| walker |  | 301 | 7 | go package + imports in condition.go |  |  | 0.707 |
+| walker |  | 308 | 7 | go package + imports in constraints.go |  |  | 0.311 |
+| ns | 308 |  | 144 | go.mod — module path, Go floor, deps | 2.1 |  | 0.311 |
+| walker |  | 315 | 7 | go package + imports in func.go |  |  | 0.311 |
+| walker |  | 322 | 7 | go package + imports in intersect.go |  |  | 0.311 |
+| walker |  | 329 | 7 | go package + imports in map.go |  |  | 0.311 |
+| walker |  | 336 | 7 | go package + imports in tuples.go |  |  | 0.311 |
+| walker |  | 343 | 7 | go package + imports in types.go |  |  | 0.311 |
+| walker |  | 358 | 15 | listing of 'mutable' |  |  | 0.312 |
+| walker |  | 377 | 19 | go decl doc at constraints.go:4 |  |  | 0.314 |
+| ns | 386 |  | 78 | Canonical four-package import block | 2.2 |  | 0.255 |
+| walker |  | 392 | 15 | go package + imports in type_manipulation.go |  |  | 0.255 |
+| walker |  | 510 | 118 | go module file go.mod |  |  | 0.705 |
 | walker |  | 530 | 20 | listing of 'internal/constraints' |  |  | 0.707 |
 | walker |  | 556 | 26 | README headline in internal/constraints/README.md |  |  | 0.707 |
 | ns | 561 |  | 175 | Repository root listing | 2.3 |  | 0.796 |

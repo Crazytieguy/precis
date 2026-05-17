@@ -6,114 +6,115 @@ Score(3000)=0.551 I=0.786 C=0.387 ns_rows≤3K=13/40 (reached=5 partial=1 missin
 | ns | 40 |  | 40 | Top-level fixture listing | 1.1 |  | 1.000 |
 | walker |  | 62 | 22 | go decl names surface in main.go |  |  | 1.000 |
 | walker |  | 62 | 0 | go decl at main.go:14 |  |  | 1.000 |
-| walker |  | 118 | 56 | README headline in README.md |  |  | 1.000 |
-| ns | 135 |  | 95 | README lede | 1.2 |  | 0.851 |
-| walker |  | 142 | 24 | README.md section #0 |  |  | 0.900 |
-| walker |  | 157 | 15 | listing of 'contribute' |  |  | 0.900 |
-| walker |  | 181 | 24 | listing of 'sdk' |  |  | 0.900 |
-| ns | 201 |  | 66 | internal/ + cmd/ subtree listings | 1.3 |  | 0.612 |
-| walker |  | 214 | 33 | README headline in sdk/README.md |  |  | 0.612 |
-| walker |  | 220 | 6 | listing of 'examples' |  |  | 0.612 |
-| walker |  | 250 | 30 | listing of 'internal' |  |  | 0.734 |
-| ns | 257 |  | 56 | go.mod — module declaration | 1.4 |  | 0.669 |
-| walker |  | 267 | 17 | listing of 'internal/auth' |  |  | 0.669 |
-| walker |  | 303 | 36 | listing of 'cmd' |  |  | 0.856 |
-| walker |  | 315 | 12 | README.md section #1 |  |  | 0.856 |
-| walker |  | 327 | 12 | README.md section #2 |  |  | 0.856 |
-| walker |  | 339 | 12 | README.md section #3 |  |  | 0.856 |
-| walker |  | 351 | 12 | README.md section #5 |  |  | 0.856 |
-| ns | 353 |  | 96 | main.go — package + imports + version literal | 1.5 |  | 0.738 |
-| walker |  | 363 | 12 | README.md section #12 |  |  | 0.738 |
-| walker |  | 377 | 14 | README.md section #11 |  |  | 0.738 |
-| walker |  | 448 | 71 | go package + imports in main.go |  |  | 0.844 |
-| walker |  | 463 | 15 | README.md section #4 |  |  | 0.844 |
-| walker |  | 478 | 15 | README.md section #6 |  |  | 0.844 |
-| ns | 498 |  | 145 | main.go — version-flag short-circuit + fang.Execute | 1.6 | 1.5 | 0.737 |
-| walker |  | 506 | 28 | go decl names surface in internal/auth/browser.go |  |  | 0.737 |
-| walker |  | 506 | 0 | go decl at internal/auth/browser.go:14 |  |  | 0.737 |
-| walker |  | 506 | 0 | go decl at internal/auth/browser.go:34 |  |  | 0.737 |
-| walker |  | 517 | 11 | README.md section #20 |  |  | 0.737 |
-| walker |  | 533 | 16 | README.md section #13 |  |  | 0.737 |
-| walker |  | 545 | 12 | README.md section #15 |  |  | 0.737 |
-| walker |  | 557 | 12 | README.md section #18 |  |  | 0.738 |
-| walker |  | 575 | 18 | README.md section #9 |  |  | 0.738 |
-| walker |  | 638 | 63 | go decl names surface in sdk/types.go |  |  | 0.738 |
-| walker |  | 638 | 0 | go decl at sdk/types.go:10 |  |  | 0.738 |
-| walker |  | 638 | 0 | go decl at sdk/types.go:14 |  |  | 0.738 |
-| walker |  | 638 | 0 | go decl at sdk/types.go:18 |  |  | 0.738 |
-| walker |  | 638 | 0 | go decl at sdk/types.go:24 |  |  | 0.738 |
-| walker |  | 647 | 9 | go decl body at sdk/types.go:18 |  |  | 0.738 |
-| walker |  | 657 | 10 | go decl body at sdk/types.go:24 |  |  | 0.738 |
-| walker |  | 670 | 13 | README.md section #21 |  |  | 0.738 |
-| walker |  | 683 | 13 | README.md section #22 |  |  | 0.739 |
-| walker |  | 696 | 13 | README.md section #23 |  |  | 0.739 |
-| ns | 730 |  | 232 | README — supported features list | 1.7 |  | 0.663 |
-| walker |  | 765 | 69 | go decl names surface in cmd/hooks.go |  |  | 0.663 |
-| walker |  | 765 | 0 | go decl at cmd/hooks.go:176 |  |  | 0.663 |
-| walker |  | 777 | 12 | listing of 'internal/agent' |  |  | 0.663 |
-| walker |  | 811 | 34 | go decl names surface in internal/agent/streaming.go |  |  | 0.663 |
-| walker |  | 811 | 0 | go decl at internal/agent/streaming.go:19 |  |  | 0.663 |
-| walker |  | 831 | 20 | README.md section #10 |  |  | 0.663 |
-| walker |  | 845 | 14 | README.md section #24 |  |  | 0.670 |
-| walker |  | 880 | 35 | listing of 'internal/models' |  |  | 0.670 |
-| walker |  | 887 | 7 | go package + imports in internal/models/models_data.go |  |  | 0.670 |
-| walker |  | 900 | 13 | listing of 'internal/tokens' |  |  | 0.670 |
-| walker |  | 914 | 14 | go decl names surface in internal/tokens/counter.go |  |  | 0.670 |
-| walker |  | 914 | 0 | go decl at internal/tokens/counter.go:21 |  |  | 0.670 |
-| walker |  | 940 | 26 | go decl names surface in internal/tokens/init.go |  |  | 0.670 |
-| walker |  | 940 | 0 | go decl at internal/tokens/init.go:21 |  |  | 0.670 |
-| walker |  | 940 | 0 | go decl at internal/tokens/init.go:50 |  |  | 0.670 |
-| walker |  | 947 | 7 | go package + imports in internal/tokens/anthropic.go |  |  | 0.670 |
-| walker |  | 954 | 7 | go package + imports in internal/tokens/counter.go |  |  | 0.670 |
-| walker |  | 961 | 7 | go package + imports in internal/tokens/init.go |  |  | 0.670 |
-| walker |  | 994 | 33 | go decl doc at sdk/types.go:10 |  |  | 0.670 |
-| ns | 1004 |  | 274 | README — host/client/server architecture model | 1.8 |  | 0.599 |
-| walker |  | 1007 | 13 | go decl body at internal/tokens/init.go:21 |  |  | 0.599 |
-| walker |  | 1020 | 13 | go decl body at internal/tokens/init.go:50 |  |  | 0.599 |
-| walker |  | 1035 | 15 | README.md section #27 |  |  | 0.606 |
-| walker |  | 1074 | 39 | listing of 'internal/hooks' |  |  | 0.606 |
-| walker |  | 1081 | 7 | go package + imports in internal/hooks/events.go |  |  | 0.606 |
-| walker |  | 1121 | 40 | listing of 'internal/builtin' |  |  | 0.606 |
-| walker |  | 1157 | 36 | go decl doc at sdk/types.go:14 |  |  | 0.606 |
-| walker |  | 1173 | 16 | README.md section #16 |  |  | 0.614 |
-| walker |  | 1189 | 16 | README.md section #17 |  |  | 0.624 |
-| walker |  | 1205 | 16 | README.md section #26 |  |  | 0.634 |
-| walker |  | 1238 | 33 | README.md section #38 |  |  | 0.634 |
-| walker |  | 1279 | 41 | README.md section #31 |  |  | 0.634 |
-| walker |  | 1324 | 45 | listing of 'internal/config' |  |  | 0.634 |
-| ns | 1339 |  | 335 | go.mod — direct deps (CLI / config / MCP / LLM core) | 1.9 |  | 0.586 |
-| walker |  | 1358 | 34 | go decl doc at sdk/types.go:18 |  |  | 0.586 |
-| walker |  | 1392 | 34 | go decl doc at sdk/types.go:24 |  |  | 0.586 |
-| ns | 1436 |  | 97 | go.mod — direct deps (UI / Gemini / misc) | 1.10 |  | 0.569 |
-| walker |  | 1508 | 116 | headings outline in sdk/README.md |  |  | 0.569 |
-| walker |  | 1518 | 10 | sdk/README.md section #17 |  |  | 0.569 |
-| walker |  | 1548 | 30 | sdk/README.md section #1 |  |  | 0.569 |
-| walker |  | 1603 | 55 | go decl names surface in internal/config/merger.go |  |  | 0.569 |
-| walker |  | 1603 | 0 | go decl at internal/config/merger.go:13 |  |  | 0.569 |
-| walker |  | 1603 | 0 | go decl at internal/config/merger.go:28 |  |  | 0.569 |
-| walker |  | 1603 | 0 | go decl at internal/config/merger.go:48 |  |  | 0.569 |
-| walker |  | 1662 | 59 | go decl names surface in internal/models/models_data.go |  |  | 0.569 |
-| walker |  | 1662 | 0 | go decl at internal/models/models_data.go:41 |  |  | 0.569 |
-| walker |  | 1680 | 18 | go decl at internal/models/models_data.go:26 |  |  | 0.569 |
-| walker |  | 1696 | 16 | go decl doc at internal/models/models_data.go:26 |  |  | 0.569 |
-| walker |  | 1713 | 17 | go decl doc at internal/models/models_data.go:41 |  |  | 0.569 |
-| ns | 1737 |  | 301 | MCPServerConfig — struct definition (the central config type) | 2.1 |  | 0.523 |
-| walker |  | 1757 | 44 | go decl at internal/models/models_data.go:18 |  |  | 0.523 |
-| walker |  | 1771 | 14 | go decl doc at internal/models/models_data.go:18 |  |  | 0.523 |
-| walker |  | 1790 | 19 | README.md section #25 |  |  | 0.534 |
-| walker |  | 1840 | 50 | go decl at internal/models/models_data.go:32 |  |  | 0.534 |
-| walker |  | 1854 | 14 | go decl doc at internal/models/models_data.go:32 |  |  | 0.534 |
-| walker |  | 1875 | 21 | README.md section #28 |  |  | 0.545 |
-| ns | 2004 |  | 267 | MCPServerConfig.GetTransportType — type→transport mapping | 2.2 |  | 0.489 |
-| walker |  | 2432 | 557 | go module file go.mod |  |  | 0.604 |
-| walker |  | 2454 | 22 | README.md section #19 |  |  | 0.614 |
-| ns | 2486 |  | 482 | rootCmd — Use / Short / Long with examples | 2.3 |  | 0.551 |
-| walker |  | 2526 | 72 | go decl names surface in internal/hooks/schemas.go |  |  | 0.551 |
-| walker |  | 2548 | 22 | go decl at internal/hooks/schemas.go:42 |  |  | 0.551 |
-| walker |  | 2590 | 42 | go decl at internal/hooks/schemas.go:23 |  |  | 0.551 |
-| walker |  | 2664 | 74 | go decl names surface in internal/models/generate_models.go |  |  | 0.551 |
-| walker |  | 2664 | 0 | go decl at internal/models/generate_models.go:156 |  |  | 0.551 |
-| walker |  | 2719 | 55 | go decl at internal/models/generate_models.go:50 |  |  | 0.551 |
+| walker |  | 103 | 41 | go module identity in go.mod |  |  | 1.000 |
+| ns | 135 |  | 95 | README lede | 1.2 |  | 0.805 |
+| walker |  | 159 | 56 | README headline in README.md |  |  | 0.860 |
+| walker |  | 183 | 24 | README.md section #0 |  |  | 0.909 |
+| walker |  | 198 | 15 | listing of 'contribute' |  |  | 0.909 |
+| ns | 201 |  | 66 | internal/ + cmd/ subtree listings | 1.3 |  | 0.618 |
+| walker |  | 222 | 24 | listing of 'sdk' |  |  | 0.618 |
+| walker |  | 255 | 33 | README headline in sdk/README.md |  |  | 0.618 |
+| ns | 257 |  | 56 | go.mod — module declaration | 1.4 |  | 0.609 |
+| walker |  | 261 | 6 | listing of 'examples' |  |  | 0.609 |
+| walker |  | 291 | 30 | listing of 'internal' |  |  | 0.717 |
+| walker |  | 308 | 17 | listing of 'internal/auth' |  |  | 0.717 |
+| walker |  | 344 | 36 | listing of 'cmd' |  |  | 0.899 |
+| ns | 353 |  | 96 | main.go — package + imports + version literal | 1.5 |  | 0.775 |
+| walker |  | 356 | 12 | README.md section #1 |  |  | 0.775 |
+| walker |  | 368 | 12 | README.md section #2 |  |  | 0.775 |
+| walker |  | 380 | 12 | README.md section #3 |  |  | 0.775 |
+| walker |  | 392 | 12 | README.md section #5 |  |  | 0.775 |
+| walker |  | 404 | 12 | README.md section #12 |  |  | 0.775 |
+| walker |  | 418 | 14 | README.md section #11 |  |  | 0.775 |
+| walker |  | 489 | 71 | go package + imports in main.go |  |  | 0.880 |
+| ns | 498 |  | 145 | main.go — version-flag short-circuit + fang.Execute | 1.6 | 1.5 | 0.768 |
+| walker |  | 504 | 15 | README.md section #4 |  |  | 0.768 |
+| walker |  | 519 | 15 | README.md section #6 |  |  | 0.768 |
+| walker |  | 547 | 28 | go decl names surface in internal/auth/browser.go |  |  | 0.768 |
+| walker |  | 547 | 0 | go decl at internal/auth/browser.go:14 |  |  | 0.768 |
+| walker |  | 547 | 0 | go decl at internal/auth/browser.go:34 |  |  | 0.768 |
+| walker |  | 558 | 11 | README.md section #20 |  |  | 0.768 |
+| walker |  | 574 | 16 | README.md section #13 |  |  | 0.768 |
+| walker |  | 586 | 12 | README.md section #15 |  |  | 0.768 |
+| walker |  | 598 | 12 | README.md section #18 |  |  | 0.768 |
+| walker |  | 616 | 18 | README.md section #9 |  |  | 0.768 |
+| walker |  | 679 | 63 | go decl names surface in sdk/types.go |  |  | 0.768 |
+| walker |  | 679 | 0 | go decl at sdk/types.go:10 |  |  | 0.768 |
+| walker |  | 679 | 0 | go decl at sdk/types.go:14 |  |  | 0.768 |
+| walker |  | 679 | 0 | go decl at sdk/types.go:18 |  |  | 0.768 |
+| walker |  | 679 | 0 | go decl at sdk/types.go:24 |  |  | 0.768 |
+| walker |  | 688 | 9 | go decl body at sdk/types.go:18 |  |  | 0.768 |
+| walker |  | 698 | 10 | go decl body at sdk/types.go:24 |  |  | 0.768 |
+| walker |  | 711 | 13 | README.md section #21 |  |  | 0.769 |
+| walker |  | 724 | 13 | README.md section #22 |  |  | 0.769 |
+| ns | 730 |  | 232 | README — supported features list | 1.7 |  | 0.685 |
+| walker |  | 737 | 13 | README.md section #23 |  |  | 0.690 |
+| walker |  | 806 | 69 | go decl names surface in cmd/hooks.go |  |  | 0.690 |
+| walker |  | 806 | 0 | go decl at cmd/hooks.go:176 |  |  | 0.690 |
+| walker |  | 818 | 12 | listing of 'internal/agent' |  |  | 0.690 |
+| walker |  | 852 | 34 | go decl names surface in internal/agent/streaming.go |  |  | 0.690 |
+| walker |  | 852 | 0 | go decl at internal/agent/streaming.go:19 |  |  | 0.690 |
+| walker |  | 872 | 20 | README.md section #10 |  |  | 0.690 |
+| walker |  | 886 | 14 | README.md section #24 |  |  | 0.697 |
+| walker |  | 921 | 35 | listing of 'internal/models' |  |  | 0.697 |
+| walker |  | 928 | 7 | go package + imports in internal/models/models_data.go |  |  | 0.697 |
+| walker |  | 941 | 13 | listing of 'internal/tokens' |  |  | 0.697 |
+| walker |  | 955 | 14 | go decl names surface in internal/tokens/counter.go |  |  | 0.697 |
+| walker |  | 955 | 0 | go decl at internal/tokens/counter.go:21 |  |  | 0.697 |
+| walker |  | 981 | 26 | go decl names surface in internal/tokens/init.go |  |  | 0.697 |
+| walker |  | 981 | 0 | go decl at internal/tokens/init.go:21 |  |  | 0.697 |
+| walker |  | 981 | 0 | go decl at internal/tokens/init.go:50 |  |  | 0.697 |
+| walker |  | 988 | 7 | go package + imports in internal/tokens/anthropic.go |  |  | 0.697 |
+| walker |  | 995 | 7 | go package + imports in internal/tokens/counter.go |  |  | 0.697 |
+| walker |  | 1002 | 7 | go package + imports in internal/tokens/init.go |  |  | 0.697 |
+| ns | 1004 |  | 274 | README — host/client/server architecture model | 1.8 |  | 0.622 |
+| walker |  | 1035 | 33 | go decl doc at sdk/types.go:10 |  |  | 0.622 |
+| walker |  | 1048 | 13 | go decl body at internal/tokens/init.go:21 |  |  | 0.622 |
+| walker |  | 1061 | 13 | go decl body at internal/tokens/init.go:50 |  |  | 0.622 |
+| walker |  | 1076 | 15 | README.md section #27 |  |  | 0.630 |
+| walker |  | 1115 | 39 | listing of 'internal/hooks' |  |  | 0.630 |
+| walker |  | 1122 | 7 | go package + imports in internal/hooks/events.go |  |  | 0.630 |
+| walker |  | 1162 | 40 | listing of 'internal/builtin' |  |  | 0.630 |
+| walker |  | 1198 | 36 | go decl doc at sdk/types.go:14 |  |  | 0.630 |
+| walker |  | 1214 | 16 | README.md section #16 |  |  | 0.637 |
+| walker |  | 1230 | 16 | README.md section #17 |  |  | 0.647 |
+| walker |  | 1246 | 16 | README.md section #26 |  |  | 0.657 |
+| walker |  | 1279 | 33 | README.md section #38 |  |  | 0.657 |
+| walker |  | 1320 | 41 | README.md section #31 |  |  | 0.657 |
+| ns | 1339 |  | 335 | go.mod — direct deps (CLI / config / MCP / LLM core) | 1.9 |  | 0.607 |
+| walker |  | 1365 | 45 | listing of 'internal/config' |  |  | 0.607 |
+| walker |  | 1399 | 34 | go decl doc at sdk/types.go:18 |  |  | 0.607 |
+| walker |  | 1433 | 34 | go decl doc at sdk/types.go:24 |  |  | 0.607 |
+| ns | 1436 |  | 97 | go.mod — direct deps (UI / Gemini / misc) | 1.10 |  | 0.589 |
+| walker |  | 1549 | 116 | headings outline in sdk/README.md |  |  | 0.589 |
+| walker |  | 1559 | 10 | sdk/README.md section #17 |  |  | 0.589 |
+| walker |  | 1589 | 30 | sdk/README.md section #1 |  |  | 0.589 |
+| walker |  | 1644 | 55 | go decl names surface in internal/config/merger.go |  |  | 0.589 |
+| walker |  | 1644 | 0 | go decl at internal/config/merger.go:13 |  |  | 0.589 |
+| walker |  | 1644 | 0 | go decl at internal/config/merger.go:28 |  |  | 0.589 |
+| walker |  | 1644 | 0 | go decl at internal/config/merger.go:48 |  |  | 0.589 |
+| walker |  | 1703 | 59 | go decl names surface in internal/models/models_data.go |  |  | 0.589 |
+| walker |  | 1703 | 0 | go decl at internal/models/models_data.go:41 |  |  | 0.589 |
+| walker |  | 1721 | 18 | go decl at internal/models/models_data.go:26 |  |  | 0.589 |
+| walker |  | 1737 | 16 | go decl doc at internal/models/models_data.go:26 |  |  | 0.542 |
+| ns | 1737 |  | 301 | MCPServerConfig — struct definition (the central config type) | 2.1 |  | 0.542 |
+| walker |  | 1754 | 17 | go decl doc at internal/models/models_data.go:41 |  |  | 0.542 |
+| walker |  | 1798 | 44 | go decl at internal/models/models_data.go:18 |  |  | 0.542 |
+| walker |  | 1812 | 14 | go decl doc at internal/models/models_data.go:18 |  |  | 0.542 |
+| walker |  | 1831 | 19 | README.md section #25 |  |  | 0.552 |
+| walker |  | 1881 | 50 | go decl at internal/models/models_data.go:32 |  |  | 0.552 |
+| walker |  | 1895 | 14 | go decl doc at internal/models/models_data.go:32 |  |  | 0.552 |
+| walker |  | 1916 | 21 | README.md section #28 |  |  | 0.564 |
+| walker |  | 1938 | 22 | README.md section #19 |  |  | 0.576 |
+| ns | 2004 |  | 267 | MCPServerConfig.GetTransportType — type→transport mapping | 2.2 |  | 0.517 |
+| walker |  | 2010 | 72 | go decl names surface in internal/hooks/schemas.go |  |  | 0.517 |
+| walker |  | 2032 | 22 | go decl at internal/hooks/schemas.go:42 |  |  | 0.517 |
+| walker |  | 2074 | 42 | go decl at internal/hooks/schemas.go:23 |  |  | 0.517 |
+| walker |  | 2148 | 74 | go decl names surface in internal/models/generate_models.go |  |  | 0.517 |
+| walker |  | 2148 | 0 | go decl at internal/models/generate_models.go:156 |  |  | 0.517 |
+| walker |  | 2203 | 55 | go decl at internal/models/generate_models.go:50 |  |  | 0.517 |
+| ns | 2486 |  | 482 | rootCmd — Use / Short / Long with examples | 2.3 |  | 0.464 |
+| walker |  | 2719 | 516 | go module file go.mod |  |  | 0.551 |
 | walker |  | 2778 | 59 | go decl at internal/hooks/schemas.go:32 |  |  | 0.551 |
 | walker |  | 2856 | 78 | go decl names surface in internal/agent/factory.go |  |  | 0.551 |
 | walker |  | 2856 | 0 | go decl at internal/agent/factory.go:15 |  |  | 0.551 |

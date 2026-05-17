@@ -6,10 +6,11 @@ Score(3000)=0.715 I=0.871 C=0.586 ns_rows≤3K=22/44 (reached=13 partial=3 missi
 | ns | 50 |  | 50 | Root directory listing | 1.1 |  | 1.000 |
 | walker |  | 69 | 19 | go package doc lede in main.go |  |  | 1.000 |
 | ns | 86 |  | 36 | README title + one-line description | 1.2 |  | 0.881 |
-| walker |  | 100 | 31 | README headline in README.md |  |  | 0.965 |
-| ns | 112 |  | 26 | main.go package doc line | 1.3 |  | 0.921 |
-| ns | 139 |  | 27 | go.mod module + Go version | 1.4 |  | 0.835 |
-| walker |  | 213 | 113 | go module file go.mod |  |  | 0.920 |
+| walker |  | 91 | 22 | go module identity in go.mod |  |  | 0.894 |
+| ns | 112 |  | 26 | main.go package doc line | 1.3 |  | 0.857 |
+| walker |  | 122 | 31 | README headline in README.md |  |  | 0.934 |
+| ns | 139 |  | 27 | go.mod module + Go version | 1.4 |  | 0.897 |
+| walker |  | 213 | 91 | go module file go.mod |  |  | 0.920 |
 | ns | 219 |  | 80 | go.mod direct dependencies | 1.5 |  | 0.914 |
 | ns | 296 |  | 77 | README -install transcript | 1.6 |  | 0.803 |
 | ns | 441 |  | 145 | README cert generation transcript | 1.7 |  | 0.659 |

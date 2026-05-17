@@ -47,6 +47,28 @@ README.md
     222→### Getting Started with Contributing
     …
 auth.go
+    17→const AuthUserKey = "user"
+    …
+    20→const AuthProxyUserKey = "proxy_user"
+    …
+    23→type Accounts map[string]string
+    …
+    25→type authPair struct {
+    …
+    30→type authPairs []authPair
+    …
+    32→func (a authPairs) searchCredential(authValue string) (string, bool) {
+    …
+    48→func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {
+    …
+    72→func BasicAuth(accounts Accounts) HandlerFunc {
+    73→	return BasicAuthForRealm(accounts, "")
+    76→func processAccounts(accounts Accounts) authPairs {
+    …
+    91→func authorizationHeader(user, password string) string {
+    …
+    98→func BasicAuthForProxy(accounts Accounts, realm string) HandlerFunc {
+    …
 auth_test.go
 benchmarks_test.go
 binding/
@@ -158,6 +180,8 @@ gin_integration_test.go
 gin_test.go
 githubapi_test.go
 go.mod
+    1→module github.com/gin-gonic/gin
+    3→go 1.25.0
 go.sum
 internal/
     bytesconv/

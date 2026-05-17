@@ -96,8 +96,6 @@ database/
         examples/
     clickhouse/
         README.md
-            1→# ClickHouse
-            3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
         clickhouse.go
         clickhouse_test.go
         examples/
@@ -165,6 +163,8 @@ dktesting/
     example_test.go
 docker-deploy.sh
 go.mod
+    1→module github.com/golang-migrate/migrate/v4
+    3→go 1.24.0
 go.sum
 internal/
     cli/

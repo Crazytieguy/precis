@@ -6,69 +6,70 @@ Score(3000)=0.522 I=0.802 C=0.340 ns_rows≤3K=20/45 (reached=7 partial=4 missin
 | ns | 55 |  | 55 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 83 | 28 | go package doc lede in beszel.go |  |  | 1.000 |
 | ns | 92 |  | 37 | README one-line description | 1.2 |  | 0.897 |
-| walker |  | 115 | 32 | README headline in readme.md |  |  | 0.966 |
-| ns | 124 |  | 32 | go.mod identity + Go toolchain | 1.3 |  | 0.880 |
-| walker |  | 187 | 72 | go decl names surface in beszel.go |  |  | 0.886 |
-| walker |  | 187 | 0 | go decl at beszel.go:15 |  |  | 0.886 |
-| walker |  | 187 | 0 | go decl at beszel.go:18 |  |  | 0.886 |
-| walker |  | 224 | 37 | go decl at beszel.go:7 |  |  | 0.767 |
-| ns | 224 |  | 100 | README Features bullets (first half) | 1.4 |  | 0.767 |
-| walker |  | 243 | 19 | go decl doc at beszel.go:15 |  |  | 0.770 |
-| walker |  | 262 | 19 | go decl doc at beszel.go:18 |  |  | 0.774 |
-| walker |  | 284 | 22 | go package + imports in beszel.go |  |  | 0.779 |
-| walker |  | 310 | 26 | listing of 'supplemental' |  |  | 0.780 |
-| ns | 329 |  | 105 | README Architecture section: hub + agent | 1.5 |  | 0.679 |
-| walker |  | 378 | 68 | headings outline in readme.md |  |  | 0.683 |
-| ns | 399 |  | 70 | README Features bullets (second half) | 1.6 |  | 0.649 |
-| walker |  | 403 | 25 | readme.md section #23 |  |  | 0.649 |
-| walker |  | 413 | 10 | listing of 'supplemental/docker' |  |  | 0.649 |
-| walker |  | 430 | 17 | readme.md section #2 |  |  | 0.662 |
-| ns | 465 |  | 66 | internal/ subpackage listing | 1.7 |  | 0.534 |
-| ns | 493 |  | 28 | Two main packages: cmd/agent + cmd/hub entry points | 1.8 |  | 0.511 |
-| walker |  | 496 | 66 | listing of 'internal' |  |  | 0.727 |
-| walker |  | 509 | 13 | listing of 'internal/entities' |  |  | 0.728 |
-| walker |  | 539 | 30 | listing of 'internal/ghupdate' |  |  | 0.728 |
-| walker |  | 573 | 34 | go decl names surface in internal/ghupdate/selinux.go |  |  | 0.728 |
-| walker |  | 573 | 0 | go decl at internal/ghupdate/selinux.go:10 |  |  | 0.728 |
-| walker |  | 573 | 0 | go decl at internal/ghupdate/selinux.go:41 |  |  | 0.728 |
-| walker |  | 592 | 19 | readme.md section #1 |  |  | 0.744 |
-| walker |  | 628 | 36 | listing of 'internal/records' |  |  | 0.744 |
-| walker |  | 665 | 37 | listing of 'supplemental/debian' |  |  | 0.744 |
-| walker |  | 687 | 22 | readme.md section #7 |  |  | 0.748 |
-| walker |  | 691 | 4 | listing of 'internal/users' |  |  | 0.748 |
-| walker |  | 704 | 13 | readme.md section #16 |  |  | 0.748 |
-| ns | 708 |  | 215 | Root package: Version + protocol min versions (full) | 1.9 |  | 0.755 |
-| walker |  | 717 | 13 | readme.md section #17 |  |  | 0.755 |
-| walker |  | 740 | 23 | readme.md section #3 |  |  | 0.774 |
-| walker |  | 788 | 48 | go decl names surface in internal/ghupdate/release.go |  |  | 0.774 |
-| walker |  | 788 | 0 | go decl at internal/ghupdate/release.go:26 |  |  | 0.774 |
-| walker |  | 802 | 14 | readme.md section #19 |  |  | 0.774 |
-| walker |  | 826 | 24 | readme.md section #5 |  |  | 0.784 |
-| walker |  | 850 | 24 | readme.md section #6 |  |  | 0.800 |
-| walker |  | 902 | 52 | readme.md section #9 |  |  | 0.800 |
-| walker |  | 917 | 15 | readme.md section #15 |  |  | 0.801 |
-| walker |  | 922 | 5 | listing of 'supplemental/guides' |  |  | 0.801 |
-| ns | 939 |  | 231 | README Supported metrics list | 1.10 |  | 0.734 |
-| ns | 1148 |  | 209 | go.mod direct dependencies (first half) | 1.11 |  | 0.685 |
-| ns | 1349 |  | 201 | go.mod direct dependencies (second half) | 1.12 |  | 0.644 |
-| walker |  | 1370 | 448 | go module file go.mod |  |  | 0.795 |
-| walker |  | 1423 | 53 | readme.md section #10 |  |  | 0.795 |
-| ns | 1717 |  | 368 | agent/ directory listing | 1.13 |  | 0.599 |
-| walker |  | 1722 | 299 | readme.md section #0 |  |  | 0.599 |
-| walker |  | 1743 | 21 | go decl doc at internal/ghupdate/selinux.go:10 |  |  | 0.599 |
-| walker |  | 1802 | 59 | go decl names surface in internal/records/records_test_helpers.go |  |  | 0.599 |
-| walker |  | 1802 | 0 | go decl at internal/records/records_test_helpers.go:10 |  |  | 0.599 |
-| walker |  | 1802 | 0 | go decl at internal/records/records_test_helpers.go:15 |  |  | 0.599 |
-| walker |  | 1802 | 0 | go decl at internal/records/records_test_helpers.go:20 |  |  | 0.599 |
-| walker |  | 1809 | 7 | go decl body at internal/records/records_test_helpers.go:20 |  |  | 0.599 |
-| walker |  | 1818 | 9 | go decl body at internal/records/records_test_helpers.go:10 |  |  | 0.599 |
-| walker |  | 1831 | 13 | go decl doc at internal/records/records_test_helpers.go:20 |  |  | 0.599 |
-| walker |  | 1848 | 17 | go decl doc at internal/records/records_test_helpers.go:10 |  |  | 0.599 |
-| walker |  | 1865 | 17 | go decl doc at internal/records/records_test_helpers.go:15 |  |  | 0.599 |
-| walker |  | 1882 | 17 | go decl body at internal/records/records_test_helpers.go:15 |  |  | 0.599 |
-| ns | 1885 |  | 168 | common-ws.go: WebSocketAction enum (full) | 2.1 |  | 0.568 |
-| ns | 1926 |  | 41 | internal/entities/ subdirectory listing | 2.2 |  | 0.557 |
-| walker |  | 1955 | 73 | headings outline in supplemental/guides/systemd.md |  |  | 0.557 |
+| walker |  | 110 | 27 | go module identity in go.mod |  |  | 0.909 |
+| ns | 124 |  | 32 | go.mod identity + Go toolchain | 1.3 |  | 0.877 |
+| walker |  | 142 | 32 | README headline in readme.md |  |  | 0.939 |
+| walker |  | 214 | 72 | go decl names surface in beszel.go |  |  | 0.945 |
+| walker |  | 214 | 0 | go decl at beszel.go:15 |  |  | 0.945 |
+| walker |  | 214 | 0 | go decl at beszel.go:18 |  |  | 0.945 |
+| ns | 224 |  | 100 | README Features bullets (first half) | 1.4 |  | 0.812 |
+| walker |  | 251 | 37 | go decl at beszel.go:7 |  |  | 0.818 |
+| walker |  | 270 | 19 | go decl doc at beszel.go:15 |  |  | 0.821 |
+| walker |  | 289 | 19 | go decl doc at beszel.go:18 |  |  | 0.826 |
+| walker |  | 311 | 22 | go package + imports in beszel.go |  |  | 0.831 |
+| ns | 329 |  | 105 | README Architecture section: hub + agent | 1.5 |  | 0.723 |
+| walker |  | 337 | 26 | listing of 'supplemental' |  |  | 0.724 |
+| ns | 399 |  | 70 | README Features bullets (second half) | 1.6 |  | 0.688 |
+| walker |  | 405 | 68 | headings outline in readme.md |  |  | 0.691 |
+| walker |  | 430 | 25 | readme.md section #23 |  |  | 0.691 |
+| walker |  | 440 | 10 | listing of 'supplemental/docker' |  |  | 0.691 |
+| walker |  | 457 | 17 | readme.md section #2 |  |  | 0.704 |
+| ns | 465 |  | 66 | internal/ subpackage listing | 1.7 |  | 0.568 |
+| ns | 493 |  | 28 | Two main packages: cmd/agent + cmd/hub entry points | 1.8 |  | 0.544 |
+| walker |  | 523 | 66 | listing of 'internal' |  |  | 0.756 |
+| walker |  | 536 | 13 | listing of 'internal/entities' |  |  | 0.757 |
+| walker |  | 566 | 30 | listing of 'internal/ghupdate' |  |  | 0.757 |
+| walker |  | 600 | 34 | go decl names surface in internal/ghupdate/selinux.go |  |  | 0.757 |
+| walker |  | 600 | 0 | go decl at internal/ghupdate/selinux.go:10 |  |  | 0.757 |
+| walker |  | 600 | 0 | go decl at internal/ghupdate/selinux.go:41 |  |  | 0.757 |
+| walker |  | 619 | 19 | readme.md section #1 |  |  | 0.772 |
+| walker |  | 655 | 36 | listing of 'internal/records' |  |  | 0.772 |
+| walker |  | 692 | 37 | listing of 'supplemental/debian' |  |  | 0.772 |
+| ns | 708 |  | 215 | Root package: Version + protocol min versions (full) | 1.9 |  | 0.775 |
+| walker |  | 714 | 22 | readme.md section #7 |  |  | 0.778 |
+| walker |  | 718 | 4 | listing of 'internal/users' |  |  | 0.778 |
+| walker |  | 731 | 13 | readme.md section #16 |  |  | 0.778 |
+| walker |  | 744 | 13 | readme.md section #17 |  |  | 0.778 |
+| walker |  | 767 | 23 | readme.md section #3 |  |  | 0.796 |
+| walker |  | 815 | 48 | go decl names surface in internal/ghupdate/release.go |  |  | 0.796 |
+| walker |  | 815 | 0 | go decl at internal/ghupdate/release.go:26 |  |  | 0.796 |
+| walker |  | 829 | 14 | readme.md section #19 |  |  | 0.797 |
+| walker |  | 853 | 24 | readme.md section #5 |  |  | 0.807 |
+| walker |  | 877 | 24 | readme.md section #6 |  |  | 0.823 |
+| walker |  | 929 | 52 | readme.md section #9 |  |  | 0.823 |
+| ns | 939 |  | 231 | README Supported metrics list | 1.10 |  | 0.750 |
+| walker |  | 944 | 15 | readme.md section #15 |  |  | 0.754 |
+| walker |  | 949 | 5 | listing of 'supplemental/guides' |  |  | 0.754 |
+| walker |  | 1002 | 53 | readme.md section #10 |  |  | 0.754 |
+| ns | 1148 |  | 209 | go.mod direct dependencies (first half) | 1.11 |  | 0.704 |
+| walker |  | 1301 | 299 | readme.md section #0 |  |  | 0.704 |
+| walker |  | 1322 | 21 | go decl doc at internal/ghupdate/selinux.go:10 |  |  | 0.704 |
+| ns | 1349 |  | 201 | go.mod direct dependencies (second half) | 1.12 |  | 0.662 |
+| walker |  | 1381 | 59 | go decl names surface in internal/records/records_test_helpers.go |  |  | 0.662 |
+| walker |  | 1381 | 0 | go decl at internal/records/records_test_helpers.go:10 |  |  | 0.662 |
+| walker |  | 1381 | 0 | go decl at internal/records/records_test_helpers.go:15 |  |  | 0.662 |
+| walker |  | 1381 | 0 | go decl at internal/records/records_test_helpers.go:20 |  |  | 0.662 |
+| walker |  | 1388 | 7 | go decl body at internal/records/records_test_helpers.go:20 |  |  | 0.662 |
+| walker |  | 1397 | 9 | go decl body at internal/records/records_test_helpers.go:10 |  |  | 0.662 |
+| walker |  | 1410 | 13 | go decl doc at internal/records/records_test_helpers.go:20 |  |  | 0.662 |
+| walker |  | 1427 | 17 | go decl doc at internal/records/records_test_helpers.go:10 |  |  | 0.662 |
+| walker |  | 1444 | 17 | go decl doc at internal/records/records_test_helpers.go:15 |  |  | 0.662 |
+| walker |  | 1461 | 17 | go decl body at internal/records/records_test_helpers.go:15 |  |  | 0.662 |
+| walker |  | 1534 | 73 | headings outline in supplemental/guides/systemd.md |  |  | 0.662 |
+| ns | 1717 |  | 368 | agent/ directory listing | 1.13 |  | 0.499 |
+| ns | 1885 |  | 168 | common-ws.go: WebSocketAction enum (full) | 2.1 |  | 0.473 |
+| ns | 1926 |  | 41 | internal/entities/ subdirectory listing | 2.2 |  | 0.466 |
+| walker |  | 1955 | 421 | go module file go.mod |  |  | 0.557 |
 | walker |  | 1984 | 29 | readme.md section #4 |  |  | 0.572 |
 | walker |  | 1990 | 6 | listing of 'internal/cmd' |  |  | 0.572 |
 | walker |  | 1996 | 6 | listing of 'supplemental/kubernetes' |  |  | 0.572 |

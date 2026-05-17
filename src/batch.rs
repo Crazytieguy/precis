@@ -470,8 +470,19 @@ pub enum GoKey {
     /// function's first line in a `_test.go` file. Skipped for
     /// non-test files. Priority 3.x–5.x.
     TestNames { file: PathBuf },
+    /// Identity slice of a `go.mod` (or `go.work`) file: the `module`
+    /// path, `go` version floor, and optional `toolchain` lines. A
+    /// small (~25–40 tok) high-value calibration anchor — NS authors
+    /// regularly anchor on the bare module declaration + Go version
+    /// as a 1.x atom independent of the require block. Emitted as the
+    /// predecessor of [`GoKey::GoMod`] so the cheap identity slice can
+    /// land at a small budget without dragging the whole module
+    /// dependency block with it. Priority 1.x.
+    GoModIdentity { file: PathBuf },
     /// Whole-file render of a `go.mod` (or `go.work`) file. Capped
-    /// at a small line count; larger module files are skipped. Priority 1.x.
+    /// at a small line count; larger module files are skipped.
+    /// Predecessor: matching [`GoKey::GoModIdentity`] (identity lines
+    /// are an ancestor subset of the whole-file span). Priority 1.x.
     GoMod { file: PathBuf },
 }
 
@@ -1111,6 +1122,9 @@ impl GoKey {
                     "go test names surface in {}",
                     display_path(file, fixture_root)
                 )
+            }
+            GoKey::GoModIdentity { file } => {
+                format!("go module identity in {}", display_path(file, fixture_root))
             }
             GoKey::GoMod { file } => format!("go module file {}", display_path(file, fixture_root)),
         }

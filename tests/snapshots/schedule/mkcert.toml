@@ -1,7 +1,7 @@
 fixture = "mkcert"
 budget = 10000
 cumulative_tokens = 9820
-batch_count = 134
+batch_count = 135
 
 [[batches]]
 position = 1
@@ -37,10 +37,36 @@ kind = "full"
 
 [[batches]]
 position = 3
+key = 'Go(GoModIdentity { file: "go.mod" })'
+descriptor = "go module identity in go.mod"
+cost_tokens = 22
+cum_tokens = 91
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 31
-cum_tokens = 100
+cum_tokens = 122
 
 [batches.content]
 kind = "lines"
@@ -62,10 +88,10 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 4
+position = 5
 key = 'Go(GoMod { file: "go.mod" })'
 descriptor = "go module file go.mod"
-cost_tokens = 113
+cost_tokens = 91
 cum_tokens = 213
 
 [batches.content]
@@ -112,7 +138,7 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 5
+position = 6
 key = 'Go(DeclNames { file: "main.go", chunk_index: 0 })'
 descriptor = "go decl names surface in main.go"
 cost_tokens = 286
@@ -410,7 +436,7 @@ end = 383
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 7
 key = 'Go(Decl { file: "main.go", start_line: 85 })'
 descriptor = "go decl at main.go:85"
 cost_tokens = 0
@@ -428,7 +454,7 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Go(Decl { file: "main.go", start_line: 87 })'
 descriptor = "go decl at main.go:87"
 cost_tokens = 0
@@ -446,7 +472,7 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Go(Decl { file: "main.go", start_line: 171 })'
 descriptor = "go decl at main.go:171"
 cost_tokens = 0
@@ -464,7 +490,7 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Go(Decl { file: "main.go", start_line: 240 })'
 descriptor = "go decl at main.go:240"
 cost_tokens = 0
@@ -482,7 +508,7 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Go(Decl { file: "main.go", start_line: 267 })'
 descriptor = "go decl at main.go:267"
 cost_tokens = 0
@@ -500,7 +526,7 @@ end = 267
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Go(Decl { file: "main.go", start_line: 307 })'
 descriptor = "go decl at main.go:307"
 cost_tokens = 0
@@ -518,7 +544,7 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Go(Decl { file: "main.go", start_line: 336 })'
 descriptor = "go decl at main.go:336"
 cost_tokens = 0
@@ -536,7 +562,7 @@ end = 336
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Go(Decl { file: "main.go", start_line: 345 })'
 descriptor = "go decl at main.go:345"
 cost_tokens = 0
@@ -554,7 +580,7 @@ end = 345
 kind = "full"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Go(Decl { file: "main.go", start_line: 358 })'
 descriptor = "go decl at main.go:358"
 cost_tokens = 0
@@ -572,7 +598,7 @@ end = 358
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Go(Decl { file: "main.go", start_line: 364 })'
 descriptor = "go decl at main.go:364"
 cost_tokens = 0
@@ -590,7 +616,7 @@ end = 364
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Go(Decl { file: "main.go", start_line: 370 })'
 descriptor = "go decl at main.go:370"
 cost_tokens = 0
@@ -608,7 +634,7 @@ end = 370
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Go(Decl { file: "main.go", start_line: 375 })'
 descriptor = "go decl at main.go:375"
 cost_tokens = 0
@@ -626,7 +652,7 @@ end = 375
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Go(Decl { file: "main.go", start_line: 382 })'
 descriptor = "go decl at main.go:382"
 cost_tokens = 0
@@ -644,7 +670,7 @@ end = 382
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Go(DeclBody { file: "main.go", start_line: 370 })'
 descriptor = "go decl body at main.go:370"
 cost_tokens = 19
@@ -662,7 +688,7 @@ end = 372
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Go(DeclBody { file: "main.go", start_line: 375 })'
 descriptor = "go decl body at main.go:375"
 cost_tokens = 20
@@ -680,7 +706,7 @@ end = 377
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Go(DeclDoc { file: "main.go", start_line: 85 })'
 descriptor = "go decl doc at main.go:85"
 cost_tokens = 63
@@ -698,7 +724,7 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 132
@@ -900,7 +926,7 @@ end = 189
 kind = "ellipsis"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 38
@@ -926,7 +952,7 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Go(DeclNames { file: "truststore_java.go", chunk_index: 0 })'
 descriptor = "go decl names surface in truststore_java.go"
 cost_tokens = 146
@@ -1048,7 +1074,7 @@ end = 111
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Go(Decl { file: "truststore_java.go", start_line: 31 })'
 descriptor = "go decl at truststore_java.go:31"
 cost_tokens = 0
@@ -1066,7 +1092,7 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Go(Decl { file: "truststore_java.go", start_line: 57 })'
 descriptor = "go decl at truststore_java.go:57"
 cost_tokens = 0
@@ -1084,7 +1110,7 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Go(Decl { file: "truststore_java.go", start_line: 81 })'
 descriptor = "go decl at truststore_java.go:81"
 cost_tokens = 0
@@ -1102,7 +1128,7 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Go(Decl { file: "truststore_java.go", start_line: 94 })'
 descriptor = "go decl at truststore_java.go:94"
 cost_tokens = 0
@@ -1120,7 +1146,7 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Go(Decl { file: "truststore_java.go", start_line: 110 })'
 descriptor = "go decl at truststore_java.go:110"
 cost_tokens = 0
@@ -1138,7 +1164,7 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Go(Decl { file: "truststore_java.go", start_line: 21 })'
 descriptor = "go decl at truststore_java.go:21"
 cost_tokens = 9
@@ -1164,7 +1190,7 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Go(DeclBody { file: "main.go", start_line: 358 })'
 descriptor = "go decl body at main.go:358"
 cost_tokens = 33
@@ -1182,7 +1208,7 @@ end = 361
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Markdown(Section { file: "README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 20
@@ -1200,7 +1226,7 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Go(DeclNames { file: "truststore_nss.go", chunk_index: 0 })'
 descriptor = "go decl names surface in truststore_nss.go"
 cost_tokens = 173
@@ -1338,7 +1364,7 @@ end = 132
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 39 })'
 descriptor = "go decl at truststore_nss.go:39"
 cost_tokens = 0
@@ -1356,7 +1382,7 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 73 })'
 descriptor = "go decl at truststore_nss.go:73"
 cost_tokens = 0
@@ -1374,7 +1400,7 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 89 })'
 descriptor = "go decl at truststore_nss.go:89"
 cost_tokens = 0
@@ -1392,7 +1418,7 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 106 })'
 descriptor = "go decl at truststore_nss.go:106"
 cost_tokens = 0
@@ -1410,7 +1436,7 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 120 })'
 descriptor = "go decl at truststore_nss.go:120"
 cost_tokens = 0
@@ -1428,7 +1454,7 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 131 })'
 descriptor = "go decl at truststore_nss.go:131"
 cost_tokens = 0
@@ -1446,7 +1472,7 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Go(DeclBody { file: "main.go", start_line: 364 })'
 descriptor = "go decl body at main.go:364"
 cost_tokens = 42
@@ -1464,7 +1490,7 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Go(DeclNames { file: "cert.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cert.go"
 cost_tokens = 211
@@ -1650,7 +1676,7 @@ end = 367
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Go(Decl { file: "cert.go", start_line: 37 })'
 descriptor = "go decl at cert.go:37"
 cost_tokens = 0
@@ -1668,7 +1694,7 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Go(Decl { file: "cert.go", start_line: 50 })'
 descriptor = "go decl at cert.go:50"
 cost_tokens = 0
@@ -1686,7 +1712,7 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Go(Decl { file: "cert.go", start_line: 148 })'
 descriptor = "go decl at cert.go:148"
 cost_tokens = 0
@@ -1704,7 +1730,7 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Go(Decl { file: "cert.go", start_line: 166 })'
 descriptor = "go decl at cert.go:166"
 cost_tokens = 0
@@ -1722,7 +1748,7 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Go(Decl { file: "cert.go", start_line: 176 })'
 descriptor = "go decl at cert.go:176"
 cost_tokens = 0
@@ -1740,7 +1766,7 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Go(Decl { file: "cert.go", start_line: 202 })'
 descriptor = "go decl at cert.go:202"
 cost_tokens = 0
@@ -1758,7 +1784,7 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Go(Decl { file: "cert.go", start_line: 209 })'
 descriptor = "go decl at cert.go:209"
 cost_tokens = 0
@@ -1776,7 +1802,7 @@ end = 209
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Go(Decl { file: "cert.go", start_line: 282 })'
 descriptor = "go decl at cert.go:282"
 cost_tokens = 0
@@ -1794,7 +1820,7 @@ end = 282
 kind = "full"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Go(Decl { file: "cert.go", start_line: 310 })'
 descriptor = "go decl at cert.go:310"
 cost_tokens = 0
@@ -1812,7 +1838,7 @@ end = 310
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Go(Decl { file: "cert.go", start_line: 366 })'
 descriptor = "go decl at cert.go:366"
 cost_tokens = 0
@@ -1830,7 +1856,7 @@ end = 366
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Go(DeclDoc { file: "cert.go", start_line: 282 })'
 descriptor = "go decl doc at cert.go:282"
 cost_tokens = 17
@@ -1848,7 +1874,7 @@ end = 281
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Go(DeclBody { file: "cert.go", start_line: 366 })'
 descriptor = "go decl body at cert.go:366"
 cost_tokens = 17
@@ -1866,7 +1892,7 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Go(PackageImports { file: "main.go" })'
 descriptor = "go package + imports in main.go"
 cost_tokens = 167
@@ -1900,7 +1926,7 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Markdown(Section { file: "README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 21
@@ -1918,7 +1944,7 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Go(DeclBody { file: "main.go", start_line: 336 })'
 descriptor = "go decl body at main.go:336"
 cost_tokens = 48
@@ -1944,7 +1970,7 @@ end = 342
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Go(DeclDoc { file: "truststore_java.go", start_line: 110 })'
 descriptor = "go decl doc at truststore_java.go:110"
 cost_tokens = 41
@@ -1962,7 +1988,7 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Go(DeclDoc { file: "truststore_nss.go", start_line: 120 })'
 descriptor = "go decl doc at truststore_nss.go:120"
 cost_tokens = 41
@@ -1980,7 +2006,7 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Go(PackageImports { file: "truststore_nss.go" })'
 descriptor = "go package + imports in truststore_nss.go"
 cost_tokens = 72
@@ -2006,7 +2032,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 394
@@ -2072,7 +2098,7 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Markdown(Section { file: "README.md", section_index: 10 })'
 descriptor = "README.md section #10"
 cost_tokens = 39
@@ -2090,7 +2116,7 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Go(Decl { file: "main.go", start_line: 155 })'
 descriptor = "go decl at main.go:155"
 cost_tokens = 164
@@ -2124,7 +2150,7 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 40
@@ -2150,7 +2176,7 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 41
@@ -2176,7 +2202,7 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Go(PackageImports { file: "truststore_java.go" })'
 descriptor = "go package + imports in truststore_java.go"
 cost_tokens = 114
@@ -2202,7 +2228,7 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 66
+position = 67
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 48
@@ -2228,7 +2254,7 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 67
+position = 68
 key = 'Go(DeclBody { file: "main.go", start_line: 345 })'
 descriptor = "go decl body at main.go:345"
 cost_tokens = 91
@@ -2246,7 +2272,7 @@ end = 355
 kind = "full"
 
 [[batches]]
-position = 68
+position = 69
 key = 'Go(Decl { file: "main.go", start_line: 30 })'
 descriptor = "go decl at main.go:30"
 cost_tokens = 170
@@ -2312,7 +2338,7 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 69
+position = 70
 key = 'Markdown(Section { file: "README.md", section_index: 22 })'
 descriptor = "README.md section #22"
 cost_tokens = 40
@@ -2330,7 +2356,7 @@ end = 186
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 15 })'
 descriptor = "README.md section #15"
 cost_tokens = 41
@@ -2356,7 +2382,7 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Markdown(Section { file: "README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 43
@@ -2374,7 +2400,7 @@ end = 168
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 63
@@ -2400,7 +2426,7 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Markdown(Section { file: "README.md", section_index: 24 })'
 descriptor = "README.md section #24"
 cost_tokens = 45
@@ -2418,7 +2444,7 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Markdown(Section { file: "README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 47
@@ -2436,7 +2462,7 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Markdown(Section { file: "README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 49
@@ -2454,7 +2480,7 @@ end = 184
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 71
@@ -2480,7 +2506,7 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Markdown(Section { file: "README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 194
@@ -2522,7 +2548,7 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Go(PackageImports { file: "cert.go" })'
 descriptor = "go package + imports in cert.go"
 cost_tokens = 243
@@ -2556,7 +2582,7 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Go(DeclBody { file: "cert.go", start_line: 202 })'
 descriptor = "go decl body at cert.go:202"
 cost_tokens = 66
@@ -2574,7 +2600,7 @@ end = 206
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Go(DeclNames { file: "truststore_darwin.go", chunk_index: 0 })'
 descriptor = "go decl names surface in truststore_darwin.go"
 cost_tokens = 138
@@ -2648,7 +2674,7 @@ end = 106
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Go(Decl { file: "truststore_darwin.go", start_line: 25 })'
 descriptor = "go decl at truststore_darwin.go:25"
 cost_tokens = 0
@@ -2666,7 +2692,7 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Go(Decl { file: "truststore_darwin.go", start_line: 52 })'
 descriptor = "go decl at truststore_darwin.go:52"
 cost_tokens = 0
@@ -2684,7 +2710,7 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Go(Decl { file: "truststore_darwin.go", start_line: 105 })'
 descriptor = "go decl at truststore_darwin.go:105"
 cost_tokens = 0
@@ -2702,7 +2728,7 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Go(Decl { file: "truststore_darwin.go", start_line: 18 })'
 descriptor = "go decl at truststore_darwin.go:18"
 cost_tokens = 9
@@ -2720,7 +2746,7 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Go(DeclNames { file: "truststore_linux.go", chunk_index: 0 })'
 descriptor = "go decl names surface in truststore_linux.go"
 cost_tokens = 144
@@ -2842,7 +2868,7 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Go(Decl { file: "truststore_linux.go", start_line: 27 })'
 descriptor = "go decl at truststore_linux.go:27"
 cost_tokens = 0
@@ -2860,7 +2886,7 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Go(Decl { file: "truststore_linux.go", start_line: 51 })'
 descriptor = "go decl at truststore_linux.go:51"
 cost_tokens = 0
@@ -2878,7 +2904,7 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Go(Decl { file: "truststore_linux.go", start_line: 55 })'
 descriptor = "go decl at truststore_linux.go:55"
 cost_tokens = 0
@@ -2896,7 +2922,7 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Go(Decl { file: "truststore_linux.go", start_line: 77 })'
 descriptor = "go decl at truststore_linux.go:77"
 cost_tokens = 0
@@ -2914,7 +2940,7 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Go(Decl { file: "truststore_linux.go", start_line: 17 })'
 descriptor = "go decl at truststore_linux.go:17"
 cost_tokens = 29
@@ -2940,7 +2966,7 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Go(DeclBody { file: "main.go", start_line: 382 })'
 descriptor = "go decl body at main.go:382"
 cost_tokens = 164
@@ -2958,7 +2984,7 @@ end = 392
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 100
@@ -2984,7 +3010,7 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Go(Decl { file: "main.go", start_line: 49 })'
 descriptor = "go decl at main.go:49"
 cost_tokens = 309
@@ -3074,7 +3100,7 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Markdown(Section { file: "README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 104
@@ -3100,7 +3126,7 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Go(DeclBody { file: "cert.go", start_line: 166 })'
 descriptor = "go decl body at cert.go:166"
 cost_tokens = 80
@@ -3118,7 +3144,7 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
@@ -3132,7 +3158,7 @@ parent = ".github"
 entries = ["ISSUE_TEMPLATE", "workflows"]
 
 [[batches]]
-position = 97
+position = 98
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
@@ -3146,7 +3172,7 @@ parent = ".github/workflows"
 entries = ["release.yml", "test.yml"]
 
 [[batches]]
-position = 98
+position = 99
 key = 'Go(DeclDoc { file: "truststore_darwin.go", start_line: 25 })'
 descriptor = "go decl doc at truststore_darwin.go:25"
 cost_tokens = 24
@@ -3164,7 +3190,7 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Markdown(Section { file: "README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 47
@@ -3198,7 +3224,7 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 92
@@ -3216,7 +3242,7 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Markdown(Section { file: "README.md", section_index: 23 })'
 descriptor = "README.md section #23"
 cost_tokens = 94
@@ -3242,7 +3268,7 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 120 })'
 descriptor = "go decl body at truststore_nss.go:120"
 cost_tokens = 114
@@ -3260,7 +3286,7 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Go(PackageImports { file: "truststore_linux.go" })'
 descriptor = "go package + imports in truststore_linux.go"
 cost_tokens = 70
@@ -3286,7 +3312,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Go(DeclBody { file: "cert.go", start_line: 37 })'
 descriptor = "go decl body at cert.go:37"
 cost_tokens = 115
@@ -3304,7 +3330,7 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Go(DeclBody { file: "truststore_linux.go", start_line: 51 })'
 descriptor = "go decl body at truststore_linux.go:51"
 cost_tokens = 23
@@ -3322,7 +3348,7 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Go(DeclBody { file: "main.go", start_line: 240 })'
 descriptor = "go decl body at main.go:240"
 cost_tokens = 249
@@ -3348,7 +3374,7 @@ end = 264
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Go(PackageImports { file: "truststore_darwin.go" })'
 descriptor = "go package + imports in truststore_darwin.go"
 cost_tokens = 78
@@ -3382,7 +3408,7 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Go(Decl { file: "truststore_nss.go", start_line: 17 })'
 descriptor = "go decl at truststore_nss.go:17"
 cost_tokens = 210
@@ -3400,7 +3426,7 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Go(DeclBody { file: "truststore_java.go", start_line: 81 })'
 descriptor = "go decl body at truststore_java.go:81"
 cost_tokens = 127
@@ -3426,7 +3452,7 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Go(PackageImports { file: "truststore_windows.go" })'
 descriptor = "go package + imports in truststore_windows.go"
 cost_tokens = 95
@@ -3452,7 +3478,7 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Go(DeclNames { file: "truststore_windows.go", chunk_index: 0 })'
 descriptor = "go decl names surface in truststore_windows.go"
 cost_tokens = 365
@@ -3606,7 +3632,7 @@ end = 108
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 35 })'
 descriptor = "go decl at truststore_windows.go:35"
 cost_tokens = 0
@@ -3624,7 +3650,7 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 54 })'
 descriptor = "go decl at truststore_windows.go:54"
 cost_tokens = 0
@@ -3642,7 +3668,7 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 71 })'
 descriptor = "go decl at truststore_windows.go:71"
 cost_tokens = 0
@@ -3660,7 +3686,7 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 83 })'
 descriptor = "go decl at truststore_windows.go:83"
 cost_tokens = 0
@@ -3678,7 +3704,7 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 91 })'
 descriptor = "go decl at truststore_windows.go:91"
 cost_tokens = 0
@@ -3696,7 +3722,7 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 107 })'
 descriptor = "go decl at truststore_windows.go:107"
 cost_tokens = 0
@@ -3714,7 +3740,7 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 19 })'
 descriptor = "go decl at truststore_windows.go:19"
 cost_tokens = 9
@@ -3732,7 +3758,7 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 25 })'
 descriptor = "go decl at truststore_windows.go:25"
 cost_tokens = 9
@@ -3750,7 +3776,7 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Go(DeclBody { file: "truststore_java.go", start_line: 94 })'
 descriptor = "go decl body at truststore_java.go:94"
 cost_tokens = 136
@@ -3768,7 +3794,7 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Go(DeclBody { file: "truststore_java.go", start_line: 110 })'
 descriptor = "go decl body at truststore_java.go:110"
 cost_tokens = 148
@@ -3786,7 +3812,7 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 73 })'
 descriptor = "go decl body at truststore_nss.go:73"
 cost_tokens = 141
@@ -3804,7 +3830,7 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 106 })'
 descriptor = "go decl body at truststore_nss.go:106"
 cost_tokens = 147
@@ -3822,7 +3848,7 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 116
@@ -3872,7 +3898,7 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Markdown(Section { file: "README.md", section_index: 20 })'
 descriptor = "README.md section #20"
 cost_tokens = 91
@@ -3906,7 +3932,7 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Go(DeclBody { file: "main.go", start_line: 307 })'
 descriptor = "go decl body at main.go:307"
 cost_tokens = 388
@@ -3924,7 +3950,7 @@ end = 333
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Markdown(Section { file: "README.md", section_index: 13 })'
 descriptor = "README.md section #13"
 cost_tokens = 180
@@ -3974,7 +4000,7 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Go(DeclBody { file: "cert.go", start_line: 148 })'
 descriptor = "go decl body at cert.go:148"
 cost_tokens = 210
@@ -4000,7 +4026,7 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 131 })'
 descriptor = "go decl body at truststore_nss.go:131"
 cost_tokens = 215
@@ -4018,7 +4044,7 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Go(DeclBody { file: "cert.go", start_line: 176 })'
 descriptor = "go decl body at cert.go:176"
 cost_tokens = 251
@@ -4052,7 +4078,7 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 89 })'
 descriptor = "go decl body at truststore_nss.go:89"
 cost_tokens = 254
@@ -4070,7 +4096,7 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Go(DeclBody { file: "truststore_java.go", start_line: 31 })'
 descriptor = "go decl body at truststore_java.go:31"
 cost_tokens = 274
@@ -4120,7 +4146,7 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Go(DeclBody { file: "main.go", start_line: 267 })'
 descriptor = "go decl body at main.go:267"
 cost_tokens = 561
@@ -4138,7 +4164,7 @@ end = 304
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Go(DeclBody { file: "truststore_windows.go", start_line: 83 })'
 descriptor = "go decl body at truststore_windows.go:83"
 cost_tokens = 63

@@ -4,7 +4,8 @@ Score(3000)=0.746 I=0.949 C=0.585 ns_rows≤3K=19/39 (reached=15 partial=0 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 78 | 78 | listing of '.' |  |  | 1.000 |
 | ns | 78 |  | 78 | Top-level fs listing | 1.1 |  | 1.000 |
-| walker |  | 102 | 24 | go module file go.mod |  |  | 1.000 |
+| walker |  | 102 | 24 | go module identity in go.mod |  |  | 1.000 |
+| walker |  | 102 | 0 | go module file go.mod |  |  | 1.000 |
 | walker |  | 118 | 16 | go decl names surface in prefix.go |  |  | 1.000 |
 | walker |  | 118 | 0 | go decl at prefix.go:16 |  |  | 1.000 |
 | walker |  | 136 | 18 | go decl names surface in append.go |  |  | 1.000 |
