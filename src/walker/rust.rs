@@ -414,6 +414,23 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let src_main_entry = is_src_main_file(file);
         if is_entrypoint_file(file) {
             let entry_items = find_private_top_level_item_starts(&tree, &source);
+            // Thin-`fn main` wrapper pattern: src/main.rs's `fn main` body
+            // is just `match run() { ... }` (or similar error-shim), with
+            // the real call-graph living in a private `fn run`/etc. NS
+            // authors regularly anchor on the wrapped fn's body, but the
+            // walker only emits `fn main` itself, leaving the wrapper's
+            // body unscheduled. When `fn main` is thin, treat every
+            // private top-level fn in the file as a peer entry item so
+            // the wrapped body becomes schedulable like a Tokio
+            // `fn main` body would be. Examples already get this peer
+            // treatment via `example_main_entry`; the thin-wrapper case
+            // is the bin-crate analog.
+            let thin_main_wrapper = src_main_entry
+                && entry_items.iter().any(|item| {
+                    matches!(item.kind, ItemKind::Fn)
+                        && name_of(item.node, &source) == Some("main")
+                        && is_thin_main_body(item.node)
+                });
             if !entry_items.is_empty() {
                 for item in &entry_items {
                     if !should_emit_private_entry_item(
@@ -421,6 +438,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         &source,
                         example_main_entry,
                         src_main_entry,
+                        thin_main_wrapper,
                     ) {
                         continue;
                     }
@@ -704,13 +722,47 @@ fn should_emit_private_entry_item(
     source: &str,
     example_main_entry: bool,
     src_main_entry: bool,
+    thin_main_wrapper: bool,
 ) -> bool {
     if example_main_entry {
         return true;
     }
-    matches!(item_kind_of(node), Some(ItemKind::Fn))
-        && (has_async_main_attribute(node, source)
-            || (src_main_entry && name_of(node, source) == Some("main")))
+    if !matches!(item_kind_of(node), Some(ItemKind::Fn)) {
+        return false;
+    }
+    if has_async_main_attribute(node, source) {
+        return true;
+    }
+    if src_main_entry && name_of(node, source) == Some("main") {
+        return true;
+    }
+    // Peer entries inside a thin-`fn main` wrapper: every private
+    // top-level fn in src/main.rs (the wrapped real-main and any
+    // co-resident helpers) becomes a schedulable entry item.
+    // `thin_main_wrapper` already implies `src_main_entry` at the
+    // call site, so no further guard is needed here.
+    thin_main_wrapper
+}
+
+/// `fn main` is a thin wrapper when its body is just an error-handling
+/// shim — the shape of `match run() { Ok(_) => (), Err(e) => { ... } }`,
+/// `run().unwrap()`, or `std::process::exit(real_main())`. Limit to two
+/// top-level statements so a `fn main` that owns nontrivial logic
+/// itself (CLI subcommand dispatch inline, logging setup + dispatch +
+/// error branch) does not get reclassified as a wrapper, which would
+/// promote every helper-fn in `main.rs` to a peer entry batch.
+const THIN_MAIN_MAX_STATEMENTS: usize = 2;
+
+fn is_thin_main_body(node: Node) -> bool {
+    let Some(body) = node.child_by_field_name("body") else {
+        return false;
+    };
+    let mut cursor = body.walk();
+    let stmt_count = body
+        .named_children(&mut cursor)
+        .filter(|child| child.kind() != "line_comment" && child.kind() != "block_comment")
+        .count();
+    stmt_count <= THIN_MAIN_MAX_STATEMENTS
 }
 
 fn is_src_main_file(path: &Path) -> bool {

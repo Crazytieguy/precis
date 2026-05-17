@@ -142,6 +142,24 @@ src/
         25→pub mod parameter;
         26→pub mod timer;
         27→pub mod util;
+        29→fn run() -> Result<()> {
+        30→    // Enabled ANSI colors on Windows 10
+        31→    #[cfg(windows)]
+        32→    colored::control::set_virtual_terminal(true).unwrap();
+        34→    let cli_arguments = get_cli_arguments(env::args_os());
+        35→    let mut options = Options::from_cli_arguments(&cli_arguments)?;
+        36→    let commands = Commands::from_cli_arguments(&cli_arguments)?;
+        37→    let export_manager = ExportManager::from_cli_arguments(
+        38→        &cli_arguments,
+        39→        options.time_unit,
+        40→        options.sort_order_exports,
+        41→    )?;
+        43→    options.validate_against_command_list(&commands)?;
+        45→    let mut scheduler = Scheduler::new(&commands, &options, &export_manager);
+        46→    scheduler.run_benchmarks()?;
+        47→    scheduler.print_relative_speed_comparison();
+        48→    scheduler.final_export()?;
+        50→    Ok(())
         53→fn main() {
         54→    match run() {
         55→        Ok(_) => {}
@@ -151,37 +169,6 @@ src/
         59→        }
         60→    }
     options.rs
-        17→pub const DEFAULT_SHELL: &str = "sh";
-        …
-        20→pub const DEFAULT_SHELL: &str = "cmd.exe";
-        …
-        24→pub enum Shell {
-        25→    /// Default shell command
-        26→    Default(&'static str),
-        28→    /// Custom shell command specified via --shell
-        29→    Custom(Vec<String>),
-        30→}
-        71→pub enum CmdFailureAction {
-        …
-        84→pub enum OutputStyleOption {
-        …
-        102→pub enum SortOrder {
-        103→    Command,
-        104→    MeanTime,
-        105→}
-        108→pub struct RunBounds {
-        …
-        123→pub enum CommandInputPolicy {
-        …
-        149→pub enum CommandOutputPolicy {
-        …
-        185→pub enum ExecutorKind {
-        186→    Raw,
-        187→    Shell(Shell),
-        188→    Mock(Option<String>),
-        189→}
-        198→pub struct Options {
-        …
     outlier_detection.rs
         13→pub const OUTLIER_THRESHOLD: f64 = 1.4826 * 10.0;
         …

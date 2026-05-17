@@ -138,28 +138,54 @@ src/
         24→    data: Arc<Mutex<Data>>,
         25→}
     main.rs
-        1→mod clipboard;
-        2→mod cmd;
-        3→mod config;
-        4→mod debug;
-        5→mod edit;
-        6→mod live_reload;
-        7→mod parse;
-        8→mod tree;
-        9→mod ui;
-        11→use std::fs;
-        12→use std::io;
-        13→use std::io::Read;
-        14→use std::path::PathBuf;
-        15→use std::process;
-        16→use std::rc::Rc;
-        18→use anyhow::{bail, Context, Result};
-        19→use live_reload::FileWatcher;
-        21→use crate::cmd::CommandArgs;
-        22→use crate::config::Config;
-        23→use crate::parse::{ContentType, SyntaxToken};
-        24→use crate::tree::Tree;
-        25→use crate::ui::{App, HeaderContext};
+        27→fn run() -> Result<()> {
+        28→    let Some(args) = CommandArgs::parse()? else {
+        29→        return Ok(());
+        30→    };
+        32→    let mut cfg = if args.ignore_config {
+        33→        Config::default()
+        34→    } else {
+        35→        Config::load(args.config.clone())?
+        36→    };
+        38→    args.update_config(&mut cfg);
+        39→    cfg.parse().context("parse config")?;
+        41→    let cfg = Rc::new(cfg);
+        43→    if args.show_config {
+        44→        return cfg.show();
+        45→    }
+        47→    if let Some(ref debug_file) = args.debug {
+        48→        debug::set_file(debug_file.clone());
+        49→    }
+        51→    // The user can specify the content type manually, or we can determine it based on the
+        52→    // file extension.
+        53→    // If the content type cannot be determined here, use `ContentType::Any` as default, let
+        54→    // parser to detect it.
+        55→    let content_type = args.get_content_type();
+        57→    let max_data_size = args.max_data_size.unwrap_or(cfg.data.max_data_size) * 1024 * 1024;
+        58→    let mut fw = None;
+        79→    if let Some(target_type) = args.to {
+        80→        if matches!(target_type, ContentType::Any) {
+        81→            bail!("target content type cannot be 'any' when using '--to' option");
+        82→        }
+        83→        let parser = content_type.new_parser();
+        84→        let target_parser = target_type.new_parser();
+        86→        let value = parser.parse_root(Some(target_parser.as_ref()), &data)?;
+        87→        let tokens = target_parser.syntax_highlight("", &value);
+        88→        let text = SyntaxToken::pure_text(&tokens);
+        90→        print!("{text}");
+        91→        return Ok(());
+        92→    }
+        94→    if data.len() > max_data_size {
+        95→        bail!("the data size is too large, we limit the maximum size to {} to ensure TUI performance, you should try to reduce the read size. HINT: You can use command line arg `--max-data-size` or config option `data.max_data_size` to modify this limitation", humansize::format_size(max_data_size, humansize::BINARY));
+        96→    }
+        98→    let tree = Tree::parse(cfg.clone(), &data, content_type).context("parse data")?;
+        99→    let extension = tree.parser.extension();
+        101→    let mut app = App::new(cfg.clone(), tree, fw);
+        103→    if !cfg.header.disable {
+        104→        let header_ctx = HeaderContext::new(args.path, extension, data.len());
+        105→        app.set_header(&header_ctx);
+        106→    }
+        108→    ui::start(app)
         111→fn main() {
         112→    if let Err(err) = run() {
         113→        eprintln!("Error: {err:#}");
@@ -172,10 +198,6 @@ src/
             11→}
         hcl.rs
         json.rs
-            6→pub struct JsonParser {}
-            …
-            26→pub fn highlight(value: &Value, indent: usize, has_next: bool) -> Vec<SyntaxToken> {
-            …
         jsonl.rs
         mod.rs
             18→pub enum ContentType {
@@ -193,28 +215,7 @@ src/
             33→    Any,
             34→}
             36→pub trait Parser {
-            37→    fn extension(&self) -> &'static str;
-            39→    fn allow_array_root(&self) -> bool;
-            41→    fn parse(&self, data: &str) -> Result<Value>;
-            43→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken>;
-            45→    fn parse_root(&self, validator: Option<&dyn Parser>, data: &[u8]) -> Result<Value> {
-            46→        let data = String::from_utf8(data.to_vec()).context("parse content utf8")?;
-            47→        let value = self.parse(&data)?;
-            49→        match value {
-            50→            Value::Object(_) => {}
-            51→            Value::Array(_) => {
-            52→                let allow =
-            53→                    validator.map_or_else(|| self.allow_array_root(), Parser::allow_array_root);
-            54→                if !allow {
-            55→                    let schema = validator.map_or_else(|| self.extension(), Parser::extension);
-            56→                    bail!("schema '{schema}' does not allow array as root");
-            57→                }
-            58→            }
-            59→            _ => bail!("root value must be either object or array"),
-            60→        }
-            62→        Ok(value)
-            63→    }
-            64→}
+            …
             66→impl ContentType {
             67→    pub fn new_parser(self) -> Box<dyn Parser> {
             …
@@ -264,28 +265,6 @@ src/
             89→}
         data_block.rs
         filter.rs
-            13→pub struct Filter {
-            14→    cfg: Rc<Config>,
-            15→    text_area: TextArea<'static>,
-            16→    target: FilterTarget,
-            17→    ignore_case: bool,
-            18→}
-            20→pub enum FilterAction {
-            21→    Edit,
-            22→    Confirm,
-            23→    Skip,
-            24→    Quit,
-            25→}
-            27→pub struct FilterOptions {
-            28→    pub text: String,
-            29→    pub target: FilterTarget,
-            30→    pub ignore_case: bool,
-            31→}
-            34→pub enum FilterTarget {
-            35→    Key,
-            36→    Value,
-            37→    All,
-            38→}
         footer.rs
             10→pub enum FooterText<'a> {
             11→    Identify(&'a [String], Option<String>),
@@ -297,11 +276,7 @@ src/
             18→}
         header.rs
             11→pub struct HeaderContext {
-            12→    version: String,
-            13→    data_source: Cow<'static, str>,
-            14→    content_type: &'static str,
-            15→    data_size: String,
-            16→}
+            …
             41→pub struct Header {
             42→    cfg: Rc<Config>,
             43→    data: String,
