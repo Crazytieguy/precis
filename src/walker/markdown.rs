@@ -440,11 +440,22 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
     } else {
         SUB_SECTION_SIGNAL_SCALE
     };
+    // BodyBlocks of a concept H3 (monaco-editor's Providers split into
+    // two paragraphs) are still concept content; lift them to the same
+    // scale as a single-paragraph concept H3 (Editors). The marker is
+    // gated on H3 byte size in `push_h3_child_or_body_blocks`, so this
+    // doesn't fire for the long-topical-section H3s that happen to
+    // live under a concept H2 (htmy's `### Components`).
+    let body_block_scale = if range.parent_is_concept_h2 {
+        README_CONCEPT_H3_SIGNAL_SCALE
+    } else {
+        BODY_BLOCK_SIGNAL_SCALE
+    };
     match range.kind {
         SectionKind::Whole | SectionKind::Intro => parent,
         SectionKind::H3Child => parent * h3_scale,
         SectionKind::BulletItem => parent * bullet_scale,
-        SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
+        SectionKind::BodyBlock => parent * body_block_scale,
     }
 }
 
@@ -465,6 +476,17 @@ const README_SUB_SECTION_SIGNAL_SCALE: f64 = 0.55;
 /// parent H2 title matches the marker set, so it doesn't lift
 /// elaboration H3s under arbitrary topical H2s.
 const README_CONCEPT_H3_SIGNAL_SCALE: f64 = 1.0;
+
+/// Upper byte size for an H3 to still propagate the concept boost
+/// (`README_CONCEPT_H3_SIGNAL_SCALE`) onto its `BodyBlock`s when split.
+/// A single-paragraph concept H3 stays as one `H3Child` (no split,
+/// the threshold doesn't apply). A multi-paragraph concept *definition*
+/// — monaco-editor's Providers (~500 B, 2 paragraphs) — falls in the
+/// window and keeps the boost on each paragraph. A multi-KB H3 living
+/// under a concept H2 (htmy's `### Components` at ~4 KB) is a long
+/// topical section rather than a concept definition; treating every
+/// paragraph as a top-tier concept row crowds NS-anchored content.
+const CONCEPT_H3_BODY_BLOCK_MAX_BYTES: usize = 700;
 
 fn is_changelog_class(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
@@ -1123,11 +1145,14 @@ struct SectionRange {
     /// True when this range's parent H2's title is an orientation-concept
     /// marker (`Concepts`, `Architecture`, `Overview`, …; see
     /// [`is_concept_h2_title`]). Lets `section_value` boost `H3Child`
-    /// ranges under such H2s — the H3s there are the canonical concept
-    /// definitions NS authors anchor on. Always false for non-README
-    /// files. Always false for `BulletItem` / `BodyBlock` / `Whole` /
-    /// `Intro` because those kinds aren't H3 concept rows even when
-    /// they live under a matching H2.
+    /// and concept-`BodyBlock` ranges under such H2s — those are the
+    /// canonical concept definitions NS authors anchor on. Always false
+    /// for non-README files. Always false for `BulletItem` / `Whole` /
+    /// `Intro` (those kinds aren't concept-row content even when they
+    /// live under a matching H2). `BodyBlock`s inherit the flag only
+    /// when produced by `push_h3_child_or_body_blocks` splitting a
+    /// concept H3 — paragraphs of a long concept H3 like Providers
+    /// are still concept content.
     parent_is_concept_h2: bool,
 }
 
@@ -1326,9 +1351,20 @@ fn push_h3_child_or_body_blocks(
     if !has_substantive_body(h3_section, h3_start, h3_end, source) {
         return;
     }
-    if h3_section.end_byte() - h3_section.start_byte() >= BODY_BLOCK_SPLIT_BYTES {
+    let h3_bytes = h3_section.end_byte() - h3_section.start_byte();
+    if h3_bytes >= BODY_BLOCK_SPLIT_BYTES {
+        // See `CONCEPT_H3_BODY_BLOCK_MAX_BYTES` — the boost only
+        // propagates to BodyBlocks when the H3 is a tight definition.
+        let body_block_concept =
+            parent_is_concept_h2 && h3_bytes <= CONCEPT_H3_BODY_BLOCK_MAX_BYTES;
         let ranges = body_block_ranges(h3_section, source);
-        if push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present) {
+        if push_body_block_ranges(
+            out,
+            ranges,
+            parent_idx,
+            synthetic_intro_present,
+            body_block_concept,
+        ) {
             return;
         }
     }
@@ -1347,6 +1383,7 @@ fn push_body_block_ranges(
     ranges: Vec<(usize, usize)>,
     parent_idx: usize,
     synthetic_intro_present: bool,
+    parent_is_concept_h2: bool,
 ) -> bool {
     if ranges.len() < 2 {
         return false;
@@ -1357,7 +1394,7 @@ fn push_body_block_ranges(
         kind: SectionKind::BodyBlock,
         parent_index: parent_idx,
         synthetic_intro_present,
-        parent_is_concept_h2: false,
+        parent_is_concept_h2,
     }));
     true
 }
@@ -1372,7 +1409,9 @@ fn push_list_body_blocks(
     let Some(ranges) = list_only_body_block_ranges(section, source) else {
         return false;
     };
-    push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present)
+    // List-only body-block split is the H2-direct fallback (no H3
+    // children). The concept-H3 boost doesn't apply at this level.
+    push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present, false)
 }
 
 fn list_only_body_block_ranges(section: Node<'_>, source: &str) -> Option<Vec<(usize, usize)>> {
