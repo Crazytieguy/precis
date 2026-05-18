@@ -240,15 +240,12 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
 
         // Only emit `PackageDocLede` for files that qualify as an
         // entry-shaped file (package-name match, big-struct anchor,
-        // or the `doc.go` Go-convention package-docs file). Internal
-        // subpackage doc ledes (`internal/xtime/time.go`) carry low
-        // orientation value relative to their cost and crowd the
-        // early budget if every subpackage gets one.
-        let is_doc_go = file
-            .file_stem()
-            .and_then(|s| s.to_str())
-            .is_some_and(|s| s == "doc");
-        if (entry_factor > 1.0 || is_doc_go)
+        // or the `doc.go` Go-convention package-docs file — all
+        // surfaced via `go_entry_factor_for`). Internal subpackage
+        // doc ledes (`internal/xtime/time.go`) carry low orientation
+        // value relative to their cost and crowd the early budget if
+        // every subpackage gets one.
+        if entry_factor > 1.0
             && let Some(content) =
                 single_file_lines_content(file, &source, collect_package_doc_lede(&tree, &source))
         {
@@ -892,6 +889,17 @@ fn go_entry_factor_for(
         return 1.0;
     };
     if pkg == Some(stem) {
+        return BOOST;
+    }
+    // `doc.go` is the long-standing Go convention for "the file
+    // holding the package's godoc paragraph" — pkg.go.dev surfaces it
+    // as the package landing page. NS authors anchor on its lede
+    // accordingly (gin's `Package godoc lede`). Treating it as an
+    // entry-shaped file lifts its `PackageDocLede` / `PackageImports`
+    // value to match a package-name-matched anchor file. doc.go
+    // typically carries no decls, so the boost cascades only onto the
+    // lede / imports — exactly the batches the convention targets.
+    if stem == "doc" {
         return BOOST;
     }
     if decls

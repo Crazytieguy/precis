@@ -11,26 +11,26 @@ Score(3000)=0.508 I=0.595 C=0.433 ns_rows≤3K=20/46 (reached=5 partial=1 missin
 | walker |  | 229 | 229 | listing of '.' |  |  | 0.000 |
 | walker |  | 238 | 9 | README headline in README.md |  |  | 0.192 |
 | walker |  | 241 | 3 | listing of 'codec' |  |  | 0.192 |
-| walker |  | 245 | 4 | listing of 'docs' |  |  | 0.192 |
-| walker |  | 255 | 10 | go decl names surface in context_appengine.go |  |  | 0.192 |
-| walker |  | 255 | 0 | go decl at context_appengine.go:9 |  |  | 0.192 |
-| walker |  | 279 | 24 | go module identity in go.mod |  |  | 0.349 |
-| walker |  | 286 | 7 | listing of 'internal' |  |  | 0.349 |
-| walker |  | 301 | 15 | go decl names surface in version.go |  |  | 0.380 |
-| walker |  | 301 | 0 | go decl at version.go:8 |  |  | 0.380 |
-| walker |  | 320 | 19 | go package doc lede in doc.go |  |  | 0.420 |
+| walker |  | 260 | 19 | go package doc lede in doc.go |  |  | 0.243 |
+| walker |  | 264 | 4 | listing of 'docs' |  |  | 0.243 |
+| walker |  | 274 | 10 | go decl names surface in context_appengine.go |  |  | 0.243 |
+| walker |  | 274 | 0 | go decl at context_appengine.go:9 |  |  | 0.243 |
+| walker |  | 298 | 24 | go module identity in go.mod |  |  | 0.390 |
+| walker |  | 305 | 7 | listing of 'internal' |  |  | 0.390 |
+| walker |  | 320 | 15 | go decl names surface in version.go |  |  | 0.420 |
+| walker |  | 320 | 0 | go decl at version.go:8 |  |  | 0.420 |
 | walker |  | 343 | 23 | go decl names surface in deprecated.go |  |  | 0.420 |
 | walker |  | 343 | 0 | go decl at deprecated.go:17 |  |  | 0.420 |
-| walker |  | 350 | 7 | go package + imports in context_appengine.go |  |  | 0.420 |
-| walker |  | 357 | 7 | go package + imports in path.go |  |  | 0.420 |
-| walker |  | 364 | 7 | go package + imports in version.go |  |  | 0.420 |
-| walker |  | 379 | 15 | listing of 'ginS' |  |  | 0.421 |
-| ns | 383 |  | 162 | Minimal handler example (doc.go body) | 1.7 |  | 0.253 |
-| walker |  | 394 | 15 | listing of 'testdata' |  |  | 0.253 |
-| walker |  | 408 | 14 | go decl doc at version.go:8 |  |  | 0.356 |
-| walker |  | 483 | 75 | listing of 'render' |  |  | 0.372 |
-| walker |  | 492 | 9 | docs/doc.md section #0 |  |  | 0.372 |
-| walker |  | 508 | 16 | go package + imports in doc.go |  |  | 0.379 |
+| walker |  | 359 | 16 | go package + imports in doc.go |  |  | 0.421 |
+| walker |  | 366 | 7 | go package + imports in context_appengine.go |  |  | 0.421 |
+| walker |  | 373 | 7 | go package + imports in path.go |  |  | 0.421 |
+| walker |  | 380 | 7 | go package + imports in version.go |  |  | 0.421 |
+| ns | 383 |  | 162 | Minimal handler example (doc.go body) | 1.7 |  | 0.258 |
+| walker |  | 395 | 15 | listing of 'ginS' |  |  | 0.259 |
+| walker |  | 410 | 15 | listing of 'testdata' |  |  | 0.260 |
+| walker |  | 424 | 14 | go decl doc at version.go:8 |  |  | 0.362 |
+| walker |  | 499 | 75 | listing of 'render' |  |  | 0.379 |
+| walker |  | 508 | 9 | docs/doc.md section #0 |  |  | 0.379 |
 | ns | 539 |  | 156 | binding/ directory listing | 1.8 |  | 0.245 |
 | walker |  | 577 | 69 | go decl names surface in path.go |  |  | 0.245 |
 | walker |  | 577 | 0 | go decl at path.go:23 |  |  | 0.245 |
