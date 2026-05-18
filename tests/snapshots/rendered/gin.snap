@@ -14,38 +14,6 @@ LICENSE
 Makefile
 README.md
     1→# Gin Web Framework
-    14→## 📰 Gin 1.12.0 is now available!
-    …
-    43→## Getting Started
-    …
-    45→### Prerequisites
-    …
-    50→### Installation
-    …
-    58→### Your First Gin Application
-    …
-    111→### Next Steps
-    …
-    125→## 📖 Documentation
-    …
-    127→### API Reference
-    …
-    131→### User Guides
-    …
-    140→### Official Tutorials
-    …
-    144→## ⚡ Performance Benchmarks
-    …
-    188→## 🔌 Middleware Ecosystem
-    …
-    199→## 🏢 Production Usage
-    …
-    210→## 🤝 Contributing
-    …
-    214→### How to Contribute
-    …
-    222→### Getting Started with Contributing
-    …
 auth.go
 auth_test.go
 benchmarks_test.go
@@ -59,14 +27,6 @@ binding/
         9→import "net/http"
     binding_test.go
     bson.go
-        14→type bsonBinding struct{}
-        …
-        16→func (bsonBinding) Name() string {
-        17→	return "bson"
-        20→func (b bsonBinding) Bind(req *http.Request, obj any) error {
-        …
-        28→func (bsonBinding) BindBody(body []byte, obj any) error {
-        …
     default_validator.go
     default_validator_benchmark_test.go
     default_validator_test.go
@@ -118,14 +78,6 @@ binding/
 codec/
     json/
         api.go
-            10→var API Core
-            …
-            13→type Core interface {
-            …
-            22→type Encoder interface {
-            …
-            41→type Decoder interface {
-            …
         go_json.go
         json.go
         jsoniter.go
@@ -146,10 +98,6 @@ deprecated.go
     8→	"log"
     10→	"github.com/gin-gonic/gin/binding"
     11→)
-    13→// BindWith binds the passed struct pointer using the specified binding engine.
-    14→// See the binding package.
-    15→//
-    16→// Deprecated: Use MustBindWith or ShouldBindWith.
     17→func (c *Context) BindWith(obj any, b binding.Binding) error {
     …
 deprecated_test.go
@@ -187,6 +135,66 @@ fs.go
     …
 fs_test.go
 gin.go
+    25→const (
+    26→	defaultMultipartMemory = 32 << 20 // 32 MB
+    27→	escapedColon           = "\\:"
+    28→	colon                  = ":"
+    29→	backslash              = "\\"
+    30→)
+    32→var (
+    33→	default404Body = []byte("404 page not found")
+    34→	default405Body = []byte("405 method not allowed")
+    35→)
+    37→var defaultPlatform string
+    …
+    39→var defaultTrustedCIDRs = []*net.IPNet{
+    …
+    50→// HandlerFunc defines the handler used by gin middleware as return value.
+    51→type HandlerFunc func(*Context)
+    …
+    53→// OptionFunc defines the function to change the default configuration
+    54→type OptionFunc func(*Engine)
+    …
+    56→// HandlersChain defines a HandlerFunc slice.
+    57→type HandlersChain []HandlerFunc
+    …
+    59→// Last returns the last handler in the chain. i.e. the last handler is the main one.
+    60→func (c HandlersChain) Last() HandlerFunc {
+    61→	if length := len(c); length > 0 {
+    62→		return c[length-1]
+    63→	}
+    64→	return nil
+    67→// RouteInfo represents a request route's specification which contains method and path and its handler.
+    68→type RouteInfo struct {
+    69→	Method      string
+    70→	Path        string
+    71→	Handler     string
+    72→	HandlerFunc HandlerFunc
+    73→}
+    75→// RoutesInfo defines a RouteInfo slice.
+    76→type RoutesInfo []RouteInfo
+    …
+    82→	PlatformGoogleAppEngine = "X-Appengine-Remote-Addr"
+    …
+    85→	PlatformCloudflare = "CF-Connecting-IP"
+    …
+    87→	PlatformFlyIO = "Fly-Client-IP"
+    …
+    92→type Engine struct {
+    93→	RouterGroup
+    169→	// UseH2C enable h2c support.
+    170→	UseH2C bool
+    189→}
+    191→var _ IRouter = (*Engine)(nil)
+    …
+    202→func New(opts ...OptionFunc) *Engine {
+    …
+    236→func Default(opts ...OptionFunc) *Engine {
+    …
+    243→func (engine *Engine) Handler() http.Handler {
+    …
+    820→func redirectRequest(c *Context) {
+    …
 ginS/
     README.md
         1→# Gin Default Server
@@ -240,7 +248,6 @@ render/
         16→}
         18→var bsonContentType = []string{"application/bson"}
         …
-        20→// Render (BSON) marshals the given interface object and writes data with custom ContentType.
         21→func (r BSON) Render(w http.ResponseWriter) error {
         …
         31→// WriteContentType (BSONBuf) writes BSONBuf ContentType.
@@ -283,7 +290,6 @@ render/
         16→}
         18→var protobufContentType = []string{"application/x-protobuf"}
         …
-        20→// Render (ProtoBuf) marshals the given interface object and writes data with custom ContentType.
         21→func (r ProtoBuf) Render(w http.ResponseWriter) error {
         …
         33→// WriteContentType (ProtoBuf) writes ProtoBuf ContentType.
@@ -339,18 +345,6 @@ render/
         26→func (r XML) WriteContentType(w http.ResponseWriter) {
         27→	writeContentType(w, xmlContentType)
     yaml.go
-        13→// YAML contains the given interface object.
-        14→type YAML struct {
-        15→	Data any
-        16→}
-        18→var yamlContentType = []string{"application/yaml; charset=utf-8"}
-        …
-        20→// Render (YAML) marshals the given interface object and writes data with custom ContentType.
-        21→func (r YAML) Render(w http.ResponseWriter) error {
-        …
-        33→// WriteContentType (YAML) writes YAML ContentType for response.
-        34→func (r YAML) WriteContentType(w http.ResponseWriter) {
-        35→	writeContentType(w, yamlContentType)
 response_writer.go
 response_writer_test.go
 routergroup.go

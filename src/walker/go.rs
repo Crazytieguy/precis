@@ -414,7 +414,7 @@ const GO_DECL_NAMES_CHUNK_THRESHOLD: usize = 30;
 /// ~2.5K; chunking it regressed past iterations. gin.go (832 lines)
 /// and tea.go / command.go all benefit from chunking — their full
 /// surfaces don't fit in the 10K-budget schedule at all without it.
-const GO_DECL_NAMES_CHUNK_LINE_THRESHOLD: usize = 850;
+const GO_DECL_NAMES_CHUNK_LINE_THRESHOLD: usize = 800;
 
 fn is_test_file(file: &Path) -> bool {
     file.file_name()
