@@ -343,6 +343,7 @@ fn readme_section_value(
     mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
         * readme_index_decay(range, total_h2_count)
         * canonical_usage_section_factor(range)
+        * features_section_factor(range)
 }
 
 /// Multiplier applied to README H2 sections whose title is one of the
@@ -362,6 +363,29 @@ const CANONICAL_USAGE_SECTION_FACTOR: f64 = 1.5;
 fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
     if range.parent_is_canonical_usage_h2 && matches!(range.kind, SectionKind::Whole) {
         CANONICAL_USAGE_SECTION_FACTOR
+    } else {
+        1.0
+    }
+}
+
+/// Multiplier applied to README H2 sections whose title is a
+/// features-list marker (see [`is_features_h2_title`]). A
+/// `## Features` (or `## Key features`) section is the README's
+/// high-density capability inventory — a bullet list that names
+/// every major capability of the project in a few lines. NS authors
+/// regularly anchor on it (hyperfine 1.10, beszel 1.4 + 1.6,
+/// enclosed 1.10, mcphost 1.7, log 5.1, …). At default value the
+/// section loses the V/C race to cheaper trailing one-liner sections
+/// (`## License`, `## See Also`) on long-README projects and arrives
+/// past the auto-injection budget. Only applies when the section
+/// stays as one `Whole` — a `## Features` long enough to split into
+/// per-bullet `BulletItem` children is already a different shape, and
+/// individual bullets ride their own per-item scale.
+const FEATURES_SECTION_FACTOR: f64 = 1.6;
+
+fn features_section_factor(range: &SectionRange) -> f64 {
+    if range.parent_is_features_h2 && matches!(range.kind, SectionKind::Whole) {
+        FEATURES_SECTION_FACTOR
     } else {
         1.0
     }
@@ -1359,6 +1383,13 @@ struct SectionRange {
     /// otherwise displace it on pure cost. Always false for non-README
     /// files.
     parent_is_canonical_usage_h2: bool,
+    /// True when this range's parent H2 is a README features-list
+    /// section: `## Features` / `## Key features` / `## Feature
+    /// highlights` (see [`is_features_h2_title`]). The bullet list
+    /// inside such a section is the README's high-density capability
+    /// inventory — NS authors regularly anchor on it across Rust /
+    /// Go / Python / TS projects. Always false for non-README files.
+    parent_is_features_h2: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1425,6 +1456,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     synthetic_intro_present,
                     parent_is_concept_h2: false,
                     parent_is_canonical_usage_h2: false,
+                    parent_is_features_h2: false,
                 });
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -1433,6 +1465,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     split_eligible_file && outline_will_emit && bytes >= H2_SPLIT_BYTES;
                 let body_block_split_gate = split_eligible_file && bytes >= H2_SPLIT_BYTES;
                 let usage_h2 = readme && is_canonical_usage_h2(*node, source);
+                let features_h2 = readme && is_features_h2_title(*node, source);
 
                 let bullet_items = structural_split_gate
                     .then(|| should_split_by_bullets(*node, source))
@@ -1458,6 +1491,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             synthetic_intro_present,
                             parent_is_concept_h2: false,
                             parent_is_canonical_usage_h2: false,
+                            parent_is_features_h2: false,
                         });
                     }
                     continue;
@@ -1507,6 +1541,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             synthetic_intro_present,
                             parent_is_concept_h2: false,
                             parent_is_canonical_usage_h2: usage_h2,
+                            parent_is_features_h2: features_h2,
                         });
                     }
                 }
@@ -1546,6 +1581,7 @@ fn push_intro<'a>(
         synthetic_intro_present,
         parent_is_concept_h2: false,
         parent_is_canonical_usage_h2: false,
+        parent_is_features_h2: false,
     });
 }
 
@@ -1586,6 +1622,7 @@ fn push_h3_child_or_body_blocks(
         synthetic_intro_present,
         parent_is_concept_h2,
         parent_is_canonical_usage_h2: false,
+        parent_is_features_h2: false,
     });
 }
 
@@ -1607,6 +1644,7 @@ fn push_body_block_ranges(
         synthetic_intro_present,
         parent_is_concept_h2,
         parent_is_canonical_usage_h2: false,
+        parent_is_features_h2: false,
     }));
     true
 }
@@ -1935,6 +1973,21 @@ fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
             | "quickstart"
             | "getting started"
             | "demo"
+    )
+}
+
+/// README H2 sections worth a features-list boost: title is one of
+/// the features-list markers. Used by `section_value` via
+/// `features_section_factor`. Matching is the same shape as
+/// `is_concept_h2_title` / `is_canonical_usage_h2_title` (lowercased
+/// alphanumeric prefix of the heading's inline text).
+fn is_features_h2_title(h2_section: Node<'_>, source: &str) -> bool {
+    let Some(core) = h2_title_core(h2_section, source) else {
+        return false;
+    };
+    matches!(
+        core.as_str(),
+        "features" | "key features" | "feature highlights" | "highlights"
     )
 }
 
