@@ -146,7 +146,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: MarkdownKey::ReadmeHeadline { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: readme_headline_value(&file, ctx),
+                // RST headlines carry the *entire* substantive README in
+                // one batch (no `Section` split — see the block-comment
+                // above). They're the RST equivalent of the README's
+                // ReadmeHeadline + every `## …` section combined, so the
+                // value tier should match the broader-anchor role. The
+                // long-RST cases (beets's 550-token headline) sit near
+                // the auto-injection budget edge; the boost keeps them
+                // inside the budget rather than displaced behind
+                // peripheral per-file batches.
+                value: readme_headline_value(&file, ctx) * RST_README_HEADLINE_FACTOR,
             });
         }
     }
@@ -278,6 +287,17 @@ fn summary_value(file: &Path, ctx: &WalkCtx) -> f64 {
 fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
 }
+
+/// Multiplier applied to the RST `ReadmeHeadline` batch. RST READMEs
+/// don't get `Section` / `HeadingsOutline` companion batches (no
+/// tree-sitter-md parse), so the lone `ReadmeHeadline` batch carries
+/// the *entire* substantive README in one chunk — far more NS
+/// coverage per batch than a Markdown headline (which is paired with
+/// per-section content). Lift its value tier to reflect the broader
+/// anchor role; otherwise long-RST READMEs (beets's 550-token
+/// headline) sit past the auto-injection budget because their cost
+/// loses the V/C race despite the per-token coverage being high.
+const RST_README_HEADLINE_FACTOR: f64 = 1.5;
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -> f64 {
     mix_signals(

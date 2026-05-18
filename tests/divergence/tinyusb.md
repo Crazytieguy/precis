@@ -4,9 +4,9 @@ Score(3000)=0.625 I=0.792 C=0.493 ns_rows≤3K=13/35 (reached=4 partial=2 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 50 |  | 50 | src/ directory listing — core stack subdirs | 1.1 |  | 0.000 |
 | walker |  | 107 | 107 | listing of '.' |  |  | 0.000 |
-| walker |  | 114 | 7 | listing of 'hw' |  |  | 0.000 |
 | ns | 150 |  | 100 | tusb.h init/task/deinit public entrypoints | 1.2 |  | 0.000 |
-| walker |  | 161 | 47 | README headline in README.rst |  |  | 0.000 |
+| walker |  | 154 | 47 | README headline in README.rst |  |  | 0.000 |
+| walker |  | 161 | 7 | listing of 'hw' |  |  | 0.000 |
 | walker |  | 178 | 17 | listing of 'lib' |  |  | 0.000 |
 | walker |  | 192 | 14 | listing of 'lib/SEGGER_RTT' |  |  | 0.000 |
 | walker |  | 214 | 22 | listing of 'lib/rt-thread' |  |  | 0.000 |
