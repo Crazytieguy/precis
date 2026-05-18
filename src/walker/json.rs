@@ -409,15 +409,40 @@ fn is_dependencies_key(k: &str) -> bool {
 /// repo.
 const SECONDARY_PACKAGE_JSON_FACTOR: f64 = 0.05;
 
+/// A `package.json` is a scaffold template when it lives inside a
+/// `template-*` directory or under a `templates/` ancestor. These are
+/// the npm-init / create-* stamp materials (vite's
+/// `packages/create-vite/template-vue/package.json`, etc.) — they
+/// describe a starter someone else will receive, not the repo's own
+/// API or workflow. Without demotion they flood the schedule (15+
+/// nearly-identical scripts/identity batches in vite's case),
+/// crowding out load-bearing source.
+const SCAFFOLD_TEMPLATE_PACKAGE_JSON_FACTOR: f64 = 0.05;
+
 fn secondary_package_json_factor(file: &Path) -> f64 {
     let Some(parent) = file.parent() else {
         return 1.0;
     };
     if parent.join("pyproject.toml").is_file() || parent.join("Cargo.toml").is_file() {
-        SECONDARY_PACKAGE_JSON_FACTOR
-    } else {
-        1.0
+        return SECONDARY_PACKAGE_JSON_FACTOR;
     }
+    if is_scaffold_template_path(file) {
+        return SCAFFOLD_TEMPLATE_PACKAGE_JSON_FACTOR;
+    }
+    1.0
+}
+
+/// True iff any ancestor directory of `file` is named like a scaffold
+/// template stash: literal `templates` or a `template-*` directory.
+/// Matches vite's `packages/create-vite/template-vue/`,
+/// create-react-app-style `templates/cra-template-X/`, and similar
+/// `create-*` scaffold layouts.
+fn is_scaffold_template_path(file: &Path) -> bool {
+    file.ancestors().any(|anc| {
+        anc.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
+            n == "templates" || n.starts_with("template-") || n.starts_with("cra-template-")
+        })
+    })
 }
 
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
