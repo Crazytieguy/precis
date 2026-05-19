@@ -1,573 +1,461 @@
 fixture = "aiogram"
 revision_pin = "f6b2cd53"
 summary = """
-aiogram is a large, mostly auto-generated async framework for the
-Telegram Bot API. The repository has two clearly different shapes:
+aiogram is a modern, fully asynchronous Python framework for the Telegram
+Bot API. The `aiogram` package wraps the entire Bot API surface — methods,
+types, enums — as Pydantic models, generated from `.butcher` source by an
+external codegen tool. On top of the API client (`Bot`, `BaseSession`,
+`AiohttpSession`) sits a dispatcher layer (`Router`, `Dispatcher`,
+`TelegramEventObserver`) that routes incoming `Update`s to user-defined
+handlers via filters, middlewares, and an FSM (`FSMContext`,
+`StatesGroup`, `Scene`). Webhook and long-polling are both first-class.
 
-1. A hand-written **dispatcher / runtime** that does the actual
-   framework work — `aiogram/dispatcher/`, `aiogram/fsm/`,
-   `aiogram/filters/`, `aiogram/handlers/`, `aiogram/webhook/`,
-   `aiogram/client/`, `aiogram/utils/`. This is where almost every
-   non-codegen task lands (handler/filter/middleware/FSM/scene logic,
-   polling, webhook serving, sessions, defaults, exceptions, magic
-   filters, keyboards, i18n).
-
-2. A huge, **butcher-generated API surface** under
-   `aiogram/types/` (~340 pydantic models), `aiogram/methods/` (~165
-   `TelegramMethod` subclasses), and `aiogram/enums/`. Almost every
-   file there mirrors a Telegram Bot API entity and is regenerated
-   from `.butcher/` inputs (see AGENTS.md). Catastrophic-omission
-   risk here is "agent thinks a Bot API method/type doesn't exist".
-
-The ranking prioritizes orientation that serves both: dispatcher
-public surface (Bot, Dispatcher, Router, Filter, FSM, Scene,
-BaseMiddleware, BaseSession, the `Update.event_type` switch) early
-and densely, plus location-only catalogs of the generated
-`methods/` and `types/` directories so the agent can pinpoint any
-Bot API method/type with one hop. AGENTS.md (codegen rules,
-checks, changelog gating, Serena-MCP guidance) is treated as
-first-class because misunderstanding the regen workflow is the
-canonical failure mode for contribution tasks.
+Likely agent tasks span: writing a new bot (use the dispatcher / Router /
+filters API and call `dp.start_polling(bot)` or webhook glue); adding
+handlers / FSM states / scenes; calling Bot API methods or instantiating
+types from `aiogram.types` / `aiogram.methods`; understanding the
+middleware chain (errors, user-context, FSM); plus contribution-style
+work (the codegen pipeline under `.butcher`, towncrier changelog). Ranking
+front-loads the user-facing dispatcher / Bot surface and a runnable echo
+example, then the full Bot API class catalog, then the auto-generated
+method / type / enum directories that dominate the file count.
 """
 
-# ===========================================================================
-# Tier 1 — Orientation lede: what this repo is, where things live
-# ===========================================================================
+# =====================================================================
+# Tier 1 — Top-level orientation.
+# =====================================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "Package version + Bot API version"
+descriptor = "README headline lede"
 justification = """
-Two-line file pinning both the framework's release version
-(3.28.2) and the Telegram Bot API version it targets (10.0).
-Tiny and answers a recurring question zero-follow-up. Cheap
-enough to come first under the growth envelope.
+The single sentence that defines aiogram — modern, async, Telegram Bot
+API, Python 3.10+, asyncio + aiohttp. Best zero-follow-up answer to
+"what is this repo?".
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/__meta__.py", start = 1, end = 2, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.rst", start = 37, end = 40, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "Project lede paragraph (what aiogram is)"
+descriptor = "Repository root listing"
 justification = """
-The one-paragraph "what aiogram is" — async framework over the
-Telegram Bot API, Python 3.10+, asyncio + aiohttp. Single most
-useful zero-follow-up batch for any "what is this project"
-framing. Skipped the badge block; jumped past it to the prose.
+Top-level fs layout: where the package, examples, docs, tests,
+scripts, changelog fragments live, plus build/lint config files.
 """
-content = { kind = "lines", spans = [
-    { path = "README.rst", start = 37, end = 40, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "fs"
+groups = [{ parent = ".", entries = "all" }]
 
 [[batches]]
 id = "1.3"
-descriptor = "Top-level repository layout"
+descriptor = "Package version + Bot API version"
 justification = """
-Names every immediate child of the repo root. Cheapest way to
-mitigate catastrophic omission at the directory level — surfaces
-the existence of CHANGES/, .butcher/, docs/, examples/, scripts/,
-tests/, Makefile, pyproject.toml, README.rst, AGENTS.md, CLAUDE.md
-and the `aiogram/` package itself.
+aiogram package version (3.28.2) and the target Telegram Bot API
+revision (10.0). Critical for any task involving Bot API features.
 """
-content = { kind = "fs", groups = [
-    { parent = ".", entries = "all" },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/__meta__.py", start = 1, end = 2, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "aiogram package layout (subpackages + flat modules)"
+descriptor = "`aiogram/` package directory listing"
 justification = """
-The single most important fs view in the repo: every subpackage
-(`client/`, `dispatcher/`, `enums/`, `filters/`, `fsm/`, `handlers/`,
-`methods/`, `types/`, `utils/`, `webhook/`) and the two flat
-modules (`exceptions.py`, `loggers.py`). The mental model of
-aiogram lives here. Without this the agent will guess wrong
-about where to look.
+The package layout: `client/`, `dispatcher/`, `enums/`, `filters/`,
+`fsm/`, `handlers/`, `methods/`, `types/`, `utils/`, `webhook/`, plus
+`exceptions.py`, `loggers.py`, `__meta__.py`.
 """
-content = { kind = "fs", groups = [
-    { parent = "aiogram", entries = "all" },
-] }
+[batches.content]
+kind = "fs"
+groups = [{ parent = "aiogram", entries = "all" }]
 
 [[batches]]
 id = "1.5"
-descriptor = "`aiogram/__init__.py` imports of the top-level names"
+descriptor = "Public top-level API — `__all__`"
 justification = """
-The import block that wires up the public top-level API:
-`Bot`, `Dispatcher`, `Router`, `BaseMiddleware`, the
-`MagicFilter` used for `F`, and the `html` / `md` decoration
-helpers — plus the `enums`, `methods`, `types` subpackages and
-the `session` namespace. Tells the agent exactly which modules
-back each public symbol, which is the dominant first follow-up.
+The `__all__` tuple from `aiogram/__init__.py`: `BaseMiddleware`,
+`Bot`, `Dispatcher`, `F`, `Router`, `__api_version__`, `__version__`,
+`enums`, `flags`, `html`, `md`, `methods`, `session`, `types`.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/__init__.py", start = 1, end = 15, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/__init__.py", start = 17, end = 32, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "`aiogram/__init__.py` `__all__` tuple"
+descriptor = "Public top-level API — import bindings"
 justification = """
-The `__all__` enumeration — names every public re-export from
-the top of the package in one place. Cheap location-batch that
-prevents the agent from inventing names that look like they
-should be importable but aren't.
+The `from ... import ...` lines that resolve each `__all__` entry to
+its source module. Tells the agent where each public name is defined
+(`from .client.bot import Bot`,
+`from .dispatcher.dispatcher import Dispatcher`,
+`from .utils.magic_filter import MagicFilter`, etc.).
 """
 predecessor = "1.5"
-content = { kind = "lines", spans = [
-    { path = "aiogram/__init__.py", start = 17, end = 32, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/__init__.py", start = 1, end = 15, render = { kind = "full" } },
+]
 
-# ===========================================================================
-# Tier 2 — Runtime mental model: Dispatcher, Router, Filter, Middleware,
-# Handler, FSM. The hand-written core that any non-codegen task touches.
-# ===========================================================================
+[[batches]]
+id = "1.7"
+descriptor = "README features list"
+justification = """
+The README's feature bullets (asyncio, type hints, PyPy, Bot API 10.0
++ codegen, Router/Blueprints, FSM, magic filters, middlewares,
+replies-into-webhook, i18n). Canonical capability list — zero-follow-up
+"what does aiogram support?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.rst", start = 52, end = 60, render = { kind = "full" } },
+]
+
+# =====================================================================
+# Tier 2 — Echo bot pattern.
+# =====================================================================
 
 [[batches]]
 id = "2.1"
-descriptor = "`Update.event_type` property header"
+descriptor = "examples/ directory listing"
 justification = """
-The single property that decides which observer fires for any
-inbound update — its body walks `update.message`,
-`update.callback_query`, ..., `update.managed_bot` in order
-and returns the matching name. Here we land only the header +
-docstring so the agent knows the property exists and what it
-does; the body's full enumeration is refined later as a
-deeper batch.
+Names every runnable example file: `echo_bot.py`, `echo_bot_webhook.py`,
+`finite_state_machine.py`, `error_handling.py`, `multibot.py`,
+`quiz_scene.py`, `scene.py`, `own_filter.py`, `multi_file_bot/`,
+`web_app/`, etc.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/types/update.py", start = 163, end = 171, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "fs"
+groups = [{ parent = "examples", entries = "all" }]
 
 [[batches]]
 id = "2.2"
-descriptor = "Router observers dict — message-family update types"
+descriptor = "echo_bot.py — imports + Dispatcher construction"
 justification = """
-First half of the single dict literal that maps update-type
-names to per-router observers. Lands the core message-family
-update types: `message`, `edited_message`, `channel_post`,
-`edited_channel_post`, `inline_query`, `chosen_inline_result`,
-`callback_query`, `shipping_query`, `pre_checkout_query`,
-`poll`, `poll_answer`, `my_chat_member`, `chat_member`. The
-remaining names are added by 2.3.
+Imports of `examples/echo_bot.py` are a cheat sheet for the most
+common bot pattern: `from aiogram import Bot, Dispatcher, html`,
+`DefaultBotProperties`, `ParseMode`, `CommandStart`, `Message`. Plus
+`dp = Dispatcher()`.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/dispatcher/router.py", start = 96, end = 109, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "examples/echo_bot.py", start = 1, end = 17, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "Router observers dict — newer + special update types"
+descriptor = "echo_bot.py — handler decorator + main()"
 justification = """
-Second half of the observers dict, completing the catalog with
-`chat_join_request`, `message_reaction`, `message_reaction_count`,
-`chat_boost`, `removed_chat_boost`, `deleted_business_messages`,
-`business_connection`, `edited_business_message`,
-`business_message`, `purchased_paid_media`, `managed_bot`,
-`guest_message`, plus the `error` channel (also aliased as
-`router.errors`). Together with 2.2 this is the complete
-catastrophic-omission mitigation for "which update types does
-aiogram dispatch?".
+Handler decoration (`@dp.message(CommandStart())` and `@dp.message()`),
+the `Message`-typed param, `await message.answer(...)`, plus the
+`main()` body that does `Bot(token=..., default=DefaultBotProperties(...))`
++ `await dp.start_polling(bot)`. Zero-follow-up for the basic bot
+pattern.
 """
 predecessor = "2.2"
-content = { kind = "lines", spans = [
-    { path = "aiogram/dispatcher/router.py", start = 110, end = 123, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "examples/echo_bot.py", start = 20, end = 23, render = { kind = "full" } },
+    { path = "examples/echo_bot.py", start = 30, end = 30, render = { kind = "full" } },
+    { path = "examples/echo_bot.py", start = 33, end = 34, render = { kind = "full" } },
+    { path = "examples/echo_bot.py", start = 42, end = 42, render = { kind = "full" } },
+    { path = "examples/echo_bot.py", start = 48, end = 53, render = { kind = "full" } },
+]
+
+# =====================================================================
+# Tier 3 — Dispatcher + Router core.
+# =====================================================================
 
 [[batches]]
-id = "2.4"
-descriptor = "`Router` class header + docstring + ctor"
+id = "3.1"
+descriptor = "Router class — docstring"
 justification = """
-The class header + docstring explaining the two registration
-modes (observer method and decorator), and the `__init__`
-signature showing it takes only an optional `name`. Together
-with the observers catalog (2.2 / 2.3) this is enough to use
-Router zero-follow-up for "register a handler" tasks.
+`Router` is the spine of aiogram's dispatch model. The docstring
+explains both registration styles (`router.<event_type>.register` vs
+the `@router.<event_type>(...)` decorator).
 """
-predecessor = "2.3"
-content = { kind = "lines", spans = [
-    { path = "aiogram/dispatcher/router.py", start = 16, end = 30, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/dispatcher/router.py", start = 16, end = 25, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "2.5"
-descriptor = "`Dispatcher.__init__` signature + storage/fsm wiring"
+id = "3.2"
+descriptor = "Router observer names — event-type roster"
 justification = """
-Dispatcher is the root Router. The ctor signature names the
-user-facing knobs — `storage`, `fsm_strategy`,
-`events_isolation`, `disable_fsm`, `name`, `**kwargs` (workflow
-data). Required reading for "how do I configure FSM / state".
+Every `self.<name> = TelegramEventObserver(...)` line — the canonical
+inventory of update types: `message`, `edited_message`, `channel_post`,
+`inline_query`, `callback_query`, `shipping_query`,
+`pre_checkout_query`, `poll`, `chat_member`, `chat_join_request`,
+`message_reaction`, `chat_boost`, `business_*`, `managed_bot`,
+`guest_message`, `errors`/`error`. Catastrophic omission hedge.
 """
-content = { kind = "lines", spans = [
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/dispatcher/router.py", start = 38, end = 38, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 39, end = 39, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 40, end = 40, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 45, end = 45, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 50, end = 50, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 51, end = 51, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 56, end = 56, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 57, end = 57, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 58, end = 58, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 59, end = 59, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 61, end = 61, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 66, end = 66, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 83, end = 83, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 88, end = 88, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 89, end = 89, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 91, end = 91, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Router method names"
+justification = """
+Locations for every public method on Router: `include_router`,
+`propagate_event`, `emit_startup`, `emit_shutdown`, plus the
+`chain_head` / `chain_tail` / `parent_router` properties.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/dispatcher/router.py", start = 152, end = 152, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "aiogram/dispatcher/router.py", start = 200, end = 200, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 207, end = 207, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 213, end = 213, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/router.py", start = 261, end = 261, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "aiogram/dispatcher/router.py", start = 274, end = 274, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "aiogram/dispatcher/router.py", start = 287, end = 287, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Dispatcher — header + `__init__` signature"
+justification = """
+`Dispatcher(Router)` is the root router. The signature shows the FSM
+storage / strategy / events_isolation / disable_fsm wiring — the
+config knobs any agent tunes when scaffolding a bot.
+"""
+[batches.content]
+kind = "lines"
+spans = [
     { path = "aiogram/dispatcher/dispatcher.py", start = 38, end = 52, render = { kind = "full" } },
-] }
+]
 
 [[batches]]
-id = "2.6"
-descriptor = "`Dispatcher` polling + webhook + feed entry points"
+id = "3.5"
+descriptor = "Dispatcher method names"
 justification = """
-First lines of all the Dispatcher entry points: `feed_update`
-(main update-in entry), `feed_raw_update` (dict-input variant),
-`feed_webhook_update` (returns a method to be answered into the
-webhook), `stop_polling`, `start_polling` (async runner over
-`*bots`), `run_polling` (sync wrapper, uses uvloop if available).
-Tells the agent exactly which Dispatcher method to reach for
-in any runtime topology.
+Locations for `feed_update`, `feed_raw_update`, `feed_webhook_update`,
+`stop_polling`, `start_polling`, `run_polling`. The exact entry points
+an agent calls.
 """
-predecessor = "2.5"
-content = { kind = "lines", spans = [
+[batches.content]
+kind = "lines"
+spans = [
     { path = "aiogram/dispatcher/dispatcher.py", start = 141, end = 141, render = { kind = "full" } },
     { path = "aiogram/dispatcher/dispatcher.py", start = 186, end = 186, render = { kind = "full" } },
     { path = "aiogram/dispatcher/dispatcher.py", start = 436, end = 436, render = { kind = "full" } },
     { path = "aiogram/dispatcher/dispatcher.py", start = 497, end = 497, render = { kind = "full" } },
     { path = "aiogram/dispatcher/dispatcher.py", start = 520, end = 520, render = { kind = "full" } },
     { path = "aiogram/dispatcher/dispatcher.py", start = 632, end = 632, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.7"
-descriptor = "`Filter` ABC — class header + `__call__` contract"
-justification = """
-The user-extension ABC for custom filters. Class header and the
-`__call__` signature: `async def __call__(self, *args, **kwargs)
--> bool | dict[str, Any]` — returning a dict injects keyword
-arguments into the handler call. That extension contract is
-the load-bearing knowledge for any "write a filter" task.
-"""
-content = { kind = "lines", spans = [
-    { path = "aiogram/filters/base.py", start = 9, end = 14, render = { kind = "full" } },
-    { path = "aiogram/filters/base.py", start = 23, end = 31, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.8"
-descriptor = "`Filter` — `__invert__` and `update_handler_flags`"
-justification = """
-The other two hook points on the Filter ABC: `__invert__`
-(implements `~filter`, returns an inverted filter via
-`invert_f`), and `update_handler_flags` (no-op base hook that
-filters like `Command` override to write into the handler's
-flags dict).
-"""
-predecessor = "2.7"
-content = { kind = "lines", spans = [
-    { path = "aiogram/filters/base.py", start = 33, end = 44, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.9"
-descriptor = "`BaseMiddleware` ABC"
-justification = """
-The abstract base for middlewares — defines the
-`(handler, event, data)` async-call contract. Together with
-`Filter` this is the entire user-facing extension surface
-of the dispatcher.
-"""
-content = { kind = "lines", spans = [
-    { path = "aiogram/dispatcher/middlewares/base.py", start = 1, end = 29, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.10"
-descriptor = "Filters package public surface"
-justification = """
-`from aiogram.filters import ...` enumeration: `Command`,
-`CommandObject`, `CommandStart`, `StateFilter`, `MagicData`,
-`ExceptionMessageFilter`, `ExceptionTypeFilter`, the
-`ChatMemberUpdatedFilter` and its IS_ADMIN/JOIN_TRANSITION/
-LEAVE_TRANSITION/etc. constants, the `and_f` / `or_f` /
-`invert_f` combinators, and the `BaseFilter` alias.
-Catastrophic-omission mitigation for "which builtin filters
-can I use".
-"""
-content = { kind = "lines", spans = [
-    { path = "aiogram/filters/__init__.py", start = 1, end = 23, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.11"
-descriptor = "`State` class — descriptor protocol + predicate `__call__`"
-justification = """
-The State object behaves as a descriptor: when assigned at
-class scope it grabs the attribute name as the state name and
-links to its `StatesGroup`. Its `__call__` is the predicate
-used as a filter — true if `raw_state` matches `self.state`
-(or `*` for any).
-"""
-content = { kind = "lines", spans = [
-    { path = "aiogram/fsm/state.py", start = 8, end = 38, render = { kind = "full" } },
-    { path = "aiogram/fsm/state.py", start = 50, end = 58, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.12"
-descriptor = "`StatesGroup` + `default_state` / `any_state` singletons"
-justification = """
-The `StatesGroup` class users subclass so they can declare
-states as class attributes. `get_root` walks parents up, the
-`__call__` returns true for any state-name in this group.
-Module-level `default_state` (state==None) and `any_state`
-(state=="*") singletons are the two sentinels handlers
-compare against.
-"""
-predecessor = "2.11"
-content = { kind = "lines", spans = [
-    { path = "aiogram/fsm/state.py", start = 160, end = 175, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.13"
-descriptor = "`FSMContext` — state/data access in handlers"
-justification = """
-The handle that handlers receive as the `state` kwarg.
-Methods: `set_state`, `get_state`, `set_data`, `get_data`,
-`get_value`, `update_data`, `clear`. Almost zero-follow-up
-for "how do I read/write state in a handler".
-"""
-content = { kind = "lines", spans = [
-    { path = "aiogram/fsm/context.py", start = 1, end = 22, render = { kind = "full" } },
-    { path = "aiogram/fsm/context.py", start = 33, end = 44, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.14"
-descriptor = "`StorageKey` dataclass — the FSM key shape"
-justification = """
-Frozen dataclass identifying a state slot: `bot_id`, `chat_id`,
-`user_id`, `thread_id`, `business_connection_id`, `destiny`.
-The five `FSMStrategy` modes change which subset is populated.
-Tiny but load-bearing for any "where is state scoped" question.
-"""
-content = { kind = "lines", spans = [
-    { path = "aiogram/fsm/storage/base.py", start = 9, end = 22, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.15"
-descriptor = "`BaseStorage` abstract methods"
-justification = """
-Required reading for "implement a custom storage": abstract
-methods `set_state`, `get_state`, `set_data`, `get_data`,
-`close`, with the concrete `get_value` / `update_data` helpers
-layered on top via the abstract get/set pair.
-"""
-predecessor = "2.14"
-content = { kind = "lines", spans = [
-    { path = "aiogram/fsm/storage/base.py", start = 102, end = 142, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.16"
-descriptor = "`FSMStrategy` enum + `apply_strategy`"
-justification = """
-Names the five FSM key-scoping strategies — `USER_IN_CHAT`
-(default), `CHAT`, `GLOBAL_USER`, `USER_IN_TOPIC`,
-`CHAT_TOPIC` — with one-line docstrings each, plus the
-`apply_strategy` function showing how each strategy maps
-(chat_id, user_id, thread_id). Full body, file is small.
-"""
-content = { kind = "lines", spans = [
-    { path = "aiogram/fsm/strategy.py", start = 1, end = 20, render = { kind = "full" } },
-] }
-
-# ===========================================================================
-# Tier 3 — Canonical examples, Bot/session/exceptions surface, AGENTS.md,
-# handler ABCs, webhook entry points. Semantic density for the most common
-# "write a bot" / "extend the framework" tasks.
-# ===========================================================================
-
-[[batches]]
-id = "3.1"
-descriptor = "Examples + handlers + webhook directory listings"
-justification = """
-Names every example script (echo_bot.py, echo_bot_webhook.py,
-echo_bot_webhook_ssl.py, finite_state_machine.py, scene.py,
-quiz_scene.py, multibot.py, error_handling.py, own_filter.py,
-context_addition_from_filter.py, stars_invoice.py,
-specify_updates.py, without_dispatcher.py, multi_file_bot,
-web_app), the class-based handler modules
-(message/callback_query/inline_query/poll/chat_member/...), and
-the webhook package (`aiohttp_server.py`, `security.py`).
-Catastrophic-omission mitigation for "is there an example /
-handler for X".
-"""
-content = { kind = "fs", groups = [
-    { parent = "examples", entries = "all" },
-    { parent = "aiogram/handlers", entries = "all" },
-    { parent = "aiogram/webhook", entries = "all" },
-] }
-
-[[batches]]
-id = "3.2"
-descriptor = "echo_bot.py — imports + start handler"
-justification = """
-Lines 1-30 of the canonical "hello world": the imports needed
-(`Bot`, `Dispatcher`, `html`, `DefaultBotProperties`, `ParseMode`,
-`CommandStart`, `Message`), the module-level `dp = Dispatcher()`,
-and the `@dp.message(CommandStart())` handler. Highest
-zero-follow-up batch in the repo for "show me how a handler
-looks".
-"""
-content = { kind = "lines", spans = [
-    { path = "examples/echo_bot.py", start = 1, end = 30, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.3"
-descriptor = "echo_bot.py — echo handler + `main()` runner"
-justification = """
-Lines 33-58: the catch-all `@dp.message()` echo handler
-(showing `message.send_copy` + a `TypeError` fallback), then
-the `main()` coroutine showing how a Bot is constructed
-(`Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=...))`)
-and started (`await dp.start_polling(bot)`). Together with 3.2
-this is a complete runnable example.
-"""
-predecessor = "3.2"
-content = { kind = "lines", spans = [
-    { path = "examples/echo_bot.py", start = 33, end = 58, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.4"
-descriptor = "AGENTS.md — codegen / butcher workflow"
-justification = """
-The `## Bot API/codegen workflow` section explaining that
-`aiogram/types/`, `aiogram/methods/`, `aiogram/enums/` are
-generated from `.butcher/`, must not be hand-edited
-(especially `entity.json`), and how to regenerate (`butcher
-parse / refresh / apply all`). Plus the maintainer rule about
-`.butcher` config edits over manual generated-code edits.
-This is the most important behavioural rule for any
-contribution-style task.
-"""
-content = { kind = "lines", spans = [
-    { path = "AGENTS.md", start = 72, end = 96, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.5"
-descriptor = "AGENTS.md — setup + checks loop + changelog rule"
-justification = """
-Setup incantation (`uv sync --all-extras --group dev --group
-test` + pre-commit install), the "Mandatory local checks before
-PR" quick loop (`ruff check / ruff format / mypy / pytest`),
-and the `CHANGES/<issue>.<category>.rst` requirement with the
-five valid categories (`feature`, `bugfix`, `doc`, `removal`,
-`misc`). PRs without a changelog fragment are CI-blocked
-unless tagged `skip news`.
-"""
-predecessor = "3.4"
-content = { kind = "lines", spans = [
-    { path = "AGENTS.md", start = 12, end = 17, render = { kind = "full" } },
-    { path = "AGENTS.md", start = 33, end = 44, render = { kind = "full" } },
-    { path = "AGENTS.md", start = 65, end = 70, render = { kind = "full" } },
-] }
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "`Bot` class header + `__init__` signature"
+descriptor = "Dispatcher.start_polling — full signature"
 justification = """
-Bot ctor at `aiogram/client/bot.py:275-302`: takes `token`,
-optional `session: BaseSession | None` (defaults to
-`AiohttpSession()`), optional `default: DefaultBotProperties
-| None`, and rejects legacy kwargs (`parse_mode`,
-`disable_web_page_preview`, `protect_content`) with a TypeError
-pointing at `DefaultBotProperties` (since 3.7.0). The full
-implementation file is 6000+ lines of generated method
-shortcuts; only the ctor + small id/me helpers are
-hand-written.
+Full keyword-arg list (polling_timeout, handle_as_tasks, backoff_config,
+allowed_updates, handle_signals, close_bot_session,
+tasks_concurrency_limit, **kwargs). The most-tweaked function in
+production aiogram bots.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/client/bot.py", start = 275, end = 302, render = { kind = "full" } },
-] }
+predecessor = "3.5"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/dispatcher/dispatcher.py", start = 520, end = 531, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.7"
-descriptor = "`DefaultBotProperties` — all default-knob fields"
+descriptor = "TelegramEventObserver — register + trigger"
 justification = """
-Single source of truth for what bot-wide defaults exist:
-`parse_mode`, `disable_notification`, `protect_content`,
-`allow_sending_without_reply`, `link_preview`,
-`link_preview_is_disabled`, `link_preview_prefer_small_media`,
-`link_preview_prefer_large_media`, `link_preview_show_above_text`,
-`show_caption_above_media`. Catastrophic-omission mitigation:
-agent should know exactly which defaults are bot-wide
-configurable.
+The class that backs each `router.<event_type>`. Shows the `register`
+entry point's `(callback, *filters, flags=None, **kwargs)` shape and
+the `trigger` loop that walks handlers and stops on the first match.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/client/default.py", start = 40, end = 65, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/dispatcher/event/telegram.py", start = 18, end = 25, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/event/telegram.py", start = 58, end = 65, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/event/telegram.py", start = 111, end = 116, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/event/telegram.py", start = 130, end = 130, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.8"
-descriptor = "`BaseSession` — abstract session contract"
+descriptor = "dispatcher/ + event/ + middlewares/ listings"
 justification = """
-The `BaseSession` ABC every HTTP session subclasses
-(`AiohttpSession` is the only built-in). Ctor takes
-`api: TelegramAPIServer`, `json_loads/json_dumps`, `timeout`,
-and exposes a `RequestMiddlewareManager` as `self.middleware`.
-Body has abstract `close` / `make_request` / `stream_content`
-(see file lines 142-178), plus `check_response` (3.9 below).
+Names every file under `aiogram/dispatcher/`, `event/`, and
+`middlewares/`: `router.py`, `dispatcher.py`, `flags.py`,
+`event/{bases,event,handler,telegram}.py`,
+`middlewares/{base,data,error,manager,user_context}.py`.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/client/session/base.py", start = 48, end = 75, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "aiogram/dispatcher", entries = "all" },
+    { parent = "aiogram/dispatcher/event", entries = "all" },
+    { parent = "aiogram/dispatcher/middlewares", entries = "all" },
+]
 
 [[batches]]
 id = "3.9"
-descriptor = "`BaseSession.check_response` — status-code → typed exception map"
+descriptor = "BaseMiddleware ABC"
 justification = """
-The function that maps Telegram HTTP responses to typed
-exceptions. Only the raise-statements: `TelegramRetryAfter`
-(flood control, sets `retry_after`), `TelegramMigrateToChat`,
-`TelegramBadRequest` (400), `TelegramNotFound` (404),
-`TelegramConflictError` (409), `TelegramUnauthorizedError`
-(401), `TelegramForbiddenError` (403),
-`TelegramEntityTooLarge` (413), `RestartingTelegram` /
-`TelegramServerError` (5xx).
+Every custom middleware subclasses this. The `__call__(handler, event,
+data)` contract — `handler` is the next wrapped step, `event` is a
+TelegramObject subclass, `data` is the contextual dict that gets
+mapped to handler arguments.
 """
-predecessor = "3.8"
-content = { kind = "lines", spans = [
-    { path = "aiogram/client/session/base.py", start = 120, end = 135, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/dispatcher/middlewares/base.py", start = 10, end = 29, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.10"
-descriptor = "`AiohttpSession` ctor — proxy / connection-pool knobs"
+descriptor = "ErrorsMiddleware + EventContext locations"
 justification = """
-The only built-in `BaseSession` implementation. Ctor accepts
-`proxy: _ProxyType | None` (single basic / chain /
-aiohttp_socks ProxyConnector) and `limit` (max concurrent
-connections, default 100). Pulled from the ctor signature.
+The dispatcher auto-wires these on construction. `ErrorsMiddleware`
+catches exceptions in handlers and re-propagates them as `error`
+events via the router. `EventContext` (in `middlewares/user_context.py`)
+captures chat/user/thread info for downstream handlers.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/client/session/aiohttp.py", start = 72, end = 80, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/dispatcher/middlewares/error.py", start = 16, end = 16, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/middlewares/error.py", start = 20, end = 30, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/middlewares/user_context.py", start = 22, end = 23, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/middlewares/user_context.py", start = 38, end = 38, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.11"
-descriptor = "Exception hierarchy — every class name"
+descriptor = "Update event-type dispatch — head + tail"
 justification = """
-The full public exception surface defined in
-`aiogram/exceptions.py`: `AiogramError` root,
-`DetailedAiogramError`, `CallbackAnswerException`,
-`SceneException`, `UnsupportedKeywordArgument`, then the
-Telegram tree (`TelegramAPIError`, `TelegramNetworkError`,
-`TelegramRetryAfter`, `TelegramMigrateToChat`,
-`TelegramBadRequest`, `TelegramNotFound`,
-`TelegramConflictError`, `TelegramUnauthorizedError`,
-`TelegramForbiddenError`, `TelegramServerError`,
-`RestartingTelegram`, `TelegramEntityTooLarge`), plus
-`ClientDecodeError` and `DataNotDictLikeError`. Class header
-lines only.
+`Update.event_type` walks Update's optional fields and decides which
+observer fires; the same names as `Router.observers` (batch 3.2). Head
++ tail of the if-chain; full body is redundant with 3.2.
 """
-content = { kind = "lines", spans = [
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/types/update.py", start = 163, end = 165, render = { kind = "full" } },
+    { path = "aiogram/types/update.py", start = 172, end = 173, render = { kind = "full" } },
+    { path = "aiogram/types/update.py", start = 220, end = 223, render = { kind = "full" } },
+    { path = "aiogram/types/update.py", start = 226, end = 227, render = { kind = "full" } },
+    { path = "aiogram/types/update.py", start = 230, end = 231, render = { kind = "full" } },
+]
+
+# =====================================================================
+# Tier 4 — Bot client + exceptions.
+# =====================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "Bot — constructor signature"
+justification = """
+`Bot(token, session=None, default=None, **kwargs)`. The most common
+single line in any aiogram script.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/client/bot.py", start = 275, end = 282, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Bot — `__call__` body"
+justification = """
+`Bot.__call__` delegates to `self.session(self, method, ...)` — method
+objects are how Bot API requests are made. Plus `token` and `id`
+accessors.
+"""
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/client/bot.py", start = 344, end = 346, render = { kind = "full" } },
+    { path = "aiogram/client/bot.py", start = 348, end = 349, render = { kind = "full" } },
+    { path = "aiogram/client/bot.py", start = 497, end = 504, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "DefaultBotProperties — field roster"
+justification = """
+Every well-written bot passes `default=DefaultBotProperties(...)`.
+Names every field: parse_mode, disable_notification, protect_content,
+allow_sending_without_reply, link_preview / link_preview_*,
+show_caption_above_media.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/client/default.py", start = 40, end = 41, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 46, end = 46, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 48, end = 48, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 50, end = 50, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 52, end = 52, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 54, end = 54, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 56, end = 56, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 58, end = 58, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 60, end = 60, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 62, end = 62, render = { kind = "full" } },
+    { path = "aiogram/client/default.py", start = 64, end = 64, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "Exceptions hierarchy — class names"
+justification = """
+Class declarations for every exception in `aiogram/exceptions.py`:
+`AiogramError`, `DetailedAiogramError`, `CallbackAnswerException`,
+`SceneException`, `UnsupportedKeywordArgument`, `TelegramAPIError`,
+`TelegramNetworkError`, `TelegramRetryAfter`, `TelegramMigrateToChat`,
+`TelegramBadRequest`, `TelegramNotFound`, `TelegramConflictError`,
+`TelegramUnauthorizedError`, `TelegramForbiddenError`,
+`TelegramServerError`, `RestartingTelegram`, `TelegramEntityTooLarge`,
+`ClientDecodeError`, `DataNotDictLikeError`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
     { path = "aiogram/exceptions.py", start = 8, end = 8, render = { kind = "full" } },
     { path = "aiogram/exceptions.py", start = 14, end = 14, render = { kind = "full" } },
-    { path = "aiogram/exceptions.py", start = 34, end = 34, render = { kind = "full" } },
-    { path = "aiogram/exceptions.py", start = 40, end = 40, render = { kind = "full" } },
-    { path = "aiogram/exceptions.py", start = 46, end = 46, render = { kind = "full" } },
     { path = "aiogram/exceptions.py", start = 54, end = 54, render = { kind = "full" } },
     { path = "aiogram/exceptions.py", start = 74, end = 74, render = { kind = "full" } },
     { path = "aiogram/exceptions.py", start = 82, end = 82, render = { kind = "full" } },
@@ -578,143 +466,460 @@ content = { kind = "lines", spans = [
     { path = "aiogram/exceptions.py", start = 144, end = 144, render = { kind = "full" } },
     { path = "aiogram/exceptions.py", start = 150, end = 150, render = { kind = "full" } },
     { path = "aiogram/exceptions.py", start = 156, end = 156, render = { kind = "full" } },
-    { path = "aiogram/exceptions.py", start = 162, end = 162, render = { kind = "full" } },
-    { path = "aiogram/exceptions.py", start = 174, end = 174, render = { kind = "full" } },
-    { path = "aiogram/exceptions.py", start = 182, end = 182, render = { kind = "full" } },
-    { path = "aiogram/exceptions.py", start = 202, end = 202, render = { kind = "full" } },
-] }
+]
 
 [[batches]]
-id = "3.12"
-descriptor = "`aiogram/loggers.py` — five named loggers"
+id = "4.5"
+descriptor = "client/ + session/ listings"
 justification = """
-Tiny module that declares the five framework loggers:
-`aiogram.dispatcher` (polling lifecycle), `aiogram.event`
-(per-update timing), `aiogram.middlewares`, `aiogram.webhook`,
-`aiogram.scene`. Use these names when configuring `logging`.
+Files under `aiogram/client/`: `bot.py`, `default.py`, `telegram.py`,
+`context_controller.py`, plus the `session/` subtree (`aiohttp.py`,
+`base.py`, `middlewares/`).
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/loggers.py", start = 1, end = 7, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "aiogram/client", entries = "all" },
+    { parent = "aiogram/client/session", entries = "all" },
+]
+
+# =====================================================================
+# Tier 5 — Filters + handlers.
+# =====================================================================
 
 [[batches]]
-id = "3.13"
-descriptor = "Handlers package public surface (class-based handlers)"
+id = "5.1"
+descriptor = "filters/__init__.py — `__all__`"
 justification = """
-`from aiogram.handlers import ...` enumeration: `BaseHandler`,
-`BaseHandlerMixin`, `CallbackQueryHandler`, `ChatMemberHandler`,
-`ChosenInlineResultHandler`, `ErrorHandler`,
-`InlineQueryHandler`, `MessageHandler`,
-`MessageHandlerCommandMixin`, `PollHandler`,
-`PreCheckoutQueryHandler`, `ShippingQueryHandler`. The
-alternative to function handlers when classes are preferred.
+The complete `aiogram.filters` export list: `Command`,
+`CommandObject`, `CommandStart`, `StateFilter`, `MagicData`,
+`ChatMemberUpdatedFilter`, the chat-member constants
+(`ADMINISTRATOR` / `CREATOR` / `IS_ADMIN` / `MEMBER` / `KICKED` /
+`RESTRICTED` / `LEFT` / `JOIN_TRANSITION` / `LEAVE_TRANSITION` /
+`PROMOTED_TRANSITION` / `IS_MEMBER` / `IS_NOT_MEMBER`), the logic ops
+`and_f` / `or_f` / `invert_f`, exception filters.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/handlers/__init__.py", start = 1, end = 25, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/filters/__init__.py", start = 25, end = 51, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "3.14"
-descriptor = "`BaseHandler` class-based handler ABC"
+id = "5.2"
+descriptor = "filters/ + handlers/ listings"
 justification = """
-`BaseHandler[T]`: receives an `event: T` and `**kwargs` data,
-exposes `self.bot` (extracts from data), `self.update`, and an
-abstract `handle()` coroutine. `__await__` delegates to
-`handle()` so the framework can `await BaseHandler(event,
-**data)` once registered.
+Files under `aiogram/filters/` and `aiogram/handlers/`. The handlers/
+list reveals every class-based-handler variant (callback_query,
+chat_member, chosen_inline_result, error, inline_query, message,
+poll, pre_checkout_query, shipping_query).
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/handlers/base.py", start = 20, end = 47, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "aiogram/filters", entries = "all" },
+    { parent = "aiogram/handlers", entries = "all" },
+]
 
 [[batches]]
-id = "3.15"
-descriptor = "Webhook entry points: `setup_application` + `BaseRequestHandler`"
+id = "5.3"
+descriptor = "Filter ABC — `__call__` contract"
 justification = """
-`setup_application(app, dispatcher, **kwargs)` mounts the
-dispatcher's startup/shutdown hooks onto an
-`aiohttp.Application`. `BaseRequestHandler.__init__` shows the
-public knobs: `dispatcher`, `handle_in_background`, free
-`**data`. The webhook package also exposes
-`SimpleRequestHandler` (single bot) and
-`TokenBasedRequestHandler` (multibot, exercised by
-`examples/multibot.py`).
+The base class every custom filter subclasses. `__call__` returns
+`bool | dict[str, Any]` — the dict form merges context into the
+handler call.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/webhook/aiohttp_server.py", start = 22, end = 30, render = { kind = "full" } },
-    { path = "aiogram/webhook/aiohttp_server.py", start = 86, end = 105, render = { kind = "full" } },
-] }
-
-# ===========================================================================
-# Tier 4 — Generated-API catastrophic-omission catalog.
-# `aiogram/methods/` (~165 TelegramMethod subclasses) and `aiogram/types/`
-# (~340 pydantic models) are 1-to-1 mirrors of Bot API entities. The agent
-# must be able to answer "does method/type X exist?" without guessing.
-# ===========================================================================
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/filters/base.py", start = 9, end = 9, render = { kind = "full" } },
+    { path = "aiogram/filters/base.py", start = 20, end = 20, render = { kind = "full" } },
+    { path = "aiogram/filters/base.py", start = 23, end = 24, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "4.1"
-descriptor = "aiogram/enums directory listing — all enum filenames"
+id = "5.4"
+descriptor = "Command filter — signature"
 justification = """
-Every generated `aiogram/enums/*.py` filename. File stems are
-snake_case Bot API enum names: `parse_mode`, `chat_type`,
-`chat_member_status`, `content_type`, `update_type`,
-`message_entity_type`, `sticker_format`, etc. Lets the agent
-answer "is there an enum for X?" without guessing.
+`Command(*values, commands=None, prefix='/', ignore_case=False,
+ignore_mention=False, magic=None)` and the supported pattern types
+(`str | re.Pattern | BotCommand`).
 """
-content = { kind = "fs", groups = [
-    { parent = "aiogram/enums", entries = "all" },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/filters/command.py", start = 18, end = 18, render = { kind = "full" } },
+    { path = "aiogram/filters/command.py", start = 25, end = 25, render = { kind = "full" } },
+    { path = "aiogram/filters/command.py", start = 40, end = 48, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "4.2"
-descriptor = "aiogram/methods directory listing — all method filenames"
+id = "5.5"
+descriptor = "StateFilter / Exception filters / CallbackData — locations"
 justification = """
-Every generated `aiogram/methods/*.py` filename, 1-to-1 with
-Bot API method names (`send_message`, `edit_message_text`,
-`answer_callback_query`, `set_webhook`, `get_updates`, ...,
-plus newer surfaces like stickers, gifts, business accounts,
-stars, suggested posts). Biggest catastrophic-omission
-mitigation in the repo. From here a grep / file-read against
-the matching filename gives the agent the full pydantic class
-in one hop.
+`StateFilter(*states)` where StateType =
+`str | State | StatesGroup | type[StatesGroup] | None`,
+`ExceptionTypeFilter`, `ExceptionMessageFilter`, and
+`CallbackData(BaseModel, prefix=..., sep=...)`.
 """
-content = { kind = "fs", groups = [
-    { parent = "aiogram/methods", entries = "all" },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/filters/state.py", start = 9, end = 9, render = { kind = "full" } },
+    { path = "aiogram/filters/state.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "aiogram/filters/state.py", start = 19, end = 19, render = { kind = "full" } },
+    { path = "aiogram/filters/exception.py", start = 10, end = 10, render = { kind = "full" } },
+    { path = "aiogram/filters/exception.py", start = 17, end = 17, render = { kind = "full" } },
+    { path = "aiogram/filters/exception.py", start = 30, end = 30, render = { kind = "full" } },
+    { path = "aiogram/filters/exception.py", start = 37, end = 37, render = { kind = "full" } },
+    { path = "aiogram/filters/callback_data.py", start = 24, end = 24, render = { kind = "full" } },
+    { path = "aiogram/filters/callback_data.py", start = 34, end = 34, render = { kind = "full" } },
+]
 
 [[batches]]
-id = "4.3"
-descriptor = "aiogram/utils + docs/ directory listings"
+id = "5.6"
+descriptor = "MagicFilter — `F` extension"
 justification = """
-Names every utility module (`backoff`, `callback_answer`,
-`chat_action`, `deep_linking`, `formatting`, `i18n`, `keyboard`,
-`markdown`, `media_group`, `payload`, `serialization`,
-`text_decorations`, `token`, `web_app`, `web_app_signature`,
-`magic_filter`, `class_attrs_resolver`, ...) and the docs
-sub-trees (`api/`, `dispatcher/`, `utils/`, `locale/`,
-`contributing.rst`, `install.rst`, `migration_2_to_3.rst`).
-Both are highly task-dependent reach-fors; this batch makes
-them discoverable.
+Tiny wrapper around the upstream `magic_filter` library adding
+`as_(name)` (e.g. `F.text.casefold().as_('lower')`).
 """
-content = { kind = "fs", groups = [
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/utils/magic_filter.py", start = 21, end = 23, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.8"
+descriptor = "Flags — handler metadata"
+justification = """
+`aiogram.flags` lets handlers attach named flags middlewares inspect —
+e.g. `@flags.chat_action()`. Names `FlagGenerator` / `FlagDecorator`
+and the extraction helpers `extract_flags` / `get_flag` / `check_flags`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/dispatcher/flags.py", start = 14, end = 14, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/flags.py", start = 20, end = 20, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/flags.py", start = 74, end = 74, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/flags.py", start = 91, end = 91, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/flags.py", start = 105, end = 105, render = { kind = "full" } },
+    { path = "aiogram/dispatcher/flags.py", start = 123, end = 123, render = { kind = "full" } },
+]
+
+# =====================================================================
+# Tier 6 — FSM.
+# =====================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "fsm/ + fsm/storage/ listings"
+justification = """
+Files under `aiogram/fsm/`: `context.py`, `middleware.py`, `scene.py`,
+`state.py`, `strategy.py`, plus storage backends `base.py`,
+`memory.py`, `mongo.py`, `pymongo.py`, `redis.py`.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "aiogram/fsm", entries = "all" },
+    { parent = "aiogram/fsm/storage", entries = "all" },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "FSMContext — method names"
+justification = """
+The user-facing FSM API: `FSMContext(storage, key)` plus method names
+`set_state`, `get_state`, `set_data`, `get_data`, `get_value`,
+`update_data`, `clear`. Handlers receive an `FSMContext` via the
+`state: FSMContext` arg.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/fsm/context.py", start = 7, end = 8, render = { kind = "full" } },
+    { path = "aiogram/fsm/context.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "aiogram/fsm/context.py", start = 15, end = 15, render = { kind = "full" } },
+    { path = "aiogram/fsm/context.py", start = 18, end = 18, render = { kind = "full" } },
+    { path = "aiogram/fsm/context.py", start = 21, end = 21, render = { kind = "full" } },
+    { path = "aiogram/fsm/context.py", start = 30, end = 30, render = { kind = "full" } },
+    { path = "aiogram/fsm/context.py", start = 33, end = 33, render = { kind = "full" } },
+    { path = "aiogram/fsm/context.py", start = 42, end = 42, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "State + StatesGroup + sentinels"
+justification = """
+The `class Form(StatesGroup): name = State()` pattern. `State`
+constructor + `__set_name__` (auto-names from the attribute) +
+`default_state` / `any_state` (`*`) sentinels.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/fsm/state.py", start = 8, end = 13, render = { kind = "full" } },
+    { path = "aiogram/fsm/state.py", start = 160, end = 161, render = { kind = "full" } },
+    { path = "aiogram/fsm/state.py", start = 174, end = 175, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "FSMStrategy enum"
+justification = """
+The five strategies — USER_IN_CHAT (default), CHAT, GLOBAL_USER,
+USER_IN_TOPIC, CHAT_TOPIC. Passed to Dispatcher's `fsm_strategy=`
+kwarg.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/fsm/strategy.py", start = 4, end = 18, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "StorageKey + BaseStorage abstract names"
+justification = """
+`StorageKey(bot_id, chat_id, user_id, thread_id,
+business_connection_id, destiny)` is the granularity of one FSM slot.
+`BaseStorage` lists what every backend implements: `set_state` /
+`get_state` / `set_data` / `get_data` / `update_data` / `close`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/fsm/storage/base.py", start = 14, end = 21, render = { kind = "full" } },
+    { path = "aiogram/fsm/storage/base.py", start = 102, end = 102, render = { kind = "full" } },
+    { path = "aiogram/fsm/storage/base.py", start = 108, end = 108, render = { kind = "full" } },
+    { path = "aiogram/fsm/storage/base.py", start = 117, end = 117, render = { kind = "full" } },
+    { path = "aiogram/fsm/storage/base.py", start = 126, end = 126, render = { kind = "full" } },
+    { path = "aiogram/fsm/storage/base.py", start = 135, end = 135, render = { kind = "full" } },
+    { path = "aiogram/fsm/storage/base.py", start = 173, end = 173, render = { kind = "full" } },
+    { path = "aiogram/fsm/storage/base.py", start = 187, end = 187, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.6"
+descriptor = "Scene + scene.py class roster"
+justification = """
+`Scene` class header plus locations for every class in scene.py
+(`HistoryManager`, `ObserverDecorator`, `SceneAction`,
+`ActionContainer`, `HandlerContainer`, `SceneConfig`,
+`SceneHandlerWrapper`, `Scene`, `SceneWizard`, `ScenesManager`,
+`SceneRegistry`, `After`, `ObserverMarker`, `OnMarker`). Deeper detail
+is in `examples/scene.py` / `examples/quiz_scene.py`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/fsm/scene.py", start = 32, end = 32, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 106, end = 106, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 167, end = 167, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 174, end = 174, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 199, end = 199, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 207, end = 207, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 235, end = 235, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 297, end = 297, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 442, end = 442, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 659, end = 659, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 746, end = 746, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 891, end = 891, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 908, end = 908, render = { kind = "full" } },
+    { path = "aiogram/fsm/scene.py", start = 936, end = 936, render = { kind = "full" } },
+]
+
+# =====================================================================
+# Tier 7 — Webhook server.
+# =====================================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "webhook/ listing + setup_application signature"
+justification = """
+Files under `aiogram/webhook/`: `aiohttp_server.py`, `security.py`.
+Plus `setup_application(app, dispatcher, **kwargs)` — the glue that
+wires Dispatcher's startup/shutdown hooks onto an aiohttp Application.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "aiogram/webhook", entries = "all" }]
+
+[[batches]]
+id = "7.2"
+descriptor = "RequestHandler class names"
+justification = """
+The three classes that connect aiohttp requests to
+`dispatcher.feed_webhook_update`: `BaseRequestHandler` (abstract),
+`SimpleRequestHandler(dispatcher, bot, handle_in_background=True,
+secret_token=None)`, `TokenBasedRequestHandler(dispatcher,
+handle_in_background=True, bot_settings=None)` with its
+`{bot_token}`-in-path constraint.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/webhook/aiohttp_server.py", start = 22, end = 22, render = { kind = "full" } },
+    { path = "aiogram/webhook/aiohttp_server.py", start = 86, end = 86, render = { kind = "full" } },
+    { path = "aiogram/webhook/aiohttp_server.py", start = 211, end = 211, render = { kind = "full" } },
+    { path = "aiogram/webhook/aiohttp_server.py", start = 212, end = 218, render = { kind = "full" } },
+    { path = "aiogram/webhook/aiohttp_server.py", start = 247, end = 247, render = { kind = "full" } },
+    { path = "aiogram/webhook/aiohttp_server.py", start = 248, end = 254, render = { kind = "full" } },
+]
+
+# =====================================================================
+# Tier 8 — Utils.
+# =====================================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "utils/ directory listing"
+justification = """
+Every file under `aiogram/utils/`: auth_widget, backoff,
+callback_answer, chat_action, chat_member, class_attrs_resolver,
+dataclass, deep_linking, formatting, i18n/, keyboard, link,
+magic_filter, markdown, media_group, mixins, mypy_hacks, payload,
+serialization, text_decorations, token, warnings, web_app,
+web_app_signature.
+"""
+[batches.content]
+kind = "fs"
+groups = [
     { parent = "aiogram/utils", entries = "all" },
-    { parent = "docs", entries = "all" },
-] }
+    { parent = "aiogram/utils/i18n", entries = "all" },
+]
 
 [[batches]]
-id = "4.4"
-descriptor = "Types/__init__.py — pointer + first 20 type names"
+id = "8.2"
+descriptor = "Keyboard builders + util class locations"
 justification = """
-`aiogram/types/` has 340 generated `TelegramObject` subclasses;
-listing all of them blows the budget. This batch lands the
-package-init imports for the alphabetical first 20 (anchored
-on the Bot API entity names: AcceptedGiftTypes, AffiliateInfo,
-Animation, Audio, BackgroundFill*, ...) plus the package
-header line. From here, agents grep `aiogram/types/<snake>.py`
-to find any specific type. Catastrophic-omission risk in this
-package is unusually high because the surface is so wide.
+`KeyboardBuilder` is the generic base; `InlineKeyboardBuilder` /
+`ReplyKeyboardBuilder` are the concrete classes. Also names util
+middleware classes: `I18n`, `I18nMiddleware` / `SimpleI18nMiddleware`
+/ `FSMI18nMiddleware`, `CallbackAnswerMiddleware`, `ChatActionSender` /
+`ChatActionMiddleware`. Catastrophic-omission hedge.
 """
-content = { kind = "lines", spans = [
-    { path = "aiogram/types/__init__.py", start = 1, end = 14, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/utils/keyboard.py", start = 32, end = 32, render = { kind = "full" } },
+    { path = "aiogram/utils/keyboard.py", start = 293, end = 293, render = { kind = "full" } },
+    { path = "aiogram/utils/keyboard.py", start = 369, end = 369, render = { kind = "full" } },
+    { path = "aiogram/utils/i18n/core.py", start = 16, end = 16, render = { kind = "full" } },
+    { path = "aiogram/utils/i18n/middleware.py", start = 25, end = 25, render = { kind = "full" } },
+    { path = "aiogram/utils/i18n/middleware.py", start = 97, end = 97, render = { kind = "full" } },
+    { path = "aiogram/utils/i18n/middleware.py", start = 161, end = 161, render = { kind = "full" } },
+    { path = "aiogram/utils/callback_answer.py", start = 136, end = 136, render = { kind = "full" } },
+    { path = "aiogram/utils/chat_action.py", start = 19, end = 19, render = { kind = "full" } },
+    { path = "aiogram/utils/chat_action.py", start = 347, end = 347, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.3"
+descriptor = "Logger names"
+justification = """
+The six standard logger names (`aiogram.dispatcher`, `aiogram.event`,
+`aiogram.middlewares`, `aiogram.webhook`, `aiogram.scene`) — important
+for "how do I see what aiogram logs" questions.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/loggers.py", start = 1, end = 7, render = { kind = "full" } },
+]
+
+# =====================================================================
+# Tier 9 — Codegen surface + remaining listings.
+# =====================================================================
+
+[[batches]]
+id = "9.1"
+descriptor = "enums/ directory listing"
+justification = """
+All 35 enum module filenames under `aiogram/enums/` — `parse_mode`,
+`chat_action`, `chat_member_status`, `chat_type`, `content_type`,
+`message_entity_type`, `update_type`, etc. Enums map 1:1 to Telegram
+Bot API enumerations.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "aiogram/enums", entries = "all" }]
+
+[[batches]]
+id = "9.2"
+descriptor = "TelegramMethod codegen pattern — SendMessage"
+justification = """
+A single representative method class
+(`SendMessage(TelegramMethod[Message])`): `__returning__ = Message`,
+`__api_method__ = "sendMessage"`, declarative Pydantic fields, and the
+auto-generated `__init__` guarded by `if TYPE_CHECKING:`. The shape
+all 178 method classes share.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "aiogram/methods/send_message.py", start = 20, end = 28, render = { kind = "full" } },
+    { path = "aiogram/methods/send_message.py", start = 78, end = 84, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "9.3"
+descriptor = ".butcher/ + scripts/ + CHANGES/ listings"
+justification = """
+Codegen + contributor scaffolding: `.butcher/` is the source for the
+autogenerated method/type/enum modules (don't edit generated code,
+edit here); `scripts/` has version-bump scripts; `CHANGES/` holds
+towncrier fragments per PR.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = ".butcher", entries = "all" },
+    { parent = "scripts", entries = "all" },
+    { parent = "CHANGES", entries = "all" },
+]
+
+[[batches]]
+id = "9.4"
+descriptor = "docs/ + docs/dispatcher/ + docs/utils/ listings"
+justification = """
+Sphinx docs tree: top-level `docs/`, `docs/dispatcher/` (router,
+dispatcher, long_polling, webhook, middlewares, flags, filters/,
+finite_state_machine/, class_based_handlers/, dependency_injection,
+errors), and `docs/utils/` (callback_answer, chat_action,
+deep_linking, formatting, i18n, keyboard, media_group, serialization,
+web_app).
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "docs", entries = "all" },
+    { parent = "docs/dispatcher", entries = "all" },
+    { parent = "docs/utils", entries = "all" },
+]
+
+[[batches]]
+id = "9.6"
+descriptor = "methods/ — all 178 Bot API method modules"
+justification = """
+The autogenerated Bot API surface, one file per Telegram method. Gives
+the agent the full method namespace at once and lets follow-up be a
+direct file open.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "aiogram/methods", entries = "all" }]
+
+[[batches]]
+id = "9.7"
+descriptor = "types/ — all 341 Telegram-type modules"
+justification = """
+Sibling of 9.6 for the type side. Lets the agent locate any Telegram
+type by filename. Largest batch in the NS; comes last because of its
+cost.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "aiogram/types", entries = "all" }]

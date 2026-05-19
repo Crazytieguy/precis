@@ -1,1045 +1,775 @@
 fixture = "rqlite"
 revision_pin = "c74c936d"
 summary = """
-`rqlite` is a distributed, fault-tolerant relational database written
-in Go. It puts SQLite (via a forked `go-sqlite3` driver that adds
-preupdate/commit hooks and disables checkpoint-on-close) behind the
-Raft consensus algorithm from `hashicorp/raft`. Every write goes
-through Raft and is applied by every node's FSM to its local SQLite
-file; reads can run locally with a tunable consistency level (`none`,
-`weak`, `linearizable`, `strong`). The binary is a single statically
-linked executable (`cmd/rqlited`) with a sibling CLI (`cmd/rqlite`)
-that speaks the HTTP API.
+rqlite is a Go-implemented distributed relational database: SQLite under
+Hashicorp Raft consensus, exposed over a REST/JSON HTTP API. The repository
+is a sprawling, multi-package Go module (`github.com/rqlite/rqlite/v10`) with
+two production binaries — `rqlited` (the server) and `rqlite` (the CLI) —
+plus a benchmarking tool `rqbench`.
 
-The `store/` package is the load-bearing centre: it owns the Raft
-instance, the SQLite database (via `db.SwappableDB`), the snapshot
-store, the Bolt log store, the network transport, and all the
-bookkeeping that ties those subsystems together. `db/` shapes SQLite
-to be safe under Raft (`SYNCHRONOUS=OFF`, autocheckpoint disabled,
-`MaxOpenConns(1)` on the writer, custom `CheckpointManager`). `http/`
-serves `/db/execute`, `/db/query`, `/db/request` plus snapshot,
-backup, load, boot, status, nodes endpoints. `cluster/` carries
-intra-node control-plane traffic (request forwarding, joins, removes,
-CDC high-watermark broadcast, backup streaming) multiplexed over the
-Raft port via a one-byte mux header. `snapshot/` implements a custom
-Raft snapshot store that supports full + incremental WAL-based
-snapshots with an MRSW lock so a slow follower can't stall the
-leader. `cdc/` streams row-level changes to a webhook via a BoltDB
-FIFO independent of the Raft log.
+The ranking prioritizes:
 
-This NS serves coding-agent queries spanning explanations of the
-overall architecture, locating where specific HTTP endpoints,
-SQL/Raft entry points, consistency-level semantics, snapshot
-orchestration, checkpoint coordination, cluster bootstrap/discovery,
-CDC event flow, configuration flags, command-line subcommands, or
-proto messages live. Each major package has a hand-written
-`DESIGN.md` — including these early gives strong zero-follow-up
-coverage for "why does X work this way?" questions; the function-
-signature batches give "where does X happen?" precision.
+1. Establishing the "what is this" within the first few hundred tokens —
+   distributed SQLite, Raft, single-binary, the v10 generation, the top-level
+   module path.
+2. Locating the major architectural seams. Six packages do the load-bearing
+   work: `store/` (FSM bridge to Raft + snapshot orchestration + cluster
+   formation), `db/` (SQLite wrapper, WAL ownership, CDC hook plumbing),
+   `http/` (REST API + endpoint dispatch), `cluster/` (intercluster control
+   plane + bootstrap), `snapshot/` (custom Raft snapshot store with
+   incremental snapshots), `cdc/` (Change Data Capture FIFO). Each has a
+   `DESIGN.md` that is exceptionally well-written and high-signal; surfacing
+   their key paragraphs early gives the agent semantic context that would
+   otherwise require many tool calls.
+3. Mapping the HTTP API. `/db/execute`, `/db/query`, `/db/request`,
+   `/db/backup`, `/db/load`, `/boot`, `/snapshot`, `/reap`, `/remove`,
+   `/status`, `/nodes`, `/leader`, `/readyz`, `/licenses` — agents asking
+   "how do I X via the API" or "where does request Y get handled" should
+   land directly.
+4. The configuration surface. `rqlited` has dozens of CLI flags generated
+   from `cmd/rqlited/flags.toml`; the generated `config_flags.go` Config
+   struct documents every option.
+5. The protobuf surface — every cluster message and every command type is
+   declared in three `.proto` files. These are short, structured, and
+   extremely high-value because they enumerate the entire wire API.
+
+Likely query distribution: API behavior questions (consistency levels,
+queued writes, backup/restore), Raft/snapshot internals, CDC delivery
+semantics, cluster formation/discovery, build/operate (Docker, CLI flags),
+and contributor-style "where is the code that handles X" questions.
 """
 
-# =============================================================================
-# Tier 1 — Top-level orientation: what is this repo, what packages exist
-# =============================================================================
+# ============================================================================
+# Tier 1 — Crate-level orientation. Every batch here pays off at the smallest
+# budget.
+# ============================================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "Root directory listing"
+descriptor = "rqlited one-line description"
 justification = """
-The first thing a coding agent needs is the shape of the repo: every
-top-level dir + every top-level file. Tells the agent that the major
-packages are `store/`, `db/`, `http/`, `cluster/`, `cdc/`, `snapshot/`,
-`command/`, `auth/`, `auto/`, `cmd/`, `tcp/`, `queue/`, `proxy/`,
-`internal/`, `system_test/`, `tools/`, that there's a vendored
-`DOC/` of assets, that build/CI lives in `Dockerfile`,
-`appveyor.yml`, `Vagrantfile`, `docker-entrypoint.sh`, that the
-repo uses Go modules (`go.mod`/`go.sum`), and that several
-top-level docs exist (`README.md`, `CHANGELOG.md`, `CLAUDE.md`,
-`CONTRIBUTING.md`, `LICENSE`, `doc.go`). Catastrophic-omission
-hedge: any later batch that references a top-level path lands in
-this catalog.
+The `desc` constant inside `cmd/rqlited/main.go` is the single highest-
+density "what is this" string in the repo: "rqlite is a lightweight,
+fault-tolerant relational database, which uses SQLite as its storage
+engine." Cleaner than the link-heavy README headline (which we'd have
+to truncate to fit the early-batch envelope). One short line.
 """
-content = { kind = "fs", groups = [{ parent = ".", entries = "all" }] }
+content = { kind = "lines", spans = [
+    { path = "cmd/rqlited/main.go", start = 53, end = 53, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.2"
-descriptor = "README one-paragraph lede"
+descriptor = "Top-level fs listing"
 justification = """
-The one-paragraph self-description from the README: rqlite is
-fault-tolerant, distributed, SQLite-based, lightweight, easy to
-operate. Cheap, single-paragraph, perfect for the smallest budgets.
+Every immediate child of the fixture root. Establishes the package layout
+at a glance: auth, auto, cdc, cluster, cmd, command, db, http, internal,
+proxy, queue, snapshot, store, tcp, system_test plus README/CHANGELOG/
+Dockerfile/go.mod/doc.go/CLAUDE.md/CONTRIBUTING.md. Listing the whole top
+level avoids "I only see some packages" inference, and the directory
+names are unusually descriptive in this codebase.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "README.md", start = 15, end = 15, render = { kind = "full" } },
-]
+content = { kind = "fs", groups = [
+    { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.3"
-descriptor = "Top-level Markdown H2 heading locations"
+descriptor = "Module path + Go version"
 justification = """
-Names + line numbers of every H2 heading in README.md and CLAUDE.md.
-Cheap "what sections exist?" hedge so the agent knows *which*
-sub-section to grep into later. Catastrophic-omission mitigation:
-agents won't assume there's only an Architecture section when there's
-also API, Clustering, Operational Features, Performance, etc. Later
-1.x batches that pull the body of these sections declare 1.3 as
-predecessor and override the heading line.
+go.mod first lines: module `github.com/rqlite/rqlite/v10`, go 1.26. The
+/v10 suffix is load-bearing — major-versioned Go module on its tenth
+major (consistent with CHANGELOG and the "v10 motivation" sections in
+DESIGN.md files).
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "README.md", start = 22, end = 22, render = { kind = "full" } },
-  { path = "README.md", start = 45, end = 45, render = { kind = "full" } },
-  { path = "README.md", start = 64, end = 64, render = { kind = "full" } },
-  { path = "README.md", start = 68, end = 68, render = { kind = "full" } },
-  { path = "CLAUDE.md", start = 5, end = 5, render = { kind = "full" } },
-  { path = "CLAUDE.md", start = 32, end = 32, render = { kind = "full" } },
-  { path = "CLAUDE.md", start = 41, end = 41, render = { kind = "full" } },
-  { path = "CLAUDE.md", start = 82, end = 82, render = { kind = "full" } },
-  { path = "CLAUDE.md", start = 103, end = 103, render = { kind = "full" } },
-  { path = "CLAUDE.md", start = 110, end = 110, render = { kind = "full" } },
-  { path = "CLAUDE.md", start = 118, end = 118, render = { kind = "full" } },
-  { path = "CLAUDE.md", start = 125, end = 125, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.4"
-descriptor = "doc.go package comment"
+descriptor = "Go package doc lede"
 justification = """
-The Go package comment in `doc.go` is the canonical
-one-paragraph description and adds the Raft framing that the README
-lede underplays. Cheap and authoritative.
+First sentence of doc.go's package-doc paragraph names Raft explicitly:
+"Package rqlite is a lightweight, distributed relational database built
+on SQLite. rqlite uses Raft to achieve consensus across the cluster of
+SQLite databases." Complements 1.1 (which mentioned neither Raft nor
+consensus).
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "doc.go", start = 23, end = 27, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "doc.go", start = 24, end = 24, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.5"
-descriptor = "CLAUDE.md — Architecture intro + Core Packages (store/db/http)"
-predecessor = "1.3"
+descriptor = "Quick Start: run + write"
 justification = """
-The architecture-overview paragraph + one-line role descriptions for
-the three load-bearing packages (`store/`, `db/`, `http/`). This is
-the highest-value-per-token semantic batch in the repo for an
-agent's initial mental model. Predecessor 1.3 owns the H2 heading on
-line 41.
+First half of the README Quick Start: docker-run and the INSERT-via-curl
+example to `/db/execute`. Anchors the "how do I run and write data"
+question — port 4001, JSON-array statement body, table-create + insert
+in one request.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "CLAUDE.md", start = 41, end = 51, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 26, end = 36, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "CLAUDE.md — Core Packages, remaining four"
+descriptor = "Quick Start: query"
 justification = """
-One-line role descriptions for `cluster/`, `command/`, `snapshot/`,
-`cdc/`. Completes the package catalog the rest of the NS will dive
-into.
+Second half of the Quick Start: SELECT via curl GET to `/db/query` with
+URL-encoded `q=`. Completes the read-path picture.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "CLAUDE.md", start = 53, end = 59, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 38, end = 41, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.7"
-descriptor = "CLAUDE.md — Data flow, entry points, key deps"
+descriptor = "Two production binaries"
 justification = """
-Two-line write and read data-flow sketches, the consistency-levels
-list, the three `cmd/` entry points, and the load-bearing external
-dependencies. Closes out the architecture orientation.
+Package-comment lines for both `cmd/rqlite/main.go` (CLI) and
+`cmd/rqlited/main.go` (server). Names the two binaries explicitly,
+which the agent might otherwise infer only from the cmd/ subdirs.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "CLAUDE.md", start = 61, end = 80, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "cmd/rqlite/main.go", start = 1, end = 2, render = { kind = "full" } },
+    { path = "cmd/rqlited/main.go", start = 1, end = 2, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "1.8"
-descriptor = "CLAUDE.md — HTTP API + consistency + write modes"
-predecessor = "1.3"
-justification = """
-After packages, the next-most-asked questions are about the API:
-which endpoints exist, what consistency levels do, what write modes
-do, the non-deterministic-function rewriting trick. Hand-distilled
-spec for all four. Strong zero-follow-up. Predecessor 1.3 owns the
-H2 on line 82.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "CLAUDE.md", start = 82, end = 101, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "1.9"
-descriptor = "CLAUDE.md — clustering, operational features, performance"
-predecessor = "1.3"
-justification = """
-Cluster sizing rules, discovery options, backup/restore endpoints,
-CDC delivery semantics, extensions, performance trade-offs.
-Predecessor 1.3 owns the H2 lines (103, 110, 118).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "CLAUDE.md", start = 103, end = 123, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "1.10"
-descriptor = "go.mod direct deps + replace directives"
-justification = """
-Names the load-bearing third-party deps: `hashicorp/raft`,
-`mattn/go-sqlite3` (replaced by `rqlite/go-sqlite3` fork — see the
-`replace` block at the bottom, that's the load-bearing detail for the
-preupdate-hook story in `db/`), `etcd-io/bbolt`, `protobuf`, the
-disco-clients module, aws-sdk-go-v2 (for auto-backup S3), and the
-`mkideal/cli` + `peterh/liner` pair (for the rqlite CLI). The
-`v10` module path is also load-bearing — internal imports use it.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "go.mod", start = 1, end = 24, render = { kind = "full" } },
-  { path = "go.mod", start = 82, end = 85, render = { kind = "full" } },
-]
-
-# =============================================================================
-# Tier 2 — Package directory inventories: what files exist in each package
-# =============================================================================
+# ============================================================================
+# Tier 2 — Package map. Listings of major-package contents + design-doc
+# pointers. After this tier the agent knows what exists where.
+# ============================================================================
 
 [[batches]]
 id = "2.1"
-descriptor = "cmd/ directory listing"
+descriptor = "cmd/ tree"
 justification = """
-The three binaries live here: `rqlited` (server), `rqlite` (CLI),
-`rqbench` (benchmark). Listing this dir + the version.go file tells
-agents where entry points are. Tiny cost.
+Three binaries: rqlite (CLI), rqlited (server), rqbench (benchmark).
+Listing all of cmd/ together prevents the agent from missing rqbench or
+assuming there's only one binary. Also catches CLI subpackages (history,
+http client) for one-hop-to-source on CLI questions.
 """
-content = { kind = "fs", groups = [{ parent = "cmd", entries = "all" }] }
+content = { kind = "fs", groups = [
+    { parent = "cmd", entries = "all" },
+    { parent = "cmd/rqlite", entries = "all" },
+    { parent = "cmd/rqlited", entries = "all" },
+    { parent = "cmd/rqbench", entries = "all" },
+] }
 
 [[batches]]
 id = "2.2"
-descriptor = "cmd/rqlited and cmd/rqlite listings"
+descriptor = "Contributing pointer: design docs are first-class"
 justification = """
-`rqlited` has `main.go`, `flags.go`, `flags.toml` (generated source
-of truth for CLI flags), `gen.go`, `signals.go`, `profile.go`,
-`config_flags.go`. `rqlite` has `main.go` + `backup.go`, `query.go`,
-`request.go`, `remove_node.go`, plus `history/` and `http/`
-sub-packages. Catastrophic-omission hedge for "where do the rqlited
-flags live?" / "where's the rqlite CLI backup command?".
+CONTRIBUTING.md lines 6-7 tell the reader explicitly that each package
+has its own DESIGN.md and that they should be reviewed before changes.
+Meta-fact about the codebase that changes how an agent should approach
+it — the design docs are first-class artifacts.
 """
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "cmd/rqlited", entries = "all" },
-  { parent = "cmd/rqlite", entries = "all" },
-  { parent = "cmd/rqbench", entries = "all" },
-]
+content = { kind = "lines", spans = [
+    { path = "CONTRIBUTING.md", start = 6, end = 7, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.3"
-descriptor = "store/ directory listing"
+descriptor = "store/ + db/ listing"
 justification = """
-The most important package. Lists every file so agents can find
-`store.go` (the central Store type), `fsm.go` (the Raft FSM
-delegate), `command_processor.go`, `transport.go`, `state.go`,
-`server.go`, `provider.go`, `file_fingerprint.go` (clean-snapshot
-fingerprint), `db_config.go`, plus `log/` (BoltDB log) and
-`throttler/` subdirs. Includes `DESIGN.md` so agents know to read it.
+Immediate children of the two most-load-bearing packages: store (Raft
+FSM, snapshot orchestration, cluster formation, ~3k lines in store.go)
+and db (SQLite wrapper, WAL ownership). Includes their DESIGN.md files
+(body-mined in tier 3) and the *.go file names so the agent can land
+directly on e.g. fsm.go, command_processor.go, checkpoint_manager.go,
+swappable_db.go, driver.go.
 """
-content = { kind = "fs", groups = [{ parent = "store", entries = "all" }] }
+content = { kind = "fs", groups = [
+    { parent = "store", entries = "all" },
+    { parent = "db", entries = "all" },
+] }
 
 [[batches]]
 id = "2.4"
-descriptor = "db/ directory listing"
+descriptor = "http/ + cluster/ listing"
 justification = """
-`db.go` (SQLite wrapper), `driver.go` (driver factory),
-`swappable_db.go` (RW-mutex wrapped DB), `cdc.go` (CDC streamer),
-`checkpoint_manager.go` (v10 bounded checkpointing), `state.go`
-(BreakingPragmas, IsValid* helpers), plus `wal/`, `extensions/`,
-`humanize/` subpackages. DESIGN.md is the primary reading entry.
+The REST API package and the intercluster control-plane package. http/
+contains the request parsing, the auth helpers, and the single huge
+service.go that owns every endpoint. cluster/ contains client, service,
+bootstrap, join, remove, with sub-packages disco/, proto/, servicetest/.
 """
-content = { kind = "fs", groups = [{ parent = "db", entries = "all" }] }
+content = { kind = "fs", groups = [
+    { parent = "http", entries = "all" },
+    { parent = "cluster", entries = "all" },
+] }
 
 [[batches]]
 id = "2.5"
-descriptor = "http/ directory listing"
+descriptor = "snapshot/ + cdc/ listing"
 justification = """
-`service.go` (the HTTP service with all endpoint handlers),
-`nodes.go`, `query_params.go`, `preflight.go`, `request_parser.go`,
-plus `console/` (embedded UI), `url/` and `licenses/` subpackages.
+The two remaining major-package listings. snapshot/ implements the
+custom Raft snapshot store (sink, streamer, reap-via-plan, upgrade
+paths). cdc/ implements Change Data Capture (FIFO, service, sink,
+config). Both have DESIGN.md files.
 """
-content = { kind = "fs", groups = [{ parent = "http", entries = "all" }] }
+content = { kind = "fs", groups = [
+    { parent = "snapshot", entries = "all" },
+    { parent = "cdc", entries = "all" },
+] }
 
 [[batches]]
 id = "2.6"
-descriptor = "cluster/, snapshot/, cdc/, command/ listings"
+descriptor = "Supporting packages: auth, auto, command, tcp, proxy, queue"
 justification = """
-The four other major packages. `cluster/` has bootstrap.go,
-client.go, service.go, join.go, remove.go, doc.go, plus `disco/`
-(Consul/etcd discovery) and `proto/` (protobuf). `snapshot/` has
-sink.go, sink_full.go, store.go, streamer.go, restore.go,
-upgrader.go, observer.go, staging.go, state.go, crc_checker.go,
-snapshot.go, plus `plan/` (reap plan-execute pattern), `sidecar/`
-(CRC sidecars), and `proto/`. `cdc/` has service.go, sink.go,
-fifo.go, config.go, cdc_cluster.go, plus `http-endpoint/`, `json/`,
-`regexp/`, `cdctest/` helpers. `command/` has marshal.go,
-comparators.go, stringer.go, plus `proto/`, `chunking/`,
-`encoding/`, `sql/` subpackages.
+Listings for the smaller top-level packages: auth (credentials/perms),
+auto/* (S3/GCS/file backup-restore), command (protobufs + marshal),
+tcp/* (mux + connection pool), proxy, queue. Together with 2.7 these
+cover every non-internal package.
 """
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "cluster", entries = "all" },
-  { parent = "snapshot", entries = "all" },
-  { parent = "cdc", entries = "all" },
-  { parent = "command", entries = "all" },
-]
+content = { kind = "fs", groups = [
+    { parent = "auth", entries = "all" },
+    { parent = "auto", entries = "all" },
+    { parent = "command", entries = "all" },
+    { parent = "tcp", entries = "all" },
+    { parent = "proxy", entries = "all" },
+    { parent = "queue", entries = "all" },
+] }
 
 [[batches]]
 id = "2.7"
-descriptor = "Smaller top-level packages: auth, auto, proxy, queue, tcp"
+descriptor = "internal/ subpackages"
 justification = """
-Auth has a single credential_store.go. `auto/` is the auto-backup
-and auto-restore subsystem (S3, GCS, file). `proxy/` is the
-HTTP-to-internode proxy. `queue/` is the generic batching queue
-used by HTTP queued-writes. `tcp/` is the mux/dialer layer that
-multiplexes Raft + cluster + (optionally) HTTP traffic over a
-single port. Hedge: agent won't assume these don't exist.
+Helper subpackages under internal/: fsutil, index, progress, random,
+rarchive (gzip/zip/tar), rsum (CRC), rsync (sync primitives — ready
+channels, MRSW lock, atomic types), rtls (TLS reloader). Lots of
+"why does the code call rsync.NewAtomicBool" answerable here in one
+hop.
 """
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "auth", entries = "all" },
-  { parent = "auto", entries = "all" },
-  { parent = "auto/aws", entries = "all" },
-  { parent = "auto/backup", entries = "all" },
-  { parent = "auto/restore", entries = "all" },
-  { parent = "auto/file", entries = "all" },
-  { parent = "auto/gcp", entries = "all" },
-  { parent = "proxy", entries = "all" },
-  { parent = "queue", entries = "all" },
-  { parent = "tcp", entries = "all" },
-  { parent = "tcp/pool", entries = "all" },
-]
+content = { kind = "fs", groups = [
+    { parent = "internal", entries = "all" },
+    { parent = "internal/rsync", entries = "all" },
+    { parent = "internal/rtls", entries = "all" },
+    { parent = "internal/rarchive", entries = "all" },
+] }
 
-[[batches]]
-id = "2.8"
-descriptor = "internal/ subpackage listings"
-justification = """
-Eight small leaf packages under `internal/` used everywhere:
-`fsutil/` (filesystem helpers), `index/` (single-file persisted
-index), `progress/` (progress reporter for snapshot I/O), `random/`
-(durations + jitter), `rarchive/` (gzip/zip/tar.gz/zlib/zstd
-wrappers used by backup compression), `rsum/` (crc32 + md5 helpers),
-`rsync/` (atomic primitives — AtomicBool, AtomicTime, CheckAndSet,
-ReadyChannels, ReadyTarget, SyncChannels — used pervasively in
-Store), `rtls/` (TLS config + cert reloader).
-"""
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "internal", entries = "all" },
-  { parent = "internal/fsutil", entries = "all" },
-  { parent = "internal/index", entries = "all" },
-  { parent = "internal/progress", entries = "all" },
-  { parent = "internal/random", entries = "all" },
-  { parent = "internal/rarchive", entries = "all" },
-  { parent = "internal/rsum", entries = "all" },
-  { parent = "internal/rsync", entries = "all" },
-  { parent = "internal/rtls", entries = "all" },
-]
-
-[[batches]]
-id = "2.9"
-descriptor = "store/ subpackages and db/ subpackages"
-justification = """
-`store/log/` (BoltDB-backed Raft log store), `store/throttler/`
-(rate limiter for writes under pressure). `db/wal/` (byte-level
-WAL reader/writer/scanners — the load-bearing piece for
-incremental snapshots), `db/extensions/` (extension .so store),
-`db/humanize/` (byte humanization).
-"""
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "store/log", entries = "all" },
-  { parent = "store/throttler", entries = "all" },
-  { parent = "db/wal", entries = "all" },
-  { parent = "db/extensions", entries = "all" },
-  { parent = "db/humanize", entries = "all" },
-]
-
-[[batches]]
-id = "2.10"
-descriptor = "proto/ + command sub-packages + cluster/disco + snapshot/plan + snapshot/sidecar"
-justification = """
-Listing the proto directories tells agents where the wire formats
-live (`command/proto/command.proto`, `cluster/proto/message.proto`,
-`snapshot/proto/snapshot.proto`). `command/chunking/`,
-`command/encoding/`, `command/sql/` are the small support packages.
-`cluster/disco/`, `snapshot/plan/`, `snapshot/sidecar/` round out
-the per-package sub-trees.
-"""
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "command/proto", entries = "all" },
-  { parent = "command/chunking", entries = "all" },
-  { parent = "command/encoding", entries = "all" },
-  { parent = "command/sql", entries = "all" },
-  { parent = "cluster/proto", entries = "all" },
-  { parent = "cluster/disco", entries = "all" },
-  { parent = "snapshot/proto", entries = "all" },
-  { parent = "snapshot/plan", entries = "all" },
-  { parent = "snapshot/sidecar", entries = "all" },
-]
-
-[[batches]]
-id = "2.11"
-descriptor = "system_test/ and tools/ listings"
-justification = """
-`system_test/` is the integration-test suite (Go single_node /
-multi-node / cdc / cluster / forwarding tests, helpers, e2e Python
-scripts under `e2e/`). `tools/` has the build scripts for extensions
-(`build-sqlean.sh`, `build-sqlite-vec.sh`, `build-sqliteai.sh`,
-`build-rqlite-ext.sh`), the `bash-completions/`, the protoc
-installer, and the gofmt linter wrapper. Tells agents where the
-acceptance tests and developer tooling live.
-"""
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "system_test", entries = "all" },
-  { parent = "system_test/e2e", entries = "all" },
-  { parent = "tools", entries = "all" },
-]
-
-# =============================================================================
-# Tier 3 — DESIGN.md H2 locations + Purpose paragraphs (high-value semantic
-#          context for every major package, cheaply broadcast)
-# =============================================================================
+# ============================================================================
+# Tier 3 — Architectural semantics. The DESIGN.md files are the spine of this
+# codebase's docs (CONTRIBUTING.md flags them as required reading). This tier
+# surfaces each package's Purpose paragraph + a full table of H2 headings so
+# the agent has a complete map of "what concepts each package documents".
+# ============================================================================
 
 [[batches]]
 id = "3.1"
-descriptor = "DESIGN.md H2 heading locations (all five packages)"
+descriptor = "store/ Purpose"
 justification = """
-Each of `store/`, `db/`, `cdc/`, `snapshot/`, `cluster/` has a hand-
-written DESIGN.md with many H2 sections covering motivation,
-architecture, lock structure, wire formats, lifecycle, trade-offs.
-This batch shows every H2 in every DESIGN.md with line numbers —
-agents see at a glance what topics each doc covers and can jump to
-a specific section. Catastrophic-omission hedge so the agent doesn't
-assume "Purpose" is the whole doc. Later 3.x batches that pull
-section bodies declare 3.1 as predecessor.
+The 'store is the central glue' framing: every external entry point —
+HTTP, cluster service, CDC, auto-backup — eventually goes through
+*store.Store. Most of the package's complexity is coordinating
+subsystems. Essential semantic anchor.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "store/DESIGN.md", start = 3, end = 3, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 9, end = 9, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 27, end = 27, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 48, end = 48, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 71, end = 71, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 87, end = 87, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 93, end = 93, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 102, end = 102, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 114, end = 114, render = { kind = "full" } },
-  { path = "store/DESIGN.md", start = 123, end = 123, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 3, end = 3, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 9, end = 9, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 15, end = 15, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 30, end = 30, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 42, end = 42, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 48, end = 48, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 72, end = 72, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 87, end = 87, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 95, end = 95, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 106, end = 106, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 115, end = 115, render = { kind = "full" } },
-  { path = "db/DESIGN.md", start = 119, end = 119, render = { kind = "full" } },
-  { path = "cdc/DESIGN.md", start = 3, end = 3, render = { kind = "full" } },
-  { path = "cdc/DESIGN.md", start = 7, end = 7, render = { kind = "full" } },
-  { path = "cdc/DESIGN.md", start = 13, end = 13, render = { kind = "full" } },
-  { path = "cdc/DESIGN.md", start = 78, end = 78, render = { kind = "full" } },
-  { path = "cdc/DESIGN.md", start = 158, end = 158, render = { kind = "full" } },
-  { path = "cdc/DESIGN.md", start = 171, end = 171, render = { kind = "full" } },
-  { path = "cdc/DESIGN.md", start = 185, end = 185, render = { kind = "full" } },
-  { path = "cdc/DESIGN.md", start = 211, end = 211, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 3, end = 3, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 9, end = 9, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 29, end = 29, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 58, end = 58, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 112, end = 112, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 118, end = 118, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 134, end = 134, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 148, end = 148, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 152, end = 152, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 156, end = 156, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 3, end = 3, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 11, end = 11, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 19, end = 19, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 35, end = 35, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 53, end = 53, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 70, end = 70, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 74, end = 74, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 87, end = 87, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 93, end = 93, render = { kind = "full" } },
-  { path = "cluster/DESIGN.md", start = 102, end = 102, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "store/DESIGN.md", start = 3, end = 7, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "store/DESIGN.md — Purpose paragraph"
-predecessor = "3.1"
+descriptor = "store/DESIGN.md H2 outline"
 justification = """
-Names every external entry into the Store and frames the package's
-job. The single highest-density-per-token paragraph for "what's the
-architectural role of store/?".
+Every H2 heading line in store/DESIGN.md, as locations. Tells the agent
+the doc covers: FSM Bridge, Request Path, Snapshot Orchestration,
+Clean-Snapshot Fingerprint, State and Locks, Leader Changes and
+Observers, Cluster Formation, Other Background Activity, Key Design
+Decisions. One-hop to the right section for any of these topics.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "store/DESIGN.md", start = 3, end = 7, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "store/DESIGN.md", start = 9, end = 9, render = { kind = "full" } },
+    { path = "store/DESIGN.md", start = 27, end = 27, render = { kind = "full" } },
+    { path = "store/DESIGN.md", start = 48, end = 48, render = { kind = "full" } },
+    { path = "store/DESIGN.md", start = 71, end = 71, render = { kind = "full" } },
+    { path = "store/DESIGN.md", start = 87, end = 87, render = { kind = "full" } },
+    { path = "store/DESIGN.md", start = 93, end = 93, render = { kind = "full" } },
+    { path = "store/DESIGN.md", start = 102, end = 102, render = { kind = "full" } },
+    { path = "store/DESIGN.md", start = 114, end = 114, render = { kind = "full" } },
+    { path = "store/DESIGN.md", start = 123, end = 123, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.3"
-descriptor = "db/DESIGN.md — Purpose + Background paragraphs"
-predecessor = "3.1"
+descriptor = "db/ Purpose"
 justification = """
-Frames db/ as the package that reshapes SQLite's defaults so it's
-safe under Raft. Names `SwappableDB`, `CheckpointManager`,
-`CDCEvent`, `SYNCHRONOUS=OFF`, the rqlite-owns-WAL principle.
+db owns SQLite file, WAL, connection pool, and the lifecycle of every
+PRAGMA that affects rqlite/SQLite coordination. The shaping idea:
+reshape SQLite defaults so it's safe under Raft consensus — writes
+serialized, WAL never disappears unexpectedly, checkpoint cadence
+dictated by snapshot subsystem not SQLite autocheckpointer.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "db/DESIGN.md", start = 3, end = 13, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "db/DESIGN.md", start = 3, end = 7, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.4"
-descriptor = "cdc/DESIGN.md — Purpose + Background paragraphs"
-predecessor = "3.1"
+descriptor = "db/DESIGN.md H2 outline"
 justification = """
-CDC delivery is at-least-once; the FIFO queue is decoupled from
-Raft log truncation. Two short paragraphs that frame the whole
-subsystem.
+All H2s in db/DESIGN.md: Background (how rqlite uses SQLite), Two
+Connections One Writer, Driver Factory, SwappableDB, Checkpointing,
+wal/ Subpackage, CDC Integration, Boundary Checks, Backup/Serialize/
+Dump/ReplayWAL, Extensions, Key Design Decisions. The wal subpackage
+and SwappableDB names are non-obvious and worth surfacing as locations.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "cdc/DESIGN.md", start = 3, end = 11, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "db/DESIGN.md", start = 9, end = 9, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 15, end = 15, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 30, end = 30, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 42, end = 42, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 48, end = 48, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 72, end = 72, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 87, end = 87, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 95, end = 95, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 106, end = 106, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 115, end = 115, render = { kind = "full" } },
+    { path = "db/DESIGN.md", start = 119, end = 119, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.5"
-descriptor = "snapshot/DESIGN.md — Purpose + 'why a custom store' paragraphs"
-predecessor = "3.1"
+descriptor = "http/ entry pkg comment"
 justification = """
-Explains the snapshot store's role as Raft's ground truth + the two
-motivations for the v10 custom design: incremental snapshots based
-on WAL, and the MRSW lock so a slow follower can't stall the leader.
+http/service.go line 1: package doc for the HTTP server package. No
+DESIGN.md exists for http/ — the package comment is all the prose
+documentation, and it's just one line saying what the package does.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "snapshot/DESIGN.md", start = 3, end = 7, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 21, end = 21, render = { kind = "full" } },
-  { path = "snapshot/DESIGN.md", start = 25, end = 25, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "http/service.go", start = 1, end = 2, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.6"
-descriptor = "cluster/DESIGN.md — Purpose + The Wire/Mux paragraph"
-predecessor = "3.1"
+descriptor = "cluster/ Purpose"
 justification = """
-What cluster/ does (intra-node control plane), how it shares a TCP
-port with Raft via a one-byte mux header, the wire format (8-byte
-LE length prefix + marshaled proto.Command).
+cluster owns intracluster control-plane: forwarding writes to leader,
+node metadata, join/remove, leader stepdown, CDC HWM broadcast,
+backup-ship. Critically: cluster does NOT carry Raft RPCs (those go
+through the hashicorp/raft library). cluster only contributes a mux
+header byte so Raft + cluster share one TCP port.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "cluster/DESIGN.md", start = 3, end = 17, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "cluster/DESIGN.md", start = 3, end = 9, render = { kind = "full" } },
+] }
 
-# =============================================================================
-# Tier 4 — Key entry-point content (where requests come in)
-# =============================================================================
+[[batches]]
+id = "3.7"
+descriptor = "cluster/DESIGN.md H2 outline"
+justification = """
+H2s in cluster/DESIGN.md: Wire & Multiplexed Port, Service, Client,
+Bootstrapping, Removal, Discovery (disco/), CDC HighwaterMark
+Broadcast, Backup Transport, Key Design Decisions.
+"""
+content = { kind = "lines", spans = [
+    { path = "cluster/DESIGN.md", start = 11, end = 11, render = { kind = "full" } },
+    { path = "cluster/DESIGN.md", start = 19, end = 19, render = { kind = "full" } },
+    { path = "cluster/DESIGN.md", start = 35, end = 35, render = { kind = "full" } },
+    { path = "cluster/DESIGN.md", start = 53, end = 53, render = { kind = "full" } },
+    { path = "cluster/DESIGN.md", start = 70, end = 70, render = { kind = "full" } },
+    { path = "cluster/DESIGN.md", start = 74, end = 74, render = { kind = "full" } },
+    { path = "cluster/DESIGN.md", start = 87, end = 87, render = { kind = "full" } },
+    { path = "cluster/DESIGN.md", start = 93, end = 93, render = { kind = "full" } },
+    { path = "cluster/DESIGN.md", start = 102, end = 102, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "snapshot/ Purpose"
+justification = """
+snapshot/ implements rqlite's custom Raft snapshot store. The Purpose
+paragraph names the contract: if Raft log is truncated up to index N,
+the snapshot store must be able to produce database state at index N.
+"""
+content = { kind = "lines", spans = [
+    { path = "snapshot/DESIGN.md", start = 3, end = 7, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "snapshot/DESIGN.md H2 outline"
+justification = """
+H2s in snapshot/DESIGN.md: Background, Core Concepts (snapshot
+types, ordering, ChecksummedFile), Architecture, WAL Staging, Wire
+Format, Store Lifecycle, Full Snapshot Trigger, Upgrade Support, Key
+Design Decisions. Surfaces "incremental snapshots" + "plan-execute" as
+concepts.
+"""
+content = { kind = "lines", spans = [
+    { path = "snapshot/DESIGN.md", start = 9, end = 9, render = { kind = "full" } },
+    { path = "snapshot/DESIGN.md", start = 29, end = 29, render = { kind = "full" } },
+    { path = "snapshot/DESIGN.md", start = 58, end = 58, render = { kind = "full" } },
+    { path = "snapshot/DESIGN.md", start = 112, end = 112, render = { kind = "full" } },
+    { path = "snapshot/DESIGN.md", start = 118, end = 118, render = { kind = "full" } },
+    { path = "snapshot/DESIGN.md", start = 134, end = 134, render = { kind = "full" } },
+    { path = "snapshot/DESIGN.md", start = 148, end = 148, render = { kind = "full" } },
+    { path = "snapshot/DESIGN.md", start = 152, end = 152, render = { kind = "full" } },
+    { path = "snapshot/DESIGN.md", start = 156, end = 156, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "cdc/ Purpose + at-least-once contract"
+justification = """
+cdc/ streams row-level changes (INSERT/UPDATE/DELETE) to a webhook as
+JSON over HTTP, at-least-once delivery. The contract sentence is the
+key fact for downstream-consumer questions about deduplication.
+"""
+content = { kind = "lines", spans = [
+    { path = "cdc/DESIGN.md", start = 3, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "cdc/DESIGN.md H2 outline"
+justification = """
+H2s in cdc/DESIGN.md: Background (separate FIFO over Raft replay),
+Architecture Overview, Key Components, Snapshot Synchronization,
+Leadership Transitions, Configuration, Key Design Decisions. Surfaces
+the "FIFO independent of Raft log" decision as locatable.
+"""
+content = { kind = "lines", spans = [
+    { path = "cdc/DESIGN.md", start = 7, end = 7, render = { kind = "full" } },
+    { path = "cdc/DESIGN.md", start = 13, end = 13, render = { kind = "full" } },
+    { path = "cdc/DESIGN.md", start = 78, end = 78, render = { kind = "full" } },
+    { path = "cdc/DESIGN.md", start = 158, end = 158, render = { kind = "full" } },
+    { path = "cdc/DESIGN.md", start = 171, end = 171, render = { kind = "full" } },
+    { path = "cdc/DESIGN.md", start = 185, end = 185, render = { kind = "full" } },
+    { path = "cdc/DESIGN.md", start = 211, end = 211, render = { kind = "full" } },
+] }
+
+# ============================================================================
+# Tier 4 — HTTP API surface. The endpoint switch block is the single most
+# load-bearing piece of code in this repo for "where does request X go". Pull
+# it as one cohesive batch (it would be catastrophic-omission to show only
+# some endpoints). Plus the Store interface that scopes what the HTTP layer
+# can call.
+# ============================================================================
 
 [[batches]]
 id = "4.1"
-descriptor = "http ServeHTTP — the URL → handler dispatch switch"
+descriptor = "HTTP endpoint dispatch switch"
 justification = """
-This is the single most-asked precision question — "where is the
-/db/execute endpoint handled?". The switch statement enumerates
-*every* URL path the HTTP server serves and dispatches to the
-corresponding handler. Strong zero-follow-up coverage for any
-endpoint-location query, and it doubles as an inventory of HTTP
-endpoints.
+ServeHTTP's case block enumerates every URL prefix the rqlited server
+recognizes: /console, /db/execute, /db/query, /db/request, /db/backup,
+/db/load, /db/sql, /boot, /snapshot, /reap, /remove, /status, /nodes,
+/leader, /readyz, /licenses, /debug/vars, /debug/pprof. Each branch
+names the handler fn (handleExecute, handleBackup, etc.) — the agent
+can grep that name to find the implementation. Catastrophic-omission
+hedge: pulling only some endpoints would mislead the agent into
+thinking the others don't exist.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "http/service.go", start = 437, end = 438, render = { kind = "full" } },
-  { path = "http/service.go", start = 456, end = 514, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "http/service.go", start = 456, end = 514, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.2"
-descriptor = "http Store + Cluster interfaces"
+descriptor = "http Store interface"
 justification = """
-The HTTP layer talks to the Store via a small interface, not the
-concrete `*store.Store`. This batch shows the exact methods the
-HTTP layer depends on (Leader/Nodes/Ready/Committed/Stats/Snapshot/
-Reap/ReadFrom) plus the Cluster and CredentialStore interfaces.
-High value for understanding the package boundary; lets the agent
-answer "what does HTTP need from Store?" without reading store.go.
+The interface the HTTP layer requires its store dependency to satisfy
+(Store: Leader, Nodes, Ready, Committed, Stats, Snapshot, Reap,
+ReadFrom). Closest thing to a "public API surface" for the storage
+layer as seen by the REST API.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "http/service.go", start = 52, end = 52, render = { kind = "full" } },
-  { path = "http/service.go", start = 54, end = 54, render = { kind = "full" } },
-  { path = "http/service.go", start = 57, end = 57, render = { kind = "full" } },
-  { path = "http/service.go", start = 60, end = 60, render = { kind = "full" } },
-  { path = "http/service.go", start = 64, end = 64, render = { kind = "full" } },
-  { path = "http/service.go", start = 67, end = 67, render = { kind = "full" } },
-  { path = "http/service.go", start = 70, end = 70, render = { kind = "full" } },
-  { path = "http/service.go", start = 74, end = 74, render = { kind = "full" } },
-  { path = "http/service.go", start = 79, end = 80, render = { kind = "full" } },
-  { path = "http/service.go", start = 84, end = 86, render = { kind = "full" } },
-  { path = "http/service.go", start = 89, end = 94, render = { kind = "full" } },
-  { path = "http/service.go", start = 97, end = 100, render = { kind = "full" } },
-  { path = "http/service.go", start = 103, end = 105, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "http/service.go", start = 51, end = 80, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.3"
-descriptor = "store FSM — Raft FSM delegate type"
+descriptor = "http Cluster + CredentialStore interfaces"
 justification = """
-The FSM type is a thin wrapper around `*Store` that delegates
-Apply/Snapshot/Restore — the central design decision the store
-DESIGN.md discusses. The whole type + delegating methods fit in 13
-lines.
+The other interfaces HTTP requires: GetNodeMetaer + Cluster (only
+GetNodeMeta + Stats), and CredentialStore (only AA() — auth + authz
+in one call). Small, complete enumeration of what HTTP demands of its
+collaborators.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "store/fsm.go", start = 17, end = 39, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "http/service.go", start = 82, end = 100, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.4"
-descriptor = "store FSMSnapshot wrapper — instrumented snapshot+Finalizer hooks"
-predecessor = "4.3"
+descriptor = "auth permission constants"
 justification = """
-The FSMSnapshot wrapper carries Finalizer (the
-`createSnapshotFingerprint` callback that writes the clean-snapshot
-file) and OnRelease (`(invoked, succeeded)` flags that drive the
-`FULL_NEEDED` recovery logic). These hooks are referenced repeatedly
-in store/DESIGN.md.
+Every permission name in auth/credential_store.go (PermAll, PermJoin,
+PermJoinReadOnly, PermRemove, PermExecute, PermQuery, PermStatus,
+PermReady, PermBackup, PermLoad, PermSnapshot, PermLeaderOps, PermUI).
+These strings appear in the auth config file; the full list prevents
+the agent from inventing perms that don't exist.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "store/fsm.go", start = 41, end = 53, render = { kind = "full" } },
-  { path = "store/fsm.go", start = 54, end = 55, render = { kind = "full" } },
-  { path = "store/fsm.go", start = 82, end = 83, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "auth/credential_store.go", start = 11, end = 42, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "4.5"
-descriptor = "rqlited startup waypoints — section comments"
-justification = """
-The waypoint comments in `cmd/rqlited/main.go` enumerate the startup
-order: signal handling → flag parsing → mux listen → Raft layer →
-extension store → Store creation → auto-restore → credential store
-→ cluster service → cluster client → CDC service → proxy → HTTP
-service → Store open → status providers → cluster creation → user-
-visible log of API addr → auto-backups → block until shutdown →
-remove on shutdown / stepdown → close. Cheap location batch — the
-agent can grep the file for any specific waypoint after seeing them
-all.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "cmd/rqlited/main.go", start = 69, end = 69, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 83, end = 83, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 90, end = 90, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 93, end = 93, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 103, end = 103, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 115, end = 115, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 125, end = 125, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 131, end = 131, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 161, end = 161, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 167, end = 167, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 173, end = 173, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 179, end = 179, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 188, end = 188, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 192, end = 192, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 202, end = 202, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 207, end = 207, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 224, end = 224, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 233, end = 233, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 239, end = 239, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 248, end = 248, render = { kind = "full" } },
-  { path = "cmd/rqlited/main.go", start = 251, end = 252, render = { kind = "full" } },
-]
-
-# =============================================================================
-# Tier 5 — Public-fn signature locations for major packages
-#          (truncated to fn name + params, broadcast-many-locations cheaply)
-# =============================================================================
+# ============================================================================
+# Tier 5 — Wire-protocol enumeration. The three .proto files are unusually
+# structured + cheap-to-include — they define the *full* externally-visible
+# data shapes.
+# ============================================================================
 
 [[batches]]
 id = "5.1"
-descriptor = "store Store — public Execute/Query/Request + lifecycle method signatures"
+descriptor = "snapshot proto: full wire format"
 justification = """
-The most-asked location batch for store/: names + line numbers of
-every public method on `*Store`. Truncated to fn name + parameter
-list (no return types, no body). Covers the SQL request entry
-points (Execute, Query, Request, VerifyLeader), the lifecycle
-methods (Open, Close, Bootstrap, Notify, Join, Remove, Stepdown),
-the state getters (Leader/Nodes/IsLeader/State/CommitIndex/etc),
-and the snapshot/backup/load/CDC entry points. Catastrophic-omission
-hedge: agents see every public method in one shot.
+snapshot/proto/snapshot.proto is only 27 lines, defining Header,
+FullSnapshot, IncrementalFileSnapshot, and SnapshotHeader. Including
+the whole file gives the agent the entire snapshot wire format without
+any follow-up. Tiny, semantic-rich.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "store/store.go", start = 513, end = 513, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 528, end = 528, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 846, end = 846, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 882, end = 882, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 920, end = 920, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 926, end = 926, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 935, end = 935, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 943, end = 943, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 952, end = 952, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1021, end = 1021, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1028, end = 1028, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1040, end = 1040, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1047, end = 1047, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1052, end = 1052, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1088, end = 1088, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1136, end = 1136, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1153, end = 1153, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1251, end = 1251, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1278, end = 1278, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1288, end = 1288, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1301, end = 1301, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1323, end = 1323, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1437, end = 1437, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1495, end = 1495, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1597, end = 1597, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1621, end = 1621, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1738, end = 1738, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1887, end = 1887, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 1944, end = 1944, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 2012, end = 2012, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 2024, end = 2024, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 2041, end = 2041, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 2059, end = 2059, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 2087, end = 2087, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 2145, end = 2145, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 2213, end = 2213, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "store/store.go", start = 2237, end = 2237, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-]
+content = { kind = "lines", spans = [
+    { path = "snapshot/proto/snapshot.proto", start = 1, end = 27, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.2"
-descriptor = "http handler method signatures"
+descriptor = "cluster proto: Command oneof + COMMAND_TYPE_* enum"
 justification = """
-Every `handle*` method in http/service.go that's wired to a URL
-path. Reading 4.1 (the ServeHTTP switch) lands the agent on the
-right `handle*` name; this batch then tells them what line each
-lives on. Cheap broadcast — line numbers come for free.
+cluster/proto/message.proto lines 19-53 contain the Command message
+and every COMMAND_TYPE_* enum value (GET_NODE_META, EXECUTE, QUERY,
+BACKUP, LOAD, REMOVE_NODE, NOTIFY, JOIN, REQUEST, LOAD_CHUNK,
+BACKUP_STREAM, STEPDOWN, HIGHWATER_MARK_UPDATE). The canonical list of
+intercluster control-plane messages — pulling the whole enum together
+is the catastrophic-omission hedge.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "http/service.go", start = 529, end = 529, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 588, end = 588, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 659, end = 659, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 707, end = 707, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 781, end = 781, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 812, end = 812, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 835, end = 835, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 863, end = 863, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1000, end = 1000, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1051, end = 1051, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1148, end = 1148, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1224, end = 1224, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1242, end = 1242, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1254, end = 1254, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1276, end = 1276, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1336, end = 1336, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1410, end = 1410, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1502, end = 1502, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1578, end = 1578, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1601, end = 1601, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1658, end = 1658, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "http/service.go", start = 1735, end = 1735, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-]
+content = { kind = "lines", spans = [
+    { path = "cluster/proto/message.proto", start = 19, end = 53, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.3"
-descriptor = "db DB — public method signatures"
+descriptor = "command proto: Parameter/Statement/Request"
 justification = """
-Public methods on `*DB` and `Open*` constructors in `db/db.go`:
-opening, checkpointing (single most-asked db/ topic), pre-update /
-update / commit hook registration, integrity check, backup, vacuum,
-serialize, execute/query primitives. Cheap location batch.
+The core request shapes — Parameter (oneof i/d/b/y/s for typed values),
+Statement (sql + parameters + forceQuery + sql_explain), and Request
+(transaction + statements + dbTimeout + rollbackOnError +
+qualifyColumns). Lines 13-38.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "db/db.go", start = 236, end = 236, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 244, end = 244, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 353, end = 353, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 461, end = 461, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 522, end = 522, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 591, end = 591, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 599, end = 599, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 740, end = 740, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 749, end = 749, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 804, end = 804, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 860, end = 860, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 867, end = 867, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 881, end = 881, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 898, end = 898, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 917, end = 917, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 958, end = 958, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 1099, end = 1099, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 1111, end = 1111, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "db/db.go", start = 1122, end = 1122, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-]
+content = { kind = "lines", spans = [
+    { path = "command/proto/command.proto", start = 13, end = 38, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.4"
-descriptor = "cluster Client public method signatures"
+descriptor = "command proto: ConsistencyLevel + Query/Execute requests"
 justification = """
-The `Client` is the send side of intra-cluster traffic. Reading
-this catalog tells the agent which methods exist for forwarding
-Execute/Query/Request to the leader, for joins, removes, stepdown,
-backup streaming, HWM broadcast.
+The ConsistencyLevel enum (NONE / WEAK / STRONG / AUTO / LINEARIZABLE)
+and the QueryRequest/QueryRows/ExecuteRequest/ExecuteResult/
+ExecuteQueryRequest/ExecuteQueryResponse messages. Critical for any
+"how do I set consistency" / "what consistency options are there"
+question.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "cluster/client.go", start = 96, end = 96, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 107, end = 107, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 171, end = 171, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 195, end = 195, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 227, end = 227, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 259, end = 259, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 291, end = 291, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 348, end = 348, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 380, end = 380, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 424, end = 424, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 468, end = 468, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 512, end = 512, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 564, end = 564, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/client.go", start = 690, end = 690, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-]
+content = { kind = "lines", spans = [
+    { path = "command/proto/command.proto", start = 40, end = 96, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.5"
-descriptor = "cdc Service + snapshot Store + cluster Service — public method signatures"
+descriptor = "command proto: Command type + cluster-membership requests"
 justification = """
-Three packages' public APIs in one batch. cdc/service.go: Start,
-Stop, HighWatermark, NumEndpointRetries, IsLeader, SetLeader, Stats.
-snapshot/store.go: Create, Open, Reap, DueNext, SetDueNext, Close,
-List, LatestIndexTerm. cluster/service.go: New, Open, Close, Stats,
-RegisterHWMUpdate, GetAPIAddr/SetAPIAddr, GetVersion/SetVersion,
-GetNodeAPIURL. All truncated.
+The top-level Command type enum with COMMAND_TYPE_QUERY/EXECUTE/NOOP/
+LOAD/JOIN/EXECUTE_QUERY/LOAD_CHUNK plus the cluster-membership request
+shapes (JoinRequest, NotifyRequest, RemoveNodeRequest, StepdownRequest,
+Noop). The Command type enum here is distinct from cluster/proto's
+COMMAND_TYPE_*; they overlap conceptually but live at different layers.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "cdc/service.go", start = 169, end = 169, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cdc/service.go", start = 251, end = 251, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cdc/service.go", start = 277, end = 277, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cdc/service.go", start = 293, end = 293, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cdc/service.go", start = 299, end = 299, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cdc/service.go", start = 304, end = 304, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cdc/service.go", start = 312, end = 312, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cdc/service.go", start = 317, end = 317, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 223, end = 223, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 262, end = 262, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 300, end = 300, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 327, end = 327, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 373, end = 373, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 437, end = 437, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 470, end = 470, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 646, end = 646, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "snapshot/store.go", start = 660, end = 660, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/service.go", start = 183, end = 183, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/service.go", start = 196, end = 196, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/service.go", start = 203, end = 203, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/service.go", start = 209, end = 209, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-  { path = "cluster/service.go", start = 257, end = 257, render = { kind = "truncated", pattern = "^[^(]+\\(" } },
-]
+content = { kind = "lines", spans = [
+    { path = "command/proto/command.proto", start = 124, end = 162, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.6"
-descriptor = "command.proto — top-level message + enum declarations"
+descriptor = "command proto: CDC event shape"
 justification = """
-The wire schema. Names every proto message (Statement, Request,
-QueryRequest, ExecuteRequest, ExecuteQueryRequest, BackupRequest,
-LoadRequest, LoadChunkRequest, JoinRequest, NotifyRequest,
-RemoveNodeRequest, StepdownRequest, Noop, Command — the wrapper —
-CDCValue/CDCRow/CDCEvent and the indexed-group flavors) plus the
-two key enums (Suffrage, ConsistencyLevel — `NONE/WEAK/STRONG/AUTO/
-LINEARIZABLE`). Strong zero-follow-up for "is there a proto for X?".
+CDCValue / CDCRow / CDCEvent / CDCIndexedEventGroup messages. The
+proto-side shape that webhook consumers see (modulo proto-to-JSON
+conversion). Plus the Operation enum (INSERT/UPDATE/DELETE). Self-
+contained block — directly answers "what's the format of a CDC event".
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "command/proto/command.proto", start = 7, end = 7, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 13, end = 13, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 24, end = 24, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 32, end = 32, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 40, end = 45, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 48, end = 48, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 57, end = 57, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 61, end = 61, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 69, end = 69, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 74, end = 74, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 81, end = 81, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 90, end = 90, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 98, end = 98, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 112, end = 112, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 124, end = 124, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 130, end = 130, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 135, end = 135, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 139, end = 139, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 148, end = 148, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 164, end = 164, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 174, end = 174, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 178, end = 178, render = { kind = "full" } },
-  { path = "command/proto/command.proto", start = 195, end = 195, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "command/proto/command.proto", start = 164, end = 200, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "5.7"
-descriptor = "rqlite CLI — dot-command names (truncated)"
-justification = """
-The interactive `rqlite` CLI has ~30 dot-commands (.backup, .boot,
-.consistency, .dump, .extensions, .leader, .mode, .nodes, .reap,
-.remove, .restore, .schema, .snapshot, .status, .stepdown, .tables,
-…). The cliHelp slice in cmd/rqlite/main.go is the canonical
-enumeration. Truncated to just the command + args to cut cost.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "cmd/rqlite/main.go", start = 66, end = 95, render = { kind = "truncated", pattern = "^[^ ]+`?[A-Z\\[]*[^ ]*" } },
-]
-
-
-[[batches]]
-id = "5.8"
-descriptor = "auth permission constants"
-justification = """
-Reading/writing rqlite is gated by per-permission credential checks.
-`auth/credential_store.go` defines every permission constant (PermAll,
-PermJoin, PermJoinReadOnly, PermRemove, PermExecute, PermQuery,
-PermStatus, PermReady, PermBackup, PermLoad, PermSnapshot,
-PermLeaderOps, PermUI) — together they enumerate every authority an
-rqlite credential can carry. Catastrophic-omission hedge: agent
-won't invent perms that don't exist.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "auth/credential_store.go", start = 17, end = 17, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 19, end = 19, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 21, end = 21, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 23, end = 23, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 25, end = 25, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 27, end = 27, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 29, end = 29, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 31, end = 31, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 33, end = 33, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 35, end = 35, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 37, end = 37, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 39, end = 39, render = { kind = "full" } },
-  { path = "auth/credential_store.go", start = 41, end = 41, render = { kind = "full" } },
-]
-
-# =============================================================================
-# Tier 6 — Targeted refinements: key types, config flags, DESIGN.md detail
-# =============================================================================
+# ============================================================================
+# Tier 6 — Targeted code-surface batches. Function/method signatures + key
+# struct fields for store, db, and HTTP. These get the agent to "I can name
+# the function that does X" with no follow-up.
+# ============================================================================
 
 [[batches]]
 id = "6.1"
-descriptor = "store package errors — name + literal"
+descriptor = "store.Store struct: core fields"
 justification = """
-Every sentinel error the package returns: ErrNotOpen, ErrOpen,
-ErrNotReady, ErrNotLeader, ErrLeaderNotFound, ErrNotSingleNode,
-ErrStaleRead, ErrStrongReadNeeded, ErrOpenTimeout,
-ErrWaitForRemovalTimeout, ErrWaitForLeaderTimeout,
-ErrWaitForFSMTimeout, ErrInvalidBackupFormat, ErrBackupCASFailed,
-ErrCDCEnabled, ErrInvalidVacuum, ErrLoadInProgress,
-ErrNothingNewToSnapshot, ErrNodeNotFound, ErrClusterNotFound,
-ErrNoWALToSnapshot. Each line is shown verbatim (`= errors.New(...)`)
-so the agent sees both name and message.
+The first ~40 fields of the Store struct (line 311 type-decl through
+line 348). The Store deliberately has ~80 fields ("Single struct, many
+concerns" — store/DESIGN.md). The fields named here cover the main
+sub-systems: raft + raftTn, ly (Layer = mux), dbDrv + db + checkpointer,
+the cdc{Mu,Streamer,OutCh,IDsOnly,TableRe,Enabled,Registered} group
+(CDC wiring), dechunkManager, cmdProc (CommandProcessor — used in
+RecoverNode too). Inline comments document each field — keep Full so
+the comments survive.
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "store/store.go", start = 46, end = 46, render = { kind = "full" } },
-  { path = "store/store.go", start = 49, end = 49, render = { kind = "full" } },
-  { path = "store/store.go", start = 52, end = 52, render = { kind = "full" } },
-  { path = "store/store.go", start = 56, end = 56, render = { kind = "full" } },
-  { path = "store/store.go", start = 59, end = 59, render = { kind = "full" } },
-  { path = "store/store.go", start = 63, end = 63, render = { kind = "full" } },
-  { path = "store/store.go", start = 67, end = 67, render = { kind = "full" } },
-  { path = "store/store.go", start = 71, end = 71, render = { kind = "full" } },
-  { path = "store/store.go", start = 75, end = 75, render = { kind = "full" } },
-  { path = "store/store.go", start = 79, end = 79, render = { kind = "full" } },
-  { path = "store/store.go", start = 83, end = 83, render = { kind = "full" } },
-  { path = "store/store.go", start = 87, end = 87, render = { kind = "full" } },
-  { path = "store/store.go", start = 91, end = 91, render = { kind = "full" } },
-  { path = "store/store.go", start = 94, end = 94, render = { kind = "full" } },
-  { path = "store/store.go", start = 97, end = 97, render = { kind = "full" } },
-  { path = "store/store.go", start = 101, end = 101, render = { kind = "full" } },
-  { path = "store/store.go", start = 105, end = 105, render = { kind = "full" } },
-  { path = "store/store.go", start = 109, end = 109, render = { kind = "full" } },
-  { path = "store/store.go", start = 112, end = 112, render = { kind = "full" } },
-  { path = "store/store.go", start = 115, end = 115, render = { kind = "full" } },
-  { path = "store/store.go", start = 120, end = 120, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "store/store.go", start = 311, end = 348, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.2"
-descriptor = "cluster mux header constants"
+descriptor = "store request-path public methods"
 justification = """
-Cluster traffic shares a TCP port with Raft via one-byte mux headers.
-`MuxRaftHeader = 1` and `MuxClusterHeader = 2` are the protocol's
-load-bearing constants — referenced everywhere TCP is opened. Tiny,
-high-value-per-token batch for "how does port multiplexing work?".
+Signatures of Store.Execute, Store.Query, Store.Request, Store.Backup,
+Store.Load, Store.ReadFrom, Store.Vacuum — the public entry points
+covered in the Request Path section of store/DESIGN.md. Truncated to
+keep just the fn signature line. Lets the agent grep these names
+directly when asked "how do reads/writes flow".
 """
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "cluster/service.go", start = 59, end = 59, render = { kind = "full" } },
-  { path = "cluster/service.go", start = 62, end = 62, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+    { path = "store/store.go", start = 1437, end = 1437, render = { kind = "full" } },
+    { path = "store/store.go", start = 1495, end = 1495, render = { kind = "full" } },
+    { path = "store/store.go", start = 1621, end = 1621, render = { kind = "full" } },
+    { path = "store/store.go", start = 1738, end = 1738, render = { kind = "full" } },
+    { path = "store/store.go", start = 1887, end = 1887, render = { kind = "full" } },
+    { path = "store/store.go", start = 1944, end = 1944, render = { kind = "full" } },
+    { path = "store/store.go", start = 2012, end = 2012, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "store cluster + lifecycle methods"
+justification = """
+Other top-level Store methods: New, Open, Close, Bootstrap, Stepdown,
+Join, Notify, Remove, EnableCDC, DisableCDC, Snapshot (via the
+SnapshotStore-driving path), Database, Noop. Names alone — agent
+greps to find the body.
+"""
+content = { kind = "lines", spans = [
+    { path = "store/store.go", start = 464, end = 464, render = { kind = "full" } },
+    { path = "store/store.go", start = 528, end = 528, render = { kind = "full" } },
+    { path = "store/store.go", start = 846, end = 846, render = { kind = "full" } },
+    { path = "store/store.go", start = 882, end = 882, render = { kind = "full" } },
+    { path = "store/store.go", start = 952, end = 952, render = { kind = "full" } },
+    { path = "store/store.go", start = 2024, end = 2024, render = { kind = "full" } },
+    { path = "store/store.go", start = 2041, end = 2041, render = { kind = "full" } },
+    { path = "store/store.go", start = 2059, end = 2059, render = { kind = "full" } },
+    { path = "store/store.go", start = 2087, end = 2087, render = { kind = "full" } },
+    { path = "store/store.go", start = 2145, end = 2145, render = { kind = "full" } },
+    { path = "store/store.go", start = 2213, end = 2213, render = { kind = "full" } },
+    { path = "store/store.go", start = 2237, end = 2237, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "store.Store sentinel errors"
+justification = """
+The exported error variables at the top of store.go (ErrNotOpen, ErrOpen,
+ErrNotReady, ErrNotLeader, ErrLeaderNotFound, ErrNotSingleNode,
+ErrStaleRead, ErrStrongReadNeeded, ErrOpenTimeout,
+ErrWaitForRemovalTimeout). Together with the consistency-level enum
+in 5.4, these are the surface for understanding "what can go wrong".
+"""
+content = { kind = "lines", spans = [
+    { path = "store/store.go", start = 44, end = 80, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "db.DB struct + checkpoint mode constants"
+justification = """
+The DB struct (lines 179-196) and the CheckpointMode constants
+(CheckpointRestart, CheckpointTruncate) plus IntegrityCheckMode. The
+DB struct shows the two-connection-pool architecture (rwDB with
+MaxOpenConns(1), roDB for reads) that the DESIGN.md singles out as
+load-bearing.
+"""
+content = { kind = "lines", spans = [
+    { path = "db/db.go", start = 86, end = 112, render = { kind = "full" } },
+    { path = "db/db.go", start = 178, end = 197, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "db.DB public method signatures"
+justification = """
+Names of the major DB methods: Open, OpenWithDriver, hook registrations
+(RegisterPreUpdateHook, RegisterUpdateHook, RegisterCommitHook),
+Checkpoint family (Checkpoint, CheckpointTruncateWithTimeout,
+CheckpointWithTimeout, DisableCheckpointing, EnableCheckpointing),
+schema/utility (Optimize, Vacuum, VacuumInto, IntegrityCheck,
+SetSynchronousMode, ExtensionNames, ColumnNames, TableColumnTypes).
+"""
+content = { kind = "lines", spans = [
+    { path = "db/db.go", start = 236, end = 236, render = { kind = "full" } },
+    { path = "db/db.go", start = 244, end = 244, render = { kind = "full" } },
+    { path = "db/db.go", start = 353, end = 353, render = { kind = "full" } },
+    { path = "db/db.go", start = 461, end = 461, render = { kind = "full" } },
+    { path = "db/db.go", start = 522, end = 522, render = { kind = "full" } },
+    { path = "db/db.go", start = 591, end = 591, render = { kind = "full" } },
+    { path = "db/db.go", start = 740, end = 740, render = { kind = "full" } },
+    { path = "db/db.go", start = 749, end = 749, render = { kind = "full" } },
+    { path = "db/db.go", start = 804, end = 804, render = { kind = "full" } },
+    { path = "db/db.go", start = 860, end = 860, render = { kind = "full" } },
+    { path = "db/db.go", start = 867, end = 867, render = { kind = "full" } },
+    { path = "db/db.go", start = 881, end = 881, render = { kind = "full" } },
+    { path = "db/db.go", start = 898, end = 898, render = { kind = "full" } },
+    { path = "db/db.go", start = 904, end = 904, render = { kind = "full" } },
+    { path = "db/db.go", start = 917, end = 917, render = { kind = "full" } },
+    { path = "db/db.go", start = 970, end = 970, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "http.Service public/private handler locations"
+justification = """
+The handler functions in http/service.go (locations only — names tell
+the story): handleRemove, handleSQLAnalyze, handleBackup, handleLoad,
+handleBoot, handleSnapshot, handleReap, handleStatus, handleNodes,
+handleLeader, handleReadyz, handleLicenses, handleUI, handleExecute,
+queuedExecute, execute, handleQuery, handleRequest, handleExpvar,
+handlePprof. With these names+lines the agent goes from "what does
+/X do" to the implementation in one read.
+"""
+content = { kind = "lines", spans = [
+    { path = "http/service.go", start = 529, end = 529, render = { kind = "full" } },
+    { path = "http/service.go", start = 588, end = 588, render = { kind = "full" } },
+    { path = "http/service.go", start = 659, end = 659, render = { kind = "full" } },
+    { path = "http/service.go", start = 707, end = 707, render = { kind = "full" } },
+    { path = "http/service.go", start = 781, end = 781, render = { kind = "full" } },
+    { path = "http/service.go", start = 812, end = 812, render = { kind = "full" } },
+    { path = "http/service.go", start = 835, end = 835, render = { kind = "full" } },
+    { path = "http/service.go", start = 863, end = 863, render = { kind = "full" } },
+    { path = "http/service.go", start = 1000, end = 1000, render = { kind = "full" } },
+    { path = "http/service.go", start = 1051, end = 1051, render = { kind = "full" } },
+    { path = "http/service.go", start = 1148, end = 1148, render = { kind = "full" } },
+    { path = "http/service.go", start = 1224, end = 1224, render = { kind = "full" } },
+    { path = "http/service.go", start = 1242, end = 1242, render = { kind = "full" } },
+    { path = "http/service.go", start = 1254, end = 1254, render = { kind = "full" } },
+    { path = "http/service.go", start = 1276, end = 1276, render = { kind = "full" } },
+    { path = "http/service.go", start = 1336, end = 1336, render = { kind = "full" } },
+    { path = "http/service.go", start = 1410, end = 1410, render = { kind = "full" } },
+    { path = "http/service.go", start = 1502, end = 1502, render = { kind = "full" } },
+] }
+
+# ============================================================================
+# Tier 7 — Last-mile additions under the cap.
+# ============================================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "CHANGELOG v10 'what's new' summary"
+justification = """
+The 'What's new in this release?' summary for v10.0.0 (CHANGELOG lines
+33-43) recaps the major v10 changes in three short paragraphs: non-
+blocking snapshotting on the leader during follower transfer, Raft
+snapshotting that no longer blocks on long-running reads, comprehensive
+CRC32 checksumming, and the new built-in `/console` web app. Connects
+the DESIGN.md v10-motivation paragraphs to a single release-notes
+synopsis — and tells the agent which features are *new* vs.
+established (useful when answering "should I rely on X" questions).
+"""
+content = { kind = "lines", spans = [
+    { path = "CHANGELOG.md", start = 33, end = 43, render = { kind = "full" } },
+] }

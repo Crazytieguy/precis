@@ -15,24 +15,30 @@ shape so generated example code compiles, (b) where the heavy
 Dataset/KVS/RequestQueue surface, (d) HTTP-client and Playwright
 pluggability, (e) the docs/examples corpus that doubles as
 copy-pasteable tutorial code. Ranking front-loads the README lede,
-the public re-export surface, the canonical quick-start example, and
-the CLAUDE.md architecture summary, then drills into BasicCrawler /
+the public re-export surface, the canonical quick-start examples, and
+the architecture-overview prose, then drills into BasicCrawler /
 context / router / Request / Configuration. Catastrophic-omission
 risk is "agent assumes a crawler type or storage backend doesn't
 exist because we only listed some" — every subpackage __init__/tree
-gets a locations-style batch.
+gets a locations-style batch. Top-level `CLAUDE.md` / `AGENTS.md` /
+`GEMINI.md` are symlinked host-injected files, so the NS only
+surfaces their existence via fs listings and never schedules their
+bodies.
 """
 
 # =========================================================================
 # Tier 1 — orientation. Stair-stepped to respect the growth envelope.
+# Small budgets must still get "what is this repo and what does it
+# offer" with no follow-ups.
 # =========================================================================
 
 [[batches]]
 id = "1.1"
 descriptor = "README crawler tagline"
 justification = """
-Two-line "Python web scraping / browser automation library" pitch.
-Tiny so a 100-token budget gets something useful.
+Two-line "Python web scraping / browser automation library" pitch
+plus the "build reliable scrapers. Fast." positioning sentence. Tiny
+so a 100-token budget gets something useful.
 """
 content.kind = "lines"
 content.spans = [
@@ -46,7 +52,8 @@ descriptor = "Public `crawlee` package — imports"
 justification = """
 Top-level `crawlee/__init__.py` imports: Request, RequestOptions,
 RequestState, service_locator, ConcurrencySettings, EnqueueStrategy,
-HttpHeaders, RequestTransformAction, SkippedReason, Glob.
+HttpHeaders, RequestTransformAction, SkippedReason, Glob. Names the
+ten symbols an agent gets from `import crawlee`.
 """
 content.kind = "lines"
 content.spans = [
@@ -58,7 +65,8 @@ id = "1.3"
 descriptor = "Top-level filesystem layout"
 justification = """
 src/, docs/, tests/, website/, CHANGELOG, README, CLAUDE.md = AGENTS.md
-= GEMINI.md (symlinks to `.rules.md`), CONTRIBUTING, pyproject.
+= GEMINI.md (symlinks to `.rules.md`), CONTRIBUTING, pyproject,
+uv.lock, codecov.yaml, renovate.json, typos.toml.
 """
 content.kind = "fs"
 content.groups = [
@@ -67,12 +75,28 @@ content.groups = [
 
 [[batches]]
 id = "1.4"
+descriptor = "Project name, version, Python support, CLI entrypoint"
+justification = """
+pyproject metadata anchoring install / distribution / Python
+compatibility: package name `crawlee`, version `1.7.1`, `authors`,
+`requires-python >=3.10`, plus the `crawlee = "crawlee._cli:cli"`
+script entrypoint behind `crawlee create my-crawler`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "pyproject.toml", start = 6, end = 12, render.kind = "full" },
+  { path = "pyproject.toml", start = 97, end = 98, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.5"
 descriptor = "src/crawlee/ subpackage tree"
 justification = """
 crawlers/, storages/, storage_clients/, http_clients/, browsers/,
 sessions/, events/, _autoscaling/, fingerprint_suite/,
 request_loaders/, statistics/, _utils/, otel/, project_template/,
-plus top-level modules. Catastrophic-omission hedge.
+plus top-level modules. The map an agent uses to decide where to
+look for any specific feature. Catastrophic-omission hedge.
 """
 content.kind = "fs"
 content.groups = [
@@ -80,45 +104,36 @@ content.groups = [
 ]
 
 [[batches]]
-id = "1.5"
-descriptor = "CLAUDE.md crawler hierarchy (ASCII tree)"
-justification = """
-The single densest architecture summary in the repo: BasicCrawler →
-AbstractHttpCrawler → Http/BS/Parsel; PlaywrightCrawler;
-AdaptivePlaywrightCrawler.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "CLAUDE.md", start = 64, end = 71, render.kind = "full" },
-]
-
-[[batches]]
 id = "1.6"
-descriptor = "CLAUDE.md crawler-layer bullets"
+descriptor = "Architecture overview lede"
 justification = """
-Bullets clarify what BasicCrawler / AbstractHttpCrawler /
-PlaywrightCrawler each add (request lifecycle, HTTP-client
-integration, browser-based crawling).
+The opening sentences of `docs/guides/architecture_overview.mdx`:
+"modern and modular web scraping framework... both HTTP-only and
+browser-based scraping" plus the crawler-section opener identifying
+`BasicCrawler` as the inheritance root and naming the two
+specialised families (HTTP crawlers and browser crawlers). Real
+docs prose, not a host-injected file.
 """
 content.kind = "lines"
-predecessor = "1.5"
 content.spans = [
-  { path = "CLAUDE.md", start = 73, end = 75, render.kind = "full" },
+  { path = "docs/guides/architecture_overview.mdx", start = 9, end = 9, render.kind = "full" },
+  { path = "docs/guides/architecture_overview.mdx", start = 13, end = 13, render.kind = "full" },
 ]
 
 [[batches]]
 id = "1.7"
-descriptor = "CLAUDE.md context pipeline chain"
+descriptor = "README features bullets"
 justification = """
-Completes the architecture mental model:
-BasicCrawlingContext → HttpCrawlingContext → ParsedHttpCrawlingContext
-→ BeautifulSoupCrawlingContext middleware chain, with async-generator
-middleware semantics.
+Nine "Why Crawlee" bullets: HTTP & headless-browser unified, automatic
+parallel crawling, type hints, automatic retries, proxy rotation +
+session management, configurable request routing, persistent request
+queue, pluggable storage, error handling. Pre-frames every later tier
+("oh, retries / sessions live somewhere") so follow-up greps are
+focused.
 """
 content.kind = "lines"
-predecessor = "1.6"
 content.spans = [
-  { path = "CLAUDE.md", start = 77, end = 85, render.kind = "full" },
+  { path = "README.md", start = 176, end = 184, render.kind = "full" },
 ]
 
 # =========================================================================
@@ -141,13 +156,12 @@ content.spans = [
 
 [[batches]]
 id = "2.2"
-descriptor = "EnqueueStrategy / HttpMethod / SkippedReason / LogLevel / RequestTransformAction literals"
+descriptor = "Type aliases: HttpMethod / EnqueueStrategy / SkippedReason / LogLevel / RequestTransformAction"
 justification = """
 The string-literal vocabularies the API accepts: HttpMethod
 (GET/POST/...), EnqueueStrategy (all/same-domain/same-hostname/
 same-origin), SkippedReason (robots_txt), LogLevel, RequestTransformAction.
-Constantly-needed, and pulled here both for early access and to
-clear the envelope path to the quick-start examples.
+Constantly needed, and gets the envelope path to the quick-start examples.
 """
 content.kind = "lines"
 content.spans = [
@@ -158,7 +172,7 @@ content.spans = [
 id = "2.3"
 descriptor = "Quick-start BeautifulSoup example"
 justification = """
-Most-likely "show me a working crawler" target. Covers:
+The most-likely "show me a working crawler" target. Covers:
 `BeautifulSoupCrawler(max_requests_per_crawl=...)`,
 `@crawler.router.default_handler`, `BeautifulSoupCrawlingContext`,
 `context.request.url`, `context.soup.title`, `context.push_data`,
@@ -187,8 +201,15 @@ content.spans = [
 id = "2.5"
 descriptor = "crawlers package `__all__` (every exported class)"
 justification = """
-Canonical list of every crawler/context/options class. Catastrophic-
-omission hedge against "the agent forgot Stagehand/Adaptive exists".
+Canonical list of every crawler/context/options class:
+AbstractHttpCrawler, AbstractHttpParser, AdaptivePlaywrightCrawler
+(+ statistics/contexts), BasicCrawler/Options/Context,
+BeautifulSoupCrawler (+ context + parser type), ContextPipeline,
+HttpCrawler/Options/Context/Result, ParsedHttpCrawlingContext,
+ParselCrawler (+ context), PlaywrightCrawler (+ pre/post-nav contexts),
+RenderingType/Prediction/Predictor, StagehandCrawler (+ contexts).
+Catastrophic-omission hedge against "the agent forgot Stagehand
+exists".
 """
 content.kind = "lines"
 content.spans = [
@@ -203,6 +224,7 @@ The single most-asked question about handler bodies: "what
 attributes/methods does `context` have?" — request, session,
 proxy_info, send_request, add_requests, push_data, use_state,
 get_key_value_store, log, register_deferred_cleanup, get_snapshot.
+The first thing every handler reads.
 """
 content.kind = "lines"
 content.spans = [
@@ -214,7 +236,8 @@ id = "2.7"
 descriptor = "Router class usage block (decorator pattern)"
 justification = """
 The shape every multi-handler crawler uses: `@router.use` middleware,
-`@router.default_handler`, `@router.handler(label='product')`.
+`@router.default_handler`, `@router.handler(label='product')`,
+matching `Request.label` to a handler. Docstring-as-tutorial.
 """
 content.kind = "lines"
 content.spans = [
@@ -225,7 +248,8 @@ content.spans = [
 id = "2.8"
 descriptor = "Router method signatures (default_handler/handler/use/__call__)"
 justification = """
-Refines 2.7 with the executable surface — header lines only.
+Refines 2.7 with the executable surface — header lines only, no
+bodies. Tiny token cost ("free" once 2.7 has landed).
 """
 content.kind = "lines"
 predecessor = "2.7"
@@ -243,7 +267,8 @@ justification = """
 Construction-site kwargs: url, method, headers, payload, label,
 session_id, unique_key, id, keep_url_fragment,
 use_extended_unique_key, always_enqueue, user_data, no_retry,
-enqueue_strategy, max_retries.
+enqueue_strategy, max_retries. The shape of every URL string passed
+to `add_requests` / `enqueue_links`.
 """
 content.kind = "lines"
 content.spans = [
@@ -256,7 +281,8 @@ descriptor = "Request model field names"
 justification = """
 Field names on the Request pydantic model: unique_key, url, method,
 payload, headers, user_data, retry_count, no_retry, loaded_url,
-handled_at.
+handled_at. Locations only, so an agent grepping `loaded_url` or
+`unique_key` lands in one hop.
 """
 content.kind = "lines"
 content.spans = [
@@ -277,8 +303,9 @@ id = "2.11"
 descriptor = "EnqueueLinksKwargs + strategy docs"
 justification = """
 `context.enqueue_links(strategy=..., include=..., exclude=...,
-limit=..., base_url=...)` + strategy docstring covering all four
-options (all/same-domain/same-hostname/same-origin).
+limit=..., base_url=...)` + the strategy docstring covering all four
+options (all/same-domain/same-hostname/same-origin). One of the
+top-3 helper calls users ask about.
 """
 content.kind = "lines"
 content.spans = [
@@ -295,7 +322,8 @@ descriptor = "BasicCrawler class docstring (responsibilities)"
 justification = """
 The 1720-line class every other crawler subclasses; docstring lists
 autoscaling, retries, session management, statistics, label routing,
-proxy rotation, direct storage helpers.
+proxy rotation, direct storage helpers. Anchors "where does retry
+logic live" / "how does autoscaling work" follow-ups.
 """
 content.kind = "lines"
 content.spans = [
@@ -306,8 +334,8 @@ content.spans = [
 id = "3.2"
 descriptor = "BasicCrawler.__init__ kwargs"
 justification = """
-Public configuration surface for every concrete crawler. 35 kwargs
-with defaults: max_request_retries=3, max_session_rotations=10,
+Public configuration surface inherited by every concrete crawler.
+35 kwargs with defaults: max_request_retries=3, max_session_rotations=10,
 max_crawl_depth, use_session_pool=True, retry_on_blocked=True,
 request_handler_timeout=1min, abort_on_error, keep_alive,
 respect_robots_txt_file, etc.
@@ -324,7 +352,8 @@ justification = """
 Header lines for every public method/property on a BasicCrawler
 instance: stop, get_request_manager, get_dataset, get_key_value_store,
 error_handler, failed_request_handler, on_skipped_request, run,
-add_requests, use_state, get_data, export_data.
+add_requests, use_state, get_data, export_data. Lets agents grep
+for the right callsite in one read.
 """
 content.kind = "lines"
 content.spans = [
@@ -353,7 +382,8 @@ _handle_failed_request (1199), _handle_skipped_request (1212),
 _commit_request_handler_result (1324), __run_task_function (1376),
 _run_request_handler (1511), _raise_for_error_status_code (1524),
 _raise_for_session_blocked_status_code (1546),
-_is_allowed_based_on_robots_txt_file (1612).
+_is_allowed_based_on_robots_txt_file (1612). Behaviour-debugging
+follow-ups land in one hop.
 """
 content.kind = "lines"
 content.spans = [
@@ -375,13 +405,14 @@ content.spans = [
 id = "3.5"
 descriptor = "AbstractHttpCrawler class doc"
 justification = """
-Bridge from BasicCrawler to BS/Parsel/Http crawlers — class header
-+ docstring; navigation_timeout option from HttpCrawlerOptions.
+Bridge from BasicCrawler to BS/Parsel/Http crawlers — the additional
+`navigation_timeout` option, plus the class header + docstring naming
+the three concrete subclasses.
 """
 content.kind = "lines"
 content.spans = [
   { path = "src/crawlee/crawlers/_abstract_http/_abstract_http_crawler.py", start = 46, end = 47, render.kind = "full" },
-  { path = "src/crawlee/crawlers/_abstract_http/_abstract_http_crawler.py", start = 51, end = 68, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_abstract_http/_abstract_http_crawler.py", start = 50, end = 68, render.kind = "full" },
 ]
 
 [[batches]]
@@ -439,7 +470,8 @@ id = "3.9"
 descriptor = "ContextPipeline class header + compose"
 justification = """
 The middleware-pipeline class. Header + the `compose` factory
-method (how subclasses add their context-enhancing middleware).
+method (how subclasses add their context-enhancing middleware that
+yields exactly once around the request lifecycle).
 """
 content.kind = "lines"
 content.spans = [
@@ -453,7 +485,10 @@ descriptor = "crawlers/ subpackage tree"
 justification = """
 Listing of every concrete crawler subdir (_basic, _abstract_http,
 _beautifulsoup, _parsel, _http, _playwright, _adaptive_playwright,
-_stagehand) and its contents. Catastrophic-omission hedge.
+_stagehand) and its contents. Pairs with 2.5 (__all__) and 3.5–3.8
+(class headers) so the agent knows the exact filename for the
+crawler it wants. Catastrophic-omission hedge against the long
+tail (Stagehand/Adaptive submodules).
 """
 content.kind = "fs"
 content.groups = [
@@ -477,7 +512,8 @@ id = "4.1"
 descriptor = "storages package re-exports + class headers"
 justification = """
 Dataset, KeyValueStore, RequestQueue — three high-level storage
-classes — each as a one-line class header.
+classes — each as a one-line class header at the location agents
+grep for.
 """
 content.kind = "lines"
 content.spans = [
@@ -491,9 +527,13 @@ content.spans = [
 id = "4.2"
 descriptor = "Storage method locations (Dataset + KVS + RequestQueue)"
 justification = """
-Header lines for every public method on the three storages.
-Catastrophic-omission hedge for the combined storage method
-surface.
+Header lines for every public method on the three storages:
+Dataset (push_data, get_data, iterate_items, list_items, export_to),
+KeyValueStore (get_value, set_value, delete_value, iterate_keys,
+list_keys, record_exists, get_public_url, get_auto_saved_value),
+RequestQueue (add_request, add_requests, fetch_next_request,
+get_request, mark_request_as_handled, reclaim_request, is_empty).
+Catastrophic-omission hedge for storage method surface.
 """
 content.kind = "lines"
 content.spans = [
@@ -527,7 +567,8 @@ Every storage backend (FileSystemStorageClient, MemoryStorageClient,
 SqlStorageClient, RedisStorageClient, StorageClient ABC) and every
 HTTP client (ImpitHttpClient default, HttpClient ABC,
 HttpCrawlingResult, HttpResponse, HttpxHttpClient,
-CurlImpersonateHttpClient) — just the __all__ entries.
+CurlImpersonateHttpClient) — just the __all__ entries. The
+pluggable surface.
 """
 content.kind = "lines"
 content.spans = [
@@ -540,7 +581,8 @@ id = "4.4"
 descriptor = "HttpClient ABC method headers"
 justification = """
 The HttpClient contract every backend implements: __init__, crawl,
-send_request, stream, cleanup.
+send_request, stream, cleanup. Anchors "how do I add a custom HTTP
+backend" questions in one read.
 """
 content.kind = "lines"
 content.spans = [
@@ -587,7 +629,8 @@ id = "4.6"
 descriptor = "service_locator method names"
 justification = """
 Global registry getter/setter pairs for Configuration, EventManager,
-StorageClient, StorageInstanceManager.
+StorageClient, StorageInstanceManager. The single source of
+truth for "where does my crawler get its config from".
 """
 content.kind = "lines"
 content.spans = [
@@ -610,7 +653,8 @@ Every error agents may raise/catch: UserDefinedErrorHandlerError,
 UserHandlerTimeoutError, SessionError, ServiceConflictError,
 ProxyError, HttpStatusCodeError, HttpClientStatusCodeError,
 RequestHandlerError, ContextPipeline{Init,Final,Interrupted}Error,
-RequestCollisionError.
+RequestCollisionError. Catastrophic-omission hedge — listing some
+implies the rest don't exist.
 """
 content.kind = "lines"
 content.spans = [
@@ -647,11 +691,12 @@ content.spans = [
 id = "4.9"
 descriptor = "ConcurrencySettings + Event enum"
 justification = """
-ConcurrencySettings(min_concurrency=1, max_concurrency=100,
-desired_concurrency=10, max_tasks_per_minute=inf) + the Event enum
-(PERSIST_STATE / SYSTEM_INFO / MIGRATING / ABORTING / EXIT /
-SESSION_RETIRED / BROWSER_LAUNCHED/RETIRED/CLOSED /
-PAGE_CREATED/CLOSED / CRAWLER_STATUS).
+ConcurrencySettings(min_concurrency=1, max_concurrency, desired_concurrency,
+max_tasks_per_minute) constructor + the Event enum (PERSIST_STATE /
+SYSTEM_INFO / MIGRATING / ABORTING / EXIT / SESSION_RETIRED /
+BROWSER_LAUNCHED/RETIRED/CLOSED / PAGE_CREATED/CLOSED /
+CRAWLER_STATUS). Catastrophic-omission hedge for event names an
+agent might register listeners for.
 """
 content.kind = "lines"
 content.spans = [
@@ -694,6 +739,7 @@ sql_sqlite, sql_mysql, stagehand, redis, all. Anchors
 content.kind = "lines"
 content.spans = [
   { path = "pyproject.toml", start = 53, end = 53, render.kind = "full" },
+  { path = "pyproject.toml", start = 54, end = 54, render.kind = "full" },
   { path = "pyproject.toml", start = 61, end = 61, render.kind = "full" },
   { path = "pyproject.toml", start = 62, end = 62, render.kind = "full" },
   { path = "pyproject.toml", start = 63, end = 63, render.kind = "full" },
@@ -710,29 +756,6 @@ content.spans = [
 
 [[batches]]
 id = "5.3"
-descriptor = "pyproject poe task names + project script"
-justification = """
-"How do I run tests / lint / build?" — task header lines (clean,
-install-sync, build, type-check, check-code, install-dev, lint,
-format, unit-tests, unit-tests-cov, e2e-templates-tests, build-docs,
-run-docs) + the `crawlee = "crawlee._cli:cli"` script.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 97, end = 98, render.kind = "full" },
-  { path = "pyproject.toml", start = 307, end = 312, render.kind = "full" },
-  { path = "pyproject.toml", start = 314, end = 314, render.kind = "full" },
-  { path = "pyproject.toml", start = 317, end = 317, render.kind = "full" },
-  { path = "pyproject.toml", start = 320, end = 320, render.kind = "full" },
-  { path = "pyproject.toml", start = 323, end = 323, render.kind = "full" },
-  { path = "pyproject.toml", start = 335, end = 335, render.kind = "full" },
-  { path = "pyproject.toml", start = 352, end = 352, render.kind = "full" },
-  { path = "pyproject.toml", start = 364, end = 364, render.kind = "full" },
-  { path = "pyproject.toml", start = 368, end = 368, render.kind = "full" },
-]
-
-[[batches]]
-id = "5.4"
 descriptor = "docs/guides tree (every named guide)"
 justification = """
 Final catastrophic-omission hedge for the long-form docs corpus:
@@ -742,7 +765,9 @@ request_loaders, request_router, request_throttling,
 running_in_web_server, scaling_crawlers, service_locator,
 session_management, stagehand_crawler, storage_clients, storages,
 trace_and_monitor_crawlers, crawler_login, creating_web_archive.
-Agent greps a topic and lands on the guide in one read.
+Agent greps a topic and lands on the guide in one read. (Poe
+task names are already in the host-injected `AGENTS.md`, so they're
+not duplicated here.)
 """
 content.kind = "fs"
 content.groups = [

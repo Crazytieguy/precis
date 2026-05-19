@@ -189,3 +189,10 @@ boundaries are a judgment call per fixture.
 - **No existing North Stars.** Don't read `tests/north-stars/*.toml`
   — each fixture should be ranked from first principles, not
   patterned after another fixture.
+- **No body content from host-auto-injected files.** Top-level
+  `AGENTS.md` / `CLAUDE.md` and files under `.claude/skills/`,
+  `.agent/skills/`, `.cursor/rules/` are already loaded into the
+  agent's context by the host harness, so precis scheduling their
+  bodies wastes budget. Their filenames can still appear in fs
+  listings (the agent knows the file exists and can read it on
+  demand), but no batch should pull line ranges from their bodies.
