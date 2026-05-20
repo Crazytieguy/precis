@@ -56,214 +56,134 @@ pub enum FsKey {
     DirListing { dir: PathBuf },
 }
 
-impl From<FsKey> for BatchKey {
-    fn from(k: FsKey) -> Self {
-        BatchKey::Fs(k)
-    }
-}
-impl From<RustKey> for BatchKey {
-    fn from(k: RustKey) -> Self {
-        BatchKey::Rust(k)
-    }
-}
-impl From<MarkdownKey> for BatchKey {
-    fn from(k: MarkdownKey) -> Self {
-        BatchKey::Markdown(k)
-    }
-}
-impl From<TomlKey> for BatchKey {
-    fn from(k: TomlKey) -> Self {
-        BatchKey::Toml(k)
-    }
-}
-impl From<TsKey> for BatchKey {
-    fn from(k: TsKey) -> Self {
-        BatchKey::Typescript(k)
-    }
-}
-impl From<JsonKey> for BatchKey {
-    fn from(k: JsonKey) -> Self {
-        BatchKey::Json(k)
-    }
-}
-impl From<PlaintextKey> for BatchKey {
-    fn from(k: PlaintextKey) -> Self {
-        BatchKey::Plaintext(k)
-    }
-}
-impl From<PrismaKey> for BatchKey {
-    fn from(k: PrismaKey) -> Self {
-        BatchKey::Prisma(k)
-    }
-}
-impl From<CKey> for BatchKey {
-    fn from(k: CKey) -> Self {
-        BatchKey::C(k)
-    }
-}
-impl From<GoKey> for BatchKey {
-    fn from(k: GoKey) -> Self {
-        BatchKey::Go(k)
-    }
-}
-impl From<PythonKey> for BatchKey {
-    fn from(k: PythonKey) -> Self {
-        BatchKey::Python(k)
-    }
-}
-impl From<LuaKey> for BatchKey {
-    fn from(k: LuaKey) -> Self {
-        BatchKey::Lua(k)
-    }
-}
-impl From<YamlKey> for BatchKey {
-    fn from(k: YamlKey) -> Self {
-        BatchKey::Yaml(k)
-    }
+macro_rules! impl_batchkey_from {
+    ($($variant:ident => $key:ident),* $(,)?) => {
+        $(
+            impl From<$key> for BatchKey {
+                fn from(k: $key) -> Self { BatchKey::$variant(k) }
+            }
+        )*
+    };
 }
 
-/// Rust batches. Per-item for pub type declarations (struct/enum/trait/fn)
-/// so the scheduler can individually rank e.g. `pub trait Log` above
-/// `pub struct RecordBuilder` when the North Star does. File-scope batches
-/// for crate-doc / mod-use / impl-method-groups; cross-file scope for the
-/// macro surface (macros cluster in a single `src_dir` and benefit from
-/// one name-list batch).
+impl_batchkey_from! {
+    Fs => FsKey,
+    Rust => RustKey,
+    Markdown => MarkdownKey,
+    Toml => TomlKey,
+    Typescript => TsKey,
+    Json => JsonKey,
+    Plaintext => PlaintextKey,
+    Prisma => PrismaKey,
+    C => CKey,
+    Go => GoKey,
+    Python => PythonKey,
+    Lua => LuaKey,
+    Yaml => YamlKey,
+}
+
+/// Rust batches. Per-item for pub type declarations so the scheduler can
+/// individually rank them. File-scope for crate-doc / mod-use / impl-method
+/// groups; cross-file scope for the `#[macro_export]` name surface.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum RustKey {
-    /// `//!` module-doc lede — first paragraph only, entrypoints
-    /// (`lib.rs`, `main.rs`). Priority 1.x.
+    /// `//!` module-doc lede — first paragraph only, entrypoint files.
     CrateDocLede { file: PathBuf },
-    /// `//!` module-doc body — everything after the first paragraph.
-    /// Predecessor: `CrateDocLede`. Priority 2.x–3.x.
+    /// `//!` module-doc body — after the first paragraph.
+    /// Predecessor: `CrateDocLede`.
     CrateDocBody { file: PathBuf },
-    /// `use` + `mod` + `pub use` plumbing at the top of a file. Priority 2.x.
+    /// `use` + `mod` + `pub use` plumbing at the top of a file.
     ModUse { file: PathBuf },
-    /// Surface listing of every top-level `pub` item name in a file. A
-    /// catastrophic-omission hedge: when budget can't fit every individual
-    /// item's body, this cheap listing still tells the agent that all the
-    /// named items exist. Priority 1.x.
+    /// Surface listing of every top-level `pub` item name in a file —
+    /// catastrophic-omission hedge.
     PubItemNames { file: PathBuf },
-    /// A single top-level `pub` item's declaration. For struct/enum/trait/
-    /// type/const/static, the whole item (fields, variants, method sigs
-    /// for traits). For fn/fn-sig, the signature with a `…` body marker.
-    /// No rustdoc — that's the `PubItemDocLede` / `PubItemDocBody`
-    /// refinement. Keyed by the item's start line so each item has a
-    /// distinct batch. Priority 1.x–4.x.
+    /// One top-level `pub` item's declaration. Whole item for
+    /// struct/enum/trait/type/const/static; signature with body marker
+    /// for fn. Keyed by start line.
     PubItem { file: PathBuf, start_line: usize },
-    /// Body slice of a public function item, split by top-level statement.
-    /// Predecessor: the matching `PubItem`.
+    /// Body slice of a public fn, split by top-level statement.
+    /// Predecessor: matching `PubItem`.
     PubItemBody {
         file: PathBuf,
         start_line: usize,
         body_start_line: usize,
     },
-    /// A private top-level item in a Rust entrypoint file. Functions render
-    /// as signatures with body ellipses; non-functions render whole so example
-    /// `main.rs` usage flows can still surface without `pub` items.
+    /// Private top-level item in a Rust entrypoint file. Functions render
+    /// as sig with body ellipses; non-functions render whole.
     EntryItem { file: PathBuf, start_line: usize },
-    /// Body slice of a private entrypoint function, split by top-level
-    /// statement. Predecessor: the matching `EntryItem`.
+    /// Body slice of a private entrypoint fn, split by top-level statement.
+    /// Predecessor: matching `EntryItem`.
     EntryItemBody {
         file: PathBuf,
         start_line: usize,
         body_start_line: usize,
     },
-    /// First paragraph of the rustdoc (`///` / `/** */`) above a single
-    /// `pub` item — everything up to the first `# Heading` line, or
-    /// the whole doc when no heading is present. Predecessor: the
-    /// matching `PubItem` at the same `start_line`. Priority 3.x.
+    /// First paragraph of the rustdoc above a `pub` item (up to first
+    /// `# Heading`, or whole doc when headless). Predecessor: matching
+    /// `PubItem`.
     PubItemDocLede { file: PathBuf, start_line: usize },
-    /// Body of the rustdoc above a single `pub` item — from the first
-    /// `# Heading` onward. Predecessor: the matching `PubItemDocLede`
-    /// when one exists, otherwise the `PubItem` (for docs whose first
-    /// non-doctest-hidden line is already a heading — empty Lede would
-    /// otherwise dead-key the body). Priority 3.x–4.x.
+    /// Rustdoc body from the first `# Heading` onward. Predecessor:
+    /// matching `PubItemDocLede` if any, else `PubItem` (avoids
+    /// dead-keying when Lede would be empty).
     PubItemDocBody { file: PathBuf, start_line: usize },
-    /// Impl-block headers + method signatures in a single file. Priority 2.x.
+    /// Impl-block headers + method signatures in a single file.
     MethodSigs { file: PathBuf },
-    /// `#[macro_export] macro_rules!` names across `src_dir` (cross-file
-    /// example). Priority 1.x.
+    /// `#[macro_export] macro_rules!` names across `src_dir`.
     MacroNames { src_dir: PathBuf },
-    /// Full body of one `#[macro_export] macro_rules!` definition.
-    /// Per-macro splitting (vs. the previous cross-file `MacroBodies`
-    /// aggregate) lets the scheduler rank user-facing macros above
-    /// dispatch helpers and keeps a single oversized body from blocking
-    /// the prefix-monotone schedule. Predecessor: `MacroNames` for the
-    /// enclosing `src_dir`. Priority 2.x.
+    /// Full body of one `#[macro_export] macro_rules!`. Predecessor:
+    /// `MacroNames` for the enclosing `src_dir`.
     MacroBody { file: PathBuf, start_line: usize },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum MarkdownKey {
-    /// Whole `SUMMARY.md` (mdBook ToC). Priority 1.x.
+    /// Whole `SUMMARY.md` (mdBook ToC).
     SummaryWhole { file: PathBuf },
-    /// README headline: first heading + first paragraph. Priority 1.x.
+    /// README headline: first heading + first paragraph.
     ReadmeHeadline { file: PathBuf },
-    /// Cheap navigation hedge: every H1/H2/H3 heading line in the file,
-    /// nothing else. Analog of [`RustKey::PubItemNames`]. For READMEs,
-    /// the H1 line stays under [`MarkdownKey::ReadmeHeadline`] so the
-    /// headline's truncation render isn't overridden; outline collects
-    /// H2+H3 only. Predecessor of every [`MarkdownKey::Section`] in the
-    /// file when emitted (so the section's heading-row overlap is
-    /// permitted as ancestor overlap). Priority 1.x.
+    /// Every H1/H2/H3 heading line (H2+H3 only for READMEs, where the
+    /// H1 stays under `ReadmeHeadline`). Predecessor of every same-file
+    /// `Section` when emitted, so heading-row overlap is permitted as
+    /// ancestor overlap.
     HeadingsOutline { file: PathBuf },
-    /// One scheduling unit of a markdown file's body, indexed by its
-    /// 0-based position in the walker's logical-section list. The
-    /// granularity is variable: most H2s stay as a single `Whole`
-    /// range; content-heavy H2s (and the file's outline emitted) are
-    /// subdivided either as a *bullet split* (an H2 whose
-    /// non-decorative content is a single bullet list, one batch per
-    /// top-level item — anyhow `## Details` shape) or as an *H3
-    /// split* (an H2 with ≥2 H3 children, one `Intro` plus one batch
-    /// per H3 child). Either rule lets the scheduler pick relevant
-    /// sub-sections instead of all-or-nothing committing to the
-    /// whole H2. The split classification lives in the walker (not
-    /// on this key) — `section_index` is the post-split logical
-    /// index, so enabling or changing a split rule shifts the
-    /// numbering. For `README.md`, section 0 is the first section
-    /// after the headline (predecessor: `ReadmeHeadline`). When
-    /// [`MarkdownKey::HeadingsOutline`] is emitted for the same file
-    /// the outline becomes Section's predecessor. Priority 2.x–5.x.
+    /// One scheduling unit of a markdown body, indexed by 0-based
+    /// position in the walker's logical-section list. Granularity is
+    /// variable — H2s may be whole, bullet-split (one batch per top-level
+    /// item), or H3-split (one `Intro` plus one batch per H3 child); the
+    /// split classification lives in the walker, so `section_index` is
+    /// post-split. For `README.md`, predecessor is `ReadmeHeadline`
+    /// (or `HeadingsOutline` when it's emitted for the file).
     Section { file: PathBuf, section_index: usize },
 }
 
-/// TypeScript / TSX batches. Mirrors the Rust walker shape: per-file
-/// orientation batches (module-doc lede, imports, top-level export-name
-/// surface) plus per-export item batches with optional JSDoc refinement.
-///
-/// "Public" in TS = a top-level declaration with the `export` keyword (or
-/// a `default` export). Re-exports without a body (`export { foo } from '…'`)
-/// are folded into the `Imports` batch since they're plumbing, not items.
+/// TypeScript / TSX batches. "Public" = top-level with `export` (or
+/// `default` export). Body-less re-exports (`export { foo } from '…'`)
+/// fold into `Imports`.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TsKey {
-    /// Top-of-file `/** … */` block — module-level JSDoc lede. Priority 1.x.
-    /// Only emitted for entrypoint files (`index.ts`, `main.ts`, `mod.ts`).
+    /// Module-level JSDoc lede. Entrypoint files only.
     ModuleDocLede { file: PathBuf },
-    /// `import` + side-effect imports + bare `export … from` re-exports at
-    /// the top of the file. Plumbing batch. Priority 2.x.
+    /// `import`, side-effect imports, and bare `export … from` re-exports.
     Imports { file: PathBuf },
-    /// Chunked `Imports` for entrypoint files that are mostly re-export walls.
-    /// Each chunk groups consecutive imports/re-exports from the same source.
+    /// Chunked `Imports` for entrypoint files that are mostly re-export
+    /// walls; each chunk groups consecutive imports from the same source.
     ImportChunk { file: PathBuf, chunk_index: usize },
-    /// Surface listing of every top-level export's first line — a
-    /// catastrophic-omission hedge when individual decls don't all fit.
-    /// Priority 1.x.
+    /// Surface listing of every top-level export's first line —
+    /// catastrophic-omission hedge.
     ExportNames {
         file: PathBuf,
         chunk_index: usize,
         export_count: usize,
         type_only_export_count: usize,
     },
-    /// One top-level export's declaration. For interface/type/class/enum,
-    /// the whole item. For function, signature with body marker. For
-    /// const/let, the assignment line. Keyed by start line so each
-    /// export has a distinct batch. Priority 1.x–4.x.
+    /// One top-level export's declaration. Whole item for
+    /// interface/type/class/enum; signature with body marker for fn;
+    /// assignment line for const/let. Keyed by start line.
     Export { file: PathBuf, start_line: usize },
-    /// JSDoc (`/** … */`) above a single export. Predecessor: the matching
-    /// `Export` at the same `start_line`. Priority 3.x.
+    /// JSDoc above a single export. Predecessor: matching `Export`.
     ExportDoc { file: PathBuf, start_line: usize },
-    /// Surface for one member of an exported JavaScript class. Predecessor:
-    /// the matching class `Export` at the same `start_line`. Priority 2.x–3.x.
+    /// One member of an exported JS class. Predecessor: matching class
+    /// `Export`.
     ExportMember {
         file: PathBuf,
         /// Parent export line.
@@ -271,100 +191,76 @@ pub enum TsKey {
         /// First line of the class member surface.
         member_start_line: usize,
     },
-    /// Body slice of an export with a `statement_block` body — function,
-    /// generator, class methods, or `export default <fn|class>`. Brace-strip
-    /// rule: outer `{` and `}` rows omitted, interior rows emitted.
-    /// Predecessor: the matching `Export` at the same `start_line`. Sibling
-    /// of `ExportDoc` under `Export`; the two cover disjoint lines. Priority
-    /// 2.x–3.x.
+    /// Body slice of an export with a `statement_block` body (fn,
+    /// generator, class methods, `export default <fn|class>`). Outer
+    /// braces stripped. Predecessor: matching `Export`. Sibling of
+    /// `ExportDoc` under `Export`; the two cover disjoint lines.
     ExportBody {
         file: PathBuf,
-        /// Parent export line. Kept in the key so body slices remain tied to
-        /// their predecessor even when two bodies start on the same line in
-        /// different declarations.
+        /// Parent export line — keeps body slices tied to their
+        /// predecessor when two bodies share a start line in different
+        /// declarations.
         start_line: usize,
-        /// First emitted line of this body slice; disambiguates siblings
-        /// within the parent export.
+        /// First emitted line of this body slice; disambiguates siblings.
         body_start_line: usize,
     },
-    /// Top-level non-exported TypeScript declaration surface. This catches
-    /// module-private classes, helper functions, type aliases, and constants
-    /// that exported APIs depend on but do not export directly.
+    /// Top-level non-exported declaration surface — module-private
+    /// classes, helper fns, type aliases, constants that exported APIs
+    /// depend on.
     ModuleItem { file: PathBuf, start_line: usize },
-    /// Body slice of a top-level non-exported declaration. Large bodies split
-    /// by top-level statement so methods/regions can schedule independently.
-    /// Predecessor: the matching `ModuleItem`.
+    /// Body slice of a non-exported top-level decl, split by top-level
+    /// statement. Predecessor: matching `ModuleItem`.
     ModuleItemBody {
         file: PathBuf,
-        /// Parent module item line. Kept in the key so the predecessor edge
-        /// and sibling body slices share the same declaration identity.
+        /// Parent module item line.
         start_line: usize,
-        /// First emitted line of this body slice; disambiguates siblings
-        /// within the parent item.
+        /// First emitted line of this body slice; disambiguates siblings.
         body_start_line: usize,
     },
 }
 
-/// JSON batches. `package.json` is split along the same ontology as
-/// `Cargo.toml` (identity / scripts ≈ features / dependencies) plus a
-/// JS-specific entrypoint-pointer batch (`main`/`module`/`exports`/etc.).
-/// Other small JSON configs (`tsconfig.json`, `.eslintrc.json`,
-/// `jsr.json`, …) get a single `Whole` batch when they're small enough
-/// to pay for outright.
+/// JSON batches. `package.json` splits along the `Cargo.toml` ontology
+/// (identity / scripts / deps) plus a JS entrypoint-pointer batch. Other
+/// small JSON configs get a single `Whole` batch.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum JsonKey {
     /// `package.json` identity scalars: `name`, `version`, `description`,
-    /// `type`, `private`, `license`/`licenses`. Priority 1.x.
+    /// `type`, `private`, `license`/`licenses`.
     Identity { file: PathBuf },
     /// Auxiliary `package.json` metadata: authorship, repository/homepage,
-    /// bugs, keywords, publish config, funding. Priority 1.x-2.x.
+    /// bugs, keywords, publish config, funding.
     IdentityMeta { file: PathBuf },
     /// `package.json` entrypoint pointers: `main`, `module`, `browser`,
     /// `exports`, `types`/`typings`, `source`, `bin`, `unpkg`, `umd:main`,
-    /// `jsnext:main`, `react-native`, `files`. Priority 1.x–2.x.
+    /// `jsnext:main`, `react-native`, `files`.
     Entry { file: PathBuf },
     /// `package.json` runtime/toolchain constraints: `engines`,
-    /// `engineStrict`, `packageManager`. Priority 1.x-2.x.
+    /// `engineStrict`, `packageManager`.
     Runtime { file: PathBuf },
-    /// `package.json` `scripts` block. Priority 2.x.
+    /// `package.json` `scripts` block.
     Scripts { file: PathBuf },
     /// `package.json` dependency blocks (`dependencies`,
     /// `devDependencies`, `peerDependencies`, `optionalDependencies`,
-    /// `overrides`, `resolutions`). Priority 2.x–4.x.
+    /// `overrides`, `resolutions`).
     Dependencies { file: PathBuf },
-    /// Whole-file render of a small JSON config (`tsconfig.json`,
-    /// `.eslintrc.json`, `jsr.json`, etc.). Skipped for `package.json`
-    /// (use the split batches instead) and for large/generated files.
+    /// Whole-file render of a small JSON config. Skipped for
+    /// `package.json` (use the split batches) and for large/generated files.
     Whole { file: PathBuf },
 }
 
-/// Plaintext config / license file batches. One whole-file `Whole`
-/// variant per supported filename (see [`crate::walker::plaintext`] for
-/// the whitelist). These files would otherwise only appear in dir
-/// listings — the plaintext walker emits a content batch capped at a
-/// small line + token budget so render-time displacement of richer
-/// walker batches stays bounded.
+/// Plaintext config / license file batches. Whitelist lives in
+/// [`crate::walker::plaintext`]. Capped on line + token cost to bound
+/// render-time displacement of richer walker batches.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PlaintextKey {
-    /// Whole-file render of a small, known-plaintext config or license
-    /// file. Skipped when the file's line count or rendered token cost
-    /// exceeds the walker's caps.
+    /// Whole-file render. Skipped when line count or rendered token
+    /// cost exceeds the walker's caps.
     Whole { file: PathBuf },
 }
 
 /// YAML batches. Narrowly scoped to `docker-compose.{yml,yaml}` —
-/// the only YAML file shape NS authors consistently anchor on
-/// (deployment topology: which services exist, what images they run,
-/// which ports / volumes / env they wire). Other YAML configs
-/// (GitHub workflow files, CI configs, application config) are out
-/// of scope for now; precis surfaces them via their parent directory
-/// listing and the agent can `Read` them if needed.
-///
-/// Emitted as a single whole-file `Whole` batch — docker-compose
-/// files are typically short (≤30 lines) and their structure is
-/// already best read top-to-bottom. A line-count cap keeps a
-/// pathological multi-stack compose file from displacing richer
-/// per-file batches.
+/// other YAML configs are out of scope; the agent can `Read` them
+/// after seeing the dir listing.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum YamlKey {
     /// Whole-file render of a `docker-compose.{yml,yaml}` file. Skipped
@@ -372,84 +268,57 @@ pub enum YamlKey {
     Whole { file: PathBuf },
 }
 
-/// Prisma schema batches. A `schema.prisma` file is the canonical
-/// data-model anchor for any Node/TS app using the Prisma ORM; the
-/// walker emits one `Toc` batch listing every top-level declaration's
-/// opening line so the catalog of models/enums/datasources/generators
-/// is reachable without delivering each declaration's body.
+/// Prisma schema batches.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PrismaKey {
     /// One line per top-level `model` / `enum` / `datasource` /
-    /// `generator` declaration in a `schema.prisma`. Catastrophic-
-    /// omission hedge analogous to the Rust walker's `PubItemNames`.
+    /// `generator` declaration in a `schema.prisma` — catastrophic-
+    /// omission hedge.
     Toc { file: PathBuf },
 }
 
-/// C / C-header batches. Mirrors the Rust walker shape: per-file
-/// orientation batches (top-of-file banner, includes, decl-name surface)
-/// plus per-decl item batches with optional doc / body refinement.
-///
-/// "Public" rule: top-level `function_definition` / `declaration` /
-/// `type_definition` / `preproc_def` / `preproc_function_def` whose
-/// declarator is not `static` (in `.c` files), plus `static inline`
-/// function definitions in `.h` files (header-only inline accessors are
-/// part of the header's public API expansion). The single wrapping
-/// header-guard `#ifndef X` / `#define X` / `#endif` is descended into
-/// transparently.
+/// C / C-header batches. "Public" rule: top-level
+/// `function_definition` / `declaration` / `type_definition` /
+/// `preproc_def` / `preproc_function_def` that aren't `static` (in `.c`
+/// files), plus `static inline` fn defs in `.h` files. Header-guard
+/// `#ifndef`/`#define`/`#endif` is descended transparently.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum CKey {
-    /// Top-of-file `/* */` banner comment (license / brief). Priority
-    /// 1.x for headers, 4.x for `.c` files.
+    /// Top-of-file `/* */` banner comment (license / brief).
     HeaderBanner { file: PathBuf },
-    /// `#include` directives — the file's structural dependencies.
-    /// Priority 2.x.
+    /// `#include` directives.
     Includes { file: PathBuf },
     /// Surface listing of every top-level public declaration's first
-    /// line — typedefs, function prototypes, struct/enum names, public
-    /// `#define`s, function definitions. Catastrophic-omission hedge.
-    /// Large headers/source files (`krep.h` exposes ~80 decls) chunk
-    /// the surface in `NAMES_SURFACE_CHUNK_SIZE`-sized groups so a
-    /// 1000-token monolith doesn't lose the value/cost race against
-    /// per-decl batches. Priority 1.x.
+    /// line — catastrophic-omission hedge. Chunked in
+    /// `NAMES_SURFACE_CHUNK_SIZE` groups so a large surface doesn't
+    /// lose the value/cost race against per-decl batches.
     DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level public declaration. For typedefs / function
-    /// prototypes / `extern` decls / `#define`s, the whole statement.
-    /// For struct / enum / union, the whole specifier. For function
-    /// definitions, the signature with a body marker. Keyed by start
-    /// line. Priority 1.x–4.x.
+    /// One top-level public declaration. Whole statement for typedefs /
+    /// prototypes / `extern` / `#define`; whole specifier for
+    /// struct/enum/union; signature with body marker for fn defs.
+    /// Keyed by start line.
     Decl { file: PathBuf, start_line: usize },
-    /// Body interior of a function definition. Predecessor: matching
-    /// [`CKey::Decl`] at the same `start_line`. Priority 2.x–3.x.
+    /// Body interior of a fn definition. Predecessor: matching `Decl`.
     DeclBody { file: PathBuf, start_line: usize },
     /// Doc comment(s) immediately above a declaration. Predecessor:
-    /// matching [`CKey::Decl`]. Priority 3.x.
+    /// matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
     /// Rows of a `static struct { ... } X[] = { ... };` registration
-    /// table declared inside a function body — captures the table's
-    /// opening header line, one row per inner initializer, and the
-    /// closing `};`. Predecessor: enclosing [`CKey::Decl`]. Sibling of
-    /// [`CKey::DeclBody`] for the same function; the two are kept
-    /// disjoint (DeclBody excludes the table's row range). Priority
-    /// 2.x — sqlite-vec's `aFunc[]` / `aMod[]` are the load-bearing
-    /// case.
+    /// table inside a fn body — header line, per-initializer rows, and
+    /// closing `};`. Predecessor: enclosing `Decl`. Sibling of
+    /// `DeclBody`; the two are disjoint (DeclBody excludes the table).
     InitTableRows {
         file: PathBuf,
         start_line: usize,
         end_line: usize,
     },
-    /// A blank-line-separated field group inside a big struct/union body,
-    /// or a sized chunk of enumerators inside a big enum body. NS authors
-    /// anchor on per-field-group rows for the giant aggregates that
-    /// dominate C catalog headers (chibicc.h's `Obj`, `Node`, `Type`,
-    /// `NodeKind`, `TypeKind`). At the default whole-aggregate
-    /// granularity, the `Decl` batch for one of these structs is too
-    /// large to fit at small budgets, and no member content is delivered.
-    /// Emitted only when a struct/union has ≥3 blank-line groups, or an
-    /// enum has ≥`AGGREGATE_ENUM_CHUNK_MIN` enumerators.
-    /// Predecessor: matching [`CKey::Decl`] at the same `start_line` —
-    /// line overlap with the Decl is allowed as ancestor overlap, and
-    /// the Decl's own rendered span is reduced to the type header +
-    /// closer so the two batches don't conflict on body rows.
+    /// Blank-line-separated field group inside a big struct/union body,
+    /// or a sized chunk of enumerators inside a big enum body. Emitted
+    /// only when a struct/union has ≥3 blank-line groups, or an enum
+    /// has ≥`AGGREGATE_ENUM_CHUNK_MIN` enumerators. Predecessor:
+    /// matching `Decl` — line overlap with the Decl is allowed as
+    /// ancestor overlap; the Decl's span is reduced to the type header
+    /// + closer.
     AggregateMemberGroup {
         file: PathBuf,
         start_line: usize,
@@ -457,177 +326,113 @@ pub enum CKey {
     },
 }
 
-/// Go batches. Mirrors the C walker shape — per-file orientation
-/// batches (package + imports, decl-name surface) plus per-decl item
-/// batches with optional doc / body refinement.
-///
-/// Visibility: emits **all** top-level declarations, exported and
-/// unexported. NS authors regularly anchor on intentionally-unexported
-/// types (`go-multierror`'s `chain`, `tock`'s `repository` /
-/// `twInterval`). A `visibility_factor` discount ranks exported names
-/// above unexported ones rather than hard-filtering.
-///
-/// Grouped declarations (`type ( … )`, `var ( … )`, `const ( … )`)
-/// are emitted as **one** batch covering the whole block — splitting
-/// per-spec would lose iota / inherited-type / shared-comment
-/// semantics, which is critical for Go's enum-via-iota idiom.
-///
-/// `*_test.go` files surface a separate [`GoKey::TestNames`] batch
-/// listing `Test*` / `Benchmark*` / `Example*` first lines only —
-/// `go test`'s lookup contract — while skipping per-decl bodies. The
-/// 0.2 multiplier from [`crate::value::non_essential_factor`] keeps the
-/// test surface deprioritized vs. ordinary source.
-///
-/// `go.mod` (and `go.work`) get a single whole-file batch
-/// ([`GoKey::GoMod`]); NS authors split the file into logical sections
-/// by line range, but the walker needs only to make the file
-/// reachable in one schedule slot.
+/// Go batches. Emits **all** top-level decls regardless of export
+/// status — NS authors anchor on intentionally-unexported types; a
+/// `visibility_factor` discount ranks exported names higher rather than
+/// hard-filtering. Grouped decls (`type ( … )`, `var ( … )`, `const ( … )`)
+/// stay as one batch so iota / inherited-type / shared-comment semantics
+/// survive. `*_test.go` files emit only `TestNames` plus a non-essential
+/// discount on per-decl bodies.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum GoKey {
-    /// `// Package foo provides ...` doc-comment block immediately
-    /// above the `package` clause. Standalone identity lede; emitted
-    /// separately from `PackageImports` so a long package comment can
-    /// fire without dragging the file's whole import block with it.
-    /// Priority 1.x for the root entry file.
+    /// `// Package foo …` doc comment immediately above `package`.
+    /// Emitted separately from `PackageImports` so a long package
+    /// comment can fire without dragging the import block.
     PackageDocLede { file: PathBuf },
     /// Package clause + import block at the top of a `.go` file.
-    /// Plumbing batch. Priority 2.x.
     PackageImports { file: PathBuf },
-    /// Surface listing of every top-level declaration's first line —
-    /// funcs, methods, types, vars, consts. Catastrophic-omission
-    /// hedge. Visibility-blind — lists everything in the file
-    /// regardless of export status. Chunked at `GO_DECL_NAMES_CHUNK_SIZE`
-    /// only when the file has > `GO_DECL_NAMES_CHUNK_THRESHOLD` decls;
-    /// smaller files stay unchunked (a single `chunk_index = 0` batch).
-    /// Priority 1.x.
+    /// Surface listing of every top-level decl's first line.
+    /// Catastrophic-omission hedge. Visibility-blind. Chunked at
+    /// `GO_DECL_NAMES_CHUNK_SIZE` only above
+    /// `GO_DECL_NAMES_CHUNK_THRESHOLD` decls.
     DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level declaration. For function / method definitions,
-    /// the signature with a body marker. For type / var / const, the
-    /// whole declaration including grouped specs. Keyed by start line.
-    /// Priority 1.x–4.x.
+    /// One top-level declaration. Signature with body marker for
+    /// fn/method defs; whole decl (including grouped specs) for
+    /// type/var/const. Keyed by start line.
     Decl { file: PathBuf, start_line: usize },
-    /// Body interior of a function or method definition. Predecessor:
-    /// matching [`GoKey::Decl`] at the same `start_line`. Priority 2.x–3.x.
+    /// Body interior of a fn or method definition. Predecessor:
+    /// matching `Decl`.
     DeclBody { file: PathBuf, start_line: usize },
-    /// Run of `//` (or `/* */`) comments immediately above a decl, with
-    /// no blank-line gap. Predecessor: matching [`GoKey::Decl`].
-    /// Priority 3.x.
+    /// Run of `//` (or `/* */`) comments above a decl with no
+    /// blank-line gap. Predecessor: matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
-    /// Blank-line-separated field-group within a big `type X struct { … }`
-    /// declaration. NS authors anchor on Cobra-style per-field-group
-    /// rows ("Command help-text fields", "Command boolean knobs") — at
-    /// the default whole-struct granularity the struct's `Decl` batch
-    /// is too large to fit at small budgets and no field content is
-    /// delivered. Emitted only for type-decls whose struct body has
-    /// ≥3 blank-line-separated groups and ≥60 body lines. Predecessor:
-    /// matching [`GoKey::Decl`] at the same `start_line` — line overlap
-    /// with the Decl is allowed as ancestor overlap, and the Decl's
-    /// own rendered span is reduced to the struct header + closer so
-    /// the two batches don't conflict on body rows.
+    /// Blank-line-separated field-group within a big
+    /// `type X struct { … }`. Emitted only for type-decls whose struct
+    /// body has ≥3 blank-line groups and ≥60 body lines. Predecessor:
+    /// matching `Decl` — line overlap allowed as ancestor overlap; the
+    /// Decl's span is reduced to the struct header + closer.
     StructFieldGroup {
         file: PathBuf,
         start_line: usize,
         group_start_line: usize,
     },
     /// Surface listing of every `Test*` / `Benchmark*` / `Example*`
-    /// function's first line in a `_test.go` file. Skipped for
-    /// non-test files. Priority 3.x–5.x.
+    /// fn's first line in a `_test.go` file.
     TestNames { file: PathBuf },
-    /// Identity slice of a `go.mod` (or `go.work`) file: the `module`
-    /// path, `go` version floor, and optional `toolchain` lines. A
-    /// small (~25–40 tok) high-value calibration anchor — NS authors
-    /// regularly anchor on the bare module declaration + Go version
-    /// as a 1.x atom independent of the require block. Emitted as the
-    /// predecessor of [`GoKey::GoMod`] so the cheap identity slice can
-    /// land at a small budget without dragging the whole module
-    /// dependency block with it. Priority 1.x.
+    /// Identity slice of a `go.mod` / `go.work`: `module` path, `go`
+    /// version floor, optional `toolchain` lines. Predecessor of
+    /// `GoMod` so the cheap identity slice can land without the whole
+    /// require block.
     GoModIdentity { file: PathBuf },
-    /// Whole-file render of a `go.mod` (or `go.work`) file. Capped
-    /// at a small line count; larger module files are skipped.
-    /// Predecessor: matching [`GoKey::GoModIdentity`] (identity lines
-    /// are an ancestor subset of the whole-file span). Priority 1.x.
+    /// Whole-file render of a `go.mod` / `go.work`. Line-capped.
+    /// Predecessor: matching `GoModIdentity`.
     GoMod { file: PathBuf },
 }
 
-/// Python batches. Mirrors the Go / C walkers' shape — per-file
-/// orientation (imports + `__all__` + module docstring + module-level
-/// dunder assignments fold into [`PythonKey::Imports`]) plus per-decl
-/// item batches (top-level def / class / non-dunder constant), and
-/// per-method batches inside top-level classes (Rust precedent —
-/// methods are first-class scheduling units).
+/// Python batches. Per-decl items at the top level and per-method
+/// inside top-level classes (methods are first-class scheduling units).
 ///
-/// **Decorator handling**: tree-sitter Python wraps a decorated def /
-/// class in `decorated_definition`. The walker treats that wrapper as
-/// the unit, so a `Decl`'s `start_line` is the `@decorator` row and
-/// the span includes the decorator lines.
+/// Decorated defs / classes use the `decorated_definition` wrapper as
+/// the unit, so `start_line` is the `@decorator` row and the span
+/// includes decorator lines.
 ///
-/// **Visibility**: emits all top-level + class-body items. A
-/// `visibility_factor` discount (1.0 unprefixed, 0.6 leading-`_`,
-/// 1.0 dunder) ranks public-by-PEP-8 names above leading-`_`-prefixed
-/// "internal" ones rather than hard-filtering. NSes anchor on
-/// intentionally-private names (`pluggy._callers._multicall`,
-/// `pluggy._hooks.HookCaller._add_hookimpl`).
-///
-/// `test_*.py` / `*_test.py` files surface a separate
-/// [`PythonKey::TestNames`] batch listing every `def test_*` first
-/// line (decorator-aware) and skip per-decl bodies. The 0.2
-/// multiplier from [`crate::value::non_essential_factor`] keeps the
-/// test surface deprioritized vs. ordinary source.
+/// Visibility: emits all top-level + class-body items; a
+/// `visibility_factor` ranks public-by-PEP-8 names above leading-`_`
+/// rather than hard-filtering (NSes anchor on intentionally-private
+/// names). `test_*.py` / `*_test.py` files emit only `TestNames` plus a
+/// non-essential discount on per-decl content.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PythonKey {
-    /// Top-of-file `import` / `from … import …` statements, optional
-    /// module docstring, `__all__`, and module-level dunder
-    /// assignments (`__version__`, `__author__`). Plumbing batch.
-    /// Priority 2.x.
+    /// `import` / `from … import …` statements, optional module
+    /// docstring, `__all__`, and module-level dunder assignments.
     Imports { file: PathBuf },
-    /// Chunked `Imports` for large `__init__.py` re-export walls. Each chunk
-    /// groups consecutive imports/re-exports from the same source.
+    /// Chunked `Imports` for large `__init__.py` re-export walls.
     ImportChunk { file: PathBuf, chunk_index: usize },
-    /// Surface listing of every top-level class, def (sync or async),
-    /// and non-dunder simple-assignment first line.
-    /// Catastrophic-omission hedge. Priority 1.x.
+    /// Surface listing of every top-level class / def (sync or async) /
+    /// non-dunder simple-assignment first line.
     DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level item. For class, the `class Foo(Base):` header
-    /// (decorator lines included if decorated) plus up to two non-blank
-    /// rows of the docstring's first paragraph — PEP 257's "summary
-    /// line" alongside the header so the per-decl batch carries the
-    /// usual NS anchor as one cognitive unit. For def, signature with
-    /// body marker plus the same lede. For constant, the assignment
-    /// line(s). Keyed by start line (the decorator row when
-    /// decorated). Priority 1.x–4.x.
+    /// One top-level item. For class/def: header (+ decorators if any) +
+    /// up to two non-blank rows of the docstring's first paragraph
+    /// (PEP 257 summary line) so the per-decl batch carries the usual
+    /// NS anchor as one unit. For constant: the assignment line(s).
+    /// Keyed by start line (decorator row when decorated).
     Decl { file: PathBuf, start_line: usize },
     /// Docstring of a top-level def or class — the
     /// `expression_statement(string)` at the start of its body, after
-    /// any leading comments. Predecessor: matching [`PythonKey::Decl`].
-    /// Priority 3.x.
+    /// any leading comments. Predecessor: matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
-    /// Body slice of a top-level def, split by top-level statement.
-    /// Skips the leading docstring (covered by [`PythonKey::DeclDoc`]).
-    /// Predecessor: matching [`PythonKey::Decl`]. Priority 2.x–3.x.
+    /// Body slice of a top-level def, split by top-level statement;
+    /// skips the leading docstring. Predecessor: matching `Decl`.
     DeclBody {
         file: PathBuf,
         start_line: usize,
         body_start_line: usize,
     },
-    /// Class body excluding method def signatures and the leading
-    /// docstring — covers TypedDict / dataclass / Protocol / Pydantic
-    /// fields, `__slots__`, class-level constants. Predecessor:
-    /// matching class [`PythonKey::Decl`]. Priority 3.x–4.x.
+    /// Class body excluding method-def signatures and the leading
+    /// docstring — TypedDict / dataclass / Protocol / Pydantic fields,
+    /// `__slots__`, class-level constants. Predecessor: matching
+    /// class `Decl`.
     ClassBody { file: PathBuf, start_line: usize },
     /// Surface listing of every method def first line across every
-    /// top-level class in this file — Rust [`RustKey::MethodSigs`]
-    /// analog. Decorator-aware. Catastrophic-omission hedge for class
-    /// APIs. Priority 2.x.
+    /// top-level class. Decorator-aware. Catastrophic-omission hedge.
     MethodSigs { file: PathBuf, chunk_index: usize },
-    /// Per-method version of [`PythonKey::Decl`] for a method inside
-    /// a top-level class. Predecessor: enclosing class's
-    /// [`PythonKey::Decl`]. Priority 2.x–4.x.
+    /// Method-level `Decl` analog for a method inside a top-level
+    /// class. Predecessor: enclosing class's `Decl`.
     Method { file: PathBuf, start_line: usize },
-    /// Method's docstring. Predecessor: matching
-    /// [`PythonKey::Method`]. Priority 3.x.
+    /// Method's docstring. Predecessor: matching `Method`.
     MethodDoc { file: PathBuf, start_line: usize },
     /// Method body slice, split by top-level statement, sans leading
-    /// docstring. Predecessor: matching [`PythonKey::Method`]. Priority 3.x–4.x.
+    /// docstring. Predecessor: matching `Method`.
     MethodBody {
         file: PathBuf,
         start_line: usize,
@@ -635,47 +440,41 @@ pub enum PythonKey {
     },
     /// Surface listing of every `def test_*` first line in a `test_*.py`
     /// / `*_test.py` file (top-level + class-body, decorator-aware).
-    /// Skipped for non-test files. Priority 3.x–5.x.
     TestNames { file: PathBuf },
 }
 
-/// Lua batches. The dominant Lua content in the corpus is LuaCATS spec
-/// files (`---@meta`, `---@class`, `---@alias`) — these get a whole-
-/// file rendering when small. Other Lua sources get the C/Python-style
-/// per-decl breakdown.
+/// Lua batches. LuaCATS spec files (`---@meta`, `---@class`,
+/// `---@alias`) get whole-file rendering when small; other Lua sources
+/// get the C/Python-style per-decl breakdown.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum LuaKey {
-    /// Top-of-file comment block (license / brief). Priority 5.x.
+    /// Top-of-file comment block (license / brief).
     Banner { file: PathBuf },
-    /// Whole-file rendering for LuaCATS spec files (those with
-    /// `---@meta` at the top, or majority-LuaCATS-tag comment density).
-    /// Carries the entire file as a single span. Gated to small files.
-    /// Priority 1.x — these are the canonical API contracts.
+    /// Whole-file rendering for LuaCATS spec files (`---@meta` at top,
+    /// or majority-LuaCATS-tag comment density). Gated to small files.
     MetaFileWhole { file: PathBuf },
-    /// Surface listing of every top-level function name + table-method
-    /// assignment first line. Catastrophic-omission hedge. Priority 1.x.
+    /// Surface listing of every top-level fn name + table-method
+    /// assignment first line.
     DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level function-like declaration's signature/header.
-    /// Covers `function foo()`, `local function foo()`, and
-    /// `M.foo = function(...)` (table-method assignment). Keyed by
-    /// start line. Priority 1.x–3.x.
+    /// One top-level fn-like declaration's signature/header. Covers
+    /// `function foo()`, `local function foo()`, and `M.foo = function(...)`.
+    /// Keyed by start line.
     Decl { file: PathBuf, start_line: usize },
     /// LuaCATS `---@` comment block immediately above a decl.
-    /// Predecessor: matching `Decl`. Priority 3.x.
+    /// Predecessor: matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
-    /// Body interior of a function decl. Predecessor: matching `Decl`.
-    /// Priority 2.x–4.x.
+    /// Body interior of a fn decl. Predecessor: matching `Decl`.
     DeclBody { file: PathBuf, start_line: usize },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
-    /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
+    /// `[package]` or `[workspace.package]` identity block.
     Identity { file: PathBuf },
-    /// `[features]` table. Priority 1.x.
+    /// `[features]` table.
     Features { file: PathBuf },
     /// `[dependencies]` / `[dev-dependencies]` / `[build-dependencies]` /
-    /// `[workspace.dependencies]`. Priority 2.x.
+    /// `[workspace.dependencies]`.
     Dependencies { file: PathBuf },
 }
 
@@ -753,11 +552,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Rust(k) => k.concavity_exponent(),
             BatchKey::Typescript(k) => k.concavity_exponent(),
             BatchKey::Lua(k) => k.concavity_exponent(),
-            BatchKey::Fs(_)
-            | BatchKey::Toml(_)
-            | BatchKey::Plaintext(_)
-            | BatchKey::Prisma(_)
-            | BatchKey::Yaml(_) => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 
@@ -770,28 +565,21 @@ impl WalkerKey for BatchKey {
 }
 
 impl FsKey {
-    pub fn describe(&self, fixture_root: &Path) -> String {
-        match self {
-            FsKey::DirListing { dir } => {
-                let shown = display_path(dir, fixture_root);
-                if shown.is_empty() {
-                    "listing of '.'".to_string()
-                } else {
-                    format!("listing of '{shown}'")
-                }
-            }
+    pub fn describe(&self, root: &Path) -> String {
+        let FsKey::DirListing { dir } = self;
+        let shown = display_path(dir, root);
+        if shown.is_empty() {
+            "listing of '.'".to_string()
+        } else {
+            format!("listing of '{shown}'")
         }
     }
 }
 
 impl RustKey {
-    /// `PubItemDocBody` carries a steeper `0.45`: rustdoc prose after
-    /// the first `# Heading` grows token cost without proportional
-    /// structural value, so at the default it out-ranks cheaper
-    /// anchors (`PubItemNames`, `ModUse`, sibling `PubItem`s).
-    /// `CrateDocBody` stays at the default — its bullets are where
-    /// fixture NSes credit the crate-orientation prose. Matches the
-    /// `MarkdownKey::Section` precedent of demoting prose bodies only.
+    /// `PubItemDocBody` steepens to `0.45` — rustdoc prose past the
+    /// first heading grows in cost without proportional structural value.
+    /// `CrateDocBody` stays at the default (its bullets carry credit).
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             RustKey::PubItemDocBody { .. } => 0.45,
@@ -799,120 +587,63 @@ impl RustKey {
         }
     }
 
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
-            RustKey::CrateDocLede { file } => {
-                format!("crate-doc lede in {}", display_path(file, fixture_root))
-            }
-            RustKey::CrateDocBody { file } => {
-                format!("crate-doc body in {}", display_path(file, fixture_root))
-            }
-            RustKey::ModUse { file } => {
-                format!("mod/use plumbing in {}", display_path(file, fixture_root))
-            }
-            RustKey::PubItemNames { file } => {
-                format!(
-                    "pub-item names surface in {}",
-                    display_path(file, fixture_root)
-                )
-            }
+            RustKey::CrateDocLede { file } => describe_in("crate-doc lede", file, root),
+            RustKey::CrateDocBody { file } => describe_in("crate-doc body", file, root),
+            RustKey::ModUse { file } => describe_in("mod/use plumbing", file, root),
+            RustKey::PubItemNames { file } => describe_in("pub-item names surface", file, root),
             RustKey::PubItem { file, start_line } => {
-                format!(
-                    "pub item at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("pub item", file, *start_line, root)
             }
             RustKey::PubItemBody {
                 file,
                 start_line,
                 body_start_line,
-            } => {
-                format!(
-                    "pub item body at {}:{} body {}",
-                    display_path(file, fixture_root),
-                    start_line,
-                    body_start_line
-                )
-            }
+            } => describe_at_body("pub item body", file, *start_line, *body_start_line, root),
             RustKey::EntryItem { file, start_line } => {
-                format!(
-                    "entry item at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("entry item", file, *start_line, root)
             }
             RustKey::EntryItemBody {
                 file,
                 start_line,
                 body_start_line,
-            } => {
-                format!(
-                    "entry item body at {}:{} body {}",
-                    display_path(file, fixture_root),
-                    start_line,
-                    body_start_line
-                )
-            }
+            } => describe_at_body("entry item body", file, *start_line, *body_start_line, root),
             RustKey::PubItemDocLede { file, start_line } => {
-                format!(
-                    "pub-item doc lede at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("pub-item doc lede", file, *start_line, root)
             }
             RustKey::PubItemDocBody { file, start_line } => {
-                format!(
-                    "pub-item doc body at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("pub-item doc body", file, *start_line, root)
             }
-            RustKey::MethodSigs { file } => {
-                format!("impl method sigs in {}", display_path(file, fixture_root))
-            }
+            RustKey::MethodSigs { file } => describe_in("impl method sigs", file, root),
             RustKey::MacroNames { src_dir } => {
-                format!(
-                    "macro_export names across {}",
-                    display_path(src_dir, fixture_root)
-                )
+                format!("macro_export names across {}", display_path(src_dir, root))
             }
             RustKey::MacroBody { file, start_line } => {
-                format!(
-                    "macro_export body at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("macro_export body", file, *start_line, root)
             }
         }
     }
 }
 
 impl MarkdownKey {
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
             MarkdownKey::SummaryWhole { file } => {
-                format!("mdBook SUMMARY at {}", display_path(file, fixture_root))
+                format!("mdBook SUMMARY at {}", display_path(file, root))
             }
-            MarkdownKey::ReadmeHeadline { file } => {
-                format!("README headline in {}", display_path(file, fixture_root))
-            }
-            MarkdownKey::HeadingsOutline { file } => {
-                format!("headings outline in {}", display_path(file, fixture_root))
-            }
+            MarkdownKey::ReadmeHeadline { file } => describe_in("README headline", file, root),
+            MarkdownKey::HeadingsOutline { file } => describe_in("headings outline", file, root),
             MarkdownKey::Section {
                 file,
                 section_index,
-            } => format!(
-                "{} section #{section_index}",
-                display_path(file, fixture_root)
-            ),
+            } => format!("{} section #{section_index}", display_path(file, root)),
         }
     }
 
-    /// Sections at index ≥1 get a steeper `0.45` so prose body grows more
-    /// expensive than structural anchors of the same value. Index 0 keeps
-    /// the default — many READMEs lead with their canonical claim there.
+    /// `Section` at index ≥1 steepens to `0.45` to demote prose body
+    /// against structural anchors of the same value; index 0 keeps the
+    /// default since READMEs often lead with their canonical claim.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             MarkdownKey::Section {
@@ -925,13 +656,11 @@ impl MarkdownKey {
 }
 
 impl TsKey {
-    /// TypeScript / TSX implementation export-name catalogs carry a mild
-    /// `0.38` concavity: flatter than coherent anchors, but not as steep as
-    /// prose bodies or tiny per-decl batches. Declaration files keep the
-    /// default because their names surface is often the useful API anchor.
-    /// JavaScript runtime export gates also keep the default; treating them
-    /// as flat catalogs demotes load-bearing anchors. Large TS/TSX
-    /// re-export-wall import chunks use the same catalog-shaped exponent.
+    /// `ExportNames` / `ImportChunk` for TS/TSX impl files use a mild
+    /// `0.38` (flatter than per-decl, steeper than coherent anchors).
+    /// Declaration files and JS runtime exports keep the default —
+    /// flattening them demotes load-bearing anchors. `ExportMember`
+    /// uses `0.45` (per-decl tier).
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             TsKey::ExportNames { file, .. }
@@ -952,10 +681,8 @@ impl TsKey {
     }
 
     pub fn gated_descendant_value_weight(&self) -> f64 {
-        // Broad, mostly type-only export-name surfaces are real gates:
-        // individual exports can be high-value descendants, but none can
-        // compete until the names surface lands. Runtime-heavy catalogs and
-        // tiny type files keep their normal standalone rank.
+        // Broad, mostly type-only export-name surfaces are real gates.
+        // Runtime-heavy catalogs and tiny type files keep standalone rank.
         let TsKey::ExportNames {
             export_count,
             type_only_export_count,
@@ -976,105 +703,66 @@ impl TsKey {
         }
     }
 
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
-            TsKey::ModuleDocLede { file } => {
-                format!("module-doc lede in {}", display_path(file, fixture_root))
-            }
-            TsKey::Imports { file } => format!("imports in {}", display_path(file, fixture_root)),
+            TsKey::ModuleDocLede { file } => describe_in("module-doc lede", file, root),
+            TsKey::Imports { file } => describe_in("imports", file, root),
             TsKey::ImportChunk { file, chunk_index } => {
-                describe_chunked_surface("imports", file, *chunk_index, fixture_root)
+                describe_chunked_surface("imports", file, *chunk_index, root)
             }
             TsKey::ExportNames {
                 file, chunk_index, ..
-            } => describe_chunked_surface("export names surface", file, *chunk_index, fixture_root),
-            TsKey::Export { file, start_line } => {
-                format!(
-                    "export at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
-            }
+            } => describe_chunked_surface("export names surface", file, *chunk_index, root),
+            TsKey::Export { file, start_line } => describe_at("export", file, *start_line, root),
             TsKey::ExportDoc { file, start_line } => {
-                format!(
-                    "export doc at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("export doc", file, *start_line, root)
             }
             TsKey::ExportMember {
                 file,
                 start_line,
                 member_start_line,
-            } => {
-                format!(
-                    "export member at {}:{} member {}",
-                    display_path(file, fixture_root),
-                    start_line,
-                    member_start_line
-                )
-            }
+            } => format!(
+                "export member at {}:{start_line} member {member_start_line}",
+                display_path(file, root)
+            ),
             TsKey::ExportBody {
                 file,
                 start_line,
                 body_start_line,
-            } => {
-                format!(
-                    "export body at {}:{} body {}",
-                    display_path(file, fixture_root),
-                    start_line,
-                    body_start_line
-                )
-            }
+            } => describe_at_body("export body", file, *start_line, *body_start_line, root),
             TsKey::ModuleItem { file, start_line } => {
-                format!(
-                    "module item at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("module item", file, *start_line, root)
             }
             TsKey::ModuleItemBody {
                 file,
                 start_line,
                 body_start_line,
-            } => {
-                format!(
-                    "module item body at {}:{} body {}",
-                    display_path(file, fixture_root),
-                    start_line,
-                    body_start_line
-                )
-            }
+            } => describe_at_body(
+                "module item body",
+                file,
+                *start_line,
+                *body_start_line,
+                root,
+            ),
         }
     }
 }
 
 impl TomlKey {
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
-            TomlKey::Identity { file } => {
-                format!("[package] in {}", display_path(file, fixture_root))
-            }
-            TomlKey::Features { file } => {
-                format!("[features] in {}", display_path(file, fixture_root))
-            }
-            TomlKey::Dependencies { file } => {
-                format!("[dependencies] in {}", display_path(file, fixture_root))
-            }
+            TomlKey::Identity { file } => describe_in("[package]", file, root),
+            TomlKey::Features { file } => describe_in("[features]", file, root),
+            TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
         }
     }
 }
 
 impl JsonKey {
-    /// `Whole` carries a steeper concavity than the default for the same
-    /// reason Markdown non-leading sections do: a verbatim 200-line
-    /// `tsconfig.json` (or any non-package JSON config) has token cost
-    /// that grows without proportional structural value. 0.45 matches the
-    /// `MarkdownKey::Section` non-zero-index, `GoKey::Decl`, and
-    /// `CKey::Decl` precedent — calibrated against the d2ts (5 nested
-    /// configs) and cmdk (242-token tsconfig) divergence reports. The
-    /// other JsonKey variants stay at the default — the package.json
-    /// section batches are short and structural.
+    /// `Whole` steepens to `0.45` — verbatim JSON config bodies grow
+    /// in cost without proportional structural value. Other variants
+    /// (package.json sections) stay at the default; they're short and
+    /// structural.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             JsonKey::Whole { .. } => 0.45,
@@ -1082,76 +770,44 @@ impl JsonKey {
         }
     }
 
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
-            JsonKey::Identity { file } => {
-                format!("package identity in {}", display_path(file, fixture_root))
-            }
-            JsonKey::IdentityMeta { file } => {
-                format!(
-                    "package identity metadata in {}",
-                    display_path(file, fixture_root)
-                )
-            }
-            JsonKey::Entry { file } => format!(
-                "package entrypoints in {}",
-                display_path(file, fixture_root)
-            ),
-            JsonKey::Runtime { file } => format!(
-                "package runtime metadata in {}",
-                display_path(file, fixture_root)
-            ),
-            JsonKey::Scripts { file } => {
-                format!("package scripts in {}", display_path(file, fixture_root))
-            }
-            JsonKey::Dependencies { file } => {
-                format!(
-                    "package dependencies in {}",
-                    display_path(file, fixture_root)
-                )
-            }
-            JsonKey::Whole { file } => format!("json config {}", display_path(file, fixture_root)),
+            JsonKey::Identity { file } => describe_in("package identity", file, root),
+            JsonKey::IdentityMeta { file } => describe_in("package identity metadata", file, root),
+            JsonKey::Entry { file } => describe_in("package entrypoints", file, root),
+            JsonKey::Runtime { file } => describe_in("package runtime metadata", file, root),
+            JsonKey::Scripts { file } => describe_in("package scripts", file, root),
+            JsonKey::Dependencies { file } => describe_in("package dependencies", file, root),
+            JsonKey::Whole { file } => format!("json config {}", display_path(file, root)),
         }
     }
 }
 
 impl PlaintextKey {
-    pub fn describe(&self, fixture_root: &Path) -> String {
-        match self {
-            PlaintextKey::Whole { file } => {
-                format!("plaintext config {}", display_path(file, fixture_root))
-            }
-        }
+    pub fn describe(&self, root: &Path) -> String {
+        let PlaintextKey::Whole { file } = self;
+        format!("plaintext config {}", display_path(file, root))
     }
 }
 
 impl PrismaKey {
-    pub fn describe(&self, fixture_root: &Path) -> String {
-        match self {
-            PrismaKey::Toc { file } => {
-                format!("Prisma schema TOC in {}", display_path(file, fixture_root))
-            }
-        }
+    pub fn describe(&self, root: &Path) -> String {
+        let PrismaKey::Toc { file } = self;
+        describe_in("Prisma schema TOC", file, root)
     }
 }
 
 impl YamlKey {
-    pub fn describe(&self, fixture_root: &Path) -> String {
-        match self {
-            YamlKey::Whole { file } => {
-                format!("docker-compose at {}", display_path(file, fixture_root))
-            }
-        }
+    pub fn describe(&self, root: &Path) -> String {
+        let YamlKey::Whole { file } = self;
+        format!("docker-compose at {}", display_path(file, root))
     }
 }
 
 impl GoKey {
-    /// `Decl` and `DeclBody` carry a steeper concavity than the default
-    /// for the same reason as the C walker — Go top-level decls (a single
-    /// type-spec line, a function signature, a `var Foo = expr`) are
-    /// short, source files emit dozens of them, and the default 0.35
-    /// exponent runs them up the rank against larger anchors. 0.45
-    /// matches the C walker's calibrated value.
+    /// Per-decl batches steepen to `0.45` (matches the C walker) —
+    /// short decls plus dozens per file would otherwise dominate the
+    /// rank against larger anchors at the default 0.35.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             GoKey::Decl { .. } | GoKey::DeclBody { .. } | GoKey::StructFieldGroup { .. } => 0.45,
@@ -1159,78 +815,41 @@ impl GoKey {
         }
     }
 
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
-            GoKey::PackageDocLede { file } => {
-                format!(
-                    "go package doc lede in {}",
-                    display_path(file, fixture_root)
-                )
-            }
-            GoKey::PackageImports { file } => {
-                format!(
-                    "go package + imports in {}",
-                    display_path(file, fixture_root)
-                )
-            }
+            GoKey::PackageDocLede { file } => describe_in("go package doc lede", file, root),
+            GoKey::PackageImports { file } => describe_in("go package + imports", file, root),
             GoKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("go decl names surface", file, *chunk_index, fixture_root)
+                describe_chunked_surface("go decl names surface", file, *chunk_index, root)
             }
-            GoKey::Decl { file, start_line } => {
-                format!(
-                    "go decl at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
-            }
+            GoKey::Decl { file, start_line } => describe_at("go decl", file, *start_line, root),
             GoKey::DeclBody { file, start_line } => {
-                format!(
-                    "go decl body at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("go decl body", file, *start_line, root)
             }
             GoKey::DeclDoc { file, start_line } => {
-                format!(
-                    "go decl doc at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("go decl doc", file, *start_line, root)
             }
             GoKey::StructFieldGroup {
                 file,
                 start_line,
                 group_start_line,
             } => format!(
-                "go struct field group at {}:{} group {}",
-                display_path(file, fixture_root),
-                start_line,
-                group_start_line,
+                "go struct field group at {}:{start_line} group {group_start_line}",
+                display_path(file, root)
             ),
-            GoKey::TestNames { file } => {
-                format!(
-                    "go test names surface in {}",
-                    display_path(file, fixture_root)
-                )
-            }
-            GoKey::GoModIdentity { file } => {
-                format!("go module identity in {}", display_path(file, fixture_root))
-            }
-            GoKey::GoMod { file } => format!("go module file {}", display_path(file, fixture_root)),
+            GoKey::TestNames { file } => describe_in("go test names surface", file, root),
+            GoKey::GoModIdentity { file } => describe_in("go module identity", file, root),
+            GoKey::GoMod { file } => format!("go module file {}", display_path(file, root)),
         }
     }
 }
 
 impl PythonKey {
-    /// `DeclNames` is the broad predecessor names surface and carries a
-    /// milder tuned `0.37` concavity; large re-export-wall import chunks use
-    /// the same catalog-shaped exponent. Per-decl / per-method batches carry
-    /// the same 0.45 concavity as
-    /// the C / Go walkers — Python decls are short (a single `def
-    /// name(...):`, a single `class X(Base):` line), source files
-    /// emit dozens of them, and the default 0.35 lets every tiny one
-    /// out-rank larger anchors. `ClassBody` keeps the default because
-    /// field listings have a structural tie to the class.
+    /// `DeclNames` + `ImportChunk` use a mild `0.37` (broad
+    /// catalog-shaped surfaces). Per-decl / per-method batches use
+    /// `0.45` (matches C / Go) for the same reason — short decls
+    /// emitted in bulk. `ClassBody` keeps the default; field listings
+    /// tie structurally to the class.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             PythonKey::ImportChunk { .. } => 0.37,
@@ -1243,103 +862,64 @@ impl PythonKey {
         }
     }
 
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
-            PythonKey::Imports { file } => {
-                format!("python imports in {}", display_path(file, fixture_root))
-            }
+            PythonKey::Imports { file } => describe_in("python imports", file, root),
             PythonKey::ImportChunk { file, chunk_index } => {
-                describe_chunked_surface("python imports", file, *chunk_index, fixture_root)
+                describe_chunked_surface("python imports", file, *chunk_index, root)
             }
-            PythonKey::DeclNames { file, chunk_index } => describe_chunked_surface(
-                "python decl names surface",
-                file,
-                *chunk_index,
-                fixture_root,
-            ),
+            PythonKey::DeclNames { file, chunk_index } => {
+                describe_chunked_surface("python decl names surface", file, *chunk_index, root)
+            }
             PythonKey::Decl { file, start_line } => {
-                format!(
-                    "python decl at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("python decl", file, *start_line, root)
             }
             PythonKey::DeclDoc { file, start_line } => {
-                format!(
-                    "python decl doc at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("python decl doc", file, *start_line, root)
             }
             PythonKey::DeclBody {
                 file,
                 start_line,
                 body_start_line,
-            } => {
-                format!(
-                    "python decl body at {}:{} body {}",
-                    display_path(file, fixture_root),
-                    start_line,
-                    body_start_line
-                )
-            }
+            } => describe_at_body(
+                "python decl body",
+                file,
+                *start_line,
+                *body_start_line,
+                root,
+            ),
             PythonKey::ClassBody { file, start_line } => {
-                format!(
-                    "python class body at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("python class body", file, *start_line, root)
             }
             PythonKey::MethodSigs { file, chunk_index } => {
-                describe_chunked_surface("python method sigs", file, *chunk_index, fixture_root)
+                describe_chunked_surface("python method sigs", file, *chunk_index, root)
             }
             PythonKey::Method { file, start_line } => {
-                format!(
-                    "python method at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("python method", file, *start_line, root)
             }
             PythonKey::MethodDoc { file, start_line } => {
-                format!(
-                    "python method doc at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("python method doc", file, *start_line, root)
             }
             PythonKey::MethodBody {
                 file,
                 start_line,
                 body_start_line,
-            } => {
-                format!(
-                    "python method body at {}:{} body {}",
-                    display_path(file, fixture_root),
-                    start_line,
-                    body_start_line
-                )
-            }
-            PythonKey::TestNames { file } => {
-                format!(
-                    "python test names surface in {}",
-                    display_path(file, fixture_root)
-                )
-            }
+            } => describe_at_body(
+                "python method body",
+                file,
+                *start_line,
+                *body_start_line,
+                root,
+            ),
+            PythonKey::TestNames { file } => describe_in("python test names surface", file, root),
         }
     }
 }
 
 impl CKey {
-    /// `Decl` and `DeclBody` carry a steeper concavity than the default
-    /// because C decls are typically very short (a single typedef /
-    /// prototype line) and a header file emits dozens of them. Under
-    /// the default 0.35 exponent each tiny batch has a runaway
-    /// value/cost^0.35 ratio and the scheduler picks the whole stack
-    /// of them before any larger anchor batch (README section, RustKey
-    /// PubItem). 0.45 (matching `MarkdownKey::Section` for non-zero
-    /// indices) tames that without dropping headers out of the schedule
-    /// — calibrated against the divergence reports for sds, bareiron,
-    /// and krep.
+    /// Per-decl batches steepen to `0.45` — typedef / prototype lines
+    /// are short and headers emit dozens; the default 0.35 lets the
+    /// stack dominate larger anchor batches.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             CKey::Decl { .. } | CKey::DeclBody { .. } | CKey::AggregateMemberGroup { .. } => 0.45,
@@ -1347,70 +927,44 @@ impl CKey {
         }
     }
 
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
-            CKey::HeaderBanner { file } => {
-                format!("c header banner in {}", display_path(file, fixture_root))
-            }
-            CKey::Includes { file } => {
-                format!("c includes in {}", display_path(file, fixture_root))
-            }
+            CKey::HeaderBanner { file } => describe_in("c header banner", file, root),
+            CKey::Includes { file } => describe_in("c includes", file, root),
             CKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("c decl names surface", file, *chunk_index, fixture_root)
+                describe_chunked_surface("c decl names surface", file, *chunk_index, root)
             }
-            CKey::Decl { file, start_line } => {
-                format!(
-                    "c decl at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
-            }
+            CKey::Decl { file, start_line } => describe_at("c decl", file, *start_line, root),
             CKey::DeclBody { file, start_line } => {
-                format!(
-                    "c decl body at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("c decl body", file, *start_line, root)
             }
             CKey::DeclDoc { file, start_line } => {
-                format!(
-                    "c decl doc at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("c decl doc", file, *start_line, root)
             }
             CKey::InitTableRows {
                 file,
                 start_line,
                 end_line,
-            } => {
-                format!(
-                    "c init table rows at {}:{}-{}",
-                    display_path(file, fixture_root),
-                    start_line,
-                    end_line
-                )
-            }
+            } => format!(
+                "c init table rows at {}:{start_line}-{end_line}",
+                display_path(file, root)
+            ),
             CKey::AggregateMemberGroup {
                 file,
                 start_line,
                 group_start_line,
             } => format!(
-                "c aggregate member group at {}:{} group {}",
-                display_path(file, fixture_root),
-                start_line,
-                group_start_line,
+                "c aggregate member group at {}:{start_line} group {group_start_line}",
+                display_path(file, root)
             ),
         }
     }
 }
 
 impl LuaKey {
-    /// Match the C/Python per-decl steepening (0.45) so individual
-    /// short Lua function signatures don't dominate larger anchor
-    /// batches. `MetaFileWhole` keeps the default — these are the
-    /// load-bearing LuaCATS specs the soluna NS prioritizes; a steeper
-    /// exponent would push them later in the schedule.
+    /// Per-decl batches steepen to `0.45` (matches C / Python).
+    /// `MetaFileWhole` keeps the default — LuaCATS specs are
+    /// load-bearing and shouldn't be pushed later.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             LuaKey::Decl { .. } | LuaKey::DeclBody { .. } => 0.45,
@@ -1418,37 +972,21 @@ impl LuaKey {
         }
     }
 
-    pub fn describe(&self, fixture_root: &Path) -> String {
+    pub fn describe(&self, root: &Path) -> String {
         match self {
-            LuaKey::Banner { file } => {
-                format!("lua banner in {}", display_path(file, fixture_root))
-            }
+            LuaKey::Banner { file } => describe_in("lua banner", file, root),
             LuaKey::MetaFileWhole { file } => {
-                format!("lua meta-file at {}", display_path(file, fixture_root))
+                format!("lua meta-file at {}", display_path(file, root))
             }
             LuaKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("lua decl names surface", file, *chunk_index, fixture_root)
+                describe_chunked_surface("lua decl names surface", file, *chunk_index, root)
             }
-            LuaKey::Decl { file, start_line } => {
-                format!(
-                    "lua decl at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
-            }
+            LuaKey::Decl { file, start_line } => describe_at("lua decl", file, *start_line, root),
             LuaKey::DeclDoc { file, start_line } => {
-                format!(
-                    "lua decl doc at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("lua decl doc", file, *start_line, root)
             }
             LuaKey::DeclBody { file, start_line } => {
-                format!(
-                    "lua decl body at {}:{}",
-                    display_path(file, fixture_root),
-                    start_line
-                )
+                describe_at("lua decl body", file, *start_line, root)
             }
         }
     }
@@ -1461,19 +999,26 @@ fn display_path(path: &Path, fixture_root: &Path) -> String {
         .to_string()
 }
 
-fn describe_chunked_surface(
-    label: &str,
-    file: &Path,
-    chunk_index: usize,
-    fixture_root: &Path,
-) -> String {
+/// `"<label> in <path>"`.
+fn describe_in(label: &str, file: &Path, root: &Path) -> String {
+    format!("{label} in {}", display_path(file, root))
+}
+
+/// `"<label> at <path>:<line>"`.
+fn describe_at(label: &str, file: &Path, line: usize, root: &Path) -> String {
+    format!("{label} at {}:{line}", display_path(file, root))
+}
+
+/// `"<label> at <path>:<line> body <body>"`.
+fn describe_at_body(label: &str, file: &Path, line: usize, body: usize, root: &Path) -> String {
+    format!("{label} at {}:{line} body {body}", display_path(file, root))
+}
+
+fn describe_chunked_surface(label: &str, file: &Path, chunk_index: usize, root: &Path) -> String {
     if chunk_index == 0 {
-        format!("{label} in {}", display_path(file, fixture_root))
+        describe_in(label, file, root)
     } else {
-        format!(
-            "{label} #{chunk_index} in {}",
-            display_path(file, fixture_root)
-        )
+        format!("{label} #{chunk_index} in {}", display_path(file, root))
     }
 }
 
