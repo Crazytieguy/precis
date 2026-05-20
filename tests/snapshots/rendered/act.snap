@@ -252,6 +252,10 @@ pkg/
             24→func openPty() (*os.File, *os.File, error) {
             25→	return pty.Open()
         util_openbsd_mips64.go
+            9→func getSysProcAttr(cmdLine string, tty bool) *syscall.SysProcAttr {
+            …
+            15→func openPty() (*os.File, *os.File, error) {
+            …
         util_plan9.go
         util_windows.go
     exprparser/

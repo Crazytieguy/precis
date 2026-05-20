@@ -53,6 +53,11 @@ README.md
     133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
+    15→package cobra
+    17→import (
+    18→	"fmt"
+    19→	"os"
+    20→)
 active_help_test.go
 args.go
     15→package cobra
@@ -65,38 +70,24 @@ assets/
     CobraMain.png
 bash_completions.go
 bash_completionsV2.go
+    24→func (c *Command) genBashCompletion(w io.Writer, includeDesc bool) error {
+    …
+    31→func genBashComp(buf io.StringWriter, name string, includeDesc bool) {
+    …
+    469→// GenBashCompletionFileV2 generates Bash completion version 2.
+    470→func (c *Command) GenBashCompletionFileV2(filename string, includeDesc bool) error {
+    …
+    480→// GenBashCompletionV2 generates Bash completion file version 2
+    481→// and writes it to the passed writer.
+    482→func (c *Command) GenBashCompletionV2(w io.Writer, includeDesc bool) error {
+    483→	return c.genBashCompletion(w, includeDesc)
 bash_completionsV2_test.go
 bash_completions_test.go
 cobra.go
-    18→package cobra
-    20→import (
-    21→	"fmt"
-    22→	"io"
-    23→	"os"
-    24→	"reflect"
-    25→	"strconv"
-    26→	"strings"
-    27→	"text/template"
-    28→	"time"
-    29→	"unicode"
-    30→)
 cobra_test.go
 command.go
     15→// Package cobra is a commander providing a simple interface to create powerful modern CLI interfaces.
     16→// In addition to providing an interface, Cobra simultaneously provides a controller to organize your application code.
-    17→package cobra
-    19→import (
-    20→	"bytes"
-    21→	"context"
-    22→	"errors"
-    23→	"fmt"
-    24→	"io"
-    25→	"os"
-    26→	"path/filepath"
-    27→	"sort"
-    28→	"strings"
-    30→	flag "github.com/spf13/pflag"
-    31→)
     33→const (
     34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
     35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
@@ -214,13 +205,6 @@ command.go
     258→	// Must be > 0.
     259→	SuggestionsMinimumDistance int
     260→}
-    262→// Context returns underlying command context. If command was executed
-    263→// with ExecuteContext or the context was set with SetContext, the
-    264→// previously set context will be returned. Otherwise, nil is returned.
-    265→//
-    266→// Notice that a call to Execute and ExecuteC will replace a nil context of
-    267→// a command with a context.Background, so a background context will be
-    268→// returned by Context after one of these functions has been called.
     269→func (c *Command) Context() context.Context {
     270→	return c.ctx
     273→// SetContext sets context for the command. This context will be overwritten by
@@ -257,6 +241,14 @@ doc/
     yaml_docs.go
     yaml_docs_test.go
 fish_completions.go
+    25→func genFishComp(buf io.StringWriter, name string, includeDesc bool) {
+    …
+    275→// GenFishCompletion generates fish completion file and writes to the passed writer.
+    276→func (c *Command) GenFishCompletion(w io.Writer, includeDesc bool) error {
+    …
+    283→// GenFishCompletionFile generates fish completion file.
+    284→func (c *Command) GenFishCompletionFile(filename string, includeDesc bool) error {
+    …
 fish_completions_test.go
 flag_groups.go
 flag_groups_test.go
@@ -273,6 +265,10 @@ go.sum
 powershell_completions.go
 powershell_completions_test.go
 shell_completions.go
+    15→package cobra
+    17→import (
+    18→	"github.com/spf13/pflag"
+    19→)
 site/
     content/
         active_help.md

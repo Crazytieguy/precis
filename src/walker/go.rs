@@ -60,11 +60,6 @@ use super::{
     push_rows, signature_end_row, single_file_lines_content,
 };
 
-/// Cap on `GoMod` line emission when the file has no `// indirect`
-/// markers (older / hand-written go.mods). With the indirect filter,
-/// even monorepo go.mods render under this cap.
-const GOMOD_LINE_CAP: usize = 80;
-
 const VISIBILITY_FACTOR_EXPORTED: f64 = 1.0;
 const VISIBILITY_FACTOR_UNEXPORTED: f64 = 0.6;
 
@@ -120,12 +115,9 @@ fn expand_gomod(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
 /// Build the identity-only content for `go.mod` / `go.work`: the
 /// `module`, `go`, and `toolchain` directive lines at the top of the
-/// file. Returns `None` if the file has none of these (in practice
-/// `go.work` may legitimately have only a `go` directive, which still
-/// counts). NS authors anchor on this slice as a small high-value
-/// orientation atom ("Module name + Go version"); emitting it
-/// independently of the heavier require-block batch lets the cheap
-/// slice land first at small budgets.
+/// file. Returns `None` if none of these are present. Emitted
+/// separately from the heavier require-block batch so the cheap
+/// identity slice can land first at small budgets.
 fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let mut lines = Vec::new();
@@ -168,7 +160,6 @@ fn build_gomod_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     }
 
     let mut lines = Vec::with_capacity(total_lines);
-    let mut indirect_seen = false;
     let mut in_require_block = false;
     for (i, raw) in source.lines().enumerate() {
         let trimmed = raw.trim();
@@ -184,15 +175,11 @@ fn build_gomod_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
             continue;
         }
         if in_require_block && raw.contains("// indirect") {
-            indirect_seen = true;
             continue;
         }
         lines.push(line_no);
     }
 
-    if !indirect_seen && lines.len() > GOMOD_LINE_CAP {
-        return None;
-    }
     single_file_lines_content(file, &source, FileLines::new(lines))
 }
 
@@ -231,20 +218,14 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         let line_count = src_lines.len();
         let pkg = package_name(&tree, &source);
         let decls = find_decls(&tree, &source, pkg.as_deref());
-        // Compute the entry-file boost once per file and thread it
-        // through the value functions. Computing inside each value
-        // function (called 4 + 3 × decls times per file) re-walked the
-        // tree on every call — command.go's 139 decls × 7-8 channels
-        // = ~1000 tree-walks per file in the hot path.
+        // Computed once per file and threaded through value functions
+        // — the previous design recomputed inside each value call,
+        // re-walking the tree per decl.
         let entry_factor = go_entry_factor_for(file, ctx, pkg.as_deref(), &decls);
 
-        // Only emit `PackageDocLede` for files that qualify as an
-        // entry-shaped file (package-name match, big-struct anchor,
-        // or the `doc.go` Go-convention package-docs file — all
-        // surfaced via `go_entry_factor_for`). Internal subpackage
-        // doc ledes (`internal/xtime/time.go`) carry low orientation
-        // value relative to their cost and crowd the early budget if
-        // every subpackage gets one.
+        // Restrict `PackageDocLede` to entry-shaped files (see
+        // `go_entry_factor_for`). Internal subpackage ledes carry
+        // low orientation value relative to cost.
         if entry_factor > 1.0
             && let Some(content) =
                 single_file_lines_content(file, &source, collect_package_doc_lede(&tree, &source))
@@ -253,7 +234,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 key: GoKey::PackageDocLede { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: package_doc_lede_value(file, ctx, entry_factor),
+                value: GoRole::PackageDocLede.value(file, ctx, entry_factor, 1.0),
             });
         }
         if let Some(content) =
@@ -263,7 +244,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 key: GoKey::PackageImports { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: package_imports_value(file, ctx, entry_factor),
+                value: GoRole::PackageImports.value(file, ctx, entry_factor, 1.0),
             });
         }
 
@@ -271,14 +252,9 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             continue;
         }
 
-        // Names-surface chunking: oversized API files (tea.go's 56
-        // decls × 1439 lines, command.go's 139 decls × 2072 lines)
-        // emit a too-big unchunked surface that loses the value/cost
-        // race to small-sibling-file batches. Chunk only when BOTH
-        // decl count and line count are large: chunking moderately-
-        // sized files (gin.go 57 × 832, migrate.go 35 × 979) regressed
-        // because their full surfaces DID fit at ~2.5K and chunking
-        // displaced delivered content.
+        // Names-surface chunking: only oversized API files (both many
+        // decls AND many lines) chunk. Smaller files emit their full
+        // surface so it can land in one batch at small budgets.
         let chunk_count = if decls.len() > GO_DECL_NAMES_CHUNK_THRESHOLD
             && line_count > GO_DECL_NAMES_CHUNK_LINE_THRESHOLD
         {
@@ -309,7 +285,8 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     key: names_keys[chunk_index].clone().into(),
                     predecessor: None,
                     content,
-                    value: decl_names_value(file, ctx, chunk_index, chunk_count, entry_factor),
+                    value: GoRole::DeclNames.value(file, ctx, entry_factor, 1.0)
+                        * names_surface_chunk_factor(chunk_index, chunk_count),
                 });
             }
         }
@@ -337,7 +314,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     key: decl_key.clone().into(),
                     predecessor: Some(names_predecessor.clone()),
                     content,
-                    value: decl_value(file, info, ctx, entry_factor),
+                    value: GoRole::Decl.value(file, ctx, entry_factor, info.kv()),
                 });
             }
             let decl_predecessor = BatchKey::Go(decl_key);
@@ -350,7 +327,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
-                    value: decl_doc_value(file, info, ctx, entry_factor),
+                    value: GoRole::DeclDoc.value(file, ctx, entry_factor, info.kv()),
                 });
             }
             if info.kind.has_body()
@@ -364,7 +341,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
-                    value: decl_body_value(file, info, ctx, entry_factor),
+                    value: GoRole::DeclBody.value(file, ctx, entry_factor, info.kv()),
                 });
             }
             // Big-struct field-group split. Each blank-line-separated
@@ -384,7 +361,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         .into(),
                         predecessor: Some(decl_predecessor.clone()),
                         content,
-                        value: struct_field_group_value(file, info, ctx, entry_factor),
+                        value: GoRole::StructFieldGroup.value(file, ctx, entry_factor, info.kv()),
                     });
                 }
             }
@@ -394,26 +371,16 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
 }
 
 /// Chunk size for Go declaration-name surfaces. Smaller than the
-/// universal `NAMES_SURFACE_CHUNK_SIZE` (12) because Go method-
-/// declaration name rows render long (`func (c *Command) Foo(...)`
-/// ~22 tokens each) — a 12-name chunk often still won't fit at 3K for
-/// an oversized API file (command.go's 12-name chunk is 261 tokens),
-/// so the first chunk must hold fewer names. NS authors anchor on
-/// per-class / per-flag-group rows that comfortably fit within ~10
-/// names.
+/// universal `NAMES_SURFACE_CHUNK_SIZE` because Go method-declaration
+/// name rows render long (`func (c *Command) Foo(...)`), so a chunk
+/// must hold fewer names to fit at the 3K budget tier.
 const GO_DECL_NAMES_CHUNK_SIZE: usize = 8;
 
-/// Decl-count threshold below which the names surface stays as a
-/// single coherent batch. Past iterations split at 24 and regressed
-/// xxhash (29 decls). 30 keeps xxhash unchunked.
 const GO_DECL_NAMES_CHUNK_THRESHOLD: usize = 30;
 
-/// Line-count co-threshold — chunking also requires the file to be
-/// large enough that its full names surface plausibly won't fit at 3K.
-/// migrate.go (979 lines, 35 decls) has a surface that DOES fit at
-/// ~2.5K; chunking it regressed past iterations. gin.go (832 lines)
-/// and tea.go / command.go all benefit from chunking — their full
-/// surfaces don't fit in the 10K-budget schedule at all without it.
+/// Co-gate: chunking also requires the file to be large enough that
+/// its full names surface plausibly won't fit at 3K. Smaller files
+/// regress when chunked because their full surface already fits.
 const GO_DECL_NAMES_CHUNK_LINE_THRESHOLD: usize = 800;
 
 fn is_test_file(file: &Path) -> bool {
@@ -484,6 +451,10 @@ impl DeclInfo {
         } else {
             VISIBILITY_FACTOR_UNEXPORTED
         }
+    }
+
+    fn kv(&self) -> f64 {
+        self.kind.kind_weight() * self.visibility_factor()
     }
 }
 
@@ -629,17 +600,14 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
     }
 }
 
-/// Minimum source-line span (closing brace minus opening brace) for a
-/// struct body to be eligible for field-group chunking. Below this,
-/// the unchunked struct fits cheaply at any reasonable budget and
-/// splitting adds scheduling churn without payoff.
+/// Minimum struct-body span (in source lines) eligible for
+/// field-group chunking. Below this, the unchunked struct already
+/// fits cheaply.
 const STRUCT_FIELD_GROUP_MIN_LINES: usize = 60;
 
-/// Minimum number of blank-line-separated field groups required for
-/// chunking. A two-group struct's groups would be roughly half the
-/// struct each — the parent Decl is already cheap to schedule when
-/// the struct is moderately small, and per-group fragmentation is
-/// only useful for Command-style structs with many distinct anchors.
+/// Minimum blank-line-separated field groups required to chunk.
+/// Per-group fragmentation only pays off for structs with several
+/// distinct anchors.
 const STRUCT_FIELD_GROUP_MIN_GROUPS: usize = 3;
 
 /// Locate the inner `struct_type` node of a `type_spec` whose type is
@@ -789,126 +757,78 @@ fn go_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     file_depth_factor(file, ctx, false)
 }
 
-fn package_doc_lede_value(file: &Path, ctx: &WalkCtx, entry_factor: f64) -> f64 {
-    // Higher cat than `PackageImports`: the doc lede answers "what
-    // does this package provide" — identity-level orientation. The
-    // entry-file boost compounds on the package-name-matched file
-    // (tea.go in package tea, xxhash.go in package xxhash).
-    mix_signals(0.60, 0.55, 0.55, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
+/// Per-role `(cat, fu, ztu)` signal triples sharing the entry-factor /
+/// aux-factor pipeline.
+#[derive(Clone, Copy)]
+enum GoRole {
+    PackageDocLede,
+    PackageImports,
+    DeclNames,
+    Decl,
+    DeclDoc,
+    DeclBody,
+    StructFieldGroup,
 }
 
-fn package_imports_value(file: &Path, ctx: &WalkCtx, entry_factor: f64) -> f64 {
-    mix_signals(0.30, 0.55, 0.3, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
+impl GoRole {
+    /// `kv` is `kind_weight * visibility_factor` for decl-bearing
+    /// roles, `1.0` for the no-decl roles.
+    fn value(self, file: &Path, ctx: &WalkCtx, entry_factor: f64, kv: f64) -> f64 {
+        let (cat, fu, ztu) = match self {
+            GoRole::PackageDocLede => (0.60, 0.55, 0.55),
+            GoRole::PackageImports => (0.30, 0.55, 0.30),
+            GoRole::DeclNames => (0.65, 0.55, 0.35),
+            GoRole::Decl => (0.70, 0.85, 0.65),
+            GoRole::DeclDoc => (0.20, 0.60, 0.80),
+            GoRole::DeclBody => (0.30, 0.80, 0.70),
+            GoRole::StructFieldGroup => (0.55, 0.70, 0.55),
+        };
+        mix_signals(
+            (cat * kv).min(1.0),
+            (fu * kv).min(1.0),
+            ztu,
+            go_depth_factor(file, ctx),
+        ) * go_aux_factor(file)
+            * entry_factor
+    }
 }
 
-/// Sits below per-decl `Type`-kind value so the scheduler favours
-/// structural anchors in load-bearing files over a blanket name
-/// surface in every `.go` file.
-fn decl_names_value(
-    file: &Path,
-    ctx: &WalkCtx,
-    chunk_index: usize,
-    chunk_count: usize,
-    entry_factor: f64,
-) -> f64 {
-    mix_signals(0.65, 0.55, 0.35, go_depth_factor(file, ctx))
-        * go_aux_factor(file)
-        * entry_factor
-        * names_surface_chunk_factor(chunk_index, chunk_count)
-}
-
-fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx, entry_factor: f64) -> f64 {
-    let kv = info.kind.kind_weight() * info.visibility_factor();
-    let cat = (0.70 * kv).min(1.0);
-    let fu = (0.85 * kv).min(1.0);
-    mix_signals(cat, fu, 0.65, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
-}
-
-fn decl_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx, entry_factor: f64) -> f64 {
-    let kv = info.kind.kind_weight() * info.visibility_factor();
-    let cat = (0.20 * kv).min(1.0);
-    let fu = (0.6 * kv).min(1.0);
-    mix_signals(cat, fu, 0.8, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
-}
-
-fn decl_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx, entry_factor: f64) -> f64 {
-    let kv = info.kind.kind_weight() * info.visibility_factor();
-    let cat = (0.30 * kv).min(1.0);
-    let fu = (0.80 * kv).min(1.0);
-    mix_signals(cat, fu, 0.7, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
-}
-
-fn struct_field_group_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx, entry_factor: f64) -> f64 {
-    // Same shape as `decl_value` for a Type, scaled down: each group
-    // is one slice of the struct's identity, not the whole declaration.
-    let kv = info.kind.kind_weight() * info.visibility_factor();
-    let cat = (0.55 * kv).min(1.0);
-    let fu = (0.70 * kv).min(1.0);
-    mix_signals(cat, fu, 0.55, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
-}
-
-/// Boost Go files that anchor the package's API surface. Two
-/// conditions, either alone sufficient:
+/// Boost Go files that anchor the package's API surface. Either
+/// alone is sufficient:
 ///
-/// - **Package-name match**: file stem matches the file's `package`
-///   clause (`tea.go` in `package tea`, `cobra.go` in `package
-///   cobra`). The long-standing "the file the agent looks at first"
-///   convention. Analogous to Rust's `lib.rs`/`main.rs`
+/// - **Package-name match**: file stem == file's `package` clause
+///   (`tea.go` in `package tea`). Analogous to Rust's `lib.rs`/`main.rs`
 ///   `entrypoint_boost`.
-/// - **Has a big-struct anchor**: the file contains an *exported*
-///   single-spec `type X struct { … }` whose body spans ≥
-///   `STRUCT_FIELD_GROUP_MIN_LINES` lines and splits into at least
-///   `STRUCT_FIELD_GROUP_MIN_GROUPS` blank-line-separated field groups.
-///   Cobra's `command.go` is the canonical case — the package's
-///   exported `Command` struct is the API anchor even though the file
-///   stem doesn't match `package cobra`. The split-eligibility +
-///   exported gate keeps the boost off files whose big struct is a
-///   private contiguous configuration blob without per-field-group
-///   anchors.
+/// - **`doc.go` convention**: pkg.go.dev surfaces it as the package
+///   landing page; boost cascades onto its lede / imports batches.
+/// - **Big-struct anchor**: an *exported* single-spec `type X struct
+///   { … }` eligible for field-group splitting. The exported +
+///   split-eligibility gate keeps the boost off private configuration
+///   blobs.
 ///
-/// Restricted to root-level files (depth ≤ 1): in monorepos with many
-/// internal/sub-packages, every subpackage would match the package-
-/// name rule and the boost would crowd the early budget with
-/// private-implementation content.
-///
-/// Called once per file in `expand_source_files` and the resulting
-/// `f64` is threaded through every per-file value function — the
-/// previous design recomputed this 4 + 3 × decls times per file
-/// (re-walking the tree on each call).
+/// Restricted to root-level files (depth ≤ 1): in monorepos every
+/// subpackage would otherwise match the package-name rule and crowd
+/// the early budget with private-implementation content.
 fn go_entry_factor_for(
     file: &Path,
     ctx: &WalkCtx,
     pkg: Option<&str>,
     decls: &[(Node, DeclInfo)],
 ) -> f64 {
-    const BOOST: f64 = 1.4;
     if ctx.depth_from_root(file) > 1 {
         return 1.0;
     }
     let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
         return 1.0;
     };
-    if pkg == Some(stem) {
-        return BOOST;
-    }
-    // `doc.go` is the long-standing Go convention for "the file
-    // holding the package's godoc paragraph" — pkg.go.dev surfaces it
-    // as the package landing page. NS authors anchor on its lede
-    // accordingly (gin's `Package godoc lede`). Treating it as an
-    // entry-shaped file lifts its `PackageDocLede` / `PackageImports`
-    // value to match a package-name-matched anchor file. doc.go
-    // typically carries no decls, so the boost cascades only onto the
-    // lede / imports — exactly the batches the convention targets.
-    if stem == "doc" {
-        return BOOST;
-    }
-    if decls
+    let big_struct_anchor = decls
         .iter()
-        .any(|(_, info)| info.exported && !info.struct_field_groups.is_empty())
-    {
-        return BOOST;
+        .any(|(_, info)| info.exported && !info.struct_field_groups.is_empty());
+    if pkg == Some(stem) || stem == "doc" || big_struct_anchor {
+        1.4
+    } else {
+        1.0
     }
-    1.0
 }
 
 fn package_name(tree: &Tree, source: &str) -> Option<String> {
@@ -927,24 +847,19 @@ fn package_name(tree: &Tree, source: &str) -> Option<String> {
     None
 }
 
-/// Damp Go files whose stem carries a build-tag suffix or matches
-/// the cobra-style shell-completion generator convention. Both
-/// classes are aux implementation behind a portable interface; NS
-/// authors anchor on the un-suffixed sibling.
+/// Damp Go files whose stem carries a build-tag suffix — aux
+/// implementation behind a portable interface; NS authors anchor on
+/// the un-suffixed sibling.
 fn go_aux_factor(file: &Path) -> f64 {
     let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
         return 1.0;
     };
     let lower = name.to_ascii_lowercase();
     let stem = lower.strip_suffix(".go").unwrap_or(&lower);
-    if is_go_completion_stem(stem) || is_go_build_variant_stem(stem) {
+    if is_go_build_variant_stem(stem) {
         return 0.5;
     }
     1.0
-}
-
-fn is_go_completion_stem(stem: &str) -> bool {
-    stem == "active_help" || stem.contains("completion")
 }
 
 /// Go build-tag suffix on a filename stem. The Go toolchain auto-
@@ -957,41 +872,14 @@ fn is_go_build_variant_stem(stem: &str) -> bool {
     };
     matches!(
         suffix,
-        "aix"
-            | "android"
-            | "darwin"
-            | "dragonfly"
-            | "freebsd"
-            | "hurd"
-            | "illumos"
-            | "ios"
-            | "js"
-            | "linux"
-            | "nacl"
-            | "netbsd"
-            | "openbsd"
-            | "plan9"
-            | "solaris"
-            | "wasip1"
-            | "windows"
-            | "zos"
-            | "unix"
-            | "bsd"
-            | "other"
-            | "notwin"
-            | "nonwin"
-            | "win"
-            | "amd64"
-            | "arm"
-            | "arm64"
-            | "386"
-            | "loong64"
-            | "mips"
-            | "mips64"
-            | "ppc64"
-            | "riscv64"
-            | "s390x"
-            | "wasm"
+        // GOOS values (subset of `go tool dist list`).
+        "darwin" | "linux" | "windows" | "freebsd" | "openbsd" | "netbsd"
+        | "dragonfly" | "plan9" | "solaris" | "ios" | "android" | "aix"
+        | "illumos" | "js" | "wasm" | "wasip1" | "zos"
+        // GOARCH values.
+        | "amd64" | "arm" | "arm64" | "386" | "ppc64" | "riscv64" | "s390x"
+        // Informal multi-OS variants.
+        | "unix" | "bsd" | "other" | "win" | "notwin" | "nonwin"
     )
 }
 
@@ -1000,24 +888,12 @@ fn test_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn gomod_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Identity directives (module / go / toolchain) split off into
-    // [`GoKey::GoModIdentity`] — this batch's value reflects the
-    // residual require / replace / exclude / retract content, not the
-    // top-level identity lede. Catastrophic-omission stays high (NS
-    // authors anchor on the dep list) but follow-up minimization drops
-    // a notch versus the pre-split value, since the lede is no longer
-    // bundled in.
+    // Identity directives split into [`GoKey::GoModIdentity`]; this
+    // batch reflects the residual require / replace / exclude /
+    // retract content.
     mix_signals(0.80, 0.60, 0.5, go_depth_factor(file, ctx))
 }
 
-/// Identity slice of a `go.mod` is a small, high-value orientation
-/// atom (module path + Go version, ~25–40 tok). Catastrophic-omission
-/// dominates — knowing the module path is identity-level info on par
-/// with the package-doc lede; without it the agent can't even name
-/// the package. Follow-up minimization is high too (no further work
-/// needed to learn the import root); zero-tool-call understanding sits
-/// below the full module batch because the identity slice alone
-/// doesn't list deps.
 fn gomod_identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.90, 0.75, 0.35, go_depth_factor(file, ctx))
 }
@@ -1043,20 +919,15 @@ fn collect_package_imports(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(dedup_sorted(lines))
 }
 
-/// The contiguous `//`-comment block immediately above the file's
-/// `package` clause — Go's "package comment" convention. NS authors
-/// anchor on this as the file's identity lede (`// Package tea
-/// provides ...`). Emitted as a separate batch (vs folding into
-/// `PackageImports`) so the lede can fire standalone at low cost when
-/// the `PackageImports` batch's `import (...)` block is heavy.
+/// The contiguous comment block immediately above the file's
+/// `package` clause — Go's "package comment" convention. Emitted as a
+/// separate batch (vs folding into `PackageImports`) so the lede can
+/// fire standalone at low cost.
 ///
 /// `/* … */` block comments span the whole godoc body in a single
-/// tree-sitter node — line/example/notes/etc — which can balloon the
-/// "lede" batch to hundreds of tokens (e.g. gin's `doc.go` ships an
-/// example `package main` block inside `/* … */`). Keep only the first
-/// paragraph: stop at the first blank source line inside the comment.
-/// `//`-style ledes are unaffected (each `//` line is its own node,
-/// and `collect_doc_comments_above` already stops at any source-row gap).
+/// tree-sitter node, so we truncate to the first paragraph (stop at
+/// first blank source row). `//`-style ledes are unaffected since
+/// `collect_doc_comments_above` already stops at any row gap.
 fn collect_package_doc_lede(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -1427,7 +1298,7 @@ replace github.com/x/y => github.com/forked/y v2.0.0
     }
 
     #[test]
-    fn go_mod_falls_back_to_capped_whole_file_when_no_indirect() {
+    fn go_mod_emits_whole_file_when_no_indirect_lines_present() {
         let src = "module example.com/foo\n\ngo 1.22\n";
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("go.mod");
