@@ -533,9 +533,7 @@ impl BodyPart {
     }
 }
 
-// Below roughly a dozen emitted atoms, splitting usually costs more scheduling
-// surface than it saves: descendants are tiny and the parent body batch is
-// already cheap enough to carry as a single region.
+/// Minimum body interior lines for per-statement splitting.
 pub(crate) const BODY_SPLIT_MIN_LINES: usize = 12;
 
 pub(crate) fn body_part_value_factor(part_count: usize) -> f64 {
@@ -562,7 +560,7 @@ pub(crate) fn statement_block_parts(
     let named_children: Vec<_> = b.named_children(&mut cursor).collect();
     let body_start = b.start_position().row;
     let body_end = b.end_position().row;
-    // Python function blocks are indentation-delimited; Rust/TS blocks include brace rows.
+    // Python function blocks are indent-delimited (no brace rows).
     let undelimited_block = block_kind == "block"
         && b.parent()
             .is_some_and(|parent| parent.kind() == "function_definition")
@@ -607,8 +605,7 @@ pub(crate) fn statement_block_parts(
         }
     }
     if parts.len() <= 1 {
-        // Named children omit comment-only/interstitial content. Preserve the
-        // complete block when there is nothing meaningful to split.
+        // Nothing meaningful to split — preserve the complete block.
         vec![BodyPart { lines: interior }]
     } else {
         parts
@@ -623,28 +620,14 @@ pub(crate) fn signature_end_row(node: Node) -> usize {
         .unwrap_or_else(|| node.end_position().row)
 }
 
-/// Doc comment(s) immediately above a decl — a run of consecutive
-/// `comment` nodes touching `node` (no blank-line gap between any pair).
-/// Shared across C / Go / Lua walkers, each of which treats top-level
-/// `comment` nodes as the AST shape for documentation.
-///
-/// End-of-line comments on a *previous* sibling's line (e.g. C's
-/// `int foo(); //-V2586 …` followed by `int bar();`) are tree-sitter
-/// `comment` siblings of the next decl but visually belong to the
-/// previous decl's line. Treating them as doc comments would let the
-/// resulting `DeclDoc` claim a row already owned by the prior `Decl`
-/// and trip the scheduler's non-ancestor-overlap guard. Skip any
-/// comment that isn't the first non-whitespace token on its line.
+/// Consecutive doc-comment siblings touching `node`. End-of-line
+/// comments on a previous sibling's line are skipped (they would
+/// trip non-ancestor overlap).
 pub(crate) fn collect_doc_comments_above(node: Node, source: &str) -> FileLines {
     collect_doc_comments_above_bounded(node, source, None)
 }
 
-/// [`collect_doc_comments_above`] with an explicit lower row boundary.
-/// Walks back through prev siblings the same way, but stops as soon as
-/// the next comment starts at or below `boundary_row` (0-based) —
-/// callers use this to keep `DeclDoc` from grabbing comments owned by
-/// the file's [`HeaderBanner`](crate::batch::CKey::HeaderBanner) batch
-/// when banner and first decl are not separated by a blank line.
+/// [`collect_doc_comments_above`] with a lower row boundary.
 pub(crate) fn collect_doc_comments_above_bounded(
     node: Node,
     source: &str,
