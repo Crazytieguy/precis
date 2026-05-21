@@ -72,44 +72,21 @@ const FULL_VALUE_BODY_SEGMENTS_PER_FILE: usize = 4;
 // value/cost ratio lose to broader structural candidates in budget pressure.
 const LATE_BODY_SEGMENT_VALUE_FACTOR: f64 = 0.05;
 const JS_CLASS_MEMBER_SPLIT_MIN: usize = 12;
-/// Upper bound on class member count for splitting. A class with 80+
-/// members fragments into 80 per-method `ExportMember` batches at
-/// 10-15 tokens each — combined they dominate the early budget on the
-/// concavity ratio without satisfying any single NS row that groups
-/// method names (commander NS 3.4–3.7 are catalog rows by NS-author
-/// choice). Above this cap we suppress the per-method batches; the
-/// unsplit `Export`'s larger token cost mostly puts it past the
-/// auto-injection budget too, but the freed budget slots reliably
-/// land NS-aligned package.json / README / sibling-file content.
+/// Upper bound on class member count for the per-method split — above
+/// this, the per-method `ExportMember` batches dominate the early
+/// budget on concavity without satisfying any catalog-shape NS row.
 const JS_CLASS_MEMBER_SPLIT_MAX: usize = 40;
 /// Minimum prototype-method assignments in a JS file for the synthesized
-/// per-method exports to fire. Below this floor the file is almost
-/// certainly *not* a "prototype-style class" — a single `module.exports
-/// = thing` plus an incidental `thing.helper = function …` shouldn't
-/// hijack the file's emission shape. Express's three prototype files
-/// each have 8+ method assignments, so 3 is comfortably below the
-/// signal floor.
+/// per-method exports to fire. Below this floor a couple incidental
+/// `thing.helper = function …` lines shouldn't hijack the file shape.
 const JS_PROTOTYPE_METHOD_MIN: usize = 3;
-/// Value multiplier for a prototype-style JS file's names surface. The
-/// catalog of `app.X` / `req.X` / `res.X` method names IS the public
-/// API; NS authors rank it priority 2.x — well above per-section
-/// README slices that otherwise win small-batch ranking races.
+/// Value multiplier for a prototype-style JS file's names surface —
+/// the `app.X` / `req.X` catalog IS the public API.
 const JS_PROTOTYPE_NAMES_VALUE_BOOST: f64 = 1.5;
 
 /// Per-run TypeScript-walker state. Caches the project's "public
-/// surface" — the set of TS/JS files transitively reachable from any
-/// entrypoint file (index / main / mod) via re-export chains. A file
-/// is in the public surface iff it's an entrypoint OR some
-/// public-surface file re-exports content from it (`export ... from
-/// './path'`, `export * from './path'`, or `import ... from './path';
-/// export { ... }` where one of the named exports came from that
-/// import). Plain imports (no matching local re-export) are internal
-/// dependencies and do NOT expand the surface.
-///
-/// Used as a public-vs-private signal: items in non-surface files are
-/// inherently less load-bearing than items in surface files (NS
-/// authors universally rank the public API surface ahead of internal
-/// type machinery / helper modules).
+/// surface" (entrypoint files + transitively re-exported targets) so
+/// items in non-surface files can be damped as internal.
 #[derive(Default)]
 pub struct TypescriptState {
     public_surface: OnceCell<HashSet<PathBuf>>,
@@ -144,17 +121,7 @@ impl TypescriptState {
     }
 
     /// Walk up from `file` to the nearest dir under `root` that contains
-    /// its own `package.json` — that's the enclosing JS/TS sub-package.
-    /// Returns `None` when no non-root `package.json` lies between the
-    /// file and the seed root (the file belongs to the root package).
-    /// Memoized per file.
-    ///
-    /// Mirrors [`crate::walker::rust::RustState::nearest_member_dir`] in
-    /// shape, but unconditional: it doesn't require the sub-package to be
-    /// declared in a `workspaces`/`pnpm-workspace.yaml` field. The use
-    /// case is generic sub-package detection (e.g. monaco-editor's
-    /// `webpack-plugin/`, which has its own `package.json` but isn't part
-    /// of a declared workspace).
+    /// its own `package.json`. Memoized.
     pub(in crate::walker) fn nearest_subpackage_dir(
         &self,
         file: &Path,
@@ -631,15 +598,9 @@ fn emit_export_body_parts(
     }
 }
 
-/// Damping factor for very small body batches. One-line method
-/// bodies in JS/TS are typically pass-through delegation
-/// (`return x.f()`, `this.x = x`), not load-bearing implementation —
-/// the signature alone tells callers what the method does. Without
-/// damping, these tiny bodies (cost 5–8 tokens) win the V/C race
-/// against substantial method bodies (constructor / boot ordering)
-/// that NS authors anchor on. Two-line bodies sit on the boundary
-/// and keep most of their weight; bodies of three or more lines are
-/// substantive enough to keep their full weight.
+/// Damp very small body batches — one-line bodies in JS/TS are
+/// typically pass-through delegation; the signature already tells
+/// callers what the method does.
 fn tiny_body_value_factor(line_count: usize) -> f64 {
     match line_count {
         0 | 1 => 0.65,
@@ -726,28 +687,18 @@ struct ExportInfo<'a> {
     decl: Node<'a>,
     body_parts: Vec<BodyPart>,
     class_members: Vec<ClassMemberInfo>,
-    /// True when this export carries no runtime value: `Interface` /
-    /// `TypeAlias`, or a `NamedReexport` whose `export_statement` has
-    /// the statement-level `type` keyword (`export type { Foo }`). Used
-    /// by `type_machinery_factor` to flag whole files as type-machinery
-    /// internals — the per-export `Export` / `ExportDoc` value is
-    /// damped on those files. `Enum` is *not* type-only (TS enums emit
-    /// runtime objects).
+    /// True for type-only exports (`Interface`, `TypeAlias`, or a
+    /// `NamedReexport` whose statement has the `type` keyword). Flags
+    /// whole files as type-machinery for damping. `Enum` is NOT type-
+    /// only — TS enums emit runtime objects.
     is_type_only: bool,
-    /// True when this export was synthesized from a CommonJS prototype-
-    /// style method assignment (`receiver.X = function …` /
-    /// `Ctor.prototype.X = function …`). The receiver and its methods
-    /// form one semantic unit ("the App / Req / Res prototype"); NS
-    /// authors anchor on the *combined* method-name catalog as a single
-    /// surface, so the file-level names surface stays unchunked when
-    /// these are present.
+    /// True when synthesized from a CommonJS prototype-style method
+    /// assignment. Keeps the file-level names surface unchunked so
+    /// the combined method catalog stays as one anchor.
     is_prototype_method: bool,
     /// True when `body_parts` came from a CommonJS factory match —
-    /// the receiver table plus inner-function locations. Body parts
-    /// are *sibling* anchors (each NS-relevant on its own merit),
-    /// not alternative slices of one body, so the emitter must skip
-    /// the per-part value damping that targets long function-body
-    /// chains in catalog files.
+    /// the parts are sibling anchors, so the emitter skips the per-
+    /// part value damping that targets long function-body chains.
     factory_sibling_body_parts: bool,
 }
 
