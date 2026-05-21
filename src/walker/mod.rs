@@ -54,11 +54,8 @@ pub trait Walker {
     fn expand(&mut self, scheduled: &Self::Key, ctx: &WalkCtx) -> Vec<Batch<Self::Key>>;
 }
 
-/// Top-level walker: filesystem listings drive discovery; per-language
-/// modules (`rust`, `markdown`, `toml`, `typescript`, `json`, `plaintext`)
-/// own per-dir candidate emission and are dispatched here. There's no
-/// trait-object indirection — the language list is a closed set known at
-/// this site.
+/// Top-level walker: FS listings drive discovery; per-language modules
+/// own per-dir candidate emission and are dispatched here directly.
 #[derive(Default)]
 pub struct FsWalker;
 
@@ -91,17 +88,8 @@ impl Walker for FsWalker {
     }
 }
 
-/// Per-run context. Holds the seed root plus a shared source cache +
-/// per-file parse cache. The source cache is the same handle the
-/// [`RenderedTree`](crate::render::RenderedTree) uses for render-time
-/// materialization, so each file is read at most once across the whole run.
-///
-/// Per-walker run state — cross-file analyses each language wants to
-/// memoize for the run — lives in language-named fields below. Each
-/// language walker's state struct is defined alongside that walker; the
-/// shared cells stay typed and explicit rather than going through a
-/// `TypeId`-keyed bag. New languages add a field here and own its
-/// initialization.
+/// Per-run context: seed root, shared source/parse caches, and per-
+/// walker run state in language-named fields below.
 pub struct WalkCtx {
     root: PathBuf,
     source_cache: SourceCache,
@@ -288,10 +276,7 @@ impl WalkCtx {
 }
 
 /// Scan the seed root's README for relative-path hyperlinks to source
-/// files (`[label](./examples/foo.js)`). Returns the canonicalized file
-/// paths so callers can look them up regardless of how the path arrived.
-/// Empty set on missing/unreadable README. Recognizes the common
-/// case-insensitive README basenames + `.md` / `.rst` / `.txt` extensions.
+/// files. Returns canonicalized paths.
 fn collect_readme_cited_paths(root: &Path) -> HashSet<PathBuf> {
     let Ok(entries) = std::fs::read_dir(root) else {
         return HashSet::new();
@@ -355,13 +340,8 @@ fn collect_readme_cited_paths(root: &Path) -> HashSet<PathBuf> {
     out
 }
 
-/// Extract `(target)` from `[label](target)` patterns in a markdown
-/// document. Hand-rolled — running a tree-sitter parse on the README
-/// just to get link targets would be overkill, and the bracket/paren
-/// pairing is simple enough that a stateful scanner does it in one
-/// pass. Skips reference-style links and image links (`![alt](src)`)
-/// for simplicity; both conventions cover the majority of inline
-/// example references.
+/// Extract `(target)` from `[label](target)` patterns in markdown.
+/// Skips reference-style and image (`![alt](src)`) links.
 fn extract_inline_link_targets(text: &str) -> Vec<String> {
     let bytes = text.as_bytes();
     let mut out = Vec::new();
@@ -420,10 +400,9 @@ fn extract_inline_link_targets(text: &str) -> Vec<String> {
     out
 }
 
-/// Lines a collector wants to render for one file: `full` = emit the source
-/// line verbatim; `ellipses` = emit a walker `…` marker at that line number
-/// (no text, no rendered line number — but a real line number so descendant
-/// batches can override it with real content).
+/// Lines a collector wants to render for one file: `full` = emit
+/// verbatim; `ellipses` = emit a walker `…` marker (overrideable by
+/// descendant batches).
 #[derive(Default, Debug, Clone)]
 pub(crate) struct FileLines {
     pub full: Vec<usize>,
@@ -451,21 +430,15 @@ pub(crate) fn file_lines_covered_by(child: &FileLines, parent: &FileLines) -> bo
             .all(|line| parent.ellipses.contains(line) || parent.full.contains(line))
 }
 
-/// Path-relative location prior shared by every per-file walker: depth
-/// penalty (`value::depth_factor`) folded with the non-essential-directory
-/// discount (`WalkCtx::non_essential_factor`). Walkers without an
-/// entrypoint concept call this directly; walkers that pin entrypoints to
-/// depth ≤ 1 use [`file_depth_factor`] which adds that knob.
+/// Path-relative location prior: depth penalty × non-essential-dir
+/// discount. Use [`file_depth_factor`] to add entrypoint pinning.
 pub(crate) fn path_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     crate::value::depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file)
 }
 
-/// [`path_depth_factor`] with optional entrypoint pinning. When
-/// `is_entrypoint` is true the depth is clamped to 1 — an `index.ts` at
-/// depth 5 ranks the same as one at depth 1, since it's the file the
-/// agent looks at first regardless of how the package is laid out. The
-/// non-essential discount still applies (an entrypoint inside `tests/`
-/// doesn't get an unconditional pass).
+/// [`path_depth_factor`] with optional entrypoint pinning — when
+/// `is_entrypoint`, depth clamps to 1 so an `index.ts` at any depth
+/// ranks like depth 1. Non-essential discount still applies.
 pub(crate) fn file_depth_factor(file: &Path, ctx: &WalkCtx, is_entrypoint: bool) -> f64 {
     let depth = ctx.depth_from_root(file);
     let pinned_depth = if is_entrypoint { depth.min(1) } else { depth };
