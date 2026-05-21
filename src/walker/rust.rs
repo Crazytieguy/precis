@@ -413,7 +413,8 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let example_main_entry = example_entry && is_main_rs(file);
         let src_main_entry = is_src_main_file(file);
         if is_entrypoint_file(file) {
-            let entry_items = find_private_top_level_item_starts(&tree, &source);
+            let entry_items =
+                find_top_level_item_starts(&tree, &source, TopLevelItemVisibility::Private);
             // Thin-`fn main` wrapper pattern: src/main.rs's `fn main` body
             // is just `match run() { ... }` (or similar error-shim), with
             // the real call-graph living in a private `fn run`/etc. NS
@@ -524,11 +525,25 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let macro_names_key = RustKey::MacroNames {
         src_dir: dir.to_path_buf(),
     };
-    if let Some(content) = build_cross_file_content(dir, ctx, collect_macro_name_lines) {
+    let rust_files = files_with_extension(dir, "rs");
+    let mut macro_name_spans: Vec<Span> = Vec::new();
+    for file in &rust_files {
+        let Some((source, tree)) = parse_rust(ctx, file) else {
+            continue;
+        };
+        macro_name_spans.extend(build_file_spans(
+            file,
+            &source,
+            collect_macro_name_lines(&tree, &source),
+        ));
+    }
+    if !macro_name_spans.is_empty() {
         out.push(batch(
             macro_names_key.clone(),
             None,
-            content,
+            BatchContent::Lines {
+                spans: macro_name_spans,
+            },
             macro_names_value(dir_depth),
         ));
     }
@@ -661,10 +676,6 @@ fn item_kind_of(node: Node) -> Option<ItemKind> {
 
 fn find_pub_item_starts<'a>(tree: &'a Tree, source: &str) -> Vec<PubItemInfo<'a>> {
     find_top_level_item_starts(tree, source, TopLevelItemVisibility::Public)
-}
-
-fn find_private_top_level_item_starts<'a>(tree: &'a Tree, source: &str) -> Vec<PubItemInfo<'a>> {
-    find_top_level_item_starts(tree, source, TopLevelItemVisibility::Private)
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -846,25 +857,13 @@ fn crate_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // sub-crate's lede; damp the lede on secondary members so the
     // primary crate's lede + structural ARCHITECTURE rows compete
     // first in budget.
-    let secondary = secondary_workspace_member_member_factor(file, ctx);
+    let secondary = secondary_workspace_member_factor(file, ctx);
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
     mix_signals(cat, 0.5, 0.9, rust_depth_factor(file, ctx)) * secondary
 }
 
-fn secondary_workspace_member_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    let Some(manifest_dir) = ctx.rust_state().nearest_member_dir(file, ctx.root()) else {
-        return 1.0;
-    };
-    let same_basename = ctx
-        .root()
-        .file_name()
-        .zip(manifest_dir.file_name())
-        .is_some_and(|(r, m)| r == m);
-    if same_basename { 1.0 } else { 0.7 }
-}
-
 fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let secondary = secondary_workspace_member_member_factor(file, ctx);
+    let secondary = secondary_workspace_member_factor(file, ctx);
     let cat = (0.35 * entrypoint_boost(file)).min(1.0);
     mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx)) * secondary
 }
@@ -914,7 +913,7 @@ fn pub_item_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // 0.7 secondary factor here so a workspace with N sub-crates
     // doesn't flood the early budget with N per-crate name surfaces.
     let s = file_visibility_factor(file, ctx);
-    let secondary = secondary_workspace_member_member_factor(file, ctx);
+    let secondary = secondary_workspace_member_factor(file, ctx);
     let cat = (0.8 * entrypoint_boost(file) * s).min(1.0);
     mix_signals(cat, 0.6 * s, 0.35 * s, rust_depth_factor(file, ctx)) * secondary
 }
@@ -1122,28 +1121,6 @@ fn rust_parent_dirs_under(dir: &Path) -> Vec<PathBuf> {
 }
 
 // --- per-batch content builders ---
-
-fn build_cross_file_content<F>(src_dir: &Path, ctx: &WalkCtx, collect: F) -> Option<BatchContent>
-where
-    F: Fn(&Tree, &str) -> FileLines,
-{
-    let rust_files = files_with_extension(src_dir, "rs");
-    if rust_files.is_empty() {
-        return None;
-    }
-    let mut all_spans: Vec<Span> = Vec::new();
-    for file in &rust_files {
-        let Some((source, tree)) = parse_rust(ctx, file) else {
-            continue;
-        };
-        let lines = collect(&tree, &source);
-        all_spans.extend(build_file_spans(file, &source, lines));
-    }
-    if all_spans.is_empty() {
-        return None;
-    }
-    Some(BatchContent::Lines { spans: all_spans })
-}
 
 fn batch(
     key: RustKey,
