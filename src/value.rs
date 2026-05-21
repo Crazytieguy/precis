@@ -17,17 +17,13 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
     (1000.0 * cat + 400.0 * fu + 300.0 * ztu) * depth.max(0.0)
 }
 
-/// Chunk size for names-surface gates. Twelve declarations is roughly one
-/// screenful of API anchors: enough context to orient, small enough that a
-/// later chunk does not make the first chunk too expensive for descendants.
+/// Chunk size for names-surface gates — roughly one screenful of API.
 pub const NAMES_SURFACE_CHUNK_SIZE: usize = 12;
 
-/// First chunks are deliberately a little below the previous unchunked
-/// surface value so small unchunked files still win comparable rank races.
+/// First-chunk factor (slightly below unchunked) so small unchunked
+/// files win comparable rank races.
 const CHUNKED_NAMES_FIRST_CHUNK_FACTOR: f64 = 0.9;
-/// A 0.25 falloff puts the fourth chunk at about half the first chunk,
-/// keeping source-order tails available without letting giant catalogs win
-/// every early scheduling slot.
+/// Falloff per later chunk — 0.25 puts chunk 4 at ~half chunk 1.
 const CHUNKED_NAMES_FALLOFF: f64 = 0.25;
 
 pub fn names_surface_chunk_count(dependent_count: usize) -> usize {
@@ -38,12 +34,7 @@ pub fn names_surface_chunk_index(item_index: usize) -> usize {
     item_index / NAMES_SURFACE_CHUNK_SIZE
 }
 
-/// Value multiplier for a names-surface batch that gates per-item
-/// descendants. The surface carries its own orientation value, but it
-/// also unlocks the scheduler's ability to choose precise child batches
-/// later; dense public API files should therefore beat unrelated
-/// follow-up batches without letting one enormous catalog dominate the
-/// whole prefix.
+/// Per-chunk multiplier for a chunked names-surface batch.
 pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
     if chunk_count <= 1 {
         1.0
@@ -52,12 +43,8 @@ pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64
     }
 }
 
-/// Value multiplier for import/re-export-wall chunks. The first chunk keeps
-/// full import-batch value because it unlocks the package surface; later
-/// source groups fall off at the same shape as names-surface chunks
-/// (`names_surface_chunk_factor` decay) — both are public-surface gates
-/// for the same kind of catalog, so source-order tails stay schedulable
-/// without letting the tail crowd more precise semantic anchors.
+/// Per-chunk multiplier for re-export-wall chunks. First chunk keeps
+/// full value; later groups fall off similar to names-surface chunks.
 pub fn reexport_import_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
     if chunk_count <= 1 {
         1.0
@@ -66,28 +53,15 @@ pub fn reexport_import_chunk_factor(chunk_index: usize, chunk_count: usize) -> f
     }
 }
 
-/// Down-weight a batch by filesystem depth. Depth 0 (root) and depth 1
-/// (files directly in root, e.g. Cargo.toml, README.md) are unpenalized;
-/// penalty grows for deeper content. First-pass placeholder; calibrate
-/// against north-star reports.
+/// Down-weight a batch by filesystem depth — depth 0/1 unpenalized.
 pub fn depth_factor(depth: usize) -> f64 {
     1.0 / (1.0 + depth.saturating_sub(1) as f64 * 0.3)
 }
 
-/// Multiplier applied to content whose path is under a "non-essential"
-/// directory (tests / examples / benches / fixtures / private helpers /
-/// contributor automation / showcase websites). These are load-bearing for
-/// *using* the crate's infrastructure but rarely for understanding it; they
-/// should only appear once the primary-source batches have landed.
-///
-/// File-level test-file naming (`*.test.ts`, `*.spec.ts`, `*_test.go`)
-/// is also caught — many JS/TS projects keep tests next to source rather
-/// than in a `tests/` directory.
-///
-/// `path` is matched component-wise *relative to* `root` (so the outer
-/// `tests/fixtures/` of the test harness doesn't poison every fixture
-/// path). When `path` isn't under `root` (a walker bug; not panicked on
-/// for release-mode robustness), the absolute path is used as-is.
+/// Multiplier for content whose path is under a "non-essential"
+/// directory (tests/examples/benches/...) or whose filename signals a
+/// test (`*.test.ts`, `*_test.go`). Matched component-wise relative to
+/// `root` so the harness's outer `tests/fixtures/` doesn't poison.
 pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f64 {
     non_essential_factor_inner(path, root, false)
 }
@@ -237,16 +211,9 @@ pub(crate) fn non_essential_factor_inner(
     1.0
 }
 
-/// Detect a depth-1 documentation-site sub-app: a directory whose
-/// name is a docs-site convention AND that ships its own
-/// `package.json` (Docusaurus, VitePress, Astro, Next.js docs sites
-/// all create one). Distinguishes a separate docs publishing app
-/// (axios's `docs/`, dockly's `docs/`) from real user-facing
-/// documentation that lives inline (click's `docs/`, mdbook's
-/// `docs/` — both lack a nested package.json). NS authors rank the
-/// parent library's content ahead of either kind, but only the
-/// sub-app shape is reliably demoted-able without losing canonical
-/// documentation.
+/// Detect a depth-1 docs-site sub-app — directory named like a docs
+/// site that ships its own `package.json` (Docusaurus, VitePress, …).
+/// Distinguishes a separate publishing app from inline user docs.
 fn is_docs_site_subtree(first_component: &str, root: &std::path::Path) -> bool {
     let lower = first_component.to_ascii_lowercase();
     if !matches!(lower.as_str(), "docs" | "doc" | "site" | "website") {
@@ -255,10 +222,9 @@ fn is_docs_site_subtree(first_component: &str, root: &std::path::Path) -> bool {
     root.join(first_component).join("package.json").is_file()
 }
 
-/// Root-level dirs holding vendored / third-party content, release
-/// artifacts, or repo-level admin. Depth-1-only: projects that vendor
-/// as part of their *own* source tree (chalk's `source/vendor/`)
-/// keep full weight on those nested vendored modules.
+/// Root-level dirs holding vendored / third-party content. Depth-1
+/// only so nested vendored modules under a project's own source tree
+/// keep full weight.
 fn is_root_level_vendor_dir_name(s: &str) -> bool {
     let lower = s.to_ascii_lowercase();
     matches!(
@@ -278,11 +244,8 @@ fn is_root_level_vendor_dir_name(s: &str) -> bool {
     )
 }
 
-/// Rust proc-macro helper-crate convention (`<name>-macros`,
-/// `<name>_macros`, `<name>-derive`, `<name>_derive`). NS authors
-/// anchor on the user-facing crate's re-exports rather than the
-/// macros crate's `pub fn derive_foo`. Plain `macros` / `derive`
-/// excluded — they're more likely a real module name (`bevy/macros`).
+/// Rust proc-macro helper-crate convention (`<name>-macros` etc.).
+/// Plain `macros`/`derive` excluded — those are usually real modules.
 fn is_proc_macro_crate_dir_name(s: &str) -> bool {
     for suffix in ["-macros", "_macros", "-derive", "_derive"] {
         if let Some(stem) = s.strip_suffix(suffix)
@@ -294,21 +257,8 @@ fn is_proc_macro_crate_dir_name(s: &str) -> bool {
     false
 }
 
-/// Auto-injected agent-instruction files: their bodies are already in
-/// the model's context, so precis budget spent on them is waste. The
-/// extension filter is what keeps directory listings from matching —
-/// `.claude/skills` (no extension) reaches the predicate but returns
-/// false, so its fs-listing batch keeps full weight and the file paths
-/// stay discoverable.
-///
-/// Takes the original `path` + `root` (mirroring [`non_essential_factor`])
-/// rather than a pre-stripped target, so call sites don't have to
-/// duplicate the strip-prefix dance.
-///
-/// Matches anywhere in the tree, not just at the repo root: nested
-/// `packages/foo/CLAUDE.md` in a monorepo is the same kind of
-/// agent-instruction content as the root one, and Claude Code's
-/// CLAUDE.md hierarchy is recursive.
+/// Auto-injected agent-instruction files (CLAUDE.md / AGENTS.md /
+/// skill docs). Matches anywhere in the tree — CLAUDE.md is recursive.
 pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path) -> bool {
     let target = path.strip_prefix(root).unwrap_or(path);
     let Some(ext) = target.extension().and_then(|e| e.to_str()) else {
@@ -340,13 +290,10 @@ pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path)
     })
 }
 
-/// True for admin / release markdown — CHANGELOG / CONTRIBUTING /
-/// SECURITY / NOTICE / RELEASING / etc. — anywhere in the tree.
-/// Monorepos commonly carry per-package CHANGELOGs (d2ts's
-/// `packages/d2mini/CHANGELOG.md`, the Changesets pattern); these
-/// follow the same admin-doc semantics as the root copy. NS atoms
-/// pointing at these basenames are all at `exp_t > 9000` across the
-/// corpus, so demotion is metric-safe.
+/// True for admin/release markdown — CHANGELOG / CONTRIBUTING /
+/// SECURITY / NOTICE / RELEASING / migration-guide stems / etc. —
+/// anywhere in the tree (monorepo per-package copies inherit the
+/// same admin-doc semantics).
 pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     let Some(ext) = target.extension().and_then(|e| e.to_str()) else {
         return false;
@@ -531,16 +478,10 @@ fn is_locale_language(s: &str) -> bool {
     )
 }
 
-/// Default cost-side concavity exponent for the scheduling ratio. The
-/// ontology's principle is "value is sublinear in batch size"; `sqrt`
-/// alone is too aggressive on cost — a 1500-token `lib.rs` PubDecls
-/// batch holding the full crate API gets beaten by two dozen 80-token
-/// batches with similar per-token ratio, but losing that one coherent
-/// batch is a catastrophic-omission outcome. The gentler default keeps
-/// big anchor batches competitive. Per-key overrides on
-/// [`crate::batch::WalkerKey::concavity_exponent`] raise this for
-/// prose-shaped batches whose token count grows without proportional
-/// structural value.
+/// Default cost-side concavity for the scheduling ratio — gentle so
+/// big coherent anchor batches stay competitive against many small
+/// per-decl batches. Per-key overrides raise this for prose-shaped
+/// batches via [`crate::batch::WalkerKey::concavity_exponent`].
 pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 
 /// Convert a value and a marginal token cost into the scheduling ratio.
