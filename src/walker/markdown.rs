@@ -441,10 +441,9 @@ fn parse_md(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_md::LANGUAGE.into())
 }
 
-/// Parse `text` with the inline grammar. tree-sitter-md's block grammar
-/// produces a flat `inline` node holding raw bytes; the inline grammar
-/// is what turns those bytes into named `image` / `inline_link` /
-/// `html_tag` children.
+/// Parse `text` with the inline grammar — surfaces named `image` /
+/// `inline_link` / `html_tag` children that the block grammar leaves
+/// as opaque bytes.
 fn parse_inline(text: &str) -> Option<Tree> {
     let mut parser = tree_sitter::Parser::new();
     parser
@@ -490,11 +489,8 @@ fn build_outline_content(
     single_file_lines_content(file, source, FileLines::new(full).with_ellipses(ellipses))
 }
 
-/// Heading-row ranges (1-based, inclusive) the `HeadingsOutline` batch
-/// would render. Walks every `atx_heading` / `setext_heading` reachable
-/// in the parse tree, keeps only level 1-3, and (for READMEs) drops any
-/// heading already covered by `ReadmeHeadline` so the outline never
-/// overrides the headline's `Render::Truncated` with `Render::Full`.
+/// Heading row ranges for `HeadingsOutline` — H1-H3 only, with any
+/// headline-covered headings dropped on READMEs.
 fn collectable_outline_rows(file: &Path, tree: &Tree, source: &str) -> Vec<(usize, usize)> {
     let headline_covered: BTreeSet<usize> = if is_readme(file) {
         headline_spec(tree, source)
@@ -572,18 +568,9 @@ fn is_readme_rst(file: &Path) -> bool {
         .is_some_and(|n| n.eq_ignore_ascii_case("README.rst"))
 }
 
-/// Render the RST README's title + first substantive paragraph as a
-/// single `ReadmeHeadline` batch. Stops at the first setext-style
-/// heading after the title (a row of `=` or `-` whose width covers the
-/// preceding non-blank line) — analogous to how
-/// [`headline_spec`] stops at the first H2 of an MD README.
-///
-/// "Decorative" lines (top-level `.. directive::` blocks: `.. image::`,
-/// `.. _ref:`, `.. |substitution| image::`, bare `.. badges` comments)
-/// are skipped along with their indented continuation. The setext H1
-/// underline directly under the title is kept (it identifies the
-/// title); subsequent setext underlines after the lede end the
-/// headline.
+/// RST `ReadmeHeadline` content — title + first substantive paragraph,
+/// stopping at the next setext heading. Skips `.. directive::` blocks
+/// and their indented continuations.
 fn build_rst_readme_content(file: &Path, source: &str) -> Option<BatchContent> {
     let src_lines: Vec<&str> = source.lines().collect();
     if src_lines.is_empty() {
@@ -847,9 +834,7 @@ fn children_after<'a>(parent: Node<'a>, after: Node<'a>) -> Vec<Node<'a>> {
 
 // --- decorative classifiers ---
 
-/// Inline children with no semantic content — whitespace text and
-/// line-breaks. Skipping these from inline iteration leaves only the
-/// "real" inline children.
+/// Inline children with no semantic content — whitespace and breaks.
 fn is_skippable_inline(node: Node, source: &str) -> bool {
     match node.kind() {
         "text" => source[node.start_byte()..node.end_byte()].trim().is_empty(),
@@ -858,10 +843,7 @@ fn is_skippable_inline(node: Node, source: &str) -> bool {
     }
 }
 
-/// Image / badge / `<img>`-tag inline. We deliberately do NOT classify
-/// plain text-link / autolink / email-autolink as decorative: a
-/// paragraph of just `[Live Examples](...)` is real navigation content
-/// for the reader.
+/// Image / badge / `<img>` inline. Plain text-links are NOT decorative.
 fn is_decorative_inline(node: Node, source: &str) -> bool {
     match node.kind() {
         "image" => true,
@@ -883,10 +865,8 @@ fn is_img_html_tag(node: Node, source: &str) -> bool {
         .starts_with("<img")
 }
 
-/// True iff every direct child of `link_text` is either skippable or
-/// an image-shaped node. Direct children only — DO NOT recurse into
-/// `image`'s `image_description` (the alt text would otherwise count
-/// as prose and defeat badge detection).
+/// True iff every direct child of `link_text` is skippable or image-
+/// shaped — direct only (recursion would catch image alt-text).
 fn link_text_is_image_only_direct(link_text: Node, source: &str) -> bool {
     let mut cur = link_text.walk();
     let mut had_any = false;
@@ -904,13 +884,9 @@ fn link_text_is_image_only_direct(link_text: Node, source: &str) -> bool {
     had_any
 }
 
-/// A paragraph is decorative iff every non-skippable inline child is
-/// decorative AND there's at least one such child. The block grammar's
-/// `inline` node is opaque bytes — we re-parse with the inline grammar
-/// to see named children like `image` / `inline_link` / `html_tag`.
-/// Returns `false` (treat as non-decorative) when the inline grammar
-/// doesn't surface any named children — e.g., a plain-text paragraph
-/// produces only an `inline` root with raw `text` content.
+/// Paragraph is decorative iff every non-skippable inline child is
+/// decorative AND there's at least one. Plain-text paragraphs (no
+/// named inline children) return `false`.
 fn is_decorative_paragraph(para: Node, source: &str) -> bool {
     let Some(inline_block) = first_child_of_kind(para, "inline") else {
         return false;
@@ -923,9 +899,8 @@ fn is_decorative_paragraph(para: Node, source: &str) -> bool {
     inline_root_is_all_decorative(root, inline_text)
 }
 
-/// True iff the inline content is non-empty AND every fragment
-/// (named children + plain-text gaps between them — the inline grammar
-/// leaves plain text outside named nodes) is decorative or whitespace.
+/// True iff every fragment (named + plain-text gaps) is decorative or
+/// whitespace, and at least one fragment exists.
 fn inline_root_is_all_decorative(root: Node, inline_text: &str) -> bool {
     let named = named_decorative_candidates(root, inline_text);
     if named.is_empty() {
