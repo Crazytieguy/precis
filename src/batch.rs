@@ -97,9 +97,7 @@ pub enum RustKey {
     /// Surface listing of every top-level `pub` item name in a file —
     /// catastrophic-omission hedge.
     PubItemNames { file: PathBuf },
-    /// One top-level `pub` item's declaration. Whole item for
-    /// struct/enum/trait/type/const/static; signature with body marker
-    /// for fn. Keyed by start line.
+    /// Whole top-level `pub` item (sig with body marker for fn).
     PubItem { file: PathBuf, start_line: usize },
     /// Body slice of a public fn, split by top-level statement.
     /// Predecessor: matching `PubItem`.
@@ -118,13 +116,10 @@ pub enum RustKey {
         start_line: usize,
         body_start_line: usize,
     },
-    /// First paragraph of the rustdoc above a `pub` item (up to first
-    /// `# Heading`, or whole doc when headless). Predecessor: matching
-    /// `PubItem`.
+    /// Rustdoc up to the first `# Heading`. Predecessor: `PubItem`.
     PubItemDocLede { file: PathBuf, start_line: usize },
     /// Rustdoc body from the first `# Heading` onward. Predecessor:
-    /// matching `PubItemDocLede` if any, else `PubItem` (avoids
-    /// dead-keying when Lede would be empty).
+    /// `PubItemDocLede` if any, else `PubItem`.
     PubItemDocBody { file: PathBuf, start_line: usize },
     /// Impl-block headers + method signatures in a single file.
     MethodSigs { file: PathBuf },
@@ -141,18 +136,11 @@ pub enum MarkdownKey {
     SummaryWhole { file: PathBuf },
     /// README headline: first heading + first paragraph.
     ReadmeHeadline { file: PathBuf },
-    /// Every H1/H2/H3 heading line (H2+H3 only for READMEs, where the
-    /// H1 stays under `ReadmeHeadline`). Predecessor of every same-file
-    /// `Section` when emitted, so heading-row overlap is permitted as
-    /// ancestor overlap.
+    /// Every H1/H2/H3 heading line (H2+H3 only on READMEs). Predecessor
+    /// of every same-file `Section`.
     HeadingsOutline { file: PathBuf },
-    /// One scheduling unit of a markdown body, indexed by 0-based
-    /// position in the walker's logical-section list. Granularity is
-    /// variable — H2s may be whole, bullet-split (one batch per top-level
-    /// item), or H3-split (one `Intro` plus one batch per H3 child); the
-    /// split classification lives in the walker, so `section_index` is
-    /// post-split. For `README.md`, predecessor is `ReadmeHeadline`
-    /// (or `HeadingsOutline` when it's emitted for the file).
+    /// One scheduling unit of a markdown body, indexed by post-split
+    /// position. May be whole H2 / per-bullet / Intro+per-H3 child.
     Section { file: PathBuf, section_index: usize },
 }
 
@@ -176,9 +164,7 @@ pub enum TsKey {
         export_count: usize,
         type_only_export_count: usize,
     },
-    /// One top-level export's declaration. Whole item for
-    /// interface/type/class/enum; signature with body marker for fn;
-    /// assignment line for const/let. Keyed by start line.
+    /// Top-level export's declaration (sig with body marker for fn).
     Export { file: PathBuf, start_line: usize },
     /// JSDoc above a single export. Predecessor: matching `Export`.
     ExportDoc { file: PathBuf, start_line: usize },
@@ -191,30 +177,21 @@ pub enum TsKey {
         /// First line of the class member surface.
         member_start_line: usize,
     },
-    /// Body slice of an export with a `statement_block` body (fn,
-    /// generator, class methods, `export default <fn|class>`). Outer
-    /// braces stripped. Predecessor: matching `Export`. Sibling of
-    /// `ExportDoc` under `Export`; the two cover disjoint lines.
+    /// Body slice of an export with a `statement_block` body (outer
+    /// braces stripped). Predecessor: matching `Export`.
     ExportBody {
         file: PathBuf,
-        /// Parent export line — keeps body slices tied to their
-        /// predecessor when two bodies share a start line in different
-        /// declarations.
         start_line: usize,
-        /// First emitted line of this body slice; disambiguates siblings.
+        /// Disambiguates sibling body slices.
         body_start_line: usize,
     },
-    /// Top-level non-exported declaration surface — module-private
-    /// classes, helper fns, type aliases, constants that exported APIs
-    /// depend on.
+    /// Top-level non-exported decl — module-private classes, helpers.
     ModuleItem { file: PathBuf, start_line: usize },
-    /// Body slice of a non-exported top-level decl, split by top-level
-    /// statement. Predecessor: matching `ModuleItem`.
+    /// Body slice of a non-exported decl. Predecessor: matching
+    /// `ModuleItem`.
     ModuleItemBody {
         file: PathBuf,
-        /// Parent module item line.
         start_line: usize,
-        /// First emitted line of this body slice; disambiguates siblings.
         body_start_line: usize,
     },
 }
@@ -230,21 +207,18 @@ pub enum JsonKey {
     /// Auxiliary `package.json` metadata: authorship, repository/homepage,
     /// bugs, keywords, publish config, funding.
     IdentityMeta { file: PathBuf },
-    /// `package.json` entrypoint pointers: `main`, `module`, `browser`,
-    /// `exports`, `types`/`typings`, `source`, `bin`, `unpkg`, `umd:main`,
-    /// `jsnext:main`, `react-native`, `files`.
+    /// `package.json` entrypoint pointers (`main`/`module`/`exports`/
+    /// `bin`/`types`/`files`/...).
     Entry { file: PathBuf },
-    /// `package.json` runtime/toolchain constraints: `engines`,
-    /// `engineStrict`, `packageManager`.
+    /// `package.json` runtime/toolchain constraints (`engines`,
+    /// `packageManager`).
     Runtime { file: PathBuf },
     /// `package.json` `scripts` block.
     Scripts { file: PathBuf },
-    /// `package.json` dependency blocks (`dependencies`,
-    /// `devDependencies`, `peerDependencies`, `optionalDependencies`,
-    /// `overrides`, `resolutions`).
+    /// `package.json` dependency blocks (`dependencies`/`dev`/`peer`/...).
     Dependencies { file: PathBuf },
     /// Whole-file render of a small JSON config. Skipped for
-    /// `package.json` (use the split batches) and for large/generated files.
+    /// `package.json` and for large/generated files.
     Whole { file: PathBuf },
 }
 
