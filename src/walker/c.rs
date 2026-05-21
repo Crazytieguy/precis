@@ -654,12 +654,7 @@ fn header_guard_body_node<'a>(root: Node<'a>, source: &str) -> Option<Node<'a>> 
     }
 }
 
-/// True iff `node` (a `preproc_ifdef`) is shaped like
-/// `#ifndef X` / `#define X` / … / `#endif`. Detection is by source
-/// text: tree-sitter-c surfaces the opening `#ifndef` / `#define` as
-/// raw tokens rather than as a structured field, and the simplest way
-/// to verify the name match is to scan the first non-blank, non-comment
-/// directive line after the `#ifndef`.
+/// True iff `node` is `#ifndef X / #define X / … / #endif`.
 fn is_header_guard(ifdef: Node, source: &str) -> bool {
     let text = &source[ifdef.start_byte()..ifdef.end_byte()];
     let mut lines = text.lines();
@@ -693,9 +688,8 @@ fn is_header_guard(ifdef: Node, source: &str) -> bool {
     false
 }
 
-/// Identify a top-level node as a public decl, returning its `DeclInfo`.
-/// Returns `None` for nodes we don't surface (preproc_include, comments,
-/// `static` items in `.c` files, etc.).
+/// Classify a top-level node as a public decl. `None` for unsurfaced
+/// kinds (preproc_include, comments, `static` in `.c` files, …).
 fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> {
     let start_line = node.start_position().row + 1;
     let (kind, has_body) = match node.kind() {
@@ -754,15 +748,10 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
     })
 }
 
-/// Minimum source-line span (closing brace minus opening brace) for a
-/// struct/union body to be eligible for blank-line field-group chunking.
-/// Below this, the unchunked aggregate fits cheaply at any reasonable
-/// budget and splitting adds scheduling churn without payoff.
+/// Minimum struct/union body span (lines) for field-group chunking.
 const AGGREGATE_STRUCT_MIN_LINES: usize = 30;
 
-/// Minimum number of blank-line-separated field groups required for
-/// struct/union chunking. A two-group struct's groups are roughly half
-/// the struct each — the parent Decl is already cheap to schedule.
+/// Minimum field-groups required for struct/union chunking.
 const AGGREGATE_STRUCT_MIN_GROUPS: usize = 3;
 
 /// Minimum enumerators for enum chunking. Below this, the whole enum
@@ -800,10 +789,8 @@ fn find_aggregate_body(node: Node) -> Option<Node> {
     }
 }
 
-/// Decompose an aggregate body into chunks. Struct/union bodies split
-/// on blank lines (each non-empty run is a group); enum bodies split
-/// into fixed-size chunks. Returns an empty vec when the body is too
-/// small to be worth chunking.
+/// Aggregate body → member chunks. Struct/union split on blank lines,
+/// enum split fixed-size. Empty when too small.
 fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
     let body_start = body.start_position().row;
     let body_end = body.end_position().row;
@@ -826,9 +813,7 @@ fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMem
     }
 }
 
-/// Blank-line-separated field groups for a struct/union body, as
-/// `AggregateMemberGroup`s. Wraps the shared
-/// [`collect_blank_line_groups`] helper.
+/// Blank-line-separated field groups for a struct/union body.
 fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
     collect_blank_line_groups(body, source)
         .into_iter()
@@ -839,12 +824,8 @@ fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMe
         .collect()
 }
 
-/// Split an enum body into fixed-size enumerator chunks. Each chunk's
-/// `rows` covers every 1-based source row the chunked enumerators
-/// occupy, including continuation rows of multi-line enumerators
-/// (`FOO = (1 << 20)\n  | (1 << 21),`). Returns an empty vec when the
-/// enum has fewer than `AGGREGATE_ENUM_CHUNK_MIN` enumerators (small
-/// enums stay as a single `Decl`).
+/// Fixed-size enumerator chunks. Continuation rows of multi-line
+/// enumerators are included. Empty when below the chunk-min.
 fn collect_enum_chunks(body: Node) -> Vec<AggregateMemberGroup> {
     let mut cursor = body.walk();
     let enumerator_spans: Vec<(usize, usize)> = body
@@ -870,9 +851,8 @@ fn collect_enum_chunks(body: Node) -> Vec<AggregateMemberGroup> {
         .collect()
 }
 
-/// Is this `#define X` the back-half of a `#ifndef X` / `#define X`
-/// header guard? Detection is conservative: the name must be uppercase
-/// (`A-Z`, `0-9`, `_`) and the `#define` has no value.
+/// True iff `#define X` is the back-half of a header guard —
+/// uppercase name and no value.
 fn is_header_guard_define(node: Node, source: &str) -> bool {
     let Some(name_node) = node.child_by_field_name("name") else {
         return false;
@@ -921,10 +901,8 @@ fn has_struct_union_or_enum(node: Node) -> bool {
     })
 }
 
-/// True when the `declaration`'s declarator is (recursively, through
-/// pointers / parens) a `function_declarator` — i.e. this `declaration`
-/// is a function prototype. A declarator without a `function_declarator`
-/// somewhere underneath is a variable.
+/// True if a declarator recursively reaches a `function_declarator`
+/// (i.e. the declaration is a function prototype).
 fn has_function_declarator(node: Node) -> bool {
     let mut cursor = node.walk();
     node.children(&mut cursor).any(declarator_is_function)
@@ -942,12 +920,7 @@ fn declarator_is_function(node: Node) -> bool {
 
 // --- value functions ----------------------------------------------------
 
-/// C source files this walker owns: `.c`, `.h`, and `.h.tmpl` (a
-/// template that compiles down to a public header at release time —
-/// sqlite-vec's `sqlite-vec.h.tmpl` is the canonical example, with the
-/// VERSION/DATE/SOURCE placeholders substituted by the build). Treated
-/// as headers structurally: the same `#ifdef` / `#define` / extern-C
-/// shape, and NSes anchor on them with the same value profile.
+/// C source files this walker owns: `.c`, `.h`, and `.h.tmpl`.
 fn c_source_files(dir: &Path) -> Vec<PathBuf> {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return Vec::new();
@@ -967,8 +940,7 @@ fn c_source_files(dir: &Path) -> Vec<PathBuf> {
     out
 }
 
-/// True for `.c`, `.h`, and `.h.tmpl` filenames (case-insensitive on
-/// the extension; the literal `.tmpl` suffix must follow `.h`).
+/// True for `.c`, `.h`, and `.h.tmpl` filenames.
 fn is_c_source_file_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
     lower.ends_with(".c") || lower.ends_with(".h") || lower.ends_with(".h.tmpl")
