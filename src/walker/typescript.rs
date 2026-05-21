@@ -3109,16 +3109,9 @@ fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
     surface
 }
 
-/// Extract source paths that `tree` exposes through its public surface.
-/// Two flavors:
-/// - ESM: `export ... from '...'` clauses (named, star, type re-export)
-///   plus `import ... from '...'` whose bound names appear in a top-level
-///   `export { name }` clause (namespace-, default-, named-import +
-///   re-export patterns).
-/// - CommonJS: `require('...')`-bound locals that are then assigned to
-///   `exports.X = local` or appear in a `module.exports = { local }`
-///   object-literal. Covers commander's `index.js` shape where every
-///   `./lib/X.js` is required + re-exported on the same module.
+/// Source paths exposed through the file's public surface — `export …
+/// from`/re-exported `import` (ESM) plus `require(...)`-bound locals
+/// that get re-assigned to `exports` (CommonJS).
 fn collect_reexported_source_paths(tree: &Tree, source: &str) -> Vec<String> {
     let root = tree.root_node();
     let mut out: Vec<String> = Vec::new();
@@ -3195,16 +3188,9 @@ fn collect_reexported_source_paths(tree: &Tree, source: &str) -> Vec<String> {
     out
 }
 
-/// `true` when this file emits any *named* export: an `export …`
-/// statement (`export const Foo`, `export function Foo`,
-/// `export { Foo }`, `export default …`), an `exports.X = …`
-/// property assignment, or a `module.exports = { … }` object-literal
-/// namespace. The library signal used by `compute_public_surface`:
-/// a library entrypoint has at least one named export; a script /
-/// app entrypoint typically has none, or has only the "default-style"
-/// `module.exports = local-identifier` (which doesn't count as named —
-/// the file exposes a single thing and its imports are still part of
-/// the runtime chain).
+/// True when the file emits any named export — `export …`, `exports.X`,
+/// or `module.exports = { … }`. Library signal for the surface graph;
+/// `module.exports = local-id` (default-style) doesn't count.
 fn file_has_named_exports(tree: &Tree, source: &str) -> bool {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -3228,11 +3214,8 @@ fn file_has_named_exports(tree: &Tree, source: &str) -> bool {
     false
 }
 
-/// Source paths from this file's top-level `import` / `require`
-/// declarations. Used as a fallback by `compute_public_surface` when
-/// the file is a script-style (app) entrypoint that re-exports
-/// nothing — the imported modules ARE the runtime surface even though
-/// the entrypoint doesn't name them as a public API.
+/// Source paths from top-level `import` / `require` declarations —
+/// surface-fallback for script-style entrypoints with no re-exports.
 fn collect_import_source_paths(tree: &Tree, source: &str) -> Vec<String> {
     let root = tree.root_node();
     let mut out: Vec<String> = Vec::new();
@@ -3307,10 +3290,8 @@ fn collect_require_bindings(stmt: Node, source: &str, bindings: &mut HashMap<Str
     }
 }
 
-/// Local names (before any `as`) of each specifier in this
-/// `export_statement`'s `export_clause` / `namespace_export`. Type-only
-/// specifiers are kept — they still bring their source into the
-/// surface.
+/// Local names (before `as`) of each specifier in an `export_clause`
+/// or `namespace_export`. Includes type-only specifiers.
 fn local_reexport_local_names(stmt: Node, source: &str) -> Vec<String> {
     let mut out = Vec::new();
     let mut sc = stmt.walk();
@@ -3404,14 +3385,9 @@ fn strip_quotes(s: &str) -> &str {
         .unwrap_or(s)
 }
 
-/// Resolve a relative TS/JS source specifier (`./foo`, `./foo.js`,
-/// `./foo/bar`) against `dir`. Returns the first existing candidate
-/// in [`TS_JS_EXTS`] precedence order. Stripping a `.js` / `.mjs` /
-/// `.cjs` suffix and substituting `.ts` first handles the post-build
-/// extension convention (`from './foo.js'` referring to `foo.ts`)
-/// used by ky / typeguard / similar. Falls back to `<rel>/index.<ext>`.
-/// Bare specifiers (`react`, `@scope/pkg`) and non-relative paths
-/// return `None`.
+/// Resolve a relative TS/JS specifier against `dir`. Tries the literal,
+/// then a `.js`→`.ts`-style ext substitution, then `<rel>/index.<ext>`.
+/// `None` for bare specifiers.
 fn resolve_ts_relative_path(dir: &Path, rel: &str) -> Option<PathBuf> {
     if !(rel.starts_with("./") || rel.starts_with("../") || rel == "." || rel == "..") {
         return None;
@@ -3452,10 +3428,8 @@ fn strip_ts_js_ext(rel: &str) -> Option<&str> {
     None
 }
 
-/// Append `.<ext>` to `base`. Note: `Path::with_extension` REPLACES the
-/// last component's extension; we need append because the
-/// resolver also tries candidates against the as-written `rel` (which
-/// may not have an extension and shouldn't have one stripped).
+/// Append `.<ext>` to `base` — `Path::with_extension` would replace,
+/// and the resolver needs append.
 fn append_extension(base: &Path, ext: &str) -> PathBuf {
     let mut s = base.as_os_str().to_owned();
     s.push(".");
