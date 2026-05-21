@@ -406,10 +406,8 @@ pub(crate) fn file_depth_factor(file: &Path, ctx: &WalkCtx, is_entrypoint: bool)
     crate::value::depth_factor(pinned_depth) * ctx.non_essential_factor(file)
 }
 
-/// Build a [`BatchContent::Lines`] from a single file's [`FileLines`]
-/// spec. Blank source lines are filtered from the `full` set; an ellipsis
-/// at a line already in `full` is dropped. Returns `None` when the
-/// resulting span set is empty (caller declines to emit the batch).
+/// `BatchContent::Lines` from a single file's `FileLines`. `None` if
+/// the resulting span set is empty.
 pub(crate) fn single_file_lines_content(
     path: &Path,
     source: &str,
@@ -422,12 +420,8 @@ pub(crate) fn single_file_lines_content(
     Some(BatchContent::Lines { spans })
 }
 
-/// Parse `file` and run a per-file `FileLines` collector, yielding a
-/// `BatchContent::Lines` if the result is non-empty. Used by walkers
-/// whose per-file batches share the parse-then-collect-spans shape
-/// (currently rust + ts). Caller supplies the parser closure so
-/// language-specific parser dispatch (e.g. `.ts` vs `.tsx`) stays in
-/// the language module.
+/// Parse + collect spans for per-file walker batches. Caller-supplied
+/// parser closure handles language-specific parser dispatch.
 pub(crate) fn build_per_file_content(
     file: &Path,
     ctx: &WalkCtx,
@@ -439,10 +433,8 @@ pub(crate) fn build_per_file_content(
     single_file_lines_content(file, &source, lines)
 }
 
-/// Convert a `FileLines` spec for one file into contiguous [`Span`] ranges.
-/// Blank source lines (all-whitespace) are excluded from the `Full` set;
-/// an ellipsis line that also appears in `full` is dropped (a real line
-/// always beats an ellipsis marker at the same position).
+/// `FileLines` → contiguous [`Span`] ranges. Blank source lines and
+/// ellipses superseded by `Full` are dropped.
 pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> Vec<Span> {
     let src_lines: Vec<&str> = source.lines().collect();
     let full: BTreeSet<usize> = lines
@@ -488,12 +480,8 @@ pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> V
 }
 
 // --- shared tree-sitter span helpers ---
-//
-// Pure AST utilities reused by every per-language walker that emits line
-// spans. Kept here so language walkers don't redeclare identical helpers.
 
-/// Append every 1-based row covered by `node` to `out`, skipping any
-/// trailing newline at the end of the node's text.
+/// Append every 1-based row covered by `node` (trailing-newline aware).
 pub(crate) fn extend_span(out: &mut Vec<usize>, node: Node, source: &str) {
     push_rows(
         out,
