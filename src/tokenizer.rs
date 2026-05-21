@@ -4,9 +4,7 @@ use std::sync::OnceLock;
 
 use tiktoken_rs::CoreBPE;
 
-/// Bytes-per-token constant for the approximate estimator. Global
-/// median over the 66-fixture corpus, fit by
-/// `scripts/calibrate_bytes_per_token.sh`.
+/// Bytes-per-token for the approx estimator (corpus median).
 pub const BYTES_PER_TOKEN_K: f64 = 3.6;
 
 fn bpe() -> &'static CoreBPE {
@@ -14,9 +12,8 @@ fn bpe() -> &'static CoreBPE {
     BPE.get_or_init(|| tiktoken_rs::o200k_base().expect("o200k_base init"))
 }
 
-/// Approximate token count from byte length. Used by the scheduler's
-/// approx-ranking pass; ceil + clamp-to-1 ensures non-empty rows never
-/// score as zero-cost (which would compute as `f64::INFINITY` ratio).
+/// Approximate token count by byte length. Clamp-to-1 keeps non-empty
+/// rows from scoring as `INFINITY` ratio.
 pub fn approx_count(text: &str) -> usize {
     if text.is_empty() {
         return 0;
@@ -25,15 +22,12 @@ pub fn approx_count(text: &str) -> usize {
 }
 
 thread_local! {
-    /// Per-thread memoization of `count(text)`. The scheduler calls
-    /// `format_line_row` + `count` many times for the same rendered line
-    /// (every `best_exact` pass), so keying on the exact string and
-    /// avoiding re-tokenization is a meaningful speedup on large repos.
+    /// Per-thread memoization of `count(text)` — the scheduler
+    /// tokenizes the same rendered line many times per pass.
     static CACHE: RefCell<HashMap<String, usize>> = RefCell::new(HashMap::new());
 }
 
-/// Token count under o200k_base, using ordinary (no-special-token) encoding so
-/// it matches what `scripts/count-tokens.py` reports to the North Star author.
+/// Token count under o200k_base (ordinary encoding).
 pub fn count(text: &str) -> usize {
     #[cfg(feature = "timing")]
     let _start = std::time::Instant::now();

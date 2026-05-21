@@ -6,9 +6,7 @@ use std::cell::RefCell;
 use std::sync::OnceLock;
 use std::time::{Duration, Instant};
 
-/// One-shot env-var probe: when `PRECIS_CALIBRATE` is set, render rows
-/// emit `[calib] bytes=X tokens=Y` on stderr for downstream
-/// `bytes / tokens` calibration.
+/// `PRECIS_CALIBRATE=1` → render rows emit `[calib] bytes=X tokens=Y`.
 fn calibrate_on() -> bool {
     static ON: OnceLock<bool> = OnceLock::new();
     *ON.get_or_init(|| std::env::var_os("PRECIS_CALIBRATE").is_some())
@@ -43,9 +41,7 @@ impl Drop for PhaseTimer {
 
 pub type CounterField = fn(&mut Counters) -> &mut Counter;
 
-/// RAII guard for a counter slot. Records elapsed-on-Drop into the field
-/// returned by `field`. For hit/miss counters, use `record_with_hit` at
-/// the cache-branch directly — a guard can't observe which branch ran.
+/// RAII guard recording elapsed-on-Drop into a `Counters` slot.
 pub struct CounterGuard {
     field: CounterField,
     start: Instant,
