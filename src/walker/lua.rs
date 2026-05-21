@@ -205,11 +205,8 @@ fn push_decl<'a>(out: &mut Vec<(Node<'a>, DeclInfo)>, node: Node<'a>) {
     ));
 }
 
-/// Walk `field` children of a table constructor and emit any whose value is a
-/// `function_definition`. Recurses into nested `table_constructor` values up
-/// to `remaining_depth` more levels — typical Lua puts at most one nesting
-/// level (e.g. a `static = { ... }` sub-table on a class mixin), so going
-/// deeper risks surfacing data-table contents that aren't method-like.
+/// Emit fields with function values from a table constructor, recursing
+/// into nested constructors up to `remaining_depth` more levels.
 fn collect_function_fields<'a>(
     tc: Node<'a>,
     out: &mut Vec<(Node<'a>, DeclInfo)>,
@@ -226,10 +223,7 @@ fn collect_function_fields<'a>(
         match value.kind() {
             "function_definition" => push_decl(out, field),
             "table_constructor" if remaining_depth > 0 => {
-                // Only surface the sub-table's parent field if at least one
-                // of its descendants would have been surfaced — keeps pure
-                // data subtables (e.g. nested config) out of the names
-                // surface.
+                // Only surface the parent if a descendant would surface.
                 let before = out.len();
                 collect_function_fields(value, out, remaining_depth - 1);
                 if out.len() > before {
@@ -269,8 +263,7 @@ fn rhs_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
 
 // --- collectors ---------------------------------------------------------
 
-/// Top-of-file `--` comment block. Stops at the first non-comment,
-/// non-blank token.
+/// Top-of-file `--` comment block.
 fn collect_header_banner(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -300,12 +293,8 @@ fn collect_decl_names_from_with_global_starts(
     FileLines::new(full).with_ellipses(ellipses)
 }
 
-/// Signature lines for a decl. For `function_declaration` and the
-/// function-RHS-wrappers (`local foo = function(...)`,
-/// `M.foo = function(...)`), the rows from the statement's start through
-/// the row before the function's body. Trimmed at the next sibling
-/// decl's start_line so we never claim a row that's another decl's
-/// anchor (parallel to the C walker's adjacency trim).
+/// Signature lines for a decl — statement start through pre-body row,
+/// trimmed at the next sibling decl's start_line (no anchor overlap).
 fn collect_decl(
     node: Node,
     source: &str,
@@ -323,9 +312,7 @@ fn collect_decl(
     let mut ellipses = Vec::new();
     push_rows(&mut full, start_row, sig_end);
 
-    // Body-elision marker: a `…` on the line right after the signature
-    // so descendant `DeclBody` batches can override it with real
-    // content. Only when the body has interior rows to elide.
+    // Body-elision marker after the signature, when interior exists.
     if let Some(body) = body_node {
         let bs = body.start_position().row;
         let be = body.end_position().row;
@@ -337,9 +324,7 @@ fn collect_decl(
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-/// Body interior of a function-like decl: rows strictly between the
-/// body's first and last rows, blank source rows skipped. Returns empty
-/// when the body has no interior to render.
+/// Non-blank interior rows of a function-like decl's body.
 fn collect_decl_body(node: Node, src_lines: &[&str]) -> FileLines {
     let Some(body) = body_node_for_decl(node) else {
         return FileLines::new(Vec::new());
@@ -358,8 +343,7 @@ fn collect_decl_body(node: Node, src_lines: &[&str]) -> FileLines {
     FileLines::new(out)
 }
 
-/// The function body's `block` node, regardless of which decl shape
-/// holds it.
+/// The function body's `block` node for any decl shape.
 fn body_node_for_decl<'a>(node: Node<'a>) -> Option<Node<'a>> {
     match node.kind() {
         "function_declaration" => node.child_by_field_name("body"),
@@ -381,9 +365,8 @@ fn body_node_for_decl<'a>(node: Node<'a>) -> Option<Node<'a>> {
 
 // --- meta-file detection ------------------------------------------------
 
-/// Does this Lua source look like a LuaCATS spec / `---@meta` file?
-/// True when either the first non-blank line is `---@meta` *or* >60%
-/// of comment lines (`-- ...`) start with `---@`.
+/// True iff `source` is a LuaCATS `---@meta` spec — by leader line
+/// or by `---@`-tag density on comments.
 fn is_meta_file(source: &str) -> bool {
     // Quick check for `---@meta` leader.
     for line in source.lines() {
@@ -396,9 +379,7 @@ fn is_meta_file(source: &str) -> bool {
         }
         break;
     }
-    // Density check: count `---`-prefixed comment lines vs. plain
-    // comment lines. LuaCATS uses `---` (three dashes); ordinary
-    // comments use `--`.
+    // Density: `---`-prefixed comments vs plain `--` comments.
     let mut tagged = 0usize;
     let mut commented = 0usize;
     for line in source.lines() {
