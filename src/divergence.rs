@@ -402,9 +402,7 @@ fn build_scores(ctx: &BuildCtx, walker: &WalkerSnapshots) -> Scores {
     let vector: [ScoreAtBudget; BUDGETS.len()] =
         std::array::from_fn(|i| compute_score_at(ctx, i, walker));
 
-    // Row-level reached/partial/missing counts at the primary budget.
-    // Status anchors on damped credit (= credit × completion) — the
-    // same quantity `Score(B)` consumes per atom.
+    // reached/partial/missing on damped credit at the primary budget.
     let primary_cum = &walker.cums[PRIMARY_BUDGET_INDEX];
     let mut reached = 0;
     let mut partial = 0;
@@ -472,10 +470,8 @@ fn compute_score_at(ctx: &BuildCtx, budget_idx: usize, walker: &WalkerSnapshots)
     )
 }
 
-/// Same scoring formula as [`compute_score_at`], but takes the
-/// running state directly so the schedule-table renderer can compute
-/// Score(B) at every row's cumulative-tokens value without rebuilding
-/// a `WalkerSnapshots` per row.
+/// [`compute_score_at`] but takes running state — the schedule-table
+/// renderer can compute Score(B) per row without rebuilding snapshots.
 pub(super) fn compute_score_at_running(
     ctx: &BuildCtx,
     budget: usize,
@@ -539,10 +535,8 @@ pub(super) fn compute_score_at_running(
     }
 }
 
-/// Byte-weighted completion of an NS batch under a walker state.
-/// `Σ min(walker, ns) / Σ ns` over the batch's atoms — the
-/// `completion(B_i)` factor in `damped_credit`. Returns 0 when nothing
-/// is delivered, 1 when the batch is fully covered.
+/// Byte-weighted completion: `Σ min(walker, ns) / Σ ns` over the
+/// batch's atoms — the `completion(B_i)` factor in `damped_credit`.
 fn completion_for_row(ns_atoms: &[GradedAtom], walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
     if ns_atoms.is_empty() {
         return 0.0;
@@ -568,9 +562,6 @@ fn atom_credit(atom: &GradedAtom, walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
 }
 
 /// Fold one walker batch's atoms into a cumulative byte-max map.
-/// Used by both the per-budget snapshot pass ([`walker_cum_at`]) and
-/// the per-row running advance in the schedule-table renderer — same
-/// kernel, no behavioral drift.
 pub(super) fn fold_walker_atoms<'a>(cum: &mut BTreeMap<&'a Atom, usize>, atoms: &'a [GradedAtom]) {
     for wa in atoms {
         let entry = cum.entry(&wa.atom).or_insert(0);
