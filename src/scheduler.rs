@@ -137,42 +137,24 @@ pub struct Scheduler<W: Walker> {
     scheduled: HashSet<BatchId>,
     /// Ordered log of scheduled batch ids + costs for the final report.
     scheduled_log: Vec<(BatchId, Cost)>,
-    /// Cached exact marginal cost per emitted batch. Walker invariants
-    /// keep cached costs stable: non-ancestor line overlap is rejected
-    /// during apply, and debug builds reject overlapping FS atoms at
-    /// absorb time.
+    /// Cached exact marginal cost per emitted batch.
     cost_cache: HashMap<BatchId, Cost>,
-    /// Cached approximate token count (`bytes / k`) per emitted batch,
-    /// used by the approx ranking pass. Same stability story as
-    /// `cost_cache`.
+    /// Cached approx token count per emitted batch (for approx ranking).
     approx_cost_cache: HashMap<BatchId, usize>,
-    /// Parent → unscheduled children index, maintained incrementally at
-    /// `absorb`/`schedule`. `best_exact` rebuilt this from scratch on
-    /// every iteration before; that rebuild was the dominant O(N²) cost
-    /// on medium-large fixtures.
-    ///
-    /// Order within each `Vec` matches `entries` order. That ordering
-    /// is observable: `raw_gated_descendant_value` iterates this list
-    /// and accumulates `f64`, and non-associativity could otherwise
-    /// shift ranking ties. Append on absorb, `retain` on schedule.
+    /// Parent → unscheduled children index, maintained incrementally.
+    /// Vec order within each entry must match `entries` order — it's
+    /// observable via floating-point accumulation in
+    /// `raw_gated_descendant_value`.
     children_index: ChildrenByParent,
-    /// Children whose predecessor key hasn't been absorbed yet.
-    /// Drained into `children_index` when the matching parent is
-    /// absorbed. Mirrors the current `key_to_id.get(pred)` miss
-    /// behavior in the old rebuild — orphans that never see a parent
-    /// stay inert here forever, which is fine (they're also inert in
-    /// eligibility today).
+    /// Children whose predecessor key hasn't been absorbed yet —
+    /// drained into `children_index` when the parent is absorbed.
     pending_children: HashMap<W::Key, Vec<BatchId>>,
-    /// Debug-only verifier toggle. When on, `best_exact` recomputes the
-    /// parent→children index from scratch each call and asserts it
-    /// matches `children_index`. Off by default; tests turn it on via
-    /// [`Self::enable_children_index_verifier`]. Process-local (no env
-    /// var) so concurrent libtest threads can't race.
+    /// Debug-only: recompute `children_index` from scratch each call
+    /// and assert it matches the incrementally-maintained version.
     #[cfg(debug_assertions)]
     verify_children_index: bool,
-    /// Debug-only owner map for FS render cells. The production walker
-    /// emits one full listing per directory, so overlapping sibling FS
-    /// atoms are a walker-contract violation rather than a scheduler case.
+    /// Debug-only owner map for FS render cells — overlapping sibling
+    /// FS atoms are a walker-contract violation.
     #[cfg(debug_assertions)]
     fs_atom_owners: BTreeMap<(PathBuf, String), W::Key>,
 }
@@ -182,9 +164,7 @@ impl<W: Walker> Scheduler<W> {
         Self::with_source_cache(root, walker, token_budget, byte_budget, SourceCache::new())
     }
 
-    /// Construct a scheduler sharing an externally-owned `SourceCache`. Used
-    /// by tests that preload synthetic source content so the render pipeline
-    /// can materialize spans against paths that don't exist on disk.
+    /// Scheduler sharing an externally-owned `SourceCache` (tests).
     pub fn with_source_cache(
         root: PathBuf,
         walker: W,
@@ -214,24 +194,18 @@ impl<W: Walker> Scheduler<W> {
         }
     }
 
-    /// Turn on the debug-only `children_index` verifier (recompute and
-    /// assert on every `best_exact` call). For invariant tests; not
-    /// meant for production paths.
+    /// Debug-only: turn on the `children_index` invariant verifier.
     #[cfg(debug_assertions)]
     pub fn enable_children_index_verifier(&mut self) {
         self.verify_children_index = true;
     }
 
-    /// Run the scheduler and return just the rendered tree. Back-compat
-    /// entry point used by `precis::render`; new consumers should prefer
-    /// [`run_with_report`](Self::run_with_report).
+    /// Run the scheduler and return just the rendered tree.
     pub fn run(self) -> RenderedTree {
         self.run_with_report().tree
     }
 
-    /// Run the scheduler and return the tree plus the ordered log of
-    /// scheduled batches. Used by `render_schedule` and the divergence
-    /// test.
+    /// Run the scheduler and return the tree plus the scheduled-batches log.
     pub fn run_with_report(mut self) -> RunReport<W::Key> {
         crate::time_span!("run_with_report");
         {
