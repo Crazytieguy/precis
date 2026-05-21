@@ -64,12 +64,9 @@ use super::{
     statement_block_parts,
 };
 
-// TS/JS catalog files can expose many same-file body refinements. The first
-// four body segments keep full value because they usually cover the main
-// component/function bodies; later segments are commonly nested helper detail.
+/// First N body segments per file keep full value; later segments
+/// drop to `LATE_BODY_SEGMENT_VALUE_FACTOR`.
 const FULL_VALUE_BODY_SEGMENTS_PER_FILE: usize = 4;
-// Keep late body segments schedulable as last-resort detail, but make their
-// value/cost ratio lose to broader structural candidates in budget pressure.
 const LATE_BODY_SEGMENT_VALUE_FACTOR: f64 = 0.05;
 const JS_CLASS_MEMBER_SPLIT_MIN: usize = 12;
 /// Upper bound on class member count for the per-method split — above
@@ -536,21 +533,15 @@ fn emit_export_body_parts(
     parts: Vec<BodyPart>,
     predecessor: &BatchKey,
 ) {
-    // Factory body parts are sibling anchors (receiver table +
-    // inner-function locations), not alternative slices of one body —
-    // each is independently NS-relevant. Bypass `body_part_value_factor`
-    // so the partition doesn't tank each part's V/C the way it does
-    // for per-statement split alternatives.
+    // Factory body parts are sibling anchors; skip the per-partition
+    // value damping.
     let part_value_factor = if item.factory_sibling_body_parts {
         1.0
     } else {
         body_part_value_factor(parts.len())
     };
-    // Class method bodies are peer units (one body batch per method) —
-    // the late-body decay targets long function-body chains in catalog
-    // files where later segments are redundant detail, but each class
-    // method is its own semantic unit. Mirrors the ModuleItem class-
-    // body path which already bypasses the decay.
+    // Class method bodies are peer units — each is its own semantic
+    // unit so the late-body decay doesn't apply.
     let is_class_peer = matches!(item.kind, ItemKind::Class | ItemKind::Default);
     for part in parts {
         let Some(body_start_line) = part.start_line() else {
@@ -562,11 +553,7 @@ fn emit_export_body_parts(
         else {
             continue;
         };
-        // Factory siblings are complementary anchors, not alternative
-        // body slices — exempt them from the late-segment damping
-        // that targets catalog files' long body chains. Without this
-        // exempt, the inner-helper bodies (segments 5+) collapse to
-        // 5% value and lose every budget race.
+        // Factory siblings and class peers skip late-segment damping.
         let segment_factor = if item.factory_sibling_body_parts || is_class_peer {
             1.0
         } else {
@@ -764,12 +751,7 @@ fn find_export_starts<'a>(
         out.sort_by_key(|e| e.start_line);
     }
 
-    // CommonJS prototype-style method assignments (`app.X = function …`,
-    // `Request.prototype.X = function …`). Express / Connect-style JS
-    // libraries assemble their public surface this way; without this
-    // synthesis the method-name catalogs NS authors anchor on are
-    // entirely absent from the walker output. Only JS files participate
-    // — TS / TSX use real class syntax for the same shape.
+    // CommonJS prototype-style method assignments — JS only.
     if is_js_file(file) {
         let receivers = collect_module_exports_receivers(tree, source);
         if !receivers.is_empty() {
