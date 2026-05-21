@@ -25,60 +25,35 @@ use crate::value::mix_signals;
 
 use super::{FileLines, WalkCtx, fs::list_dir, path_depth_factor, single_file_lines_content};
 
-/// Hard cap on the number of source lines a plaintext file may have to
-/// be considered for a `Whole` batch. Larger files are skipped wholesale.
+/// Line cap on a `Whole` plaintext batch.
 const PLAINTEXT_LINE_CAP: usize = 60;
 
-/// FS-metadata pre-flight gate: skip files whose raw byte size is
-/// obviously past the cap before opening them. 80 bytes/line bounds
-/// the worst-case rendered cost (line-cap × ~80 chars × token-overhead)
-/// to roughly 1500 tokens — comfortably below any single budget chunk
-/// the scheduler would let plaintext claim. Files denser than this
-/// are agent-`Read` territory, not precis output.
+/// FS-metadata pre-flight gate (≈80 bytes/line × line cap).
 const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 
-/// What kind of plaintext file this is. Drives the signal preset and
-/// keeps the (filename → preset) mapping in one table.
+/// Plaintext file class — drives the (filename → signal preset) table.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
-    /// LICENSE / LICENSE-MIT / LICENSE-APACHE / COPYING / NOTICE etc.
-    /// Conveys legal status; rarely affects how to use the project.
+    /// LICENSE / LICENSE-MIT / COPYING / NOTICE etc.
     License,
-    /// .gitignore / .dockerignore. Hints at generated artifacts and
-    /// involved tooling.
+    /// .gitignore / .dockerignore.
     IgnoreList,
     /// .editorconfig / .eslintrc / .prettierrc (extensionless).
-    /// Formatting + lint conventions; affects code edits.
     EditorConfig,
     /// .nvmrc / .python-version / .tool-versions / pnpm-workspace.yaml.
-    /// Toolchain or workspace-topology pinning — orientation files for
-    /// "what does this project assume about its environment / shape".
-    /// `.npmrc` is intentionally absent (auth-token risk — see module
-    /// doc).
     Toolchain,
-    /// VERSION file: a one-line version stamp (`0.1.7-alpha.10`). NS
-    /// authors anchor on this when no `pyproject.toml` / `package.json`
-    /// / `Cargo.toml` carries the canonical version (sqlite-vec, act).
+    /// One-line version stamp.
     Version,
-    /// TODO file: an open backlog in plain text. NS authors anchor on
-    /// the header item as a "what's pending" orientation signal
-    /// (sqlite-vec).
+    /// Plain-text backlog.
     Todo,
 }
 
-/// Classify a file by its name. Returns `None` for any file the walker
-/// does not own — including format-aware siblings (`.eslintrc.json`,
-/// `LICENSE.md`) that other walkers handle, and out-of-scope variants
-/// (`LICENSE-HEADER`, `Makefile`) that we deliberately don't claim.
-///
-/// Credential-bearing names (`.npmrc`, `.netrc`, `.env`, `.pypirc`)
-/// are NOT classified — see the module doc for the safety rationale.
+/// Classify a file by name. `None` for files the walker doesn't own
+/// (other walkers' formats, out-of-scope variants, credential names).
 pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
-    // License names are matched case-insensitively (some repos use
-    // lowercase `license`); dotfile names case-sensitively (Unix
-    // convention). Listing names exhaustively is on purpose: an
-    // open-ended `LICENSE-*` predicate would also pick up things like
-    // `LICENSE-HEADER` (tomli) that aren't actually a license header.
+    // Licenses match case-insensitively; dotfiles case-sensitively.
+    // The list is exhaustive on purpose — `LICENSE-*` would catch
+    // `LICENSE-HEADER` etc.
     let lower = name.to_ascii_lowercase();
     if matches!(
         lower.as_str(),
