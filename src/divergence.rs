@@ -113,25 +113,18 @@ use crate::schedule_types::{Atom, Schedule, ScheduledBatch};
 mod render;
 use render::format_report;
 
-/// Per-budget Score grid: geometric on `[1000, 9000]` with ratio
-/// `⁶√9 ≈ 1.442`, symmetric around 3000 on the log scale. The vector
-/// at these budgets is the headline; `Score(3000)` is the primary
-/// objective (auto-injection budget every session hits).
+/// Per-budget Score grid — geometric on `[1000, 9000]` (ratio ⁶√9 ≈
+/// 1.442), symmetric around 3000 on the log scale.
 pub const BUDGETS: [usize; 7] = [1000, 1442, 2080, 3000, 4327, 6240, 9000];
 
-/// Index of the primary budget within [`BUDGETS`]. `Score(3000)` is
-/// the single number that drives sort order and headline framing.
+/// Index of the primary budget. `Score(3000)` drives sort order.
 pub const PRIMARY_BUDGET_INDEX: usize = 3;
 
-/// Damped-credit threshold: NS batch counted as `reached` iff
-/// `credit × completion` at the primary budget ≥ this. Same
-/// quantity Score(B) consumes per atom, so the bucketing reflects
-/// what the metric rewards.
+/// `reached` threshold on damped credit at the primary budget.
 const REACH_THRESHOLD: f64 = 0.8;
 
-/// Damped-credit threshold: NS batch counted as `missing` iff
-/// `credit × completion` at the primary budget < this. Rows in
-/// `[MISSING_FLOOR, REACH_THRESHOLD)` are `partial`.
+/// `missing` threshold on damped credit. `[MISSING_FLOOR, REACH_THRESHOLD)`
+/// is `partial`.
 const MISSING_FLOOR: f64 = 0.5;
 
 /// One row of the per-budget score table.
@@ -155,26 +148,20 @@ pub struct ScoreAtBudget {
     pub walker_used: usize,
 }
 
-/// Headline scores. Bucket counts are gated to atoms reachable at the
-/// primary budget (`A_3K`) — they describe the rows the optimization
-/// target actually depends on, not whole-NS noise.
-/// `reached + partial + missing == rows_in_a_primary`.
+/// Headline scores. Bucket counts gate on atoms reachable at the
+/// primary budget (`reached + partial + missing == rows_in_primary`).
 #[derive(Debug, Clone)]
 pub struct Scores {
-    /// Per-budget vector, one entry per [`BUDGETS`] slot.
     pub vector: [ScoreAtBudget; BUDGETS.len()],
-    /// Total NS batches across the whole NS (all budgets). For "X of Y"
-    /// framing where Y captures the full ground truth.
+    /// Total NS batches across all budgets.
     pub total_ns: usize,
-    /// NS batches with `exp_t ≤ PRIMARY_BUDGET` — the rows whose status
-    /// drives `Score(3000)`. Equal to `reached + partial + missing`.
+    /// NS batches with `exp_t ≤ PRIMARY_BUDGET`.
     pub rows_in_primary: usize,
-    /// In `A_3K`: final credit ≥ [`REACH_THRESHOLD`].
+    /// Credit ≥ [`REACH_THRESHOLD`].
     pub reached: usize,
-    /// In `A_3K`: final credit in `[MISSING_FLOOR, REACH_THRESHOLD)` —
-    /// present but diluted.
+    /// Credit in `[MISSING_FLOOR, REACH_THRESHOLD)`.
     pub partial: usize,
-    /// In `A_3K`: final credit < [`MISSING_FLOOR`].
+    /// Credit < [`MISSING_FLOOR`].
     pub missing: usize,
 }
 
@@ -184,9 +171,8 @@ impl Scores {
         self.vector[PRIMARY_BUDGET_INDEX].score
     }
 
-    /// Single line that appears verbatim as the first line of any
-    /// divergence report (and as the entire contents of a
-    /// validation-tier baseline).
+    /// First line of any divergence report; full contents of a
+    /// validation-tier baseline.
     pub fn headline(&self) -> String {
         let primary = &self.vector[PRIMARY_BUDGET_INDEX];
         format!(
@@ -203,8 +189,6 @@ impl Scores {
     }
 }
 
-/// Primary budget for headline counts and per-row attention direction.
-/// Sourced from [`BUDGETS`] at [`PRIMARY_BUDGET_INDEX`].
 pub(crate) const PRIMARY_BUDGET: usize = BUDGETS[PRIMARY_BUDGET_INDEX];
 
 /// Compute scores. `schedule` is expected to be a full-cap walker run.
@@ -228,19 +212,10 @@ pub fn generate_divergence_report(
 
 // ---- graded atoms ------------------------------------------------------
 
-/// One atom of content with the byte footprint used for **credit
-/// accounting only** — this is not a render-cost weight.
-///
-/// `bytes` semantics (minimum 1 for any present atom — 0 is reserved for
-/// "walker never rendered this atom"):
-/// - `Line::Full` = source line length.
-/// - `Line::Truncated{pattern}` = regex-match byte-end (validator
-///   guarantees ≥ 1 on every covered line).
-/// - `Line::Ellipsis` = `1`.
-/// - `Fs`: always `1`. Fs atoms are boolean.
-///
-/// Credit between two graded atoms sharing identity (same `Atom`) is
-/// `min(walker.bytes, ns.bytes) / max(ns.bytes, 1)`, capped at 1.0.
+/// One content atom with byte footprint for credit accounting (not
+/// render-cost). `bytes ≥ 1` for any present atom; 0 means "walker
+/// never rendered this atom". Credit between matching atoms is
+/// `min(walker, ns) / max(ns, 1)`, capped at 1.0.
 #[derive(Debug, Clone)]
 pub(super) struct GradedAtom {
     atom: Atom,
@@ -302,10 +277,8 @@ fn atoms_from_content(
     }
 }
 
-/// Per-render byte_end: where this render stops within the source line.
-/// `Ellipsis` is a 1-byte sentinel (not 0) so NS-ellipsis vs walker-
-/// ellipsis on the same line scores full credit. All render kinds floor
-/// at 1 so "present" is strictly distinguishable from "not rendered".
+/// Per-render byte_end. Ellipsis is a 1-byte sentinel; all kinds
+/// floor at 1 to keep "present" distinguishable from "not rendered".
 fn byte_end_for(render: &Render, source_line: &str) -> usize {
     match render {
         Render::Full => source_line.len().max(1),
@@ -328,14 +301,11 @@ pub(super) struct BuildCtx<'a> {
 
 struct NsRow {
     atoms: Vec<GradedAtom>,
-    /// Cumulative token cost up through this batch, computed as the
-    /// marginal cost of applying each batch in order to a shared
-    /// `RenderedTree` — same accounting as `simulate_ns`.
+    /// Cumulative tokens through this batch (same accounting as
+    /// `simulate_ns`).
     exp_t: usize,
-    /// 1-indexed rank of this row's first atom in the flat NS schedule
-    /// order. `r(rank_start + i) = 1 / (rank_start + i)` is atom `i`'s
-    /// Importance weight. NS batches arrive in rank order so atoms in
-    /// `A_B` are exactly ranks `1..=|A_B|`.
+    /// 1-indexed rank of this row's first atom in the flat NS schedule.
+    /// Atom `i`'s Importance weight is `1 / (rank_start + i)`.
     rank_start: usize,
 }
 
@@ -347,12 +317,8 @@ struct WalkerRow<'a> {
 
 impl<'a> BuildCtx<'a> {
     fn new(ns: &'a NorthStar, schedule: &'a Schedule, fixture_root: &Path) -> Result<Self> {
-        // Walker atom paths come from `schedule.batches`, which were
-        // built against `Schedule::root` (canonicalized by
-        // `render_schedule`). NS atoms get keyed by `fixture_root` here.
-        // Canonicalize so the two sets land in the same path namespace —
-        // otherwise an Atom keyed by `<symlinked>/…` never matches an
-        // Atom keyed by `<real>/…` and every row scores 0.
+        // Canonicalize so NS atoms and walker atoms land in the same
+        // path namespace (`Schedule::root` is canonicalized too).
         let fixture_root = fixture_root
             .canonicalize()
             .with_context(|| format!("canonicalize fixture_root {}", fixture_root.display()))?;
@@ -369,9 +335,7 @@ impl<'a> BuildCtx<'a> {
             let marginal = tree.marginal_cost(&content);
             cum += marginal.tokens;
             let batch_id = BatchId::new(pos);
-            // Divergence doesn't care about predecessor-chain conflicts
-            // here — that's `simulate_ns`'s job. `|_| true` accepts any
-            // existing owner so the tree evolves faithfully regardless.
+            // Predecessor-chain conflicts are `simulate_ns`'s concern.
             let _ = tree.apply(&content, batch_id, |_| true);
             let rank_start = next_rank;
             next_rank += atoms.len();
@@ -401,16 +365,10 @@ impl<'a> BuildCtx<'a> {
 
 // ---- scoring -----------------------------------------------------------
 
-/// Per-budget walker state used by `build_scores` to compute the
-/// 7-entry headline `vector`. Borrowed `&Atom` keys — keys live in
-/// `ctx.walker_rows`, so the snapshot can't outlive `ctx`.
+/// Per-budget walker state for `build_scores`.
 struct WalkerSnapshots<'a> {
-    /// Per-budget byte-max maps, indexed by [`BUDGETS`].
     cums: [BTreeMap<&'a Atom, usize>; BUDGETS.len()],
-    /// Per-budget atom counts of `A_B` (NS atoms in batches with
-    /// `exp_t ≤ B`).
     a_b_atoms: [usize; BUDGETS.len()],
-    /// Per-budget walker `cum_tokens` at the last batch fitting in B.
     walker_used: [usize; BUDGETS.len()],
 }
 
