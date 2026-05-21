@@ -558,313 +558,210 @@ mod tests {
     use super::*;
     use std::path::Path;
 
-    /// The file-level discount for "private helper" filenames is
-    /// Rust-only — Python `_*.py` files (PEP 8 internal-but-load-bearing
-    /// convention) and framework underscore files (Next.js `_app.tsx`,
-    /// Cloudflare `_routes.json`) keep their full weight. The literal
-    /// `inner.rs` and `__-prefixed *.rs` patterns still discount.
+    fn assert_factor(expected: f64, paths: &[&str]) {
+        let root = Path::new("/repo");
+        for path in paths {
+            assert_eq!(
+                non_essential_factor(&root.join(path), root),
+                expected,
+                "{path}",
+            );
+        }
+    }
+
     #[test]
     fn value_underscore_filename_discount_is_rust_only() {
-        let root = Path::new("/repo");
-        // Rust private helper conventions: still 0.5.
-        assert_eq!(
-            non_essential_factor(&root.join("src/__private_api.rs"), root),
-            0.5,
-        );
-        assert_eq!(non_essential_factor(&root.join("src/inner.rs"), root), 0.5,);
-        // Python load-bearing files: full weight.
-        assert_eq!(
-            non_essential_factor(&root.join("src/pluggy/_hooks.py"), root),
+        // Rust private-helper convention: literal `inner.rs` and
+        // `__-prefixed *.rs` discount. Single-underscore `*.rs` files
+        // and Python/JS framework underscore files keep full weight.
+        assert_factor(0.5, &["src/__private_api.rs", "src/inner.rs"]);
+        assert_factor(
             1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join("src/pluggy/__init__.py"), root),
-            1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join("src/pkg/__main__.py"), root),
-            1.0,
-        );
-        // Framework underscore files in JS/TS land: full weight.
-        assert_eq!(
-            non_essential_factor(&root.join("pages/_app.tsx"), root),
-            1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join("packages/x/_routes.json"), root),
-            1.0,
-        );
-        // Single-underscore `*.rs` files no longer get a discount —
-        // prefer to specialize per file with a literal allowlist if a
-        // regression appears.
-        assert_eq!(
-            non_essential_factor(&root.join("src/_helper.rs"), root),
-            1.0,
+            &[
+                "src/pluggy/_hooks.py",
+                "src/pluggy/__init__.py",
+                "src/pkg/__main__.py",
+                "pages/_app.tsx",
+                "packages/x/_routes.json",
+                "src/_helper.rs",
+            ],
         );
     }
 
     #[test]
     fn value_github_contributor_templates_are_discounted() {
-        let root = Path::new("/repo");
-        assert_eq!(
-            non_essential_factor(&root.join(".github/PULL_REQUEST_TEMPLATE.md"), root),
+        assert_factor(
             0.2,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join(".github/pull_request_template.md"), root),
-            0.2,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join(".github/ISSUE_TEMPLATE/bug.md"), root),
-            0.2,
+            &[
+                ".github/PULL_REQUEST_TEMPLATE.md",
+                ".github/pull_request_template.md",
+                ".github/ISSUE_TEMPLATE/bug.md",
+            ],
         );
     }
 
     #[test]
     fn value_github_workflows_keep_full_weight() {
-        let root = Path::new("/repo");
-        assert_eq!(
-            non_essential_factor(&root.join(".github/workflows/ci.yml"), root),
-            1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join(".github/workflows"), root),
-            1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join(".github/dependabot.yml"), root),
-            0.2,
-        );
+        assert_factor(1.0, &[".github/workflows/ci.yml", ".github/workflows"]);
+        assert_factor(0.2, &[".github/dependabot.yml"]);
     }
 
     #[test]
     fn value_top_level_peripheral_docs_are_discounted() {
-        let root = Path::new("/repo");
-        for name in [
-            "CHANGELOG.md",
-            "changelog.rst",
-            "HISTORY.md",
-            "RELEASE_NOTES.md",
-            "RELEASING.md",
-            "CONTRIBUTING.md",
-            "SECURITY.md",
-            "NOTICE.md",
-            "AUTHORS.md",
-            "CODE_OF_CONDUCT.md",
-            "CODEOWNERS.md",
-            "SUPPORT.md",
-            "GOVERNANCE.md",
-            // NEWS — release-notes content; jq's NEWS.md, htop's NEWS.
-            "NEWS.md",
-            "news.rst",
-            // FAQ — rich's .faq/FAQ.md.
-            "FAQ.md",
-            // Upgrade / migration guides — bubbletea's UPGRADE_GUIDE_V2.md.
-            "UPGRADE_GUIDE_V2.md",
-            "upgrade-guide.md",
-        ] {
-            assert_eq!(
-                non_essential_factor(&root.join(name), root),
-                0.2,
-                "top-level {name}",
-            );
-        }
+        assert_factor(
+            0.2,
+            &[
+                "CHANGELOG.md",
+                "changelog.rst",
+                "HISTORY.md",
+                "RELEASE_NOTES.md",
+                "RELEASING.md",
+                "CONTRIBUTING.md",
+                "SECURITY.md",
+                "NOTICE.md",
+                "AUTHORS.md",
+                "CODE_OF_CONDUCT.md",
+                "CODEOWNERS.md",
+                "SUPPORT.md",
+                "GOVERNANCE.md",
+                "NEWS.md",
+                "news.rst",
+                "FAQ.md",
+                "UPGRADE_GUIDE_V2.md",
+                "upgrade-guide.md",
+            ],
+        );
     }
 
-    /// Same basenames in subdirectories ARE demoted — monorepo
-    /// per-package CHANGELOGs (d2ts's `packages/d2mini/CHANGELOG.md`)
-    /// follow the same admin-doc semantics. NS atoms that point at
-    /// these paths (otree's `docs/changelog.md`, etc.) are all at
-    /// `exp_t > 9000` across the corpus, so demotion is metric-safe.
     #[test]
     fn value_subdir_peripheral_basenames_are_demoted() {
-        let root = Path::new("/repo");
-        assert_eq!(
-            non_essential_factor(&root.join("docs/changelog.md"), root),
+        // Monorepo per-package CHANGELOGs etc. inherit the admin-doc
+        // semantics — NS atoms pointing at these are all at exp_t>9K
+        // so demotion is metric-safe.
+        assert_factor(
             0.2,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join("docs/CONTRIBUTING.md"), root),
-            0.2,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join("packages/d2mini/CHANGELOG.md"), root),
-            0.2,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join("subproject/CHANGELOG.md"), root),
-            0.2,
+            &[
+                "docs/changelog.md",
+                "docs/CONTRIBUTING.md",
+                "packages/d2mini/CHANGELOG.md",
+                "subproject/CHANGELOG.md",
+            ],
         );
     }
 
     #[test]
     fn value_auto_injected_agent_docs_are_strongly_discounted() {
-        let root = Path::new("/repo");
-        for path in [
-            "AGENTS.md",
-            "agents.md",
-            "CLAUDE.md",
-            "claude.rst",
-            ".claude/skills/foo/SKILL.md",
-            ".agent/skills/bar/instructions.md",
-            ".cursor/rules/baz.mdc",
-            // Nested AGENTS.md / CLAUDE.md in monorepos: Claude Code's
-            // CLAUDE.md hierarchy is recursive, so these are still
-            // auto-injected.
-            "packages/foo/CLAUDE.md",
-            "crates/bar/AGENTS.md",
-        ] {
-            assert_eq!(
-                non_essential_factor(&root.join(path), root),
-                0.1,
-                "auto-injected {path}",
-            );
-        }
+        // Claude Code's CLAUDE.md hierarchy is recursive — nested
+        // AGENTS.md/CLAUDE.md in monorepos are still auto-injected.
+        assert_factor(
+            0.1,
+            &[
+                "AGENTS.md",
+                "agents.md",
+                "CLAUDE.md",
+                "claude.rst",
+                ".claude/skills/foo/SKILL.md",
+                ".agent/skills/bar/instructions.md",
+                ".cursor/rules/baz.mdc",
+                "packages/foo/CLAUDE.md",
+                "crates/bar/AGENTS.md",
+            ],
+        );
     }
 
-    /// Root-level dot-directories — IDE / tooling / CI / admin /
-    /// auto-injected-skill subtrees — uniformly demote to 0.2. The
-    /// `is_auto_injected_doc_file` check then upgrades doc-extension
-    /// files inside the skill subtrees to the stronger 0.1 discount.
-    /// Non-text helpers under those subtrees inherit the dot-dir
-    /// demotion — they're skill-private implementation, not project
-    /// source the model should orient on through precis.
     #[test]
     fn value_root_dot_directories_are_discounted() {
-        let root = Path::new("/repo");
-        for path in [
-            // Skill subtrees: listing + non-text helpers.
-            ".claude/skills",
-            ".claude/skills/foo",
-            ".claude/skills/foo/script.py",
-            ".claude/skills/foo/data.json",
-            // IDE / dev-env config.
-            ".vscode/settings.json",
-            ".devcontainer/devcontainer.json",
-            ".idea/foo.xml",
-            // Hook / CI / package-manager tooling.
-            ".husky/pre-commit",
-            ".circleci/config.yml",
-            ".cargo/config.toml",
-            ".yarn/plugins/foo.cjs",
-            // FAQ subtree (rich's .faq/).
-            ".faq/FAQ.md",
-        ] {
-            assert_eq!(
-                non_essential_factor(&root.join(path), root),
-                0.2,
-                "root dot-dir {path}",
-            );
-        }
+        // IDE / tooling / CI / admin / auto-injected-skill subtrees.
+        // `is_auto_injected_doc_file` then upgrades doc-extension
+        // files inside skill subtrees to the stronger 0.1 discount.
+        assert_factor(
+            0.2,
+            &[
+                ".claude/skills",
+                ".claude/skills/foo",
+                ".claude/skills/foo/script.py",
+                ".claude/skills/foo/data.json",
+                ".vscode/settings.json",
+                ".devcontainer/devcontainer.json",
+                ".idea/foo.xml",
+                ".husky/pre-commit",
+                ".circleci/config.yml",
+                ".cargo/config.toml",
+                ".yarn/plugins/foo.cjs",
+                ".faq/FAQ.md",
+            ],
+        );
     }
 
     #[test]
     fn value_changeset_subtree_is_discounted() {
-        let root = Path::new("/repo");
-        assert_eq!(
-            non_essential_factor(&root.join(".changeset/foo.md"), root),
+        assert_factor(
             0.2,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join(".changeset/README.md"), root),
-            0.2,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join(".changeset/config.json"), root),
-            0.2,
+            &[
+                ".changeset/foo.md",
+                ".changeset/README.md",
+                ".changeset/config.json",
+            ],
         );
     }
 
-    /// `contribute/` is **not** in the demotion set: only mcphost uses
-    /// it, the savings are tiny, and the subtree contains non-markdown
-    /// content (`build.sh`, `conf/demo.json`) where demotion would be
-    /// unjustified.
     #[test]
     fn value_contribute_subtree_keeps_full_weight() {
-        let root = Path::new("/repo");
-        assert_eq!(
-            non_essential_factor(&root.join("contribute/contribute.md"), root),
+        // `contribute/` is intentionally NOT demoted: only mcphost
+        // uses it and the subtree contains non-markdown content.
+        assert_factor(
             1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join("contribute/build.sh"), root),
-            1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join("contribute/conf/demo.json"), root),
-            1.0,
+            &[
+                "contribute/contribute.md",
+                "contribute/build.sh",
+                "contribute/conf/demo.json",
+            ],
         );
     }
 
     #[test]
     fn value_localized_readme_is_discounted() {
-        let root = Path::new("/repo");
-        for name in [
-            "README.zh-CN.md",
-            "Readme_zh-CN.md",
-            "README.ja.md",
-            "README.pt_BR.rst",
-            "README.fr.md",
-            "README.en-US.md",
-            // Informal codes seen in the wild — rich has README.cn.md /
-            // README.kr.md alongside README.zh-tw.md / README.ja.md.
-            "README.cn.md",
-            "README.kr.md",
-            "README.fa.md",
-            // Regional dialect tags accepted via the `<lang>-<region>`
-            // pattern when the language root is in the whitelist.
-            "README.de-ch.md",
-            "README.pt-pt.md",
-            "README.es-mx.md",
-        ] {
-            assert_eq!(
-                non_essential_factor(&root.join(name), root),
-                0.2,
-                "localized {name}",
-            );
-        }
+        assert_factor(
+            0.2,
+            &[
+                "README.zh-CN.md",
+                "Readme_zh-CN.md",
+                "README.ja.md",
+                "README.pt_BR.rst",
+                "README.fr.md",
+                "README.en-US.md",
+                "README.cn.md",
+                "README.kr.md",
+                "README.fa.md",
+                "README.de-ch.md",
+                "README.pt-pt.md",
+                "README.es-mx.md",
+            ],
+        );
     }
 
-    /// The whitelist eliminates false positives a loose
-    /// `[a-z]{2,3}(-[A-Z]{2,4})?` regex would catch: `README.api.md`,
-    /// `README.dev.md`, etc. are not localized copies, they're
-    /// auxiliary docs whose contents matter.
-    /// (`README.test.md` is excluded from this list — it's caught
-    /// by the pre-existing co-located-test rule, which discounts to
-    /// 0.2 for a different reason.)
     #[test]
     fn value_non_locale_readme_suffixes_keep_full_weight() {
-        let root = Path::new("/repo");
-        for name in [
-            "README.api.md",
-            "README.dev.md",
-            "README.old.md",
-            "README_template.md",
-        ] {
-            assert_eq!(
-                non_essential_factor(&root.join(name), root),
-                1.0,
-                "non-locale {name}",
-            );
-        }
+        // Whitelist eliminates false positives a loose
+        // `[a-z]{2,3}(-[A-Z]{2,4})?` regex would catch.
+        assert_factor(
+            1.0,
+            &[
+                "README.api.md",
+                "README.dev.md",
+                "README.old.md",
+                "README_template.md",
+            ],
+        );
     }
 
     #[test]
     fn value_bare_readme_keeps_full_weight() {
-        let root = Path::new("/repo");
-        assert_eq!(non_essential_factor(&root.join("README.md"), root), 1.0,);
-        assert_eq!(non_essential_factor(&root.join("README.rst"), root), 1.0,);
-        assert_eq!(non_essential_factor(&root.join("Readme.md"), root), 1.0,);
+        assert_factor(1.0, &["README.md", "README.rst", "Readme.md"]);
     }
 
-    /// Localized READMEs in subdirs (e.g. monorepo packages) ARE
-    /// demoted — same admin-doc semantics as root.
     #[test]
     fn value_subdir_localized_readme_is_demoted() {
-        let root = Path::new("/repo");
-        assert_eq!(
-            non_essential_factor(&root.join("docs/README.zh-CN.md"), root),
-            0.2,
-        );
+        assert_factor(0.2, &["docs/README.zh-CN.md"]);
     }
 }
