@@ -47,12 +47,9 @@ use super::{
     name_of, push_rows, signature_end_row, single_file_lines_content, statement_block_parts,
 };
 
-/// Per-run Rust-walker state owned by [`WalkCtx`]. Stores cross-file
-/// analyses that the Rust walker needs to memoize for a single run:
-/// module visibility (which `.rs` files are reachable from `src/lib.rs`'s
-/// `pub mod` graph), Cargo workspace membership, and per-directory
-/// exported-macro-name sets. Pure storage — computation lives in the
-/// walker's free functions and accesses state through [`WalkCtx::rust_state`].
+/// Per-run Rust-walker state owned by [`WalkCtx`] — memoizes module
+/// visibility, workspace membership, exported macros, and cargo source
+/// dirs across a single run.
 pub struct RustState {
     module_visibility: OnceCell<HashMap<PathBuf, Visibility>>,
     exported_macros_per_dir: RefCell<HashMap<PathBuf, Arc<HashSet<String>>>>,
@@ -586,10 +583,7 @@ fn gated_on_dir_listing(mut batches: Vec<Batch<BatchKey>>, dir: &Path) -> Vec<Ba
     batches
 }
 
-/// Kind of a top-level pub item, used to weight its batch. Traits are the
-/// load-bearing abstraction every backend implements; enums and structs
-/// carry the data-model; free fns are the call surface. First-pass
-/// ordering — calibrate against the north stars.
+/// Top-level pub item kind. Used for value weighting.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum ItemKind {
     Trait,
@@ -622,14 +616,9 @@ struct PubItemInfo<'a> {
     surface: ApiSurface,
 }
 
-/// Whether a syntactically-public item is part of the external crate API.
-/// `Public` (plain `pub`) competes for the budget at full weight;
-/// `Restricted` (`pub(crate)` / `pub(super)` / `pub(self)` / `pub(in ...)`)
-/// is compiler-visible inside the crate but not the external surface.
-/// `doc_hidden` is orthogonal — public items can still be opted out of
-/// rustdoc with `#[doc(hidden)]`. Together they produce a non-API factor
-/// applied uniformly across the value channels in `pub_item_signals` /
-/// `pub_item_doc_signals`.
+/// Whether a syntactically-public item is part of the external crate
+/// API. `Restricted` (`pub(crate)`/`pub(super)`/`pub(in ...)`) and
+/// `doc_hidden` each apply their own non-API factor.
 #[derive(Debug, Clone, Copy)]
 struct ApiSurface {
     visibility: Visibility,
@@ -756,12 +745,8 @@ fn should_emit_private_entry_item(
 }
 
 /// `fn main` is a thin wrapper when its body is just an error-handling
-/// shim — the shape of `match run() { Ok(_) => (), Err(e) => { ... } }`,
-/// `run().unwrap()`, or `std::process::exit(real_main())`. Limit to two
-/// top-level statements so a `fn main` that owns nontrivial logic
-/// itself (CLI subcommand dispatch inline, logging setup + dispatch +
-/// error branch) does not get reclassified as a wrapper, which would
-/// promote every helper-fn in `main.rs` to a peer entry batch.
+/// shim (`run().unwrap()`, `std::process::exit(real_main())`, ...). Cap
+/// at 2 statements to avoid reclassifying a nontrivial `main`.
 const THIN_MAIN_MAX_STATEMENTS: usize = 2;
 
 fn is_thin_main_body(node: Node) -> bool {
@@ -814,13 +799,9 @@ fn entrypoint_boost(path: &Path) -> f64 {
     }
 }
 
-/// Multi-crate workspaces where the primary crate shares the repo
-/// basename (`toasty/crates/toasty`, `sps/sps`, `mdbook/.`) tend to
-/// have NS rows that anchor on each crate's `lib.rs` / `main.rs` /
-/// `mod.rs` (module tree, re-exports) but not its deep per-file API
-/// surface. Damping non-entrypoint files in secondary crates keeps
-/// each crate's entrypoints competitive while moving the wide-but-
-/// shallow per-file signature sweep further down the schedule.
+/// Damp non-entrypoint files in secondary workspace members so the
+/// primary crate's entrypoints + sub-crates' lib.rs/main.rs/mod.rs
+/// anchors win the early budget over per-file signature sweeps.
 const SECONDARY_WORKSPACE_MEMBER_FACTOR: f64 = 0.7;
 
 fn rust_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -890,10 +871,7 @@ fn mod_use_value(file: &Path, ctx: &WalkCtx, mod_decl_count: usize) -> f64 {
     mix_signals(cat, 0.65, 0.38, rust_depth_factor(file, ctx))
 }
 
-/// Count top-level `mod_item` nodes — the `mod foo;` declarations that
-/// list the crate's submodule tree. Used by `mod_use_value` to
-/// distinguish a module-table entrypoint (NS-anchor-shaped) from a
-/// use-heavy entrypoint (plumbing-shaped).
+/// Count top-level `mod_item` nodes (the `mod foo;` submodule table).
 fn count_top_level_mod_items(tree: &Tree, _source: &str) -> usize {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -977,12 +955,9 @@ fn pub_item_doc_lede_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx
     mix_signals(cat, fu, 0.8 * s, rust_depth_factor(file, ctx))
 }
 
-/// Body weights are a strict refinement of the lede: body rarely adds
-/// catastrophic info beyond what the lede already covered (so halve
-/// catastrophic), follow-up stays close to the lede's value because
-/// `# Examples` does save tool calls (0.55 vs lede 0.6), and ztu
-/// drops to 0.55 since example walls add only marginal understanding
-/// over the lede prose.
+/// Body weights are a strict refinement of the lede — body rarely
+/// adds catastrophic info, follow-up stays close (examples save tool
+/// calls), ztu drops since example walls add marginal understanding.
 fn pub_item_doc_body_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let s = effective_surface(surface, ctx, file).factor();
@@ -991,8 +966,7 @@ fn pub_item_doc_body_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx
     mix_signals(cat, fu, 0.55 * s, rust_depth_factor(file, ctx))
 }
 
-/// Combine a per-item local `ApiSurface` with the file's effective
-/// crate-visibility from `module_visibility`. `doc_hidden` passes through.
+/// Combine the per-item `ApiSurface` with the file's `module_visibility`.
 fn effective_surface(local: ApiSurface, ctx: &WalkCtx, file: &Path) -> ApiSurface {
     let visibility = match (local.visibility, module_visibility(ctx, file)) {
         (Visibility::Public, Visibility::Public) => Visibility::Public,
@@ -1024,24 +998,9 @@ fn macro_names_value(depth: usize) -> f64 {
     mix_signals(0.75, 0.6, 0.4, depth_factor(depth))
 }
 
-/// Per-macro signals. Three demotion axes stack multiplicatively:
-///
-/// - `__`-prefixed name → 0.4 axis (`pub(crate)` analog)
-/// - `#[doc(hidden)]` outer attribute → 0.4 axis (mirrors
-///   [`ApiSurface::factor`])
-/// - wrapper macro (body invokes another `#[macro_export]` sibling
-///   via `$crate::<name>!`) → 0.6 axis. The wrapper axis is what
-///   makes `log!` (root) outrank `error!`/`warn!`/etc. (which all
-///   delegate to `$crate::log!`); without it, smaller wrapper
-///   bodies win on cost concavity alone and the larger root never
-///   fits at the budget tail.
-///
-/// A doubly-internal macro (`__-prefixed` + `#[doc(hidden)]`) lands
-/// at axis = 0.16 — the same floor `ApiSurface::factor` produces for
-/// a `pub(crate) #[doc(hidden)]` PubItem. The previous aggregate
-/// collector excluded `__-prefixed` macros entirely; per-macro
-/// emission keeps them visible at low priority so the scheduler
-/// decides on budget.
+/// Per-macro signals. Demotion axes stack multiplicatively:
+/// `__`-prefixed name → 0.4, `#[doc(hidden)]` → 0.4, wrapper macro
+/// that delegates to a sibling `$crate::<name>!` → 0.6.
 fn macro_body_value(file: &Path, info: &MacroInfo, ctx: &WalkCtx) -> f64 {
     let underscore = if info.underscore_private { 0.4 } else { 1.0 };
     let doc_hidden = if info.doc_hidden { 0.4 } else { 1.0 };
