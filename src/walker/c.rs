@@ -274,12 +274,9 @@ fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
     ranges
 }
 
-/// 1-based line numbers of top-level `// <stem>.c` (or `/* <stem>.c */`)
-/// banner comments — the amalgamation-style section dividers chibicc.h
-/// uses to partition prototypes by their backing translation unit. Only
-/// `comment` children of the translation_unit root are scanned;
-/// comments nested inside decls or preproc blocks don't count, since
-/// the chunker partitions top-level decls.
+/// 1-based line numbers of top-level `// <stem>.c` banner comments
+/// — the amalgamation-style section dividers. Only top-level
+/// `comment` children are scanned.
 fn find_module_section_banner_lines(tree: &Tree, source: &str) -> Vec<usize> {
     let mut out = Vec::new();
     let mut cursor = tree.root_node().walk();
@@ -295,13 +292,8 @@ fn find_module_section_banner_lines(tree: &Tree, source: &str) -> Vec<usize> {
     out
 }
 
-/// True iff `text` (a comment node's source slice) is a module-section
-/// banner — `// <stem>.c` or `/* <stem>.c */` after trimming, where
-/// `<stem>` is an identifier-shaped C identifier (letters, digits,
-/// underscores). Tolerates surrounding whitespace and the chibicc
-/// triple-slash idiom (`// \n// foo.c \n//`) which tree-sitter-c
-/// surfaces as three sibling `comment` nodes — the middle one is the
-/// banner.
+/// True iff `text` is a module-section banner — `// <stem>.c` or
+/// `/* <stem>.c */` after trimming, with `<stem>` matching `[A-Za-z0-9_]+`.
 fn is_module_section_banner_comment(text: &str) -> bool {
     let body = if let Some(rest) = text.strip_prefix("//") {
         rest
@@ -810,27 +802,17 @@ const AGGREGATE_STRUCT_MIN_LINES: usize = 30;
 /// the struct each — the parent Decl is already cheap to schedule.
 const AGGREGATE_STRUCT_MIN_GROUPS: usize = 3;
 
-/// Minimum number of enumerators required for enum chunking. Below
-/// this the whole enum is small enough that splitting adds scheduling
-/// churn for no benefit (a 16-row enum already fits in a 3K budget as
-/// a single `Decl`). chibicc.h's `NodeKind` (49 enumerators) and
-/// `TypeKind` (16) anchor this threshold: NodeKind is the canonical
-/// chunk target; TypeKind stays whole.
+/// Minimum enumerators for enum chunking. Below this, the whole enum
+/// fits in budget as one `Decl` and splitting adds churn.
 const AGGREGATE_ENUM_CHUNK_MIN: usize = 32;
 
-/// Chunk size for big enum bodies. Roughly matches the inner-row
-/// granularity of NS atoms — a typical NS author rows like "ND_ADD
-/// through ND_SHR (arithmetic / bit ops)" cover 10–14 enumerators.
+/// Chunk size for big enum bodies — roughly the inner-row granularity
+/// NS authors use ("ND_ADD through ND_SHR" ~10-14 enumerators).
 const AGGREGATE_ENUM_CHUNK_SIZE: usize = 12;
 
-/// Locate the body node of a top-level aggregate decl. Handles:
-/// - bare `struct_specifier` / `union_specifier` / `enum_specifier`,
-/// - `declaration` whose type_specifier is one of the above,
-/// - `type_definition` (`typedef struct { … } X;`).
-///
-/// Returns the inner `field_declaration_list` (struct/union) or
-/// `enumerator_list` (enum); `None` for forward declarations and
-/// any decl shape without an inner body.
+/// Locate the body node of a top-level aggregate decl: `struct`/`union`/
+/// `enum` specifier, `declaration` over one of those, or `typedef
+/// struct { … } X`. Returns the inner field/enumerator list.
 fn find_aggregate_body(node: Node) -> Option<Node> {
     fn spec_body(spec: Node) -> Option<Node> {
         match spec.kind() {
@@ -1037,20 +1019,9 @@ fn is_header_file(path: &Path) -> bool {
     lower.ends_with(".h") || lower.ends_with(".h.tmpl")
 }
 
-/// Multiplier applied to header-file batches that an autotools
-/// `Makefile.am` *explicitly* marks as internal (a public set exists,
-/// but the header isn't in it). Public headers and headers in projects
-/// without an `include_HEADERS` declaration are unaffected. Gentle
-/// enough to keep internal headers schedulable at deeper budgets while
-/// letting the public surface win the early-budget race against the
-/// dozen-odd implementation headers an autotools library typically
-/// ships alongside its `.c` files.
+/// Damp internal headers explicitly marked non-public by `Makefile.am`.
 const INTERNAL_HEADER_FACTOR: f64 = 0.4;
 
-/// `INTERNAL_HEADER_FACTOR` when `file` is a `.h` known-internal under
-/// the seed root's autotools manifest, `1.0` otherwise (including `.c`
-/// files, projects without a public-header manifest, and the public
-/// headers themselves).
 fn explicit_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if !is_header_file(file) {
         return 1.0;
@@ -1061,22 +1032,13 @@ fn explicit_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-/// Catastrophic-axis multiplier for header (boost) vs `.c` (demote).
-/// Headers carry the public API; `.c` content is implementation detail
-/// that an agent reading a C library usually wants in less depth.
-/// Calibrated against the krep / sds / bareiron divergence reports —
-/// the ratio is wide because without it the walker spends most of its
-/// budget on per-function bodies in `.c` files and displaces README
-/// content that the NSes consistently rank as tier 1.
+/// Catastrophic-axis multiplier: headers carry the public API, `.c`
+/// content is implementation detail.
 fn header_cat_factor(file: &Path) -> f64 {
     if is_header_file(file) { 1.15 } else { 0.55 }
 }
 
-/// Follow-up axis multiplier. Headers don't get a boost on follow-up
-/// (their value is "what's the API", not "what does it do") — the boost
-/// is catastrophic-axis-only — but `.c` content is still demoted, so an
-/// agent that already saw the names surface doesn't burn budget on
-/// implementation details.
+/// Follow-up axis: headers stay neutral, `.c` content stays demoted.
 fn body_fu_factor(file: &Path) -> f64 {
     if is_header_file(file) { 1.0 } else { 0.55 }
 }
@@ -1145,24 +1107,14 @@ fn header_banner_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 /// Per-conditional-`#include` value increment for an umbrella header's
-/// feature-gated include map. The Includes batch grows roughly
-/// linearly in cost with directive count when it captures a class /
-/// platform include map (tinyusb's `tusb.h`: each `#if CFG_TUH_*`
-/// arm is ~3 lines around one `#include`), so value must scale
-/// similarly to stay competitive under the scheduler's
-/// `value / cost^0.35` ranking — otherwise the bigger batch slips
-/// past 3K and the NS-anchored "what classes/modules ship" map never
-/// lands in early budget. Gated on conditional content so plain
-/// stdlib include lists (chibicc.h-style 18 stdlib lines) don't get
-/// promoted ahead of higher-value surfaces.
+/// feature-gated include map — scales the Includes batch with its
+/// directive count so a class/platform include map stays competitive.
+/// Gated on conditional content so plain stdlib include lists don't
+/// get promoted.
 const HUB_INCLUDE_VALUE_PER_DIRECTIVE: f64 = 80.0;
 
-/// True iff `file` sits where a project's canonical entry header
-/// would: directly at the repo root, or directly under `src/`. Used
-/// to gate the hub-header boost so platform-specific Platform.h-style
-/// files deeper in the tree (htop's `solaris/Platform.h`,
-/// `freebsd/Platform.h`) don't trigger it — those have comparable
-/// include counts but aren't the project's umbrella header.
+/// True iff `file` sits where a project's canonical entry header would:
+/// directly at the repo root, or directly under `src/`.
 fn is_at_canonical_entry_location(file: &Path, ctx: &WalkCtx) -> bool {
     match ctx.depth_from_root(file) {
         1 => true,
@@ -1345,16 +1297,9 @@ fn header_banner_end_row(tree: &Tree) -> Option<usize> {
     end
 }
 
-/// Collect the file's include-map lines along with a count of
-/// conditional `#include` directives folded into the batch — the
-/// signal a hub header needs the value boost. The line set captures
-/// unconditional `#include`s plus any top-level conditional block
-/// whose body is exclusively directive content and contains an
-/// `#include` (the feature-gated include-map idiom). The count covers
-/// `#include`s nested inside those captured conditional blocks; plain
-/// stdlib include lists (chibicc.h-style 18-deep `#include <stdarg.h>`
-/// runs) report zero, so the hub boost only fires when the file
-/// actually carries a conditional/include-map shape.
+/// Collect include-map lines plus the count of conditional `#include`
+/// directives folded into the batch — the latter is the signal that
+/// gates the hub-header boost.
 fn collect_includes(tree: &Tree, source: &str) -> (FileLines, usize) {
     let mut lines = Vec::new();
     let mut conditional_include_count = 0;
