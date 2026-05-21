@@ -25,9 +25,7 @@ pub fn seed(ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         .collect()
 }
 
-/// Subdirectory listings for the dir whose listing was just scheduled.
-/// File-based batches are emitted by per-language walkers; the FS walker
-/// only owns directory recursion.
+/// Subdirectory listings for the just-scheduled dir's listing.
 pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let children = list_dir(dir);
     let mut out = Vec::new();
@@ -44,16 +42,12 @@ pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
 // ---- additional helpers ----
 
-/// Enumerate the files under `dir` (non-recursive) matching an extension.
-/// Returns absolute paths. Used by per-language walkers to build cross-file
-/// batch scopes without opening any file.
+/// Files in `dir` (non-recursive) whose extension matches.
 pub fn files_with_extension(dir: &Path, ext: &str) -> Vec<PathBuf> {
     files_with_any_extension(dir, &[ext])
 }
 
-/// Like [`files_with_extension`] but accepts any of several extensions in a
-/// single `read_dir` pass — convenient for walkers that handle paired
-/// extensions (e.g. `.ts` + `.tsx`).
+/// Files in `dir` matching any of `exts`, in one `read_dir` pass.
 pub fn files_with_any_extension(dir: &Path, exts: &[&str]) -> Vec<PathBuf> {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return Vec::new();
@@ -75,8 +69,7 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str]) -> Vec<PathBuf> {
     out
 }
 
-/// Recursively walk `dir` for files whose extension matches (case-insensitive).
-/// Used for cross-file batches that span subdirectories (`src/kv/mod.rs` etc).
+/// Recursively walk `dir` for files with `ext` (case-insensitive).
 pub fn files_with_extension_recursive(dir: &Path, ext: &str) -> Vec<PathBuf> {
     let mut out = Vec::new();
     walk_files_recursive(dir, ext, &mut out);
@@ -204,12 +197,8 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     mix_signals(cat, fu, ztu, depth) * small_listing_factor
 }
 
-/// Damp deeply-nested directory listings whose tiny entry count makes them
-/// redundant with their parent listing. A `crates/foo/` directory containing
-/// just `Cargo.toml` + `src/` adds nothing the parent `crates/` listing
-/// hasn't already named — at depth ≥ 2, it's bibliographic noise. The
-/// damp does not apply at the root or its direct children, where listings
-/// are the orientation surface.
+/// Damp deeply-nested tiny directory listings — they're redundant
+/// with the parent listing at depth ≥ 2.
 fn small_listing_decay(child_count: usize, depth: usize) -> f64 {
     if depth < 2 {
         return 1.0;
@@ -238,14 +227,8 @@ pub(crate) fn is_source_dir(dir: &Path) -> bool {
         .is_some_and(|name| matches!(name, "src" | "lib"))
 }
 
-/// The Go module convention for primary library code: a `pkg/` directory
-/// sitting next to a `go.mod`. Equivalent in role to `lib/`/`src/` in
-/// JS/TS — its listing is the API-surface entry, and its flat
-/// subpackages are the partition NS authors anchor on (act's
-/// `pkg/lookpath`, `pkg/runner`; helm's `pkg/action`, `pkg/cli`, etc.).
-/// Gated on the parent `go.mod` to keep the lift Go-specific — a
-/// directory literally named `pkg` in a non-Go project has no
-/// equivalent convention.
+/// `pkg/` directory next to a `go.mod` — the Go convention for
+/// primary library code. Equivalent to `lib/`/`src/` in JS/TS.
 fn is_go_pkg_wrapper(dir: &Path) -> bool {
     dir.file_name()
         .and_then(|n| n.to_str())
@@ -260,19 +243,9 @@ fn has_module_entrypoint(dir: &Path) -> bool {
         .any(|name| dir.join(name).is_file())
 }
 
-/// Go-specific module-source detection. A directory is a Go subpackage
-/// when it contains multiple non-test `.go` files (the language rule
-/// says any `.go` file declares a package, but small helper dirs are
-/// usually plumbing rather than an API-surface partition; the file-
-/// count threshold is calibrated against the divergence corpus). The
-/// module-tier promotion is restricted to **root-level** subpackages
-/// (the dir's parent contains a `go.mod`) and subpackages directly
-/// under a root-level `pkg/` wrapper (act's `pkg/lookpath`, helm's
-/// `pkg/action`): NS authors anchor on these as the package's
-/// API-surface partition (gin's `binding`/`render`, lo's `it`,
-/// beszel's `agent`), on par with Rust's `mod.rs`-bearing subdirs.
-/// Deeper Go subdirs and small helper dirs shouldn't crowd the early
-/// budget — the parent listing already names them.
+/// Go module-source detection — a dir with multiple non-test `.go`
+/// files, restricted to root-level subpackages or those directly
+/// under a root-level `pkg/` wrapper.
 fn is_go_module_subpackage(dir: &Path) -> bool {
     const MIN_GO_FILES: usize = 5;
     // Either the parent has a go.mod (subpackage of an outer Go module —
@@ -388,19 +361,9 @@ fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     ctx.fs_state().source_inventory_count(dir, MIN_SOURCE_FILES) >= MIN_SOURCE_FILES
 }
 
-/// True when `dir` has an ancestor whose basename is a recognized
-/// source directory (`src` / `lib`) sitting directly under the seed
-/// root. Used to promote flat source partitions (no entrypoint, no
-/// sibling module) into the inventory tier when their listing is
-/// what names the package's API.
-///
-/// The shallowness gate matters: in a single-package layout (`./lib/…`,
-/// `./src/…`), every descendant is part of the one declared API
-/// partition the parent listing has already named, and inventory
-/// promotion surfaces the leaf partitions that lack their own anchor.
-/// In multi-package layouts (`./crate-a/src/…`, deep CUDA shims) the
-/// outer crate / shim already gates its own contents — promoting
-/// internal leaves crowds higher-priority orientation.
+/// True when `dir` lies under a root-level `src`/`lib`/`pkg/` dir.
+/// Promotes flat source partitions into the inventory tier; the
+/// shallowness gate avoids crowding in multi-package layouts.
 fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
     let root = ctx.root();
     let mut parent = dir.parent();
@@ -459,18 +422,14 @@ fn is_source_inventory_file(path: &Path) -> bool {
 }
 
 fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 {
-    // Supporting inventories are useful orientation even below real source
-    // content; keep the discount, but not the full 0.2 suppression.
-    // Clamp at depth 2 so nested examples/docs don't behave like root
-    // entrypoints, but also don't disappear solely because of layout depth.
+    // Clamp depth at 2 so nested examples/docs neither disappear nor
+    // act like entrypoints; floor non-essential at 0.5.
     let depth = ctx.depth_from_root(dir).min(2);
     crate::value::depth_factor(depth) * non_essential.max(0.5)
 }
 
-/// Directories the walker never recurses into. Matches common
-/// heavy/generated trees. Note: these directories still appear in
-/// listings (via `fs_util::list_dir`); this only affects walker
-/// traversal and per-language file enumeration.
+/// Directories the walker never recurses into — heavy/generated trees.
+/// They still appear in listings; only walker traversal is affected.
 pub(crate) fn should_skip_dir(name: &str) -> bool {
     matches!(
         name,
