@@ -36,21 +36,17 @@ pub mod toml;
 pub mod typescript;
 pub mod yaml;
 
-/// Walker contract. The associated `Key` type is walker-private: scheduler +
-/// renderer never name it, and adding a new walker doesn't change
-/// scheduler/renderer code.
+/// Walker contract — `Key` is walker-private so the scheduler/render
+/// code stays generic over walkers.
 pub trait Walker {
     type Key: WalkerKey;
 
-    /// Initial batches emitted before any scheduling decision. Typically
-    /// the root filesystem listing.
+    /// Initial batches before any scheduling decision (typically the
+    /// root FS listing).
     fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<Self::Key>>;
 
     /// Called when a batch is scheduled — returns newly-discovered
-    /// batches. `scheduled` is the key just moved into the tree; the
-    /// walker uses it to decide what to propose next (e.g. once a
-    /// directory listing is scheduled, language walkers emit per-file
-    /// batches for files in that dir).
+    /// batches.
     fn expand(&mut self, scheduled: &Self::Key, ctx: &WalkCtx) -> Vec<Batch<Self::Key>>;
 }
 
@@ -95,24 +91,13 @@ pub struct WalkCtx {
     source_cache: SourceCache,
     /// Tree-sitter parse results, keyed by path.
     tree_cache: RefCell<HashMap<PathBuf, Arc<Tree>>>,
-    /// Per-run state owned by `walker::rust` — module visibility,
-    /// workspace membership, exported-macro names per dir.
     rust_state: rust::RustState,
-    /// Per-run state owned by `walker::fs` — cached filesystem-shape probes.
     fs_state: fs::FsState,
-    /// Per-run state owned by `walker::json` — npm/yarn/pnpm
-    /// workspace-member resolution.
     json_state: json::JsonState,
-    /// Per-run state owned by `walker::typescript` — project's public
-    /// surface (entrypoint-reachable TS/JS files).
     typescript_state: typescript::TypescriptState,
-    /// Per-run state owned by `walker::c` — autotools `include_HEADERS`
-    /// declarations marking public-API headers vs internal ones.
     c_state: c::CState,
-    /// Files explicitly hyperlinked from the root README. Resolved lazily
-    /// on first access by scanning the root README for relative path links
-    /// to source files. Used to opt examples/ files mentioned in the
-    /// README out of the generic non-essential demotion.
+    /// Files hyperlinked from the root README — exempts them from the
+    /// `examples/`-style non-essential demotion.
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
 }
 
@@ -143,21 +128,16 @@ impl WalkCtx {
         &self.source_cache
     }
 
-    /// Depth of `path` relative to the seed root (root itself = 0). Returns
-    /// 0 for paths not under root — a walker bug, but don't panic mid-run.
+    /// Depth of `path` relative to the seed root (root itself = 0).
     pub fn depth_from_root(&self, path: &Path) -> usize {
         path.strip_prefix(&self.root)
             .map(|p| p.components().count())
             .unwrap_or(0)
     }
 
-    /// Path-aware non-essential discount, scoped to this run's root so
-    /// the outer test/tooling dirs of whoever invoked precis don't poison
-    /// every fixture path. Files explicitly hyperlinked from the root
-    /// README bypass the discount when their only demotion reason is the
-    /// `examples/`-style component classifier (other discount classes —
-    /// auto-injected docs, peripheral docs, proc-macro crates, locale
-    /// suffixes — still apply).
+    /// Non-essential discount, scoped to this run's root. README-cited
+    /// files skip the `examples/`-style classifier — other discount
+    /// classes still apply.
     pub fn non_essential_factor(&self, path: &Path) -> f64 {
         let base = crate::value::non_essential_factor(path, &self.root);
         if base < 1.0 && self.is_readme_cited(path) {
@@ -167,10 +147,8 @@ impl WalkCtx {
         }
     }
 
-    /// True iff `path` is hyperlinked from the seed root's README, OR if
-    /// `path` is a directory containing a hyperlinked file. The directory
-    /// case lets the FS walker schedule the parent dir listing earlier so
-    /// per-language walkers actually get to emit the cited file's batches.
+    /// True iff `path` is README-cited, or a directory containing a
+    /// README-cited file.
     pub fn is_readme_cited(&self, path: &Path) -> bool {
         let cited = self
             .readme_cited_paths
@@ -197,15 +175,12 @@ impl WalkCtx {
         crate::value::is_auto_injected_doc_file(path, &self.root)
     }
 
-    /// Read `path` into memory, caching the result. Returns an `Arc<str>`
-    /// so callers don't duplicate the string.
+    /// Read `path` into memory, caching the result.
     pub fn read_source(&self, path: &Path) -> Option<Arc<str>> {
         self.source_cache.get(path)
     }
 
-    /// Parse `path` with the given tree-sitter grammar, caching the result.
-    /// The grammar is only instantiated on the first parse of a file; the
-    /// parsed tree is shared across subsequent materialize calls.
+    /// Parse `path` with `language`, caching the result.
     pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<str>, Arc<Tree>)> {
         #[cfg(feature = "timing")]
         let _start = std::time::Instant::now();
@@ -245,31 +220,17 @@ impl WalkCtx {
         &self.c_state
     }
 
-    /// `true` iff `file` is a `Cargo.toml` declared (or auto-promoted) as
-    /// a workspace member by the seed-root `Cargo.toml`. The TOML walker
-    /// uses this to dampen `[package]` identity weighting on sub-crate
-    /// manifests (where most identity is inherited from the workspace
-    /// root). Lives on `RustState` because workspace resolution is a
-    /// Cargo concept and the cache should die with the run.
+    /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.
     pub fn is_workspace_member(&self, file: &Path) -> bool {
         self.rust_state.is_workspace_member(file, &self.root)
     }
 
-    /// `true` iff `file` is a `package.json` declared as a member of the
-    /// seed-root JS/TS workspace (npm/yarn `workspaces` field or
-    /// `pnpm-workspace.yaml` `packages:` list). Mirrors
-    /// [`Self::is_workspace_member`] for the JSON walker, which uses it to
-    /// damp `Identity` on nested package manifests where most metadata
-    /// is inherited from / orchestrated by the workspace root.
+    /// `true` iff `file` is a JS/TS workspace-member `package.json`.
     pub fn is_js_workspace_member(&self, file: &Path) -> bool {
         self.json_state.is_workspace_member(file, &self.root)
     }
 
-    /// `true` iff `file` is in the TS/JS public surface — an entrypoint
-    /// (`index.{ts,tsx,js,mjs,cjs}` / `main.*` / `mod.*`) or
-    /// transitively re-exported by one. The TypeScript walker uses this
-    /// to demote items in non-surface files, mirroring a public-vs-
-    /// private visibility distinction.
+    /// `true` iff `file` is in the TS/JS public surface.
     pub fn is_ts_public_surface(&self, file: &Path) -> bool {
         self.typescript_state.is_in_public_surface(file, self)
     }
