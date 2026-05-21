@@ -27,9 +27,8 @@ pub struct SimulatedBatch {
     pub violations: Vec<Violation>,
 }
 
-/// Per-NS-batch violation kinds. The validator emits them as it finds them;
-/// each [`SimulatedBatch`] carries the violations that apply to that batch.
-/// Keep new variants in sync with `validate-ns`'s formatter.
+/// Per-NS-batch violation kinds. Keep new variants in sync with
+/// `validate-ns`'s formatter.
 #[derive(Debug, Clone)]
 pub enum Violation {
     /// Two batches share the same NS id. Reported on the duplicate
@@ -66,10 +65,8 @@ pub enum Violation {
         line: usize,
         pattern: String,
     },
-    /// Truncated render's pattern matches enough of the line that the
-    /// rendered `<match>…` is no shorter (in tokens) than the full line —
-    /// truncation saves nothing. Pattern should drop the meaningful tail;
-    /// if there is no meaningful tail, use `Render::Full` instead.
+    /// Truncated render's `<match>…` is no shorter (in tokens) than
+    /// the full line — pattern should drop more, or use `Render::Full`.
     TruncationSavesNothing {
         path: PathBuf,
         line: usize,
@@ -77,11 +74,7 @@ pub enum Violation {
         full_tokens: usize,
         truncated_tokens: usize,
     },
-    /// `Render::Ellipsis` span where `start != end`. Renders as one `…`
-    /// per covered line — visually indistinguishable from one `…`
-    /// (Ellipsis lines emit no line number) but costing N× the tokens.
-    /// Almost always an authoring slip; the schema doc on
-    /// `Render::Ellipsis` calls this single-line-only.
+    /// Multi-line `Render::Ellipsis` span — Ellipsis is single-line-only.
     EllipsisMultiLine {
         path: PathBuf,
         start: usize,
@@ -95,21 +88,15 @@ pub enum Violation {
         line: usize,
         existing_batch: String,
     },
-    /// `cost > ENV_BASE + ENV_COEF · cumulative_before` — the growth
-    /// envelope that replaces the old 2× rule. See
-    /// `docs/design-notes.md` for rationale.
+    /// `cost > ENV_BASE + ENV_COEF · cumulative_before`.
     GrowthEnvelope {
         cost: usize,
         cumulative_before: usize,
         max_allowed: usize,
     },
-    /// Two spans in the same batch cover the same `(path, line)`. Batch
-    /// spans must be disjoint; cross-batch overrides go through
-    /// predecessor edges instead.
+    /// Two spans in the same batch cover the same `(path, line)`.
     OverlappingSpans { path: PathBuf, line: usize },
-    /// Two batches list the same `(parent, entry)` FS atom. Directory
-    /// listings are boolean atoms; split rows should partition entries
-    /// rather than repeat the same parent/name pair.
+    /// Two batches list the same `(parent, entry)` FS atom.
     OverlappingFsEntry {
         parent: PathBuf,
         entry: String,
@@ -139,9 +126,8 @@ pub fn envelope_max(cumulative_before: usize) -> usize {
     ENV_BASE + cumulative_before * ENV_COEF_NUMERATOR / ENV_COEF_DENOMINATOR
 }
 
-/// Simulate applying an NS's batches to a fresh `RenderedTree` in rank
-/// order. Returns per-batch cost + collected violations. Does not read the
-/// walker — NS content resolves via [`resolve_content`].
+/// Apply an NS's batches to a fresh `RenderedTree` in rank order.
+/// Returns per-batch cost + collected violations.
 pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationReport> {
     let source_cache = SourceCache::new();
     let mut tree = RenderedTree::new(fixture_root.to_path_buf(), source_cache.clone());
@@ -284,9 +270,8 @@ fn is_render_blocking(v: &Violation) -> bool {
     )
 }
 
-/// Record for an NS batch whose cost/apply was skipped — either because
-/// span validation flagged it (render would panic) or content resolution
-/// failed. Cumulative-tokens carries forward unchanged.
+/// Record for an NS batch whose cost/apply was skipped — span
+/// validation or content resolution failed.
 fn skipped_batch(
     ns_batch: &crate::north_star::NsBatch,
     cumulative: usize,
