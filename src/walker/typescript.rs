@@ -989,11 +989,8 @@ fn collect_local_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
     out
 }
 
-/// Local identifier names that appear on the right-hand side of top-level
-/// CommonJS export assignments (`exports.Foo = Foo`,
-/// `module.exports.Foo = Foo`, or `module.exports = { Foo }`). These mirror
-/// ESM value re-exports for JS packages that keep declarations local and
-/// publish them at the bottom of the module.
+/// Local identifier names on the RHS of top-level CommonJS export
+/// assignments (`exports.Foo = Foo` / `module.exports = { Foo }`).
 fn collect_commonjs_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -1034,16 +1031,10 @@ fn collect_object_export_names(node: Node, source: &str, out: &mut HashSet<Strin
     }
 }
 
-/// Identifier names bound to `module.exports` at file scope. Captures the
-/// CommonJS / prototype-style "receiver" idiom — `var app = exports =
-/// module.exports = {};`, `module.exports = req;`, or `var req = …;
-/// module.exports = req;`. Subsequent `app.X = function …` /
-/// `req.X = function …` / `Application.prototype.X = function …`
-/// statements are then synthesized as exported methods so NS authors who
-/// anchor on "Application prototype — method names" find the surface.
-///
-/// Empty when no such binding exists. Both the receiver name and any
-/// constructor whose `.prototype` is the receiver value are included.
+/// Identifier names bound to `module.exports` at file scope —
+/// receivers whose `.X = function …` assignments become synthesized
+/// exported methods. Includes constructors whose `.prototype` is the
+/// receiver value.
 fn collect_module_exports_receivers(tree: &Tree, source: &str) -> HashSet<String> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -1084,12 +1075,9 @@ fn collect_module_exports_receivers(tree: &Tree, source: &str) -> HashSet<String
     receivers
 }
 
-/// Extract receiver-name additions from a top-level
-/// `assignment_expression`. A right-deep chain like `X = exports =
-/// module.exports = {}` lets every left identifier whose right-tail
-/// reaches `module.exports` be a receiver — same as `module.exports = X`
-/// (then `X` is the receiver) or `module.exports.X = …` (no receiver
-/// added, the existing CJS path handles that).
+/// Extract receivers from a top-level `assignment_expression`. A
+/// chain like `X = exports = module.exports = {}` admits every LHS
+/// whose right-tail reaches `module.exports`.
 fn collect_module_exports_receivers_from_assignment(
     assignment: Node,
     source: &str,
@@ -1118,9 +1106,7 @@ fn collect_module_exports_receivers_from_assignment(
     }
 }
 
-/// True if `node` is `module.exports` or an assignment chain whose right
-/// recursively contains `module.exports` (the LHS of an inner
-/// assignment).
+/// True if `node` is `module.exports` or transitively assigns to it.
 fn chain_contains_module_exports(node: Node, source: &str) -> bool {
     if is_module_exports_member(node, source) {
         return true;
@@ -1134,12 +1120,8 @@ fn chain_contains_module_exports(node: Node, source: &str) -> bool {
     is_module_exports_member(left, source) || chain_contains_module_exports(right, source)
 }
 
-/// One top-level `Receiver.member = function …` (or `.prototype.member =
-/// function …`) assignment whose receiver is a tracked
-/// `module.exports`-aliased name. The captured `anchor` is the wrapping
-/// `expression_statement`; `fn_expr` is the function-valued RHS used as
-/// the synthesized declaration node (so `decl_surface_lines` /
-/// `body_parts` see the function shape directly).
+/// One `Receiver.member = function …` (or `.prototype.member = …`)
+/// assignment on a tracked `module.exports`-aliased receiver.
 #[derive(Debug, Clone)]
 struct PrototypeMethodAssignment<'a> {
     start_line: usize,
@@ -1147,12 +1129,8 @@ struct PrototypeMethodAssignment<'a> {
     fn_expr: Node<'a>,
 }
 
-/// Scan top-level statements for prototype-style method assignments on
-/// any receiver in `receivers`. Both `receiver.member = function …` and
-/// `receiver.prototype.member = function …` count. Chained assignments
-/// (`receiver.get = receiver.header = function …`) surface once at the
-/// statement's start line — the shared signature line is what NS authors
-/// cite for both names.
+/// Top-level prototype-style method assignments on any receiver in
+/// `receivers`. Chained assignments surface once at the statement.
 fn collect_prototype_method_assignments<'a>(
     tree: &'a Tree,
     source: &str,
