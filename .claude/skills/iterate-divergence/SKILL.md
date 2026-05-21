@@ -139,7 +139,7 @@ Success criteria, in order of importance:
    worth the code added. A code-removing or heuristic-simplifying
    change at flat metric is a ship.
 
-After non-trivial changes, run `/simplify`.
+After non-trivial changes, run `/code-review`.
 
 ## 5. Commit each coherent improvement
 
