@@ -7,40 +7,29 @@ use std::path::PathBuf;
 
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-/// A batch's content: a set of filesystem listings, or a set of source
-/// line ranges. Tagged `kind` in TOML.
+/// A batch's content — FS listings or source line ranges. `kind` in TOML.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "lowercase")]
 pub enum BatchContent {
-    /// Directory listings. Each group names a parent and the entries to
-    /// show underneath it.
+    /// Directory listings.
     Fs { groups: Vec<FsGroup> },
-    /// Source line ranges with render specs. Spans within one batch
-    /// must be disjoint on `(path, line)`; cross-batch overrides go
-    /// through predecessor edges instead.
+    /// Source line ranges. Spans within a batch are disjoint on
+    /// `(path, line)`; cross-batch overrides go through predecessors.
     Lines { spans: Vec<Span> },
 }
 
-/// One directory listing: a parent directory and the entries to show
-/// underneath it.
+/// One directory listing — parent directory + entries to show.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FsGroup {
-    /// The parent directory.
     pub parent: PathBuf,
-    /// Which children under `parent` to include.
     pub entries: FsEntries,
 }
 
-/// Selection of children under an [`FsGroup`]'s parent.
-///
-/// - `All` — every immediate child of `parent`.
-/// - `Listed(names)` — the named children only. Each entry is a path
-///   component relative to `parent` (typically just a filename).
+/// Children under an [`FsGroup`]'s parent.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum FsEntries {
-    /// Pre-resolution sentinel: every immediate child of `parent`.
-    /// Expanded to `Listed` at NS load time (see `ns_loader`); walker
-    /// output never carries this variant.
+    /// Sentinel for "every immediate child" — `ns_loader` expands to
+    /// `Listed`; walker output never carries `All`.
     All,
     Listed(Vec<PathBuf>),
 }
