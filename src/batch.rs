@@ -262,28 +262,17 @@ pub enum CKey {
     HeaderBanner { file: PathBuf },
     /// `#include` directives.
     Includes { file: PathBuf },
-    /// Surface listing of every top-level public declaration's first
-    /// line — catastrophic-omission hedge. Chunked in
-    /// `NAMES_SURFACE_CHUNK_SIZE` groups so a large surface doesn't
-    /// lose the value/cost race against per-decl batches.
+    /// Names-surface chunk for top-level public decls.
     DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level public declaration. Whole statement for typedefs /
-    /// prototypes / `extern` / `#define`; whole specifier for
-    /// struct/enum/union; signature with body marker for fn defs.
-    /// Keyed by start line.
+    /// One top-level public declaration (sig with body marker for fn).
     Decl { file: PathBuf, start_line: usize },
     /// Body interior of a fn definition. Predecessor: matching `Decl`.
     DeclBody { file: PathBuf, start_line: usize },
-    /// Doc comment(s) immediately above a declaration. Predecessor:
-    /// matching `Decl`.
+    /// Doc comment(s) above a decl. Predecessor: matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
     /// Blank-line-separated field group inside a big struct/union body,
-    /// or a sized chunk of enumerators inside a big enum body. Emitted
-    /// only when a struct/union has ≥3 blank-line groups, or an enum
-    /// has ≥`AGGREGATE_ENUM_CHUNK_MIN` enumerators. Predecessor:
-    /// matching `Decl` — line overlap with the Decl is allowed as
-    /// ancestor overlap; the Decl's span is reduced to the type header
-    /// + closer.
+    /// or a sized chunk of a big enum body. Predecessor: `Decl` (the
+    /// Decl span is trimmed to header + closer).
     AggregateMemberGroup {
         file: PathBuf,
         start_line: usize,
@@ -291,93 +280,59 @@ pub enum CKey {
     },
 }
 
-/// Go batches. Emits **all** top-level decls regardless of export
-/// status — NS authors anchor on intentionally-unexported types; a
-/// `visibility_factor` discount ranks exported names higher rather than
-/// hard-filtering. Grouped decls (`type ( … )`, `var ( … )`, `const ( … )`)
-/// stay as one batch so iota / inherited-type / shared-comment semantics
-/// survive. `*_test.go` files emit only `TestNames` plus a non-essential
-/// discount on per-decl bodies.
+/// Go batches. Emits all top-level decls regardless of export status
+/// — visibility is a value discount, not a filter. Grouped decls
+/// stay as one batch so iota / shared-comment semantics survive.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum GoKey {
-    /// `// Package foo …` doc comment immediately above `package`.
-    /// Emitted separately from `PackageImports` so a long package
-    /// comment can fire without dragging the import block.
+    /// `// Package foo …` doc comment above `package`.
     PackageDocLede { file: PathBuf },
     /// Package clause + import block at the top of a `.go` file.
     PackageImports { file: PathBuf },
-    /// Surface listing of every top-level decl's first line.
-    /// Catastrophic-omission hedge. Visibility-blind. Chunked at
-    /// `GO_DECL_NAMES_CHUNK_SIZE` only above
-    /// `GO_DECL_NAMES_CHUNK_THRESHOLD` decls.
+    /// Names-surface chunk for top-level decls (visibility-blind).
     DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level declaration. Signature with body marker for
-    /// fn/method defs; whole decl (including grouped specs) for
-    /// type/var/const. Keyed by start line.
+    /// One top-level declaration (sig with body marker for fn/method).
     Decl { file: PathBuf, start_line: usize },
-    /// Body interior of a fn or method definition. Predecessor:
-    /// matching `Decl`.
+    /// Body interior of a fn/method def. Predecessor: matching `Decl`.
     DeclBody { file: PathBuf, start_line: usize },
-    /// Run of `//` (or `/* */`) comments above a decl with no
-    /// blank-line gap. Predecessor: matching `Decl`.
+    /// `//`/`/* */` run above a decl. Predecessor: matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
-    /// Blank-line-separated field-group within a big
-    /// `type X struct { … }`. Emitted only for type-decls whose struct
-    /// body has ≥3 blank-line groups and ≥60 body lines. Predecessor:
-    /// matching `Decl` — line overlap allowed as ancestor overlap; the
-    /// Decl's span is reduced to the struct header + closer.
+    /// Blank-line-separated field group in a big struct. Predecessor:
+    /// `Decl` (Decl span is trimmed to header + closer).
     StructFieldGroup {
         file: PathBuf,
         start_line: usize,
         group_start_line: usize,
     },
-    /// Surface listing of every `Test*` / `Benchmark*` / `Example*`
-    /// fn's first line in a `_test.go` file.
+    /// Names surface for `Test*`/`Benchmark*`/`Example*` in `*_test.go`.
     TestNames { file: PathBuf },
-    /// Identity slice of a `go.mod` / `go.work`: `module` path, `go`
-    /// version floor, optional `toolchain` lines. Predecessor of
-    /// `GoMod` so the cheap identity slice can land without the whole
-    /// require block.
+    /// Identity slice of a `go.mod` / `go.work` — `module`, `go`,
+    /// `toolchain`. Predecessor of `GoMod`.
     GoModIdentity { file: PathBuf },
     /// Whole-file render of a `go.mod` / `go.work`. Line-capped.
     /// Predecessor: matching `GoModIdentity`.
     GoMod { file: PathBuf },
 }
 
-/// Python batches. Per-decl items at the top level and per-method
-/// inside top-level classes (methods are first-class scheduling units).
-///
-/// Decorated defs / classes use the `decorated_definition` wrapper as
-/// the unit, so `start_line` is the `@decorator` row and the span
-/// includes decorator lines.
-///
-/// Visibility: emits all top-level + class-body items; a
-/// `visibility_factor` ranks public-by-PEP-8 names above leading-`_`
-/// rather than hard-filtering (NSes anchor on intentionally-private
-/// names). `test_*.py` / `*_test.py` files emit only `TestNames` plus a
-/// non-essential discount on per-decl content.
+/// Python batches. All top-level + class-body items emit; visibility
+/// is a value discount, not a filter. Decorated defs use the
+/// `decorated_definition` wrapper as the unit (decorator rows included).
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PythonKey {
-    /// `import` / `from … import …` statements, optional module
-    /// docstring, `__all__`, and module-level dunder assignments.
+    /// `import` / `from … import …` + module docstring + `__all__` +
+    /// module-level dunder assignments.
     Imports { file: PathBuf },
     /// Chunked `Imports` for large `__init__.py` re-export walls.
     ImportChunk { file: PathBuf, chunk_index: usize },
-    /// Surface listing of every top-level class / def (sync or async) /
-    /// non-dunder simple-assignment first line.
+    /// Names-surface chunk for top-level class/def/non-dunder consts.
     DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level item. For class/def: header (+ decorators if any) +
-    /// up to two non-blank rows of the docstring's first paragraph
-    /// (PEP 257 summary line) so the per-decl batch carries the usual
-    /// NS anchor as one unit. For constant: the assignment line(s).
-    /// Keyed by start line (decorator row when decorated).
+    /// One top-level item — header + up to 2 docstring-summary rows
+    /// for class/def, or assignment line(s) for const.
     Decl { file: PathBuf, start_line: usize },
-    /// Docstring of a top-level def or class — the
-    /// `expression_statement(string)` at the start of its body, after
-    /// any leading comments. Predecessor: matching `Decl`.
+    /// Top-level def/class docstring. Predecessor: matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
-    /// Body slice of a top-level def, split by top-level statement;
-    /// skips the leading docstring. Predecessor: matching `Decl`.
+    /// Body slice of a top-level def (docstring excluded). Predecessor:
+    /// matching `Decl`.
     DeclBody {
         file: PathBuf,
         start_line: usize,
