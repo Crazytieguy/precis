@@ -145,10 +145,7 @@ fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchConte
     single_file_lines_content(file, &source, FileLines::new(lines))
 }
 
-/// Build `GoMod` content as a line set. Drops `// indirect` lines
-/// inside `require ( … )` blocks; keeps every directive (`module`,
-/// `go`, `toolchain`, `replace`, `exclude`, `retract`, `use`) and
-/// the structural `require (` / `)` delimiters.
+/// `GoMod` content — drops `// indirect` lines inside `require (…)`.
 fn build_gomod_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let total_lines = source.lines().count();
@@ -265,9 +262,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 chunk_index,
             })
             .collect();
-        // chunk_count == 1 means "don't chunk" — produce a single batch
-        // that covers all decls regardless of how many `chunks(N)` would
-        // yield. Otherwise `chunks(N)` lines up with the chunk count.
+        // chunk_count == 1: single batch covers all decls.
         let names_lines_by_chunk: Vec<FileLines> = if chunk_count == 1 {
             vec![collect_decl_names_from(&decls)]
         } else {
@@ -508,10 +503,7 @@ fn method_info(node: Node, source: &str) -> Option<DeclInfo> {
         decl_lines,
         name_lines: vec![start_line],
         body_rows: body_interior_rows(node),
-        // Method counts as exported only when both its name and the
-        // receiver type are exported. A lowercase method on an exported
-        // type stays package-private from the agent's "what's the
-        // public API" view.
+        // Exported only when both name and receiver type are exported.
         exported: is_exported(name) && receiver_type_exported(node, source),
         struct_field_groups: Vec::new(),
     })
@@ -542,8 +534,7 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
     push_rows(&mut decl_lines, start_row, end_row);
 
     let mut struct_field_groups = Vec::new();
-    // Only chunk single-spec struct decls: `type X struct { … }`.
-    // Multi-spec groups (`type ( … )`) keep the existing behaviour.
+    // Only chunk single-spec struct decls; multi-spec groups stay whole.
     if type_spec_count == 1
         && let Some(spec) = single_type_spec
         && let Some(struct_body) = find_struct_body(spec)
@@ -583,19 +574,13 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
     }
 }
 
-/// Minimum struct-body span (in source lines) eligible for
-/// field-group chunking. Below this, the unchunked struct already
-/// fits cheaply.
+/// Minimum struct-body span (lines) for field-group chunking.
 const STRUCT_FIELD_GROUP_MIN_LINES: usize = 60;
 
-/// Minimum blank-line-separated field groups required to chunk.
-/// Per-group fragmentation only pays off for structs with several
-/// distinct anchors.
+/// Minimum field-groups required for struct chunking.
 const STRUCT_FIELD_GROUP_MIN_GROUPS: usize = 3;
 
-/// Locate the inner `struct_type` node of a `type_spec` whose type is
-/// a struct. Walks named children; returns the struct_type node or
-/// None for non-struct types.
+/// `struct_type` node from a struct-typed `type_spec`.
 fn find_struct_body(spec: Node) -> Option<Node> {
     let ty = spec.child_by_field_name("type")?;
     if ty.kind() == "struct_type" {
@@ -605,10 +590,7 @@ fn find_struct_body(spec: Node) -> Option<Node> {
     }
 }
 
-/// Split a struct body into blank-line-separated field groups. Each
-/// group's `rows` covers the leading `//` doc comments + the field
-/// row(s) of every contiguous non-blank source line in the group.
-/// Wraps the shared [`collect_blank_line_groups`] helper.
+/// Blank-line-separated field groups for a Go struct body.
 fn collect_struct_field_groups(struct_body: Node, source: &str) -> Vec<StructFieldGroup> {
     collect_blank_line_groups(struct_body, source)
         .into_iter()
@@ -683,8 +665,7 @@ fn receiver_type_exported(method: Node, source: &str) -> bool {
     false
 }
 
-/// Walk a receiver / parameter type back to its root `type_identifier`.
-/// Strips `*T` and `T[U]` wrappers; gives up on anything more exotic.
+/// Root `type_identifier` of a type, stripping `*T`/`T[U]` wrappers.
 fn type_root_identifier<'a>(node: Node<'_>, source: &'a str) -> Option<&'a str> {
     match node.kind() {
         "type_identifier" => Some(&source[node.start_byte()..node.end_byte()]),
@@ -776,22 +757,9 @@ impl GoRole {
     }
 }
 
-/// Boost Go files that anchor the package's API surface. Either
-/// alone is sufficient:
-///
-/// - **Package-name match**: file stem == file's `package` clause
-///   (`tea.go` in `package tea`). Analogous to Rust's `lib.rs`/`main.rs`
-///   `entrypoint_boost`.
-/// - **`doc.go` convention**: pkg.go.dev surfaces it as the package
-///   landing page; boost cascades onto its lede / imports batches.
-/// - **Big-struct anchor**: an *exported* single-spec `type X struct
-///   { … }` eligible for field-group splitting. The exported +
-///   split-eligibility gate keeps the boost off private configuration
-///   blobs.
-///
-/// Restricted to root-level files (depth ≤ 1): in monorepos every
-/// subpackage would otherwise match the package-name rule and crowd
-/// the early budget with private-implementation content.
+/// 1.4× boost for files anchoring the package API surface —
+/// package-name match, `doc.go`, or an exported chunked struct.
+/// Root-level only.
 fn go_entry_factor_for(
     file: &Path,
     ctx: &WalkCtx,
