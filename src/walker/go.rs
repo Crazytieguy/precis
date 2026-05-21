@@ -113,11 +113,8 @@ fn expand_gomod(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     out
 }
 
-/// Build the identity-only content for `go.mod` / `go.work`: the
-/// `module`, `go`, and `toolchain` directive lines at the top of the
-/// file. Returns `None` if none of these are present. Emitted
-/// separately from the heavier require-block batch so the cheap
-/// identity slice can land first at small budgets.
+/// Identity slice of `go.mod` / `go.work` — `module`/`go`/`toolchain`
+/// directives only, before any block bodies.
 fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let mut lines = Vec::new();
@@ -370,17 +367,14 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
     out
 }
 
-/// Chunk size for Go declaration-name surfaces. Smaller than the
-/// universal `NAMES_SURFACE_CHUNK_SIZE` because Go method-declaration
-/// name rows render long (`func (c *Command) Foo(...)`), so a chunk
-/// must hold fewer names to fit at the 3K budget tier.
+/// Chunk size for Go decl-name surfaces. Smaller than Python/TS's 12
+/// because method-decl rows render long (`func (c *Command) Foo(...)`).
 const GO_DECL_NAMES_CHUNK_SIZE: usize = 8;
 
 const GO_DECL_NAMES_CHUNK_THRESHOLD: usize = 30;
 
-/// Co-gate: chunking also requires the file to be large enough that
-/// its full names surface plausibly won't fit at 3K. Smaller files
-/// regress when chunked because their full surface already fits.
+/// Co-gate — only chunk when the file's full names surface plausibly
+/// won't fit at 3K.
 const GO_DECL_NAMES_CHUNK_LINE_THRESHOLD: usize = 800;
 
 fn is_test_file(file: &Path) -> bool {
@@ -421,26 +415,19 @@ struct DeclInfo {
     kind: DeclKind,
     start_line: usize,
     decl_lines: Vec<usize>,
-    /// One entry per name the names surface should list. For a
-    /// single-spec decl, just `[start_line]`. For a grouped
-    /// `type/var/const ( … )` block, one entry per inner spec.
+    /// One entry per name on the names surface — one per inner spec
+    /// for grouped `type/var/const ( … )` blocks.
     name_lines: Vec<usize>,
     body_rows: Option<(usize, usize)>,
     exported: bool,
-    /// Blank-line-separated field groups inside a big `type X struct
-    /// { … }` body. When present, `decl_lines` covers only the type
-    /// header and the closing brace — body rows belong to the
-    /// emitted [`GoKey::StructFieldGroup`] batches instead. Empty
-    /// when the decl is not a big struct.
+    /// Blank-line-separated field groups inside a big struct body;
+    /// when present, `decl_lines` covers only header + closing brace.
     struct_field_groups: Vec<StructFieldGroup>,
 }
 
 #[derive(Debug, Clone)]
 struct StructFieldGroup {
-    /// 1-based start line of the first row in the group (including any
-    /// leading `//` doc comment).
     group_start_line: usize,
-    /// All 1-based row numbers covered by this group.
     rows: Vec<usize>,
 }
 
@@ -494,12 +481,8 @@ fn function_info(node: Node, source: &str, pkg: Option<&str>) -> Option<DeclInfo
     let mut decl_lines = Vec::new();
     push_rows(&mut decl_lines, node.start_position().row, sig_end);
     let start_line = node.start_position().row + 1;
-    // `func main` in `package main` is the binary's entry point. Go's
-    // case-based exported-name rule forces it to lowercase, but it's
-    // the most load-bearing function in any Go binary — orientation
-    // queries land here. Treat it as exported so its decl / body /
-    // doc batches rank with the same visibility weight as a real
-    // exported top-level function.
+    // Treat `func main` in `package main` as exported — it's the
+    // binary's entrypoint, the most load-bearing fn regardless of case.
     let exported = is_exported(name) || (name == "main" && pkg == Some("main"));
     Some(DeclInfo {
         kind: DeclKind::Func,
