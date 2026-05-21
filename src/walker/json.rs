@@ -266,9 +266,7 @@ fn is_package_json(name: &str) -> bool {
     name.eq_ignore_ascii_case("package.json")
 }
 
-/// Files that should never produce JSON batches: lockfiles, generated
-/// metadata, anything noisy enough that a full or partial render is
-/// almost always wasted budget.
+/// Files that never produce JSON batches — lockfiles and `.tsbuildinfo`.
 fn is_skipped_json(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
     matches!(lower.as_str(), "package-lock.json" | "npm-shrinkwrap.json")
@@ -374,11 +372,8 @@ fn secondary_package_json_factor(file: &Path) -> f64 {
     1.0
 }
 
-/// True iff any ancestor directory of `file` is named like a scaffold
-/// template stash: literal `templates` or a `template-*` directory.
-/// Matches vite's `packages/create-vite/template-vue/`,
-/// create-react-app-style `templates/cra-template-X/`, and similar
-/// `create-*` scaffold layouts.
+/// True iff `file` is under a `templates/` / `template-*` / `cra-template-*`
+/// ancestor — npm scaffold template content.
 fn is_scaffold_template_path(file: &Path) -> bool {
     file.ancestors().any(|anc| {
         anc.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
@@ -461,9 +456,7 @@ fn parse_json(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_json::LANGUAGE.into())
 }
 
-/// Top-level `pair` nodes inside the document's root object. Returns
-/// `(unquoted_key, start_line_1based, end_line_1based)` for each. If the
-/// document root isn't an object (rare but legal), returns empty.
+/// `(unquoted_key, start_1based, end_1based)` for each top-level pair.
 fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     let root = tree.root_node();
     let Some(object) = first_child_of_kind(root, "object") else {
@@ -504,25 +497,9 @@ fn unquote_string(node: Node, source: &str) -> String {
 
 // --- JS/TS workspace-member resolution ---
 
-/// Resolve the seed-root's declared JS/TS workspace members (npm/yarn
-/// `workspaces` field on the root `package.json`, plus pnpm's
-/// `pnpm-workspace.yaml`) and return their absolute `package.json`
-/// paths. The set is the union across both sources.
-///
-/// Honest scope (intentional false-negatives — a missed member just
-/// means we don't damp; we never damp a non-member):
-/// - Only trailing-`/*` globs are honored. Mid-name (`packages/foo-*`)
-///   and `?` patterns are not.
-/// - `pnpm-workspace.yaml` is read with a tiny hand-rolled scanner
-///   (top-level `packages:` list). If any entry begins with `!` —
-///   pnpm's negation syntax — we **opt the entire repo out of JS
-///   workspace damping** (return an empty set, regardless of any
-///   `package.json#workspaces` declaration). Pnpm's negation is the
-///   source of truth for which packages are excluded; expanding the
-///   non-negated globs while skipping the negation would silently
-///   reinstate excluded packages via the npm union path.
-/// - Path entries with `..` or absolute paths are skipped.
-/// - Returns empty set on any read/parse error.
+/// JS/TS workspace members — union of `package.json#workspaces` and
+/// `pnpm-workspace.yaml`'s `packages:` list. Only trailing-`/*` globs
+/// are honored. Any pnpm `!` negation opts the repo out entirely.
 pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     let Ok(canonical_root) = root.canonicalize() else {
         return HashSet::new();
@@ -546,16 +523,8 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     out
 }
 
-/// Read the npm/yarn `workspaces` field from `<root>/package.json`.
-/// Supports both array form (`"workspaces": ["packages/*"]`) and object
-/// form (`"workspaces": { "packages": [...] }`). Returns the list of
-/// raw entry strings; resolution is downstream.
-///
-/// Parses with the same `tree-sitter-json` grammar the rest of the
-/// walker uses. Reads the file directly rather than going through
-/// `WalkCtx` because the resolver runs at first-query time and
-/// shouldn't pollute the source/parse caches with the workspace root
-/// (which already has its own batches scheduled by then).
+/// Raw entries from the `workspaces` field on `<root>/package.json`.
+/// Supports both array and object (`{"packages": […]}`) forms.
 fn npm_workspaces_entries(root: &Path) -> Vec<String> {
     let manifest = root.join("package.json");
     let Ok(text) = std::fs::read_to_string(&manifest) else {
