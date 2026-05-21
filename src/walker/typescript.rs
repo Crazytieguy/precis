@@ -91,9 +91,6 @@ const JS_PROTOTYPE_NAMES_VALUE_BOOST: f64 = 1.5;
 pub struct TypescriptState {
     public_surface: OnceCell<HashSet<PathBuf>>,
     in_surface_lookup: RefCell<HashMap<PathBuf, bool>>,
-    /// Cache of nearest-enclosing-non-root `package.json` directory for a
-    /// file. `None` means there is no non-root `package.json` between the
-    /// file and the seed root (the file belongs to the root package).
     nearest_subpackage_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
 }
 
@@ -102,9 +99,7 @@ impl TypescriptState {
         Self::default()
     }
 
-    /// `true` iff `file` is in the project's TS/JS public surface — an
-    /// entrypoint file or transitively re-exported by one. Lookups are
-    /// memoized.
+    /// `true` iff `file` is in the project's TS/JS public surface.
     pub fn is_in_public_surface(&self, file: &Path, ctx: &WalkCtx) -> bool {
         if let Some(&hit) = self.in_surface_lookup.borrow().get(file) {
             return hit;
@@ -638,15 +633,10 @@ enum ItemKind {
     Enum,
     Function,
     Const,
-    /// `export default …` where the default is an expression (or function
-    /// expression / class expression). Treated like a class/function in
-    /// weight — it's the most prominent thing the module exports.
+    /// `export default …` (expression / class expr / function expr).
     Default,
-    /// Local re-export clause without a `from` source: `export { foo }`,
-    /// `export type { Pattern }`. Names a local declaration; the
-    /// declaration itself isn't resolved (would need a name table), but
-    /// the export line still tells the agent the public surface includes
-    /// `foo`. Single-line span.
+    /// `export { foo }` / `export type { Pattern }` — single-line span,
+    /// declaration target not resolved.
     NamedReexport,
 }
 
@@ -675,30 +665,23 @@ fn should_split_js_class_export(file: &Path, item: &ExportInfo<'_>) -> bool {
 
 #[derive(Debug, Clone)]
 struct ExportInfo<'a> {
-    /// 1-based line of either the wrapping `export_statement` (real export)
-    /// or the module-private `lexical_declaration` re-exported by name
-    /// (synthetic export).
+    /// 1-based line of the wrapping `export_statement`, or the local
+    /// `lexical_declaration` for synthetic re-exports.
     start_line: usize,
     kind: ItemKind,
-    /// Node used for the declaration surface and JSDoc anchor. Real
-    /// exports anchor at the wrapping `export_statement`; synthetic
-    /// re-exports anchor at the local declaration itself.
+    /// Anchor for the declaration surface + JSDoc.
     anchor: Node<'a>,
     decl: Node<'a>,
     body_parts: Vec<BodyPart>,
     class_members: Vec<ClassMemberInfo>,
-    /// True for type-only exports (`Interface`, `TypeAlias`, or a
-    /// `NamedReexport` whose statement has the `type` keyword). Flags
-    /// whole files as type-machinery for damping. `Enum` is NOT type-
-    /// only — TS enums emit runtime objects.
+    /// True for type-only exports — flags whole files as type-machinery
+    /// for damping. `Enum` is NOT type-only.
     is_type_only: bool,
     /// True when synthesized from a CommonJS prototype-style method
-    /// assignment. Keeps the file-level names surface unchunked so
-    /// the combined method catalog stays as one anchor.
+    /// assignment.
     is_prototype_method: bool,
-    /// True when `body_parts` came from a CommonJS factory match —
-    /// the parts are sibling anchors, so the emitter skips the per-
-    /// part value damping that targets long function-body chains.
+    /// True when `body_parts` are sibling anchors from a factory match
+    /// — the emitter skips per-part value damping.
     factory_sibling_body_parts: bool,
 }
 
@@ -717,16 +700,10 @@ struct ModuleItemInfo {
     body_parts: Vec<BodyPart>,
 }
 
-/// Top-level exports in a file. Walks `program` children, looking for
-/// `export_statement` nodes and identifying the inner declaration. Re-
-/// exports without an inner declaration (`export { foo } from '…'`) are
-/// skipped — they're plumbing, picked up by `Imports`. After the real
-/// pass, walks `lexical_declaration` siblings looking for module-private
-/// `const X = <fn-init>` whose name appears in a top-level
-/// `export { X }` value clause; emits a synthesized `ExportInfo` for each
-/// (skipping any that share a start_line with a real `export_statement`,
-/// since `TsKey::Export` keys disambiguate only by start_line and the
-/// scheduler dedupes silently).
+/// Top-level exports in a file. Walks `program` for `export_statement`
+/// then for module-private `const X = <fn-init>` re-exported by name —
+/// emits a synthesized `ExportInfo` for each. Bare `export { foo }
+/// from '…'` is skipped (picked up by `Imports`).
 fn find_export_starts<'a>(
     file: &Path,
     tree: &'a Tree,
@@ -879,9 +856,8 @@ fn make_export_info<'a>(
     }
 }
 
-/// Top-level declarations that are not already represented by public export
-/// batches. These module-private items often hold the real implementation
-/// behind a thin exported API.
+/// Top-level decls not already covered by `find_export_starts` — the
+/// module-private items behind a thin exported API.
 fn find_module_items(
     tree: &Tree,
     source: &str,
@@ -924,15 +900,11 @@ fn is_private_props_type(node: Node, kind: ItemKind, source: &str) -> bool {
     name_of(node, source).is_some_and(|name| name.ends_with("Props"))
 }
 
-/// True when this export carries no runtime value. `NamedReexport` is
-/// type-only iff the wrapping `export_statement` carries the
-/// statement-level `type` keyword (`export type { Foo }`); inline
-/// `export { type Foo, valueY }` is conservatively runtime since per-
-/// specifier mixing would misclassify. `export declare ...` (ambient)
-/// is type-only — the declaration names a runtime value provided by
-/// some other environment, but the .ts file itself emits no code.
-/// `Enum` without `declare` is runtime (TS enums emit a runtime
-/// object).
+/// True when an export carries no runtime value. `Enum` and
+/// `Class`/`Function`/`Const`/`Default` are runtime; `Interface`/
+/// `TypeAlias` always type-only; `NamedReexport` only when the
+/// statement carries the `type` keyword. `export declare …` is
+/// type-only (ambient).
 fn is_export_type_only(kind: ItemKind, stmt: Node, source: &str) -> bool {
     if has_ambient_declaration(stmt) {
         return true;
