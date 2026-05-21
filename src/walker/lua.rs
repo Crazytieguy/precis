@@ -194,9 +194,9 @@ fn find_decls<'a>(tree: &'a Tree, _source: &str) -> Vec<(Node<'a>, DeclInfo)> {
                 push_decl(&mut out, child);
             }
             "variable_declaration" | "assignment_statement" => {
-                if function_definition_rhs(child).is_some() {
+                if rhs_of_kind(child, "function_definition").is_some() {
                     push_decl(&mut out, child);
-                } else if let Some(tc) = table_constructor_rhs(child) {
+                } else if let Some(tc) = rhs_of_kind(child, "table_constructor") {
                     collect_function_fields(tc, &mut out, 1);
                 }
             }
@@ -253,48 +253,23 @@ fn collect_function_fields<'a>(
     }
 }
 
-/// The `function_definition` node that's the RHS of an `assignment_statement`
-/// or `variable_declaration`. Returns `None` for plain `function_declaration`.
-fn function_definition_rhs<'a>(node: Node<'a>) -> Option<Node<'a>> {
+/// The node of `kind` that's the RHS of an `assignment_statement` /
+/// `variable_declaration`. Used to recognise `local Foo = function(...)`
+/// and `local Foo = {...}` shapes.
+fn rhs_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
         match child.kind() {
             "expression_list" => {
                 let mut inner = child.walk();
                 for expr in child.children(&mut inner) {
-                    if expr.kind() == "function_definition" {
+                    if expr.kind() == kind {
                         return Some(expr);
                     }
                 }
             }
             "assignment_statement" => {
-                if let Some(n) = function_definition_rhs(child) {
-                    return Some(n);
-                }
-            }
-            _ => {}
-        }
-    }
-    None
-}
-
-/// The `table_constructor` node that's the RHS of an `assignment_statement`
-/// or `variable_declaration`. Returns `None` if the RHS is something else
-/// (function definition, primitive, function call, etc.).
-fn table_constructor_rhs<'a>(node: Node<'a>) -> Option<Node<'a>> {
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
-        match child.kind() {
-            "expression_list" => {
-                let mut inner = child.walk();
-                for expr in child.children(&mut inner) {
-                    if expr.kind() == "table_constructor" {
-                        return Some(expr);
-                    }
-                }
-            }
-            "assignment_statement" => {
-                if let Some(n) = table_constructor_rhs(child) {
+                if let Some(n) = rhs_of_kind(child, kind) {
                     return Some(n);
                 }
             }
@@ -401,7 +376,7 @@ fn body_node_for_decl<'a>(node: Node<'a>) -> Option<Node<'a>> {
     match node.kind() {
         "function_declaration" => node.child_by_field_name("body"),
         "assignment_statement" | "variable_declaration" => {
-            let fn_def = function_definition_rhs(node)?;
+            let fn_def = rhs_of_kind(node, "function_definition")?;
             fn_def.child_by_field_name("body")
         }
         "field" => {
