@@ -92,20 +92,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
     non_essential_factor_inner(path, root, false)
 }
 
-/// Like [`non_essential_factor`] but skips the `examples/`-style
-/// directory-name classifier. Used for files explicitly hyperlinked
-/// from the root README — the NS author treats those as canonical
-/// usage anchors regardless of which directory they live in. Other
-/// non-essential classes (auto-injected docs, peripheral docs,
-/// proc-macro crates, locale suffixes, test files) still apply.
-pub fn non_essential_factor_excluding_examples(
-    path: &std::path::Path,
-    root: &std::path::Path,
-) -> f64 {
-    non_essential_factor_inner(path, root, true)
-}
-
-fn non_essential_factor_inner(
+pub(crate) fn non_essential_factor_inner(
     path: &std::path::Path,
     root: &std::path::Path,
     skip_dir_classifier: bool,
@@ -556,16 +543,9 @@ fn is_locale_language(s: &str) -> bool {
 /// structural value.
 pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 
-/// Convert a value and a marginal token cost into the scheduling ratio
-/// at the default concavity exponent. Thin wrapper over
-/// [`ratio_with_exponent`] for callers that don't need a per-key exponent.
-pub fn ratio(value: f64, cost_tokens: usize) -> f64 {
-    ratio_with_exponent(value, cost_tokens, DEFAULT_CONCAVITY_EXPONENT)
-}
-
-/// Like [`ratio`] but with caller-supplied concavity exponent. The
-/// scheduler calls this with `entry.key.concavity_exponent()` so prose-
-/// shaped batches see a steeper cost penalty than structural ones.
+/// Convert a value and a marginal token cost into the scheduling ratio.
+/// The scheduler passes `entry.key.concavity_exponent()` so prose-shaped
+/// batches see a steeper cost penalty than structural ones.
 pub fn ratio_with_exponent(value: f64, cost_tokens: usize, cost_exponent: f64) -> f64 {
     if cost_tokens == 0 {
         return f64::INFINITY;

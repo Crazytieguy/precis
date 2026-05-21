@@ -1011,9 +1011,9 @@ fn describe_chunked_surface(label: &str, file: &Path, chunk_index: usize, root: 
 /// the batch enters the pool but the walker never sees it.
 ///
 /// Walkers compute `value` directly: it's the scalar input to
-/// [`crate::value::ratio`], on a shared cross-walker scale (calibration
-/// across walkers is a divergence-reports problem, not a code-level
-/// invariant — see `docs/design-notes.md`).
+/// [`crate::value::ratio_with_exponent`], on a shared cross-walker
+/// scale (calibration across walkers is a divergence-reports problem,
+/// not a code-level invariant — see `docs/design-notes.md`).
 #[derive(Debug, Clone)]
 pub struct Batch<K: WalkerKey> {
     pub key: K,

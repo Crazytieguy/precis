@@ -173,7 +173,7 @@ impl WalkCtx {
     pub fn non_essential_factor(&self, path: &Path) -> f64 {
         let base = crate::value::non_essential_factor(path, &self.root);
         if base < 1.0 && self.is_readme_cited(path) {
-            crate::value::non_essential_factor_excluding_examples(path, &self.root)
+            crate::value::non_essential_factor_inner(path, &self.root, true)
         } else {
             base
         }
