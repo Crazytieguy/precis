@@ -397,20 +397,14 @@ impl DeclKind {
     }
 }
 
-/// One top-level item or method. `unit_node` is the outermost node
-/// (decorated_definition wrapper if decorated); `inner_node` is the
-/// underlying `function_definition` / `class_definition` / for a const,
-/// the `expression_statement` containing the assignment. `start_line`
-/// is the unit_node's first row + 1 — so decorator rows are part of
-/// the span.
+/// One top-level item or method. `unit_node` wraps decorators;
+/// `inner_node` is the underlying def/class/expression_statement.
 #[derive(Debug, Clone, Copy)]
 struct DeclInfo<'a> {
     kind: DeclKind,
     unit_node: Node<'a>,
     inner_node: Node<'a>,
     start_line: usize,
-    /// Underscore-prefixed (excluding pure-dunder names) → 0.6 visibility.
-    /// Dunders like `__init__` keep 1.0.
     underscore_private: bool,
 }
 
@@ -425,11 +419,7 @@ impl<'a> DeclInfo<'a> {
 }
 
 /// Returns `(unit_node, inner_node)` for a `function_definition` /
-/// `class_definition`, unwrapping a `decorated_definition` wrapper if
-/// present. Returns `None` for any other node kind. The unit_node is
-/// what the walker treats as one decl span (so decorator lines are
-/// part of `start_line .. end_line`); the inner_node carries the
-/// `name`, `body`, and parameters.
+/// `class_definition`, unwrapping `decorated_definition` if present.
 fn function_or_decorated<'a>(node: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
     match node.kind() {
         "function_definition" | "class_definition" => Some((node, node)),
@@ -604,15 +594,9 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(dedup_sorted(lines))
 }
 
-/// Cap on total leading-comment lines folded into the `Imports` batch.
-/// The leading-comment slot models the *module prelude* — a few lines
-/// of shebang / directive / one-liner header, including PEP 723
-/// inline-script metadata blocks (`# /// script` … `# ///`, typically
-/// 6–8 lines). Beyond this many lines the block is almost always a
-/// copyright / license preface (beets, many OSS Python packages);
-/// folding it in displaces the docstring slot's small footprint with
-/// legal boilerplate. Calibrated to fit common PEP 723 blocks while
-/// filtering MIT / Apache notices (~13+ lines).
+/// Cap on leading-comment lines folded into the `Imports` batch. Sized
+/// to admit shebang/directive headers and PEP 723 inline-script blocks
+/// (~6-8 lines) while excluding MIT/Apache license prefaces (~13+).
 const LEADING_COMMENT_BLOCK_LINE_CAP: usize = 8;
 
 fn collect_reexport_import_chunks(
@@ -760,12 +744,8 @@ fn import_source_key(node: Node, source: &str) -> String {
     text.lines().next().unwrap_or(text).trim().to_string()
 }
 
-/// True iff `if_stmt` is shaped like `if TYPE_CHECKING: <imports only>`
-/// with no `elif` / `else` branch — the canonical Python idiom for
-/// importing types only available to type-checkers. Restricting to this
-/// shape rules out platform/version dispatch (`if sys.version_info:
-/// import fast_impl`) where the runtime branch carries real
-/// implementation choices, not plumbing.
+/// True iff `if_stmt` is `if TYPE_CHECKING: <imports only>` with no
+/// `elif` / `else`. Excludes platform/version dispatch.
 fn is_type_checking_import_block(if_stmt: Node, source: &str) -> bool {
     let condition = if_stmt.child_by_field_name("condition");
     if !condition.is_some_and(|c| is_type_checking_condition(c, source)) {
@@ -794,21 +774,10 @@ fn is_type_checking_import_block(if_stmt: Node, source: &str) -> bool {
     any
 }
 
-/// True iff `try_stmt` is shaped like an optional-import probe: the
-/// `try:` body and every `except:` body contain only imports, simple
-/// fallback constants (`X = None / False / True / "" / [] / {}`),
-/// trivial scaffolding (`pass`, `raise …`), or comments. No `else:` /
-/// `finally:` clauses. Catches three common Python idioms:
-///
-/// * Django-style settings dispatch (`try: from .dev import *; except:
-///   from .prod import *`) where the file is itself an import wall.
-/// * Optional-dep version probes (`try: from chardet import __version__;
-///   except ImportError: chardet_version = None`).
-/// * Hard requirement guards (`try: from . import gst; except
-///   ImportError: raise ImportError("install gstreamer")`).
-///
-/// Restricting to this shape rules out procedural try-blocks (logging
-/// init, side-effecting probes) that happen to start with an import.
+/// True iff `try_stmt` is an optional-import probe: try-body and every
+/// except-body contain only imports, simple fallback constants, `pass`/
+/// `raise`, or comments. No `else:` / `finally:`. Excludes procedural
+/// try-blocks that happen to start with an import.
 fn is_optional_import_try_block(try_stmt: Node, source: &str) -> bool {
     let Some(body) = try_stmt.child_by_field_name("body") else {
         return false;
@@ -840,8 +809,7 @@ fn is_optional_import_try_block(try_stmt: Node, source: &str) -> bool {
     any_except
 }
 
-/// Body (a `block` node) of a try / except clause is "optional-import
-/// shaped" — see [`is_optional_import_try_block`].
+/// See [`is_optional_import_try_block`].
 fn suite_is_optional_import_only(block: Node, source: &str) -> bool {
     let mut cursor = block.walk();
     let mut any = false;
@@ -865,11 +833,8 @@ fn suite_is_optional_import_only(block: Node, source: &str) -> bool {
     any
 }
 
-/// `NAME = None | True | False | "" | [] | {}` — the constant fallback
-/// shapes seen at module scope after an `except ImportError:` clause.
-/// Rejects anything more complex (function calls, attribute access,
-/// expressions) so we don't accidentally classify side-effecting probes
-/// as imports.
+/// `NAME = None | True | False | "" | [] | {}` — constant fallback
+/// shapes seen after `except ImportError:`.
 fn is_simple_fallback_assignment(node: Node, source: &str) -> bool {
     let mut cursor = node.walk();
     let Some(assignment) = node
@@ -918,12 +883,9 @@ fn is_type_checking_condition(node: Node, source: &str) -> bool {
     }
 }
 
-/// Surface listing of every top-level decl's first line. Class / def
-/// entries emit a `Full + Ellipsis` pair so the body-elision marker
-/// renders. Const entries emit Full only — there's no body, and the
-/// next-row ellipsis would conflict with whatever statement follows
-/// (e.g. a `TYPE_CHECKING = False` const followed immediately by `if
-/// TYPE_CHECKING:`).
+/// Surface listing of every top-level decl's first line. Class/def
+/// entries emit Full + Ellipsis (body-elision marker); consts emit
+/// Full only to avoid overlapping the next statement.
 fn collect_decl_names_from(decls: &[DeclInfo]) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
