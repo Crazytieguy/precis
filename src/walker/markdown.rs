@@ -350,19 +350,11 @@ fn index_decay(idx: usize, exp: f64, floor: f64) -> f64 {
 fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     let is_guide = is_changelog_class(file);
     let is_orientation = is_orientation_doc(file);
-    // Root-level orientation docs (depth 1) don't take the cat bump —
-    // depth-1 already wins the cost race, and bumping them regresses
-    // fixtures whose NS anchors only specific sections rather than the
-    // whole doc.
+    // Root-level (depth 1) orientation already wins; only nested
+    // orientation gets the cat bump.
     let is_nested_orientation = is_orientation && ctx.depth_from_root(file) > 1;
-    // Changelogs are conventionally sorted newest-first, so later
-    // sections are ancient release notes of decreasing relevance. Apply
-    // an index-based decay only to guide-shape files; for general docs
-    // the section order doesn't imply relevance. Floored at 0.35 so a
-    // deep section can still fire if budget permits, just not displace
-    // higher-tier content. The decay uses `parent_index` (un-split
-    // top-level position) so a future H3-split of a changelog still
-    // inherits its parent H2's decay tier.
+    // Changelog index decay (newest-first) — floor lets deep sections
+    // still fire when budget permits.
     let scale = if is_guide {
         index_decay(parent_index, 0.3, 0.35)
     } else {
@@ -403,12 +395,9 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
     } else {
         SUB_SECTION_SIGNAL_SCALE
     };
-    // BodyBlocks of a concept H3 (monaco-editor's Providers split into
-    // two paragraphs) are still concept content; lift them to the same
-    // scale as a single-paragraph concept H3 (Editors). The marker is
-    // gated on H3 byte size in `push_h3_child_or_body_blocks`, so this
-    // doesn't fire for the long-topical-section H3s that happen to
-    // live under a concept H2 (htmy's `### Components`).
+    // BodyBlocks of a concept H3 are still concept content. The
+    // gate in `push_h3_child_or_body_blocks` excludes long topical
+    // H3s.
     let body_block_scale = if range.parent_is_concept_h2 {
         README_CONCEPT_H3_SIGNAL_SCALE
     } else {
@@ -694,18 +683,16 @@ fn is_rst_underline(line: &str, min_width: usize) -> bool {
 
 // --- headline spec + span construction ---
 
-/// Computed shape of `ReadmeHeadline`: the set of source rows the batch
-/// renders, plus an optional per-row truncation override for the
-/// heading line. Rows are 1-based.
+/// Computed shape of `ReadmeHeadline` — rendered source rows plus an
+/// optional per-row truncation override for the heading line.
 #[derive(Debug, Clone)]
 struct HeadlineSpec {
     covered_rows: BTreeSet<usize>,
     truncate: Option<TruncatedRow>,
 }
 
-/// Per-row truncation override: render row `row` as
-/// `Render::Truncated { pattern }` instead of `Render::Full`. Storing
-/// the pair together makes "row set without pattern" unrepresentable.
+/// Per-row truncation override — paired so "rows without pattern" is
+/// unrepresentable.
 #[derive(Debug, Clone)]
 struct TruncatedRow {
     row: usize,
@@ -718,9 +705,8 @@ impl HeadlineSpec {
     }
 }
 
-/// Block kinds that bound a section's content. Hitting one means we've
-/// reached a sibling sub-section — `ReadmeHeadline` must never reach
-/// into nested H2/H3 bodies.
+/// Block kinds that bound a section — `ReadmeHeadline` never reaches
+/// past these.
 fn is_section_boundary(kind: &str) -> bool {
     matches!(kind, "section" | "atx_heading" | "setext_heading")
 }
@@ -730,24 +716,16 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     let heading = first_heading_child(section)?;
 
     let mut covered: BTreeSet<usize> = BTreeSet::new();
-    // Prelude content: a README that opens with HTML title blocks /
-    // badges / a one-paragraph lede before the first heading
-    // (microbootstrap, many JS/TS libs) wraps that material in a
-    // heading-less section that `headed_sections` skips. Surface up to
-    // one substantive paragraph (skipping leading decorative
-    // paragraphs / image-only HTML) so the lede's content lines are
-    // covered. The heading and post-heading walk below still apply.
+    // Prelude content: README opens with HTML title blocks / badges /
+    // lede paragraph before the first heading. Surface up to one
+    // substantive paragraph, skipping decoratives.
     extend_prelude_lede(&mut covered, tree.root_node(), section, source);
     extend_rows_inclusive(&mut covered, heading, source);
     let heading_first_row = heading.start_position().row + 1;
 
-    // Walk siblings after the heading, skipping leading decorative
-    // paragraphs / image-only HTML blocks / admin block_quotes
-    // (`> [!WARNING]` callouts, long deprecation notices); then include
-    // subsequent blocks until we hit the first substantive paragraph.
-    // If that paragraph is a short tagline under an H1 (posting's
-    // bold-tagline shape), take one more non-decorative block — the
-    // prose lede that follows it.
+    // Skip leading decorative paragraphs / image-only HTML / admin
+    // block_quotes, then include blocks until the first substantive
+    // paragraph. Short H1 taglines get one more non-decorative block.
     let post: Vec<Node> = children_after(section, heading);
     let mut i = 0;
     while i < post.len() {
