@@ -1043,9 +1043,7 @@ fn first_docstring_statement<'a>(body: Node<'a>) -> Option<Node<'a>> {
     None
 }
 
-/// True iff `node` is `expression_statement` whose first named child is
-/// a `string` or `concatenated_string` — the AST shape tree-sitter-python
-/// gives a docstring.
+/// True iff `node` is a docstring `expression_statement(string)`.
 fn is_docstring_statement(node: Node) -> bool {
     if node.kind() != "expression_statement" {
         return false;
@@ -1107,9 +1105,7 @@ fn block_child_parts(body: Node, src_lines: &[&str]) -> Vec<BodyPart> {
     parts
 }
 
-/// Class body rows, skipping methods (decorated or not) and the leading
-/// docstring. Includes class-level annotated assignments, `__slots__`,
-/// constants, inline comments.
+/// Class body rows, skipping methods and the leading docstring.
 fn collect_class_body(inner: Node, src_lines: &[&str]) -> FileLines {
     let Some(body) = inner.child_by_field_name("body") else {
         return FileLines::new(Vec::new());
@@ -1148,12 +1144,9 @@ fn collect_class_body(inner: Node, src_lines: &[&str]) -> FileLines {
     FileLines::new(out)
 }
 
-/// Test functions across a `_test.py` / `test_*.py` file: every
-/// top-level + class-body `def test_*` first line. The emitted line is
-/// the inner `def test_*` row, not the decorator row — pytest
-/// discovers tests by the def name, and a decorator-row anchor combined
-/// with the Full+Ellipsis pair can hide the actual signature behind a
-/// multi-line `@pytest.mark.parametrize(...)` block.
+/// `def test_*` first lines (top-level + class-body). The inner `def`
+/// row, not the decorator row — so `@pytest.mark.parametrize(...)`
+/// stacks don't hide the signature.
 fn collect_test_function_starts(tree: &Tree, source: &str) -> Vec<usize> {
     let root = tree.root_node();
     let mut out = Vec::new();
