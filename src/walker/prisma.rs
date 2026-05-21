@@ -28,9 +28,7 @@ use super::{
     FileLines, WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content,
 };
 
-/// Conservative cap on TOC entries. Schemas with more than this many
-/// declarations are unusual; the cap is a budget hedge so the TOC
-/// stays a cheap orientation batch rather than a body-sized one.
+/// Cap on TOC entries — budget hedge.
 const MAX_TOC_ENTRIES: usize = 80;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -63,10 +61,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     out
 }
 
-/// 1-indexed line numbers of every top-level Prisma declaration in
-/// `source`. Recognizes `model`, `enum`, `datasource`, and
-/// `generator` keywords when they appear at the start of a line
-/// (Prisma's only valid placement for top-level declarations).
+/// 1-indexed lines of top-level Prisma declarations
+/// (`model`/`enum`/`datasource`/`generator`).
 fn toc_lines(source: &str) -> Vec<usize> {
     source
         .lines()
@@ -76,10 +72,8 @@ fn toc_lines(source: &str) -> Vec<usize> {
 }
 
 fn is_toc_line(line: &str) -> bool {
-    // Top-level keywords are not indented; comments (`//`) and block
-    // members are. A `starts_with(keyword)` check followed by a
-    // whitespace separator is sufficient because Prisma's syntax is
-    // strict about these positions.
+    // Top-level keywords are not indented in Prisma; `starts_with` +
+    // whitespace separator is sufficient.
     for kw in ["model ", "enum ", "datasource ", "generator "] {
         if line.starts_with(kw) {
             return true;
@@ -89,10 +83,6 @@ fn is_toc_line(line: &str) -> bool {
 }
 
 fn toc_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Schema TOC is a top-tier catastrophic-omission hedge: the data
-    // model drives most backend questions in a Prisma-shaped app. Rate
-    // it on par with package.json `Identity` so it consistently lands
-    // before README sections and per-dir listings.
     mix_signals(1.0, 0.7, 0.85, path_depth_factor(file, ctx))
 }
 

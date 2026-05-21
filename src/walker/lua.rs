@@ -28,13 +28,9 @@ use super::{
     trim_end_before_next_decl,
 };
 
-/// Token cap for `MetaFileWhole`: above this, fall back to per-decl
-/// emission so a large LuaCATS spec doesn't crowd the whole budget with
-/// a single batch.
+/// Token cap for `MetaFileWhole` — above, fall back to per-decl.
 const META_FILE_TOKEN_CAP: usize = 400;
-/// LuaCATS-tag density threshold for treating a file as a meta-file
-/// even without a `---@meta` leader: > 60% of comment lines starting
-/// with `---@`.
+/// Treat as meta-file when ≥60% of comment lines start with `---@`.
 const META_TAG_DENSITY_THRESHOLD: f64 = 0.60;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -174,16 +170,8 @@ struct DeclInfo {
     start_line: usize,
 }
 
-/// Walk the top-level (`chunk`) children and emit a `DeclInfo` for each
-/// function-like declaration we recognize. Sorted by start_line; dups
-/// (rare; e.g. when `declaration` wraps a `function_declaration` that
-/// also surfaces directly) are coalesced.
-///
-/// Tables-as-classes (`local M = { foo = function(...) end, ... }`) are
-/// idiomatic Lua: a function-valued field inside a table-constructor RHS
-/// is treated the same as `function M.foo(...) end` for purposes of
-/// surface enumeration. Fields are surfaced one level deep into nested
-/// table constructors so common shapes like `static = { ... }` resolve.
+/// Top-level fn-like declarations. Tables-as-classes
+/// (`local M = { foo = function … }`) surface one nesting level deep.
 fn find_decls<'a>(tree: &'a Tree, _source: &str) -> Vec<(Node<'a>, DeclInfo)> {
     let root = tree.root_node();
     let mut out = Vec::new();
