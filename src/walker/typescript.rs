@@ -2991,19 +2991,12 @@ fn is_first_top_level_node(node: Node) -> bool {
 
 // --- public-surface reachability ----------------------------------------
 
-/// Source-file extensions in TS/JS source-of-truth precedence order. Used
-/// for both relative-path resolution and the entrypoint-file scan.
-/// Declaration extensions come AFTER runtime so the TS source wins when
-/// both exist (e.g. `./foo.ts` over a generated `./foo.d.ts`); declaration
-/// files only enter as entrypoints when the package ships a pure-types
-/// `index.d.ts` (commander's `typings/index.d.ts` shape).
+/// TS/JS extensions in precedence order. Declaration extensions come
+/// last so TS source wins over generated `.d.ts`.
 const TS_JS_EXTS: &[&str] = &["ts", "tsx", "js", "mjs", "cjs", "d.ts", "d.mts", "d.cts"];
 
-/// Recursively walk `dir` for files whose basename `is_entrypoint_file`
-/// recognizes. Skips heavy / generated trees via [`fs::should_skip_dir`].
-/// Results are sorted so the BFS frontier in [`compute_public_surface`]
-/// processes files in a stable order regardless of `read_dir`'s
-/// OS-dependent listing.
+/// Sorted recursive walk for entrypoint-named files. Skips heavy /
+/// generated trees.
 fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
     fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
         let Ok(read_dir) = std::fs::read_dir(dir) else {
@@ -3032,12 +3025,8 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
     out
 }
 
-/// Compute the project's public surface: every TS/JS file transitively
-/// reachable from an entrypoint via re-export chains. Walks each
-/// entrypoint, collects its re-exported source paths, resolves them
-/// to absolute paths, and BFS-expands until fixed point. Result is
-/// canonicalized so it can be compared against arbitrary paths the
-/// walker hands in.
+/// Project's public surface — every TS/JS file transitively reachable
+/// from an entrypoint via re-export chains. Canonicalized.
 fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
     let entrypoints = find_all_entrypoints(ctx.root());
     let mut surface: HashSet<PathBuf> = HashSet::new();
