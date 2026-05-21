@@ -29,10 +29,8 @@ impl BatchId {
     }
 }
 
-/// Default walker-key sum used by [`crate::walker::multi::MultiWalker`].
-/// Scheduler/render code depends on the [`WalkerKey`] trait, not on
-/// this enum — a new walker implementing [`WalkerKey`] can be added
-/// without touching either.
+/// Default walker-key sum. Scheduler/render code depends on the
+/// [`WalkerKey`] trait, not this enum.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum BatchKey {
     Fs(FsKey),
@@ -82,9 +80,8 @@ impl_batchkey_from! {
     Yaml => YamlKey,
 }
 
-/// Rust batches. Per-item for pub type declarations so the scheduler can
-/// individually rank them. File-scope for crate-doc / mod-use / impl-method
-/// groups; cross-file scope for the `#[macro_export]` name surface.
+/// Rust batches — per-item for pub types, file-scope for crate-doc /
+/// mod-use / methods, cross-file for the `#[macro_export]` surface.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum RustKey {
     /// `//!` module-doc lede — first paragraph only, entrypoint files.
@@ -398,14 +395,8 @@ pub enum TomlKey {
     Dependencies { file: PathBuf },
 }
 
-/// Opaque walker-key contract. Scheduler + renderer depend on this trait
-/// instead of any concrete walker-specific enum, so a new walker can be
-/// added without touching them.
-///
-/// `Clone + Eq + Hash` support the scheduler's key-to-id map and dead
-/// set; `Ord` gives deterministic tiebreaks; `Debug` is for panic
-/// messages; `Send + Sync + 'static` keep the type usable across
-/// threads / `Arc`s if downstream ever needs it.
+/// Opaque walker-key contract — scheduler + renderer depend on this
+/// trait so a new walker doesn't touch them.
 pub trait WalkerKey:
     Clone
     + std::fmt::Debug
@@ -418,26 +409,18 @@ pub trait WalkerKey:
     + Sync
     + 'static
 {
-    /// One-line human descriptor (e.g. `"crate-doc lede in src/lib.rs"`).
-    /// Shown in schedule snapshots + divergence reports so diffs read
-    /// as content-shape rather than `Rust(CrateDocLede(PathBuf(...)))`.
-    /// `fixture_root` is stripped from any embedded paths so descriptors
-    /// stay relative and diff-stable across checkouts.
+    /// One-line human descriptor for snapshots and divergence reports.
+    /// `fixture_root` is stripped from embedded paths.
     fn describe(&self, fixture_root: &Path) -> String;
 
-    /// Per-key cost concavity exponent for the scheduling ratio
-    /// (`value / cost^exponent`). Defaults to
-    /// [`crate::value::DEFAULT_CONCAVITY_EXPONENT`]; raise on prose-shaped
-    /// batches (doc bodies, README sections) whose token count grows
-    /// without proportional structural value.
+    /// Per-key cost concavity for the scheduling ratio
+    /// (`value / cost^exponent`). Raise on prose-shaped batches.
     fn concavity_exponent(&self) -> f64 {
         crate::value::DEFAULT_CONCAVITY_EXPONENT
     }
 
-    /// Weight for routing discovered descendant value back into this
-    /// key's scheduling score. Defaults to off: most predecessor edges
-    /// are ordinary refinements, not broad gates whose children should
-    /// affect the parent's rank.
+    /// Weight for routing descendant value back into this key's
+    /// rank. Off by default — only broad gates opt in.
     fn gated_descendant_value_weight(&self) -> f64 {
         0.0
     }
