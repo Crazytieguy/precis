@@ -366,18 +366,9 @@ fn readme_section_value(
         * features_section_factor(range)
 }
 
-/// Multiplier applied to README H2 sections whose title is one of the
-/// canonical-usage markers (see [`is_canonical_usage_h2_title`]).
-/// The canonical-demo snippet inside these sections is consistently
-/// the highest-value follow-up to the README headline — NS authors
-/// pin three rows (CREATE / INSERT / KNN-SELECT in sqlite-vec) to the
-/// same code fence — but a single mid-sized section pays a steep
-/// `value / cost^k` penalty against cheaper sibling sections that
-/// only carry boilerplate (`## See Also`, `## License`). The boost
-/// lifts the V/C ratio enough to clear that cost gap. Only applies
-/// to a `Whole` section so split bullet / H3 children stay on their
-/// existing scales; non-matching titles and non-README files are
-/// unaffected.
+/// Boost for README H2 `Whole` sections whose title is a canonical-
+/// usage marker (see [`is_canonical_usage_h2_title`]) — the demo
+/// fence inside is the highest-value follow-up to the headline.
 const CANONICAL_USAGE_SECTION_FACTOR: f64 = 1.5;
 
 fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
@@ -388,19 +379,9 @@ fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
     }
 }
 
-/// Multiplier applied to README H2 sections whose title is a
-/// features-list marker (see [`is_features_h2_title`]). A
-/// `## Features` (or `## Key features`) section is the README's
-/// high-density capability inventory — a bullet list that names
-/// every major capability of the project in a few lines. NS authors
-/// regularly anchor on it (hyperfine 1.10, beszel 1.4 + 1.6,
-/// enclosed 1.10, mcphost 1.7, log 5.1, …). At default value the
-/// section loses the V/C race to cheaper trailing one-liner sections
-/// (`## License`, `## See Also`) on long-README projects and arrives
-/// past the auto-injection budget. Only applies when the section
-/// stays as one `Whole` — a `## Features` long enough to split into
-/// per-bullet `BulletItem` children is already a different shape, and
-/// individual bullets ride their own per-item scale.
+/// Boost for README H2 `Whole` sections whose title is a features-list
+/// marker (see [`is_features_h2_title`]) — the high-density capability
+/// inventory that anchors many NS rows.
 const FEATURES_SECTION_FACTOR: f64 = 1.6;
 
 fn features_section_factor(range: &SectionRange) -> f64 {
