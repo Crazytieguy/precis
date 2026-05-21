@@ -1193,12 +1193,8 @@ fn normalize_rustdoc_line(raw: &str) -> Option<&str> {
     None
 }
 
-/// Match the Markdown ATX heading rule on already-normalized rustdoc
-/// content. CommonMark accepts 0–3 leading spaces of indentation, then
-/// 1–6 `#` characters, then either end-of-line or a space/tab. Rejects
-/// `#######` (7 hashes, more than ATX allows), `#!` (the `#![attr]`
-/// shape), and `#[` (the `#[attr]` shape) — both of which appear in
-/// rustdoc examples and would be false-positive headings.
+/// CommonMark ATX heading on normalized rustdoc content — 0-3 spaces,
+/// 1-6 `#`, then EOL or whitespace. Rejects `#!`/`#[` (rust attrs).
 fn is_doc_atx_heading(content: &str) -> bool {
     // Leading indent: tolerate up to 3 spaces (CommonMark).
     let mut indent = 0usize;
@@ -1225,24 +1221,9 @@ fn is_doc_atx_heading(content: &str) -> bool {
     matches!(after_hashes.bytes().next(), None | Some(b' ' | b'\t'))
 }
 
-/// Drop rustdoc doctest-hidden lines. In any rustdoc block (`///`,
-/// `//!`, or `/** */` / `/*! */`), lines whose first non-whitespace
-/// token is `# ` or a bare `#`, while inside a Rust fenced code block
-/// (` ``` ` or ` ~~~ ` with empty/`rust`/`no_run`/`ignore`/
-/// `compile_fail`/`should_panic`/`edition*` info-string), are
-/// scaffolding rustdoc strips from the rendered HTML. Keeping them in a
-/// token-budgeted summary spends real tokens on content the human reader
-/// of the docs never sees.
-///
-/// Operates on a sorted list of 1-based source line numbers, all expected
-/// to belong to one contiguous rustdoc block. The fence state machine
-/// runs on the *normalized* content (post comment-marker), so
-/// `/** ` / ` * ` / ` */` block-doc continuation lines participate too.
-/// Lines whose normalized form is `None` (the bare `/**` opener,
-/// `*/` closer, or lone `*` continuation) are passed through unchanged
-/// — they're structural and never the target of stripping. Preserves
-/// honest rendering (output is still a verbatim subset of the source —
-/// just a smaller one).
+/// Strip rustdoc doctest-hidden lines (`# …` inside a Rust fenced code
+/// block) — rustdoc itself removes them from rendered HTML. Operates
+/// on a sorted, contiguous-block list of 1-based source line numbers.
 fn strip_hidden_doctest_lines(lines: Vec<usize>, source: &str) -> Vec<usize> {
     if lines.is_empty() {
         return lines;
@@ -1300,10 +1281,7 @@ enum FenceState {
     Inside { kind: FenceKind, hides: bool },
 }
 
-/// Returns `Some((kind, info_string))` if `content` (the post-prefix
-/// remainder of a doc line, with one optional leading space stripped) opens
-/// or closes a code fence. The info string is the trailing text after the
-/// fence delimiter.
+/// `Some((kind, info_string))` if `content` opens or closes a fence.
 fn open_fence(content: &str) -> Option<(FenceKind, &str)> {
     let trimmed = content.trim_start();
     if let Some(rest) = trimmed.strip_prefix("```") {
@@ -1315,9 +1293,8 @@ fn open_fence(content: &str) -> Option<(FenceKind, &str)> {
     }
 }
 
-/// Whether a code fence's info string identifies a Rust block. Empty info
-/// string defaults to Rust (rustdoc convention). The info-string's first
-/// comma-separated token decides; case-insensitive.
+/// True iff the fence info string identifies a Rust block. Empty
+/// defaults to Rust (rustdoc convention).
 fn is_rust_lang(info: &str) -> bool {
     let token = info
         .trim()
