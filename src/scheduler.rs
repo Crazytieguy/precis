@@ -215,10 +215,8 @@ impl<W: Walker> Scheduler<W> {
             }
         }
 
-        // Prefix-monotone scheduling: rank eligible entries by
-        // `value / cost^k` and pick the best-fit; if the top-ranked
-        // exact doesn't fit, stop (no fallback to smaller batches). This
-        // makes the schedule at `T_small` a true prefix of `T_large`'s.
+        // Prefix-monotone scheduling — stop on the first top-ranked
+        // batch that doesn't fit (no fallback to smaller batches).
         #[cfg(feature = "timing")]
         let mut exact_misses = ExactMissAccumulator::default();
         {
@@ -345,10 +343,7 @@ impl<W: Walker> Scheduler<W> {
         }
     }
 
-    /// Eligibility check: predecessor is scheduled (or no predecessor).
-    /// Orphan dependents (predecessor never emitted) stay pending forever
-    /// — that's intentional; walkers are responsible for not declaring a
-    /// predecessor they aren't going to emit.
+    /// Eligibility — predecessor scheduled, or no predecessor.
     fn eligible(&self, pred: Option<&W::Key>) -> bool {
         match pred {
             None => true,
@@ -361,22 +356,8 @@ impl<W: Walker> Scheduler<W> {
 
     // ---- exact pool ----
 
-    /// Top-ranked eligible batch regardless of fit, with its
-    /// already-computed cost. Returning `Cost` here lets the main loop do
-    /// the fit check and (on schedule) apply without recomputing —
-    /// `cost_spans` is the hot path per iteration.
-    ///
-    /// Set `PRECIS_VERIFY_COST_CACHE=1` (debug builds only) to recompute
-    /// on every cache hit and `debug_assert_eq!` against the cached
-    /// value, turning any missed-invalidation bug into a deterministic
-    /// panic. Off by default because the recompute roughly 2× the
-    /// debug-test runtime; targeted regression coverage lives in
-    /// `tests/scheduler_invariants.rs::scheduler_invariants_fs_overlap_invalidates_cached_cost`,
-    /// which sets the env var so it always exercises the gate.
-    ///
-    /// `&mut self` because the cache may be populated mid-call. The body
-    /// must mutate only `cost_cache`; no scheduler state transitions
-    /// (`scheduled`/`scheduled_log`/`tree.apply`) belong here.
+    /// Top-ranked eligible batch + its cost. `PRECIS_VERIFY_COST_CACHE=1`
+    /// (debug) recomputes every hit and asserts against the cache.
     fn best_exact(&mut self) -> Option<(BatchId, f64, Cost)> {
         crate::time_counter!(best_exact);
 
@@ -400,9 +381,8 @@ impl<W: Walker> Scheduler<W> {
             );
         }
 
-        // Shared across the approx and exact passes — `effective_value`
-        // depends only on (id, children_index, scheduled), all stable
-        // within a single `best_exact` call.
+        // Shared across approx and exact passes — `effective_value`
+        // depends only on stable state within a `best_exact` call.
         let mut descendant_value_cache = HashMap::new();
         let pool = self.select_contender_pool(&eligible, &mut descendant_value_cache);
 
@@ -660,15 +640,12 @@ impl<W: Walker> Scheduler<W> {
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
 
-        // Drop the scheduled batch's cached cost. Other cached costs stay
-        // stable under walker invariants: siblings don't mutate each
-        // other's render cells, and ancestor refinements are scheduled
-        // before a dependent first becomes eligible/cached.
+        // Drop the scheduled batch's cached cost; others stay stable
+        // under walker invariants.
         self.cost_cache.remove(&id);
 
-        // Remove this id from its parent's child list. `retain` preserves
-        // the order of remaining elements (entries-order matters — see
-        // `children_index` field doc).
+        // Remove `id` from its parent's child list — `retain`
+        // preserves entries-order.
         let parent_id = self.entries[id.index()]
             .predecessor
             .as_ref()
