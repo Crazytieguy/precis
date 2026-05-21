@@ -23,10 +23,8 @@ use super::{
     single_file_lines_content,
 };
 
-/// Multiplier applied to `[package]` Identity signals on workspace-member
-/// Cargo.tomls. A sub-crate's identity is mostly inherited from the
-/// workspace root (`edition.workspace = true` etc.); same axis as the
-/// Rust walker's `pub(crate)` damping.
+/// Damp `[package]` Identity on workspace-member Cargo.tomls — sub-
+/// crate identity is mostly inherited from the workspace root.
 const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
 const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
@@ -73,11 +71,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     out
 }
 
-/// Cargo: top-level `[dependencies]` / `[dev-dependencies]` / etc. tables.
-/// pyproject: `[project].dependencies` is a multi-line array (no separate
-/// dependencies *table*), so it never matched the table-name path — fold
-/// it in here so Python projects get a Dependencies batch covering their
-/// runtime deps the same way Cargo crates do.
+/// Dependency content for Cargo (table-based) and pyproject (array
+/// under `[project]`).
 fn build_dependencies_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
     let (source, tree) = parse_toml(ctx, file)?;
     let mut line_numbers: Vec<usize> = Vec::new();
@@ -104,10 +99,7 @@ fn build_dependencies_content(file: &Path, ctx: &WalkCtx) -> Option<crate::conte
     single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
-/// 1-based row span of a `<key> = [...]` array inside the `[project]`
-/// table. `None` when there's no `[project]` table, no matching key, or
-/// the matched value isn't an array. Tree-sitter resolves multi-line
-/// arrays, in-string brackets, comments, and escapes natively.
+/// Row span of `<key> = [...]` inside the `[project]` table.
 fn project_pair_array_rows(tree: &Tree, source: &str, key: &str) -> Option<(usize, usize)> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -215,13 +207,9 @@ fn project_identity_lines(
     out
 }
 
-/// `broad_scalars` widens the captured key set from the original
-/// name+description core to the full PEP 621 lede (adds version,
-/// requires-python, license, readme). Only literal `pyproject.toml`
-/// files use the broad set — alternative-named TOMLs that happen to
-/// carry a `[project]` table (peepdb's `project.toml`) stay narrow,
-/// where the wider capture displaces NS-anchored content the author
-/// did not place in the [project] table.
+/// `broad_scalars` widens the captured keys from {name, description}
+/// to the full PEP 621 lede. Only `pyproject.toml` uses the broad set
+/// — alternative-named TOMLs with a `[project]` table stay narrow.
 fn is_project_scalar_pair_line(line: &str, broad_scalars: bool) -> bool {
     let Some((key, value)) = line.trim_start().split_once('=') else {
         return false;
@@ -255,12 +243,8 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
-    // Pyproject *shape* — any TOML file with a `[project]` (PEP 621) or
-    // `[tool.poetry]` (Poetry, predates PEP 621 and still widely used)
-    // table follows the pyproject layout convention regardless of
-    // filename. Catches alternatives like peepdb's `project.toml`
-    // alongside the standard `pyproject.toml`. Cargo.toml never matches
-    // (it uses `[package]`).
+    // Pyproject shape — any TOML with `[project]` or `[tool.poetry]`,
+    // regardless of filename. Cargo.toml uses `[package]` and won't match.
     let (source, tree) = parse_toml(ctx, file)?;
     let sections = collect_sections(&tree, &source);
     if !sections
@@ -286,11 +270,8 @@ fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
     })
 }
 
-/// `[project]` (PEP 621) and `[tool.poetry]` (Poetry) are the two TOML
-/// identity tables a pyproject file can lead with. Both carry the same
-/// `name` / `version` / `description` / `license` / `readme` scalars
-/// at the head of the table, so the lede-detection and scalar-filter
-/// logic treats them identically.
+/// The two TOML identity tables a pyproject file can lead with — both
+/// carry the same PEP-621-style identity scalars.
 fn is_pyproject_identity_table(name: &str) -> bool {
     matches!(name, "project" | "tool.poetry")
 }
@@ -321,9 +302,8 @@ fn parse_toml(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
 
 // --- section collection ---
 
-/// Returns `(header_name, start_line_1based, end_line_1based)` for every
-/// top-level `table` node. A table's range is its header line through the
-/// row before the next table (or EOF).
+/// `(header_name, start_1based, end_1based)` for every top-level
+/// `table`. End is the row before the next table or EOF.
 fn collect_sections(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -365,29 +345,10 @@ fn extract_table_name(node: Node, source: &str) -> Option<String> {
 
 // --- workspace-member resolution ---
 
-/// Resolve the seed-root `Cargo.toml`'s declared workspace members
-/// (including auto-promoted local path-dependencies) and return their
-/// absolute Cargo.toml paths.
-///
-/// The set is the **union** of two sources:
-/// - explicit `[workspace].members` entries (literals + trailing-`/*`
-///   globs); and
-/// - top-level `[dependencies]` / `[dev-dependencies]` /
-///   `[build-dependencies]` entries with `path = "..."` resolving under
-///   `<root>` (Cargo auto-promotes these as members; see
-///   <https://doc.rust-lang.org/cargo/reference/workspaces.html#the-members-and-exclude-fields>).
-///
-/// `[workspace].exclude` is applied **once at the end** to the unified
-/// set, so it blocks both explicit members and auto-promoted path deps.
-///
-/// Honest scope (intentional false-negatives — a missed member just
-/// means we don't damp; we never damp a non-member):
-/// - Only trailing-`/*` globs are honored. `crates/mdbook-*`,
-///   `**/Cargo.toml`, `?` patterns are not.
-/// - `[workspace]` is only read from `<root>/Cargo.toml`. Workspace
-///   roots elsewhere on disk aren't considered.
-/// - Path entries with `..` or absolute paths are skipped.
-/// - Returns empty set on any TOML parse error or missing root file.
+/// Declared + auto-promoted workspace members from `<root>/Cargo.toml`.
+/// Union of `[workspace].members` (literals + trailing-`/*` globs) and
+/// `[dependencies]`-table `path = "..."` entries; `[workspace].exclude`
+/// applies to the union. Empty on parse error.
 pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     let root_manifest = root.join("Cargo.toml");
     let Ok(text) = std::fs::read_to_string(&root_manifest) else {
