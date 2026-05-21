@@ -470,8 +470,7 @@ fn find_top_level_decls<'a>(tree: &'a Tree, source: &str) -> Vec<DeclInfo<'a>> {
     out
 }
 
-/// Methods of one class — direct children of the class body, with
-/// `decorated_definition` unwrapped.
+/// Methods of one class (direct body children, decorator-unwrapped).
 fn collect_methods_in_class<'a>(class_decl: &DeclInfo<'a>, source: &str) -> Vec<DeclInfo<'a>> {
     let Some(body) = class_decl.inner_node.child_by_field_name("body") else {
         return Vec::new();
@@ -511,10 +510,8 @@ fn is_dunder(name: &str) -> bool {
     name.starts_with("__") && name.ends_with("__") && name.len() >= 4
 }
 
-/// Returns the assignment target name if `expression_statement` looks
-/// like a simple `NAME = …` or `NAME: TYPE = …`. Multi-target assignments
-/// (`a = b = …`), tuple targets (`a, b = …`), and unpack targets are
-/// rejected — they aren't NS-anchor shaped.
+/// Target name of a simple `NAME = …` or `NAME: TYPE = …`. Rejects
+/// multi-target, tuple, and unpack assignments.
 fn const_assignment_target<'a>(node: Node<'a>, source: &'a str) -> Option<&'a str> {
     let mut cursor = node.walk();
     let inner = node
@@ -870,8 +867,7 @@ fn is_simple_fallback_assignment(node: Node, source: &str) -> bool {
     }
 }
 
-/// Match `TYPE_CHECKING` and `typing.TYPE_CHECKING` (the two forms
-/// accepted by mypy / pyright as the type-checking guard).
+/// Match `TYPE_CHECKING` / `typing.TYPE_CHECKING`.
 fn is_type_checking_condition(node: Node, source: &str) -> bool {
     match node.kind() {
         "identifier" => &source[node.start_byte()..node.end_byte()] == "TYPE_CHECKING",
@@ -937,19 +933,10 @@ fn collect_decl(info: &DeclInfo) -> FileLines {
     FileLines::new(dedup_sorted(lines))
 }
 
-/// Rows of the docstring's first paragraph — the opening row of the
-/// docstring's string node plus any contiguous non-blank rows that follow,
-/// up to but not including the first blank row. Returns empty when no
-/// docstring. Capped at [`DOC_LEDE_MAX_ROWS`] to keep the
-/// [`PythonKey::Decl`] batch small when a class summary spans many lines
-/// without a paragraph break (the rest is delivered by
-/// [`PythonKey::DeclDoc`]).
-///
-/// Lets the per-decl batch carry the PEP 257 "summary line" alongside the
-/// `class X:` / `def f(...)` header — NS rows typically pair the header
-/// with the docstring's first sentence as a single cognitive anchor, and
-/// without this the full docstring (which can run dozens of lines) is the
-/// only path to that summary.
+/// Rows of the docstring's first paragraph — opens at the docstring
+/// node, takes contiguous non-blank rows up to the first blank, capped
+/// at `DOC_LEDE_MAX_ROWS`. Lets `Decl` carry the PEP 257 summary alongside
+/// the header.
 fn collect_doc_lede(inner: Node, src_lines: &[&str]) -> FileLines {
     let Some(body) = inner.child_by_field_name("body") else {
         return FileLines::new(Vec::new());
@@ -992,12 +979,8 @@ fn collect_doc_lede(inner: Node, src_lines: &[&str]) -> FileLines {
     FileLines::new(dedup_sorted(rows))
 }
 
-/// True iff `trimmed` (a row with leading/trailing whitespace already
-/// stripped) is only a docstring delimiter — `"""`, `'''`, or one of
-/// those preceded by Python's `r` / `b` / `f` / `u` string prefix
-/// (case-insensitive, possibly combined like `rb`/`Rf`). Rejects lines
-/// with any other character so a docstring whose first line begins with
-/// `R` (e.g. `"""Real-world example.`) isn't misread as scaffolding.
+/// True iff `trimmed` is only docstring scaffolding — `"""`/`'''`,
+/// optionally preceded by an `r`/`b`/`f`/`u` string prefix.
 fn is_docstring_delimiter_line(trimmed: &str) -> bool {
     let bytes = trimmed.as_bytes();
     let mut i = 0;
@@ -1014,17 +997,12 @@ fn is_docstring_delimiter_line(trimmed: &str) -> bool {
         && (rest.first() == Some(&b'"') || rest.first() == Some(&b'\''))
 }
 
-/// Cap on the number of docstring content rows pulled into
-/// [`PythonKey::Decl`]. Two rows covers PEP 257's "one-line summary" plus
-/// the common single-wrap case without blowing the per-class Decl batch
-/// up when a class summary runs many lines without a paragraph break.
+/// Cap on docstring rows folded into `Decl` (PEP 257 one-line summary
+/// + the common single-wrap case).
 const DOC_LEDE_MAX_ROWS: usize = 2;
 
-/// Minimum docstring row span (0-based row difference between opening and
-/// closing `"""`) required before [`PythonKey::Decl`] absorbs the
-/// docstring lede. Short docstrings already fit cheaply through
-/// [`PythonKey::DeclDoc`]; the lede earns its keep only when the rest of
-/// the docstring is too expensive for the small-budget tier.
+/// Minimum docstring row-span before `Decl` absorbs the lede — short
+/// docstrings already fit cheaply through `DeclDoc`.
 const DOC_LEDE_MIN_DOC_ROWS: usize = 12;
 
 fn merge_file_lines(into: &mut FileLines, other: FileLines) {
@@ -1035,9 +1013,7 @@ fn merge_file_lines(into: &mut FileLines, other: FileLines) {
     into.ellipses.retain(|line| !into.full.contains(line));
 }
 
-/// Rows of the docstring inside a `function_definition` / `class_definition`
-/// body: the first `expression_statement(string)` after any leading
-/// comments. Returns empty `FileLines` when no docstring.
+/// Rows of the first docstring in `inner`'s body, or empty if none.
 fn collect_doc_for(inner: Node, source: &str) -> FileLines {
     let Some(body) = inner.child_by_field_name("body") else {
         return FileLines::new(Vec::new());
