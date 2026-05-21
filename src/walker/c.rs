@@ -470,22 +470,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             };
             let decl_lines = collect_decl(*node, info, &source, &all_starts);
             let doc_lines = collect_doc_comments_above_bounded(*node, &source, banner_end_row);
-            let init_tables = if info.kind == DeclKind::FunctionDef {
-                find_init_tables_in_body(*node)
-            } else {
-                Vec::new()
-            };
-            let excluded_ranges: Vec<(usize, usize)> = init_tables
-                .iter()
-                .map(|t| {
-                    (
-                        t.decl_node.start_position().row + 1,
-                        t.decl_node.end_position().row + 1,
-                    )
-                })
-                .collect();
             let body_lines = if info.has_body {
-                collect_decl_body(*node, &src_lines, &excluded_ranges)
+                collect_decl_body(*node, &src_lines)
             } else {
                 FileLines::new(Vec::new())
             };
@@ -526,28 +512,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     content,
                     value: decl_body_value(file, info.kind, ctx),
                 });
-            }
-            for table in &init_tables {
-                let start_line = table.decl_node.start_position().row + 1;
-                let end_line = table.decl_node.end_position().row + 1;
-                let rows = collect_init_table_rows(table);
-                if let Some(content) = single_file_lines_content(file, &source, rows) {
-                    out.push(Batch {
-                        key: CKey::InitTableRows {
-                            file: file.clone(),
-                            start_line,
-                            end_line,
-                        }
-                        .into(),
-                        // Top-level: tying to the enclosing Decl would block
-                        // emission when the function lives deep in a large
-                        // file (sqlite-vec.c:9751). DeclBody excludes these
-                        // rows already — no sibling overlap.
-                        predecessor: None,
-                        content,
-                        value: init_table_value(file, ctx),
-                    });
-                }
             }
             // Per-group / per-chunk batches for big aggregate bodies.
             // Sibling of `DeclDoc` under the same `Decl` predecessor;
@@ -1386,14 +1350,6 @@ fn aggregate_member_group_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f
     mix_signals(cat, fu, 0.45, c_depth_factor(file, ctx))
 }
 
-fn init_table_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Modest value: NS authors rank registration tables in tier 2.5+
-    // (typically NS_cum > 3K), so a high value just displaces tier-1
-    // orientation that the NS *does* score at 3K. Tuned so tables
-    // land between 3K and 10K instead.
-    mix_signals(0.25, 0.45, 0.55, c_depth_factor(file, ctx))
-}
-
 // --- parser -------------------------------------------------------------
 
 fn parse_c(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
@@ -1658,12 +1614,9 @@ fn collect_decl(
 
 /// Body interior of a function definition: rows strictly between the
 /// `compound_statement`'s `{` and `}`, with blank source rows skipped.
-/// `excluded` is a list of 1-based inclusive line ranges to leave out —
-/// used by [`InitTableRows`](CKey::InitTableRows) so DeclBody and
-/// InitTableRows can be emitted as disjoint siblings under the same
-/// `Decl` predecessor. Returns empty when the body has no interior to
-/// render (single-line body or all-blank interior).
-fn collect_decl_body(node: Node, src_lines: &[&str], excluded: &[(usize, usize)]) -> FileLines {
+/// Returns empty when the body has no interior to render (single-line
+/// body or all-blank interior).
+fn collect_decl_body(node: Node, src_lines: &[&str]) -> FileLines {
     let Some(body) = node.child_by_field_name("body") else {
         return FileLines::new(Vec::new());
     };
@@ -1673,108 +1626,12 @@ fn collect_decl_body(node: Node, src_lines: &[&str], excluded: &[(usize, usize)]
         return FileLines::new(Vec::new());
     }
     let mut out = Vec::new();
-    'rows: for row in (s + 1)..e {
-        let line = row + 1;
-        for (lo, hi) in excluded {
-            if line >= *lo && line <= *hi {
-                continue 'rows;
-            }
-        }
+    for row in (s + 1)..e {
         if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
-            out.push(line);
+            out.push(row + 1);
         }
     }
     FileLines::new(out)
-}
-
-/// Detected `static struct { ... } X[] = { ... };` registration table
-/// inside a function body. Used to emit a per-table batch independent
-/// of the surrounding [`CKey::DeclBody`].
-struct InitTable<'a> {
-    /// The `declaration` node spanning `static struct { ... } X[] = { ... };`.
-    decl_node: Node<'a>,
-    /// The outer `initializer_list` (the RHS `{ ... }`).
-    outer_list: Node<'a>,
-}
-
-/// Minimum number of inner initializer-list entries for a declaration
-/// to qualify as a registration table. Two is the floor — sqlite-vec's
-/// `aMod[]` has exactly two entries and the NS still credits it.
-const INIT_TABLE_MIN_ENTRIES: usize = 2;
-
-/// Maximum row span of an inner initializer-list. Each registration
-/// row should fit on a line or two; multi-line entries usually mean a
-/// non-table use of static array (or a nested struct that wouldn't
-/// render usefully one-line-per-entry).
-const INIT_TABLE_MAX_INNER_ROWS: usize = 2;
-
-fn find_init_tables_in_body<'a>(node: Node<'a>) -> Vec<InitTable<'a>> {
-    let Some(body) = node.child_by_field_name("body") else {
-        return Vec::new();
-    };
-    let mut out = Vec::new();
-    let mut cursor = body.walk();
-    for child in body.named_children(&mut cursor) {
-        if child.kind() != "declaration" {
-            continue;
-        }
-        let Some(init_decl) = init_declarator_of(child) else {
-            continue;
-        };
-        let Some(declarator) = init_decl.child_by_field_name("declarator") else {
-            continue;
-        };
-        if declarator.kind() != "array_declarator" {
-            continue;
-        }
-        let Some(outer_list) = init_decl.child_by_field_name("value") else {
-            continue;
-        };
-        if outer_list.kind() != "initializer_list" {
-            continue;
-        }
-        let inner_lists = inner_initializer_lists(outer_list);
-        if inner_lists.len() < INIT_TABLE_MIN_ENTRIES {
-            continue;
-        }
-        if !inner_lists.iter().all(|l| {
-            l.end_position().row.saturating_sub(l.start_position().row) < INIT_TABLE_MAX_INNER_ROWS
-        }) {
-            continue;
-        }
-        out.push(InitTable {
-            decl_node: child,
-            outer_list,
-        });
-    }
-    out
-}
-
-fn init_declarator_of(decl: Node) -> Option<Node> {
-    let mut cursor = decl.walk();
-    decl.named_children(&mut cursor)
-        .find(|child| child.kind() == "init_declarator")
-}
-
-fn inner_initializer_lists<'a>(outer: Node<'a>) -> Vec<Node<'a>> {
-    let mut cursor = outer.walk();
-    outer
-        .named_children(&mut cursor)
-        .filter(|c| c.kind() == "initializer_list")
-        .collect()
-}
-
-/// Emit the row spec for an `InitTableRows` batch: one line per inner
-/// initializer's start row. NS authors trim these tables to just the
-/// data rows (skipping the `static struct {…} X[] = {` preamble and
-/// the closing `};`), so the walker matches that shape — the table
-/// name is recoverable from the source `path:line` rendered prefix.
-fn collect_init_table_rows(table: &InitTable) -> FileLines {
-    let mut full = Vec::new();
-    for inner in inner_initializer_lists(table.outer_list) {
-        full.push(inner.start_position().row + 1);
-    }
-    FileLines::new(dedup_sorted(full))
 }
 
 #[cfg(test)]
@@ -2072,99 +1929,6 @@ void llco_second(void) { return; }
                 );
             }
         }
-    }
-
-    #[test]
-    fn c_init_table_rows_recognizer_finds_static_array_of_structs() {
-        // 4-entry positive case.
-        let src = "\
-int init(void) {
-  static struct { const char *n; int v; } aReg[] = {
-    {\"a\", 1},
-    {\"b\", 2},
-    {\"c\", 3},
-    {\"d\", 4},
-  };
-  return 0;
-}
-";
-        let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, std::path::Path::new("test.c"));
-        let fn_decls: Vec<_> = decls
-            .iter()
-            .filter(|(_, i)| i.kind == DeclKind::FunctionDef)
-            .collect();
-        assert_eq!(fn_decls.len(), 1, "expected 1 fn def, got {decls:?}");
-        let tables = find_init_tables_in_body(fn_decls[0].0);
-        assert_eq!(tables.len(), 1, "expected 1 init table");
-
-        let rows = collect_init_table_rows(&tables[0]);
-        // Expected: one row per inner entry. The fixture has four
-        // entries on lines 3, 4, 5, 6 (1-based). No framing rows.
-        assert_eq!(rows.full, vec![3, 4, 5, 6]);
-    }
-
-    #[test]
-    fn c_init_table_rows_recognizer_skips_too_few_entries() {
-        // 1-entry array isn't a table — below the 2-entry floor.
-        let src = "\
-int init(void) {
-  static struct { int v; } aSingleton[] = {
-    {1},
-  };
-  return 0;
-}
-";
-        let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, std::path::Path::new("test.c"));
-        let fn_decl = decls
-            .iter()
-            .find(|(_, i)| i.kind == DeclKind::FunctionDef)
-            .expect("fn def");
-        let tables = find_init_tables_in_body(fn_decl.0);
-        assert!(
-            tables.is_empty(),
-            "1-entry init list should not match: {tables:?}",
-            tables = tables.len()
-        );
-    }
-
-    #[test]
-    fn c_init_table_rows_disjoint_from_decl_body() {
-        // The DeclBody for the enclosing function MUST exclude rows
-        // claimed by InitTableRows (siblings under the same Decl
-        // predecessor — non-ancestor overlap would panic the
-        // scheduler).
-        let src = "\
-int init(void) {
-  int before = 1;
-  static struct { const char *n; int v; } aReg[] = {
-    {\"a\", 1},
-    {\"b\", 2},
-    {\"c\", 3},
-    {\"d\", 4},
-  };
-  int after = 2;
-  return 0;
-}
-";
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(root.join("init.c"), src).unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
-        // The scheduler runs to completion only if no overlap panic
-        // fires; the disjoint-row guarantee is checked there.
-        let report = scheduler.run_with_report();
-        let has_table = report
-            .scheduled
-            .iter()
-            .any(|r| matches!(&r.key, BatchKey::C(CKey::InitTableRows { .. })));
-        assert!(
-            has_table,
-            "expected an InitTableRows batch; keys: {:?}",
-            report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>()
-        );
     }
 
     #[test]

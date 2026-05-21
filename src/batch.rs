@@ -303,15 +303,6 @@ pub enum CKey {
     /// Doc comment(s) immediately above a declaration. Predecessor:
     /// matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
-    /// Rows of a `static struct { ... } X[] = { ... };` registration
-    /// table inside a fn body — header line, per-initializer rows, and
-    /// closing `};`. Predecessor: enclosing `Decl`. Sibling of
-    /// `DeclBody`; the two are disjoint (DeclBody excludes the table).
-    InitTableRows {
-        file: PathBuf,
-        start_line: usize,
-        end_line: usize,
-    },
     /// Blank-line-separated field group inside a big struct/union body,
     /// or a sized chunk of enumerators inside a big enum body. Emitted
     /// only when a struct/union has ≥3 blank-line groups, or an enum
@@ -941,14 +932,6 @@ impl CKey {
             CKey::DeclDoc { file, start_line } => {
                 describe_at("c decl doc", file, *start_line, root)
             }
-            CKey::InitTableRows {
-                file,
-                start_line,
-                end_line,
-            } => format!(
-                "c init table rows at {}:{start_line}-{end_line}",
-                display_path(file, root)
-            ),
             CKey::AggregateMemberGroup {
                 file,
                 start_line,
