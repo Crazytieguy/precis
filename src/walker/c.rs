@@ -1214,11 +1214,7 @@ fn collect_header_banner(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(lines)
 }
 
-/// 0-based row of the last comment in the file's HeaderBanner — the
-/// leading run of comment children of root. Mirrors
-/// [`collect_header_banner`]'s span shape so callers can keep
-/// `DeclDoc` from crossing the banner boundary. `None` when the file
-/// has no leading comment block.
+/// Last-comment row of the file's HeaderBanner (`None` if no banner).
 fn header_banner_end_row(tree: &Tree) -> Option<usize> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -1263,18 +1259,12 @@ fn collect_includes(tree: &Tree, source: &str) -> (FileLines, usize) {
     )
 }
 
-/// Result of classifying a `preproc_if*` / `preproc_else*` block.
+/// Classification of a `preproc_if*` / `preproc_else*` block.
 #[derive(Default)]
 struct ConditionalClass {
-    /// True iff every named child is preprocessor content — `#include`,
-    /// `#define`, comments, condition/name tokens, and nested
-    /// conditionals that are themselves directive-only. A block
-    /// wrapping real C code (`declaration`, `function_definition`,
-    /// `statement`, `linkage_specification`, …) is not directive-only.
+    /// True iff every named child is preprocessor content (recursively).
     directive_only: bool,
-    /// `#include` directives in this block's subtree, summed across
-    /// every branch (top-level + `#else` / `#elif` arms + nested
-    /// conditionals).
+    /// `#include` count summed across every branch (subtree-wide).
     include_count: usize,
 }
 
@@ -1344,8 +1334,8 @@ fn collect_decl_names_from_with_global_starts(
     FileLines::new(full).with_ellipses(ellipses)
 }
 
-/// True iff the 1-based source line is safe to claim as an ellipsis
-/// marker — i.e. not a line another non-ancestor batch owns.
+/// True iff the line is safe to claim as an ellipsis marker — not
+/// owned by `Includes` or a sibling decl's leading comment.
 fn ellipsis_line_safe(line: usize, src_lines: &[&str]) -> bool {
     let Some(text) = src_lines.get(line - 1) else {
         return false;
@@ -1364,23 +1354,10 @@ fn ellipsis_line_safe(line: usize, src_lines: &[&str]) -> bool {
     true
 }
 
-/// Lines for the decl's signature/header. For function definitions, the
-/// signature with a body-elision marker (only when the body has interior
-/// rows to elide). For prototypes / typedefs / variables / `#define`s,
-/// the whole statement. For struct / union / enum at top level, the
-/// whole specifier — except when the decl is chunked into per-member
-/// groups (`info.member_groups` non-empty), in which case the parent
-/// `Decl` covers only the type header + closing brace so the member
-/// groups own the body rows.
-///
-/// `all_starts` is the set of 1-based `start_line`s of every sibling decl
-/// in this translation unit (including this decl's own). Spans are
-/// trimmed so they never claim a row that's another decl's start —
-/// tree-sitter occasionally produces overlapping nodes (e.g. when a
-/// macro like `LLCO_EXTERN` is folded into a following function as a
-/// type qualifier and is also surfaced as a sibling node), and the
-/// scheduler's non-ancestor-overlap guard would panic on unfolded
-/// overlap.
+/// Lines for the decl's signature/header. Fn defs get a body-elision
+/// marker; other decls render whole. Aggregates with `member_groups`
+/// trim to header + closer. Spans are trimmed at sibling decl starts
+/// to avoid non-ancestor overlap from tree-sitter node overlap.
 fn collect_decl(
     node: Node,
     info: &DeclInfo,
@@ -1445,10 +1422,7 @@ fn collect_decl(
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-/// Body interior of a function definition: rows strictly between the
-/// `compound_statement`'s `{` and `}`, with blank source rows skipped.
-/// Returns empty when the body has no interior to render (single-line
-/// body or all-blank interior).
+/// Non-blank interior rows of a fn definition's `compound_statement`.
 fn collect_decl_body(node: Node, src_lines: &[&str]) -> FileLines {
     let Some(body) = node.child_by_field_name("body") else {
         return FileLines::new(Vec::new());
