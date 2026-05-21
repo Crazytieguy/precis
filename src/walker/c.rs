@@ -54,43 +54,23 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, CKey};
 use crate::value::{mix_signals, names_surface_chunk_factor};
 
-/// Chunk size for C declaration-name surfaces when there's no
-/// structural signal (banner-separated sections) to chunk on. Larger
-/// than the `NAMES_SURFACE_CHUNK_SIZE = 12` used by Python/TS because
-/// C headers regularly expose 50+ decls and NS authors anchor on
-/// unified subset rows (e.g. sds's "Public fn declarations — utility
-/// fns" covers 14 specific lines). A 24-decl chunk keeps the surface
-/// coherent for files in the 25–48 decl band while still splitting
-/// catalog headers like krep.h (~80 decls) so the first chunk reaches
-/// the budget.
+/// Chunk size for C decl-name surfaces with no structural signal.
+/// Larger than Python/TS's 12 because C headers regularly expose 50+
+/// decls; 24 keeps mid-sized headers coherent while still splitting
+/// catalog amalgamation headers.
 const C_DECL_NAMES_CHUNK_SIZE: usize = 24;
 
-/// Minimum number of `// <stem>.c` section banners required to switch
-/// from count-based chunking to section-banner chunking on a canonical
-/// entry header. Below this, the header isn't an amalgamation catalog
-/// and the count-based chunks fit the surface better.
+/// Minimum `// <stem>.c` banners required to switch to section-banner
+/// chunking on a canonical entry header.
 const SECTION_BANNER_MIN_COUNT: usize = 3;
 
-/// Per-run C-walker state. Caches the seed-root's autotools
-/// `include_HEADERS` declaration (parsed from `Makefile.am` once per
-/// run), which lists the public-API headers an autotools project
-/// installs. When present, internal headers — everything else under
-/// `src/` — get demoted in early budget so the public surface ranks
-/// first.
+/// Per-run C-walker state. Caches the seed root's autotools
+/// `include_HEADERS` set so internal headers can be demoted.
 #[derive(Default)]
 pub(in crate::walker) struct CState {
-    /// `Some(set)` iff a `Makefile.am` exists at the seed root and
-    /// declares at least one public header via `include_HEADERS` /
-    /// `nobase_include_HEADERS`. The set holds canonicalized absolute
-    /// paths. `None` means no information is available, in which case
-    /// no public/private distinction is enforced and the walker falls
-    /// back to treating every header equally.
+    /// `Some(set)` iff `Makefile.am` declares at least one public header.
+    /// `None` means no info — every header is treated equally.
     public_headers: OnceCell<Option<HashSet<PathBuf>>>,
-    /// Memoized `is-public` lookup per header path. Mirrors the
-    /// `workspace_member_lookup` pattern in `RustState`: every value
-    /// signal on a header (`Decl`, `DeclDoc`, `DeclBody`, `DeclNames`
-    /// chunks) reads visibility, so a single canonicalize per file
-    /// rather than per call matters when a header carries 50+ decls.
     visibility_lookup: RefCell<HashMap<PathBuf, bool>>,
 }
 
@@ -124,19 +104,12 @@ impl CState {
     }
 }
 
-/// Parse `Makefile.am` at `root` for the `include_HEADERS` /
+/// Parse `Makefile.am` at `root` for `include_HEADERS` /
 /// `nobase_include_HEADERS` / `pkginclude_HEADERS` declarations.
-/// Returns the canonical paths of every listed `.h` file, or `None`
-/// if the file is missing / unreadable / declares no public headers.
-/// Line-continuation `\` is honored.
-///
-/// **Fails open** on any installing `*_HEADERS` line whose value
-/// cannot be statically resolved to a literal list of `.h`
-/// filenames — `+=` appends, variable-expanded values like
-/// `$(MY_HEADERS)`, conditional `if FOO` arms with their own
-/// assignments. Returning `None` in those cases is safer than
-/// returning an incomplete set, since a partial public set would
-/// silently demote any installed-but-missed header to internal.
+/// Returns canonical paths of every listed `.h`, or `None` if the
+/// file is missing / unreadable / declares no public headers.
+/// Fails open on `+=`, conditional assignment, or `$(VAR)`-valued
+/// lines — a partial set would silently demote real public headers.
 fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
     let manifest = root.join("Makefile.am");
     let text = std::fs::read_to_string(&manifest).ok()?;
@@ -208,22 +181,9 @@ use super::{
     single_file_lines_content, trim_end_before_next_decl,
 };
 
-/// Partition the in-source-order `decls` of a single C source file into
-/// chunks for the decl-names surface, along with the chunking
-/// strategy. Two strategies:
-///
-/// 1. **Section-banner chunking** (preferred for amalgamation-style
-///    headers): when `file` is a header at a canonical entry location
-///    and contains at least `SECTION_BANNER_MIN_COUNT` top-level
-///    `// <stem>.c` banner comments, chunk on banner boundaries. Each
-///    chunk's decls are the run of decls whose `start_line` falls
-///    between consecutive banners; any decls before the first banner
-///    form the leading "preamble" chunk. Chunks with zero decls are
-///    skipped — banners with no following decls (a banner immediately
-///    before the next banner) don't produce empty surfaces.
-/// 2. **Count-based fallback**: split into `C_DECL_NAMES_CHUNK_SIZE`-
-///    sized chunks. This is what every C header without amalgamation
-///    structure uses (the typical case).
+/// Partition `decls` into chunks for the decl-names surface. Prefers
+/// section-banner chunking for amalgamation-style headers; falls back
+/// to fixed-size source-order chunks otherwise.
 fn compute_decl_chunk_ranges(
     decls: &[(Node, DeclInfo)],
     tree: &Tree,
@@ -240,25 +200,18 @@ fn compute_decl_chunk_ranges(
     )
 }
 
-/// Which chunking strategy produced the ranges. The decl-names value
-/// model treats section-banner chunks differently from count-based
-/// chunks: a banner-delimited chunk is its own subject (the strings.c
-/// section of an amalgamation header), so the source-order falloff
-/// that count-based chunking carries (later chunks are less load-bearing
-/// summaries of the same catalog) shouldn't apply.
+/// Which chunking strategy produced the ranges. Banner-delimited
+/// chunks are each their own subject so they skip the source-order
+/// value decay that count-based chunks apply.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum DeclChunkingStrategy {
-    /// Fixed-size source-order chunks; later chunks decay in value.
     CountBased,
-    /// Chunks delimited by `// <stem>.c` banner comments; each chunk
-    /// stands alone, so no source-order decay.
     SectionBanner,
 }
 
-/// Section-banner chunking — see [`compute_decl_chunk_ranges`].
-/// Returns `None` when the file doesn't qualify (not a header at a
-/// canonical entry location, or fewer than `SECTION_BANNER_MIN_COUNT`
-/// banner comments).
+/// Section-banner chunking. Returns `None` unless the file is a header
+/// at a canonical entry location with at least `SECTION_BANNER_MIN_COUNT`
+/// `// <stem>.c` banner comments.
 fn section_banner_chunk_ranges(
     decls: &[(Node, DeclInfo)],
     tree: &Tree,
