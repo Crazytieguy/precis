@@ -920,36 +920,24 @@ fn is_export_type_only(kind: ItemKind, stmt: Node, source: &str) -> bool {
     }
 }
 
-/// True when this `export_statement` wraps an `ambient_declaration` —
-/// `export declare function` / `export declare class` / `export declare
-/// const`, etc. tree-sitter-typescript surfaces this wrapper between
-/// `export_statement` and the inner decl node.
+/// True when this `export_statement` wraps an `ambient_declaration`
+/// (`export declare …`).
 fn has_ambient_declaration(stmt: Node) -> bool {
     let mut cursor = stmt.walk();
     stmt.children(&mut cursor)
         .any(|c| c.kind() == "ambient_declaration")
 }
 
-/// True for TypeScript declaration files (`.d.ts` / `.d.tsx`). All
-/// exports in these files are implicitly ambient — the file emits no
-/// runtime code, so per-export batches are deprioritized like other
-/// type-machinery files.
+/// True for TypeScript declaration files (`.d.ts` / `.d.tsx`).
 pub(crate) fn is_declaration_file(path: &Path) -> bool {
     path.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.ends_with(".d.ts") || n.ends_with(".d.tsx"))
 }
 
-/// `TYPE_MACHINERY_FILE_FACTOR` when this file emits no runtime code,
-/// else `1.0`. Two paths qualify: a declaration file (`.d.ts`) — every
-/// export is implicitly ambient — or a regular `.ts` file whose every
-/// top-level export is type-only (interface / type alias / `export
-/// type { ... }` / `export declare ...`). Per-export `Export` /
-/// `ExportDoc` / `ExportBody` batches multiply this in so the
-/// schedule prefers runtime-bearing files at the same V/C.
-/// `ExportNames` is intentionally outside this discount — NS authors
-/// of type-heavy public APIs (e.g., `ky`) expect the names surface
-/// even when individual lines aren't load-bearing.
+/// `TYPE_MACHINERY_FILE_FACTOR` when the file emits no runtime code —
+/// `.d.ts` or every top-level export is type-only. `ExportNames` is
+/// intentionally NOT damped so the names surface stays visible.
 fn type_machinery_factor(file: &Path, exports: &[ExportInfo<'_>]) -> f64 {
     if is_declaration_file(file) || (!exports.is_empty() && exports.iter().all(|e| e.is_type_only))
     {
@@ -961,11 +949,9 @@ fn type_machinery_factor(file: &Path, exports: &[ExportInfo<'_>]) -> f64 {
 
 const TYPE_MACHINERY_FILE_FACTOR: f64 = 0.35;
 
-/// Local identifier names that appear in any top-level **value**
-/// re-export clause (`export { X }`, `export { X as Y }`). Excludes
-/// `export type { X }` (statement-level type modifier),
-/// `export { type X }` (per-specifier type modifier), and any clause
-/// with a `from '…'` source (those are plumbing handled by `Imports`).
+/// Local identifier names in top-level value re-export clauses
+/// (`export { X }` / `export { X as Y }`). Excludes type-only and
+/// any clause with a `from` source.
 fn collect_local_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -1415,9 +1401,8 @@ impl<'a> LocatedExport<'a> {
         }
     }
 
-    /// The node a collector should anchor at (start_row, prev_sibling
-    /// for JSDoc) — the wrapping `export_statement` for real exports,
-    /// the lexical_declaration itself for synthetics.
+    /// Anchor node for the collector — the wrapping `export_statement`
+    /// for real exports, the lexical_declaration for synthetics.
     fn anchor(&self) -> Node<'a> {
         match *self {
             LocatedExport::Real { export_stmt, .. } => export_stmt,
@@ -1425,9 +1410,8 @@ impl<'a> LocatedExport<'a> {
         }
     }
 
-    /// The inner declaration node — the function/class/lexical_decl
-    /// returned by `classify_export` for real exports, the
-    /// lexical_declaration itself for synthetics.
+    /// Inner declaration node from `classify_export` (real) or the
+    /// lexical_declaration itself (synthetic).
     fn decl(&self) -> Node<'a> {
         match *self {
             LocatedExport::Real { decl, .. } | LocatedExport::Synthetic { decl, .. } => decl,
