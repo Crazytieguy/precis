@@ -23,10 +23,7 @@ use crate::tokenizer;
 
 const INDENT_UNIT: &str = "    ";
 
-/// Shared source-file cache. The scheduler constructs one and hands clones
-/// to both `WalkCtx` (for walker-side parsing) and `RenderedTree` (for
-/// materialization at render time), so each file is read at most once per
-/// run regardless of how many batches touch it.
+/// Shared source-file cache — read each file at most once per run.
 #[derive(Clone, Debug, Default)]
 pub struct SourceCache(Rc<RefCell<HashMap<PathBuf, Arc<str>>>>);
 

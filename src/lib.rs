@@ -47,10 +47,8 @@ pub use schedule_types::{Atom, CandidateBatch, Schedule, ScheduledBatch};
 use scheduler::Scheduler;
 use walker::FsWalker;
 
-/// Render a precis summary of the given path(s) under the given budgets.
-///
-/// First-pass v0.2 supports a single seed path that must be a directory.
-/// Multi-path inputs and file-as-seed are in the deferred set.
+/// Render a precis summary of the given path(s) under the given
+/// budgets. v0.2 supports a single directory seed.
 pub fn render(
     paths: &[impl AsRef<Path>],
     token_budget: usize,
@@ -74,10 +72,8 @@ pub fn render(
 }
 
 /// Replay a previously-produced [`Schedule`] against a fresh tree at
-/// `budget` (≤ the schedule's budget). Stops once cumulative tokens
-/// exceed `budget`; under prefix-monotone scheduling this matches what
-/// [`render`] would have produced at the smaller budget directly,
-/// without re-running the walker.
+/// `budget`. Under prefix-monotone scheduling this matches running
+/// `render` at the smaller budget, without re-running the walker.
 pub fn render_with_schedule(
     schedule: &Schedule,
     root: impl AsRef<Path>,
@@ -94,12 +90,8 @@ pub fn render_with_schedule(
     Ok(tree.render())
 }
 
-/// Run the walker at `budget` and return a structured `Schedule` — the
-/// input both the regression-snapshot test and `compare-ns` (divergence
-/// metric) consume. Strings out the ordered batch log: keys are formatted
-/// via `BatchKey::describe()` for readable diffs; content is the resolved
-/// library `BatchContent` (fs groups with explicit children, lines with
-/// spans).
+/// Run the walker at `budget` and return a [`Schedule`] — input for
+/// regression snapshots and the divergence metric.
 pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Schedule> {
     let path = paths
         .first()

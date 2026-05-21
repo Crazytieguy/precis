@@ -10,10 +10,8 @@ pub(super) fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
     out
 }
 
-/// Interleaved NS + walker timeline, sorted by cumulative tokens, with
-/// `Score(B = cum)` computed at every row. The single primary surface
-/// of the divergence report; see the iterate-divergence SKILL for how
-/// to read it.
+/// Interleaved NS + walker timeline, sorted by cumulative tokens —
+/// the divergence report's primary surface.
 fn format_schedule_table(out: &mut String, ctx: &BuildCtx) {
     out.push('\n');
     out.push_str(
@@ -117,13 +115,8 @@ fn write_row(out: &mut String, row: &Row<'_>, score: f64) {
     .unwrap();
 }
 
-/// Markdown table-cell escape. `|` splits cells in GFM/CommonMark
-/// tables and `\n` / `\r` break the row entirely. Backslash matters:
-/// in GFM, a pipe is only escaped when preceded by an odd-length
-/// backslash run, so input `\|` (e.g. an already-escaped pipe from
-/// the NS author, or a regex fragment) must first have its `\`
-/// doubled and then its `|` escaped — otherwise the original `\` cancels
-/// the new escape and the pipe still acts as a delimiter.
+/// Markdown table-cell escape. Backslashes are doubled BEFORE pipes
+/// are escaped — in GFM, only an odd-length backslash run escapes a pipe.
 fn escape_cell(s: &str) -> String {
     s.replace('\\', "\\\\")
         .replace('|', "\\|")
