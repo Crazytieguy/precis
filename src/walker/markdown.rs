@@ -113,29 +113,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md");
     let mut out = Vec::new();
 
-    // RST README: emit a single `ReadmeHeadline` batch with the
-    // file's non-decorative content. No tree-sitter parse — we
-    // line-scan, drop `.. directive::` blocks (image / badge /
-    // hyperlink targets), and render the rest. This is enough
-    // to unblock typeguard / pluggy whose NS pins the README's
-    // lede + brief mode/feature paragraphs (a single substantive
-    // block in source order). Larger RST files get the same
-    // single-batch treatment capped by `RST_README_LINE_CAP`;
-    // beyond that the file is treated as too big for one slot
-    // and skipped. We do NOT emit `HeadingsOutline` or per-section
-    // `Section` batches for RST (tree-sitter-md can't parse the
-    // setext-style `===` / `---` underlines), so the budget for
-    // RST READMEs is one anchor batch.
+    // RST README: emit one ReadmeHeadline batch with the non-decorative
+    // content (no tree-sitter parse — line-scan, drop `.. directive::`
+    // blocks). Skip nested README.rst — root-level is the only anchor.
     for file in super::fs::files_with_extension(dir, "rst") {
-        if !is_readme_rst(&file) {
-            continue;
-        }
-        // Skip README.rst inside subdirectories (changelog/,
-        // downstream/, etc.). The root-level README is the only
-        // ReadmeHeadline anchor; nested READMEs are admin files
-        // describing the subtree's content convention, and crowding
-        // the schedule with them displaces real source content.
-        if dir != ctx.root() {
+        if !is_readme_rst(&file) || dir != ctx.root() {
             continue;
         }
         let Some(source) = ctx.read_source(&file) else {
@@ -146,15 +128,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: MarkdownKey::ReadmeHeadline { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                // RST headlines carry the *entire* substantive README in
-                // one batch (no `Section` split — see the block-comment
-                // above). They're the RST equivalent of the README's
-                // ReadmeHeadline + every `## …` section combined, so the
-                // value tier should match the broader-anchor role. The
-                // long-RST cases (beets's 550-token headline) sit near
-                // the auto-injection budget edge; the boost keeps them
-                // inside the budget rather than displaced behind
-                // peripheral per-file batches.
                 value: readme_headline_value(&file, ctx) * RST_README_HEADLINE_FACTOR,
             });
         }
@@ -288,15 +261,10 @@ fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
 }
 
-/// Multiplier applied to the RST `ReadmeHeadline` batch. RST READMEs
-/// don't get `Section` / `HeadingsOutline` companion batches (no
-/// tree-sitter-md parse), so the lone `ReadmeHeadline` batch carries
-/// the *entire* substantive README in one chunk — far more NS
-/// coverage per batch than a Markdown headline (which is paired with
-/// per-section content). Lift its value tier to reflect the broader
-/// anchor role; otherwise long-RST READMEs (beets's 550-token
-/// headline) sit past the auto-injection budget because their cost
-/// loses the V/C race despite the per-token coverage being high.
+/// Multiplier for the RST `ReadmeHeadline` batch. RST READMEs have no
+/// `Section` / `HeadingsOutline` companions (no tree-sitter-md parse),
+/// so the lone headline carries the whole substantive README and ranks
+/// as a broader anchor.
 const RST_README_HEADLINE_FACTOR: f64 = 1.5;
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -> f64 {
@@ -325,23 +293,9 @@ fn dense_md_sibling_factor(file: &Path, sibling_md_count: usize) -> f64 {
     ((DENSE_THRESHOLD as f64) / (sibling_md_count as f64)).sqrt()
 }
 
-/// Damp the outline value for loose `docs/<file>.md` pages — markdown
-/// files at depth 2 that aren't README or orientation docs
-/// (ARCHITECTURE / OVERVIEW / DESIGN / STRUCTURE). NS authors anchor
-/// the outline batch on the README, on a project-orientation doc, or
-/// on the entries of a curated docs site (a `docs/guides/`,
-/// `docs/reference/`, `site/content/`, or `guide/src/` subdirectory);
-/// standalone pages like `docs/installation.md`, `docs/usage.md`, or
-/// `docs/index.md` rarely appear in NSes yet still consume budget at
-/// the per-file outline rank.
-///
-/// Depth-based gating distinguishes the two cases. Depth 1
-/// (CONTRIBUTING.md, IMAGES.md) keeps full value — root-level admin /
-/// topical docs are rare and occasionally NS-anchored. Depth ≥ 3
-/// (docs/reference/X.md, docs/guides/X.md, guide/src/Y.md) also keeps
-/// full value — a subdirectory under `docs/` is a curation signal
-/// that NS authors do reference. The damp targets exactly the
-/// in-between case: `docs/X.md` with no further organization.
+/// Damp the outline value for non-README/non-orientation `.md` files at
+/// depth 2 (`docs/X.md`). Depth 1 and depth ≥ 3 keep full value — the
+/// damp targets only loose docs/ siblings that are rarely NS-anchored.
 const NON_ANCHOR_OUTLINE_FACTOR: f64 = 0.4;
 
 fn non_anchor_outline_factor(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -507,33 +461,19 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
     }
 }
 
-/// README H3 children often ARE the canonical concept rows NS authors
-/// anchor on ("Models", "URIs", "Editors" in monaco-editor), not
-/// elaboration sub-sections of a larger H2. Bump above the generic
-/// `SUB_SECTION_SIGNAL_SCALE` so these compete with per-method class
-/// body fragments in the early budget. Non-README docs (CHANGELOG,
-/// ARCHITECTURE, /docs pages) keep the conservative discount.
+/// README H3 children are often canonical concept rows in their own
+/// right; bump above the generic `SUB_SECTION_SIGNAL_SCALE`.
 const README_SUB_SECTION_SIGNAL_SCALE: f64 = 0.55;
 
-/// Stronger scale for H3 children under a README H2 whose title is an
-/// orientation-concept marker (`## Concepts`, `## Architecture`, …; see
-/// [`is_concept_h2_title`]). Such H3s are the named concept definitions
-/// NS authors anchor on; the generic
-/// `README_SUB_SECTION_SIGNAL_SCALE` keeps them behind per-decl
-/// surfaces in the early budget. The boost only applies when the
-/// parent H2 title matches the marker set, so it doesn't lift
-/// elaboration H3s under arbitrary topical H2s.
+/// Stronger scale for H3 children under a README concept-marker H2
+/// (see [`is_concept_h2_title`]) — those H3s are the named concept
+/// definitions NS authors anchor on.
 const README_CONCEPT_H3_SIGNAL_SCALE: f64 = 1.0;
 
-/// Upper byte size for an H3 to still propagate the concept boost
-/// (`README_CONCEPT_H3_SIGNAL_SCALE`) onto its `BodyBlock`s when split.
-/// A single-paragraph concept H3 stays as one `H3Child` (no split,
-/// the threshold doesn't apply). A multi-paragraph concept *definition*
-/// — monaco-editor's Providers (~500 B, 2 paragraphs) — falls in the
-/// window and keeps the boost on each paragraph. A multi-KB H3 living
-/// under a concept H2 (htmy's `### Components` at ~4 KB) is a long
-/// topical section rather than a concept definition; treating every
-/// paragraph as a top-tier concept row crowds NS-anchored content.
+/// Upper byte size for an H3 to still propagate the concept boost onto
+/// its `BodyBlock`s when split — keeps the lift for concept
+/// definitions (~500 B, a couple paragraphs) but suppresses it for
+/// long topical sections living under the same H2.
 const CONCEPT_H3_BODY_BLOCK_MAX_BYTES: usize = 700;
 
 fn is_changelog_class(file: &Path) -> bool {
