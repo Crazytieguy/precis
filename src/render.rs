@@ -255,11 +255,8 @@ impl RenderedTree {
         T: Fn(&str) -> usize,
     {
         let resolved = explode_spans(spans);
-        // explode_spans yields `(path, line)` in lex order; grouping by
-        // path lets source + indent + existing-content lookups happen
-        // once per path while preserving that order — required so the
-        // visitor's per-atom output indexes 1:1 with
-        // `divergence::atoms_from_content`'s Lines arm.
+        // Group by path so source/indent lookups happen once per file,
+        // preserving lex order to keep 1:1 with `atoms_from_content`.
         let mut by_path: BTreeMap<&Path, Vec<(usize, &Render)>> = BTreeMap::new();
         for (path, line, render) in &resolved {
             by_path
