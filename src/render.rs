@@ -49,8 +49,7 @@ impl SourceCache {
         Some(arc)
     }
 
-    /// Insert a pre-loaded source (used when the walker has already read the
-    /// file via its own path). Idempotent — repeated inserts are no-ops.
+    /// Insert a pre-loaded source. Idempotent.
     pub fn insert(&self, path: PathBuf, source: Arc<str>) {
         self.0.borrow_mut().entry(path).or_insert(source);
     }
@@ -62,9 +61,8 @@ pub struct Cost {
     pub bytes: usize,
 }
 
-/// A span wanted to write a line that's already owned by a non-ancestor
-/// batch. Scheduler treats as a walker bug (debug-asserts); simulator
-/// surfaces as an NS-authoring violation.
+/// A span tried to write a line owned by a non-ancestor batch.
+/// Scheduler debug-asserts; simulator surfaces as a violation.
 #[derive(Debug, Clone)]
 pub struct ApplyConflict {
     pub path: PathBuf,
@@ -125,9 +123,7 @@ impl RenderedTree {
         &self.root
     }
 
-    /// Marginal cost of applying `content` against the current state.
-    /// Exact tokens via `tiktoken_rs`. Also feeds the optional
-    /// `[calib]` recorder when `--features timing` is on.
+    /// Marginal cost of applying `content` — exact tokens.
     pub fn marginal_cost(&self, content: &BatchContent) -> Cost {
         let mut total = Cost::default();
         self.visit_atom_costs(
@@ -143,33 +139,24 @@ impl RenderedTree {
         total
     }
 
-    /// Approximate token count — `bytes / k` per row. Used by the
-    /// scheduler's approx-ranking pass; the exact `marginal_cost` runs
-    /// on the small contender pool that survives ranking.
+    /// Approximate token count (`bytes / k`) — for approx ranking.
     pub fn marginal_cost_approx(&self, content: &BatchContent) -> usize {
         let mut tokens: usize = 0;
         self.visit_atom_costs(content, tokenizer::approx_count, |c| tokens += c.tokens);
         tokens
     }
 
-    /// Marginal cost broken down per atom — one entry per atom in the
-    /// batch, in `divergence::atoms_from_content` iteration order so
-    /// callers can index 1:1. Atoms that don't contribute (FS entries
-    /// already listed, line refinements no longer than the prior render)
-    /// yield `Cost::default()`. Used by the divergence walker-waste
-    /// accounting to attribute off-NS spend to atoms with their actual
-    /// marginal contribution — bodies and short decls can sit in the
-    /// same batch but differ ~10× in token weight.
+    /// Per-atom marginal cost, indexed 1:1 with
+    /// `divergence::atoms_from_content`. Non-contributing atoms yield
+    /// `Cost::default()`.
     pub fn marginal_cost_per_atom(&self, content: &BatchContent) -> Vec<Cost> {
         let mut out = Vec::new();
         self.visit_atom_costs(content, tokenizer::count, |c| out.push(c));
         out
     }
 
-    /// Internal visitor: invokes `visit(cost)` once per atom in iteration
-    /// order. Single source of truth for the per-atom cost formula. The
-    /// `tokens` closure decides exact vs approximate counting; everything
-    /// else (FS zeroing, span delta) is identical across counters.
+    /// Per-atom cost visitor — `tokens` chooses exact vs approx
+    /// counting; everything else is identical.
     fn visit_atom_costs<F, T>(&self, content: &BatchContent, tokens: T, mut visit: F)
     where
         F: FnMut(Cost),
@@ -181,12 +168,8 @@ impl RenderedTree {
         }
     }
 
-    /// Apply `content` against the rendered tree. `owner` is the
-    /// emitting batch's id; `is_ancestor(id)` tells us whether an
-    /// existing line's owner is an ancestor — non-ancestor overlaps
-    /// are returned as [`ApplyConflict`]s so callers can surface them
-    /// as violations (simulator) or debug-assert (scheduler, which
-    /// trusts walker-emitted batches to declare correct predecessors).
+    /// Apply `content` to the tree. Non-ancestor overlaps come back
+    /// as [`ApplyConflict`]s for the caller to handle.
     pub fn apply(
         &mut self,
         content: &BatchContent,
@@ -465,10 +448,8 @@ fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize) -> String 
     s
 }
 
-/// Materialize a single rendered line from its render spec + source text.
-/// `source_line` is the raw source at that 1-indexed line (without the
-/// trailing newline); empty string is the fallback when source is
-/// unavailable (release tolerates; debug asserts the invariant).
+/// Render one line: render spec + raw source text (empty string when
+/// unavailable — release tolerates, debug asserts).
 fn format_line_row(
     number: usize,
     render: &Render,
