@@ -23,26 +23,16 @@ use super::{
     single_file_lines_content,
 };
 
-/// Hard cap on `Whole` JSON config rendering. Above this, we skip the
-/// batch entirely — generated files (lockfiles, .nyc_output, package
-/// manifests in node_modules) are pure noise.
+/// Hard cap on `Whole` JSON config rendering — generated files
+/// (lockfiles, manifests in node_modules) skip the batch entirely.
 const WHOLE_LINE_CAP: usize = 60;
 
-/// Multiplier applied to `Identity` signals on workspace-member
-/// `package.json` files. Same axis as the TOML walker's
-/// `WORKSPACE_MEMBER_IDENTITY_FACTOR`: in a workspace, a sub-package's
-/// `name`/`version`/`description` is mostly inherited or trivially
-/// derivable from the root, so it shouldn't crowd out the root manifest
-/// or load-bearing source.
+/// Damp `Identity` signals on workspace-member `package.json` files —
+/// sub-package identity is mostly inherited from the root.
 const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
-/// Per-run JSON-walker state owned by [`WalkCtx`]. Caches the seed-root's
-/// JS/TS workspace member set so we resolve it at most once per run.
-/// Members are determined from the union of `<root>/package.json#workspaces`
-/// (npm/yarn) and `<root>/pnpm-workspace.yaml` (pnpm). Pnpm declarations
-/// containing a `!`-prefixed (negation) entry are treated as opt-out for
-/// pnpm-based damping — see `collect_workspace_members` for the safety
-/// rationale.
+/// Per-run JSON-walker state — caches the seed root's JS/TS workspace
+/// member set (npm/yarn `workspaces` + `pnpm-workspace.yaml`).
 #[derive(Default)]
 pub struct JsonState {
     members: OnceCell<HashSet<PathBuf>>,
@@ -50,9 +40,7 @@ pub struct JsonState {
 }
 
 impl JsonState {
-    /// `true` iff `file` is a `package.json` declared as a workspace
-    /// member by the seed root. Lookups are memoized — one canonicalize
-    /// per file across the run.
+    /// `true` iff `file` is a workspace-member `package.json`.
     pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
         let members = self.members.get_or_init(|| collect_workspace_members(root));
         if members.is_empty() {
@@ -121,39 +109,24 @@ fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<Batc
     })
 }
 
-/// Emit the six `package.json` batches chained as
-/// `Identity ← IdentityMeta ← Entry ← Runtime ← Scripts ← Dependencies`.
-/// The chain exists so a compact one-line `package.json` (where all six
-/// key groups collapse onto the same source line) renders through the
-/// predecessor-override path instead of tripping a non-ancestor overlap.
-/// For typical multi-line files the spans are disjoint and the chain
-/// costs nothing.
-///
-/// Predecessor advances only when the prior section actually emitted —
-/// a `package.json` missing identity keys still chains Entry → Scripts →
-/// Dependencies cleanly rather than orphaning them on an unscheduled
-/// Identity batch.
+/// Emit the six `package.json` batches chained as Identity ← IdentityMeta
+/// ← Entry ← Runtime ← Scripts ← Dependencies. The chain lets a compact
+/// one-line manifest render via predecessor-override without tripping
+/// non-ancestor overlap.
 fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
     let Some((source, tree)) = parse_json(ctx, file) else {
         return;
     };
     let pairs = top_level_pairs(&tree, &source);
-    // Workspace shells named `*-monorepo` are pure orchestration: the
-    // root package's name/scripts/deps describe the monorepo as a
-    // build target, not any project's API. Damp every batch so the
-    // per-member packages and primary-language anchors win the budget.
+    // `*-monorepo` shells are pure orchestration; damp so per-member
+    // packages and primary-language anchors win the budget.
     let shell_factor =
         if file.parent() == Some(ctx.root()) && package_json_name_ends_with(&source, "-monorepo") {
             0.2
         } else {
             1.0
         };
-    // App-style `package.json`s describe an application's workflow
-    // rather than a publishable library API: `scripts` is the
-    // operate-this-thing surface (start/dev/migrate/seed) and
-    // `dependencies` is the framework stack NS authors anchor on.
-    // Library manifests publish `exports`/`module` and put scripts in
-    // dev-tooling territory, so the boost is opt-in by signal — see
+    // App-style manifests get a Scripts/Dependencies boost — see
     // `is_app_package_json` for the predicate.
     let app_factor = if is_app_package_json(&source) {
         APP_SCRIPTS_DEPS_FACTOR
@@ -211,24 +184,8 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
 /// `package.json`s (see [`is_app_package_json`]).
 const APP_SCRIPTS_DEPS_FACTOR: f64 = 1.3;
 
-/// True for `package.json` files that describe an application rather
-/// than a publishable library — checked by source-string scan since
-/// the parse tree has already been threaded through `emit_package_json`
-/// and these are local, non-recursive keys. Signals are conservative
-/// (need at least one positive indicator):
-/// - `"private": true` — never published to a registry, so the
-///   manifest's authority is the operate-this-thing axis rather than
-///   the public-API axis.
-/// - `"bin"` field present AND no `"files"` allowlist — ships an
-///   executable but isn't packaging a library payload for npm. A
-///   manifest that lists `files` (or `private:true` aside) is
-///   publishable; its `scripts` is conventionally dev-tooling and its
-///   NS rank lives below the Entry/identity block.
-///
-/// Library-shaped manifests (no `private`, no `bin`, only
-/// `exports`/`main`/`module`) return false. Hybrid library+CLI
-/// packages (json-server, semver) keep the library default because
-/// their `files` allowlist signals a publishable payload.
+/// True for application-shaped `package.json` (not library): either
+/// `"private": true`, or `"bin"` without a `"files"` allowlist.
 fn is_app_package_json(source: &str) -> bool {
     if has_private_true(source) {
         return true;
@@ -236,8 +193,7 @@ fn is_app_package_json(source: &str) -> bool {
     has_top_level_key(source, "bin") && !has_top_level_key(source, "files")
 }
 
-/// `true` iff the source contains a top-level `"private": true` pair.
-/// Cheap scan — sufficient for well-formed JSON.
+/// `true` iff the source contains a top-level `"private": true`.
 fn has_private_true(source: &str) -> bool {
     let Some(idx) = source.find("\"private\"") else {
         return false;
@@ -249,12 +205,9 @@ fn has_private_true(source: &str) -> bool {
     rest[colon + 1..].trim_start().starts_with("true")
 }
 
-/// `true` iff the source declares a top-level key named `key`. Looks
-/// for `"key"` followed (after whitespace) by `:` — sufficient to
-/// distinguish `"bin": …` from a `bin` substring inside a script body
-/// or path. Doesn't validate that the key is at the document's top
-/// level; well-formed `package.json` manifests don't reuse these
-/// reserved names in nested objects.
+/// `true` iff the source declares a top-level key — `"key":`
+/// (whitespace tolerant). Doesn't validate top-levelness, but well-
+/// formed `package.json` doesn't reuse reserved names in nested objects.
 fn has_top_level_key(source: &str, key: &str) -> bool {
     let needle = format!("\"{key}\"");
     let mut cursor = source;
@@ -268,9 +221,7 @@ fn has_top_level_key(source: &str, key: &str) -> bool {
     false
 }
 
-/// Look up the `"name"` field's string value in a parsed package.json
-/// source and check whether it ends with the given suffix. Cheap
-/// inline parsing — sufficient for well-formed JSON.
+/// True iff the source's top-level `"name"` ends with `suffix`.
 fn package_json_name_ends_with(source: &str, suffix: &str) -> bool {
     let Some(idx) = source.find("\"name\"") else {
         return false;
@@ -400,23 +351,14 @@ fn is_dependencies_key(k: &str) -> bool {
 
 // --- value ---
 
-/// A `package.json` is secondary metadata when a Python project
-/// manifest (pyproject.toml) or a Rust manifest sits in the same dir.
-/// In those layouts the JS package is almost always a docs/tooling
-/// site (microbootstrap's `microbootstrap-docs` Vuepress shell, etc.)
-/// rather than the primary project surface, so each `package.json`
-/// batch should rank below the primary-language batches in the same
-/// repo.
+/// Damp `package.json` when a non-JS root manifest (pyproject.toml or
+/// Cargo.toml) sits in the same dir — the JS package is almost
+/// certainly a docs/tooling site, not the primary surface.
 const SECONDARY_PACKAGE_JSON_FACTOR: f64 = 0.05;
 
-/// A `package.json` is a scaffold template when it lives inside a
-/// `template-*` directory or under a `templates/` ancestor. These are
-/// the npm-init / create-* stamp materials (vite's
-/// `packages/create-vite/template-vue/package.json`, etc.) — they
-/// describe a starter someone else will receive, not the repo's own
-/// API or workflow. Without demotion they flood the schedule (15+
-/// nearly-identical scripts/identity batches in vite's case),
-/// crowding out load-bearing source.
+/// Damp `package.json` inside scaffold-template directories
+/// (`templates/` or `template-*`) — they're starter material, not the
+/// repo's own API/workflow.
 const SCAFFOLD_TEMPLATE_PACKAGE_JSON_FACTOR: f64 = 0.05;
 
 fn secondary_package_json_factor(file: &Path) -> f64 {
