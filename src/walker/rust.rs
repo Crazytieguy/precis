@@ -97,9 +97,7 @@ impl RustState {
         arc
     }
 
-    /// `true` iff `file` is a `Cargo.toml` declared (or auto-promoted) as
-    /// a workspace member by the seed-root `Cargo.toml`. Lookups are
-    /// memoized to avoid one canonicalize syscall per signal computation.
+    /// `true` iff `file` is a workspace-member `Cargo.toml`. Memoized.
     pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
         let members = self.workspace_members(root);
         if members.is_empty() {
@@ -118,11 +116,8 @@ impl RustState {
         hit
     }
 
-    /// Walk up from `file` to the nearest enclosing `Cargo.toml` and
-    /// return its directory iff that manifest is a workspace member.
-    /// Stops at the first manifest encountered — for a source file
-    /// inside a non-member nested crate, returns `None` even when a
-    /// member manifest exists further up. Memoized per file.
+    /// Directory of the nearest enclosing `Cargo.toml` iff it's a
+    /// workspace member — `None` for a non-member nested crate.
     pub(in crate::walker) fn nearest_member_dir(
         &self,
         file: &Path,
@@ -632,13 +627,8 @@ pub(super) enum Visibility {
 }
 
 impl ApiSurface {
-    /// Multiplier applied to all three value channels for non-API items.
-    /// Calibrated against the divergence score metric across the 10
-    /// fixtures: 0.4 per axis (visibility, doc_hidden) demotes
-    /// non-API items meaningfully without dropping load-bearing
-    /// internal types out of the schedule entirely. 0.16 stacks for
-    /// items that are *both* restricted and `#[doc(hidden)]` (the
-    /// most clearly internal class).
+    /// Multiplier for non-API items — 0.4 per axis (visibility,
+    /// doc_hidden); stacks to 0.16 for the doubly-internal class.
     fn factor(self) -> f64 {
         let v = match self.visibility {
             Visibility::Public => 1.0,
@@ -1113,18 +1103,9 @@ enum DocSection {
     Body,
 }
 
-/// Collect line numbers belonging to the crate-`//!` block, split at the
-/// first Markdown heading (`//! #`, `//! ##`, …). Regular license-header
-/// `// comments` above the `//!` run are skipped. The lede is everything
-/// from the first `//!` up to (but not including) the first heading line;
-/// the body is from the heading onwards. If no heading is present, the
-/// whole block is the lede.
-///
-/// Doctest-hidden lines are stripped *before* the lede/body split: a
-/// crate doc that opens with a fenced Rust example whose first hidden
-/// line happens to read `# use crate::X;` would otherwise have its
-/// boundary land on the (invisible) doctest setup, mis-splitting around
-/// the real heading.
+/// Crate-`//!` block lines, split at the first markdown heading
+/// (lede vs body). Doctest-hidden `# …` lines are stripped before the
+/// split so they can't capture the heading boundary.
 fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> Vec<usize> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -1141,10 +1122,8 @@ fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> V
     split_doc_lines_at_first_heading(all, source, section)
 }
 
-/// Apply the shared rustdoc heading-split: drop hidden doctest lines,
-/// then partition the remaining lines at the first ATX heading. Used by
-/// both module-level (`//!`) and item-level (`///`, `/** */`) doc
-/// collectors so the heading rule has one source of truth.
+/// Shared rustdoc heading-split — strip hidden doctest lines, then
+/// partition at the first ATX heading.
 fn split_doc_lines_at_first_heading(
     lines: Vec<usize>,
     source: &str,
@@ -1169,19 +1148,13 @@ fn split_doc_lines_at_first_heading(
     }
 }
 
-/// Strip the rustdoc comment marker from a raw source line and return
-/// the post-marker content. Returns `None` for purely structural lines
-/// (the `/**` / `/*!` opener with no body, the `*/` closer, or a lone
-/// `*` continuation marker) — those carry no doc content and shouldn't
-/// participate in fence/heading detection.
+/// Strip the rustdoc marker from a raw source line. Returns `None`
+/// for purely structural lines (`/**`/`/*!` openers with no body, the
+/// `*/` closer, lone `*` continuation).
 ///
-/// Recognized prefixes (longest-match first so `///` / `//!` always win
-/// over the `*` continuation rule):
-///   - `///` (with up to one optional space after)
-///   - `//!` (with up to one optional space after)
-///   - `/**` opener; if the post-marker remainder is whitespace only,
-///     return `None`; else return the remainder (single-line block doc).
-///   - `/*!` opener; same as above.
+/// Prefixes (longest match first):
+///   - `///` / `//!` (with one optional space)
+///   - `/**` / `/*!` openers (None if remainder is whitespace-only)
 ///   - ` * ` / ` *` block-doc continuation (any leading whitespace
 ///     tolerated; one optional space after the `*` consumed).
 ///   - ` */` closer → `None`.
