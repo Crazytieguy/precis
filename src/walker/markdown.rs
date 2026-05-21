@@ -541,12 +541,8 @@ fn build_section_content(
 ) -> Option<BatchContent> {
     let (start, end) = (range.start, range.end);
 
-    // For README section 0, exclude lines already covered by
-    // `ReadmeHeadline`. Otherwise the two batches overlap on short
-    // READMEs, Section 0's marginal cost drops to zero after dedupe,
-    // and `ratio(value, 0) = INFINITY` gives it unconditional
-    // scheduling priority — a smell even though the duplicate apply
-    // is a no-op.
+    // For README section 0, skip lines `ReadmeHeadline` covers — else
+    // their marginal cost goes to 0 and `ratio(value, 0) = ∞`.
     let effective_start = if section_index == 0
         && is_readme(file)
         && let Some(spec) = headline_spec(tree, source)
@@ -808,9 +804,8 @@ fn build_headline_spans(file: &Path, source: &str, spec: &HeadlineSpec) -> Vec<S
         .filter(|n| Some(*n) != trunc_row)
         .collect();
 
-    // build_file_spans handles blank-row filtering + contiguous-range
-    // merging for the Full rows; we only need to splice in the
-    // truncated-row span (if any) to assemble the final list.
+    // Full rows go through `build_file_spans` (blank-filter + merge);
+    // splice the truncated-row span in afterwards.
     let mut spans = super::build_file_spans(file, source, FileLines::new(full_rows));
     if let Some(t) = &spec.truncate {
         spans.push(Span {
@@ -1198,10 +1193,8 @@ fn compute_heading_truncation(heading: Node, source: &str) -> Option<TruncatedRo
         return None;
     }
 
-    // The pattern runs from the heading marker (`# `, `## `, …) through
-    // the project-name text. Including the heading marker matters
-    // because `Render::Truncated` only renders the matched bytes —
-    // without `#` the rendered line would lose its heading marker.
+    // Pattern includes the heading marker (`# `, `## `, …) because
+    // `Render::Truncated` only renders matched bytes.
     let abs_trim = inline_block.start_byte() + named[0].start_byte();
     let prefix = source[heading.start_byte()..abs_trim].trim_end();
     if prefix.contains('\n') || prefix.is_empty() {
@@ -1984,13 +1977,9 @@ fn extend_prelude_lede(
         }
         i += 1;
     }
-    // Include the first substantive prelude block. If it's a short
-    // tagline (ts-pattern's `<h1>TS-Pattern</h1>`, microbootstrap's
-    // `<b>name</b> assists you...`), also include the next non-
-    // decorative block — the actual prose lede or the canonical code
-    // example. Decoratives are skipped between the two without being
-    // included. Larger preludes stop at one block to keep batch size
-    // bounded.
+    // Include the first substantive prelude block. Short taglines
+    // extend to one more non-decorative block (skipping decoratives
+    // between).
     if let Some(block) = prelude_blocks.get(i) {
         extend_rows_inclusive(covered, *block, source);
         if is_short_substantive_block(*block, source) {
@@ -2031,10 +2020,8 @@ fn is_admin_emoji_paragraph(para: Node, source: &str) -> bool {
 }
 
 fn starts_with_admin_emoji(s: &str) -> bool {
-    // ⚠ U+26A0 (with or without U+FE0F variation selector), 🚨 U+1F6A8,
-    // ⛔ U+26D4, ❗ U+2757. Match the codepoint, not the byte sequence,
-    // so the variation selector (`⚠️` = U+26A0 U+FE0F) and the bare
-    // form both classify the same.
+    // Codepoint match (variation selector U+FE0F is consumed at the
+    // next iteration) — `⚠️` and `⚠` classify the same.
     let mut chars = s.chars();
     matches!(
         chars.next(),
@@ -2042,10 +2029,8 @@ fn starts_with_admin_emoji(s: &str) -> bool {
     )
 }
 
-/// Top-level `section` children of `node` that have a heading. Tree-sitter-md
-/// wraps a leading `html_block` (or other heading-less prelude) in its own
-/// `section` node — those don't represent a navigable doc section, so we
-/// skip them everywhere section indices are counted or addressed.
+/// Top-level `section` children with a heading — skips tree-sitter-md's
+/// heading-less prelude `section` wrapper.
 fn headed_sections(node: Node<'_>) -> impl Iterator<Item = Node<'_>> {
     let mut cursor = node.walk();
     let children: Vec<Node> = node.children(&mut cursor).collect();
