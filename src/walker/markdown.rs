@@ -56,55 +56,30 @@ use super::{
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
-/// suppresses itself. The outline is the predecessor of every section,
-/// so an oversize outline that fails to fit near the budget tail would
-/// block the whole file.
+/// suppresses itself — the outline predecesses every section, so an
+/// oversize outline would block the whole file.
 const MAX_OUTLINE_HEADINGS: usize = 30;
 
-/// Upper bound (in source bytes) on the outline's heading content. The
-/// row-count cap alone wouldn't catch a file with 5 very long headings
-/// — render bytes drive token cost, so we also cap by source bytes.
-/// 1500 chars ≈ 400 tokens, comfortably small at any reasonable budget.
+/// Source-byte cap on the outline's heading content (~400 tokens).
 const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 
-/// Minimum H2 source-byte length required to subdivide it into per-H3
-/// or per-bullet `SectionRange`s. Below this, the H2 fits in one
-/// batch and splitting just adds scheduling overhead with no
-/// waste-reduction payoff.
+/// Minimum H2 source bytes to split into H3/bullet sub-sections.
 const H2_SPLIT_BYTES: usize = 600;
 
-/// Multiplier on the three value signals for `SectionKind::H3Child`
-/// and `SectionKind::BulletItem` ranges. Compensates for the smaller
-/// marginal cost — identical signals would over-rank a sub-section
-/// relative to other walker batches at the parent H2's calibration
-/// level.
+/// Multiplier on the three value signals for `H3Child` / `BulletItem`
+/// ranges — compensates for smaller marginal cost.
 const SUB_SECTION_SIGNAL_SCALE: f64 = 0.45;
 
-/// Multiplier for `SectionKind::BodyBlock`, which can be as small as a
-/// single paragraph or list item. Body blocks are useful budget fillers
-/// but should not outrank intact declarations / larger doc sections just
-/// because their marginal cost is tiny.
+/// Multiplier for `BodyBlock` (paragraph / list item) ranges.
 const BODY_BLOCK_SIGNAL_SCALE: f64 = 0.60;
 
-/// Minimum source-byte length before a section or sub-section is split
-/// into body blocks. WHY: below this, the current divergence corpus mostly
-/// gains schedule churn rather than useful budget relief; it stays lower
-/// than `H2_SPLIT_BYTES` because it can apply after H2 splitting too.
+/// Minimum source bytes before a section is split into body blocks.
+/// Lower than `H2_SPLIT_BYTES` since it can apply after H2 splitting.
 const BODY_BLOCK_SPLIT_BYTES: usize = 350;
 
-/// Bullet-list-split predicate parameters.
-///
-/// `BULLET_MIN_ITEMS` — minimum count of top-level list items the
-/// section's single list block must contain. Below this the gain from
-/// splitting is negligible.
-///
-/// `BULLET_MIN_LARGE_ITEMS` and `BULLET_LARGE_ITEM_BYTES` — at least
-/// `BULLET_MIN_LARGE_ITEMS` of those items must individually exceed
-/// `BULLET_LARGE_ITEM_BYTES` source bytes. Calibrated to anyhow's
-/// `## Details` (6 items, each ~150-300 source bytes); below the
-/// threshold the items are short one-liners (e.g. ts-pattern's
-/// `## Features`) where splitting adds scheduling overhead without
-/// reducing waste. Pair gates the predicate together.
+/// Bullet-list-split predicate parameters. Both gates must hold — the
+/// section's list needs `≥BULLET_MIN_ITEMS` items, of which at least
+/// `BULLET_MIN_LARGE_ITEMS` exceed `BULLET_LARGE_ITEM_BYTES`.
 const BULLET_MIN_ITEMS: usize = 3;
 const BULLET_MIN_LARGE_ITEMS: usize = 2;
 const BULLET_LARGE_ITEM_BYTES: usize = 200;
@@ -231,10 +206,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     out
 }
 
-/// True if the outline batch should be emitted for a file with these
-/// heading rows. Bounded both by row count and total source bytes —
-/// long heading lines can blow past `MAX_OUTLINE_HEADINGS * tokens`
-/// even when the row count looks safe.
+/// True if the outline batch should be emitted — bounded by both row
+/// count and total source bytes.
 fn outline_emits_for(rows: &[(usize, usize)], source: &str) -> bool {
     if rows.len() < 2 || rows.len() > MAX_OUTLINE_HEADINGS {
         return false;
@@ -277,11 +250,8 @@ fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -
         * non_anchor_outline_factor(file, ctx)
 }
 
-/// Saturate the per-file outline value when the file sits in a dir
-/// with many `.md` siblings: the directory listing already names
-/// every file, so emitting a ranked outline per file crowds source
-/// content. README and orientation docs are exempt — they're the
-/// anchor, not the noise.
+/// Saturate the per-file outline value in dirs with many .md siblings —
+/// the dir listing already names them. README/orientation docs exempt.
 fn dense_md_sibling_factor(file: &Path, sibling_md_count: usize) -> f64 {
     if is_readme(file) || is_orientation_doc(file) {
         return 1.0;
@@ -420,10 +390,8 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     ) * scale
 }
 
-/// Per-section value. Child ranges scale the parent's value — identical
-/// weights would over-rank them on the value/cost ratio once the cost
-/// drops to per-sub-section size. `Intro` keeps full weight (it carries
-/// the H2 heading + topic prelude).
+/// Per-section value. Child ranges scale the parent's value so they
+/// don't over-rank once cost drops. `Intro` keeps full weight.
 fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_count: usize) -> f64 {
     let parent = if is_readme(file) {
         readme_section_value(file, range, ctx, total_h2_count)
