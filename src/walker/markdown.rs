@@ -316,9 +316,8 @@ fn features_section_factor(range: &SectionRange) -> f64 {
     }
 }
 
-/// Index decay for README sections. Long READMEs (>= 18 H2s) switch
-/// to a steeper falloff so kitchen-sink documentation projects' tail
-/// sections don't crowd source-code anchors.
+/// Index decay for README sections — long READMEs (≥18 H2s) get a
+/// steeper falloff to keep tail sections off the early budget.
 fn readme_index_decay(range: &SectionRange, total_h2_count: usize) -> f64 {
     let h2_idx = if range.synthetic_intro_present {
         range.parent_index.saturating_sub(1)
@@ -332,10 +331,7 @@ fn readme_index_decay(range: &SectionRange, total_h2_count: usize) -> f64 {
     }
 }
 
-/// Count of real H2 sections — `parent_index` is monotonic per
-/// `logical_sections`, so `max(parent_index) + 1` gives the H2
-/// cardinality (minus one when a synthetic H1-unwrap intro occupies
-/// `parent_idx 0`).
+/// Count of real H2 sections (excluding the synthetic intro at idx 0).
 fn section_h2_count(ranges: &[SectionRange]) -> usize {
     let synthetic_intro_present = ranges.first().is_some_and(|r| r.synthetic_intro_present);
     let max_parent = ranges.iter().map(|r| r.parent_index).max();
@@ -346,10 +342,7 @@ fn section_h2_count(ranges: &[SectionRange]) -> usize {
     }
 }
 
-/// Index-based signal-channel scale factor: `(idx + 1)^-exp`, floored
-/// at `floor`. Shared by `readme_index_decay` and the changelog decay
-/// in `heading_slab_signals`. Both decay the same shape; differ only
-/// in `exp` and `floor`.
+/// `(idx + 1)^-exp`, floored at `floor` — shared decay shape.
 fn index_decay(idx: usize, exp: f64, floor: f64) -> f64 {
     ((idx as f64 + 1.0).powf(-exp)).max(floor)
 }
@@ -1269,35 +1262,14 @@ struct SectionRange {
     kind: SectionKind,
     parent_index: usize,
     synthetic_intro_present: bool,
-    /// True when this range's parent H2's title is an orientation-concept
-    /// marker (`Concepts`, `Architecture`, `Overview`, …; see
-    /// [`is_concept_h2_title`]). Lets `section_value` boost `H3Child`
-    /// and concept-`BodyBlock` ranges under such H2s — those are the
-    /// canonical concept definitions NS authors anchor on. Always false
-    /// for non-README files. Always false for `BulletItem` / `Whole` /
-    /// `Intro` (those kinds aren't concept-row content even when they
-    /// live under a matching H2). `BodyBlock`s inherit the flag only
-    /// when produced by `push_h3_child_or_body_blocks` splitting a
-    /// concept H3 — paragraphs of a long concept H3 like Providers
-    /// are still concept content.
+    /// Parent H2 title matches a concept marker (see
+    /// [`is_concept_h2_title`]). README-only; gates the H3 concept boost.
     parent_is_concept_h2: bool,
-    /// True when this range's parent H2 is a README canonical-usage
-    /// section: a `## Usage` / `## Sample usage` / `## Example(s)` /
-    /// `## Quick start` / `## Getting started` / `## Basic usage` /
-    /// `## Demo` header (see [`is_canonical_usage_h2_title`]). NS
-    /// authors anchor on the canonical demo snippet inside these
-    /// sections (sqlite-vec's `## Sample usage` covers NS 1.5, 1.9,
-    /// 1.10); the section's value gets a boost so it competes with
-    /// the cheaper trailing `## See Also`-style bullet sections that
-    /// otherwise displace it on pure cost. Always false for non-README
-    /// files.
+    /// Parent H2 title matches a canonical-usage marker (see
+    /// [`is_canonical_usage_h2_title`]). README-only.
     parent_is_canonical_usage_h2: bool,
-    /// True when this range's parent H2 is a README features-list
-    /// section: `## Features` / `## Key features` / `## Feature
-    /// highlights` (see [`is_features_h2_title`]). The bullet list
-    /// inside such a section is the README's high-density capability
-    /// inventory — NS authors regularly anchor on it across Rust /
-    /// Go / Python / TS projects. Always false for non-README files.
+    /// Parent H2 title matches a features-list marker (see
+    /// [`is_features_h2_title`]). README-only.
     parent_is_features_h2: bool,
 }
 
