@@ -1297,19 +1297,12 @@ fn is_init_py(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()) == Some("__init__.py")
 }
 
-/// True iff `file` is the top-level package's `__init__.py` — the
-/// `__init__.py` at the root of its package hierarchy (e.g. `flask/__init__.py`
-/// or `src/flask/__init__.py`), not a sub-package's (e.g. `flask/json/__init__.py`).
-/// Detected by walking up: the file is top-level when its grandparent does
-/// not contain `__init__.py` — i.e. the package isn't nested inside another
-/// Python package. Namespace packages (no parent `__init__.py`) also qualify.
-///
-/// Non-essential-path gate: an `examples/<topic>/<pkg>/__init__.py` likewise
-/// has no `__init__.py` two dirs up, but its package surface is sample code,
-/// not the project's canonical API. Excluded via `non_essential_factor` so
-/// the top-level boost stays scoped to real public-API anchors.
-fn is_top_level_package_init(file: &Path, ctx: &WalkCtx) -> bool {
-    if !is_init_py(file) {
+/// True iff `file` is `<name>` at the root of its package hierarchy —
+/// i.e. its grandparent does not contain `__init__.py`. Excludes
+/// `examples/<topic>/<pkg>/<name>` via `non_essential_factor` so the
+/// boost stays scoped to real public-API anchors.
+fn is_top_level_package_file(file: &Path, ctx: &WalkCtx, name: &str) -> bool {
+    if file.file_name().and_then(|n| n.to_str()) != Some(name) {
         return false;
     }
     let Some(parent) = file.parent() else {
@@ -1324,56 +1317,16 @@ fn is_top_level_package_init(file: &Path, ctx: &WalkCtx) -> bool {
     ctx.non_essential_factor(file) >= 1.0
 }
 
-/// Boost the top-level package's `__init__.py` over sub-package
-/// `__init__.py`s. The top-level init is the canonical public API surface
-/// (`from .submod import Public` re-exports + `__all__`); sub-package
-/// inits expose intermediate-tier APIs that are secondary. Without this
-/// boost, smaller sub-package inits win the cost^0.35-penalised ratio
-/// race and the top-level init lands much later in the schedule.
 fn top_level_package_init_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    if is_top_level_package_init(file, ctx) {
+    if is_top_level_package_file(file, ctx, "__init__.py") {
         3.0
     } else {
         1.0
     }
 }
 
-/// True iff `file` is the top-level package's `__main__.py` — the
-/// `python -m <pkg>` entry point sitting next to a top-level
-/// `__init__.py` (e.g. `posting/__main__.py`, `beets/__main__.py`).
-/// Same scoping rule as [`is_top_level_package_init`]: top-level when
-/// the file's grandparent does not contain `__init__.py`, with the
-/// `non_essential_factor` gate so `examples/<topic>/<pkg>/__main__.py`
-/// doesn't get the same treatment.
-fn is_top_level_app_main(file: &Path, ctx: &WalkCtx) -> bool {
-    if file.file_name().and_then(|n| n.to_str()) != Some("__main__.py") {
-        return false;
-    }
-    let Some(parent) = file.parent() else {
-        return false;
-    };
-    let Some(grandparent) = parent.parent() else {
-        return true;
-    };
-    if grandparent.join("__init__.py").is_file() {
-        return false;
-    }
-    ctx.non_essential_factor(file) >= 1.0
-}
-
-/// Boost the top-level `__main__.py`'s [`PythonKey::Imports`] batch.
-/// Mirror of [`top_level_package_init_factor`] for the script-
-/// entrypoint shape: `__init__.py` is the import-time public surface
-/// (re-exports), and the sibling `__main__.py` is the runtime entry
-/// shim — its imports name the CLI dispatch function (`from .ui
-/// import main`, `from .cli import main`) and sit alongside the
-/// module docstring inside the same batch, so the whole batch is the
-/// `python -m <pkg>` orientation anchor. Smaller factor than the
-/// init factor because the imports aren't a re-export wall, and the
-/// per-decl content of `__main__.py` (`if __name__ == "__main__":`
-/// trampoline, occasional CLI defs) is left at the default values.
 fn top_level_app_main_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    if is_top_level_app_main(file, ctx) {
+    if is_top_level_package_file(file, ctx, "__main__.py") {
         1.5
     } else {
         1.0
