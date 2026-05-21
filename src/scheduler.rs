@@ -415,11 +415,8 @@ impl<W: Walker> Scheduler<W> {
         best.map(|(ratio, id, cost)| (id, ratio, cost))
     }
 
-    /// Narrow `eligible` to the small contender pool the exact pass
-    /// will rerank. When the strategy already admits everyone (fixed-K
-    /// and `eligible.len() <= k`), short-circuits to skip the approx
-    /// pass — doubling up tokenization is pure overhead without a long
-    /// tail to prune.
+    /// Narrow `eligible` to the contender pool the exact pass reranks.
+    /// Skips the approx pass when the strategy admits everyone.
     fn select_contender_pool(
         &mut self,
         eligible: &[BatchId],
@@ -527,9 +524,7 @@ impl<W: Walker> Scheduler<W> {
         base + bonus
     }
 
-    /// Reference implementation: rebuild the parent→children index by
-    /// scanning entries. Used only by the `PRECIS_VERIFY_CHILDREN_INDEX`
-    /// debug verifier; the hot path reads `self.children_index` directly.
+    /// Rebuild the parent→children index from scratch — debug verifier.
     #[cfg(debug_assertions)]
     fn children_by_parent_rebuilt(&self) -> ChildrenByParent {
         let mut children: ChildrenByParent = HashMap::new();
@@ -670,8 +665,7 @@ impl<W: Walker> Scheduler<W> {
         }
     }
 
-    /// Walk the predecessor chain, resolving keys to ids. Cycles are a
-    /// walker bug; debug-assert + break.
+    /// Walk the predecessor chain. Cycles are a walker bug (debug-assert).
     fn ancestors_of(&self, id: BatchId) -> HashSet<BatchId> {
         let mut set = HashSet::new();
         let mut cur = self.entries[id.index()].predecessor.as_ref();
