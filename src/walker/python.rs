@@ -1287,13 +1287,7 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
         * concrete_impl_sibling_factor(file)
 }
 
-/// Damp files that sit alongside a `base.py` sibling in the same dir
-/// (and are not `base.py`/`__init__.py` themselves). The convention
-/// `base.py` + concrete impls (`cors_instrument.py`,
-/// `swagger_instrument.py`, ...) means the abstract base is the
-/// load-bearing anchor for the directory; concrete files repeat the
-/// shape and rarely show up in NS rows. Applied to every per-file
-/// value channel so the whole concrete file ranks below its base.
+/// 1.5× boost for `base.py`, 0.6× damp on its concrete siblings.
 fn concrete_impl_sibling_factor(file: &Path) -> f64 {
     let Some(parent) = file.parent() else {
         return 1.0;
@@ -1305,9 +1299,6 @@ fn concrete_impl_sibling_factor(file: &Path) -> f64 {
         return 1.0;
     }
     if stem == "base" && parent.join("base.py").is_file() {
-        // The abstract base of a base.py + concrete impls layout is
-        // the canonical anchor; promote it so it lands before its
-        // concrete neighbors crowd the budget.
         return 1.5;
     }
     if parent.join("base.py").is_file() {
