@@ -255,10 +255,7 @@ fn section_banner_chunk_ranges(
     Some(ranges)
 }
 
-/// Count-based chunking — see [`compute_decl_chunk_ranges`]. A file
-/// with `≤ C_DECL_NAMES_CHUNK_SIZE` decls yields one chunk; otherwise
-/// chunks of exactly `C_DECL_NAMES_CHUNK_SIZE` decls (the final chunk
-/// may be smaller).
+/// Fixed-size source-order chunks of `C_DECL_NAMES_CHUNK_SIZE` decls.
 fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
     if decl_count == 0 {
         return Vec::new();
@@ -486,25 +483,19 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
 // --- decl classification ------------------------------------------------
 
-/// Coarse decl kinds for value weighting. Matches the structural anchors
-/// the C NSes consistently call out (typedefs, structs, function
-/// prototypes / definitions, public macros).
+/// Coarse decl kinds for value weighting.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum DeclKind {
-    /// `typedef …` — names a new type. Often the central data shape.
     Typedef,
-    /// `struct foo { … };` / `union foo { … };` / `enum { … };` at top
-    /// level (a `declaration` whose type_specifier is one of these).
     Aggregate,
-    /// `int foo(...) { ... }` — function definition with body.
+    /// `int foo(...) { ... }` — fn with body.
     FunctionDef,
-    /// `int foo(...);` — function declaration / prototype.
+    /// `int foo(...);` — fn prototype.
     FunctionDecl,
-    /// `extern T foo;` / `T foo;` — variable declaration.
     Variable,
-    /// `#define X val` — object-like macro.
+    /// `#define X val`.
     Macro,
-    /// `#define X(args) body` — function-like macro.
+    /// `#define X(args) body`.
     MacroFn,
 }
 
@@ -526,30 +517,24 @@ impl DeclKind {
 struct DeclInfo {
     start_line: usize,
     kind: DeclKind,
-    /// True for `function_definition` only — gates `DeclBody` emission.
+    /// Gates `DeclBody` emission — true only for `function_definition`.
     has_body: bool,
-    /// Per-group/per-chunk member-batches for big aggregates. Empty when
-    /// the decl isn't a chunk-eligible struct/union/enum. When non-empty,
-    /// the parent `Decl` is trimmed to the type header + closing brace so
-    /// each group renders disjoint body rows.
+    /// Per-group member-batches for big aggregates. When non-empty the
+    /// parent `Decl` is trimmed to the type header + closing brace.
     member_groups: Vec<AggregateMemberGroup>,
 }
 
-/// One chunk of a big aggregate body. Used for both blank-line-separated
-/// struct/union field groups and sized enum-body chunks.
+/// One chunk of a big aggregate body — struct/union field group or
+/// sized enum-body chunk.
 #[derive(Debug, Clone)]
 struct AggregateMemberGroup {
-    /// 1-based start line of the first row in the group.
     group_start_line: usize,
-    /// All 1-based row numbers covered by this group.
     rows: Vec<usize>,
 }
 
-/// All public top-level decls in `file`'s tree, in source order, paired
-/// with the AST node so per-decl collectors don't have to re-walk.
-/// Descends transparently through a single wrapping `#ifndef X` /
-/// `#define X` / `#endif` header guard and through `extern "C" { ... }`
-/// linkage specs (raw or wrapped in `#ifdef __cplusplus`).
+/// All public top-level decls in source order. Descends through one
+/// wrapping `#ifndef X / #define X / #endif` header guard and through
+/// `extern "C" { … }` linkage specs.
 fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, DeclInfo)> {
     let in_header = is_header_file(file);
     let mut out = Vec::new();
@@ -563,17 +548,8 @@ fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, D
     out
 }
 
-/// Visit every "effective top-level" item — translation_unit children
-/// minus envelopes that wrap real decls. Descends transparently
-/// through:
-/// - the file's `#ifndef X / #define X` header guard (a single wrapping
-///   `preproc_ifdef`)
-/// - `extern "C" { ... }` linkage specs, including the `#ifdef __cplusplus`
-///   wrapper that C headers use to make the spec C++-only. tree-sitter-c
-///   parses `extern "C" {` and its matching `}` into a single
-///   `linkage_specification` node even when each brace lives in its own
-///   `#ifdef __cplusplus` block, so the actual decls hang off the
-///   `linkage_specification`'s `declaration_list`.
+/// Visit each "effective top-level" item — descends through the file's
+/// header guard and through `extern "C" { … }` linkage specs.
 fn walk_top_level<'a, F: FnMut(Node<'a>)>(root: Node<'a>, source: &str, visit: &mut F) {
     let header_guard_body = header_guard_body_node(root, source);
     let mut cursor = root.walk();
@@ -586,9 +562,8 @@ fn walk_top_level<'a, F: FnMut(Node<'a>)>(root: Node<'a>, source: &str, visit: &
     }
 }
 
-/// Visit each child of `node`, applying the same envelope-descent rule
-/// the top-level walk uses. Used for nodes that are themselves a
-/// descent boundary (header guard, `extern "C"` linkage_specification).
+/// Visit each child of `node` with envelope-descent — used for header
+/// guard / `extern "C"` linkage_specification bodies.
 fn descend_envelopes<'a, F: FnMut(Node<'a>)>(node: Node<'a>, source: &str, visit: &mut F) {
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
@@ -596,9 +571,8 @@ fn descend_envelopes<'a, F: FnMut(Node<'a>)>(node: Node<'a>, source: &str, visit
     }
 }
 
-/// Either visit `node` as top-level, or — if it's an `extern "C" { ... }`
-/// envelope (raw or `#ifdef __cplusplus`-wrapped) — descend into the
-/// decls it contains.
+/// Visit `node`, descending if it's an `extern "C" { … }` envelope
+/// (raw or `#ifdef __cplusplus`-wrapped).
 fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
     node: Node<'a>,
     source: &str,
@@ -611,15 +585,10 @@ fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
     visit(node);
 }
 
-/// If `node` is an `extern "C" { ... }` envelope, return the inner
-/// `declaration_list` whose children are the wrapped decls. Recognizes
-/// both a bare `linkage_specification` and the
-/// `#ifdef __cplusplus / extern "C" { / #endif` wrapper idiom common in
-/// C headers. The `#ifdef` envelope is accepted only when the guard
-/// symbol is `__cplusplus` and the body's sole non-token child is the
-/// `linkage_specification` — a feature-gate (`#ifdef FEATURE_X`) around
-/// a linkage spec must stay opaque to avoid advertising
-/// platform/feature-gated decls as unconditional public API.
+/// If `node` is an `extern "C" { … }` envelope (raw or
+/// `#ifdef __cplusplus`-wrapped), return the inner `declaration_list`.
+/// The `#ifdef` envelope is accepted only when the guard symbol is
+/// `__cplusplus` — feature gates around a linkage spec stay opaque.
 fn extern_c_declaration_list<'a>(node: Node<'a>, source: &str) -> Option<Node<'a>> {
     let linkage = match node.kind() {
         "linkage_specification" => node,
@@ -632,13 +601,9 @@ fn extern_c_declaration_list<'a>(node: Node<'a>, source: &str) -> Option<Node<'a
         .find(|c| c.kind() == "declaration_list")
 }
 
-/// If `ifdef` is shaped like `#ifdef __cplusplus / linkage_specification /
-/// #endif` (with the standard `#ifdef` / identifier / body / `#endif`
-/// children tree-sitter-c surfaces), return the `linkage_specification`
-/// child. Otherwise `None` — including when the guard symbol isn't
-/// `__cplusplus` (a feature gate), the directive is `#ifndef` (which
-/// inverts the gate), or the body contains anything besides a single
-/// `linkage_specification`.
+/// If `ifdef` is `#ifdef __cplusplus / linkage_specification / #endif`,
+/// return the `linkage_specification`. Rejects feature gates and
+/// `#ifndef`.
 fn cplusplus_wrapped_linkage_specification<'a>(ifdef: Node<'a>, source: &str) -> Option<Node<'a>> {
     let mut cursor = ifdef.walk();
     let mut children = ifdef.children(&mut cursor);
@@ -662,11 +627,9 @@ fn cplusplus_wrapped_linkage_specification<'a>(ifdef: Node<'a>, source: &str) ->
     found
 }
 
-/// The `preproc_ifdef` node that wraps the file body as a header guard,
-/// if any. Recognized by structure — `#ifndef X` whose body's first
-/// child is `#define X` — not by naming convention. Returns the
-/// `preproc_ifdef` node itself; its direct children are the lines we
-/// want to treat as top-level.
+/// The `preproc_ifdef` wrapping the file as a header guard — `#ifndef X`
+/// whose body's first child is `#define X`. Direct children are the
+/// effective top-level lines.
 fn header_guard_body_node<'a>(root: Node<'a>, source: &str) -> Option<Node<'a>> {
     let mut cursor = root.walk();
     let mut candidate: Option<Node<'a>> = None;
