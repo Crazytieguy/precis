@@ -226,10 +226,8 @@ fn section_banner_chunk_ranges(
     if banner_lines.len() < SECTION_BANNER_MIN_COUNT {
         return None;
     }
-    // Partition decl indices by their start_line vs banner lines. A
-    // decl at line >= banner_lines[k] and < banner_lines[k+1] belongs
-    // to chunk k+1 (chunk 0 is the preamble); after the last banner,
-    // decls belong to the final chunk.
+    // Chunk 0 is the preamble (before the first banner); subsequent
+    // chunks span decls between consecutive banners.
     let mut ranges: Vec<Range<usize>> = Vec::new();
     let mut start = 0usize;
     for &boundary in &banner_lines {
@@ -246,9 +244,7 @@ fn section_banner_chunk_ranges(
     if start < decls.len() {
         ranges.push(start..decls.len());
     }
-    // Without at least two chunks the section split doesn't add
-    // anything over the unchunked surface; fall back so values stay
-    // calibrated against count-based chunking.
+    // <2 chunks adds nothing over unchunked — fall back.
     if ranges.len() < 2 {
         return None;
     }
@@ -669,9 +665,7 @@ fn is_header_guard(ifdef: Node, source: &str) -> bool {
     else {
         return false;
     };
-    // The `#define X` follows on a subsequent line (sometimes after
-    // blank lines / comments). Look ahead a small fixed window — header
-    // guards in real fixtures put the `#define` immediately after.
+    // Look ahead 8 lines for the `#define X` (blank/comment-tolerant).
     for line in lines.take(8) {
         let t = line.trim_start();
         if t.is_empty() || t.starts_with("//") || t.starts_with("/*") {
@@ -1085,13 +1079,8 @@ fn decl_names_value(
 ) -> f64 {
     let cat = (0.80 * header_cat_factor(file)).min(1.0);
     let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
-    // Section-banner chunks are independent subjects (one per module
-    // in an amalgamation header), not source-order summaries of the
-    // same catalog — so the chunk-index falloff that's appropriate
-    // for count-based chunking would unfairly suppress tail-module
-    // sections. Flatten to the same per-chunk multiplier the first
-    // count-based chunk would carry, so each section competes on its
-    // own cost.
+    // Section-banner chunks skip the source-order falloff — each one
+    // is an independent subject (one module per chunk).
     let chunk_factor = match strategy {
         DeclChunkingStrategy::CountBased => names_surface_chunk_factor(chunk_index, chunk_count),
         DeclChunkingStrategy::SectionBanner => names_surface_chunk_factor(0, chunk_count.max(2)),
@@ -1099,13 +1088,7 @@ fn decl_names_value(
     base * chunk_factor
 }
 
-/// Vendored / shim standard-library headers (`include/stdarg.h`,
-/// `include/stdbool.h`, …) under non-root directories. These names
-/// match a known C-stdlib header and almost never carry project-canonical
-/// content — they're API-compat shims a compiler/runtime ships so its
-/// own translation units can `#include <stdarg.h>`. NSes never anchor
-/// on their decl-names surface. Apply a flat demotion so they sit
-/// behind real project headers in the early budget.
+/// Damp vendored / shim C-stdlib headers under non-root dirs.
 const STDLIB_SHIM_FACTOR: f64 = 0.25;
 
 fn stdlib_shim_factor(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -1310,20 +1293,9 @@ fn collect_decl_names_from_with_global_starts(
 ) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    // Don't drop an ellipsis on a row owned by another non-ancestor
-    // batch — the scheduler's overlap guard would panic when both fire.
-    // Three classes to avoid:
-    //   - another decl's start row (this chunk or another), since
-    //     adjacent single-line decls (`#define` runs) would otherwise
-    //     claim the next decl's anchor as a truncation marker;
-    //   - `#include` lines, owned by the file's `Includes` batch
-    //     (chibicc.h: the first decl is `#define _POSIX_C_SOURCE …` on
-    //     line 1, immediately followed by `#include` directives — the
-    //     naive ellipsis at line 2 conflicted with `Includes`);
-    //   - comment-only lines, which the *next* decl's `DeclDoc` will
-    //     claim (a doc-comment run between two decls falls in the
-    //     no-man's-land that the previous decl's ellipsis would
-    //     otherwise grab).
+    // Skip ellipses on rows owned elsewhere — sibling-decl starts,
+    // `#include` lines, comment-only lines all flag via
+    // `ellipsis_line_safe` / `all_starts`.
     for (_, info) in decls {
         full.push(info.start_line);
         let ellipsis_line = info.start_line + 1;
@@ -1341,14 +1313,13 @@ fn ellipsis_line_safe(line: usize, src_lines: &[&str]) -> bool {
         return false;
     };
     let trimmed = text.trim_start();
-    // `#include` lines belong to the file's `Includes` batch.
-    if trimmed.starts_with("#include") {
-        return false;
-    }
-    // Full-line comments — either the previous decl's trailing comment
-    // (rare) or the next decl's leading doc comment (common). Either
-    // way, another batch will claim them.
-    if trimmed.starts_with("//") || trimmed.starts_with("/*") || trimmed.starts_with('*') {
+    // `#include` lines belong to the `Includes` batch; comment-only
+    // lines belong to the next decl's `DeclDoc`.
+    if trimmed.starts_with("#include")
+        || trimmed.starts_with("//")
+        || trimmed.starts_with("/*")
+        || trimmed.starts_with('*')
+    {
         return false;
     }
     true
