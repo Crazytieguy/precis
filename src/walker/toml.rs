@@ -270,8 +270,6 @@ fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
     })
 }
 
-/// The two TOML identity tables a pyproject file can lead with — both
-/// carry the same PEP-621-style identity scalars.
 fn is_pyproject_identity_table(name: &str) -> bool {
     matches!(name, "project" | "tool.poetry")
 }
@@ -281,12 +279,8 @@ fn features_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Pyproject `[project].dependencies` is more anchor-shaped than Cargo
-    // `[dependencies]`: PEP 621 NS authors regularly anchor on it as a
-    // tier-1 row, whereas Cargo authors more often defer dep listings to
-    // the deeper budget. The pyproject lede signal already partitions
-    // these files — reuse it as a cat-axis bump so pyproject deps win
-    // their value/cost race against root-listing ratios.
+    // Pyproject lede manifests get a cat-axis bump — reuses the same
+    // signal as `identity_value` so the two stay co-classified.
     let cat = match pyproject_identity_factor(file, ctx) {
         Some(PYPROJECT_LEDE_IDENTITY_FACTOR | PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR) => 0.55,
         _ => 0.4,
@@ -323,7 +317,7 @@ fn collect_sections(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     for i in 0..raw.len() {
         let start = raw[i].1 + 1;
         let end = if i + 1 < raw.len() {
-            raw[i + 1].1 // next table's row (0-indexed) → last row of this section is one before (0-indexed → stays same 1-indexed)
+            raw[i + 1].1
         } else {
             total_rows
         };
@@ -498,9 +492,6 @@ Homepage = "https://example.com"
         assert!(!is_pyproject_identity_table("tool.poetry.dependencies"));
         assert!(!is_pyproject_identity_table("package"));
 
-        // The same scalar filter applies to a `[tool.poetry]` table —
-        // name / version / description / license / readme are the broad
-        // set in both layouts.
         let source = r#"[tool.poetry]
 name = "rich"
 homepage = "https://github.com/Textualize/rich"
@@ -708,7 +699,6 @@ members = ["crates/mdbook-*"]
 "#,
         )
         .unwrap();
-        // Even with matching dirs on disk, unsupported globs return empty.
         let crates_dir = dir.path().join("crates/mdbook-core");
         fs::create_dir_all(&crates_dir).unwrap();
         fs::write(
