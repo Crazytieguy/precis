@@ -27,31 +27,21 @@ use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::ratio_with_exponent as score_ratio;
 use crate::walker::{WalkCtx, Walker};
 
-/// How much recursively-gated descendant value can flow back to a
-/// predecessor. The cap keeps wide API surfaces from overwhelming the
-/// whole schedule, while still letting a small gate reflect that it
-/// unlocks several valuable precise descendants.
+/// Cap on per-child descendant-value flow into a predecessor.
 const GATED_DESCENDANT_BONUS_MAX_PARENT_MULTIPLE_PER_CHILD: f64 = 0.15;
 const GATED_DESCENDANT_BONUS_MAX_PARENT_MULTIPLE_CAP: f64 = 3.0;
-/// Only fan-out gates get a scheduling boost. One-off predecessor edges
-/// like `Export -> ExportBody` are refinements, not broad unlock points,
-/// and boosting every such edge spends budget too aggressively.
+/// Minimum fan-out for a predecessor edge to count as a gate.
 const GATED_DESCENDANT_MIN_DIRECT_CHILDREN: usize = 4;
 /// Raw descendant value is normalized by this multiple of the parent's
 /// own value before applying the saturating curve.
 const GATED_DESCENDANT_BONUS_SATURATION_PARENT_MULTIPLE: f64 = 2.0;
-/// Grandchildren matter, but less than direct children: the immediate
-/// gate must land before any child can compete.
+/// Per-depth decay for grandchild value flowing back to a predecessor.
 const GATED_DESCENDANT_DEPTH_DECAY: f64 = 0.5;
 
 type ChildrenByParent = HashMap<BatchId, Vec<BatchId>>;
 
-/// How `best_exact` narrows the eligible pool before exact
-/// tokenization. Production picks one variant at compile time
-/// (`DEFAULT_CONTENDER_POOL`); the env-var override exists only under
-/// `--features timing` for calibration sweeps, so release builds have
-/// no environment dependency that could undermine the zero-drift
-/// baseline gate.
+/// How `best_exact` narrows the pool before exact tokenization. The
+/// env-var override is gated behind `--features timing`.
 #[derive(Debug, Clone, Copy)]
 enum ContenderPool {
     /// Top-K by approx score.
@@ -111,10 +101,8 @@ fn contender_pool() -> ContenderPool {
     DEFAULT_CONTENDER_POOL
 }
 
-/// A single scheduled batch, captured in order for downstream consumers
-/// (schedule snapshots, divergence metric). Generic over the walker's
-/// key type; callers that don't want to carry the generic can post-process
-/// into a `String`-keyed form (see `lib.rs::render_schedule`).
+/// A single scheduled batch, captured in order for snapshots and the
+/// divergence metric. Generic over the walker's key type.
 #[derive(Debug, Clone)]
 pub struct ScheduledBatchRecord<K> {
     pub key: K,
@@ -123,9 +111,7 @@ pub struct ScheduledBatchRecord<K> {
     pub cum_tokens: usize,
 }
 
-/// Everything the scheduler produced: the rendered tree plus the ordered
-/// log of scheduled batches. `render()` can be called on the tree; the
-/// log drives `render_schedule()` and the divergence metric.
+/// Scheduler output: rendered tree + ordered log of scheduled batches.
 #[derive(Debug)]
 pub struct RunReport<K: WalkerKey> {
     pub tree: RenderedTree,

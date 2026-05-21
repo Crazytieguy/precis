@@ -145,14 +145,9 @@ pub struct ScoreAtBudget {
     pub importance: f64,
     /// Coverage — rank-uniform recall over A_B.
     pub coverage: f64,
-    /// Mean per-row completion across A_B rows (i.e. `exp_t ≤ budget`)
-    /// **the walker delivered any atom of**. Restriction matters:
-    /// `completion_for_row` returns 0.0 for fully missing rows, so a
-    /// naive mean would conflate "row never delivered" (rank-order
-    /// miss, already visible in low importance/coverage) with "row
-    /// partially delivered" (the orthogonal partial-delivery signal
-    /// this column isolates). `f64::NAN` when no A_B row was
-    /// delivered; the renderer formats this as `—`.
+    /// Mean per-row completion across A_B rows the walker delivered any
+    /// atom of (excludes fully-missing rows to keep the signal
+    /// orthogonal to importance/coverage). `NaN` → renderer shows `—`.
     pub completion: f64,
     /// `√(importance × coverage)`.
     pub score: f64,
