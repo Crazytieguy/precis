@@ -1246,45 +1246,22 @@ struct SectionRange {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum SectionKind {
-    /// Whole top-level section (un-split H2 or H1-unwrap synthetic intro).
+    /// Un-split H2 (or synthetic H1-unwrap intro).
     Whole,
-    /// H2 heading + prelude before its first H3 child or bullet list.
+    /// H2 heading + prelude before its first sub-section.
     Intro,
     /// One H3 sub-section under a split H2.
     H3Child,
-    /// One top-level bullet item under a split H2 (see
-    /// `should_split_by_bullets`). Preserves the H2 heading via
-    /// `HeadingsOutline`, same gating discipline as H3 splitting.
+    /// One top-level bullet item under a bullet-split H2.
     BulletItem,
-    /// One direct body block (paragraph, code block, nested section, or
-    /// list item) inside a long split section.
+    /// One direct block inside a long split section.
     BodyBlock,
 }
 
-/// Section ranges for batching. The "un-split top-level list" — one
-/// entry per top-level section (including the synthetic H1-unwrap
-/// intro) — is the basis for `parent_index`. H2s that satisfy a split
-/// rule expand to one optional `Intro` range (only when its body
-/// before the first sub-section has substantive content) plus one
-/// sub-range per child:
-///
-/// - **Bullet split** fires when the H2's content (modulo decorative
-///   blocks) is exactly one `list` block satisfying
-///   [`should_split_by_bullets`] — emits one `BulletItem` per
-///   substantive top-level list item.
-/// - **H3 split** fires when the H2 has ≥2 direct H3 children and
-///   meets the byte threshold — emits one `H3Child` per substantive
-///   H3 child, or smaller `BodyBlock`s inside that H3 when it is still
-///   large and block-structured.
-/// - **Body-block split** refines large H3 children into direct
-///   paragraph/code/list blocks, and also fires as a fallback for
-///   list-only H2s whose items are too small for the specialized
-///   bullet split.
-///
-/// All other top-level entries emit one `Whole` range. H3/prose splits
-/// require the outline to preserve heading rows — Intro ranges with
-/// empty bodies are elided to avoid `ratio(value, 0) = INFINITY` no-op
-/// batches, so without an outline the heading would otherwise be lost.
+/// Section ranges for batching. H2s that satisfy a split rule expand
+/// to an optional `Intro` plus per-child sub-ranges (bullet split,
+/// H3 split, or body-block split). Other top-level entries emit one
+/// `Whole`. Splits require the outline to preserve heading rows.
 fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange> {
     let entries = top_level_entries(tree.root_node(), source);
     let outline_will_emit = {
