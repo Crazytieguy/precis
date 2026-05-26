@@ -210,229 +210,242 @@ Score(3000)=0.521 I=0.717 C=0.378 ns_rows≤3K=16/54 (reached=7 partial=2 missin
 | walker |  | 4750 | 3 | listing of '.codex' |  |  | 0.411 |
 | walker |  | 4773 | 23 | python decl names surface #1 in src/posting/variables.py |  |  | 0.411 |
 | walker |  | 4773 | 0 | python decl at src/posting/variables.py:157 |  |  | 0.411 |
-| walker |  | 4801 | 28 | python decl at src/posting/variables.py:133 |  |  | 0.412 |
-| walker |  | 4817 | 16 | python decl doc at src/posting/variables.py:157 |  |  | 0.412 |
+| walker |  | 4787 | 14 | python decl at src/posting/variables.py:133 |  |  | 0.412 |
+| walker |  | 4803 | 16 | python decl doc at src/posting/variables.py:157 |  |  | 0.412 |
+| walker |  | 4869 | 66 | headings outline in docs/guide/environments.md |  |  | 0.412 |
 | ns | 4871 |  | 272 | Posting.BINDINGS — global keys | 3.4 | 3.1 | 0.399 |
-| walker |  | 4883 | 66 | headings outline in docs/guide/environments.md |  |  | 0.399 |
 | ns | 5025 |  | 154 | MainScreen.compose layout | 3.5 | 3.1 | 0.391 |
-| walker |  | 5074 | 191 | README.md section #1 |  |  | 0.391 |
-| walker |  | 5127 | 53 | docs/guide/themes.md section #0 |  |  | 0.391 |
-| walker |  | 5172 | 45 | python method sigs in src/posting/widgets/request/method_selection.py |  |  | 0.391 |
-| walker |  | 5172 | 0 | python method at src/posting/widgets/request/method_selection.py:86 |  |  | 0.391 |
-| walker |  | 5189 | 17 | python method at src/posting/widgets/request/method_selection.py:78 |  |  | 0.391 |
-| walker |  | 5199 | 10 | python method body at src/posting/widgets/request/method_selection.py:86 body 87 |  |  | 0.391 |
-| walker |  | 5224 | 25 | python decl names surface in src/posting/widgets/request/request_scripts.py |  |  | 0.391 |
-| walker |  | 5224 | 0 | python decl at src/posting/widgets/request/request_scripts.py:17 |  |  | 0.391 |
-| walker |  | 5235 | 11 | python decl at src/posting/widgets/request/request_scripts.py:129 |  |  | 0.391 |
+| walker |  | 5060 | 191 | README.md section #1 |  |  | 0.391 |
+| walker |  | 5113 | 53 | docs/guide/themes.md section #0 |  |  | 0.391 |
+| walker |  | 5158 | 45 | python method sigs in src/posting/widgets/request/method_selection.py |  |  | 0.391 |
+| walker |  | 5158 | 0 | python method at src/posting/widgets/request/method_selection.py:86 |  |  | 0.391 |
+| walker |  | 5175 | 17 | python method at src/posting/widgets/request/method_selection.py:78 |  |  | 0.391 |
+| walker |  | 5185 | 10 | python method body at src/posting/widgets/request/method_selection.py:86 body 87 |  |  | 0.391 |
+| walker |  | 5210 | 25 | python decl names surface in src/posting/widgets/request/request_scripts.py |  |  | 0.391 |
+| walker |  | 5210 | 0 | python decl at src/posting/widgets/request/request_scripts.py:17 |  |  | 0.391 |
+| walker |  | 5210 | 0 | python decl at src/posting/widgets/request/request_scripts.py:129 |  |  | 0.391 |
+| walker |  | 5239 | 29 | python imports in src/posting/locations.py |  |  | 0.382 |
 | ns | 5239 |  | 214 | MainScreen action method index | 3.6 | 3.1 | 0.382 |
-| walker |  | 5264 | 29 | python imports in src/posting/locations.py |  |  | 0.382 |
-| walker |  | 5302 | 38 | python decl names surface in src/posting/widgets/key_value_copy_modal.py |  |  | 0.382 |
-| walker |  | 5302 | 0 | python decl at src/posting/widgets/key_value_copy_modal.py:15 |  |  | 0.382 |
-| walker |  | 5318 | 16 | python decl doc at src/posting/widgets/key_value_copy_modal.py:15 |  |  | 0.382 |
+| walker |  | 5277 | 38 | python decl names surface in src/posting/widgets/key_value_copy_modal.py |  |  | 0.382 |
+| walker |  | 5277 | 0 | python decl at src/posting/widgets/key_value_copy_modal.py:15 |  |  | 0.382 |
+| walker |  | 5293 | 16 | python decl doc at src/posting/widgets/key_value_copy_modal.py:15 |  |  | 0.382 |
+| walker |  | 5365 | 72 | python method sigs in src/posting/widgets/variable_input.py |  |  | 0.382 |
+| walker |  | 5365 | 0 | python method at src/posting/widgets/variable_input.py:38 |  |  | 0.382 |
+| walker |  | 5365 | 0 | python method at src/posting/widgets/variable_input.py:47 |  |  | 0.382 |
+| walker |  | 5365 | 0 | python method at src/posting/widgets/variable_input.py:61 |  |  | 0.382 |
 | ns | 5366 |  | 127 | Posting App methods | 3.7 | 3.1 | 0.378 |
-| walker |  | 5390 | 72 | python method sigs in src/posting/widgets/variable_input.py |  |  | 0.378 |
-| walker |  | 5390 | 0 | python method at src/posting/widgets/variable_input.py:38 |  |  | 0.378 |
-| walker |  | 5390 | 0 | python method at src/posting/widgets/variable_input.py:47 |  |  | 0.378 |
-| walker |  | 5390 | 0 | python method at src/posting/widgets/variable_input.py:61 |  |  | 0.378 |
-| walker |  | 5420 | 30 | python imports in src/posting/tuple_to_multidict.py |  |  | 0.378 |
-| walker |  | 5446 | 26 | python decl names surface in src/posting/widgets/request/form_editor.py |  |  | 0.378 |
-| walker |  | 5446 | 0 | python decl at src/posting/widgets/request/form_editor.py:12 |  |  | 0.378 |
-| walker |  | 5446 | 0 | python decl at src/posting/widgets/request/form_editor.py:40 |  |  | 0.378 |
-| walker |  | 5457 | 11 | python decl doc at src/posting/widgets/request/form_editor.py:40 |  |  | 0.378 |
-| walker |  | 5519 | 62 | python class body at src/posting/widgets/center_middle.py:4 |  |  | 0.378 |
-| walker |  | 5582 | 63 | python decl names surface in src/posting/help_screen.py |  |  | 0.378 |
-| walker |  | 5582 | 0 | python decl at src/posting/help_screen.py:22 |  |  | 0.378 |
-| walker |  | 5582 | 0 | python decl at src/posting/help_screen.py:33 |  |  | 0.378 |
-| walker |  | 5582 | 0 | python decl at src/posting/help_screen.py:44 |  |  | 0.378 |
-| walker |  | 5582 | 0 | python decl at src/posting/help_screen.py:48 |  |  | 0.378 |
-| walker |  | 5590 | 8 | python decl at src/posting/help_screen.py:14 |  |  | 0.378 |
-| walker |  | 5600 | 10 | python class body at src/posting/help_screen.py:14 |  |  | 0.378 |
-| walker |  | 5609 | 9 | python decl doc at src/posting/help_screen.py:22 |  |  | 0.378 |
-| walker |  | 5618 | 9 | python decl doc at src/posting/help_screen.py:33 |  |  | 0.378 |
-| walker |  | 5629 | 11 | python decl doc at src/posting/help_screen.py:44 |  |  | 0.378 |
-| walker |  | 5655 | 26 | python method sigs in src/posting/help_screen.py |  |  | 0.378 |
-| walker |  | 5655 | 0 | python method at src/posting/help_screen.py:127 |  |  | 0.378 |
-| walker |  | 5683 | 28 | python decl doc at src/posting/help_screen.py:14 |  |  | 0.378 |
-| walker |  | 5739 | 56 | python class body at src/posting/help_screen.py:22 |  |  | 0.378 |
-| walker |  | 5795 | 56 | python class body at src/posting/help_screen.py:33 |  |  | 0.378 |
-| walker |  | 5857 | 62 | python method at src/posting/help_screen.py:117 |  |  | 0.378 |
-| walker |  | 5888 | 31 | python imports in src/posting/messages.py |  |  | 0.378 |
-| walker |  | 5930 | 42 | python class body at src/posting/widgets/response/response_trace.py:33 |  |  | 0.378 |
-| walker |  | 6005 | 75 | headings outline in docs/guide/navigation.md |  |  | 0.378 |
-| walker |  | 6032 | 27 | python decl names surface in src/posting/widgets/request/query_editor.py |  |  | 0.378 |
-| walker |  | 6032 | 0 | python decl at src/posting/widgets/request/query_editor.py:13 |  |  | 0.378 |
-| walker |  | 6032 | 0 | python decl at src/posting/widgets/request/query_editor.py:49 |  |  | 0.378 |
-| walker |  | 6051 | 19 | python decl doc at src/posting/widgets/request/query_editor.py:13 |  |  | 0.378 |
-| walker |  | 6071 | 20 | python decl doc at src/posting/widgets/request/query_editor.py:49 |  |  | 0.378 |
-| walker |  | 6145 | 74 | python decl at src/posting/types.py:6 |  |  | 0.378 |
+| walker |  | 5395 | 30 | python imports in src/posting/tuple_to_multidict.py |  |  | 0.378 |
+| walker |  | 5421 | 26 | python decl names surface in src/posting/widgets/request/form_editor.py |  |  | 0.378 |
+| walker |  | 5421 | 0 | python decl at src/posting/widgets/request/form_editor.py:12 |  |  | 0.378 |
+| walker |  | 5421 | 0 | python decl at src/posting/widgets/request/form_editor.py:40 |  |  | 0.378 |
+| walker |  | 5432 | 11 | python decl doc at src/posting/widgets/request/form_editor.py:40 |  |  | 0.378 |
+| walker |  | 5494 | 62 | python class body at src/posting/widgets/center_middle.py:4 |  |  | 0.378 |
+| walker |  | 5557 | 63 | python decl names surface in src/posting/help_screen.py |  |  | 0.378 |
+| walker |  | 5557 | 0 | python decl at src/posting/help_screen.py:22 |  |  | 0.378 |
+| walker |  | 5557 | 0 | python decl at src/posting/help_screen.py:33 |  |  | 0.378 |
+| walker |  | 5557 | 0 | python decl at src/posting/help_screen.py:44 |  |  | 0.378 |
+| walker |  | 5557 | 0 | python decl at src/posting/help_screen.py:48 |  |  | 0.378 |
+| walker |  | 5565 | 8 | python decl at src/posting/help_screen.py:14 |  |  | 0.378 |
+| walker |  | 5575 | 10 | python class body at src/posting/help_screen.py:14 |  |  | 0.378 |
+| walker |  | 5584 | 9 | python decl doc at src/posting/help_screen.py:22 |  |  | 0.378 |
+| walker |  | 5593 | 9 | python decl doc at src/posting/help_screen.py:33 |  |  | 0.378 |
+| walker |  | 5604 | 11 | python decl doc at src/posting/help_screen.py:44 |  |  | 0.378 |
+| walker |  | 5630 | 26 | python method sigs in src/posting/help_screen.py |  |  | 0.378 |
+| walker |  | 5630 | 0 | python method at src/posting/help_screen.py:127 |  |  | 0.378 |
+| walker |  | 5658 | 28 | python decl doc at src/posting/help_screen.py:14 |  |  | 0.378 |
+| walker |  | 5714 | 56 | python class body at src/posting/help_screen.py:22 |  |  | 0.378 |
+| walker |  | 5770 | 56 | python class body at src/posting/help_screen.py:33 |  |  | 0.378 |
+| walker |  | 5832 | 62 | python method at src/posting/help_screen.py:117 |  |  | 0.378 |
+| walker |  | 5863 | 31 | python imports in src/posting/messages.py |  |  | 0.378 |
+| walker |  | 5905 | 42 | python class body at src/posting/widgets/response/response_trace.py:33 |  |  | 0.378 |
+| walker |  | 5980 | 75 | headings outline in docs/guide/navigation.md |  |  | 0.378 |
+| walker |  | 6007 | 27 | python decl names surface in src/posting/widgets/request/query_editor.py |  |  | 0.378 |
+| walker |  | 6007 | 0 | python decl at src/posting/widgets/request/query_editor.py:13 |  |  | 0.378 |
+| walker |  | 6007 | 0 | python decl at src/posting/widgets/request/query_editor.py:49 |  |  | 0.378 |
+| walker |  | 6026 | 19 | python decl doc at src/posting/widgets/request/query_editor.py:13 |  |  | 0.378 |
+| walker |  | 6046 | 20 | python decl doc at src/posting/widgets/request/query_editor.py:49 |  |  | 0.378 |
+| walker |  | 6120 | 74 | python decl at src/posting/types.py:6 |  |  | 0.378 |
+| walker |  | 6160 | 40 | python method doc at src/posting/commands.py:204 |  |  | 0.378 |
 | ns | 6162 |  | 796 | send_request — build + template + httpx client | 3.8 | 3.6 | 0.351 |
-| walker |  | 6185 | 40 | python method doc at src/posting/commands.py:204 |  |  | 0.351 |
-| walker |  | 6213 | 28 | python decl names surface in src/posting/widgets/request/request_editor.py |  |  | 0.351 |
-| walker |  | 6213 | 0 | python decl at src/posting/widgets/request/request_editor.py:29 |  |  | 0.351 |
-| walker |  | 6213 | 0 | python decl at src/posting/widgets/request/request_editor.py:33 |  |  | 0.351 |
-| walker |  | 6218 | 5 | python class body at src/posting/widgets/request/request_editor.py:29 |  |  | 0.351 |
+| walker |  | 6188 | 28 | python decl names surface in src/posting/widgets/request/request_editor.py |  |  | 0.351 |
+| walker |  | 6188 | 0 | python decl at src/posting/widgets/request/request_editor.py:29 |  |  | 0.351 |
+| walker |  | 6188 | 0 | python decl at src/posting/widgets/request/request_editor.py:33 |  |  | 0.351 |
+| walker |  | 6193 | 5 | python class body at src/posting/widgets/request/request_editor.py:29 |  |  | 0.351 |
+| walker |  | 6212 | 19 | python decl doc at src/posting/widgets/request/request_editor.py:33 |  |  | 0.351 |
 | ns | 6220 |  | 58 | locations.py — config/data dirs | 4.1 |  | 0.349 |
-| walker |  | 6237 | 19 | python decl doc at src/posting/widgets/request/request_editor.py:33 |  |  | 0.349 |
-| walker |  | 6317 | 80 | python method sigs in src/posting/widgets/rich_log.py |  |  | 0.349 |
-| walker |  | 6317 | 0 | python method at src/posting/widgets/rich_log.py:8 |  |  | 0.349 |
-| walker |  | 6317 | 0 | python method at src/posting/widgets/rich_log.py:14 |  |  | 0.349 |
-| walker |  | 6317 | 0 | python method at src/posting/widgets/rich_log.py:24 |  |  | 0.349 |
-| walker |  | 6317 | 0 | python method at src/posting/widgets/rich_log.py:30 |  |  | 0.349 |
+| walker |  | 6292 | 80 | python method sigs in src/posting/widgets/rich_log.py |  |  | 0.349 |
+| walker |  | 6292 | 0 | python method at src/posting/widgets/rich_log.py:8 |  |  | 0.349 |
+| walker |  | 6292 | 0 | python method at src/posting/widgets/rich_log.py:14 |  |  | 0.349 |
+| walker |  | 6292 | 0 | python method at src/posting/widgets/rich_log.py:24 |  |  | 0.349 |
+| walker |  | 6292 | 0 | python method at src/posting/widgets/rich_log.py:30 |  |  | 0.349 |
 | ns | 6335 |  | 115 | Settings class header + env wiring | 4.2 |  | 0.345 |
 | ns | 6419 |  | 84 | Nested config model headers | 4.3 |  | 0.342 |
-| walker |  | 6448 | 131 | python method sigs in src/posting/jump_overlay.py |  |  | 0.342 |
-| walker |  | 6448 | 0 | python method at src/posting/jump_overlay.py:64 |  |  | 0.342 |
-| walker |  | 6448 | 0 | python method at src/posting/jump_overlay.py:67 |  |  | 0.342 |
-| walker |  | 6448 | 0 | python method at src/posting/jump_overlay.py:84 |  |  | 0.342 |
-| walker |  | 6448 | 0 | python method at src/posting/jump_overlay.py:103 |  |  | 0.342 |
-| walker |  | 6448 | 0 | python method at src/posting/jump_overlay.py:107 |  |  | 0.342 |
-| walker |  | 6462 | 14 | python method at src/posting/jump_overlay.py:80 |  |  | 0.342 |
-| walker |  | 6469 | 7 | python method body at src/posting/jump_overlay.py:64 body 65 |  |  | 0.342 |
-| walker |  | 6482 | 13 | python method body at src/posting/jump_overlay.py:80 body 82 |  |  | 0.342 |
-| walker |  | 6546 | 64 | python method at src/posting/jump_overlay.py:32 |  |  | 0.342 |
-| walker |  | 6575 | 29 | python decl names surface in src/posting/widgets/request/request_body.py |  |  | 0.342 |
-| walker |  | 6575 | 0 | python decl at src/posting/widgets/request/request_body.py:12 |  |  | 0.342 |
-| walker |  | 6575 | 0 | python decl at src/posting/widgets/request/request_body.py:50 |  |  | 0.342 |
-| walker |  | 6602 | 27 | python method sigs in src/posting/widgets/request/request_body.py |  |  | 0.342 |
-| walker |  | 6602 | 0 | python method at src/posting/widgets/request/request_body.py:17 |  |  | 0.342 |
-| walker |  | 6602 | 0 | python method at src/posting/widgets/request/request_body.py:67 |  |  | 0.342 |
-| walker |  | 6622 | 20 | python decl doc at src/posting/widgets/request/request_body.py:50 |  |  | 0.342 |
-| walker |  | 6652 | 30 | python decl doc at src/posting/widgets/request/request_body.py:12 |  |  | 0.342 |
+| walker |  | 6423 | 131 | python method sigs in src/posting/jump_overlay.py |  |  | 0.342 |
+| walker |  | 6423 | 0 | python method at src/posting/jump_overlay.py:64 |  |  | 0.342 |
+| walker |  | 6423 | 0 | python method at src/posting/jump_overlay.py:67 |  |  | 0.342 |
+| walker |  | 6423 | 0 | python method at src/posting/jump_overlay.py:84 |  |  | 0.342 |
+| walker |  | 6423 | 0 | python method at src/posting/jump_overlay.py:103 |  |  | 0.342 |
+| walker |  | 6423 | 0 | python method at src/posting/jump_overlay.py:107 |  |  | 0.342 |
+| walker |  | 6437 | 14 | python method at src/posting/jump_overlay.py:80 |  |  | 0.342 |
+| walker |  | 6444 | 7 | python method body at src/posting/jump_overlay.py:64 body 65 |  |  | 0.342 |
+| walker |  | 6457 | 13 | python method body at src/posting/jump_overlay.py:80 body 82 |  |  | 0.342 |
+| walker |  | 6521 | 64 | python method at src/posting/jump_overlay.py:32 |  |  | 0.342 |
+| walker |  | 6550 | 29 | python decl names surface in src/posting/widgets/request/request_body.py |  |  | 0.342 |
+| walker |  | 6550 | 0 | python decl at src/posting/widgets/request/request_body.py:12 |  |  | 0.342 |
+| walker |  | 6550 | 0 | python decl at src/posting/widgets/request/request_body.py:50 |  |  | 0.342 |
+| walker |  | 6577 | 27 | python method sigs in src/posting/widgets/request/request_body.py |  |  | 0.342 |
+| walker |  | 6577 | 0 | python method at src/posting/widgets/request/request_body.py:17 |  |  | 0.342 |
+| walker |  | 6577 | 0 | python method at src/posting/widgets/request/request_body.py:67 |  |  | 0.342 |
+| walker |  | 6597 | 20 | python decl doc at src/posting/widgets/request/request_body.py:50 |  |  | 0.342 |
+| walker |  | 6627 | 30 | python decl doc at src/posting/widgets/request/request_body.py:12 |  |  | 0.342 |
+| walker |  | 6691 | 64 | docs/guide/external_tools.md section #0 |  |  | 0.342 |
 | ns | 6694 |  | 275 | Settings scalar field index | 4.4 | 4.2 | 0.337 |
-| walker |  | 6716 | 64 | docs/guide/external_tools.md section #0 |  |  | 0.337 |
-| walker |  | 6730 | 14 | python imports in src/posting/widgets/response/response_headers.py |  |  | 0.337 |
-| walker |  | 6765 | 35 | python imports in src/posting/files.py |  |  | 0.337 |
-| walker |  | 6800 | 35 | python imports in src/posting/user_host.py |  |  | 0.337 |
-| walker |  | 6824 | 24 | python method body at src/posting/auth.py:10 body 11 |  |  | 0.337 |
-| walker |  | 6855 | 31 | python decl names surface in src/posting/widgets/response/script_output.py |  |  | 0.337 |
-| walker |  | 6855 | 0 | python decl at src/posting/widgets/response/script_output.py:20 |  |  | 0.337 |
-| walker |  | 6880 | 25 | python method body at src/posting/help_screen.py:117 body 124 |  |  | 0.337 |
+| walker |  | 6705 | 14 | python imports in src/posting/widgets/response/response_headers.py |  |  | 0.337 |
+| walker |  | 6740 | 35 | python imports in src/posting/files.py |  |  | 0.337 |
+| walker |  | 6775 | 35 | python imports in src/posting/user_host.py |  |  | 0.337 |
+| walker |  | 6799 | 24 | python method body at src/posting/auth.py:10 body 11 |  |  | 0.337 |
+| walker |  | 6830 | 31 | python decl names surface in src/posting/widgets/response/script_output.py |  |  | 0.337 |
+| walker |  | 6830 | 0 | python decl at src/posting/widgets/response/script_output.py:20 |  |  | 0.337 |
+| walker |  | 6855 | 25 | python method body at src/posting/help_screen.py:117 body 124 |  |  | 0.337 |
 | ns | 6901 |  | 207 | FocusSettings + CertificateSettings fields | 4.5 | 4.3 | 0.333 |
-| walker |  | 6927 | 47 | python decl body at src/posting/tuple_to_multidict.py:9 body 10 |  |  | 0.333 |
-| walker |  | 7018 | 91 | python method sigs in src/posting/widgets/confirmation.py |  |  | 0.333 |
-| walker |  | 7018 | 0 | python method at src/posting/widgets/confirmation.py:59 |  |  | 0.333 |
-| walker |  | 7018 | 0 | python method at src/posting/widgets/confirmation.py:66 |  |  | 0.333 |
-| walker |  | 7028 | 10 | python method at src/posting/widgets/confirmation.py:74 |  |  | 0.333 |
-| walker |  | 7038 | 10 | python method at src/posting/widgets/confirmation.py:78 |  |  | 0.333 |
-| walker |  | 7057 | 19 | python method at src/posting/widgets/confirmation.py:82 |  |  | 0.333 |
-| walker |  | 7066 | 9 | python method body at src/posting/widgets/confirmation.py:74 body 76 |  |  | 0.333 |
-| walker |  | 7075 | 9 | python method body at src/posting/widgets/confirmation.py:78 body 80 |  |  | 0.333 |
-| walker |  | 7085 | 10 | python method body at src/posting/widgets/confirmation.py:82 body 84 |  |  | 0.333 |
-| walker |  | 7133 | 48 | python decl names surface in src/posting/widgets/select.py |  |  | 0.333 |
-| walker |  | 7133 | 0 | python decl at src/posting/widgets/select.py:8 |  |  | 0.333 |
-| walker |  | 7133 | 0 | python decl at src/posting/widgets/select.py:38 |  |  | 0.333 |
+| walker |  | 6902 | 47 | python decl body at src/posting/tuple_to_multidict.py:9 body 10 |  |  | 0.333 |
+| walker |  | 6993 | 91 | python method sigs in src/posting/widgets/confirmation.py |  |  | 0.333 |
+| walker |  | 6993 | 0 | python method at src/posting/widgets/confirmation.py:59 |  |  | 0.333 |
+| walker |  | 6993 | 0 | python method at src/posting/widgets/confirmation.py:66 |  |  | 0.333 |
+| walker |  | 7003 | 10 | python method at src/posting/widgets/confirmation.py:74 |  |  | 0.333 |
+| walker |  | 7013 | 10 | python method at src/posting/widgets/confirmation.py:78 |  |  | 0.333 |
+| walker |  | 7032 | 19 | python method at src/posting/widgets/confirmation.py:82 |  |  | 0.333 |
+| walker |  | 7041 | 9 | python method body at src/posting/widgets/confirmation.py:74 body 76 |  |  | 0.333 |
+| walker |  | 7050 | 9 | python method body at src/posting/widgets/confirmation.py:78 body 80 |  |  | 0.333 |
+| walker |  | 7060 | 10 | python method body at src/posting/widgets/confirmation.py:82 body 84 |  |  | 0.333 |
+| walker |  | 7108 | 48 | python decl names surface in src/posting/widgets/select.py |  |  | 0.333 |
+| walker |  | 7108 | 0 | python decl at src/posting/widgets/select.py:8 |  |  | 0.333 |
+| walker |  | 7108 | 0 | python decl at src/posting/widgets/select.py:38 |  |  | 0.333 |
 | ns | 7162 |  | 261 | variables.py public surface | 5.1 |  | 0.329 |
-| walker |  | 7208 | 75 | python method at src/posting/jump_overlay.py:46 |  |  | 0.329 |
-| walker |  | 7287 | 79 | python class body at src/posting/widgets/select.py:38 |  |  | 0.329 |
-| walker |  | 7340 | 53 | python class body at src/posting/widgets/request/form_editor.py:12 |  |  | 0.329 |
-| walker |  | 7364 | 24 | python imports in src/posting/widgets/tabbed_content.py |  |  | 0.329 |
+| walker |  | 7183 | 75 | python method at src/posting/jump_overlay.py:46 |  |  | 0.329 |
+| walker |  | 7262 | 79 | python class body at src/posting/widgets/select.py:38 |  |  | 0.329 |
+| walker |  | 7315 | 53 | python class body at src/posting/widgets/request/form_editor.py:12 |  |  | 0.329 |
+| walker |  | 7339 | 24 | python imports in src/posting/widgets/tabbed_content.py |  |  | 0.329 |
 | ns | 7401 |  | 239 | scripts.Posting context class | 5.2 |  | 0.323 |
-| walker |  | 7446 | 82 | python class body at src/posting/widgets/rich_log.py:37 |  |  | 0.323 |
-| walker |  | 7522 | 76 | docs/guide/command_palette.md section #0 |  |  | 0.323 |
-| walker |  | 7621 | 99 | listing of 'tests' |  |  | 0.324 |
-| walker |  | 7676 | 55 | python class body at src/posting/widgets/request/query_editor.py:13 |  |  | 0.324 |
+| walker |  | 7421 | 82 | python class body at src/posting/widgets/rich_log.py:37 |  |  | 0.323 |
+| walker |  | 7497 | 76 | docs/guide/command_palette.md section #0 |  |  | 0.323 |
+| walker |  | 7596 | 99 | listing of 'tests' |  |  | 0.324 |
+| walker |  | 7651 | 55 | python class body at src/posting/widgets/request/query_editor.py:13 |  |  | 0.324 |
 | ns | 7677 |  | 276 | Script function signatures (user-facing) | 5.3 |  | 0.320 |
-| walker |  | 7774 | 98 | python method sigs in src/posting/widgets/select.py |  |  | 0.320 |
-| walker |  | 7774 | 0 | python method at src/posting/widgets/select.py:17 |  |  | 0.320 |
-| walker |  | 7774 | 0 | python method at src/posting/widgets/select.py:34 |  |  | 0.320 |
-| walker |  | 7774 | 0 | python method at src/posting/widgets/select.py:45 |  |  | 0.320 |
-| walker |  | 7774 | 0 | python method at src/posting/widgets/select.py:48 |  |  | 0.320 |
-| walker |  | 7774 | 0 | python method at src/posting/widgets/select.py:59 |  |  | 0.320 |
-| walker |  | 7774 | 0 | python method at src/posting/widgets/select.py:62 |  |  | 0.320 |
-| walker |  | 7787 | 13 | python method at src/posting/widgets/select.py:68 |  |  | 0.320 |
-| walker |  | 7795 | 8 | python method body at src/posting/widgets/select.py:45 body 46 |  |  | 0.320 |
-| walker |  | 7803 | 8 | python method body at src/posting/widgets/select.py:59 body 60 |  |  | 0.320 |
-| walker |  | 7818 | 15 | python method body at src/posting/widgets/select.py:34 body 35 |  |  | 0.320 |
+| walker |  | 7749 | 98 | python method sigs in src/posting/widgets/select.py |  |  | 0.320 |
+| walker |  | 7749 | 0 | python method at src/posting/widgets/select.py:17 |  |  | 0.320 |
+| walker |  | 7749 | 0 | python method at src/posting/widgets/select.py:34 |  |  | 0.320 |
+| walker |  | 7749 | 0 | python method at src/posting/widgets/select.py:45 |  |  | 0.320 |
+| walker |  | 7749 | 0 | python method at src/posting/widgets/select.py:48 |  |  | 0.320 |
+| walker |  | 7749 | 0 | python method at src/posting/widgets/select.py:59 |  |  | 0.320 |
+| walker |  | 7749 | 0 | python method at src/posting/widgets/select.py:62 |  |  | 0.320 |
+| walker |  | 7762 | 13 | python method at src/posting/widgets/select.py:68 |  |  | 0.320 |
+| walker |  | 7770 | 8 | python method body at src/posting/widgets/select.py:45 body 46 |  |  | 0.320 |
+| walker |  | 7778 | 8 | python method body at src/posting/widgets/select.py:59 body 60 |  |  | 0.320 |
+| walker |  | 7793 | 15 | python method body at src/posting/widgets/select.py:34 body 35 |  |  | 0.320 |
 | ns | 7862 |  | 185 | Theme model header + loader fns | 5.4 |  | 0.316 |
-| walker |  | 7901 | 83 | python decl names surface in src/posting/locations.py |  |  | 0.321 |
-| walker |  | 7901 | 0 | python decl at src/posting/locations.py:6 |  |  | 0.321 |
-| walker |  | 7901 | 0 | python decl at src/posting/locations.py:12 |  |  | 0.321 |
-| walker |  | 7901 | 0 | python decl at src/posting/locations.py:17 |  |  | 0.321 |
-| walker |  | 7901 | 0 | python decl at src/posting/locations.py:24 |  |  | 0.321 |
-| walker |  | 7901 | 0 | python decl at src/posting/locations.py:29 |  |  | 0.321 |
-| walker |  | 7901 | 0 | python decl at src/posting/locations.py:34 |  |  | 0.321 |
-| walker |  | 7914 | 13 | python decl doc at src/posting/locations.py:17 |  |  | 0.321 |
-| walker |  | 7926 | 12 | python decl body at src/posting/locations.py:34 body 35 |  |  | 0.324 |
-| walker |  | 7940 | 14 | python decl doc at src/posting/locations.py:12 |  |  | 0.324 |
-| walker |  | 7954 | 14 | python decl doc at src/posting/locations.py:24 |  |  | 0.324 |
-| walker |  | 7968 | 14 | python decl doc at src/posting/locations.py:29 |  |  | 0.324 |
+| walker |  | 7876 | 83 | python decl names surface in src/posting/locations.py |  |  | 0.321 |
+| walker |  | 7876 | 0 | python decl at src/posting/locations.py:6 |  |  | 0.321 |
+| walker |  | 7876 | 0 | python decl at src/posting/locations.py:12 |  |  | 0.321 |
+| walker |  | 7876 | 0 | python decl at src/posting/locations.py:17 |  |  | 0.321 |
+| walker |  | 7876 | 0 | python decl at src/posting/locations.py:24 |  |  | 0.321 |
+| walker |  | 7876 | 0 | python decl at src/posting/locations.py:29 |  |  | 0.321 |
+| walker |  | 7876 | 0 | python decl at src/posting/locations.py:34 |  |  | 0.321 |
+| walker |  | 7889 | 13 | python decl doc at src/posting/locations.py:17 |  |  | 0.321 |
+| walker |  | 7901 | 12 | python decl body at src/posting/locations.py:34 body 35 |  |  | 0.324 |
+| walker |  | 7915 | 14 | python decl doc at src/posting/locations.py:12 |  |  | 0.324 |
+| walker |  | 7929 | 14 | python decl doc at src/posting/locations.py:24 |  |  | 0.324 |
+| walker |  | 7943 | 14 | python decl doc at src/posting/locations.py:29 |  |  | 0.324 |
+| walker |  | 7956 | 13 | python decl body at src/posting/locations.py:24 body 26 |  |  | 0.324 |
+| walker |  | 7970 | 14 | python decl body at src/posting/locations.py:12 body 14 |  |  | 0.324 |
 | ns | 7975 |  | 113 | BUILTIN_THEMES — every theme name | 5.5 | 5.4 | 0.322 |
-| walker |  | 7981 | 13 | python decl body at src/posting/locations.py:24 body 26 |  |  | 0.322 |
+| walker |  | 7984 | 14 | python decl body at src/posting/locations.py:29 body 31 |  |  | 0.322 |
 | ns | 7989 |  | 14 | Importing — module list | 6.1 |  | 0.325 |
-| walker |  | 7995 | 14 | python decl body at src/posting/locations.py:12 body 14 |  |  | 0.325 |
-| walker |  | 8009 | 14 | python decl body at src/posting/locations.py:29 body 31 |  |  | 0.325 |
+| walker |  | 8071 | 87 | python class body at src/posting/widgets/select.py:8 |  |  | 0.325 |
 | ns | 8090 |  | 101 | CurlImport — public surface | 6.2 |  | 0.324 |
-| walker |  | 8096 | 87 | python class body at src/posting/widgets/select.py:8 |  |  | 0.324 |
-| walker |  | 8118 | 22 | python decl names surface #1 in src/posting/importing/postman.py |  |  | 0.324 |
-| walker |  | 8144 | 26 | python decl at src/posting/importing/postman.py:178 |  |  | 0.324 |
-| walker |  | 8177 | 33 | python decl at src/posting/importing/postman.py:203 |  |  | 0.324 |
-| walker |  | 8197 | 20 | python decl doc at src/posting/importing/postman.py:203 |  |  | 0.324 |
+| walker |  | 8093 | 22 | python decl names surface #1 in src/posting/importing/postman.py |  |  | 0.324 |
+| walker |  | 8119 | 26 | python decl at src/posting/importing/postman.py:178 |  |  | 0.324 |
+| walker |  | 8152 | 33 | python decl at src/posting/importing/postman.py:203 |  |  | 0.324 |
+| walker |  | 8172 | 20 | python decl doc at src/posting/importing/postman.py:203 |  |  | 0.324 |
 | ns | 8251 |  | 161 | OpenAPI import — entry points | 6.3 |  | 0.321 |
-| walker |  | 8301 | 104 | python method sigs in src/posting/widgets/variable_autocomplete.py |  |  | 0.321 |
-| walker |  | 8301 | 0 | python method at src/posting/widgets/variable_autocomplete.py:51 |  |  | 0.321 |
-| walker |  | 8301 | 0 | python method at src/posting/widgets/variable_autocomplete.py:60 |  |  | 0.321 |
-| walker |  | 8301 | 0 | python method at src/posting/widgets/variable_autocomplete.py:84 |  |  | 0.321 |
-| walker |  | 8301 | 0 | python method at src/posting/widgets/variable_autocomplete.py:93 |  |  | 0.321 |
-| walker |  | 8332 | 31 | python method doc at src/posting/widgets/variable_autocomplete.py:60 |  |  | 0.321 |
+| walker |  | 8276 | 104 | python method sigs in src/posting/widgets/variable_autocomplete.py |  |  | 0.321 |
+| walker |  | 8276 | 0 | python method at src/posting/widgets/variable_autocomplete.py:51 |  |  | 0.321 |
+| walker |  | 8276 | 0 | python method at src/posting/widgets/variable_autocomplete.py:60 |  |  | 0.321 |
+| walker |  | 8276 | 0 | python method at src/posting/widgets/variable_autocomplete.py:84 |  |  | 0.321 |
+| walker |  | 8276 | 0 | python method at src/posting/widgets/variable_autocomplete.py:93 |  |  | 0.321 |
+| walker |  | 8307 | 31 | python method doc at src/posting/widgets/variable_autocomplete.py:60 |  |  | 0.321 |
+| walker |  | 8376 | 69 | python method sigs in src/posting/widgets/response/response_trace.py |  |  | 0.321 |
+| walker |  | 8376 | 0 | python method at src/posting/widgets/response/response_trace.py:50 |  |  | 0.321 |
+| walker |  | 8376 | 0 | python method at src/posting/widgets/response/response_trace.py:67 |  |  | 0.321 |
+| walker |  | 8376 | 0 | python method at src/posting/widgets/response/response_trace.py:82 |  |  | 0.321 |
+| walker |  | 8383 | 7 | python method body at src/posting/widgets/response/response_trace.py:82 body 83 |  |  | 0.321 |
 | ns | 8393 |  | 142 | Postman import — top-level types + entry | 6.4 |  | 0.318 |
-| walker |  | 8401 | 69 | python method sigs in src/posting/widgets/response/response_trace.py |  |  | 0.318 |
-| walker |  | 8401 | 0 | python method at src/posting/widgets/response/response_trace.py:50 |  |  | 0.318 |
-| walker |  | 8401 | 0 | python method at src/posting/widgets/response/response_trace.py:67 |  |  | 0.318 |
-| walker |  | 8401 | 0 | python method at src/posting/widgets/response/response_trace.py:82 |  |  | 0.318 |
-| walker |  | 8408 | 7 | python method body at src/posting/widgets/response/response_trace.py:82 body 83 |  |  | 0.318 |
-| walker |  | 8478 | 70 | python method sigs in src/posting/widgets/response/cookies_table.py |  |  | 0.318 |
-| walker |  | 8478 | 0 | python method at src/posting/widgets/response/cookies_table.py:10 |  |  | 0.318 |
-| walker |  | 8478 | 0 | python method at src/posting/widgets/response/cookies_table.py:14 |  |  | 0.318 |
-| walker |  | 8490 | 12 | python method at src/posting/widgets/response/cookies_table.py:31 |  |  | 0.318 |
-| walker |  | 8509 | 19 | python method at src/posting/widgets/response/cookies_table.py:21 |  |  | 0.318 |
+| walker |  | 8453 | 70 | python method sigs in src/posting/widgets/response/cookies_table.py |  |  | 0.318 |
+| walker |  | 8453 | 0 | python method at src/posting/widgets/response/cookies_table.py:10 |  |  | 0.318 |
+| walker |  | 8453 | 0 | python method at src/posting/widgets/response/cookies_table.py:14 |  |  | 0.318 |
+| walker |  | 8465 | 12 | python method at src/posting/widgets/response/cookies_table.py:31 |  |  | 0.318 |
+| walker |  | 8484 | 19 | python method at src/posting/widgets/response/cookies_table.py:21 |  |  | 0.318 |
+| walker |  | 8503 | 19 | python method at src/posting/widgets/response/cookies_table.py:26 |  |  | 0.318 |
 | ns | 8510 |  | 117 | to_curl signature + opening | 6.5 | 2.4 | 0.316 |
-| walker |  | 8528 | 19 | python method at src/posting/widgets/response/cookies_table.py:26 |  |  | 0.316 |
-| walker |  | 8594 | 66 | python decl at src/posting/widgets/text_area.py:697 |  |  | 0.316 |
+| walker |  | 8569 | 66 | python decl at src/posting/widgets/text_area.py:697 |  |  | 0.316 |
 | ns | 8597 |  | 87 | Top-level widgets directory | 7.1 |  | 0.334 |
-| walker |  | 8683 | 89 | python decl names surface in src/posting/files.py |  |  | 0.334 |
-| walker |  | 8683 | 0 | python decl at src/posting/files.py:62 |  |  | 0.334 |
-| walker |  | 8683 | 0 | python decl at src/posting/files.py:72 |  |  | 0.334 |
-| walker |  | 8683 | 0 | python decl at src/posting/files.py:99 |  |  | 0.334 |
-| walker |  | 8696 | 13 | python decl at src/posting/files.py:10 |  |  | 0.334 |
+| walker |  | 8658 | 89 | python decl names surface in src/posting/files.py |  |  | 0.334 |
+| walker |  | 8658 | 0 | python decl at src/posting/files.py:62 |  |  | 0.334 |
+| walker |  | 8658 | 0 | python decl at src/posting/files.py:72 |  |  | 0.334 |
+| walker |  | 8658 | 0 | python decl at src/posting/files.py:99 |  |  | 0.334 |
+| walker |  | 8671 | 13 | python decl at src/posting/files.py:10 |  |  | 0.334 |
+| walker |  | 8679 | 8 | python decl body at src/posting/files.py:72 body 96 |  |  | 0.334 |
 | ns | 8703 |  | 106 | widgets/request/, widgets/response/, widgets/collection/ | 7.2 |  | 0.349 |
-| walker |  | 8704 | 8 | python decl body at src/posting/files.py:72 body 96 |  |  | 0.349 |
-| walker |  | 8798 | 94 | python decl doc at src/posting/files.py:99 |  |  | 0.349 |
-| walker |  | 8889 | 91 | python decl names surface in src/posting/urls.py |  |  | 0.349 |
-| walker |  | 8889 | 0 | python decl at src/posting/urls.py:9 |  |  | 0.349 |
-| walker |  | 8889 | 0 | python decl at src/posting/urls.py:24 |  |  | 0.349 |
-| walker |  | 8889 | 0 | python decl at src/posting/urls.py:49 |  |  | 0.349 |
-| walker |  | 8966 | 77 | python decl doc at src/posting/urls.py:24 |  |  | 0.349 |
+| walker |  | 8773 | 94 | python decl doc at src/posting/files.py:99 |  |  | 0.349 |
+| walker |  | 8864 | 91 | python decl names surface in src/posting/urls.py |  |  | 0.349 |
+| walker |  | 8864 | 0 | python decl at src/posting/urls.py:9 |  |  | 0.349 |
+| walker |  | 8864 | 0 | python decl at src/posting/urls.py:24 |  |  | 0.349 |
+| walker |  | 8864 | 0 | python decl at src/posting/urls.py:49 |  |  | 0.349 |
+| walker |  | 8941 | 77 | python decl doc at src/posting/urls.py:24 |  |  | 0.349 |
 | ns | 8979 |  | 276 | RequestEditor.compose tabs | 7.3 |  | 0.344 |
-| walker |  | 9046 | 80 | python decl doc at src/posting/urls.py:9 |  |  | 0.344 |
-| walker |  | 9156 | 110 | headings outline in docs/guide/configuration.md |  |  | 0.344 |
-| walker |  | 9179 | 23 | docs/guide/configuration.md section #3 |  |  | 0.344 |
+| walker |  | 9021 | 80 | python decl doc at src/posting/urls.py:9 |  |  | 0.344 |
+| walker |  | 9131 | 110 | headings outline in docs/guide/configuration.md |  |  | 0.344 |
+| walker |  | 9154 | 23 | docs/guide/configuration.md section #3 |  |  | 0.344 |
 | ns | 9194 |  | 215 | ResponseArea.compose tabs | 7.4 |  | 0.340 |
-| walker |  | 9250 | 71 | docs/guide/configuration.md section #0 |  |  | 0.340 |
+| walker |  | 9225 | 71 | docs/guide/configuration.md section #0 |  |  | 0.340 |
 | ns | 9277 |  | 83 | urls.py — path-param helpers | 8.1 |  | 0.341 |
-| walker |  | 9360 | 110 | headings outline in docs/guide/scripting.md |  |  | 0.341 |
-| walker |  | 9372 | 12 | python decl body at src/posting/urls.py:9 body 21 |  |  | 0.341 |
+| walker |  | 9335 | 110 | headings outline in docs/guide/scripting.md |  |  | 0.341 |
+| walker |  | 9347 | 12 | python decl body at src/posting/urls.py:9 body 21 |  |  | 0.341 |
 | ns | 9426 |  | 149 | highlighters.py — URL/variable/path-param styling | 8.2 |  | 0.339 |
-| walker |  | 9468 | 96 | python class body at src/posting/widgets/key_value.py:19 |  |  | 0.339 |
+| walker |  | 9443 | 96 | python class body at src/posting/widgets/key_value.py:19 |  |  | 0.339 |
 | ns | 9509 |  | 83 | Small helper modules — auth, yaml, save_request, files | 8.3 |  | 0.346 |
-| walker |  | 9543 | 75 | python method sigs in src/posting/widgets/request/form_editor.py |  |  | 0.346 |
-| walker |  | 9543 | 0 | python method at src/posting/widgets/request/form_editor.py:18 |  |  | 0.346 |
-| walker |  | 9543 | 0 | python method at src/posting/widgets/request/form_editor.py:26 |  |  | 0.346 |
-| walker |  | 9543 | 0 | python method at src/posting/widgets/request/form_editor.py:43 |  |  | 0.346 |
-| walker |  | 9543 | 0 | python method at src/posting/widgets/request/form_editor.py:53 |  |  | 0.346 |
-| walker |  | 9576 | 33 | python method at src/posting/widgets/request/form_editor.py:56 |  |  | 0.346 |
-| walker |  | 9589 | 13 | python method body at src/posting/widgets/request/form_editor.py:53 body 54 |  |  | 0.346 |
+| walker |  | 9518 | 75 | python method sigs in src/posting/widgets/request/form_editor.py |  |  | 0.346 |
+| walker |  | 9518 | 0 | python method at src/posting/widgets/request/form_editor.py:18 |  |  | 0.346 |
+| walker |  | 9518 | 0 | python method at src/posting/widgets/request/form_editor.py:26 |  |  | 0.346 |
+| walker |  | 9518 | 0 | python method at src/posting/widgets/request/form_editor.py:43 |  |  | 0.346 |
+| walker |  | 9518 | 0 | python method at src/posting/widgets/request/form_editor.py:53 |  |  | 0.346 |
+| walker |  | 9551 | 33 | python method at src/posting/widgets/request/form_editor.py:56 |  |  | 0.346 |
+| walker |  | 9564 | 13 | python method body at src/posting/widgets/request/form_editor.py:53 body 54 |  |  | 0.346 |
 | ns | 9608 |  | 99 | Tests directory | 9.1 |  | 0.359 |
+| walker |  | 9639 | 75 | python method sigs in src/posting/widgets/request/query_editor.py |  |  | 0.359 |
+| walker |  | 9639 | 0 | python method at src/posting/widgets/request/query_editor.py:23 |  |  | 0.359 |
+| walker |  | 9639 | 0 | python method at src/posting/widgets/request/query_editor.py:31 |  |  | 0.359 |
+| walker |  | 9639 | 0 | python method at src/posting/widgets/request/query_editor.py:35 |  |  | 0.359 |
+| walker |  | 9639 | 0 | python method at src/posting/widgets/request/query_editor.py:54 |  |  | 0.359 |
+| walker |  | 9651 | 12 | python method at src/posting/widgets/request/query_editor.py:65 |  |  | 0.359 |
 | ns | 9660 |  | 52 | Test sample assets | 9.2 |  | 0.357 |
-| walker |  | 9664 | 75 | python method sigs in src/posting/widgets/request/query_editor.py |  |  | 0.357 |
-| walker |  | 9664 | 0 | python method at src/posting/widgets/request/query_editor.py:23 |  |  | 0.357 |
-| walker |  | 9664 | 0 | python method at src/posting/widgets/request/query_editor.py:31 |  |  | 0.357 |
-| walker |  | 9664 | 0 | python method at src/posting/widgets/request/query_editor.py:35 |  |  | 0.357 |
-| walker |  | 9664 | 0 | python method at src/posting/widgets/request/query_editor.py:54 |  |  | 0.357 |
-| walker |  | 9676 | 12 | python method at src/posting/widgets/request/query_editor.py:65 |  |  | 0.357 |
-| walker |  | 9709 | 33 | docs/guide/environments.md section #2 |  |  | 0.357 |
+| walker |  | 9684 | 33 | docs/guide/environments.md section #2 |  |  | 0.357 |
+| walker |  | 9782 | 98 | python class body at src/posting/widgets/tabbed_content.py:5 |  |  | 0.357 |
 | ns | 9788 |  | 128 | Snapshot test app entry | 9.3 |  | 0.355 |
-| walker |  | 9811 | 102 | python decl doc at src/posting/variables.py:133 |  |  | 0.355 |
 | ns | 9884 |  | 96 | User docs index | 9.4 |  | 0.371 |
-| walker |  | 9909 | 98 | python class body at src/posting/widgets/tabbed_content.py:5 |  |  | 0.371 |
+| walker |  | 9897 | 115 | python method sigs in src/posting/widgets/key_value_copy_modal.py |  |  | 0.371 |
+| walker |  | 9897 | 0 | python method at src/posting/widgets/key_value_copy_modal.py:55 |  |  | 0.371 |
+| walker |  | 9897 | 0 | python method at src/posting/widgets/key_value_copy_modal.py:64 |  |  | 0.371 |
+| walker |  | 9897 | 0 | python method at src/posting/widgets/key_value_copy_modal.py:71 |  |  | 0.371 |
+| walker |  | 9897 | 0 | python method at src/posting/widgets/key_value_copy_modal.py:74 |  |  | 0.371 |
+| walker |  | 9897 | 0 | python method at src/posting/widgets/key_value_copy_modal.py:77 |  |  | 0.371 |
+| walker |  | 9897 | 0 | python method at src/posting/widgets/key_value_copy_modal.py:80 |  |  | 0.371 |
+| walker |  | 9916 | 19 | python method at src/posting/widgets/key_value_copy_modal.py:67 |  |  | 0.371 |
+| walker |  | 9923 | 7 | python method body at src/posting/widgets/key_value_copy_modal.py:80 body 81 |  |  | 0.371 |
+| walker |  | 9934 | 11 | python method body at src/posting/widgets/key_value_copy_modal.py:67 body 69 |  |  | 0.371 |
+| walker |  | 9946 | 12 | python method body at src/posting/widgets/key_value_copy_modal.py:64 body 65 |  |  | 0.371 |
 | ns | 9954 |  | 70 | Make test target | 10.1 |  | 0.370 |
+| walker |  | 9959 | 13 | python method body at src/posting/widgets/key_value_copy_modal.py:77 body 78 |  |  | 0.370 |
+| walker |  | 9973 | 14 | python method body at src/posting/widgets/key_value_copy_modal.py:71 body 72 |  |  | 0.370 |
+| walker |  | 9987 | 14 | python method body at src/posting/widgets/key_value_copy_modal.py:74 body 75 |  |  | 0.370 |
 | ns | 9997 |  | 43 | Trivial module surfaces — version, types, messages | 10.2 |  | 0.372 |

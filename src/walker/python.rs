@@ -218,11 +218,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 file: file.clone(),
                 start_line: decl.start_line,
             };
-            let mut decl_lines = collect_decl(decl);
-            if matches!(decl.kind, DeclKind::Class | DeclKind::Function) {
-                let lede = collect_doc_lede(decl.inner_node, &src_lines);
-                merge_file_lines(&mut decl_lines, lede);
-            }
+            let decl_lines = collect_decl(decl);
             if (!matches!(decl.kind, DeclKind::Const)
                 || !file_lines_covered_by(&decl_lines, &names_lines_by_chunk[chunk_index]))
                 && let Some(content) = single_file_lines_content(file, &source, decl_lines)
@@ -918,86 +914,6 @@ fn collect_decl(info: &DeclInfo) -> FileLines {
     let mut lines = Vec::new();
     push_rows(&mut lines, unit_start, end_row);
     FileLines::new(dedup_sorted(lines))
-}
-
-/// Rows of the docstring's first paragraph — opens at the docstring
-/// node, takes contiguous non-blank rows up to the first blank, capped
-/// at `DOC_LEDE_MAX_ROWS`. Lets `Decl` carry the PEP 257 summary alongside
-/// the header.
-fn collect_doc_lede(inner: Node, src_lines: &[&str]) -> FileLines {
-    let Some(body) = inner.child_by_field_name("body") else {
-        return FileLines::new(Vec::new());
-    };
-    let Some(doc_stmt) = first_docstring_statement(body) else {
-        return FileLines::new(Vec::new());
-    };
-    let start_row = doc_stmt.start_position().row;
-    let end_row = doc_stmt.end_position().row;
-    // Only emit a lede when the docstring is large enough that DeclDoc can
-    // plausibly slip past the small-budget tier — for short docstrings the
-    // whole DeclDoc lands cheap anyway and the lede is just noise.
-    if end_row.saturating_sub(start_row) < DOC_LEDE_MIN_DOC_ROWS {
-        return FileLines::new(Vec::new());
-    }
-    let mut rows = Vec::new();
-    let mut content_seen = false;
-    for row in start_row..=end_row {
-        let Some(line) = src_lines.get(row) else {
-            break;
-        };
-        let trimmed = line.trim();
-        // A blank or delimiter-only row (`"""` / `'''`, optionally with
-        // an `r` / `b` / `f` / `u` string prefix) is scaffolding, not
-        // content. Captures the `"""\n    Summary.\n` shape as well as
-        // `"""Summary.` openings; the post-summary paragraph break is a
-        // blank row and terminates the lede.
-        if trimmed.is_empty() || is_docstring_delimiter_line(trimmed) {
-            if content_seen {
-                break;
-            }
-            continue;
-        }
-        rows.push(row + 1);
-        content_seen = true;
-        if rows.len() >= DOC_LEDE_MAX_ROWS {
-            break;
-        }
-    }
-    FileLines::new(dedup_sorted(rows))
-}
-
-/// True iff `trimmed` is only docstring scaffolding — `"""`/`'''`,
-/// optionally preceded by an `r`/`b`/`f`/`u` string prefix.
-fn is_docstring_delimiter_line(trimmed: &str) -> bool {
-    let bytes = trimmed.as_bytes();
-    let mut i = 0;
-    while i < bytes.len()
-        && matches!(
-            bytes[i],
-            b'r' | b'R' | b'b' | b'B' | b'f' | b'F' | b'u' | b'U'
-        )
-    {
-        i += 1;
-    }
-    let rest = &bytes[i..];
-    rest.iter().all(|&b| matches!(b, b'"' | b'\''))
-        && (rest.first() == Some(&b'"') || rest.first() == Some(&b'\''))
-}
-
-/// Cap on docstring rows folded into `Decl` (PEP 257 one-line summary
-/// + the common single-wrap case).
-const DOC_LEDE_MAX_ROWS: usize = 2;
-
-/// Minimum docstring row-span before `Decl` absorbs the lede — short
-/// docstrings already fit cheaply through `DeclDoc`.
-const DOC_LEDE_MIN_DOC_ROWS: usize = 12;
-
-fn merge_file_lines(into: &mut FileLines, other: FileLines) {
-    let mut full = std::mem::take(&mut into.full);
-    full.extend(other.full);
-    into.full = dedup_sorted(full);
-    // Drop any ellipsis that is now covered by a real line.
-    into.ellipses.retain(|line| !into.full.contains(line));
 }
 
 /// Rows of the first docstring in `inner`'s body, or empty if none.
@@ -1763,30 +1679,6 @@ def f():
         let body = def_body_parts(f.inner_node, &src_lines);
         assert_eq!(body.len(), 1);
         assert_eq!(body[0].lines, vec![3], "body skips docstring on row 2");
-    }
-
-    #[test]
-    fn python_doc_lede_delimiter_line_classifier() {
-        // Scaffold rows — must be classified as delimiter-only.
-        assert!(is_docstring_delimiter_line("\"\"\""));
-        assert!(is_docstring_delimiter_line("'''"));
-        assert!(is_docstring_delimiter_line("r\"\"\""));
-        assert!(is_docstring_delimiter_line("R\"\"\""));
-        assert!(is_docstring_delimiter_line("f\"\"\""));
-        assert!(is_docstring_delimiter_line("b'''"));
-        assert!(is_docstring_delimiter_line("rb\"\"\""));
-        assert!(is_docstring_delimiter_line("Rf'''"));
-        assert!(is_docstring_delimiter_line("\"\"\"\"\"\""));
-
-        // Content rows — must NOT be classified as delimiter-only.
-        assert!(!is_docstring_delimiter_line("Real-world summary."));
-        assert!(!is_docstring_delimiter_line("\"\"\"Summary."));
-        assert!(!is_docstring_delimiter_line("r\"\"\"Summary."));
-        assert!(!is_docstring_delimiter_line("Returns:"));
-        assert!(!is_docstring_delimiter_line("Foo"));
-        assert!(!is_docstring_delimiter_line(""));
-        // A `'` paired with non-quote content stays content.
-        assert!(!is_docstring_delimiter_line("don't"));
     }
 
     #[test]
