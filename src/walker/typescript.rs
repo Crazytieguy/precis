@@ -2042,41 +2042,11 @@ fn collect_reexport_import_chunks(
     if !is_entrypoint_file(file) {
         return None;
     }
-    let mut groups = collect_reexport_import_groups(tree, source)?;
+    let groups = collect_reexport_import_groups(tree, source)?;
     if !should_chunk_import_groups(&groups) {
         return None;
     }
-    prioritize_relative_source_groups(&mut groups);
     Some(groups_to_file_lines(groups))
-}
-
-/// Reorder chunk groups so bare-reexports from package-relative sources
-/// (`./x`, `../x`) precede external-package imports. The early chunk
-/// indexes carry the most `imports_chunk_value` (later indexes fall off
-/// with `reexport_import_chunk_factor`); for a package entrypoint, the
-/// `./*` re-export wall is the public-API map a consumer is looking
-/// for, while imports of external libraries are plumbing. Document
-/// order alone puts `import * as Rolldown from 'rolldown'` ahead of
-/// `export { defineConfig } from './config'`, which inverts the value
-/// ordering on big walls.
-fn prioritize_relative_source_groups(groups: &mut [ImportGroup]) {
-    // Stable sort preserves intra-bucket document order so the rank
-    // within each class still tracks source-order proximity.
-    groups.sort_by_key(|group| !is_relative_source(&group.source));
-}
-
-fn is_relative_source(source_key: &str) -> bool {
-    // `source_key` is the raw quoted source literal (e.g. `'./config'`).
-    let bytes = source_key.as_bytes();
-    if bytes.len() < 3 {
-        return false;
-    }
-    let quote = bytes[0];
-    if quote != b'\'' && quote != b'"' && quote != b'`' {
-        return false;
-    }
-    let inner = &source_key[1..];
-    inner.starts_with("./") || inner.starts_with("../")
 }
 
 fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> {
