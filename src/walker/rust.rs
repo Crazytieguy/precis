@@ -433,8 +433,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     // main.rs stays as a whole-item batch under the
                     // general non-essential discount.
                     let is_main_fn = matches!(item.kind, ItemKind::Fn)
-                        && (name_of(item.node, &source) == Some("main")
-                            || has_async_main_attribute(item.node, &source));
+                        && name_of(item.node, &source) == Some("main");
                     let body_split_example_main =
                         example_main_entry && is_main_fn && ctx.is_readme_cited(file);
                     let render_whole = example_entry && !body_split_example_main;
@@ -705,9 +704,6 @@ fn should_emit_private_entry_item(
     if !matches!(item_kind_of(node), Some(ItemKind::Fn)) {
         return false;
     }
-    if has_async_main_attribute(node, source) {
-        return true;
-    }
     if src_main_entry && name_of(node, source) == Some("main") {
         return true;
     }
@@ -747,14 +743,6 @@ fn is_src_main_file(path: &Path) -> bool {
 
 fn is_main_rs(path: &Path) -> bool {
     path.file_name().and_then(|n| n.to_str()) == Some("main.rs")
-}
-
-fn has_async_main_attribute(node: Node, source: &str) -> bool {
-    any_outer_attribute(node, |attr| {
-        let text = &source[attr.start_byte()..attr.end_byte()];
-        let compact: String = text.chars().filter(|c| !c.is_whitespace()).collect();
-        compact.starts_with("tokio::main") || compact.starts_with("async_std::main")
-    })
 }
 
 fn is_workspace_member_source_file(file: &Path, ctx: &WalkCtx) -> bool {
