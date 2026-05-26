@@ -124,23 +124,24 @@ Score(3000)=0.610 I=0.839 C=0.443 ns_rows≤3K=17/44 (reached=9 partial=0 missin
 | walker |  | 7095 | 10 | pub-item doc lede at src/__private_api.rs:39 |  |  | 0.525 |
 | ns | 7149 |  | 185 | Implementing-a-Logger doc snippet | 5.2 | 2.3 | 0.515 |
 | walker |  | 7188 | 93 | pub item at src/__private_api.rs:84 |  |  | 0.520 |
-| walker |  | 7308 | 120 | pub-item doc lede at src/kv/source.rs:51 |  |  | 0.520 |
 | ns | 7366 |  | 217 | Default-Off warning + STATIC_MAX_LEVEL note | 5.3 |  | 0.514 |
-| walker |  | 7369 | 61 | README.md section #5 |  |  | 0.514 |
-| walker |  | 7424 | 55 | pub item body at src/__private_api.rs:84 body 94 |  |  | 0.521 |
-| walker |  | 7479 | 55 | pub-item doc body at src/lib.rs:1420 |  |  | 0.521 |
-| ns | 7693 |  | 327 | Compile-time max_level_* conflict guards | 5.4 |  | 0.512 |
-| walker |  | 7964 | 485 | macro_export body at src/macros.rs:75 |  |  | 0.571 |
-| ns | 7986 |  | 293 | FromStr impls for Level/LevelFilter | 5.5 | 2.4 | 0.557 |
-| ns | 8318 |  | 332 | RecordBuilder method index | 5.6 | 3.1 | 0.551 |
-| ns | 8407 |  | 89 | MetadataBuilder method index | 5.7 | 3.2 | 0.549 |
-| ns | 8659 |  | 252 | Logger blanket impls (&T, Box, Arc) | 5.8 | 2.3 | 0.539 |
-| walker |  | 8804 | 840 | pub item at src/kv/value.rs:462 |  |  | 0.556 |
-| walker |  | 8872 | 68 | README.md section #2 |  |  | 0.556 |
-| walker |  | 8880 | 8 | CHANGELOG.md section #0 |  |  | 0.556 |
-| ns | 8977 |  | 318 | non-atomic AtomicUsize fallback | 5.9 |  | 0.543 |
-| ns | 8998 |  | 21 | tests/ + benches/ + harness listings | 5.10 |  | 0.540 |
-| ns | 9234 |  | 236 | Macro test-fn names (tests/macros.rs) | 5.11 |  | 0.530 |
-| ns | 9640 |  | 406 | kv::Source impl matrix | 5.12 | 4.4 | 0.514 |
-| ns | 9784 |  | 144 | kv::Error variants | 5.13 |  | 0.510 |
-| ns | 9861 |  | 77 | logger() global accessor | 5.14 | 3.5 | 0.507 |
+| walker |  | 7598 | 410 | macro_export body at src/macros.rs:165 |  |  | 0.514 |
+| ns | 7693 |  | 327 | Compile-time max_level_* conflict guards | 5.4 |  | 0.505 |
+| ns | 7986 |  | 293 | FromStr impls for Level/LevelFilter | 5.5 | 2.4 | 0.494 |
+| walker |  | 8008 | 410 | macro_export body at src/macros.rs:204 |  |  | 0.494 |
+| ns | 8318 |  | 332 | RecordBuilder method index | 5.6 | 3.1 | 0.488 |
+| ns | 8407 |  | 89 | MetadataBuilder method index | 5.7 | 3.2 | 0.486 |
+| walker |  | 8418 | 410 | macro_export body at src/macros.rs:252 |  |  | 0.486 |
+| ns | 8659 |  | 252 | Logger blanket impls (&T, Box, Arc) | 5.8 | 2.3 | 0.477 |
+| walker |  | 8828 | 410 | macro_export body at src/macros.rs:292 |  |  | 0.477 |
+| ns | 8977 |  | 318 | non-atomic AtomicUsize fallback | 5.9 |  | 0.465 |
+| ns | 8998 |  | 21 | tests/ + benches/ + harness listings | 5.10 |  | 0.464 |
+| ns | 9234 |  | 236 | Macro test-fn names (tests/macros.rs) | 5.11 |  | 0.455 |
+| walker |  | 9238 | 410 | macro_export body at src/macros.rs:336 |  |  | 0.455 |
+| walker |  | 9358 | 120 | pub-item doc lede at src/kv/source.rs:51 |  |  | 0.455 |
+| walker |  | 9419 | 61 | README.md section #5 |  |  | 0.455 |
+| walker |  | 9474 | 55 | pub item body at src/__private_api.rs:84 body 94 |  |  | 0.460 |
+| walker |  | 9529 | 55 | pub-item doc body at src/lib.rs:1420 |  |  | 0.460 |
+| ns | 9640 |  | 406 | kv::Source impl matrix | 5.12 | 4.4 | 0.447 |
+| ns | 9784 |  | 144 | kv::Error variants | 5.13 |  | 0.443 |
+| ns | 9861 |  | 77 | logger() global accessor | 5.14 | 3.5 | 0.441 |

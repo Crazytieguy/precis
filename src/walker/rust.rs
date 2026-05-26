@@ -48,11 +48,10 @@ use super::{
 };
 
 /// Per-run Rust-walker state owned by [`WalkCtx`] — memoizes module
-/// visibility, workspace membership, exported macros, and cargo source
-/// dirs across a single run.
+/// visibility, workspace membership, and cargo source dirs across a
+/// single run.
 pub struct RustState {
     module_visibility: OnceCell<HashMap<PathBuf, Visibility>>,
-    exported_macros_per_dir: RefCell<HashMap<PathBuf, Arc<HashSet<String>>>>,
     workspace: super::workspace::WorkspaceMembership,
     nearest_member_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
     cargo_source_dirs: OnceCell<Vec<PathBuf>>,
@@ -64,7 +63,6 @@ impl RustState {
     pub fn new() -> Self {
         Self {
             module_visibility: OnceCell::new(),
-            exported_macros_per_dir: RefCell::new(HashMap::new()),
             workspace: super::workspace::WorkspaceMembership::default(),
             nearest_member_dir_lookup: RefCell::new(HashMap::new()),
             cargo_source_dirs: OnceCell::new(),
@@ -78,21 +76,6 @@ impl RustState {
         init: impl FnOnce() -> HashMap<PathBuf, Visibility>,
     ) -> &HashMap<PathBuf, Visibility> {
         self.module_visibility.get_or_init(init)
-    }
-
-    pub(in crate::walker) fn exported_macros_in_dir(
-        &self,
-        dir: &Path,
-        init: impl FnOnce() -> HashSet<String>,
-    ) -> Arc<HashSet<String>> {
-        if let Some(arc) = self.exported_macros_per_dir.borrow().get(dir) {
-            return arc.clone();
-        }
-        let arc = Arc::new(init());
-        self.exported_macros_per_dir
-            .borrow_mut()
-            .insert(dir.to_path_buf(), arc.clone());
-        arc
     }
 
     /// `true` iff `file` is a workspace-member `Cargo.toml`. Memoized.
@@ -495,9 +478,6 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     // `find_pub_item_starts` skips `macro_definition` nodes, and the loop's
     // early `continue` on empty pub items would silently skip macro-only
     // files like `tests/fixtures/log/src/macros.rs`.
-    let exported_names = ctx
-        .rust_state()
-        .exported_macros_in_dir(dir, || compute_exported_macros(dir, ctx));
     let macro_names_key = RustKey::MacroNames {
         src_dir: dir.to_path_buf(),
     };
@@ -528,7 +508,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some((source, tree)) = parse_rust(ctx, file) else {
             continue;
         };
-        for info in find_macro_starts(&tree, &source, &exported_names) {
+        for info in find_macro_starts(&tree, &source) {
             if let Some(content) = single_file_lines_content(
                 file,
                 &source,
@@ -962,13 +942,11 @@ fn macro_names_value(depth: usize) -> f64 {
 }
 
 /// Per-macro signals. Demotion axes stack multiplicatively:
-/// `__`-prefixed name → 0.4, `#[doc(hidden)]` → 0.4, wrapper macro
-/// that delegates to a sibling `$crate::<name>!` → 0.6.
+/// `__`-prefixed name → 0.4, `#[doc(hidden)]` → 0.4.
 fn macro_body_value(file: &Path, info: &MacroInfo, ctx: &WalkCtx) -> f64 {
     let underscore = if info.underscore_private { 0.4 } else { 1.0 };
     let doc_hidden = if info.doc_hidden { 0.4 } else { 1.0 };
-    let wrapper = if info.is_wrapper { 0.6 } else { 1.0 };
-    let axis = underscore * doc_hidden * wrapper;
+    let axis = underscore * doc_hidden;
     let cat = (0.50 * axis * entrypoint_boost(file)).min(1.0);
     let fu = (0.70 * axis).min(1.0);
     mix_signals(cat, fu, 0.55 * axis, rust_depth_factor(file, ctx))
@@ -1459,36 +1437,20 @@ fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {
 /// Per-macro orientation gathered at `expand` time so each `MacroBody`
 /// candidate carries the inputs `macro_body_signals` needs without re-
 /// parsing the file. Mirrors the [`PubItemInfo`] / [`ApiSurface`] split.
-///
-/// `is_wrapper` is the "this macro just delegates to another exported
-/// macro" classification: if the body invokes `$crate::<name>!` for some
-/// `<name>` that is itself `#[macro_export]`'d in the same `src_dir`,
-/// the macro is a thin re-export-style wrapper (e.g. log's `error!`,
-/// `warn!`, `info!`, etc. all dispatch into `log!`). Wrappers carry a
-/// strict refinement of root-dispatcher signals — same demotion shape
-/// `pub_item_doc_body` uses against `pub_item`. Without this axis,
-/// `error!` (smaller body) out-ratios `log!` (larger root-dispatcher
-/// body) on cost concavity alone.
 #[derive(Debug, Clone, Copy)]
 struct MacroInfo {
     start_line: usize,
     underscore_private: bool,
     doc_hidden: bool,
-    is_wrapper: bool,
 }
 
-fn find_macro_starts(
-    tree: &Tree,
-    source: &str,
-    exported_names: &HashSet<String>,
-) -> Vec<MacroInfo> {
+fn find_macro_starts(tree: &Tree, source: &str) -> Vec<MacroInfo> {
     let mut out = Vec::new();
     for_each_exported_macro(tree, source, |node, name| {
         out.push(MacroInfo {
             start_line: node.start_position().row + 1,
             underscore_private: name.starts_with("__"),
             doc_hidden: has_doc_hidden(node, source),
-            is_wrapper: macro_body_is_wrapper(node, Some(name), source, exported_names),
         });
     });
     out
@@ -1504,46 +1466,6 @@ fn macro_definition_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
     node.children(&mut cursor)
         .find(|c| c.kind() == "identifier")
         .map(|c| &source[c.start_byte()..c.end_byte()])
-}
-
-/// True when the macro's body invokes `$crate::<other>!` for some
-/// public-facing sibling `#[macro_export]` macro in the same `src_dir`,
-/// where `<other>` is not the macro itself, not `__`-prefixed, and is
-/// in `exported_names`.
-///
-/// Self-exclusion guards a self-recursive exported macro from
-/// classifying itself as its own wrapper.
-///
-/// `__`-target exclusion is load-bearing: a root dispatcher like `log!`
-/// invokes `$crate::__log!` (an internal helper), and without the
-/// exclusion `log!` would itself be classified as a wrapper. The
-/// wrapper axis demotes `error!`/`warn!`/etc. (which delegate to
-/// `log!`, the public API) below the root they wrap; targeting an
-/// internal helper is not the same kind of delegation.
-fn macro_body_is_wrapper(
-    node: Node,
-    self_name: Option<&str>,
-    source: &str,
-    exported_names: &HashSet<String>,
-) -> bool {
-    let body = &source[node.start_byte()..node.end_byte()];
-    exported_names
-        .iter()
-        .filter(|name| !name.starts_with("__") && Some(name.as_str()) != self_name)
-        .any(|name| body.contains(&format!("$crate::{name}!")))
-}
-
-fn compute_exported_macros(dir: &Path, ctx: &WalkCtx) -> HashSet<String> {
-    let mut out = HashSet::new();
-    for file in files_with_extension(dir, "rs") {
-        let Some((source, tree)) = parse_rust(ctx, &file) else {
-            continue;
-        };
-        for_each_exported_macro(&tree, &source, |_, name| {
-            out.insert(name.to_string());
-        });
-    }
-    out
 }
 
 fn collect_macro_body_at(tree: &Tree, source: &str, start_line: usize) -> FileLines {
@@ -2931,52 +2853,5 @@ pub fn anchor() {}
         let body = collect_doc_section_lines(src, DocSection::Body);
         assert!(!lede.is_empty(), "lede should cover the doc: {lede:?}");
         assert!(body.is_empty(), "body should be empty: {body:?}");
-    }
-
-    #[test]
-    fn rust_macro_self_recursive_export_is_not_classified_as_wrapper() {
-        // A `#[macro_export] macro_rules! foo` whose body invokes
-        // `$crate::foo!` recursively is the root macro, not a thin
-        // delegate. Codex adversarial review flagged self-recursion as
-        // a false-positive wrapper case before merge.
-        let src = "#[macro_export]\nmacro_rules! foo {\n    () => { };\n    ($($t:tt)+) => { $crate::foo!() };\n}\n";
-        let tree = parse(src);
-        let names: HashSet<String> = ["foo".to_string()].into_iter().collect();
-        let infos = find_macro_starts(&tree, src, &names);
-        assert_eq!(infos.len(), 1);
-        assert!(
-            !infos[0].is_wrapper,
-            "self-recursive macro must not be a wrapper",
-        );
-    }
-
-    #[test]
-    fn rust_macro_wrapper_classification_excludes_underscore_targets() {
-        // `log!` body invokes `$crate::__log!` — `__log` is exported
-        // but `__`-prefixed, which is excluded from the wrapper
-        // predicate. So `log!` is not a wrapper of `__log`.
-        let src = "#[macro_export]\nmacro_rules! __log {\n    () => { };\n}\n#[macro_export]\nmacro_rules! log {\n    () => { $crate::__log!() };\n}\n#[macro_export]\nmacro_rules! error {\n    () => { $crate::log!() };\n}\n";
-        let tree = parse(src);
-        let names: HashSet<String> = ["__log", "log", "error"]
-            .iter()
-            .map(|s| s.to_string())
-            .collect();
-        let infos = find_macro_starts(&tree, src, &names);
-        let by_line: HashMap<_, _> = infos.iter().map(|i| (i.start_line, i)).collect();
-        // __log: no body call to anything → not wrapper
-        // log: body calls $crate::__log! (excluded) → not wrapper
-        // error: body calls $crate::log! (non-__) → wrapper
-        let log_line = src
-            .lines()
-            .position(|l| l.contains("macro_rules! log"))
-            .unwrap()
-            + 1;
-        let error_line = src
-            .lines()
-            .position(|l| l.contains("macro_rules! error"))
-            .unwrap()
-            + 1;
-        assert!(!by_line[&log_line].is_wrapper, "log! must be a root");
-        assert!(by_line[&error_line].is_wrapper, "error! must be a wrapper");
     }
 }
