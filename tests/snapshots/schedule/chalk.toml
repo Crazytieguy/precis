@@ -619,36 +619,10 @@ kind = "full"
 
 [[batches]]
 position = 10
-key = 'Markdown(Section { file: "readme.md", section_index: 1 })'
-descriptor = "readme.md section #1"
-cost_tokens = 137
-cum_tokens = 716
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 25
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
 key = 'Markdown(Section { file: "readme.md", section_index: 6 })'
 descriptor = "readme.md section #6"
 cost_tokens = 12
-cum_tokens = 728
+cum_tokens = 591
 
 [batches.content]
 kind = "lines"
@@ -662,11 +636,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 12
+position = 11
 key = 'Markdown(Section { file: "readme.md", section_index: 7 })'
 descriptor = "readme.md section #7"
 cost_tokens = 12
-cum_tokens = 740
+cum_tokens = 603
 
 [batches.content]
 kind = "lines"
@@ -680,11 +654,11 @@ end = 124
 kind = "full"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Markdown(Section { file: "readme.md", section_index: 31 })'
 descriptor = "readme.md section #31"
 cost_tokens = 34
-cum_tokens = 774
+cum_tokens = 637
 
 [batches.content]
 kind = "lines"
@@ -706,11 +680,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Markdown(Section { file: "readme.md", section_index: 17 })'
 descriptor = "readme.md section #17"
 cost_tokens = 14
-cum_tokens = 788
+cum_tokens = 651
 
 [batches.content]
 kind = "lines"
@@ -724,11 +698,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Markdown(Section { file: "readme.md", section_index: 18 })'
 descriptor = "readme.md section #18"
 cost_tokens = 14
-cum_tokens = 802
+cum_tokens = 665
 
 [batches.content]
 kind = "lines"
@@ -742,11 +716,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Markdown(Section { file: "readme.md", section_index: 40 })'
 descriptor = "readme.md section #40"
 cost_tokens = 39
-cum_tokens = 841
+cum_tokens = 704
 
 [batches.content]
 kind = "lines"
@@ -768,11 +742,11 @@ end = 297
 kind = "full"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Markdown(Section { file: "readme.md", section_index: 19 })'
 descriptor = "readme.md section #19"
 cost_tokens = 16
-cum_tokens = 857
+cum_tokens = 720
 
 [batches.content]
 kind = "lines"
@@ -786,11 +760,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Markdown(Section { file: "readme.md", section_index: 23 })'
 descriptor = "readme.md section #23"
 cost_tokens = 16
-cum_tokens = 873
+cum_tokens = 736
 
 [batches.content]
 kind = "lines"
@@ -804,11 +778,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 27
-cum_tokens = 900
+cum_tokens = 763
 
 [batches.content]
 kind = "fs"
@@ -818,11 +792,11 @@ parent = "test"
 entries = ["_fixture.js", "chalk.js", "instance.js", "level.js", "no-color-support.js", "visible.js"]
 
 [[batches]]
-position = 20
+position = 19
 key = 'Markdown(Section { file: "readme.md", section_index: 24 })'
 descriptor = "readme.md section #24"
 cost_tokens = 17
-cum_tokens = 917
+cum_tokens = 780
 
 [batches.content]
 kind = "lines"
@@ -836,11 +810,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Markdown(Section { file: "readme.md", section_index: 4 })'
 descriptor = "readme.md section #4"
 cost_tokens = 19
-cum_tokens = 936
+cum_tokens = 799
 
 [batches.content]
 kind = "lines"
@@ -854,11 +828,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Markdown(Section { file: "readme.md", section_index: 20 })'
 descriptor = "readme.md section #20"
 cost_tokens = 20
-cum_tokens = 956
+cum_tokens = 819
 
 [batches.content]
 kind = "lines"
@@ -872,11 +846,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Markdown(Section { file: "readme.md", section_index: 2 })'
 descriptor = "readme.md section #2"
 cost_tokens = 83
-cum_tokens = 1039
+cum_tokens = 902
 
 [batches.content]
 kind = "lines"
@@ -906,11 +880,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Fs(DirListing { dir: "source/vendor" })'
 descriptor = "listing of 'source/vendor'"
 cost_tokens = 9
-cum_tokens = 1048
+cum_tokens = 911
 
 [batches.content]
 kind = "fs"
@@ -920,11 +894,11 @@ parent = "source/vendor"
 entries = ["ansi-styles", "supports-color"]
 
 [[batches]]
-position = 25
+position = 24
 key = 'Fs(DirListing { dir: "source/vendor/supports-color" })'
 descriptor = "listing of 'source/vendor/supports-color'"
 cost_tokens = 18
-cum_tokens = 1066
+cum_tokens = 929
 
 [batches.content]
 kind = "fs"
@@ -934,11 +908,11 @@ parent = "source/vendor/supports-color"
 entries = ["browser.d.ts", "browser.js", "index.d.ts", "index.js"]
 
 [[batches]]
-position = 26
+position = 25
 key = 'Markdown(Section { file: "readme.md", section_index: 21 })'
 descriptor = "readme.md section #21"
 cost_tokens = 23
-cum_tokens = 1089
+cum_tokens = 952
 
 [batches.content]
 kind = "lines"
@@ -952,11 +926,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Markdown(Section { file: "readme.md", section_index: 22 })'
 descriptor = "readme.md section #22"
 cost_tokens = 24
-cum_tokens = 1113
+cum_tokens = 976
 
 [batches.content]
 kind = "lines"
@@ -970,11 +944,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Markdown(Section { file: "readme.md", section_index: 37 })'
 descriptor = "readme.md section #37"
 cost_tokens = 21
-cum_tokens = 1134
+cum_tokens = 997
 
 [batches.content]
 kind = "lines"
@@ -988,11 +962,11 @@ end = 268
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Typescript(Imports { file: "benchmark.js" })'
 descriptor = "imports in benchmark.js"
 cost_tokens = 11
-cum_tokens = 1145
+cum_tokens = 1008
 
 [batches.content]
 kind = "lines"
@@ -1006,11 +980,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 231
-cum_tokens = 1376
+cum_tokens = 1239
 
 [batches.content]
 kind = "lines"
@@ -1032,11 +1006,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 177
-cum_tokens = 1553
+cum_tokens = 1416
 
 [batches.content]
 kind = "lines"
@@ -1058,11 +1032,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 44
-cum_tokens = 1597
+cum_tokens = 1460
 
 [batches.content]
 kind = "lines"
@@ -1076,11 +1050,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 49
-cum_tokens = 1646
+cum_tokens = 1509
 
 [batches.content]
 kind = "lines"
@@ -1094,11 +1068,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Markdown(Section { file: "readme.md", section_index: 25 })'
 descriptor = "readme.md section #25"
 cost_tokens = 30
-cum_tokens = 1676
+cum_tokens = 1539
 
 [batches.content]
 kind = "lines"
@@ -1107,6 +1081,32 @@ kind = "lines"
 path = "readme.md"
 start = 183
 end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Markdown(Section { file: "readme.md", section_index: 1 })'
+descriptor = "readme.md section #1"
+cost_tokens = 137
+cum_tokens = 1676
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 25
+end = 34
 
 [batches.content.spans.render]
 kind = "full"

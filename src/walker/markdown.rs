@@ -287,7 +287,6 @@ fn readme_section_value(
     mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
         * readme_index_decay(range, total_h2_count)
         * canonical_usage_section_factor(range)
-        * features_section_factor(range)
 }
 
 /// Boost for README H2 `Whole` sections whose title is a canonical-
@@ -298,19 +297,6 @@ const CANONICAL_USAGE_SECTION_FACTOR: f64 = 1.5;
 fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
     if range.parent_is_canonical_usage_h2 && matches!(range.kind, SectionKind::Whole) {
         CANONICAL_USAGE_SECTION_FACTOR
-    } else {
-        1.0
-    }
-}
-
-/// Boost for README H2 `Whole` sections whose title is a features-list
-/// marker (see [`is_features_h2_title`]) — the high-density capability
-/// inventory that anchors many NS rows.
-const FEATURES_SECTION_FACTOR: f64 = 1.6;
-
-fn features_section_factor(range: &SectionRange) -> f64 {
-    if range.parent_is_features_h2 && matches!(range.kind, SectionKind::Whole) {
-        FEATURES_SECTION_FACTOR
     } else {
         1.0
     }
@@ -1184,9 +1170,6 @@ struct SectionRange {
     /// Parent H2 title matches a canonical-usage marker (see
     /// [`is_canonical_usage_h2_title`]). README-only.
     parent_is_canonical_usage_h2: bool,
-    /// Parent H2 title matches a features-list marker (see
-    /// [`is_features_h2_title`]). README-only.
-    parent_is_features_h2: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1229,7 +1212,6 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     parent_index: parent_idx,
                     synthetic_intro_present,
                     parent_is_canonical_usage_h2: false,
-                    parent_is_features_h2: false,
                 });
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -1238,7 +1220,6 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     split_eligible_file && outline_will_emit && bytes >= H2_SPLIT_BYTES;
                 let body_block_split_gate = split_eligible_file && bytes >= H2_SPLIT_BYTES;
                 let usage_h2 = readme && is_canonical_usage_h2(*node, source);
-                let features_h2 = readme && is_features_h2_title(*node, source);
 
                 let bullet_items = structural_split_gate
                     .then(|| should_split_by_bullets(*node, source))
@@ -1263,7 +1244,6 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             parent_index: parent_idx,
                             synthetic_intro_present,
                             parent_is_canonical_usage_h2: false,
-                            parent_is_features_h2: false,
                         });
                     }
                     continue;
@@ -1310,7 +1290,6 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             parent_index: parent_idx,
                             synthetic_intro_present,
                             parent_is_canonical_usage_h2: usage_h2,
-                            parent_is_features_h2: features_h2,
                         });
                     }
                 }
@@ -1349,7 +1328,6 @@ fn push_intro<'a>(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
-        parent_is_features_h2: false,
     });
 }
 
@@ -1378,7 +1356,6 @@ fn push_h3_child_or_body_blocks(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
-        parent_is_features_h2: false,
     });
 }
 
@@ -1398,7 +1375,6 @@ fn push_body_block_ranges(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
-        parent_is_features_h2: false,
     }));
     true
 }
@@ -1694,21 +1670,6 @@ fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
     )
 }
 
-/// README H2 sections worth a features-list boost: title is one of
-/// the features-list markers. Used by `section_value` via
-/// `features_section_factor`. Matching is the same shape as
-/// `is_canonical_usage_h2_title` (lowercased alphanumeric prefix of
-/// the heading's inline text).
-fn is_features_h2_title(h2_section: Node<'_>, source: &str) -> bool {
-    let Some(core) = h2_title_core(h2_section, source) else {
-        return false;
-    };
-    matches!(
-        core.as_str(),
-        "features" | "key features" | "feature highlights" | "highlights"
-    )
-}
-
 /// True iff `section`'s direct children include at least one
 /// `fenced_code_block` whose source bytes are at least
 /// [`CANONICAL_USAGE_CODE_MIN_FRACTION`] of the section's total body
@@ -1741,8 +1702,7 @@ fn section_is_code_dominant(section: Node<'_>, _source: &str) -> bool {
 
 /// Plain-text core of an H2's title (lowercased, alphanumeric +
 /// whitespace prefix only). Returns `None` when no `inline` child is
-/// found. Shared by [`is_canonical_usage_h2_title`] and
-/// [`is_features_h2_title`].
+/// found. Used by [`is_canonical_usage_h2_title`].
 fn h2_title_core(h2_section: Node<'_>, source: &str) -> Option<String> {
     let heading = first_heading_child(h2_section)?;
     let inline = first_child_of_kind(heading, "inline")?;

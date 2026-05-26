@@ -1,4 +1,4 @@
-Score(3000)=0.555 I=0.815 C=0.378 ns_rows≤3K=23/42 (reached=8 partial=1 missing=14)
+Score(3000)=0.527 I=0.802 C=0.346 ns_rows≤3K=23/42 (reached=7 partial=1 missing=15)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -111,57 +111,57 @@ Score(3000)=0.555 I=0.815 C=0.378 ns_rows≤3K=23/42 (reached=8 partial=1 missin
 | walker |  | 2604 | 12 | pub-item doc lede at src/output/warnings.rs:13 |  |  | 0.556 |
 | ns | 2696 |  | 126 | Benchmark module-level helpers + MIN_EXECUTION_TIME | 2.11 |  | 0.542 |
 | walker |  | 2728 | 124 | impl method sigs in src/export/mod.rs |  |  | 0.555 |
-| walker |  | 2872 | 144 | README.md section #1 |  |  | 0.585 |
-| ns | 2874 |  | 178 | relative_speed + outlier_detection signatures | 2.12 |  | 0.569 |
-| walker |  | 2904 | 32 | README.md section #4 |  |  | 0.569 |
-| ns | 2951 |  | 77 | tests/ + scripts/ fs listings | 2.13 |  | 0.555 |
-| walker |  | 3001 | 97 | pub item at src/parameter/range_step.rs:7 |  |  | 0.555 |
-| walker |  | 3014 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.555 |
-| walker |  | 3026 | 12 | pub-item doc lede at src/util/units.rs:6 |  |  | 0.555 |
-| walker |  | 3102 | 76 | pub-item names surface in src/output/format.rs |  |  | 0.555 |
-| walker |  | 3102 | 0 | pub item at src/output/format.rs:5 |  |  | 0.555 |
-| walker |  | 3102 | 0 | pub item at src/output/format.rs:11 |  |  | 0.555 |
-| walker |  | 3102 | 0 | pub item at src/output/format.rs:18 |  |  | 0.555 |
-| walker |  | 3127 | 25 | pub item body at src/output/format.rs:5 body 6 |  |  | 0.555 |
-| walker |  | 3265 | 138 | pub-item names surface in src/options.rs |  |  | 0.580 |
-| walker |  | 3283 | 18 | pub item at src/options.rs:102 |  |  | 0.580 |
-| walker |  | 3313 | 30 | pub item at src/options.rs:185 |  |  | 0.580 |
-| ns | 3326 |  | 375 | CLI flag names — every Arg::new() line | 3.1 |  | 0.550 |
-| walker |  | 3361 | 48 | pub item at src/options.rs:24 |  |  | 0.550 |
-| ns | 3375 |  | 49 | RunBounds default — '10 runs by default' | 3.2 |  | 0.545 |
-| walker |  | 3412 | 51 | pub item at src/options.rs:123 |  |  | 0.545 |
-| walker |  | 3462 | 50 | pub item at src/options.rs:108 |  |  | 0.545 |
-| walker |  | 3531 | 69 | pub item at src/options.rs:71 |  |  | 0.545 |
-| walker |  | 3545 | 14 | pub-item doc lede at src/options.rs:24 |  |  | 0.545 |
-| walker |  | 3559 | 14 | pub-item doc lede at src/options.rs:71 |  |  | 0.545 |
-| walker |  | 3572 | 13 | pub-item doc lede at src/options.rs:108 |  |  | 0.545 |
-| walker |  | 3668 | 96 | pub item at src/options.rs:149 |  |  | 0.545 |
-| walker |  | 3683 | 15 | pub-item doc lede at src/options.rs:149 |  |  | 0.545 |
-| ns | 3685 |  | 310 | Scheduler::run_benchmarks body | 3.3 | 2.1 | 0.525 |
-| walker |  | 3795 | 112 | pub item at src/options.rs:84 |  |  | 0.525 |
-| walker |  | 3805 | 10 | pub-item doc lede at src/options.rs:84 |  |  | 0.525 |
-| walker |  | 3821 | 16 | pub-item doc lede at src/util/min_max.rs:2 |  |  | 0.525 |
-| walker |  | 3837 | 16 | pub-item doc lede at src/util/min_max.rs:10 |  |  | 0.525 |
-| walker |  | 3877 | 40 | pub item body at src/output/format.rs:11 body 12 |  |  | 0.525 |
-| ns | 3893 |  | 208 | Benchmark::run — count-of-runs formula | 3.4 | 2.2 | 0.510 |
-| walker |  | 3898 | 21 | listing of 'tests' |  |  | 0.513 |
-| walker |  | 4133 | 235 | pub item at src/error.rs:7 |  |  | 0.514 |
-| walker |  | 4175 | 42 | pub item body at src/util/min_max.rs:2 body 3 |  |  | 0.514 |
-| walker |  | 4217 | 42 | pub item body at src/util/min_max.rs:10 body 11 |  |  | 0.514 |
-| walker |  | 4235 | 18 | pub-item doc lede at src/output/format.rs:11 |  |  | 0.514 |
-| walker |  | 4253 | 18 | pub-item doc lede at src/output/format.rs:18 |  |  | 0.514 |
-| ns | 4283 |  | 390 | Benchmark::run — warning push logic | 3.5 | 2.2 | 0.489 |
-| walker |  | 4333 | 80 | pub item body at src/outlier_detection.rs:43 body 44 |  |  | 0.489 |
-| walker |  | 4484 | 151 | mod/use plumbing in src/timer/mod.rs |  |  | 0.489 |
-| ns | 4505 |  | 222 | Benchmark::run — BenchmarkResult construction | 3.6 | 2.9 | 0.476 |
-| walker |  | 4531 | 47 | README.md section #7 |  |  | 0.476 |
-| walker |  | 4575 | 44 | pub-item doc lede at src/outlier_detection.rs:43 |  |  | 0.476 |
-| walker |  | 4781 | 206 | mod/use plumbing in src/export/mod.rs |  |  | 0.476 |
-| ns | 5047 |  | 542 | Per-format markup exporters — Markdown / Orgmode | 3.7 | 2.10 | 0.447 |
-| walker |  | 5144 | 363 | pub item at src/error.rs:37 |  |  | 0.448 |
-| walker |  | 5171 | 27 | listing of 'src/benchmark' |  |  | 0.472 |
-| walker |  | 5237 | 66 | README.md section #8 |  |  | 0.472 |
-| walker |  | 5314 | 77 | README.md section #6 |  |  | 0.472 |
+| walker |  | 2760 | 32 | README.md section #4 |  |  | 0.555 |
+| walker |  | 2857 | 97 | pub item at src/parameter/range_step.rs:7 |  |  | 0.555 |
+| walker |  | 2870 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.555 |
+| ns | 2874 |  | 178 | relative_speed + outlier_detection signatures | 2.12 |  | 0.540 |
+| walker |  | 2882 | 12 | pub-item doc lede at src/util/units.rs:6 |  |  | 0.540 |
+| ns | 2951 |  | 77 | tests/ + scripts/ fs listings | 2.13 |  | 0.527 |
+| walker |  | 2958 | 76 | pub-item names surface in src/output/format.rs |  |  | 0.527 |
+| walker |  | 2958 | 0 | pub item at src/output/format.rs:5 |  |  | 0.527 |
+| walker |  | 2958 | 0 | pub item at src/output/format.rs:11 |  |  | 0.527 |
+| walker |  | 2958 | 0 | pub item at src/output/format.rs:18 |  |  | 0.527 |
+| walker |  | 2983 | 25 | pub item body at src/output/format.rs:5 body 6 |  |  | 0.527 |
+| walker |  | 3121 | 138 | pub-item names surface in src/options.rs |  |  | 0.553 |
+| walker |  | 3139 | 18 | pub item at src/options.rs:102 |  |  | 0.553 |
+| walker |  | 3169 | 30 | pub item at src/options.rs:185 |  |  | 0.553 |
+| walker |  | 3217 | 48 | pub item at src/options.rs:24 |  |  | 0.553 |
+| walker |  | 3268 | 51 | pub item at src/options.rs:123 |  |  | 0.553 |
+| walker |  | 3318 | 50 | pub item at src/options.rs:108 |  |  | 0.553 |
+| ns | 3326 |  | 375 | CLI flag names — every Arg::new() line | 3.1 |  | 0.524 |
+| ns | 3375 |  | 49 | RunBounds default — '10 runs by default' | 3.2 |  | 0.519 |
+| walker |  | 3387 | 69 | pub item at src/options.rs:71 |  |  | 0.519 |
+| walker |  | 3401 | 14 | pub-item doc lede at src/options.rs:24 |  |  | 0.519 |
+| walker |  | 3415 | 14 | pub-item doc lede at src/options.rs:71 |  |  | 0.519 |
+| walker |  | 3428 | 13 | pub-item doc lede at src/options.rs:108 |  |  | 0.519 |
+| walker |  | 3524 | 96 | pub item at src/options.rs:149 |  |  | 0.519 |
+| walker |  | 3539 | 15 | pub-item doc lede at src/options.rs:149 |  |  | 0.519 |
+| walker |  | 3651 | 112 | pub item at src/options.rs:84 |  |  | 0.519 |
+| walker |  | 3661 | 10 | pub-item doc lede at src/options.rs:84 |  |  | 0.519 |
+| walker |  | 3677 | 16 | pub-item doc lede at src/util/min_max.rs:2 |  |  | 0.519 |
+| ns | 3685 |  | 310 | Scheduler::run_benchmarks body | 3.3 | 2.1 | 0.500 |
+| walker |  | 3693 | 16 | pub-item doc lede at src/util/min_max.rs:10 |  |  | 0.500 |
+| walker |  | 3733 | 40 | pub item body at src/output/format.rs:11 body 12 |  |  | 0.500 |
+| walker |  | 3754 | 21 | listing of 'tests' |  |  | 0.503 |
+| ns | 3893 |  | 208 | Benchmark::run — count-of-runs formula | 3.4 | 2.2 | 0.489 |
+| walker |  | 3989 | 235 | pub item at src/error.rs:7 |  |  | 0.489 |
+| walker |  | 4031 | 42 | pub item body at src/util/min_max.rs:2 body 3 |  |  | 0.489 |
+| walker |  | 4073 | 42 | pub item body at src/util/min_max.rs:10 body 11 |  |  | 0.489 |
+| walker |  | 4091 | 18 | pub-item doc lede at src/output/format.rs:11 |  |  | 0.489 |
+| walker |  | 4109 | 18 | pub-item doc lede at src/output/format.rs:18 |  |  | 0.490 |
+| walker |  | 4189 | 80 | pub item body at src/outlier_detection.rs:43 body 44 |  |  | 0.490 |
+| ns | 4283 |  | 390 | Benchmark::run — warning push logic | 3.5 | 2.2 | 0.466 |
+| walker |  | 4340 | 151 | mod/use plumbing in src/timer/mod.rs |  |  | 0.466 |
+| walker |  | 4387 | 47 | README.md section #7 |  |  | 0.466 |
+| walker |  | 4431 | 44 | pub-item doc lede at src/outlier_detection.rs:43 |  |  | 0.466 |
+| ns | 4505 |  | 222 | Benchmark::run — BenchmarkResult construction | 3.6 | 2.9 | 0.453 |
+| walker |  | 4637 | 206 | mod/use plumbing in src/export/mod.rs |  |  | 0.453 |
+| walker |  | 5000 | 363 | pub item at src/error.rs:37 |  |  | 0.455 |
+| walker |  | 5027 | 27 | listing of 'src/benchmark' |  |  | 0.481 |
+| ns | 5047 |  | 542 | Per-format markup exporters — Markdown / Orgmode | 3.7 | 2.10 | 0.451 |
+| walker |  | 5093 | 66 | README.md section #8 |  |  | 0.451 |
+| walker |  | 5170 | 77 | README.md section #6 |  |  | 0.451 |
+| walker |  | 5314 | 144 | README.md section #1 |  |  | 0.472 |
 | ns | 5447 |  | 400 | AsciidocExporter body | 3.8 | 2.10 | 0.453 |
 | walker |  | 5578 | 264 | [dependencies] in Cargo.toml |  |  | 0.453 |
 | walker |  | 5641 | 63 | pub-item doc lede at src/outlier_detection.rs:13 |  |  | 0.453 |

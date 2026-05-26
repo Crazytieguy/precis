@@ -13,18 +13,6 @@ README.md
     1→# Tock
     5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
     6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
-    8→## Features
-    10→<img src="assets/demo.png" width="820px" />
-    12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
-    14→Features include:
-    16→- 📝 **Simple plaintext format** - Activities stored in human-readable files
-    17→- 📅 **Notes & Tags** - Attach detailed notes and tags to activities
-    18→- 🎨 **Interactive TUI** - Beautiful terminal calendar view using Bubble Tea
-    19→- ⚡ **Fast & Lightweight** - Single binary, no dependencies
-    20→- 🔄 **Compatible** - Reads/writes Bartib file format and TimeWarrior data files
-    21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
-    22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
-    24→<hr clear="right"/>
     602→## Update Check
     604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
     606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
@@ -106,7 +94,7 @@ internal/
                 20→	models.Activity
                 21→}
                 23→func (a currentCmdActivity) Duration() time.Duration {
-                …
+                24→	return a.Activity.Duration().Round(time.Second)
                 27→func (a currentCmdActivity) DurationHMS() string {
                 …
                 35→func NewCurrentCmd() *cobra.Command {
@@ -279,11 +267,18 @@ internal/
                 …
         ports/
             mocks/
+                mock_activityrepository.go
+                mock_activityresolver.go
+                mock_notesrepository.go
             ports.go
                 11→type ActivityResolver interface {
                 …
                 22→type ActivityRepository interface {
-                …
+                23→	Save(ctx context.Context, activity models.Activity) error
+                24→	FindLast(ctx context.Context) (*models.Activity, error)
+                25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
+                26→	Remove(ctx context.Context, activity models.Activity) error
+                27→}
                 29→type NotesRepository interface {
                 30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
                 31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
@@ -311,5 +306,11 @@ internal/
                 …
     timeutil/
         timeutil.go
+            1→package timeutil
+            3→import (
+            4→	"strings"
+            5→	"time"
+            7→	"github.com/go-faster/errors"
+            8→)
         timeutil_test.go
 tock.yaml.example

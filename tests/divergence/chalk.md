@@ -18,36 +18,36 @@ Score(3000)=0.562 I=0.801 C=0.394 ns_rows≤3K=18/46 (reached=7 partial=1 missin
 | ns | 485 |  | 180 | Readme H2/H3 headings | 2.1 |  | 0.493 |
 | walker |  | 558 | 253 | headings outline in readme.md |  |  | 0.716 |
 | walker |  | 579 | 21 | readme.md section #30 |  |  | 0.716 |
+| walker |  | 591 | 12 | readme.md section #6 |  |  | 0.716 |
+| walker |  | 603 | 12 | readme.md section #7 |  |  | 0.716 |
+| walker |  | 637 | 34 | readme.md section #31 |  |  | 0.716 |
+| walker |  | 651 | 14 | readme.md section #17 |  |  | 0.716 |
+| walker |  | 665 | 14 | readme.md section #18 |  |  | 0.717 |
 | ns | 679 |  | 194 | index.js public exports | 2.2 |  | 0.614 |
-| walker |  | 716 | 137 | readme.md section #1 |  |  | 0.614 |
-| walker |  | 728 | 12 | readme.md section #6 |  |  | 0.614 |
-| walker |  | 740 | 12 | readme.md section #7 |  |  | 0.614 |
-| walker |  | 774 | 34 | readme.md section #31 |  |  | 0.614 |
-| walker |  | 788 | 14 | readme.md section #17 |  |  | 0.614 |
-| walker |  | 802 | 14 | readme.md section #18 |  |  | 0.614 |
-| walker |  | 841 | 39 | readme.md section #40 |  |  | 0.614 |
-| walker |  | 857 | 16 | readme.md section #19 |  |  | 0.615 |
-| walker |  | 873 | 16 | readme.md section #23 |  |  | 0.615 |
-| walker |  | 900 | 27 | listing of 'test' |  |  | 0.615 |
-| ns | 909 |  | 230 | Readme: chalk.level table | 2.3 | 2.1 | 0.543 |
-| walker |  | 917 | 17 | readme.md section #24 |  |  | 0.544 |
-| walker |  | 936 | 19 | readme.md section #4 |  |  | 0.544 |
-| walker |  | 956 | 20 | readme.md section #20 |  |  | 0.545 |
-| walker |  | 1039 | 83 | readme.md section #2 |  |  | 0.545 |
-| walker |  | 1048 | 9 | listing of 'source/vendor' |  |  | 0.561 |
-| walker |  | 1066 | 18 | listing of 'source/vendor/supports-color' |  |  | 0.607 |
-| walker |  | 1089 | 23 | readme.md section #21 |  |  | 0.608 |
-| walker |  | 1113 | 24 | readme.md section #22 |  |  | 0.609 |
+| walker |  | 704 | 39 | readme.md section #40 |  |  | 0.614 |
+| walker |  | 720 | 16 | readme.md section #19 |  |  | 0.615 |
+| walker |  | 736 | 16 | readme.md section #23 |  |  | 0.615 |
+| walker |  | 763 | 27 | listing of 'test' |  |  | 0.615 |
+| walker |  | 780 | 17 | readme.md section #24 |  |  | 0.616 |
+| walker |  | 799 | 19 | readme.md section #4 |  |  | 0.616 |
+| walker |  | 819 | 20 | readme.md section #20 |  |  | 0.617 |
+| walker |  | 902 | 83 | readme.md section #2 |  |  | 0.617 |
+| ns | 909 |  | 230 | Readme: chalk.level table | 2.3 | 2.1 | 0.545 |
+| walker |  | 911 | 9 | listing of 'source/vendor' |  |  | 0.561 |
+| walker |  | 929 | 18 | listing of 'source/vendor/supports-color' |  |  | 0.607 |
+| walker |  | 952 | 23 | readme.md section #21 |  |  | 0.608 |
+| walker |  | 976 | 24 | readme.md section #22 |  |  | 0.609 |
+| walker |  | 997 | 21 | readme.md section #37 |  |  | 0.609 |
+| walker |  | 1008 | 11 | imports in benchmark.js |  |  | 0.609 |
 | ns | 1120 |  | 211 | Readme: Modifiers list | 2.4 | 2.1 | 0.609 |
-| walker |  | 1134 | 21 | readme.md section #37 |  |  | 0.609 |
-| walker |  | 1145 | 11 | imports in benchmark.js |  |  | 0.609 |
-| ns | 1272 |  | 152 | Readme: Colors list | 2.5 | 2.1 | 0.560 |
-| walker |  | 1376 | 231 | package identity metadata in package.json |  |  | 0.593 |
-| ns | 1444 |  | 172 | Readme: Background colors list | 2.6 | 2.1 | 0.551 |
-| walker |  | 1553 | 177 | package entrypoints in package.json |  |  | 0.570 |
-| walker |  | 1597 | 44 | package runtime metadata in package.json |  |  | 0.570 |
-| walker |  | 1646 | 49 | package scripts in package.json |  |  | 0.570 |
-| walker |  | 1676 | 30 | readme.md section #25 |  |  | 0.581 |
+| walker |  | 1239 | 231 | package identity metadata in package.json |  |  | 0.645 |
+| ns | 1272 |  | 152 | Readme: Colors list | 2.5 | 2.1 | 0.593 |
+| walker |  | 1416 | 177 | package entrypoints in package.json |  |  | 0.613 |
+| ns | 1444 |  | 172 | Readme: Background colors list | 2.6 | 2.1 | 0.570 |
+| walker |  | 1460 | 44 | package runtime metadata in package.json |  |  | 0.570 |
+| walker |  | 1509 | 49 | package scripts in package.json |  |  | 0.570 |
+| walker |  | 1539 | 30 | readme.md section #25 |  |  | 0.581 |
+| walker |  | 1676 | 137 | readme.md section #1 |  |  | 0.581 |
 | ns | 1698 |  | 254 | Readme: supportsColor / FORCE_COLOR / flags / chalkStderr | 2.7 | 2.1 | 0.559 |
 | walker |  | 1710 | 34 | readme.md section #11 |  |  | 0.563 |
 | walker |  | 1744 | 34 | readme.md section #13 |  |  | 0.568 |
