@@ -60,10 +60,6 @@ use crate::value::{mix_signals, names_surface_chunk_factor};
 /// catalog amalgamation headers.
 const C_DECL_NAMES_CHUNK_SIZE: usize = 24;
 
-/// Minimum `// <stem>.c` banners required to switch to section-banner
-/// chunking on a canonical entry header.
-const SECTION_BANNER_MIN_COUNT: usize = 3;
-
 /// Per-run C-walker state. Caches the seed root's autotools
 /// `include_HEADERS` set so internal headers can be demoted.
 #[derive(Default)]
@@ -181,76 +177,6 @@ use super::{
     single_file_lines_content, trim_end_before_next_decl,
 };
 
-/// Partition `decls` into chunks for the decl-names surface. Prefers
-/// section-banner chunking for amalgamation-style headers; falls back
-/// to fixed-size source-order chunks otherwise.
-fn compute_decl_chunk_ranges(
-    decls: &[(Node, DeclInfo)],
-    tree: &Tree,
-    source: &str,
-    file: &Path,
-    ctx: &WalkCtx,
-) -> (Vec<Range<usize>>, DeclChunkingStrategy) {
-    if let Some(ranges) = section_banner_chunk_ranges(decls, tree, source, file, ctx) {
-        return (ranges, DeclChunkingStrategy::SectionBanner);
-    }
-    (
-        count_based_chunk_ranges(decls.len()),
-        DeclChunkingStrategy::CountBased,
-    )
-}
-
-/// Which chunking strategy produced the ranges. Banner-delimited
-/// chunks are each their own subject so they skip the source-order
-/// value decay that count-based chunks apply.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum DeclChunkingStrategy {
-    CountBased,
-    SectionBanner,
-}
-
-/// Section-banner chunking. Returns `None` unless the file is a header
-/// at a canonical entry location with at least `SECTION_BANNER_MIN_COUNT`
-/// `// <stem>.c` banner comments.
-fn section_banner_chunk_ranges(
-    decls: &[(Node, DeclInfo)],
-    tree: &Tree,
-    source: &str,
-    file: &Path,
-    ctx: &WalkCtx,
-) -> Option<Vec<Range<usize>>> {
-    if !is_header_file(file) || !is_at_canonical_entry_location(file, ctx) {
-        return None;
-    }
-    let banner_lines = find_module_section_banner_lines(tree, source);
-    if banner_lines.len() < SECTION_BANNER_MIN_COUNT {
-        return None;
-    }
-    // Chunk 0 is the preamble (before the first banner); subsequent
-    // chunks span decls between consecutive banners.
-    let mut ranges: Vec<Range<usize>> = Vec::new();
-    let mut start = 0usize;
-    for &boundary in &banner_lines {
-        // Find the first decl whose start_line >= boundary.
-        let end = decls
-            .iter()
-            .position(|(_, d)| d.start_line >= boundary)
-            .unwrap_or(decls.len());
-        if end > start {
-            ranges.push(start..end);
-        }
-        start = end;
-    }
-    if start < decls.len() {
-        ranges.push(start..decls.len());
-    }
-    // <2 chunks adds nothing over unchunked — fall back.
-    if ranges.len() < 2 {
-        return None;
-    }
-    Some(ranges)
-}
-
 /// Fixed-size source-order chunks of `C_DECL_NAMES_CHUNK_SIZE` decls.
 fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
     if decl_count == 0 {
@@ -265,44 +191,6 @@ fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
         i = end;
     }
     ranges
-}
-
-/// 1-based line numbers of top-level `// <stem>.c` banner comments
-/// — the amalgamation-style section dividers. Only top-level
-/// `comment` children are scanned.
-fn find_module_section_banner_lines(tree: &Tree, source: &str) -> Vec<usize> {
-    let mut out = Vec::new();
-    let mut cursor = tree.root_node().walk();
-    for child in tree.root_node().children(&mut cursor) {
-        if child.kind() != "comment" {
-            continue;
-        }
-        let text = &source[child.start_byte()..child.end_byte()];
-        if is_module_section_banner_comment(text) {
-            out.push(child.start_position().row + 1);
-        }
-    }
-    out
-}
-
-/// True iff `text` is a module-section banner — `// <stem>.c` or
-/// `/* <stem>.c */` after trimming, with `<stem>` matching `[A-Za-z0-9_]+`.
-fn is_module_section_banner_comment(text: &str) -> bool {
-    let body = if let Some(rest) = text.strip_prefix("//") {
-        rest
-    } else if let Some(rest) = text.strip_prefix("/*").and_then(|s| s.strip_suffix("*/")) {
-        rest
-    } else {
-        return false;
-    };
-    let trimmed = body.trim();
-    let Some(stem) = trimmed.strip_suffix(".c") else {
-        return false;
-    };
-    !stem.is_empty()
-        && stem
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '-')
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -351,8 +239,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // "Public fn declarations — utility fns" across chunks. Chunk
         // only when the surface is large enough that the unified batch
         // would lose the value/cost race against per-decl batches.
-        let (chunk_ranges, chunk_strategy) =
-            compute_decl_chunk_ranges(&decls, &tree, &source, file, ctx);
+        let chunk_ranges = count_based_chunk_ranges(decls.len());
         let names_chunk_count = chunk_ranges.len();
         let names_predecessors: Vec<_> = (0..names_chunk_count)
             .map(|chunk_index| {
@@ -395,7 +282,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx, chunk_index, names_chunk_count, chunk_strategy),
+                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
             });
         }
         for (decl_index, (node, info)) in decls.iter().enumerate() {
@@ -1035,42 +922,15 @@ fn header_banner_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.4, 0.7, c_depth_factor(file, ctx))
 }
 
-/// True iff `file` sits where a project's canonical entry header would:
-/// directly at the repo root, or directly under `src/`.
-fn is_at_canonical_entry_location(file: &Path, ctx: &WalkCtx) -> bool {
-    match ctx.depth_from_root(file) {
-        1 => true,
-        2 => {
-            file.parent()
-                .and_then(|p| p.file_name())
-                .and_then(|n| n.to_str())
-                == Some("src")
-        }
-        _ => false,
-    }
-}
-
 fn includes_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let cat = (0.30 * header_cat_factor(file)).min(1.0);
     mix_signals(cat, 0.55, 0.3, c_depth_factor(file, ctx))
 }
 
-fn decl_names_value(
-    file: &Path,
-    ctx: &WalkCtx,
-    chunk_index: usize,
-    chunk_count: usize,
-    strategy: DeclChunkingStrategy,
-) -> f64 {
+fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
     let cat = (0.80 * header_cat_factor(file)).min(1.0);
     let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
-    // Section-banner chunks skip the source-order falloff — each one
-    // is an independent subject (one module per chunk).
-    let chunk_factor = match strategy {
-        DeclChunkingStrategy::CountBased => names_surface_chunk_factor(chunk_index, chunk_count),
-        DeclChunkingStrategy::SectionBanner => names_surface_chunk_factor(0, chunk_count.max(2)),
-    };
-    base * chunk_factor
+    base * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 
 /// Damp vendored / shim C-stdlib headers under non-root dirs.
@@ -1987,143 +1847,6 @@ typedef int x;
             !has_group,
             "small enum must not chunk; keys: {:?}",
             report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>(),
-        );
-    }
-
-    #[test]
-    fn c_section_banner_comment_recognizer() {
-        for text in [
-            "// strings.c",
-            "//  tokenize.c",
-            "//tokenize.c ",
-            "/* preprocess.c */",
-            "/*  parse.c  */",
-            "// aho_corasick.c",
-            "// foo-bar.c",
-        ] {
-            assert!(
-                is_module_section_banner_comment(text),
-                "expected banner match for {text:?}",
-            );
-        }
-        for text in [
-            "//",
-            "// just a comment",
-            "// foo.h",
-            "// strings.cpp",
-            "// 12 lines below",
-            "/* license boilerplate */",
-            "// .c",
-            "// strings.c extra",
-        ] {
-            assert!(
-                !is_module_section_banner_comment(text),
-                "unexpected banner match for {text:?}",
-            );
-        }
-    }
-
-    #[test]
-    fn c_section_banner_chunking_partitions_decls_by_module() {
-        // chibicc-style amalgamation header at the canonical entry
-        // location: each `// stem.c` banner partitions the following
-        // decls into a chunk. The preamble decls form chunk 0; the
-        // tail-module banners get their own chunks even when those
-        // sections carry only a handful of prototypes.
-        let src = "\
-typedef struct Type Type;
-typedef struct Node Node;
-
-//
-// strings.c
-//
-
-void strarray_push(int x);
-void format(int x);
-
-//
-// tokenize.c
-//
-
-void tokenize(int x);
-
-//
-// codegen.c
-//
-
-void codegen(int x);
-
-//
-// main.c
-//
-
-int file_exists(int x);
-";
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(root.join("chibicc.h"), src).unwrap();
-        // The walker runs against the directory; we read decls through
-        // the public path so canonical-entry gating is observed.
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 20_000, None);
-        let report = scheduler.run_with_report();
-        let chunk_indices: Vec<usize> = report
-            .scheduled
-            .iter()
-            .filter_map(|r| match &r.key {
-                BatchKey::C(CKey::DeclNames { file, chunk_index })
-                    if file.ends_with("chibicc.h") =>
-                {
-                    Some(*chunk_index)
-                }
-                _ => None,
-            })
-            .collect();
-        // 4 banners + 1 preamble = 5 chunks, all with decls so all
-        // emitted.
-        let mut sorted = chunk_indices.clone();
-        sorted.sort();
-        assert_eq!(
-            sorted,
-            vec![0, 1, 2, 3, 4],
-            "expected 5 section chunks, got {chunk_indices:?}",
-        );
-    }
-
-    #[test]
-    fn c_section_banner_chunking_falls_back_below_minimum_count() {
-        // Only 2 banners — below SECTION_BANNER_MIN_COUNT (= 3). Should
-        // fall back to count-based chunking; with this small a surface
-        // (3 decls) a single unchunked DeclNames batch is emitted.
-        let src = "\
-//
-// strings.c
-//
-void foo(int x);
-
-//
-// tokenize.c
-//
-void bar(int x);
-void baz(int x);
-";
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(root.join("small.h"), src).unwrap();
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 20_000, None);
-        let report = scheduler.run_with_report();
-        let chunk_count = report
-            .scheduled
-            .iter()
-            .filter(|r| {
-                matches!(
-                    &r.key,
-                    BatchKey::C(CKey::DeclNames { file, .. }) if file.ends_with("small.h")
-                )
-            })
-            .count();
-        assert_eq!(
-            chunk_count, 1,
-            "below SECTION_BANNER_MIN_COUNT banners → single count-based chunk",
         );
     }
 
