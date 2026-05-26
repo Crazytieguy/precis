@@ -54,17 +54,32 @@ pub enum FsKey {
     DirListing { dir: PathBuf },
 }
 
-macro_rules! impl_batchkey_from {
+/// Generates the `From<XKey> for BatchKey` forwarders and the
+/// `WalkerKey for BatchKey` dispatch from a single variant list. Each
+/// inner key implements [`InnerKey`] for the dispatch body.
+macro_rules! impl_batchkey {
     ($($variant:ident => $key:ident),* $(,)?) => {
         $(
             impl From<$key> for BatchKey {
                 fn from(k: $key) -> Self { BatchKey::$variant(k) }
             }
         )*
+
+        impl WalkerKey for BatchKey {
+            fn describe(&self, fixture_root: &Path) -> String {
+                match self { $(BatchKey::$variant(k) => InnerKey::describe(k, fixture_root),)* }
+            }
+            fn concavity_exponent(&self) -> f64 {
+                match self { $(BatchKey::$variant(k) => InnerKey::concavity_exponent(k),)* }
+            }
+            fn gated_descendant_value_weight(&self) -> f64 {
+                match self { $(BatchKey::$variant(k) => InnerKey::gated_descendant_value_weight(k),)* }
+            }
+        }
     };
 }
 
-impl_batchkey_from! {
+impl_batchkey! {
     Fs => FsKey,
     Rust => RustKey,
     Markdown => MarkdownKey,
@@ -78,6 +93,19 @@ impl_batchkey_from! {
     Python => PythonKey,
     Lua => LuaKey,
     Yaml => YamlKey,
+}
+
+/// Per-walker contributions to the [`WalkerKey`] dispatch on
+/// [`BatchKey`]. Defaults match [`WalkerKey`]'s defaults so walkers
+/// only implement the methods they override.
+trait InnerKey {
+    fn describe(&self, fixture_root: &Path) -> String;
+    fn concavity_exponent(&self) -> f64 {
+        crate::value::DEFAULT_CONCAVITY_EXPONENT
+    }
+    fn gated_descendant_value_weight(&self) -> f64 {
+        0.0
+    }
 }
 
 /// Rust batches — per-item for pub types, file-scope for crate-doc /
@@ -426,49 +454,8 @@ pub trait WalkerKey:
     }
 }
 
-impl WalkerKey for BatchKey {
-    fn describe(&self, fixture_root: &Path) -> String {
-        match self {
-            BatchKey::Fs(k) => k.describe(fixture_root),
-            BatchKey::Rust(k) => k.describe(fixture_root),
-            BatchKey::Markdown(k) => k.describe(fixture_root),
-            BatchKey::Toml(k) => k.describe(fixture_root),
-            BatchKey::Typescript(k) => k.describe(fixture_root),
-            BatchKey::Json(k) => k.describe(fixture_root),
-            BatchKey::Plaintext(k) => k.describe(fixture_root),
-            BatchKey::Prisma(k) => k.describe(fixture_root),
-            BatchKey::C(k) => k.describe(fixture_root),
-            BatchKey::Go(k) => k.describe(fixture_root),
-            BatchKey::Python(k) => k.describe(fixture_root),
-            BatchKey::Lua(k) => k.describe(fixture_root),
-            BatchKey::Yaml(k) => k.describe(fixture_root),
-        }
-    }
-
-    fn concavity_exponent(&self) -> f64 {
-        match self {
-            BatchKey::Markdown(k) => k.concavity_exponent(),
-            BatchKey::C(k) => k.concavity_exponent(),
-            BatchKey::Go(k) => k.concavity_exponent(),
-            BatchKey::Json(k) => k.concavity_exponent(),
-            BatchKey::Python(k) => k.concavity_exponent(),
-            BatchKey::Rust(k) => k.concavity_exponent(),
-            BatchKey::Typescript(k) => k.concavity_exponent(),
-            BatchKey::Lua(k) => k.concavity_exponent(),
-            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-
-    fn gated_descendant_value_weight(&self) -> f64 {
-        match self {
-            BatchKey::Typescript(k) => k.gated_descendant_value_weight(),
-            _ => 0.0,
-        }
-    }
-}
-
-impl FsKey {
-    pub fn describe(&self, root: &Path) -> String {
+impl InnerKey for FsKey {
+    fn describe(&self, root: &Path) -> String {
         let FsKey::DirListing { dir } = self;
         let shown = display_path(dir, root);
         if shown.is_empty() {
@@ -479,18 +466,18 @@ impl FsKey {
     }
 }
 
-impl RustKey {
+impl InnerKey for RustKey {
     /// `PubItemDocBody` steepens to `0.45` — rustdoc prose past the
     /// first heading grows in cost without proportional structural value.
     /// `CrateDocBody` stays at the default (its bullets carry credit).
-    pub fn concavity_exponent(&self) -> f64 {
+    fn concavity_exponent(&self) -> f64 {
         match self {
             RustKey::PubItemDocBody { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 
-    pub fn describe(&self, root: &Path) -> String {
+    fn describe(&self, root: &Path) -> String {
         match self {
             RustKey::CrateDocLede { file } => describe_in("crate-doc lede", file, root),
             RustKey::CrateDocBody { file } => describe_in("crate-doc body", file, root),
@@ -529,8 +516,8 @@ impl RustKey {
     }
 }
 
-impl MarkdownKey {
-    pub fn describe(&self, root: &Path) -> String {
+impl InnerKey for MarkdownKey {
+    fn describe(&self, root: &Path) -> String {
         match self {
             MarkdownKey::SummaryWhole { file } => {
                 format!("mdBook SUMMARY at {}", display_path(file, root))
@@ -547,7 +534,7 @@ impl MarkdownKey {
     /// `Section` at index ≥1 steepens to `0.45` to demote prose body
     /// against structural anchors of the same value; index 0 keeps the
     /// default since READMEs often lead with their canonical claim.
-    pub fn concavity_exponent(&self) -> f64 {
+    fn concavity_exponent(&self) -> f64 {
         match self {
             MarkdownKey::Section {
                 section_index: 0, ..
@@ -558,13 +545,13 @@ impl MarkdownKey {
     }
 }
 
-impl TsKey {
+impl InnerKey for TsKey {
     /// `ExportNames` / `ImportChunk` for TS/TSX impl files use a mild
     /// `0.38` (flatter than per-decl, steeper than coherent anchors).
     /// Declaration files and JS runtime exports keep the default —
     /// flattening them demotes load-bearing anchors. `ExportMember`
     /// uses `0.45` (per-decl tier).
-    pub fn concavity_exponent(&self) -> f64 {
+    fn concavity_exponent(&self) -> f64 {
         match self {
             TsKey::ExportNames { file, .. }
                 if crate::walker::typescript::is_ts_or_tsx_file(file)
@@ -583,7 +570,7 @@ impl TsKey {
         }
     }
 
-    pub fn gated_descendant_value_weight(&self) -> f64 {
+    fn gated_descendant_value_weight(&self) -> f64 {
         // Broad, mostly type-only export-name surfaces are real gates.
         // Runtime-heavy catalogs and tiny type files keep standalone rank.
         let TsKey::ExportNames {
@@ -606,7 +593,7 @@ impl TsKey {
         }
     }
 
-    pub fn describe(&self, root: &Path) -> String {
+    fn describe(&self, root: &Path) -> String {
         match self {
             TsKey::ModuleDocLede { file } => describe_in("module-doc lede", file, root),
             TsKey::Imports { file } => describe_in("imports", file, root),
@@ -651,8 +638,8 @@ impl TsKey {
     }
 }
 
-impl TomlKey {
-    pub fn describe(&self, root: &Path) -> String {
+impl InnerKey for TomlKey {
+    fn describe(&self, root: &Path) -> String {
         match self {
             TomlKey::Identity { file } => describe_in("[package]", file, root),
             TomlKey::Features { file } => describe_in("[features]", file, root),
@@ -661,19 +648,19 @@ impl TomlKey {
     }
 }
 
-impl JsonKey {
+impl InnerKey for JsonKey {
     /// `Whole` steepens to `0.45` — verbatim JSON config bodies grow
     /// in cost without proportional structural value. Other variants
     /// (package.json sections) stay at the default; they're short and
     /// structural.
-    pub fn concavity_exponent(&self) -> f64 {
+    fn concavity_exponent(&self) -> f64 {
         match self {
             JsonKey::Whole { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 
-    pub fn describe(&self, root: &Path) -> String {
+    fn describe(&self, root: &Path) -> String {
         match self {
             JsonKey::Identity { file } => describe_in("package identity", file, root),
             JsonKey::IdentityMeta { file } => describe_in("package identity metadata", file, root),
@@ -686,39 +673,39 @@ impl JsonKey {
     }
 }
 
-impl PlaintextKey {
-    pub fn describe(&self, root: &Path) -> String {
+impl InnerKey for PlaintextKey {
+    fn describe(&self, root: &Path) -> String {
         let PlaintextKey::Whole { file } = self;
         format!("plaintext config {}", display_path(file, root))
     }
 }
 
-impl PrismaKey {
-    pub fn describe(&self, root: &Path) -> String {
+impl InnerKey for PrismaKey {
+    fn describe(&self, root: &Path) -> String {
         let PrismaKey::Toc { file } = self;
         describe_in("Prisma schema TOC", file, root)
     }
 }
 
-impl YamlKey {
-    pub fn describe(&self, root: &Path) -> String {
+impl InnerKey for YamlKey {
+    fn describe(&self, root: &Path) -> String {
         let YamlKey::Whole { file } = self;
         format!("docker-compose at {}", display_path(file, root))
     }
 }
 
-impl GoKey {
+impl InnerKey for GoKey {
     /// Per-decl batches steepen to `0.45` (matches the C walker) —
     /// short decls plus dozens per file would otherwise dominate the
     /// rank against larger anchors at the default 0.35.
-    pub fn concavity_exponent(&self) -> f64 {
+    fn concavity_exponent(&self) -> f64 {
         match self {
             GoKey::Decl { .. } | GoKey::DeclBody { .. } | GoKey::StructFieldGroup { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 
-    pub fn describe(&self, root: &Path) -> String {
+    fn describe(&self, root: &Path) -> String {
         match self {
             GoKey::PackageDocLede { file } => describe_in("go package doc lede", file, root),
             GoKey::PackageImports { file } => describe_in("go package + imports", file, root),
@@ -747,13 +734,13 @@ impl GoKey {
     }
 }
 
-impl PythonKey {
+impl InnerKey for PythonKey {
     /// `DeclNames` + `ImportChunk` use a mild `0.37` (broad
     /// catalog-shaped surfaces). Per-decl / per-method batches use
     /// `0.45` (matches C / Go) for the same reason — short decls
     /// emitted in bulk. `ClassBody` keeps the default; field listings
     /// tie structurally to the class.
-    pub fn concavity_exponent(&self) -> f64 {
+    fn concavity_exponent(&self) -> f64 {
         match self {
             PythonKey::ImportChunk { .. } => 0.37,
             PythonKey::DeclNames { .. } => 0.37,
@@ -765,7 +752,7 @@ impl PythonKey {
         }
     }
 
-    pub fn describe(&self, root: &Path) -> String {
+    fn describe(&self, root: &Path) -> String {
         match self {
             PythonKey::Imports { file } => describe_in("python imports", file, root),
             PythonKey::ImportChunk { file, chunk_index } => {
@@ -819,18 +806,18 @@ impl PythonKey {
     }
 }
 
-impl CKey {
+impl InnerKey for CKey {
     /// Per-decl batches steepen to `0.45` — typedef / prototype lines
     /// are short and headers emit dozens; the default 0.35 lets the
     /// stack dominate larger anchor batches.
-    pub fn concavity_exponent(&self) -> f64 {
+    fn concavity_exponent(&self) -> f64 {
         match self {
             CKey::Decl { .. } | CKey::DeclBody { .. } | CKey::AggregateMemberGroup { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 
-    pub fn describe(&self, root: &Path) -> String {
+    fn describe(&self, root: &Path) -> String {
         match self {
             CKey::HeaderBanner { file } => describe_in("c header banner", file, root),
             CKey::Includes { file } => describe_in("c includes", file, root),
@@ -856,18 +843,18 @@ impl CKey {
     }
 }
 
-impl LuaKey {
+impl InnerKey for LuaKey {
     /// Per-decl batches steepen to `0.45` (matches C / Python).
     /// `MetaFileWhole` keeps the default — LuaCATS specs are
     /// load-bearing and shouldn't be pushed later.
-    pub fn concavity_exponent(&self) -> f64 {
+    fn concavity_exponent(&self) -> f64 {
         match self {
             LuaKey::Decl { .. } | LuaKey::DeclBody { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 
-    pub fn describe(&self, root: &Path) -> String {
+    fn describe(&self, root: &Path) -> String {
         match self {
             LuaKey::Banner { file } => describe_in("lua banner", file, root),
             LuaKey::MetaFileWhole { file } => {
