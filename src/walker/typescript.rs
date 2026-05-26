@@ -77,9 +77,6 @@ const JS_CLASS_MEMBER_SPLIT_MAX: usize = 40;
 /// per-method exports to fire. Below this floor a couple incidental
 /// `thing.helper = function …` lines shouldn't hijack the file shape.
 const JS_PROTOTYPE_METHOD_MIN: usize = 3;
-/// Value multiplier for a prototype-style JS file's names surface —
-/// the `app.X` / `req.X` catalog IS the public API.
-const JS_PROTOTYPE_NAMES_VALUE_BOOST: f64 = 1.5;
 
 /// Per-run TypeScript-walker state. Caches the project's "public
 /// surface" (entrypoint files + transitively re-exported targets) so
@@ -281,14 +278,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 else {
                     continue;
                 };
-                // Prototype-style files: the names surface IS the file's
-                // public API answer. Boost so it outranks unrelated body
-                // / README slices competing in the same prefix.
-                let prototype_boost = if has_prototype_method {
-                    JS_PROTOTYPE_NAMES_VALUE_BOOST
-                } else {
-                    1.0
-                };
                 out.push(Batch {
                     key: names_predecessors[chunk_index].clone(),
                     predecessor: module_predecessor.clone(),
@@ -301,8 +290,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         js_factor,
                         has_split_js_class_export,
                         interface_export_count,
-                    ) * per_export_factor
-                        * prototype_boost,
+                    ) * per_export_factor,
                 });
             }
             for (item_index, item) in exports.iter().enumerate() {
