@@ -129,7 +129,14 @@ src/
         10→exports.useColors = useColors;
         11→exports.storage = localstorage();
         12→exports.destroy = (() => {
-        …
+        13→	let warned = false;
+        15→	return () => {
+        16→		if (!warned) {
+        17→			warned = true;
+        18→			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+        19→		}
+        20→	};
+        21→})();
         27→exports.colors = [
         …
         115→function useColors() {
@@ -142,11 +149,8 @@ src/
         …
         219→function load() {
         …
-        247→function localstorage() {
-        …
         258→module.exports = require('./common')(exports);
         …
-        260→const {formatters} = module.exports;
     common.js
         7→function setup(env) {
         8→	createDebug.debug = createDebug;
@@ -247,8 +251,6 @@ src/
     node.js
         5→const tty = require('tty');
         6→const util = require('util');
-        182→function getDate() {
-        …
         203→function save(namespaces) {
         204→	if (namespaces) {
         205→		process.env.DEBUG = namespaces;
@@ -263,7 +265,6 @@ src/
         …
         240→module.exports = require('./common')(exports);
         …
-        242→const {formatters} = module.exports;
 test.js
     3→const assert = require('assert');
     4→const debug = require('./src');

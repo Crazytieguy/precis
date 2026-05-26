@@ -405,9 +405,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // BFS can miss them — but their private helpers (an internal
         // `getDate` / `localstorage` function) are still part of the
         // surface NS authors anchor on as function-name locations.
-        let emit_private_nonclass =
-            (is_entrypoint_file(file) || ctx.is_readme_cited(file) || is_entrypoint_sibling(file))
-                && (is_tsx_file(file) || is_js_file(file));
+        let emit_private_nonclass = (is_entrypoint_file(file) || ctx.is_readme_cited(file))
+            && (is_tsx_file(file) || is_js_file(file));
         for item in module_items {
             if !emit_private_nonclass && !matches!(item.kind, ItemKind::Class) {
                 continue;
@@ -1624,33 +1623,6 @@ fn has_default_keyword(node: Node, source: &str) -> bool {
             c.kind() == "keyword" && text == "default"
         }
     })
-}
-
-/// True when `file` lives in a source directory (`src/` or `lib/`)
-/// alongside a TS/JS entrypoint file. The entrypoint dispatches to
-/// its siblings (often via runtime-conditional `require` that
-/// `compute_public_surface` can't follow), so the siblings' private
-/// helpers are still part of the documented surface NS authors
-/// anchor on as function-name locations.
-///
-/// Restricted to `src/` / `lib/` to keep build-tooling files at the
-/// repo root (`gulpfile.js`, `karma.conf.js`, etc.) from picking up
-/// private-helper emission just because they happen to share a
-/// directory with `index.js` at the root.
-fn is_entrypoint_sibling(file: &Path) -> bool {
-    if is_entrypoint_file(file) {
-        // The entrypoint itself is not a "sibling" of itself for this check.
-        return false;
-    }
-    let Some(parent) = file.parent() else {
-        return false;
-    };
-    if !is_source_dir(parent) {
-        return false;
-    }
-    JS_MODULE_ENTRYPOINT_FILES
-        .iter()
-        .any(|name| parent.join(name).is_file())
 }
 
 /// Files whose name signals "module entrypoint / public surface".
