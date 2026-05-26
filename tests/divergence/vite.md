@@ -158,47 +158,47 @@ Score(3000)=0.514 I=0.743 C=0.356 ns_rows≤3K=14/42 (reached=6 partial=1 missin
 | walker |  | 5514 | 30 | README headline in packages/create-vite/template-svelte/README.md |  |  | 0.373 |
 | walker |  | 5533 | 19 | listing of 'packages/create-vite/template-svelte/src' |  |  | 0.373 |
 | walker |  | 5541 | 8 | export names surface in packages/create-vite/template-svelte/src/main.js |  |  | 0.373 |
-| walker |  | 5572 | 31 | module item at packages/create-vite/template-svelte/src/main.js:5 |  |  | 0.373 |
-| walker |  | 5607 | 35 | headings outline in packages/create-vite/template-svelte/README.md |  |  | 0.373 |
+| walker |  | 5576 | 35 | headings outline in packages/create-vite/template-svelte/README.md |  |  | 0.373 |
 | ns | 5614 |  | 363 | resolvePlugins signature + final plugin chain | 4.3 | 4.1 | 0.359 |
-| walker |  | 5652 | 45 | listing of 'packages/create-vite/template-qwik-ts' |  |  | 0.359 |
-| walker |  | 5663 | 11 | README headline in packages/create-vite/template-qwik-ts/README.md |  |  | 0.359 |
-| walker |  | 5684 | 21 | listing of 'packages/create-vite/template-qwik-ts/src' |  |  | 0.359 |
-| walker |  | 5740 | 56 | headings outline in packages/create-vite/template-qwik-ts/README.md |  |  | 0.359 |
-| walker |  | 5785 | 45 | listing of 'packages/create-vite/template-solid-ts' |  |  | 0.359 |
+| walker |  | 5621 | 45 | listing of 'packages/create-vite/template-qwik-ts' |  |  | 0.359 |
+| walker |  | 5632 | 11 | README headline in packages/create-vite/template-qwik-ts/README.md |  |  | 0.359 |
+| walker |  | 5653 | 21 | listing of 'packages/create-vite/template-qwik-ts/src' |  |  | 0.359 |
+| walker |  | 5709 | 56 | headings outline in packages/create-vite/template-qwik-ts/README.md |  |  | 0.359 |
+| walker |  | 5754 | 45 | listing of 'packages/create-vite/template-solid-ts' |  |  | 0.359 |
+| walker |  | 5790 | 36 | README headline in packages/create-vite/template-solid-ts/README.md |  |  | 0.359 |
 | ns | 5804 |  | 190 | createServer entry | 4.4 | 2.5 | 0.353 |
-| walker |  | 5821 | 36 | README headline in packages/create-vite/template-solid-ts/README.md |  |  | 0.353 |
-| walker |  | 5842 | 21 | listing of 'packages/create-vite/template-solid-ts/src' |  |  | 0.353 |
-| walker |  | 5857 | 15 | module item at packages/create-vite/template-solid-ts/src/index.tsx:6 |  |  | 0.353 |
-| walker |  | 5862 | 5 | listing of 'packages/create-vite/__tests__' |  |  | 0.353 |
-| walker |  | 5912 | 50 | listing of 'packages/create-vite/template-react-ts' |  |  | 0.353 |
-| walker |  | 5951 | 39 | README headline in packages/create-vite/template-react-ts/README.md |  |  | 0.353 |
-| walker |  | 5975 | 24 | headings outline in packages/create-vite/template-react-ts/README.md |  |  | 0.353 |
-| walker |  | 5996 | 21 | listing of 'packages/create-vite/template-react-ts/src' |  |  | 0.353 |
-| walker |  | 6046 | 50 | listing of 'packages/create-vite/template-vue-ts' |  |  | 0.353 |
-| walker |  | 6064 | 18 | listing of 'packages/create-vite/template-vue-ts/src' |  |  | 0.353 |
+| walker |  | 5811 | 21 | listing of 'packages/create-vite/template-solid-ts/src' |  |  | 0.353 |
+| walker |  | 5826 | 15 | module item at packages/create-vite/template-solid-ts/src/index.tsx:6 |  |  | 0.353 |
+| walker |  | 5831 | 5 | listing of 'packages/create-vite/__tests__' |  |  | 0.353 |
+| walker |  | 5881 | 50 | listing of 'packages/create-vite/template-react-ts' |  |  | 0.353 |
+| walker |  | 5920 | 39 | README headline in packages/create-vite/template-react-ts/README.md |  |  | 0.353 |
+| walker |  | 5944 | 24 | headings outline in packages/create-vite/template-react-ts/README.md |  |  | 0.353 |
+| walker |  | 5965 | 21 | listing of 'packages/create-vite/template-react-ts/src' |  |  | 0.353 |
+| walker |  | 6015 | 50 | listing of 'packages/create-vite/template-vue-ts' |  |  | 0.353 |
+| walker |  | 6033 | 18 | listing of 'packages/create-vite/template-vue-ts/src' |  |  | 0.353 |
 | ns | 6114 |  | 310 | EnvironmentModuleNode — class + key fields | 4.5 |  | 0.346 |
-| walker |  | 6149 | 85 | README headline in packages/create-vite/template-vue-ts/README.md |  |  | 0.346 |
-| walker |  | 6189 | 40 | packages/create-vite/template-vue-ts/README.md section #0 |  |  | 0.346 |
-| walker |  | 6197 | 8 | export names surface in packages/create-vite/template-react-ts/src/App.tsx |  |  | 0.346 |
-| walker |  | 6281 | 84 | headings outline in packages/create-vite/template-solid/README.md |  |  | 0.346 |
-| walker |  | 6281 | 0 | packages/create-vite/template-solid/README.md section #0 |  |  | 0.346 |
+| walker |  | 6118 | 85 | README headline in packages/create-vite/template-vue-ts/README.md |  |  | 0.346 |
+| walker |  | 6158 | 40 | packages/create-vite/template-vue-ts/README.md section #0 |  |  | 0.346 |
+| walker |  | 6166 | 8 | export names surface in packages/create-vite/template-react-ts/src/App.tsx |  |  | 0.346 |
+| walker |  | 6250 | 84 | headings outline in packages/create-vite/template-solid/README.md |  |  | 0.346 |
+| walker |  | 6250 | 0 | packages/create-vite/template-solid/README.md section #0 |  |  | 0.346 |
 | ns | 6319 |  | 205 | EnvironmentModuleGraph + ResolvedUrl | 4.6 | 4.5 | 0.341 |
-| walker |  | 6365 | 84 | headings outline in packages/create-vite/template-solid-ts/README.md |  |  | 0.341 |
-| walker |  | 6365 | 0 | packages/create-vite/template-solid-ts/README.md section #0 |  |  | 0.341 |
-| walker |  | 6421 | 56 | listing of 'packages/create-vite/template-svelte-ts' |  |  | 0.341 |
-| walker |  | 6456 | 35 | README headline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.341 |
-| walker |  | 6475 | 19 | listing of 'packages/create-vite/template-svelte-ts/src' |  |  | 0.341 |
-| walker |  | 6483 | 8 | export names surface in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.341 |
-| walker |  | 6518 | 35 | headings outline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.341 |
+| walker |  | 6334 | 84 | headings outline in packages/create-vite/template-solid-ts/README.md |  |  | 0.341 |
+| walker |  | 6334 | 0 | packages/create-vite/template-solid-ts/README.md section #0 |  |  | 0.341 |
+| walker |  | 6390 | 56 | listing of 'packages/create-vite/template-svelte-ts' |  |  | 0.341 |
+| walker |  | 6425 | 35 | README headline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.341 |
+| walker |  | 6444 | 19 | listing of 'packages/create-vite/template-svelte-ts/src' |  |  | 0.341 |
+| walker |  | 6452 | 8 | export names surface in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.341 |
+| walker |  | 6487 | 35 | headings outline in packages/create-vite/template-svelte-ts/README.md |  |  | 0.341 |
 | ns | 6553 |  | 234 | TransformResult / TransformOptions / transformRequest sig | 4.7 |  | 0.334 |
-| walker |  | 6614 | 96 | packages/create-vite/template-react/README.md section #0 |  |  | 0.334 |
-| walker |  | 6710 | 96 | packages/create-vite/template-react-ts/README.md section #0 |  |  | 0.334 |
+| walker |  | 6583 | 96 | packages/create-vite/template-react/README.md section #0 |  |  | 0.334 |
+| walker |  | 6679 | 96 | packages/create-vite/template-react-ts/README.md section #0 |  |  | 0.334 |
+| walker |  | 6717 | 38 | packages/create-vite/template-svelte/README.md section #1 |  |  | 0.334 |
 | ns | 6747 |  | 194 | DevEnvironment class header | 4.8 |  | 0.328 |
-| walker |  | 6748 | 38 | packages/create-vite/template-svelte/README.md section #1 |  |  | 0.328 |
-| walker |  | 6786 | 38 | packages/create-vite/template-svelte-ts/README.md section #1 |  |  | 0.328 |
-| walker |  | 6813 | 27 | packages/create-vite/template-solid/README.md section #2 |  |  | 0.328 |
-| walker |  | 6840 | 27 | packages/create-vite/template-solid-ts/README.md section #2 |  |  | 0.328 |
+| walker |  | 6755 | 38 | packages/create-vite/template-svelte-ts/README.md section #1 |  |  | 0.328 |
+| walker |  | 6782 | 27 | packages/create-vite/template-solid/README.md section #2 |  |  | 0.328 |
+| walker |  | 6809 | 27 | packages/create-vite/template-solid-ts/README.md section #2 |  |  | 0.328 |
+| walker |  | 6840 | 31 | module item at packages/create-vite/template-svelte/src/main.js:5 |  |  | 0.328 |
 | walker |  | 6873 | 33 | imports in packages/create-vite/template-vue-ts/src/main.ts |  |  | 0.328 |
 | walker |  | 6907 | 34 | imports in packages/create-vite/template-svelte-ts/src/main.ts |  |  | 0.328 |
 | walker |  | 7085 | 178 | headings outline in packages/plugin-legacy/README.md |  |  | 0.328 |

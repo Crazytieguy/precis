@@ -183,120 +183,127 @@ Score(3000)=0.582 I=0.875 C=0.387 ns_rows≤3K=15/40 (reached=9 partial=0 missin
 | walker |  | 5485 | 13 | export names surface in apps/mobile/app/(tabs)/dashboard/index.tsx |  |  | 0.534 |
 | walker |  | 5485 | 0 | export at apps/mobile/app/(tabs)/dashboard/index.tsx:24 |  |  | 0.534 |
 | walker |  | 5503 | 18 | module item at apps/mobile/app/(tabs)/dashboard/index.tsx:22 |  |  | 0.534 |
-| walker |  | 5638 | 135 | module item at apps/mobile/app/(tabs)/dashboard/index.tsx:153 |  |  | 0.534 |
-| walker |  | 5655 | 17 | listing of 'apps/mobile/app/(tabs)/settings' |  |  | 0.534 |
-| walker |  | 5668 | 13 | export names surface in apps/mobile/app/(tabs)/settings/index.tsx |  |  | 0.534 |
-| walker |  | 5668 | 0 | export at apps/mobile/app/(tabs)/settings/index.tsx:32 |  |  | 0.534 |
+| walker |  | 5520 | 17 | listing of 'apps/mobile/app/(tabs)/settings' |  |  | 0.534 |
+| walker |  | 5533 | 13 | export names surface in apps/mobile/app/(tabs)/settings/index.tsx |  |  | 0.534 |
+| walker |  | 5533 | 0 | export at apps/mobile/app/(tabs)/settings/index.tsx:32 |  |  | 0.534 |
+| walker |  | 5550 | 17 | listing of 'apps/mobile/app/(tabs)/tags' |  |  | 0.534 |
+| walker |  | 5563 | 13 | export names surface in apps/mobile/app/(tabs)/tags/index.tsx |  |  | 0.534 |
+| walker |  | 5563 | 0 | export at apps/mobile/app/(tabs)/tags/index.tsx:32 |  |  | 0.534 |
+| walker |  | 5580 | 17 | module item at apps/mobile/app/(tabs)/tags/index.tsx:20 |  |  | 0.534 |
+| walker |  | 5598 | 18 | module item at apps/mobile/app/(tabs)/tags/index.tsx:22 |  |  | 0.534 |
+| walker |  | 5646 | 48 | module item body at apps/mobile/app/(tabs)/tags/index.tsx:22 body 23 |  |  | 0.534 |
+| walker |  | 5711 | 65 | module item at apps/mobile/app/(tabs)/tags/index.tsx:116 |  |  | 0.534 |
+| walker |  | 5723 | 12 | listing of 'apps/web/types' |  |  | 0.534 |
 | ns | 5739 |  | 271 | packages/* — package contents | 3.6 |  | 0.566 |
-| walker |  | 5759 | 91 | module item at apps/mobile/app/(tabs)/settings/index.tsx:263 |  |  | 0.566 |
-| walker |  | 5776 | 17 | listing of 'apps/mobile/app/(tabs)/tags' |  |  | 0.566 |
-| walker |  | 5789 | 13 | export names surface in apps/mobile/app/(tabs)/tags/index.tsx |  |  | 0.566 |
-| walker |  | 5789 | 0 | export at apps/mobile/app/(tabs)/tags/index.tsx:32 |  |  | 0.566 |
-| ns | 5839 |  | 100 | packages/filesystem index — re-export surface | 3.7 |  | 0.561 |
-| walker |  | 5854 | 65 | module item at apps/mobile/app/(tabs)/tags/index.tsx:116 |  |  | 0.561 |
-| walker |  | 5871 | 17 | module item at apps/mobile/app/(tabs)/tags/index.tsx:20 |  |  | 0.561 |
-| walker |  | 5889 | 18 | module item at apps/mobile/app/(tabs)/tags/index.tsx:22 |  |  | 0.561 |
-| walker |  | 5937 | 48 | module item body at apps/mobile/app/(tabs)/tags/index.tsx:22 body 23 |  |  | 0.561 |
-| walker |  | 5949 | 12 | listing of 'apps/web/types' |  |  | 0.561 |
-| walker |  | 5954 | 5 | listing of 'apps/web/pages/public/collections' |  |  | 0.561 |
-| walker |  | 5962 | 8 | listing of 'apps/web/pages/api' |  |  | 0.562 |
-| walker |  | 5965 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.562 |
-| walker |  | 6044 | 79 | listing of 'apps/web/lib/client' |  |  | 0.568 |
-| walker |  | 6049 | 5 | listing of '.devcontainer' |  |  | 0.568 |
-| walker |  | 6053 | 4 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.568 |
-| walker |  | 6065 | 12 | export names surface in apps/web/pages/api/v2/dashboard/index.ts |  |  | 0.568 |
-| walker |  | 6093 | 28 | export at apps/web/pages/api/v2/dashboard/index.ts:7 |  |  | 0.568 |
+| walker |  | 5814 | 91 | module item at apps/mobile/app/(tabs)/settings/index.tsx:263 |  |  | 0.566 |
+| walker |  | 5819 | 5 | listing of 'apps/web/pages/public/collections' |  |  | 0.566 |
+| walker |  | 5827 | 8 | listing of 'apps/web/pages/api' |  |  | 0.566 |
+| walker |  | 5830 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.566 |
+| ns | 5839 |  | 100 | packages/filesystem index — re-export surface | 3.7 |  | 0.562 |
+| walker |  | 5909 | 79 | listing of 'apps/web/lib/client' |  |  | 0.568 |
+| walker |  | 5914 | 5 | listing of '.devcontainer' |  |  | 0.568 |
+| walker |  | 5918 | 4 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.568 |
+| walker |  | 5930 | 12 | export names surface in apps/web/pages/api/v2/dashboard/index.ts |  |  | 0.568 |
+| walker |  | 5958 | 28 | export at apps/web/pages/api/v2/dashboard/index.ts:7 |  |  | 0.568 |
 | ns | 6206 |  | 367 | apps/web/lib/api/controllers — bracketed leaves + stripe | 3.8 |  | 0.540 |
-| walker |  | 6377 | 284 | export body at apps/web/pages/api/v2/dashboard/index.ts:7 body 11 |  |  | 0.540 |
-| walker |  | 6383 | 6 | listing of 'apps/web/pages/public/links' |  |  | 0.540 |
-| walker |  | 6389 | 6 | listing of 'apps/web/pages/public/preserved' |  |  | 0.540 |
-| walker |  | 6499 | 110 | package dependencies in packages/prisma/package.json |  |  | 0.540 |
-| walker |  | 6505 | 6 | listing of 'apps/web/e2e/tests' |  |  | 0.540 |
-| walker |  | 6689 | 184 | README.md section #27 |  |  | 0.540 |
-| walker |  | 6763 | 74 | imports in apps/web/pages/api/v2/dashboard/index.ts |  |  | 0.540 |
-| walker |  | 6860 | 97 | listing of 'apps/web/lib/api' |  |  | 0.553 |
-| walker |  | 6893 | 33 | listing of 'apps/web/lib/api/stripe' |  |  | 0.553 |
-| ns | 6908 |  | 702 | verifyUser middleware (full) | 4.1 |  | 0.525 |
-| walker |  | 6929 | 36 | listing of 'apps/web/lib/api/controllers' |  |  | 0.535 |
-| walker |  | 6946 | 17 | listing of 'apps/web/lib/api/controllers/links' |  |  | 0.536 |
-| walker |  | 6955 | 9 | listing of 'apps/web/lib/api/controllers/public' |  |  | 0.537 |
-| walker |  | 6982 | 27 | listing of 'apps/web/lib/api/controllers/tags' |  |  | 0.539 |
-| walker |  | 7006 | 24 | listing of 'apps/web/lib/api/controllers/links/linkId' |  |  | 0.541 |
-| walker |  | 7020 | 14 | listing of 'apps/web/lib/api/controllers/collections' |  |  | 0.543 |
-| walker |  | 7034 | 14 | listing of 'apps/web/lib/api/controllers/tokens' |  |  | 0.546 |
-| walker |  | 7048 | 14 | listing of 'apps/web/lib/api/controllers/users' |  |  | 0.548 |
-| walker |  | 7075 | 27 | listing of 'apps/web/lib/api/controllers/users/userId' |  |  | 0.552 |
-| walker |  | 7085 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.552 |
-| walker |  | 7154 | 69 | listing of 'apps/web/pages/api/v1' |  |  | 0.575 |
-| walker |  | 7172 | 18 | listing of 'apps/web/pages/api/v1/preserved' |  |  | 0.575 |
-| walker |  | 7194 | 22 | listing of 'apps/web/pages/api/v1/auth' |  |  | 0.575 |
-| walker |  | 7203 | 9 | listing of 'apps/web/pages/api/v1/public' |  |  | 0.575 |
-| walker |  | 7215 | 12 | listing of 'apps/web/pages/api/v1/links' |  |  | 0.575 |
-| walker |  | 7239 | 24 | export names surface in apps/web/pages/api/v1/links/index.ts |  |  | 0.575 |
-| walker |  | 7239 | 0 | export at apps/web/pages/api/v1/links/index.ts:9 |  |  | 0.575 |
-| walker |  | 7252 | 13 | listing of 'apps/web/pages/api/v1/users' |  |  | 0.575 |
-| walker |  | 7276 | 24 | export names surface in apps/web/pages/api/v1/users/index.ts |  |  | 0.575 |
-| walker |  | 7276 | 0 | export at apps/web/pages/api/v1/users/index.ts:6 |  |  | 0.575 |
+| walker |  | 6242 | 284 | export body at apps/web/pages/api/v2/dashboard/index.ts:7 body 11 |  |  | 0.540 |
+| walker |  | 6248 | 6 | listing of 'apps/web/pages/public/links' |  |  | 0.540 |
+| walker |  | 6254 | 6 | listing of 'apps/web/pages/public/preserved' |  |  | 0.540 |
+| walker |  | 6364 | 110 | package dependencies in packages/prisma/package.json |  |  | 0.540 |
+| walker |  | 6370 | 6 | listing of 'apps/web/e2e/tests' |  |  | 0.540 |
+| walker |  | 6554 | 184 | README.md section #27 |  |  | 0.540 |
+| walker |  | 6628 | 74 | imports in apps/web/pages/api/v2/dashboard/index.ts |  |  | 0.540 |
+| walker |  | 6725 | 97 | listing of 'apps/web/lib/api' |  |  | 0.553 |
+| walker |  | 6758 | 33 | listing of 'apps/web/lib/api/stripe' |  |  | 0.553 |
+| walker |  | 6794 | 36 | listing of 'apps/web/lib/api/controllers' |  |  | 0.564 |
+| walker |  | 6811 | 17 | listing of 'apps/web/lib/api/controllers/links' |  |  | 0.565 |
+| walker |  | 6820 | 9 | listing of 'apps/web/lib/api/controllers/public' |  |  | 0.566 |
+| walker |  | 6847 | 27 | listing of 'apps/web/lib/api/controllers/tags' |  |  | 0.568 |
+| walker |  | 6871 | 24 | listing of 'apps/web/lib/api/controllers/links/linkId' |  |  | 0.570 |
+| walker |  | 6885 | 14 | listing of 'apps/web/lib/api/controllers/collections' |  |  | 0.573 |
+| walker |  | 6899 | 14 | listing of 'apps/web/lib/api/controllers/tokens' |  |  | 0.575 |
+| ns | 6908 |  | 702 | verifyUser middleware (full) | 4.1 |  | 0.546 |
+| walker |  | 6913 | 14 | listing of 'apps/web/lib/api/controllers/users' |  |  | 0.548 |
+| walker |  | 6940 | 27 | listing of 'apps/web/lib/api/controllers/users/userId' |  |  | 0.552 |
+| walker |  | 6950 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.552 |
+| walker |  | 7019 | 69 | listing of 'apps/web/pages/api/v1' |  |  | 0.575 |
+| walker |  | 7037 | 18 | listing of 'apps/web/pages/api/v1/preserved' |  |  | 0.575 |
+| walker |  | 7059 | 22 | listing of 'apps/web/pages/api/v1/auth' |  |  | 0.575 |
+| walker |  | 7068 | 9 | listing of 'apps/web/pages/api/v1/public' |  |  | 0.575 |
+| walker |  | 7080 | 12 | listing of 'apps/web/pages/api/v1/links' |  |  | 0.575 |
+| walker |  | 7104 | 24 | export names surface in apps/web/pages/api/v1/links/index.ts |  |  | 0.575 |
+| walker |  | 7104 | 0 | export at apps/web/pages/api/v1/links/index.ts:9 |  |  | 0.575 |
+| walker |  | 7117 | 13 | listing of 'apps/web/pages/api/v1/users' |  |  | 0.575 |
+| walker |  | 7141 | 24 | export names surface in apps/web/pages/api/v1/users/index.ts |  |  | 0.575 |
+| walker |  | 7141 | 0 | export at apps/web/pages/api/v1/users/index.ts:6 |  |  | 0.575 |
+| walker |  | 7343 | 202 | export body at apps/web/pages/api/v1/users/index.ts:6 body 7 |  |  | 0.575 |
+| walker |  | 7353 | 10 | listing of 'apps/web/pages/api/v1/links/[id]' |  |  | 0.575 |
 | ns | 7357 |  | 449 | links REST handler — verifyUser + GET dispatch | 4.2 |  | 0.563 |
-| walker |  | 7478 | 202 | export body at apps/web/pages/api/v1/users/index.ts:6 body 7 |  |  | 0.563 |
-| walker |  | 7488 | 10 | listing of 'apps/web/pages/api/v1/links/[id]' |  |  | 0.563 |
-| walker |  | 7512 | 24 | export names surface in apps/web/pages/api/v1/links/[id]/index.ts |  |  | 0.563 |
-| walker |  | 7512 | 0 | export at apps/web/pages/api/v1/links/[id]/index.ts:7 |  |  | 0.563 |
+| walker |  | 7377 | 24 | export names surface in apps/web/pages/api/v1/links/[id]/index.ts |  |  | 0.563 |
+| walker |  | 7377 | 0 | export at apps/web/pages/api/v1/links/[id]/index.ts:7 |  |  | 0.563 |
 | ns | 7599 |  | 242 | links/[id] REST handler — imports + signature | 4.3 |  | 0.557 |
-| walker |  | 7913 | 401 | export body at apps/web/pages/api/v1/links/[id]/index.ts:7 body 8 |  |  | 0.561 |
-| walker |  | 7979 | 66 | imports in apps/web/pages/api/v1/users/index.ts |  |  | 0.561 |
-| walker |  | 7993 | 14 | listing of 'apps/web/pages/api/v1/tags' |  |  | 0.561 |
-| walker |  | 8017 | 24 | export names surface in apps/web/pages/api/v1/tags/index.ts |  |  | 0.561 |
-| walker |  | 8017 | 0 | export at apps/web/pages/api/v1/tags/index.ts:9 |  |  | 0.561 |
-| walker |  | 8021 | 4 | listing of 'apps/web/pages/api/v1/dashboard' |  |  | 0.561 |
-| walker |  | 8033 | 12 | export names surface in apps/web/pages/api/v1/dashboard/index.ts |  |  | 0.561 |
-| walker |  | 8061 | 28 | export at apps/web/pages/api/v1/dashboard/index.ts:6 |  |  | 0.561 |
+| walker |  | 7778 | 401 | export body at apps/web/pages/api/v1/links/[id]/index.ts:7 body 8 |  |  | 0.561 |
+| walker |  | 7844 | 66 | imports in apps/web/pages/api/v1/users/index.ts |  |  | 0.561 |
+| walker |  | 7858 | 14 | listing of 'apps/web/pages/api/v1/tags' |  |  | 0.561 |
+| walker |  | 7882 | 24 | export names surface in apps/web/pages/api/v1/tags/index.ts |  |  | 0.561 |
+| walker |  | 7882 | 0 | export at apps/web/pages/api/v1/tags/index.ts:9 |  |  | 0.561 |
+| walker |  | 7886 | 4 | listing of 'apps/web/pages/api/v1/dashboard' |  |  | 0.561 |
+| walker |  | 7898 | 12 | export names surface in apps/web/pages/api/v1/dashboard/index.ts |  |  | 0.561 |
+| walker |  | 7926 | 28 | export at apps/web/pages/api/v1/dashboard/index.ts:6 |  |  | 0.561 |
+| walker |  | 8063 | 137 | export body at apps/web/pages/api/v1/dashboard/index.ts:6 body 10 |  |  | 0.561 |
+| walker |  | 8067 | 4 | listing of 'apps/web/pages/api/v1/getFavicon' |  |  | 0.561 |
 | ns | 8072 |  | 473 | packages/router — hook declaration locations (12 files) | 4.4 |  | 0.549 |
-| walker |  | 8198 | 137 | export body at apps/web/pages/api/v1/dashboard/index.ts:6 body 10 |  |  | 0.549 |
-| walker |  | 8202 | 4 | listing of 'apps/web/pages/api/v1/getFavicon' |  |  | 0.549 |
+| walker |  | 8079 | 12 | export names surface in apps/web/pages/api/v1/getFavicon/index.ts |  |  | 0.549 |
+| walker |  | 8107 | 28 | export at apps/web/pages/api/v1/getFavicon/index.ts:33 |  |  | 0.549 |
+| walker |  | 8141 | 34 | imports in apps/web/pages/api/v1/getFavicon/index.ts |  |  | 0.549 |
+| walker |  | 8145 | 4 | listing of 'apps/web/pages/api/v1/logins' |  |  | 0.549 |
+| walker |  | 8181 | 36 | export names surface in apps/web/pages/api/v1/logins/index.ts |  |  | 0.549 |
+| walker |  | 8181 | 0 | export at apps/web/pages/api/v1/logins/index.ts:20 |  |  | 0.549 |
+| walker |  | 8211 | 30 | export at apps/web/pages/api/v1/logins/index.ts:13 |  |  | 0.549 |
 | ns | 8213 |  | 141 | packages/router/links — 11 hook declaration locations | 4.5 |  | 0.545 |
-| walker |  | 8214 | 12 | export names surface in apps/web/pages/api/v1/getFavicon/index.ts |  |  | 0.545 |
-| walker |  | 8242 | 28 | export at apps/web/pages/api/v1/getFavicon/index.ts:33 |  |  | 0.545 |
-| walker |  | 8276 | 34 | imports in apps/web/pages/api/v1/getFavicon/index.ts |  |  | 0.545 |
-| walker |  | 8280 | 4 | listing of 'apps/web/pages/api/v1/logins' |  |  | 0.545 |
-| walker |  | 8316 | 36 | export names surface in apps/web/pages/api/v1/logins/index.ts |  |  | 0.545 |
-| walker |  | 8316 | 0 | export at apps/web/pages/api/v1/logins/index.ts:20 |  |  | 0.545 |
-| walker |  | 8346 | 30 | export at apps/web/pages/api/v1/logins/index.ts:13 |  |  | 0.545 |
-| walker |  | 8355 | 9 | export body at apps/web/pages/api/v1/logins/index.ts:13 body 17 |  |  | 0.545 |
-| walker |  | 8429 | 74 | export at apps/web/pages/api/v1/logins/index.ts:4 |  |  | 0.545 |
-| walker |  | 8460 | 31 | imports in apps/web/pages/api/v1/logins/index.ts |  |  | 0.545 |
-| walker |  | 8464 | 4 | listing of 'apps/web/pages/api/v1/migration' |  |  | 0.545 |
-| walker |  | 8499 | 35 | export names surface in apps/web/pages/api/v1/migration/index.ts |  |  | 0.545 |
-| walker |  | 8499 | 0 | export at apps/web/pages/api/v1/migration/index.ts:48 |  |  | 0.545 |
+| walker |  | 8220 | 9 | export body at apps/web/pages/api/v1/logins/index.ts:13 body 17 |  |  | 0.545 |
+| walker |  | 8294 | 74 | export at apps/web/pages/api/v1/logins/index.ts:4 |  |  | 0.545 |
+| walker |  | 8325 | 31 | imports in apps/web/pages/api/v1/logins/index.ts |  |  | 0.545 |
+| walker |  | 8329 | 4 | listing of 'apps/web/pages/api/v1/migration' |  |  | 0.545 |
+| walker |  | 8364 | 35 | export names surface in apps/web/pages/api/v1/migration/index.ts |  |  | 0.545 |
+| walker |  | 8364 | 0 | export at apps/web/pages/api/v1/migration/index.ts:48 |  |  | 0.545 |
+| walker |  | 8391 | 27 | export at apps/web/pages/api/v1/migration/index.ts:11 |  |  | 0.545 |
+| walker |  | 8395 | 4 | listing of 'apps/web/pages/api/v1/payment' |  |  | 0.545 |
+| walker |  | 8419 | 24 | export names surface in apps/web/pages/api/v1/payment/index.ts |  |  | 0.545 |
+| walker |  | 8419 | 0 | export at apps/web/pages/api/v1/payment/index.ts:7 |  |  | 0.545 |
 | ns | 8507 |  | 294 | packages/lib/schemaValidation — zod schema declaration locations | 4.6 |  | 0.538 |
-| walker |  | 8526 | 27 | export at apps/web/pages/api/v1/migration/index.ts:11 |  |  | 0.538 |
-| walker |  | 8530 | 4 | listing of 'apps/web/pages/api/v1/payment' |  |  | 0.538 |
-| walker |  | 8554 | 24 | export names surface in apps/web/pages/api/v1/payment/index.ts |  |  | 0.538 |
-| walker |  | 8554 | 0 | export at apps/web/pages/api/v1/payment/index.ts:7 |  |  | 0.538 |
 | ns | 8672 |  | 165 | apps/worker/index.ts — spawn-respawn supervisor | 5.1 |  | 0.533 |
+| walker |  | 8760 | 341 | export body at apps/web/pages/api/v1/payment/index.ts:7 body 8 |  |  | 0.533 |
+| walker |  | 8764 | 4 | listing of 'apps/web/pages/api/v1/search' |  |  | 0.533 |
+| walker |  | 8776 | 12 | export names surface in apps/web/pages/api/v1/search/index.ts |  |  | 0.533 |
+| walker |  | 8804 | 28 | export at apps/web/pages/api/v1/search/index.ts:6 |  |  | 0.533 |
 | ns | 8809 |  | 137 | packages/lib/ssrf — public export locations | 5.2 |  | 0.530 |
-| walker |  | 8895 | 341 | export body at apps/web/pages/api/v1/payment/index.ts:7 body 8 |  |  | 0.530 |
-| walker |  | 8899 | 4 | listing of 'apps/web/pages/api/v1/search' |  |  | 0.530 |
-| walker |  | 8911 | 12 | export names surface in apps/web/pages/api/v1/search/index.ts |  |  | 0.530 |
 | ns | 8936 |  | 127 | packages/lib/ssrf — blocked hostname lists | 5.3 | 5.2 | 0.526 |
-| walker |  | 8939 | 28 | export at apps/web/pages/api/v1/search/index.ts:6 |  |  | 0.526 |
 | ns | 9078 |  | 142 | searchQueryBuilder — supported search conditions | 5.4 |  | 0.521 |
-| walker |  | 9251 | 312 | export body at apps/web/pages/api/v1/search/index.ts:6 body 10 |  |  | 0.521 |
-| walker |  | 9318 | 67 | imports in apps/web/pages/api/v1/search/index.ts |  |  | 0.521 |
-| walker |  | 9322 | 4 | listing of 'apps/web/pages/api/v1/session' |  |  | 0.521 |
-| walker |  | 9334 | 12 | export names surface in apps/web/pages/api/v1/session/index.ts |  |  | 0.521 |
+| walker |  | 9116 | 312 | export body at apps/web/pages/api/v1/search/index.ts:6 body 10 |  |  | 0.521 |
+| walker |  | 9183 | 67 | imports in apps/web/pages/api/v1/search/index.ts |  |  | 0.521 |
+| walker |  | 9187 | 4 | listing of 'apps/web/pages/api/v1/session' |  |  | 0.521 |
+| walker |  | 9199 | 12 | export names surface in apps/web/pages/api/v1/session/index.ts |  |  | 0.521 |
+| walker |  | 9227 | 28 | export at apps/web/pages/api/v1/session/index.ts:6 |  |  | 0.521 |
 | ns | 9355 |  | 277 | archiveHandler — worker preservation pipeline signature | 5.5 |  | 0.516 |
-| walker |  | 9362 | 28 | export at apps/web/pages/api/v1/session/index.ts:6 |  |  | 0.516 |
+| walker |  | 9483 | 256 | export body at apps/web/pages/api/v1/session/index.ts:6 body 10 |  |  | 0.516 |
+| walker |  | 9487 | 4 | listing of 'apps/web/pages/api/v1/webhook' |  |  | 0.516 |
+| walker |  | 9510 | 23 | export names surface in apps/web/pages/api/v1/webhook/index.ts |  |  | 0.516 |
+| walker |  | 9538 | 28 | export at apps/web/pages/api/v1/webhook/index.ts:27 |  |  | 0.516 |
+| walker |  | 9565 | 27 | export at apps/web/pages/api/v1/webhook/index.ts:5 |  |  | 0.516 |
 | ns | 9603 |  | 248 | _app.tsx — Next.js root provider stack | 5.6 |  | 0.511 |
-| walker |  | 9618 | 256 | export body at apps/web/pages/api/v1/session/index.ts:6 body 10 |  |  | 0.511 |
-| walker |  | 9622 | 4 | listing of 'apps/web/pages/api/v1/webhook' |  |  | 0.511 |
-| walker |  | 9645 | 23 | export names surface in apps/web/pages/api/v1/webhook/index.ts |  |  | 0.511 |
-| walker |  | 9673 | 28 | export at apps/web/pages/api/v1/webhook/index.ts:27 |  |  | 0.511 |
-| walker |  | 9700 | 27 | export at apps/web/pages/api/v1/webhook/index.ts:5 |  |  | 0.511 |
+| walker |  | 9618 | 53 | imports in apps/web/pages/api/v1/webhook/index.ts |  |  | 0.511 |
+| walker |  | 9687 | 69 | imports in apps/web/pages/api/v1/dashboard/index.ts |  |  | 0.511 |
 | ns | 9721 |  | 118 | packages/types/global — export locations | 6.1 |  | 0.508 |
-| walker |  | 9753 | 53 | imports in apps/web/pages/api/v1/webhook/index.ts |  |  | 0.508 |
-| walker |  | 9822 | 69 | imports in apps/web/pages/api/v1/dashboard/index.ts |  |  | 0.508 |
+| walker |  | 9757 | 70 | imports in apps/web/pages/api/v1/session/index.ts |  |  | 0.508 |
+| walker |  | 9769 | 12 | listing of 'apps/web/pages/api/v1/public/collections' |  |  | 0.508 |
+| walker |  | 9848 | 79 | imports in apps/web/pages/api/v1/payment/index.ts |  |  | 0.508 |
 | ns | 9887 |  | 166 | packages/types/global — key runtime enum values | 6.2 | 6.1 | 0.502 |
-| walker |  | 9892 | 70 | imports in apps/web/pages/api/v1/session/index.ts |  |  | 0.502 |
-| walker |  | 9904 | 12 | listing of 'apps/web/pages/api/v1/public/collections' |  |  | 0.502 |
-| walker |  | 9983 | 79 | imports in apps/web/pages/api/v1/payment/index.ts |  |  | 0.502 |
+| walker |  | 9896 | 48 | listing of 'apps/web/lib/api/controllers/migration' |  |  | 0.508 |
+| walker |  | 9901 | 5 | listing of 'apps/web/lib/api/controllers/search' |  |  | 0.509 |
+| walker |  | 9906 | 5 | listing of 'apps/web/lib/api/controllers/session' |  |  | 0.510 |
+| walker |  | 9917 | 11 | listing of 'apps/web/pages/collections' |  |  | 0.510 |
+| walker |  | 9938 | 21 | export names surface in apps/web/pages/collections/index.tsx |  |  | 0.510 |
+| walker |  | 9955 | 17 | module item at apps/web/pages/collections/index.tsx:21 |  |  | 0.510 |
+| walker |  | 9966 | 11 | listing of 'apps/web/pages/tags' |  |  | 0.510 |
+| walker |  | 9989 | 23 | export names surface in apps/web/pages/tags/index.tsx |  |  | 0.510 |
