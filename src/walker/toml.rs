@@ -395,9 +395,11 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
             else {
                 continue;
             };
-            if let Some(member) =
-                canonical_member(&canonical_root, &root.join(path_str), CARGO_MANIFEST_FILENAME)
-            {
+            if let Some(member) = canonical_member(
+                &canonical_root,
+                &root.join(path_str),
+                CARGO_MANIFEST_FILENAME,
+            ) {
                 candidates.insert(member);
             }
         }

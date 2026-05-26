@@ -383,48 +383,21 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
     } else {
         heading_slab_value(file, range.parent_index, ctx)
     };
-    let h3_scale = if range.parent_is_concept_h2 {
-        README_CONCEPT_H3_SIGNAL_SCALE
-    } else if is_readme(file) {
+    let sub_scale = if is_readme(file) {
         README_SUB_SECTION_SIGNAL_SCALE
     } else {
         SUB_SECTION_SIGNAL_SCALE
-    };
-    let bullet_scale = if is_readme(file) {
-        README_SUB_SECTION_SIGNAL_SCALE
-    } else {
-        SUB_SECTION_SIGNAL_SCALE
-    };
-    // BodyBlocks of a concept H3 are still concept content. The
-    // gate in `push_h3_child_or_body_blocks` excludes long topical
-    // H3s.
-    let body_block_scale = if range.parent_is_concept_h2 {
-        README_CONCEPT_H3_SIGNAL_SCALE
-    } else {
-        BODY_BLOCK_SIGNAL_SCALE
     };
     match range.kind {
         SectionKind::Whole | SectionKind::Intro => parent,
-        SectionKind::H3Child => parent * h3_scale,
-        SectionKind::BulletItem => parent * bullet_scale,
-        SectionKind::BodyBlock => parent * body_block_scale,
+        SectionKind::H3Child | SectionKind::BulletItem => parent * sub_scale,
+        SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
     }
 }
 
 /// README H3 children are often canonical concept rows in their own
 /// right; bump above the generic `SUB_SECTION_SIGNAL_SCALE`.
 const README_SUB_SECTION_SIGNAL_SCALE: f64 = 0.55;
-
-/// Stronger scale for H3 children under a README concept-marker H2
-/// (see [`is_concept_h2_title`]) — those H3s are the named concept
-/// definitions NS authors anchor on.
-const README_CONCEPT_H3_SIGNAL_SCALE: f64 = 1.0;
-
-/// Upper byte size for an H3 to still propagate the concept boost onto
-/// its `BodyBlock`s when split — keeps the lift for concept
-/// definitions (~500 B, a couple paragraphs) but suppresses it for
-/// long topical sections living under the same H2.
-const CONCEPT_H3_BODY_BLOCK_MAX_BYTES: usize = 700;
 
 fn is_changelog_class(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
@@ -1208,9 +1181,6 @@ struct SectionRange {
     kind: SectionKind,
     parent_index: usize,
     synthetic_intro_present: bool,
-    /// Parent H2 title matches a concept marker (see
-    /// [`is_concept_h2_title`]). README-only; gates the H3 concept boost.
-    parent_is_concept_h2: bool,
     /// Parent H2 title matches a canonical-usage marker (see
     /// [`is_canonical_usage_h2_title`]). README-only.
     parent_is_canonical_usage_h2: bool,
@@ -1258,7 +1228,6 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     kind: SectionKind::Whole,
                     parent_index: parent_idx,
                     synthetic_intro_present,
-                    parent_is_concept_h2: false,
                     parent_is_canonical_usage_h2: false,
                     parent_is_features_h2: false,
                 });
@@ -1293,7 +1262,6 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             kind: SectionKind::BulletItem,
                             parent_index: parent_idx,
                             synthetic_intro_present,
-                            parent_is_concept_h2: false,
                             parent_is_canonical_usage_h2: false,
                             parent_is_features_h2: false,
                         });
@@ -1316,14 +1284,12 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                         synthetic_intro_present,
                         source,
                     );
-                    let concept_h2 = readme && is_concept_h2_title(*node, source);
                     for h3 in &h3s {
                         push_h3_child_or_body_blocks(
                             &mut out,
                             *h3,
                             parent_idx,
                             synthetic_intro_present,
-                            concept_h2,
                             source,
                         );
                     }
@@ -1343,7 +1309,6 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             kind: SectionKind::Whole,
                             parent_index: parent_idx,
                             synthetic_intro_present,
-                            parent_is_concept_h2: false,
                             parent_is_canonical_usage_h2: usage_h2,
                             parent_is_features_h2: features_h2,
                         });
@@ -1383,7 +1348,6 @@ fn push_intro<'a>(
         kind: SectionKind::Intro,
         parent_index: parent_idx,
         synthetic_intro_present,
-        parent_is_concept_h2: false,
         parent_is_canonical_usage_h2: false,
         parent_is_features_h2: false,
     });
@@ -1394,7 +1358,6 @@ fn push_h3_child_or_body_blocks(
     h3_section: Node<'_>,
     parent_idx: usize,
     synthetic_intro_present: bool,
-    parent_is_concept_h2: bool,
     source: &str,
 ) {
     let (h3_start, h3_end) = node_row_range(h3_section, source);
@@ -1403,18 +1366,8 @@ fn push_h3_child_or_body_blocks(
     }
     let h3_bytes = h3_section.end_byte() - h3_section.start_byte();
     if h3_bytes >= BODY_BLOCK_SPLIT_BYTES {
-        // See `CONCEPT_H3_BODY_BLOCK_MAX_BYTES` — the boost only
-        // propagates to BodyBlocks when the H3 is a tight definition.
-        let body_block_concept =
-            parent_is_concept_h2 && h3_bytes <= CONCEPT_H3_BODY_BLOCK_MAX_BYTES;
         let ranges = body_block_ranges(h3_section, source);
-        if push_body_block_ranges(
-            out,
-            ranges,
-            parent_idx,
-            synthetic_intro_present,
-            body_block_concept,
-        ) {
+        if push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present) {
             return;
         }
     }
@@ -1424,7 +1377,6 @@ fn push_h3_child_or_body_blocks(
         kind: SectionKind::H3Child,
         parent_index: parent_idx,
         synthetic_intro_present,
-        parent_is_concept_h2,
         parent_is_canonical_usage_h2: false,
         parent_is_features_h2: false,
     });
@@ -1435,7 +1387,6 @@ fn push_body_block_ranges(
     ranges: Vec<(usize, usize)>,
     parent_idx: usize,
     synthetic_intro_present: bool,
-    parent_is_concept_h2: bool,
 ) -> bool {
     if ranges.len() < 2 {
         return false;
@@ -1446,7 +1397,6 @@ fn push_body_block_ranges(
         kind: SectionKind::BodyBlock,
         parent_index: parent_idx,
         synthetic_intro_present,
-        parent_is_concept_h2,
         parent_is_canonical_usage_h2: false,
         parent_is_features_h2: false,
     }));
@@ -1463,9 +1413,7 @@ fn push_list_body_blocks(
     let Some(ranges) = list_only_body_block_ranges(section, source) else {
         return false;
     };
-    // List-only body-block split is the H2-direct fallback (no H3
-    // children). The concept-H3 boost doesn't apply at this level.
-    push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present, false)
+    push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present)
 }
 
 fn list_only_body_block_ranges(section: Node<'_>, source: &str) -> Option<Vec<(usize, usize)>> {
@@ -1713,40 +1661,6 @@ fn direct_h3_children<'a>(h2_section: Node<'a>) -> Vec<Node<'a>> {
         .collect()
 }
 
-/// True iff the H2 section's heading text is an orientation-concept
-/// marker. The H3 children of such an H2 are typically the canonical
-/// concept definitions an NS author would anchor on (monaco-editor's
-/// `## Concepts` → Models / URIs / Editors / Providers / Disposables)
-/// rather than elaboration sub-sections of a longer topic. Used by
-/// `section_value` to lift those H3 rows above the generic
-/// `README_SUB_SECTION_SIGNAL_SCALE` so they compete with per-decl
-/// surfaces in the early budget.
-///
-/// Matching is case-insensitive and on the heading's plain text only
-/// (badges / decorative inlines are tolerated because the title is
-/// matched as a prefix word). The set is intentionally narrow:
-/// "Getting Started" / "Installation" H3s tend to be procedural steps,
-/// not concepts, so they are excluded.
-fn is_concept_h2_title(h2_section: Node<'_>, source: &str) -> bool {
-    let Some(core) = h2_title_core(h2_section, source) else {
-        return false;
-    };
-    matches!(
-        core.as_str(),
-        "concepts"
-            | "core concepts"
-            | "key concepts"
-            | "architecture"
-            | "overview"
-            | "fundamentals"
-            | "primitives"
-            | "building blocks"
-            | "glossary"
-            | "terminology"
-            | "theory of operation"
-    )
-}
-
 /// README H2 sections worth a canonical-usage boost: title is one of
 /// the canonical-demo markers (`## Usage` / `## Sample usage` /
 /// `## Example(s)` / `## Quick start` / `## Getting started` /
@@ -1783,8 +1697,8 @@ fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
 /// README H2 sections worth a features-list boost: title is one of
 /// the features-list markers. Used by `section_value` via
 /// `features_section_factor`. Matching is the same shape as
-/// `is_concept_h2_title` / `is_canonical_usage_h2_title` (lowercased
-/// alphanumeric prefix of the heading's inline text).
+/// `is_canonical_usage_h2_title` (lowercased alphanumeric prefix of
+/// the heading's inline text).
 fn is_features_h2_title(h2_section: Node<'_>, source: &str) -> bool {
     let Some(core) = h2_title_core(h2_section, source) else {
         return false;
@@ -1827,8 +1741,8 @@ fn section_is_code_dominant(section: Node<'_>, _source: &str) -> bool {
 
 /// Plain-text core of an H2's title (lowercased, alphanumeric +
 /// whitespace prefix only). Returns `None` when no `inline` child is
-/// found. Shared by [`is_concept_h2_title`] and
-/// [`is_canonical_usage_h2_title`].
+/// found. Shared by [`is_canonical_usage_h2_title`] and
+/// [`is_features_h2_title`].
 fn h2_title_core(h2_section: Node<'_>, source: &str) -> Option<String> {
     let heading = first_heading_child(h2_section)?;
     let inline = first_child_of_kind(heading, "inline")?;

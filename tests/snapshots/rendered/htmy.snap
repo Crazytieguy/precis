@@ -50,8 +50,6 @@ README.md
     …
     291→### Error boundary
     …
-    293→The `ErrorBoundary` component is useful if you want your application to fail gracefully (e.g. display an error message) instead of raising an HTTP error.
-    297→Optionally, you can define which errors an error boundary can handle, giving you fine control over error handling.
     299→### Sync or async?
     …
     301→In general, a component should be async if it must await some async call inside.
@@ -83,6 +81,9 @@ README.md
 docs/
     api/
         core.md
+            1→# ::: htmy.core
+            3→    options:
+            4→        show_root_heading: true
         etree.md
         function_component.md
         html.md
@@ -188,6 +189,12 @@ htmy/
     etree.py
         23→class ETreeConverter:
         …
+        38→    __slots__ = ("_rules",)
+        40→    _htmy_fragment: ClassVar[str] = "htmy_fragment"
+        41→    """
+        42→    Placeholder tag name that's used to wrap possibly multi-root XML snippets into a valid
+        43→    XML document with a single root that can be processed by standard tools.
+        44→    """
     function_component.py
     html.py
     i18n.py

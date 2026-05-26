@@ -44,10 +44,8 @@ README.md
     …
     52→### Editors
     …
-    54→An editor is a user facing view of the model. This is what gets attached to the DOM and what your users see visually. Typical editor operations are displaying a model, managing the view state, or executing actions or commands.
     56→### Providers
     …
-    58→Providers provide smart editor features. For example, this includes completion and hover information. It is not the same as, but often maps to [language server protocol](https://microsoft.github.io/language-server-protocol) features.
     62→### Disposables
     …
     66→## Documentation
@@ -137,13 +135,32 @@ samples/
         …
         36→MIT
     browser-esm-esbuild/
+        .gitignore
+        build.js
+        dist/
+        index.html
+        index.js
+        package.json
+            2→	"name": "helloworld",
     browser-esm-parcel/
+        .gitignore
+        index.html
+        package-lock.json
+        package.json
+            2→	"name": "helloworld",
+        src/
     browser-esm-vite/
     browser-esm-vite-react/
     browser-esm-webpack/
     browser-esm-webpack-monaco-plugin/
     browser-esm-webpack-small/
     browser-esm-webpack-typescript/
+        .gitignore
+        package.json
+            2→	"name": "monaco-esm-webpack-typescript",
+        src/
+        tsconfig.json
+        webpack.config.js
     browser-esm-webpack-typescript-react/
     electron-esm-webpack/
     legacy/
