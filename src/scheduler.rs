@@ -40,66 +40,10 @@ const GATED_DESCENDANT_DEPTH_DECAY: f64 = 0.5;
 
 type ChildrenByParent = HashMap<BatchId, Vec<BatchId>>;
 
-/// How `best_exact` narrows the pool before exact tokenization. The
-/// env-var override is gated behind `--features timing`.
-#[derive(Debug, Clone, Copy)]
-enum ContenderPool {
-    /// Top-K by approx score.
-    AbsoluteK(usize),
-    /// Every candidate whose approx score is ≥ `top * ratio`. A peaky
-    /// score distribution admits few; a flat one admits more.
-    #[cfg_attr(not(feature = "timing"), allow(dead_code))]
-    RelativeRatio(f64),
-}
-
-/// Corpus boundary is K=66 (htop); 2× margin for off-corpus inputs.
-const DEFAULT_CONTENDER_POOL: ContenderPool = ContenderPool::AbsoluteK(128);
-
-#[cfg(feature = "timing")]
-#[derive(Default)]
-struct ExactMissAccumulator {
-    iterations: u64,
-    sum: u64,
-}
-
-#[cfg(feature = "timing")]
-impl ExactMissAccumulator {
-    fn note(&mut self, before: usize, after: usize) {
-        self.iterations += 1;
-        self.sum += (after - before) as u64;
-    }
-    fn dump(&self) {
-        if self.iterations == 0 {
-            return;
-        }
-        let mean = self.sum as f64 / self.iterations as f64;
-        eprintln!(
-            "[timing] pool_stats: iterations={}, exact_misses_total={}, exact_misses_mean_per_iter={mean:.2}",
-            self.iterations, self.sum
-        );
-    }
-}
-
-fn contender_pool() -> ContenderPool {
-    #[cfg(feature = "timing")]
-    {
-        use std::sync::OnceLock;
-        static OVERRIDE: OnceLock<Option<ContenderPool>> = OnceLock::new();
-        if let Some(p) = OVERRIDE.get_or_init(|| {
-            let raw = std::env::var("PRECIS_CONTENDER_POOL").ok()?;
-            if let Some(rest) = raw.strip_prefix("absolute:") {
-                rest.parse().ok().map(ContenderPool::AbsoluteK)
-            } else if let Some(rest) = raw.strip_prefix("relative:") {
-                rest.parse().ok().map(ContenderPool::RelativeRatio)
-            } else {
-                None
-            }
-        }) {
-            return *p;
-        }
-    }
-    DEFAULT_CONTENDER_POOL
-}
+/// `best_exact` narrows the eligible set to the top-K by approx score
+/// before exact tokenization. Corpus boundary is K=66 (htop); 2× margin
+/// for off-corpus inputs.
+const CONTENDER_POOL_K: usize = 128;
 
 /// A single scheduled batch, captured in order for snapshots and the
 /// divergence metric. Generic over the walker's key type.
@@ -217,26 +161,18 @@ impl<W: Walker> Scheduler<W> {
 
         // Prefix-monotone scheduling — stop on the first top-ranked
         // batch that doesn't fit (no fallback to smaller batches).
-        #[cfg(feature = "timing")]
-        let mut exact_misses = ExactMissAccumulator::default();
         {
             crate::time_span!("scheduler_loop");
             loop {
-                #[cfg(feature = "timing")]
-                let before = self.cost_cache.len();
                 let Some((id, _, cost)) = self.best_exact() else {
                     break;
                 };
-                #[cfg(feature = "timing")]
-                exact_misses.note(before, self.cost_cache.len());
                 if !self.fits(cost) {
                     break;
                 }
                 self.schedule(id, cost);
             }
         }
-        #[cfg(feature = "timing")]
-        exact_misses.dump();
 
         if cfg!(debug_assertions) {
             let total_tokens = self.tree.total_tokens();
@@ -415,15 +351,15 @@ impl<W: Walker> Scheduler<W> {
         best.map(|(ratio, id, cost)| (id, ratio, cost))
     }
 
-    /// Narrow `eligible` to the contender pool the exact pass reranks.
-    /// Skips the approx pass when the strategy admits everyone.
+    /// Narrow `eligible` to the top-K contender pool by approx score
+    /// for the exact pass to rerank. Skips the approx pass when the
+    /// eligible set already fits in the pool.
     fn select_contender_pool(
         &mut self,
         eligible: &[BatchId],
         descendant_value_cache: &mut HashMap<BatchId, f64>,
     ) -> Vec<BatchId> {
-        let strategy = contender_pool();
-        if matches!(strategy, ContenderPool::AbsoluteK(k) if eligible.len() <= k) {
+        if eligible.len() <= CONTENDER_POOL_K {
             return eligible.to_vec();
         }
 
@@ -452,39 +388,17 @@ impl<W: Walker> Scheduler<W> {
             candidates.push((ratio, id));
         }
 
-        match strategy {
-            ContenderPool::AbsoluteK(k) => {
-                let k = k.min(candidates.len()).max(1);
-                let pivot = candidates.len() - k;
-                // Partition so positions [pivot, len) hold the k largest
-                // (in arbitrary order — the exact pass re-ranks).
-                let entries = &self.entries;
-                candidates.select_nth_unstable_by(pivot, |a, b| {
-                    a.0.partial_cmp(&b.0)
-                        .unwrap_or(std::cmp::Ordering::Equal)
-                        .then_with(|| entries[b.1.index()].key.cmp(&entries[a.1.index()].key))
-                });
-                candidates[pivot..].iter().map(|(_, id)| *id).collect()
-            }
-            ContenderPool::RelativeRatio(r) => {
-                let top = candidates
-                    .iter()
-                    .map(|(ratio, _)| *ratio)
-                    .fold(f64::NEG_INFINITY, f64::max);
-                if !top.is_finite() {
-                    return candidates.into_iter().map(|(_, id)| id).collect();
-                }
-                let threshold = top * r;
-                let pool: Vec<BatchId> = candidates
-                    .iter()
-                    .filter(|(ratio, _)| *ratio >= threshold)
-                    .map(|(_, id)| *id)
-                    .collect();
-                // Finite top ⇒ leader is ≥ threshold ⇒ pool non-empty.
-                debug_assert!(!pool.is_empty());
-                pool
-            }
-        }
+        let k = CONTENDER_POOL_K.min(candidates.len()).max(1);
+        let pivot = candidates.len() - k;
+        // Partition so positions [pivot, len) hold the k largest
+        // (in arbitrary order — the exact pass re-ranks).
+        let entries = &self.entries;
+        candidates.select_nth_unstable_by(pivot, |a, b| {
+            a.0.partial_cmp(&b.0)
+                .unwrap_or(std::cmp::Ordering::Equal)
+                .then_with(|| entries[b.1.index()].key.cmp(&entries[a.1.index()].key))
+        });
+        candidates[pivot..].iter().map(|(_, id)| *id).collect()
     }
 
     fn effective_value(
