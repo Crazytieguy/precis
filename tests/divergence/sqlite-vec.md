@@ -21,9 +21,9 @@ Score(3000)=0.572 I=0.825 C=0.397 ns_rows≤3K=19/47 (reached=9 partial=1 missin
 | ns | 456 |  | 126 | sqlite-vec.h.tmpl entry-point declaration | 1.8 |  | 0.633 |
 | walker |  | 461 | 13 | c decl at sqlite-vec.h.tmpl:34 |  |  | 0.642 |
 | walker |  | 469 | 8 | c decl doc at sqlite-vec.h.tmpl:22 |  |  | 0.642 |
-| walker |  | 515 | 46 | c includes in sqlite-vec.h.tmpl |  |  | 0.646 |
-| walker |  | 532 | 17 | python imports in tmp-static.py |  |  | 0.646 |
-| walker |  | 559 | 27 | listing of 'bindings/rust' |  |  | 0.646 |
+| walker |  | 486 | 17 | python imports in tmp-static.py |  |  | 0.642 |
+| walker |  | 513 | 27 | listing of 'bindings/rust' |  |  | 0.642 |
+| walker |  | 559 | 46 | c includes in sqlite-vec.h.tmpl |  |  | 0.646 |
 | walker |  | 578 | 19 | listing of 'benchmarks' |  |  | 0.646 |
 | walker |  | 582 | 4 | listing of 'bindings/rust/src' |  |  | 0.646 |
 | walker |  | 591 | 9 | mod/use plumbing in bindings/rust/src/lib.rs |  |  | 0.646 |

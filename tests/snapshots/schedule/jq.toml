@@ -1,7 +1,7 @@
 fixture = "jq"
 budget = 10000
-cumulative_tokens = 9979
-batch_count = 203
+cumulative_tokens = 9975
+batch_count = 204
 
 [[batches]]
 position = 1
@@ -4033,44 +4033,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 129
-key = 'C(Includes { file: "src/util.h" })'
-descriptor = "c includes in src/util.h"
-cost_tokens = 112
-cum_tokens = 6514
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/util.h"
-start = 4
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/util.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/util.h"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
 key = 'C(DeclNames { file: "src/jv_aux.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_aux.c"
 cost_tokens = 254
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4284,11 +4250,11 @@ end = 755
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 130
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 80 })'
 descriptor = "c decl at src/jv_aux.c:80"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4310,11 +4276,11 @@ end = 81
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 131
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 146 })'
 descriptor = "c decl at src/jv_aux.c:146"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4336,11 +4302,11 @@ end = 147
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 132
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 230 })'
 descriptor = "c decl at src/jv_aux.c:230"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4362,11 +4328,11 @@ end = 231
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 133
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 372 })'
 descriptor = "c decl at src/jv_aux.c:372"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4388,11 +4354,11 @@ end = 373
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 134
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 431 })'
 descriptor = "c decl at src/jv_aux.c:431"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4414,11 +4380,11 @@ end = 432
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 135
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 504 })'
 descriptor = "c decl at src/jv_aux.c:504"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4440,11 +4406,11 @@ end = 505
 kind = "ellipsis"
 
 [[batches]]
-position = 137
+position = 136
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 554 })'
 descriptor = "c decl at src/jv_aux.c:554"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4466,11 +4432,11 @@ end = 555
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 137
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 566 })'
 descriptor = "c decl at src/jv_aux.c:566"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4492,11 +4458,11 @@ end = 567
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 138
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 600 })'
 descriptor = "c decl at src/jv_aux.c:600"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4518,11 +4484,11 @@ end = 601
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 139
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 711 })'
 descriptor = "c decl at src/jv_aux.c:711"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4544,11 +4510,11 @@ end = 712
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 140
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 726 })'
 descriptor = "c decl at src/jv_aux.c:726"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4570,11 +4536,11 @@ end = 727
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 141
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 754 })'
 descriptor = "c decl at src/jv_aux.c:754"
 cost_tokens = 0
-cum_tokens = 6768
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4596,11 +4562,11 @@ end = 755
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 142
 key = 'C(Decl { file: "src/jv_aux.c", start_line: 675 })'
 descriptor = "c decl at src/jv_aux.c:675"
 cost_tokens = 29
-cum_tokens = 6797
+cum_tokens = 6685
 
 [batches.content]
 kind = "lines"
@@ -4614,11 +4580,11 @@ end = 679
 kind = "full"
 
 [[batches]]
-position = 144
+position = 143
 key = 'C(Includes { file: "src/inject_errors.c" })'
 descriptor = "c includes in src/inject_errors.c"
 cost_tokens = 62
-cum_tokens = 6859
+cum_tokens = 6747
 
 [batches.content]
 kind = "lines"
@@ -4632,11 +4598,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 145
+position = 144
 key = 'C(DeclNames { file: "src/bytecode.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/bytecode.h"
 cost_tokens = 167
-cum_tokens = 7026
+cum_tokens = 6914
 
 [batches.content]
 kind = "lines"
@@ -4786,11 +4752,11 @@ end = 95
 kind = "ellipsis"
 
 [[batches]]
-position = 146
+position = 145
 key = 'C(Decl { file: "src/bytecode.h", start_line: 59 })'
 descriptor = "c decl at src/bytecode.h:59"
 cost_tokens = 35
-cum_tokens = 7061
+cum_tokens = 6949
 
 [batches.content]
 kind = "lines"
@@ -4804,11 +4770,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 147
+position = 146
 key = 'C(Decl { file: "src/bytecode.h", start_line: 32 })'
 descriptor = "c decl at src/bytecode.h:32"
 cost_tokens = 62
-cum_tokens = 7123
+cum_tokens = 7011
 
 [batches.content]
 kind = "lines"
@@ -4846,11 +4812,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 148
+position = 147
 key = 'C(Decl { file: "src/jv_print.c", start_line: 31 })'
 descriptor = "c decl at src/jv_print.c:31"
 cost_tokens = 65
-cum_tokens = 7188
+cum_tokens = 7076
 
 [batches.content]
 kind = "lines"
@@ -4864,11 +4830,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 149
+position = 148
 key = 'C(DeclDoc { file: "src/jv_print.c", start_line: 31 })'
 descriptor = "c decl doc at src/jv_print.c:31"
 cost_tokens = 59
-cum_tokens = 7247
+cum_tokens = 7135
 
 [batches.content]
 kind = "lines"
@@ -4882,11 +4848,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 150
+position = 149
 key = 'C(Decl { file: "src/locfile.h", start_line: 12 })'
 descriptor = "c decl at src/locfile.h:12"
 cost_tokens = 77
-cum_tokens = 7324
+cum_tokens = 7212
 
 [batches.content]
 kind = "lines"
@@ -4900,11 +4866,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 151
+position = 150
 key = 'C(Includes { file: "src/jv_dtoa_tsd.c" })'
 descriptor = "c includes in src/jv_dtoa_tsd.c"
 cost_tokens = 72
-cum_tokens = 7396
+cum_tokens = 7284
 
 [batches.content]
 kind = "lines"
@@ -4926,11 +4892,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 152
+position = 151
 key = 'C(DeclNames { file: "src/bytecode.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/bytecode.c"
 cost_tokens = 314
-cum_tokens = 7710
+cum_tokens = 7598
 
 [batches.content]
 kind = "lines"
@@ -5048,11 +5014,11 @@ end = 150
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 152
 key = 'C(Decl { file: "src/bytecode.c", start_line: 9 })'
 descriptor = "c decl at src/bytecode.c:9"
 cost_tokens = 0
-cum_tokens = 7710
+cum_tokens = 7598
 
 [batches.content]
 kind = "lines"
@@ -5066,11 +5032,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 154
+position = 153
 key = 'C(Decl { file: "src/bytecode.c", start_line: 31 })'
 descriptor = "c decl at src/bytecode.c:31"
 cost_tokens = 0
-cum_tokens = 7710
+cum_tokens = 7598
 
 [batches.content]
 kind = "lines"
@@ -5092,11 +5058,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 155
+position = 154
 key = 'C(Decl { file: "src/bytecode.c", start_line: 40 })'
 descriptor = "c decl at src/bytecode.c:40"
 cost_tokens = 0
-cum_tokens = 7710
+cum_tokens = 7598
 
 [batches.content]
 kind = "lines"
@@ -5118,11 +5084,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 156
+position = 155
 key = 'C(Decl { file: "src/bytecode.c", start_line: 64 })'
 descriptor = "c decl at src/bytecode.c:64"
 cost_tokens = 0
-cum_tokens = 7710
+cum_tokens = 7598
 
 [batches.content]
 kind = "lines"
@@ -5144,11 +5110,11 @@ end = 65
 kind = "ellipsis"
 
 [[batches]]
-position = 157
+position = 156
 key = 'C(Decl { file: "src/bytecode.c", start_line: 95 })'
 descriptor = "c decl at src/bytecode.c:95"
 cost_tokens = 0
-cum_tokens = 7710
+cum_tokens = 7598
 
 [batches.content]
 kind = "lines"
@@ -5170,11 +5136,11 @@ end = 96
 kind = "ellipsis"
 
 [[batches]]
-position = 158
+position = 157
 key = 'C(Decl { file: "src/bytecode.c", start_line: 149 })'
 descriptor = "c decl at src/bytecode.c:149"
 cost_tokens = 0
-cum_tokens = 7710
+cum_tokens = 7598
 
 [batches.content]
 kind = "lines"
@@ -5196,11 +5162,11 @@ end = 150
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 158
 key = 'C(Decl { file: "src/bytecode.c", start_line: 19 })'
 descriptor = "c decl at src/bytecode.c:19"
 cost_tokens = 15
-cum_tokens = 7725
+cum_tokens = 7613
 
 [batches.content]
 kind = "lines"
@@ -5214,11 +5180,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 160
+position = 159
 key = 'C(DeclDoc { file: "src/bytecode.c", start_line: 9 })'
 descriptor = "c decl doc at src/bytecode.c:9"
 cost_tokens = 9
-cum_tokens = 7734
+cum_tokens = 7622
 
 [batches.content]
 kind = "lines"
@@ -5232,11 +5198,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 161
+position = 160
 key = 'C(DeclNames { file: "src/jv_parse.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_parse.c"
 cost_tokens = 331
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5530,11 +5496,11 @@ end = 918
 kind = "ellipsis"
 
 [[batches]]
-position = 162
+position = 161
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 715 })'
 descriptor = "c decl at src/jv_parse.c:715"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5556,11 +5522,11 @@ end = 716
 kind = "ellipsis"
 
 [[batches]]
-position = 163
+position = 162
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 722 })'
 descriptor = "c decl at src/jv_parse.c:722"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5582,11 +5548,11 @@ end = 723
 kind = "ellipsis"
 
 [[batches]]
-position = 164
+position = 163
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 729 })'
 descriptor = "c decl at src/jv_parse.c:729"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5608,11 +5574,11 @@ end = 730
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 164
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 735 })'
 descriptor = "c decl at src/jv_parse.c:735"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5634,11 +5600,11 @@ end = 736
 kind = "ellipsis"
 
 [[batches]]
-position = 166
+position = 165
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 772 })'
 descriptor = "c decl at src/jv_parse.c:772"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5660,11 +5626,11 @@ end = 773
 kind = "ellipsis"
 
 [[batches]]
-position = 167
+position = 166
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 869 })'
 descriptor = "c decl at src/jv_parse.c:869"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5686,11 +5652,11 @@ end = 870
 kind = "ellipsis"
 
 [[batches]]
-position = 168
+position = 167
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 909 })'
 descriptor = "c decl at src/jv_parse.c:909"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5712,11 +5678,11 @@ end = 910
 kind = "ellipsis"
 
 [[batches]]
-position = 169
+position = 168
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 913 })'
 descriptor = "c decl at src/jv_parse.c:913"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5738,11 +5704,11 @@ end = 914
 kind = "ellipsis"
 
 [[batches]]
-position = 170
+position = 169
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 917 })'
 descriptor = "c decl at src/jv_parse.c:917"
 cost_tokens = 0
-cum_tokens = 8065
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -5764,11 +5730,11 @@ end = 918
 kind = "ellipsis"
 
 [[batches]]
-position = 171
+position = 170
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 34 })'
 descriptor = "c decl at src/jv_parse.c:34"
 cost_tokens = 5
-cum_tokens = 8070
+cum_tokens = 7958
 
 [batches.content]
 kind = "lines"
@@ -5790,11 +5756,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 172
+position = 171
 key = 'C(AggregateMemberGroup { file: "src/jv_parse.c", start_line: 34, group_start_line: 42 })'
 descriptor = "c aggregate member group at src/jv_parse.c:34 group 42"
 cost_tokens = 8
-cum_tokens = 8078
+cum_tokens = 7966
 
 [batches.content]
 kind = "lines"
@@ -5808,11 +5774,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 173
+position = 172
 key = 'C(AggregateMemberGroup { file: "src/jv_parse.c", start_line: 34, group_start_line: 56 })'
 descriptor = "c aggregate member group at src/jv_parse.c:34 group 56"
 cost_tokens = 10
-cum_tokens = 8088
+cum_tokens = 7976
 
 [batches.content]
 kind = "lines"
@@ -5826,11 +5792,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 174
+position = 173
 key = 'C(AggregateMemberGroup { file: "src/jv_parse.c", start_line: 34, group_start_line: 58 })'
 descriptor = "c aggregate member group at src/jv_parse.c:34 group 58"
 cost_tokens = 12
-cum_tokens = 8100
+cum_tokens = 7988
 
 [batches.content]
 kind = "lines"
@@ -5844,11 +5810,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 175
+position = 174
 key = 'C(DeclBody { file: "src/jv_parse.c", start_line: 913 })'
 descriptor = "c decl body at src/jv_parse.c:913"
 cost_tokens = 14
-cum_tokens = 8114
+cum_tokens = 8002
 
 [batches.content]
 kind = "lines"
@@ -5862,11 +5828,11 @@ end = 914
 kind = "full"
 
 [[batches]]
-position = 176
+position = 175
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 646 })'
 descriptor = "c decl at src/jv_parse.c:646"
 cost_tokens = 29
-cum_tokens = 8143
+cum_tokens = 8031
 
 [batches.content]
 kind = "lines"
@@ -5880,11 +5846,11 @@ end = 647
 kind = "full"
 
 [[batches]]
-position = 177
+position = 176
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 640 })'
 descriptor = "c decl at src/jv_parse.c:640"
 cost_tokens = 31
-cum_tokens = 8174
+cum_tokens = 8062
 
 [batches.content]
 kind = "lines"
@@ -5898,11 +5864,11 @@ end = 641
 kind = "full"
 
 [[batches]]
-position = 178
+position = 177
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 643 })'
 descriptor = "c decl at src/jv_parse.c:643"
 cost_tokens = 32
-cum_tokens = 8206
+cum_tokens = 8094
 
 [batches.content]
 kind = "lines"
@@ -5916,11 +5882,11 @@ end = 644
 kind = "full"
 
 [[batches]]
-position = 179
+position = 178
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 637 })'
 descriptor = "c decl at src/jv_parse.c:637"
 cost_tokens = 33
-cum_tokens = 8239
+cum_tokens = 8127
 
 [batches.content]
 kind = "lines"
@@ -5934,11 +5900,11 @@ end = 638
 kind = "full"
 
 [[batches]]
-position = 180
+position = 179
 key = 'C(DeclBody { file: "src/jv_parse.c", start_line: 722 })'
 descriptor = "c decl body at src/jv_parse.c:722"
 cost_tokens = 18
-cum_tokens = 8257
+cum_tokens = 8145
 
 [batches.content]
 kind = "lines"
@@ -5952,11 +5918,11 @@ end = 724
 kind = "full"
 
 [[batches]]
-position = 181
+position = 180
 key = 'C(DeclBody { file: "src/jv_parse.c", start_line: 909 })'
 descriptor = "c decl body at src/jv_parse.c:909"
 cost_tokens = 18
-cum_tokens = 8275
+cum_tokens = 8163
 
 [batches.content]
 kind = "lines"
@@ -5970,11 +5936,11 @@ end = 910
 kind = "full"
 
 [[batches]]
-position = 182
+position = 181
 key = 'C(DeclBody { file: "src/jv_parse.c", start_line: 917 })'
 descriptor = "c decl body at src/jv_parse.c:917"
 cost_tokens = 18
-cum_tokens = 8293
+cum_tokens = 8181
 
 [batches.content]
 kind = "lines"
@@ -5988,11 +5954,11 @@ end = 918
 kind = "full"
 
 [[batches]]
-position = 183
+position = 182
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 556 })'
 descriptor = "c decl at src/jv_parse.c:556"
 cost_tokens = 46
-cum_tokens = 8339
+cum_tokens = 8227
 
 [batches.content]
 kind = "lines"
@@ -6006,11 +5972,11 @@ end = 562
 kind = "full"
 
 [[batches]]
-position = 184
+position = 183
 key = 'C(AggregateMemberGroup { file: "src/jv_parse.c", start_line: 34, group_start_line: 52 })'
 descriptor = "c aggregate member group at src/jv_parse.c:34 group 52"
 cost_tokens = 28
-cum_tokens = 8367
+cum_tokens = 8255
 
 [batches.content]
 kind = "lines"
@@ -6024,11 +5990,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 185
+position = 184
 key = 'C(Decl { file: "src/jv_parse.c", start_line: 25 })'
 descriptor = "c decl at src/jv_parse.c:25"
 cost_tokens = 75
-cum_tokens = 8442
+cum_tokens = 8330
 
 [batches.content]
 kind = "lines"
@@ -6042,11 +6008,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 186
+position = 185
 key = 'C(DeclBody { file: "src/jv_parse.c", start_line: 729 })'
 descriptor = "c decl body at src/jv_parse.c:729"
 cost_tokens = 41
-cum_tokens = 8483
+cum_tokens = 8371
 
 [batches.content]
 kind = "lines"
@@ -6060,11 +6026,11 @@ end = 732
 kind = "full"
 
 [[batches]]
-position = 187
+position = 186
 key = 'C(Includes { file: "src/builtin.h" })'
 descriptor = "c includes in src/builtin.h"
 cost_tokens = 31
-cum_tokens = 8514
+cum_tokens = 8402
 
 [batches.content]
 kind = "lines"
@@ -6078,11 +6044,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 188
+position = 187
 key = 'Python(DeclNames { file: "docs/build_mantests.py", chunk_index: 0 })'
 descriptor = "python decl names surface in docs/build_mantests.py"
 cost_tokens = 11
-cum_tokens = 8525
+cum_tokens = 8413
 
 [batches.content]
 kind = "lines"
@@ -6096,11 +6062,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 189
+position = 188
 key = 'C(DeclNames { file: "src/jv_dtoa.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_dtoa.h"
 cost_tokens = 206
-cum_tokens = 8731
+cum_tokens = 8619
 
 [batches.content]
 kind = "lines"
@@ -6202,11 +6168,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 189
 key = 'C(Decl { file: "src/jv_dtoa.h", start_line: 6 })'
 descriptor = "c decl at src/jv_dtoa.h:6"
 cost_tokens = 32
-cum_tokens = 8763
+cum_tokens = 8651
 
 [batches.content]
 kind = "lines"
@@ -6220,11 +6186,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 191
+position = 190
 key = 'C(Decl { file: "src/inject_errors.c", start_line: 22 })'
 descriptor = "c decl at src/inject_errors.c:22"
 cost_tokens = 82
-cum_tokens = 8845
+cum_tokens = 8733
 
 [batches.content]
 kind = "lines"
@@ -6238,11 +6204,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 192
+position = 191
 key = 'C(DeclNames { file: "src/jv.h", chunk_index: 5 })'
 descriptor = "c decl names surface #5 in src/jv.h"
 cost_tokens = 211
-cum_tokens = 9056
+cum_tokens = 8944
 
 [batches.content]
 kind = "lines"
@@ -6280,11 +6246,11 @@ end = 273
 kind = "ellipsis"
 
 [[batches]]
-position = 193
+position = 192
 key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 141 })'
 descriptor = "c decl body at src/jv_alloc.c:141"
 cost_tokens = 44
-cum_tokens = 9100
+cum_tokens = 8988
 
 [batches.content]
 kind = "lines"
@@ -6298,11 +6264,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 194
+position = 193
 key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 167 })'
 descriptor = "c decl body at src/jv_alloc.c:167"
 cost_tokens = 44
-cum_tokens = 9144
+cum_tokens = 9032
 
 [batches.content]
 kind = "lines"
@@ -6316,11 +6282,11 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 195
+position = 194
 key = 'C(DeclBody { file: "src/jv_alloc.c", start_line: 183 })'
 descriptor = "c decl body at src/jv_alloc.c:183"
 cost_tokens = 44
-cum_tokens = 9188
+cum_tokens = 9076
 
 [batches.content]
 kind = "lines"
@@ -6334,11 +6300,11 @@ end = 188
 kind = "full"
 
 [[batches]]
-position = 196
+position = 195
 key = 'C(Includes { file: "src/jv_aux.c" })'
 descriptor = "c includes in src/jv_aux.c"
 cost_tokens = 85
-cum_tokens = 9273
+cum_tokens = 9161
 
 [batches.content]
 kind = "lines"
@@ -6352,11 +6318,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 197
+position = 196
 key = 'C(Includes { file: "src/jq_test.c" })'
 descriptor = "c includes in src/jq_test.c"
 cost_tokens = 88
-cum_tokens = 9361
+cum_tokens = 9249
 
 [batches.content]
 kind = "lines"
@@ -6370,11 +6336,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 198
+position = 197
 key = 'C(DeclBody { file: "src/jv_dtoa_tsd.c", start_line: 22 })'
 descriptor = "c decl body at src/jv_dtoa_tsd.c:22"
 cost_tokens = 47
-cum_tokens = 9408
+cum_tokens = 9296
 
 [batches.content]
 kind = "lines"
@@ -6388,11 +6354,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 199
+position = 198
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 165
-cum_tokens = 9573
+cum_tokens = 9461
 
 [batches.content]
 kind = "fs"
@@ -6402,11 +6368,11 @@ parent = "tests"
 entries = ["base64.test", "base64test", "jq-f-test.sh", "jq.test", "jq_fuzz_compile.c", "jq_fuzz_execute.cpp", "jq_fuzz_fixed.cpp", "jq_fuzz_load_file.c", "jq_fuzz_parse.c", "jq_fuzz_parse_extended.c", "jq_fuzz_parse_stream.c", "jqtest", "local.supp", "man.test", "manonig.test", "manonigtest", "mantest", "modules", "no-main-program.jq", "onig.supp", "onig.test", "onigtest", "optional.test", "optionaltest", "setup", "shtest", "torture", "uri.test", "uritest", "utf8test", "yes-main-program.jq"]
 
 [[batches]]
-position = 200
+position = 199
 key = 'C(Includes { file: "src/compile.c" })'
 descriptor = "c includes in src/compile.c"
 cost_tokens = 94
-cum_tokens = 9667
+cum_tokens = 9555
 
 [batches.content]
 kind = "lines"
@@ -6420,11 +6386,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 201
+position = 200
 key = 'C(Includes { file: "src/jv_file.c" })'
 descriptor = "c includes in src/jv_file.c"
 cost_tokens = 94
-cum_tokens = 9761
+cum_tokens = 9649
 
 [batches.content]
 kind = "lines"
@@ -6446,11 +6412,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 202
+position = 201
 key = 'C(Decl { file: "src/main.c", start_line: 164 })'
 descriptor = "c decl at src/main.c:164"
 cost_tokens = 117
-cum_tokens = 9878
+cum_tokens = 9766
 
 [batches.content]
 kind = "lines"
@@ -6464,11 +6430,11 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 203
+position = 202
 key = 'C(DeclDoc { file: "src/jv_unicode.c", start_line: 11 })'
 descriptor = "c decl doc at src/jv_unicode.c:11"
 cost_tokens = 101
-cum_tokens = 9979
+cum_tokens = 9867
 
 [batches.content]
 kind = "lines"
@@ -6477,6 +6443,42 @@ kind = "lines"
 path = "src/jv_unicode.c"
 start = 6
 end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
+key = 'C(DeclBody { file: "src/jv_parse.c", start_line: 715 })'
+descriptor = "c decl body at src/jv_parse.c:715"
+cost_tokens = 50
+cum_tokens = 9917
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_parse.c"
+start = 716
+end = 719
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'C(AggregateMemberGroup { file: "src/jv_parse.c", start_line: 34, group_start_line: 35 })'
+descriptor = "c aggregate member group at src/jv_parse.c:34 group 35"
+cost_tokens = 58
+cum_tokens = 9975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_parse.c"
+start = 35
+end = 40
 
 [batches.content.spans.render]
 kind = "full"

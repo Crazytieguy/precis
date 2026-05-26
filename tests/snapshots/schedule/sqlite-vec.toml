@@ -363,28 +363,10 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'C(Includes { file: "sqlite-vec.h.tmpl" })'
-descriptor = "c includes in sqlite-vec.h.tmpl"
-cost_tokens = 46
-cum_tokens = 515
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-vec.h.tmpl"
-start = 4
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
 key = 'Python(Imports { file: "tmp-static.py" })'
 descriptor = "python imports in tmp-static.py"
 cost_tokens = 17
-cum_tokens = 532
+cum_tokens = 486
 
 [batches.content]
 kind = "lines"
@@ -398,11 +380,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Fs(DirListing { dir: "bindings/rust" })'
 descriptor = "listing of 'bindings/rust'"
 cost_tokens = 27
-cum_tokens = 559
+cum_tokens = 513
 
 [batches.content]
 kind = "fs"
@@ -410,6 +392,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "bindings/rust"
 entries = [".gitignore", "Cargo.lock", "Cargo.toml.tmpl", "Makefile", "build.rs", "src"]
+
+[[batches]]
+position = 14
+key = 'C(Includes { file: "sqlite-vec.h.tmpl" })'
+descriptor = "c includes in sqlite-vec.h.tmpl"
+cost_tokens = 46
+cum_tokens = 559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sqlite-vec.h.tmpl"
+start = 4
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 15

@@ -11,26 +11,26 @@ Score(3000)=0.702 I=0.852 C=0.578 ns_rows≤3K=15/36 (reached=11 partial=1 missi
 | ns | 143 |  | 72 | Build instruction (drop in two files) | 1.3 |  | 0.459 |
 | walker |  | 170 | 87 | c header banner in neco.h |  |  | 0.459 |
 | ns | 265 |  | 122 | README Features — coroutines & sync | 1.4 |  | 0.392 |
-| walker |  | 280 | 110 | c includes in neco.h |  |  | 0.392 |
 | ns | 343 |  | 78 | README Features — extra APIs (net/signals/RNG/streams) | 1.5 |  | 0.375 |
 | ns | 493 |  | 150 | README Features — runtime/platform/build | 1.6 |  | 0.333 |
-| ns | 632 |  | 139 | Goals & non-goals | 1.7 |  | 0.286 |
-| walker |  | 688 | 408 | README headline in README.md |  |  | 0.716 |
+| walker |  | 578 | 408 | README headline in README.md |  |  | 0.836 |
+| ns | 632 |  | 139 | Goals & non-goals | 1.7 |  | 0.716 |
 | ns | 785 |  | 153 | Subdirectory listings: deps/docs/examples | 2.1 |  | 0.536 |
-| walker |  | 921 | 233 | headings outline in README.md |  |  | 0.539 |
-| ns | 946 |  | 161 | Subdirectory listings: tests + .github | 2.2 |  | 0.435 |
-| walker |  | 967 | 46 | README.md section #0 |  |  | 0.435 |
-| walker |  | 983 | 16 | README.md section #21 |  |  | 0.435 |
-| walker |  | 1038 | 55 | README.md section #2 |  |  | 0.495 |
+| walker |  | 811 | 233 | headings outline in README.md |  |  | 0.539 |
+| walker |  | 857 | 46 | README.md section #0 |  |  | 0.539 |
+| walker |  | 873 | 16 | README.md section #21 |  |  | 0.539 |
+| walker |  | 928 | 55 | README.md section #2 |  |  | 0.613 |
+| ns | 946 |  | 161 | Subdirectory listings: tests + .github | 2.2 |  | 0.495 |
+| walker |  | 996 | 68 | headings outline in docs/assets/API_head.md |  |  | 0.495 |
 | ns | 1088 |  | 142 | neco.h section-banner outline | 2.3 |  | 0.456 |
-| walker |  | 1106 | 68 | headings outline in docs/assets/API_head.md |  |  | 0.456 |
 | ns | 1376 |  | 288 | neco.h — Basic operations group (signatures) | 2.4 |  | 0.420 |
-| walker |  | 1518 | 412 | c decl names surface in neco.h |  |  | 0.477 |
-| walker |  | 1518 | 0 | c decl at neco.h:35 |  |  | 0.477 |
-| walker |  | 1518 | 0 | c decl at neco.h:61 |  |  | 0.477 |
-| walker |  | 1596 | 78 | c decl doc at neco.h:61 |  |  | 0.480 |
-| walker |  | 1670 | 74 | c decl doc at neco.h:35 |  |  | 0.533 |
-| walker |  | 1685 | 15 | README.md section #16 |  |  | 0.533 |
+| walker |  | 1408 | 412 | c decl names surface in neco.h |  |  | 0.477 |
+| walker |  | 1408 | 0 | c decl at neco.h:35 |  |  | 0.477 |
+| walker |  | 1408 | 0 | c decl at neco.h:61 |  |  | 0.477 |
+| walker |  | 1486 | 78 | c decl doc at neco.h:61 |  |  | 0.480 |
+| walker |  | 1560 | 74 | c decl doc at neco.h:35 |  |  | 0.533 |
+| walker |  | 1575 | 15 | README.md section #16 |  |  | 0.533 |
+| walker |  | 1685 | 110 | c includes in neco.h |  |  | 0.533 |
 | walker |  | 1727 | 42 | listing of 'deps' |  |  | 0.585 |
 | walker |  | 1789 | 62 | README.md section #14 |  |  | 0.585 |
 | ns | 1818 |  | 442 | neco.h — Channels group (signatures) | 2.5 |  | 0.577 |

@@ -56,7 +56,14 @@ lib/
             46→	uint32_t   lease;
             47→} dhcp_entry_t;
             49→typedef struct dhcp_config
-            …
+            50→{
+            51→	ip4_addr_t    router;
+            52→	uint16_t      port;
+            53→	ip4_addr_t    dns;
+            54→	const char   *domain;
+            55→	int           num_entry;
+            56→	dhcp_entry_t *entries;
+            57→} dhcp_config_t;
             62→err_t dhserv_init(const dhcp_config_t *c);
             63→void dhserv_free(void);
             …
@@ -97,6 +104,8 @@ src/
             cdc_device.c
             cdc_device.h
                 30→#include "cdc.h"
+                305→bool     cdcd_xfer_cb         (uint8_t rhport, uint8_t ep_addr, xfer_result_t result, uint32_t xferred_bytes);
+                …
             cdc_host.c
             cdc_host.h
                 30→#include "cdc.h"
@@ -115,11 +124,17 @@ src/
                 137→typedef struct {
                 …
                 152→typedef struct {
-                …
+                153→  uint32_t type     ; ///< Message Type, must be \ref RNDIS_MSG_RESET
+                154→  uint32_t length   ; ///< Message length in bytes, MUST be 0x06
+                155→  uint32_t reserved ;
+                156→} rndis_msg_reset_t;
                 160→typedef struct {
                 …
                 180→typedef struct {
-                …
+                181→  uint32_t type       ; ///< Message Type
+                182→  uint32_t length     ; ///< Message length in bytes, MUST be 0x10
+                183→  uint32_t request_id ;
+                184→} rndis_msg_keep_alive_t, rndis_msg_halt_t;
                 188→typedef struct {
                 …
                 197→typedef struct {
@@ -163,8 +178,14 @@ src/
                 101→#define DFU_ATTR_MANIFESTATION_TOLERANT    (1u << 2)
                 102→#define DFU_ATTR_WILL_DETACH               (1u << 3)
                 …
+                104→// DFU Status Request Payload
                 105→typedef struct TU_ATTR_PACKED
-                …
+                106→{
+                107→  uint8_t bStatus;
+                108→  uint8_t bwPollTimeout[3];
+                109→  uint8_t bState;
+                110→  uint8_t iString;
+                111→} dfu_status_response_t;
             dfu_device.c
             dfu_device.h
                 30→#include "dfu.h"
@@ -197,15 +218,21 @@ src/
                 30→#include "common/tusb_common.h"
             midi_device.c
             midi_device.h
+                30→#include "class/audio/audio.h"
+                31→#include "midi.h"
                 147→bool     midid_xfer_cb(uint8_t rhport, uint8_t edpt_addr, xfer_result_t result, uint32_t xferred_bytes);
                 …
             midi_host.c
             midi_host.h
+                30→#include "class/audio/audio.h"
+                31→#include "midi.h"
         msc/
             msc.h
                 30→#include "common/tusb_common.h"
             msc_device.c
             msc_device.h
+                30→#include "common/tusb_common.h"
+                31→#include "msc.h"
             msc_host.c
             msc_host.h
                 30→#include "msc.h"
@@ -214,12 +241,16 @@ src/
                 30→#include "common/tusb_common.h"
             mtp_device.c
             mtp_device.h
+                30→#include "common/tusb_common.h"
+                31→#include "mtp.h"
         net/
             ecm_rndis_device.c
             ncm.h
                 31→#include "common/tusb_common.h"
             ncm_device.c
             net_device.h
+                31→#include <stdint.h>
+                32→#include "class/cdc/cdc.h"
         printer/
             printer.h
                 30→#include "common/tusb_common.h"
@@ -231,6 +262,11 @@ src/
             printer_device.h
                 34→#include "printer.h"
         usbtmc/
+            usbtmc.h
+                31→#include "common/tusb_common.h"
+            usbtmc_device.c
+            usbtmc_device.h
+                31→#include "usbtmc.h"
         vendor/
             vendor_device.c
             vendor_device.h
@@ -243,7 +279,26 @@ src/
                 30→#include "common/tusb_common.h"
             video_device.c
             video_device.h
+                31→#include "common/tusb_common.h"
+                32→#include "video.h"
     common/
+        tusb_common.h
+        tusb_compiler.h
+        tusb_debug.h
+            144→#define TU_LOG0(...)
+            145→#define TU_LOG0_MEM(...)
+            146→#define TU_LOG0_BUF(...)
+            147→#define TU_LOG0_INT(...)
+            148→#define TU_LOG0_HEX(...)
+            …
+        tusb_fifo.c
+        tusb_fifo.h
+            35→#include "common/tusb_common.h"
+            36→#include "osal/osal.h"
+        tusb_mcu.h
+        tusb_private.h
+        tusb_types.h
+        tusb_verify.h
     device/
         dcd.h
         usbd.c
@@ -279,89 +334,34 @@ src/
     tinyusb.mk
     tusb.c
     tusb.h
-        37→#include "common/tusb_common.h"
-        38→#include "osal/osal.h"
-        39→#include "common/tusb_fifo.h"
-        42→#if CFG_TUC_ENABLED
-        43→  #include "typec/usbc.h"
-        44→#endif
-        47→#if CFG_TUH_ENABLED
-        48→  #include "host/usbh.h"
-        50→  #if CFG_TUH_HID
-        51→    #include "class/hid/hid_host.h"
-        52→  #endif
-        54→  #if CFG_TUH_MSC
-        55→    #include "class/msc/msc_host.h"
-        56→  #endif
-        58→  #if CFG_TUH_CDC
-        59→    #include "class/cdc/cdc_host.h"
-        60→  #endif
-        62→  #if CFG_TUH_MIDI
-        63→    #include "class/midi/midi_host.h"
-        64→  #endif
-        66→  #if CFG_TUH_VENDOR
-        67→    #include "class/vendor/vendor_host.h"
-        68→  #endif
-        69→#else
-        70→  #ifndef tuh_int_handler
-        71→  #define tuh_int_handler(...)
-        72→  #endif
-        73→#endif
-        76→#if CFG_TUD_ENABLED
-        77→  #include "device/usbd.h"
-        79→  #if CFG_TUD_HID
-        80→    #include "class/hid/hid_device.h"
-        81→  #endif
-        83→  #if CFG_TUD_CDC
-        84→    #include "class/cdc/cdc_device.h"
-        85→  #endif
-        87→  #if CFG_TUD_MSC
-        88→    #include "class/msc/msc_device.h"
-        89→  #endif
-        91→  #if CFG_TUD_PRINTER
-        92→    #include "class/printer/printer_device.h"
-        93→  #endif
-        95→  #if CFG_TUD_MTP
-        96→    #include "class/mtp/mtp_device.h"
-        97→  #endif
-        99→  #if CFG_TUD_AUDIO
-        100→    #include "class/audio/audio_device.h"
-        101→  #endif
-        103→  #if CFG_TUD_VIDEO
-        104→    #include "class/video/video_device.h"
-        105→  #endif
-        107→  #if CFG_TUD_MIDI
-        108→    #include "class/midi/midi_device.h"
-        109→  #endif
-        111→  #if CFG_TUD_VENDOR
-        112→    #include "class/vendor/vendor_device.h"
-        113→  #endif
-        115→  #if CFG_TUD_USBTMC
-        116→    #include "class/usbtmc/usbtmc_device.h"
-        117→  #endif
-        119→  #if CFG_TUD_DFU_RUNTIME
-        120→    #include "class/dfu/dfu_rt_device.h"
-        121→  #endif
-        123→  #if CFG_TUD_DFU
-        124→    #include "class/dfu/dfu_device.h"
-        125→  #endif
-        127→  #if CFG_TUD_ECM_RNDIS || CFG_TUD_NCM
-        128→    #include "class/net/net_device.h"
-        129→  #endif
-        131→  #if CFG_TUD_BTH
-        132→    #include "class/bth/bth_device.h"
-        133→  #endif
-        134→#else
-        135→  #ifndef tud_int_handler
-        136→  #define tud_int_handler(...)
-        137→  #endif
-        138→#endif
     tusb_option.h
     typec/
         pd_types.h
         tcd.h
         usbc.c
         usbc.h
+            30→#include "common/tusb_common.h"
+            31→#include "pd_types.h"
+            49→// Init typec stack on a port
+            50→bool tuc_init(uint8_t rhport, uint32_t port_type);
+            …
+            52→// Check if typec port is initialized
+            53→bool tuc_inited(uint8_t rhport);
+            …
+            58→void tuc_task_ext(uint32_t timeout_ms, bool in_isr);
+            …
+            60→// Task function should be called in main/rtos loop
+            61→TU_ATTR_ALWAYS_INLINE static inline
+            62→void tuc_task (void) {
+            63→  tuc_task_ext(UINT32_MAX, false);
+            70→// Interrupt handler, name alias to TCD
+            71→#define tuc_int_handler tcd_int_handler
+            …
+            77→bool tuc_pd_data_received_cb(uint8_t rhport, pd_header_t const* header, uint8_t const* dobj, uint8_t const* p_end);
+            78→bool tuc_pd_control_received_cb(uint8_t rhport, pd_header_t const* header);
+            …
+            84→bool tuc_msg_request(uint8_t rhport, void const* rdo);
+            …
 test/
 tools/
 version.yml
