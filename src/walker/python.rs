@@ -531,7 +531,6 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
     let mut cursor = root.walk();
     let mut lines = Vec::new();
     let mut first_real_statement_seen = false;
-    let mut leading_comment_lines: Vec<usize> = Vec::new();
     for child in root.children(&mut cursor) {
         match child.kind() {
             "import_statement" | "import_from_statement" | "future_import_statement" => {
@@ -570,14 +569,10 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
                 // noqa`, `# type: ignore`), or a brief "what this module
                 // is" header. Same shape as the module docstring slot —
                 // module-prelude context that orients the file alongside
-                // imports / `__all__`. Multi-screen prefaces (copyright /
-                // license blocks) are filtered post-collection by the
-                // total-line cap below; trailing comments between imports
+                // imports / `__all__`. Trailing comments between imports
                 // stay out.
                 if !first_real_statement_seen {
-                    let start = child.start_position().row + 1;
-                    let end = child.end_position().row + 1;
-                    leading_comment_lines.extend(start..=end);
+                    extend_span(&mut lines, child, source);
                 }
             }
             _ => {
@@ -585,16 +580,8 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
             }
         }
     }
-    if leading_comment_lines.len() <= LEADING_COMMENT_BLOCK_LINE_CAP {
-        lines.extend(leading_comment_lines);
-    }
     FileLines::new(dedup_sorted(lines))
 }
-
-/// Cap on leading-comment lines folded into the `Imports` batch. Sized
-/// to admit shebang/directive headers and PEP 723 inline-script blocks
-/// (~6-8 lines) while excluding MIT/Apache license prefaces (~13+).
-const LEADING_COMMENT_BLOCK_LINE_CAP: usize = 8;
 
 fn collect_reexport_import_chunks(
     file: &Path,
