@@ -10,6 +10,9 @@ expression: rendered
     CONTRIBUTING.md
     FUNDING.yml
     ISSUE_TEMPLATE/
+        Bug_report.md
+        Custom.md
+        Feature_request.md
     ISSUE_TEMPLATE.md
     SECURITY.md
     dependabot.yml
@@ -59,6 +62,20 @@ README.md
     38→Requests officially supports Python 3.10+.
     40→## Supported Features & Best–Practices
     …
+    42→Requests is ready for the demands of building robust and reliable HTTP–speaking applications, for the needs of today.
+    44→- Keep-Alive & Connection Pooling
+    45→- International Domains and URLs
+    46→- Sessions with Cookie Persistence
+    47→- Browser-style TLS/SSL Verification
+    48→- Basic & Digest Authentication
+    49→- Familiar `dict`–like Cookies
+    50→- Automatic Content Decompression and Decoding
+    51→- Multi-part File Uploads
+    52→- SOCKS Proxy Support
+    53→- Connection Timeouts
+    54→- Streaming Downloads
+    55→- Automatic honoring of `.netrc`
+    56→- Chunked HTTP Requests
     58→## Cloning the repository
     …
 docs/
@@ -157,14 +174,6 @@ src/
             43→import warnings
             45→import urllib3
             47→from .exceptions import RequestsDependencyWarning
-            49→try:
-            50→    from charset_normalizer import __version__ as charset_normalizer_version
-            51→except ImportError:
-            52→    charset_normalizer_version = None
-            54→try:
-            55→    from chardet import __version__ as chardet_version  # type: ignore[import-not-found]
-            56→except ImportError:
-            57→    chardet_version = None
             60→def check_compatibility(
             61→    urllib3_version: str,
             62→    chardet_version: str | None,
@@ -289,7 +298,7 @@ src/
             129→    trust_env: bool
             130→    cookies: RequestsCookieJar
             395→class Session(SessionRedirectMixin):
-            396→    """A Requests session.
+            …
             908→def session() -> Session:
             …
             920→    return Session()
@@ -302,7 +311,7 @@ src/
             16→_VT = TypeVar("_VT")
             17→_D = TypeVar("_D")
             20→class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]):
-            21→    """A case-insensitive ``dict``-like object.
+            …
             47→    _store: OrderedDict[str, tuple[str, _VT]]
             88→    # Copy is required
             96→class LookupDict(dict[str, _VT]):

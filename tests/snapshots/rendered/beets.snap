@@ -49,6 +49,19 @@ README_kr.rst
 SECURITY.md
 beets/
     __init__.py
+        1→# This file is part of beets.
+        2→# Copyright 2016, Adrian Sampson.
+        3→#
+        4→# Permission is hereby granted, free of charge, to any person obtaining
+        5→# a copy of this software and associated documentation files (the
+        6→# "Software"), to deal in the Software without restriction, including
+        7→# without limitation the rights to use, copy, modify, merge, publish,
+        8→# distribute, sublicense, and/or sell copies of the Software, and to
+        9→# permit persons to whom the Software is furnished to do so, subject to
+        10→# the following conditions:
+        11→#
+        12→# The above copyright notice and this permission notice shall be
+        13→# included in all copies or substantial portions of the Software.
         16→from sys import stderr
         18→import confuse
         20→from .util.deprecation import deprecate_imports
@@ -64,13 +77,21 @@ beets/
         …
         52→config = IncludeLazyConfig("beets", __name__)
     __main__.py
-        15→"""The __main__ module lets you run the beets CLI interface by typing
-        16→`python -m beets`.
-        17→"""
-        19→import sys
-        21→from .ui import main
     autotag/
         __init__.py
+            1→# This file is part of beets.
+            2→# Copyright 2016, Adrian Sampson.
+            3→#
+            4→# Permission is hereby granted, free of charge, to any person obtaining
+            5→# a copy of this software and associated documentation files (the
+            6→# "Software"), to deal in the Software without restriction, including
+            7→# without limitation the rights to use, copy, modify, merge, publish,
+            8→# distribute, sublicense, and/or sell copies of the Software, and to
+            9→# permit persons to whom the Software is furnished to do so, subject to
+            10→# the following conditions:
+            11→#
+            12→# The above copyright notice and this permission notice shall be
+            13→# included in all copies or substantial portions of the Software.
             15→"""Facilities for automatically determining files' correct metadata."""
             17→from __future__ import annotations
             19→from importlib import import_module
@@ -103,26 +124,6 @@ beets/
         types.py
     importer/
         __init__.py
-            15→"""Provides the basic, interface-agnostic workflow for importing and
-            16→autotagging music files.
-            17→"""
-            19→from .session import ImportAbortError, ImportSession
-            20→from .tasks import (
-            21→    Action,
-            22→    ArchiveImportTask,
-            23→    ImportTask,
-            24→    SentinelImportTask,
-            25→    SingletonImportTask,
-            26→)
-            30→__all__ = [
-            31→    "Action",
-            32→    "ArchiveImportTask",
-            33→    "ImportAbortError",
-            34→    "ImportSession",
-            35→    "ImportTask",
-            36→    "SentinelImportTask",
-            37→    "SingletonImportTask",
-            38→]
         session.py
         stages.py
         state.py
@@ -135,6 +136,10 @@ beets/
             5→from .models import Album, Item, LibModel
             6→from .queries import parse_query_parts, parse_query_string
             8→NEW_MODULE_BY_NAME = dict.fromkeys(
+            9→    ("DateType", "DurationType", "MusicalKey", "PathType"), "beets.dbcore.types"
+            10→) | dict.fromkeys(
+            11→    ("BLOB_TYPE", "SingletonQuery", "PathQuery"), "beets.dbcore.query"
+            12→)
             15→def __getattr__(name: str):
             16→    return deprecate_imports(__name__, NEW_MODULE_BY_NAME, name)
             19→__all__ = [
@@ -163,31 +168,16 @@ beets/
     plugins.py
     py.typed
     test/
+        __init__.py
+        _common.py
+        helper.py
     ui/
         __init__.py
         commands/
             __init__.py
-                15→"""This module provides the default commands for beets' command-line
-                16→interface.
-                17→"""
-                19→from beets.util.deprecation import deprecate_imports
-                21→from .completion import completion_cmd
-                22→from .config import config_cmd
-                23→from .fields import fields_cmd
-                24→from .help import HelpCommand
-                25→from .import_ import import_cmd
-                26→from .list import list_cmd
-                27→from .modify import modify_cmd
-                28→from .move import move_cmd
-                29→from .remove import remove_cmd
-                30→from .stats import stats_cmd
-                31→from .update import update_cmd
-                32→from .version import version_cmd
-                33→from .write import write_cmd
                 36→def __getattr__(name: str):
                 37→    """Handle deprecated imports."""
                 50→default_commands = [
-                67→__all__ = ["default_commands"]
             completion.py
             completion_base.sh
             config.py
@@ -244,6 +234,7 @@ beets/
             27→import subprocess
             28→import sys
             29→import tempfile
+            30→import traceback
         artresizer.py
         bluelet.py
         color.py
@@ -253,6 +244,8 @@ beets/
         extension.py
         functemplate.py
         hidden.py
+            25→def is_hidden(path: bytes | Path) -> bool:
+            …
         id_extractors.py
         layout.py
         lyrics.py
@@ -267,6 +260,11 @@ docs/
     Makefile
     _static/
     _templates/
+        autosummary/
+            base.rst
+            class.rst
+            module.rst
+            namedtuple.rst
     api/
         database.rst
         index.rst
@@ -283,7 +281,13 @@ docs/
         library.rst
         paths.rst
         plugins/
+            autotagger.rst
+            commands.rst
+            events.rst
+            index.rst
+            other/
     extensions/
+        conf.py
     faq.rst
     guides/
         advanced.rst

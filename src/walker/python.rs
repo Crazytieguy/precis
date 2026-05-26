@@ -547,13 +547,7 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
                 }
                 first_real_statement_seen = true;
             }
-            "if_statement" => {
-                if is_type_checking_import_block(child, source) {
-                    extend_span(&mut lines, child, source);
-                }
-                first_real_statement_seen = true;
-            }
-            "try_statement" => {
+            "if_statement" | "try_statement" => {
                 first_real_statement_seen = true;
             }
             "comment" => {
@@ -644,24 +638,7 @@ fn collect_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> 
                 }
                 first_real_statement_seen = true;
             }
-            "if_statement" => {
-                if is_type_checking_import_block(child, source) {
-                    if imports_prefix_ended {
-                        return None;
-                    }
-                    push_import_group(
-                        &mut groups,
-                        "TYPE_CHECKING".to_string(),
-                        false,
-                        child,
-                        source,
-                    );
-                } else {
-                    imports_prefix_ended = true;
-                }
-                first_real_statement_seen = true;
-            }
-            "try_statement" => {
+            "if_statement" | "try_statement" => {
                 imports_prefix_ended = true;
                 first_real_statement_seen = true;
             }
@@ -712,48 +689,6 @@ fn import_source_key(node: Node, source: &str) -> String {
         }
     }
     text.lines().next().unwrap_or(text).trim().to_string()
-}
-
-/// True iff `if_stmt` is `if TYPE_CHECKING: <imports only>` with no
-/// `elif` / `else`. Excludes platform/version dispatch.
-fn is_type_checking_import_block(if_stmt: Node, source: &str) -> bool {
-    let condition = if_stmt.child_by_field_name("condition");
-    if !condition.is_some_and(|c| is_type_checking_condition(c, source)) {
-        return false;
-    }
-    let mut cursor = if_stmt.walk();
-    for child in if_stmt.children(&mut cursor) {
-        if matches!(child.kind(), "elif_clause" | "else_clause") {
-            return false;
-        }
-    }
-    let Some(body) = if_stmt.child_by_field_name("consequence") else {
-        return false;
-    };
-    let mut body_cursor = body.walk();
-    let mut any = false;
-    for child in body.named_children(&mut body_cursor) {
-        any = true;
-        if !matches!(
-            child.kind(),
-            "import_statement" | "import_from_statement" | "future_import_statement"
-        ) {
-            return false;
-        }
-    }
-    any
-}
-
-/// Match `TYPE_CHECKING` / `typing.TYPE_CHECKING`.
-fn is_type_checking_condition(node: Node, source: &str) -> bool {
-    match node.kind() {
-        "identifier" => &source[node.start_byte()..node.end_byte()] == "TYPE_CHECKING",
-        "attribute" => {
-            let attr_text = &source[node.start_byte()..node.end_byte()];
-            attr_text.ends_with(".TYPE_CHECKING")
-        }
-        _ => false,
-    }
 }
 
 /// Surface listing of every top-level decl's first line. Class/def
@@ -1399,132 +1334,6 @@ import os
         for r in [1, 2, 3, 4, 6] {
             assert!(lines.full.contains(&r), "missing {r}: {:?}", lines.full);
         }
-    }
-
-    #[test]
-    fn python_type_checking_block_in_imports_but_not_runtime_dispatch() {
-        // `if TYPE_CHECKING: import …` is plumbing — folded into Imports.
-        let src_tc = "\
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from foo import Bar
-";
-        let (source, tree) = parse(src_tc);
-        let lines = collect_imports(&tree, &source);
-        assert!(
-            lines.full.contains(&3),
-            "TYPE_CHECKING block missing: {:?}",
-            lines.full
-        );
-        assert!(lines.full.contains(&4));
-
-        // `if sys.version_info: import fast` is runtime dispatch — must
-        // NOT be classified as plumbing (codex adversarial review fix).
-        let src_runtime = "\
-import sys
-
-if sys.version_info >= (3, 11):
-    from foo import fast_impl as Impl
-else:
-    from foo import slow_impl as Impl
-";
-        let (source, tree) = parse(src_runtime);
-        let lines = collect_imports(&tree, &source);
-        assert!(
-            !lines.full.contains(&3),
-            "runtime version-dispatch must not be in Imports: {:?}",
-            lines.full,
-        );
-    }
-
-    #[test]
-    fn python_optional_import_try_block_in_imports() {
-        // Django-style settings dispatch.
-        let src_django = "\
-try:
-    from .dev import *
-except:
-    from .prod import *
-";
-        let (source, tree) = parse(src_django);
-        let lines = collect_imports(&tree, &source);
-        for r in [1, 2, 3, 4] {
-            assert!(
-                lines.full.contains(&r),
-                "django dispatch missing line {r}: {:?}",
-                lines.full,
-            );
-        }
-
-        // Version probe with `X = None` fallback.
-        let src_probe = "\
-try:
-    from chardet import __version__ as chardet_version
-except ImportError:
-    chardet_version = None
-";
-        let (source, tree) = parse(src_probe);
-        let lines = collect_imports(&tree, &source);
-        for r in [1, 2, 3, 4] {
-            assert!(
-                lines.full.contains(&r),
-                "optional-dep probe missing line {r}: {:?}",
-                lines.full,
-            );
-        }
-
-        // Hard requirement with `raise ImportError(...)` fallback.
-        let src_required = "\
-try:
-    from . import gstplayer
-except ImportError as e:
-    raise ImportError(\"Install gstreamer.\") from e
-";
-        let (source, tree) = parse(src_required);
-        let lines = collect_imports(&tree, &source);
-        for r in [1, 2, 3, 4] {
-            assert!(
-                lines.full.contains(&r),
-                "raise-fallback missing line {r}: {:?}",
-                lines.full,
-            );
-        }
-
-        // Procedural try with a side-effecting call must NOT be folded
-        // in (rich's `_IMPORT_CWD = os.path.abspath(os.getcwd())`).
-        let src_procedural = "\
-import os
-
-try:
-    _IMPORT_CWD = os.path.abspath(os.getcwd())
-except FileNotFoundError:
-    _IMPORT_CWD = \"\"
-";
-        let (source, tree) = parse(src_procedural);
-        let lines = collect_imports(&tree, &source);
-        assert!(
-            !lines.full.contains(&3),
-            "procedural try must not be in Imports: {:?}",
-            lines.full,
-        );
-
-        // `else:` / `finally:` clauses signal procedural intent — reject.
-        let src_with_else = "\
-try:
-    from foo import bar
-except ImportError:
-    bar = None
-else:
-    do_something()
-";
-        let (source, tree) = parse(src_with_else);
-        let lines = collect_imports(&tree, &source);
-        assert!(
-            !lines.full.contains(&1),
-            "try-with-else must not be in Imports: {:?}",
-            lines.full,
-        );
     }
 
     #[test]

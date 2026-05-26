@@ -156,8 +156,6 @@ rich/
         4→from typing import IO, TYPE_CHECKING, Any, Callable, Optional, Union
         6→from ._extension import load_ipython_extension  # noqa: F401
         8→__all__ = ["get_console", "reconfigure", "print", "inspect", "print_json"]
-        10→if TYPE_CHECKING:
-        11→    from .console import Console
         14→_console: Optional["Console"] = None
         23→def get_console() -> "Console":
         …
@@ -210,6 +208,7 @@ rich/
         …
         69→NULL_FILE = NullFile()
     _palettes.py
+        1→from .palette import Palette
     _pick.py
         1→from typing import Optional
         4→def pick_bool(*values: Optional[bool]) -> bool:
@@ -226,6 +225,7 @@ rich/
         11→        """Get top of stack."""
         14→    def push(self, item: T) -> None:
         …
+        16→        self.append(item)
     _timer.py
         12→@contextlib.contextmanager
         13→def timer(subject: str = "time") -> Generator[None, None, None]:
@@ -263,7 +263,7 @@ rich/
         31→    def normalized(self) -> Tuple[float, float, float]:
     columns.py
         16→class Columns(JupyterMixin):
-        17→    """Display renderables in neat columns.
+        …
     console.py
     constrain.py
         10→class Constrain(JupyterMixin):
@@ -289,7 +289,7 @@ rich/
     highlighter.py
     json.py
         9→class JSON:
-        10→    """A renderable which pretty prints JSON.
+        …
         25→    def __init__(
         …
         53→    @classmethod
@@ -302,22 +302,24 @@ rich/
         22→class _RefreshThread(Thread):
         …
         41→class Live(JupyterMixin, RenderHook):
-        42→    """Renders an auto-updating live display of any given renderable.
+        …
     live_render.py
         10→VerticalOverflowMethod = Literal["crop", "ellipsis", "visible"]
         13→class LiveRender:
         …
     logging.py
         24→class RichHandler(Handler):
-        25→    """A logging handler that renders output with Rich. The time / level / message and file are displayed in columns.
-        26→    The level is color coded, and the message is syntax highlighted.
+        …
     markdown.py
     markup.py
     measure.py
         11→class Measurement(NamedTuple):
         12→    """Stores the minimum and maximum widths (in characters) required to render an object."""
         125→def measure_renderables(
-        …
+        126→    console: "Console",
+        127→    options: "ConsoleOptions",
+        128→    renderables: Sequence["RenderableType"],
+        129→) -> "Measurement":
     padding.py
     pager.py
         5→class Pager(ABC):
@@ -330,17 +332,18 @@ rich/
         43→    # This is somewhat inefficient and needs caching
     panel.py
         17→class Panel(JupyterMixin):
-        18→    """A console renderable that draws a border around its contents.
+        …
     pretty.py
     progress.py
     progress_bar.py
         15→PULSE_SIZE = 20
         18→class ProgressBar(JupyterMixin):
-        19→    """Renders a (progress) bar. Used by rich.progress.
+        …
     prompt.py
     protocol.py
     py.typed
     region.py
+        1→from typing import NamedTuple
         4→class Region(NamedTuple):
         5→    """Defines a rectangular region of the screen."""
     repr.py
@@ -374,13 +377,20 @@ rich/
     terminal_theme.py
     text.py
     theme.py
+        7→class Theme:
+        …
+        15→    styles: Dict[str, Style]
+        77→class ThemeStackError(Exception):
+        78→    """Base exception for errors related to the theme stack."""
+        81→class ThemeStack:
+        …
     themes.py
         5→DEFAULT = Theme(DEFAULT_STYLES)
     traceback.py
     tree.py
         11→GuideType = Tuple[str, str, str, str]
         14→class Tree(JupyterMixin):
-        15→    """A renderable for a tree structure.
+        …
 setup.py
     1→#!/usr/bin/env python
     3→# This is a shim to hopefully allow Github to detect the package, build is done with poetry

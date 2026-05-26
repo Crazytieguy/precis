@@ -43,6 +43,7 @@ README.md
     …
     179→### Rendering
     …
+    181→`htmy.Renderer` is the built-in, default renderer of the library.
     211→### Context
     …
     279→### Formatter
@@ -187,7 +188,6 @@ htmy/
     etree.py
         23→class ETreeConverter:
         …
-        25→    Utility for converting XML strings to custom components.
     function_component.py
     html.py
     i18n.py
@@ -209,7 +209,6 @@ htmy/
             …
             81→class MD(Snippet):
             …
-            83→    Component for reading, customizing, and rendering markdown documents.
             98→    __slots__ = (
             99→        "_converter",
             100→        "_renderer",
@@ -241,10 +240,8 @@ htmy/
     snippet.py
         27→class Slots:
         …
-        29→    Utility that resolves slots in a string input to components.
         158→class Snippet:
         …
-        160→    Component that renders text, which may be asynchronously loaded from a file.
         216→    __slots__ = ("_path_or_text", "_text_processor", "_text_resolver")
     tag.py
         12→class _TagWithPropsImpl:

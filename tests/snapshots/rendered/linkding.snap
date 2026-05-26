@@ -129,11 +129,15 @@ bookmarks/
         commands/
             backup.py
                 7→class Command(BaseCommand):
-                …
+                8→    help = "Creates a backup of the linkding database"
             create_initial_superuser.py
             enable_wal.py
             ensure_superuser.py
+                5→class Command(BaseCommand):
+                …
             full_backup.py
+                9→class Command(BaseCommand):
+                …
             generate_secret_key.py
             import_netscape.py
             migrate_tasks.py
@@ -179,10 +183,6 @@ bookmarks/
         __init__.py
             1→# Use dev settings as default, use production if dev settings do not exist
             2→# ruff: noqa
-            3→try:
-            4→    from .dev import *
-            5→except:
-            6→    from .prod import *
         base.py
         custom.py
         dev.py
