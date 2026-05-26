@@ -240,8 +240,6 @@ src/
         276→		return val;
         283→	function destroy() {
         284→		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
-        287→	createDebug.enable(createDebug.load());
-        289→	return createDebug;
         292→module.exports = setup;
     index.js
         1→/**
