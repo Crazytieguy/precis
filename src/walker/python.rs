@@ -554,9 +554,6 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
                 first_real_statement_seen = true;
             }
             "try_statement" => {
-                if is_optional_import_try_block(child, source) {
-                    extend_span(&mut lines, child, source);
-                }
                 first_real_statement_seen = true;
             }
             "comment" => {
@@ -665,14 +662,7 @@ fn collect_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> 
                 first_real_statement_seen = true;
             }
             "try_statement" => {
-                if is_optional_import_try_block(child, source) {
-                    if imports_prefix_ended {
-                        return None;
-                    }
-                    push_import_group(&mut groups, "try_import".to_string(), false, child, source);
-                } else {
-                    imports_prefix_ended = true;
-                }
+                imports_prefix_ended = true;
                 first_real_statement_seen = true;
             }
             "comment" => {}
@@ -752,102 +742,6 @@ fn is_type_checking_import_block(if_stmt: Node, source: &str) -> bool {
         }
     }
     any
-}
-
-/// True iff `try_stmt` is an optional-import probe: try-body and every
-/// except-body contain only imports, simple fallback constants, `pass`/
-/// `raise`, or comments. No `else:` / `finally:`. Excludes procedural
-/// try-blocks that happen to start with an import.
-fn is_optional_import_try_block(try_stmt: Node, source: &str) -> bool {
-    let Some(body) = try_stmt.child_by_field_name("body") else {
-        return false;
-    };
-    if !suite_is_optional_import_only(body, source) {
-        return false;
-    }
-    let mut cursor = try_stmt.walk();
-    let mut any_except = false;
-    for child in try_stmt.children(&mut cursor) {
-        match child.kind() {
-            "else_clause" | "finally_clause" => return false,
-            "except_clause" => {
-                let mut clause_cursor = child.walk();
-                let Some(block) = child
-                    .children(&mut clause_cursor)
-                    .find(|c| c.kind() == "block")
-                else {
-                    return false;
-                };
-                if !suite_is_optional_import_only(block, source) {
-                    return false;
-                }
-                any_except = true;
-            }
-            _ => {}
-        }
-    }
-    any_except
-}
-
-/// See [`is_optional_import_try_block`].
-fn suite_is_optional_import_only(block: Node, source: &str) -> bool {
-    let mut cursor = block.walk();
-    let mut any = false;
-    for child in block.named_children(&mut cursor) {
-        any = true;
-        match child.kind() {
-            "import_statement"
-            | "import_from_statement"
-            | "future_import_statement"
-            | "raise_statement"
-            | "pass_statement"
-            | "comment" => {}
-            "expression_statement" => {
-                if !is_simple_fallback_assignment(child, source) {
-                    return false;
-                }
-            }
-            _ => return false,
-        }
-    }
-    any
-}
-
-/// `NAME = None | True | False | "" | [] | {}` — constant fallback
-/// shapes seen after `except ImportError:`.
-fn is_simple_fallback_assignment(node: Node, source: &str) -> bool {
-    let mut cursor = node.walk();
-    let Some(assignment) = node
-        .children(&mut cursor)
-        .find(|c| c.kind() == "assignment")
-    else {
-        return false;
-    };
-    let Some(left) = assignment.child_by_field_name("left") else {
-        return false;
-    };
-    if left.kind() != "identifier" {
-        return false;
-    }
-    let Some(right) = assignment.child_by_field_name("right") else {
-        return false;
-    };
-    match right.kind() {
-        "none" | "true" | "false" => true,
-        "string" => {
-            let text = &source[right.start_byte()..right.end_byte()];
-            // Empty-string literal — rejects f-strings / multi-line
-            // docstrings used as side-effecting expressions.
-            matches!(text, "\"\"" | "''" | "\"\"\"\"\"\"" | "''''''")
-        }
-        "list" | "dictionary" | "set" => {
-            // Empty literal only — `[item]` carries content that may be
-            // load-bearing elsewhere; conservative reject.
-            let text = &source[right.start_byte()..right.end_byte()];
-            matches!(text, "[]" | "{}")
-        }
-        _ => false,
-    }
 }
 
 /// Match `TYPE_CHECKING` / `typing.TYPE_CHECKING`.
