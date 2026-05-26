@@ -56,6 +56,22 @@ packages/
         src/
             __tests__/
             index.ts
+                128→export const modulePreloadLinkRE: RegExp =
+                129→  /<link(?![\w-])[^>]*?\srel=(['"])modulepreload\1[^>]*>/g
+                794→export async function detectPolyfills(
+                795→  code: string,
+                796→  targets: any,
+                797→  assumptions: Record<string, boolean>,
+                798→  list: Set<string>,
+                799→): Promise<void> {
+                …
+                1057→export const cspHashes: string[] = [
+                …
+                1064→export type { Options }
+                …
+                1066→export default viteLegacyPlugin
+                …
+                1078→export { viteLegacyPluginCjs as 'module.exports' }
             shims.d.ts
             snippets.ts
             types.ts
@@ -116,6 +132,14 @@ packages/
                     …
                 esmEvaluator.ts
                     15→export class ESModulesEvaluator implements ModuleEvaluator {
+                    16→  public readonly startOffset: number =
+                    17→    getAsyncFunctionDeclarationPaddingLineCount()
+                    19→  async runInlinedModule(
+                    20→    context: ModuleRunnerContext,
+                    21→    code: string,
+                    22→  ): Promise<any> {
+                    …
+                    47→  runExternalModule(filepath: string): Promise<any> {
                     …
                 evaluatedModules.ts
                     11→export class EvaluatedModuleNode {
@@ -151,26 +175,6 @@ packages/
                 build.ts
                 cli.ts
                 config.ts
-                    140→export interface ConfigEnv {
-                    …
-                    158→export type AppType = 'spa' | 'mpa' | 'custom'
-                    …
-                    160→export type UserConfigFnObject = (env: ConfigEnv) => UserConfig
-                    161→export type UserConfigFnPromise = (env: ConfigEnv) => Promise<UserConfig>
-                    162→export type UserConfigFn = (env: ConfigEnv) => UserConfig | Promise<UserConfig>
-                    …
-                    164→export type UserConfigExport =
-                    165→  | UserConfig
-                    166→  | Promise<UserConfig>
-                    167→  | UserConfigFnObject
-                    168→  | UserConfigFnPromise
-                    169→  | UserConfigFn
-                    176→export function defineConfig(config: UserConfig): UserConfig
-                    177→export function defineConfig(config: Promise<UserConfig>): Promise<UserConfig>
-                    178→export function defineConfig(config: UserConfigFnObject): UserConfigFnObject
-                    179→export function defineConfig(config: UserConfigFnPromise): UserConfigFnPromise
-                    180→export function defineConfig(config: UserConfigFn): UserConfigFn
-                    181→export function defineConfig(config: UserConfigExport): UserConfigExport
                 constants.ts
                 deprecations.ts
                 env.ts

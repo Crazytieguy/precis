@@ -162,71 +162,64 @@ Score(3000)=0.560 I=0.663 C=0.473 ns_rows≤3K=20/41 (reached=7 partial=3 missin
 | ns | 5411 |  | 391 | _parseCommand body — action handler + hooks | 5.2b | 5.2 | 0.424 |
 | walker |  | 5744 | 555 | export at lib/help.js:12 |  |  | 0.473 |
 | walker |  | 5759 | 15 | module item at examples/split.js:10 |  |  | 0.473 |
-| walker |  | 5911 | 152 | export names surface in typings/index.d.ts |  |  | 0.473 |
-| walker |  | 5921 | 10 | export at typings/index.d.ts:31 |  |  | 0.473 |
-| walker |  | 5942 | 21 | export at typings/index.d.ts:342 |  |  | 0.473 |
-| walker |  | 5971 | 29 | export at typings/index.d.ts:345 |  |  | 0.473 |
-| walker |  | 6009 | 38 | export at typings/index.d.ts:349 |  |  | 0.473 |
+| walker |  | 5871 | 112 | export doc at lib/option.js:268 |  |  | 0.473 |
+| walker |  | 5913 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.473 |
 | ns | 6016 |  | 605 | parseOptions body — entry + main loop frame | 5.3 | 3.6 | 0.449 |
-| walker |  | 6121 | 112 | export doc at lib/option.js:268 |  |  | 0.449 |
-| walker |  | 6163 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.449 |
-| walker |  | 6218 | 55 | export at typings/index.d.ts:16 |  |  | 0.449 |
-| walker |  | 6281 | 63 | export at typings/index.d.ts:40 |  |  | 0.449 |
-| walker |  | 6641 | 360 | export body at lib/command.js:2752 body 2753 |  |  | 0.449 |
-| walker |  | 6700 | 59 | module item body at examples/custom-command-class.js:6 body 8 |  |  | 0.449 |
-| walker |  | 6712 | 12 | imports in examples/arguments-custom-processing.js |  |  | 0.449 |
-| walker |  | 6724 | 12 | imports in examples/arguments-extra.js |  |  | 0.449 |
-| walker |  | 6736 | 12 | imports in examples/configure-output.js |  |  | 0.449 |
-| walker |  | 6748 | 12 | imports in examples/custom-command-class.js |  |  | 0.449 |
-| walker |  | 6760 | 12 | imports in examples/defaultCommand.js |  |  | 0.449 |
-| walker |  | 6772 | 12 | imports in examples/nestedCommands.js |  |  | 0.449 |
-| walker |  | 6784 | 12 | imports in examples/options-boolean-or-value.js |  |  | 0.449 |
-| walker |  | 6796 | 12 | imports in examples/options-common.js |  |  | 0.449 |
-| ns | 6799 |  | 783 | parseOptions body — flag dispatch branches | 5.3b | 5.3 | 0.423 |
-| walker |  | 6808 | 12 | imports in examples/options-custom-processing.js |  |  | 0.423 |
-| walker |  | 6820 | 12 | imports in examples/options-defaults.js |  |  | 0.423 |
-| walker |  | 6832 | 12 | imports in examples/options-negatable.js |  |  | 0.423 |
-| walker |  | 6844 | 12 | imports in examples/options-required.js |  |  | 0.423 |
-| walker |  | 6856 | 12 | imports in examples/options-variadic.js |  |  | 0.423 |
-| walker |  | 6877 | 21 | module item at examples/options-negatable.js:18 |  |  | 0.423 |
-| walker |  | 7069 | 192 | docs/help-in-depth.md section #0 |  |  | 0.423 |
-| walker |  | 7083 | 14 | imports in examples/action-this.js |  |  | 0.423 |
-| walker |  | 7097 | 14 | imports in examples/alias.js |  |  | 0.423 |
-| walker |  | 7111 | 14 | imports in examples/argument.js |  |  | 0.423 |
-| walker |  | 7125 | 14 | imports in examples/pass-through-options.js |  |  | 0.423 |
-| walker |  | 7139 | 14 | imports in examples/positional-options.js |  |  | 0.423 |
-| walker |  | 7153 | 14 | imports in examples/split.js |  |  | 0.423 |
-| walker |  | 7167 | 14 | imports in examples/string-util.js |  |  | 0.424 |
-| walker |  | 7181 | 14 | imports in examples/thank.js |  |  | 0.424 |
+| walker |  | 6273 | 360 | export body at lib/command.js:2752 body 2753 |  |  | 0.449 |
+| walker |  | 6332 | 59 | module item body at examples/custom-command-class.js:6 body 8 |  |  | 0.449 |
+| walker |  | 6344 | 12 | imports in examples/arguments-custom-processing.js |  |  | 0.449 |
+| walker |  | 6356 | 12 | imports in examples/arguments-extra.js |  |  | 0.449 |
+| walker |  | 6368 | 12 | imports in examples/configure-output.js |  |  | 0.449 |
+| walker |  | 6380 | 12 | imports in examples/custom-command-class.js |  |  | 0.449 |
+| walker |  | 6392 | 12 | imports in examples/defaultCommand.js |  |  | 0.449 |
+| walker |  | 6404 | 12 | imports in examples/nestedCommands.js |  |  | 0.449 |
+| walker |  | 6416 | 12 | imports in examples/options-boolean-or-value.js |  |  | 0.449 |
+| walker |  | 6428 | 12 | imports in examples/options-common.js |  |  | 0.449 |
+| walker |  | 6440 | 12 | imports in examples/options-custom-processing.js |  |  | 0.449 |
+| walker |  | 6452 | 12 | imports in examples/options-defaults.js |  |  | 0.449 |
+| walker |  | 6464 | 12 | imports in examples/options-negatable.js |  |  | 0.449 |
+| walker |  | 6476 | 12 | imports in examples/options-required.js |  |  | 0.449 |
+| walker |  | 6488 | 12 | imports in examples/options-variadic.js |  |  | 0.449 |
+| walker |  | 6509 | 21 | module item at examples/options-negatable.js:18 |  |  | 0.449 |
+| walker |  | 6701 | 192 | docs/help-in-depth.md section #0 |  |  | 0.449 |
+| walker |  | 6715 | 14 | imports in examples/action-this.js |  |  | 0.449 |
+| walker |  | 6729 | 14 | imports in examples/alias.js |  |  | 0.449 |
+| walker |  | 6743 | 14 | imports in examples/argument.js |  |  | 0.449 |
+| walker |  | 6757 | 14 | imports in examples/pass-through-options.js |  |  | 0.449 |
+| walker |  | 6771 | 14 | imports in examples/positional-options.js |  |  | 0.449 |
+| walker |  | 6785 | 14 | imports in examples/split.js |  |  | 0.449 |
+| walker |  | 6799 | 14 | imports in examples/string-util.js |  |  | 0.424 |
+| ns | 6799 |  | 783 | parseOptions body — flag dispatch branches | 5.3b | 5.3 | 0.424 |
+| walker |  | 6813 | 14 | imports in examples/thank.js |  |  | 0.424 |
 | ns | 7221 |  | 422 | addOption body — defaults + listener registration | 5.4 | 3.4 | 0.411 |
-| ns | 7597 |  | 376 | addOption body — handleOptionValue closure | 5.4b | 5.4 | 0.401 |
-| walker |  | 7723 | 542 | export body at lib/argument.js:3 body 14 |  |  | 0.430 |
-| walker |  | 7951 | 228 | package dependencies in package.json |  |  | 0.430 |
-| ns | 7964 |  | 367 | Help formatHelp — usage + description + arguments | 6.1 | 3.8 | 0.418 |
-| walker |  | 7967 | 16 | imports in examples/help-groups.js |  |  | 0.418 |
-| walker |  | 7983 | 16 | imports in examples/hook.js |  |  | 0.418 |
-| walker |  | 7999 | 16 | imports in examples/options-conflicts.js |  |  | 0.418 |
-| walker |  | 8015 | 16 | imports in examples/options-env.js |  |  | 0.418 |
-| walker |  | 8031 | 16 | imports in examples/options-extra.js |  |  | 0.418 |
-| walker |  | 8047 | 16 | imports in examples/options-implies.js |  |  | 0.418 |
-| walker |  | 8305 | 258 | Readme.md section #3 |  |  | 0.420 |
-| ns | 8479 |  | 515 | Help formatHelp — options, global options, commands | 6.1b | 6.1 | 0.405 |
-| walker |  | 8529 | 224 | docs/terminology.md section #0 |  |  | 0.425 |
-| walker |  | 8537 | 8 | export body at lib/option.js:3 body 194 |  |  | 0.425 |
-| walker |  | 8604 | 67 | headings outline in docs/options-in-depth.md |  |  | 0.425 |
-| ns | 8752 |  | 273 | examples/ + docs/ listings | 7.1 |  | 0.455 |
-| walker |  | 8819 | 215 | docs/options-in-depth.md section #0 |  |  | 0.455 |
-| walker |  | 8857 | 38 | module item body at examples/configure-output.js:4 body 5 |  |  | 0.455 |
-| walker |  | 9117 | 260 | docs/parsing-and-hooks.md section #0 |  |  | 0.472 |
-| walker |  | 9148 | 31 | module item at examples/options-negatable.js:19 |  |  | 0.472 |
-| walker |  | 9158 | 10 | export body at lib/option.js:3 body 182 |  |  | 0.472 |
-| walker |  | 9279 | 121 | export at typings/index.d.ts:354 |  |  | 0.472 |
-| walker |  | 9510 | 231 | Readme.md section #9 |  |  | 0.473 |
+| walker |  | 7355 | 542 | export body at lib/argument.js:3 body 14 |  |  | 0.441 |
+| walker |  | 7583 | 228 | package dependencies in package.json |  |  | 0.441 |
+| ns | 7597 |  | 376 | addOption body — handleOptionValue closure | 5.4b | 5.4 | 0.430 |
+| walker |  | 7599 | 16 | imports in examples/help-groups.js |  |  | 0.430 |
+| walker |  | 7615 | 16 | imports in examples/hook.js |  |  | 0.430 |
+| walker |  | 7631 | 16 | imports in examples/options-conflicts.js |  |  | 0.430 |
+| walker |  | 7647 | 16 | imports in examples/options-env.js |  |  | 0.430 |
+| walker |  | 7663 | 16 | imports in examples/options-extra.js |  |  | 0.430 |
+| walker |  | 7679 | 16 | imports in examples/options-implies.js |  |  | 0.430 |
+| walker |  | 7937 | 258 | Readme.md section #3 |  |  | 0.432 |
+| ns | 7964 |  | 367 | Help formatHelp — usage + description + arguments | 6.1 | 3.8 | 0.420 |
+| walker |  | 8161 | 224 | docs/terminology.md section #0 |  |  | 0.441 |
+| walker |  | 8169 | 8 | export body at lib/option.js:3 body 194 |  |  | 0.441 |
+| walker |  | 8236 | 67 | headings outline in docs/options-in-depth.md |  |  | 0.441 |
+| walker |  | 8451 | 215 | docs/options-in-depth.md section #0 |  |  | 0.441 |
+| ns | 8479 |  | 515 | Help formatHelp — options, global options, commands | 6.1b | 6.1 | 0.425 |
+| walker |  | 8489 | 38 | module item body at examples/configure-output.js:4 body 5 |  |  | 0.425 |
+| walker |  | 8749 | 260 | docs/parsing-and-hooks.md section #0 |  |  | 0.444 |
+| ns | 8752 |  | 273 | examples/ + docs/ listings | 7.1 |  | 0.472 |
+| walker |  | 8780 | 31 | module item at examples/options-negatable.js:19 |  |  | 0.472 |
+| walker |  | 8790 | 10 | export body at lib/option.js:3 body 182 |  |  | 0.472 |
+| walker |  | 9021 | 231 | Readme.md section #9 |  |  | 0.473 |
+| walker |  | 9332 | 311 | docs/release-policy.md section #0 |  |  | 0.474 |
+| walker |  | 9496 | 164 | json config tsconfig.js.json |  |  | 0.474 |
 | ns | 9565 |  | 813 | tests/ listing | 7.2 |  | 0.440 |
-| ns | 9598 |  | 33 | docs/ — H1/H2 headings of in-depth guides | 7.3 |  | 0.440 |
-| ns | 9679 |  | 81 | Readme Options sub-headings | 7.4 |  | 0.438 |
-| ns | 9802 |  | 123 | Readme Commands + Automated help sub-headings | 7.5 |  | 0.434 |
-| walker |  | 9821 | 311 | docs/release-policy.md section #0 |  |  | 0.435 |
+| ns | 9598 |  | 33 | docs/ — H1/H2 headings of in-depth guides | 7.3 |  | 0.441 |
+| walker |  | 9661 | 165 | json config package-support.json |  |  | 0.441 |
+| ns | 9679 |  | 81 | Readme Options sub-headings | 7.4 |  | 0.439 |
+| ns | 9802 |  | 123 | Readme Commands + Automated help sub-headings | 7.5 |  | 0.435 |
 | ns | 9921 |  | 119 | Readme Bits-and-pieces sub-headings | 7.6 |  | 0.432 |
-| walker |  | 9985 | 164 | json config tsconfig.js.json |  |  | 0.432 |
 | ns | 9995 |  | 74 | options-in-depth — table of contents | 7.7 |  | 0.434 |
