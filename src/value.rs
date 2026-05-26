@@ -499,210 +499,97 @@ mod tests {
     use super::*;
     use std::path::Path;
 
-    fn assert_factor(expected: f64, paths: &[&str]) {
+    /// Single table-driven driver. Each row is `(expected, paths)`
+    /// where `paths` is space-separated (paths contain no spaces). The
+    /// inline comment above each row names the rule under test.
+    #[test]
+    fn value_non_essential_factor_cases() {
+        let cases: &[(f64, &str)] = &[
+            // Rust underscore-prefix discount: only `inner.rs` and
+            // `__*.rs` discount; single-underscore `.rs` and Python/JS
+            // framework underscore files keep full weight.
+            (0.5, "src/__private_api.rs src/inner.rs"),
+            (
+                1.0,
+                "src/pluggy/_hooks.py src/pluggy/__init__.py src/pkg/__main__.py \
+                 pages/_app.tsx packages/x/_routes.json src/_helper.rs",
+            ),
+            // GitHub: contributor templates demote; workflows keep full
+            // weight; dependabot config demotes.
+            (
+                0.2,
+                ".github/PULL_REQUEST_TEMPLATE.md .github/pull_request_template.md \
+                 .github/ISSUE_TEMPLATE/bug.md",
+            ),
+            (1.0, ".github/workflows/ci.yml .github/workflows"),
+            (0.2, ".github/dependabot.yml"),
+            // Top-level peripheral docs (admin / release / governance).
+            (
+                0.2,
+                "CHANGELOG.md changelog.rst HISTORY.md RELEASE_NOTES.md RELEASING.md \
+                 CONTRIBUTING.md SECURITY.md NOTICE.md AUTHORS.md CODE_OF_CONDUCT.md \
+                 CODEOWNERS.md SUPPORT.md GOVERNANCE.md NEWS.md news.rst FAQ.md \
+                 UPGRADE_GUIDE_V2.md upgrade-guide.md",
+            ),
+            // Monorepo per-package CHANGELOGs etc. inherit admin-doc semantics.
+            (
+                0.2,
+                "docs/changelog.md docs/CONTRIBUTING.md \
+                 packages/d2mini/CHANGELOG.md subproject/CHANGELOG.md",
+            ),
+            // Auto-injected agent docs: recursive (nested copies in monorepos
+            // still auto-inject).
+            (
+                0.1,
+                "AGENTS.md agents.md CLAUDE.md claude.rst \
+                 .claude/skills/foo/SKILL.md .agent/skills/bar/instructions.md \
+                 .cursor/rules/baz.mdc packages/foo/CLAUDE.md crates/bar/AGENTS.md",
+            ),
+            // Root dot-directories (IDE / tooling / CI / admin / skills).
+            (
+                0.2,
+                ".claude/skills .claude/skills/foo .claude/skills/foo/script.py \
+                 .claude/skills/foo/data.json .vscode/settings.json \
+                 .devcontainer/devcontainer.json .idea/foo.xml .husky/pre-commit \
+                 .circleci/config.yml .cargo/config.toml .yarn/plugins/foo.cjs \
+                 .faq/FAQ.md",
+            ),
+            // Changesets subtree: per-package release-note staging area.
+            (
+                0.2,
+                ".changeset/foo.md .changeset/README.md .changeset/config.json",
+            ),
+            // `contribute/` is intentionally NOT demoted (mcphost-only,
+            // non-markdown subtree).
+            (
+                1.0,
+                "contribute/contribute.md contribute/build.sh contribute/conf/demo.json",
+            ),
+            // Localized READMEs: `[a-z]{2,3}(-[A-Z]{2,4})?` locale suffix
+            // demotes; non-locale suffixes (`api`, `dev`, `old`, `template`)
+            // and bare READMEs keep full weight. Subdir applies too.
+            (
+                0.2,
+                "README.zh-CN.md Readme_zh-CN.md README.ja.md README.pt_BR.rst \
+                 README.fr.md README.en-US.md README.cn.md README.kr.md README.fa.md \
+                 README.de-ch.md README.pt-pt.md README.es-mx.md",
+            ),
+            (
+                1.0,
+                "README.api.md README.dev.md README.old.md README_template.md",
+            ),
+            (1.0, "README.md README.rst Readme.md"),
+            (0.2, "docs/README.zh-CN.md"),
+        ];
         let root = Path::new("/repo");
-        for path in paths {
-            assert_eq!(
-                non_essential_factor(&root.join(path), root),
-                expected,
-                "{path}",
-            );
+        for (expected, paths) in cases {
+            for path in paths.split_ascii_whitespace() {
+                assert_eq!(
+                    non_essential_factor(&root.join(path), root),
+                    *expected,
+                    "{path}",
+                );
+            }
         }
-    }
-
-    #[test]
-    fn value_underscore_filename_discount_is_rust_only() {
-        // Rust private-helper convention: literal `inner.rs` and
-        // `__-prefixed *.rs` discount. Single-underscore `*.rs` files
-        // and Python/JS framework underscore files keep full weight.
-        assert_factor(0.5, &["src/__private_api.rs", "src/inner.rs"]);
-        assert_factor(
-            1.0,
-            &[
-                "src/pluggy/_hooks.py",
-                "src/pluggy/__init__.py",
-                "src/pkg/__main__.py",
-                "pages/_app.tsx",
-                "packages/x/_routes.json",
-                "src/_helper.rs",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_github_contributor_templates_are_discounted() {
-        assert_factor(
-            0.2,
-            &[
-                ".github/PULL_REQUEST_TEMPLATE.md",
-                ".github/pull_request_template.md",
-                ".github/ISSUE_TEMPLATE/bug.md",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_github_workflows_keep_full_weight() {
-        assert_factor(1.0, &[".github/workflows/ci.yml", ".github/workflows"]);
-        assert_factor(0.2, &[".github/dependabot.yml"]);
-    }
-
-    #[test]
-    fn value_top_level_peripheral_docs_are_discounted() {
-        assert_factor(
-            0.2,
-            &[
-                "CHANGELOG.md",
-                "changelog.rst",
-                "HISTORY.md",
-                "RELEASE_NOTES.md",
-                "RELEASING.md",
-                "CONTRIBUTING.md",
-                "SECURITY.md",
-                "NOTICE.md",
-                "AUTHORS.md",
-                "CODE_OF_CONDUCT.md",
-                "CODEOWNERS.md",
-                "SUPPORT.md",
-                "GOVERNANCE.md",
-                "NEWS.md",
-                "news.rst",
-                "FAQ.md",
-                "UPGRADE_GUIDE_V2.md",
-                "upgrade-guide.md",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_subdir_peripheral_basenames_are_demoted() {
-        // Monorepo per-package CHANGELOGs etc. inherit the admin-doc
-        // semantics — NS atoms pointing at these are all at exp_t>9K
-        // so demotion is metric-safe.
-        assert_factor(
-            0.2,
-            &[
-                "docs/changelog.md",
-                "docs/CONTRIBUTING.md",
-                "packages/d2mini/CHANGELOG.md",
-                "subproject/CHANGELOG.md",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_auto_injected_agent_docs_are_strongly_discounted() {
-        // Claude Code's CLAUDE.md hierarchy is recursive — nested
-        // AGENTS.md/CLAUDE.md in monorepos are still auto-injected.
-        assert_factor(
-            0.1,
-            &[
-                "AGENTS.md",
-                "agents.md",
-                "CLAUDE.md",
-                "claude.rst",
-                ".claude/skills/foo/SKILL.md",
-                ".agent/skills/bar/instructions.md",
-                ".cursor/rules/baz.mdc",
-                "packages/foo/CLAUDE.md",
-                "crates/bar/AGENTS.md",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_root_dot_directories_are_discounted() {
-        // IDE / tooling / CI / admin / auto-injected-skill subtrees.
-        // `is_auto_injected_doc_file` then upgrades doc-extension
-        // files inside skill subtrees to the stronger 0.1 discount.
-        assert_factor(
-            0.2,
-            &[
-                ".claude/skills",
-                ".claude/skills/foo",
-                ".claude/skills/foo/script.py",
-                ".claude/skills/foo/data.json",
-                ".vscode/settings.json",
-                ".devcontainer/devcontainer.json",
-                ".idea/foo.xml",
-                ".husky/pre-commit",
-                ".circleci/config.yml",
-                ".cargo/config.toml",
-                ".yarn/plugins/foo.cjs",
-                ".faq/FAQ.md",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_changeset_subtree_is_discounted() {
-        assert_factor(
-            0.2,
-            &[
-                ".changeset/foo.md",
-                ".changeset/README.md",
-                ".changeset/config.json",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_contribute_subtree_keeps_full_weight() {
-        // `contribute/` is intentionally NOT demoted: only mcphost
-        // uses it and the subtree contains non-markdown content.
-        assert_factor(
-            1.0,
-            &[
-                "contribute/contribute.md",
-                "contribute/build.sh",
-                "contribute/conf/demo.json",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_localized_readme_is_discounted() {
-        assert_factor(
-            0.2,
-            &[
-                "README.zh-CN.md",
-                "Readme_zh-CN.md",
-                "README.ja.md",
-                "README.pt_BR.rst",
-                "README.fr.md",
-                "README.en-US.md",
-                "README.cn.md",
-                "README.kr.md",
-                "README.fa.md",
-                "README.de-ch.md",
-                "README.pt-pt.md",
-                "README.es-mx.md",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_non_locale_readme_suffixes_keep_full_weight() {
-        // Whitelist eliminates false positives a loose
-        // `[a-z]{2,3}(-[A-Z]{2,4})?` regex would catch.
-        assert_factor(
-            1.0,
-            &[
-                "README.api.md",
-                "README.dev.md",
-                "README.old.md",
-                "README_template.md",
-            ],
-        );
-    }
-
-    #[test]
-    fn value_bare_readme_keeps_full_weight() {
-        assert_factor(1.0, &["README.md", "README.rst", "Readme.md"]);
-    }
-
-    #[test]
-    fn value_subdir_localized_readme_is_demoted() {
-        assert_factor(0.2, &["docs/README.zh-CN.md"]);
     }
 }
