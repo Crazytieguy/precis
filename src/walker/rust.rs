@@ -53,8 +53,7 @@ use super::{
 pub struct RustState {
     module_visibility: OnceCell<HashMap<PathBuf, Visibility>>,
     exported_macros_per_dir: RefCell<HashMap<PathBuf, Arc<HashSet<String>>>>,
-    workspace_members: OnceCell<HashSet<PathBuf>>,
-    workspace_member_lookup: RefCell<HashMap<PathBuf, bool>>,
+    workspace: super::workspace::WorkspaceMembership,
     nearest_member_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
     cargo_source_dirs: OnceCell<Vec<PathBuf>>,
     expanded_dirs: RefCell<HashSet<PathBuf>>,
@@ -66,8 +65,7 @@ impl RustState {
         Self {
             module_visibility: OnceCell::new(),
             exported_macros_per_dir: RefCell::new(HashMap::new()),
-            workspace_members: OnceCell::new(),
-            workspace_member_lookup: RefCell::new(HashMap::new()),
+            workspace: super::workspace::WorkspaceMembership::default(),
             nearest_member_dir_lookup: RefCell::new(HashMap::new()),
             cargo_source_dirs: OnceCell::new(),
             expanded_dirs: RefCell::new(HashSet::new()),
@@ -99,21 +97,8 @@ impl RustState {
 
     /// `true` iff `file` is a workspace-member `Cargo.toml`. Memoized.
     pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
-        let members = self.workspace_members(root);
-        if members.is_empty() {
-            return false;
-        }
-        if let Some(&hit) = self.workspace_member_lookup.borrow().get(file) {
-            return hit;
-        }
-        let hit = file
-            .canonicalize()
-            .map(|c| members.contains(&c))
-            .unwrap_or(false);
-        self.workspace_member_lookup
-            .borrow_mut()
-            .insert(file.to_path_buf(), hit);
-        hit
+        self.workspace
+            .is_member(file, || super::toml::collect_workspace_members(root))
     }
 
     /// Directory of the nearest enclosing `Cargo.toml` iff it's a
@@ -149,8 +134,8 @@ impl RustState {
     }
 
     fn workspace_members(&self, root: &Path) -> &HashSet<PathBuf> {
-        self.workspace_members
-            .get_or_init(|| super::toml::collect_workspace_members(root))
+        self.workspace
+            .members(|| super::toml::collect_workspace_members(root))
     }
 
     pub(in crate::walker) fn cargo_source_dirs(

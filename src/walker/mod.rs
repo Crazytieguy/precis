@@ -34,6 +34,7 @@ pub mod python;
 pub mod rust;
 pub mod toml;
 pub mod typescript;
+mod workspace;
 pub mod yaml;
 
 /// Walker contract — `Key` is walker-private so the scheduler/render

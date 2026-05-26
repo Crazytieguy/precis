@@ -18,6 +18,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TomlKey};
 use crate::value::mix_signals;
 
+use super::workspace::{canonical_member, expand_member_entry};
 use super::{
     FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
     single_file_lines_content,
@@ -339,12 +340,14 @@ fn extract_table_name(node: Node, source: &str) -> Option<String> {
 
 // --- workspace-member resolution ---
 
+const CARGO_MANIFEST_FILENAME: &str = "Cargo.toml";
+
 /// Declared + auto-promoted workspace members from `<root>/Cargo.toml`.
 /// Union of `[workspace].members` (literals + trailing-`/*` globs) and
 /// `[dependencies]`-table `path = "..."` entries; `[workspace].exclude`
 /// applies to the union. Empty on parse error.
 pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
-    let root_manifest = root.join("Cargo.toml");
+    let root_manifest = root.join(CARGO_MANIFEST_FILENAME);
     let Ok(text) = std::fs::read_to_string(&root_manifest) else {
         return HashSet::new();
     };
@@ -368,7 +371,9 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
         let mut out = HashSet::new();
         for entry in arr.iter().filter_map(|v| v.as_str()) {
             for path in expand_member_entry(root, entry) {
-                if let Some(member) = canonical_member(&canonical_root, &path) {
+                if let Some(member) =
+                    canonical_member(&canonical_root, &path, CARGO_MANIFEST_FILENAME)
+                {
                     out.insert(member);
                 }
             }
@@ -382,64 +387,29 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
         let Some(table) = value.get(table_name).and_then(|v| v.as_table()) else {
             continue;
         };
-        for (_dep_name, dep_value) in table.iter() {
-            let Some(path_str) = dep_value
+        for dep in table.values() {
+            let Some(path_str) = dep
                 .as_table()
                 .and_then(|t| t.get("path"))
                 .and_then(|v| v.as_str())
             else {
                 continue;
             };
-            if let Some(member) = canonical_member(&canonical_root, &root.join(path_str)) {
+            if let Some(member) =
+                canonical_member(&canonical_root, &root.join(path_str), CARGO_MANIFEST_FILENAME)
+            {
                 candidates.insert(member);
             }
         }
     }
 
-    let excluded = collect("exclude");
-    for ex in &excluded {
-        candidates.remove(ex);
+    for ex in collect("exclude") {
+        candidates.remove(&ex);
     }
     if let Ok(canonical_root_manifest) = root_manifest.canonicalize() {
         candidates.remove(&canonical_root_manifest);
     }
     candidates
-}
-
-/// Expand a single `members`/`exclude` entry against `<root>`. Supports
-/// literal entries (`./crates/foo`, `examples/bar`) and trailing-`/*`
-/// globs (`crates/*`). Returns directory paths whose `Cargo.toml` may
-/// then exist; existence is checked downstream by `canonical_member`.
-fn expand_member_entry(root: &Path, entry: &str) -> Vec<PathBuf> {
-    if let Some(prefix) = entry.strip_suffix("/*") {
-        let parent = root.join(prefix);
-        let Ok(read) = std::fs::read_dir(&parent) else {
-            return Vec::new();
-        };
-        let mut out = Vec::new();
-        for entry in read.flatten() {
-            let path = entry.path();
-            if path.is_dir() {
-                out.push(path);
-            }
-        }
-        out
-    } else if entry.contains('*') || entry.contains('?') {
-        // Unsupported glob shape; honest no-op.
-        Vec::new()
-    } else {
-        vec![root.join(entry)]
-    }
-}
-
-/// Resolve a member directory to its canonical `Cargo.toml`, requiring
-/// the file to exist and to live under `canonical_root` (no `..` escape,
-/// no absolute override).
-fn canonical_member(canonical_root: &Path, dir: &Path) -> Option<PathBuf> {
-    let canonical_manifest = dir.join("Cargo.toml").canonicalize().ok()?;
-    canonical_manifest
-        .starts_with(canonical_root)
-        .then_some(canonical_manifest)
 }
 
 #[cfg(test)]

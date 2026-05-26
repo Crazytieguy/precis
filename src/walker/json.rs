@@ -7,8 +7,7 @@
 //! generated JSONs are skipped. The full key→batch mapping lives in the
 //! `is_*_key` predicates below.
 
-use std::cell::{OnceCell, RefCell};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -18,6 +17,7 @@ use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
 use crate::value::mix_signals;
 
+use super::workspace::{WorkspaceMembership, canonical_member, expand_member_entry};
 use super::{
     FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
     single_file_lines_content,
@@ -35,28 +35,14 @@ const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 /// member set (npm/yarn `workspaces` + `pnpm-workspace.yaml`).
 #[derive(Default)]
 pub struct JsonState {
-    members: OnceCell<HashSet<PathBuf>>,
-    member_lookup: RefCell<HashMap<PathBuf, bool>>,
+    membership: WorkspaceMembership,
 }
 
 impl JsonState {
     /// `true` iff `file` is a workspace-member `package.json`.
     pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
-        let members = self.members.get_or_init(|| collect_workspace_members(root));
-        if members.is_empty() {
-            return false;
-        }
-        if let Some(&hit) = self.member_lookup.borrow().get(file) {
-            return hit;
-        }
-        let hit = file
-            .canonicalize()
-            .map(|c| members.contains(&c))
-            .unwrap_or(false);
-        self.member_lookup
-            .borrow_mut()
-            .insert(file.to_path_buf(), hit);
-        hit
+        self.membership
+            .is_member(file, || collect_workspace_members(root))
     }
 }
 
@@ -497,6 +483,8 @@ fn unquote_string(node: Node, source: &str) -> String {
 
 // --- JS/TS workspace-member resolution ---
 
+const PACKAGE_JSON_FILENAME: &str = "package.json";
+
 /// JS/TS workspace members — union of `package.json#workspaces` and
 /// `pnpm-workspace.yaml`'s `packages:` list. Only trailing-`/*` globs
 /// are honored. Any pnpm `!` negation opts the repo out entirely.
@@ -511,13 +499,13 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     let mut out = HashSet::new();
     for entry in npm_workspaces_entries(root).into_iter().chain(pnpm) {
         for dir in expand_member_entry(root, &entry) {
-            if let Some(member) = canonical_member_manifest(&canonical_root, &dir) {
+            if let Some(member) = canonical_member(&canonical_root, &dir, PACKAGE_JSON_FILENAME) {
                 out.insert(member);
             }
         }
     }
 
-    if let Ok(canonical_root_manifest) = root.join("package.json").canonicalize() {
+    if let Ok(canonical_root_manifest) = root.join(PACKAGE_JSON_FILENAME).canonicalize() {
         out.remove(&canonical_root_manifest);
     }
     out
@@ -660,43 +648,6 @@ fn unquote_yaml_scalar(raw: &str) -> String {
         }
     }
     raw.to_string()
-}
-
-/// Expand a single workspace entry against `<root>`. Supports literal
-/// paths (`./packages/foo`) and trailing-`/*` globs (`packages/*`).
-/// Returns directory paths whose `package.json` may then exist;
-/// existence is checked downstream by `canonical_member_manifest`.
-fn expand_member_entry(root: &Path, entry: &str) -> Vec<PathBuf> {
-    let trimmed = entry.trim_start_matches("./");
-    if let Some(prefix) = trimmed.strip_suffix("/*") {
-        let parent = root.join(prefix);
-        let Ok(read) = std::fs::read_dir(&parent) else {
-            return Vec::new();
-        };
-        let mut out = Vec::new();
-        for entry in read.flatten() {
-            let path = entry.path();
-            if path.is_dir() {
-                out.push(path);
-            }
-        }
-        out
-    } else if trimmed.contains('*') || trimmed.contains('?') {
-        // Unsupported glob shape; honest no-op.
-        Vec::new()
-    } else {
-        vec![root.join(trimmed)]
-    }
-}
-
-/// Resolve a member directory to its canonical `package.json`,
-/// requiring the file to exist and to live under `canonical_root`
-/// (no `..` escape, no absolute override).
-fn canonical_member_manifest(canonical_root: &Path, dir: &Path) -> Option<PathBuf> {
-    let canonical_manifest = dir.join("package.json").canonicalize().ok()?;
-    canonical_manifest
-        .starts_with(canonical_root)
-        .then_some(canonical_manifest)
 }
 
 #[cfg(test)]
