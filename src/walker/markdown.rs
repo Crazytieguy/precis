@@ -1030,42 +1030,6 @@ enum HeadlineExtend {
     SeekExtension,
 }
 
-/// An html_block is a "navigation block" iff it contains 3+ anchor
-/// tags AND the text between them (after stripping all tags) is
-/// dominantly separator punctuation. Matches superstruct's
-/// `<p align="center"> <a href="#usage">Usage</a> • ...</p>` shape.
-/// Decorative for headline purposes — the link labels alone add no
-/// orientation value the FS listing doesn't already imply.
-fn is_nav_link_html_block(block: Node, source: &str) -> bool {
-    let raw = &source[block.start_byte()..block.end_byte()];
-    let anchor_count = raw.matches("<a ").count();
-    if anchor_count < 3 {
-        return false;
-    }
-    let stripped = strip_html_tags(raw);
-    let separator_tokens = stripped
-        .split_whitespace()
-        .filter(|w| {
-            !w.is_empty()
-                && w.chars().all(|c| {
-                    matches!(
-                        c,
-                        '\u{2022}'
-                            | '\u{00B7}'
-                            | '|'
-                            | '/'
-                            | '\\'
-                            | ','
-                            | '-'
-                            | '\u{2014}'
-                            | '\u{2013}'
-                    )
-                })
-        })
-        .count();
-    separator_tokens + 1 >= anchor_count
-}
-
 fn strip_html_tags(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
     let bytes = s.as_bytes();
@@ -1789,9 +1753,7 @@ fn extend_prelude_lede(
             "paragraph"
                 if is_decorative_paragraph(block, source)
                     || is_nav_link_paragraph(block, source) => {}
-            "html_block"
-                if is_decorative_html_block(block, source)
-                    || is_nav_link_html_block(block, source) => {}
+            "html_block" if is_decorative_html_block(block, source) => {}
             "block_quote" if is_admin_block_quote(block, source) => {}
             _ => break,
         }
@@ -1810,9 +1772,7 @@ fn extend_prelude_lede(
                     "paragraph"
                         if is_decorative_paragraph(next, source)
                             || is_nav_link_paragraph(next, source) => {}
-                    "html_block"
-                        if is_decorative_html_block(next, source)
-                            || is_nav_link_html_block(next, source) => {}
+                    "html_block" if is_decorative_html_block(next, source) => {}
                     "block_quote" if is_admin_block_quote(next, source) => {}
                     _ => break,
                 }
