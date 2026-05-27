@@ -213,13 +213,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     });
                 }
             }
-        } else if let Some(content) = build_per_file_content(file, ctx, parse_ts, collect_imports) {
-            out.push(Batch {
-                key: TsKey::Imports { file: file.clone() }.into(),
-                predecessor: module_predecessor.clone(),
-                content,
-                value: imports_value(file, ctx, js_factor),
-            });
         }
 
         let Some((source, tree)) = parse_ts(ctx, file) else {
