@@ -218,22 +218,6 @@ sqlite-dist.toml
     8→git_tag_format = "v$VERSION"
 sqlite-vec.c
 sqlite-vec.h.tmpl
-    4→#ifndef SQLITE_CORE
-    5→#include "sqlite3ext.h"
-    6→#else
-    7→#include "sqlite3.h"
-    8→#endif
-    20→#define SQLITE_VEC_VERSION "v${VERSION}"
-    21→// TODO rm
-    22→#define SQLITE_VEC_DATE "${DATE}"
-    23→#define SQLITE_VEC_SOURCE "${SOURCE}"
-    …
-    26→#define SQLITE_VEC_VERSION_MAJOR ${VERSION_MAJOR}
-    27→#define SQLITE_VEC_VERSION_MINOR ${VERSION_MINOR}
-    28→#define SQLITE_VEC_VERSION_PATCH ${VERSION_PATCH}
-    …
-    34→SQLITE_VEC_API int sqlite3_vec_init(sqlite3 *db, char **pzErrMsg,
-    35→                  const sqlite3_api_routines *pApi);
 test.sql
 tests/
 tmp-static.py

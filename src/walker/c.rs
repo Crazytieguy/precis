@@ -801,7 +801,7 @@ fn declarator_is_function(node: Node) -> bool {
 
 // --- value functions ----------------------------------------------------
 
-/// C source files this walker owns: `.c`, `.h`, and `.h.tmpl`.
+/// C source files this walker owns: `.c` and `.h`.
 fn c_source_files(dir: &Path) -> Vec<PathBuf> {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return Vec::new();
@@ -821,18 +821,17 @@ fn c_source_files(dir: &Path) -> Vec<PathBuf> {
     out
 }
 
-/// True for `.c`, `.h`, and `.h.tmpl` filenames.
+/// True for `.c` and `.h` filenames.
 fn is_c_source_file_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
-    lower.ends_with(".c") || lower.ends_with(".h") || lower.ends_with(".h.tmpl")
+    lower.ends_with(".c") || lower.ends_with(".h")
 }
 
 fn is_header_file(path: &Path) -> bool {
     let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
         return false;
     };
-    let lower = name.to_ascii_lowercase();
-    lower.ends_with(".h") || lower.ends_with(".h.tmpl")
+    name.to_ascii_lowercase().ends_with(".h")
 }
 
 /// Damp internal headers explicitly marked non-public by `Makefile.am`.
@@ -893,7 +892,7 @@ fn secondary_root_pair_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     // the root — otherwise this is a single-pair flat project (sds
     // structure) where every depth-1 file is part of the project's
     // own surface.
-    let primary_present = ["c", "h", "h.tmpl"]
+    let primary_present = ["c", "h"]
         .iter()
         .any(|ext| ctx.root().join(format!("{repo}.{ext}")).is_file());
     if primary_present {
@@ -903,15 +902,10 @@ fn secondary_root_pair_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-/// Project-name stem of a C source file, treating `.h.tmpl` as a
-/// header variant whose stem is everything before `.h.tmpl`
-/// (`sqlite-vec.h.tmpl` → `sqlite-vec`). Plain `.c` / `.h` files use
-/// `file_stem()`.
+/// Project-name stem of a C source file. Thin wrapper over
+/// [`Path::file_stem`] kept as a named helper to localize the
+/// concept across `c.rs` callers.
 fn c_source_stem(file: &Path) -> Option<&str> {
-    let name = file.file_name().and_then(|n| n.to_str())?;
-    if name.to_ascii_lowercase().ends_with(".h.tmpl") {
-        return Some(&name[..name.len() - ".h.tmpl".len()]);
-    }
     file.file_stem().and_then(|s| s.to_str())
 }
 
