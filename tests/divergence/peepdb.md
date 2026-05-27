@@ -119,20 +119,20 @@ Score(3000)=0.592 I=0.831 C=0.421 ns_rows≤3K=18/40 (reached=8 partial=2 missin
 | walker |  | 3111 | 34 | README.md section #20 |  |  | 0.594 |
 | walker |  | 3144 | 33 | docs/installation.md section #4 |  |  | 0.594 |
 | walker |  | 3177 | 33 | docs/usage.md section #2 |  |  | 0.594 |
-| walker |  | 3180 | 3 | listing of '.github' |  |  | 0.594 |
-| walker |  | 3188 | 8 | listing of '.github/workflows' |  |  | 0.609 |
-| walker |  | 3225 | 37 | README.md section #24 |  |  | 0.609 |
-| walker |  | 3377 | 152 | python decl at peepdb/cli.py:126 |  |  | 0.618 |
+| walker |  | 3198 | 21 | docs/README.md section #5 |  |  | 0.594 |
+| walker |  | 3201 | 3 | listing of '.github' |  |  | 0.594 |
+| walker |  | 3209 | 8 | listing of '.github/workflows' |  |  | 0.609 |
+| walker |  | 3246 | 37 | README.md section #24 |  |  | 0.609 |
+| walker |  | 3398 | 152 | python decl at peepdb/cli.py:126 |  |  | 0.618 |
 | ns | 3400 |  | 501 | cli.view — decorators + signature + dispatch into peep_db | 4.4 | 3.4 | 0.570 |
-| walker |  | 3424 | 47 | python decl doc at peepdb/cli.py:126 |  |  | 0.578 |
-| walker |  | 3463 | 39 | README.md section #23 |  |  | 0.578 |
-| walker |  | 3579 | 116 | README.md section #27 |  |  | 0.578 |
+| walker |  | 3445 | 47 | python decl doc at peepdb/cli.py:126 |  |  | 0.578 |
+| walker |  | 3484 | 39 | README.md section #23 |  |  | 0.578 |
+| walker |  | 3600 | 116 | README.md section #27 |  |  | 0.578 |
 | ns | 3604 |  | 204 | cli.view — table vs JSON output handling + main() | 4.5 | 4.4 | 0.561 |
-| walker |  | 3619 | 40 | README.md section #19 |  |  | 0.561 |
-| walker |  | 3651 | 32 | python imports in peepdb/db/base.py |  |  | 0.569 |
-| walker |  | 3683 | 32 | python imports in peepdb/db/mariadb.py |  |  | 0.569 |
-| walker |  | 3715 | 32 | python imports in peepdb/db/mysql.py |  |  | 0.569 |
-| walker |  | 3736 | 21 | docs/README.md section #5 |  |  | 0.569 |
+| walker |  | 3640 | 40 | README.md section #19 |  |  | 0.561 |
+| walker |  | 3672 | 32 | python imports in peepdb/db/base.py |  |  | 0.569 |
+| walker |  | 3704 | 32 | python imports in peepdb/db/mariadb.py |  |  | 0.569 |
+| walker |  | 3736 | 32 | python imports in peepdb/db/mysql.py |  |  | 0.569 |
 | walker |  | 3775 | 39 | python imports in peepdb/db/sqlite.py |  |  | 0.569 |
 | walker |  | 3822 | 47 | README.md section #12 |  |  | 0.569 |
 | walker |  | 3862 | 40 | python imports in peepdb/db/mssql.py |  |  | 0.569 |
@@ -281,14 +281,14 @@ Score(3000)=0.592 I=0.831 C=0.421 ns_rows≤3K=18/40 (reached=8 partial=2 missin
 | walker |  | 9397 | 11 | python method at peepdb/db/mssql.py:35 |  |  | 0.568 |
 | walker |  | 9442 | 45 | python method body at peepdb/db/mssql.py:7 body 8 |  |  | 0.568 |
 | walker |  | 9496 | 54 | python method body at peepdb/db/mssql.py:28 body 29 |  |  | 0.568 |
-| walker |  | 9506 | 10 | python decl body at peepdb/config.py:178 body 182 |  |  | 0.568 |
 | ns | 9526 |  | 470 | MSSQL adapter — distinctive lines (ODBC connection string, schema.table, OFFSET FETCH) | 6.8 | 4.2 | 0.556 |
+| walker |  | 9573 | 77 | docs/README.md section #6 |  |  | 0.556 |
+| walker |  | 9583 | 10 | python decl body at peepdb/config.py:178 body 182 |  |  | 0.556 |
 | ns | 9632 |  | 106 | Firebase adapter — distinctive __init__ override + Firestore client setup | 7.1 | 4.2 | 0.555 |
-| walker |  | 9640 | 134 | README.md section #21 |  |  | 0.555 |
 | ns | 9696 |  | 64 | Oracle adapter — service_name kwarg on connect | 7.2 | 4.2 | 0.553 |
-| walker |  | 9721 | 81 | python method body at peepdb/db/firebase.py:30 body 31 |  |  | 0.553 |
+| walker |  | 9717 | 134 | README.md section #21 |  |  | 0.553 |
 | ns | 9792 |  | 96 | test_cli — every test fn def line (truncated) | 7.3 |  | 0.549 |
+| walker |  | 9798 | 81 | python method body at peepdb/db/firebase.py:30 body 31 |  |  | 0.549 |
 | ns | 9848 |  | 56 | test_peepdb + test_data_types + test_mongodb_uri + test_sqlite — class/fn locations | 7.4 |  | 0.547 |
-| walker |  | 9875 | 154 | README.md section #25 |  |  | 0.547 |
 | ns | 9933 |  | 85 | README — all H2 section headings (location-only) | 7.5 |  | 0.551 |
-| walker |  | 9952 | 77 | docs/README.md section #6 |  |  | 0.551 |
+| walker |  | 9952 | 154 | README.md section #25 |  |  | 0.551 |

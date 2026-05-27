@@ -90,17 +90,17 @@ Score(3000)=0.625 I=0.834 C=0.468 ns_rows≤3K=18/44 (reached=9 partial=2 missin
 | ns | 6006 |  | 458 | backtrace.rs cfg landscape (locations) | 3.8 |  | 0.435 |
 | walker |  | 6130 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.435 |
 | ns | 6235 |  | 229 | nightly.rs locations + signatures | 3.9 |  | 0.434 |
-| walker |  | 6254 | 124 | pub-item doc body at src/lib.rs:468 |  |  | 0.434 |
-| walker |  | 6453 | 199 | README.md section #1 |  |  | 0.434 |
+| walker |  | 6329 | 199 | README.md section #1 |  |  | 0.434 |
+| walker |  | 6453 | 124 | pub-item doc body at src/lib.rs:468 |  |  | 0.434 |
 | ns | 6577 |  | 342 | ensure.rs orientation header (locations) | 3.10 |  | 0.425 |
 | walker |  | 6658 | 205 | README.md section #5 |  |  | 0.425 |
-| walker |  | 6696 | 38 | pub item at src/kind.rs:80 |  |  | 0.427 |
-| ns | 6817 |  | 240 | tests/common + drop helpers | 4.1 |  | 0.417 |
-| walker |  | 6911 | 215 | README.md section #4 |  |  | 0.417 |
-| walker |  | 6951 | 40 | pub item at src/kind.rs:58 |  |  | 0.420 |
-| walker |  | 6991 | 40 | pub item at src/kind.rs:104 |  |  | 0.423 |
-| ns | 7104 |  | 287 | test_context: Low/Mid/High chain helper + fns | 4.2 |  | 0.412 |
-| walker |  | 7232 | 241 | README.md section #2 |  |  | 0.412 |
+| ns | 6817 |  | 240 | tests/common + drop helpers | 4.1 |  | 0.415 |
+| walker |  | 6873 | 215 | README.md section #4 |  |  | 0.415 |
+| ns | 7104 |  | 287 | test_context: Low/Mid/High chain helper + fns | 4.2 |  | 0.403 |
+| walker |  | 7114 | 241 | README.md section #2 |  |  | 0.403 |
+| walker |  | 7152 | 38 | pub item at src/kind.rs:80 |  |  | 0.405 |
+| walker |  | 7192 | 40 | pub item at src/kind.rs:58 |  |  | 0.408 |
+| walker |  | 7232 | 40 | pub item at src/kind.rs:104 |  |  | 0.412 |
 | walker |  | 7301 | 69 | pub-item names surface in tests/test_ffi.rs |  |  | 0.412 |
 | walker |  | 7301 | 0 | pub item at tests/test_ffi.rs:7 |  |  | 0.412 |
 | walker |  | 7301 | 0 | pub item at tests/test_ffi.rs:12 |  |  | 0.412 |

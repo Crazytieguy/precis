@@ -3115,10 +3115,28 @@ kind = "full"
 
 [[batches]]
 position = 100
+key = 'Markdown(Section { file: "docs/README.md", section_index: 5 })'
+descriptor = "docs/README.md section #5"
+cost_tokens = 21
+cum_tokens = 3198
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 3180
+cum_tokens = 3201
 
 [batches.content]
 kind = "fs"
@@ -3128,11 +3146,11 @@ parent = ".github"
 entries = ["workflows"]
 
 [[batches]]
-position = 101
+position = 102
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 3188
+cum_tokens = 3209
 
 [batches.content]
 kind = "fs"
@@ -3142,11 +3160,11 @@ parent = ".github/workflows"
 entries = ["pages.yml", "test.yml"]
 
 [[batches]]
-position = 102
+position = 103
 key = 'Markdown(Section { file: "README.md", section_index: 24 })'
 descriptor = "README.md section #24"
 cost_tokens = 37
-cum_tokens = 3225
+cum_tokens = 3246
 
 [batches.content]
 kind = "lines"
@@ -3160,11 +3178,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 126 })'
 descriptor = "python decl at peepdb/cli.py:126"
 cost_tokens = 152
-cum_tokens = 3377
+cum_tokens = 3398
 
 [batches.content]
 kind = "lines"
@@ -3178,11 +3196,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Python(DeclDoc { file: "peepdb/cli.py", start_line: 126 })'
 descriptor = "python decl doc at peepdb/cli.py:126"
 cost_tokens = 47
-cum_tokens = 3424
+cum_tokens = 3445
 
 [batches.content]
 kind = "lines"
@@ -3204,11 +3222,11 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Markdown(Section { file: "README.md", section_index: 23 })'
 descriptor = "README.md section #23"
 cost_tokens = 39
-cum_tokens = 3463
+cum_tokens = 3484
 
 [batches.content]
 kind = "lines"
@@ -3222,11 +3240,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Markdown(Section { file: "README.md", section_index: 27 })'
 descriptor = "README.md section #27"
 cost_tokens = 116
-cum_tokens = 3579
+cum_tokens = 3600
 
 [batches.content]
 kind = "lines"
@@ -3256,11 +3274,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Markdown(Section { file: "README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 40
-cum_tokens = 3619
+cum_tokens = 3640
 
 [batches.content]
 kind = "lines"
@@ -3274,11 +3292,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Python(Imports { file: "peepdb/db/base.py" })'
 descriptor = "python imports in peepdb/db/base.py"
 cost_tokens = 32
-cum_tokens = 3651
+cum_tokens = 3672
 
 [batches.content]
 kind = "lines"
@@ -3292,11 +3310,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Python(Imports { file: "peepdb/db/mariadb.py" })'
 descriptor = "python imports in peepdb/db/mariadb.py"
 cost_tokens = 32
-cum_tokens = 3683
+cum_tokens = 3704
 
 [batches.content]
 kind = "lines"
@@ -3310,11 +3328,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Python(Imports { file: "peepdb/db/mysql.py" })'
 descriptor = "python imports in peepdb/db/mysql.py"
 cost_tokens = 32
-cum_tokens = 3715
+cum_tokens = 3736
 
 [batches.content]
 kind = "lines"
@@ -3323,24 +3341,6 @@ kind = "lines"
 path = "peepdb/db/mysql.py"
 start = 1
 end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Markdown(Section { file: "docs/README.md", section_index: 5 })'
-descriptor = "docs/README.md section #5"
-cost_tokens = 21
-cum_tokens = 3736
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 70
-end = 70
 
 [batches.content.spans.render]
 kind = "full"
@@ -6991,10 +6991,28 @@ kind = "full"
 
 [[batches]]
 position = 246
+key = 'Markdown(Section { file: "docs/README.md", section_index: 6 })'
+descriptor = "docs/README.md section #6"
+cost_tokens = 77
+cum_tokens = 9573
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 72
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 247
 key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 178, body_start_line: 182 })'
 descriptor = "python decl body at peepdb/config.py:178 body 182"
 cost_tokens = 10
-cum_tokens = 9506
+cum_tokens = 9583
 
 [batches.content]
 kind = "lines"
@@ -7008,11 +7026,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 247
+position = 248
 key = 'Markdown(Section { file: "README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 134
-cum_tokens = 9640
+cum_tokens = 9717
 
 [batches.content]
 kind = "lines"
@@ -7026,11 +7044,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 248
+position = 249
 key = 'Python(MethodBody { file: "peepdb/db/firebase.py", start_line: 30, body_start_line: 31 })'
 descriptor = "python method body at peepdb/db/firebase.py:30 body 31"
 cost_tokens = 81
-cum_tokens = 9721
+cum_tokens = 9798
 
 [batches.content]
 kind = "lines"
@@ -7044,11 +7062,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 249
+position = 250
 key = 'Markdown(Section { file: "README.md", section_index: 25 })'
 descriptor = "README.md section #25"
 cost_tokens = 154
-cum_tokens = 9875
+cum_tokens = 9952
 
 [batches.content]
 kind = "lines"
@@ -7057,24 +7075,6 @@ kind = "lines"
 path = "README.md"
 start = 127
 end = 140
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 250
-key = 'Markdown(Section { file: "docs/README.md", section_index: 6 })'
-descriptor = "docs/README.md section #6"
-cost_tokens = 77
-cum_tokens = 9952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 72
-end = 74
 
 [batches.content.spans.render]
 kind = "full"

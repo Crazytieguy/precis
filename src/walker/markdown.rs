@@ -16,14 +16,12 @@
 //! - `Section { file, section_index }` — one scheduling unit of a
 //!   markdown file's body, 0-indexed. Default granularity is one
 //!   H2-level top-level section per batch; `logical_sections`
-//!   subdivides via one of three rules when applicable. *Bullet split*
-//!   (anyhow's `## Details` shape) — an H2 whose non-decorative
-//!   content is a single `list` block becomes one `BulletItem` per
-//!   substantive top-level item. *H3 split* (content-heavy H2 with
-//!   ≥2 H3 children) becomes one `Intro` (when its body is
-//!   substantive) plus one `H3Child` per H3. *Body-block split*
-//!   refines large H3 children into direct paragraph/code/list blocks,
-//!   and can split list-only H2 sections into one body block per item.
+//!   subdivides via one of two rules when applicable. *H3 split*
+//!   (content-heavy H2 with ≥2 H3 children) becomes one `Intro`
+//!   (when its body is substantive) plus one `H3Child` per H3.
+//!   *Body-block split* refines large H3 children into direct
+//!   paragraph/code/list blocks, and can split list-only H2 sections
+//!   into one body block per item (anyhow's `## Details` shape).
 //!   All per-child kinds carry a global signal scale
 //!   (`SUB_SECTION_SIGNAL_SCALE` / `BODY_BLOCK_SIGNAL_SCALE`) to keep
 //!   them from over-ranking once the marginal cost drops to
@@ -66,8 +64,8 @@ const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 /// Minimum H2 source bytes to split into H3/bullet sub-sections.
 const H2_SPLIT_BYTES: usize = 600;
 
-/// Multiplier on the three value signals for `H3Child` / `BulletItem`
-/// ranges — compensates for smaller marginal cost.
+/// Multiplier on the three value signals for `H3Child` ranges —
+/// compensates for smaller marginal cost.
 const SUB_SECTION_SIGNAL_SCALE: f64 = 0.45;
 
 /// Multiplier for `BodyBlock` (paragraph / list item) ranges.
@@ -76,13 +74,6 @@ const BODY_BLOCK_SIGNAL_SCALE: f64 = 0.60;
 /// Minimum source bytes before a section is split into body blocks.
 /// Lower than `H2_SPLIT_BYTES` since it can apply after H2 splitting.
 const BODY_BLOCK_SPLIT_BYTES: usize = 350;
-
-/// Bullet-list-split predicate parameters. Both gates must hold — the
-/// section's list needs `≥BULLET_MIN_ITEMS` items, of which at least
-/// `BULLET_MIN_LARGE_ITEMS` exceed `BULLET_LARGE_ITEM_BYTES`.
-const BULLET_MIN_ITEMS: usize = 3;
-const BULLET_MIN_LARGE_ITEMS: usize = 2;
-const BULLET_LARGE_ITEM_BYTES: usize = 200;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md");
@@ -354,7 +345,7 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
     };
     match range.kind {
         SectionKind::Whole | SectionKind::Intro => parent,
-        SectionKind::H3Child | SectionKind::BulletItem => parent * sub_scale,
+        SectionKind::H3Child => parent * sub_scale,
         SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
     }
 }
@@ -1110,8 +1101,6 @@ enum SectionKind {
     Intro,
     /// One H3 sub-section under a split H2.
     H3Child,
-    /// One top-level bullet item under a bullet-split H2.
-    BulletItem,
     /// One direct block inside a long split section.
     BodyBlock,
 }
@@ -1150,34 +1139,6 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     split_eligible_file && outline_will_emit && bytes >= H2_SPLIT_BYTES;
                 let body_block_split_gate = split_eligible_file && bytes >= H2_SPLIT_BYTES;
                 let usage_h2 = readme && is_canonical_usage_h2(*node, source);
-
-                let bullet_items = structural_split_gate
-                    .then(|| should_split_by_bullets(*node, source))
-                    .flatten();
-
-                if let Some(items) = bullet_items {
-                    push_intro(
-                        &mut out,
-                        *node,
-                        *start,
-                        items[0],
-                        parent_idx,
-                        synthetic_intro_present,
-                        source,
-                    );
-                    for item in items {
-                        let (item_start, item_end) = node_row_range(item, source);
-                        out.push(SectionRange {
-                            start: item_start,
-                            end: item_end,
-                            kind: SectionKind::BulletItem,
-                            parent_index: parent_idx,
-                            synthetic_intro_present,
-                            parent_is_canonical_usage_h2: false,
-                        });
-                    }
-                    continue;
-                }
 
                 let h3s = if structural_split_gate {
                     direct_h3_children(*node)
@@ -1481,40 +1442,6 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
             end: span_last_row(s, source) + 1,
         })
         .collect()
-}
-
-/// True iff the H2 section's only structural content is a single
-/// `list` block (decorative blocks like trailing `<br>` or
-/// image-only paragraphs are tolerated). Returns the substantive
-/// list items that the caller should emit as `BulletItem` ranges, so
-/// the same item set drives both the size gate and emission —
-/// otherwise a section with many raw items but few substantive ones
-/// could pass the gate and then emit too few ranges, suppressing a
-/// legitimate H3 split.
-///
-/// Decorative siblings around the list (e.g. anyhow's trailing
-/// `<br>`) are tolerated but not preserved by any emitted range.
-/// That's load-bearing on the decorative classifiers
-/// ([`is_decorative_html_block`] / [`is_decorative_paragraph`]) being
-/// strict: image-only / badge-only blocks have no rendered content
-/// worth scheduling.
-fn should_split_by_bullets<'a>(h2_section: Node<'a>, source: &str) -> Option<Vec<Node<'a>>> {
-    let items: Vec<Node<'a>> =
-        top_level_list_items(single_list_with_decorative_siblings(h2_section, source)?)
-            .into_iter()
-            .filter(|i| has_substantive_list_item(*i))
-            .collect();
-    if items.len() < BULLET_MIN_ITEMS {
-        return None;
-    }
-    let large = items
-        .iter()
-        .filter(|i| i.end_byte() - i.start_byte() >= BULLET_LARGE_ITEM_BYTES)
-        .count();
-    if large < BULLET_MIN_LARGE_ITEMS {
-        return None;
-    }
-    Some(items)
 }
 
 /// Top-level `list_item` children of a `list` node. Excludes nested
@@ -2397,7 +2324,7 @@ mod tests {
 
     /// anyhow `## Details` shape — heading + bulleted list of items
     /// each containing a code-block-ish prose blob, then a trailing
-    /// `<br>` html_block before the next H2. Must split into BulletItem
+    /// `<br>` html_block before the next H2. Must split into BodyBlock
     /// ranges; trailing decorative html_block is tolerated; no Intro
     /// (heading-only prelude).
     #[test]
@@ -2411,14 +2338,14 @@ mod tests {
             !kinds.contains(&SectionKind::Intro),
             "no Intro for heading-only prelude; got {ranges:?}"
         );
-        let bullets: Vec<&SectionRange> = ranges
+        let body_blocks: Vec<&SectionRange> = ranges
             .iter()
-            .filter(|r| r.kind == SectionKind::BulletItem)
+            .filter(|r| r.kind == SectionKind::BodyBlock)
             .collect();
         assert_eq!(
-            bullets.len(),
+            body_blocks.len(),
             3,
-            "expected 3 BulletItem ranges; got {ranges:?}"
+            "expected 3 BodyBlock ranges; got {ranges:?}"
         );
         // Trailing `<br>` row sits after the last bullet's range.
         let br_row = src
@@ -2427,13 +2354,13 @@ mod tests {
             .map(|i| i + 1)
             .expect("test source must contain <br>");
         assert!(
-            bullets.iter().all(|b| b.end < br_row),
-            "<br> must not be inside any bullet range"
+            body_blocks.iter().all(|b| b.end < br_row),
+            "<br> must not be inside any body-block range"
         );
     }
 
     /// Real anyhow `## Details` text (rows 21-125 of fixture README,
-    /// trailing `<br>` included) must produce one BulletItem per real
+    /// trailing `<br>` included) must produce one BodyBlock per real
     /// item. Catches "predicate filters out the item" regressions
     /// against the data the feature is sized for.
     #[test]
@@ -2454,28 +2381,22 @@ mod tests {
         let details = lines[details_start..next_h2].join("\n");
         let src = format!("# Title\n\nTagline.\n\n{details}\n## Next\n\nbody.\n");
         let ranges = sections("README.md", &src);
-        let bullets: Vec<&SectionRange> = ranges
+        let body_blocks: Vec<&SectionRange> = ranges
             .iter()
-            .filter(|r| r.kind == SectionKind::BulletItem)
+            .filter(|r| r.kind == SectionKind::BodyBlock)
             .collect();
         // anyhow's ## Details has 6 top-level bullets; expect each to survive.
         assert_eq!(
-            bullets.len(),
+            body_blocks.len(),
             6,
-            "expected 6 BulletItem ranges from real anyhow ## Details; got {ranges:?}"
+            "expected 6 BodyBlock ranges from real anyhow ## Details; got {ranges:?}"
         );
     }
 
-    /// Short bullets (each well under `BULLET_LARGE_ITEM_BYTES`) miss the
-    /// specialized bullet split, but a long list still falls through to the
-    /// generic body-block split.
+    /// A long list-only section splits into one body block per item.
     #[test]
     fn markdown_h2_body_block_split_short_bullets() {
         let prefix = "# Title\n\nTagline.\n\n## Features";
-        // Make the section large enough overall that the byte gate
-        // can't single-handedly suppress; the specialized bullet-item
-        // gate should reject, then generic body blocks should recover
-        // one range per top-level item.
         let mut src = String::from(prefix);
         for i in 0..40 {
             src.push_str(&format!("\n- short item {i}\n"));
@@ -2488,7 +2409,7 @@ mod tests {
             .count();
         assert_eq!(
             body_blocks, 40,
-            "long short-bullet list must split into body blocks; got {ranges:?}"
+            "long bullet list must split into body blocks; got {ranges:?}"
         );
     }
 
@@ -2535,14 +2456,6 @@ mod tests {
     /// markdown walker make for image-only / badge-only content:
     /// there's no semantic value to preserve, so dropping it is
     /// fine.
-    ///
-    /// (A leading decorative paragraph before the list is a
-    /// theoretical case but doesn't occur in any current fixture; if
-    /// one ever does, the Intro range will pick it up via
-    /// `has_substantive_body`, which currently classifies any
-    /// non-blank row as substantive. The decorative classifier is
-    /// only consulted by the bullet-split predicate, not by the
-    /// Intro construction.)
     #[test]
     fn markdown_h2_split_bullets_trailing_decorative_html_block() {
         let prefix = "# Title\n\nTagline.\n\n## Details";
@@ -2551,14 +2464,14 @@ mod tests {
             "\n<p align=\"center\"><img src=\"./assets/footer.png\"/></p>\n\n## Next\n\nbody.\n",
         );
         let ranges = sections("README.md", &src);
-        let bullets: Vec<&SectionRange> = ranges
+        let body_blocks: Vec<&SectionRange> = ranges
             .iter()
-            .filter(|r| r.kind == SectionKind::BulletItem)
+            .filter(|r| r.kind == SectionKind::BodyBlock)
             .collect();
         assert_eq!(
-            bullets.len(),
+            body_blocks.len(),
             3,
-            "trailing decorative html_block must not block the bullet split; got {ranges:?}"
+            "trailing decorative html_block must not block the body-block split; got {ranges:?}"
         );
         let footer_row = src
             .lines()
@@ -2573,8 +2486,9 @@ mod tests {
         );
     }
 
-    /// Section has prose paragraph then list — predicate REJECTS
-    /// because the paragraph is a non-decorative non-list child.
+    /// Section has prose paragraph then list — list-only predicate
+    /// rejects because the paragraph is a non-decorative non-list
+    /// child, so no body-block split fires.
     #[test]
     fn markdown_h2_no_split_bullets_with_prose() {
         let prose = "Here are the details:\n\
@@ -2592,26 +2506,25 @@ mod tests {
         src.push_str("\n## Next\n\nbody.\n");
         let ranges = sections("README.md", &src);
         assert!(
-            !ranges.iter().any(|r| r.kind == SectionKind::BulletItem),
-            "prose-then-list section must not bullet-split; got {ranges:?}"
+            !ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
+            "prose-then-list section must not body-block-split; got {ranges:?}"
         );
     }
 
-    /// Changelog file class is gated out of bullet split (same gate as
-    /// H3 split — index-decay needs a stable per-H2 mapping).
+    /// Changelog file class is gated out of body-block split — index-
+    /// decay needs a stable per-H2 mapping.
     #[test]
     fn markdown_h2_no_split_bullets_changelog() {
         let src = make_bullet_section("## v1.0", 3, 4);
         let ranges = sections("CHANGELOG.md", &src);
         assert!(
-            !ranges.iter().any(|r| r.kind == SectionKind::BulletItem),
-            "changelog must not bullet-split; got {ranges:?}"
+            !ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
+            "changelog must not split; got {ranges:?}"
         );
     }
 
-    /// Outline-omitted file doesn't use the specialized `BulletItem`
-    /// split, but the generic body-block fallback can still emit the
-    /// substantive list items.
+    /// Outline-omitted file still uses the body-block fallback for
+    /// list-only H2 sections.
     #[test]
     fn markdown_h2_body_block_bullets_when_outline_omitted() {
         let mut src = String::from("# Title\n\nTagline.\n\n");
@@ -2628,10 +2541,6 @@ mod tests {
         assert!(
             ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
             "outline-omitted long list should fall back to body blocks; got {ranges:?}",
-        );
-        assert!(
-            !ranges.iter().any(|r| r.kind == SectionKind::BulletItem),
-            "outline-omitted file must not use BulletItem split; got {ranges:?}"
         );
     }
 

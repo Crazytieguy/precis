@@ -1955,44 +1955,10 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Rust(PubItemDocBody { file: "src/lib.rs", start_line: 468 })'
-descriptor = "pub-item doc body at src/lib.rs:468"
-cost_tokens = 124
-cum_tokens = 6254
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 439
-end = 441
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 458
-end = 460
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 462
-end = 467
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 199
-cum_tokens = 6453
+cum_tokens = 6329
 
 [batches.content]
 kind = "lines"
@@ -2038,6 +2004,40 @@ end = 39
 kind = "full"
 
 [[batches]]
+position = 61
+key = 'Rust(PubItemDocBody { file: "src/lib.rs", start_line: 468 })'
+descriptor = "pub-item doc body at src/lib.rs:468"
+cost_tokens = 124
+cum_tokens = 6453
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 439
+end = 441
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 458
+end = 460
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 462
+end = 467
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 62
 key = 'Markdown(Section { file: "README.md", section_index: 5 })'
 descriptor = "README.md section #5"
@@ -2073,28 +2073,10 @@ kind = "full"
 
 [[batches]]
 position = 63
-key = 'Rust(PubItem { file: "src/kind.rs", start_line: 80 })'
-descriptor = "pub item at src/kind.rs:80"
-cost_tokens = 38
-cum_tokens = 6696
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 80
-end = 85
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 215
-cum_tokens = 6911
+cum_tokens = 6873
 
 [batches.content]
 kind = "lines"
@@ -2124,47 +2106,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 65
-key = 'Rust(PubItem { file: "src/kind.rs", start_line: 58 })'
-descriptor = "pub item at src/kind.rs:58"
-cost_tokens = 40
-cum_tokens = 6951
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 58
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Rust(PubItem { file: "src/kind.rs", start_line: 104 })'
-descriptor = "pub item at src/kind.rs:104"
-cost_tokens = 40
-cum_tokens = 6991
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 104
-end = 109
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
+position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 241
-cum_tokens = 7232
+cum_tokens = 7114
 
 [batches.content]
 kind = "lines"
@@ -2213,6 +2159,60 @@ kind = "full"
 path = "README.md"
 start = 62
 end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Rust(PubItem { file: "src/kind.rs", start_line: 80 })'
+descriptor = "pub item at src/kind.rs:80"
+cost_tokens = 38
+cum_tokens = 7152
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 80
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Rust(PubItem { file: "src/kind.rs", start_line: 58 })'
+descriptor = "pub item at src/kind.rs:58"
+cost_tokens = 40
+cum_tokens = 7192
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 58
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Rust(PubItem { file: "src/kind.rs", start_line: 104 })'
+descriptor = "pub item at src/kind.rs:104"
+cost_tokens = 40
+cum_tokens = 7232
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 104
+end = 109
 
 [batches.content.spans.render]
 kind = "full"
