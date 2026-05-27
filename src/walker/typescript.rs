@@ -974,22 +974,28 @@ fn collect_commonjs_value_reexports(tree: &Tree, source: &str) -> HashSet<String
 }
 
 fn collect_object_export_names(node: Node, source: &str, out: &mut HashSet<String>) {
-    let mut cursor = node.walk();
-    for child in node.named_children(&mut cursor) {
-        match child.kind() {
-            "shorthand_property_identifier" | "identifier" => {
-                out.insert(source[child.start_byte()..child.end_byte()].to_string());
-            }
-            "pair" => {
-                if let Some(value) = child.child_by_field_name("value")
-                    && let Some(name) = identifier_text(value, source)
-                {
-                    out.insert(name.to_string());
-                }
-            }
-            _ => {}
-        }
+    for name in object_value_names(node, source) {
+        out.insert(name);
     }
+}
+
+/// Local identifier names bound on the value side of an `object` literal:
+/// shorthand `{ A }` yields `A`; `{ key: A }` yields `A`; computed/spread
+/// children are skipped. Used by `module.exports = { … }` collectors that
+/// need to map each entry to its local declaration name.
+fn object_value_names(node: Node, source: &str) -> Vec<String> {
+    let mut cursor = node.walk();
+    node.named_children(&mut cursor)
+        .filter_map(|child| match child.kind() {
+            "shorthand_property_identifier" | "identifier" => {
+                Some(source[child.start_byte()..child.end_byte()].to_string())
+            }
+            "pair" => child
+                .child_by_field_name("value")
+                .and_then(|v| identifier_text(v, source).map(str::to_string)),
+            _ => None,
+        })
+        .collect()
 }
 
 /// Identifier names bound to `module.exports` at file scope —
@@ -2890,20 +2896,8 @@ fn collect_reexported_source_paths(tree: &Tree, source: &str) -> Vec<String> {
         };
         match commonjs_export_target(left, source) {
             Some(CommonJsExportTarget::Namespace) if right.kind() == "object" => {
-                let mut object_cursor = right.walk();
-                for child in right.named_children(&mut object_cursor) {
-                    let local = match child.kind() {
-                        "shorthand_property_identifier" | "identifier" => {
-                            Some(source[child.start_byte()..child.end_byte()].to_string())
-                        }
-                        "pair" => child
-                            .child_by_field_name("value")
-                            .and_then(|v| identifier_text(v, source).map(str::to_string)),
-                        _ => None,
-                    };
-                    if let Some(name) = local
-                        && let Some(src) = import_bindings.get(&name)
-                    {
+                for name in object_value_names(right, source) {
+                    if let Some(src) = import_bindings.get(&name) {
                         out.push(src.clone());
                     }
                 }
