@@ -35,6 +35,11 @@ fn format_schedule_table(out: &mut String, ctx: &BuildCtx) {
     // row in the group. Otherwise tied walker + NS rows would show two
     // different Score values for the same `B`, which is order-dependent
     // garbage — `Score(B)` is a function of state, not of iteration order.
+    //
+    // Each pending row carries the formatted prefix (everything except
+    // the trailing Score column) so the Score can be appended after the
+    // group's state advance.
+    let mut pending: Vec<String> = Vec::new();
     loop {
         let next_cum = match (
             ns_iter.peek().map(|(_, r)| r.exp_t),
@@ -45,22 +50,19 @@ fn format_schedule_table(out: &mut String, ctx: &BuildCtx) {
             (None, Some(w)) => w,
             (Some(n), Some(w)) => n.min(w),
         };
-        let mut group: Vec<Row<'_>> = Vec::new();
+        pending.clear();
         // Walker rows for this cum first (arbitrary within-group order —
         // they all carry the same Score after state advance).
         while walker_iter.peek().is_some_and(|wr| wr.seen_t == next_cum) {
             let wr = walker_iter.next().unwrap();
             fold_walker_atoms(&mut walker_cum, &wr.atoms);
             walker_used = wr.seen_t;
-            group.push(Row {
-                source: "walker",
-                ns_cum: None,
-                walker_cum: Some(wr.seen_t),
-                marginal: wr.batch.cost_tokens,
-                descriptor: &wr.batch.descriptor,
-                id: "",
-                predecessor: "",
-            });
+            pending.push(format!(
+                "| walker |  | {} | {} | {} |  |  |",
+                wr.seen_t,
+                wr.batch.cost_tokens,
+                escape_cell(&wr.batch.descriptor),
+            ));
         }
         while ns_iter.peek().is_some_and(|(_, r)| r.exp_t == next_cum) {
             let (i, ns) = ns_iter.next().unwrap();
@@ -68,51 +70,21 @@ fn format_schedule_table(out: &mut String, ctx: &BuildCtx) {
             let marginal = ns.exp_t.saturating_sub(prev_ns_t);
             prev_ns_t = ns.exp_t;
             let nsb = &ctx.ns.batches[i];
-            group.push(Row {
-                source: "ns",
-                ns_cum: Some(ns.exp_t),
-                walker_cum: None,
+            pending.push(format!(
+                "| ns | {} |  | {} | {} | {} | {} |",
+                ns.exp_t,
                 marginal,
-                descriptor: &nsb.descriptor,
-                id: &nsb.id,
-                predecessor: nsb.predecessor.as_deref().unwrap_or(""),
-            });
+                escape_cell(&nsb.descriptor),
+                escape_cell(&nsb.id),
+                escape_cell(nsb.predecessor.as_deref().unwrap_or("")),
+            ));
         }
         let score =
             compute_score_at_running(ctx, next_cum, &walker_cum, a_b_atoms, walker_used).score;
-        for row in &group {
-            write_row(out, row, score);
+        for prefix in &pending {
+            writeln!(out, "{prefix} {score:.3} |").unwrap();
         }
     }
-}
-
-struct Row<'a> {
-    source: &'a str,
-    ns_cum: Option<usize>,
-    walker_cum: Option<usize>,
-    marginal: usize,
-    descriptor: &'a str,
-    id: &'a str,
-    predecessor: &'a str,
-}
-
-fn write_row(out: &mut String, row: &Row<'_>, score: f64) {
-    fn opt(c: Option<usize>) -> String {
-        c.map(|v| v.to_string()).unwrap_or_default()
-    }
-    writeln!(
-        out,
-        "| {} | {} | {} | {} | {} | {} | {} | {:.3} |",
-        row.source,
-        opt(row.ns_cum),
-        opt(row.walker_cum),
-        row.marginal,
-        escape_cell(row.descriptor),
-        escape_cell(row.id),
-        escape_cell(row.predecessor),
-        score,
-    )
-    .unwrap();
 }
 
 /// Markdown table-cell escape. Backslashes are doubled BEFORE pipes
