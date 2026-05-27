@@ -1731,30 +1731,28 @@ fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f6
     mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
-fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
-    let k = kind.kind_weight();
-    let class_boost = if matches!(kind, ItemKind::Class) {
+/// Module-private classes carry per-method query value (constructors,
+/// member sigs) — lift cat so each surface can compete against
+/// peer-level orientation batches in the early budget.
+fn module_item_class_boost(kind: ItemKind) -> f64 {
+    if matches!(kind, ItemKind::Class) {
         1.5
     } else {
         1.0
-    };
-    let cat = (0.38 * class_boost * k * entrypoint_boost(file)).min(1.0);
-    let fu = (0.7 * class_boost * k).min(1.0);
+    }
+}
+
+fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
+    let k = kind.kind_weight() * module_item_class_boost(kind);
+    let cat = (0.38 * k * entrypoint_boost(file)).min(1.0);
+    let fu = (0.7 * k).min(1.0);
     mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
-    let k = kind.kind_weight();
-    // Class method bodies carry per-method query value; lift cat so
-    // each method's body can compete against peer-level orientation
-    // batches in the early budget.
-    let class_boost = if matches!(kind, ItemKind::Class) {
-        1.5
-    } else {
-        1.0
-    };
-    let cat = (0.30 * class_boost * k * entrypoint_boost(file)).min(1.0);
-    let fu = (0.82 * class_boost * k).min(1.0);
+    let k = kind.kind_weight() * module_item_class_boost(kind);
+    let cat = (0.30 * k * entrypoint_boost(file)).min(1.0);
+    let fu = (0.82 * k).min(1.0);
     mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
 
@@ -2118,13 +2116,6 @@ fn decl_surface_lines(
                 }
             }
         }
-        "interface_declaration" | "type_alias_declaration" | "enum_declaration" => {
-            push_rows(
-                &mut full,
-                export_start_row,
-                node_end_row_trimmed(decl, source),
-            );
-        }
         "lexical_declaration" | "variable_declaration" => {
             if let Some(body) = find_fn_init_body(decl) {
                 let body_start_row = body.start_position().row;
@@ -2140,15 +2131,13 @@ fn decl_surface_lines(
                 );
             }
         }
-        _ => {
-            // Default-export expression with nothing structural —
-            // emit the single statement line.
-            push_rows(
-                &mut full,
-                export_start_row,
-                node_end_row_trimmed(decl, source),
-            );
-        }
+        // interface / type alias / enum span their whole declaration;
+        // default-export expressions with nothing structural fall here too.
+        _ => push_rows(
+            &mut full,
+            export_start_row,
+            node_end_row_trimmed(decl, source),
+        ),
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
