@@ -70,6 +70,18 @@ docs/
     debugging-core.gif
     debugging-languages.gif
     integrate-esm.md
+        1→## Integrating the ESM version of the Monaco Editor
+        …
+        9→### Using webpack
+        …
+        17→### Option 1: Using the Monaco Editor WebPack Plugin
+        …
+        62→### Option 2: Using plain webpack
+        …
+        135→### Using parcel
+        …
+        189→### Using Vite
+        …
     launch config.png
     out-folders.dio.svg
 editor.code-workspace
@@ -135,19 +147,11 @@ samples/
         …
         36→MIT
     browser-esm-esbuild/
-        .gitignore
-        build.js
-        dist/
-        index.html
-        index.js
-        package.json
-            2→	"name": "helloworld",
     browser-esm-parcel/
         .gitignore
         index.html
         package-lock.json
         package.json
-            2→	"name": "helloworld",
         src/
     browser-esm-vite/
     browser-esm-vite-react/
@@ -155,12 +159,6 @@ samples/
     browser-esm-webpack-monaco-plugin/
     browser-esm-webpack-small/
     browser-esm-webpack-typescript/
-        .gitignore
-        package.json
-            2→	"name": "monaco-esm-webpack-typescript",
-        src/
-        tsconfig.json
-        webpack.config.js
     browser-esm-webpack-typescript-react/
     electron-esm-webpack/
     legacy/

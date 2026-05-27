@@ -247,7 +247,6 @@ fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -
         0.4,
         super::file_depth_factor(file, ctx, is_orientation_doc(file)),
     ) * dense_md_sibling_factor(file, sibling_md_count)
-        * non_anchor_outline_factor(file, ctx)
 }
 
 /// Saturate the per-file outline value in dirs with many .md siblings —
@@ -261,21 +260,6 @@ fn dense_md_sibling_factor(file: &Path, sibling_md_count: usize) -> f64 {
         return 1.0;
     }
     ((DENSE_THRESHOLD as f64) / (sibling_md_count as f64)).sqrt()
-}
-
-/// Damp the outline value for non-README/non-orientation `.md` files at
-/// depth 2 (`docs/X.md`). Depth 1 and depth ≥ 3 keep full value — the
-/// damp targets only loose docs/ siblings that are rarely NS-anchored.
-const NON_ANCHOR_OUTLINE_FACTOR: f64 = 0.4;
-
-fn non_anchor_outline_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    if is_readme(file) || is_orientation_doc(file) {
-        return 1.0;
-    }
-    if ctx.depth_from_root(file) != 2 {
-        return 1.0;
-    }
-    NON_ANCHOR_OUTLINE_FACTOR
 }
 
 fn readme_section_value(

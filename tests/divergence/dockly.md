@@ -219,20 +219,22 @@ Score(3000)=0.471 I=0.698 C=0.317 ns_rows≤3K=17/39 (reached=5 partial=2 missin
 | walker |  | 8458 | 531 | README.md section #3 |  |  | 0.444 |
 | walker |  | 8486 | 28 | imports in src/themes/theme.selector.js |  |  | 0.444 |
 | walker |  | 8760 | 274 | export body at src/dockerUtil.js:5 body 126 |  |  | 0.471 |
-| walker |  | 8847 | 87 | export body at src/screen.js:18 body 170 |  |  | 0.482 |
+| walker |  | 8788 | 28 | headings outline in .github/PULL_REQUEST_TEMPLATE.md |  |  | 0.471 |
+| walker |  | 8788 | 0 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.471 |
+| walker |  | 8875 | 87 | export body at src/screen.js:18 body 170 |  |  | 0.482 |
 | ns | 8899 |  | 778 | toolbar.widget: command dicts (every keybinding) | 7.1 |  | 0.458 |
-| walker |  | 9006 | 159 | export body at src/widgetsTemplates/list.widget.template.js:8 body 89 |  |  | 0.458 |
-| walker |  | 9104 | 98 | export body at src/screen.js:18 body 153 |  |  | 0.473 |
-| walker |  | 9137 | 33 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.474 |
+| walker |  | 9034 | 159 | export body at src/widgetsTemplates/list.widget.template.js:8 body 89 |  |  | 0.458 |
+| walker |  | 9132 | 98 | export body at src/screen.js:18 body 153 |  |  | 0.473 |
+| walker |  | 9165 | 33 | imports in src/widgetsTemplates/info.widget.template.js |  |  | 0.474 |
 | ns | 9169 |  | 270 | containerList: overrides + getSelectedContainer | 8.1 |  | 0.465 |
-| walker |  | 9312 | 175 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.481 |
-| walker |  | 9383 | 71 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.481 |
-| walker |  | 9383 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.481 |
-| walker |  | 9421 | 38 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.487 |
-| walker |  | 9464 | 43 | docs/README.md section #0 |  |  | 0.487 |
-| walker |  | 9508 | 44 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.494 |
-| walker |  | 9521 | 13 | listing of 'docs/src/assets' |  |  | 0.483 |
-| ns | 9521 |  | 352 | imageList + servicesList: headers + Selected getters | 8.2 |  | 0.483 |
-| walker |  | 9597 | 76 | CONTRIBUTING.md section #0 |  |  | 0.483 |
+| walker |  | 9340 | 175 | export body at src/widgetsTemplates/base.hook.template.js:6 body 8 |  |  | 0.481 |
+| walker |  | 9411 | 71 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.481 |
+| walker |  | 9411 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.481 |
+| walker |  | 9449 | 38 | imports in src/widgetsTemplates/base.hook.template.js |  |  | 0.487 |
+| walker |  | 9492 | 43 | docs/README.md section #0 |  |  | 0.487 |
+| ns | 9521 |  | 352 | imageList + servicesList: headers + Selected getters | 8.2 |  | 0.477 |
+| walker |  | 9536 | 44 | imports in src/widgetsTemplates/list.widget.template.js |  |  | 0.483 |
+| walker |  | 9549 | 13 | listing of 'docs/src/assets' |  |  | 0.483 |
+| walker |  | 9625 | 76 | CONTRIBUTING.md section #0 |  |  | 0.483 |
 | ns | 9630 |  | 109 | actionStatus + searchInput + actionsMenu: identity anchors | 9.1 |  | 0.480 |
 | ns | 9705 |  | 75 | containerInfo + servicesInfo + imageInfo: identity anchors | 9.2 |  | 0.477 |

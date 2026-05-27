@@ -67,6 +67,12 @@ contribute/
     build.sh
     conf/
     contribute.md
+        1→# Contribute README
+        2→Thanks for your contribution, you can follow these step to run this repo and debug it.
+        3→## Run demo
+        …
+        30→## Contribute your code
+        31→just write your code and push it.
 examples/
     hooks/
     scripts/
@@ -107,14 +113,6 @@ internal/
     agent/
         agent.go
         factory.go
-            15→type SpinnerFunc func(message string, fn func() error) error
-            …
-            19→type AgentCreationOptions struct {
-            …
-            43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
-            …
-            76→func ParseModelName(modelString string) (provider, model string) {
-            …
         streaming.go
             19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
             …

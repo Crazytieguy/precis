@@ -1,7 +1,7 @@
 fixture = "dockly"
 budget = 10000
-cumulative_tokens = 9597
-batch_count = 195
+cumulative_tokens = 9625
+batch_count = 197
 
 [[batches]]
 position = 1
@@ -5315,10 +5315,86 @@ kind = "full"
 
 [[batches]]
 position = 184
+key = 'Markdown(HeadingsOutline { file: ".github/PULL_REQUEST_TEMPLATE.md" })'
+descriptor = "headings outline in .github/PULL_REQUEST_TEMPLATE.md"
+cost_tokens = 28
+cum_tokens = 8788
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 185
+key = 'Markdown(Section { file: ".github/PULL_REQUEST_TEMPLATE.md", section_index: 0 })'
+descriptor = ".github/PULL_REQUEST_TEMPLATE.md section #0"
+cost_tokens = 0
+cum_tokens = 8788
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 170 })'
 descriptor = "export body at src/screen.js:18 body 170"
 cost_tokens = 87
-cum_tokens = 8847
+cum_tokens = 8875
 
 [batches.content]
 kind = "lines"
@@ -5332,11 +5408,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 185
+position = 187
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 89 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 89"
 cost_tokens = 159
-cum_tokens = 9006
+cum_tokens = 9034
 
 [batches.content]
 kind = "lines"
@@ -5350,11 +5426,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 186
+position = 188
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 153 })'
 descriptor = "export body at src/screen.js:18 body 153"
 cost_tokens = 98
-cum_tokens = 9104
+cum_tokens = 9132
 
 [batches.content]
 kind = "lines"
@@ -5384,11 +5460,11 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 187
+position = 189
 key = 'Typescript(Imports { file: "src/widgetsTemplates/info.widget.template.js" })'
 descriptor = "imports in src/widgetsTemplates/info.widget.template.js"
 cost_tokens = 33
-cum_tokens = 9137
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -5410,11 +5486,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 188
+position = 190
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/base.hook.template.js", start_line: 6, body_start_line: 8 })'
 descriptor = "export body at src/widgetsTemplates/base.hook.template.js:6 body 8"
 cost_tokens = 175
-cum_tokens = 9312
+cum_tokens = 9340
 
 [batches.content]
 kind = "lines"
@@ -5460,11 +5536,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 189
+position = 191
 key = 'Markdown(HeadingsOutline { file: "CODE_OF_CONDUCT.md" })'
 descriptor = "headings outline in CODE_OF_CONDUCT.md"
 cost_tokens = 71
-cum_tokens = 9383
+cum_tokens = 9411
 
 [batches.content]
 kind = "lines"
@@ -5582,11 +5658,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 192
 key = 'Markdown(Section { file: "CODE_OF_CONDUCT.md", section_index: 0 })'
 descriptor = "CODE_OF_CONDUCT.md section #0"
 cost_tokens = 0
-cum_tokens = 9383
+cum_tokens = 9411
 
 [batches.content]
 kind = "lines"
@@ -5600,11 +5676,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 191
+position = 193
 key = 'Typescript(Imports { file: "src/widgetsTemplates/base.hook.template.js" })'
 descriptor = "imports in src/widgetsTemplates/base.hook.template.js"
 cost_tokens = 38
-cum_tokens = 9421
+cum_tokens = 9449
 
 [batches.content]
 kind = "lines"
@@ -5618,11 +5694,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 192
+position = 194
 key = 'Markdown(Section { file: "docs/README.md", section_index: 0 })'
 descriptor = "docs/README.md section #0"
 cost_tokens = 43
-cum_tokens = 9464
+cum_tokens = 9492
 
 [batches.content]
 kind = "lines"
@@ -5636,11 +5712,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 193
+position = 195
 key = 'Typescript(Imports { file: "src/widgetsTemplates/list.widget.template.js" })'
 descriptor = "imports in src/widgetsTemplates/list.widget.template.js"
 cost_tokens = 44
-cum_tokens = 9508
+cum_tokens = 9536
 
 [batches.content]
 kind = "lines"
@@ -5670,11 +5746,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 194
+position = 196
 key = 'Fs(DirListing { dir: "docs/src/assets" })'
 descriptor = "listing of 'docs/src/assets'"
 cost_tokens = 13
-cum_tokens = 9521
+cum_tokens = 9549
 
 [batches.content]
 kind = "fs"
@@ -5684,11 +5760,11 @@ parent = "docs/src/assets"
 entries = ["css", "fonts", "images", "scss"]
 
 [[batches]]
-position = 195
+position = 197
 key = 'Markdown(Section { file: "CONTRIBUTING.md", section_index: 0 })'
 descriptor = "CONTRIBUTING.md section #0"
 cost_tokens = 76
-cum_tokens = 9597
+cum_tokens = 9625
 
 [batches.content]
 kind = "lines"

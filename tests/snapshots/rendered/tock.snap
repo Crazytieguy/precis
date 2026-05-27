@@ -37,6 +37,48 @@ cmd/
 demo/
 docs/
     commands.md
+        1→# Commands Reference
+        …
+        23→## Core Commands
+        …
+        25→### `start`
+        …
+        27→Start a new activity.
+        55→---
+        57→### `stop` (alias: `s`)
+        …
+        59→Stop the current activity.
+        84→---
+        86→### `add`
+        …
+        88→Add a completed activity manually.
+        116→---
+        118→### `remove` (alias: `rm`)
+        …
+        120→Remove an activity.
+        141→---
+        143→### `continue` (alias: `c`)
+        …
+        186→---
+        188→## Viewing & Reporting
+        …
+        190→### `calendar`
+        …
+        192→Open the comprehensive interactive dashboard.
+        215→---
+        217→### `list` (alias: `ls`)
+        …
+        238→---
+        240→### `current`
+        …
+        260→### `last` (alias: `lt`)
+        …
+        283→### `report`
+        …
+        307→### `analyze`
+        …
+        330→### `ical`
+        …
 go.mod
     1→module github.com/kriuchkov/tock
     3→go 1.25.6
@@ -61,16 +103,6 @@ internal/
     adapters/
         cli/
             add.go
-                16→type addOptions struct {
-                …
-                26→func NewAddCmd() *cobra.Command {
-                …
-                64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
-                …
-                124→func resolveStartTime(startStr string, theme Theme) (string, error) {
-                …
-                163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
-                …
             analyze.go
                 20→func NewAnalyzeCmd() *cobra.Command {
                 …
@@ -94,7 +126,7 @@ internal/
                 20→	models.Activity
                 21→}
                 23→func (a currentCmdActivity) Duration() time.Duration {
-                24→	return a.Activity.Duration().Round(time.Second)
+                …
                 27→func (a currentCmdActivity) DurationHMS() string {
                 …
                 35→func NewCurrentCmd() *cobra.Command {
@@ -267,18 +299,11 @@ internal/
                 …
         ports/
             mocks/
-                mock_activityrepository.go
-                mock_activityresolver.go
-                mock_notesrepository.go
             ports.go
                 11→type ActivityResolver interface {
                 …
                 22→type ActivityRepository interface {
-                23→	Save(ctx context.Context, activity models.Activity) error
-                24→	FindLast(ctx context.Context) (*models.Activity, error)
-                25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
-                26→	Remove(ctx context.Context, activity models.Activity) error
-                27→}
+                …
                 29→type NotesRepository interface {
                 30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
                 31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
@@ -306,11 +331,5 @@ internal/
                 …
     timeutil/
         timeutil.go
-            1→package timeutil
-            3→import (
-            4→	"strings"
-            5→	"time"
-            7→	"github.com/go-faster/errors"
-            8→)
         timeutil_test.go
 tock.yaml.example

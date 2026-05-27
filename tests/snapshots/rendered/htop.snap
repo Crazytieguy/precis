@@ -199,22 +199,6 @@ darwin/
         …
     PlatformHelpers.c
     PlatformHelpers.h
-        2→#define HEADER_PlatformHelpers
-        14→typedef struct KernelVersion {
-        15→   short int major;
-        16→   short int minor;
-        17→   short int patch;
-        18→} KernelVersion;
-        20→void Platform_GetKernelVersion(KernelVersion* k);
-        …
-        27→int Platform_CompareKernelVersion(KernelVersion v);
-        …
-        30→bool Platform_KernelVersionIsBetween(KernelVersion lowerBound, KernelVersion upperBound);
-        …
-        32→void Platform_getCPUBrandString(char* cpuBrandString, size_t cpuBrandStringSize);
-        …
-        34→bool Platform_isRunningTranslated(void);
-        …
     ProcessField.h
         2→#define HEADER_DarwinProcessField
         11→#define PLATFORM_PROCESS_FIELDS  \
@@ -224,6 +208,15 @@ docs/
     images/
     styleguide.md
     understanding-htop-versions.md
+        1→Understanding htop versions
+        2→===========================
+        …
+        4→Release versions
+        5→------------------
+        …
+        14→Development versions
+        15→----------------------
+        …
 dragonflybsd/
 freebsd/
     FreeBSDMachine.c

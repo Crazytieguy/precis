@@ -3,9 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
-    workflows/
-        pages.yml
-        test.yml
 .gitignore
 CONTRIBUTING.md
 LICENSE
@@ -46,22 +43,10 @@ README.md
     …
     74→### 3. View Tables
     …
-    76→View all tables:
-    77→```bash
-    78→peepdb view <connection_name>
-    79→```
-    86→Example:
-    87→```bash
-    88→peepdb view myapp_db --table users
-    89→```
     103→### 4. Pagination
     …
     115→### 5. Choose Output Format
     …
-    122→Example:
-    123→```bash
-    124→peepdb view myapp_db --table users --format json
-    125→```
     142→### 6. Remove Saved Connections
     …
     154→## 🔒 Security
@@ -126,8 +111,55 @@ docs/
     _config.yml
     contributing.md
     index.md
+        6→# peepDB
+        …
+        8→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, and MariaDB, peepDB is lightweight, secure, and incredibly easy to use.
+        10→## 🚀 Features
+        …
+        20→## Getting Started
+        …
+        28→## 🔒 Security
+        …
+        40→## 📜 License
+        …
     installation.md
+        6→# 📦 Installation
+        …
+        8→You can install peepDB directly from PyPI using pip:
+        10→```bash
+        11→pip install peepdb
+        12→```
+        14→This will install the latest version of peepDB along with all its dependencies.
+        16→## Requirements
+        …
+        18→- Python 3.9 or higher
+        19→- pip (Python package installer)
+        21→## System Dependencies
+        …
+        30→## Verifying the Installation
+        …
+        42→## Next Steps
+        …
     usage.md
+        6→# 🛠️ Usage
+        …
+        8→peepDB provides a user-friendly command-line interface for interacting with your databases. Here are the main commands and their usage:
+        10→## Saving Database Connection Details
+        …
+        20→## Listing Saved Connections
+        …
+        28→## Viewing Tables
+        …
+        42→## Pagination
+        …
+        50→## Choosing Output Format
+        …
+        58→## Removing Saved Connections
+        …
+        74→## Help
+        …
+        82→## Examples
+        …
 images/
     demo.gif
     peepdb_example1.png
@@ -178,18 +210,7 @@ peepdb/
         121→    """
         122→    count = remove_all_connections()
         126→@cli.command()
-        127→@click.argument('connection_name')
-        128→@click.option('--table', required=False, help='Specific table to view')
-        129→@click.option('--format', type=click.Choice(['table', 'json']), default='table', help='Output format')
-        130→@click.option('--page', type=int, default=1, help='Page number to view')
-        131→@click.option('--page-size', type=int, default=50, help='Number of rows per page')
-        132→@click.option('--scientific', is_flag=True, help='Use scientific notation for numbers')
-        133→def view(connection_name, table, format, page, page_size, scientific):
-        134→    """
-        135→    View data from a saved connection.
-        137→    Example:
-        138→    peepdb view mydb --table SomeTable
-        139→    """
+        …
         181→def main():
         182→    cli()
     config.py
@@ -258,23 +279,13 @@ peepdb/
             38→        self.disconnect()
         firebase.py
         mariadb.py
-            5→class MariaDBDatabase(BaseDatabase):
-            …
         mongodb.py
-            8→class MongoDBDatabase(BaseDatabase):
-            …
         mssql.py
-            6→class MSSQLDatabase(BaseDatabase):
-            …
         mysql.py
-            5→class MySQLDatabase(BaseDatabase):
-            …
         oracle.py
             7→class OracleDatabase(BaseDatabase):
             …
         postgresql.py
-            6→class PostgreSQLDatabase(BaseDatabase):
-            …
         sqlite.py
             6→class SQLiteDatabase(BaseDatabase):
             …
