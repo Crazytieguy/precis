@@ -43,8 +43,9 @@ use crate::value::{depth_factor, mix_signals};
 
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, build_file_spans, build_per_file_content,
-    dedup_sorted, extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_extension,
-    name_of, push_rows, signature_end_row, single_file_lines_content, statement_block_parts,
+    collect_doc_comments_above_filtered, dedup_sorted, extend_span, file_depth_factor,
+    file_lines_covered_by, fs::files_with_extension, name_of, push_rows, signature_end_row,
+    single_file_lines_content, statement_block_parts,
 };
 
 /// Per-run Rust-walker state owned by [`WalkCtx`] — memoizes module
@@ -200,8 +201,13 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let ep = is_entrypoint_file(file);
         if ep {
             let lede_key = RustKey::CrateDocLede { file: file.clone() };
+            let collect_section = |section| {
+                move |tree: &Tree, source: &str| {
+                    FileLines::new(collect_module_doc_lines(tree, source, section))
+                }
+            };
             if let Some(content) =
-                build_per_file_content(file, ctx, parse_rust, collect_module_doc_lede)
+                build_per_file_content(file, ctx, parse_rust, collect_section(DocSection::Lede))
             {
                 out.push(batch(
                     lede_key.clone(),
@@ -211,7 +217,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 ));
             }
             if let Some(content) =
-                build_per_file_content(file, ctx, parse_rust, collect_module_doc_body)
+                build_per_file_content(file, ctx, parse_rust, collect_section(DocSection::Body))
             {
                 out.push(batch(
                     RustKey::CrateDocBody { file: file.clone() },
@@ -1038,14 +1044,6 @@ fn batch(
 
 // --- AST collectors ---
 
-fn collect_module_doc_lede(tree: &Tree, source: &str) -> FileLines {
-    FileLines::new(collect_module_doc_lines(tree, source, DocSection::Lede))
-}
-
-fn collect_module_doc_body(tree: &Tree, source: &str) -> FileLines {
-    FileLines::new(collect_module_doc_lines(tree, source, DocSection::Body))
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum DocSection {
     /// First paragraph of `//!` only.
@@ -1063,7 +1061,8 @@ fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> V
     let mut all: Vec<usize> = Vec::new();
     for child in root.children(&mut cursor) {
         if matches!(child.kind(), "line_comment" | "block_comment") {
-            if is_module_doc_comment(child, source) {
+            let text = &source[child.start_byte()..child.end_byte()];
+            if text.starts_with("//!") || text.starts_with("/*!") {
                 extend_span(&mut all, child, source);
             }
             continue;
@@ -1380,9 +1379,12 @@ fn collect_pub_item_doc_section(raw: Vec<usize>, source: &str, section: DocSecti
 }
 
 fn collect_pub_item_doc_raw(child: Node, source: &str) -> Vec<usize> {
-    let mut out = Vec::new();
-    collect_outer_docs_above(child, source, &mut out);
-    dedup_sorted(out)
+    collect_doc_comments_above_filtered(child, source, None, |prev, src| {
+        let text = &src[prev.start_byte()..prev.end_byte()];
+        matches!(prev.kind(), "line_comment" | "block_comment")
+            && (text.starts_with("///") || text.starts_with("/**"))
+    })
+    .full
 }
 
 fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
@@ -1891,30 +1893,6 @@ fn has_macro_export(node: Node, source: &str) -> bool {
             c.kind() == "identifier" && &source[c.start_byte()..c.end_byte()] == "macro_export"
         })
     })
-}
-
-fn is_module_doc_comment(node: Node, source: &str) -> bool {
-    let text = &source[node.start_byte()..node.end_byte()];
-    text.starts_with("//!") || text.starts_with("/*!")
-}
-
-fn is_outer_doc_comment(node: Node, source: &str) -> bool {
-    let text = &source[node.start_byte()..node.end_byte()];
-    text.starts_with("///") || text.starts_with("/**")
-}
-
-fn collect_outer_docs_above(node: Node, source: &str, out: &mut Vec<usize>) {
-    let mut cur = node.prev_sibling();
-    while let Some(prev) = cur {
-        match prev.kind() {
-            "line_comment" | "block_comment" if is_outer_doc_comment(prev, source) => {
-                extend_span(out, prev, source);
-                cur = prev.prev_sibling();
-            }
-            "attribute_item" => cur = prev.prev_sibling(),
-            _ => break,
-        }
-    }
 }
 
 #[cfg(test)]

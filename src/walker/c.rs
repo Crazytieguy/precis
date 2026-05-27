@@ -172,7 +172,7 @@ fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, collect_blank_line_groups,
-    collect_doc_comments_above_bounded, dedup_sorted, extend_span, file_depth_factor,
+    collect_doc_comments_above_filtered, dedup_sorted, extend_span, file_depth_factor,
     file_lines_covered_by, node_end_row_trimmed, push_rows, signature_end_row,
     single_file_lines_content, trim_end_before_next_decl,
 };
@@ -294,7 +294,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 start_line: info.start_line,
             };
             let decl_lines = collect_decl(*node, info, &source, &all_starts);
-            let doc_lines = collect_doc_comments_above_bounded(*node, &source, banner_end_row);
+            let doc_lines =
+                collect_doc_comments_above_filtered(*node, &source, banner_end_row, |prev, _| {
+                    prev.kind() == "comment"
+                });
             let body_lines = if info.has_body {
                 collect_decl_body(*node, &src_lines)
             } else {

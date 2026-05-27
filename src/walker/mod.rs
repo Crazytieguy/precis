@@ -615,31 +615,37 @@ pub(crate) fn signature_end_row(node: Node) -> usize {
 
 /// Consecutive doc-comment siblings touching `node`. End-of-line
 /// comments on a previous sibling's line are skipped (they would
-/// trip non-ancestor overlap).
+/// trip non-ancestor overlap). `attribute_item` siblings are skipped
+/// without breaking the chain — no-op outside Rust grammars.
 pub(crate) fn collect_doc_comments_above(node: Node, source: &str) -> FileLines {
-    collect_doc_comments_above_bounded(node, source, None)
+    collect_doc_comments_above_filtered(node, source, None, |prev, _| prev.kind() == "comment")
 }
 
-/// [`collect_doc_comments_above`] with a lower row boundary.
-pub(crate) fn collect_doc_comments_above_bounded(
+/// [`collect_doc_comments_above`] with an `is_doc_comment` predicate
+/// (default: any `comment` node) and a lower row boundary.
+pub(crate) fn collect_doc_comments_above_filtered<F>(
     node: Node,
     source: &str,
     boundary_row: Option<usize>,
-) -> FileLines {
+    is_doc_comment: F,
+) -> FileLines
+where
+    F: Fn(Node, &str) -> bool,
+{
     let mut out = Vec::new();
     let mut cur = node.prev_sibling();
     let mut next_start = node.start_position().row;
     while let Some(prev) = cur {
-        if prev.kind() != "comment" {
-            break;
+        if prev.kind() == "attribute_item" {
+            next_start = prev.start_position().row;
+            cur = prev.prev_sibling();
+            continue;
         }
-        if next_start.saturating_sub(prev.end_position().row) > 1 {
-            break;
-        }
-        if !comment_starts_at_line_start(prev, source) {
-            break;
-        }
-        if boundary_row.is_some_and(|b| prev.start_position().row <= b) {
+        if !is_doc_comment(prev, source)
+            || next_start.saturating_sub(prev.end_position().row) > 1
+            || !comment_starts_at_line_start(prev, source)
+            || boundary_row.is_some_and(|b| prev.start_position().row <= b)
+        {
             break;
         }
         extend_span(&mut out, prev, source);
