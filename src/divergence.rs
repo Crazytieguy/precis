@@ -138,10 +138,6 @@ pub struct ScoreAtBudget {
     pub importance: f64,
     /// Coverage — rank-uniform recall over A_B.
     pub coverage: f64,
-    /// Mean per-row completion across A_B rows the walker delivered any
-    /// atom of (excludes fully-missing rows to keep the signal
-    /// orthogonal to importance/coverage). `NaN` → renderer shows `—`.
-    pub completion: f64,
     /// `√(importance × coverage)`.
     pub score: f64,
 }
@@ -468,7 +464,6 @@ pub(super) fn compute_score_at_running(
             a_b_atoms: 0,
             importance: 0.0,
             coverage: 0.0,
-            completion: f64::NAN,
             score: 0.0,
         };
     }
@@ -477,16 +472,10 @@ pub(super) fn compute_score_at_running(
 
     let mut importance_num = 0.0;
     let mut coverage_sum = 0.0;
-    let mut delivered_completion_sum = 0.0;
-    let mut delivered_completion_n = 0usize;
     for row in &ctx.ns_rows {
         let completion = completion_for_row(&row.atoms, walker_cum);
         if completion == 0.0 {
             continue;
-        }
-        if row.exp_t <= budget {
-            delivered_completion_sum += completion;
-            delivered_completion_n += 1;
         }
         for (i, atom) in row.atoms.iter().enumerate() {
             let rank = row.rank_start + i;
@@ -500,18 +489,12 @@ pub(super) fn compute_score_at_running(
 
     let importance = (importance_num / ideal_denom).min(1.0);
     let coverage = coverage_sum / a_b_atoms as f64;
-    let completion = if delivered_completion_n == 0 {
-        f64::NAN
-    } else {
-        delivered_completion_sum / delivered_completion_n as f64
-    };
     let score = (importance * coverage).sqrt();
     ScoreAtBudget {
         budget,
         a_b_atoms,
         importance,
         coverage,
-        completion,
         score,
     }
 }
