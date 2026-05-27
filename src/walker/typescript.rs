@@ -672,7 +672,7 @@ fn find_export_starts<'a>(
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
-    let mut real_lines: HashSet<usize> = HashSet::new();
+    let mut emitted_lines: HashSet<usize> = HashSet::new();
     for child in root.children(&mut cursor) {
         let Some((kind, decl_node)) =
             classify_export(child, source).or_else(|| classify_commonjs_export(child, source))
@@ -680,7 +680,7 @@ fn find_export_starts<'a>(
             continue;
         };
         let start_line = child.start_position().row + 1;
-        real_lines.insert(start_line);
+        emitted_lines.insert(start_line);
         let is_type_only = is_export_type_only(kind, child, source);
         out.push(make_export_info(
             start_line,
@@ -697,8 +697,8 @@ fn find_export_starts<'a>(
 
     let reexports = collect_local_value_reexports(tree, source);
     let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
+    let mut needs_sort = false;
     if !reexports.is_empty() || !commonjs_reexports.is_empty() {
-        let mut emitted_lines = real_lines.clone();
         let mut cursor = root.walk();
         for child in root.children(&mut cursor) {
             let start_line = child.start_position().row + 1;
@@ -719,8 +719,8 @@ fn find_export_starts<'a>(
                 start_line, kind, child, child, file, source, src_lines, false, false,
             ));
             emitted_lines.insert(start_line);
+            needs_sort = true;
         }
-        out.sort_by_key(|e| e.start_line);
     }
 
     // CommonJS prototype-style method assignments — JS only.
@@ -729,7 +729,6 @@ fn find_export_starts<'a>(
         if !receivers.is_empty() {
             let methods = collect_prototype_method_assignments(tree, source, &receivers);
             if methods.len() >= JS_PROTOTYPE_METHOD_MIN {
-                let mut emitted_lines: HashSet<usize> = out.iter().map(|e| e.start_line).collect();
                 for method in methods {
                     if emitted_lines.contains(&method.start_line) {
                         continue;
@@ -746,12 +745,15 @@ fn find_export_starts<'a>(
                         true,
                     ));
                     emitted_lines.insert(method.start_line);
+                    needs_sort = true;
                 }
-                out.sort_by_key(|e| e.start_line);
             }
         }
     }
 
+    if needs_sort {
+        out.sort_by_key(|e| e.start_line);
+    }
     out
 }
 
