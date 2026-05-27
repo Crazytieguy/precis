@@ -947,18 +947,12 @@ fn collect_commonjs_value_reexports(tree: &Tree, source: &str) -> HashSet<String
             Some(CommonJsExportTarget::Namespace)
         ) && right.kind() == "object"
         {
-            collect_object_export_names(right, source, &mut out);
+            out.extend(object_value_names(right, source));
         } else if let Some(name) = identifier_text(right, source) {
             out.insert(name.to_string());
         }
     }
     out
-}
-
-fn collect_object_export_names(node: Node, source: &str, out: &mut HashSet<String>) {
-    for name in object_value_names(node, source) {
-        out.insert(name);
-    }
 }
 
 /// Local identifier names bound on the value side of an `object` literal:
