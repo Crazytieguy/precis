@@ -581,11 +581,10 @@ fn collect_reexport_import_chunks(
     if !is_init_py(file) {
         return None;
     }
-    let mut groups = collect_import_groups(tree, source)?;
+    let groups = collect_import_groups(tree, source)?;
     if !should_chunk_import_groups(&groups) {
         return None;
     }
-    prioritize_public_manifest_groups(&mut groups);
     Some(groups_to_file_lines(groups))
 }
 
@@ -650,12 +649,6 @@ fn collect_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> 
         }
     }
     Some(groups)
-}
-
-fn prioritize_public_manifest_groups(groups: &mut [ImportGroup]) {
-    // `__all__` is the explicit public manifest, so keep it ahead of lower
-    // value tail imports when a wall cannot fully fit at small budgets.
-    groups.sort_by_key(|group| group.source != "__all__");
 }
 
 fn tolerate_reexport_wall_other(
