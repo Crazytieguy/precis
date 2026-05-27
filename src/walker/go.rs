@@ -758,8 +758,7 @@ impl GoRole {
 }
 
 /// 1.4× boost for files anchoring the package API surface —
-/// package-name match, `doc.go`, or an exported chunked struct.
-/// Root-level only.
+/// package-name match or an exported chunked struct. Root-level only.
 fn go_entry_factor_for(
     file: &Path,
     ctx: &WalkCtx,
@@ -775,7 +774,7 @@ fn go_entry_factor_for(
     let big_struct_anchor = decls
         .iter()
         .any(|(_, info)| info.exported && !info.struct_field_groups.is_empty());
-    if pkg == Some(stem) || stem == "doc" || big_struct_anchor {
+    if pkg == Some(stem) || big_struct_anchor {
         1.4
     } else {
         1.0

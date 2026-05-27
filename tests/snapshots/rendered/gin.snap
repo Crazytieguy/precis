@@ -102,8 +102,6 @@ deprecated.go
     …
 deprecated_test.go
 doc.go
-    1→/*
-    2→Package gin implements a HTTP web framework called gin.
     22→package gin // import "github.com/gin-gonic/gin"
 docs/
     doc.md
@@ -189,6 +187,7 @@ gin.go
     …
     202→func New(opts ...OptionFunc) *Engine {
     …
+    235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
     236→func Default(opts ...OptionFunc) *Engine {
     …
     243→func (engine *Engine) Handler() http.Handler {
