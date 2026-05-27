@@ -897,14 +897,12 @@ fn is_decorative_html_block(block: Node, source: &str) -> bool {
     stripped.trim().is_empty()
 }
 
-/// True when a `block_quote` is an admin / warning / callout — a
-/// GitHub-flavored callout (`> [!WARNING]`, `> [!NOTE]`, etc.) OR a
-/// multi-paragraph block_quote (4+ source rows). Short single-paragraph
+/// True when a `block_quote` is a GitHub-flavored admin callout
+/// (`> [!WARNING]`, `> [!NOTE]`, etc.). Short single-paragraph
 /// block_quotes (typically taglines — `> Ky is a tiny and elegant HTTP
 /// client...`) are NOT classified as admin and stay in the headline.
 fn is_admin_block_quote(block: Node, source: &str) -> bool {
     let raw = &source[block.start_byte()..block.end_byte()];
-    // GitHub-style callouts open with `> [!TYPE]`.
     for line in raw.lines().take(2) {
         let trimmed = line.trim_start_matches('>').trim();
         if let Some(rest) = trimmed.strip_prefix("[!")
@@ -915,12 +913,7 @@ fn is_admin_block_quote(block: Node, source: &str) -> bool {
             return true;
         }
     }
-    // Multi-paragraph or long block_quote (4+ lines including the
-    // line numbers of the first row through the last). Single-line
-    // taglines stay.
-    let start = block.start_position().row;
-    let end = block.end_position().row;
-    end.saturating_sub(start) >= 3
+    false
 }
 
 /// A "navigation paragraph" is a paragraph whose substantive content is
