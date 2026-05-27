@@ -2435,42 +2435,38 @@ fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> 
 /// blocks stay merged because per-slice atom overhead dominates their benefit.
 /// For classes, each method body is considered independently.
 fn body_parts(decl: Node, kind: ItemKind, source: &str, src_lines: &[&str]) -> Vec<BodyPart> {
+    if is_class_kind_decl(decl, kind) {
+        return class_method_body_parts(decl, src_lines);
+    }
+    function_body_parts(decl_fn_body(decl, kind), source, src_lines)
+}
+
+/// True when this `(decl, kind)` should route to `class_method_body_parts`.
+/// `Class` always does; `Default` does when the underlying expression is a
+/// class expression / declaration.
+fn is_class_kind_decl(decl: Node, kind: ItemKind) -> bool {
+    matches!(kind, ItemKind::Class) || (matches!(kind, ItemKind::Default) && is_class_node(decl))
+}
+
+/// Statement block of a top-level fn-bearing declaration. Returns `None` for
+/// declarations with no reachable function body (pure-data consts, named
+/// reexports, `export default <object>`, etc.) — callers fall through to
+/// the empty `body_parts` result.
+fn decl_fn_body(decl: Node, kind: ItemKind) -> Option<Node> {
     match kind {
-        ItemKind::Function => {
-            function_body_parts(decl.child_by_field_name("body"), source, src_lines)
-        }
-        ItemKind::Class => class_method_body_parts(decl, src_lines),
-        ItemKind::Const => {
-            // Const fn-init: arrow / function expression direct, or wrapped
-            // through `forwardRef(props => {...})` / `memo(...)`. Pure-data
-            // consts (object/array/primitive) yield no body.
-            if let Some(body) = find_fn_init_body(decl) {
-                function_body_parts(Some(body), source, src_lines)
-            } else {
-                Vec::new()
-            }
-        }
+        ItemKind::Function => decl.child_by_field_name("body"),
+        ItemKind::Const => find_fn_init_body(decl),
         ItemKind::Default => match decl.kind() {
             "function_declaration"
             | "function_expression"
             | "arrow_function"
-            | "generator_function" => {
-                function_body_parts(decl.child_by_field_name("body"), source, src_lines)
-            }
-            "class" | "class_declaration" | "abstract_class_declaration" => {
-                class_method_body_parts(decl, src_lines)
-            }
+            | "generator_function" => decl.child_by_field_name("body"),
             "call_expression" | "parenthesized_expression" => {
-                // `export default forwardRef(props => {...})` etc.
-                if let Some(body) = descend_for_fn_body(decl, FN_BODY_DESCEND_DEPTH) {
-                    function_body_parts(Some(body), source, src_lines)
-                } else {
-                    Vec::new()
-                }
+                descend_for_fn_body(decl, FN_BODY_DESCEND_DEPTH)
             }
-            _ => Vec::new(),
+            _ => None,
         },
-        _ => Vec::new(),
+        _ => None,
     }
 }
 
@@ -2551,25 +2547,8 @@ fn factory_inner_function_body_parts(body: Node, src_lines: &[&str]) -> Vec<Body
 /// the merge so a single ExportBody covers the interior — the
 /// existing materializer contract.
 fn is_factory_body_match(decl: Node, kind: ItemKind, source: &str, src_lines: &[&str]) -> bool {
-    let body_opt = match kind {
-        ItemKind::Function => decl.child_by_field_name("body"),
-        ItemKind::Const => find_fn_init_body(decl),
-        ItemKind::Default => match decl.kind() {
-            "function_declaration"
-            | "function_expression"
-            | "arrow_function"
-            | "generator_function" => decl.child_by_field_name("body"),
-            "call_expression" | "parenthesized_expression" => {
-                descend_for_fn_body(decl, FN_BODY_DESCEND_DEPTH)
-            }
-            _ => None,
-        },
-        _ => None,
-    };
-    let Some(body) = body_opt else {
-        return false;
-    };
-    factory_receiver_table_part(body, source, src_lines).is_some()
+    decl_fn_body(decl, kind)
+        .is_some_and(|body| factory_receiver_table_part(body, source, src_lines).is_some())
 }
 
 /// Minimum receiver-property assignments at the head of a function body
