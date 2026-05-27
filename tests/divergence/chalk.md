@@ -148,8 +148,8 @@ Score(3000)=0.562 I=0.801 C=0.394 ns_rows≤3K=18/46 (reached=7 partial=1 missin
 | walker |  | 6767 | 48 | module item body at source/index.js:41 body 42 |  |  | 0.514 |
 | walker |  | 6803 | 36 | imports in source/vendor/supports-color/index.js |  |  | 0.514 |
 | ns | 6804 |  | 186 | ansi-styles: hexToAnsi256 / rgbToAnsi / hexToAnsi compositions | 4.10 |  | 0.505 |
-| walker |  | 6819 | 16 | imports in source/vendor/supports-color/index.d.ts |  |  | 0.505 |
-| walker |  | 6832 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.505 |
+| walker |  | 6816 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.505 |
+| walker |  | 6832 | 16 | imports in source/vendor/supports-color/index.d.ts |  |  | 0.505 |
 | walker |  | 6927 | 95 | export names surface in source/vendor/supports-color/index.d.ts |  |  | 0.505 |
 | walker |  | 6927 | 0 | export at source/vendor/supports-color/index.d.ts:19 |  |  | 0.505 |
 | ns | 6957 |  | 153 | supports-color: helper signatures (locations) | 5.1 |  | 0.506 |

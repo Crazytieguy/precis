@@ -1638,20 +1638,6 @@ fn is_entrypoint_file(path: &Path) -> bool {
         && matches!(ext, "ts" | "tsx" | "js" | "mjs" | "cjs")
 }
 
-/// True for files that should seed the public-surface graph but
-/// shouldn't otherwise get the entrypoint depth-pin / value boost.
-/// Currently: declaration-only entrypoint files (`index.d.ts`,
-/// `index.d.mts`, `index.d.cts` etc.) that ship as the TS public API
-/// for JS packages whose runtime entrypoint is plain JS — commander's
-/// `typings/index.d.ts` is the canonical example.
-fn is_declaration_entrypoint_file(path: &Path) -> bool {
-    let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
-        return false;
-    };
-    (name.starts_with("index.") || name.starts_with("main."))
-        && (name.ends_with(".d.ts") || name.ends_with(".d.mts") || name.ends_with(".d.cts"))
-}
-
 pub(crate) fn is_ts_or_tsx_file(path: &Path) -> bool {
     path.extension()
         .and_then(|e| e.to_str())
@@ -2776,9 +2762,7 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
                 if !super::fs::should_skip_dir(&name.to_string_lossy()) {
                     walk(&path, out);
                 }
-            } else if file_type.is_file()
-                && (is_entrypoint_file(&path) || is_declaration_entrypoint_file(&path))
-            {
+            } else if file_type.is_file() && is_entrypoint_file(&path) {
                 out.push(path);
             }
         }
