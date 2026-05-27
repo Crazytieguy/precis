@@ -133,184 +133,189 @@ Score(3000)=0.490 I=0.765 C=0.313 ns_rows≤3K=23/40 (reached=7 partial=1 missin
 | ns | 3580 |  | 661 | src/features/register.all.ts (all 63 imports) | 2.8 |  | 0.447 |
 | walker |  | 3628 | 61 | export at src/languages/features/json/register.ts:23 |  |  | 0.447 |
 | walker |  | 3694 | 66 | export at src/languages/features/css/register.ts:291 |  |  | 0.447 |
-| walker |  | 3835 | 141 | export names surface in src/languages/features/typescript/register.ts |  |  | 0.448 |
-| walker |  | 3851 | 16 | export at src/languages/features/typescript/register.ts:186 |  |  | 0.448 |
-| walker |  | 3874 | 23 | export at src/languages/features/typescript/register.ts:50 |  |  | 0.448 |
-| walker |  | 3907 | 33 | export at src/languages/features/typescript/register.ts:219 |  |  | 0.448 |
-| walker |  | 3935 | 28 | export at src/languages/features/typescript/register.ts:31 |  |  | 0.448 |
-| walker |  | 3981 | 46 | export at src/languages/features/typescript/register.ts:166 |  |  | 0.448 |
-| walker |  | 4153 | 172 | export names surface in src/languages/features/html/register.ts |  |  | 0.448 |
-| walker |  | 4168 | 15 | export at src/languages/features/html/register.ts:224 |  |  | 0.448 |
-| walker |  | 4185 | 17 | export at src/languages/features/html/register.ts:24 |  |  | 0.448 |
-| walker |  | 4214 | 29 | export at src/languages/features/html/register.ts:197 |  |  | 0.448 |
-| walker |  | 4245 | 31 | export at src/languages/features/html/register.ts:204 |  |  | 0.448 |
-| walker |  | 4278 | 33 | export at src/languages/features/html/register.ts:211 |  |  | 0.448 |
-| walker |  | 4334 | 56 | package scripts in samples/browser-esm-vite/package.json |  |  | 0.448 |
-| walker |  | 4390 | 56 | package scripts in samples/browser-esm-webpack-small/package.json |  |  | 0.448 |
-| walker |  | 4401 | 11 | export doc at src/languages/features/css/register.ts:140 |  |  | 0.448 |
-| ns | 4426 |  | 846 | src/languages/definitions/register.all.ts (all ~85 imports) | 2.9 |  | 0.404 |
-| walker |  | 4438 | 37 | listing of 'monaco-lsp-client/src/adapters' |  |  | 0.404 |
-| walker |  | 4515 | 77 | export at src/languages/features/typescript/register.ts:201 |  |  | 0.404 |
-| walker |  | 4602 | 87 | module item body at webpack-plugin/src/index.ts:159 body 182 |  |  | 0.404 |
-| ns | 4628 |  | 202 | CONTRIBUTING.md — recipe for adding a new tokenizer | 2.10 |  | 0.399 |
-| walker |  | 4689 | 87 | module item body at webpack-plugin/src/index.ts:159 body 191 |  |  | 0.399 |
-| walker |  | 4769 | 80 | export at src/languages/features/html/register.ts:105 |  |  | 0.399 |
-| walker |  | 4828 | 59 | package scripts in samples/electron-esm-webpack/package.json |  |  | 0.399 |
-| walker |  | 4925 | 97 | MAINTAINING.md section #0 |  |  | 0.399 |
-| walker |  | 4929 | 4 | listing of 'webpack-plugin/src/loaders' |  |  | 0.399 |
-| walker |  | 4985 | 56 | README.md section #19 |  |  | 0.399 |
-| walker |  | 5048 | 63 | package scripts in samples/browser-esm-webpack-typescript/package.json |  |  | 0.399 |
-| walker |  | 5116 | 68 | export at src/languages/features/json/register.ts:53 |  |  | 0.399 |
-| ns | 5147 |  | 519 | docs/integrate-esm.md — section TOC + bundler section headers | 2.11 |  | 0.388 |
-| walker |  | 5185 | 69 | export at src/languages/features/typescript/register.ts:22 |  |  | 0.388 |
-| walker |  | 5209 | 24 | imports in src/languages/register.all.ts |  |  | 0.391 |
-| ns | 5441 |  | 294 | MonacoEnvironment worker map (canonical sample — index.js) | 2.12 |  | 0.382 |
-| walker |  | 5481 | 272 | listing of 'src/features' |  |  | 0.493 |
-| walker |  | 5573 | 92 | export at src/languages/features/typescript/register.ts:154 |  |  | 0.493 |
-| walker |  | 5641 | 68 | package scripts in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.493 |
-| walker |  | 5723 | 82 | listing of 'samples/legacy' |  |  | 0.493 |
-| walker |  | 5740 | 17 | listing of 'samples/legacy/electron-amd' |  |  | 0.493 |
-| walker |  | 5752 | 12 | package identity in samples/legacy/electron-amd/package.json |  |  | 0.493 |
-| walker |  | 5763 | 11 | package entrypoints in samples/legacy/electron-amd/package.json |  |  | 0.493 |
-| walker |  | 5780 | 17 | listing of 'samples/legacy/electron-amd-nodeIntegration' |  |  | 0.479 |
-| ns | 5780 |  | 339 | Webpack entry-points config for monaco workers | 2.13 | 2.12 | 0.479 |
-| walker |  | 5795 | 15 | package identity in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.479 |
-| walker |  | 5806 | 11 | package entrypoints in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.479 |
-| walker |  | 5818 | 12 | listing of 'samples/legacy/browser-amd-diff-editor' |  |  | 0.479 |
-| walker |  | 5854 | 36 | package scripts in samples/legacy/electron-amd/package.json |  |  | 0.479 |
-| ns | 5862 |  | 82 | Representative language register (rust register.ts) | 2.14 |  | 0.475 |
-| walker |  | 5890 | 36 | package scripts in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.475 |
-| walker |  | 5894 | 4 | listing of 'samples/legacy/browser-amd-editor' |  |  | 0.475 |
-| walker |  | 5898 | 4 | listing of 'samples/legacy/browser-amd-localized' |  |  | 0.475 |
-| walker |  | 5902 | 4 | listing of 'samples/legacy/browser-amd-monarch' |  |  | 0.475 |
-| walker |  | 5906 | 4 | listing of 'samples/legacy/browser-amd-requirejs' |  |  | 0.475 |
-| walker |  | 5910 | 4 | listing of 'samples/legacy/browser-amd-shadow-dom' |  |  | 0.475 |
-| walker |  | 5914 | 4 | listing of 'samples/legacy/browser-amd-shared-model' |  |  | 0.475 |
-| walker |  | 5918 | 4 | listing of 'samples/legacy/browser-amd-trusted-types' |  |  | 0.475 |
-| walker |  | 5994 | 76 | export at src/languages/features/typescript/register.ts:12 |  |  | 0.475 |
-| walker |  | 6090 | 96 | export at src/languages/features/css/register.ts:276 |  |  | 0.475 |
-| walker |  | 6186 | 96 | export at src/languages/features/json/register.ts:10 |  |  | 0.475 |
-| ns | 6286 |  | 424 | Representative language module header (rust.ts conf + Monarch keywords) | 2.15 | 2.14 | 0.460 |
-| walker |  | 6333 | 147 | module item at monaco-lsp-client/generator/index.ts:7 |  |  | 0.460 |
-| walker |  | 6341 | 8 | module item body at monaco-lsp-client/generator/index.ts:7 body 42 |  |  | 0.460 |
-| walker |  | 6351 | 10 | module item body at monaco-lsp-client/generator/index.ts:7 body 58 |  |  | 0.460 |
-| walker |  | 6371 | 20 | module item body at monaco-lsp-client/generator/index.ts:7 body 65 |  |  | 0.460 |
-| walker |  | 6402 | 31 | module item body at monaco-lsp-client/generator/index.ts:7 body 49 |  |  | 0.460 |
-| walker |  | 6459 | 57 | module item body at monaco-lsp-client/generator/index.ts:7 body 16 |  |  | 0.460 |
-| walker |  | 6482 | 23 | imports in samples/browser-esm-vite/main.ts |  |  | 0.460 |
-| walker |  | 6490 | 8 | listing of 'samples/browser-esm-parcel/src' |  |  | 0.460 |
-| walker |  | 6498 | 8 | listing of 'samples/browser-esm-webpack-typescript/src' |  |  | 0.460 |
-| ns | 6769 |  | 483 | Representative feature register (find/register.js) — top half | 2.16 |  | 0.445 |
-| walker |  | 6802 | 304 | listing of 'src/languages/definitions' |  |  | 0.550 |
-| walker |  | 6819 | 17 | listing of 'src/languages/definitions/sql' |  |  | 0.550 |
-| walker |  | 6841 | 22 | listing of 'src/languages/definitions/mysql' |  |  | 0.550 |
-| walker |  | 6866 | 25 | listing of 'src/languages/definitions/pgsql' |  |  | 0.550 |
-| walker |  | 6879 | 13 | listing of 'src/languages/definitions/apex' |  |  | 0.550 |
-| walker |  | 6892 | 13 | listing of 'src/languages/definitions/bat' |  |  | 0.550 |
-| walker |  | 6905 | 13 | listing of 'src/languages/definitions/coffee' |  |  | 0.550 |
-| walker |  | 6918 | 13 | listing of 'src/languages/definitions/cpp' |  |  | 0.550 |
-| walker |  | 6931 | 13 | listing of 'src/languages/definitions/css' |  |  | 0.550 |
-| walker |  | 6944 | 13 | listing of 'src/languages/definitions/dart' |  |  | 0.550 |
-| walker |  | 6957 | 13 | listing of 'src/languages/definitions/go' |  |  | 0.550 |
-| ns | 6959 |  | 190 | registerLanguage / loadLanguage signatures | 3.1 |  | 0.543 |
-| walker |  | 6970 | 13 | listing of 'src/languages/definitions/graphql' |  |  | 0.543 |
-| walker |  | 6983 | 13 | listing of 'src/languages/definitions/handlebars' |  |  | 0.543 |
-| walker |  | 6996 | 13 | listing of 'src/languages/definitions/html' |  |  | 0.543 |
-| walker |  | 7009 | 13 | listing of 'src/languages/definitions/java' |  |  | 0.543 |
-| walker |  | 7022 | 13 | listing of 'src/languages/definitions/javascript' |  |  | 0.543 |
-| walker |  | 7035 | 13 | listing of 'src/languages/definitions/kotlin' |  |  | 0.543 |
-| walker |  | 7048 | 13 | listing of 'src/languages/definitions/less' |  |  | 0.543 |
-| walker |  | 7061 | 13 | listing of 'src/languages/definitions/liquid' |  |  | 0.543 |
-| walker |  | 7074 | 13 | listing of 'src/languages/definitions/lua' |  |  | 0.543 |
-| walker |  | 7087 | 13 | listing of 'src/languages/definitions/markdown' |  |  | 0.543 |
-| walker |  | 7100 | 13 | listing of 'src/languages/definitions/perl' |  |  | 0.543 |
-| walker |  | 7113 | 13 | listing of 'src/languages/definitions/php' |  |  | 0.543 |
+| walker |  | 3750 | 56 | package scripts in samples/browser-esm-vite/package.json |  |  | 0.447 |
+| walker |  | 3806 | 56 | package scripts in samples/browser-esm-webpack-small/package.json |  |  | 0.447 |
+| walker |  | 3817 | 11 | export doc at src/languages/features/css/register.ts:140 |  |  | 0.447 |
+| walker |  | 3854 | 37 | listing of 'monaco-lsp-client/src/adapters' |  |  | 0.447 |
+| walker |  | 3941 | 87 | module item body at webpack-plugin/src/index.ts:159 body 182 |  |  | 0.447 |
+| walker |  | 4028 | 87 | module item body at webpack-plugin/src/index.ts:159 body 191 |  |  | 0.447 |
+| walker |  | 4087 | 59 | package scripts in samples/electron-esm-webpack/package.json |  |  | 0.447 |
+| walker |  | 4184 | 97 | MAINTAINING.md section #0 |  |  | 0.447 |
+| walker |  | 4188 | 4 | listing of 'webpack-plugin/src/loaders' |  |  | 0.447 |
+| walker |  | 4244 | 56 | README.md section #19 |  |  | 0.447 |
+| walker |  | 4307 | 63 | package scripts in samples/browser-esm-webpack-typescript/package.json |  |  | 0.447 |
+| walker |  | 4375 | 68 | export at src/languages/features/json/register.ts:53 |  |  | 0.447 |
+| walker |  | 4399 | 24 | imports in src/languages/register.all.ts |  |  | 0.451 |
+| ns | 4426 |  | 846 | src/languages/definitions/register.all.ts (all ~85 imports) | 2.9 |  | 0.408 |
+| ns | 4628 |  | 202 | CONTRIBUTING.md — recipe for adding a new tokenizer | 2.10 |  | 0.402 |
+| walker |  | 4671 | 272 | listing of 'src/features' |  |  | 0.518 |
+| walker |  | 4739 | 68 | package scripts in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.518 |
+| walker |  | 4821 | 82 | listing of 'samples/legacy' |  |  | 0.518 |
+| walker |  | 4838 | 17 | listing of 'samples/legacy/electron-amd' |  |  | 0.518 |
+| walker |  | 4850 | 12 | package identity in samples/legacy/electron-amd/package.json |  |  | 0.518 |
+| walker |  | 4861 | 11 | package entrypoints in samples/legacy/electron-amd/package.json |  |  | 0.518 |
+| walker |  | 4878 | 17 | listing of 'samples/legacy/electron-amd-nodeIntegration' |  |  | 0.518 |
+| walker |  | 4893 | 15 | package identity in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.518 |
+| walker |  | 4904 | 11 | package entrypoints in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.518 |
+| walker |  | 4916 | 12 | listing of 'samples/legacy/browser-amd-diff-editor' |  |  | 0.518 |
+| walker |  | 4952 | 36 | package scripts in samples/legacy/electron-amd/package.json |  |  | 0.518 |
+| walker |  | 4988 | 36 | package scripts in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.518 |
+| walker |  | 4992 | 4 | listing of 'samples/legacy/browser-amd-editor' |  |  | 0.518 |
+| walker |  | 4996 | 4 | listing of 'samples/legacy/browser-amd-localized' |  |  | 0.518 |
+| walker |  | 5000 | 4 | listing of 'samples/legacy/browser-amd-monarch' |  |  | 0.518 |
+| walker |  | 5004 | 4 | listing of 'samples/legacy/browser-amd-requirejs' |  |  | 0.518 |
+| walker |  | 5008 | 4 | listing of 'samples/legacy/browser-amd-shadow-dom' |  |  | 0.518 |
+| walker |  | 5012 | 4 | listing of 'samples/legacy/browser-amd-shared-model' |  |  | 0.518 |
+| walker |  | 5016 | 4 | listing of 'samples/legacy/browser-amd-trusted-types' |  |  | 0.518 |
+| walker |  | 5112 | 96 | export at src/languages/features/css/register.ts:276 |  |  | 0.518 |
+| ns | 5147 |  | 519 | docs/integrate-esm.md — section TOC + bundler section headers | 2.11 |  | 0.504 |
+| walker |  | 5208 | 96 | export at src/languages/features/json/register.ts:10 |  |  | 0.504 |
+| walker |  | 5355 | 147 | module item at monaco-lsp-client/generator/index.ts:7 |  |  | 0.504 |
+| walker |  | 5363 | 8 | module item body at monaco-lsp-client/generator/index.ts:7 body 42 |  |  | 0.504 |
+| walker |  | 5373 | 10 | module item body at monaco-lsp-client/generator/index.ts:7 body 58 |  |  | 0.504 |
+| walker |  | 5393 | 20 | module item body at monaco-lsp-client/generator/index.ts:7 body 65 |  |  | 0.504 |
+| walker |  | 5424 | 31 | module item body at monaco-lsp-client/generator/index.ts:7 body 49 |  |  | 0.504 |
+| ns | 5441 |  | 294 | MonacoEnvironment worker map (canonical sample — index.js) | 2.12 |  | 0.492 |
+| walker |  | 5481 | 57 | module item body at monaco-lsp-client/generator/index.ts:7 body 16 |  |  | 0.492 |
+| walker |  | 5504 | 23 | imports in samples/browser-esm-vite/main.ts |  |  | 0.492 |
+| walker |  | 5512 | 8 | listing of 'samples/browser-esm-parcel/src' |  |  | 0.492 |
+| walker |  | 5520 | 8 | listing of 'samples/browser-esm-webpack-typescript/src' |  |  | 0.492 |
+| ns | 5780 |  | 339 | Webpack entry-points config for monaco workers | 2.13 | 2.12 | 0.478 |
+| walker |  | 5824 | 304 | listing of 'src/languages/definitions' |  |  | 0.591 |
+| walker |  | 5841 | 17 | listing of 'src/languages/definitions/sql' |  |  | 0.591 |
+| ns | 5862 |  | 82 | Representative language register (rust register.ts) | 2.14 |  | 0.587 |
+| walker |  | 5863 | 22 | listing of 'src/languages/definitions/mysql' |  |  | 0.587 |
+| walker |  | 5888 | 25 | listing of 'src/languages/definitions/pgsql' |  |  | 0.587 |
+| walker |  | 5901 | 13 | listing of 'src/languages/definitions/apex' |  |  | 0.587 |
+| walker |  | 5914 | 13 | listing of 'src/languages/definitions/bat' |  |  | 0.587 |
+| walker |  | 5927 | 13 | listing of 'src/languages/definitions/coffee' |  |  | 0.587 |
+| walker |  | 5940 | 13 | listing of 'src/languages/definitions/cpp' |  |  | 0.587 |
+| walker |  | 5953 | 13 | listing of 'src/languages/definitions/css' |  |  | 0.587 |
+| walker |  | 5966 | 13 | listing of 'src/languages/definitions/dart' |  |  | 0.587 |
+| walker |  | 5979 | 13 | listing of 'src/languages/definitions/go' |  |  | 0.587 |
+| walker |  | 5992 | 13 | listing of 'src/languages/definitions/graphql' |  |  | 0.587 |
+| walker |  | 6005 | 13 | listing of 'src/languages/definitions/handlebars' |  |  | 0.587 |
+| walker |  | 6018 | 13 | listing of 'src/languages/definitions/html' |  |  | 0.587 |
+| walker |  | 6031 | 13 | listing of 'src/languages/definitions/java' |  |  | 0.587 |
+| walker |  | 6044 | 13 | listing of 'src/languages/definitions/javascript' |  |  | 0.587 |
+| walker |  | 6057 | 13 | listing of 'src/languages/definitions/kotlin' |  |  | 0.587 |
+| walker |  | 6070 | 13 | listing of 'src/languages/definitions/less' |  |  | 0.587 |
+| walker |  | 6083 | 13 | listing of 'src/languages/definitions/liquid' |  |  | 0.587 |
+| walker |  | 6096 | 13 | listing of 'src/languages/definitions/lua' |  |  | 0.587 |
+| walker |  | 6109 | 13 | listing of 'src/languages/definitions/markdown' |  |  | 0.587 |
+| walker |  | 6122 | 13 | listing of 'src/languages/definitions/perl' |  |  | 0.587 |
+| walker |  | 6135 | 13 | listing of 'src/languages/definitions/php' |  |  | 0.587 |
+| walker |  | 6148 | 13 | listing of 'src/languages/definitions/pla' |  |  | 0.587 |
+| walker |  | 6161 | 13 | listing of 'src/languages/definitions/protobuf' |  |  | 0.587 |
+| walker |  | 6174 | 13 | listing of 'src/languages/definitions/pug' |  |  | 0.587 |
+| walker |  | 6187 | 13 | listing of 'src/languages/definitions/python' |  |  | 0.587 |
+| walker |  | 6200 | 13 | listing of 'src/languages/definitions/r' |  |  | 0.587 |
+| walker |  | 6213 | 13 | listing of 'src/languages/definitions/razor' |  |  | 0.587 |
+| walker |  | 6226 | 13 | listing of 'src/languages/definitions/redis' |  |  | 0.587 |
+| walker |  | 6239 | 13 | listing of 'src/languages/definitions/ruby' |  |  | 0.587 |
+| walker |  | 6252 | 13 | listing of 'src/languages/definitions/rust' |  |  | 0.587 |
+| walker |  | 6265 | 13 | listing of 'src/languages/definitions/sb' |  |  | 0.587 |
+| walker |  | 6278 | 13 | listing of 'src/languages/definitions/scala' |  |  | 0.587 |
+| ns | 6286 |  | 424 | Representative language module header (rust.ts conf + Monarch keywords) | 2.15 | 2.14 | 0.568 |
+| walker |  | 6291 | 13 | listing of 'src/languages/definitions/scheme' |  |  | 0.568 |
+| walker |  | 6304 | 13 | listing of 'src/languages/definitions/shell' |  |  | 0.568 |
+| walker |  | 6317 | 13 | listing of 'src/languages/definitions/solidity' |  |  | 0.568 |
+| walker |  | 6330 | 13 | listing of 'src/languages/definitions/st' |  |  | 0.568 |
+| walker |  | 6343 | 13 | listing of 'src/languages/definitions/swift' |  |  | 0.568 |
+| walker |  | 6356 | 13 | listing of 'src/languages/definitions/twig' |  |  | 0.568 |
+| walker |  | 6369 | 13 | listing of 'src/languages/definitions/vb' |  |  | 0.568 |
+| walker |  | 6382 | 13 | listing of 'src/languages/definitions/xml' |  |  | 0.568 |
+| walker |  | 6395 | 13 | listing of 'src/languages/definitions/yaml' |  |  | 0.568 |
+| walker |  | 6410 | 15 | listing of 'src/languages/definitions/abap' |  |  | 0.568 |
+| walker |  | 6425 | 15 | listing of 'src/languages/definitions/azcli' |  |  | 0.568 |
+| walker |  | 6440 | 15 | listing of 'src/languages/definitions/cameligo' |  |  | 0.568 |
+| walker |  | 6455 | 15 | listing of 'src/languages/definitions/csharp' |  |  | 0.568 |
+| walker |  | 6470 | 15 | listing of 'src/languages/definitions/csp' |  |  | 0.568 |
+| walker |  | 6485 | 15 | listing of 'src/languages/definitions/cypher' |  |  | 0.568 |
+| walker |  | 6500 | 15 | listing of 'src/languages/definitions/dockerfile' |  |  | 0.568 |
+| walker |  | 6515 | 15 | listing of 'src/languages/definitions/ecl' |  |  | 0.568 |
+| walker |  | 6530 | 15 | listing of 'src/languages/definitions/elixir' |  |  | 0.568 |
+| walker |  | 6545 | 15 | listing of 'src/languages/definitions/flow9' |  |  | 0.568 |
+| walker |  | 6560 | 15 | listing of 'src/languages/definitions/fsharp' |  |  | 0.568 |
+| walker |  | 6575 | 15 | listing of 'src/languages/definitions/hcl' |  |  | 0.568 |
+| walker |  | 6590 | 15 | listing of 'src/languages/definitions/julia' |  |  | 0.568 |
+| walker |  | 6605 | 15 | listing of 'src/languages/definitions/lexon' |  |  | 0.568 |
+| walker |  | 6620 | 15 | listing of 'src/languages/definitions/m3' |  |  | 0.568 |
+| walker |  | 6635 | 15 | listing of 'src/languages/definitions/mdx' |  |  | 0.568 |
+| walker |  | 6650 | 15 | listing of 'src/languages/definitions/mips' |  |  | 0.568 |
+| walker |  | 6665 | 15 | listing of 'src/languages/definitions/objective-c' |  |  | 0.568 |
+| walker |  | 6680 | 15 | listing of 'src/languages/definitions/pascal' |  |  | 0.568 |
+| walker |  | 6695 | 15 | listing of 'src/languages/definitions/postiats' |  |  | 0.568 |
+| walker |  | 6710 | 15 | listing of 'src/languages/definitions/powerquery' |  |  | 0.568 |
+| walker |  | 6725 | 15 | listing of 'src/languages/definitions/powershell' |  |  | 0.568 |
+| walker |  | 6740 | 15 | listing of 'src/languages/definitions/qsharp' |  |  | 0.568 |
+| walker |  | 6755 | 15 | listing of 'src/languages/definitions/redshift' |  |  | 0.568 |
+| ns | 6769 |  | 483 | Representative feature register (find/register.js) — top half | 2.16 |  | 0.549 |
+| walker |  | 6770 | 15 | listing of 'src/languages/definitions/scss' |  |  | 0.549 |
+| walker |  | 6785 | 15 | listing of 'src/languages/definitions/sophia' |  |  | 0.549 |
+| walker |  | 6800 | 15 | listing of 'src/languages/definitions/sparql' |  |  | 0.549 |
+| walker |  | 6815 | 15 | listing of 'src/languages/definitions/tcl' |  |  | 0.549 |
+| walker |  | 6830 | 15 | listing of 'src/languages/definitions/typescript' |  |  | 0.549 |
+| walker |  | 6845 | 15 | listing of 'src/languages/definitions/typespec' |  |  | 0.549 |
+| walker |  | 6860 | 15 | listing of 'src/languages/definitions/wgsl' |  |  | 0.549 |
+| walker |  | 6877 | 17 | listing of 'src/languages/definitions/bicep' |  |  | 0.549 |
+| walker |  | 6894 | 17 | listing of 'src/languages/definitions/clojure' |  |  | 0.549 |
+| walker |  | 6911 | 17 | listing of 'src/languages/definitions/msdax' |  |  | 0.549 |
+| walker |  | 6928 | 17 | listing of 'src/languages/definitions/pascaligo' |  |  | 0.549 |
+| walker |  | 6945 | 17 | listing of 'src/languages/definitions/restructuredtext' |  |  | 0.549 |
+| ns | 6959 |  | 190 | registerLanguage / loadLanguage signatures | 3.1 |  | 0.542 |
+| walker |  | 6962 | 17 | listing of 'src/languages/definitions/systemverilog' |  |  | 0.542 |
+| walker |  | 7038 | 76 | listing of 'src/languages/definitions/freemarker2' |  |  | 0.542 |
 | ns | 7119 |  | 160 | internal/common/initialize.ts (worker bootstrap) | 3.2 |  | 0.536 |
-| walker |  | 7126 | 13 | listing of 'src/languages/definitions/pla' |  |  | 0.536 |
-| walker |  | 7139 | 13 | listing of 'src/languages/definitions/protobuf' |  |  | 0.536 |
-| walker |  | 7152 | 13 | listing of 'src/languages/definitions/pug' |  |  | 0.536 |
-| walker |  | 7165 | 13 | listing of 'src/languages/definitions/python' |  |  | 0.536 |
-| walker |  | 7178 | 13 | listing of 'src/languages/definitions/r' |  |  | 0.536 |
-| walker |  | 7191 | 13 | listing of 'src/languages/definitions/razor' |  |  | 0.536 |
-| walker |  | 7204 | 13 | listing of 'src/languages/definitions/redis' |  |  | 0.536 |
-| walker |  | 7217 | 13 | listing of 'src/languages/definitions/ruby' |  |  | 0.536 |
-| walker |  | 7230 | 13 | listing of 'src/languages/definitions/rust' |  |  | 0.536 |
-| walker |  | 7243 | 13 | listing of 'src/languages/definitions/sb' |  |  | 0.536 |
-| walker |  | 7256 | 13 | listing of 'src/languages/definitions/scala' |  |  | 0.536 |
-| walker |  | 7269 | 13 | listing of 'src/languages/definitions/scheme' |  |  | 0.536 |
-| walker |  | 7282 | 13 | listing of 'src/languages/definitions/shell' |  |  | 0.536 |
-| walker |  | 7295 | 13 | listing of 'src/languages/definitions/solidity' |  |  | 0.536 |
-| walker |  | 7308 | 13 | listing of 'src/languages/definitions/st' |  |  | 0.536 |
-| walker |  | 7321 | 13 | listing of 'src/languages/definitions/swift' |  |  | 0.536 |
-| walker |  | 7334 | 13 | listing of 'src/languages/definitions/twig' |  |  | 0.536 |
-| walker |  | 7347 | 13 | listing of 'src/languages/definitions/vb' |  |  | 0.536 |
-| walker |  | 7360 | 13 | listing of 'src/languages/definitions/xml' |  |  | 0.536 |
-| walker |  | 7373 | 13 | listing of 'src/languages/definitions/yaml' |  |  | 0.536 |
-| walker |  | 7388 | 15 | listing of 'src/languages/definitions/abap' |  |  | 0.536 |
-| walker |  | 7403 | 15 | listing of 'src/languages/definitions/azcli' |  |  | 0.536 |
-| walker |  | 7418 | 15 | listing of 'src/languages/definitions/cameligo' |  |  | 0.536 |
-| walker |  | 7433 | 15 | listing of 'src/languages/definitions/csharp' |  |  | 0.536 |
-| walker |  | 7448 | 15 | listing of 'src/languages/definitions/csp' |  |  | 0.536 |
-| walker |  | 7463 | 15 | listing of 'src/languages/definitions/cypher' |  |  | 0.536 |
-| walker |  | 7478 | 15 | listing of 'src/languages/definitions/dockerfile' |  |  | 0.536 |
-| walker |  | 7493 | 15 | listing of 'src/languages/definitions/ecl' |  |  | 0.536 |
-| ns | 7494 |  | 375 | TS register.ts — exported instances + onLanguage wiring | 3.3 |  | 0.525 |
-| walker |  | 7508 | 15 | listing of 'src/languages/definitions/elixir' |  |  | 0.525 |
-| walker |  | 7523 | 15 | listing of 'src/languages/definitions/flow9' |  |  | 0.525 |
-| walker |  | 7538 | 15 | listing of 'src/languages/definitions/fsharp' |  |  | 0.525 |
-| walker |  | 7553 | 15 | listing of 'src/languages/definitions/hcl' |  |  | 0.525 |
-| walker |  | 7568 | 15 | listing of 'src/languages/definitions/julia' |  |  | 0.525 |
-| walker |  | 7583 | 15 | listing of 'src/languages/definitions/lexon' |  |  | 0.525 |
-| walker |  | 7598 | 15 | listing of 'src/languages/definitions/m3' |  |  | 0.525 |
-| walker |  | 7613 | 15 | listing of 'src/languages/definitions/mdx' |  |  | 0.525 |
-| walker |  | 7628 | 15 | listing of 'src/languages/definitions/mips' |  |  | 0.525 |
-| ns | 7640 |  | 146 | TS register.ts — top-level interface/enum locations | 3.4 |  | 0.528 |
-| walker |  | 7643 | 15 | listing of 'src/languages/definitions/objective-c' |  |  | 0.528 |
-| walker |  | 7658 | 15 | listing of 'src/languages/definitions/pascal' |  |  | 0.528 |
-| walker |  | 7673 | 15 | listing of 'src/languages/definitions/postiats' |  |  | 0.528 |
-| walker |  | 7688 | 15 | listing of 'src/languages/definitions/powerquery' |  |  | 0.528 |
-| walker |  | 7703 | 15 | listing of 'src/languages/definitions/powershell' |  |  | 0.528 |
-| walker |  | 7718 | 15 | listing of 'src/languages/definitions/qsharp' |  |  | 0.528 |
-| walker |  | 7733 | 15 | listing of 'src/languages/definitions/redshift' |  |  | 0.528 |
-| walker |  | 7748 | 15 | listing of 'src/languages/definitions/scss' |  |  | 0.528 |
-| walker |  | 7763 | 15 | listing of 'src/languages/definitions/sophia' |  |  | 0.528 |
-| walker |  | 7778 | 15 | listing of 'src/languages/definitions/sparql' |  |  | 0.528 |
-| walker |  | 7793 | 15 | listing of 'src/languages/definitions/tcl' |  |  | 0.528 |
-| walker |  | 7808 | 15 | listing of 'src/languages/definitions/typescript' |  |  | 0.528 |
-| walker |  | 7823 | 15 | listing of 'src/languages/definitions/typespec' |  |  | 0.528 |
-| walker |  | 7838 | 15 | listing of 'src/languages/definitions/wgsl' |  |  | 0.528 |
-| walker |  | 7855 | 17 | listing of 'src/languages/definitions/bicep' |  |  | 0.528 |
-| walker |  | 7872 | 17 | listing of 'src/languages/definitions/clojure' |  |  | 0.528 |
-| walker |  | 7889 | 17 | listing of 'src/languages/definitions/msdax' |  |  | 0.528 |
-| walker |  | 7906 | 17 | listing of 'src/languages/definitions/pascaligo' |  |  | 0.528 |
-| walker |  | 7923 | 17 | listing of 'src/languages/definitions/restructuredtext' |  |  | 0.528 |
-| walker |  | 7940 | 17 | listing of 'src/languages/definitions/systemverilog' |  |  | 0.528 |
-| ns | 8009 |  | 369 | TS tsMode.ts — setup functions + setupMode body | 3.5 |  | 0.516 |
-| walker |  | 8016 | 76 | listing of 'src/languages/definitions/freemarker2' |  |  | 0.516 |
-| walker |  | 8129 | 113 | module item body at monaco-lsp-client/generator/index.ts:7 body 27 |  |  | 0.516 |
-| walker |  | 8267 | 138 | export names surface #1 in src/languages/features/json/register.ts |  |  | 0.516 |
-| walker |  | 8289 | 22 | export at src/languages/features/json/register.ts:142 |  |  | 0.516 |
-| walker |  | 8303 | 14 | export at src/languages/features/json/register.ts:342 |  |  | 0.516 |
-| walker |  | 8341 | 38 | export at src/languages/features/json/register.ts:337 |  |  | 0.516 |
-| walker |  | 8369 | 28 | export at src/languages/features/json/register.ts:331 |  |  | 0.516 |
-| walker |  | 8453 | 84 | export at src/languages/features/json/register.ts:255 |  |  | 0.516 |
-| walker |  | 8477 | 24 | imports in monaco-lsp-client/generator/index.ts |  |  | 0.516 |
-| walker |  | 8501 | 24 | imports in samples/browser-esm-webpack-typescript/src/index.ts |  |  | 0.516 |
-| ns | 8709 |  | 700 | TS tsWorker.ts — class header + ICreateData + create() factory | 3.6 |  | 0.497 |
-| walker |  | 9150 | 649 | package scripts in package.json |  |  | 0.529 |
-| ns | 9191 |  | 482 | TS tsWorker.ts — method-header locations | 3.7 | 3.6 | 0.518 |
-| walker |  | 9246 | 96 | README.md section #3 |  |  | 0.518 |
-| walker |  | 9339 | 93 | export names surface #1 in src/languages/features/css/register.ts |  |  | 0.518 |
-| walker |  | 9361 | 22 | export at src/languages/features/css/register.ts:346 |  |  | 0.518 |
-| walker |  | 9413 | 52 | export at src/languages/features/css/register.ts:317 |  |  | 0.518 |
-| walker |  | 9465 | 52 | export at src/languages/features/css/register.ts:324 |  |  | 0.518 |
-| walker |  | 9517 | 52 | export at src/languages/features/css/register.ts:331 |  |  | 0.518 |
-| walker |  | 9569 | 52 | export at src/languages/features/css/register.ts:339 |  |  | 0.518 |
-| walker |  | 9659 | 90 | export at src/languages/features/css/register.ts:306 |  |  | 0.518 |
-| walker |  | 9694 | 35 | listing of 'src/languages/features/typescript/lib' |  |  | 0.529 |
-| walker |  | 9810 | 116 | export at src/languages/features/html/register.ts:28 |  |  | 0.529 |
-| walker |  | 9858 | 48 | MAINTAINING.md section #2 |  |  | 0.529 |
-| walker |  | 9871 | 13 | export names surface in monaco-lsp-client/src/adapters/LspClient.ts |  |  | 0.529 |
-| walker |  | 9886 | 15 | export at monaco-lsp-client/src/adapters/LspClient.ts:30 |  |  | 0.529 |
-| ns | 9972 |  | 781 | monaco-lsp-client/src/adapters/LspClient.ts — feature catalog | 3.8 |  | 0.510 |
-| walker |  | 9975 | 89 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.510 |
+| walker |  | 7151 | 113 | module item body at monaco-lsp-client/generator/index.ts:7 body 27 |  |  | 0.536 |
+| walker |  | 7289 | 138 | export names surface #1 in src/languages/features/json/register.ts |  |  | 0.536 |
+| walker |  | 7311 | 22 | export at src/languages/features/json/register.ts:142 |  |  | 0.536 |
+| walker |  | 7325 | 14 | export at src/languages/features/json/register.ts:342 |  |  | 0.536 |
+| walker |  | 7363 | 38 | export at src/languages/features/json/register.ts:337 |  |  | 0.536 |
+| walker |  | 7391 | 28 | export at src/languages/features/json/register.ts:331 |  |  | 0.536 |
+| walker |  | 7475 | 84 | export at src/languages/features/json/register.ts:255 |  |  | 0.536 |
+| ns | 7494 |  | 375 | TS register.ts — exported instances + onLanguage wiring | 3.3 |  | 0.524 |
+| walker |  | 7499 | 24 | imports in monaco-lsp-client/generator/index.ts |  |  | 0.524 |
+| walker |  | 7523 | 24 | imports in samples/browser-esm-webpack-typescript/src/index.ts |  |  | 0.524 |
+| ns | 7640 |  | 146 | TS register.ts — top-level interface/enum locations | 3.4 |  | 0.518 |
+| ns | 8009 |  | 369 | TS tsMode.ts — setup functions + setupMode body | 3.5 |  | 0.507 |
+| walker |  | 8172 | 649 | package scripts in package.json |  |  | 0.541 |
+| walker |  | 8268 | 96 | README.md section #3 |  |  | 0.541 |
+| walker |  | 8361 | 93 | export names surface #1 in src/languages/features/css/register.ts |  |  | 0.541 |
+| walker |  | 8383 | 22 | export at src/languages/features/css/register.ts:346 |  |  | 0.541 |
+| walker |  | 8435 | 52 | export at src/languages/features/css/register.ts:317 |  |  | 0.541 |
+| walker |  | 8487 | 52 | export at src/languages/features/css/register.ts:324 |  |  | 0.541 |
+| walker |  | 8539 | 52 | export at src/languages/features/css/register.ts:331 |  |  | 0.541 |
+| walker |  | 8591 | 52 | export at src/languages/features/css/register.ts:339 |  |  | 0.541 |
+| walker |  | 8681 | 90 | export at src/languages/features/css/register.ts:306 |  |  | 0.541 |
+| ns | 8709 |  | 700 | TS tsWorker.ts — class header + ICreateData + create() factory | 3.6 |  | 0.521 |
+| walker |  | 8716 | 35 | listing of 'src/languages/features/typescript/lib' |  |  | 0.532 |
+| walker |  | 8764 | 48 | MAINTAINING.md section #2 |  |  | 0.532 |
+| walker |  | 8777 | 13 | export names surface in monaco-lsp-client/src/adapters/LspClient.ts |  |  | 0.532 |
+| walker |  | 8792 | 15 | export at monaco-lsp-client/src/adapters/LspClient.ts:30 |  |  | 0.532 |
+| walker |  | 8881 | 89 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.532 |
+| walker |  | 8954 | 73 | README.md section #20 |  |  | 0.532 |
+| walker |  | 9085 | 131 | export at src/languages/features/css/register.ts:124 |  |  | 0.532 |
+| walker |  | 9177 | 92 | samples/README.md section #1 |  |  | 0.532 |
+| ns | 9191 |  | 482 | TS tsWorker.ts — method-header locations | 3.7 | 3.6 | 0.520 |
+| walker |  | 9330 | 153 | module item body at webpack-plugin/src/index.ts:159 body 163 |  |  | 0.520 |
+| walker |  | 9337 | 7 | listing of 'src/deprecated/basic-languages' |  |  | 0.521 |
+| walker |  | 9471 | 134 | README.md section #2 |  |  | 0.521 |
+| walker |  | 9531 | 60 | listing of 'website' |  |  | 0.521 |
+| walker |  | 9557 | 26 | listing of 'website/src' |  |  | 0.521 |
+| walker |  | 9569 | 12 | listing of 'website/src/runner' |  |  | 0.521 |
+| walker |  | 9615 | 46 | listing of 'website/src/website' |  |  | 0.521 |
+| walker |  | 9642 | 27 | listing of 'website/src/website/pages' |  |  | 0.521 |
+| walker |  | 9653 | 11 | export names surface in src/languages/features/css/workerManager.ts |  |  | 0.521 |
+| walker |  | 9664 | 11 | export names surface in src/languages/features/html/workerManager.ts |  |  | 0.521 |
+| walker |  | 9675 | 11 | export names surface in src/languages/features/json/workerManager.ts |  |  | 0.521 |
+| walker |  | 9686 | 11 | export names surface in src/languages/features/typescript/workerManager.ts |  |  | 0.521 |
+| walker |  | 9927 | 241 | module item at monaco-lsp-client/generator/index.ts:259 |  |  | 0.521 |
+| walker |  | 9936 | 9 | module item body at monaco-lsp-client/generator/index.ts:259 body 631 |  |  | 0.521 |
+| walker |  | 9946 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 357 |  |  | 0.521 |
+| walker |  | 9956 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 359 |  |  | 0.521 |
+| walker |  | 9966 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 372 |  |  | 0.521 |
+| ns | 9972 |  | 781 | monaco-lsp-client/src/adapters/LspClient.ts — feature catalog | 3.8 |  | 0.502 |
+| walker |  | 9976 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 374 |  |  | 0.502 |
+| walker |  | 9986 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 388 |  |  | 0.502 |
+| walker |  | 9996 | 10 | module item body at monaco-lsp-client/generator/index.ts:259 body 406 |  |  | 0.502 |
