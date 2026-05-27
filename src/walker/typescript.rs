@@ -2379,11 +2379,11 @@ fn is_factory_body_match(decl: Node, kind: ItemKind, source: &str, src_lines: &[
         .is_some_and(|body| factory_receiver_table_part(body, source, src_lines).is_some())
 }
 
-/// Minimum receiver-property assignments at the head of a function body
-/// for the factory-table fold to fire. Mirrors `JS_PROTOTYPE_METHOD_MIN`
-/// — below this floor the pattern is just two incidental property
-/// assignments, not a public-API wiring table.
-const FACTORY_RECEIVER_TABLE_MIN: usize = 3;
+/// Minimum count for the factory-shape folds — receiver-property head
+/// assignments and inner `function_declaration` helpers.  Below this
+/// floor the pattern is just a couple incidental statements, not a
+/// public-API wiring table.  Mirrors `JS_PROTOTYPE_METHOD_MIN`.
+const FACTORY_PATTERN_MIN: usize = 3;
 
 /// If `body` is a `statement_block` matching the factory-table idiom
 /// — its tail contains `return R;` and its head is a run of
@@ -2415,7 +2415,7 @@ fn factory_receiver_table_part(body: Node, source: &str, src_lines: &[&str]) -> 
         extend_nonblank_rows(&mut table_rows, src_lines, start_row, end_row);
         count += 1;
     }
-    if count < FACTORY_RECEIVER_TABLE_MIN {
+    if count < FACTORY_PATTERN_MIN {
         return None;
     }
     let lines = dedup_sorted(table_rows);
@@ -2446,19 +2446,13 @@ fn factory_inner_function_locations_part(body: Node, src_lines: &[&str]) -> Opti
             line.saturating_sub(1) < src_lines.len() && !src_lines[line - 1].trim().is_empty()
         })
         .collect();
-    if lines.len() < FACTORY_INNER_FUNCTION_LOCATIONS_MIN {
+    if lines.len() < FACTORY_PATTERN_MIN {
         return None;
     }
     Some(BodyPart {
         lines: dedup_sorted(lines),
     })
 }
-
-/// Minimum nested-function-declaration count for the inner-function
-/// locations surface to fire. Mirrors `FACTORY_RECEIVER_TABLE_MIN` —
-/// below this floor the function body is unlikely to be the
-/// CommonJS-style factory whose body is a small set of named helpers.
-const FACTORY_INNER_FUNCTION_LOCATIONS_MIN: usize = 3;
 
 /// Return the identifier text of the first top-level `return
 /// <Identifier>;` statement in `named` (the function body's named
@@ -3141,7 +3135,7 @@ module.exports = setup;
 
     #[test]
     fn walker_typescript_factory_receiver_table_no_match_below_floor() {
-        // Two assignments is below `FACTORY_RECEIVER_TABLE_MIN` — fall
+        // Two assignments is below `FACTORY_PATTERN_MIN` — fall
         // back to the standard split (regular body interior emit).
         let src = "\
 function setup() {
