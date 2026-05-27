@@ -1627,28 +1627,14 @@ fn has_default_keyword(node: Node, source: &str) -> bool {
 
 /// Files whose name signals "module entrypoint / public surface".
 fn is_entrypoint_file(path: &Path) -> bool {
-    path.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
-        matches!(
-            n,
-            "index.ts"
-                | "index.tsx"
-                | "index.js"
-                | "index.mjs"
-                | "index.cjs"
-                | "main.ts"
-                | "main.tsx"
-                | "main.js"
-                | "main.mjs"
-                | "main.cjs"
-                | "mod.ts"
-                | "mod.tsx"
-                | "mod.js"
-                | "mod.mjs"
-                | "mod.cjs"
-                | "esm.js"
-                | "esm.mjs"
-        )
-    })
+    let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+        return false;
+    };
+    let Some((stem, ext)) = name.rsplit_once('.') else {
+        return false;
+    };
+    matches!(stem, "index" | "main" | "mod" | "esm")
+        && matches!(ext, "ts" | "tsx" | "js" | "mjs" | "cjs")
 }
 
 /// True for files that should seed the public-surface graph but
@@ -1658,17 +1644,11 @@ fn is_entrypoint_file(path: &Path) -> bool {
 /// for JS packages whose runtime entrypoint is plain JS — commander's
 /// `typings/index.d.ts` is the canonical example.
 fn is_declaration_entrypoint_file(path: &Path) -> bool {
-    path.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
-        matches!(
-            n,
-            "index.d.ts"
-                | "index.d.mts"
-                | "index.d.cts"
-                | "main.d.ts"
-                | "main.d.mts"
-                | "main.d.cts"
-        )
-    })
+    let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+        return false;
+    };
+    (name.starts_with("index.") || name.starts_with("main."))
+        && (name.ends_with(".d.ts") || name.ends_with(".d.mts") || name.ends_with(".d.cts"))
 }
 
 pub(crate) fn is_ts_or_tsx_file(path: &Path) -> bool {
