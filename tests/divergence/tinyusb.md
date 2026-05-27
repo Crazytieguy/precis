@@ -5,9 +5,9 @@ Score(3000)=0.439 I=0.712 C=0.270 ns_rows≤3K=19/41 (reached=5 partial=0 missin
 | ns | 12 |  | 12 | README title | 1.1 |  | 0.000 |
 | ns | 62 |  | 50 | src/ subdirectory listing | 1.2 |  | 0.000 |
 | walker |  | 107 | 107 | listing of '.' |  |  | 0.000 |
+| walker |  | 114 | 7 | listing of 'hw' |  |  | 0.000 |
 | ns | 136 |  | 74 | README headline overview | 1.3 |  | 0.000 |
-| walker |  | 154 | 47 | README headline in README.rst |  |  | 0.259 |
-| walker |  | 161 | 7 | listing of 'hw' |  |  | 0.259 |
+| walker |  | 161 | 47 | README headline in README.rst |  |  | 0.259 |
 | walker |  | 178 | 17 | listing of 'lib' |  |  | 0.259 |
 | walker |  | 192 | 14 | listing of 'lib/SEGGER_RTT' |  |  | 0.259 |
 | walker |  | 214 | 22 | listing of 'lib/rt-thread' |  |  | 0.259 |

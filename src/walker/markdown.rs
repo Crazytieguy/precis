@@ -103,7 +103,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: MarkdownKey::ReadmeHeadline { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: readme_headline_value(&file, ctx) * RST_README_HEADLINE_FACTOR,
+                value: readme_headline_value(&file, ctx),
             });
         }
     }
@@ -233,12 +233,6 @@ fn summary_value(file: &Path, ctx: &WalkCtx) -> f64 {
 fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
 }
-
-/// Multiplier for the RST `ReadmeHeadline` batch. RST READMEs have no
-/// `Section` / `HeadingsOutline` companions (no tree-sitter-md parse),
-/// so the lone headline carries the whole substantive README and ranks
-/// as a broader anchor.
-const RST_README_HEADLINE_FACTOR: f64 = 1.5;
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -> f64 {
     mix_signals(
