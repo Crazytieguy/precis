@@ -144,8 +144,6 @@ pub struct ScoreAtBudget {
     pub completion: f64,
     /// `√(importance × coverage)`.
     pub score: f64,
-    /// Walker `cum_tokens` at the last batch fitting in `budget`.
-    pub walker_used: usize,
 }
 
 /// Headline scores. Bucket counts gate on atoms reachable at the
@@ -369,7 +367,6 @@ impl<'a> BuildCtx<'a> {
 struct WalkerSnapshots<'a> {
     cums: [BTreeMap<&'a Atom, usize>; BUDGETS.len()],
     a_b_atoms: [usize; BUDGETS.len()],
-    walker_used: [usize; BUDGETS.len()],
 }
 
 impl<'a> WalkerSnapshots<'a> {
@@ -382,19 +379,7 @@ impl<'a> WalkerSnapshots<'a> {
                 .map(|r| r.atoms.len())
                 .sum::<usize>()
         });
-        let walker_used = BUDGETS.map(|budget| {
-            ctx.walker_rows
-                .iter()
-                .filter(|wr| wr.seen_t <= budget)
-                .map(|wr| wr.seen_t)
-                .max()
-                .unwrap_or(0)
-        });
-        Self {
-            cums,
-            a_b_atoms,
-            walker_used,
-        }
+        Self { cums, a_b_atoms }
     }
 }
 
@@ -466,7 +451,6 @@ fn compute_score_at(ctx: &BuildCtx, budget_idx: usize, walker: &WalkerSnapshots)
         BUDGETS[budget_idx],
         &walker.cums[budget_idx],
         walker.a_b_atoms[budget_idx],
-        walker.walker_used[budget_idx],
     )
 }
 
@@ -477,7 +461,6 @@ pub(super) fn compute_score_at_running(
     budget: usize,
     walker_cum: &BTreeMap<&Atom, usize>,
     a_b_atoms: usize,
-    walker_used: usize,
 ) -> ScoreAtBudget {
     if a_b_atoms == 0 {
         return ScoreAtBudget {
@@ -487,7 +470,6 @@ pub(super) fn compute_score_at_running(
             coverage: 0.0,
             completion: f64::NAN,
             score: 0.0,
-            walker_used,
         };
     }
 
@@ -531,7 +513,6 @@ pub(super) fn compute_score_at_running(
         coverage,
         completion,
         score,
-        walker_used,
     }
 }
 
@@ -698,7 +679,6 @@ mod tests {
         // precomputed snapshot.
         let mut walker_cum: BTreeMap<&Atom, usize> = BTreeMap::new();
         let mut a_b_atoms: usize = 0;
-        let mut walker_used: usize = 0;
         let mut ns_idx = 0;
         let mut walker_idx = 0;
 
@@ -711,14 +691,12 @@ mod tests {
             {
                 let wr = &ctx.walker_rows[walker_idx];
                 super::fold_walker_atoms(&mut walker_cum, &wr.atoms);
-                walker_used = wr.seen_t;
                 walker_idx += 1;
             }
             let snap = compute_score_at(&ctx, i, &walker);
-            let run = compute_score_at_running(&ctx, budget, &walker_cum, a_b_atoms, walker_used);
+            let run = compute_score_at_running(&ctx, budget, &walker_cum, a_b_atoms);
             assert_eq!(snap.budget, run.budget, "budget at i={i}");
             assert_eq!(snap.a_b_atoms, run.a_b_atoms, "a_b_atoms at i={i}");
-            assert_eq!(snap.walker_used, run.walker_used, "walker_used at i={i}");
             assert!(
                 (snap.importance - run.importance).abs() < 1e-12,
                 "importance at i={i}: snap={} run={}",

@@ -23,7 +23,6 @@ fn format_schedule_table(out: &mut String, ctx: &BuildCtx) {
 
     let mut walker_cum: BTreeMap<&Atom, usize> = BTreeMap::new();
     let mut a_b_atoms: usize = 0;
-    let mut walker_used: usize = 0;
     let mut prev_ns_t: usize = 0;
 
     let mut ns_iter = ctx.ns_rows.iter().enumerate().peekable();
@@ -56,7 +55,6 @@ fn format_schedule_table(out: &mut String, ctx: &BuildCtx) {
         while walker_iter.peek().is_some_and(|wr| wr.seen_t == next_cum) {
             let wr = walker_iter.next().unwrap();
             fold_walker_atoms(&mut walker_cum, &wr.atoms);
-            walker_used = wr.seen_t;
             pending.push(format!(
                 "| walker |  | {} | {} | {} |  |  |",
                 wr.seen_t,
@@ -79,8 +77,7 @@ fn format_schedule_table(out: &mut String, ctx: &BuildCtx) {
                 escape_cell(nsb.predecessor.as_deref().unwrap_or("")),
             ));
         }
-        let score =
-            compute_score_at_running(ctx, next_cum, &walker_cum, a_b_atoms, walker_used).score;
+        let score = compute_score_at_running(ctx, next_cum, &walker_cum, a_b_atoms).score;
         for prefix in &pending {
             writeln!(out, "{prefix} {score:.3} |").unwrap();
         }
