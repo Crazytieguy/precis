@@ -94,9 +94,9 @@
 //! - `Score(B=cum)` — Score(B) at `B = whichever cum is filled on this
 //!   row`, three decimals. Computed by [`compute_score_at_running`]
 //!   in a single forward pass that maintains running `walker_cum`
-//!   and `a_b_atoms` state — equivalent to
-//!   [`compute_score_at`] at the grid budgets but evaluated at every
-//!   row's transition point.
+//!   and `a_b_atoms` state — the same function the snapshot path
+//!   (`build_scores`) calls at each grid budget, so the per-row curve
+//!   and the grid-aligned snapshot agree by construction.
 
 use std::collections::BTreeMap;
 use std::path::Path;
@@ -380,8 +380,9 @@ impl<'a> WalkerSnapshots<'a> {
 }
 
 fn build_scores(ctx: &BuildCtx, walker: &WalkerSnapshots) -> Scores {
-    let vector: [ScoreAtBudget; BUDGETS.len()] =
-        std::array::from_fn(|i| compute_score_at(ctx, i, walker));
+    let vector: [ScoreAtBudget; BUDGETS.len()] = std::array::from_fn(|i| {
+        compute_score_at_running(ctx, BUDGETS[i], &walker.cums[i], walker.a_b_atoms[i])
+    });
 
     // reached/partial/missing on damped credit at the primary budget.
     let primary_cum = &walker.cums[PRIMARY_BUDGET_INDEX];
@@ -441,17 +442,10 @@ fn classify(damped_credit: f64) -> RowStatus {
     }
 }
 
-fn compute_score_at(ctx: &BuildCtx, budget_idx: usize, walker: &WalkerSnapshots) -> ScoreAtBudget {
-    compute_score_at_running(
-        ctx,
-        BUDGETS[budget_idx],
-        &walker.cums[budget_idx],
-        walker.a_b_atoms[budget_idx],
-    )
-}
-
-/// [`compute_score_at`] but takes running state — the schedule-table
-/// renderer can compute Score(B) per row without rebuilding snapshots.
+/// Compute `ScoreAtBudget` from running state — the per-budget snapshot
+/// path (`build_scores`) and the per-row schedule-table renderer both
+/// route through here, so the per-row Score(B=cum) curve and the
+/// grid-aligned snapshot agree by construction.
 pub(super) fn compute_score_at_running(
     ctx: &BuildCtx,
     budget: usize,
@@ -559,8 +553,7 @@ mod tests {
     use crate::schedule_types::{Atom, ScheduledBatch};
 
     use super::{
-        BUDGETS, BuildCtx, GradedAtom, NsRow, WalkerRow, WalkerSnapshots, compute_score_at,
-        compute_score_at_running,
+        BUDGETS, BuildCtx, GradedAtom, NsRow, WalkerRow, WalkerSnapshots, compute_score_at_running,
     };
 
     fn line_atom(path: &str, line: usize, bytes: usize) -> GradedAtom {
@@ -584,12 +577,12 @@ mod tests {
         }
     }
 
-    /// `compute_score_at_running` must produce bitwise-identical scores
-    /// to `compute_score_at` when the running state at `B = BUDGETS[i]`
-    /// matches what `WalkerSnapshots::build` would have computed there.
-    /// Guards against off-by-one in `a_b_atoms`, missed `walker_cum`
-    /// updates, or wrong tie-break ordering in the schedule-table
-    /// renderer.
+    /// A manual two-pointer forward pass over NS + walker rows
+    /// (mirroring `format_schedule_table`'s per-row state advance) must
+    /// produce the same `walker_cum` / `a_b_atoms` state at each grid
+    /// budget as the snapshot path (`WalkerSnapshots::build`). Guards
+    /// against off-by-one in `a_b_atoms`, missed `walker_cum` updates,
+    /// or wrong tie-break ordering in the schedule-table renderer.
     #[test]
     fn divergence_running_score_matches_snapshot_at_each_budget() {
         // NorthStar reference only — `BuildCtx.ns` is read by the report
@@ -676,7 +669,7 @@ mod tests {
                 super::fold_walker_atoms(&mut walker_cum, &wr.atoms);
                 walker_idx += 1;
             }
-            let snap = compute_score_at(&ctx, i, &walker);
+            let snap = compute_score_at_running(&ctx, budget, &walker.cums[i], walker.a_b_atoms[i]);
             let run = compute_score_at_running(&ctx, budget, &walker_cum, a_b_atoms);
             assert_eq!(snap.budget, run.budget, "budget at i={i}");
             assert_eq!(snap.a_b_atoms, run.a_b_atoms, "a_b_atoms at i={i}");
