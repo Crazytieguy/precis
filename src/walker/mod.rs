@@ -250,15 +250,7 @@ fn collect_readme_cited_paths(root: &Path) -> HashSet<PathBuf> {
             continue;
         };
         let lower = name.to_ascii_lowercase();
-        let is_readme = matches!(
-            lower.as_str(),
-            "readme.md"
-                | "readme.rst"
-                | "readme.txt"
-                | "readme"
-                | "readme.markdown"
-                | "readme.mdown"
-        );
+        let is_readme = matches!(lower.as_str(), "readme.md" | "readme.rst" | "readme.txt");
         if !is_readme {
             continue;
         }
