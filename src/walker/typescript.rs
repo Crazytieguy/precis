@@ -158,7 +158,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in &js_like_files {
         let ep = is_entrypoint_file(file);
-        let js_factor = js_value_factor(file, ctx) * public_surface_factor(file, ctx);
+        let js_factor = js_value_factor(file, ctx)
+            * public_surface_factor(file, ctx)
+            * secondary_ts_workspace_member_factor(file, ctx);
         let module_predecessor = module_entrypoint_gate
             .as_ref()
             .filter(|_| module_entrypoint.as_deref() != Some(file.as_path()))
@@ -1634,16 +1636,12 @@ fn ends_with_ignore_ascii_case(value: &str, suffix: &str) -> bool {
 
 fn module_doc_lede_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx))
-        * js_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
+    mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let cat = (0.3 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx))
-        * js_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
+    mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx)) * js_factor
 }
 
 /// Damp factor for TS/JS files in a "secondary" sub-package — a
@@ -1710,34 +1708,27 @@ fn export_names_value(
         * names_surface_chunk_factor(chunk_index, chunk_count)
         * js_factor
         * class_split_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.70 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.85 * k).min(1.0);
-    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx))
-        * js_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
+    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.20 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.6 * k).min(1.0);
-    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx))
-        * js_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
+    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.62 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.95 * k).min(1.0);
-    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx))
-        * js_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
+    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
@@ -1749,9 +1740,7 @@ fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64)
     };
     let cat = (0.38 * class_boost * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.7 * class_boost * k).min(1.0);
-    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx))
-        * js_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
+    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
@@ -1766,9 +1755,7 @@ fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor:
     };
     let cat = (0.30 * class_boost * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.82 * class_boost * k).min(1.0);
-    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx))
-        * js_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
+    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
 
 // Strictly below `Export.catastrophic` (0.70) — `Export`'s signature already
@@ -1778,9 +1765,7 @@ fn export_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64)
     let k = kind.kind_weight();
     let cat = (0.45 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.9 * k).min(1.0);
-    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx))
-        * js_factor
-        * secondary_ts_workspace_member_factor(file, ctx)
+    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
 }
 
 // --- parser ---
