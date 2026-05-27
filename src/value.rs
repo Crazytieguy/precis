@@ -399,82 +399,27 @@ fn is_known_locale(s: &str) -> bool {
     // normalize the separator before matching. Comparison is
     // case-insensitive because the caller already lowercased the stem.
     let normalized = s.replace('_', "-");
-    if is_locale_language(normalized.as_str()) {
-        return true;
-    }
-    // `<lang>-<region>` form: accept if the language root is a known
-    // language code (e.g. `de-ch`, `pt-pt`, `es-mx`, `zh-hans`). Whitelisting
-    // by the root rather than enumerating every region pair keeps the false-
-    // positive shield (a bare unknown token like `dev` / `api` never matches)
-    // while picking up dialects the per-fixture corpus didn't surface yet.
-    if let Some((lang, region)) = normalized.split_once('-')
-        && !region.is_empty()
-        && is_locale_language(lang)
-    {
-        return true;
-    }
-    false
+    let lang_root = normalized
+        .split_once('-')
+        .map_or(normalized.as_str(), |(l, r)| {
+            if r.is_empty() { normalized.as_str() } else { l }
+        });
+    is_locale_language(lang_root)
 }
 
+/// Accept any 2–3-character ASCII-letter token that isn't a known
+/// false-positive stem (`api` / `dev` / `old` / `template` / etc.).
+/// A whitelist of ~50 ISO codes can never keep up with new ones in
+/// the wild; the blocklist of non-locale README suffixes is small and
+/// stable.
 fn is_locale_language(s: &str) -> bool {
-    matches!(
+    let len = s.len();
+    if !(2..=3).contains(&len) || !s.bytes().all(|b| b.is_ascii_lowercase()) {
+        return false;
+    }
+    !matches!(
         s,
-        "zh" | "ja"
-            | "ko"
-            // Informal codes seen in the wild: `kr` (Korean), `cn` (Chinese),
-            // `tw` (Taiwanese / Traditional Chinese). Not ISO 639, but README
-            // authors use them.
-            | "kr"
-            | "cn"
-            | "tw"
-            | "fr"
-            | "de"
-            | "es"
-            | "it"
-            | "pt"
-            | "ru"
-            | "ar"
-            | "hi"
-            | "bn"
-            | "fa"
-            | "nl"
-            | "pl"
-            | "tr"
-            | "sv"
-            | "no"
-            | "da"
-            | "fi"
-            | "cs"
-            | "vi"
-            | "th"
-            | "id"
-            | "he"
-            | "uk"
-            | "ro"
-            | "hu"
-            | "el"
-            | "az"
-            | "bg"
-            | "hr"
-            | "sk"
-            | "sl"
-            | "et"
-            | "lv"
-            | "lt"
-            | "sr"
-            | "ms"
-            | "ml"
-            | "ta"
-            | "te"
-            | "ur"
-            | "ne"
-            | "my"
-            | "km"
-            | "lo"
-            | "ka"
-            | "hy"
-            | "is"
-            | "en"
+        "api" | "dev" | "old" | "new" | "min" | "tmp" | "bak" | "pre"
     )
 }
 
