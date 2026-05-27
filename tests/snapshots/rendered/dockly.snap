@@ -105,8 +105,6 @@ src/
     cli.js
         97→module.exports = new Cli()
     dockerUtil.js
-        1→'use strict'
-        3→const DockerLib = require('dockerode')
         5→class Util {
         6→  constructor (config) {
         …
@@ -178,7 +176,7 @@ src/
         120→      })
         121→    })
         124→  getInfo (cb) {
-        …
+        125→    const host = {}
         155→  getContainer (containerId, cb) {
         156→    const container = this.dockerCon.getContainer(containerId)
         157→    return container.inspect(cb)
@@ -269,7 +267,7 @@ src/
         82→      this.widgetsRepository.delete(hookName)
         83→    }
         86→  initWidgets () {
-        …
+        87→    const layout = GRID_LAYOUT[this.mode]
         107→  clearWidgets () {
         108→    for (let [widgetName] of this.assets.get('widgets').entries()) {
         109→      this.widgets.delete(widgetName)

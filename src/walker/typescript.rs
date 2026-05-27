@@ -519,7 +519,6 @@ fn emit_export_body_parts(
         let Some(body_start_line) = part.start_line() else {
             continue;
         };
-        let part_line_count = part.lines.len();
         let Some(content) =
             single_file_lines_content(emit.file, emit.source, FileLines::new(part.lines))
         else {
@@ -543,23 +542,11 @@ fn emit_export_body_parts(
             value: export_body_value(emit.file, item.kind, emit.ctx, emit.js_factor)
                 * emit.per_export_factor
                 * part_value_factor
-                * segment_factor
-                * tiny_body_value_factor(part_line_count),
+                * segment_factor,
         });
         if !is_class_peer {
             *emit.body_segment_index += 1;
         }
-    }
-}
-
-/// Damp very small body batches — one-line bodies in JS/TS are
-/// typically pass-through delegation; the signature already tells
-/// callers what the method does.
-fn tiny_body_value_factor(line_count: usize) -> f64 {
-    match line_count {
-        0 | 1 => 0.65,
-        2 => 0.85,
-        _ => 1.0,
     }
 }
 

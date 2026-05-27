@@ -20,70 +20,70 @@ Score(3000)=0.587 I=0.797 C=0.432 ns_rows≤3K=23/44 (reached=11 partial=3 missi
 | walker |  | 415 | 22 | README.md section #1 |  |  | 0.589 |
 | walker |  | 435 | 20 | export names surface in src/common.js |  |  | 0.591 |
 | walker |  | 435 | 0 | export at src/common.js:7 |  |  | 0.591 |
-| ns | 464 |  | 75 | common.js inner-function name locations | 2.2 |  | 0.521 |
+| walker |  | 443 | 8 | export body at src/common.js:7 body 146 |  |  | 0.591 |
+| walker |  | 452 | 9 | export body at src/common.js:7 body 61 |  |  | 0.591 |
+| walker |  | 461 | 9 | export body at src/common.js:7 body 63 |  |  | 0.591 |
+| ns | 464 |  | 75 | common.js inner-function name locations | 2.2 |  | 0.522 |
+| walker |  | 470 | 9 | export body at src/common.js:7 body 64 |  |  | 0.522 |
+| walker |  | 480 | 10 | export body at src/common.js:7 body 116 |  |  | 0.522 |
+| walker |  | 490 | 10 | export body at src/common.js:7 body 119 |  |  | 0.522 |
 | ns | 497 |  | 33 | common.js: setup() signature + bootstrap + module.exports | 2.3 |  | 0.503 |
-| ns | 614 |  | 117 | node.js exports table (top of file) | 2.4 |  | 0.457 |
-| walker |  | 620 | 185 | package identity metadata in package.json |  |  | 0.457 |
-| ns | 666 |  | 52 | node.js function-name locations | 2.5 |  | 0.431 |
-| walker |  | 686 | 66 | package entrypoints in package.json |  |  | 0.449 |
-| ns | 712 |  | 46 | node.js bottom wiring + formatters registration | 2.6 |  | 0.435 |
-| walker |  | 716 | 30 | package runtime metadata in package.json |  |  | 0.486 |
-| ns | 762 |  | 50 | browser.js exports table (top of file) | 2.7 |  | 0.468 |
-| ns | 816 |  | 54 | browser.js function-name locations | 2.8 |  | 0.449 |
-| walker |  | 824 | 108 | package scripts in package.json |  |  | 0.450 |
-| walker |  | 839 | 15 | export names surface #1 in src/browser.js |  |  | 0.450 |
-| walker |  | 847 | 8 | export body at src/common.js:7 body 146 |  |  | 0.450 |
-| ns | 852 |  | 36 | browser.js bottom wiring + formatters.j | 2.9 |  | 0.445 |
-| walker |  | 856 | 9 | export body at src/common.js:7 body 61 |  |  | 0.445 |
-| walker |  | 865 | 9 | export body at src/common.js:7 body 63 |  |  | 0.445 |
-| walker |  | 874 | 9 | export body at src/common.js:7 body 64 |  |  | 0.445 |
-| walker |  | 907 | 33 | export body at src/common.js:7 body 142 |  |  | 0.446 |
-| walker |  | 917 | 10 | export body at src/common.js:7 body 116 |  |  | 0.446 |
-| walker |  | 927 | 10 | export body at src/common.js:7 body 119 |  |  | 0.446 |
-| walker |  | 937 | 10 | export body at src/common.js:7 body 166 |  |  | 0.446 |
-| walker |  | 974 | 37 | export body at src/common.js:7 body 220 |  |  | 0.446 |
-| walker |  | 985 | 11 | export body at src/common.js:7 body 62 |  |  | 0.523 |
-| ns | 985 |  | 133 | README H2 heading locations | 2.10 |  | 0.523 |
-| walker |  | 996 | 11 | export body at src/common.js:7 body 163 |  |  | 0.524 |
-| walker |  | 1007 | 11 | export body at src/common.js:7 body 167 |  |  | 0.524 |
-| walker |  | 1046 | 39 | export body at src/common.js:7 body 273 |  |  | 0.524 |
-| walker |  | 1058 | 12 | export body at src/common.js:7 body 164 |  |  | 0.524 |
-| walker |  | 1070 | 12 | export body at src/common.js:7 body 193 |  |  | 0.524 |
-| walker |  | 1082 | 12 | export body at src/common.js:7 body 194 |  |  | 0.524 |
-| walker |  | 1094 | 12 | export body at src/common.js:7 body 195 |  |  | 0.524 |
-| walker |  | 1106 | 12 | export body at src/common.js:7 body 196 |  |  | 0.525 |
-| ns | 1114 |  | 129 | enabled(name): namespace match loop | 3.1 | 2.2 | 0.486 |
-| walker |  | 1118 | 12 | export body at src/common.js:7 body 224 |  |  | 0.486 |
-| walker |  | 1140 | 22 | imports in test.js |  |  | 0.486 |
-| walker |  | 1153 | 13 | export body at src/common.js:7 body 219 |  |  | 0.486 |
-| walker |  | 1167 | 14 | export body at src/common.js:7 body 117 |  |  | 0.486 |
-| walker |  | 1181 | 14 | export body at src/common.js:7 body 118 |  |  | 0.487 |
-| walker |  | 1231 | 50 | export body at src/common.js:7 body 150 |  |  | 0.487 |
-| walker |  | 1246 | 15 | export body at src/common.js:7 body 141 |  |  | 0.487 |
-| walker |  | 1286 | 40 | README.md section #15 |  |  | 0.487 |
-| ns | 1316 |  | 202 | enable(namespaces): comma/whitespace split + names/skips partition | 3.2 | 2.2 | 0.451 |
-| walker |  | 1344 | 58 | export body at src/common.js:7 body 169 |  |  | 0.475 |
-| ns | 1387 |  | 71 | disable(): rebuild namespaces string, then clear | 3.3 | 2.2 | 0.460 |
-| walker |  | 1408 | 64 | export body at src/common.js:7 body 234 |  |  | 0.488 |
-| walker |  | 1680 | 272 | package dependencies in package.json |  |  | 0.511 |
-| walker |  | 1756 | 76 | export body at src/common.js:7 body 175 |  |  | 0.558 |
-| ns | 1763 |  | 376 | createDebug factory: signature + per-instance setup tail | 3.4 | 2.2 | 0.511 |
-| walker |  | 1880 | 124 | README.md section #5 |  |  | 0.511 |
-| walker |  | 1905 | 25 | export body at src/common.js:7 body 120 |  |  | 0.519 |
-| walker |  | 1953 | 48 | export names surface #1 in src/node.js |  |  | 0.525 |
-| walker |  | 1953 | 0 | export at src/node.js:203 |  |  | 0.525 |
-| walker |  | 1953 | 0 | export at src/node.js:220 |  |  | 0.525 |
-| walker |  | 1953 | 0 | export at src/node.js:231 |  |  | 0.525 |
-| walker |  | 2039 | 86 | export body at src/common.js:7 body 8 |  |  | 0.571 |
-| walker |  | 2126 | 87 | export body at src/node.js:203 body 204 |  |  | 0.572 |
-| walker |  | 2214 | 88 | export body at src/common.js:7 body 41 |  |  | 0.631 |
-| ns | 2246 |  | 483 | matchesTemplate(): wildcard match algorithm | 3.5 | 2.2 | 0.570 |
-| walker |  | 2260 | 46 | imports in test.node.js |  |  | 0.570 |
-| walker |  | 2282 | 22 | imports in src/node.js |  |  | 0.570 |
-| walker |  | 2381 | 99 | export body at src/common.js:7 body 42 |  |  | 0.572 |
-| walker |  | 2492 | 111 | export body at src/common.js:7 body 250 |  |  | 0.612 |
-| walker |  | 2691 | 199 | README.md section #4 |  |  | 0.612 |
-| walker |  | 2727 | 36 | export body at src/common.js:7 body 284 |  |  | 0.613 |
+| walker |  | 500 | 10 | export body at src/common.js:7 body 166 |  |  | 0.503 |
+| walker |  | 511 | 11 | export body at src/common.js:7 body 62 |  |  | 0.504 |
+| walker |  | 522 | 11 | export body at src/common.js:7 body 163 |  |  | 0.504 |
+| walker |  | 533 | 11 | export body at src/common.js:7 body 167 |  |  | 0.504 |
+| walker |  | 545 | 12 | export body at src/common.js:7 body 164 |  |  | 0.504 |
+| walker |  | 557 | 12 | export body at src/common.js:7 body 193 |  |  | 0.504 |
+| walker |  | 569 | 12 | export body at src/common.js:7 body 194 |  |  | 0.504 |
+| walker |  | 581 | 12 | export body at src/common.js:7 body 195 |  |  | 0.504 |
+| walker |  | 593 | 12 | export body at src/common.js:7 body 196 |  |  | 0.504 |
+| walker |  | 605 | 12 | export body at src/common.js:7 body 224 |  |  | 0.504 |
+| ns | 614 |  | 117 | node.js exports table (top of file) | 2.4 |  | 0.458 |
+| walker |  | 618 | 13 | export body at src/common.js:7 body 219 |  |  | 0.458 |
+| walker |  | 632 | 14 | export body at src/common.js:7 body 117 |  |  | 0.458 |
+| walker |  | 646 | 14 | export body at src/common.js:7 body 118 |  |  | 0.459 |
+| walker |  | 661 | 15 | export body at src/common.js:7 body 141 |  |  | 0.459 |
+| ns | 666 |  | 52 | node.js function-name locations | 2.5 |  | 0.433 |
+| ns | 712 |  | 46 | node.js bottom wiring + formatters registration | 2.6 |  | 0.419 |
+| ns | 762 |  | 50 | browser.js exports table (top of file) | 2.7 |  | 0.404 |
+| ns | 816 |  | 54 | browser.js function-name locations | 2.8 |  | 0.388 |
+| walker |  | 846 | 185 | package identity metadata in package.json |  |  | 0.388 |
+| ns | 852 |  | 36 | browser.js bottom wiring + formatters.j | 2.9 |  | 0.380 |
+| walker |  | 912 | 66 | package entrypoints in package.json |  |  | 0.396 |
+| walker |  | 942 | 30 | package runtime metadata in package.json |  |  | 0.443 |
+| ns | 985 |  | 133 | README H2 heading locations | 2.10 |  | 0.521 |
+| walker |  | 1050 | 108 | package scripts in package.json |  |  | 0.521 |
+| walker |  | 1075 | 25 | export body at src/common.js:7 body 120 |  |  | 0.522 |
+| walker |  | 1090 | 15 | export names surface #1 in src/browser.js |  |  | 0.525 |
+| ns | 1114 |  | 129 | enabled(name): namespace match loop | 3.1 | 2.2 | 0.487 |
+| walker |  | 1123 | 33 | export body at src/common.js:7 body 142 |  |  | 0.487 |
+| walker |  | 1159 | 36 | export body at src/common.js:7 body 284 |  |  | 0.487 |
+| walker |  | 1196 | 37 | export body at src/common.js:7 body 220 |  |  | 0.488 |
+| walker |  | 1235 | 39 | export body at src/common.js:7 body 273 |  |  | 0.489 |
+| walker |  | 1257 | 22 | imports in test.js |  |  | 0.489 |
+| walker |  | 1307 | 50 | export body at src/common.js:7 body 150 |  |  | 0.489 |
+| ns | 1316 |  | 202 | enable(namespaces): comma/whitespace split + names/skips partition | 3.2 | 2.2 | 0.452 |
+| walker |  | 1347 | 40 | README.md section #15 |  |  | 0.452 |
+| ns | 1387 |  | 71 | disable(): rebuild namespaces string, then clear | 3.3 | 2.2 | 0.438 |
+| walker |  | 1405 | 58 | export body at src/common.js:7 body 169 |  |  | 0.461 |
+| walker |  | 1469 | 64 | export body at src/common.js:7 body 234 |  |  | 0.489 |
+| walker |  | 1741 | 272 | package dependencies in package.json |  |  | 0.512 |
+| ns | 1763 |  | 376 | createDebug factory: signature + per-instance setup tail | 3.4 | 2.2 | 0.479 |
+| walker |  | 1817 | 76 | export body at src/common.js:7 body 175 |  |  | 0.519 |
+| walker |  | 1941 | 124 | README.md section #5 |  |  | 0.519 |
+| walker |  | 1989 | 48 | export names surface #1 in src/node.js |  |  | 0.526 |
+| walker |  | 1989 | 0 | export at src/node.js:203 |  |  | 0.526 |
+| walker |  | 1989 | 0 | export at src/node.js:220 |  |  | 0.526 |
+| walker |  | 1989 | 0 | export at src/node.js:231 |  |  | 0.526 |
+| walker |  | 2075 | 86 | export body at src/common.js:7 body 8 |  |  | 0.572 |
+| walker |  | 2162 | 87 | export body at src/node.js:203 body 204 |  |  | 0.573 |
+| ns | 2246 |  | 483 | matchesTemplate(): wildcard match algorithm | 3.5 | 2.2 | 0.516 |
+| walker |  | 2250 | 88 | export body at src/common.js:7 body 41 |  |  | 0.571 |
+| walker |  | 2296 | 46 | imports in test.node.js |  |  | 0.571 |
+| walker |  | 2318 | 22 | imports in src/node.js |  |  | 0.571 |
+| walker |  | 2417 | 99 | export body at src/common.js:7 body 42 |  |  | 0.573 |
+| walker |  | 2528 | 111 | export body at src/common.js:7 body 250 |  |  | 0.613 |
+| walker |  | 2727 | 199 | README.md section #4 |  |  | 0.613 |
 | ns | 2781 |  | 535 | debug(...args) inner body: per-call dispatch | 3.6 | 2.2 | 0.548 |
 | walker |  | 2862 | 135 | export names surface in src/browser.js |  |  | 0.578 |
 | walker |  | 2862 | 0 | export at src/browser.js:7 |  |  | 0.578 |
@@ -108,10 +108,10 @@ Score(3000)=0.587 I=0.797 C=0.432 ns_rows≤3K=23/44 (reached=11 partial=3 missi
 | walker |  | 3471 | 0 | export at src/node.js:155 |  |  | 0.587 |
 | walker |  | 3471 | 0 | export at src/node.js:167 |  |  | 0.587 |
 | walker |  | 3471 | 0 | export at src/node.js:193 |  |  | 0.587 |
-| walker |  | 3508 | 37 | export body at src/node.js:155 body 156 |  |  | 0.592 |
-| walker |  | 3553 | 45 | export at src/node.js:18 |  |  | 0.610 |
-| walker |  | 3570 | 17 | export doc at src/node.js:27 |  |  | 0.610 |
-| walker |  | 3591 | 21 | export body at src/node.js:193 body 194 |  |  | 0.614 |
+| walker |  | 3492 | 21 | export body at src/node.js:193 body 194 |  |  | 0.589 |
+| walker |  | 3529 | 37 | export body at src/node.js:155 body 156 |  |  | 0.596 |
+| walker |  | 3574 | 45 | export at src/node.js:18 |  |  | 0.614 |
+| walker |  | 3591 | 17 | export doc at src/node.js:27 |  |  | 0.614 |
 | walker |  | 3620 | 29 | export doc at src/node.js:155 |  |  | 0.614 |
 | walker |  | 3646 | 26 | export doc at src/node.js:12 |  |  | 0.614 |
 | ns | 3664 |  | 285 | node.js DEBUG_* env-var parser (inspectOpts) | 4.3 |  | 0.588 |

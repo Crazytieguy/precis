@@ -24,33 +24,33 @@ Score(3000)=0.636 I=0.830 C=0.487 ns_rows≤3K=21/51 (reached=9 partial=2 missin
 | walker |  | 622 | 11 | README.md section #9 |  |  | 0.707 |
 | walker |  | 639 | 17 | export names surface in src/parse-where.ts |  |  | 0.707 |
 | walker |  | 639 | 0 | export at src/parse-where.ts:58 |  |  | 0.707 |
-| walker |  | 651 | 12 | export names surface in src/adapters/observer.ts |  |  | 0.707 |
-| walker |  | 673 | 22 | export names surface in src/matches-where.ts |  |  | 0.707 |
-| walker |  | 673 | 0 | export at src/matches-where.ts:24 |  |  | 0.707 |
-| walker |  | 700 | 27 | README.md section #6 |  |  | 0.707 |
+| walker |  | 655 | 16 | export body at src/random-id.ts:3 body 4 |  |  | 0.707 |
+| walker |  | 667 | 12 | export names surface in src/adapters/observer.ts |  |  | 0.707 |
+| walker |  | 689 | 22 | export names surface in src/matches-where.ts |  |  | 0.707 |
+| walker |  | 689 | 0 | export at src/matches-where.ts:24 |  |  | 0.707 |
+| walker |  | 716 | 27 | README.md section #6 |  |  | 0.707 |
 | ns | 719 |  | 208 | Canonical db.json shape | 1.7 |  | 0.625 |
-| walker |  | 888 | 188 | package identity metadata in package.json |  |  | 0.625 |
+| walker |  | 904 | 188 | package identity metadata in package.json |  |  | 0.625 |
 | ns | 914 |  | 195 | Routes table (array + object resources) | 2.1 |  | 0.546 |
-| walker |  | 957 | 69 | package entrypoints in package.json |  |  | 0.593 |
-| walker |  | 989 | 32 | package runtime metadata in package.json |  |  | 0.634 |
+| walker |  | 973 | 69 | package entrypoints in package.json |  |  | 0.593 |
+| walker |  | 1005 | 32 | package runtime metadata in package.json |  |  | 0.634 |
 | ns | 1070 |  | 156 | Query cheat sheet (filter/sort/page/embed/where) | 2.2 |  | 0.594 |
-| walker |  | 1153 | 164 | package scripts in package.json |  |  | 0.595 |
-| walker |  | 1187 | 34 | export names surface in src/app.ts |  |  | 0.595 |
-| walker |  | 1187 | 0 | export at src/app.ts:94 |  |  | 0.595 |
-| walker |  | 1208 | 21 | export at src/app.ts:18 |  |  | 0.595 |
-| walker |  | 1238 | 30 | README.md section #13 |  |  | 0.596 |
-| walker |  | 1281 | 43 | export names surface in src/paginate.ts |  |  | 0.596 |
-| walker |  | 1281 | 0 | export at src/paginate.ts:11 |  |  | 0.596 |
-| walker |  | 1351 | 70 | export at src/paginate.ts:1 |  |  | 0.596 |
+| walker |  | 1169 | 164 | package scripts in package.json |  |  | 0.595 |
+| walker |  | 1203 | 34 | export names surface in src/app.ts |  |  | 0.595 |
+| walker |  | 1203 | 0 | export at src/app.ts:94 |  |  | 0.595 |
+| walker |  | 1224 | 21 | export at src/app.ts:18 |  |  | 0.596 |
+| walker |  | 1254 | 30 | README.md section #13 |  |  | 0.596 |
+| walker |  | 1297 | 43 | export names surface in src/paginate.ts |  |  | 0.596 |
+| walker |  | 1297 | 0 | export at src/paginate.ts:11 |  |  | 0.596 |
+| walker |  | 1367 | 70 | export at src/paginate.ts:1 |  |  | 0.596 |
 | ns | 1385 |  | 315 | Conditions operators list | 2.3 |  | 0.530 |
-| walker |  | 1503 | 152 | json config tsconfig.json |  |  | 0.531 |
-| walker |  | 1602 | 99 | README.md section #19 |  |  | 0.534 |
+| walker |  | 1519 | 152 | json config tsconfig.json |  |  | 0.531 |
+| walker |  | 1618 | 99 | README.md section #19 |  |  | 0.534 |
 | ns | 1642 |  | 257 | Pagination response shape | 2.4 |  | 0.491 |
-| walker |  | 1654 | 52 | export names surface in src/where-operators.ts |  |  | 0.491 |
-| walker |  | 1654 | 0 | export at src/where-operators.ts:16 |  |  | 0.491 |
-| walker |  | 1786 | 132 | README.md section #7 |  |  | 0.545 |
-| walker |  | 1802 | 16 | export body at src/random-id.ts:3 body 4 |  |  | 0.545 |
-| walker |  | 1818 | 16 | export body at src/where-operators.ts:16 body 17 |  |  | 0.545 |
+| walker |  | 1670 | 52 | export names surface in src/where-operators.ts |  |  | 0.491 |
+| walker |  | 1670 | 0 | export at src/where-operators.ts:16 |  |  | 0.491 |
+| walker |  | 1686 | 16 | export body at src/where-operators.ts:16 body 17 |  |  | 0.492 |
+| walker |  | 1818 | 132 | README.md section #7 |  |  | 0.545 |
 | ns | 1826 |  | 184 | Embed + _where + dependent-delete syntax | 2.5 |  | 0.524 |
 | walker |  | 1960 | 142 | README.md section #8 |  |  | 0.609 |
 | walker |  | 1975 | 15 | imports in src/random-id.ts |  |  | 0.609 |

@@ -1683,28 +1683,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 60
-key = 'Typescript(ExportBody { file: "src/use-prevent-scroll.ts", start_line: 294, body_start_line: 295 })'
-descriptor = "export body at src/use-prevent-scroll.ts:294 body 295"
-cost_tokens = 60
-cum_tokens = 7728
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/use-prevent-scroll.ts"
-start = 295
-end = 299
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
 key = 'Typescript(ExportBody { file: "src/use-prevent-scroll.ts", start_line: 29, body_start_line: 30 })'
 descriptor = "export body at src/use-prevent-scroll.ts:29 body 30"
 cost_tokens = 39
-cum_tokens = 7767
+cum_tokens = 7707
 
 [batches.content]
 kind = "lines"
@@ -1713,6 +1695,24 @@ kind = "lines"
 path = "src/use-prevent-scroll.ts"
 start = 30
 end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Typescript(ExportBody { file: "src/use-prevent-scroll.ts", start_line: 294, body_start_line: 295 })'
+descriptor = "export body at src/use-prevent-scroll.ts:294 body 295"
+cost_tokens = 60
+cum_tokens = 7767
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/use-prevent-scroll.ts"
+start = 295
+end = 299
 
 [batches.content.spans.render]
 kind = "full"

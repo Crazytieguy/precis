@@ -37,9 +37,9 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | ns | 1168 |  | 317 | docs/summary.md (the GitBook TOC) | 2.6 |  | 0.532 |
 | walker |  | 1218 | 56 | export names surface in src/structs/coercions.ts |  |  | 0.534 |
 | walker |  | 1218 | 0 | export at src/structs/coercions.ts:79 |  |  | 0.534 |
-| walker |  | 1265 | 47 | export at src/structs/coercions.ts:16 |  |  | 0.534 |
-| walker |  | 1322 | 57 | export at src/structs/coercions.ts:38 |  |  | 0.534 |
-| walker |  | 1339 | 17 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.534 |
+| walker |  | 1235 | 17 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.534 |
+| walker |  | 1282 | 47 | export at src/structs/coercions.ts:16 |  |  | 0.534 |
+| walker |  | 1339 | 57 | export at src/structs/coercions.ts:38 |  |  | 0.534 |
 | ns | 1448 |  | 280 | structs/types.ts — all 24 type-factory names | 3.1 |  | 0.482 |
 | ns | 1533 |  | 85 | structs/refinements.ts — all 7 refinement names | 3.2 |  | 0.469 |
 | ns | 1571 |  | 38 | structs/coercions.ts — coerce / defaulted / trimmed | 3.3 |  | 0.477 |
@@ -111,10 +111,10 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | walker |  | 4181 | 0 | export at src/struct.ts:259 |  |  | 0.558 |
 | walker |  | 4213 | 32 | export at src/struct.ts:221 |  |  | 0.566 |
 | walker |  | 4252 | 39 | export at src/struct.ts:243 |  |  | 0.577 |
-| walker |  | 4289 | 37 | export at src/struct.ts:139 |  |  | 0.577 |
-| walker |  | 4326 | 37 | export at src/struct.ts:157 |  |  | 0.577 |
-| walker |  | 4366 | 40 | export at src/struct.ts:123 |  |  | 0.577 |
-| walker |  | 4388 | 22 | export body at src/struct.ts:175 body 176 |  |  | 0.577 |
+| walker |  | 4274 | 22 | export body at src/struct.ts:175 body 176 |  |  | 0.577 |
+| walker |  | 4311 | 37 | export at src/struct.ts:139 |  |  | 0.577 |
+| walker |  | 4348 | 37 | export at src/struct.ts:157 |  |  | 0.577 |
+| walker |  | 4388 | 40 | export at src/struct.ts:123 |  |  | 0.577 |
 | walker |  | 4430 | 42 | export body at src/struct.ts:123 body 128 |  |  | 0.577 |
 | walker |  | 4513 | 83 | export at src/struct.ts:185 |  |  | 0.578 |
 | walker |  | 4578 | 65 | export body at src/struct.ts:139 body 144 |  |  | 0.578 |
@@ -166,13 +166,13 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | walker |  | 8567 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.517 |
 | walker |  | 8567 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.517 |
 | walker |  | 8567 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.517 |
-| walker |  | 8600 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.517 |
-| walker |  | 8637 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.517 |
-| walker |  | 8675 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.517 |
-| walker |  | 8718 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.517 |
-| walker |  | 8762 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.517 |
-| walker |  | 8807 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.517 |
-| walker |  | 8824 | 17 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.517 |
+| walker |  | 8584 | 17 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.517 |
+| walker |  | 8617 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.517 |
+| walker |  | 8654 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.517 |
+| walker |  | 8692 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.517 |
+| walker |  | 8735 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.517 |
+| walker |  | 8779 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.517 |
+| walker |  | 8824 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.517 |
 | walker |  | 8926 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.517 |
 | walker |  | 8991 | 65 | export body at src/structs/utilities.ts:60 body 61 |  |  | 0.517 |
 | ns | 8999 |  | 900 | test/index.test.ts — the validation-fixture harness | 6.4 |  | 0.490 |

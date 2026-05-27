@@ -147,7 +147,7 @@ lib/
             22→export default CanceledError;
         isCancel.js
             3→export default function isCancel(value) {
-            …
+            4→  return !!(value && value.__CANCEL__);
     core/
         Axios.js
             281→export default Axios;
@@ -196,8 +196,6 @@ lib/
             35→  return (encoder || JSON.stringify)(rawValue);
             177→export default defaults;
         transitional.js
-            3→export default {
-            …
     env/
         README.md
             1→# axios // env

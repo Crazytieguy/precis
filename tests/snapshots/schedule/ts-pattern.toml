@@ -189,10 +189,28 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
+key = 'Typescript(ExportBody { file: "src/match.ts", start_line: 32, body_start_line: 35 })'
+descriptor = "export body at src/match.ts:32 body 35"
+cost_tokens = 14
+cum_tokens = 238
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/match.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 136
-cum_tokens = 360
+cum_tokens = 374
 
 [batches.content]
 kind = "lines"
@@ -230,11 +248,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 26
-cum_tokens = 386
+cum_tokens = 400
 
 [batches.content]
 kind = "fs"
@@ -244,11 +262,11 @@ parent = "docs"
 entries = ["roadmap.md", "v3-to-v4-migration-guide.md", "v4-to-v5-migration-guide.md"]
 
 [[batches]]
-position = 11
+position = 12
 key = 'Fs(DirListing { dir: "src/types" })'
 descriptor = "listing of 'src/types'"
 cost_tokens = 56
-cum_tokens = 442
+cum_tokens = 456
 
 [batches.content]
 kind = "fs"
@@ -258,11 +276,11 @@ parent = "src/types"
 entries = ["BuildMany.ts", "DeepExclude.ts", "DistributeUnions.ts", "ExtractPreciseValue.ts", "FindSelected.ts", "InvertPattern.ts", "IsMatching.ts", "Match.ts", "Pattern.ts", "helpers.ts", "index.ts"]
 
 [[batches]]
-position = 12
+position = 13
 key = 'Typescript(Imports { file: "src/types/index.ts" })'
 descriptor = "imports in src/types/index.ts"
 cost_tokens = 10
-cum_tokens = 452
+cum_tokens = 466
 
 [batches.content]
 kind = "lines"
@@ -276,11 +294,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 104
-cum_tokens = 556
+cum_tokens = 570
 
 [batches.content]
 kind = "lines"
@@ -302,11 +320,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Typescript(Imports { file: "src/index.ts" })'
 descriptor = "imports in src/index.ts"
 cost_tokens = 39
-cum_tokens = 595
+cum_tokens = 609
 
 [batches.content]
 kind = "lines"
@@ -323,24 +341,6 @@ kind = "full"
 path = "src/index.ts"
 start = 3
 end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Typescript(ExportBody { file: "src/match.ts", start_line: 32, body_start_line: 35 })'
-descriptor = "export body at src/match.ts:32 body 35"
-cost_tokens = 14
-cum_tokens = 609
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 35
-end = 35
 
 [batches.content.spans.render]
 kind = "full"
