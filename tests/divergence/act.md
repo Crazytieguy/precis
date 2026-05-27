@@ -40,69 +40,69 @@ Score(3000)=0.517 I=0.836 C=0.320 ns_rows≤3K=12/42 (reached=3 partial=2 missin
 | walker |  | 812 | 32 | go decl names surface in cmd/dir.go |  |  | 0.652 |
 | walker |  | 812 | 0 | go decl at cmd/dir.go:15 |  |  | 0.652 |
 | walker |  | 821 | 9 | go decl at cmd/dir.go:10 |  |  | 0.652 |
-| walker |  | 862 | 41 | go decl body at main.go:13 |  |  | 0.743 |
-| walker |  | 887 | 25 | README.md section #2 |  |  | 0.743 |
-| walker |  | 944 | 57 | go package + imports in main.go |  |  | 0.798 |
-| walker |  | 963 | 19 | listing of 'cmd/testdata' |  |  | 0.798 |
-| walker |  | 982 | 19 | listing of 'pkg/schema' |  |  | 0.799 |
-| ns | 992 |  | 297 | Input struct (first half) — workflow/secrets/env/platform/container fields | 3.1 |  | 0.667 |
-| walker |  | 1007 | 25 | README.md section #3 |  |  | 0.667 |
-| walker |  | 1053 | 46 | go decl names surface in cmd/secrets.go |  |  | 0.667 |
-| walker |  | 1053 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.667 |
-| walker |  | 1053 | 0 | go decl at cmd/secrets.go:40 |  |  | 0.667 |
-| walker |  | 1058 | 5 | go decl body at cmd/secrets.go:40 |  |  | 0.667 |
-| walker |  | 1084 | 26 | go decl names surface in pkg/lookpath/error.go |  |  | 0.667 |
-| walker |  | 1084 | 0 | go decl at pkg/lookpath/error.go:8 |  |  | 0.667 |
-| walker |  | 1102 | 18 | go decl at pkg/lookpath/error.go:3 |  |  | 0.667 |
-| walker |  | 1109 | 7 | go decl body at pkg/lookpath/error.go:8 |  |  | 0.667 |
-| walker |  | 1116 | 7 | go package + imports in pkg/common/cartesian.go |  |  | 0.667 |
-| walker |  | 1123 | 7 | go package + imports in pkg/model/job_context.go |  |  | 0.667 |
-| walker |  | 1131 | 8 | go package + imports in pkg/artifactcache/doc.go |  |  | 0.667 |
-| walker |  | 1139 | 8 | go package + imports in pkg/artifactcache/model.go |  |  | 0.667 |
-| walker |  | 1147 | 8 | go package + imports in pkg/lookpath/error.go |  |  | 0.667 |
-| ns | 1300 |  | 308 | Input struct (second half) — caps/servers/cache/matrix/network fields | 3.2 | 3.1 | 0.581 |
-| walker |  | 1307 | 160 | listing of 'pkg/container' |  |  | 0.587 |
-| walker |  | 1319 | 12 | go decl names surface in pkg/container/executions_environment.go |  |  | 0.587 |
-| walker |  | 1345 | 26 | go decl names surface in pkg/container/parse_env_file.go |  |  | 0.587 |
-| walker |  | 1345 | 0 | go decl at pkg/container/parse_env_file.go:14 |  |  | 0.587 |
-| walker |  | 1381 | 36 | go decl names surface in pkg/container/docker_network.go |  |  | 0.587 |
-| walker |  | 1381 | 0 | go decl at pkg/container/docker_network.go:12 |  |  | 0.587 |
-| walker |  | 1381 | 0 | go decl at pkg/container/docker_network.go:45 |  |  | 0.587 |
-| ns | 1422 |  | 122 | Input path-resolving method names | 3.3 | 3.2 | 0.569 |
-| walker |  | 1567 | 186 | listing of 'pkg/runner' |  |  | 0.576 |
-| walker |  | 1605 | 38 | go decl names surface in pkg/artifactcache/model.go |  |  | 0.576 |
-| walker |  | 1605 | 0 | go decl at pkg/artifactcache/model.go:9 |  |  | 0.576 |
-| walker |  | 1651 | 46 | IMAGES.md section #0 |  |  | 0.576 |
-| walker |  | 1691 | 40 | go decl names surface in pkg/common/file.go |  |  | 0.576 |
-| walker |  | 1691 | 0 | go decl at pkg/common/file.go:10 |  |  | 0.576 |
-| walker |  | 1691 | 0 | go decl at pkg/common/file.go:37 |  |  | 0.576 |
-| walker |  | 1701 | 10 | go decl doc at pkg/common/file.go:10 |  |  | 0.576 |
-| walker |  | 1713 | 12 | go decl doc at pkg/common/file.go:37 |  |  | 0.576 |
-| walker |  | 1753 | 40 | go decl names surface in pkg/container/docker_volume.go |  |  | 0.576 |
-| walker |  | 1753 | 0 | go decl at pkg/container/docker_volume.go:12 |  |  | 0.576 |
-| walker |  | 1753 | 0 | go decl at pkg/container/docker_volume.go:36 |  |  | 0.576 |
-| walker |  | 1794 | 41 | go decl names surface in pkg/common/cartesian.go |  |  | 0.576 |
-| walker |  | 1794 | 0 | go decl at pkg/common/cartesian.go:4 |  |  | 0.576 |
-| walker |  | 1794 | 0 | go decl at pkg/common/cartesian.go:25 |  |  | 0.576 |
-| walker |  | 1815 | 21 | listing of 'pkg/model/testdata' |  |  | 0.576 |
-| walker |  | 1860 | 45 | go decl names surface in pkg/model/anchors.go |  |  | 0.576 |
-| walker |  | 1860 | 0 | go decl at pkg/model/anchors.go:9 |  |  | 0.576 |
-| walker |  | 1860 | 0 | go decl at pkg/model/anchors.go:36 |  |  | 0.576 |
-| walker |  | 1906 | 46 | go decl names surface in pkg/common/context.go |  |  | 0.576 |
-| walker |  | 1906 | 0 | go decl at pkg/common/context.go:10 |  |  | 0.576 |
-| walker |  | 1906 | 0 | go decl at pkg/common/context.go:42 |  |  | 0.576 |
-| ns | 1913 |  | 491 | Run-mode flags (root.go 68-82) — list/graph/job/secrets/env | 3.4 |  | 0.545 |
-| walker |  | 1952 | 46 | go decl names surface in pkg/container/util.go |  |  | 0.545 |
-| walker |  | 1952 | 0 | go decl at pkg/container/util.go:12 |  |  | 0.545 |
-| walker |  | 1952 | 0 | go decl at pkg/container/util.go:24 |  |  | 0.545 |
-| walker |  | 1999 | 47 | go decl names surface in pkg/container/util_openbsd_mips64.go |  |  | 0.545 |
-| walker |  | 1999 | 0 | go decl at pkg/container/util_openbsd_mips64.go:9 |  |  | 0.545 |
-| walker |  | 1999 | 0 | go decl at pkg/container/util_openbsd_mips64.go:15 |  |  | 0.545 |
-| walker |  | 2047 | 48 | go decl names surface in pkg/container/docker_auth.go |  |  | 0.545 |
-| walker |  | 2047 | 0 | go decl at pkg/container/docker_auth.go:15 |  |  | 0.545 |
-| walker |  | 2047 | 0 | go decl at pkg/container/docker_auth.go:42 |  |  | 0.545 |
-| walker |  | 2065 | 18 | go decl doc at pkg/common/cartesian.go:4 |  |  | 0.545 |
-| walker |  | 2108 | 43 | go decl at pkg/artifactcache/model.go:3 |  |  | 0.545 |
+| walker |  | 846 | 25 | README.md section #2 |  |  | 0.652 |
+| walker |  | 903 | 57 | go package + imports in main.go |  |  | 0.705 |
+| walker |  | 922 | 19 | listing of 'cmd/testdata' |  |  | 0.705 |
+| walker |  | 941 | 19 | listing of 'pkg/schema' |  |  | 0.706 |
+| walker |  | 966 | 25 | README.md section #3 |  |  | 0.706 |
+| ns | 992 |  | 297 | Input struct (first half) — workflow/secrets/env/platform/container fields | 3.1 |  | 0.590 |
+| walker |  | 1012 | 46 | go decl names surface in cmd/secrets.go |  |  | 0.590 |
+| walker |  | 1012 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.590 |
+| walker |  | 1012 | 0 | go decl at cmd/secrets.go:40 |  |  | 0.590 |
+| walker |  | 1017 | 5 | go decl body at cmd/secrets.go:40 |  |  | 0.590 |
+| walker |  | 1043 | 26 | go decl names surface in pkg/lookpath/error.go |  |  | 0.590 |
+| walker |  | 1043 | 0 | go decl at pkg/lookpath/error.go:8 |  |  | 0.590 |
+| walker |  | 1061 | 18 | go decl at pkg/lookpath/error.go:3 |  |  | 0.590 |
+| walker |  | 1068 | 7 | go decl body at pkg/lookpath/error.go:8 |  |  | 0.590 |
+| walker |  | 1075 | 7 | go package + imports in pkg/common/cartesian.go |  |  | 0.590 |
+| walker |  | 1082 | 7 | go package + imports in pkg/model/job_context.go |  |  | 0.590 |
+| walker |  | 1090 | 8 | go package + imports in pkg/artifactcache/doc.go |  |  | 0.590 |
+| walker |  | 1098 | 8 | go package + imports in pkg/artifactcache/model.go |  |  | 0.590 |
+| walker |  | 1106 | 8 | go package + imports in pkg/lookpath/error.go |  |  | 0.590 |
+| walker |  | 1266 | 160 | listing of 'pkg/container' |  |  | 0.596 |
+| walker |  | 1278 | 12 | go decl names surface in pkg/container/executions_environment.go |  |  | 0.596 |
+| ns | 1300 |  | 308 | Input struct (second half) — caps/servers/cache/matrix/network fields | 3.2 | 3.1 | 0.520 |
+| walker |  | 1304 | 26 | go decl names surface in pkg/container/parse_env_file.go |  |  | 0.520 |
+| walker |  | 1304 | 0 | go decl at pkg/container/parse_env_file.go:14 |  |  | 0.520 |
+| walker |  | 1340 | 36 | go decl names surface in pkg/container/docker_network.go |  |  | 0.520 |
+| walker |  | 1340 | 0 | go decl at pkg/container/docker_network.go:12 |  |  | 0.520 |
+| walker |  | 1340 | 0 | go decl at pkg/container/docker_network.go:45 |  |  | 0.520 |
+| ns | 1422 |  | 122 | Input path-resolving method names | 3.3 | 3.2 | 0.503 |
+| walker |  | 1526 | 186 | listing of 'pkg/runner' |  |  | 0.511 |
+| walker |  | 1564 | 38 | go decl names surface in pkg/artifactcache/model.go |  |  | 0.511 |
+| walker |  | 1564 | 0 | go decl at pkg/artifactcache/model.go:9 |  |  | 0.511 |
+| walker |  | 1610 | 46 | IMAGES.md section #0 |  |  | 0.511 |
+| walker |  | 1650 | 40 | go decl names surface in pkg/common/file.go |  |  | 0.511 |
+| walker |  | 1650 | 0 | go decl at pkg/common/file.go:10 |  |  | 0.511 |
+| walker |  | 1650 | 0 | go decl at pkg/common/file.go:37 |  |  | 0.511 |
+| walker |  | 1660 | 10 | go decl doc at pkg/common/file.go:10 |  |  | 0.511 |
+| walker |  | 1672 | 12 | go decl doc at pkg/common/file.go:37 |  |  | 0.511 |
+| walker |  | 1712 | 40 | go decl names surface in pkg/container/docker_volume.go |  |  | 0.511 |
+| walker |  | 1712 | 0 | go decl at pkg/container/docker_volume.go:12 |  |  | 0.511 |
+| walker |  | 1712 | 0 | go decl at pkg/container/docker_volume.go:36 |  |  | 0.511 |
+| walker |  | 1753 | 41 | go decl names surface in pkg/common/cartesian.go |  |  | 0.511 |
+| walker |  | 1753 | 0 | go decl at pkg/common/cartesian.go:4 |  |  | 0.511 |
+| walker |  | 1753 | 0 | go decl at pkg/common/cartesian.go:25 |  |  | 0.511 |
+| walker |  | 1774 | 21 | listing of 'pkg/model/testdata' |  |  | 0.511 |
+| walker |  | 1819 | 45 | go decl names surface in pkg/model/anchors.go |  |  | 0.511 |
+| walker |  | 1819 | 0 | go decl at pkg/model/anchors.go:9 |  |  | 0.511 |
+| walker |  | 1819 | 0 | go decl at pkg/model/anchors.go:36 |  |  | 0.511 |
+| walker |  | 1865 | 46 | go decl names surface in pkg/common/context.go |  |  | 0.511 |
+| walker |  | 1865 | 0 | go decl at pkg/common/context.go:10 |  |  | 0.511 |
+| walker |  | 1865 | 0 | go decl at pkg/common/context.go:42 |  |  | 0.511 |
+| walker |  | 1911 | 46 | go decl names surface in pkg/container/util.go |  |  | 0.511 |
+| walker |  | 1911 | 0 | go decl at pkg/container/util.go:12 |  |  | 0.511 |
+| walker |  | 1911 | 0 | go decl at pkg/container/util.go:24 |  |  | 0.511 |
+| ns | 1913 |  | 491 | Run-mode flags (root.go 68-82) — list/graph/job/secrets/env | 3.4 |  | 0.484 |
+| walker |  | 1958 | 47 | go decl names surface in pkg/container/util_openbsd_mips64.go |  |  | 0.484 |
+| walker |  | 1958 | 0 | go decl at pkg/container/util_openbsd_mips64.go:9 |  |  | 0.484 |
+| walker |  | 1958 | 0 | go decl at pkg/container/util_openbsd_mips64.go:15 |  |  | 0.484 |
+| walker |  | 2006 | 48 | go decl names surface in pkg/container/docker_auth.go |  |  | 0.484 |
+| walker |  | 2006 | 0 | go decl at pkg/container/docker_auth.go:15 |  |  | 0.484 |
+| walker |  | 2006 | 0 | go decl at pkg/container/docker_auth.go:42 |  |  | 0.484 |
+| walker |  | 2024 | 18 | go decl doc at pkg/common/cartesian.go:4 |  |  | 0.484 |
+| walker |  | 2067 | 43 | go decl at pkg/artifactcache/model.go:3 |  |  | 0.484 |
+| walker |  | 2108 | 41 | go decl body at main.go:13 |  |  | 0.545 |
 | walker |  | 2160 | 52 | go decl names surface in pkg/container/docker_build.go |  |  | 0.545 |
 | walker |  | 2160 | 0 | go decl at pkg/container/docker_build.go:23 |  |  | 0.545 |
 | walker |  | 2160 | 0 | go decl at pkg/container/docker_build.go:78 |  |  | 0.545 |

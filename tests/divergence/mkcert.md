@@ -166,16 +166,18 @@ Score(3000)=0.715 I=0.871 C=0.586 ns_rows≤3K=22/44 (reached=13 partial=3 missi
 | ns | 7326 |  | 281 | newCA template literal — root CA defaults | 4.4 | 2.2 | 0.648 |
 | walker |  | 7424 | 147 | go decl body at truststore_nss.go:106 |  |  | 0.648 |
 | ns | 7594 |  | 268 | fileNames body — output path derivation | 4.5 | 2.2 | 0.633 |
-| ns | 7990 |  | 396 | loadCA body — CA load + keyless mode | 4.6 | 2.2 | 0.618 |
-| ns | 8174 |  | 184 | generateKey + randomSerialNumber + caUniqueName | 4.7 | 2.2 | 0.624 |
-| walker |  | 8271 | 847 | go decl body at main.go:87 |  |  | 0.691 |
-| ns | 8554 |  | 380 | makeCertFromCSR template + CSR-omits defaults | 4.8 | 2.2 | 0.677 |
-| walker |  | 8659 | 388 | go decl body at main.go:307 |  |  | 0.678 |
-| walker |  | 8839 | 180 | README.md section #13 |  |  | 0.678 |
-| walker |  | 9049 | 210 | go decl body at cert.go:148 |  |  | 0.678 |
-| ns | 9122 |  | 568 | install() body — orchestrate all backends | 5.1 | 2.1 | 0.658 |
-| walker |  | 9264 | 215 | go decl body at truststore_nss.go:131 |  |  | 0.658 |
-| walker |  | 9515 | 251 | go decl body at cert.go:176 |  |  | 0.679 |
-| ns | 9517 |  | 395 | uninstall() body | 5.2 | 2.1 | 0.687 |
-| walker |  | 9769 | 254 | go decl body at truststore_nss.go:89 |  |  | 0.687 |
+| walker |  | 7812 | 388 | go decl body at main.go:307 |  |  | 0.635 |
+| ns | 7990 |  | 396 | loadCA body — CA load + keyless mode | 4.6 | 2.2 | 0.620 |
+| walker |  | 7992 | 180 | README.md section #13 |  |  | 0.620 |
+| ns | 8174 |  | 184 | generateKey + randomSerialNumber + caUniqueName | 4.7 | 2.2 | 0.626 |
+| walker |  | 8202 | 210 | go decl body at cert.go:148 |  |  | 0.626 |
+| walker |  | 8417 | 215 | go decl body at truststore_nss.go:131 |  |  | 0.626 |
+| ns | 8554 |  | 380 | makeCertFromCSR template + CSR-omits defaults | 4.8 | 2.2 | 0.612 |
+| walker |  | 8668 | 251 | go decl body at cert.go:176 |  |  | 0.635 |
+| walker |  | 8922 | 254 | go decl body at truststore_nss.go:89 |  |  | 0.635 |
+| ns | 9122 |  | 568 | install() body — orchestrate all backends | 5.1 | 2.1 | 0.616 |
+| walker |  | 9196 | 274 | go decl body at truststore_java.go:31 |  |  | 0.644 |
+| ns | 9517 |  | 395 | uninstall() body | 5.2 | 2.1 | 0.653 |
+| walker |  | 9757 | 561 | go decl body at main.go:267 |  |  | 0.688 |
+| walker |  | 9820 | 63 | go decl body at truststore_windows.go:83 |  |  | 0.688 |
 | ns | 9926 |  | 409 | checkPlatform body + helpers (pathExists/binaryExists/commandWithSudo) | 5.3 | 2.1 | 0.691 |

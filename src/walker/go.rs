@@ -211,7 +211,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         let src_lines: Vec<&str> = source.lines().collect();
         let line_count = src_lines.len();
         let pkg = package_name(&tree, &source);
-        let decls = find_decls(&tree, &source, pkg.as_deref());
+        let decls = find_decls(&tree, &source);
         // Computed once per file and threaded through value functions
         // — the previous design recomputed inside each value call,
         // re-walking the tree per decl.
@@ -440,14 +440,14 @@ impl DeclInfo {
     }
 }
 
-fn find_decls<'a>(tree: &'a Tree, source: &str, pkg: Option<&str>) -> Vec<(Node<'a>, DeclInfo)> {
+fn find_decls<'a>(tree: &'a Tree, source: &str) -> Vec<(Node<'a>, DeclInfo)> {
     let root = tree.root_node();
     let mut out = Vec::new();
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
         match child.kind() {
             "function_declaration" => {
-                if let Some(info) = function_info(child, source, pkg) {
+                if let Some(info) = function_info(child, source) {
                     out.push((child, info));
                 }
             }
@@ -469,23 +469,20 @@ fn find_decls<'a>(tree: &'a Tree, source: &str, pkg: Option<&str>) -> Vec<(Node<
     out
 }
 
-fn function_info(node: Node, source: &str, pkg: Option<&str>) -> Option<DeclInfo> {
+fn function_info(node: Node, source: &str) -> Option<DeclInfo> {
     let name_node = node.child_by_field_name("name")?;
     let name = &source[name_node.start_byte()..name_node.end_byte()];
     let sig_end = signature_end_row(node);
     let mut decl_lines = Vec::new();
     push_rows(&mut decl_lines, node.start_position().row, sig_end);
     let start_line = node.start_position().row + 1;
-    // Treat `func main` in `package main` as exported — it's the
-    // binary's entrypoint, the most load-bearing fn regardless of case.
-    let exported = is_exported(name) || (name == "main" && pkg == Some("main"));
     Some(DeclInfo {
         kind: DeclKind::Func,
         start_line,
         decl_lines,
         name_lines: vec![start_line],
         body_rows: body_interior_rows(node),
-        exported,
+        exported: is_exported(name),
         struct_field_groups: Vec::new(),
     })
 }
@@ -957,7 +954,7 @@ mod tests {
     fn go_emits_both_exported_and_unexported_decls() {
         let src = "package foo\n\nfunc Public() {}\nfunc private() {}\n";
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, None);
+        let decls = find_decls(&tree, &source);
         assert_eq!(decls.len(), 2);
         assert_eq!(decls[0].1.start_line, 3);
         assert!(decls[0].1.exported, "Public should be exported");
@@ -978,7 +975,7 @@ func (p *Public) helper()  {}
 func (p *private) Method() {}
 ";
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, None);
+        let decls = find_decls(&tree, &source);
         assert_eq!(decls.len(), 5);
         let by_line: std::collections::HashMap<_, _> =
             decls.iter().map(|(_, d)| (d.start_line, d)).collect();
@@ -1017,7 +1014,7 @@ var (
 )
 ";
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, None);
+        let decls = find_decls(&tree, &source);
         let kinds: Vec<_> = decls.iter().map(|(_, d)| d.kind).collect();
         assert_eq!(kinds, vec![DeclKind::Type, DeclKind::Const, DeclKind::Var]);
         assert!(decls.iter().all(|(_, d)| d.exported));
@@ -1042,7 +1039,7 @@ const (
 )
 ";
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, None);
+        let decls = find_decls(&tree, &source);
         assert_eq!(decls.len(), 2);
         let names = collect_decl_names_from(&decls);
         // Inner spec lines: Public@4, Other@5, Format12Hour@9, Format24Hour@10.
@@ -1060,7 +1057,7 @@ type (
 )
 ";
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, None);
+        let decls = find_decls(&tree, &source);
         assert_eq!(decls.len(), 1);
         assert!(!decls[0].1.exported);
         assert!((decls[0].1.visibility_factor() - VISIBILITY_FACTOR_UNEXPORTED).abs() < 1e-9);
@@ -1080,7 +1077,7 @@ func Foo() {}
 func Bar() {}
 ";
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, None);
+        let decls = find_decls(&tree, &source);
         assert_eq!(decls.len(), 2);
 
         let foo_doc = collect_doc_comments_above(decls[0].0, &source);

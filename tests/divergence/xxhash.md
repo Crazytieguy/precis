@@ -134,10 +134,10 @@ Score(3000)=0.700 I=0.880 C=0.557 ns_rows≤3K=20/40 (reached=10 partial=6 missi
 | ns | 4421 |  | 209 | UnmarshalBinary body — validation + parse | 4.9 | 2.7 | 0.709 |
 | walker |  | 4800 | 444 | go decl body at xxhash.go:129 |  |  | 0.767 |
 | walker |  | 4873 | 73 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.767 |
-| walker |  | 5104 | 231 | go decl body at xxhsum/xxhsum.go:11 |  |  | 0.815 |
-| ns | 5119 |  | 698 | Pure-Go Sum64 body (xxhash_other.go) | 4.10 | 2.5 | 0.755 |
-| ns | 5355 |  | 236 | Pure-Go writeBlocks body | 4.11 | 2.5 | 0.743 |
-| walker |  | 5378 | 274 | go decl body at dynamic/plugin.go:26 |  |  | 0.743 |
+| ns | 5119 |  | 698 | Pure-Go Sum64 body (xxhash_other.go) | 4.10 | 2.5 | 0.711 |
+| walker |  | 5147 | 274 | go decl body at dynamic/plugin.go:26 |  |  | 0.711 |
+| ns | 5355 |  | 236 | Pure-Go writeBlocks body | 4.11 | 2.5 | 0.699 |
+| walker |  | 5378 | 231 | go decl body at xxhsum/xxhsum.go:11 |  |  | 0.743 |
 | walker |  | 5386 | 8 | plaintext config dynamic/.gitignore |  |  | 0.743 |
 | walker |  | 5401 | 15 | go test names surface in xxhashbench/xxhashbench_test.go |  |  | 0.743 |
 | walker |  | 5433 | 32 | go test names surface in xxhash_unsafe_test.go |  |  | 0.745 |
