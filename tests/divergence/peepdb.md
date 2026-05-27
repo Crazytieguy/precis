@@ -6,18 +6,18 @@ Score(3000)=0.592 I=0.831 C=0.421 ns_rows≤3K=18/40 (reached=8 partial=2 missin
 | ns | 38 |  | 38 | Repository root listing | 1.1 |  | 1.000 |
 | walker |  | 72 | 34 | listing of 'peepdb' |  |  | 1.000 |
 | ns | 72 |  | 34 | Python package layout | 1.2 |  | 1.000 |
-| walker |  | 82 | 10 | python imports in peepdb/__main__.py |  |  | 1.000 |
 | ns | 117 |  | 45 | DB adapter package listing | 1.3 |  | 0.775 |
-| ns | 159 |  | 42 | Test suite listing | 1.4 |  | 0.681 |
-| walker |  | 172 | 90 | README headline in README.md |  |  | 0.684 |
-| ns | 208 |  | 49 | Docs and CI directory listings | 1.5 |  | 0.576 |
-| walker |  | 217 | 45 | listing of 'peepdb/db' |  |  | 0.743 |
-| walker |  | 229 | 12 | python decl names surface in peepdb/db/base.py |  |  | 0.743 |
-| walker |  | 229 | 0 | python decl at peepdb/db/base.py:5 |  |  | 0.743 |
-| walker |  | 240 | 11 | python decl names surface in peepdb/exceptions.py |  |  | 0.745 |
-| walker |  | 240 | 0 | python decl at peepdb/exceptions.py:1 |  |  | 0.745 |
-| walker |  | 245 | 5 | python class body at peepdb/exceptions.py:1 |  |  | 0.746 |
-| walker |  | 273 | 28 | listing of 'images' |  |  | 0.746 |
+| ns | 159 |  | 42 | Test suite listing | 1.4 |  | 0.680 |
+| walker |  | 162 | 90 | README headline in README.md |  |  | 0.684 |
+| walker |  | 207 | 45 | listing of 'peepdb/db' |  |  | 0.882 |
+| ns | 208 |  | 49 | Docs and CI directory listings | 1.5 |  | 0.743 |
+| walker |  | 219 | 12 | python decl names surface in peepdb/db/base.py |  |  | 0.743 |
+| walker |  | 219 | 0 | python decl at peepdb/db/base.py:5 |  |  | 0.743 |
+| walker |  | 230 | 11 | python decl names surface in peepdb/exceptions.py |  |  | 0.743 |
+| walker |  | 230 | 0 | python decl at peepdb/exceptions.py:1 |  |  | 0.743 |
+| walker |  | 235 | 5 | python class body at peepdb/exceptions.py:1 |  |  | 0.744 |
+| walker |  | 263 | 28 | listing of 'images' |  |  | 0.744 |
+| walker |  | 273 | 10 | python imports in peepdb/__main__.py |  |  | 0.746 |
 | walker |  | 285 | 12 | python imports in setup.py |  |  | 0.746 |
 | ns | 303 |  | 95 | README — title + one-paragraph lede | 2.1 |  | 0.743 |
 | walker |  | 326 | 41 | listing of 'docs' |  |  | 0.854 |

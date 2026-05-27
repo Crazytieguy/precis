@@ -33,28 +33,10 @@ entries = ["__init__.py", "__main__.py", "cli.py", "config.py", "core.py", "db",
 
 [[batches]]
 position = 3
-key = 'Python(Imports { file: "peepdb/__main__.py" })'
-descriptor = "python imports in peepdb/__main__.py"
-cost_tokens = 10
-cum_tokens = 82
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/__main__.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 4
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 90
-cum_tokens = 172
+cum_tokens = 162
 
 [batches.content]
 kind = "lines"
@@ -76,11 +58,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 5
+position = 4
 key = 'Fs(DirListing { dir: "peepdb/db" })'
 descriptor = "listing of 'peepdb/db'"
 cost_tokens = 45
-cum_tokens = 217
+cum_tokens = 207
 
 [batches.content]
 kind = "fs"
@@ -90,11 +72,11 @@ parent = "peepdb/db"
 entries = ["__init__.py", "base.py", "firebase.py", "mariadb.py", "mongodb.py", "mssql.py", "mysql.py", "oracle.py", "postgresql.py", "sqlite.py"]
 
 [[batches]]
-position = 6
+position = 5
 key = 'Python(DeclNames { file: "peepdb/db/base.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/base.py"
 cost_tokens = 12
-cum_tokens = 229
+cum_tokens = 219
 
 [batches.content]
 kind = "lines"
@@ -116,11 +98,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 6
 key = 'Python(Decl { file: "peepdb/db/base.py", start_line: 5 })'
 descriptor = "python decl at peepdb/db/base.py:5"
 cost_tokens = 0
-cum_tokens = 229
+cum_tokens = 219
 
 [batches.content]
 kind = "lines"
@@ -134,11 +116,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 8
+position = 7
 key = 'Python(DeclNames { file: "peepdb/exceptions.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/exceptions.py"
 cost_tokens = 11
-cum_tokens = 240
+cum_tokens = 230
 
 [batches.content]
 kind = "lines"
@@ -160,11 +142,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 8
 key = 'Python(Decl { file: "peepdb/exceptions.py", start_line: 1 })'
 descriptor = "python decl at peepdb/exceptions.py:1"
 cost_tokens = 0
-cum_tokens = 240
+cum_tokens = 230
 
 [batches.content]
 kind = "lines"
@@ -178,11 +160,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 10
+position = 9
 key = 'Python(ClassBody { file: "peepdb/exceptions.py", start_line: 1 })'
 descriptor = "python class body at peepdb/exceptions.py:1"
 cost_tokens = 5
-cum_tokens = 245
+cum_tokens = 235
 
 [batches.content]
 kind = "lines"
@@ -196,11 +178,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 11
+position = 10
 key = 'Fs(DirListing { dir: "images" })'
 descriptor = "listing of 'images'"
 cost_tokens = 28
-cum_tokens = 273
+cum_tokens = 263
 
 [batches.content]
 kind = "fs"
@@ -208,6 +190,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "images"
 entries = ["demo.gif", "peepdb_example1.png", "peepdb_example2.png", "peepdb_screenshot.png"]
+
+[[batches]]
+position = 11
+key = 'Python(Imports { file: "peepdb/__main__.py" })'
+descriptor = "python imports in peepdb/__main__.py"
+cost_tokens = 10
+cum_tokens = 273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "peepdb/__main__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 12

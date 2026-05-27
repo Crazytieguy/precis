@@ -150,21 +150,6 @@ src/
             34→    "Posting",
             35→]
         __main__.py
-            1→"""The main entry point for the Posting CLI."""
-            3→from pathlib import Path
-            4→import click
-            5→import os
-            7→from click_default_group import DefaultGroup
-            8→from rich.console import Console
-            10→from posting.app import Posting
-            11→from posting.collection import Collection
-            12→from posting.config import Settings
-            13→from posting.locations import (
-            14→    config_file,
-            15→    default_collection_directory,
-            16→    theme_directory,
-            17→)
-            18→from posting.variables import load_variables
             21→def create_config_file() -> None:
             22→    f = config_file()
             23→    if f.exists():
@@ -179,7 +164,20 @@ src/
             46→def cli() -> None:
             47→    """A TUI for testing HTTP APIs."""
             50→@cli.command()
-            …
+            51→@click.option(
+            52→    "--collection",
+            53→    "-c",
+            54→    type=click.Path(exists=True),
+            55→    help="Path to the collection directory",
+            56→)
+            57→@click.option(
+            58→    "--env",
+            59→    "-e",
+            60→    type=click.Path(exists=True),
+            61→    help="Path to the .env environment file(s)",
+            62→    multiple=True,
+            63→)
+            64→def default(collection: str | None = None, env: tuple[str, ...] = ()) -> None:
             76→@cli.command()
             77→@click.argument(
             78→    "thing_to_locate",
@@ -220,6 +218,9 @@ src/
             …
         collection.py
         commands.py
+            11→CommandType = tuple[str, IgnoreReturnCallbackType, str, bool]
+            14→class PostingProvider(Provider):
+            …
         config.py
         exit_codes.py
             1→GENERAL_ERROR = 1

@@ -929,12 +929,6 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // hundreds-of-tokens import block still beats individual per-decl
     // batches in cost^0.35-penalised ratio. A top-level `__main__.py`
     // gets a smaller secondary boost via
-    // [`top_level_app_main_factor`]: its imports name the CLI entry
-    // function (`from .ui import main`, `from .cli import main`) and
-    // sit alongside the module docstring inside the same Imports
-    // batch, so the whole batch is a `python -m <pkg>` orientation
-    // anchor — even when the imports themselves aren't a re-export
-    // wall.
     let (cat, fu) = if is_init_py(file) {
         (0.70, 1.0)
     } else {
@@ -942,7 +936,6 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     };
     mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx))
         * top_level_package_init_factor(file, ctx)
-        * top_level_app_main_factor(file, ctx)
 }
 
 fn imports_chunk_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
@@ -976,14 +969,6 @@ fn is_top_level_package_file(file: &Path, ctx: &WalkCtx, name: &str) -> bool {
 fn top_level_package_init_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if is_top_level_package_file(file, ctx, "__init__.py") {
         3.0
-    } else {
-        1.0
-    }
-}
-
-fn top_level_app_main_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    if is_top_level_package_file(file, ctx, "__main__.py") {
-        1.5
     } else {
         1.0
     }

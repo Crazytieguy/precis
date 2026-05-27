@@ -289,28 +289,10 @@ kind = "full"
 
 [[batches]]
 position = 15
-key = 'Python(Imports { file: "src/flask/__main__.py" })'
-descriptor = "python imports in src/flask/__main__.py"
-cost_tokens = 10
-cum_tokens = 493
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__main__.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
 key = 'Fs(DirListing { dir: "src/flask/sansio" })'
 descriptor = "listing of 'src/flask/sansio'"
 cost_tokens = 17
-cum_tokens = 510
+cum_tokens = 500
 
 [batches.content]
 kind = "fs"
@@ -320,11 +302,11 @@ parent = "src/flask/sansio"
 entries = ["README.md", "app.py", "blueprints.py", "scaffold.py"]
 
 [[batches]]
-position = 17
+position = 16
 key = 'Python(Imports { file: "src/flask/json/__init__.py" })'
 descriptor = "python imports in src/flask/json/__init__.py"
 cost_tokens = 52
-cum_tokens = 562
+cum_tokens = 552
 
 [batches.content]
 kind = "lines"
@@ -354,11 +336,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 9 })'
 descriptor = "python imports #9 in src/flask/__init__.py"
 cost_tokens = 64
-cum_tokens = 626
+cum_tokens = 616
 
 [batches.content]
 kind = "lines"
@@ -372,11 +354,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 6 })'
 descriptor = "python imports #6 in src/flask/__init__.py"
 cost_tokens = 146
-cum_tokens = 772
+cum_tokens = 762
 
 [batches.content]
 kind = "lines"
@@ -385,6 +367,24 @@ kind = "lines"
 path = "src/flask/__init__.py"
 start = 13
 end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Python(Imports { file: "src/flask/__main__.py" })'
+descriptor = "python imports in src/flask/__main__.py"
+cost_tokens = 10
+cum_tokens = 772
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__main__.py"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"

@@ -1,7 +1,7 @@
 fixture = "beets"
 budget = 10000
-cumulative_tokens = 9996
-batch_count = 280
+cumulative_tokens = 9986
+batch_count = 291
 
 [[batches]]
 position = 1
@@ -4883,52 +4883,10 @@ kind = "full"
 
 [[batches]]
 position = 206
-key = 'Python(Imports { file: "beets/__main__.py" })'
-descriptor = "python imports in beets/__main__.py"
-cost_tokens = 246
-cum_tokens = 7758
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "beets/__main__.py"
-start = 1
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "beets/__main__.py"
-start = 15
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "beets/__main__.py"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "beets/__main__.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 207
 key = 'Python(ClassBody { file: "beets/importer/state.py", start_line: 34 })'
 descriptor = "python class body at beets/importer/state.py:34"
 cost_tokens = 68
-cum_tokens = 7826
+cum_tokens = 7580
 
 [batches.content]
 kind = "lines"
@@ -4958,11 +4916,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 208
+position = 207
 key = 'Python(DeclDoc { file: "beets/library/exceptions.py", start_line: 4 })'
 descriptor = "python decl doc at beets/library/exceptions.py:4"
 cost_tokens = 53
-cum_tokens = 7879
+cum_tokens = 7633
 
 [batches.content]
 kind = "lines"
@@ -4984,11 +4942,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 209
+position = 208
 key = 'Python(DeclNames { file: "beets/util/color.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in beets/util/color.py"
 cost_tokens = 18
-cum_tokens = 7897
+cum_tokens = 7651
 
 [batches.content]
 kind = "lines"
@@ -5010,11 +4968,11 @@ end = 209
 kind = "ellipsis"
 
 [[batches]]
-position = 210
+position = 209
 key = 'Python(Decl { file: "beets/util/color.py", start_line: 208 })'
 descriptor = "python decl at beets/util/color.py:208"
 cost_tokens = 0
-cum_tokens = 7897
+cum_tokens = 7651
 
 [batches.content]
 kind = "lines"
@@ -5028,11 +4986,11 @@ end = 208
 kind = "full"
 
 [[batches]]
-position = 211
+position = 210
 key = 'Python(DeclNames { file: "beets/importer/session.py", chunk_index: 0 })'
 descriptor = "python decl names surface in beets/importer/session.py"
 cost_tokens = 45
-cum_tokens = 7942
+cum_tokens = 7696
 
 [batches.content]
 kind = "lines"
@@ -5086,11 +5044,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 212
+position = 211
 key = 'Python(Decl { file: "beets/importer/session.py", start_line: 42 })'
 descriptor = "python decl at beets/importer/session.py:42"
 cost_tokens = 0
-cum_tokens = 7942
+cum_tokens = 7696
 
 [batches.content]
 kind = "lines"
@@ -5104,11 +5062,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 213
+position = 212
 key = 'Python(Decl { file: "beets/importer/session.py", start_line: 48 })'
 descriptor = "python decl at beets/importer/session.py:48"
 cost_tokens = 0
-cum_tokens = 7942
+cum_tokens = 7696
 
 [batches.content]
 kind = "lines"
@@ -5122,11 +5080,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 214
+position = 213
 key = 'Python(ClassBody { file: "beets/importer/session.py", start_line: 42 })'
 descriptor = "python class body at beets/importer/session.py:42"
 cost_tokens = 7
-cum_tokens = 7949
+cum_tokens = 7703
 
 [batches.content]
 kind = "lines"
@@ -5140,11 +5098,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 215
+position = 214
 key = 'Python(DeclDoc { file: "beets/importer/session.py", start_line: 42 })'
 descriptor = "python decl doc at beets/importer/session.py:42"
 cost_tokens = 14
-cum_tokens = 7963
+cum_tokens = 7717
 
 [batches.content]
 kind = "lines"
@@ -5158,11 +5116,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 216
+position = 215
 key = 'Python(DeclDoc { file: "beets/importer/session.py", start_line: 48 })'
 descriptor = "python decl doc at beets/importer/session.py:48"
 cost_tokens = 36
-cum_tokens = 7999
+cum_tokens = 7753
 
 [batches.content]
 kind = "lines"
@@ -5176,11 +5134,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 217
+position = 216
 key = 'Python(DeclBody { file: "beets/ui/__init__.py", start_line: 111, body_start_line: 118 })'
 descriptor = "python decl body at beets/ui/__init__.py:111 body 118"
 cost_tokens = 19
-cum_tokens = 8018
+cum_tokens = 7772
 
 [batches.content]
 kind = "lines"
@@ -5194,11 +5152,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 218
+position = 217
 key = 'Python(Imports { file: "beets/util/config.py" })'
 descriptor = "python imports in beets/util/config.py"
 cost_tokens = 22
-cum_tokens = 8040
+cum_tokens = 7794
 
 [batches.content]
 kind = "lines"
@@ -5220,11 +5178,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 219
+position = 218
 key = 'Python(DeclNames { file: "beets/util/id_extractors.py", chunk_index: 0 })'
 descriptor = "python decl names surface in beets/util/id_extractors.py"
 cost_tokens = 46
-cum_tokens = 8086
+cum_tokens = 7840
 
 [batches.content]
 kind = "lines"
@@ -5262,11 +5220,11 @@ end = 51
 kind = "ellipsis"
 
 [[batches]]
-position = 220
+position = 219
 key = 'Python(Decl { file: "beets/util/id_extractors.py", start_line: 50 })'
 descriptor = "python decl at beets/util/id_extractors.py:50"
 cost_tokens = 0
-cum_tokens = 8086
+cum_tokens = 7840
 
 [batches.content]
 kind = "lines"
@@ -5280,11 +5238,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 221
+position = 220
 key = 'Python(DeclNames { file: "beets/ui/__init__.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in beets/ui/__init__.py"
 cost_tokens = 151
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5482,11 +5440,11 @@ end = 831
 kind = "ellipsis"
 
 [[batches]]
-position = 222
+position = 221
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 383 })'
 descriptor = "python decl at beets/ui/__init__.py:383"
 cost_tokens = 0
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5500,11 +5458,11 @@ end = 383
 kind = "full"
 
 [[batches]]
-position = 223
+position = 222
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 395 })'
 descriptor = "python decl at beets/ui/__init__.py:395"
 cost_tokens = 0
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5518,11 +5476,11 @@ end = 395
 kind = "full"
 
 [[batches]]
-position = 224
+position = 223
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 433 })'
 descriptor = "python decl at beets/ui/__init__.py:433"
 cost_tokens = 0
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5536,11 +5494,11 @@ end = 433
 kind = "full"
 
 [[batches]]
-position = 225
+position = 224
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 445 })'
 descriptor = "python decl at beets/ui/__init__.py:445"
 cost_tokens = 0
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5554,11 +5512,11 @@ end = 445
 kind = "full"
 
 [[batches]]
-position = 226
+position = 225
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 498 })'
 descriptor = "python decl at beets/ui/__init__.py:498"
 cost_tokens = 0
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5572,11 +5530,11 @@ end = 498
 kind = "full"
 
 [[batches]]
-position = 227
+position = 226
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 637 })'
 descriptor = "python decl at beets/ui/__init__.py:637"
 cost_tokens = 0
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5590,11 +5548,11 @@ end = 637
 kind = "full"
 
 [[batches]]
-position = 228
+position = 227
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 676 })'
 descriptor = "python decl at beets/ui/__init__.py:676"
 cost_tokens = 0
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5608,11 +5566,11 @@ end = 676
 kind = "full"
 
 [[batches]]
-position = 229
+position = 228
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 830 })'
 descriptor = "python decl at beets/ui/__init__.py:830"
 cost_tokens = 0
-cum_tokens = 8237
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -5626,11 +5584,11 @@ end = 830
 kind = "full"
 
 [[batches]]
-position = 230
+position = 229
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 459 })'
 descriptor = "python decl at beets/ui/__init__.py:459"
 cost_tokens = 9
-cum_tokens = 8246
+cum_tokens = 8000
 
 [batches.content]
 kind = "lines"
@@ -5644,11 +5602,11 @@ end = 460
 kind = "full"
 
 [[batches]]
-position = 231
+position = 230
 key = 'Python(ClassBody { file: "beets/ui/__init__.py", start_line: 676 })'
 descriptor = "python class body at beets/ui/__init__.py:676"
 cost_tokens = 17
-cum_tokens = 8263
+cum_tokens = 8017
 
 [batches.content]
 kind = "lines"
@@ -5662,11 +5620,11 @@ end = 707
 kind = "full"
 
 [[batches]]
-position = 232
+position = 231
 key = 'Python(ClassBody { file: "beets/ui/__init__.py", start_line: 637 })'
 descriptor = "python class body at beets/ui/__init__.py:637"
 cost_tokens = 21
-cum_tokens = 8284
+cum_tokens = 8038
 
 [batches.content]
 kind = "lines"
@@ -5680,11 +5638,11 @@ end = 642
 kind = "full"
 
 [[batches]]
-position = 233
+position = 232
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 445 })'
 descriptor = "python decl doc at beets/ui/__init__.py:445"
 cost_tokens = 14
-cum_tokens = 8298
+cum_tokens = 8052
 
 [batches.content]
 kind = "lines"
@@ -5698,11 +5656,11 @@ end = 446
 kind = "full"
 
 [[batches]]
-position = 234
+position = 233
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 459 })'
 descriptor = "python decl doc at beets/ui/__init__.py:459"
 cost_tokens = 16
-cum_tokens = 8314
+cum_tokens = 8068
 
 [batches.content]
 kind = "lines"
@@ -5716,11 +5674,11 @@ end = 461
 kind = "full"
 
 [[batches]]
-position = 235
+position = 234
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 676 })'
 descriptor = "python decl doc at beets/ui/__init__.py:676"
 cost_tokens = 29
-cum_tokens = 8343
+cum_tokens = 8097
 
 [batches.content]
 kind = "lines"
@@ -5734,11 +5692,11 @@ end = 679
 kind = "full"
 
 [[batches]]
-position = 236
+position = 235
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 433 })'
 descriptor = "python decl doc at beets/ui/__init__.py:433"
 cost_tokens = 30
-cum_tokens = 8373
+cum_tokens = 8127
 
 [batches.content]
 kind = "lines"
@@ -5752,11 +5710,11 @@ end = 436
 kind = "full"
 
 [[batches]]
-position = 237
+position = 236
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 637 })'
 descriptor = "python decl doc at beets/ui/__init__.py:637"
 cost_tokens = 36
-cum_tokens = 8409
+cum_tokens = 8163
 
 [batches.content]
 kind = "lines"
@@ -5770,11 +5728,11 @@ end = 640
 kind = "full"
 
 [[batches]]
-position = 238
+position = 237
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 807 })'
 descriptor = "python decl at beets/ui/__init__.py:807"
 cost_tokens = 24
-cum_tokens = 8433
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -5788,11 +5746,11 @@ end = 809
 kind = "full"
 
 [[batches]]
-position = 239
+position = 238
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 830 })'
 descriptor = "python decl doc at beets/ui/__init__.py:830"
 cost_tokens = 15
-cum_tokens = 8448
+cum_tokens = 8202
 
 [batches.content]
 kind = "lines"
@@ -5806,11 +5764,11 @@ end = 831
 kind = "full"
 
 [[batches]]
-position = 240
+position = 239
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 207 })'
 descriptor = "python decl at beets/ui/__init__.py:207"
 cost_tokens = 62
-cum_tokens = 8510
+cum_tokens = 8264
 
 [batches.content]
 kind = "lines"
@@ -5824,11 +5782,11 @@ end = 215
 kind = "full"
 
 [[batches]]
-position = 241
+position = 240
 key = 'Python(Decl { file: "beets/ui/__init__.py", start_line: 466 })'
 descriptor = "python decl at beets/ui/__init__.py:466"
 cost_tokens = 70
-cum_tokens = 8580
+cum_tokens = 8334
 
 [batches.content]
 kind = "lines"
@@ -5842,11 +5800,11 @@ end = 472
 kind = "full"
 
 [[batches]]
-position = 242
+position = 241
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 383 })'
 descriptor = "python decl doc at beets/ui/__init__.py:383"
 cost_tokens = 53
-cum_tokens = 8633
+cum_tokens = 8387
 
 [batches.content]
 kind = "lines"
@@ -5860,11 +5818,11 @@ end = 386
 kind = "full"
 
 [[batches]]
-position = 243
+position = 242
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 807 })'
 descriptor = "python decl doc at beets/ui/__init__.py:807"
 cost_tokens = 46
-cum_tokens = 8679
+cum_tokens = 8433
 
 [batches.content]
 kind = "lines"
@@ -5886,11 +5844,11 @@ end = 813
 kind = "full"
 
 [[batches]]
-position = 244
+position = 243
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 498 })'
 descriptor = "python decl doc at beets/ui/__init__.py:498"
 cost_tokens = 146
-cum_tokens = 8825
+cum_tokens = 8579
 
 [batches.content]
 kind = "lines"
@@ -5928,11 +5886,11 @@ end = 512
 kind = "full"
 
 [[batches]]
-position = 245
+position = 244
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 466 })'
 descriptor = "python decl doc at beets/ui/__init__.py:466"
 cost_tokens = 130
-cum_tokens = 8955
+cum_tokens = 8709
 
 [batches.content]
 kind = "lines"
@@ -5962,11 +5920,11 @@ end = 482
 kind = "full"
 
 [[batches]]
-position = 246
+position = 245
 key = 'Python(DeclDoc { file: "beets/ui/__init__.py", start_line: 395 })'
 descriptor = "python decl doc at beets/ui/__init__.py:395"
 cost_tokens = 136
-cum_tokens = 9091
+cum_tokens = 8845
 
 [batches.content]
 kind = "lines"
@@ -5988,11 +5946,11 @@ end = 404
 kind = "full"
 
 [[batches]]
-position = 247
+position = 246
 key = 'Python(MethodSigs { file: "beets/ui/__init__.py", chunk_index: 1 })'
 descriptor = "python method sigs #1 in beets/ui/__init__.py"
 cost_tokens = 285
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6270,11 +6228,11 @@ end = 784
 kind = "ellipsis"
 
 [[batches]]
-position = 248
+position = 247
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 514 })'
 descriptor = "python method at beets/ui/__init__.py:514"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6288,11 +6246,11 @@ end = 514
 kind = "full"
 
 [[batches]]
-position = 249
+position = 248
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 521 })'
 descriptor = "python method at beets/ui/__init__.py:521"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6306,11 +6264,11 @@ end = 521
 kind = "full"
 
 [[batches]]
-position = 250
+position = 249
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 571 })'
 descriptor = "python method at beets/ui/__init__.py:571"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6324,11 +6282,11 @@ end = 571
 kind = "full"
 
 [[batches]]
-position = 251
+position = 250
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 591 })'
 descriptor = "python method at beets/ui/__init__.py:591"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6342,11 +6300,11 @@ end = 591
 kind = "full"
 
 [[batches]]
-position = 252
+position = 251
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 621 })'
 descriptor = "python method at beets/ui/__init__.py:621"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6360,11 +6318,11 @@ end = 621
 kind = "full"
 
 [[batches]]
-position = 253
+position = 252
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 644 })'
 descriptor = "python method at beets/ui/__init__.py:644"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6378,11 +6336,11 @@ end = 644
 kind = "full"
 
 [[batches]]
-position = 254
+position = 253
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 658 })'
 descriptor = "python method at beets/ui/__init__.py:658"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6396,11 +6354,11 @@ end = 658
 kind = "full"
 
 [[batches]]
-position = 255
+position = 254
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 661 })'
 descriptor = "python method at beets/ui/__init__.py:661"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6414,11 +6372,11 @@ end = 661
 kind = "full"
 
 [[batches]]
-position = 256
+position = 255
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 681 })'
 descriptor = "python method at beets/ui/__init__.py:681"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6432,11 +6390,11 @@ end = 681
 kind = "full"
 
 [[batches]]
-position = 257
+position = 256
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 701 })'
 descriptor = "python method at beets/ui/__init__.py:701"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6450,11 +6408,11 @@ end = 701
 kind = "full"
 
 [[batches]]
-position = 258
+position = 257
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 760 })'
 descriptor = "python method at beets/ui/__init__.py:760"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6468,11 +6426,11 @@ end = 760
 kind = "full"
 
 [[batches]]
-position = 259
+position = 258
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 770 })'
 descriptor = "python method at beets/ui/__init__.py:770"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6486,11 +6444,11 @@ end = 770
 kind = "full"
 
 [[batches]]
-position = 260
+position = 259
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 783 })'
 descriptor = "python method at beets/ui/__init__.py:783"
 cost_tokens = 0
-cum_tokens = 9376
+cum_tokens = 9130
 
 [batches.content]
 kind = "lines"
@@ -6504,11 +6462,11 @@ end = 783
 kind = "full"
 
 [[batches]]
-position = 261
+position = 260
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 664 })'
 descriptor = "python method at beets/ui/__init__.py:664"
 cost_tokens = 8
-cum_tokens = 9384
+cum_tokens = 9138
 
 [batches.content]
 kind = "lines"
@@ -6522,11 +6480,11 @@ end = 665
 kind = "full"
 
 [[batches]]
-position = 262
+position = 261
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 668 })'
 descriptor = "python method at beets/ui/__init__.py:668"
 cost_tokens = 11
-cum_tokens = 9395
+cum_tokens = 9149
 
 [batches.content]
 kind = "lines"
@@ -6540,11 +6498,11 @@ end = 669
 kind = "full"
 
 [[batches]]
-position = 263
+position = 262
 key = 'Python(Method { file: "beets/ui/__init__.py", start_line: 708 })'
 descriptor = "python method at beets/ui/__init__.py:708"
 cost_tokens = 16
-cum_tokens = 9411
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -6558,11 +6516,11 @@ end = 709
 kind = "full"
 
 [[batches]]
-position = 264
+position = 263
 key = 'Python(MethodBody { file: "beets/ui/__init__.py", start_line: 658, body_start_line: 659 })'
 descriptor = "python method body at beets/ui/__init__.py:658 body 659"
 cost_tokens = 8
-cum_tokens = 9419
+cum_tokens = 9173
 
 [batches.content]
 kind = "lines"
@@ -6576,11 +6534,11 @@ end = 659
 kind = "full"
 
 [[batches]]
-position = 265
+position = 264
 key = 'Python(MethodDoc { file: "beets/ui/__init__.py", start_line: 621 })'
 descriptor = "python method doc at beets/ui/__init__.py:621"
 cost_tokens = 12
-cum_tokens = 9431
+cum_tokens = 9185
 
 [batches.content]
 kind = "lines"
@@ -6594,11 +6552,11 @@ end = 622
 kind = "full"
 
 [[batches]]
-position = 266
+position = 265
 key = 'Python(MethodBody { file: "beets/ui/__init__.py", start_line: 661, body_start_line: 662 })'
 descriptor = "python method body at beets/ui/__init__.py:661 body 662"
 cost_tokens = 10
-cum_tokens = 9441
+cum_tokens = 9195
 
 [batches.content]
 kind = "lines"
@@ -6612,11 +6570,11 @@ end = 662
 kind = "full"
 
 [[batches]]
-position = 267
+position = 266
 key = 'Python(MethodBody { file: "beets/ui/__init__.py", start_line: 664, body_start_line: 666 })'
 descriptor = "python method body at beets/ui/__init__.py:664 body 666"
 cost_tokens = 11
-cum_tokens = 9452
+cum_tokens = 9206
 
 [batches.content]
 kind = "lines"
@@ -6630,11 +6588,11 @@ end = 666
 kind = "full"
 
 [[batches]]
-position = 268
+position = 267
 key = 'Python(MethodDoc { file: "beets/ui/__init__.py", start_line: 701 })'
 descriptor = "python method doc at beets/ui/__init__.py:701"
 cost_tokens = 17
-cum_tokens = 9469
+cum_tokens = 9223
 
 [batches.content]
 kind = "lines"
@@ -6648,11 +6606,11 @@ end = 702
 kind = "full"
 
 [[batches]]
-position = 269
+position = 268
 key = 'Python(MethodDoc { file: "beets/ui/__init__.py", start_line: 770 })'
 descriptor = "python method doc at beets/ui/__init__.py:770"
 cost_tokens = 37
-cum_tokens = 9506
+cum_tokens = 9260
 
 [batches.content]
 kind = "lines"
@@ -6666,11 +6624,11 @@ end = 773
 kind = "full"
 
 [[batches]]
-position = 270
+position = 269
 key = 'Python(MethodDoc { file: "beets/ui/__init__.py", start_line: 783 })'
 descriptor = "python method doc at beets/ui/__init__.py:783"
 cost_tokens = 52
-cum_tokens = 9558
+cum_tokens = 9312
 
 [batches.content]
 kind = "lines"
@@ -6684,11 +6642,11 @@ end = 787
 kind = "full"
 
 [[batches]]
-position = 271
+position = 270
 key = 'Python(MethodDoc { file: "beets/ui/__init__.py", start_line: 681 })'
 descriptor = "python method doc at beets/ui/__init__.py:681"
 cost_tokens = 56
-cum_tokens = 9614
+cum_tokens = 9368
 
 [batches.content]
 kind = "lines"
@@ -6702,11 +6660,11 @@ end = 685
 kind = "full"
 
 [[batches]]
-position = 272
+position = 271
 key = 'Python(MethodBody { file: "beets/ui/__init__.py", start_line: 701, body_start_line: 703 })'
 descriptor = "python method body at beets/ui/__init__.py:701 body 703"
 cost_tokens = 32
-cum_tokens = 9646
+cum_tokens = 9400
 
 [batches.content]
 kind = "lines"
@@ -6720,11 +6678,11 @@ end = 705
 kind = "full"
 
 [[batches]]
-position = 273
+position = 272
 key = 'Python(MethodDoc { file: "beets/ui/__init__.py", start_line: 521 })'
 descriptor = "python method doc at beets/ui/__init__.py:521"
 cost_tokens = 73
-cum_tokens = 9719
+cum_tokens = 9473
 
 [batches.content]
 kind = "lines"
@@ -6746,11 +6704,11 @@ end = 527
 kind = "full"
 
 [[batches]]
-position = 274
+position = 273
 key = 'Python(MethodDoc { file: "beets/ui/__init__.py", start_line: 571 })'
 descriptor = "python method doc at beets/ui/__init__.py:571"
 cost_tokens = 95
-cum_tokens = 9814
+cum_tokens = 9568
 
 [batches.content]
 kind = "lines"
@@ -6780,11 +6738,11 @@ end = 580
 kind = "full"
 
 [[batches]]
-position = 275
+position = 274
 key = 'Python(MethodDoc { file: "beets/ui/__init__.py", start_line: 644 })'
 descriptor = "python method doc at beets/ui/__init__.py:644"
 cost_tokens = 95
-cum_tokens = 9909
+cum_tokens = 9663
 
 [batches.content]
 kind = "lines"
@@ -6798,11 +6756,11 @@ end = 650
 kind = "full"
 
 [[batches]]
-position = 276
+position = 275
 key = 'Python(MethodBody { file: "beets/ui/__init__.py", start_line: 571, body_start_line: 589 })'
 descriptor = "python method body at beets/ui/__init__.py:571 body 589"
 cost_tokens = 10
-cum_tokens = 9919
+cum_tokens = 9673
 
 [batches.content]
 kind = "lines"
@@ -6816,11 +6774,11 @@ end = 589
 kind = "full"
 
 [[batches]]
-position = 277
+position = 276
 key = 'Python(DeclBody { file: "beets/ui/__init__.py", start_line: 445, body_start_line: 447 })'
 descriptor = "python decl body at beets/ui/__init__.py:445 body 447"
 cost_tokens = 8
-cum_tokens = 9927
+cum_tokens = 9681
 
 [batches.content]
 kind = "lines"
@@ -6834,11 +6792,11 @@ end = 447
 kind = "full"
 
 [[batches]]
-position = 278
+position = 277
 key = 'Python(DeclBody { file: "beets/ui/__init__.py", start_line: 445, body_start_line: 456 })'
 descriptor = "python decl body at beets/ui/__init__.py:445 body 456"
 cost_tokens = 8
-cum_tokens = 9935
+cum_tokens = 9689
 
 [batches.content]
 kind = "lines"
@@ -6852,11 +6810,11 @@ end = 456
 kind = "full"
 
 [[batches]]
-position = 279
+position = 278
 key = 'Fs(DirListing { dir: "docs/dev/plugins/other" })'
 descriptor = "listing of 'docs/dev/plugins/other'"
 cost_tokens = 41
-cum_tokens = 9976
+cum_tokens = 9730
 
 [batches.content]
 kind = "fs"
@@ -6866,11 +6824,11 @@ parent = "docs/dev/plugins/other"
 entries = ["config.rst", "fields.rst", "import.rst", "index.rst", "logging.rst", "mediafile.rst", "prompts.rst", "templates.rst"]
 
 [[batches]]
-position = 280
+position = 279
 key = 'Python(DeclBody { file: "beets/ui/__init__.py", start_line: 459, body_start_line: 463 })'
 descriptor = "python decl body at beets/ui/__init__.py:459 body 463"
 cost_tokens = 20
-cum_tokens = 9996
+cum_tokens = 9750
 
 [batches.content]
 kind = "lines"
@@ -6879,6 +6837,294 @@ kind = "lines"
 path = "beets/ui/__init__.py"
 start = 463
 end = 463
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 280
+key = 'Python(MethodBody { file: "beets/ui/__init__.py", start_line: 668, body_start_line: 670 })'
+descriptor = "python method body at beets/ui/__init__.py:668 body 670"
+cost_tokens = 50
+cum_tokens = 9800
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/ui/__init__.py"
+start = 670
+end = 673
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 281
+key = 'Python(DeclNames { file: "beets/ui/commands/version.py", chunk_index: 0 })'
+descriptor = "python decl names surface in beets/ui/commands/version.py"
+cost_tokens = 31
+cum_tokens = 9831
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/ui/commands/version.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beets/ui/commands/version.py"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beets/ui/commands/version.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 282
+key = 'Python(Decl { file: "beets/ui/commands/version.py", start_line: 9 })'
+descriptor = "python decl at beets/ui/commands/version.py:9"
+cost_tokens = 0
+cum_tokens = 9831
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/ui/commands/version.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 283
+key = 'Python(DeclNames { file: "beets/util/units.py", chunk_index: 0 })'
+descriptor = "python decl names surface in beets/util/units.py"
+cost_tokens = 51
+cum_tokens = 9882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 284
+key = 'Python(Decl { file: "beets/util/units.py", start_line: 4 })'
+descriptor = "python decl at beets/util/units.py:4"
+cost_tokens = 0
+cum_tokens = 9882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 285
+key = 'Python(Decl { file: "beets/util/units.py", start_line: 17 })'
+descriptor = "python decl at beets/util/units.py:17"
+cost_tokens = 0
+cum_tokens = 9882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 286
+key = 'Python(Decl { file: "beets/util/units.py", start_line: 25 })'
+descriptor = "python decl at beets/util/units.py:25"
+cost_tokens = 0
+cum_tokens = 9882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 287
+key = 'Python(Decl { file: "beets/util/units.py", start_line: 37 })'
+descriptor = "python decl at beets/util/units.py:37"
+cost_tokens = 0
+cum_tokens = 9882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 288
+key = 'Python(DeclDoc { file: "beets/util/units.py", start_line: 25 })'
+descriptor = "python decl doc at beets/util/units.py:25"
+cost_tokens = 18
+cum_tokens = 9900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 289
+key = 'Python(DeclDoc { file: "beets/util/units.py", start_line: 17 })'
+descriptor = "python decl doc at beets/util/units.py:17"
+cost_tokens = 31
+cum_tokens = 9931
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 18
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 290
+key = 'Python(DeclDoc { file: "beets/util/units.py", start_line: 37 })'
+descriptor = "python decl doc at beets/util/units.py:37"
+cost_tokens = 34
+cum_tokens = 9965
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/util/units.py"
+start = 38
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 291
+key = 'Python(DeclBody { file: "beets/ui/__init__.py", start_line: 459, body_start_line: 462 })'
+descriptor = "python decl body at beets/ui/__init__.py:459 body 462"
+cost_tokens = 21
+cum_tokens = 9986
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beets/ui/__init__.py"
+start = 462
+end = 462
 
 [batches.content.spans.render]
 kind = "full"

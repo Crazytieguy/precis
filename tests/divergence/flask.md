@@ -22,12 +22,12 @@ Score(3000)=0.633 I=0.895 C=0.448 ns_rows≤3K=17/45 (reached=9 partial=1 missin
 | walker |  | 457 | 50 | python imports #5 in src/flask/__init__.py |  |  | 0.883 |
 | ns | 460 |  | 78 | Public re-exports — ctx helpers and jsonify | 1.6 |  | 0.884 |
 | walker |  | 483 | 26 | python imports #10 in src/flask/__init__.py |  |  | 0.919 |
-| walker |  | 493 | 10 | python imports in src/flask/__main__.py |  |  | 0.919 |
-| walker |  | 510 | 17 | listing of 'src/flask/sansio' |  |  | 1.000 |
-| walker |  | 562 | 52 | python imports in src/flask/json/__init__.py |  |  | 1.000 |
+| walker |  | 500 | 17 | listing of 'src/flask/sansio' |  |  | 1.000 |
+| walker |  | 552 | 52 | python imports in src/flask/json/__init__.py |  |  | 1.000 |
 | ns | 606 |  | 146 | Public re-exports — helpers (url_for, redirect, abort, flash, send_file, …) | 1.7 |  | 0.915 |
-| walker |  | 626 | 64 | python imports #9 in src/flask/__init__.py |  |  | 0.916 |
-| walker |  | 772 | 146 | python imports #6 in src/flask/__init__.py |  |  | 1.000 |
+| walker |  | 616 | 64 | python imports #9 in src/flask/__init__.py |  |  | 0.916 |
+| walker |  | 762 | 146 | python imports #6 in src/flask/__init__.py |  |  | 1.000 |
+| walker |  | 772 | 10 | python imports in src/flask/__main__.py |  |  | 1.000 |
 | walker |  | 781 | 9 | listing of 'examples' |  |  | 1.000 |
 | ns | 838 |  | 232 | Public re-exports — templating + signals | 1.8 |  | 0.909 |
 | walker |  | 949 | 168 | python imports #8 in src/flask/__init__.py |  |  | 1.000 |
