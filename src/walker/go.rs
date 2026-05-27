@@ -540,7 +540,7 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
         let body_end = struct_body.end_position().row;
         if body_end.saturating_sub(body_start) + 1 >= STRUCT_FIELD_GROUP_MIN_LINES {
             let groups = collect_struct_field_groups(struct_body, source);
-            if groups.len() >= STRUCT_FIELD_GROUP_MIN_GROUPS {
+            if !groups.is_empty() {
                 // Trim decl_lines to the type header row + the
                 // struct's closing-brace row. Body rows in between
                 // now belong to per-`StructFieldGroup` batches, and
@@ -573,9 +573,6 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
 
 /// Minimum struct-body span (lines) for field-group chunking.
 const STRUCT_FIELD_GROUP_MIN_LINES: usize = 60;
-
-/// Minimum field-groups required for struct chunking.
-const STRUCT_FIELD_GROUP_MIN_GROUPS: usize = 3;
 
 /// `struct_type` node from a struct-typed `type_spec`.
 fn find_struct_body(spec: Node) -> Option<Node> {
