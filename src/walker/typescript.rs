@@ -561,14 +561,12 @@ fn body_segment_value_factor(body_segment_index: usize) -> f64 {
 fn module_entrypoint_file(files: &[PathBuf]) -> Option<PathBuf> {
     files
         .iter()
-        .find(|file| is_module_bundle_entrypoint(file))
+        .find(|path| {
+            path.file_name()
+                .and_then(|n| n.to_str())
+                .is_some_and(|name| JS_MODULE_ENTRYPOINT_FILES.contains(&name))
+        })
         .cloned()
-}
-
-fn is_module_bundle_entrypoint(path: &Path) -> bool {
-    path.file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|name| JS_MODULE_ENTRYPOINT_FILES.contains(&name))
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1940,24 +1938,18 @@ fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<Impor
             // `find_export_starts` already covers them.
             "export_statement" if is_wall_compatible_inline_export(child) => {}
             "comment" | "hash_bang_line" => {}
-            _ if !tolerate_reexport_wall_other(child, &mut other_statements, &mut other_lines) => {
-                return None;
+            _ => {
+                other_statements += 1;
+                other_lines += node_line_count(child);
+                if other_statements > REEXPORT_IMPORT_MAX_OTHER_STATEMENTS
+                    || other_lines > REEXPORT_IMPORT_MAX_OTHER_LINES
+                {
+                    return None;
+                }
             }
-            _ => {}
         }
     }
     Some(groups)
-}
-
-fn tolerate_reexport_wall_other(
-    node: Node,
-    other_statements: &mut usize,
-    other_lines: &mut usize,
-) -> bool {
-    *other_statements += 1;
-    *other_lines += node_line_count(node);
-    *other_statements <= REEXPORT_IMPORT_MAX_OTHER_STATEMENTS
-        && *other_lines <= REEXPORT_IMPORT_MAX_OTHER_LINES
 }
 
 fn source_literal(node: Node, source: &str) -> Option<String> {
@@ -2301,17 +2293,13 @@ fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> 
 /// blocks stay merged because per-slice atom overhead dominates their benefit.
 /// For classes, each method body is considered independently.
 fn body_parts(decl: Node, kind: ItemKind, source: &str, src_lines: &[&str]) -> Vec<BodyPart> {
-    if is_class_kind_decl(decl, kind) {
+    // `Class` always routes to method-body splitting; `Default` does when the
+    // underlying expression is a class expression / declaration.
+    if matches!(kind, ItemKind::Class) || (matches!(kind, ItemKind::Default) && is_class_node(decl))
+    {
         return class_method_body_parts(decl, src_lines);
     }
     function_body_parts(decl_fn_body(decl, kind), source, src_lines)
-}
-
-/// True when this `(decl, kind)` should route to `class_method_body_parts`.
-/// `Class` always does; `Default` does when the underlying expression is a
-/// class expression / declaration.
-fn is_class_kind_decl(decl: Node, kind: ItemKind) -> bool {
-    matches!(kind, ItemKind::Class) || (matches!(kind, ItemKind::Default) && is_class_node(decl))
 }
 
 /// Statement block of a top-level fn-bearing declaration. Returns `None` for
