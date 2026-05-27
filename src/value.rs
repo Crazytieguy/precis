@@ -229,18 +229,7 @@ fn is_root_level_vendor_dir_name(s: &str) -> bool {
     let lower = s.to_ascii_lowercase();
     matches!(
         lower.as_str(),
-        "deps"
-            | "vendor"
-            | "vendored"
-            | "third_party"
-            | "third-party"
-            | "3rd"
-            | "3rdparty"
-            | "external"
-            | "extern"
-            | "sig"
-            | "signatures"
-            | "tap-snapshots"
+        "deps" | "vendor" | "third_party" | "third-party" | "external" | "3rd" | "sig"
     )
 }
 

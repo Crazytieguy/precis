@@ -4,55 +4,55 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 61 |  | 61 | package.json — name, description, main | 1.1 |  | 0.000 |
 | walker |  | 103 | 103 | listing of '.' |  |  | 0.000 |
-| walker |  | 113 | 10 | export names surface in index.js |  |  | 0.000 |
-| walker |  | 137 | 24 | README headline in README.md |  |  | 0.000 |
-| walker |  | 142 | 5 | listing of 'bin' |  |  | 0.000 |
+| walker |  | 106 | 3 | listing of 'tap-snapshots' |  |  | 0.000 |
+| walker |  | 116 | 10 | export names surface in index.js |  |  | 0.000 |
+| walker |  | 140 | 24 | README headline in README.md |  |  | 0.000 |
+| walker |  | 145 | 5 | listing of 'bin' |  |  | 0.000 |
 | ns | 164 |  | 103 | Repo top-level listing | 1.2 |  | 0.614 |
-| walker |  | 197 | 55 | package identity in package.json |  |  | 0.784 |
-| walker |  | 214 | 17 | listing of 'classes' |  |  | 0.799 |
-| walker |  | 241 | 27 | listing of 'internal' |  |  | 0.815 |
+| walker |  | 200 | 55 | package identity in package.json |  |  | 0.784 |
+| walker |  | 217 | 17 | listing of 'classes' |  |  | 0.799 |
+| walker |  | 244 | 27 | listing of 'internal' |  |  | 0.815 |
 | ns | 281 |  | 117 | package.json — bin entry and Node engines floor | 1.3 |  | 0.680 |
-| walker |  | 297 | 56 | listing of 'ranges' |  |  | 0.685 |
+| walker |  | 300 | 56 | listing of 'ranges' |  |  | 0.685 |
 | ns | 303 |  | 22 | classes/ + bin/ listings | 1.4 |  | 0.692 |
 | ns | 330 |  | 27 | internal/ listing | 1.5 |  | 0.698 |
 | ns | 354 |  | 24 | README — title (lede) | 2.1 |  | 0.699 |
-| walker |  | 357 | 60 | package identity metadata in package.json |  |  | 0.732 |
+| walker |  | 360 | 60 | package identity metadata in package.json |  |  | 0.732 |
 | ns | 515 |  | 161 | functions/ + ranges/ listings | 2.2 |  | 0.567 |
-| walker |  | 539 | 182 | headings outline in README.md |  |  | 0.572 |
-| walker |  | 561 | 22 | README.md section #1 |  |  | 0.572 |
-| walker |  | 585 | 24 | README.md section #54 |  |  | 0.572 |
-| walker |  | 720 | 135 | package entrypoints in package.json |  |  | 0.646 |
-| walker |  | 748 | 28 | package runtime metadata in package.json |  |  | 0.682 |
-| ns | 750 |  | 235 | README — Usage example (calls into the public API) | 2.3 |  | 0.645 |
-| walker |  | 892 | 144 | package scripts in package.json |  |  | 0.645 |
-| walker |  | 997 | 105 | listing of 'functions' |  |  | 0.847 |
+| walker |  | 542 | 182 | headings outline in README.md |  |  | 0.572 |
+| walker |  | 564 | 22 | README.md section #1 |  |  | 0.572 |
+| walker |  | 588 | 24 | README.md section #54 |  |  | 0.572 |
+| walker |  | 723 | 135 | package entrypoints in package.json |  |  | 0.646 |
+| ns | 750 |  | 235 | README — Usage example (calls into the public API) | 2.3 |  | 0.610 |
+| walker |  | 751 | 28 | package runtime metadata in package.json |  |  | 0.645 |
+| walker |  | 895 | 144 | package scripts in package.json |  |  | 0.645 |
+| walker |  | 1000 | 105 | listing of 'functions' |  |  | 0.847 |
 | ns | 1011 |  | 261 | range.bnf — canonical range grammar | 2.4 |  | 0.775 |
-| walker |  | 1377 | 380 | export at index.js:45 |  |  | 0.807 |
+| walker |  | 1380 | 380 | export at index.js:45 |  |  | 0.807 |
 | ns | 1401 |  | 390 | index.js — module.exports object body (canonical public API list) | 2.5 |  | 0.814 |
-| walker |  | 1410 | 33 | listing of 'test' |  |  | 0.814 |
-| walker |  | 1427 | 17 | listing of 'test/classes' |  |  | 0.814 |
-| walker |  | 1448 | 21 | README.md section #20 |  |  | 0.814 |
-| walker |  | 1469 | 21 | README.md section #21 |  |  | 0.814 |
-| walker |  | 1490 | 21 | README.md section #22 |  |  | 0.814 |
-| walker |  | 1511 | 21 | README.md section #23 |  |  | 0.814 |
-| walker |  | 1549 | 38 | listing of 'benchmarks' |  |  | 0.814 |
-| walker |  | 1571 | 22 | README.md section #34 |  |  | 0.814 |
-| walker |  | 1593 | 22 | README.md section #42 |  |  | 0.814 |
-| walker |  | 1615 | 22 | README.md section #51 |  |  | 0.814 |
-| walker |  | 1640 | 25 | README.md section #12 |  |  | 0.814 |
-| walker |  | 1664 | 24 | README.md section #47 |  |  | 0.814 |
+| walker |  | 1413 | 33 | listing of 'test' |  |  | 0.814 |
+| walker |  | 1430 | 17 | listing of 'test/classes' |  |  | 0.814 |
+| walker |  | 1451 | 21 | README.md section #20 |  |  | 0.814 |
+| walker |  | 1472 | 21 | README.md section #21 |  |  | 0.814 |
+| walker |  | 1493 | 21 | README.md section #22 |  |  | 0.814 |
+| walker |  | 1514 | 21 | README.md section #23 |  |  | 0.814 |
+| walker |  | 1552 | 38 | listing of 'benchmarks' |  |  | 0.814 |
+| walker |  | 1574 | 22 | README.md section #34 |  |  | 0.814 |
+| walker |  | 1596 | 22 | README.md section #42 |  |  | 0.814 |
+| walker |  | 1618 | 22 | README.md section #51 |  |  | 0.814 |
+| walker |  | 1643 | 25 | README.md section #12 |  |  | 0.814 |
+| walker |  | 1667 | 24 | README.md section #47 |  |  | 0.778 |
 | ns | 1667 |  | 266 | README — all section heading locations | 2.6 |  | 0.778 |
-| walker |  | 1684 | 20 | README.md section #33 |  |  | 0.778 |
-| walker |  | 1711 | 27 | README.md section #25 |  |  | 0.778 |
-| walker |  | 1740 | 29 | README.md section #13 |  |  | 0.778 |
+| walker |  | 1687 | 20 | README.md section #33 |  |  | 0.778 |
+| walker |  | 1714 | 27 | README.md section #25 |  |  | 0.778 |
+| walker |  | 1743 | 29 | README.md section #13 |  |  | 0.778 |
 | ns | 1775 |  | 108 | README — Versions section (leading = and v) | 3.1 | 2.6 | 0.759 |
-| walker |  | 1838 | 98 | README.md section #3 |  |  | 0.780 |
-| walker |  | 1922 | 84 | package dependencies in package.json |  |  | 0.780 |
-| walker |  | 1950 | 28 | README.md section #38 |  |  | 0.780 |
-| walker |  | 1979 | 29 | README.md section #35 |  |  | 0.780 |
-| walker |  | 2006 | 27 | listing of 'test/internal' |  |  | 0.780 |
-| walker |  | 2037 | 31 | README.md section #30 |  |  | 0.780 |
-| walker |  | 2040 | 3 | listing of 'tap-snapshots' |  |  | 0.780 |
+| walker |  | 1841 | 98 | README.md section #3 |  |  | 0.780 |
+| walker |  | 1925 | 84 | package dependencies in package.json |  |  | 0.780 |
+| walker |  | 1953 | 28 | README.md section #38 |  |  | 0.780 |
+| walker |  | 1982 | 29 | README.md section #35 |  |  | 0.780 |
+| walker |  | 2009 | 27 | listing of 'test/internal' |  |  | 0.780 |
+| walker |  | 2040 | 31 | README.md section #30 |  |  | 0.780 |
 | walker |  | 2076 | 36 | README.md section #40 |  |  | 0.780 |
 | walker |  | 2113 | 37 | README.md section #39 |  |  | 0.780 |
 | walker |  | 2150 | 37 | README.md section #46 |  |  | 0.780 |
