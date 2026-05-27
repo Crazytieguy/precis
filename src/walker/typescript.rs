@@ -1316,106 +1316,6 @@ fn descend_for_fn_body(node: Node, depth: usize) -> Option<Node> {
     }
 }
 
-/// Result of resolving a `start_line` to a top-level export-bearing node.
-/// `Real` is the existing `export ...` statement; `Synthetic` is a
-/// module-private `const X = <fn-init>` whose name appears in a value
-/// re-export clause (see `synthetic_export_name`).
-#[cfg(test)]
-enum LocatedExport<'a> {
-    Real {
-        export_stmt: Node<'a>,
-        decl: Node<'a>,
-        kind: ItemKind,
-    },
-    Synthetic {
-        decl: Node<'a>,
-        kind: ItemKind,
-    },
-}
-
-#[cfg(test)]
-impl<'a> LocatedExport<'a> {
-    fn kind(&self) -> ItemKind {
-        match self {
-            LocatedExport::Real { kind, .. } | LocatedExport::Synthetic { kind, .. } => *kind,
-        }
-    }
-
-    /// Anchor node for the collector — the wrapping `export_statement`
-    /// for real exports, the lexical_declaration for synthetics.
-    fn anchor(&self) -> Node<'a> {
-        match *self {
-            LocatedExport::Real { export_stmt, .. } => export_stmt,
-            LocatedExport::Synthetic { decl, .. } => decl,
-        }
-    }
-
-    /// Inner declaration node from `classify_export` (real) or the
-    /// lexical_declaration itself (synthetic).
-    fn decl(&self) -> Node<'a> {
-        match *self {
-            LocatedExport::Real { decl, .. } | LocatedExport::Synthetic { decl, .. } => decl,
-        }
-    }
-}
-
-/// Single source of truth for "what does this `start_line` point to".
-/// First pass returns the `export_statement` at this line if any —
-/// that mirrors `find_export_starts`'s same-line collision filter, so a
-/// `TsKey::Export { start_line }` for a real export wins even when a
-/// module-private `const` lives on the same source line. Second pass
-/// looks for a synthetic candidate. Returns `None` for stale keys
-/// (source edited since the key was issued) so collectors short-circuit
-/// rather than render the wrong content.
-#[cfg(test)]
-fn locate_export_decl<'a>(
-    tree: &'a Tree,
-    source: &str,
-    start_line: usize,
-) -> Option<LocatedExport<'a>> {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 == start_line {
-            let Some((kind, decl)) =
-                classify_export(child, source).or_else(|| classify_commonjs_export(child, source))
-            else {
-                continue;
-            };
-            return Some(LocatedExport::Real {
-                export_stmt: child,
-                decl,
-                kind,
-            });
-        }
-    }
-
-    let reexports = collect_local_value_reexports(tree, source);
-    let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
-    if reexports.is_empty() && commonjs_reexports.is_empty() {
-        return None;
-    }
-
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 != start_line {
-            continue;
-        }
-        if matches!(child.kind(), "lexical_declaration" | "variable_declaration")
-            && synthetic_export_name(child, source, &reexports).is_some()
-        {
-            return Some(LocatedExport::Synthetic {
-                decl: child,
-                kind: ItemKind::Const,
-            });
-        }
-        if let Some(kind) = synthetic_commonjs_export_kind(child, source, &commonjs_reexports) {
-            return Some(LocatedExport::Synthetic { decl: child, kind });
-        }
-    }
-    None
-}
-
 /// Recognize a top-level export-bearing item. Returns `(ItemKind,
 /// "declaration node whose end-of-content we measure")` or `None` if this
 /// node isn't a meaningful exported declaration.
@@ -2171,16 +2071,12 @@ fn collect_export_names_from(
 /// otherwise the whole declaration.
 #[cfg(test)]
 fn collect_export_lines(tree: &Tree, source: &str, start_line: usize) -> FileLines {
-    let Some(located) = locate_export_decl(tree, source, start_line) else {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let exports = find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines);
+    let Some(item) = exports.iter().find(|e| e.start_line == start_line) else {
         return FileLines::new(Vec::new());
     };
-    decl_surface_lines(
-        located.kind(),
-        located.anchor(),
-        located.decl(),
-        source,
-        true,
-    )
+    decl_surface_lines(item.kind, item.anchor, item.decl, source, true)
 }
 
 fn module_item_lines(kind: ItemKind, decl: Node, source: &str) -> FileLines {
@@ -2404,16 +2300,12 @@ fn has_multiline_statement_block(body: Node) -> bool {
 
 #[cfg(test)]
 fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> Vec<BodyPart> {
-    let Some(located) = locate_export_decl(tree, source, start_line) else {
-        return Vec::new();
-    };
     let src_lines: Vec<&str> = source.lines().collect();
-    merged_body_parts(body_parts(
-        located.decl(),
-        located.kind(),
-        source,
-        &src_lines,
-    ))
+    find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines)
+        .into_iter()
+        .find(|e| e.start_line == start_line)
+        .map(|e| e.body_parts)
+        .unwrap_or_default()
 }
 
 /// Body slices that the materializer emits for a declaration, after applying
@@ -3571,13 +3463,15 @@ export type { X };
     }
 
     #[test]
-    fn walker_typescript_locate_export_decl_real_wins_on_same_line() {
-        // Materializer-side mirror of the §4c collision filter.
+    fn walker_typescript_export_lines_real_wins_on_same_line() {
+        // Materializer-side mirror of the §4c collision filter: when a
+        // real export_statement shares a line with a `const X = …` whose
+        // name is re-exported, the synthetic candidate is dropped.
         let src = "const X = () => { return 1; }; export { X };\n";
         let tree = parse(src);
-        let located = locate_export_decl(&tree, src, 1).unwrap();
-        // Must be the real NamedReexport, not a synthetic Const.
-        assert!(matches!(located.kind(), ItemKind::NamedReexport));
+        let exports = export_infos(&tree, src);
+        assert_eq!(exports.len(), 1);
+        assert!(matches!(exports[0].kind, ItemKind::NamedReexport));
         let lines = collect_export_lines(&tree, src, 1);
         // Real export rendering is the whole single-line clause —
         // contains line 1 only.
