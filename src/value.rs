@@ -297,11 +297,7 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
         "SECURITY",
         "NOTICE",
         "AUTHORS",
-        "MAINTAINERS",
         "CODE_OF_CONDUCT",
-        "CODEOWNERS",
-        "SUPPORT",
-        "GOVERNANCE",
         "FAQ",
     ]
     .iter()
@@ -454,8 +450,7 @@ mod tests {
                 0.2,
                 "CHANGELOG.md changelog.rst HISTORY.md RELEASE_NOTES.md RELEASING.md \
                  CONTRIBUTING.md SECURITY.md NOTICE.md AUTHORS.md CODE_OF_CONDUCT.md \
-                 CODEOWNERS.md SUPPORT.md GOVERNANCE.md NEWS.md news.rst FAQ.md \
-                 UPGRADE_GUIDE_V2.md upgrade-guide.md",
+                 NEWS.md news.rst FAQ.md UPGRADE_GUIDE_V2.md upgrade-guide.md",
             ),
             // Monorepo per-package CHANGELOGs etc. inherit admin-doc semantics.
             (
