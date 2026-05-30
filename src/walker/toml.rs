@@ -424,6 +424,21 @@ mod tests {
         crate_root.join("tests/fixtures").join(rel)
     }
 
+    fn members_with(
+        root_toml: &str,
+        nested: &[(&str, &str)],
+    ) -> (tempfile::TempDir, HashSet<PathBuf>) {
+        let dir = tempfile::tempdir().unwrap();
+        fs::write(dir.path().join("Cargo.toml"), root_toml).unwrap();
+        for (rel_dir, body) in nested {
+            let manifest_dir = dir.path().join(rel_dir);
+            fs::create_dir_all(&manifest_dir).unwrap();
+            fs::write(manifest_dir.join("Cargo.toml"), body).unwrap();
+        }
+        let members = collect_workspace_members(dir.path());
+        (dir, members)
+    }
+
     #[test]
     fn walker_toml_project_identity_filters_array_values() {
         let source = r#"[project]
@@ -546,13 +561,7 @@ readme = "README.md"
 
     #[test]
     fn walker_toml_workspace_members_no_workspace() {
-        let dir = tempfile::tempdir().unwrap();
-        fs::write(
-            dir.path().join("Cargo.toml"),
-            "[package]\nname = \"x\"\nversion = \"0.1.0\"\n",
-        )
-        .unwrap();
-        let members = collect_workspace_members(dir.path());
+        let (_dir, members) = members_with("[package]\nname = \"x\"\nversion = \"0.1.0\"\n", &[]);
         assert!(
             members.is_empty(),
             "no [workspace] table → empty member set"
@@ -564,9 +573,7 @@ readme = "README.md"
     /// auto-promotion is a workspace-only behavior.
     #[test]
     fn walker_toml_workspace_members_path_dep_without_workspace() {
-        let dir = tempfile::tempdir().unwrap();
-        fs::write(
-            dir.path().join("Cargo.toml"),
+        let (_dir, members) = members_with(
             r#"[package]
 name = "root"
 version = "0.1.0"
@@ -574,16 +581,11 @@ version = "0.1.0"
 [dependencies]
 foo = { path = "deps/foo" }
 "#,
-        )
-        .unwrap();
-        let foo_dir = dir.path().join("deps/foo");
-        fs::create_dir_all(&foo_dir).unwrap();
-        fs::write(
-            foo_dir.join("Cargo.toml"),
-            "[package]\nname = \"foo\"\nversion = \"0.1.0\"\n",
-        )
-        .unwrap();
-        let members = collect_workspace_members(dir.path());
+            &[(
+                "deps/foo",
+                "[package]\nname = \"foo\"\nversion = \"0.1.0\"\n",
+            )],
+        );
         assert!(
             members.is_empty(),
             "no [workspace] table → path-dep must not be auto-promoted"
@@ -592,11 +594,9 @@ foo = { path = "deps/foo" }
 
     #[test]
     fn walker_toml_workspace_members_path_dependencies() {
-        let dir = tempfile::tempdir().unwrap();
         // Root manifest with a [workspace] (otherwise no auto-members) and
         // a path dependency.
-        fs::write(
-            dir.path().join("Cargo.toml"),
+        let (dir, members) = members_with(
             r#"[workspace]
 members = []
 
@@ -607,17 +607,16 @@ version = "0.1.0"
 [dependencies]
 foo = { path = "deps/foo" }
 "#,
-        )
-        .unwrap();
-        let foo_dir = dir.path().join("deps/foo");
-        fs::create_dir_all(&foo_dir).unwrap();
-        fs::write(
-            foo_dir.join("Cargo.toml"),
-            "[package]\nname = \"foo\"\nversion = \"0.1.0\"\n",
-        )
-        .unwrap();
-        let members = collect_workspace_members(dir.path());
-        let expected = foo_dir.join("Cargo.toml").canonicalize().unwrap();
+            &[(
+                "deps/foo",
+                "[package]\nname = \"foo\"\nversion = \"0.1.0\"\n",
+            )],
+        );
+        let expected = dir
+            .path()
+            .join("deps/foo/Cargo.toml")
+            .canonicalize()
+            .unwrap();
         assert!(
             members.contains(&expected),
             "path-dependency Cargo.toml must be auto-promoted"
@@ -628,9 +627,7 @@ foo = { path = "deps/foo" }
     /// candidate set is built from members ∪ path-deps.
     #[test]
     fn walker_toml_workspace_members_exclude_blocks_path_dep() {
-        let dir = tempfile::tempdir().unwrap();
-        fs::write(
-            dir.path().join("Cargo.toml"),
+        let (dir, members) = members_with(
             r#"[workspace]
 members = []
 exclude = ["deps/foo"]
@@ -642,17 +639,16 @@ version = "0.1.0"
 [dependencies]
 foo = { path = "deps/foo" }
 "#,
-        )
-        .unwrap();
-        let foo_dir = dir.path().join("deps/foo");
-        fs::create_dir_all(&foo_dir).unwrap();
-        fs::write(
-            foo_dir.join("Cargo.toml"),
-            "[package]\nname = \"foo\"\nversion = \"0.1.0\"\n",
-        )
-        .unwrap();
-        let members = collect_workspace_members(dir.path());
-        let candidate = foo_dir.join("Cargo.toml").canonicalize().unwrap();
+            &[(
+                "deps/foo",
+                "[package]\nname = \"foo\"\nversion = \"0.1.0\"\n",
+            )],
+        );
+        let candidate = dir
+            .path()
+            .join("deps/foo/Cargo.toml")
+            .canonicalize()
+            .unwrap();
         assert!(
             !members.contains(&candidate),
             "exclude must block path-dep auto-promotion"
@@ -663,22 +659,15 @@ foo = { path = "deps/foo" }
     /// resolver returns no members rather than silently mis-matching.
     #[test]
     fn walker_toml_workspace_members_unsupported_glob() {
-        let dir = tempfile::tempdir().unwrap();
-        fs::write(
-            dir.path().join("Cargo.toml"),
+        let (_dir, members) = members_with(
             r#"[workspace]
 members = ["crates/mdbook-*"]
 "#,
-        )
-        .unwrap();
-        let crates_dir = dir.path().join("crates/mdbook-core");
-        fs::create_dir_all(&crates_dir).unwrap();
-        fs::write(
-            crates_dir.join("Cargo.toml"),
-            "[package]\nname = \"mdbook-core\"\nversion = \"0.1.0\"\n",
-        )
-        .unwrap();
-        let members = collect_workspace_members(dir.path());
+            &[(
+                "crates/mdbook-core",
+                "[package]\nname = \"mdbook-core\"\nversion = \"0.1.0\"\n",
+            )],
+        );
         assert!(
             members.is_empty(),
             "mid-name glob shape is unsupported and must not match"

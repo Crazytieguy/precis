@@ -644,6 +644,18 @@ mod tests {
         fs::write(dir.join("package.json"), body).unwrap();
     }
 
+    fn seed_members(root: &Path, subs: &[&str]) {
+        for sub in subs {
+            let p = root.join(sub);
+            fs::create_dir_all(&p).unwrap();
+            write_pkg(&p, r#"{"name": "x"}"#);
+        }
+    }
+
+    fn member_path(root: &Path, rel: &str) -> PathBuf {
+        root.join(rel).join("package.json").canonicalize().unwrap()
+    }
+
     #[test]
     fn walker_json_workspace_members_npm_array_glob_and_literal() {
         let dir = tempfile::tempdir().unwrap();
@@ -656,20 +668,16 @@ mod tests {
                 "workspaces": ["packages/*", "apps/web"]
             }"#,
         );
-        for sub in ["packages/a", "packages/b", "apps/web", "apps/native"] {
-            let p = root.join(sub);
-            fs::create_dir_all(&p).unwrap();
-            write_pkg(&p, r#"{"name": "x"}"#);
-        }
+        seed_members(
+            root,
+            &["packages/a", "packages/b", "apps/web", "apps/native"],
+        );
         let members = collect_workspace_members(root);
         for hit in ["packages/a", "packages/b", "apps/web"] {
-            let pkg = root.join(hit).join("package.json").canonicalize().unwrap();
+            let pkg = member_path(root, hit);
             assert!(members.contains(&pkg), "expected member: {}", pkg.display());
         }
-        let miss = root
-            .join("apps/native/package.json")
-            .canonicalize()
-            .unwrap();
+        let miss = member_path(root, "apps/native");
         assert!(
             !members.contains(&miss),
             "apps/native must not be a member (not listed)"
@@ -692,11 +700,9 @@ mod tests {
                 "workspaces": { "packages": ["pkg/*"] }
             }"#,
         );
-        let sub = root.join("pkg/foo");
-        fs::create_dir_all(&sub).unwrap();
-        write_pkg(&sub, r#"{"name": "foo"}"#);
+        seed_members(root, &["pkg/foo"]);
         let members = collect_workspace_members(root);
-        let expected = sub.join("package.json").canonicalize().unwrap();
+        let expected = member_path(root, "pkg/foo");
         assert!(members.contains(&expected));
     }
 
@@ -710,20 +716,13 @@ mod tests {
             "packages:\n  - 'packages/*'\n  - examples/foo\n",
         )
         .unwrap();
-        for sub in ["packages/a", "examples/foo", "examples/bar"] {
-            let p = root.join(sub);
-            fs::create_dir_all(&p).unwrap();
-            write_pkg(&p, r#"{"name": "x"}"#);
-        }
+        seed_members(root, &["packages/a", "examples/foo", "examples/bar"]);
         let members = collect_workspace_members(root);
         for hit in ["packages/a", "examples/foo"] {
-            let pkg = root.join(hit).join("package.json").canonicalize().unwrap();
+            let pkg = member_path(root, hit);
             assert!(members.contains(&pkg), "expected member: {}", pkg.display());
         }
-        let miss = root
-            .join("examples/bar/package.json")
-            .canonicalize()
-            .unwrap();
+        let miss = member_path(root, "examples/bar");
         assert!(
             !members.contains(&miss),
             "examples/bar must not be a member"
@@ -743,11 +742,7 @@ mod tests {
             "packages:\n  - 'packages/*'\n  - '!packages/excluded'\n",
         )
         .unwrap();
-        for sub in ["packages/a", "packages/excluded"] {
-            let p = root.join(sub);
-            fs::create_dir_all(&p).unwrap();
-            write_pkg(&p, r#"{"name": "x"}"#);
-        }
+        seed_members(root, &["packages/a", "packages/excluded"]);
         let members = collect_workspace_members(root);
         assert!(
             members.is_empty(),
@@ -775,11 +770,7 @@ mod tests {
             "packages:\n  - 'packages/*'\n  - '!packages/excluded'\n",
         )
         .unwrap();
-        for sub in ["packages/a", "packages/excluded"] {
-            let p = root.join(sub);
-            fs::create_dir_all(&p).unwrap();
-            write_pkg(&p, r#"{"name": "x"}"#);
-        }
+        seed_members(root, &["packages/a", "packages/excluded"]);
         let members = collect_workspace_members(root);
         assert!(
             members.is_empty(),
@@ -809,9 +800,7 @@ mod tests {
                 "workspaces": ["packages/mdbook-*"]
             }"#,
         );
-        let p = root.join("packages/mdbook-core");
-        fs::create_dir_all(&p).unwrap();
-        write_pkg(&p, r#"{"name": "x"}"#);
+        seed_members(root, &["packages/mdbook-core"]);
         let members = collect_workspace_members(root);
         assert!(
             members.is_empty(),

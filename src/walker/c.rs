@@ -1276,13 +1276,15 @@ mod tests {
     }
 
     #[test]
-    fn c_includes_capture_directive_only_conditional_block() {
-        // The canonical "feature-gated include map" — `#if CFG_FOO {
-        // #include "x.h" }` — should be folded into the Includes batch
-        // so a reader sees which optional/platform components are
-        // available. The block range (gate + include + #endif) is
-        // captured verbatim.
-        let src = "\
+    fn c_includes_cases() {
+        let cases: &[(&str, Vec<usize>)] = &[
+            (
+                // The canonical "feature-gated include map" — `#if CFG_FOO {
+                // #include "x.h" }` — should be folded into the Includes batch
+                // so a reader sees which optional/platform components are
+                // available. The block range (gate + include + #endif) is
+                // captured verbatim.
+                "\
 #include <stdint.h>
 
 #if CFG_FOO_ENABLED
@@ -1294,58 +1296,46 @@ mod tests {
 #endif
 
 int bar(int x);
-";
-        let (source, tree) = parse(src);
-        let fl = collect_includes(&tree, &source);
-        // Lines 1 (#include stdint), 3-9 (the conditional block,
-        // collapsing blanks). Blank lines (line 2, 5, 9 inside block)
-        // are dropped by build_file_spans, not by the collector.
-        let mut full = fl.full.clone();
-        full.sort();
-        assert_eq!(full, vec![1, 3, 4, 5, 6, 7, 8, 9]);
-    }
-
-    #[test]
-    fn c_includes_skip_conditional_wrapping_real_code() {
-        // A conditional that wraps real declarations (mongoose-style
-        // amalgamation: `#if MG_ENABLE_HTTP { /* big impl */ }`) must
-        // not be captured by Includes — only the unconditional
-        // `#include` survives.
-        let src = "\
+",
+                vec![1, 3, 4, 5, 6, 7, 8, 9],
+            ),
+            (
+                // A conditional that wraps real declarations (mongoose-style
+                // amalgamation: `#if MG_ENABLE_HTTP { /* big impl */ }`) must
+                // not be captured by Includes — only the unconditional
+                // `#include` survives.
+                "\
 #include <stdint.h>
 
 #if MG_ENABLE_HTTP
 #include \"http_priv.h\"
 int http_serve(void) { return 0; }
 #endif
-";
-        let (source, tree) = parse(src);
-        let fl = collect_includes(&tree, &source);
-        let mut full = fl.full.clone();
-        full.sort();
-        // Only the unconditional include at line 1 — the conditional
-        // wraps a `function_definition` so it stays opaque.
-        assert_eq!(full, vec![1]);
-    }
-
-    #[test]
-    fn c_includes_skip_conditional_without_any_include() {
-        // A directive-only conditional that has no `#include` inside
-        // (e.g., `#ifdef __GNUC__ { #define FALLTHROUGH … }`) isn't
-        // part of the include map — leave it to the per-decl Macro
-        // batches.
-        let src = "\
+",
+                vec![1],
+            ),
+            (
+                // A directive-only conditional that has no `#include` inside
+                // (e.g., `#ifdef __GNUC__ { #define FALLTHROUGH … }`) isn't
+                // part of the include map — leave it to the per-decl Macro
+                // batches.
+                "\
 #include <stdint.h>
 
 #ifdef __GNUC__
   #define FALLTHROUGH __attribute__((fallthrough))
 #endif
-";
-        let (source, tree) = parse(src);
-        let fl = collect_includes(&tree, &source);
-        let mut full = fl.full.clone();
-        full.sort();
-        assert_eq!(full, vec![1]);
+",
+                vec![1],
+            ),
+        ];
+        for (src, expected) in cases {
+            let (source, tree) = parse(src);
+            let fl = collect_includes(&tree, &source);
+            let mut full = fl.full.clone();
+            full.sort();
+            assert_eq!(&full, expected, "source:\n{src}");
+        }
     }
 
     #[test]
@@ -1551,88 +1541,91 @@ void llco_second(void) { return; }
     }
 
     #[test]
-    fn c_walker_overlap_audit_decl_then_includes() {
-        // chibicc.h shape: a `#define` (a `Macro` decl) on line 1
-        // followed immediately by `#include` directives. Without the
-        // ellipsis-safety check, `DeclNames` would claim line 2 as an
-        // ellipsis while `Includes` claims it as a real line.
-        let src = "\
+    fn c_walker_overlap_audit_cases() {
+        let mut multichunk = String::new();
+        for i in 0..30 {
+            multichunk.push_str(&format!("int fn_{i}(void);\n"));
+            if i == 23 {
+                multichunk.push_str("// boundary doc\n");
+            }
+        }
+        let mut macros = String::new();
+        for i in 0..40 {
+            macros.push_str(&format!("#define CONST_{i} {i}\n"));
+        }
+        let cases: Vec<(&str, String)> = vec![
+            (
+                "foo.h",
+                // chibicc.h shape: a `#define` (a `Macro` decl) on line 1
+                // followed immediately by `#include` directives. Without the
+                // ellipsis-safety check, `DeclNames` would claim line 2 as an
+                // ellipsis while `Includes` claims it as a real line.
+                "\
 #define _POSIX_C_SOURCE 200809L
 #include <assert.h>
 #include <stdio.h>
 
 int foo(int x);
-";
-        assert_c_walker_overlap_free("foo.h", src);
-    }
-
-    #[test]
-    fn c_walker_overlap_audit_eol_comment_before_next_decl() {
-        // tinyusb video.h shape: every decl carries an end-of-line
-        // comment. The tree-sitter `comment` for the EOL trailer is a
-        // sibling of the *next* decl, and `collect_doc_comments_above`
-        // used to grab it as a `DeclDoc` — which then claimed a line
-        // already owned by the previous `Decl`.
-        let src = "\
+"
+                .to_string(),
+            ),
+            (
+                "eol.h",
+                // tinyusb video.h shape: every decl carries an end-of-line
+                // comment. The tree-sitter `comment` for the EOL trailer is a
+                // sibling of the *next* decl, and `collect_doc_comments_above`
+                // used to grab it as a `DeclDoc` — which then claimed a line
+                // already owned by the previous `Decl`.
+                "\
 typedef int alpha; // trailer
 typedef int beta;  // trailer
 typedef int gamma;
-";
-        assert_c_walker_overlap_free("eol.h", src);
-    }
-
-    #[test]
-    fn c_walker_overlap_audit_eol_comment_run_before_decl() {
-        // Multiple consecutive EOL-trailered decls — the prev-sibling
-        // walk must stop at the first EOL trailer (not fall through to
-        // an earlier real doc).
-        let src = "\
+"
+                .to_string(),
+            ),
+            (
+                "eol-run.h",
+                // Multiple consecutive EOL-trailered decls — the prev-sibling
+                // walk must stop at the first EOL trailer (not fall through to
+                // an earlier real doc).
+                "\
 // real doc for first
 typedef int first; // EOL trailer
 typedef int second;
-";
-        assert_c_walker_overlap_free("eol-run.h", src);
-    }
-
-    #[test]
-    fn c_walker_overlap_audit_banner_touching_first_decl() {
-        // File-top comment block followed immediately by the first
-        // decl with no blank line. `HeaderBanner` claims the comments
-        // and so does `DeclDoc` if it walks back into them — the two
-        // are not in an ancestor relationship.
-        let src = "\
+"
+                .to_string(),
+            ),
+            (
+                "banner-touch.h",
+                // File-top comment block followed immediately by the first
+                // decl with no blank line. `HeaderBanner` claims the comments
+                // and so does `DeclDoc` if it walks back into them — the two
+                // are not in an ancestor relationship.
+                "\
 /* license */
 /* brief */
 typedef int x;
-";
-        assert_c_walker_overlap_free("banner-touch.h", src);
-    }
-
-    #[test]
-    fn c_walker_overlap_audit_multichunk_decls_with_comments_between() {
-        // > 24 decls forces `DeclNames` to chunk. A doc comment line
-        // sitting between two chunks must not be claimed both by the
-        // previous chunk's ellipsis and by the next chunk's first
-        // decl's `DeclDoc`.
-        let mut src = String::new();
-        for i in 0..30 {
-            src.push_str(&format!("int fn_{i}(void);\n"));
-            if i == 23 {
-                src.push_str("// boundary doc\n");
-            }
+"
+                .to_string(),
+            ),
+            (
+                "multichunk.h",
+                // > 24 decls forces `DeclNames` to chunk. A doc comment line
+                // sitting between two chunks must not be claimed both by the
+                // previous chunk's ellipsis and by the next chunk's first
+                // decl's `DeclDoc`.
+                multichunk,
+            ),
+            (
+                "macros.h",
+                // Long run of single-line `#define`s. `DeclNames` ellipsis
+                // would otherwise land on each subsequent decl's start row.
+                macros,
+            ),
+        ];
+        for (filename, src) in cases {
+            assert_c_walker_overlap_free(filename, &src);
         }
-        assert_c_walker_overlap_free("multichunk.h", &src);
-    }
-
-    #[test]
-    fn c_walker_overlap_audit_adjacent_macro_runs() {
-        // Long run of single-line `#define`s. `DeclNames` ellipsis
-        // would otherwise land on each subsequent decl's start row.
-        let mut src = String::new();
-        for i in 0..40 {
-            src.push_str(&format!("#define CONST_{i} {i}\n"));
-        }
-        assert_c_walker_overlap_free("macros.h", &src);
     }
 
     /// `Makefile.am`'s `include_HEADERS` line, with `$(srcdir)/` refs
@@ -1672,96 +1665,92 @@ typedef int x;
         assert!(parse_include_headers(tmp.path()).is_none());
     }
 
-    #[test]
-    fn c_aggregate_struct_with_three_blank_line_groups_chunks() {
-        // chibicc-style: large struct with ≥3 blank-line-separated field
-        // groups. Each group becomes an AggregateMemberGroup; the parent
-        // Decl is trimmed to the header + closer so the two render
-        // disjoint body rows.
-        let mut src = String::from("struct Obj {\n");
-        for i in 0..10 {
-            src.push_str(&format!("  int field_a_{i};\n"));
-        }
-        src.push('\n');
-        for i in 0..10 {
-            src.push_str(&format!("  int field_b_{i};\n"));
-        }
-        src.push('\n');
-        for i in 0..10 {
-            src.push_str(&format!("  int field_c_{i};\n"));
-        }
-        src.push_str("};\n");
+    fn aggregate_group_count(filename: &str, src: &str) -> usize {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
-        std::fs::write(root.join("obj.h"), &src).unwrap();
+        std::fs::write(root.join(filename), src).unwrap();
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
         let report = scheduler.run_with_report();
-        let group_count = report
+        report
             .scheduled
             .iter()
             .filter(|r| matches!(&r.key, BatchKey::C(CKey::AggregateMemberGroup { .. })))
-            .count();
-        assert_eq!(
-            group_count,
-            3,
-            "expected 3 AggregateMemberGroup batches; keys: {:?}",
-            report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>(),
-        );
+            .count()
     }
 
     #[test]
-    fn c_aggregate_struct_with_two_groups_stays_whole() {
-        // Two-group struct: below the chunking threshold (3 groups),
-        // emitted as a single whole-aggregate Decl.
-        let mut src = String::from("struct Pair {\n");
-        for i in 0..20 {
-            src.push_str(&format!("  int a_{i};\n"));
+    fn c_aggregate_chunking_cases() {
+        let mut three_groups = String::from("struct Obj {\n");
+        for i in 0..10 {
+            three_groups.push_str(&format!("  int field_a_{i};\n"));
         }
-        src.push('\n');
-        for i in 0..20 {
-            src.push_str(&format!("  int b_{i};\n"));
+        three_groups.push('\n');
+        for i in 0..10 {
+            three_groups.push_str(&format!("  int field_b_{i};\n"));
         }
-        src.push_str("};\n");
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(root.join("pair.h"), &src).unwrap();
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
-        let report = scheduler.run_with_report();
-        let has_group = report
-            .scheduled
-            .iter()
-            .any(|r| matches!(&r.key, BatchKey::C(CKey::AggregateMemberGroup { .. })));
-        assert!(
-            !has_group,
-            "two-group struct must not chunk; keys: {:?}",
-            report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>(),
-        );
-    }
+        three_groups.push('\n');
+        for i in 0..10 {
+            three_groups.push_str(&format!("  int field_c_{i};\n"));
+        }
+        three_groups.push_str("};\n");
 
-    #[test]
-    fn c_aggregate_big_enum_chunks_into_fixed_size_groups() {
-        // chibicc-style NodeKind: 49 enumerators. The enum body splits
-        // into AGGREGATE_ENUM_CHUNK_SIZE-sized chunks.
-        let mut src = String::from("typedef enum {\n");
+        let mut two_groups = String::from("struct Pair {\n");
+        for i in 0..20 {
+            two_groups.push_str(&format!("  int a_{i};\n"));
+        }
+        two_groups.push('\n');
+        for i in 0..20 {
+            two_groups.push_str(&format!("  int b_{i};\n"));
+        }
+        two_groups.push_str("};\n");
+
+        let mut big_enum = String::from("typedef enum {\n");
         for i in 0..40 {
-            src.push_str(&format!("  ND_{i},\n"));
+            big_enum.push_str(&format!("  ND_{i},\n"));
         }
-        src.push_str("} NodeKind;\n");
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(root.join("nodekind.h"), &src).unwrap();
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
-        let report = scheduler.run_with_report();
-        let group_count = report
-            .scheduled
-            .iter()
-            .filter(|r| matches!(&r.key, BatchKey::C(CKey::AggregateMemberGroup { .. })))
-            .count();
-        let expected = 40_usize.div_ceil(AGGREGATE_ENUM_CHUNK_SIZE);
-        assert_eq!(
-            group_count, expected,
-            "expected {expected} enum chunks for 40 enumerators at chunk size {AGGREGATE_ENUM_CHUNK_SIZE}",
-        );
+        big_enum.push_str("} NodeKind;\n");
+
+        let mut small_enum = String::from("typedef enum {\n");
+        for i in 0..(AGGREGATE_ENUM_CHUNK_MIN - 1) {
+            small_enum.push_str(&format!("  K_{i},\n"));
+        }
+        small_enum.push_str("} SmallKind;\n");
+
+        let cases: Vec<(&str, String, usize)> = vec![
+            (
+                // chibicc-style: large struct with ≥3 blank-line-separated field
+                // groups. Each group becomes an AggregateMemberGroup; the parent
+                // Decl is trimmed to the header + closer so the two render
+                // disjoint body rows.
+                "obj.h",
+                three_groups,
+                3,
+            ),
+            (
+                // Two-group struct: below the chunking threshold (3 groups),
+                // emitted as a single whole-aggregate Decl.
+                "pair.h", two_groups, 0,
+            ),
+            (
+                // chibicc-style NodeKind: 40 enumerators. The enum body splits
+                // into AGGREGATE_ENUM_CHUNK_SIZE-sized chunks.
+                "nodekind.h",
+                big_enum,
+                40_usize.div_ceil(AGGREGATE_ENUM_CHUNK_SIZE),
+            ),
+            (
+                // Below AGGREGATE_ENUM_CHUNK_MIN enumerators: a single whole-Decl
+                // batch with no chunking.
+                "small.h", small_enum, 0,
+            ),
+        ];
+        for (filename, src, expected) in cases {
+            let group_count = aggregate_group_count(filename, &src);
+            assert_eq!(
+                group_count, expected,
+                "expected {expected} AggregateMemberGroup batches for {filename}",
+            );
+        }
     }
 
     #[test]
@@ -1816,31 +1805,6 @@ typedef int x;
                 "continuation row {cont} missing from chunked rows {all_rows:?}",
             );
         }
-    }
-
-    #[test]
-    fn c_aggregate_small_enum_stays_whole() {
-        // Below AGGREGATE_ENUM_CHUNK_MIN enumerators: a single whole-Decl
-        // batch with no chunking.
-        let mut src = String::from("typedef enum {\n");
-        for i in 0..(AGGREGATE_ENUM_CHUNK_MIN - 1) {
-            src.push_str(&format!("  K_{i},\n"));
-        }
-        src.push_str("} SmallKind;\n");
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(root.join("small.h"), &src).unwrap();
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
-        let report = scheduler.run_with_report();
-        let has_group = report
-            .scheduled
-            .iter()
-            .any(|r| matches!(&r.key, BatchKey::C(CKey::AggregateMemberGroup { .. })));
-        assert!(
-            !has_group,
-            "small enum must not chunk; keys: {:?}",
-            report.scheduled.iter().map(|r| &r.key).collect::<Vec<_>>(),
-        );
     }
 
     /// `+=` appends and `$(VAR)` expansions would leave an incomplete

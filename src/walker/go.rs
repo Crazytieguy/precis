@@ -914,6 +914,36 @@ mod tests {
         (source.to_string(), tree)
     }
 
+    fn gomod_lines(src: &str) -> Vec<usize> {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("go.mod");
+        std::fs::write(&path, src).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let content = build_gomod_content(&path, &ctx).expect("emits content");
+        let BatchContent::Lines { spans } = content else {
+            panic!("expected Lines content");
+        };
+        spans
+            .iter()
+            .flat_map(|span| span.start..=span.end)
+            .collect()
+    }
+
+    fn gomod_identity_lines(src: &str) -> Vec<usize> {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("go.mod");
+        std::fs::write(&path, src).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let content = build_gomod_identity_content(&path, &ctx).expect("emits content");
+        let BatchContent::Lines { spans } = content else {
+            panic!("expected Lines content");
+        };
+        spans
+            .iter()
+            .flat_map(|span| span.start..=span.end)
+            .collect()
+    }
+
     #[test]
     fn go_emits_both_exported_and_unexported_decls() {
         let src = "package foo\n\nfunc Public() {}\nfunc private() {}\n";
@@ -1123,20 +1153,7 @@ replace github.com/x/y => github.com/forked/y v2.0.0
 
 retract v0.1.0
 ";
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("go.mod");
-        std::fs::write(&path, src).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let content = build_gomod_content(&path, &ctx).expect("emits content");
-        let BatchContent::Lines { spans } = content else {
-            panic!("expected Lines content");
-        };
-        let mut lines = Vec::new();
-        for span in &spans {
-            for l in span.start..=span.end {
-                lines.push(l);
-            }
-        }
+        let lines = gomod_lines(src);
         // Indirect line (line 7) dropped; everything else kept.
         assert!(lines.contains(&1), "module clause kept");
         assert!(lines.contains(&5), "require ( kept");
@@ -1162,20 +1179,7 @@ require (
 
 replace github.com/x/y => github.com/forked/y v2.0.0
 ";
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("go.mod");
-        std::fs::write(&path, src).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let content = build_gomod_identity_content(&path, &ctx).expect("emits content");
-        let BatchContent::Lines { spans } = content else {
-            panic!("expected Lines content");
-        };
-        let mut lines = Vec::new();
-        for span in &spans {
-            for l in span.start..=span.end {
-                lines.push(l);
-            }
-        }
+        let lines = gomod_identity_lines(src);
         assert!(lines.contains(&1), "module clause kept");
         assert!(lines.contains(&3), "go version kept");
         assert!(lines.contains(&5), "toolchain kept");
@@ -1190,20 +1194,7 @@ replace github.com/x/y => github.com/forked/y v2.0.0
     #[test]
     fn go_mod_identity_handles_minimal_module() {
         let src = "module example.com/foo\n\ngo 1.22\n";
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("go.mod");
-        std::fs::write(&path, src).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let content = build_gomod_identity_content(&path, &ctx).expect("emits content");
-        let BatchContent::Lines { spans } = content else {
-            panic!("expected Lines content");
-        };
-        let mut lines = Vec::new();
-        for span in &spans {
-            for l in span.start..=span.end {
-                lines.push(l);
-            }
-        }
+        let lines = gomod_identity_lines(src);
         assert!(lines.contains(&1));
         assert!(lines.contains(&3));
     }
@@ -1211,15 +1202,8 @@ replace github.com/x/y => github.com/forked/y v2.0.0
     #[test]
     fn go_mod_emits_whole_file_when_no_indirect_lines_present() {
         let src = "module example.com/foo\n\ngo 1.22\n";
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("go.mod");
-        std::fs::write(&path, src).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let content = build_gomod_content(&path, &ctx).expect("emits content");
-        let BatchContent::Lines { spans } = content else {
-            panic!("expected Lines content");
-        };
-        assert!(!spans.is_empty());
+        let lines = gomod_lines(src);
+        assert!(!lines.is_empty());
     }
 
     #[test]
