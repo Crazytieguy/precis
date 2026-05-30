@@ -578,9 +578,20 @@ fn collect_reexport_import_chunks(
     if !is_init_py(file) {
         return None;
     }
-    let groups = collect_import_groups(tree, source)?;
+    let mut groups = collect_import_groups(tree, source)?;
     if !should_chunk_import_groups(&groups) {
         return None;
+    }
+    // `__all__` is the package's explicit public-API declaration — strictly
+    // more orienting than the individual `from .mod import Name` groups that
+    // feed it. Float it to the front so it lands at the lowest chunk index
+    // (best `reexport_import_chunk_factor`) instead of dead last — but keep a
+    // leading module docstring (`__doc__`) ahead of it, since the docstring is
+    // itself prime orientation.
+    if let Some(pos) = groups.iter().position(|group| group.source == "__all__") {
+        let all_group = groups.remove(pos);
+        let insert_at = usize::from(groups.first().is_some_and(|g| g.source == "__doc__"));
+        groups.insert(insert_at, all_group);
     }
     Some(groups_to_file_lines(groups))
 }
