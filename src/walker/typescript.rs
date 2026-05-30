@@ -2019,22 +2019,6 @@ fn collect_export_names_from(
     FileLines::new(full).with_ellipses(ellipses)
 }
 
-/// Lines for a single export's decl. For interface/type/class/enum, the
-/// whole item. For function, the signature plus a body-elision marker.
-/// For const/let, the assignment line(s) — truncated at the inner
-/// function body's `{` when the initializer is a fn-init (direct
-/// arrow/function or wrapped through `forwardRef(props => {...})` etc.),
-/// otherwise the whole declaration.
-#[cfg(test)]
-fn collect_export_lines(tree: &Tree, source: &str, start_line: usize) -> FileLines {
-    let src_lines: Vec<&str> = source.lines().collect();
-    let exports = find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines);
-    let Some(item) = exports.iter().find(|e| e.start_line == start_line) else {
-        return FileLines::new(Vec::new());
-    };
-    decl_surface_lines(item.kind, item.anchor, item.decl, source, true)
-}
-
 fn module_item_lines(kind: ItemKind, decl: Node, source: &str) -> FileLines {
     // Module-private items aren't part of the public API surface; their
     // private-vs-public split inside the declaration isn't load-bearing
@@ -2996,6 +2980,21 @@ mod tests {
         find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines)
     }
 
+    /// Lines for a single export's decl. For interface/type/class/enum, the
+    /// whole item. For function, the signature plus a body-elision marker.
+    /// For const/let, the assignment line(s) — truncated at the inner
+    /// function body's `{` when the initializer is a fn-init (direct
+    /// arrow/function or wrapped through `forwardRef(props => {...})` etc.),
+    /// otherwise the whole declaration.
+    fn collect_export_lines(tree: &Tree, source: &str, start_line: usize) -> FileLines {
+        let src_lines: Vec<&str> = source.lines().collect();
+        let exports = find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines);
+        let Some(item) = exports.iter().find(|e| e.start_line == start_line) else {
+            return FileLines::new(Vec::new());
+        };
+        decl_surface_lines(item.kind, item.anchor, item.decl, source, true)
+    }
+
     fn body_emit_rows_for(source: &str) -> Vec<usize> {
         let tree = parse(source);
         let exports = export_infos(&tree, source);
@@ -3011,12 +3010,117 @@ mod tests {
     }
 
     #[test]
-    fn walker_typescript_export_body_function_decl_emits_interior() {
-        let src = "export function foo() {\n  let x = 1;\n  return x;\n}\n";
-        let rows = body_emit_rows_for(src);
-        // Body interior rows = 2..3 (line numbers 2, 3); brace rows 1, 4
-        // skipped.
-        assert_eq!(rows, vec![2, 3]);
+    fn walker_typescript_export_body_emit_rows() {
+        const CASES: &[(&str, &[usize])] = &[
+            // Body interior rows = 2..3 (line numbers 2, 3); brace rows 1, 4
+            // skipped.
+            (
+                "export function foo() {\n  let x = 1;\n  return x;\n}\n",
+                &[2, 3],
+            ),
+            (
+                "export default function mitt() {\n  let all = new Map();\n  return { all };\n}\n",
+                &[2, 3],
+            ),
+            // Method `bar` body interior: line 4. Method `baz` body
+            // interior: lines 7, 8. Field initializer (`field`) skipped.
+            (
+                "\
+export class Foo {
+  field: number = 1;
+  bar() {
+    return 1;
+  }
+  baz(x: number) {
+    let y = x + 1;
+    return y;
+  }
+}
+",
+                &[4, 7, 8],
+            ),
+            // `export const X = () => {...}` now emits the inner arrow body
+            // through `Const`'s ExportBody arm. Signature truncates at the
+            // body's `{` line.
+            ("export const X = () => {\n  return 1;\n};\n", &[2]),
+            // memo(component, areEqual) — callback is the FIRST argument,
+            // so descent applies. The optional `areEqual` second argument
+            // doesn't change the wrapper interpretation.
+            (
+                "\
+export const Cmp = memo((props) => {
+  return null;
+}, areEqual);
+",
+                &[2],
+            ),
+            // `forwardRef(props => {...})` — body lives inside the call's
+            // arguments. `find_fn_init_body` must descend through the call
+            // expression to find it.
+            (
+                "\
+export const Item = React.forwardRef<HTMLDivElement, ItemProps>(
+  (props, ref) => {
+    const x = 1;
+    return null;
+  },
+);
+",
+                &[3, 4],
+            ),
+            // Method `bar` body interior: line 3.
+            (
+                "\
+export default class C {
+  bar() {
+    return 1;
+  }
+}
+",
+                &[3],
+            ),
+            // Blank source lines inside the body shouldn't be counted —
+            // build_file_spans filters them out, so the emit-rows helper must too.
+            // Lines 2 and 4 are blank; only 3 and 5 are emitted.
+            (
+                "\
+export function foo() {
+
+  let x = 1;
+
+  return x;
+}
+",
+                &[3, 5],
+            ),
+        ];
+
+        for (src, expected) in CASES {
+            assert_eq!(body_emit_rows_for(src), *expected, "{src}");
+        }
+    }
+
+    #[test]
+    fn walker_typescript_export_body_no_emit() {
+        const NO_EMIT: &[&str] = &[
+            // body.start_row == body.end_row → empty interior. No body
+            // candidate fires.
+            "export function foo() { return 1; }\n",
+            "export function foo() {}\n",
+            "export interface Foo { bar(): void }\n",
+            "export type Foo = { bar: number }\n",
+            "export enum Foo { A, B }\n",
+            "export const X = () => 1;\n",
+            // Object-literal initializers are pure data — no body to elide.
+            "export const X = { a: 1, b: 2 };\n",
+        ];
+
+        for src in NO_EMIT {
+            assert!(
+                export_infos(&parse(src), src)[0].body_parts.is_empty(),
+                "{src}"
+            );
+        }
     }
 
     #[test]
@@ -3173,103 +3277,6 @@ module.exports = init;
     }
 
     #[test]
-    fn walker_typescript_export_body_default_function_emits_interior() {
-        let src =
-            "export default function mitt() {\n  let all = new Map();\n  return { all };\n}\n";
-        let rows = body_emit_rows_for(src);
-        assert_eq!(rows, vec![2, 3]);
-    }
-
-    #[test]
-    fn walker_typescript_export_body_single_line_function_no_emit() {
-        let src = "export function foo() { return 1; }\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        // body.start_row == body.end_row → empty interior. No body
-        // candidate fires.
-        assert!(exports[0].body_parts.is_empty());
-    }
-
-    #[test]
-    fn walker_typescript_export_body_empty_body_no_emit() {
-        let src = "export function foo() {}\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports[0].body_parts.is_empty());
-    }
-
-    #[test]
-    fn walker_typescript_export_body_class_walks_method_bodies_only() {
-        let src = "\
-export class Foo {
-  field: number = 1;
-  bar() {
-    return 1;
-  }
-  baz(x: number) {
-    let y = x + 1;
-    return y;
-  }
-}
-";
-        let rows = body_emit_rows_for(src);
-        // Method `bar` body interior: line 4. Method `baz` body
-        // interior: lines 7, 8. Field initializer (`field`) skipped.
-        assert_eq!(rows, vec![4, 7, 8]);
-    }
-
-    #[test]
-    fn walker_typescript_export_body_interface_no_emit() {
-        let src = "export interface Foo { bar(): void }\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports[0].body_parts.is_empty());
-    }
-
-    #[test]
-    fn walker_typescript_export_body_type_alias_no_emit() {
-        let src = "export type Foo = { bar: number }\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports[0].body_parts.is_empty());
-    }
-
-    #[test]
-    fn walker_typescript_export_body_enum_no_emit() {
-        let src = "export enum Foo { A, B }\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports[0].body_parts.is_empty());
-    }
-
-    #[test]
-    fn walker_typescript_export_body_lexical_arrow_emits_interior() {
-        // `export const X = () => {...}` now emits the inner arrow body
-        // through `Const`'s ExportBody arm. Signature truncates at the
-        // body's `{` line.
-        let src = "export const X = () => {\n  return 1;\n};\n";
-        let rows = body_emit_rows_for(src);
-        assert_eq!(rows, vec![2]);
-    }
-
-    #[test]
-    fn walker_typescript_export_body_expression_arrow_no_emit() {
-        let src = "export const X = () => 1;\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports[0].body_parts.is_empty());
-    }
-
-    #[test]
-    fn walker_typescript_export_body_const_object_no_emit() {
-        // Object-literal initializers are pure data — no body to elide.
-        let src = "export const X = { a: 1, b: 2 };\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports[0].body_parts.is_empty());
-    }
-
-    #[test]
     fn walker_typescript_export_body_const_factory_callback_no_emit() {
         // Codex P1: factory(input, callback, opts) is NOT a wrapper —
         // descending into the middle callback would hide trailing
@@ -3293,37 +3300,6 @@ export const cfg = buildConfig(input, () => {
         // / "  return 1;" / "}, options);").
         let lines = collect_export_lines(&tree, src, 1);
         assert_eq!(lines.full, vec![1, 2, 3]);
-    }
-
-    #[test]
-    fn walker_typescript_export_body_const_memo_two_arg_emits_interior() {
-        // memo(component, areEqual) — callback is the FIRST argument,
-        // so descent applies. The optional `areEqual` second argument
-        // doesn't change the wrapper interpretation.
-        let src = "\
-export const Cmp = memo((props) => {
-  return null;
-}, areEqual);
-";
-        let rows = body_emit_rows_for(src);
-        assert_eq!(rows, vec![2]);
-    }
-
-    #[test]
-    fn walker_typescript_export_body_const_forwardref_emits_interior() {
-        // `forwardRef(props => {...})` — body lives inside the call's
-        // arguments. `find_fn_init_body` must descend through the call
-        // expression to find it.
-        let src = "\
-export const Item = React.forwardRef<HTMLDivElement, ItemProps>(
-  (props, ref) => {
-    const x = 1;
-    return null;
-  },
-);
-";
-        let rows = body_emit_rows_for(src);
-        assert_eq!(rows, vec![3, 4]);
     }
 
     #[test]
@@ -3544,168 +3520,128 @@ module.exports = { Help, stripColor };
     }
 
     #[test]
-    fn walker_typescript_export_body_default_class_method_bodies() {
-        let src = "\
-export default class C {
-  bar() {
-    return 1;
-  }
-}
-";
-        let rows = body_emit_rows_for(src);
-        // Method `bar` body interior: line 3.
-        assert_eq!(rows, vec![3]);
-    }
-
-    #[test]
-    fn walker_typescript_export_body_skips_blank_interior_rows() {
-        // Blank source lines inside the body shouldn't be counted —
-        // build_file_spans filters them out, so the emit-rows helper must too.
-        let src = "\
-export function foo() {
-
-  let x = 1;
-
-  return x;
-}
-";
-        let rows = body_emit_rows_for(src);
-        // Lines 2 and 4 are blank; only 3 and 5 are emitted.
-        assert_eq!(rows, vec![3, 5]);
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_pure_type_aliases() {
-        // All exports are `type` aliases → file is type-machinery.
-        let src = "\
+    fn walker_typescript_type_machinery_factor_cases() {
+        const CASES: &[(&str, &str, f64, bool, bool)] = &[
+            // All exports are `type` aliases → file is type-machinery.
+            (
+                "\
 export type A = number;
 export type B = string;
 export interface C { x: number }
-";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports.iter().all(|e| e.is_type_only));
-        assert_eq!(
-            type_machinery_factor(Path::new("foo.ts"), &exports),
-            TYPE_MACHINERY_FILE_FACTOR
-        );
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_excludes_enum() {
-        // TS `enum` emits a runtime object — not type-only. A file with
-        // any enum is not type-machinery even if every other export is
-        // a type alias.
-        let src = "\
+",
+                "foo.ts",
+                TYPE_MACHINERY_FILE_FACTOR,
+                true,
+                false,
+            ),
+            // TS `enum` emits a runtime object — not type-only. A file with
+            // any enum is not type-machinery even if every other export is
+            // a type alias.
+            (
+                "\
 export type A = number;
 export enum E { X, Y }
-";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_excludes_runtime_export() {
-        // A single runtime export disqualifies the file.
-        let src = "\
+",
+                "foo.ts",
+                1.0,
+                false,
+                false,
+            ),
+            // A single runtime export disqualifies the file.
+            (
+                "\
 export type A = number;
 export type B = string;
 export const x = 1;
-";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_export_type_clause() {
-        // `export type { Foo }` is a NamedReexport with the statement-level
-        // `type` keyword — counts as type-only.
-        let src = "\
+",
+                "foo.ts",
+                1.0,
+                false,
+                false,
+            ),
+            // `export type { Foo }` is a NamedReexport with the statement-level
+            // `type` keyword — counts as type-only.
+            (
+                "\
 type A = number;
 export type { A };
-";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports.iter().all(|e| e.is_type_only));
-        assert_eq!(
-            type_machinery_factor(Path::new("foo.ts"), &exports),
-            TYPE_MACHINERY_FILE_FACTOR
-        );
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_value_reexport_not_type_only() {
-        // Bare `export { X }` (value re-export) is conservatively non-
-        // type-only even when X happens to alias a type.
-        let src = "\
+",
+                "foo.ts",
+                TYPE_MACHINERY_FILE_FACTOR,
+                true,
+                false,
+            ),
+            // Bare `export { X }` (value re-export) is conservatively non-
+            // type-only even when X happens to alias a type.
+            // The synthetic Const at line 1 plus the NamedReexport at line 2.
+            (
+                "\
 const X = () => 1;
 export { X };
-";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        // The synthetic Const at line 1 plus the NamedReexport at line 2.
-        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_inline_type_modifier_not_type_only() {
-        // Inline `export { type Foo }` (per-specifier modifier) is not
-        // statement-level — conservatively classified as runtime so a
-        // mixed `export { type Foo, valueY }` doesn't get penalized.
-        let src = "\
+",
+                "foo.ts",
+                1.0,
+                false,
+                false,
+            ),
+            // Inline `export { type Foo }` (per-specifier modifier) is not
+            // statement-level — conservatively classified as runtime so a
+            // mixed `export { type Foo, valueY }` doesn't get penalized.
+            (
+                "\
 type A = number;
 const v = 1;
 export { type A, v };
-";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_empty_file_not_type_only() {
-        // A file with zero exports is not type-machinery (the multiplier
-        // would have nothing to apply to anyway).
-        let src = "import { foo } from './bar';\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports.is_empty());
-        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_dts_file_always_type_only() {
-        // A `.d.ts` file emits no runtime — even runtime-shaped exports
-        // (`export class`, `export const`) are implicitly ambient. Path
-        // alone qualifies the file regardless of export kinds.
-        let src = "\
+",
+                "foo.ts",
+                1.0,
+                false,
+                false,
+            ),
+            // A file with zero exports is not type-machinery (the multiplier
+            // would have nothing to apply to anyway).
+            ("import { foo } from './bar';\n", "foo.ts", 1.0, false, true),
+            // A `.d.ts` file emits no runtime — even runtime-shaped exports
+            // (`export class`, `export const`) are implicitly ambient. Path
+            // alone qualifies the file regardless of export kinds.
+            (
+                "\
 export class C { foo(): void; }
 export const x: number;
-";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert_eq!(
-            type_machinery_factor(Path::new("typings/index.d.ts"), &exports),
-            TYPE_MACHINERY_FILE_FACTOR
-        );
-    }
-
-    #[test]
-    fn walker_typescript_type_machinery_export_declare_is_type_only() {
-        // `export declare ...` in a regular `.ts` file is ambient — the
-        // .ts file emits no runtime for the declaration.
-        let src = "\
+",
+                "typings/index.d.ts",
+                TYPE_MACHINERY_FILE_FACTOR,
+                false,
+                false,
+            ),
+            // `export declare ...` in a regular `.ts` file is ambient — the
+            // .ts file emits no runtime for the declaration.
+            (
+                "\
 export declare function foo(): void;
 export declare const x: number;
-";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert!(exports.iter().all(|e| e.is_type_only));
-        assert_eq!(
-            type_machinery_factor(Path::new("foo.ts"), &exports),
-            TYPE_MACHINERY_FILE_FACTOR
-        );
+",
+                "foo.ts",
+                TYPE_MACHINERY_FILE_FACTOR,
+                true,
+                false,
+            ),
+        ];
+
+        for (src, path, expected, expect_all_type_only, expect_empty) in CASES {
+            let tree = parse(src);
+            let exports = export_infos(&tree, src);
+            if *expect_all_type_only {
+                assert!(exports.iter().all(|e| e.is_type_only), "{src}");
+            }
+            if *expect_empty {
+                assert!(exports.is_empty(), "{src}");
+            }
+            assert_eq!(
+                type_machinery_factor(Path::new(path), &exports),
+                *expected,
+                "{src}"
+            );
+        }
     }
 }
