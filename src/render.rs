@@ -146,15 +146,6 @@ impl RenderedTree {
         tokens
     }
 
-    /// Per-atom marginal cost, indexed 1:1 with
-    /// `divergence::atoms_from_content`. Non-contributing atoms yield
-    /// `Cost::default()`.
-    pub fn marginal_cost_per_atom(&self, content: &BatchContent) -> Vec<Cost> {
-        let mut out = Vec::new();
-        self.visit_atom_costs(content, tokenizer::count, |c| out.push(c));
-        out
-    }
-
     /// Per-atom cost visitor — `tokens` chooses exact vs approx
     /// counting; everything else is identical.
     fn visit_atom_costs<F, T>(&self, content: &BatchContent, tokens: T, mut visit: F)

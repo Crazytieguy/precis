@@ -579,7 +579,7 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
     let (kind, has_body) = match node.kind() {
         "function_definition" => {
             let static_ = has_static_specifier(node, source);
-            let inline = has_inline_specifier(node, source);
+            let inline = has_storage_class(node, source, "inline");
             // .c file: static excluded. .h file: static excluded unless
             // also inline (header-only inline accessor).
             if static_ && !(in_header && inline) {
@@ -756,10 +756,6 @@ fn is_header_guard_define(node: Node, source: &str) -> bool {
 
 fn has_static_specifier(node: Node, source: &str) -> bool {
     has_storage_class(node, source, "static")
-}
-
-fn has_inline_specifier(node: Node, source: &str) -> bool {
-    has_storage_class(node, source, "inline")
 }
 
 fn has_storage_class(node: Node, source: &str, keyword: &str) -> bool {

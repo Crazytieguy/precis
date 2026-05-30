@@ -368,10 +368,10 @@ pub fn is_localized_readme(target: &std::path::Path) -> bool {
     if rest.is_empty() {
         return false;
     }
-    is_known_locale(rest)
+    is_locale_language(rest)
 }
 
-fn is_known_locale(s: &str) -> bool {
+fn is_locale_language(s: &str) -> bool {
     // We accept both `<lang>-<REGION>` and `<lang>_<REGION>` forms;
     // normalize the separator before matching. Comparison is
     // case-insensitive because the caller already lowercased the stem.
@@ -381,21 +381,17 @@ fn is_known_locale(s: &str) -> bool {
         .map_or(normalized.as_str(), |(l, r)| {
             if r.is_empty() { normalized.as_str() } else { l }
         });
-    is_locale_language(lang_root)
-}
-
-/// Accept any 2–3-character ASCII-letter token that isn't a known
-/// false-positive stem (`api` / `dev` / `old` / `template` / etc.).
-/// A whitelist of ~50 ISO codes can never keep up with new ones in
-/// the wild; the blocklist of non-locale README suffixes is small and
-/// stable.
-fn is_locale_language(s: &str) -> bool {
-    let len = s.len();
-    if !(2..=3).contains(&len) || !s.bytes().all(|b| b.is_ascii_lowercase()) {
+    // Accept any 2-3-character ASCII-letter token that isn't a known
+    // false-positive stem (`api` / `dev` / `old` / `template` / etc.).
+    // A whitelist of ~50 ISO codes can never keep up with new ones in
+    // the wild; the blocklist of non-locale README suffixes is small and
+    // stable.
+    let len = lang_root.len();
+    if !(2..=3).contains(&len) || !lang_root.bytes().all(|b| b.is_ascii_lowercase()) {
         return false;
     }
     !matches!(
-        s,
+        lang_root,
         "api" | "dev" | "old" | "new" | "min" | "tmp" | "bak" | "pre"
     )
 }

@@ -438,18 +438,7 @@ fn find_top_level_decls<'a>(tree: &'a Tree, source: &str) -> Vec<DeclInfo<'a>> {
     let mut out = Vec::new();
     for child in root.children(&mut cursor) {
         if let Some((unit, inner)) = function_or_decorated(child) {
-            let kind = match inner.kind() {
-                "class_definition" => DeclKind::Class,
-                _ => DeclKind::Function,
-            };
-            let name = name_of(inner, source).unwrap_or("");
-            out.push(DeclInfo {
-                kind,
-                unit_node: unit,
-                inner_node: inner,
-                start_line: unit.start_position().row + 1,
-                underscore_private: is_underscore_private(name),
-            });
+            out.push(decl_from_def(unit, inner, source));
         } else if child.kind() == "expression_statement"
             && let Some(target) = const_assignment_target(child, source)
             && !is_dunder(target)
@@ -480,16 +469,24 @@ fn collect_methods_in_class<'a>(class_decl: &DeclInfo<'a>, source: &str) -> Vec<
         if inner.kind() != "function_definition" {
             continue;
         }
-        let name = name_of(inner, source).unwrap_or("");
-        out.push(DeclInfo {
-            kind: DeclKind::Function,
-            unit_node: unit,
-            inner_node: inner,
-            start_line: unit.start_position().row + 1,
-            underscore_private: is_underscore_private(name),
-        });
+        out.push(decl_from_def(unit, inner, source));
     }
     out
+}
+
+fn decl_from_def<'a>(unit: Node<'a>, inner: Node<'a>, source: &str) -> DeclInfo<'a> {
+    let kind = match inner.kind() {
+        "class_definition" => DeclKind::Class,
+        _ => DeclKind::Function,
+    };
+    let name = name_of(inner, source).unwrap_or("");
+    DeclInfo {
+        kind,
+        unit_node: unit,
+        inner_node: inner,
+        start_line: unit.start_position().row + 1,
+        underscore_private: is_underscore_private(name),
+    }
 }
 
 fn is_underscore_private(name: &str) -> bool {

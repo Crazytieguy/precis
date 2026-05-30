@@ -341,14 +341,14 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             // gated on the parent `Decl`; the parent Decl's own span
             // was trimmed in `grouped_type_info` to the type-header /
             // closer rows so the FieldGroup spans don't overlap.
-            for group in &info.struct_field_groups {
-                let lines = FileLines::new(group.rows.clone());
+            for (group_start_line, rows) in &info.struct_field_groups {
+                let lines = FileLines::new(rows.clone());
                 if let Some(content) = single_file_lines_content(file, &source, lines) {
                     out.push(Batch {
                         key: GoKey::StructFieldGroup {
                             file: file.clone(),
                             start_line: info.start_line,
-                            group_start_line: group.group_start_line,
+                            group_start_line: *group_start_line,
                         }
                         .into(),
                         predecessor: Some(decl_predecessor.clone()),
@@ -417,13 +417,7 @@ struct DeclInfo {
     exported: bool,
     /// Blank-line-separated field groups inside a big struct body;
     /// when present, `decl_lines` covers only header + closing brace.
-    struct_field_groups: Vec<StructFieldGroup>,
-}
-
-#[derive(Debug, Clone)]
-struct StructFieldGroup {
-    group_start_line: usize,
-    rows: Vec<usize>,
+    struct_field_groups: Vec<(usize, Vec<usize>)>,
 }
 
 impl DeclInfo {
@@ -539,7 +533,7 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
         let body_start = struct_body.start_position().row;
         let body_end = struct_body.end_position().row;
         if body_end.saturating_sub(body_start) + 1 >= STRUCT_FIELD_GROUP_MIN_LINES {
-            let groups = collect_struct_field_groups(struct_body, source);
+            let groups = collect_blank_line_groups(struct_body, source);
             if !groups.is_empty() {
                 // Trim decl_lines to the type header row + the
                 // struct's closing-brace row. Body rows in between
@@ -582,17 +576,6 @@ fn find_struct_body(spec: Node) -> Option<Node> {
     } else {
         None
     }
-}
-
-/// Blank-line-separated field groups for a Go struct body.
-fn collect_struct_field_groups(struct_body: Node, source: &str) -> Vec<StructFieldGroup> {
-    collect_blank_line_groups(struct_body, source)
-        .into_iter()
-        .map(|(group_start_line, rows)| StructFieldGroup {
-            group_start_line,
-            rows,
-        })
-        .collect()
 }
 
 fn grouped_value_info(node: Node, source: &str, kind: DeclKind) -> DeclInfo {

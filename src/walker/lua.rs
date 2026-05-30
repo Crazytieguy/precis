@@ -70,7 +70,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
 
-        let decls = find_decls(&tree, &source);
+        let decls = find_decls(&tree);
         if decls.is_empty() {
             continue;
         }
@@ -172,7 +172,7 @@ struct DeclInfo {
 
 /// Top-level fn-like declarations. Tables-as-classes
 /// (`local M = { foo = function … }`) surface one nesting level deep.
-fn find_decls<'a>(tree: &'a Tree, _source: &str) -> Vec<(Node<'a>, DeclInfo)> {
+fn find_decls<'a>(tree: &'a Tree) -> Vec<(Node<'a>, DeclInfo)> {
     let root = tree.root_node();
     let mut out = Vec::new();
     let mut cursor = root.walk();
@@ -462,8 +462,8 @@ local M = {
 }
 return M
 ";
-        let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source);
+        let (_source, tree) = parse(src);
+        let decls = find_decls(&tree);
         let starts: Vec<usize> = decls.iter().map(|(_, i)| i.start_line).collect();
         assert!(
             starts.contains(&2) && starts.contains(&3) && starts.contains(&5),
@@ -482,8 +482,8 @@ function foo(x)
   return x + 1
 end
 ";
-        let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source);
+        let (_source, tree) = parse(src);
+        let decls = find_decls(&tree);
         assert_eq!(decls.len(), 1);
         assert_eq!(decls[0].1.start_line, 1);
     }
@@ -495,8 +495,8 @@ local function foo(x)
   return x + 1
 end
 ";
-        let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source);
+        let (_source, tree) = parse(src);
+        let decls = find_decls(&tree);
         assert_eq!(decls.len(), 1, "decls: {:?}", decls);
     }
 
@@ -508,8 +508,8 @@ function M.bar(x) return x end
 M.baz = function(x) return x end
 return M
 ";
-        let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source);
+        let (_source, tree) = parse(src);
+        let decls = find_decls(&tree);
         // Expect: M.bar (function_declaration) and M.baz (assignment).
         // `local M = {}` is a variable_declaration WITHOUT function RHS,
         // so it's not recognized.
@@ -561,7 +561,7 @@ local function first(x) return x end
 local function second(x) return x end
 ";
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source);
+        let decls = find_decls(&tree);
         let all_starts: std::collections::HashSet<usize> =
             decls.iter().map(|(_, i)| i.start_line).collect();
         let mut claimed: std::collections::HashMap<usize, usize> = std::collections::HashMap::new();

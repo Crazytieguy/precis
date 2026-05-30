@@ -387,7 +387,7 @@ pub(crate) fn file_lines_covered_by(child: &FileLines, parent: &FileLines) -> bo
 /// Path-relative location prior: depth penalty × non-essential-dir
 /// discount. Use [`file_depth_factor`] to add entrypoint pinning.
 pub(crate) fn path_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    crate::value::depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file)
+    file_depth_factor(file, ctx, false)
 }
 
 /// [`path_depth_factor`] with optional entrypoint pinning — when

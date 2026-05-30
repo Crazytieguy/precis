@@ -436,7 +436,7 @@ fn collectable_outline_rows(file: &Path, tree: &Tree, source: &str) -> Vec<(usiz
             continue;
         }
         let start_row = node.start_position().row + 1;
-        let end_row = span_last_row(node, source) + 1;
+        let end_row = node_end_row_trimmed(node, source) + 1;
         if (start_row..=end_row).any(|r| headline_covered.contains(&r)) {
             continue;
         }
@@ -644,11 +644,8 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         if is_section_boundary(block.kind()) {
             break;
         }
-        match block.kind() {
-            "paragraph" if is_decorative_paragraph(block, source) => {}
-            "html_block" if is_decorative_html_block(block, source) => {}
-            "block_quote" if is_admin_block_quote(block, source) => {}
-            _ => break,
+        if !is_decorative_block(block, source) {
+            break;
         }
         i += 1;
     }
@@ -658,13 +655,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         if is_section_boundary(block.kind()) {
             break;
         }
-        let is_decorative_block = match block.kind() {
-            "paragraph" => is_decorative_paragraph(block, source),
-            "html_block" => is_decorative_html_block(block, source),
-            "block_quote" => is_admin_block_quote(block, source),
-            _ => false,
-        };
-        if is_decorative_block {
+        if is_decorative_block(block, source) {
             i += 1;
             continue;
         }
@@ -734,7 +725,7 @@ fn build_headline_spans(file: &Path, source: &str, spec: &HeadlineSpec) -> Vec<S
 /// Append every 1-based row covered by `node` to `out`, trimming a
 /// trailing newline tree-sitter-md sometimes includes in a node's span.
 fn extend_rows_inclusive(out: &mut BTreeSet<usize>, node: Node, source: &str) {
-    let last = span_last_row(node, source);
+    let last = node_end_row_trimmed(node, source);
     for row in node.start_position().row..=last {
         out.insert(row + 1);
     }
@@ -820,6 +811,15 @@ fn is_decorative_paragraph(para: Node, source: &str) -> bool {
     };
     let root = tree.root_node();
     inline_root_is_all_decorative(root, inline_text)
+}
+
+fn is_decorative_block(block: Node, source: &str) -> bool {
+    match block.kind() {
+        "paragraph" => is_decorative_paragraph(block, source),
+        "html_block" => is_decorative_html_block(block, source),
+        "block_quote" => is_admin_block_quote(block, source),
+        _ => false,
+    }
 }
 
 /// True iff every fragment (named + plain-text gaps) is decorative or
@@ -1429,7 +1429,7 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
                 out.push(TopLevelEntry::H2Section {
                     node: h2,
                     start: h2.start_position().row + 1,
-                    end: span_last_row(h2, source) + 1,
+                    end: node_end_row_trimmed(h2, source) + 1,
                 });
             }
             return out;
@@ -1439,7 +1439,7 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
         .map(|s| TopLevelEntry::H2Section {
             node: s,
             start: s.start_position().row + 1,
-            end: span_last_row(s, source) + 1,
+            end: node_end_row_trimmed(s, source) + 1,
         })
         .collect()
 }
@@ -1584,7 +1584,7 @@ fn has_substantive_body(section: Node, start: usize, end: usize, source: &str) -
         return false;
     };
     let heading_first_row = heading.start_position().row + 1;
-    let heading_last_row = span_last_row(heading, source) + 1;
+    let heading_last_row = node_end_row_trimmed(heading, source) + 1;
     source
         .lines()
         .enumerate()
@@ -1647,13 +1647,10 @@ fn extend_prelude_lede(
     let mut i = 0;
     while i < prelude_blocks.len() {
         let block = prelude_blocks[i];
-        match block.kind() {
-            "paragraph"
-                if is_decorative_paragraph(block, source)
-                    || is_nav_link_paragraph(block, source) => {}
-            "html_block" if is_decorative_html_block(block, source) => {}
-            "block_quote" if is_admin_block_quote(block, source) => {}
-            _ => break,
+        if !(is_decorative_block(block, source)
+            || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source)))
+        {
+            break;
         }
         i += 1;
     }
@@ -1666,13 +1663,10 @@ fn extend_prelude_lede(
             let mut j = i + 1;
             while j < prelude_blocks.len() {
                 let next = prelude_blocks[j];
-                match next.kind() {
-                    "paragraph"
-                        if is_decorative_paragraph(next, source)
-                            || is_nav_link_paragraph(next, source) => {}
-                    "html_block" if is_decorative_html_block(next, source) => {}
-                    "block_quote" if is_admin_block_quote(next, source) => {}
-                    _ => break,
+                if !(is_decorative_block(next, source)
+                    || (next.kind() == "paragraph" && is_nav_link_paragraph(next, source)))
+                {
+                    break;
                 }
                 j += 1;
             }
@@ -1706,12 +1700,6 @@ fn first_heading_child(section: Node) -> Option<Node> {
 fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
     let mut cur = node.walk();
     node.children(&mut cur).find(|c| c.kind() == kind)
-}
-
-/// Last source row (0-indexed) covered by `node`, trimming a trailing empty
-/// line tree-sitter-md sometimes includes in a node's span.
-fn span_last_row(node: Node, source: &str) -> usize {
-    node_end_row_trimmed(node, source)
 }
 
 #[cfg(test)]

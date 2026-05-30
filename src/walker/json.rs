@@ -114,7 +114,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         };
     // App-style manifests get a Scripts/Dependencies boost — see
     // `is_app_package_json` for the predicate.
-    let app_factor = if is_app_package_json(&source) {
+    let app_factor = if is_app_package_json(&pairs) {
         APP_SCRIPTS_DEPS_FACTOR
     } else {
         1.0
@@ -172,39 +172,20 @@ const APP_SCRIPTS_DEPS_FACTOR: f64 = 1.3;
 
 /// True for application-shaped `package.json` (not library): either
 /// `"private": true`, or `"bin"` without a `"files"` allowlist.
-fn is_app_package_json(source: &str) -> bool {
-    if has_private_true(source) {
+fn is_app_package_json(pairs: &[(String, usize, usize, bool)]) -> bool {
+    // Match the legacy byte-scanner: only the FIRST top-level `"private"` (in
+    // source/traversal order) decides, so a duplicate-key manifest behaves the
+    // same as before this was folded into the parsed pairs.
+    if pairs
+        .iter()
+        .find(|(name, _, _, _)| name == "private")
+        .is_some_and(|(_, _, _, value_is_true)| *value_is_true)
+    {
         return true;
     }
-    has_top_level_key(source, "bin") && !has_top_level_key(source, "files")
-}
-
-/// `true` iff the source contains a top-level `"private": true`.
-fn has_private_true(source: &str) -> bool {
-    let Some(idx) = source.find("\"private\"") else {
-        return false;
-    };
-    let rest = &source[idx + "\"private\"".len()..];
-    let Some(colon) = rest.find(':') else {
-        return false;
-    };
-    rest[colon + 1..].trim_start().starts_with("true")
-}
-
-/// `true` iff the source declares a top-level key — `"key":`
-/// (whitespace tolerant). Doesn't validate top-levelness, but well-
-/// formed `package.json` doesn't reuse reserved names in nested objects.
-fn has_top_level_key(source: &str, key: &str) -> bool {
-    let needle = format!("\"{key}\"");
-    let mut cursor = source;
-    while let Some(idx) = cursor.find(&needle) {
-        let after = &cursor[idx + needle.len()..];
-        if after.trim_start().starts_with(':') {
-            return true;
-        }
-        cursor = &cursor[idx + needle.len()..];
-    }
-    false
+    let has_bin = pairs.iter().any(|(name, _, _, _)| name == "bin");
+    let has_files = pairs.iter().any(|(name, _, _, _)| name == "files");
+    has_bin && !has_files
 }
 
 /// True iff the source's top-level `"name"` ends with `suffix`.
@@ -231,11 +212,11 @@ fn package_json_name_ends_with(source: &str, suffix: &str) -> bool {
 fn section_content(
     file: &Path,
     source: &str,
-    pairs: &[(String, usize, usize)],
+    pairs: &[(String, usize, usize, bool)],
     name_match: fn(&str) -> bool,
 ) -> Option<BatchContent> {
     let mut lines: Vec<usize> = Vec::new();
-    for (name, start, end) in pairs {
+    for (name, start, end, _) in pairs {
         if name_match(name) {
             lines.extend(*start..=*end);
         }
@@ -442,8 +423,8 @@ fn parse_json(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_json::LANGUAGE.into())
 }
 
-/// `(unquoted_key, start_1based, end_1based)` for each top-level pair.
-fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
+/// `(unquoted_key, start_1based, end_1based, value_is_true)` for each top-level pair.
+fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize, bool)> {
     let root = tree.root_node();
     let Some(object) = first_child_of_kind(root, "object") else {
         return Vec::new();
@@ -460,7 +441,10 @@ fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
         let key = unquote_string(key_node, source);
         let start = child.start_position().row + 1;
         let end = child.end_position().row + 1;
-        out.push((key, start, end));
+        let value_is_true = child
+            .child_by_field_name("value")
+            .is_some_and(|value| value.kind() == "true");
+        out.push((key, start, end, value_is_true));
     }
     out
 }
