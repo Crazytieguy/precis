@@ -256,7 +256,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some((source, tree)) = parse_rust(ctx, file) else {
             continue;
         };
-        let items = find_pub_item_starts(&tree, &source);
+        let items = find_top_level_item_starts(&tree, &source, TopLevelItemVisibility::Public);
         let src_lines: Vec<&str> = source.lines().collect();
         if !items.is_empty() {
             // For a single-item file the names-surface batch (one line +
@@ -481,7 +481,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
     // Cross-file macro batches, scoped to `dir` (non-recursive). Discovery
     // intentionally lives outside the per-file pub-item loop above —
-    // `find_pub_item_starts` skips `macro_definition` nodes, and the loop's
+    // `find_top_level_item_starts` skips `macro_definition` nodes, and the loop's
     // early `continue` on empty pub items would silently skip macro-only
     // files like `tests/fixtures/log/src/macros.rs`.
     let macro_names_key = RustKey::MacroNames {
@@ -621,10 +621,6 @@ fn item_kind_of(node: Node) -> Option<ItemKind> {
         "static_item" => ItemKind::Static,
         _ => return None,
     })
-}
-
-fn find_pub_item_starts<'a>(tree: &'a Tree, source: &str) -> Vec<PubItemInfo<'a>> {
-    find_top_level_item_starts(tree, source, TopLevelItemVisibility::Public)
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -1928,6 +1924,36 @@ mod tests {
         out
     }
 
+    fn write_vis_tree(files: &[(&str, &str)]) -> (TempDir, PathBuf) {
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        for (rel_path, contents) in files {
+            let path = src.join(rel_path);
+            if let Some(parent) = path.parent() {
+                std::fs::create_dir_all(parent).unwrap();
+            }
+            std::fs::write(path, contents).unwrap();
+        }
+        (dir, src)
+    }
+
+    fn vis_map(files: &[(&str, &str)]) -> (TempDir, HashMap<PathBuf, Visibility>, PathBuf) {
+        let (dir, src) = write_vis_tree(files);
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        (dir, map, src)
+    }
+
+    fn vis_map_ctx(
+        files: &[(&str, &str)],
+    ) -> (TempDir, WalkCtx, HashMap<PathBuf, Visibility>, PathBuf) {
+        let (dir, src) = write_vis_tree(files);
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        (dir, ctx, map, src)
+    }
+
     #[test]
     fn rust_visibility_classifies_pub_crate_super_self_in() {
         let src = r#"
@@ -2062,28 +2088,14 @@ pub mod inline_e { }
 
     #[test]
     fn rust_compute_module_visibility_propagates_through_pub_mod_chain() {
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(
-            src.join("lib.rs"),
-            "pub mod public_chain;\nmod private_chain;\n",
-        )
-        .unwrap();
-        std::fs::write(
-            src.join("public_chain.rs"),
-            "pub mod grandchild;\nmod gc_private;\n",
-        )
-        .unwrap();
-        std::fs::create_dir_all(src.join("public_chain")).unwrap();
-        std::fs::write(src.join("public_chain").join("grandchild.rs"), "").unwrap();
-        std::fs::write(src.join("public_chain").join("gc_private.rs"), "").unwrap();
-        std::fs::write(src.join("private_chain.rs"), "pub mod gc_under_private;\n").unwrap();
-        std::fs::create_dir_all(src.join("private_chain")).unwrap();
-        std::fs::write(src.join("private_chain").join("gc_under_private.rs"), "").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) = vis_map(&[
+            ("lib.rs", "pub mod public_chain;\nmod private_chain;\n"),
+            ("public_chain.rs", "pub mod grandchild;\nmod gc_private;\n"),
+            ("public_chain/grandchild.rs", ""),
+            ("public_chain/gc_private.rs", ""),
+            ("private_chain.rs", "pub mod gc_under_private;\n"),
+            ("private_chain/gc_under_private.rs", ""),
+        ]);
 
         assert_eq!(map.get(&src.join("lib.rs")), Some(&Visibility::Public));
         assert_eq!(
@@ -2114,14 +2126,7 @@ pub mod inline_e { }
 
     #[test]
     fn rust_compute_module_visibility_skips_when_no_lib_rs() {
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(src.join("main.rs"), "mod helpers;\n").unwrap();
-        std::fs::write(src.join("helpers.rs"), "").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, _src) = vis_map(&[("main.rs", "mod helpers;\n"), ("helpers.rs", "")]);
         // No lib.rs → empty map → callers default to Public (preserve
         // local-syntactic-only behavior for binary-only crates).
         assert!(map.is_empty());
@@ -2134,19 +2139,17 @@ pub mod inline_e { }
         // that the resolver doesn't follow. Defaulting these to Public
         // would silently restore full public-API weight; the safer
         // fallback is Restricted.
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
         // Map seeds from lib.rs, which only declares public_child.
-        std::fs::write(src.join("lib.rs"), "pub mod public_child;\n").unwrap();
-        std::fs::write(src.join("public_child.rs"), "").unwrap();
-        // Simulate a #[path]-mounted file the resolver didn't follow.
-        std::fs::write(src.join("hidden_via_path_attr.rs"), "").unwrap();
+        let (dir, ctx, _map, src) = vis_map_ctx(&[
+            ("lib.rs", "pub mod public_child;\n"),
+            ("public_child.rs", ""),
+            // Simulate a #[path]-mounted file the resolver didn't follow.
+            ("hidden_via_path_attr.rs", ""),
+        ]);
         // Files outside src/ (tests/, examples/, build.rs) should still
         // default to Public — they get the non-essential-dir discount.
         std::fs::write(dir.path().join("build.rs"), "").unwrap();
 
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
         // Reachable via `pub mod` chain → Public.
         assert_eq!(
             module_visibility(&ctx, &src.join("public_child.rs")),
@@ -2169,13 +2172,7 @@ pub mod inline_e { }
         // Binary-only crate: no `<root>/src/lib.rs` → empty map →
         // every file defaults to Public. Preserves the local-syntactic
         // check as the only signal.
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(src.join("main.rs"), "").unwrap();
-        std::fs::write(src.join("helpers.rs"), "").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let (_dir, ctx, _map, src) = vis_map_ctx(&[("main.rs", ""), ("helpers.rs", "")]);
         assert_eq!(
             module_visibility(&ctx, &src.join("main.rs")),
             Visibility::Public
@@ -2231,20 +2228,11 @@ use self::not_pub::Hidden;
     fn rust_pub_use_self_lifts_private_child_to_public() {
         // log/src/kv/mod.rs shape — `mod x;` + `pub use self::x::Item;`
         // is the motivating pattern for cross-file re-export tracking.
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(src.join("lib.rs"), "pub mod kv;\n").unwrap();
-        std::fs::create_dir_all(src.join("kv")).unwrap();
-        std::fs::write(
-            src.join("kv").join("mod.rs"),
-            "mod error;\npub use self::error::Error;\n",
-        )
-        .unwrap();
-        std::fs::write(src.join("kv").join("error.rs"), "pub struct Error;\n").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) = vis_map(&[
+            ("lib.rs", "pub mod kv;\n"),
+            ("kv/mod.rs", "mod error;\npub use self::error::Error;\n"),
+            ("kv/error.rs", "pub struct Error;\n"),
+        ]);
         assert_eq!(
             map.get(&src.join("kv").join("error.rs")),
             Some(&Visibility::Public),
@@ -2256,20 +2244,11 @@ use self::not_pub::Hidden;
     fn rust_pub_use_self_does_not_lift_when_parent_restricted() {
         // The parent's re-export only crosses to external API when the
         // parent itself is on the external surface.
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(src.join("lib.rs"), "mod parent;\n").unwrap();
-        std::fs::create_dir_all(src.join("parent")).unwrap();
-        std::fs::write(
-            src.join("parent").join("mod.rs"),
-            "mod child;\npub use self::child::X;\n",
-        )
-        .unwrap();
-        std::fs::write(src.join("parent").join("child.rs"), "pub struct X;\n").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) = vis_map(&[
+            ("lib.rs", "mod parent;\n"),
+            ("parent/mod.rs", "mod child;\npub use self::child::X;\n"),
+            ("parent/child.rs", "pub struct X;\n"),
+        ]);
         assert_eq!(
             map.get(&src.join("parent").join("child.rs")),
             Some(&Visibility::Restricted),
@@ -2279,14 +2258,11 @@ use self::not_pub::Hidden;
     #[test]
     fn rust_pub_use_self_handles_use_list_and_wildcard() {
         for re_export in ["pub use self::child::{A, B};", "pub use self::child::*;"] {
-            let dir = tempdir();
-            let src = dir.path().join("src");
-            std::fs::create_dir_all(&src).unwrap();
-            std::fs::write(src.join("lib.rs"), format!("mod child;\n{re_export}\n")).unwrap();
-            std::fs::write(src.join("child.rs"), "pub struct A; pub struct B;\n").unwrap();
-
-            let ctx = WalkCtx::new(dir.path().to_path_buf());
-            let map = compute_module_visibility(&ctx);
+            let lib = format!("mod child;\n{re_export}\n");
+            let (_dir, map, src) = vis_map(&[
+                ("lib.rs", &lib),
+                ("child.rs", "pub struct A; pub struct B;\n"),
+            ]);
             assert_eq!(
                 map.get(&src.join("child.rs")),
                 Some(&Visibility::Public),
@@ -2299,37 +2275,24 @@ use self::not_pub::Hidden;
     fn rust_pub_use_self_handles_grouped_under_self() {
         // Outer `scoped_use_list` whose path-prefix is the bare `self`
         // token (no `scoped_identifier`) — verifies the path_done logic.
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(
-            src.join("lib.rs"),
-            "mod a;\nmod b;\npub use self::{a::X, b::*};\n",
-        )
-        .unwrap();
-        std::fs::write(src.join("a.rs"), "pub struct X;\n").unwrap();
-        std::fs::write(src.join("b.rs"), "pub struct Y;\n").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) = vis_map(&[
+            ("lib.rs", "mod a;\nmod b;\npub use self::{a::X, b::*};\n"),
+            ("a.rs", "pub struct X;\n"),
+            ("b.rs", "pub struct Y;\n"),
+        ]);
         assert_eq!(map.get(&src.join("a.rs")), Some(&Visibility::Public));
         assert_eq!(map.get(&src.join("b.rs")), Some(&Visibility::Public));
     }
 
     #[test]
     fn rust_pub_use_self_handles_use_as_clause() {
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(
-            src.join("lib.rs"),
-            "mod child;\npub use self::child::Item as Renamed;\n",
-        )
-        .unwrap();
-        std::fs::write(src.join("child.rs"), "pub struct Item;\n").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) = vis_map(&[
+            (
+                "lib.rs",
+                "mod child;\npub use self::child::Item as Renamed;\n",
+            ),
+            ("child.rs", "pub struct Item;\n"),
+        ]);
         assert_eq!(map.get(&src.join("child.rs")), Some(&Visibility::Public),);
     }
 
@@ -2338,16 +2301,11 @@ use self::not_pub::Hidden;
         // The chain walks past private `mod b;` to lift b.rs because
         // `pub use self::a::b::X` makes `b`'s contents publicly reachable
         // even though `a.rs` only declares it privately.
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(src.join("lib.rs"), "mod a;\npub use self::a::b::X;\n").unwrap();
-        std::fs::create_dir_all(src.join("a")).unwrap();
-        std::fs::write(src.join("a").join("mod.rs"), "mod b;\n").unwrap();
-        std::fs::write(src.join("a").join("b.rs"), "pub struct X;\n").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) = vis_map(&[
+            ("lib.rs", "mod a;\npub use self::a::b::X;\n"),
+            ("a/mod.rs", "mod b;\n"),
+            ("a/b.rs", "pub struct X;\n"),
+        ]);
         assert_eq!(
             map.get(&src.join("a").join("mod.rs")),
             Some(&Visibility::Public),
@@ -2365,16 +2323,11 @@ use self::not_pub::Hidden;
         // Without the `mod b;` gate, an orphan `a/b.rs` on disk would
         // be silently lifted by `pub use self::a::b::X;` even though
         // it isn't actually a child mod of `a`.
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(src.join("lib.rs"), "mod a;\npub use self::a::b::X;\n").unwrap();
-        std::fs::create_dir_all(src.join("a")).unwrap();
-        std::fs::write(src.join("a").join("mod.rs"), "// no mod b\n").unwrap();
-        std::fs::write(src.join("a").join("b.rs"), "pub struct X;\n").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, ctx, map, src) = vis_map_ctx(&[
+            ("lib.rs", "mod a;\npub use self::a::b::X;\n"),
+            ("a/mod.rs", "// no mod b\n"),
+            ("a/b.rs", "pub struct X;\n"),
+        ]);
         assert_eq!(
             map.get(&src.join("a").join("mod.rs")),
             Some(&Visibility::Public),
@@ -2388,35 +2341,22 @@ use self::not_pub::Hidden;
 
     #[test]
     fn rust_pub_use_without_self_prefix_does_not_lift() {
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(
-            src.join("lib.rs"),
-            "mod foo;\npub use crate::foo::Bar;\npub use my_crate::baz::Qux;\n",
-        )
-        .unwrap();
-        std::fs::write(src.join("foo.rs"), "pub struct Bar;\n").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) = vis_map(&[
+            (
+                "lib.rs",
+                "mod foo;\npub use crate::foo::Bar;\npub use my_crate::baz::Qux;\n",
+            ),
+            ("foo.rs", "pub struct Bar;\n"),
+        ]);
         assert_eq!(map.get(&src.join("foo.rs")), Some(&Visibility::Restricted),);
     }
 
     #[test]
     fn rust_pub_use_with_inner_visibility_does_not_lift() {
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(
-            src.join("lib.rs"),
-            "mod child;\npub(crate) use self::child::X;\n",
-        )
-        .unwrap();
-        std::fs::write(src.join("child.rs"), "pub struct X;\n").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) = vis_map(&[
+            ("lib.rs", "mod child;\npub(crate) use self::child::X;\n"),
+            ("child.rs", "pub struct X;\n"),
+        ]);
         assert_eq!(
             map.get(&src.join("child.rs")),
             Some(&Visibility::Restricted),
@@ -2429,14 +2369,8 @@ use self::not_pub::Hidden;
         // pointing at the same file. We don't track cfg gates — taking
         // "any path makes it Public" is the conservative call (preserves
         // surface signal for the kv_unstable feature configuration).
-        let dir = tempdir();
-        let src = dir.path().join("src");
-        std::fs::create_dir_all(&src).unwrap();
-        std::fs::write(src.join("lib.rs"), "mod child;\npub mod child;\n").unwrap();
-        std::fs::write(src.join("child.rs"), "").unwrap();
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let map = compute_module_visibility(&ctx);
+        let (_dir, map, src) =
+            vis_map(&[("lib.rs", "mod child;\npub mod child;\n"), ("child.rs", "")]);
         assert_eq!(map.get(&src.join("child.rs")), Some(&Visibility::Public));
     }
 
@@ -2482,13 +2416,131 @@ use self::not_pub::Hidden;
     }
 
     #[test]
-    fn rust_strip_hidden_lines_default_fence() {
-        let src =
-            "//! ```\n//! # use anyhow::Result;\n//! fn ok() -> Result<()> { Ok(()) }\n//! ```\n";
-        assert_eq!(
-            strip_via(src),
-            "//! ```\n//! fn ok() -> Result<()> { Ok(()) }\n//! ```",
-        );
+    fn rust_strip_hidden_lines_eq_table() {
+        let cases = [
+            (
+                "default_fence",
+                "//! ```\n//! # use anyhow::Result;\n//! fn ok() -> Result<()> { Ok(()) }\n//! ```\n",
+                "//! ```\n//! fn ok() -> Result<()> { Ok(()) }\n//! ```",
+            ),
+            (
+                "heading_outside_fence",
+                "//! # Real heading\n//! prose\n",
+                "//! # Real heading\n//! prose",
+            ),
+            // `## foo` inside a Rust fence is rendered (rustdoc consumes one #),
+            // so the line must be kept.
+            (
+                "double_hash_in_rust_fence",
+                "/// ```\n/// ## foo\n/// ```\n",
+                "/// ```\n/// ## foo\n/// ```",
+            ),
+            // `#[derive(...)]` and `#![cfg(...)]` don't start with `# ` (no
+            // space), so they're code, not hidden.
+            (
+                "attribute_lines_kept",
+                "/// ```\n/// #[derive(Debug)]\n/// #![allow(unused)]\n/// struct S;\n/// ```\n",
+                "/// ```\n/// #[derive(Debug)]\n/// #![allow(unused)]\n/// struct S;\n/// ```",
+            ),
+        ];
+        for (case, src, expected) in cases {
+            assert_eq!(strip_via(src), expected, "case `{case}`");
+        }
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_contains_table() {
+        let cases = [
+            (
+                "lone_hash_dropped",
+                "/// ```\n/// #\n/// real\n/// ```\n",
+                &["/// #\n"][..],
+                &["/// real"][..],
+            ),
+            (
+                "tilde_fence",
+                "/// ~~~\n/// # let x = 1;\n/// real\n/// ~~~\n",
+                &["# let x"][..],
+                &[][..],
+            ),
+            // Inside a backtick Rust fence, a `~~~` line is literal content (not
+            // a closer). Subsequent `# ` lines stay hidden.
+            (
+                "mismatched_fence_kind_does_not_close",
+                "/// ```\n/// # hidden 1\n/// ~~~ inline\n/// # hidden 2\n/// ```\n",
+                &["# hidden 1", "# hidden 2"][..],
+                &["~~~ inline"][..],
+            ),
+            // Lede: prose, then a Rust fence, then a console fence, then a
+            // tilde-rust fence. Hidden lines in Rust fences only.
+            (
+                "multi_fence_state_machine",
+                "\
+//! intro
+//! ```
+//! # hidden a
+//! visible a
+//! ```
+//! between
+//! ```console
+//! # kept-console
+//! ```
+//! ~~~rust
+//! # hidden b
+//! visible b
+//! ~~~
+//! tail
+",
+                &["# hidden a", "# hidden b"][..],
+                &["# kept-console", "visible a", "visible b", "//! tail"][..],
+            ),
+            // Outer (`///`) and inner (`//!`) doc prefixes are stripped identically.
+            (
+                "works_with_outer_doc",
+                "/// ```\n/// # hidden\n/// real\n/// ```\n",
+                &["# hidden"][..],
+                &[][..],
+            ),
+            (
+                "works_with_inner_doc",
+                "//! ```\n//! # hidden\n//! real\n//! ```\n",
+                &["# hidden"][..],
+                &[][..],
+            ),
+            // Block doc lines without a `*` continuation marker (rare but
+            // syntactically allowed) normalize to `None` and pass through
+            // — they aren't recognized as fence/heading candidates.
+            (
+                "block_doc_unmarked_lines_pass_through",
+                "/** ```\n# would-be-hidden-but-not-handled\nreal\n``` */\n",
+                &[][..],
+                &["# would-be-hidden-but-not-handled"][..],
+            ),
+            // Block doc with proper `*` continuation: ` * # use ...` inside a
+            // Rust fence is hidden scaffolding and must be stripped, just like
+            // `/// # use ...` and `//! # use ...` are today.
+            (
+                "block_doc_strips_starred_hidden_inside_fence",
+                "/**\n * ```\n * # use crate::X;\n * real\n * ```\n */\n",
+                &["# use crate::X"][..],
+                &["* real"][..],
+            ),
+        ];
+        for (case, src, absent_needles, present_needles) in cases {
+            let got = strip_via(src);
+            for needle in absent_needles {
+                assert!(
+                    !got.contains(needle),
+                    "case `{case}` should drop `{needle}`; got: {got}",
+                );
+            }
+            for needle in present_needles {
+                assert!(
+                    got.contains(needle),
+                    "case `{case}` should keep `{needle}`; got: {got}",
+                );
+            }
+        }
     }
 
     #[test]
@@ -2522,95 +2574,6 @@ use self::not_pub::Hidden;
                 "fence `{lang}` should keep `# `; got: {got}",
             );
         }
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_heading_outside_fence() {
-        let src = "//! # Real heading\n//! prose\n";
-        assert_eq!(strip_via(src), src.trim_end());
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_double_hash_in_rust_fence() {
-        // `## foo` inside a Rust fence is rendered (rustdoc consumes one #),
-        // so the line must be kept.
-        let src = "/// ```\n/// ## foo\n/// ```\n";
-        assert_eq!(strip_via(src), src.trim_end());
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_attribute_lines_kept() {
-        // `#[derive(...)]` and `#![cfg(...)]` don't start with `# ` (no
-        // space), so they're code, not hidden.
-        let src = "/// ```\n/// #[derive(Debug)]\n/// #![allow(unused)]\n/// struct S;\n/// ```\n";
-        assert_eq!(strip_via(src), src.trim_end());
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_lone_hash_dropped() {
-        let src = "/// ```\n/// #\n/// real\n/// ```\n";
-        let got = strip_via(src);
-        assert!(!got.contains("/// #\n"), "lone `#` should drop; got: {got}");
-        assert!(got.contains("/// real"));
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_tilde_fence() {
-        let src = "/// ~~~\n/// # let x = 1;\n/// real\n/// ~~~\n";
-        let got = strip_via(src);
-        assert!(
-            !got.contains("# let x"),
-            "tilde-fence should drop `# `; got: {got}"
-        );
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_mismatched_fence_kind_does_not_close() {
-        // Inside a backtick Rust fence, a `~~~` line is literal content (not
-        // a closer). Subsequent `# ` lines stay hidden.
-        let src = "/// ```\n/// # hidden 1\n/// ~~~ inline\n/// # hidden 2\n/// ```\n";
-        let got = strip_via(src);
-        assert!(!got.contains("# hidden 1"));
-        assert!(!got.contains("# hidden 2"));
-        assert!(got.contains("~~~ inline"));
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_multi_fence_state_machine() {
-        // Lede: prose, then a Rust fence, then a console fence, then a
-        // tilde-rust fence. Hidden lines in Rust fences only.
-        let src = "\
-//! intro
-//! ```
-//! # hidden a
-//! visible a
-//! ```
-//! between
-//! ```console
-//! # kept-console
-//! ```
-//! ~~~rust
-//! # hidden b
-//! visible b
-//! ~~~
-//! tail
-";
-        let got = strip_via(src);
-        assert!(!got.contains("# hidden a"));
-        assert!(!got.contains("# hidden b"));
-        assert!(got.contains("# kept-console"));
-        assert!(got.contains("visible a"));
-        assert!(got.contains("visible b"));
-        assert!(got.contains("//! tail"));
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_works_with_inner_doc() {
-        // Same body for both `///` and `//!` prefix forms.
-        let outer = "/// ```\n/// # hidden\n/// real\n/// ```\n";
-        let inner = "//! ```\n//! # hidden\n//! real\n//! ```\n";
-        assert!(!strip_via(outer).contains("# hidden"));
-        assert!(!strip_via(inner).contains("# hidden"));
     }
 
     #[test]
@@ -2670,33 +2633,6 @@ pub fn anchor() {}
     }
 
     #[test]
-    fn rust_strip_hidden_lines_block_doc_unmarked_lines_pass_through() {
-        // Block doc lines without a `*` continuation marker (rare but
-        // syntactically allowed) normalize to `None` and pass through
-        // — they aren't recognized as fence/heading candidates.
-        let src = "/** ```\n# would-be-hidden-but-not-handled\nreal\n``` */\n";
-        let got = strip_via(src);
-        assert!(got.contains("# would-be-hidden-but-not-handled"));
-    }
-
-    #[test]
-    fn rust_strip_hidden_lines_block_doc_strips_starred_hidden_inside_fence() {
-        // Block doc with proper `*` continuation: ` * # use ...` inside a
-        // Rust fence is hidden scaffolding and must be stripped, just like
-        // `/// # use ...` and `//! # use ...` are today.
-        let src = "/**\n * ```\n * # use crate::X;\n * real\n * ```\n */\n";
-        let got = strip_via(src);
-        assert!(
-            !got.contains("# use crate::X"),
-            "block-doc hidden line not stripped; got: {got}",
-        );
-        assert!(
-            got.contains("* real"),
-            "visible block-doc line missing; got: {got}",
-        );
-    }
-
-    #[test]
     fn rust_doc_atx_heading_predicate() {
         // 1–6 hashes with trailing space accepted.
         for n in 1..=6 {
@@ -2741,85 +2677,134 @@ pub fn anchor() {}
     }
 
     #[test]
-    fn rust_pub_item_doc_lede_body_split_at_heading() {
-        let src = "/// Summary line.\n/// More prose.\n///\n/// # Examples\n/// example()\npub fn foo() {}\n";
-        let lede = collect_doc_section_lines(src, DocSection::Lede);
-        let body = collect_doc_section_lines(src, DocSection::Body);
-        assert!(
-            lede.iter().any(|l| l.contains("Summary line")),
-            "lede missing summary: {lede:?}",
-        );
-        assert!(
-            !lede.iter().any(|l| l.contains("# Examples")),
-            "lede crossed heading: {lede:?}",
-        );
-        assert!(
-            body.first().is_some_and(|l| l.contains("# Examples")),
-            "body should start at heading: {body:?}",
-        );
-        assert!(body.iter().any(|l| l.contains("example()")));
-    }
+    fn rust_pub_item_doc_split_table() {
+        struct Case<'a> {
+            name: &'a str,
+            src: &'a str,
+            lede_present: &'a [&'a str],
+            lede_absent: &'a [&'a str],
+            lede_empty: Option<bool>,
+            body_first: Option<&'a str>,
+            body_present: &'a [&'a str],
+            body_empty: Option<bool>,
+        }
 
-    #[test]
-    fn rust_pub_item_doc_no_heading_emits_only_lede() {
-        let src = "/// Summary line.\n/// More prose.\npub fn foo() {}\n";
-        let lede = collect_doc_section_lines(src, DocSection::Lede);
-        let body = collect_doc_section_lines(src, DocSection::Body);
-        assert!(!lede.is_empty(), "lede should cover the doc: {lede:?}");
-        assert!(body.is_empty(), "body should be empty: {body:?}");
-    }
+        let cases = [
+            Case {
+                name: "lede_body_split_at_heading",
+                src: "/// Summary line.\n/// More prose.\n///\n/// # Examples\n/// example()\npub fn foo() {}\n",
+                lede_present: &["Summary line"],
+                lede_absent: &["# Examples"],
+                lede_empty: None,
+                body_first: Some("# Examples"),
+                body_present: &["example()"],
+                body_empty: None,
+            },
+            Case {
+                name: "no_heading_emits_only_lede",
+                src: "/// Summary line.\n/// More prose.\npub fn foo() {}\n",
+                lede_present: &[],
+                lede_absent: &[],
+                lede_empty: Some(false),
+                body_first: None,
+                body_present: &[],
+                body_empty: Some(true),
+            },
+            // When the doc's first non-hidden line is already an ATX heading,
+            // the lede is empty. `expand` must wire the Body's predecessor to
+            // `PubItem` (not the absent Lede); see `walker::expand`.
+            Case {
+                name: "starts_with_heading_emits_only_body",
+                src: "/// # Examples\n/// example()\npub fn foo() {}\n",
+                lede_present: &[],
+                lede_absent: &[],
+                lede_empty: Some(true),
+                body_first: None,
+                body_present: &["# Examples"],
+                body_empty: None,
+            },
+            // Hidden `# use ...` inside a Rust fence at the *start* of the
+            // doc must not be classified as a heading.
+            Case {
+                name: "strips_hidden_doctest_before_split",
+                src: "/// ```\n/// # use foo;\n/// real()\n/// ```\n///\n/// # Real Heading\n/// detail\npub fn foo() {}\n",
+                lede_present: &[],
+                lede_absent: &[],
+                lede_empty: None,
+                body_first: Some("# Real Heading"),
+                body_present: &[],
+                body_empty: None,
+            },
+            Case {
+                name: "block_doc_split_at_starred_heading",
+                src: "/**\n * Summary.\n *\n * # Examples\n * example()\n */\npub fn foo() {}\n",
+                lede_present: &["Summary."],
+                lede_absent: &["# Examples"],
+                lede_empty: None,
+                body_first: None,
+                body_present: &["# Examples"],
+                body_empty: None,
+            },
+            Case {
+                name: "block_doc_strips_hidden_doctest_before_split",
+                src: "/**\n * ```\n * # use crate::X;\n * real()\n * ```\n *\n * # Real Heading\n * detail\n */\npub fn foo() {}\n",
+                lede_present: &[],
+                lede_absent: &[],
+                lede_empty: None,
+                body_first: Some("# Real Heading"),
+                body_present: &[],
+                body_empty: None,
+            },
+        ];
 
-    #[test]
-    fn rust_pub_item_doc_starts_with_heading_emits_only_body() {
-        // When the doc's first non-hidden line is already an ATX heading,
-        // the lede is empty. `expand` must wire the Body's predecessor to
-        // `PubItem` (not the absent Lede); see `walker::expand`.
-        let src = "/// # Examples\n/// example()\npub fn foo() {}\n";
-        let lede = collect_doc_section_lines(src, DocSection::Lede);
-        let body = collect_doc_section_lines(src, DocSection::Body);
-        assert!(lede.is_empty(), "lede should be empty: {lede:?}");
-        assert!(body.iter().any(|l| l.contains("# Examples")));
-    }
-
-    #[test]
-    fn rust_pub_item_doc_strips_hidden_doctest_before_split() {
-        // Hidden `# use ...` inside a Rust fence at the *start* of the
-        // doc must not be classified as a heading.
-        let src = "/// ```\n/// # use foo;\n/// real()\n/// ```\n///\n/// # Real Heading\n/// detail\npub fn foo() {}\n";
-        let body = collect_doc_section_lines(src, DocSection::Body);
-        assert!(
-            body.first().is_some_and(|l| l.contains("# Real Heading")),
-            "body should start at real heading: {body:?}",
-        );
-    }
-
-    #[test]
-    fn rust_pub_item_doc_block_doc_split_at_starred_heading() {
-        let src = "/**\n * Summary.\n *\n * # Examples\n * example()\n */\npub fn foo() {}\n";
-        let lede = collect_doc_section_lines(src, DocSection::Lede);
-        let body = collect_doc_section_lines(src, DocSection::Body);
-        assert!(
-            lede.iter().any(|l| l.contains("Summary.")),
-            "lede missing summary: {lede:?}",
-        );
-        assert!(
-            !lede.iter().any(|l| l.contains("# Examples")),
-            "lede crossed heading: {lede:?}",
-        );
-        assert!(
-            body.iter().any(|l| l.contains("# Examples")),
-            "body missing heading: {body:?}",
-        );
-    }
-
-    #[test]
-    fn rust_pub_item_doc_block_doc_strips_hidden_doctest_before_split() {
-        let src = "/**\n * ```\n * # use crate::X;\n * real()\n * ```\n *\n * # Real Heading\n * detail\n */\npub fn foo() {}\n";
-        let body = collect_doc_section_lines(src, DocSection::Body);
-        assert!(
-            body.first().is_some_and(|l| l.contains("# Real Heading")),
-            "body should start at real heading: {body:?}",
-        );
+        for case in cases {
+            let lede = collect_doc_section_lines(case.src, DocSection::Lede);
+            let body = collect_doc_section_lines(case.src, DocSection::Body);
+            if let Some(empty) = case.lede_empty {
+                assert_eq!(
+                    lede.is_empty(),
+                    empty,
+                    "case `{}` lede: {lede:?}",
+                    case.name
+                );
+            }
+            if let Some(empty) = case.body_empty {
+                assert_eq!(
+                    body.is_empty(),
+                    empty,
+                    "case `{}` body: {body:?}",
+                    case.name
+                );
+            }
+            for needle in case.lede_present {
+                assert!(
+                    lede.iter().any(|l| l.contains(needle)),
+                    "case `{}` lede missing `{needle}`: {lede:?}",
+                    case.name,
+                );
+            }
+            for needle in case.lede_absent {
+                assert!(
+                    !lede.iter().any(|l| l.contains(needle)),
+                    "case `{}` lede unexpectedly contains `{needle}`: {lede:?}",
+                    case.name,
+                );
+            }
+            if let Some(needle) = case.body_first {
+                assert!(
+                    body.first().is_some_and(|l| l.contains(needle)),
+                    "case `{}` body should start with `{needle}`: {body:?}",
+                    case.name,
+                );
+            }
+            for needle in case.body_present {
+                assert!(
+                    body.iter().any(|l| l.contains(needle)),
+                    "case `{}` body missing `{needle}`: {body:?}",
+                    case.name,
+                );
+            }
+        }
     }
 
     #[test]
