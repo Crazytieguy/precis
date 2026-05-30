@@ -487,7 +487,6 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let macro_names_key = RustKey::MacroNames {
         src_dir: dir.to_path_buf(),
     };
-    let rust_files = files_with_extension(dir, "rs");
     let mut macro_name_spans: Vec<Span> = Vec::new();
     for file in &rust_files {
         let Some((source, tree)) = parse_rust(ctx, file) else {
@@ -1418,17 +1417,13 @@ fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
 }
 
 fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
     let mut out = Vec::new();
     let mut ellipses = Vec::new();
-    for child in root.children(&mut cursor) {
-        if child.kind() == "macro_definition" && has_macro_export(child, source) {
-            let name_row = child.start_position().row;
-            push_rows(&mut out, name_row, name_row);
-            ellipses.push(name_row + 2);
-        }
-    }
+    for_each_exported_macro(tree, source, |node, _name| {
+        let row = node.start_position().row;
+        push_rows(&mut out, row, row);
+        ellipses.push(row + 2);
+    });
     FileLines::new(out).with_ellipses(ellipses)
 }
 

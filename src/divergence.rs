@@ -395,12 +395,20 @@ fn build_scores(ctx: &BuildCtx, walker: &WalkerSnapshots) -> Scores {
             continue;
         }
         rows_in_primary += 1;
-        let credit = credit_for_ns_atoms(&row.atoms, primary_cum);
+        let credit = if row.atoms.is_empty() {
+            0.0
+        } else {
+            let sum: f64 = row.atoms.iter().map(|a| atom_credit(a, primary_cum)).sum();
+            sum / row.atoms.len() as f64
+        };
         let completion = completion_for_row(&row.atoms, primary_cum);
-        match classify(credit * completion) {
-            RowStatus::Reached => reached += 1,
-            RowStatus::Partial => partial += 1,
-            RowStatus::Missing => missing += 1,
+        let damped = credit * completion;
+        if damped < MISSING_FLOOR {
+            missing += 1;
+        } else if damped < REACH_THRESHOLD {
+            partial += 1;
+        } else {
+            reached += 1;
         }
     }
 
@@ -411,34 +419,6 @@ fn build_scores(ctx: &BuildCtx, walker: &WalkerSnapshots) -> Scores {
         reached,
         partial,
         missing,
-    }
-}
-
-/// Atom-count-weighted mean credit across an NS row's atoms.
-fn credit_for_ns_atoms(ns_atoms: &[GradedAtom], walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
-    if ns_atoms.is_empty() {
-        return 0.0;
-    }
-    let sum: f64 = ns_atoms.iter().map(|a| atom_credit(a, walker_cum)).sum();
-    sum / ns_atoms.len() as f64
-}
-
-/// Headline row status at the primary budget. Drives the
-/// `(reached=R partial=P missing=M)` headline counts.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum RowStatus {
-    Reached,
-    Partial,
-    Missing,
-}
-
-fn classify(damped_credit: f64) -> RowStatus {
-    if damped_credit < MISSING_FLOOR {
-        RowStatus::Missing
-    } else if damped_credit < REACH_THRESHOLD {
-        RowStatus::Partial
-    } else {
-        RowStatus::Reached
     }
 }
 
@@ -506,9 +486,6 @@ fn completion_for_row(ns_atoms: &[GradedAtom], walker_cum: &BTreeMap<&Atom, usiz
         let ns_bytes = atom.bytes.max(1);
         delivered += walker_bytes.min(ns_bytes);
         total += ns_bytes;
-    }
-    if total == 0 {
-        return 0.0;
     }
     delivered as f64 / total as f64
 }

@@ -17,7 +17,7 @@ use anyhow::{Context, Result};
 use clap::Parser;
 
 use precis::ns_loader::load_ns_checked;
-use precis::ns_simulate::{SimulationReport, Violation, simulate_ns};
+use precis::ns_simulate::{SimulationReport, TOKEN_CAP, Violation, simulate_ns};
 
 #[derive(Parser, Debug)]
 #[command(about = "Validate a North Star TOML against a fixture.")]
@@ -67,7 +67,7 @@ fn run() -> Result<ExitCode> {
 /// Print per-batch table + any violations. Returns `true` iff any batch
 /// had violations (so main can exit non-zero).
 fn print_report(ns_path: &std::path::Path, fixture: &str, report: &SimulationReport) -> bool {
-    let cap_note = report.total_tokens > crate_cap();
+    let cap_note = report.total_tokens > TOKEN_CAP;
     let violation_count: usize = report.batches.iter().map(|b| b.violations.len()).sum();
 
     if violation_count == 0 && !cap_note {
@@ -76,7 +76,7 @@ fn print_report(ns_path: &std::path::Path, fixture: &str, report: &SimulationRep
             ns_path.display(),
             report.batches.len(),
             report.total_tokens,
-            crate_cap(),
+            TOKEN_CAP,
         );
     } else {
         println!(
@@ -85,7 +85,7 @@ fn print_report(ns_path: &std::path::Path, fixture: &str, report: &SimulationRep
             violation_count,
             report.batches.len(),
             report.total_tokens,
-            crate_cap(),
+            TOKEN_CAP,
         );
     }
 
@@ -210,11 +210,4 @@ fn format_violation(v: &Violation) -> String {
             format!("cap exceeded: cumulative {cumulative} > {cap} tokens")
         }
     }
-}
-
-/// The cap the simulator enforces. Duplicated from `ns_simulate::TOKEN_CAP`
-/// (which is private) so this bin can show it in output — kept intentionally
-/// in sync; if one changes, both do.
-fn crate_cap() -> usize {
-    precis::ns_simulate::TOKEN_CAP
 }

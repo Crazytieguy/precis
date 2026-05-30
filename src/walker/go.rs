@@ -441,12 +441,12 @@ fn find_decls<'a>(tree: &'a Tree, source: &str) -> Vec<(Node<'a>, DeclInfo)> {
     for child in root.children(&mut cursor) {
         match child.kind() {
             "function_declaration" => {
-                if let Some(info) = function_info(child, source) {
+                if let Some(info) = func_or_method_info(child, source, DeclKind::Func) {
                     out.push((child, info));
                 }
             }
             "method_declaration" => {
-                if let Some(info) = method_info(child, source) {
+                if let Some(info) = func_or_method_info(child, source, DeclKind::Method) {
                     out.push((child, info));
                 }
             }
@@ -463,39 +463,23 @@ fn find_decls<'a>(tree: &'a Tree, source: &str) -> Vec<(Node<'a>, DeclInfo)> {
     out
 }
 
-fn function_info(node: Node, source: &str) -> Option<DeclInfo> {
+fn func_or_method_info(node: Node, source: &str, kind: DeclKind) -> Option<DeclInfo> {
     let name_node = node.child_by_field_name("name")?;
     let name = &source[name_node.start_byte()..name_node.end_byte()];
     let sig_end = signature_end_row(node);
     let mut decl_lines = Vec::new();
     push_rows(&mut decl_lines, node.start_position().row, sig_end);
     let start_line = node.start_position().row + 1;
+    // Methods additionally require the receiver type to be exported.
+    let exported = is_exported(name)
+        && (!matches!(kind, DeclKind::Method) || receiver_type_exported(node, source));
     Some(DeclInfo {
-        kind: DeclKind::Func,
+        kind,
         start_line,
         decl_lines,
         name_lines: vec![start_line],
         body_rows: body_interior_rows(node),
-        exported: is_exported(name),
-        struct_field_groups: Vec::new(),
-    })
-}
-
-fn method_info(node: Node, source: &str) -> Option<DeclInfo> {
-    let name_node = node.child_by_field_name("name")?;
-    let name = &source[name_node.start_byte()..name_node.end_byte()];
-    let sig_end = signature_end_row(node);
-    let mut decl_lines = Vec::new();
-    push_rows(&mut decl_lines, node.start_position().row, sig_end);
-    let start_line = node.start_position().row + 1;
-    Some(DeclInfo {
-        kind: DeclKind::Method,
-        start_line,
-        decl_lines,
-        name_lines: vec![start_line],
-        body_rows: body_interior_rows(node),
-        // Exported only when both name and receiver type are exported.
-        exported: is_exported(name) && receiver_type_exported(node, source),
+        exported,
         struct_field_groups: Vec::new(),
     })
 }

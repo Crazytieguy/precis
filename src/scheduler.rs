@@ -415,7 +415,7 @@ impl<W: Walker> Scheduler<W> {
         if key_weight <= 0.0 {
             return base;
         }
-        let direct_child_count = self.direct_unscheduled_child_count(id, children_by_parent);
+        let direct_child_count = children_by_parent.get(&id).map_or(0, Vec::len);
         if direct_child_count < GATED_DESCENDANT_MIN_DIRECT_CHILDREN {
             return base;
         }
@@ -456,14 +456,6 @@ impl<W: Walker> Scheduler<W> {
             children.entry(*parent_id).or_default().push(child_id);
         }
         children
-    }
-
-    fn direct_unscheduled_child_count(
-        &self,
-        id: BatchId,
-        children_by_parent: &ChildrenByParent,
-    ) -> usize {
-        children_by_parent.get(&id).map_or(0, Vec::len)
     }
 
     fn raw_gated_descendant_value(

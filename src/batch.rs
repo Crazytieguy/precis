@@ -536,10 +536,7 @@ impl InnerKey for MarkdownKey {
     /// default since READMEs often lead with their canonical claim.
     fn concavity_exponent(&self) -> f64 {
         match self {
-            MarkdownKey::Section {
-                section_index: 0, ..
-            } => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-            MarkdownKey::Section { .. } => 0.45,
+            MarkdownKey::Section { section_index, .. } if *section_index >= 1 => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -553,13 +550,7 @@ impl InnerKey for TsKey {
     /// uses `0.45` (per-decl tier).
     fn concavity_exponent(&self) -> f64 {
         match self {
-            TsKey::ExportNames { file, .. }
-                if crate::walker::typescript::is_ts_or_tsx_file(file)
-                    && !crate::walker::typescript::is_declaration_file(file) =>
-            {
-                0.38
-            }
-            TsKey::ImportChunk { file, .. }
+            TsKey::ExportNames { file, .. } | TsKey::ImportChunk { file, .. }
                 if crate::walker::typescript::is_ts_or_tsx_file(file)
                     && !crate::walker::typescript::is_declaration_file(file) =>
             {
