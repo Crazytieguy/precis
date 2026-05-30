@@ -1728,63 +1728,51 @@ mod tests {
         build_headline_spans(&PathBuf::from("README.md"), source, &spec)
     }
 
-    /// anyhow shape: H1 setext, blank, four badge image-link lines as one
-    /// paragraph, blank, prose paragraph. The headline must skip the
-    /// badge paragraph.
-    #[test]
-    fn markdown_decorative_paragraph_skipped_anyhow_shape() {
-        let src = "Anyhow\n\
+    const HEADLINE_COVERED_CASES: &[(&str, &str, &[usize], &[usize])] = &[
+        // anyhow shape: H1 setext, blank, four badge image-link lines as one
+        // paragraph, blank, prose paragraph. The headline must skip the
+        // badge paragraph.
+        (
+            "markdown_decorative_paragraph_skipped_anyhow_shape",
+            "Anyhow\n\
                    ======\n\
                    \n\
                    [![github](https://example/badge1.svg)](https://example/repo)\n\
                    [![crates.io](https://example/badge2.svg)](https://example/crate)\n\
                    \n\
-                   This library provides anyhow::Error, a trait object based error type.\n";
-        let rows = covered(src);
-        // Heading on rows 1-2; prose on row 7. Badges (rows 4-5) skipped.
-        assert!(rows.contains(&1), "heading row 1 missing");
-        assert!(rows.contains(&7), "prose row 7 missing");
-        assert!(!rows.contains(&4), "badge row 4 should be skipped");
-        assert!(!rows.contains(&5), "badge row 5 should be skipped");
-    }
-
-    /// otree shape: H1 + blank + bare-image paragraph + blank + tagline.
-    #[test]
-    fn markdown_decorative_image_only_paragraph_skipped_otree_shape() {
-        let src = "# OTree - Object Tree TUI Viewer\n\
+                   This library provides anyhow::Error, a trait object based error type.\n",
+            &[1, 7],
+            &[4, 5],
+        ),
+        // otree shape: H1 + blank + bare-image paragraph + blank + tagline.
+        (
+            "markdown_decorative_image_only_paragraph_skipped_otree_shape",
+            "# OTree - Object Tree TUI Viewer\n\
                    \n\
                    ![screenshot](assets/screenshot.png)\n\
                    \n\
-                   A command line tool to view objects in TUI tree widget.\n";
-        let rows = covered(src);
-        assert!(rows.contains(&1), "heading row missing");
-        assert!(rows.contains(&5), "tagline row missing");
-        assert!(!rows.contains(&3), "image-only paragraph should be skipped");
-    }
-
-    /// soluna shape: H1 + blank + plain text-link paragraph + blank +
-    /// prose. Plain text-link paragraphs are not badges and must NOT
-    /// be skipped.
-    #[test]
-    fn markdown_link_only_paragraph_kept_soluna_shape() {
-        let src = "# Soluna\n\
+                   A command line tool to view objects in TUI tree widget.\n",
+            &[1, 5],
+            &[3],
+        ),
+        // soluna shape: H1 + blank + plain text-link paragraph + blank +
+        // prose. Plain text-link paragraphs are not badges and must NOT
+        // be skipped.
+        (
+            "markdown_link_only_paragraph_kept_soluna_shape",
+            "# Soluna\n\
                    \n\
                    [Live Examples](https://example/demo)\n\
                    \n\
-                   A framework for 2D games in Lua.\n";
-        let rows = covered(src);
-        assert!(rows.contains(&1));
-        assert!(
-            rows.contains(&3),
-            "plain link paragraph must NOT be skipped"
-        );
-    }
-
-    /// mitt shape: H1, block_quote tagline, list of features, prose
-    /// paragraph. Headline includes all four blocks (regression guard).
-    #[test]
-    fn markdown_mitt_shape_unchanged() {
-        let src = "# Mitt\n\
+                   A framework for 2D games in Lua.\n",
+            &[1, 3],
+            &[],
+        ),
+        // mitt shape: H1, block_quote tagline, list of features, prose
+        // paragraph. Headline includes all four blocks (regression guard).
+        (
+            "markdown_mitt_shape_unchanged",
+            "# Mitt\n\
                    \n\
                    > Tiny 200b functional event emitter / pubsub.\n\
                    \n\
@@ -1793,18 +1781,86 @@ mod tests {
                    \n\
                    Mitt was made for the browser, but works in any JavaScript runtime.\n\
                    \n\
-                   ## Table of Contents\n";
-        let rows = covered(src);
-        assert!(rows.contains(&1), "heading row missing");
-        assert!(rows.contains(&3), "block_quote tagline missing");
-        assert!(rows.contains(&5), "list row 5 missing");
-        assert!(rows.contains(&6), "list row 6 missing");
-        assert!(rows.contains(&8), "closer paragraph missing");
-        assert!(!rows.contains(&10), "must not pull in ## Table of Contents");
+                   ## Table of Contents\n",
+            &[1, 3, 5, 6, 8],
+            &[10],
+        ),
+        // Block_quote between H1 and H2 — include block_quote, stop
+        // before the H2 sub-section.
+        (
+            "markdown_blockquote_then_subsection",
+            "# Title\n\
+                   \n\
+                   > Tagline.\n\
+                   \n\
+                   ## Sub\n\
+                   \n\
+                   sub body\n",
+            &[1, 3],
+            &[5, 7],
+        ),
+        // HTML block with only an `<img>` tag (cmdk-style centered hero).
+        // The block is decorative and should be skipped.
+        (
+            "markdown_decorative_html_block_skipped",
+            "# Title\n\
+                   \n\
+                   <p align=\"center\">\n\
+                   <img src=\"hero.png\" />\n\
+                   </p>\n\
+                   \n\
+                   Tagline.\n",
+            &[1, 7],
+            &[3, 4],
+        ),
+        // Plain-text autolink paragraph is NOT decorative.
+        (
+            "markdown_autolink_paragraph_kept",
+            "# Title\n\
+                   \n\
+                   <https://example.com/docs>\n\
+                   \n\
+                   Tagline.\n",
+            &[3],
+            &[],
+        ),
+        // Multi-language nav paragraph (`[English](url) • ...`) is
+        // decorative — the headline must not burn its prelude on it.
+        (
+            "markdown_nav_link_paragraph_is_decorative",
+            "[English](https://e.x/a) • [中文](https://e.x/b) • [Fr](https://e.x/c)\n\
+                   \n\
+                   # Project\n\
+                   \n\
+                   Actual lede paragraph.\n",
+            &[3, 5],
+            &[1],
+        ),
+    ];
+
+    #[test]
+    fn markdown_headline_covered_rows_table() {
+        for (row_no, (case, src, present, absent)) in HEADLINE_COVERED_CASES.iter().enumerate() {
+            let rows = covered(src);
+            for row in *present {
+                assert!(
+                    rows.contains(row),
+                    "{case} row {}: expected source row {row} to be present; rows={rows:?}",
+                    row_no + 1
+                );
+            }
+            for row in *absent {
+                assert!(
+                    !rows.contains(row),
+                    "{case} row {}: expected source row {row} to be absent; rows={rows:?}",
+                    row_no + 1
+                );
+            }
+        }
     }
 
-    /// Nested H1→H2 immediately. Headline must NOT pull H2 body into
-    /// itself; only the H1 heading row is covered.
+    // Nested H1→H2 immediately. Headline must NOT pull the H2 body into
+    // itself; only the H1 heading row is covered (exact set, not just membership).
     #[test]
     fn markdown_nested_subsection_not_pulled_in() {
         let src = "# Title\n\
@@ -1812,26 +1868,7 @@ mod tests {
                    ## Sub\n\
                    \n\
                    sub body\n";
-        let rows = covered(src);
-        assert_eq!(rows.iter().copied().collect::<Vec<_>>(), vec![1]);
-    }
-
-    /// Block_quote between H1 and H2 — include block_quote, stop
-    /// before the H2 sub-section.
-    #[test]
-    fn markdown_blockquote_then_subsection() {
-        let src = "# Title\n\
-                   \n\
-                   > Tagline.\n\
-                   \n\
-                   ## Sub\n\
-                   \n\
-                   sub body\n";
-        let rows = covered(src);
-        assert!(rows.contains(&1));
-        assert!(rows.contains(&3), "block_quote row missing");
-        assert!(!rows.contains(&5), "must not pull in ## Sub heading");
-        assert!(!rows.contains(&7), "must not pull in sub body");
+        assert_eq!(covered(src).into_iter().collect::<Vec<_>>(), vec![1]);
     }
 
     /// cmdk shape: H1 with project name then trailing image-link badges.
@@ -1881,54 +1918,6 @@ mod tests {
             .find(|s| s.start <= 1 && s.end >= 1)
             .expect("no span covers row 1");
         assert!(matches!(heading_span.render, Render::Full));
-    }
-
-    /// HTML block with only an `<img>` tag (cmdk-style centered hero).
-    /// The block is decorative and should be skipped.
-    #[test]
-    fn markdown_decorative_html_block_skipped() {
-        let src = "# Title\n\
-                   \n\
-                   <p align=\"center\">\n\
-                   <img src=\"hero.png\" />\n\
-                   </p>\n\
-                   \n\
-                   Tagline.\n";
-        let rows = covered(src);
-        assert!(rows.contains(&1));
-        assert!(rows.contains(&7));
-        assert!(!rows.contains(&3), "html_block row 3 should be skipped");
-        assert!(!rows.contains(&4), "html_block row 4 should be skipped");
-    }
-
-    /// Plain-text autolink paragraph is NOT decorative.
-    #[test]
-    fn markdown_autolink_paragraph_kept() {
-        let src = "# Title\n\
-                   \n\
-                   <https://example.com/docs>\n\
-                   \n\
-                   Tagline.\n";
-        let rows = covered(src);
-        assert!(rows.contains(&3), "autolink paragraph must be kept");
-    }
-
-    /// Multi-language nav paragraph (`[English](url) • ...`) is
-    /// decorative — the headline must not burn its prelude on it.
-    #[test]
-    fn markdown_nav_link_paragraph_is_decorative() {
-        let src = "[English](https://e.x/a) • [中文](https://e.x/b) • [Fr](https://e.x/c)\n\
-                   \n\
-                   # Project\n\
-                   \n\
-                   Actual lede paragraph.\n";
-        let rows = covered(src);
-        assert!(rows.contains(&3), "H1 row must be present");
-        assert!(rows.contains(&5), "actual lede must be present");
-        assert!(
-            !rows.contains(&1),
-            "nav-link prelude paragraph must be skipped as decorative"
-        );
     }
 
     /// Short bold tagline followed by a prose lede: the extension
@@ -2132,109 +2121,103 @@ mod tests {
         s
     }
 
-    /// README with one H1 wrapping one H2 with two H3 children, body
-    /// large enough to clear `H2_SPLIT_BYTES`. Should return one
-    /// `Whole` (the H1-unwrap intro) plus two H3Child ranges. The H2
-    /// intro range is dropped (heading-only after the H2).
     #[test]
-    fn markdown_h2_split_intro_plus_h3_subsections() {
-        let prefix = "# Title\n\nTagline.\n\n## Usage";
-        let src = make_split_h2_source(prefix, 2, 6);
-        let ranges = sections("README.md", &src);
-        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-        assert_eq!(
-            kinds,
-            vec![
-                SectionKind::Whole,   // H1-unwrap intro
-                SectionKind::H3Child, // ### Sub 0
-                SectionKind::H3Child, // ### Sub 1
-            ],
-            "split H2 must drop the heading-only intro and emit per-H3 ranges; got {ranges:?}",
-        );
-    }
-
-    /// Substantive intro body — H2 heading followed by a real paragraph
-    /// before the first H3 — must keep the Intro range.
-    #[test]
-    fn markdown_h2_intro_kept_when_body_substantive() {
-        let prefix = "# Title\n\nTagline.\n\n## Setup\n\n\
+    fn markdown_logical_sections_kinds_table() {
+        let cases: &[(&str, &str, String, Vec<SectionKind>)] = &[
+            // README with one H1 wrapping one H2 with two H3 children, body
+            // large enough to clear `H2_SPLIT_BYTES`. Should return one
+            // `Whole` (the H1-unwrap intro) plus two H3Child ranges. The H2
+            // intro range is dropped (heading-only after the H2).
+            (
+                "markdown_h2_split_intro_plus_h3_subsections",
+                "README.md",
+                make_split_h2_source("# Title\n\nTagline.\n\n## Usage", 2, 6),
+                vec![
+                    SectionKind::Whole,   // H1-unwrap intro
+                    SectionKind::H3Child, // ### Sub 0
+                    SectionKind::H3Child, // ### Sub 1
+                ],
+            ),
+            // Substantive intro body — H2 heading followed by a real paragraph
+            // before the first H3 — must keep the Intro range.
+            (
+                "markdown_h2_intro_kept_when_body_substantive",
+                "README.md",
+                make_split_h2_source(
+                    "# Title\n\nTagline.\n\n## Setup\n\n\
                       Real prose intro before any subheading.\n\
-                      A second sentence makes it substantive.";
-        let src = make_split_h2_source(prefix, 2, 6);
-        let ranges = sections("README.md", &src);
-        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-        assert_eq!(
-            kinds,
-            vec![
-                SectionKind::Whole,
-                SectionKind::Intro,
-                SectionKind::H3Child,
-                SectionKind::H3Child,
-            ],
-            "intro with body must be kept; got {ranges:?}",
-        );
-    }
+                      A second sentence makes it substantive.",
+                    2,
+                    6,
+                ),
+                vec![
+                    SectionKind::Whole,
+                    SectionKind::Intro,
+                    SectionKind::H3Child,
+                    SectionKind::H3Child,
+                ],
+            ),
+            // H2 with only one H3 child stays a `Whole`. The split rule
+            // requires ≥2 H3 children.
+            (
+                "markdown_h2_no_split_one_h3",
+                "README.md",
+                make_split_h2_source("# Title\n\nTagline.\n\n## Usage", 1, 6),
+                vec![SectionKind::Whole, SectionKind::Whole],
+            ),
+            // Splittable shape but section bytes < `H2_SPLIT_BYTES` stays one
+            // `Whole` range.
+            (
+                "markdown_h2_no_split_under_threshold",
+                "README.md",
+                make_split_h2_source("# Title\n\nT.\n\n## Usage", 2, 0),
+                vec![SectionKind::Whole, SectionKind::Whole],
+            ),
+            // `CHANGELOG.md` shape with H3 children stays `Whole` — the
+            // changelog index-decay needs a stable per-H2 mapping.
+            (
+                "markdown_h2_split_skipped_for_changelog",
+                "CHANGELOG.md",
+                make_split_h2_source("## v1.0", 2, 6),
+                vec![SectionKind::Whole],
+            ),
+            // Doc page (non-README, non-changelog) with H3 children does
+            // split. Gate is changelog-only, not readme-only.
+            (
+                "markdown_h2_split_non_readme_doc_page",
+                "docs/setup.md",
+                make_split_h2_source(
+                    "## Setup\n\nIntro paragraph that is real prose.\n\
+                      A second line so the intro body counts as substantive.",
+                    2,
+                    6,
+                ),
+                vec![
+                    SectionKind::Intro,
+                    SectionKind::H3Child,
+                    SectionKind::H3Child,
+                ],
+            ),
+        ];
 
-    /// H2 with only one H3 child stays a `Whole`. The split rule
-    /// requires ≥2 H3 children.
-    #[test]
-    fn markdown_h2_no_split_one_h3() {
-        let prefix = "# Title\n\nTagline.\n\n## Usage";
-        let src = make_split_h2_source(prefix, 1, 6);
-        let ranges = sections("README.md", &src);
-        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-        assert_eq!(kinds, vec![SectionKind::Whole, SectionKind::Whole]);
-    }
-
-    /// Splittable shape but section bytes < `H2_SPLIT_BYTES` stays one
-    /// `Whole` range.
-    #[test]
-    fn markdown_h2_no_split_under_threshold() {
-        let prefix = "# Title\n\nT.\n\n## Usage";
-        let src = make_split_h2_source(prefix, 2, 0);
-        assert!(
-            src.len() < 600,
-            "test fixture must be under threshold; got {} bytes",
-            src.len()
-        );
-        let ranges = sections("README.md", &src);
-        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-        assert_eq!(kinds, vec![SectionKind::Whole, SectionKind::Whole]);
-    }
-
-    /// `CHANGELOG.md` shape with H3 children stays `Whole` — the
-    /// changelog index-decay needs a stable per-H2 mapping.
-    #[test]
-    fn markdown_h2_split_skipped_for_changelog() {
-        let prefix = "## v1.0";
-        let src = make_split_h2_source(prefix, 2, 6);
-        let ranges = sections("CHANGELOG.md", &src);
-        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-        assert_eq!(
-            kinds,
-            vec![SectionKind::Whole],
-            "changelog must not split; got {ranges:?}",
-        );
-    }
-
-    /// Doc page (non-README, non-changelog) with H3 children does
-    /// split. Gate is changelog-only, not readme-only.
-    #[test]
-    fn markdown_h2_split_non_readme_doc_page() {
-        let prefix = "## Setup\n\nIntro paragraph that is real prose.\n\
-                      A second line so the intro body counts as substantive.";
-        let src = make_split_h2_source(prefix, 2, 6);
-        let ranges = sections("docs/setup.md", &src);
-        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-        assert_eq!(
-            kinds,
-            vec![
-                SectionKind::Intro,
-                SectionKind::H3Child,
-                SectionKind::H3Child,
-            ],
-            "non-changelog doc page must split; got {ranges:?}",
-        );
+        for (row_no, (case, file, src, expected)) in cases.iter().enumerate() {
+            if *case == "markdown_h2_no_split_under_threshold" {
+                assert!(
+                    src.len() < 600,
+                    "{case} row {}: test fixture must be under threshold; got {} bytes",
+                    row_no + 1,
+                    src.len()
+                );
+            }
+            let ranges = sections(file, src);
+            let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
+            assert_eq!(
+                kinds.as_slice(),
+                expected.as_slice(),
+                "{case} row {}: section kinds mismatch; ranges={ranges:?}",
+                row_no + 1
+            );
+        }
     }
 
     /// Non-split changelog: every `Whole` range's `parent_index` equals
