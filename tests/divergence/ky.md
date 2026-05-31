@@ -6,25 +6,25 @@ Score(3000)=0.614 I=0.858 C=0.439 ns_rows≤3K=17/38 (reached=8 partial=0 missin
 | ns | 40 |  | 40 | Repo root listing | 1.1 |  | 1.000 |
 | ns | 79 |  | 39 | Readme one-line tagline | 1.2 |  | 0.953 |
 | walker |  | 105 | 65 | package identity in package.json |  |  | 0.955 |
-| walker |  | 117 | 12 | listing of 'media' |  |  | 0.955 |
-| walker |  | 133 | 16 | listing of 'source' |  |  | 0.958 |
-| walker |  | 143 | 10 | export names surface in source/index.ts |  |  | 0.959 |
+| walker |  | 121 | 16 | listing of 'source' |  |  | 0.958 |
+| walker |  | 131 | 10 | export names surface in source/index.ts |  |  | 0.959 |
+| walker |  | 143 | 12 | listing of 'media' |  |  | 0.959 |
 | ns | 163 |  | 84 | Readme top-level section headings (## only) | 1.3 |  | 0.679 |
-| ns | 204 |  | 41 | Readme target environments + 'no deps' note | 1.4 |  | 0.631 |
-| walker |  | 315 | 172 | README headline in readme.md |  |  | 0.701 |
-| ns | 331 |  | 127 | Readme benefits-over-fetch list | 1.5 | 1.3 | 0.743 |
-| walker |  | 336 | 21 | listing of 'source/errors' |  |  | 0.746 |
-| walker |  | 349 | 13 | export names surface in source/errors/TimeoutError.ts |  |  | 0.746 |
-| walker |  | 369 | 20 | export at source/errors/TimeoutError.ts:3 |  |  | 0.747 |
-| walker |  | 383 | 14 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.747 |
-| walker |  | 400 | 17 | export names surface in source/errors/HTTPError.ts |  |  | 0.747 |
-| ns | 447 |  | 116 | source/ tree (all immediate children + every subdir) | 1.6 |  | 0.567 |
-| walker |  | 452 | 52 | export at source/errors/HTTPError.ts:5 |  |  | 0.567 |
-| walker |  | 511 | 59 | export at source/errors/ForceRetryError.ts:8 |  |  | 0.567 |
-| ns | 545 |  | 98 | test/ tree (top-level + helpers/) | 1.7 |  | 0.482 |
-| walker |  | 550 | 39 | export body at source/errors/TimeoutError.ts:3 body 7 |  |  | 0.482 |
-| walker |  | 583 | 33 | listing of 'source/types' |  |  | 0.553 |
-| walker |  | 621 | 38 | listing of 'source/utils' |  |  | 0.672 |
+| walker |  | 164 | 21 | listing of 'source/errors' |  |  | 0.683 |
+| walker |  | 177 | 13 | export names surface in source/errors/TimeoutError.ts |  |  | 0.683 |
+| walker |  | 197 | 20 | export at source/errors/TimeoutError.ts:3 |  |  | 0.683 |
+| ns | 204 |  | 41 | Readme target environments + 'no deps' note | 1.4 |  | 0.635 |
+| walker |  | 211 | 14 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.635 |
+| walker |  | 244 | 33 | listing of 'source/types' |  |  | 0.649 |
+| walker |  | 282 | 38 | listing of 'source/utils' |  |  | 0.672 |
+| walker |  | 299 | 17 | export names surface in source/errors/HTTPError.ts |  |  | 0.672 |
+| ns | 331 |  | 127 | Readme benefits-over-fetch list | 1.5 | 1.3 | 0.535 |
+| ns | 447 |  | 116 | source/ tree (all immediate children + every subdir) | 1.6 |  | 0.650 |
+| walker |  | 471 | 172 | README headline in readme.md |  |  | 0.791 |
+| walker |  | 523 | 52 | export at source/errors/HTTPError.ts:5 |  |  | 0.791 |
+| ns | 545 |  | 98 | test/ tree (top-level + helpers/) | 1.7 |  | 0.672 |
+| walker |  | 582 | 59 | export at source/errors/ForceRetryError.ts:8 |  |  | 0.672 |
+| walker |  | 621 | 39 | export body at source/errors/TimeoutError.ts:3 body 7 |  |  | 0.672 |
 | walker |  | 636 | 15 | imports in source/types/ResponsePromise.ts |  |  | 0.672 |
 | walker |  | 651 | 15 | imports in source/types/retry.ts |  |  | 0.672 |
 | ns | 714 |  | 169 | package.json identity (name, version, description, exports, engines) | 1.8 |  | 0.621 |

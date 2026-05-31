@@ -443,41 +443,38 @@ Score(3000)=0.617 I=0.749 C=0.508 ns_rows≤3K=16/58 (reached=6 partial=0 missin
 | walker |  | 9141 | 29 | python imports in rich/box.py |  |  | 0.435 |
 | ns | 9175 |  | 39 | Pretty + pprint + JSON | 7.5 |  | 0.434 |
 | ns | 9255 |  | 80 | Prompt hierarchy | 7.6 |  | 0.432 |
-| walker |  | 9256 | 115 | python method sigs in rich/status.py |  |  | 0.432 |
-| walker |  | 9256 | 0 | python method at rich/status.py:85 |  |  | 0.432 |
-| walker |  | 9256 | 0 | python method at rich/status.py:89 |  |  | 0.432 |
-| walker |  | 9256 | 0 | python method at rich/status.py:93 |  |  | 0.432 |
-| walker |  | 9256 | 0 | python method at rich/status.py:96 |  |  | 0.432 |
-| walker |  | 9267 | 11 | python method at rich/status.py:44 |  |  | 0.432 |
 | ns | 9275 |  | 20 | Emoji + Inspect | 7.7 |  | 0.431 |
-| walker |  | 9278 | 11 | python method at rich/status.py:48 |  |  | 0.431 |
-| walker |  | 9287 | 9 | python method doc at rich/status.py:85 |  |  | 0.431 |
-| walker |  | 9296 | 9 | python method doc at rich/status.py:89 |  |  | 0.431 |
-| walker |  | 9304 | 8 | python method body at rich/status.py:93 body 94 |  |  | 0.431 |
-| walker |  | 9314 | 10 | python method body at rich/status.py:44 body 46 |  |  | 0.431 |
-| walker |  | 9324 | 10 | python method body at rich/status.py:85 body 87 |  |  | 0.431 |
-| walker |  | 9334 | 10 | python method body at rich/status.py:89 body 91 |  |  | 0.431 |
-| walker |  | 9349 | 15 | python method doc at rich/status.py:48 |  |  | 0.431 |
+| walker |  | 9276 | 135 | listing of 'docs/source' |  |  | 0.431 |
 | ns | 9355 |  | 80 | Small support: filesize / cells / control / containers | 8.1 |  | 0.433 |
-| walker |  | 9360 | 11 | python method body at rich/status.py:48 body 51 |  |  | 0.433 |
-| walker |  | 9374 | 14 | python method body at rich/status.py:96 body 97 |  |  | 0.433 |
 | ns | 9390 |  | 35 | @rich_repr / @auto decorators | 8.2 |  | 0.432 |
-| walker |  | 9430 | 56 | python method at rich/status.py:100 |  |  | 0.432 |
-| walker |  | 9438 | 8 | python method body at rich/status.py:100 body 106 |  |  | 0.432 |
-| walker |  | 9508 | 70 | python decl at rich/control.py:9 |  |  | 0.432 |
+| walker |  | 9391 | 115 | python method sigs in rich/status.py |  |  | 0.432 |
+| walker |  | 9391 | 0 | python method at rich/status.py:85 |  |  | 0.432 |
+| walker |  | 9391 | 0 | python method at rich/status.py:89 |  |  | 0.432 |
+| walker |  | 9391 | 0 | python method at rich/status.py:93 |  |  | 0.432 |
+| walker |  | 9391 | 0 | python method at rich/status.py:96 |  |  | 0.432 |
+| walker |  | 9402 | 11 | python method at rich/status.py:44 |  |  | 0.432 |
+| walker |  | 9413 | 11 | python method at rich/status.py:48 |  |  | 0.432 |
+| walker |  | 9422 | 9 | python method doc at rich/status.py:85 |  |  | 0.432 |
+| walker |  | 9431 | 9 | python method doc at rich/status.py:89 |  |  | 0.432 |
+| walker |  | 9439 | 8 | python method body at rich/status.py:93 body 94 |  |  | 0.432 |
+| walker |  | 9449 | 10 | python method body at rich/status.py:44 body 46 |  |  | 0.432 |
+| walker |  | 9459 | 10 | python method body at rich/status.py:85 body 87 |  |  | 0.432 |
+| walker |  | 9469 | 10 | python method body at rich/status.py:89 body 91 |  |  | 0.432 |
+| walker |  | 9484 | 15 | python method doc at rich/status.py:48 |  |  | 0.432 |
+| walker |  | 9495 | 11 | python method body at rich/status.py:48 body 51 |  |  | 0.432 |
+| walker |  | 9509 | 14 | python method body at rich/status.py:96 body 97 |  |  | 0.432 |
 | ns | 9556 |  | 166 | examples/ listing | 8.3 |  | 0.422 |
-| walker |  | 9584 | 76 | python decl doc at rich/control.py:48 |  |  | 0.422 |
-| walker |  | 9670 | 86 | python decl names surface in rich/terminal_theme.py |  |  | 0.422 |
-| walker |  | 9670 | 0 | python decl at rich/terminal_theme.py:9 |  |  | 0.422 |
-| walker |  | 9681 | 11 | python method sigs in rich/terminal_theme.py |  |  | 0.422 |
-| walker |  | 9798 | 117 | python method sigs in rich/progress_bar.py |  |  | 0.422 |
-| walker |  | 9798 | 0 | python method at rich/progress_bar.py:57 |  |  | 0.422 |
-| walker |  | 9798 | 0 | python method at rich/progress_bar.py:116 |  |  | 0.422 |
-| walker |  | 9811 | 13 | python method at rich/progress_bar.py:60 |  |  | 0.422 |
-| walker |  | 9821 | 10 | python method doc at rich/progress_bar.py:60 |  |  | 0.422 |
-| walker |  | 9844 | 23 | python method at rich/progress_bar.py:200 |  |  | 0.422 |
-| walker |  | 9868 | 24 | python method at rich/progress_bar.py:156 |  |  | 0.422 |
-| walker |  | 9889 | 21 | python method body at rich/progress_bar.py:57 body 58 |  |  | 0.422 |
+| walker |  | 9565 | 56 | python method at rich/status.py:100 |  |  | 0.422 |
+| walker |  | 9573 | 8 | python method body at rich/status.py:100 body 106 |  |  | 0.422 |
+| walker |  | 9643 | 70 | python decl at rich/control.py:9 |  |  | 0.422 |
+| walker |  | 9719 | 76 | python decl doc at rich/control.py:48 |  |  | 0.422 |
+| walker |  | 9805 | 86 | python decl names surface in rich/terminal_theme.py |  |  | 0.422 |
+| walker |  | 9805 | 0 | python decl at rich/terminal_theme.py:9 |  |  | 0.422 |
+| walker |  | 9816 | 11 | python method sigs in rich/terminal_theme.py |  |  | 0.422 |
 | ns | 9932 |  | 376 | tests/ listing | 8.4 |  | 0.404 |
-| walker |  | 9951 | 62 | python method at rich/spinner.py:95 |  |  | 0.404 |
-| walker |  | 9981 | 30 | python imports in rich/_null_file.py |  |  | 0.404 |
+| walker |  | 9933 | 117 | python method sigs in rich/progress_bar.py |  |  | 0.404 |
+| walker |  | 9933 | 0 | python method at rich/progress_bar.py:57 |  |  | 0.404 |
+| walker |  | 9933 | 0 | python method at rich/progress_bar.py:116 |  |  | 0.404 |
+| walker |  | 9946 | 13 | python method at rich/progress_bar.py:60 |  |  | 0.404 |
+| walker |  | 9956 | 10 | python method doc at rich/progress_bar.py:60 |  |  | 0.404 |
+| walker |  | 9979 | 23 | python method at rich/progress_bar.py:200 |  |  | 0.404 |

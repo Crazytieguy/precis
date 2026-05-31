@@ -96,8 +96,6 @@ database/
         examples/
     clickhouse/
         README.md
-            1→# ClickHouse
-            3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
         clickhouse.go
         clickhouse_test.go
         examples/
@@ -111,10 +109,6 @@ database/
         22→func (e Error) Error() string {
         …
     firebird/
-        README.md
-        examples/
-        firebird.go
-        firebird_test.go
     mongodb/
         README.md
         examples/
@@ -253,6 +247,11 @@ migration.go
 migration_test.go
 source/
     aws_s3/
+        README.md
+            1→# aws_s3
+            3→`s3://<bucket>/<prefix>`
+        s3.go
+        s3_test.go
     bitbucket/
         .gitignore
         README.md
@@ -315,6 +314,9 @@ source/
         go-bindata_test.go
         testdata/
     godoc_vfs/
+        vfs.go
+        vfs_example_test.go
+        vfs_test.go
     google_cloud_storage/
         README.md
             1→# Google Cloud Storage
@@ -348,6 +350,9 @@ source/
     parse.go
     parse_test.go
     pkger/
+        README.md
+        pkger.go
+        pkger_test.go
     stub/
     testing/
 testing/

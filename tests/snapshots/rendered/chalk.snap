@@ -14,44 +14,18 @@ code-of-conduct.md
     …
     3→## Our Pledge
     …
-    5→In the interest of fostering an open and welcoming environment, we as
-    6→contributors and maintainers pledge to making participation in our project and
-    7→our community a harassment-free experience for everyone, regardless of age, body
-    8→size, disability, ethnicity, gender identity and expression, level of experience,
-    9→nationality, personal appearance, race, religion, or sexual identity and
-    10→orientation.
     12→## Our Standards
     …
     34→## Our Responsibilities
     …
-    36→Project maintainers are responsible for clarifying the standards of acceptable
-    37→behavior and are expected to take appropriate and fair corrective action in
-    38→response to any instances of unacceptable behavior.
-    40→Project maintainers have the right and responsibility to remove, edit, or
-    41→reject comments, commits, code, wiki edits, issues, and other contributions
-    42→that are not aligned to this Code of Conduct, or to ban temporarily or
-    43→permanently any contributor for other behaviors that they deem inappropriate,
-    44→threatening, offensive, or harmful.
     46→## Scope
     …
-    48→This Code of Conduct applies both within project spaces and in public spaces
-    49→when an individual is representing the project or its community. Examples of
-    50→representing a project or community include using an official project e-mail
-    51→address, posting via an official social media account, or acting as an appointed
-    52→representative at an online or offline event. Representation of a project may be
-    53→further defined and clarified by project maintainers.
     55→## Enforcement
     …
     68→## Attribution
     …
-    70→This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
-    71→available at [http://contributor-covenant.org/version/1/4][version]
-    73→[homepage]: http://contributor-covenant.org
-    74→[version]: http://contributor-covenant.org/version/1/4/
 contributing.md
 examples/
-    rainbow.js
-    screenshot.js
 license
 media/
     logo.png
@@ -109,18 +83,6 @@ package.json
     50→		"command-line",
     51→		"text"
     52→	],
-    53→	"devDependencies": {
-    54→		"@types/node": "^16.11.10",
-    55→		"ava": "^3.15.0",
-    56→		"c8": "^7.10.0",
-    57→		"color-convert": "^2.0.1",
-    58→		"execa": "^6.0.0",
-    59→		"log-update": "^5.0.0",
-    60→		"matcha": "^0.7.0",
-    61→		"tsd": "^0.19.0",
-    62→		"xo": "^0.57.0",
-    63→		"yoctodelay": "^2.0.0"
-    64→	},
 readme.md
     10→> Terminal string styling done right
     18→## Info
@@ -151,33 +113,18 @@ readme.md
     114→### chalk.`<style>[.<style>...](string, [string...])`
     …
     116→Example: `chalk.red.bold.underline('Hello', 'world');`
-    118→Chain [styles](#styles) and call the last one as a method with a string argument. Order doesn't matter, and later styles take precedent in case of a conflict. This simply means that `chalk.red.yellow.green` is equivalent to `chalk.green`.
     120→Multiple arguments will be separated by space.
     122→### chalk.level
     …
     124→Specifies the level of color support.
-    126→Color support is automatically detected, but you can override it by setting the `level` property. You should however only do this in your own code as it applies globally to all Chalk consumers.
-    128→If you need to change this in a reusable module, create a new instance:
-    130→```js
-    131→import {Chalk} from 'chalk';
-    133→const customChalk = new Chalk({level: 0});
-    134→```
-    136→| Level | Description |
-    137→| :---: | :--- |
-    138→| `0` | All colors disabled |
-    139→| `1` | Basic color support (16 colors) |
-    140→| `2` | 256 color support |
-    141→| `3` | Truecolor support (16 million colors) |
     143→### supportsColor
     …
     145→Detect whether the terminal [supports color](https://github.com/chalk/supports-color). Used internally and handled for you, but exposed for convenience.
     149→Explicit 256/Truecolor mode can be enabled using the `--color=256` and `--color=16m` flags, respectively.
     151→### chalkStderr and supportsColorStderr
     …
-    153→`chalkStderr` contains a separate instance configured with color support detected for `stderr` stream instead of `stdout`. Override rules from `supportsColor` apply to this too. `supportsColorStderr` is exposed for convenience.
     155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
     …
-    157→All supported style strings are exposed as an array of strings for convenience. `colorNames` is the combination of `foregroundColorNames` and `backgroundColorNames`.
     171→## Styles
     …
     173→### Modifiers
@@ -208,10 +155,6 @@ readme.md
     …
     256→### Why not switch to a smaller coloring package?
     …
-    258→Chalk may be larger, but there is a reason for that. It offers a more user-friendly API, well-documented types, supports millions of colors, and covers edge cases that smaller alternatives miss. Chalk is mature, reliable, and built to last.
-    262→Chalk is also likely already in your dependency tree (since 100K+ packages depend on it), so switching won’t save space—in fact, it might increase it. npm deduplicates dependencies, so multiple Chalk instances turn into one, but adding another package alongside it will increase your overall size.
-    264→If the goal is to clean up the ecosystem, switching away from Chalk won’t even make a dent. The real problem lies with packages that have very deep dependency trees (for example, those including a lot of polyfills). Chalk has no dependencies. It's better to focus on impactful changes rather than minor optimizations.
-    266→If absolute package size is important to you, I also maintain [yoctocolors](https://github.com/sindresorhus/yoctocolors), one of the smallest color packages out there.
     268→*\- [Sindre](https://github.com/sindresorhus)*
     270→### But the smaller coloring package has benchmarks showing it is faster
     …
@@ -224,17 +167,112 @@ readme.md
 source/
     index.d.ts
     index.js
+        1→import ansiStyles from '#ansi-styles';
+        2→import supportsColor from '#supports-color';
+        3→import { // eslint-disable-line import/order
+        4→	stringReplaceAll,
+        5→	stringEncaseCRLFWithFirstIndex,
+        6→} from './utilities.js';
+        8→const {stdout: stdoutColor, stderr: stderrColor} = supportsColor;
+        10→const GENERATOR = Symbol('GENERATOR');
+        11→const STYLER = Symbol('STYLER');
+        12→const IS_EMPTY = Symbol('IS_EMPTY');
+        15→const levelMapping = [
+        16→	'ansi',
+        17→	'ansi',
+        18→	'ansi256',
+        19→	'ansi16m',
+        20→];
+        22→const styles = Object.create(null);
+        24→const applyOptions = (object, options = {}) => {
+        25→	if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
+        26→		throw new Error('The `level` option should be an integer from 0 to 3');
+        27→	}
+        29→	// Detect level if not set manually
+        30→	const colorLevel = stdoutColor ? stdoutColor.level : 0;
+        31→	object.level = options.level === undefined ? colorLevel : options.level;
+        34→export class Chalk {
+        35→	constructor(options) {
+        36→		// eslint-disable-next-line no-constructor-return
+        37→		return chalkFactory(options);
+        41→const chalkFactory = options => {
+        42→	const chalk = (...strings) => strings.join(' ');
+        43→	applyOptions(chalk, options);
+        45→	Object.setPrototypeOf(chalk, createChalk.prototype);
+        47→	return chalk;
+        50→function createChalk(options) {
+        51→	return chalkFactory(options);
+        74→const getModelAnsi = (model, level, type, ...arguments_) => {
+        …
+        94→const usedModels = ['rgb', 'hex', 'ansi256'];
+        119→const proto = Object.defineProperties(() => {}, {
+        132→const createStyler = (open, close, parent) => {
+        …
+        152→const createBuilder = (self, _styler, _isEmpty) => {
+        …
+        168→const applyStyle = (self, string) => {
+        …
+        204→const chalk = createChalk();
+        205→export const chalkStderr = createChalk({level: stderrColor ? stderrColor.level : 0});
+        …
+        220→export {
+        221→	stdoutColor as supportsColor,
+        222→	stderrColor as supportsColorStderr,
+        223→};
+        225→export default chalk;
     index.test-d.ts
     utilities.js
     vendor/
         ansi-styles/
-            index.d.ts
-            index.js
         supports-color/
             browser.d.ts
             browser.js
+                34→export default supportsColor;
             index.d.ts
             index.js
+                1→import process from 'node:process';
+                2→import os from 'node:os';
+                3→import tty from 'node:tty';
+                7→function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : process.argv) {
+                8→	const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
+                9→	const position = argv.indexOf(prefix + flag);
+                10→	const terminatorPosition = argv.indexOf('--');
+                11→	return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
+                14→const {env} = process;
+                16→let flagForceColor;
+                33→function envForceColor() {
+                34→	if ('FORCE_COLOR' in env) {
+                35→		if (env.FORCE_COLOR === 'true') {
+                36→			return 1;
+                37→		}
+                39→		if (env.FORCE_COLOR === 'false') {
+                40→			return 0;
+                41→		}
+                43→		return env.FORCE_COLOR.length === 0 ? 1 : Math.min(Number.parseInt(env.FORCE_COLOR, 10), 3);
+                44→	}
+                47→function translateLevel(level) {
+                48→	if (level === 0) {
+                49→		return false;
+                50→	}
+                52→	return {
+                53→		level,
+                54→		hasBasic: true,
+                55→		has256: level >= 2,
+                56→		has16m: level >= 3,
+                57→	};
+                60→function _supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
+                …
+                176→export function createSupportsColor(stream, options = {}) {
+                177→	const level = _supportsColor(stream, {
+                178→		streamIsTTY: stream && stream.isTTY,
+                179→		...options,
+                180→	});
+                182→	return translateLevel(level);
+                185→const supportsColor = {
+                186→	stdout: createSupportsColor({isTTY: tty.isatty(1)}),
+                187→	stderr: createSupportsColor({isTTY: tty.isatty(2)}),
+                188→};
+                190→export default supportsColor;
 test/
     _fixture.js
     chalk.js

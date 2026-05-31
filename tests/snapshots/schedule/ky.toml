@@ -45,24 +45,10 @@ kind = "full"
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "media" })'
-descriptor = "listing of 'media'"
-cost_tokens = 12
-cum_tokens = 117
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "media"
-entries = ["logo.ai", "logo.png", "logo.svg"]
-
-[[batches]]
-position = 4
 key = 'Fs(DirListing { dir: "source" })'
 descriptor = "listing of 'source'"
 cost_tokens = 16
-cum_tokens = 133
+cum_tokens = 121
 
 [batches.content]
 kind = "fs"
@@ -72,11 +58,11 @@ parent = "source"
 entries = ["core", "errors", "index.ts", "types", "utils"]
 
 [[batches]]
-position = 5
+position = 4
 key = 'Typescript(ExportNames { file: "source/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in source/index.ts"
 cost_tokens = 10
-cum_tokens = 143
+cum_tokens = 131
 
 [batches.content]
 kind = "lines"
@@ -98,45 +84,25 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 6
-key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
-descriptor = "README headline in readme.md"
-cost_tokens = 172
-cum_tokens = 315
+position = 5
+key = 'Fs(DirListing { dir: "media" })'
+descriptor = "listing of 'media'"
+cost_tokens = 12
+cum_tokens = 143
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "readme.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 22
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "media"
+entries = ["logo.ai", "logo.png", "logo.svg"]
 
 [[batches]]
-position = 7
+position = 6
 key = 'Fs(DirListing { dir: "source/errors" })'
 descriptor = "listing of 'source/errors'"
 cost_tokens = 21
-cum_tokens = 336
+cum_tokens = 164
 
 [batches.content]
 kind = "fs"
@@ -146,11 +112,11 @@ parent = "source/errors"
 entries = ["ForceRetryError.ts", "HTTPError.ts", "NonError.ts", "TimeoutError.ts"]
 
 [[batches]]
-position = 8
+position = 7
 key = 'Typescript(ExportNames { file: "source/errors/TimeoutError.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in source/errors/TimeoutError.ts"
 cost_tokens = 13
-cum_tokens = 349
+cum_tokens = 177
 
 [batches.content]
 kind = "lines"
@@ -172,11 +138,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 8
 key = 'Typescript(Export { file: "source/errors/TimeoutError.ts", start_line: 3 })'
 descriptor = "export at source/errors/TimeoutError.ts:3"
 cost_tokens = 20
-cum_tokens = 369
+cum_tokens = 197
 
 [batches.content]
 kind = "lines"
@@ -206,11 +172,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 9
 key = 'Typescript(ExportNames { file: "source/errors/ForceRetryError.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in source/errors/ForceRetryError.ts"
 cost_tokens = 14
-cum_tokens = 383
+cum_tokens = 211
 
 [batches.content]
 kind = "lines"
@@ -232,11 +198,39 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "source/types" })'
+descriptor = "listing of 'source/types'"
+cost_tokens = 33
+cum_tokens = 244
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/types"
+entries = ["ResponsePromise.ts", "common.ts", "hooks.ts", "ky.ts", "options.ts", "request.ts", "response.ts", "retry.ts"]
+
+[[batches]]
 position = 11
+key = 'Fs(DirListing { dir: "source/utils" })'
+descriptor = "listing of 'source/utils'"
+cost_tokens = 38
+cum_tokens = 282
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/utils"
+entries = ["body.ts", "delay.ts", "is.ts", "merge.ts", "normalize.ts", "options.ts", "timeout.ts", "type-guards.ts", "types.ts"]
+
+[[batches]]
+position = 12
 key = 'Typescript(ExportNames { file: "source/errors/HTTPError.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in source/errors/HTTPError.ts"
 cost_tokens = 17
-cum_tokens = 400
+cum_tokens = 299
 
 [batches.content]
 kind = "lines"
@@ -258,11 +252,45 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
+key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
+descriptor = "README headline in readme.md"
+cost_tokens = 172
+cum_tokens = 471
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 22
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
 key = 'Typescript(Export { file: "source/errors/HTTPError.ts", start_line: 5 })'
 descriptor = "export at source/errors/HTTPError.ts:5"
 cost_tokens = 52
-cum_tokens = 452
+cum_tokens = 523
 
 [batches.content]
 kind = "lines"
@@ -292,11 +320,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 13
+position = 15
 key = 'Typescript(Export { file: "source/errors/ForceRetryError.ts", start_line: 8 })'
 descriptor = "export at source/errors/ForceRetryError.ts:8"
 cost_tokens = 59
-cum_tokens = 511
+cum_tokens = 582
 
 [batches.content]
 kind = "lines"
@@ -326,11 +354,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 16
 key = 'Typescript(ExportBody { file: "source/errors/TimeoutError.ts", start_line: 3, body_start_line: 7 })'
 descriptor = "export body at source/errors/TimeoutError.ts:3 body 7"
 cost_tokens = 39
-cum_tokens = 550
+cum_tokens = 621
 
 [batches.content]
 kind = "lines"
@@ -342,34 +370,6 @@ end = 9
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "source/types" })'
-descriptor = "listing of 'source/types'"
-cost_tokens = 33
-cum_tokens = 583
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/types"
-entries = ["ResponsePromise.ts", "common.ts", "hooks.ts", "ky.ts", "options.ts", "request.ts", "response.ts", "retry.ts"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "source/utils" })'
-descriptor = "listing of 'source/utils'"
-cost_tokens = 38
-cum_tokens = 621
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/utils"
-entries = ["body.ts", "delay.ts", "is.ts", "merge.ts", "normalize.ts", "options.ts", "timeout.ts", "type-guards.ts", "types.ts"]
 
 [[batches]]
 position = 17

@@ -224,7 +224,7 @@ const MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT: usize = 2;
 pub(crate) fn is_source_dir(dir: &Path) -> bool {
     dir.file_name()
         .and_then(|n| n.to_str())
-        .is_some_and(|name| matches!(name, "src" | "lib"))
+        .is_some_and(|name| matches!(name, "src" | "lib" | "source"))
 }
 
 /// `pkg/` directory next to a `go.mod` — the Go convention for
@@ -361,7 +361,7 @@ fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     ctx.fs_state().source_inventory_count(dir, MIN_SOURCE_FILES) >= MIN_SOURCE_FILES
 }
 
-/// True when `dir` lies under a root-level `src`/`lib`/`pkg/` dir.
+/// True when `dir` lies under a root-level `src`/`lib`/`source`/`pkg/` dir.
 /// Promotes flat source partitions into the inventory tier; the
 /// shallowness gate avoids crowding in multi-package layouts.
 fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
