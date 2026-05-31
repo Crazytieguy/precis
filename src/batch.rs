@@ -255,6 +255,10 @@ pub enum PlaintextKey {
     /// Whole-file render. Skipped when line count or rendered token
     /// cost exceeds the walker's caps.
     Whole { file: PathBuf },
+    /// `NAME` + `DESCRIPTION`-lede slice of a troff man page — the
+    /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
+    /// (or autotools `*.1.in`) manual.
+    ManLede { file: PathBuf },
 }
 
 /// YAML batches. Narrowly scoped to `docker-compose.{yml,yaml}` —
@@ -684,8 +688,17 @@ impl InnerKey for JsonKey {
 
 impl InnerKey for PlaintextKey {
     fn describe(&self, root: &Path) -> String {
-        let PlaintextKey::Whole { file } = self;
-        format!("plaintext config {}", display_path(file, root))
+        match self {
+            PlaintextKey::Whole { file } => {
+                format!("plaintext config {}", display_path(file, root))
+            }
+            PlaintextKey::ManLede { file } => {
+                format!(
+                    "man-page NAME + DESCRIPTION in {}",
+                    display_path(file, root)
+                )
+            }
+        }
     }
 }
 

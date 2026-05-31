@@ -320,8 +320,6 @@ generic/
     UnwindPtrace.c
     UnwindPtrace.h
         2→#define HEADER_UnwindPtrace
-        10→#include <sys/types.h>
-        12→#include "Vector.h"
     fdstat_sysctl.c
     fdstat_sysctl.h
         2→#define HEADER_fdstat_sysctl
@@ -329,17 +327,6 @@ generic/
         …
     gettime.c
     gettime.h
-        2→#define HEADER_gettime
-        10→#include <stdint.h>
-        11→#include <time.h>
-        14→void Generic_gettime_realtime(struct timespec* tsp, uint64_t* msec);
-        …
-        16→void Generic_gettime_monotonic(uint64_t* msec);
-        …
-        18→static inline int timespec_cmp(const struct timespec* a, const struct timespec* b) {
-        …
-        26→static inline void timespec_add(const struct timespec* a, const struct timespec* b, struct timespec* result) {
-        …
     hostname.c
     hostname.h
         2→#define HEADER_hostname
@@ -349,23 +336,23 @@ generic/
     openzfs_sysctl.c
     openzfs_sysctl.h
         2→#define HEADER_openzfs_sysctl
-        10→#include "zfs/ZfsArcStats.h"
         13→void openzfs_sysctl_init(ZfsArcStats* stats);
         …
         15→void openzfs_sysctl_updateArcStats(ZfsArcStats* stats);
         …
     uname.c
     uname.h
-        2→#define HEADER_uname
         10→#include <stddef.h>
-        12→typedef void (*Platform_FetchReleaseFunction)(char* buffer, size_t length);
-        …
-        14→const char* Generic_unameRelease(Platform_FetchReleaseFunction fetchRelease);
-        …
-        16→const char* Generic_uname(void);
-        …
 htop-logo.png
 htop.1.in
+    2→.SH "NAME"
+    3→htop, pcp-htop \- interactive process viewer
+    11→.SH "DESCRIPTION"
+    12→.B htop
+    13→is a cross-platform ncurses-based process viewer.
+    14→.LP
+    15→It is similar to
+    16→.BR top ,
 htop.c
     14→const char* program = PACKAGE;
     …
@@ -415,6 +402,14 @@ openbsd/
         2→#define HEADER_OpenBSDProcessField
 pcp/
 pcp-htop.5.in
+    2→.SH "NAME"
+    3→\f3pcp-htop\f1 \- pcp-htop configuration file
+    4→.SH "DESCRIPTION"
+    5→.B pcp-htop
+    6→is a customizable performance metrics reporting tool.
+    7→It has a dynamic architecture, where a set of configuration files
+    8→provide additional, optional meters and columns to extend the fixed
+    9→set of display options provided by regular
 pcp-htop.c
 scripts/
 solaris/

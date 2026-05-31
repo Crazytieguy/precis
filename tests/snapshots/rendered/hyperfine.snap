@@ -43,6 +43,14 @@ doc/
     execution-order.svg
     histogram.png
     hyperfine.1
+        2→.SH NAME
+        3→hyperfine \- command\-line benchmarking tool
+        57→.SH DESCRIPTION
+        58→A command\-line benchmarking tool which includes:
+        59→.LP
+        60→.RS
+        61→* Statistical analysis across multiple runs
+        62→.RE
     whisker.png
 scripts/
 src/
@@ -178,13 +186,6 @@ src/
         …
     output/
         format.rs
-            5→pub fn format_duration(duration: Second, unit: Option<Unit>) -> String {
-            6→    let (duration_fmt, _) = format_duration_unit(duration, unit);
-            7→    duration_fmt
-            11→pub fn format_duration_unit(duration: Second, unit: Option<Unit>) -> (String, Unit) {
-            …
-            18→pub fn format_duration_value(duration: Second, unit: Option<Unit>) -> (String, Unit) {
-            …
         mod.rs
             1→pub mod format;
             2→pub mod progress_bar;
