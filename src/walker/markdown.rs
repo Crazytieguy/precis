@@ -2197,6 +2197,17 @@ fn heading_level(heading: Node) -> usize {
 /// image-only HTML, then include blocks until the first substantive
 /// paragraph (inclusive) or end of prelude. Mirrors the
 /// post-heading-skip-then-include walk inside `headline_spec`.
+/// True for an HTML nav / table-of-contents block — a `<p>`/`<div>` whose
+/// links point at page sections (`href="#…"`), e.g. py3xui's
+/// `Overview • Quick Start • Examples` menu. Decorative chrome, not lede.
+fn is_html_nav_block(block: Node, source: &str) -> bool {
+    if block.kind() != "html_block" {
+        return false;
+    }
+    let text = &source[block.start_byte()..block.end_byte()];
+    text.matches("href=\"#").count() + text.matches("href='#").count() >= 2
+}
+
 /// True for an admin/migration warning paragraph (`⚠️ …`, deprecation /
 /// breaking-change notices) READMEs place above the lede. These are
 /// appendix, not the project's "what is this" sentence — skip them so the
@@ -2247,7 +2258,8 @@ fn extend_prelude_lede(
         let block = prelude_blocks[i];
         if !(is_decorative_block(block, source)
             || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source))
-            || (block.kind() == "paragraph" && is_admin_warning_paragraph(block, source)))
+            || (block.kind() == "paragraph" && is_admin_warning_paragraph(block, source))
+            || is_html_nav_block(block, source))
         {
             break;
         }
@@ -2264,7 +2276,8 @@ fn extend_prelude_lede(
                 let next = prelude_blocks[j];
                 if !(is_decorative_block(next, source)
                     || (next.kind() == "paragraph" && is_nav_link_paragraph(next, source))
-                    || (next.kind() == "paragraph" && is_admin_warning_paragraph(next, source)))
+                    || (next.kind() == "paragraph" && is_admin_warning_paragraph(next, source))
+                    || is_html_nav_block(next, source))
                 {
                     break;
                 }

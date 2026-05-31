@@ -12,13 +12,14 @@ CONTRIBUTING.md
 LICENSE.md
 README.md
     7→Sync and Async Object-oriented Python SDK for the 3x-ui API.
-    9→<p align="center">
-    10→    <a href="#Overview">Overview</a> •
-    11→    <a href="#Quick-Start">Quick Start</a> •
-    12→    <a href="#Examples">Examples</a> •
-    13→    <a href="#Bugs-and-Feature-Requests">Bugs and Feature Requests</a> •
-    14→    <a href="https://pypi.org/project/py3xui/">PyPI</a>
-    15→</p>
+    17→[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/iwatkot/py3xui)](https://github.com/iwatkot/py3xui/releases)
+    18→[![PyPI - Version](https://img.shields.io/pypi/v/py3xui)](https://pypi.org/project/py3xui/)
+    19→[![GitHub issues](https://img.shields.io/github/issues/iwatkot/py3xui)](https://github.com/iwatkot/py3xui/issues)
+    20→[![Build Status](https://github.com/iwatkot/py3xui/actions/workflows/checks.yml/badge.svg)](https://github.com/iwatkot/py3xui/actions)
+    21→[![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)<br>
+    22→[![PyPI - Downloads](https://img.shields.io/pypi/dm/py3xui)](https://pypi.org/project/py3xui/)
+    23→[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py3xui)](https://pypi.org/project/py3xui/)
+    24→[![codecov](https://codecov.io/github/iwatkot/py3xui/graph/badge.svg?token=M9EYR3D23P)](https://codecov.io/github/iwatkot/py3xui)
     29→## Overview
     30→This SDK is designed to interact with the [3x-ui](https://github.com/MHSanaei/3x-ui) app in a more object-oriented way. It provides both synchronous and asynchronous methods to interact with the app. The SDK is designed to be as simple as possible to use, while still providing a lot of flexibility and uses `Pydantic` models to validate the data.<br>
     31→Used dependencies:
@@ -168,11 +169,6 @@ py3xui/
             7→<a id="client.client.ClientFields"></a>
             9→## ClientFields Objects
             …
-            11→```python
-            12→class ClientFields()
-            13→```
-            15→Stores the fields returned by the XUI API for parsing.
-            17→<a id="client.client.Client"></a>
             19→## Client Objects
             …
         __init__.py
@@ -209,9 +205,7 @@ py3xui/
             38→class Inbound(BaseModel):
             …
             88→    @field_validator("stream_settings")
-            89→    def validate_stream_settings(  # pylint: disable=no-self-argument
-            90→        cls, value: StreamSettings | str
-            91→    ) -> StreamSettings | str:
+            …
             114→    def to_json(self) -> dict[str, Any]:
             …
         settings.py
@@ -247,11 +241,6 @@ py3xui/
             7→<a id="server.server.ServerFields"></a>
             9→## ServerFields Objects
             …
-            11→```python
-            12→class ServerFields()
-            13→```
-            15→Stores fields returned by XUI API for parsing.
-            17→<a id="server.server.MemoryInfo"></a>
             19→## MemoryInfo Objects
             …
             34→## XRayInfo Objects
