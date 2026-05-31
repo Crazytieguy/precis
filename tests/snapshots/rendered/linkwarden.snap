@@ -87,49 +87,6 @@ README.md
     …
 apps/
     mobile/
-        .easignore
-        .env.sample
-        .gitignore
-        app/
-            (tabs)/
-                _layout.tsx
-                collections/
-                dashboard/
-                links/
-                settings/
-                tags/
-            +not-found.tsx
-            _layout.tsx
-            incoming.tsx
-            index.tsx
-                12→export default function HomeScreen() {
-                …
-            links/
-            login.tsx
-        app.json
-        assets/
-        babel.config.js
-        components/
-        eas.json
-        lib/
-            cache.ts
-            colors.ts
-            queryClient.ts
-            queryPersister.ts
-            theme.ts
-        metro.config.js
-        nativewind-env.d.ts
-        package.json
-        plugins/
-        store/
-            auth.ts
-            data.ts
-            tmp.ts
-        styles/
-            global.css
-        tailwind.config.js
-        tsconfig.json
-        types/
     web/
     worker/
         index.ts
@@ -274,8 +231,19 @@ packages/
             10→model Account {
             28→model User {
             77→enum Theme {
+            78→  dark
+            79→  light
+            80→  auto
+            81→}
             83→enum AiTaggingMethod {
             90→enum LinksRouteTo {
+            91→  ORIGINAL
+            92→  PDF
+            93→  READABLE
+            94→  MONOLITH
+            95→  SCREENSHOT
+            96→  DETAILS
+            97→}
             99→model WhitelistedUser {
             108→model VerificationToken {
             118→model PasswordResetToken {

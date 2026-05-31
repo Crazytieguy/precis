@@ -274,6 +274,19 @@ pub enum PrismaKey {
     /// `generator` declaration in a `schema.prisma` — catastrophic-
     /// omission hedge.
     Toc { file: PathBuf },
+    /// Full brace-block body of one top-level `model` / `enum` /
+    /// `datasource` / `generator` declaration. Predecessor: the
+    /// enclosing `Toc`. A very large `model` is split into a
+    /// head + tail along a field boundary so high-value identity /
+    /// relation fields schedule ahead of archival-default fields.
+    Decl { file: PathBuf, start_line: usize },
+    /// Tail slice of a split large `model` body. Predecessor: the
+    /// matching head `Decl` at `start_line`.
+    DeclTail {
+        file: PathBuf,
+        start_line: usize,
+        tail_start_line: usize,
+    },
 }
 
 /// C / C-header batches. "Public" rule: top-level
@@ -673,8 +686,23 @@ impl InnerKey for PlaintextKey {
 
 impl InnerKey for PrismaKey {
     fn describe(&self, root: &Path) -> String {
-        let PrismaKey::Toc { file } = self;
-        describe_in("Prisma schema TOC", file, root)
+        match self {
+            PrismaKey::Toc { file } => describe_in("Prisma schema TOC", file, root),
+            PrismaKey::Decl { file, start_line } => {
+                describe_at("Prisma decl", file, *start_line, root)
+            }
+            PrismaKey::DeclTail {
+                file,
+                start_line,
+                tail_start_line,
+            } => describe_at_body(
+                "Prisma decl tail",
+                file,
+                *start_line,
+                *tail_start_line,
+                root,
+            ),
+        }
     }
 }
 

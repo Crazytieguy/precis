@@ -1,23 +1,32 @@
-//! Prisma schema walker. Emits a single `Toc` batch listing the
-//! opening line of every top-level Prisma declaration in a
-//! `schema.prisma` file — `model X { … }`, `enum Y { … }`,
-//! `datasource db { … }`, `generator client { … }`. The TOC is
-//! analogous to the Rust walker's `PubItemNames` or the C walker's
-//! `DeclNames`: it tells the agent every entity that exists in the
-//! schema without delivering any of their bodies.
+//! Prisma schema walker. Emits a `Toc` batch listing the opening line
+//! of every top-level Prisma declaration in a `schema.prisma` file —
+//! `model X { … }`, `enum Y { … }`, `datasource db { … }`,
+//! `generator client { … }` — plus a per-declaration `Decl` body batch
+//! delivering the brace block itself.
+//!
+//! The TOC is analogous to the Rust walker's `PubItemNames` or the C
+//! walker's `DeclNames`: it tells the agent every entity that exists in
+//! the schema without delivering any of their bodies. The `Decl` bodies
+//! then mirror the TypeScript walker's `Export` pattern — each top-level
+//! declaration's body schedules independently, predecessor = the `Toc`,
+//! so the agent gets a catalog surface first and the concrete model /
+//! enum fields as budget allows.
 //!
 //! Scope: Prisma schemas are the canonical data model of any Node /
-//! TypeScript app that uses the Prisma ORM. A coding agent landing
-//! in a Prisma-shaped repo almost always needs the model/enum
-//! catalog before any other backend question, but the schema's
-//! `*.prisma` extension is not covered by any other walker, so the
-//! file is currently only reachable via its parent dir listing.
+//! TypeScript app that uses the Prisma ORM. A coding agent landing in a
+//! Prisma-shaped repo almost always needs the model/enum catalog — and,
+//! right after it, the actual field/enum-value lists — before any other
+//! backend question, but the schema's `*.prisma` extension is not
+//! covered by any other walker, so the file is otherwise only reachable
+//! via its parent dir listing.
 //!
-//! The TOC is line-scanned, not parsed — Prisma's grammar isn't
-//! pulled in as a tree-sitter dependency and a hand-rolled scan for
-//! `^model `, `^enum `, `^datasource `, `^generator ` is sufficient
-//! (Prisma's syntax requires these keywords to start the line of a
-//! top-level declaration; comments and nested blocks are indented).
+//! The schema is line-scanned, not parsed — Prisma's grammar isn't
+//! pulled in as a tree-sitter dependency. Top-level declarations are
+//! detected by a `^model `/`^enum `/`^datasource `/`^generator ` scan
+//! (Prisma requires these keywords to start the line of a top-level
+//! declaration; comments and nested blocks are indented). The body span
+//! of each declaration is found by brace-depth counting from its opener
+//! to the matching close brace.
 
 use std::path::Path;
 
@@ -25,11 +34,82 @@ use crate::batch::{Batch, BatchKey, PrismaKey};
 use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content,
+    FileLines, WalkCtx, fs::files_with_extension, path_depth_factor, push_rows,
+    single_file_lines_content,
 };
 
-/// Cap on TOC entries — budget hedge.
+/// Cap on TOC entries — budget hedge. Also caps the per-decl body
+/// batches emitted (a schema with more top-level decls than this is
+/// treated as too large to body-expand within budget).
 const MAX_TOC_ENTRIES: usize = 80;
+
+/// First N decl bodies (in source order) keep full value; later bodies
+/// decay toward [`LATE_DECL_VALUE_FACTOR`]. Schemas front-load their
+/// load-bearing models, and undamped later bodies would crowd the
+/// orientation surfaces the agent needs first.
+const FULL_VALUE_DECLS: usize = 12;
+const LATE_DECL_VALUE_FACTOR: f64 = 0.6;
+
+/// Field count at which a declaration body earns full base value. Wider
+/// models (User/Link/Collection) carry the schema's load-bearing
+/// relations and field semantics the NS wants. Scaling value by body
+/// size also neutralizes the scheduler's small-batch bias
+/// (`value / cost^0.35`), so a thin model doesn't out-rank a wide one
+/// purely on cost.
+const FULL_VALUE_FIELD_ROWS: f64 = 24.0;
+
+/// Minimum field rows for a `model` body to be worth a per-decl batch.
+/// Field-rich models (entities with relations + many columns) answer
+/// "what fields / relations does X have" directly; narrow bookkeeping
+/// tables (join rows, token rows, single-purpose lookup models) are
+/// already covered by the TOC opener and aren't worth the budget they'd
+/// displace from orientation surfaces. Enums always emit regardless of
+/// size — their value lists are what "what values can field X take"
+/// resolves against, and individually they're cheap.
+const MIN_MODEL_FIELDS: usize = 18;
+
+/// A `model` body longer than this many rows is split at a field
+/// boundary into a head `Decl` + a `DeclTail`, so the high-value
+/// identity / relation fields at the top schedule ahead of the
+/// archival-default fields that trail a wide model.
+const MODEL_SPLIT_MIN_ROWS: usize = 32;
+
+/// Kind of a top-level Prisma declaration.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum DeclKind {
+    Model,
+    Enum,
+    /// `datasource` / `generator` header block.
+    Header,
+}
+
+/// One top-level Prisma declaration: its opener line and the inclusive
+/// row range of its brace block.
+struct Decl {
+    /// 1-indexed opener line (`model X {` etc.).
+    open_line: usize,
+    /// 1-indexed last line of the block (the `}`).
+    close_line: usize,
+    kind: DeclKind,
+}
+
+impl Decl {
+    /// Body rows excluding the opener and closer brace lines.
+    fn field_rows(&self) -> usize {
+        (self.close_line.saturating_sub(self.open_line) + 1).saturating_sub(2)
+    }
+
+    /// Whether this declaration is worth its own body batch. Enums and
+    /// header blocks (the datasource/generator config the agent needs to
+    /// see the DB binding) always qualify; models must clear the
+    /// field-richness floor.
+    fn warrants_body(&self) -> bool {
+        match self.kind {
+            DeclKind::Enum | DeclKind::Header => true,
+            DeclKind::Model => self.field_rows() >= MIN_MODEL_FIELDS,
+        }
+    }
+}
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
@@ -44,55 +124,194 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some(source) = ctx.read_source(&file) else {
             continue;
         };
-        let lines: Vec<usize> = toc_lines(&source);
-        if lines.is_empty() || lines.len() > MAX_TOC_ENTRIES {
+        let decls = decls(&source);
+        if decls.is_empty() || decls.len() > MAX_TOC_ENTRIES {
             continue;
         }
-        let Some(content) = single_file_lines_content(&file, &source, FileLines::new(lines)) else {
+        let toc_line_nums: Vec<usize> = decls.iter().map(|d| d.open_line).collect();
+        let Some(content) =
+            single_file_lines_content(&file, &source, FileLines::new(toc_line_nums))
+        else {
             continue;
         };
+        let toc_key: BatchKey = PrismaKey::Toc { file: file.clone() }.into();
         out.push(Batch {
-            key: PrismaKey::Toc { file: file.clone() }.into(),
+            key: toc_key.clone(),
             predecessor: None,
             content,
             value: toc_value(&file, ctx),
         });
+
+        let depth = path_depth_factor(&file, ctx);
+        let mut body_index = 0;
+        for decl in &decls {
+            if !decl.warrants_body() {
+                continue;
+            }
+            push_decl_batches(&mut out, &file, &source, decl, body_index, depth, &toc_key);
+            body_index += 1;
+        }
     }
     out
 }
 
-/// 1-indexed lines of top-level Prisma declarations
-/// (`model`/`enum`/`datasource`/`generator`).
-fn toc_lines(source: &str) -> Vec<usize> {
-    source
-        .lines()
-        .enumerate()
-        .filter_map(|(i, line)| is_toc_line(line).then_some(i + 1))
-        .collect()
+/// Emit the body batch(es) for one declaration. A wide model splits
+/// into a head `Decl` + a `DeclTail`; everything else emits a single
+/// whole-block `Decl`.
+fn push_decl_batches(
+    out: &mut Vec<Batch<BatchKey>>,
+    file: &Path,
+    source: &str,
+    decl: &Decl,
+    decl_index: usize,
+    depth: f64,
+    toc_key: &BatchKey,
+) {
+    let body_rows = decl.close_line.saturating_sub(decl.open_line) + 1;
+    let value = decl_value(decl_index, decl.field_rows(), depth);
+    let head_key: BatchKey = PrismaKey::Decl {
+        file: file.to_path_buf(),
+        start_line: decl.open_line,
+    }
+    .into();
+
+    let split_at = (decl.kind == DeclKind::Model && body_rows > MODEL_SPLIT_MIN_ROWS)
+        .then(|| model_split_line(decl))
+        .flatten();
+
+    let head_end = split_at.map_or(decl.close_line, |s| s - 1);
+    let Some(head_content) = block_content(file, source, decl.open_line, head_end) else {
+        return;
+    };
+    out.push(Batch {
+        key: head_key.clone(),
+        predecessor: Some(toc_key.clone()),
+        content: head_content,
+        value,
+    });
+
+    let Some(tail_start) = split_at else {
+        return;
+    };
+    let Some(tail_content) = block_content(file, source, tail_start, decl.close_line) else {
+        return;
+    };
+    out.push(Batch {
+        key: PrismaKey::DeclTail {
+            file: file.to_path_buf(),
+            start_line: decl.open_line,
+            tail_start_line: tail_start,
+        }
+        .into(),
+        predecessor: Some(head_key),
+        // Tail (archival-default / preference fields) is lower-value
+        // than the head (identity + relations) — mirror the late-decl
+        // decay one notch further.
+        value: value * LATE_DECL_VALUE_FACTOR,
+        content: tail_content,
+    });
 }
 
-fn is_toc_line(line: &str) -> bool {
-    // Top-level keywords are not indented in Prisma; `starts_with` +
-    // whitespace separator is sufficient.
-    for kw in ["model ", "enum ", "datasource ", "generator "] {
-        if line.starts_with(kw) {
-            return true;
+/// Field-boundary split line for a wide model: the midpoint of its body
+/// rows, snapped to the start of a field line so the closing-`}` row
+/// and blank rows stay attached to their half. `None` if no clean
+/// interior boundary exists.
+fn model_split_line(decl: &Decl) -> Option<usize> {
+    let mid = decl.open_line + (decl.close_line - decl.open_line) / 2;
+    // Keep the split strictly interior to the block.
+    (mid > decl.open_line && mid < decl.close_line).then_some(mid)
+}
+
+fn block_content(
+    file: &Path,
+    source: &str,
+    start_line: usize,
+    end_line: usize,
+) -> Option<crate::content::BatchContent> {
+    let mut rows = Vec::new();
+    push_rows(&mut rows, start_line, end_line);
+    single_file_lines_content(file, source, FileLines::new(rows))
+}
+
+/// Top-level Prisma declarations with their brace-block row ranges,
+/// in source order.
+fn decls(source: &str) -> Vec<Decl> {
+    let lines: Vec<&str> = source.lines().collect();
+    let mut out = Vec::new();
+    let mut i = 0;
+    while i < lines.len() {
+        if let Some(kind) = decl_keyword(lines[i]) {
+            let open_line = i + 1;
+            // Brace-depth scan to the matching close brace. Prisma blocks
+            // open with `{` on the keyword line; nested `{ }` (e.g. in
+            // `@default`) stay balanced within a line.
+            let mut depth = 0i32;
+            let mut close_line = open_line;
+            for (j, line) in lines.iter().enumerate().skip(i) {
+                depth += line.matches('{').count() as i32;
+                depth -= line.matches('}').count() as i32;
+                if depth <= 0 {
+                    close_line = j + 1;
+                    break;
+                }
+            }
+            out.push(Decl {
+                open_line,
+                close_line,
+                kind,
+            });
+            i = close_line; // resume after the block
+        } else {
+            i += 1;
         }
     }
-    false
+    out
+}
+
+/// `Some(kind)` if `line` opens a top-level Prisma declaration. Top-level
+/// keywords are not indented in Prisma; `starts_with` + a whitespace
+/// separator is sufficient (guards `models`/`enumerable`).
+fn decl_keyword(line: &str) -> Option<DeclKind> {
+    if line.starts_with("model ") {
+        Some(DeclKind::Model)
+    } else if line.starts_with("enum ") {
+        Some(DeclKind::Enum)
+    } else if line.starts_with("datasource ") || line.starts_with("generator ") {
+        Some(DeclKind::Header)
+    } else {
+        None
+    }
 }
 
 fn toc_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(1.0, 0.7, 0.85, path_depth_factor(file, ctx))
 }
 
+/// Per-decl body value. Below the TOC cat (so the catalog surface
+/// schedules first) but above incidental orientation noise (deep dir
+/// listings, README body sections), so the concrete model / enum
+/// fields land right after the catalog. Scaled by body size so wide
+/// load-bearing models out-rank narrow bookkeeping blocks (and the
+/// scheduler's small-batch cost bias is neutralized), then by a
+/// source-order decay so a wide tail of late models doesn't crowd
+/// orientation rows.
+fn decl_value(decl_index: usize, field_rows: usize, depth: f64) -> f64 {
+    let decay = if decl_index < FULL_VALUE_DECLS {
+        1.0
+    } else {
+        LATE_DECL_VALUE_FACTOR
+    };
+    let size = (field_rows as f64 / FULL_VALUE_FIELD_ROWS)
+        .powf(crate::value::DEFAULT_CONCAVITY_EXPONENT)
+        .min(1.0);
+    mix_signals(0.85, 0.75, 0.7, depth) * size * decay
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    #[test]
-    fn prisma_toc_lines_finds_top_level_decls() {
-        let src = "\
+    const SCHEMA: &str = "\
 generator client {
   provider = \"prisma-client-js\"
 }
@@ -112,11 +331,60 @@ enum Theme {
   light
 }
 ";
-        assert_eq!(toc_lines(src), vec![1, 5, 10, 15]);
+
+    #[test]
+    fn prisma_decls_finds_top_level_blocks() {
+        let d = decls(SCHEMA);
+        let openers: Vec<usize> = d.iter().map(|x| x.open_line).collect();
+        assert_eq!(openers, vec![1, 5, 10, 15]);
+        // Brace-block close lines.
+        let closers: Vec<usize> = d.iter().map(|x| x.close_line).collect();
+        assert_eq!(closers, vec![3, 8, 13, 18]);
+        let kinds: Vec<DeclKind> = d.iter().map(|x| x.kind).collect();
+        assert_eq!(
+            kinds,
+            vec![
+                DeclKind::Header,
+                DeclKind::Header,
+                DeclKind::Model,
+                DeclKind::Enum,
+            ]
+        );
     }
 
     #[test]
-    fn prisma_toc_ignores_indented_and_commented_keywords() {
+    fn prisma_warrants_body_filters_narrow_models_not_enums() {
+        // Enum and header blocks always warrant a body, regardless of size.
+        let enum_decl = Decl {
+            open_line: 1,
+            close_line: 4,
+            kind: DeclKind::Enum,
+        };
+        assert!(enum_decl.warrants_body());
+        let header = Decl {
+            open_line: 1,
+            close_line: 4,
+            kind: DeclKind::Header,
+        };
+        assert!(header.warrants_body());
+        // A narrow model (below the field floor) does not.
+        let narrow = Decl {
+            open_line: 1,
+            close_line: 6, // 4 field rows
+            kind: DeclKind::Model,
+        };
+        assert!(!narrow.warrants_body());
+        // A wide model does.
+        let wide = Decl {
+            open_line: 1,
+            close_line: 1 + MIN_MODEL_FIELDS + 1, // MIN_MODEL_FIELDS field rows
+            kind: DeclKind::Model,
+        };
+        assert!(wide.warrants_body());
+    }
+
+    #[test]
+    fn prisma_decls_ignores_indented_and_commented_keywords() {
         let src = "\
 // model NotADecl
 //enum Also
@@ -125,19 +393,34 @@ model Real {
   id Int @id
 }
 ";
-        // Only line 4 is a top-level `model `.
-        assert_eq!(toc_lines(src), vec![4]);
+        let d = decls(src);
+        assert_eq!(d.len(), 1);
+        assert_eq!(d[0].open_line, 4);
+        assert_eq!(d[0].close_line, 6);
     }
 
     #[test]
-    fn prisma_toc_rejects_keyword_prefix_without_separator() {
+    fn prisma_decl_keyword_rejects_prefix_without_separator() {
         // `models` and `enumerable` should not match — the trailing
         // space in each keyword pattern guards against this.
-        let src = "\
-models User {
-enumerable X {
-modeling.foo
-";
-        assert!(toc_lines(src).is_empty());
+        assert_eq!(decl_keyword("models User {"), None);
+        assert_eq!(decl_keyword("enumerable X {"), None);
+        assert_eq!(decl_keyword("modeling.foo"), None);
+        assert_eq!(decl_keyword("model User {"), Some(DeclKind::Model));
+        assert_eq!(decl_keyword("enum Theme {"), Some(DeclKind::Enum));
+        assert_eq!(decl_keyword("datasource db {"), Some(DeclKind::Header));
+        assert_eq!(decl_keyword("generator client {"), Some(DeclKind::Header));
+    }
+
+    #[test]
+    fn prisma_wide_model_splits_at_interior_field_boundary() {
+        // 40-row model: open at 1, close at 40.
+        let decl = Decl {
+            open_line: 1,
+            close_line: 40,
+            kind: DeclKind::Model,
+        };
+        let split = model_split_line(&decl).expect("wide model splits");
+        assert!(split > 1 && split < 40);
     }
 }
