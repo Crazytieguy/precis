@@ -94,6 +94,12 @@ pub(in crate::walker) struct CState {
     /// Count of small headers tree-wide (by size), computed once. Gates
     /// the whole-file render off in many-small-modules projects.
     small_header_count: OnceCell<usize>,
+    /// Directories that are members of a mirrored-sibling group — a set
+    /// of `>= MIN_PORT_SIBLINGS` sibling subdirs sharing `>= MIN_PORT_SHARED_NAMES`
+    /// common file names (per-OS / per-vendor platform ports). Their C
+    /// content is a parallel reimplementation of one interface; the NS
+    /// anchors on the shared root API, not N copies of it.
+    port_dirs: OnceCell<HashSet<PathBuf>>,
 }
 
 impl CState {
@@ -134,6 +140,87 @@ impl CState {
             .get_or_init(|| count_small_headers(root))
             <= WHOLE_HEADER_PROJECT_MAX
     }
+
+    /// True iff `dir` is a member of a mirrored-sibling platform-port
+    /// group (computed once per run).
+    fn is_port_dir(&self, dir: &Path, root: &Path) -> bool {
+        self.port_dirs
+            .get_or_init(|| collect_port_dirs(root))
+            .contains(dir)
+    }
+}
+
+/// Minimum sibling subdirs and shared file names for a directory group to
+/// count as mirrored platform ports.
+const MIN_PORT_SIBLINGS: usize = 3;
+const MIN_PORT_SHARED_NAMES: usize = 2;
+
+/// Walk the tree and collect directories that are members of a
+/// mirrored-sibling group: a parent with `>= MIN_PORT_SIBLINGS` subdirs
+/// where `>= MIN_PORT_SHARED_NAMES` file names each appear in at least
+/// `MIN_PORT_SIBLINGS` of those subdirs (the htop `darwin/ freebsd/ …`
+/// per-OS pattern, tinyusb `src/portable/<vendor>/`). Only subdirs that
+/// actually carry a shared name are marked, so shared-helper siblings
+/// (`generic/`, `zfs/`) that don't mirror the skeleton keep full weight.
+/// Size-capped; symlinks not followed.
+fn collect_port_dirs(root: &Path) -> HashSet<PathBuf> {
+    const SCAN_CAP: usize = 4096;
+    let mut ports = HashSet::new();
+    let mut stack = vec![root.to_path_buf()];
+    let mut scanned = 0usize;
+    while let Some(parent) = stack.pop() {
+        let Ok(read_dir) = std::fs::read_dir(&parent) else {
+            continue;
+        };
+        let subdirs: Vec<PathBuf> = read_dir
+            .flatten()
+            .filter(|e| e.file_type().map(|t| t.is_dir()).unwrap_or(false))
+            .map(|e| e.path())
+            .collect();
+        for sd in &subdirs {
+            stack.push(sd.clone());
+        }
+        scanned += subdirs.len();
+        if scanned > SCAN_CAP {
+            return ports;
+        }
+        if subdirs.len() < MIN_PORT_SIBLINGS {
+            continue;
+        }
+        let per_subdir: Vec<(PathBuf, HashSet<String>)> = subdirs
+            .iter()
+            .map(|sd| {
+                let names = std::fs::read_dir(sd)
+                    .into_iter()
+                    .flatten()
+                    .flatten()
+                    .filter(|e| e.file_type().map(|t| t.is_file()).unwrap_or(false))
+                    .filter_map(|e| e.file_name().to_str().map(String::from))
+                    .collect();
+                (sd.clone(), names)
+            })
+            .collect();
+        let mut name_counts: HashMap<String, usize> = HashMap::new();
+        for (_, names) in &per_subdir {
+            for n in names {
+                *name_counts.entry(n.clone()).or_insert(0) += 1;
+            }
+        }
+        let shared: HashSet<String> = name_counts
+            .into_iter()
+            .filter(|(_, c)| *c >= MIN_PORT_SIBLINGS)
+            .map(|(n, _)| n)
+            .collect();
+        if shared.len() < MIN_PORT_SHARED_NAMES {
+            continue;
+        }
+        for (sd, names) in &per_subdir {
+            if names.iter().any(|n| shared.contains(n)) {
+                ports.insert(sd.clone());
+            }
+        }
+    }
+    ports
 }
 
 /// Count, tree-wide from `root`, headers with at most
@@ -998,6 +1085,25 @@ fn c_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
         * secondary_root_pair_factor(file, ctx)
         * stdlib_shim_factor(file, ctx)
         * explicit_visibility_factor(file, ctx)
+        * platform_port_factor(file, ctx)
+}
+
+/// Demote C content under a mirrored-sibling platform-port directory
+/// (htop's per-OS `darwin/ freebsd/ …`, tinyusb's `src/portable/<vendor>/`).
+/// These are N parallel reimplementations of one interface; the NS anchors
+/// on the shared root API and the cheap per-port header flood otherwise
+/// crowds the core out of the early budget.
+const PLATFORM_PORT_FACTOR: f64 = 0.35;
+
+fn platform_port_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    let Some(dir) = file.parent() else {
+        return 1.0;
+    };
+    if ctx.c_state().is_port_dir(dir, ctx.root()) {
+        PLATFORM_PORT_FACTOR
+    } else {
+        1.0
+    }
 }
 
 /// Damp depth-1 `.c/.h` files whose stem doesn't match the repo's

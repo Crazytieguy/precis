@@ -22,6 +22,11 @@ BacktraceScreen.c
 BacktraceScreen.h
 BatteryMeter.c
 BatteryMeter.h
+    2→#define HEADER_BatteryMeter
+    15→typedef enum ACPresence_ {
+    …
+    21→extern const MeterClass BatteryMeter_class;
+    …
 CLAUDE.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
@@ -39,6 +44,13 @@ ColumnsPanel.c
 ColumnsPanel.h
 CommandLine.c
 CommandLine.h
+    2→#define HEADER_CommandLine
+    11→typedef enum {
+    …
+    17→extern const char* program;
+    …
+    19→int CommandLine_run(int argc, char** argv);
+    …
 CommandScreen.c
 CommandScreen.h
 DateTimeMeter.c
@@ -90,6 +102,11 @@ ListItem.c
 ListItem.h
 LoadAverageMeter.c
 LoadAverageMeter.h
+    2→#define HEADER_LoadAverageMeter
+    13→extern const MeterClass LoadAverageMeter_class;
+    …
+    15→extern const MeterClass LoadMeter_class;
+    …
 Machine.c
 Machine.h
 Macros.h
@@ -98,6 +115,11 @@ MainPanel.h
 Makefile.am
 MemoryMeter.c
 MemoryMeter.h
+    2→#define HEADER_MemoryMeter
+    13→typedef struct MemoryClass_s {
+    …
+    20→extern const MeterClass MemoryMeter_class;
+    …
 MemorySwapMeter.c
 MemorySwapMeter.h
     2→#define HEADER_MemorySwapMeter
@@ -106,11 +128,22 @@ MemorySwapMeter.h
 Meter.c
 Meter.h
 MeterMode.h
+    2→#define HEADER_MeterMode
+    11→enum MeterModeId_ {
+    20→typedef unsigned int MeterModeId;
+    …
+    22→#define METERMODE_DEFAULT_SUPPORTED ( \
+    …
 MetersPanel.c
 MetersPanel.h
 NEWS
 NetworkIOMeter.c
 NetworkIOMeter.h
+    2→#define HEADER_NetworkIOMeter
+    15→typedef struct NetworkIOData_ {
+    …
+    22→extern const MeterClass NetworkIOMeter_class;
+    …
 Object.c
 Object.h
 OpenFilesScreen.c
@@ -132,11 +165,49 @@ ProvideTerm.h
 README
 README.md
     1→# [![htop logo](htop-logo.png)](https://htop.dev)
+    13→## Introduction
+    …
+    30→## Usage
+    …
+    33→### Quick Start
+    …
+    43→## Build instructions
+    …
+    45→### Prerequisite
+    …
+    54→**Note about `ncurses`:**
+    97→### Compile from source:
+    …
+    103→### Install
+    …
+    106→### Build Options
+    …
+    176→## Runtime dependencies:
+    …
+    180→### Runtime optional dependencies:
+    …
+    198→## Support
+    …
+    200→If you have trouble running `htop` please consult your operating system / Linux distribution documentation for getting support and filing bugs.
+    202→## Bugs, development feedback
+    …
+    211→## History
+    …
+    217→## License
+    …
+    219→GNU General Public License, version 2 (GPL-2.0) or, at your option, any later version.
 RichString.c
 RichString.h
 Row.c
 Row.h
 RowField.h
+    2→#define HEADER_RowField
+    13→typedef enum ReservedFields_ {
+    …
+    50→} ReservedFields;
+    53→#define ROW_DYNAMIC_FIELDS LAST_RESERVED_FIELD
+    54→typedef int32_t RowField;
+    …
 Scheduling.c
 Scheduling.h
     2→#define HEADER_Scheduling
@@ -152,6 +223,11 @@ SignalsPanel.c
 SignalsPanel.h
 SwapMeter.c
 SwapMeter.h
+    2→#define HEADER_SwapMeter
+    12→typedef enum {
+    …
+    19→extern const MeterClass SwapMeter_class;
+    …
 SysArchMeter.c
 SysArchMeter.h
     2→#define HEADER_SysArchMeter
@@ -169,43 +245,40 @@ TraceScreen.c
 TraceScreen.h
 UptimeMeter.c
 UptimeMeter.h
+    2→#define HEADER_UptimeMeter
+    13→extern const MeterClass UptimeMeter_class;
+    …
+    15→extern const MeterClass SecondsUptimeMeter_class;
+    …
 UsersTable.c
 UsersTable.h
 Vector.c
 Vector.h
 XUtils.c
 XUtils.h
+    162→static inline bool skipEndOfLine(FILE* fp) {
+    …
+    172→static inline int xDirfd(DIR* dirp) {
+    …
 autogen.sh
 check-pcp-style.sh
 configure.ac
 darwin/
     DarwinMachine.c
     DarwinMachine.h
-        2→#define HEADER_DarwinMachine
-        18→typedef struct DarwinMachine_ {
-        …
     DarwinProcess.c
     DarwinProcess.h
     DarwinProcessTable.c
     DarwinProcessTable.h
-        2→#define HEADER_DarwinProcessTable
-        16→typedef struct DarwinProcessTable_ {
-        17→   ProcessTable super;
-        19→   uint64_t global_diff;
-        20→} DarwinProcessTable;
     Platform.c
     Platform.h
-        148→static inline void Platform_dynamicScreensDone(ATTR_UNUSED Hashtable* screens) { }
-        …
     PlatformHelpers.c
     PlatformHelpers.h
     ProcessField.h
-        2→#define HEADER_DarwinProcessField
-        11→#define PLATFORM_PROCESS_FIELDS  \
-        …
 docs/
     ai-contributions-policy.md
     images/
+        screenshot.png
     styleguide.md
     understanding-htop-versions.md
         1→Understanding htop versions
@@ -218,61 +291,79 @@ docs/
         15→----------------------
         …
 dragonflybsd/
-freebsd/
-    FreeBSDMachine.c
-    FreeBSDMachine.h
-        2→#define HEADER_FreeBSDMachine
-        20→typedef struct CPUData_ {
-        21→   double userPercent;
-        22→   double nicePercent;
-        23→   double systemPercent;
-        24→   double irqPercent;
-        25→   double systemAllPercent;
-        27→   double frequency;
-        28→   double temperature;
-        29→} CPUData;
-        31→typedef struct FreeBSDMachine_ {
-        …
-    FreeBSDProcess.c
-    FreeBSDProcess.h
-        2→#define HEADER_FreeBSDProcess
-        16→typedef enum {
-        17→   SCHEDCLASS_UNKNOWN = 0,
-        19→   SCHEDCLASS_INTR_THREAD, /* interrupt thread */
-        20→   SCHEDCLASS_REALTIME,
-        21→   SCHEDCLASS_TIMESHARE, /* Regular scheduling */
-        22→   SCHEDCLASS_IDLE,
-        24→   MAX_SCHEDCLASS,
-        25→} FreeBSDSchedClass;
-        27→typedef struct FreeBSDProcess_ {
-        28→   Process super;
-        29→   int   jid;
-        30→   char* jname;
-        31→   char* emul;
-        32→   FreeBSDSchedClass sched_class;
-        33→} FreeBSDProcess;
-        35→extern const ProcessClass FreeBSDProcess_class;
-        …
-        37→extern const ProcessFieldData Process_fields[LAST_PROCESSFIELD];
-        …
-        39→Process* FreeBSDProcess_new(const Machine* host);
-        …
-        41→void Process_delete(Object* cast);
-        …
-    FreeBSDProcessTable.c
-    FreeBSDProcessTable.h
-        2→#define HEADER_FreeBSDProcessTable
-        17→typedef struct FreeBSDProcessTable_ {
-        18→   ProcessTable super;
-        20→   int osreldate;
-        21→} FreeBSDProcessTable;
+    DragonFlyBSDMachine.c
+    DragonFlyBSDMachine.h
+    DragonFlyBSDProcess.c
+    DragonFlyBSDProcess.h
+    DragonFlyBSDProcessTable.c
+    DragonFlyBSDProcessTable.h
     Platform.c
     Platform.h
     ProcessField.h
-        2→#define HEADER_FreeBSDProcessField
-        11→#define PLATFORM_PROCESS_FIELDS  \
-        …
+freebsd/
+    FreeBSDMachine.c
+    FreeBSDMachine.h
+    FreeBSDProcess.c
+    FreeBSDProcess.h
+    FreeBSDProcessTable.c
+    FreeBSDProcessTable.h
+    Platform.c
+    Platform.h
+    ProcessField.h
 generic/
+    Demangle.c
+    Demangle.h
+        2→#define HEADER_Demangle
+        10→#include "Macros.h"
+    ProvideDemangle.h
+        2→#define HEADER_ProvideDemangle
+    UnwindPtrace.c
+    UnwindPtrace.h
+        2→#define HEADER_UnwindPtrace
+        10→#include <sys/types.h>
+        12→#include "Vector.h"
+    fdstat_sysctl.c
+    fdstat_sysctl.h
+        2→#define HEADER_fdstat_sysctl
+        11→void Generic_getFileDescriptors_sysctl(double* used, double* max);
+        …
+    gettime.c
+    gettime.h
+        2→#define HEADER_gettime
+        10→#include <stdint.h>
+        11→#include <time.h>
+        14→void Generic_gettime_realtime(struct timespec* tsp, uint64_t* msec);
+        …
+        16→void Generic_gettime_monotonic(uint64_t* msec);
+        …
+        18→static inline int timespec_cmp(const struct timespec* a, const struct timespec* b) {
+        …
+        26→static inline void timespec_add(const struct timespec* a, const struct timespec* b, struct timespec* result) {
+        …
+    hostname.c
+    hostname.h
+        2→#define HEADER_hostname
+        10→#include <stddef.h>
+        13→void Generic_hostname(char* buffer, size_t size);
+        …
+    openzfs_sysctl.c
+    openzfs_sysctl.h
+        2→#define HEADER_openzfs_sysctl
+        10→#include "zfs/ZfsArcStats.h"
+        13→void openzfs_sysctl_init(ZfsArcStats* stats);
+        …
+        15→void openzfs_sysctl_updateArcStats(ZfsArcStats* stats);
+        …
+    uname.c
+    uname.h
+        2→#define HEADER_uname
+        10→#include <stddef.h>
+        12→typedef void (*Platform_FetchReleaseFunction)(char* buffer, size_t length);
+        …
+        14→const char* Generic_unameRelease(Platform_FetchReleaseFunction fetchRelease);
+        …
+        16→const char* Generic_uname(void);
+        …
 htop-logo.png
 htop.1.in
 htop.c
@@ -290,39 +381,34 @@ linux/
 m4/
     ax_check_compile_flag.m4
 netbsd/
+    NetBSDMachine.c
+    NetBSDMachine.h
+    NetBSDProcess.c
+    NetBSDProcess.h
+    NetBSDProcessTable.c
+    NetBSDProcessTable.h
+    Platform.c
+    Platform.h
+    ProcessField.h
+        2→#define HEADER_NetBSDProcessField
+    README.md
+        1→NetBSD support in htop(1)
+        2→===
+        4→This implementation utilizes kvm_getprocs(3), sysctl(3), etc, eliminating the
+        5→need for mount_procfs(8) with Linux compatibility enabled.
+        9→Notes on NetBSD curses
+        10→---
+        …
+        32→What needs improvement
+        33→---
+        …
 openbsd/
     OpenBSDMachine.c
     OpenBSDMachine.h
-        2→#define HEADER_OpenBSDMachine
-        18→typedef struct CPUData_ {
-        …
-        40→typedef struct OpenBSDMachine_ {
-        …
     OpenBSDProcess.c
     OpenBSDProcess.h
-        2→#define HEADER_OpenBSDProcess
-        18→typedef struct OpenBSDProcess_ {
-        19→   Process super;
-        21→   /* 'Kernel virtual addr of u-area' to detect main threads */
-        22→   uint64_t addr;
-        23→} OpenBSDProcess;
-        25→extern const ProcessClass OpenBSDProcess_class;
-        …
-        27→extern const ProcessFieldData Process_fields[LAST_PROCESSFIELD];
-        …
-        29→Process* OpenBSDProcess_new(const Machine* host);
-        …
-        31→void Process_delete(Object* cast);
-        …
     OpenBSDProcessTable.c
     OpenBSDProcessTable.h
-        2→#define HEADER_OpenBSDProcessTable
-        11→#include <stdbool.h>
-        12→#include <sys/types.h>
-        14→#include "ProcessTable.h"
-        17→typedef struct OpenBSDProcessTable_ {
-        18→   ProcessTable super;
-        19→} OpenBSDProcessTable;
     Platform.c
     Platform.h
     ProcessField.h
@@ -335,48 +421,12 @@ solaris/
     Platform.c
     Platform.h
     ProcessField.h
-        2→#define HEADER_SolarisProcessField
-        11→#define PLATFORM_PROCESS_FIELDS  \
-        …
     SolarisMachine.c
     SolarisMachine.h
-        2→#define HEADER_SolarisMachine
-        29→#define ZONE_ERRMSGLEN 1024
-        30→extern char zone_errmsg[ZONE_ERRMSGLEN];
-        …
-        32→typedef struct CPUData_ {
-        …
-        47→typedef struct SolarisMachine_ {
-        48→   Machine super;
-        50→   kstat_ctl_t* kd;
-        51→   CPUData* cpus;
-        53→   size_t pageSize;
-        54→   size_t pageSizeKB;
-        56→   memory_t usedMem;
-        57→   memory_t lockedMem;
-        59→   ZfsArcStats zfs;
-        60→} SolarisMachine;
     SolarisProcess.c
     SolarisProcess.h
-        2→#define HEADER_SolarisProcess
-        20→#define ERR (-1)
-        …
-        26→typedef struct SolarisProcess_ {
-        …
-        40→extern const ProcessClass SolarisProcess_class;
-        …
-        42→extern const ProcessFieldData Process_fields[LAST_PROCESSFIELD];
-        …
-        44→Process* SolarisProcess_new(const Machine* host);
-        …
-        46→void Process_delete(Object* cast);
-        …
     SolarisProcessTable.c
     SolarisProcessTable.h
-        2→#define HEADER_SolarisProcessTable
-        27→typedef struct SolarisProcessTable_ {
-        28→   ProcessTable super;
-        29→} SolarisProcessTable;
 test_spec.lua
 unsupported/
     Platform.c
@@ -385,39 +435,16 @@ unsupported/
         2→#define HEADER_UnsupportedProcessField
     UnsupportedMachine.c
     UnsupportedMachine.h
-        2→#define HEADER_UnsupportedMachine
-        10→#include "Machine.h"
-        13→typedef struct UnsupportedMachine_ {
-        14→   Machine super;
-        15→   memory_t usedMem;
-        16→   memory_t cachedMem;
-        17→} UnsupportedMachine;
     UnsupportedProcess.c
     UnsupportedProcess.h
-        2→#define HEADER_UnsupportedProcess
-        10→#include "Machine.h"
-        11→#include "Process.h"
-        14→typedef struct UnsupportedProcess_ {
-        15→   Process super;
-        17→   /* Add platform specific fields */
-        18→} UnsupportedProcess;
-        21→extern const ProcessFieldData Process_fields[LAST_PROCESSFIELD];
-        …
-        23→Process* UnsupportedProcess_new(const Machine* host);
-        …
-        25→void Process_delete(Object* cast);
-        …
-        27→extern const ProcessClass UnsupportedProcess_class;
-        …
     UnsupportedProcessTable.c
     UnsupportedProcessTable.h
-        2→#define HEADER_UnsupportedProcessTable
-        10→#include "ProcessTable.h"
-        13→typedef struct UnsupportedProcessTable_ {
-        14→   ProcessTable super;
-        15→} UnsupportedProcessTable;
 zfs/
     ZfsArcMeter.c
+        26→void ZfsArcMeter_readStats(Meter* this, const ZfsArcStats* stats) {
+        …
+        86→const MeterClass ZfsArcMeter_class = {
+        …
     ZfsArcMeter.h
         2→#define HEADER_ZfsArcMeter
         10→#include "zfs/ZfsArcStats.h"
@@ -431,6 +458,10 @@ zfs/
         10→typedef struct ZfsArcStats_ {
         …
     ZfsCompressedArcMeter.c
+        27→void ZfsCompressedArcMeter_readStats(Meter* this, const ZfsArcStats* stats) {
+        …
+        74→const MeterClass ZfsCompressedArcMeter_class = {
+        …
     ZfsCompressedArcMeter.h
         2→#define HEADER_ZfsCompressedArcMeter
         10→#include "zfs/ZfsArcStats.h"
