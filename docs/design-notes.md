@@ -219,7 +219,14 @@ fixture survey is via shell — see the survey commands in the
   exponent, additive cost floor, FS source-dir value — sit at their
   optimum. A lift past 0.5876 needs a genuinely different scheduling
   *algorithm* (explicit orientation-vs-source budget tiers), not the
-  value/cost greedy.
+  value/cost greedy. **Re-confirmed 2026-05-31 *after* the early-atom
+  recall levers (corpus 0.5908): a fresh exponent sweep — 0.32 → 0.5817,
+  0.34 → 0.5876, 0.35 → 0.5908, 0.36 → 0.5854, 0.38 → 0.5711 — keeps 0.35
+  as a clean training peak; the added recall content did not shift the
+  optimum. (Aside: lower exponents *raise* validation — 0.32 → 0.4264 vs
+  0.4199 at 0.35 — so 0.35 is mildly training-overfit, but lowering it
+  regresses training, the objective.) Don't re-run this sweep; the
+  remaining headroom is the budget-tier scheduler, not the knobs.**
 - **Prefix-stop tail effects on calibration tweaks**: any change that
   shifts a big batch's rank can leave it stuck near the budget tail
   where it no longer fits. The scheduler's prefix-monotone stop then
