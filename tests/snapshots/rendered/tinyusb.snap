@@ -24,6 +24,9 @@ README.rst
     1→TinyUSB
     2→=======
     4→|Build Status| |CircleCI Status| |Documentation Status| |Static Analysis| |Fuzzing Status| |Membrowse| |License|
+    31→TinyUSB is an open-source cross-platform USB Host/Device stack for embedded systems. It’s designed for memory safety
+    32→(no dynamic allocation) and thread safety (all interrupts deferred to non-ISR task functions). The stack emphasizes portability,
+    33→small footprint, and real-time performance across 50+ MCU families.
 SConscript
 docs/
 examples/
@@ -342,19 +345,15 @@ src/
         usbc.h
             30→#include "common/tusb_common.h"
             31→#include "pd_types.h"
-            49→// Init typec stack on a port
             50→bool tuc_init(uint8_t rhport, uint32_t port_type);
             …
-            52→// Check if typec port is initialized
             53→bool tuc_inited(uint8_t rhport);
             …
             58→void tuc_task_ext(uint32_t timeout_ms, bool in_isr);
             …
-            60→// Task function should be called in main/rtos loop
             61→TU_ATTR_ALWAYS_INLINE static inline
             62→void tuc_task (void) {
-            63→  tuc_task_ext(UINT32_MAX, false);
-            70→// Interrupt handler, name alias to TCD
+            …
             71→#define tuc_int_handler tcd_int_handler
             …
             77→bool tuc_pd_data_received_cb(uint8_t rhport, pd_header_t const* header, uint8_t const* dobj, uint8_t const* p_end);

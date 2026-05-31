@@ -611,6 +611,20 @@ fn build_rst_readme_content(file: &Path, source: &str) -> Option<BatchContent> {
         keep.push(i + 1);
         i += 1;
     }
+    // If only the title + badges/decoratives were captured (no lede prose —
+    // common when an admin section like `Sponsors` sits directly under the
+    // title), descend to the first intro/overview-class section and capture
+    // its first prose paragraph as the "what is this" lede.
+    let has_prose = keep
+        .iter()
+        .any(|&row| src_lines.get(row - 1).is_some_and(|l| is_rst_prose_line(l)));
+    if !has_prose {
+        for row in rst_intro_section_prose_rows(&src_lines) {
+            keep.push(row);
+        }
+        keep.sort_unstable();
+        keep.dedup();
+    }
     while keep
         .first()
         .is_some_and(|&row| src_lines.get(row - 1).is_none_or(|l| l.trim().is_empty()))
@@ -627,6 +641,75 @@ fn build_rst_readme_content(file: &Path, source: &str) -> Option<BatchContent> {
         return None;
     }
     single_file_lines_content(file, source, FileLines::new(keep))
+}
+
+/// True for a real RST prose line — not a heading underline, badge row
+/// (`|Build Status| …`), or directive (`.. figure::`).
+fn is_rst_prose_line(line: &str) -> bool {
+    let t = line.trim();
+    if t.is_empty() || t.starts_with("..") || t.starts_with('|') || is_rst_underline(t, 1) {
+        return false;
+    }
+    t.split_whitespace()
+        .filter(|w| w.chars().any(|c| c.is_alphabetic()))
+        .count()
+        >= 3
+}
+
+/// 1-based rows of the first prose paragraph under the first
+/// intro/overview-class RST section (`Overview` / `Introduction` /
+/// `About`), skipping its leading directives/figures. Empty if none.
+fn rst_intro_section_prose_rows(src_lines: &[&str]) -> Vec<usize> {
+    let headings = scan_rst_headings(src_lines);
+    for h in headings.iter().skip(1) {
+        let title = src_lines
+            .get(h.title_row - 1)
+            .map(|l| l.trim().to_ascii_lowercase())
+            .unwrap_or_default();
+        if !matches!(
+            title.as_str(),
+            "overview" | "introduction" | "about" | "summary"
+        ) {
+            continue;
+        }
+        let mut out = Vec::new();
+        let mut idx = h.underline_row; // 0-based index of the line after the underline
+        while idx < src_lines.len() {
+            let line = src_lines[idx];
+            let t = line.trim_start();
+            if t.is_empty() {
+                if !out.is_empty() {
+                    break;
+                }
+                idx += 1;
+                continue;
+            }
+            if t.starts_with("..") {
+                let indent = line.len() - t.len();
+                idx += 1;
+                while idx < src_lines.len() {
+                    let n = src_lines[idx];
+                    if n.trim().is_empty() || n.len() - n.trim_start().len() > indent {
+                        idx += 1;
+                    } else {
+                        break;
+                    }
+                }
+                continue;
+            }
+            if is_rst_underline(t, 1) {
+                break;
+            }
+            if is_rst_prose_line(line) {
+                out.push(idx + 1);
+            } else if !out.is_empty() {
+                break;
+            }
+            idx += 1;
+        }
+        return out;
+    }
+    Vec::new()
 }
 
 fn is_rst_underline(line: &str, min_width: usize) -> bool {
