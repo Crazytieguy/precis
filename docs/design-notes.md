@@ -176,6 +176,25 @@ fixture survey is via shell — see the survey commands in the
   hosts both "wide-but-shallow sweep" patterns (htop's `darwin/`)
   and "one primary surrounded by helpers" patterns (vaul's `src/`);
   sibling count alone can't distinguish them.
+- **The early-budget ratio wall (why Score(3000) expansion stalls).**
+  Two independent scheduler probes (2026-05) measured it: in the first
+  ~3000 tokens the winners are cheap `Fs` dir-listings / `Json` /
+  package-identity orientation batches with `value/cost^0.35` ratios of
+  ~120–291, while a deep source file's names-surface sits at ratio ~36 —
+  a 3–8× gap. Deep source (a require-hub class, a `src/` table) often
+  doesn't schedule within 10000 tokens, not just 3000. Closing the gap
+  by value tuning needs a 6–7× boost, which fires on *every* sibling at
+  that tier and reorders destructively (e.g. boosting entrypoint-required
+  classes regressed commander −0.138 / dockly −0.092 while the target
+  didn't move). The orientation batches it would displace are themselves
+  NS-wanted (NS authors front-load the file tree), so this isn't noise to
+  cut — it's a genuine local optimum. Recall levers that surface a
+  *new format* the walker emitted nowhere (RST sections, prisma bodies,
+  small-header bodies) clear the wall because they replace lower-value
+  content; pure re-ranking of already-emitted content does not. A real
+  lift past this needs a structural change (e.g. an FS-descent-order
+  signal so a fixture's primary `src/` descends before peripheral dirs,
+  or a per-tier ratio rebalance), not per-key value nudges.
 - **Prefix-stop tail effects on calibration tweaks**: any change that
   shifts a big batch's rank can leave it stuck near the budget tail
   where it no longer fits. The scheduler's prefix-monotone stop then
