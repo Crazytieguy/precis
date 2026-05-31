@@ -42,8 +42,9 @@ use crate::content::{BatchContent, Span};
 use crate::value::{depth_factor, mix_signals};
 
 use super::{
-    BodyPart, FileLines, WalkCtx, body_part_value_factor, build_file_spans, build_per_file_content,
-    collect_doc_comments_above_filtered, dedup_sorted, extend_span, file_depth_factor,
+    BodyPart, ENTRY_BODY_PART_CAP, FileLines, WalkCtx, body_part_value_factor, build_file_spans,
+    build_per_file_content, coalesce_body_parts_tail, collect_doc_comments_above_filtered,
+    dedup_sorted, entry_body_part_value_factor, extend_span, file_depth_factor,
     file_lines_covered_by, fs::files_with_extension, name_of, push_rows, signature_end_row,
     single_file_lines_content, statement_block_parts,
 };
@@ -439,16 +440,28 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         continue;
                     }
                     let item_key = BatchKey::Rust(entry_item_key);
-                    let parts = body_parts_for_item(item.node, &src_lines);
-                    // For src/main.rs entry bodies (single-bin entry
-                    // points), each top-level statement is a distinct
-                    // tutorial-step's worth of state; NS authors
-                    // typically anchor on consecutive ranges of these
-                    // statements (e.g. sps NS 1.6-1.10 split main.rs
-                    // into 5 sections). Use a softer (sqrt) decay so
-                    // peer statements stay competitive against
-                    // orientation batches.
-                    let part_value_factor = if src_main_entry || body_split_example_main {
+                    let mut parts = body_parts_for_item(item.node, &src_lines);
+                    // A README-cited *example* main (note: its parent dir
+                    // is `src`, so `src_main_entry` is also true — check
+                    // this case first) is a usage demo whose body is often
+                    // a long run of trivial `let ..; println!(..)`
+                    // statements (e.g. toasty's hello-toasty: ~44 of them).
+                    // At full value these flood the schedule with dozens of
+                    // equally-valued small batches that bury orientation
+                    // content (crates/ listing, ARCHITECTURE outline, docs
+                    // tree). Cap the tail into one trailing chunk and apply
+                    // a gentle sqrt decay so the opening steps still anchor
+                    // while the body stops out-massing the rest of the repo.
+                    //
+                    // A real bin `src/main.rs` (not under examples/) keeps
+                    // full value: its top-level statements are distinct
+                    // tutorial-step state that NS authors anchor on as
+                    // consecutive ranges (e.g. sps NS 1.6-1.10 split main
+                    // into 5 sections, hyperfine's run() into halves).
+                    let part_value_factor = if body_split_example_main {
+                        parts = coalesce_body_parts_tail(parts, ENTRY_BODY_PART_CAP);
+                        entry_body_part_value_factor(parts.len())
+                    } else if src_main_entry {
                         1.0
                     } else {
                         body_part_value_factor(parts.len())

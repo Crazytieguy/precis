@@ -529,12 +529,56 @@ impl BodyPart {
 /// Minimum body interior lines for per-statement splitting.
 pub(crate) const BODY_SPLIT_MIN_LINES: usize = 12;
 
+/// Maximum number of separately-scheduled entry-body parts. Beyond this
+/// the tail is coalesced into one trailing chunk so a long imperative
+/// `main`/`run` body (e.g. a tutorial example with dozens of
+/// `let .. ; println!(..)` statements) can't flood the schedule with
+/// dozens of equally-valued small batches that starve orientation
+/// content (directory listings, README, module maps). The cap sits just
+/// above [`BODY_SPLIT_MIN_LINES`] so NS authors who anchor on a handful
+/// of consecutive opening sections still get peer body anchors.
+pub(crate) const ENTRY_BODY_PART_CAP: usize = 14;
+
 pub(crate) fn body_part_value_factor(part_count: usize) -> f64 {
     if part_count <= 1 {
         1.0
     } else {
         1.0 / part_count as f64
     }
+}
+
+/// Softer decay for entry-point (`main`/`run`) body parts, whose top-level
+/// statements NS authors anchor on as consecutive tutorial-step sections.
+/// A `sqrt` rolloff keeps peer statements competitive against orientation
+/// batches (unlike the `1/n` [`body_part_value_factor`]) while still
+/// preventing a many-statement body from out-massing the rest of the repo.
+pub(crate) fn entry_body_part_value_factor(part_count: usize) -> f64 {
+    if part_count <= 1 {
+        1.0
+    } else {
+        1.0 / (part_count as f64).sqrt()
+    }
+}
+
+/// Cap the number of separately-scheduled body parts at `cap` by merging
+/// every part past the cap into a single trailing chunk (line-sorted,
+/// deduplicated). The leading `cap - 1` parts stay distinct so consecutive
+/// opening sections still schedule as peers; only the long tail collapses.
+pub(crate) fn coalesce_body_parts_tail(parts: Vec<BodyPart>, cap: usize) -> Vec<BodyPart> {
+    if cap == 0 || parts.len() <= cap {
+        return parts;
+    }
+    let mut head: Vec<BodyPart> = parts;
+    let tail = head.split_off(cap - 1);
+    let mut tail_lines = Vec::new();
+    for part in tail {
+        tail_lines.extend(part.lines);
+    }
+    let tail_lines = dedup_sorted(tail_lines);
+    if !tail_lines.is_empty() {
+        head.push(BodyPart { lines: tail_lines });
+    }
+    head
 }
 
 /// Body slices for a brace-delimited statement block, using top-level
