@@ -12,11 +12,38 @@ README.md
     16→>
     17→> **Authors:** Maximilian Beck, Korbinian Pöppel, Markus Spanring, Andreas Auer, Oleksandra Prudnikova, Michael Kopp, Günter Klambauer, Johannes Brandstetter, Sepp Hochreiter
     19→## About
-    …
+    21→xLSTM is a new Recurrent Neural Network architecture based on ideas of the original LSTM.
+    22→Through Exponential Gating with appropriate normalization and stabilization techniques and a new Matrix Memory it overcomes the limitations of the original LSTM 
+    23→and shows promising performance on Language Modeling when compared to Transformers or State Space Models.
+    25→:rotating_light: We trained a 7B parameter xLSTM Language Model on 2.3T tokens! :rotating_light:
+    27→We refer to the optimized architecture for our xLSTM 7B as xLSTM Large. 
     29→## Minimal Installation
     …
+    31→Create a conda environment from the file `environment_pt240cu124.yaml`.
+    32→Install the model code only (i.e. the module `xlstm`) as package:
+    34→For using the xLSTM Large 7B model install [`mlstm_kernels`](https://github.com/NX-AI/mlstm_kernels) via:
+    35→``` 
+    36→pip install mlstm_kernels
+    37→```
+    38→Then install the xlstm package via pip: 
+    39→```bash
+    40→pip install xlstm
+    41→```
+    42→Or clone from github:
+    43→```bash
+    44→git clone https://github.com/NX-AI/xlstm.git
+    45→cd xlstm
+    46→pip install -e .
+    47→```
     49→## Requirements
     …
+    51→This package is based on PyTorch and was tested for versions `>=1.8`. For a well-tested environment, install the `environment_pt240cu124.yaml` as:
+    52→```bash
+    53→conda env create -n xlstm -f environment_pt240cu124.yaml
+    54→conda activate xlstm
+    55→``` 
+    57→For the xLSTM Large 7B model we require our [`mlstm_kernels`](https://github.com/NX-AI/mlstm_kernels) package, which provides fast kernels for the xLSTM.
+    59→<div align="center">
     61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
     …
     80→## How to use the xLSTM Large 7B and its architecture
@@ -266,7 +293,6 @@ xlstm/
         49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
         …
         56→    def step(
-        57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
-        58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
+        …
         65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
         …

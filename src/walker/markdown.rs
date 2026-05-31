@@ -944,6 +944,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         i += 1;
     }
     let mut state = HeadlineExtend::SeekFirst;
+    let mut captured_lede = false;
     while i < post.len() {
         let block = post[i];
         if is_section_boundary(block.kind()) {
@@ -957,6 +958,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         match state {
             HeadlineExtend::SeekFirst => {
                 if block.kind() == "paragraph" {
+                    captured_lede = true;
                     // The "tagline + lede" extension only fires under
                     // the project's title heading (H1). For non-H1
                     // first-headed sections (`### Usage`, `## About`)
@@ -972,6 +974,32 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
             HeadlineExtend::SeekExtension => break,
         }
         i += 1;
+    }
+
+    // Decorative-title fallback: an image/badge-only H1 yields no lede,
+    // with the real "what is this" sentence pushed under the first
+    // subsection. When that subsection is intro-class (`## Introduction`
+    // / `## Overview` / `## About`), descend one level and capture its
+    // first substantive paragraph as the lede.
+    if !captured_lede
+        && heading_level(heading) == 1
+        && let Some(sub) = post.iter().find(|b| b.kind() == "section")
+        && let Some(sub_heading) = first_heading_child(*sub)
+        && is_intro_section_title(sub_heading, source)
+    {
+        extend_rows_inclusive(&mut covered, sub_heading, source);
+        for inner in children_after(*sub, sub_heading) {
+            if is_section_boundary(inner.kind()) {
+                break;
+            }
+            if is_decorative_block(inner, source) {
+                continue;
+            }
+            extend_rows_inclusive(&mut covered, inner, source);
+            if inner.kind() == "paragraph" {
+                break;
+            }
+        }
     }
 
     let truncate = compute_heading_truncation(heading, source);
@@ -2156,6 +2184,24 @@ fn first_heading_child(section: Node) -> Option<Node> {
         }
     }
     None
+}
+
+/// True iff `heading`'s title text names an orientation/intro section
+/// (`Introduction` / `Overview` / `About` / …) — the subsection a
+/// decorative-title README puts its "what is this" sentence under.
+fn is_intro_section_title(heading: Node, source: &str) -> bool {
+    let raw = &source[heading.start_byte()..heading.end_byte()];
+    let text = raw
+        .lines()
+        .next()
+        .unwrap_or("")
+        .trim_start_matches('#')
+        .trim()
+        .to_ascii_lowercase();
+    matches!(
+        text.as_str(),
+        "introduction" | "overview" | "about" | "summary" | "synopsis"
+    ) || text.starts_with("what is")
 }
 
 fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
