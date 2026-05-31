@@ -35,7 +35,9 @@
 //!   ancestor-overlaps. Enabling either split rule shifts
 //!   `section_index` numbering relative to a non-split version of
 //!   the same file; snapshots / divergence reports reflect the
-//!   post-split indexing.
+//!   post-split indexing. For `README.rst` (line-scanned, no
+//!   tree-sitter) `Section`s are the body sections after the title,
+//!   one per setext/overline heading — see [`rst_body_sections`].
 
 use std::collections::BTreeSet;
 use std::path::Path;
@@ -79,9 +81,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md");
     let mut out = Vec::new();
 
-    // RST README: emit one ReadmeHeadline batch with the non-decorative
-    // content (no tree-sitter parse — line-scan, drop `.. directive::`
-    // blocks). Skip nested README.rst — root-level is the only anchor.
+    // RST README: emit a ReadmeHeadline batch (title + first
+    // substantive paragraph) plus one `Section` batch per body section
+    // — parity with the .md path, which subdivides the README body. No
+    // tree-sitter parse — line-scan headings via `is_rst_underline`,
+    // dropping `.. directive::` blocks. Skip nested README.rst — the
+    // root-level file is the only anchor.
     for file in super::fs::files_with_extension(dir, "rst") {
         if !is_readme_rst(&file) || dir != ctx.root() {
             continue;
@@ -89,13 +94,33 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some(source) = ctx.read_source(&file) else {
             continue;
         };
+        let mut headline_emitted: Option<BatchKey> = None;
         if let Some(content) = build_rst_readme_content(&file, &source) {
+            let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
             out.push(Batch {
-                key: MarkdownKey::ReadmeHeadline { file: file.clone() }.into(),
+                key: key.clone().into(),
                 predecessor: None,
                 content,
                 value: readme_headline_value(&file, ctx),
             });
+            headline_emitted = Some(BatchKey::Markdown(key));
+        }
+        for (idx, section) in rst_body_sections(&source).into_iter().enumerate() {
+            let value = rst_section_value(&file, &section, ctx);
+            if let Some(content) =
+                single_file_lines_content(&file, &source, FileLines::new(section.rows))
+            {
+                out.push(Batch {
+                    key: MarkdownKey::Section {
+                        file: file.clone(),
+                        section_index: idx,
+                    }
+                    .into(),
+                    predecessor: headline_emitted.clone(),
+                    content,
+                    value,
+                });
+            }
         }
     }
 
@@ -590,6 +615,254 @@ fn is_rst_underline(line: &str, min_width: usize) -> bool {
     }
     let first = trimmed.chars().next().unwrap();
     matches!(first, '=' | '-' | '~' | '^' | '*' | '+' | '#') && trimmed.chars().all(|c| c == first)
+}
+
+// --- RST body sections ---
+
+/// Max body sections emitted from an RST README — keeps the tail off
+/// the early budget the way `MAX_OUTLINE_HEADINGS` bounds the .md
+/// outline. Generous enough for the typical orientation-bearing
+/// sections (overview, layout, feature lists) at the top of the file.
+const RST_MAX_BODY_SECTIONS: usize = 8;
+
+/// Source-byte cap per RST body section — a directive-heavy or
+/// reference-table section is truncated rather than dumped whole. About
+/// 500 tokens; comparable to the .md `H2_SPLIT_BYTES` ceiling on a
+/// single un-split section.
+const RST_MAX_SECTION_BYTES: usize = 1800;
+
+/// One RST README body section: the heading row + body rows (directive
+/// blocks already stripped), 1-based, plus its post-title index and
+/// whether its title is a canonical-usage marker.
+struct RstSection {
+    rows: Vec<usize>,
+    /// Position among body sections (0-based), used for index decay —
+    /// the title section is excluded so the first body section is 0.
+    index: usize,
+    is_canonical_usage: bool,
+}
+
+/// A scanned RST heading: the 1-based row of the title text and the
+/// 1-based row of the underline that closes it.
+struct RstHeading {
+    title_row: usize,
+    underline_row: usize,
+    is_canonical_usage: bool,
+}
+
+/// Line-scan all setext/overline RST headings (same detection as
+/// [`build_rst_readme_content`]). The first heading is the document
+/// title; subsequent ones bound body sections.
+fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
+    let mut headings = Vec::new();
+    let mut i = 0;
+    while i < src_lines.len() {
+        // Overline form: punctuation row / title / matching punctuation.
+        if i + 2 < src_lines.len()
+            && is_rst_underline(src_lines[i], 1)
+            && is_rst_underline(src_lines[i + 2], 1)
+            && src_lines[i].trim() == src_lines[i + 2].trim()
+            && !src_lines[i + 1].trim().is_empty()
+        {
+            headings.push(RstHeading {
+                title_row: i + 2,
+                underline_row: i + 3,
+                is_canonical_usage: is_rst_canonical_usage_title(src_lines[i + 1]),
+            });
+            i += 3;
+            continue;
+        }
+        // Setext form: a non-blank title row followed by an underline at
+        // least as wide as the title.
+        if i + 1 < src_lines.len()
+            && let Some(title) = src_lines.get(i).filter(|l| !l.trim().is_empty())
+            && is_rst_underline(src_lines[i + 1], title.trim_end().chars().count())
+        {
+            headings.push(RstHeading {
+                title_row: i + 1,
+                underline_row: i + 2,
+                is_canonical_usage: is_rst_canonical_usage_title(title),
+            });
+            i += 2;
+            continue;
+        }
+        i += 1;
+    }
+    headings
+}
+
+/// RST README body sections — every heading after the title, capped at
+/// [`RST_MAX_BODY_SECTIONS`]. Each section spans its heading through the
+/// row before the next heading, with `.. directive::` blocks and
+/// leading/trailing blank rows stripped, then truncated to
+/// [`RST_MAX_SECTION_BYTES`].
+fn rst_body_sections(source: &str) -> Vec<RstSection> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let headings = scan_rst_headings(&src_lines);
+    // headings[0] is the document title (covered by the headline batch).
+    let mut out = Vec::new();
+    for (body_idx, heading) in headings.iter().skip(1).enumerate() {
+        if body_idx >= RST_MAX_BODY_SECTIONS {
+            break;
+        }
+        let start_row = heading.title_row; // 1-based
+        let end_row = headings
+            .get(body_idx + 2) // +1 to undo skip(1), +1 for the next heading
+            .map(|next| next.title_row - 1)
+            .unwrap_or(src_lines.len());
+        let rows = collect_rst_section_rows(&src_lines, start_row, end_row, heading.underline_row);
+        if rows.is_empty() {
+            continue;
+        }
+        out.push(RstSection {
+            rows,
+            index: body_idx,
+            is_canonical_usage: heading.is_canonical_usage,
+        });
+    }
+    out
+}
+
+/// Rows (1-based) of one RST section: heading + body, skipping
+/// non-content `.. directive::` blocks (figure / image / raw / toctree
+/// / substitution / hyperlink-target comments) and their indented
+/// continuations, plus leading/trailing blanks, bounded by
+/// [`RST_MAX_SECTION_BYTES`]. Content directives (`code-block`,
+/// `literalinclude`, …) are kept — their indented body is the example
+/// the NS wants. The underline row is always kept so the heading
+/// renders.
+fn collect_rst_section_rows(
+    src_lines: &[&str],
+    start_row: usize,
+    end_row: usize,
+    underline_row: usize,
+) -> Vec<usize> {
+    let mut rows = Vec::new();
+    let mut bytes = 0usize;
+    let mut i = start_row; // 1-based
+    while i <= end_row {
+        let Some(line) = src_lines.get(i - 1) else {
+            break;
+        };
+        let trimmed = line.trim_start();
+        // Skip non-content directive blocks (but never the underline
+        // row, whose `----` can't start with `..`). Content directives
+        // fall through and render their indented body.
+        if i != underline_row && trimmed.starts_with("..") && !is_rst_content_directive(trimmed) {
+            let directive_indent = line.len() - trimmed.len();
+            i += 1;
+            while i <= end_row {
+                let Some(next) = src_lines.get(i - 1) else {
+                    break;
+                };
+                if next.trim().is_empty() {
+                    i += 1;
+                    continue;
+                }
+                let next_indent = next.len() - next.trim_start().len();
+                if next_indent > directive_indent {
+                    i += 1;
+                } else {
+                    break;
+                }
+            }
+            continue;
+        }
+        if bytes >= RST_MAX_SECTION_BYTES {
+            break;
+        }
+        bytes += line.len();
+        rows.push(i);
+        i += 1;
+    }
+    // Drop leading/trailing blank rows so the marginal cost is body, not
+    // whitespace.
+    while rows
+        .first()
+        .is_some_and(|&r| src_lines.get(r - 1).is_none_or(|l| l.trim().is_empty()))
+    {
+        rows.remove(0);
+    }
+    while rows
+        .last()
+        .is_some_and(|&r| src_lines.get(r - 1).is_none_or(|l| l.trim().is_empty()))
+    {
+        rows.pop();
+    }
+    rows
+}
+
+/// True iff `trimmed` (a line already known to start with `..`) opens a
+/// content-bearing directive whose indented body is substantive (code /
+/// included source / literal blocks). These are kept; all other
+/// directives (figure, image, raw, toctree, `.. _ref:` targets,
+/// `.. |sub|` substitutions, plain `..` comments) are stripped.
+fn is_rst_content_directive(trimmed: &str) -> bool {
+    let Some(rest) = trimmed.strip_prefix("..") else {
+        return false;
+    };
+    let rest = rest.trim_start();
+    let name: String = rest
+        .chars()
+        .take_while(|c| c.is_ascii_alphanumeric() || *c == '-')
+        .collect();
+    matches!(
+        name.as_str(),
+        "code" | "code-block" | "sourcecode" | "literalinclude" | "parsed-literal"
+    )
+}
+
+/// True iff an RST heading title is a canonical usage/example marker —
+/// the RST analog of [`is_canonical_usage_h2_title`].
+fn is_rst_canonical_usage_title(title: &str) -> bool {
+    let core: String = title
+        .trim()
+        .to_ascii_lowercase()
+        .chars()
+        .take_while(|c| c.is_ascii_alphanumeric() || c.is_ascii_whitespace())
+        .collect();
+    matches!(
+        core.trim(),
+        "usage"
+            | "sample usage"
+            | "basic usage"
+            | "example"
+            | "examples"
+            | "a definitive example"
+            | "definitive example"
+            | "usage example"
+            | "usage examples"
+            | "quick start"
+            | "quickstart"
+            | "getting started"
+            | "demo"
+    )
+}
+
+/// Down-weight for non-canonical-usage RST body sections. The reliable,
+/// generalizable win is the canonical example/demo section (a
+/// `code-block` an agent wants verbatim); the remaining body sections
+/// (install / contribute / contact / feature prose) are supplementary
+/// and, on code-centric repos, otherwise displace higher-value NS code
+/// surface. They keep enough value to fill a generous budget but not to
+/// crowd the early window.
+const RST_NON_USAGE_SECTION_FACTOR: f64 = 0.5;
+
+/// Value for an RST README body section — mirrors the .md
+/// [`readme_section_value`]: the same base signal mix and index decay,
+/// plus the canonical-usage boost when the heading is an example/usage
+/// marker. RST has no synthetic-intro wrap, so the first body section
+/// is index 0 directly. Non-usage sections are additionally down-scaled
+/// (see [`RST_NON_USAGE_SECTION_FACTOR`]).
+fn rst_section_value(file: &Path, section: &RstSection, ctx: &WalkCtx) -> f64 {
+    let base = mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx));
+    let decay = index_decay(section.index, 0.15, 0.7);
+    let usage = if section.is_canonical_usage {
+        CANONICAL_USAGE_SECTION_FACTOR
+    } else {
+        RST_NON_USAGE_SECTION_FACTOR
+    };
+    base * decay * usage
 }
 
 // --- headline spec + span construction ---
