@@ -201,7 +201,16 @@ fixture survey is via shell — see the survey commands in the
   nano-vllm +0.100 vs orientation-heavy like sqlite-vec −0.120),
   crossing languages, so neither a single exponent nor a per-language
   override captures it. A real rebalance needs a per-batch-shape (not
-  per-key) cost model or a budget-tier-aware scheduler.
+  per-key) cost model or a budget-tier-aware scheduler. The per-batch-
+  shape model was also tested and is walled: an additive ranking-cost
+  floor `value/(cost+C0)^k` (models fixed per-batch framing overhead,
+  demotes the ~5-token orientation flood) regressed at C0=20 → 0.5838
+  (otree +0.078 / toasty +0.049 vs tock −0.130 / mcphost −0.058); C0=0
+  is optimal. So all three accessible ranking knobs — multiplicative
+  exponent, additive cost floor, FS source-dir value — sit at their
+  optimum. A lift past 0.5876 needs a genuinely different scheduling
+  *algorithm* (explicit orientation-vs-source budget tiers), not the
+  value/cost greedy.
 - **Prefix-stop tail effects on calibration tweaks**: any change that
   shifts a big batch's rank can leave it stuck near the budget tail
   where it no longer fits. The scheduler's prefix-monotone stop then
