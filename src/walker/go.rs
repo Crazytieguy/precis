@@ -217,10 +217,17 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // re-walking the tree per decl.
         let entry_factor = go_entry_factor_for(file, ctx, pkg.as_deref(), &decls);
 
-        // Restrict `PackageDocLede` to entry-shaped files (see
-        // `go_entry_factor_for`). Internal subpackage ledes carry
-        // low orientation value relative to cost.
-        if entry_factor > 1.0
+        // `PackageDocLede` fires for entry-shaped files (see
+        // `go_entry_factor_for`) — internal subpackage ledes carry low
+        // orientation value relative to cost — *or* for a dedicated
+        // `doc.go` package-documentation file. A `doc.go` has no decls
+        // and a non-eponymous stem, so the entry-factor gate alone
+        // would skip it even though its godoc lede IS the package's
+        // identity sentence. Only the first-paragraph lede ships: the
+        // full godoc (with its hello-world example) is far more
+        // expensive and, under the greedy value/cost picker, ranks too
+        // late to land in budget, so it would buy no recall.
+        if (entry_factor > 1.0 || is_package_doc_file(file, &decls))
             && let Some(content) =
                 single_file_lines_content(file, &source, collect_package_doc_lede(&tree, &source))
         {
@@ -720,6 +727,19 @@ impl GoRole {
 
 /// 1.4× boost for files anchoring the package API surface —
 /// package-name match or an exported chunked struct. Root-level only.
+///
+/// Tried and reverted: extending the eponymous (`stem == package`)
+/// boost to *nested* subpackages (`internal/config/config.go`,
+/// `pkg/runner/runner.go`). The boost multiplies every decl/doc/body
+/// of the file, so it floods the 3K budget with one directory's whole
+/// interior. At 1.4× it regressed every Go fixture (mcphost −0.086,
+/// gin −0.077); even a gentle 1.15× moved no target (the NS rows the
+/// boost would surface — mcphost `config.go` 2.1/2.2/2.4 — are big
+/// enough that their fidelity never recovers within budget) while
+/// still pulling tock's out-of-budget `internal/config/config.go`
+/// ahead of its own in-budget content (−0.043). There's no walk-time
+/// signal distinguishing "NS wants this nested file in budget" from
+/// "it doesn't", so the nested boost is net-negative corpus-wide.
 fn go_entry_factor_for(
     file: &Path,
     ctx: &WalkCtx,
@@ -849,6 +869,17 @@ fn collect_package_doc_lede(tree: &Tree, source: &str) -> FileLines {
         }
     }
     FileLines::new(Vec::new())
+}
+
+/// True iff `file` is a dedicated package-documentation file: the Go
+/// convention is a decl-less `doc.go` whose only top-level content is
+/// the `package` clause and its leading godoc comment. We require the
+/// `doc.go` name (the convention is explicit) and zero top-level
+/// declarations so a `doc.go` carrying real code is never mistaken for
+/// doc-only.
+fn is_package_doc_file(file: &Path, decls: &[(Node, DeclInfo)]) -> bool {
+    let stem = file.file_stem().and_then(|s| s.to_str());
+    stem == Some("doc") && decls.is_empty()
 }
 
 /// Drop any row at or after the first blank source line in `lines.full`.
@@ -1104,6 +1135,20 @@ package foo
         let (source, tree) = parse(src);
         let lede = collect_package_doc_lede(&tree, &source);
         assert_eq!(lede.full, vec![1, 2]);
+    }
+
+    #[test]
+    fn go_is_package_doc_file_requires_doc_stem_and_no_decls() {
+        let doc = Path::new("doc.go");
+        let other = Path::new("config.go");
+        let no_decls: Vec<(Node, DeclInfo)> = Vec::new();
+        assert!(is_package_doc_file(doc, &no_decls));
+        assert!(!is_package_doc_file(other, &no_decls));
+        // A `doc.go` carrying real decls is not a doc-only file.
+        let src = "package foo\n\nfunc Foo() {}\n";
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree, &source);
+        assert!(!is_package_doc_file(doc, &decls));
     }
 
     #[test]
