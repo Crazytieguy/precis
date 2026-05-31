@@ -250,6 +250,21 @@ packages/
             126→model Collection {
             151→model UsersAndCollections {
             166→model Link {
+            167→  id              Int         @id @default(autoincrement())
+            168→  name            String      @default("")
+            169→  type            String      @default("url")
+            170→  description     String      @default("")
+            171→  highlight       Highlight[]
+            172→  pinnedBy        User[]      @relation("PinnedLinks")
+            173→  createdBy       User?       @relation("CreatedLinks", fields: [createdById], references: [id], onDelete: Cascade)
+            174→  createdById     Int?
+            175→  collection      Collection  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+            176→  collectionId    Int
+            177→  tags            Tag[]
+            178→  icon            String?
+            179→  iconWeight      String?
+            180→  color           String?
+            181→  url             String?
             200→model Tag {
             220→model Subscription {
             234→model AccessToken {
@@ -261,20 +276,6 @@ packages/
             304→enum AppMigrationStatus {
         seed.js
     router/
-        collections.tsx
-        config.tsx
-        dashboardData.tsx
-        highlights.tsx
-        links.tsx
-        package.json
-        publicLinks.tsx
-        publicTags.tsx
-        rss.tsx
-        tags.tsx
-        tokens.tsx
-        user.tsx
-        users.tsx
-        worker.tsx
     types/
         global.ts
         inputSelect.ts

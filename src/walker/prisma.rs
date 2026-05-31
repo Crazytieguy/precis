@@ -34,8 +34,7 @@ use crate::batch::{Batch, BatchKey, PrismaKey};
 use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, fs::files_with_extension, path_depth_factor, push_rows,
-    single_file_lines_content,
+    FileLines, WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content,
 };
 
 /// Cap on TOC entries — budget hedge. Also caps the per-decl body
@@ -228,8 +227,12 @@ fn block_content(
     start_line: usize,
     end_line: usize,
 ) -> Option<crate::content::BatchContent> {
-    let mut rows = Vec::new();
-    push_rows(&mut rows, start_line, end_line);
+    // `start_line`/`end_line` are already 1-based (from `decls`), so the
+    // span rows are the inclusive range directly. Routing through `push_rows`
+    // (0-based-in → 1-based-out) would add a second +1 and shift every body
+    // down a line, dropping the `model X {` opener. FileLines is 1-based,
+    // matching how the Toc consumes `open_line`.
+    let rows: Vec<usize> = (start_line..=end_line).collect();
     single_file_lines_content(file, source, FileLines::new(rows))
 }
 
