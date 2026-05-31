@@ -66,10 +66,12 @@ README.md
     136→- `-i, --ignore-case` Case-insensitive search
     137→- `-c, --count` Count matching lines only
     138→- `-o, --only-matching` Print only the matched parts of lines
+    139→- `-e PATTERN, --pattern=PATTERN` Specify pattern(s). Can be used multiple times.
     141→- `-m NUM, --max-count=NUM` Stop searching each file after finding NUM matching lines.
     142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
     144→- `-r, --recursive` Recursively search directories
     145→- `--gitignore` Respect `.gitignore` files during recursive search
+    147→- `-t NUM, --threads=NUM` Use NUM threads for file search (default: auto)
     148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
     149→- `-w, --word-regexp` Match only whole words
     150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')
@@ -105,10 +107,6 @@ README.md
     243→Copyright © 2025 Davide Santangelo
 aho_corasick.c
 aho_corasick.h
-    1→/**
-    2→ * Aho-Corasick algorithm for multiple pattern search.
-    3→ * This header declares the Aho-Corasick trie structure and functions.
-    4→ */
 krep.c
 krep.h
     1→/* krep.h - Header file for krep utility

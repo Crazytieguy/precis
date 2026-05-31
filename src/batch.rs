@@ -296,6 +296,11 @@ pub enum PrismaKey {
 /// `#ifndef`/`#define`/`#endif` is descended transparently.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum CKey {
+    /// Whole small header rendered verbatim in one batch — replaces the
+    /// `HeaderBanner`/`Includes`/`DeclNames`/per-`Decl` decomposition for
+    /// headers small enough that the decomposition only fragments their
+    /// public surface and strips macro values / `#ifdef` shape.
+    WholeFile { file: PathBuf },
     /// Top-of-file `/* */` banner comment (license / brief).
     HeaderBanner { file: PathBuf },
     /// `#include` directives.
@@ -838,6 +843,7 @@ impl InnerKey for CKey {
 
     fn describe(&self, root: &Path) -> String {
         match self {
+            CKey::WholeFile { file } => describe_in("c whole header", file, root),
             CKey::HeaderBanner { file } => describe_in("c header banner", file, root),
             CKey::Includes { file } => describe_in("c includes", file, root),
             CKey::DeclNames { file, chunk_index } => {

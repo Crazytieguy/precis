@@ -110,12 +110,6 @@ sig/
 src/
     builtin.c
     builtin.h
-        8→int builtins_bind(jq_state *, block*);
-        …
-        10→#define BINOPS \
-        …
-        24→#define BINOP(name) jv binop_ ## name(jv, jv);
-        …
     builtin.jq
     bytecode.c
     bytecode.h
@@ -167,9 +161,6 @@ src/
         41→void jq_set_debug_cb(jq_state *, jq_msg_cb, void *);
         42→void jq_get_debug_cb(jq_state *, jq_msg_cb *, void **);
     jq_parser.h
-        6→int jq_parse(struct locfile* source, block* answer);
-        7→int jq_parse_library(struct locfile* locations, block* answer);
-        …
     jq_test.c
         21→int jq_testsuite(jv libdirs, int verbose, int argc, char* argv[]) {
         …
@@ -234,7 +225,6 @@ src/
         77→jv jv_number_abs(jv);
     jv_alloc.c
     jv_alloc.h
-        4→#include <stddef.h>
     jv_aux.c
     jv_dtoa.c
     jv_dtoa.h
@@ -246,8 +236,10 @@ src/
         39→inline struct dtoa_context *tsd_dtoa_context_get(void) {
         …
     jv_dtoa_tsd.h
+        1→#ifndef JV_DTOA_TSD_H
+        2→#define JV_DTOA_TSD_H
         3→struct dtoa_context *tsd_dtoa_context_get(void);
-        …
+        4→#endif
     jv_file.c
         12→jv jv_load_file(const char* filename, int raw) {
         …
@@ -265,9 +257,11 @@ src/
         40→int jq_set_colors(const char *code_str) {
         …
     jv_private.h
+        1→#ifndef JV_PRIVATE
+        2→#define JV_PRIVATE
         4→int jvp_number_cmp(jv, jv);
         5→int jvp_number_is_nan(jv);
-        …
+        7→#endif //JV_PRIVATE
     jv_thread.h
     jv_unicode.c
     jv_unicode.h
@@ -293,12 +287,13 @@ src/
         435→int load_program(jq_state *jq, struct locfile* src, block *out_block) {
         …
     linker.h
+        1→#ifndef LINKER_H
+        2→#define LINKER_H
         4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
         5→jv load_module_meta(jq_state *jq, jv modname);
-        …
+        7→#endif
     locfile.c
     locfile.h
-        4→#include "jq.h"
     main.c
         43→int jq_testsuite(jv lib_dirs, int verbose, int argc, char* argv[]);
         …

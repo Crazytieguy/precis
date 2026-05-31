@@ -52,6 +52,7 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, CKey};
+use crate::content::BatchContent;
 use crate::value::{mix_signals, names_surface_chunk_factor};
 
 /// Chunk size for C decl-name surfaces with no structural signal.
@@ -59,6 +60,28 @@ use crate::value::{mix_signals, names_surface_chunk_factor};
 /// decls; 24 keeps mid-sized headers coherent while still splitting
 /// catalog amalgamation headers.
 const C_DECL_NAMES_CHUNK_SIZE: usize = 24;
+
+/// Max non-blank source lines for a header to render whole in one
+/// batch instead of decomposing into banner / includes / names-surface
+/// / per-decl rows. Tuned to sit above the small single-module API
+/// headers whose entire value is "here is the complete public surface
+/// plus its constants / `#ifdef` shape" (bareiron's varnum.h 12,
+/// serialize.h 17, worldgen.h 24 non-blank) and below mid-sized
+/// catalog / multi-section headers the NS deliberately splits into
+/// per-region listings (jq.h ~60, bareiron procedures.h / packets.h).
+const WHOLE_HEADER_MAX_SRC_LINES: usize = 30;
+
+/// Max number of small (`<= WHOLE_HEADER_MAX_SRC_LINES` non-blank)
+/// headers a project may hold, tree-wide, for the whole-file render to
+/// apply anywhere in it. Above this the project is a "many small
+/// modules" layout (htop's ~88 per-meter / per-platform headers spread
+/// across a dozen directories) where the catastrophic-omission hedge is
+/// *breadth* — a cheap names-surface per header so the budget reaches
+/// dozens of modules — not a full render of any one. A project with
+/// only a handful of small headers (bareiron 5, krep 1, jq 9) is one
+/// where each is a load-bearing module API that earns its full render.
+/// Counted by size alone (no parse) — a coarse project-shape signal.
+const WHOLE_HEADER_PROJECT_MAX: usize = 16;
 
 /// Per-run C-walker state. Caches the seed root's autotools
 /// `include_HEADERS` set so internal headers can be demoted.
@@ -68,6 +91,9 @@ pub(in crate::walker) struct CState {
     /// `None` means no info — every header is treated equally.
     public_headers: OnceCell<Option<HashSet<PathBuf>>>,
     visibility_lookup: RefCell<HashMap<PathBuf, bool>>,
+    /// Count of small headers tree-wide (by size), computed once. Gates
+    /// the whole-file render off in many-small-modules projects.
+    small_header_count: OnceCell<usize>,
 }
 
 impl CState {
@@ -98,6 +124,59 @@ impl CState {
             .insert(header.to_path_buf(), hit);
         Some(hit)
     }
+
+    /// True iff the project is small-header-sparse enough for the
+    /// whole-file render — count of small headers tree-wide at or below
+    /// [`WHOLE_HEADER_PROJECT_MAX`]. Computed once per run.
+    fn whole_header_render_allowed(&self, root: &Path) -> bool {
+        *self
+            .small_header_count
+            .get_or_init(|| count_small_headers(root))
+            <= WHOLE_HEADER_PROJECT_MAX
+    }
+}
+
+/// Count, tree-wide from `root`, headers with at most
+/// [`WHOLE_HEADER_MAX_SRC_LINES`] non-blank lines. Size-only (no parse)
+/// — a coarse project-shape signal, capped so a pathological tree can't
+/// stall the run. Symlinks are not followed.
+fn count_small_headers(root: &Path) -> usize {
+    const SCAN_CAP: usize = 4096;
+    let mut count = 0;
+    let mut stack = vec![root.to_path_buf()];
+    let mut scanned = 0;
+    while let Some(dir) = stack.pop() {
+        let Ok(read_dir) = std::fs::read_dir(&dir) else {
+            continue;
+        };
+        for entry in read_dir.flatten() {
+            scanned += 1;
+            if scanned > SCAN_CAP {
+                return count;
+            }
+            let path = entry.path();
+            let Ok(file_type) = entry.file_type() else {
+                continue;
+            };
+            if file_type.is_dir() {
+                stack.push(path);
+            } else if file_type.is_file() && is_header_file(&path) && header_is_small_by_size(&path)
+            {
+                count += 1;
+            }
+        }
+    }
+    count
+}
+
+/// True iff `file`'s non-blank line count is within the whole-render
+/// size bound. Reads the file directly; `None`/unreadable → not small.
+fn header_is_small_by_size(file: &Path) -> bool {
+    let Ok(text) = std::fs::read_to_string(file) else {
+        return false;
+    };
+    let non_blank = text.lines().filter(|l| !l.trim().is_empty()).count();
+    non_blank > 0 && non_blank <= WHOLE_HEADER_MAX_SRC_LINES
 }
 
 /// Parse `Makefile.am` at `root` for `include_HEADERS` /
@@ -199,8 +278,35 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         return Vec::new();
     }
 
+    // Whole-file render applies only when the project (tree-wide) holds
+    // a small handful of small headers — each a load-bearing module API.
+    // A project flooded with small headers (many-small-modules layout)
+    // keeps the decomposed names-surface so budget reaches breadth.
+    let allow_whole_headers = ctx.c_state().whole_header_render_allowed(ctx.root());
+
     let mut out = Vec::new();
     for file in &c_files {
+        let Some((source, tree)) = parse_c(ctx, file) else {
+            continue;
+        };
+
+        // A small public-API header is delivered whole in one batch
+        // rather than decomposed into banner / includes / names-surface /
+        // per-decl rows. The decomposition strips macro values, enum
+        // bodies, and `#ifdef` shape — exactly the content these tiny
+        // headers exist to carry — and fragments a handful of
+        // declarations across four batch kinds for no budget benefit.
+        if allow_whole_headers && let Some(content) = whole_small_header_content(file, &source, ctx)
+        {
+            out.push(Batch {
+                key: CKey::WholeFile { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: whole_file_value(file, ctx),
+            });
+            continue;
+        }
+
         if let Some(content) = build_per_file_content(file, ctx, parse_c, collect_header_banner) {
             out.push(Batch {
                 key: CKey::HeaderBanner { file: file.clone() }.into(),
@@ -209,10 +315,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: header_banner_value(file, ctx),
             });
         }
-
-        let Some((source, tree)) = parse_c(ctx, file) else {
-            continue;
-        };
 
         let includes_lines = collect_includes(&tree, &source);
         if let Some(content) = single_file_lines_content(file, &source, includes_lines) {
@@ -833,6 +935,40 @@ fn is_header_file(path: &Path) -> bool {
     name.to_ascii_lowercase().ends_with(".h")
 }
 
+/// True iff `file` is a header small enough, and with a real public
+/// surface, to render whole in one batch (via
+/// [`whole_small_header_content`]). The size-only project-wide gate
+/// uses the coarser [`header_is_small_by_size`]; this is the precise
+/// per-file decision. Parse trees are cached in `ctx`, so the re-parse
+/// here is a cache hit.
+fn whole_small_header_eligible(file: &Path, ctx: &WalkCtx) -> bool {
+    if !is_header_file(file) {
+        return false;
+    }
+    let Some((source, tree)) = parse_c(ctx, file) else {
+        return false;
+    };
+    let non_blank = source.lines().filter(|l| !l.trim().is_empty()).count();
+    if non_blank == 0 || non_blank > WHOLE_HEADER_MAX_SRC_LINES {
+        return false;
+    }
+    // Require a real public surface — a header that's only includes /
+    // a guard / a forward declaration belongs to the decomposed path
+    // (its `Includes` batch), not a whole-file render.
+    !find_decls(&tree, &source, file).is_empty()
+}
+
+/// Whole-file content for a small public-API header, or `None` if it
+/// isn't [`whole_small_header_eligible`]. When `Some`, the caller emits
+/// a single verbatim batch and skips the per-file decomposition.
+fn whole_small_header_content(file: &Path, source: &str, ctx: &WalkCtx) -> Option<BatchContent> {
+    if !whole_small_header_eligible(file, ctx) {
+        return None;
+    }
+    let all_lines = FileLines::new((1..=source.lines().count()).collect());
+    single_file_lines_content(file, source, all_lines)
+}
+
 /// Damp internal headers explicitly marked non-public by `Makefile.am`.
 const INTERNAL_HEADER_FACTOR: f64 = 0.4;
 
@@ -924,6 +1060,19 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
     let cat = (0.80 * header_cat_factor(file)).min(1.0);
     let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
     base * names_surface_chunk_factor(chunk_index, chunk_count)
+}
+
+/// Value for a whole small header delivered in one batch. Catastrophic
+/// weight matches the names-surface it replaces (0.80) — same scheduling
+/// priority, so consolidating into one verbatim batch doesn't out-bid
+/// the decomposition it stands in for; the gain is purely that the
+/// constants / `#ifdef` shape the names-surface strips now survive.
+/// Follow-up sits below `decl_value` since the whole batch also covers
+/// what those per-decl rows would carry.
+fn whole_file_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.80 * header_cat_factor(file)).min(1.0);
+    let fu = (0.55 * header_cat_factor(file)).min(1.0);
+    mix_signals(cat, fu, 0.6, c_depth_factor(file, ctx))
 }
 
 /// Damp vendored / shim C-stdlib headers under non-root dirs.
