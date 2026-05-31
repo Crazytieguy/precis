@@ -194,7 +194,14 @@ fixture survey is via shell — see the survey commands in the
   content; pure re-ranking of already-emitted content does not. A real
   lift past this needs a structural change (e.g. an FS-descent-order
   signal so a fixture's primary `src/` descends before peripheral dirs,
-  or a per-tier ratio rebalance), not per-key value nudges.
+  or a per-tier ratio rebalance), not per-key value nudges. Measured
+  (2026-05): the global `DEFAULT_CONCAVITY_EXPONENT` is already at its
+  peak — 0.35 → corpus avg 0.5876; 0.30 → 0.5739; 0.40 → 0.5551 — and the
+  win/loss split is by fixture *structure* (deep-method-heavy like
+  nano-vllm +0.100 vs orientation-heavy like sqlite-vec −0.120),
+  crossing languages, so neither a single exponent nor a per-language
+  override captures it. A real rebalance needs a per-batch-shape (not
+  per-key) cost model or a budget-tier-aware scheduler.
 - **Prefix-stop tail effects on calibration tweaks**: any change that
   shifts a big batch's rank can leave it stuck near the budget tail
   where it no longer fits. The scheduler's prefix-monotone stop then
