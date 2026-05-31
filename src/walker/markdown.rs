@@ -288,12 +288,33 @@ fn readme_section_value(
 /// fence inside is the highest-value follow-up to the headline.
 const CANONICAL_USAGE_SECTION_FACTOR: f64 = 1.5;
 
+/// Modest parallel boost for README reference/usage sections whose
+/// title matches the broader vocabulary (see
+/// [`is_reference_usage_title`]) — applies REGARDLESS of code fraction,
+/// so prose/list/table reference sections (`## Options`, `### Colors`,
+/// `## Environment Variables`) clear the early budget instead of
+/// sinking below the README index decay. Smaller than the code-dominant
+/// canonical factor since these sections are less reliably the single
+/// highest-value follow-up.
+const REFERENCE_USAGE_SECTION_FACTOR: f64 = 1.3;
+
+/// Combined README section boost: the stronger of the code-dominant
+/// canonical-usage boost (H2 `Whole` demo fences) and the modest
+/// reference/usage title boost (any matching `Whole` / `Intro` /
+/// `H3Child` with non-trivial body). The two never stack.
 fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
-    if range.parent_is_canonical_usage_h2 && matches!(range.kind, SectionKind::Whole) {
-        CANONICAL_USAGE_SECTION_FACTOR
+    let canonical =
+        if range.parent_is_canonical_usage_h2 && matches!(range.kind, SectionKind::Whole) {
+            CANONICAL_USAGE_SECTION_FACTOR
+        } else {
+            1.0
+        };
+    let reference = if range.is_reference_usage_section {
+        REFERENCE_USAGE_SECTION_FACTOR
     } else {
         1.0
-    }
+    };
+    canonical.max(reference)
 }
 
 /// Index decay for README sections — long READMEs (≥18 H2s) get a
@@ -1364,6 +1385,12 @@ struct SectionRange {
     /// Parent H2 title matches a canonical-usage marker (see
     /// [`is_canonical_usage_h2_title`]). README-only.
     parent_is_canonical_usage_h2: bool,
+    /// This range's own (or parent H2's, for `Whole`/`Intro`) title
+    /// matches the broader reference/usage vocabulary (see
+    /// [`is_reference_usage_title`]) and the section has non-trivial
+    /// body bytes. README-only; earns the modest
+    /// [`REFERENCE_USAGE_SECTION_FACTOR`].
+    is_reference_usage_section: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1404,6 +1431,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     parent_index: parent_idx,
                     synthetic_intro_present,
                     parent_is_canonical_usage_h2: false,
+                    is_reference_usage_section: false,
                 });
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -1412,6 +1440,16 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     split_eligible_file && outline_will_emit && bytes >= H2_SPLIT_BYTES;
                 let body_block_split_gate = split_eligible_file && bytes >= H2_SPLIT_BYTES;
                 let usage_h2 = readme && is_canonical_usage_h2(*node, source);
+                // README H2 whose title is in the reference/usage
+                // vocabulary, regardless of code fraction. Gates: a
+                // non-trivial but compact body (so stub H2s and large
+                // prose/demo blobs are excluded) AND structural
+                // reference content (list / table / code), so a
+                // prose-only intro under a reference title is skipped.
+                let reference_h2 = readme
+                    && is_reference_usage_title(*node, source)
+                    && reference_usage_body_ok(*node)
+                    && reference_usage_has_structure(*node, source);
 
                 let h3s = if structural_split_gate {
                     direct_h3_children(*node)
@@ -1454,6 +1492,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             parent_index: parent_idx,
                             synthetic_intro_present,
                             parent_is_canonical_usage_h2: usage_h2,
+                            is_reference_usage_section: reference_h2,
                         });
                     }
                 }
@@ -1485,6 +1524,12 @@ fn push_intro<'a>(
     if !has_substantive_body(h2_section, h2_start, intro_end, source) {
         return;
     }
+    // The H2 title carries the reference/usage match; the prelude
+    // before the first H3 inherits it. The compact-body gate measures
+    // just the prelude rows (the whole split H2 is large by
+    // construction). README-only — the caller is gated.
+    let reference_h2 = is_reference_usage_title(h2_section, source)
+        && reference_usage_row_range_ok(h2_section, h2_start, intro_end, source);
     out.push(SectionRange {
         start: h2_start,
         end: intro_end,
@@ -1492,6 +1537,7 @@ fn push_intro<'a>(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
+        is_reference_usage_section: reference_h2,
     });
 }
 
@@ -1513,6 +1559,12 @@ fn push_h3_child_or_body_blocks(
             return;
         }
     }
+    // The H3's OWN title carries the reference/usage match (e.g.
+    // `### Colors`, `### Default preset`). Same gates as the H2 path:
+    // compact body + structural reference content.
+    let reference_h3 = is_reference_usage_title(h3_section, source)
+        && reference_usage_body_ok(h3_section)
+        && reference_usage_has_structure(h3_section, source);
     out.push(SectionRange {
         start: h3_start,
         end: h3_end,
@@ -1520,6 +1572,7 @@ fn push_h3_child_or_body_blocks(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
+        is_reference_usage_section: reference_h3,
     });
 }
 
@@ -1539,6 +1592,7 @@ fn push_body_block_ranges(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
+        is_reference_usage_section: false,
     }));
     true
 }
@@ -1798,6 +1852,140 @@ fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
             | "getting started"
             | "demo"
     )
+}
+
+/// README reference/usage sections worth the modest
+/// [`REFERENCE_USAGE_SECTION_FACTOR`]: title (H2 or H3, taken from the
+/// section's own first heading) matches a tight reference/usage
+/// vocabulary. Unlike [`is_canonical_usage_h2`] this is NOT gated on
+/// code dominance — the point is to lift prose/list/table reference
+/// sections (option tables, color/modifier lists, environment-variable
+/// docs) above the README index decay so they clear the early budget.
+/// The vocabulary is kept tight and the body-bytes gate is enforced at
+/// the call sites; a too-broad list would over-promote trivial
+/// sections. README-only (gated at the call sites).
+fn is_reference_usage_title(section: Node<'_>, source: &str) -> bool {
+    let Some(core) = h2_title_core(section, source) else {
+        return false;
+    };
+    matches!(
+        core.as_str(),
+        // Bare "usage" is deliberately excluded: code-dominant usage
+        // demos are already handled by the canonical path, and a
+        // prose/demo `## Usage` blob (json-server) only displaces source
+        // NS when promoted. The *specific* usage titles below name
+        // genuine CLI/API reference sections.
+        "command line usage"
+            | "command-line usage"
+            | "cli usage"
+            | "command line options"
+            | "command-line options"
+            | "options"
+            | "flags"
+            | "key features"
+            | "features"
+            | "configuration"
+            | "config"
+            | "api"
+            | "api usage"
+            | "colors"
+            | "modifiers"
+            | "styles"
+            | "background colors"
+            | "environment variables"
+            | "formatters"
+            | "default preset"
+    )
+}
+
+/// Upper bound (source bytes, heading excluded) on a reference/usage
+/// section's body for it to earn [`REFERENCE_USAGE_SECTION_FACTOR`].
+/// Reference tables/lists (option tables, color/modifier lists,
+/// feature bullets) are compact — krep's `## Command Line Options`
+/// (~1.2 KB) and chalk's `## 256 and Truecolor` (~1.3 KB) clear it. The
+/// cap excludes large `## Usage` prose/demo blobs (debug ~2.1 KB,
+/// superstruct `### Usage` ~2.3 KB) that the README index decay
+/// correctly keeps off the early budget — promoting them displaces
+/// NS-anchored source content for no gain.
+const REFERENCE_USAGE_MAX_BODY_BYTES: usize = 1500;
+
+/// True iff `section`'s non-heading body is non-empty and at most
+/// [`REFERENCE_USAGE_MAX_BODY_BYTES`] — the body-size gate for the
+/// `Whole` (unsplit H2) and `H3Child` reference/usage boost. Measured
+/// over the whole node; the split-H2 `Intro` uses
+/// [`reference_usage_row_range_ok`] over just the prelude rows.
+fn reference_usage_body_ok(section: Node<'_>) -> bool {
+    let Some(heading) = first_heading_child(section) else {
+        return false;
+    };
+    let heading_bytes = heading.end_byte() - heading.start_byte();
+    let body_bytes = (section.end_byte() - section.start_byte()).saturating_sub(heading_bytes);
+    body_bytes > 0 && body_bytes <= REFERENCE_USAGE_MAX_BODY_BYTES
+}
+
+/// Like [`reference_usage_body_ok`] but over a 1-based source row range
+/// `[start, end]` (heading rows excluded). Used for a split H2's
+/// `Intro`, whose body is just the prelude before the first H3 — the
+/// whole-H2 byte count would always exceed the cap (the H2 split only
+/// because it's large), so svgo's `## Configuration` prelude would be
+/// wrongly rejected.
+fn reference_usage_row_range_ok(section: Node, start: usize, end: usize, source: &str) -> bool {
+    let Some(heading) = first_heading_child(section) else {
+        return false;
+    };
+    let heading_first_row = heading.start_position().row + 1;
+    let heading_last_row = node_end_row_trimmed(heading, source) + 1;
+    let body: Vec<&str> = source
+        .lines()
+        .enumerate()
+        .skip(start.saturating_sub(1))
+        .take(end.saturating_sub(start) + 1)
+        .filter(|(idx, _)| !(heading_first_row..=heading_last_row).contains(&(idx + 1)))
+        .map(|(_, line)| line)
+        .collect();
+    // +1 for the newline each line carried in the source.
+    let body_bytes: usize = body.iter().map(|l| l.len() + 1).sum();
+    body_bytes > 0
+        && body_bytes <= REFERENCE_USAGE_MAX_BODY_BYTES
+        && body.iter().any(|l| is_reference_structure_line(l))
+}
+
+/// True iff `line` is structural reference content: a bullet / numbered
+/// list item, a table row, or a code-fence line. Reference sections
+/// worth the boost catalog options / colors / flags as lists or tables
+/// (or hold a config code block); a section whose body is only prose —
+/// e.g. enclosed's `### Configuration`, a one-line pointer to external
+/// docs — is an intro, not a reference, and is correctly skipped.
+fn is_reference_structure_line(line: &str) -> bool {
+    let t = line.trim_start();
+    t.starts_with("- ")
+        || t.starts_with("* ")
+        || t.starts_with("+ ")
+        || t.starts_with('|')
+        || t.starts_with("```")
+        || t.starts_with("~~~")
+        || t.split_once(". ")
+            .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
+}
+
+/// True iff the section node's body (heading excluded) contains
+/// structural reference content — see [`is_reference_structure_line`].
+/// Node-based variant for the `Whole` / `H3Child` paths.
+fn reference_usage_has_structure(section: Node<'_>, source: &str) -> bool {
+    let start = section.start_position().row + 1;
+    let end = node_end_row_trimmed(section, source) + 1;
+    let Some(heading) = first_heading_child(section) else {
+        return false;
+    };
+    let heading_first_row = heading.start_position().row + 1;
+    let heading_last_row = node_end_row_trimmed(heading, source) + 1;
+    source
+        .lines()
+        .enumerate()
+        .skip(start.saturating_sub(1))
+        .take(end.saturating_sub(start) + 1)
+        .filter(|(idx, _)| !(heading_first_row..=heading_last_row).contains(&(idx + 1)))
+        .any(|(_, line)| is_reference_structure_line(line))
 }
 
 /// True iff `section`'s direct children include at least one
@@ -2691,6 +2879,49 @@ mod tests {
             kinds.contains(&SectionKind::H3Child),
             "single-block H3 child must remain whole; got {ranges:?}"
         );
+    }
+
+    #[test]
+    fn markdown_reference_usage_section_flagged() {
+        // (title, body, expect_flag_on_some_whole_range)
+        let cases: &[(&str, &str, bool)] = &[
+            // Reference title + list body → flagged.
+            ("## Options", "- `-a` first\n- `-b` second\n", true),
+            // Reference title + table body → flagged.
+            (
+                "## Environment Variables",
+                "| Name | Meaning |\n|------|---------|\n| `X` | a thing |\n",
+                true,
+            ),
+            // Reference title but prose-only body (no list/table/code)
+            // → NOT flagged (enclosed's pointer shape).
+            (
+                "## Configuration",
+                "See the configuration docs for details.\n",
+                false,
+            ),
+            // Reference title but body over the compact cap → NOT
+            // flagged (large `## Usage`-style blob).
+            (
+                "## Features",
+                &("- bullet of moderately long reference text here\n".repeat(40)),
+                false,
+            ),
+            // Non-vocabulary title with a list body → NOT flagged.
+            ("## Random Notes", "- one\n- two\n", false),
+            // Bare `## Usage` is deliberately excluded from the broad
+            // vocab (canonical path handles code-dominant usage).
+            ("## Usage", "- run it\n- profit\n", false),
+        ];
+        for (title, body, expect) in cases {
+            let src = format!("# Project\n\nTagline.\n\n{title}\n\n{body}");
+            let ranges = sections("README.md", &src);
+            let any_flagged = ranges.iter().any(|r| r.is_reference_usage_section);
+            assert_eq!(
+                any_flagged, *expect,
+                "title={title:?} body={body:?} expected flag={expect}, got {any_flagged}; ranges={ranges:?}"
+            );
+        }
     }
 
     /// Trailing decorative HTML block after the list (anyhow's

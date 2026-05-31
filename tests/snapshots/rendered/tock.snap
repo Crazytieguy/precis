@@ -13,6 +13,18 @@ README.md
     1→# Tock
     5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
     6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
+    8→## Features
+    10→<img src="assets/demo.png" width="820px" />
+    12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
+    14→Features include:
+    16→- 📝 **Simple plaintext format** - Activities stored in human-readable files
+    17→- 📅 **Notes & Tags** - Attach detailed notes and tags to activities
+    18→- 🎨 **Interactive TUI** - Beautiful terminal calendar view using Bubble Tea
+    19→- ⚡ **Fast & Lightweight** - Single binary, no dependencies
+    20→- 🔄 **Compatible** - Reads/writes Bartib file format and TimeWarrior data files
+    21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
+    22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
+    24→<hr clear="right"/>
     602→## Update Check
     604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
     606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
@@ -104,14 +116,6 @@ internal/
         cli/
             add.go
             analyze.go
-                20→func NewAnalyzeCmd() *cobra.Command {
-                …
-                70→type AnalysisStats struct {
-                …
-                84→func analyzeData(activities []models.Activity) AnalysisStats {
-                …
-                206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
-                …
             calendar.go
             calendar_sidebar.go
             continue.go
@@ -144,14 +148,6 @@ internal/
                 …
             list_gui.go
             remove.go
-                22→func NewRemoveCmd() *cobra.Command {
-                …
-                95→func parseRemoveIndex(s string) (time.Time, int, error) {
-                …
-                116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
-                …
-                127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
-                …
             report.go
                 20→type reportOptions struct {
                 …

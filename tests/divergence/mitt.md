@@ -43,15 +43,15 @@ Score(3000)=0.690 I=0.835 C=0.571 ns_rows≤3K=22/43 (reached=14 partial=3 missi
 | walker |  | 2274 | 871 | export body at src/index.ts:46 body 49 |  |  | 0.760 |
 | ns | 2294 |  | 313 | README TypeScript usage section | 3.6 |  | 0.692 |
 | walker |  | 2509 | 235 | package scripts in package.json |  |  | 0.695 |
-| walker |  | 2612 | 103 | README.md section #4 |  |  | 0.696 |
-| ns | 2626 |  | 332 | test/index_test.ts test labels — all describe + it titles | 3.7 |  | 0.652 |
-| walker |  | 2644 | 32 | README.md section #12 |  |  | 0.665 |
-| walker |  | 2671 | 27 | README.md section #6 |  |  | 0.677 |
-| walker |  | 2704 | 33 | README.md section #10 |  |  | 0.696 |
-| ns | 2829 |  | 203 | on() / off() JSDoc | 3.8 | 2.2 | 0.706 |
-| walker |  | 2853 | 149 | json config tsconfig.json |  |  | 0.709 |
-| ns | 2949 |  | 120 | compressed-size CI workflow | 4.1 |  | 0.690 |
-| walker |  | 2985 | 132 | README.md section #5 |  |  | 0.690 |
+| ns | 2626 |  | 332 | test/index_test.ts test labels — all describe + it titles | 3.7 |  | 0.651 |
+| walker |  | 2641 | 132 | README.md section #5 |  |  | 0.651 |
+| walker |  | 2744 | 103 | README.md section #4 |  |  | 0.652 |
+| walker |  | 2776 | 32 | README.md section #12 |  |  | 0.665 |
+| walker |  | 2803 | 27 | README.md section #6 |  |  | 0.677 |
+| ns | 2829 |  | 203 | on() / off() JSDoc | 3.8 | 2.2 | 0.688 |
+| walker |  | 2836 | 33 | README.md section #10 |  |  | 0.706 |
+| ns | 2949 |  | 120 | compressed-size CI workflow | 4.1 |  | 0.687 |
+| walker |  | 2985 | 149 | json config tsconfig.json |  |  | 0.690 |
 | ns | 3089 |  | 140 | package.json mocha + prettier blocks | 4.2 |  | 0.667 |
 | walker |  | 3227 | 242 | README.md section #2 |  |  | 0.669 |
 | ns | 3238 |  | 149 | tsconfig.json — full | 4.3 |  | 0.681 |

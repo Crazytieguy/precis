@@ -330,13 +330,14 @@ Score(3000)=0.570 I=0.657 C=0.495 ns_rows≤3K=14/33 (reached=5 partial=0 missin
 | walker |  | 9110 | 16 | go decl doc at internal/url/url.go:12 |  |  | 0.363 |
 | walker |  | 9119 | 9 | listing of 'source/stub' |  |  | 0.363 |
 | walker |  | 9124 | 5 | listing of 'source/go_bindata/testdata' |  |  | 0.363 |
-| walker |  | 9151 | 27 | go package + imports in cmd/migrate/main.go |  |  | 0.367 |
-| walker |  | 9200 | 49 | go package + imports in source/driver.go |  |  | 0.367 |
-| ns | 9209 |  | 229 | internal/cli/commands.go: fn signature locations | 6.4 |  | 0.364 |
-| walker |  | 9325 | 125 | headings outline in cmd/migrate/README.md |  |  | 0.364 |
-| walker |  | 9468 | 143 | go decl body at migrate.go:212 |  |  | 0.364 |
-| walker |  | 9612 | 144 | go decl body at migrate.go:265 |  |  | 0.381 |
-| ns | 9674 |  | 465 | CLI -help output (cmd/migrate/README.md) | 6.5 |  | 0.373 |
-| walker |  | 9756 | 144 | go decl body at migrate.go:287 |  |  | 0.373 |
-| walker |  | 9768 | 12 | go decl body at source/github_ee/github_ee.go:17 |  |  | 0.373 |
-| ns | 9954 |  | 280 | FAQ highlights: NilMigration, dirty, locking, two-files | 7.1 | 1.3 | 0.370 |
+| ns | 9209 |  | 229 | internal/cli/commands.go: fn signature locations | 6.4 |  | 0.360 |
+| walker |  | 9287 | 163 | README.md section #3 |  |  | 0.373 |
+| walker |  | 9314 | 27 | go package + imports in cmd/migrate/main.go |  |  | 0.377 |
+| walker |  | 9363 | 49 | go package + imports in source/driver.go |  |  | 0.377 |
+| walker |  | 9488 | 125 | headings outline in cmd/migrate/README.md |  |  | 0.377 |
+| walker |  | 9631 | 143 | go decl body at migrate.go:212 |  |  | 0.377 |
+| ns | 9674 |  | 465 | CLI -help output (cmd/migrate/README.md) | 6.5 |  | 0.370 |
+| walker |  | 9775 | 144 | go decl body at migrate.go:265 |  |  | 0.386 |
+| walker |  | 9919 | 144 | go decl body at migrate.go:287 |  |  | 0.386 |
+| walker |  | 9931 | 12 | go decl body at source/github_ee/github_ee.go:17 |  |  | 0.386 |
+| ns | 9954 |  | 280 | FAQ highlights: NilMigration, dirty, locking, two-files | 7.1 | 1.3 | 0.383 |

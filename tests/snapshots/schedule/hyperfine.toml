@@ -3053,10 +3053,36 @@ kind = "full"
 
 [[batches]]
 position = 119
+key = 'Markdown(Section { file: "README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 144
+cum_tokens = 4217
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 15
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
 key = 'Rust(PubItemDocLede { file: "src/output/format.rs", start_line: 11 })'
 descriptor = "pub-item doc lede at src/output/format.rs:11"
 cost_tokens = 18
-cum_tokens = 4091
+cum_tokens = 4235
 
 [batches.content]
 kind = "lines"
@@ -3070,11 +3096,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Rust(PubItemDocLede { file: "src/output/format.rs", start_line: 18 })'
 descriptor = "pub-item doc lede at src/output/format.rs:18"
 cost_tokens = 18
-cum_tokens = 4109
+cum_tokens = 4253
 
 [batches.content]
 kind = "lines"
@@ -3088,11 +3114,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Rust(PubItemBody { file: "src/outlier_detection.rs", start_line: 43, body_start_line: 44 })'
 descriptor = "pub item body at src/outlier_detection.rs:43 body 44"
 cost_tokens = 80
-cum_tokens = 4189
+cum_tokens = 4333
 
 [batches.content]
 kind = "lines"
@@ -3114,11 +3140,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Rust(ModUse { file: "src/timer/mod.rs" })'
 descriptor = "mod/use plumbing in src/timer/mod.rs"
 cost_tokens = 151
-cum_tokens = 4340
+cum_tokens = 4484
 
 [batches.content]
 kind = "lines"
@@ -3204,11 +3230,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Markdown(Section { file: "README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 47
-cum_tokens = 4387
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
@@ -3230,11 +3256,11 @@ end = 341
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Rust(PubItemDocLede { file: "src/outlier_detection.rs", start_line: 43 })'
 descriptor = "pub-item doc lede at src/outlier_detection.rs:43"
 cost_tokens = 44
-cum_tokens = 4431
+cum_tokens = 4575
 
 [batches.content]
 kind = "lines"
@@ -3248,11 +3274,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Rust(ModUse { file: "src/export/mod.rs" })'
 descriptor = "mod/use plumbing in src/export/mod.rs"
 cost_tokens = 206
-cum_tokens = 4637
+cum_tokens = 4781
 
 [batches.content]
 kind = "lines"
@@ -3306,11 +3332,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Rust(PubItem { file: "src/error.rs", start_line: 37 })'
 descriptor = "pub item at src/error.rs:37"
 cost_tokens = 363
-cum_tokens = 5000
+cum_tokens = 5144
 
 [batches.content]
 kind = "lines"
@@ -3324,11 +3350,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Fs(DirListing { dir: "src/benchmark" })'
 descriptor = "listing of 'src/benchmark'"
 cost_tokens = 27
-cum_tokens = 5027
+cum_tokens = 5171
 
 [batches.content]
 kind = "fs"
@@ -3338,11 +3364,11 @@ parent = "src/benchmark"
 entries = ["benchmark_result.rs", "executor.rs", "mod.rs", "relative_speed.rs", "scheduler.rs", "timing_result.rs"]
 
 [[batches]]
-position = 128
+position = 129
 key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 66
-cum_tokens = 5093
+cum_tokens = 5237
 
 [batches.content]
 kind = "lines"
@@ -3372,11 +3398,11 @@ end = 347
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Markdown(Section { file: "README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 77
-cum_tokens = 5170
+cum_tokens = 5314
 
 [batches.content]
 kind = "lines"
@@ -3393,32 +3419,6 @@ kind = "full"
 path = "README.md"
 start = 334
 end = 336
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Markdown(Section { file: "README.md", section_index: 1 })'
-descriptor = "README.md section #1"
-cost_tokens = 144
-cum_tokens = 5314
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 15
-end = 23
 
 [batches.content.spans.render]
 kind = "full"

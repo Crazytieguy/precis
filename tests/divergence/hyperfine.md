@@ -147,21 +147,21 @@ Score(3000)=0.527 I=0.802 C=0.346 ns_rows≤3K=23/42 (reached=7 partial=1 missin
 | walker |  | 3989 | 235 | pub item at src/error.rs:7 |  |  | 0.489 |
 | walker |  | 4031 | 42 | pub item body at src/util/min_max.rs:2 body 3 |  |  | 0.489 |
 | walker |  | 4073 | 42 | pub item body at src/util/min_max.rs:10 body 11 |  |  | 0.489 |
-| walker |  | 4091 | 18 | pub-item doc lede at src/output/format.rs:11 |  |  | 0.489 |
-| walker |  | 4109 | 18 | pub-item doc lede at src/output/format.rs:18 |  |  | 0.490 |
-| walker |  | 4189 | 80 | pub item body at src/outlier_detection.rs:43 body 44 |  |  | 0.490 |
-| ns | 4283 |  | 390 | Benchmark::run — warning push logic | 3.5 | 2.2 | 0.466 |
-| walker |  | 4340 | 151 | mod/use plumbing in src/timer/mod.rs |  |  | 0.466 |
-| walker |  | 4387 | 47 | README.md section #7 |  |  | 0.466 |
-| walker |  | 4431 | 44 | pub-item doc lede at src/outlier_detection.rs:43 |  |  | 0.466 |
-| ns | 4505 |  | 222 | Benchmark::run — BenchmarkResult construction | 3.6 | 2.9 | 0.453 |
-| walker |  | 4637 | 206 | mod/use plumbing in src/export/mod.rs |  |  | 0.453 |
-| walker |  | 5000 | 363 | pub item at src/error.rs:37 |  |  | 0.455 |
-| walker |  | 5027 | 27 | listing of 'src/benchmark' |  |  | 0.481 |
-| ns | 5047 |  | 542 | Per-format markup exporters — Markdown / Orgmode | 3.7 | 2.10 | 0.451 |
-| walker |  | 5093 | 66 | README.md section #8 |  |  | 0.451 |
-| walker |  | 5170 | 77 | README.md section #6 |  |  | 0.451 |
-| walker |  | 5314 | 144 | README.md section #1 |  |  | 0.472 |
+| walker |  | 4217 | 144 | README.md section #1 |  |  | 0.514 |
+| walker |  | 4235 | 18 | pub-item doc lede at src/output/format.rs:11 |  |  | 0.514 |
+| walker |  | 4253 | 18 | pub-item doc lede at src/output/format.rs:18 |  |  | 0.514 |
+| ns | 4283 |  | 390 | Benchmark::run — warning push logic | 3.5 | 2.2 | 0.489 |
+| walker |  | 4333 | 80 | pub item body at src/outlier_detection.rs:43 body 44 |  |  | 0.489 |
+| walker |  | 4484 | 151 | mod/use plumbing in src/timer/mod.rs |  |  | 0.489 |
+| ns | 4505 |  | 222 | Benchmark::run — BenchmarkResult construction | 3.6 | 2.9 | 0.476 |
+| walker |  | 4531 | 47 | README.md section #7 |  |  | 0.476 |
+| walker |  | 4575 | 44 | pub-item doc lede at src/outlier_detection.rs:43 |  |  | 0.476 |
+| walker |  | 4781 | 206 | mod/use plumbing in src/export/mod.rs |  |  | 0.476 |
+| ns | 5047 |  | 542 | Per-format markup exporters — Markdown / Orgmode | 3.7 | 2.10 | 0.447 |
+| walker |  | 5144 | 363 | pub item at src/error.rs:37 |  |  | 0.448 |
+| walker |  | 5171 | 27 | listing of 'src/benchmark' |  |  | 0.472 |
+| walker |  | 5237 | 66 | README.md section #8 |  |  | 0.472 |
+| walker |  | 5314 | 77 | README.md section #6 |  |  | 0.472 |
 | ns | 5447 |  | 400 | AsciidocExporter body | 3.8 | 2.10 | 0.453 |
 | walker |  | 5578 | 264 | [dependencies] in Cargo.toml |  |  | 0.453 |
 | walker |  | 5641 | 63 | pub-item doc lede at src/outlier_detection.rs:13 |  |  | 0.453 |

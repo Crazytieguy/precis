@@ -83,22 +83,22 @@ Score(3000)=0.562 I=0.801 C=0.394 ns_rows≤3K=18/46 (reached=7 partial=1 missin
 | walker |  | 3303 | 4 | listing of '.github/workflows' |  |  | 0.499 |
 | walker |  | 3367 | 64 | readme.md section #38 |  |  | 0.499 |
 | ns | 3392 |  | 193 | createBuilder body (function with proto) | 3.7 | 3.1 | 0.484 |
-| walker |  | 3477 | 110 | readme.md section #12 |  |  | 0.495 |
-| walker |  | 3683 | 206 | code-of-conduct.md section #2 |  |  | 0.495 |
-| ns | 3904 |  | 512 | rgb/hex/ansi256 attach loop + getModelAnsi | 3.8 | 3.1 | 0.458 |
-| ns | 4059 |  | 155 | Chalk class + chalkFactory + createChalk | 3.9 | 3.1 | 0.442 |
-| walker |  | 4068 | 385 | readme.md section #29 |  |  | 0.478 |
-| ns | 4304 |  | 245 | applyOptions + proto definition | 3.10 | 3.1 | 0.461 |
-| ns | 4334 |  | 30 | index.js finalization (defineProperties + chalk = createChalk()) | 3.11 | 2.2 | 0.458 |
-| ns | 4504 |  | 170 | ansi-styles: modifier table | 4.1 |  | 0.449 |
-| walker |  | 4662 | 594 | readme.md section #3 |  |  | 0.471 |
-| ns | 4808 |  | 304 | ansi-styles: color table | 4.2 |  | 0.457 |
-| walker |  | 4809 | 147 | readme.md section #27 |  |  | 0.498 |
-| ns | 5122 |  | 314 | ansi-styles: bgColor table | 4.3 |  | 0.483 |
-| ns | 5212 |  | 90 | ansi-styles: name arrays + default export | 4.4 |  | 0.479 |
-| walker |  | 5281 | 472 | readme.md section #39 |  |  | 0.479 |
-| ns | 5355 |  | 143 | ansi-styles: wrapAnsi16 / 256 / 16m + ANSI_BACKGROUND_OFFSET | 4.5 |  | 0.475 |
-| walker |  | 5448 | 167 | readme.md section #28 |  |  | 0.512 |
+| walker |  | 3514 | 147 | readme.md section #27 |  |  | 0.538 |
+| walker |  | 3624 | 110 | readme.md section #12 |  |  | 0.549 |
+| walker |  | 3830 | 206 | code-of-conduct.md section #2 |  |  | 0.549 |
+| ns | 3904 |  | 512 | rgb/hex/ansi256 attach loop + getModelAnsi | 3.8 | 3.1 | 0.507 |
+| walker |  | 3997 | 167 | readme.md section #28 |  |  | 0.553 |
+| ns | 4059 |  | 155 | Chalk class + chalkFactory + createChalk | 3.9 | 3.1 | 0.534 |
+| ns | 4304 |  | 245 | applyOptions + proto definition | 3.10 | 3.1 | 0.515 |
+| ns | 4334 |  | 30 | index.js finalization (defineProperties + chalk = createChalk()) | 3.11 | 2.2 | 0.512 |
+| walker |  | 4382 | 385 | readme.md section #29 |  |  | 0.543 |
+| ns | 4504 |  | 170 | ansi-styles: modifier table | 4.1 |  | 0.533 |
+| ns | 4808 |  | 304 | ansi-styles: color table | 4.2 |  | 0.517 |
+| walker |  | 4976 | 594 | readme.md section #3 |  |  | 0.537 |
+| ns | 5122 |  | 314 | ansi-styles: bgColor table | 4.3 |  | 0.521 |
+| ns | 5212 |  | 90 | ansi-styles: name arrays + default export | 4.4 |  | 0.517 |
+| ns | 5355 |  | 143 | ansi-styles: wrapAnsi16 / 256 / 16m + ANSI_BACKGROUND_OFFSET | 4.5 |  | 0.512 |
+| walker |  | 5448 | 472 | readme.md section #39 |  |  | 0.512 |
 | walker |  | 5496 | 48 | contributing.md section #0 |  |  | 0.512 |
 | walker |  | 5541 | 45 | .github/security.md section #0 |  |  | 0.512 |
 | ns | 5565 |  | 210 | ansi-styles: assembleStyles + ansi/ansi256/ansi16m installation | 4.6 |  | 0.503 |

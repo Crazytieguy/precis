@@ -96,28 +96,28 @@ Score(3000)=0.609 I=0.760 C=0.488 ns_rows≤3K=20/46 (reached=8 partial=3 missin
 | walker |  | 3212 | 47 | package runtime metadata in package.json |  |  | 0.640 |
 | ns | 3291 |  | 219 | lib/types.ts — PluginConfig + CustomPlugin | 2.9 |  | 0.619 |
 | walker |  | 3593 | 381 | package scripts in package.json |  |  | 0.619 |
-| walker |  | 3599 | 6 | listing of '.yarn' |  |  | 0.619 |
 | ns | 3607 |  | 316 | lib/types.ts — BuiltinPlugin + preset shape | 2.10 |  | 0.594 |
-| walker |  | 3680 | 81 | export names surface in lib/xast.js |  |  | 0.594 |
-| walker |  | 3680 | 0 | export at lib/xast.js:22 |  |  | 0.594 |
-| walker |  | 3680 | 0 | export at lib/xast.js:32 |  |  | 0.594 |
-| walker |  | 3680 | 0 | export at lib/xast.js:42 |  |  | 0.594 |
-| walker |  | 3680 | 0 | export at lib/xast.js:50 |  |  | 0.594 |
-| walker |  | 3697 | 17 | export body at lib/xast.js:42 body 43 |  |  | 0.594 |
-| walker |  | 3715 | 18 | export body at lib/xast.js:22 body 23 |  |  | 0.594 |
-| walker |  | 3733 | 18 | export body at lib/xast.js:32 body 33 |  |  | 0.594 |
-| walker |  | 3766 | 33 | export body at lib/xast.js:50 body 51 |  |  | 0.594 |
-| walker |  | 3874 | 108 | json config tsconfig.build.json |  |  | 0.594 |
-| walker |  | 3917 | 43 | export at lib/svgo/plugins.js:14 |  |  | 0.595 |
-| walker |  | 3933 | 16 | imports in lib/stringifier.js |  |  | 0.595 |
-| ns | 4213 |  | 606 | lib/svgo.js — optimize body | 2.11 | 2.1 | 0.553 |
-| walker |  | 4321 | 388 | listing of 'docs/04-plugins' |  |  | 0.553 |
-| walker |  | 4341 | 20 | imports in lib/path.js |  |  | 0.553 |
-| walker |  | 4389 | 48 | export body at lib/svgo/coa.js:19 body 20 |  |  | 0.553 |
-| walker |  | 4402 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.553 |
-| walker |  | 4429 | 27 | export doc at lib/svgo/coa.js:30 |  |  | 0.553 |
-| ns | 4567 |  | 354 | plugins/preset-default.js — ordered plugin list | 3.1 |  | 0.527 |
-| walker |  | 4761 | 332 | README.md section #4 |  |  | 0.574 |
+| walker |  | 3925 | 332 | README.md section #4 |  |  | 0.647 |
+| walker |  | 3931 | 6 | listing of '.yarn' |  |  | 0.647 |
+| walker |  | 4012 | 81 | export names surface in lib/xast.js |  |  | 0.648 |
+| walker |  | 4012 | 0 | export at lib/xast.js:22 |  |  | 0.648 |
+| walker |  | 4012 | 0 | export at lib/xast.js:32 |  |  | 0.648 |
+| walker |  | 4012 | 0 | export at lib/xast.js:42 |  |  | 0.648 |
+| walker |  | 4012 | 0 | export at lib/xast.js:50 |  |  | 0.648 |
+| walker |  | 4029 | 17 | export body at lib/xast.js:42 body 43 |  |  | 0.648 |
+| walker |  | 4047 | 18 | export body at lib/xast.js:22 body 23 |  |  | 0.648 |
+| walker |  | 4065 | 18 | export body at lib/xast.js:32 body 33 |  |  | 0.648 |
+| walker |  | 4098 | 33 | export body at lib/xast.js:50 body 51 |  |  | 0.648 |
+| walker |  | 4206 | 108 | json config tsconfig.build.json |  |  | 0.648 |
+| ns | 4213 |  | 606 | lib/svgo.js — optimize body | 2.11 | 2.1 | 0.602 |
+| walker |  | 4249 | 43 | export at lib/svgo/plugins.js:14 |  |  | 0.602 |
+| walker |  | 4265 | 16 | imports in lib/stringifier.js |  |  | 0.602 |
+| ns | 4567 |  | 354 | plugins/preset-default.js — ordered plugin list | 3.1 |  | 0.574 |
+| walker |  | 4653 | 388 | listing of 'docs/04-plugins' |  |  | 0.574 |
+| walker |  | 4673 | 20 | imports in lib/path.js |  |  | 0.574 |
+| walker |  | 4721 | 48 | export body at lib/svgo/coa.js:19 body 20 |  |  | 0.574 |
+| walker |  | 4734 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.574 |
+| walker |  | 4761 | 27 | export doc at lib/svgo/coa.js:30 |  |  | 0.574 |
 | walker |  | 4788 | 27 | imports in lib/parser.js |  |  | 0.574 |
 | walker |  | 4803 | 15 | imports in lib/svgo/plugins.js |  |  | 0.574 |
 | walker |  | 4896 | 93 | export body at lib/style.js:195 body 196 |  |  | 0.574 |

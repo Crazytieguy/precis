@@ -135,36 +135,36 @@ Score(3000)=0.621 I=0.824 C=0.468 ns_rows≤3K=21/42 (reached=8 partial=4 missin
 | walker |  | 5730 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.763 |
 | ns | 5889 |  | 545 | globals.h — disk-sync + network buffer knobs (with SYNC_WORLD_TO_DISK gate) | 4.9 |  | 0.740 |
 | ns | 6036 |  | 147 | globals.h — preamble + ESP_PLATFORM gating | 4.10 |  | 0.728 |
-| walker |  | 6228 | 498 | c decl at include/globals.h:200 |  |  | 0.779 |
-| ns | 6273 |  | 237 | README — Configuration 'important options' bullets | 4.11 |  | 0.774 |
-| walker |  | 6277 | 49 | README.md section #9 |  |  | 0.774 |
-| walker |  | 6339 | 62 | c includes in src/crafting.c |  |  | 0.774 |
-| walker |  | 6402 | 63 | c includes in src/structures.c |  |  | 0.774 |
-| walker |  | 6426 | 24 | imports in build_registries.js |  |  | 0.774 |
-| ns | 6815 |  | 542 | README — Compilation section | 4.12 |  | 0.766 |
-| walker |  | 6833 | 407 | c decl names surface in src/worldgen.c |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:13 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:24 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:51 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:117 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:126 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:142 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:160 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:173 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:323 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:358 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:374 |  |  | 0.766 |
-| walker |  | 6833 | 0 | c decl at src/worldgen.c:401 |  |  | 0.766 |
-| walker |  | 6860 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.766 |
-| walker |  | 6900 | 40 | c decl doc at src/worldgen.c:401 |  |  | 0.766 |
-| walker |  | 6952 | 52 | c decl doc at src/worldgen.c:126 |  |  | 0.766 |
-| walker |  | 7055 | 103 | c includes in src/worldgen.c |  |  | 0.766 |
-| walker |  | 7159 | 104 | c includes in src/globals.c |  |  | 0.766 |
-| ns | 7274 |  | 459 | main.c — handlePacket signature + author's design comment | 4.13 |  | 0.742 |
-| walker |  | 7419 | 260 | README.md section #4 |  |  | 0.742 |
-| walker |  | 7534 | 115 | c includes in src/varnum.c |  |  | 0.742 |
-| ns | 7762 |  | 488 | main() — startup signature + seed/state initialization | 4.14 |  | 0.718 |
-| walker |  | 7848 | 314 | README.md section #3 |  |  | 0.727 |
+| walker |  | 6044 | 314 | README.md section #3 |  |  | 0.734 |
+| ns | 6273 |  | 237 | README — Configuration 'important options' bullets | 4.11 |  | 0.735 |
+| walker |  | 6542 | 498 | c decl at include/globals.h:200 |  |  | 0.784 |
+| walker |  | 6591 | 49 | README.md section #9 |  |  | 0.784 |
+| walker |  | 6653 | 62 | c includes in src/crafting.c |  |  | 0.784 |
+| walker |  | 6716 | 63 | c includes in src/structures.c |  |  | 0.784 |
+| walker |  | 6740 | 24 | imports in build_registries.js |  |  | 0.784 |
+| ns | 6815 |  | 542 | README — Compilation section | 4.12 |  | 0.776 |
+| walker |  | 7147 | 407 | c decl names surface in src/worldgen.c |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:13 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:24 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:51 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:117 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:126 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:142 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:160 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:173 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:323 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:358 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:374 |  |  | 0.776 |
+| walker |  | 7147 | 0 | c decl at src/worldgen.c:401 |  |  | 0.776 |
+| walker |  | 7174 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.776 |
+| walker |  | 7214 | 40 | c decl doc at src/worldgen.c:401 |  |  | 0.776 |
+| walker |  | 7266 | 52 | c decl doc at src/worldgen.c:126 |  |  | 0.776 |
+| ns | 7274 |  | 459 | main.c — handlePacket signature + author's design comment | 4.13 |  | 0.752 |
+| walker |  | 7369 | 103 | c includes in src/worldgen.c |  |  | 0.752 |
+| walker |  | 7473 | 104 | c includes in src/globals.c |  |  | 0.752 |
+| walker |  | 7733 | 260 | README.md section #4 |  |  | 0.752 |
+| ns | 7762 |  | 488 | main() — startup signature + seed/state initialization | 4.14 |  | 0.727 |
+| walker |  | 7848 | 115 | c includes in src/varnum.c |  |  | 0.727 |
 | walker |  | 7905 | 57 | c decl body at src/structures.c:9 |  |  | 0.727 |
 | walker |  | 7964 | 59 | c decl body at src/varnum.c:34 |  |  | 0.727 |
 | ns | 8012 |  | 250 | main.c — handlePacket switch case index (truncated) | 4.15 |  | 0.711 |

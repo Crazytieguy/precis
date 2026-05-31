@@ -16,32 +16,32 @@ Score(3000)=0.540 I=0.766 C=0.380 ns_rows≤3K=16/40 (reached=4 partial=4 missin
 | walker |  | 529 | 384 | README headline in Readme.md |  |  | 0.798 |
 | ns | 590 |  | 211 | lib/express.js — public exports | 1.7 |  | 0.649 |
 | walker |  | 659 | 130 | headings outline in Readme.md |  |  | 0.649 |
-| walker |  | 765 | 106 | export names surface in lib/express.js |  |  | 0.700 |
-| walker |  | 765 | 0 | export at lib/express.js:62 |  |  | 0.700 |
-| walker |  | 765 | 0 | export at lib/express.js:70 |  |  | 0.700 |
-| walker |  | 765 | 0 | export at lib/express.js:77 |  |  | 0.700 |
-| ns | 781 |  | 191 | Application prototype — method names | 2.1 |  | 0.606 |
-| walker |  | 874 | 109 | export names surface in lib/request.js |  |  | 0.607 |
-| walker |  | 874 | 0 | export at lib/request.js:37 |  |  | 0.607 |
-| walker |  | 874 | 0 | export at lib/request.js:127 |  |  | 0.607 |
-| walker |  | 874 | 0 | export at lib/request.js:140 |  |  | 0.607 |
-| walker |  | 874 | 0 | export at lib/request.js:171 |  |  | 0.607 |
-| walker |  | 874 | 0 | export at lib/request.js:185 |  |  | 0.607 |
-| walker |  | 874 | 0 | export at lib/request.js:214 |  |  | 0.607 |
-| walker |  | 874 | 0 | export at lib/request.js:269 |  |  | 0.607 |
-| walker |  | 886 | 12 | export at lib/request.js:63 |  |  | 0.608 |
-| walker |  | 908 | 22 | export body at lib/request.js:171 body 172 |  |  | 0.608 |
-| walker |  | 931 | 23 | export body at lib/request.js:127 body 128 |  |  | 0.608 |
-| walker |  | 955 | 24 | export body at lib/request.js:140 body 141 |  |  | 0.609 |
-| walker |  | 974 | 19 | export doc at lib/express.js:70 |  |  | 0.609 |
-| walker |  | 993 | 19 | export doc at lib/express.js:77 |  |  | 0.609 |
-| walker |  | 1013 | 20 | export doc at lib/express.js:62 |  |  | 0.609 |
-| ns | 1014 |  | 233 | Response prototype — method names | 2.2 |  | 0.530 |
-| walker |  | 1033 | 20 | imports in lib/request.js |  |  | 0.530 |
-| walker |  | 1054 | 21 | imports in lib/application.js |  |  | 0.530 |
-| walker |  | 1075 | 21 | imports in lib/express.js |  |  | 0.539 |
-| walker |  | 1101 | 26 | export doc at lib/request.js:37 |  |  | 0.539 |
-| walker |  | 1185 | 84 | Readme.md section #2 |  |  | 0.539 |
+| walker |  | 743 | 84 | Readme.md section #2 |  |  | 0.649 |
+| ns | 781 |  | 191 | Application prototype — method names | 2.1 |  | 0.562 |
+| walker |  | 849 | 106 | export names surface in lib/express.js |  |  | 0.606 |
+| walker |  | 849 | 0 | export at lib/express.js:62 |  |  | 0.606 |
+| walker |  | 849 | 0 | export at lib/express.js:70 |  |  | 0.606 |
+| walker |  | 849 | 0 | export at lib/express.js:77 |  |  | 0.606 |
+| walker |  | 958 | 109 | export names surface in lib/request.js |  |  | 0.607 |
+| walker |  | 958 | 0 | export at lib/request.js:37 |  |  | 0.607 |
+| walker |  | 958 | 0 | export at lib/request.js:127 |  |  | 0.607 |
+| walker |  | 958 | 0 | export at lib/request.js:140 |  |  | 0.607 |
+| walker |  | 958 | 0 | export at lib/request.js:171 |  |  | 0.607 |
+| walker |  | 958 | 0 | export at lib/request.js:185 |  |  | 0.607 |
+| walker |  | 958 | 0 | export at lib/request.js:214 |  |  | 0.607 |
+| walker |  | 958 | 0 | export at lib/request.js:269 |  |  | 0.607 |
+| walker |  | 970 | 12 | export at lib/request.js:63 |  |  | 0.608 |
+| walker |  | 992 | 22 | export body at lib/request.js:171 body 172 |  |  | 0.608 |
+| ns | 1014 |  | 233 | Response prototype — method names | 2.2 |  | 0.529 |
+| walker |  | 1015 | 23 | export body at lib/request.js:127 body 128 |  |  | 0.529 |
+| walker |  | 1039 | 24 | export body at lib/request.js:140 body 141 |  |  | 0.530 |
+| walker |  | 1058 | 19 | export doc at lib/express.js:70 |  |  | 0.530 |
+| walker |  | 1077 | 19 | export doc at lib/express.js:77 |  |  | 0.530 |
+| walker |  | 1097 | 20 | export doc at lib/express.js:62 |  |  | 0.530 |
+| walker |  | 1117 | 20 | imports in lib/request.js |  |  | 0.530 |
+| walker |  | 1138 | 21 | imports in lib/application.js |  |  | 0.530 |
+| walker |  | 1159 | 21 | imports in lib/express.js |  |  | 0.539 |
+| walker |  | 1185 | 26 | export doc at lib/request.js:37 |  |  | 0.539 |
 | walker |  | 1206 | 21 | Readme.md section #19 |  |  | 0.539 |
 | walker |  | 1227 | 21 | Readme.md section #30 |  |  | 0.539 |
 | ns | 1243 |  | 229 | Request prototype — method + getter names | 2.3 |  | 0.507 |

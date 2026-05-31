@@ -30,37 +30,37 @@ Score(3000)=0.561 I=0.820 C=0.383 ns_rows≤3K=20/40 (reached=8 partial=3 missin
 | ns | 274 |  | 101 | nanovllm/ package tree | 1.5 |  | 0.523 |
 | ns | 321 |  | 47 | llm.py: LLM = LLMEngine alias | 2.1 |  | 0.499 |
 | walker |  | 346 | 75 | [dependencies] in pyproject.toml |  |  | 0.499 |
-| walker |  | 382 | 36 | README.md section #2 |  |  | 0.499 |
-| walker |  | 406 | 24 | listing of 'nanovllm/engine' |  |  | 0.583 |
-| walker |  | 415 | 9 | python decl names surface in nanovllm/engine/scheduler.py |  |  | 0.583 |
-| walker |  | 415 | 0 | python decl at nanovllm/engine/scheduler.py:8 |  |  | 0.583 |
-| walker |  | 425 | 10 | python decl names surface in nanovllm/engine/model_runner.py |  |  | 0.583 |
-| walker |  | 425 | 0 | python decl at nanovllm/engine/model_runner.py:15 |  |  | 0.583 |
-| walker |  | 436 | 11 | python decl names surface in nanovllm/engine/llm_engine.py |  |  | 0.583 |
-| walker |  | 436 | 0 | python decl at nanovllm/engine/llm_engine.py:15 |  |  | 0.583 |
-| ns | 438 |  | 117 | SamplingParams full | 2.2 |  | 0.520 |
-| walker |  | 467 | 31 | listing of 'nanovllm/layers' |  |  | 0.664 |
-| walker |  | 479 | 12 | python decl names surface in nanovllm/layers/layernorm.py |  |  | 0.664 |
-| walker |  | 479 | 0 | python decl at nanovllm/layers/layernorm.py:5 |  |  | 0.664 |
-| walker |  | 491 | 12 | python decl names surface in nanovllm/layers/sampler.py |  |  | 0.664 |
-| walker |  | 491 | 0 | python decl at nanovllm/layers/sampler.py:5 |  |  | 0.664 |
-| walker |  | 502 | 11 | python imports in nanovllm/sampling_params.py |  |  | 0.673 |
-| ns | 517 |  | 79 | LLMEngine class + generate signature | 2.3 |  | 0.629 |
-| walker |  | 526 | 24 | python method sigs in nanovllm/layers/sampler.py |  |  | 0.629 |
-| walker |  | 526 | 0 | python method at nanovllm/layers/sampler.py:7 |  |  | 0.629 |
-| walker |  | 543 | 17 | python method at nanovllm/layers/sampler.py:10 |  |  | 0.629 |
-| walker |  | 557 | 14 | python decl names surface in nanovllm/layers/activation.py |  |  | 0.629 |
-| walker |  | 557 | 0 | python decl at nanovllm/layers/activation.py:6 |  |  | 0.629 |
-| walker |  | 581 | 24 | python method sigs in nanovllm/layers/activation.py |  |  | 0.629 |
-| walker |  | 581 | 0 | python method at nanovllm/layers/activation.py:8 |  |  | 0.629 |
-| walker |  | 597 | 16 | python method at nanovllm/layers/activation.py:11 |  |  | 0.629 |
-| walker |  | 637 | 40 | python class body at nanovllm/sampling_params.py:4 |  |  | 0.667 |
-| walker |  | 644 | 7 | python method body at nanovllm/layers/activation.py:8 body 9 |  |  | 0.667 |
-| walker |  | 651 | 7 | python method body at nanovllm/layers/sampler.py:7 body 8 |  |  | 0.667 |
-| ns | 729 |  | 212 | Config dataclass fields | 2.4 |  | 0.575 |
-| walker |  | 737 | 86 | [package] in pyproject.toml |  |  | 0.575 |
-| ns | 796 |  | 67 | LLMEngine other method signatures | 2.5 | 2.3 | 0.555 |
-| walker |  | 811 | 74 | README.md section #1 |  |  | 0.616 |
+| walker |  | 420 | 74 | README.md section #1 |  |  | 0.598 |
+| ns | 438 |  | 117 | SamplingParams full | 2.2 |  | 0.534 |
+| walker |  | 456 | 36 | README.md section #2 |  |  | 0.534 |
+| walker |  | 480 | 24 | listing of 'nanovllm/engine' |  |  | 0.603 |
+| walker |  | 489 | 9 | python decl names surface in nanovllm/engine/scheduler.py |  |  | 0.603 |
+| walker |  | 489 | 0 | python decl at nanovllm/engine/scheduler.py:8 |  |  | 0.603 |
+| walker |  | 499 | 10 | python decl names surface in nanovllm/engine/model_runner.py |  |  | 0.603 |
+| walker |  | 499 | 0 | python decl at nanovllm/engine/model_runner.py:15 |  |  | 0.603 |
+| walker |  | 510 | 11 | python decl names surface in nanovllm/engine/llm_engine.py |  |  | 0.603 |
+| walker |  | 510 | 0 | python decl at nanovllm/engine/llm_engine.py:15 |  |  | 0.603 |
+| ns | 517 |  | 79 | LLMEngine class + generate signature | 2.3 |  | 0.563 |
+| walker |  | 541 | 31 | listing of 'nanovllm/layers' |  |  | 0.693 |
+| walker |  | 553 | 12 | python decl names surface in nanovllm/layers/layernorm.py |  |  | 0.693 |
+| walker |  | 553 | 0 | python decl at nanovllm/layers/layernorm.py:5 |  |  | 0.693 |
+| walker |  | 565 | 12 | python decl names surface in nanovllm/layers/sampler.py |  |  | 0.693 |
+| walker |  | 565 | 0 | python decl at nanovllm/layers/sampler.py:5 |  |  | 0.693 |
+| walker |  | 576 | 11 | python imports in nanovllm/sampling_params.py |  |  | 0.702 |
+| walker |  | 600 | 24 | python method sigs in nanovllm/layers/sampler.py |  |  | 0.702 |
+| walker |  | 600 | 0 | python method at nanovllm/layers/sampler.py:7 |  |  | 0.702 |
+| walker |  | 617 | 17 | python method at nanovllm/layers/sampler.py:10 |  |  | 0.702 |
+| walker |  | 631 | 14 | python decl names surface in nanovllm/layers/activation.py |  |  | 0.702 |
+| walker |  | 631 | 0 | python decl at nanovllm/layers/activation.py:6 |  |  | 0.702 |
+| walker |  | 655 | 24 | python method sigs in nanovllm/layers/activation.py |  |  | 0.702 |
+| walker |  | 655 | 0 | python method at nanovllm/layers/activation.py:8 |  |  | 0.702 |
+| walker |  | 671 | 16 | python method at nanovllm/layers/activation.py:11 |  |  | 0.702 |
+| walker |  | 711 | 40 | python class body at nanovllm/sampling_params.py:4 |  |  | 0.739 |
+| walker |  | 718 | 7 | python method body at nanovllm/layers/activation.py:8 body 9 |  |  | 0.739 |
+| walker |  | 725 | 7 | python method body at nanovllm/layers/sampler.py:7 body 8 |  |  | 0.739 |
+| ns | 729 |  | 212 | Config dataclass fields | 2.4 |  | 0.638 |
+| ns | 796 |  | 67 | LLMEngine other method signatures | 2.5 | 2.3 | 0.616 |
+| walker |  | 811 | 86 | [package] in pyproject.toml |  |  | 0.616 |
 | walker |  | 844 | 33 | python imports in example.py |  |  | 0.616 |
 | walker |  | 863 | 19 | python decl names surface in nanovllm/engine/block_manager.py |  |  | 0.616 |
 | walker |  | 863 | 0 | python decl at nanovllm/engine/block_manager.py:8 |  |  | 0.616 |
