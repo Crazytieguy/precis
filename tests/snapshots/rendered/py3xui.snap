@@ -11,8 +11,14 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 LICENSE.md
 README.md
-    4→⚠️ The secret token feature was removed in the 3x-UI 2.6.0. ⚠️     
-    5→The corresponding `token` parameter in the Api and AsyncApi constructors was removed in py3xui 0.5.0. This changed the order of constructor arguments, so please be aware of this change when updating the SDK.
+    7→Sync and Async Object-oriented Python SDK for the 3x-ui API.
+    9→<p align="center">
+    10→    <a href="#Overview">Overview</a> •
+    11→    <a href="#Quick-Start">Quick Start</a> •
+    12→    <a href="#Examples">Examples</a> •
+    13→    <a href="#Bugs-and-Feature-Requests">Bugs and Feature Requests</a> •
+    14→    <a href="https://pypi.org/project/py3xui/">PyPI</a>
+    15→</p>
     29→## Overview
     30→This SDK is designed to interact with the [3x-ui](https://github.com/MHSanaei/3x-ui) app in a more object-oriented way. It provides both synchronous and asynchronous methods to interact with the app. The SDK is designed to be as simple as possible to use, while still providing a lot of flexibility and uses `Pydantic` models to validate the data.<br>
     31→Used dependencies:
@@ -81,30 +87,6 @@ py3xui/
             3→# api.api\_database
             5→This module contains the DatabaseApi class, which is responsible handling database operations
             6→in the XUI API.
-            10→## DatabaseApi Objects
-            …
-            67→# api.api\_inbound
-            …
-            73→## InboundApi Objects
-            …
-            345→# api.api
-            …
-            351→## Api Objects
-            …
-            549→# api.api\_server
-            …
-            555→## ServerApi Objects
-            …
-            674→# api.api\_client
-            …
-            681→## ClientApi Objects
-            …
-            1042→# api.api\_base
-            …
-            1048→## ApiFields Objects
-            …
-            1058→## BaseApi Objects
-            …
         __init__.py
             1→# pylint: disable=missing-module-docstring
             2→from py3xui.api.api_client import ClientApi

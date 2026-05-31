@@ -2114,6 +2114,28 @@ fn heading_level(heading: Node) -> usize {
 /// image-only HTML, then include blocks until the first substantive
 /// paragraph (inclusive) or end of prelude. Mirrors the
 /// post-heading-skip-then-include walk inside `headline_spec`.
+/// True for an admin/migration warning paragraph (`⚠️ …`, deprecation /
+/// breaking-change notices) READMEs place above the lede. These are
+/// appendix, not the project's "what is this" sentence — skip them so the
+/// real lede is what the headline captures.
+fn is_admin_warning_paragraph(para: Node, source: &str) -> bool {
+    let text = source[para.start_byte()..para.end_byte()].trim_start();
+    if ["⚠", "🚨", "❗", "‼", "🛑"]
+        .iter()
+        .any(|m| text.starts_with(m))
+    {
+        return true;
+    }
+    let lower = text.to_ascii_lowercase();
+    let head = lower.trim_start_matches(['*', '>', '_', ' ']);
+    head.starts_with("warning")
+        || head.starts_with("note:")
+        || head.starts_with("caution")
+        || head.starts_with("deprecated")
+        || head.starts_with("important:")
+        || head.starts_with("breaking change")
+}
+
 fn extend_prelude_lede(
     covered: &mut BTreeSet<usize>,
     root: Node<'_>,
@@ -2141,7 +2163,8 @@ fn extend_prelude_lede(
     while i < prelude_blocks.len() {
         let block = prelude_blocks[i];
         if !(is_decorative_block(block, source)
-            || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source)))
+            || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source))
+            || (block.kind() == "paragraph" && is_admin_warning_paragraph(block, source)))
         {
             break;
         }
@@ -2157,7 +2180,8 @@ fn extend_prelude_lede(
             while j < prelude_blocks.len() {
                 let next = prelude_blocks[j];
                 if !(is_decorative_block(next, source)
-                    || (next.kind() == "paragraph" && is_nav_link_paragraph(next, source)))
+                    || (next.kind() == "paragraph" && is_nav_link_paragraph(next, source))
+                    || (next.kind() == "paragraph" && is_admin_warning_paragraph(next, source)))
                 {
                     break;
                 }
