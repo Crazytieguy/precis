@@ -955,10 +955,14 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
             continue;
         }
         extend_rows_inclusive(&mut covered, block, source);
+        // Any substantive post-H1 block (paragraph, block_quote, list,
+        // code lede) counts as a lede — the decorative-title fallback
+        // below must only fire for a genuinely bare image/badge title,
+        // not displace a non-paragraph lede.
+        captured_lede = true;
         match state {
             HeadlineExtend::SeekFirst => {
                 if block.kind() == "paragraph" {
-                    captured_lede = true;
                     // The "tagline + lede" extension only fires under
                     // the project's title heading (H1). For non-H1
                     // first-headed sections (`### Usage`, `## About`)
