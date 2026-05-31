@@ -188,13 +188,22 @@ fixture survey is via shell — see the survey commands in the
   classes regressed commander −0.138 / dockly −0.092 while the target
   didn't move). The orientation batches it would displace are themselves
   NS-wanted (NS authors front-load the file tree), so this isn't noise to
-  cut — it's a genuine local optimum. Recall levers that surface a
-  *new format* the walker emitted nowhere (RST sections, prisma bodies,
-  small-header bodies) clear the wall because they replace lower-value
-  content; pure re-ranking of already-emitted content does not. A real
-  lift past this needs a structural change (e.g. an FS-descent-order
-  signal so a fixture's primary `src/` descends before peripheral dirs,
-  or a per-tier ratio rebalance), not per-key value nudges. Measured
+  cut — it's a genuine local optimum *for re-ranking already-emitted
+  content*. The wall does NOT cap new-content recall: levers that surface
+  content the walker emitted nowhere keep paying, and the highest-yield
+  ones target **early / high-importance-weight (rank-1/2) atoms** —
+  Importance is `Σ damped/rank`, so a rank-1 atom is worth ~6× a rank-6
+  one. Cleared it (2026-05): RST sections, prisma bodies, small-header
+  bodies, C platform-port demotion, man-page NAME/DESC extraction
+  (`plaintext.rs`), decorative-H1 lede descent (`markdown.rs`) — the last
+  three took htop 0.182 → 0.263 and the corpus 0.5876 → 0.5890. So the
+  walker-side ceiling is NOT fixed; only *re-ranking* is at a local
+  optimum. Remaining headroom is more early-atom recall (plus a
+  core-header in-degree boost for OOP-spine ratio-wall fixtures like
+  htop, whose `Object/Row/Process/Meter/Panel` headers still lose the
+  ratio race). A lift via *re-ranking* would need a structural change
+  (FS-descent-order signal, per-tier rebalance), not per-key nudges.
+  Measured
   (2026-05): the global `DEFAULT_CONCAVITY_EXPONENT` is already at its
   peak — 0.35 → corpus avg 0.5876; 0.30 → 0.5739; 0.40 → 0.5551 — and the
   win/loss split is by fixture *structure* (deep-method-heavy like
