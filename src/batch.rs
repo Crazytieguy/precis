@@ -423,6 +423,11 @@ pub enum PythonKey {
 pub enum LuaKey {
     /// Top-of-file comment block (license / brief).
     Banner { file: PathBuf },
+    /// Top-of-file module identity table — a `local M = { _VERSION =
+    /// …, _DESCRIPTION = …, _URL = … }` metadata block (the standard
+    /// Lua library "what is this" idiom), truncated before long-string
+    /// fields like `_LICENSE = [[`.
+    ModuleIdentity { file: PathBuf },
     /// Whole-file rendering for LuaCATS spec files (`---@meta` at top,
     /// or majority-LuaCATS-tag comment density). Gated to small files.
     MetaFileWhole { file: PathBuf },
@@ -926,9 +931,15 @@ impl InnerKey for LuaKey {
         }
     }
 
+    /// The module identity table is orientation ("what is this library").
+    fn is_orientation(&self) -> bool {
+        matches!(self, LuaKey::ModuleIdentity { .. })
+    }
+
     fn describe(&self, root: &Path) -> String {
         match self {
             LuaKey::Banner { file } => describe_in("lua banner", file, root),
+            LuaKey::ModuleIdentity { file } => describe_in("lua module identity", file, root),
             LuaKey::MetaFileWhole { file } => {
                 format!("lua meta-file at {}", display_path(file, root))
             }

@@ -112,6 +112,10 @@ UPDATING.md
     67→```
     69→Notice that the parameter order is not the same now as it was in 2.x. Also note the change in naming: `isInstanceOf` instead of `instanceOf`, and `isSubclassOf` instead of `subclassOf`.
 middleclass.lua
+    1→local middleclass = {
+    2→  _VERSION     = 'middleclass v4.1.1',
+    3→  _DESCRIPTION = 'Object Orientation for Lua',
+    4→  _URL         = 'https://github.com/kikito/middleclass',
     31→local function _createIndexWrapper(aClass, f)
     …
     33→    return aClass.__instanceDict

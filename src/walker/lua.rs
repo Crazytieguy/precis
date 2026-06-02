@@ -70,6 +70,19 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
 
+        let identity_lines = collect_module_identity_lines(&source);
+        if !identity_lines.is_empty()
+            && let Some(content) =
+                single_file_lines_content(file, &source, FileLines::new(identity_lines))
+        {
+            out.push(Batch {
+                key: LuaKey::ModuleIdentity { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: module_identity_value(file, ctx),
+            });
+        }
+
         let decls = find_decls(&tree);
         if decls.is_empty() {
             continue;
@@ -262,6 +275,88 @@ fn rhs_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
 }
 
 // --- collectors ---------------------------------------------------------
+
+/// Identity-table metadata keys — the standard Lua library convention
+/// (`local M = { _VERSION = …, _DESCRIPTION = … }`).
+const IDENTITY_META_KEYS: [&str; 7] = [
+    "_VERSION",
+    "_DESCRIPTION",
+    "_NAME",
+    "_URL",
+    "_AUTHOR",
+    "_LICENSE",
+    "_COPYRIGHT",
+];
+
+fn line_has_identity_meta_key(line: &str) -> bool {
+    IDENTITY_META_KEYS.iter().any(|k| line.contains(k))
+}
+
+/// Lines (1-based) of a top-of-file module identity table: a
+/// `local M = { _VERSION = …, _DESCRIPTION = … }` metadata block (the
+/// standard Lua "what is this library" idiom). Returns the table opener
+/// plus its leading single-line `_KEY = …` fields, stopping before a
+/// long-string field (`[[`) or the table close — so the multi-line
+/// `_LICENSE = [[ … ]]` body is excluded. Empty unless an identity table
+/// (≥1 metadata key) sits at the top of the file.
+fn collect_module_identity_lines(source: &str) -> Vec<usize> {
+    let lines: Vec<&str> = source.lines().collect();
+    // First non-blank, non-comment line.
+    let mut i = 0;
+    while i < lines.len() {
+        let t = lines[i].trim_start();
+        if t.is_empty() || t.starts_with("--") {
+            i += 1;
+        } else {
+            break;
+        }
+    }
+    if i >= lines.len() {
+        return Vec::new();
+    }
+    // Must open a table assignment: `local NAME = {` or `NAME = {`.
+    let opener = lines[i].trim_start();
+    let lhs = opener.strip_prefix("local ").unwrap_or(opener);
+    let is_table_open = opener.contains('{')
+        && lhs.split('=').next().is_some_and(|name| {
+            let name = name.trim();
+            !name.is_empty()
+                && name
+                    .chars()
+                    .all(|c| c.is_alphanumeric() || c == '_' || c == '.')
+        });
+    if !is_table_open {
+        return Vec::new();
+    }
+    let mut out = vec![i + 1];
+    let mut j = i + 1;
+    while j < lines.len() {
+        let t = lines[j].trim();
+        if t.contains("[[") || t.starts_with('}') {
+            break;
+        }
+        if t.starts_with('_') {
+            out.push(j + 1);
+            j += 1;
+        } else {
+            break;
+        }
+    }
+    if out
+        .iter()
+        .any(|&ln| line_has_identity_meta_key(lines[ln - 1]))
+    {
+        out
+    } else {
+        Vec::new()
+    }
+}
+
+fn module_identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // "What is this library" — `_VERSION` / `_DESCRIPTION` / `_URL`. A
+    // primary orientation surface, valued like a crate-doc lede.
+    mix_signals(0.80, 0.55, 0.75, path_depth_factor(file, ctx))
+}
 
 /// Top-of-file `--` comment block.
 fn collect_header_banner(tree: &Tree, source: &str) -> FileLines {
@@ -549,6 +644,34 @@ function M.foo() return 1 end
 return M
 ";
         assert!(!is_meta_file(src));
+    }
+
+    #[test]
+    fn lua_module_identity_captures_metadata_and_stops_before_license() {
+        // middleclass-style identity table: opener + single-line `_KEY`
+        // fields, truncated before the multi-line `_LICENSE = [[`.
+        let src = "\
+local middleclass = {
+  _VERSION     = 'middleclass v4.1.1',
+  _DESCRIPTION = 'Object Orientation for Lua',
+  _URL         = 'https://example.com',
+  _LICENSE     = [[
+    MIT LICENSE
+  ]]
+}
+";
+        assert_eq!(collect_module_identity_lines(src), vec![1, 2, 3, 4]);
+    }
+
+    #[test]
+    fn lua_module_identity_ignores_plain_tables_and_requires() {
+        // No `_VERSION`-style metadata key ⇒ not an identity table.
+        assert!(
+            collect_module_identity_lines("local cfg = {\n  host = 'x',\n  port = 80,\n}\n")
+                .is_empty()
+        );
+        // A bare module-return table is not an assignment opener.
+        assert!(collect_module_identity_lines("return {\n  _VERSION = '1.0',\n}\n").is_empty());
     }
 
     #[test]
