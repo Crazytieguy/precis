@@ -71,24 +71,10 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 3
-cum_tokens = 159
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["server"]
-
-[[batches]]
-position = 5
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 24
-cum_tokens = 183
+cum_tokens = 180
 
 [batches.content]
 kind = "lines"
@@ -110,183 +96,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 6
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 13 })'
-descriptor = "module item at index.js:13"
-cost_tokens = 13
-cum_tokens = 196
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "images" })'
-descriptor = "listing of 'images'"
-cost_tokens = 15
-cum_tokens = 211
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "images"
-entries = ["DemoLibrary.png", "LibraryStreamSquare.png", "banner.svg"]
-
-[[batches]]
-position = 8
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 42 })'
-descriptor = "module item at index.js:42"
-cost_tokens = 15
-cum_tokens = 226
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 21 })'
-descriptor = "module item at index.js:21"
-cost_tokens = 16
-cum_tokens = 242
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 41 })'
-descriptor = "module item at index.js:41"
-cost_tokens = 18
-cum_tokens = 260
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 38 })'
-descriptor = "module item at index.js:38"
-cost_tokens = 19
-cum_tokens = 279
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 39 })'
-descriptor = "module item at index.js:39"
-cost_tokens = 19
-cum_tokens = 298
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 45 })'
-descriptor = "module item at index.js:45"
-cost_tokens = 19
-cum_tokens = 317
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 23
-cum_tokens = 340
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["README.md", "controllers", "objects", "openapi.json", "root.yaml", "schemas.yaml"]
-
-[[batches]]
-position = 15
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 43 })'
-descriptor = "module item at index.js:43"
-cost_tokens = 21
-cum_tokens = 361
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
+position = 5
 key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
 descriptor = "README headline in readme.md"
 cost_tokens = 141
-cum_tokens = 502
+cum_tokens = 321
 
 [batches.content]
 kind = "lines"
@@ -316,65 +130,179 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 17
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 44 })'
-descriptor = "module item at index.js:44"
-cost_tokens = 24
-cum_tokens = 526
+position = 6
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 3
+cum_tokens = 324
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["server"]
+
+[[batches]]
+position = 7
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 13 })'
+descriptor = "module item at index.js:13"
+cost_tokens = 13
+cum_tokens = 337
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "index.js"
-start = 44
-end = 44
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 18
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 47 })'
-descriptor = "module item at index.js:47"
-cost_tokens = 24
-cum_tokens = 550
+position = 8
+key = 'Fs(DirListing { dir: "images" })'
+descriptor = "listing of 'images'"
+cost_tokens = 15
+cum_tokens = 352
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "images"
+entries = ["DemoLibrary.png", "LibraryStreamSquare.png", "banner.svg"]
+
+[[batches]]
+position = 9
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 42 })'
+descriptor = "module item at index.js:42"
+cost_tokens = 15
+cum_tokens = 367
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "index.js"
-start = 47
-end = 47
+start = 42
+end = 42
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 19
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 52 })'
-descriptor = "module item at index.js:52"
-cost_tokens = 28
-cum_tokens = 578
+position = 10
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 21 })'
+descriptor = "module item at index.js:21"
+cost_tokens = 16
+cum_tokens = 383
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "index.js"
-start = 52
-end = 52
+start = 21
+end = 21
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 20
+position = 11
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 41 })'
+descriptor = "module item at index.js:41"
+cost_tokens = 18
+cum_tokens = 401
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 38 })'
+descriptor = "module item at index.js:38"
+cost_tokens = 19
+cum_tokens = 420
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 39 })'
+descriptor = "module item at index.js:39"
+cost_tokens = 19
+cum_tokens = 439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 45 })'
+descriptor = "module item at index.js:45"
+cost_tokens = 19
+cum_tokens = 458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 23
+cum_tokens = 481
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["README.md", "controllers", "objects", "openapi.json", "root.yaml", "schemas.yaml"]
+
+[[batches]]
+position = 16
 key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
 descriptor = "README headline in docs/README.md"
 cost_tokens = 91
-cum_tokens = 669
+cum_tokens = 572
 
 [batches.content]
 kind = "lines"
@@ -391,6 +319,78 @@ kind = "full"
 path = "docs/README.md"
 start = 3
 end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 43 })'
+descriptor = "module item at index.js:43"
+cost_tokens = 21
+cum_tokens = 593
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 44 })'
+descriptor = "module item at index.js:44"
+cost_tokens = 24
+cum_tokens = 617
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 47 })'
+descriptor = "module item at index.js:47"
+cost_tokens = 24
+cum_tokens = 641
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 52 })'
+descriptor = "module item at index.js:52"
+cost_tokens = 28
+cum_tokens = 669
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 52
+end = 52
 
 [batches.content.spans.render]
 kind = "full"

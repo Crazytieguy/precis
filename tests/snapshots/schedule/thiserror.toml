@@ -103,10 +103,70 @@ kind = "ellipsis"
 
 [[batches]]
 position = 4
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 64
+cum_tokens = 174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 14
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Toml(Identity { file: "Cargo.toml" })'
+descriptor = "[package] in Cargo.toml"
+cost_tokens = 183
+cum_tokens = 357
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 1
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 39
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 25
-cum_tokens = 135
+cum_tokens = 382
 
 [batches.content]
 kind = "fs"
@@ -116,11 +176,11 @@ parent = "src"
 entries = ["aserror.rs", "display.rs", "lib.rs", "private.rs", "provide.rs", "var.rs"]
 
 [[batches]]
-position = 5
+position = 7
 key = 'Rust(ModUse { file: "src/lib.rs" })'
 descriptor = "mod/use plumbing in src/lib.rs"
 cost_tokens = 46
-cum_tokens = 181
+cum_tokens = 428
 
 [batches.content]
 kind = "lines"
@@ -158,103 +218,11 @@ end = 289
 kind = "full"
 
 [[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "impl" })'
-descriptor = "listing of 'impl'"
-cost_tokens = 19
-cum_tokens = 200
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "impl"
-entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
-
-[[batches]]
-position = 7
-key = 'Markdown(Section { file: "README.md", section_index: 0 })'
-descriptor = "README.md section #0"
-cost_tokens = 64
-cum_tokens = 264
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 14
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 8
-key = 'Toml(Identity { file: "Cargo.toml" })'
-descriptor = "[package] in Cargo.toml"
-cost_tokens = 183
-cum_tokens = 447
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 1
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 39
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Rust(CrateDocLede { file: "src/lib.rs" })'
-descriptor = "crate-doc lede in src/lib.rs"
-cost_tokens = 267
-cum_tokens = 714
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 1
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
 key = 'Toml(Features { file: "Cargo.toml" })'
 descriptor = "[features] in Cargo.toml"
 cost_tokens = 161
-cum_tokens = 875
+cum_tokens = 589
 
 [batches.content]
 kind = "lines"
@@ -271,6 +239,38 @@ kind = "full"
 path = "Cargo.toml"
 start = 17
 end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "impl" })'
+descriptor = "listing of 'impl'"
+cost_tokens = 19
+cum_tokens = 608
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "impl"
+entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
+
+[[batches]]
+position = 10
+key = 'Rust(CrateDocLede { file: "src/lib.rs" })'
+descriptor = "crate-doc lede in src/lib.rs"
+cost_tokens = 267
+cum_tokens = 875
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 1
+end = 13
 
 [batches.content.spans.render]
 kind = "full"

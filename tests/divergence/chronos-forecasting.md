@@ -4,21 +4,21 @@ Score(3000)=0.607 I=0.855 C=0.431 ns_rows≤3K=21/53 (reached=12 partial=1 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 50 | 50 | listing of '.' |  |  | 1.000 |
 | ns | 50 |  | 50 | Top-level directory listing | 1.1 |  | 1.000 |
-| walker |  | 54 | 4 | listing of 'src' |  |  | 1.000 |
-| ns | 67 |  | 17 | README lede — title | 1.2 |  | 0.959 |
-| walker |  | 71 | 17 | README headline in README.md |  |  | 1.000 |
+| walker |  | 67 | 17 | README headline in README.md |  |  | 1.000 |
+| ns | 67 |  | 17 | README lede — title | 1.2 |  | 1.000 |
+| walker |  | 71 | 4 | listing of 'src' |  |  | 1.000 |
 | ns | 95 |  | 28 | Version + package name | 1.3 |  | 0.927 |
-| walker |  | 118 | 47 | listing of 'src/chronos' |  |  | 0.943 |
-| ns | 142 |  | 47 | src/chronos directory listing | 1.4 |  | 0.948 |
-| ns | 172 |  | 30 | src/chronos/chronos2 directory listing | 1.5 |  | 0.821 |
-| ns | 262 |  | 90 | Package public API — first half of __init__ re-exports | 1.6 |  | 0.711 |
-| ns | 310 |  | 48 | Package public API — second half of __init__ re-exports | 1.7 |  | 0.691 |
-| walker |  | 441 | 323 | python imports in src/chronos/__init__.py |  |  | 0.859 |
-| walker |  | 471 | 30 | listing of 'src/chronos/chronos2' |  |  | 0.965 |
-| ns | 490 |  | 180 | README — introduction sentence + Chronos-2 paragraph | 1.8 |  | 0.905 |
-| walker |  | 498 | 27 | listing of 'notebooks' |  |  | 0.905 |
-| walker |  | 597 | 99 | headings outline in README.md |  |  | 0.920 |
-| walker |  | 614 | 17 | README.md section #12 |  |  | 0.920 |
+| ns | 142 |  | 47 | src/chronos directory listing | 1.4 |  | 0.718 |
+| walker |  | 170 | 99 | headings outline in README.md |  |  | 0.733 |
+| ns | 172 |  | 30 | src/chronos/chronos2 directory listing | 1.5 |  | 0.635 |
+| walker |  | 187 | 17 | README.md section #12 |  |  | 0.635 |
+| walker |  | 234 | 47 | listing of 'src/chronos' |  |  | 0.837 |
+| ns | 262 |  | 90 | Package public API — first half of __init__ re-exports | 1.6 |  | 0.724 |
+| ns | 310 |  | 48 | Package public API — second half of __init__ re-exports | 1.7 |  | 0.704 |
+| ns | 490 |  | 180 | README — introduction sentence + Chronos-2 paragraph | 1.8 |  | 0.661 |
+| walker |  | 557 | 323 | python imports in src/chronos/__init__.py |  |  | 0.820 |
+| walker |  | 587 | 30 | listing of 'src/chronos/chronos2' |  |  | 0.920 |
+| walker |  | 614 | 27 | listing of 'notebooks' |  |  | 0.920 |
 | ns | 737 |  | 247 | README — Chronos-Bolt and Chronos paragraphs | 1.9 |  | 0.898 |
 | walker |  | 769 | 155 | python imports in src/chronos/chronos2/__init__.py |  |  | 0.898 |
 | walker |  | 796 | 27 | README.md section #11 |  |  | 0.898 |

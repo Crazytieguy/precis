@@ -15,41 +15,41 @@ Score(3000)=0.673 I=0.843 C=0.538 ns_rows≤3K=25/62 (reached=12 partial=3 missi
 | walker |  | 148 | 14 | listing of 'assets' |  |  | 0.933 |
 | walker |  | 158 | 10 | python decl names surface in swarm/core.py |  |  | 0.933 |
 | walker |  | 158 | 0 | python decl at swarm/core.py:26 |  |  | 0.933 |
-| walker |  | 183 | 25 | listing of 'tests' |  |  | 0.935 |
-| ns | 226 |  | 89 | Swarm replaced-by-Agents-SDK notice (README) | 1.5 |  | 0.852 |
-| ns | 311 |  | 85 | README Overview lede (Agent + handoff primitives) | 1.6 |  | 0.802 |
-| ns | 357 |  | 46 | examples/ directory listing | 1.7 |  | 0.678 |
-| walker |  | 376 | 193 | headings outline in README.md |  |  | 0.678 |
-| walker |  | 392 | 16 | python imports in swarm/util.py |  |  | 0.678 |
+| ns | 226 |  | 89 | Swarm replaced-by-Agents-SDK notice (README) | 1.5 |  | 0.850 |
+| ns | 311 |  | 85 | README Overview lede (Agent + handoff primitives) | 1.6 |  | 0.799 |
+| walker |  | 351 | 193 | headings outline in README.md |  |  | 0.799 |
+| ns | 357 |  | 46 | examples/ directory listing | 1.7 |  | 0.676 |
+| walker |  | 376 | 25 | listing of 'tests' |  |  | 0.678 |
 | ns | 419 |  | 62 | Stateless-via-Chat-Completions note | 1.8 |  | 0.659 |
-| walker |  | 443 | 51 | python decl names surface in swarm/types.py |  |  | 0.660 |
-| walker |  | 443 | 0 | python decl at swarm/types.py:14 |  |  | 0.660 |
-| walker |  | 443 | 0 | python decl at swarm/types.py:23 |  |  | 0.660 |
-| walker |  | 443 | 0 | python decl at swarm/types.py:29 |  |  | 0.660 |
-| walker |  | 476 | 33 | python class body at swarm/types.py:23 |  |  | 0.662 |
-| walker |  | 511 | 35 | python class body at swarm/types.py:29 |  |  | 0.663 |
-| walker |  | 557 | 46 | listing of 'examples' |  |  | 0.824 |
-| walker |  | 575 | 18 | listing of 'examples/personal_shopper' |  |  | 0.825 |
-| ns | 635 |  | 216 | README examples roster (prose) | 1.9 |  | 0.720 |
-| walker |  | 655 | 80 | python method sigs in swarm/core.py |  |  | 0.723 |
-| walker |  | 655 | 0 | python method at swarm/core.py:27 |  |  | 0.723 |
-| walker |  | 655 | 0 | python method at swarm/core.py:71 |  |  | 0.723 |
-| walker |  | 679 | 24 | listing of 'examples/airline' |  |  | 0.724 |
-| walker |  | 693 | 14 | listing of 'examples/airline/configs' |  |  | 0.725 |
-| walker |  | 763 | 70 | python decl names surface in swarm/util.py |  |  | 0.727 |
-| walker |  | 763 | 0 | python decl at swarm/util.py:5 |  |  | 0.727 |
-| walker |  | 763 | 0 | python decl at swarm/util.py:13 |  |  | 0.727 |
-| walker |  | 763 | 0 | python decl at swarm/util.py:21 |  |  | 0.727 |
-| walker |  | 763 | 0 | python decl at swarm/util.py:31 |  |  | 0.727 |
-| ns | 788 |  | 153 | Agent and Response Pydantic models | 1.10 |  | 0.658 |
-| walker |  | 851 | 88 | python class body at swarm/types.py:14 |  |  | 0.752 |
-| walker |  | 868 | 17 | listing of 'examples/weather_agent' |  |  | 0.753 |
-| walker |  | 940 | 72 | README.md section #4 |  |  | 0.753 |
-| walker |  | 1001 | 61 | python method at swarm/core.py:89 |  |  | 0.753 |
-| ns | 1024 |  | 236 | README minimal usage snippet | 1.11 |  | 0.616 |
-| ns | 1202 |  | 178 | Swarm.run loop semantics (numbered list) | 1.12 |  | 0.580 |
-| ns | 1358 |  | 156 | Result Pydantic model + AgentFunction alias | 1.13 |  | 0.551 |
-| walker |  | 1521 | 520 | README.md section #0 |  |  | 0.724 |
+| walker |  | 448 | 72 | README.md section #4 |  |  | 0.659 |
+| ns | 635 |  | 216 | README examples roster (prose) | 1.9 |  | 0.575 |
+| ns | 788 |  | 153 | Agent and Response Pydantic models | 1.10 |  | 0.506 |
+| walker |  | 968 | 520 | README.md section #0 |  |  | 0.599 |
+| walker |  | 984 | 16 | python imports in swarm/util.py |  |  | 0.599 |
+| ns | 1024 |  | 236 | README minimal usage snippet | 1.11 |  | 0.639 |
+| walker |  | 1035 | 51 | python decl names surface in swarm/types.py |  |  | 0.642 |
+| walker |  | 1035 | 0 | python decl at swarm/types.py:14 |  |  | 0.642 |
+| walker |  | 1035 | 0 | python decl at swarm/types.py:23 |  |  | 0.642 |
+| walker |  | 1035 | 0 | python decl at swarm/types.py:29 |  |  | 0.642 |
+| walker |  | 1068 | 33 | python class body at swarm/types.py:23 |  |  | 0.655 |
+| walker |  | 1103 | 35 | python class body at swarm/types.py:29 |  |  | 0.656 |
+| walker |  | 1149 | 46 | listing of 'examples' |  |  | 0.741 |
+| walker |  | 1167 | 18 | listing of 'examples/personal_shopper' |  |  | 0.742 |
+| ns | 1202 |  | 178 | Swarm.run loop semantics (numbered list) | 1.12 |  | 0.699 |
+| walker |  | 1247 | 80 | python method sigs in swarm/core.py |  |  | 0.701 |
+| walker |  | 1247 | 0 | python method at swarm/core.py:27 |  |  | 0.701 |
+| walker |  | 1247 | 0 | python method at swarm/core.py:71 |  |  | 0.701 |
+| walker |  | 1271 | 24 | listing of 'examples/airline' |  |  | 0.702 |
+| walker |  | 1285 | 14 | listing of 'examples/airline/configs' |  |  | 0.703 |
+| walker |  | 1355 | 70 | python decl names surface in swarm/util.py |  |  | 0.705 |
+| walker |  | 1355 | 0 | python decl at swarm/util.py:5 |  |  | 0.705 |
+| walker |  | 1355 | 0 | python decl at swarm/util.py:13 |  |  | 0.705 |
+| walker |  | 1355 | 0 | python decl at swarm/util.py:21 |  |  | 0.705 |
+| walker |  | 1355 | 0 | python decl at swarm/util.py:31 |  |  | 0.705 |
+| ns | 1358 |  | 156 | Result Pydantic model + AgentFunction alias | 1.13 |  | 0.665 |
+| walker |  | 1443 | 88 | python class body at swarm/types.py:14 |  |  | 0.723 |
+| walker |  | 1460 | 17 | listing of 'examples/weather_agent' |  |  | 0.724 |
+| walker |  | 1521 | 61 | python method at swarm/core.py:89 |  |  | 0.724 |
 | walker |  | 1538 | 17 | python imports in swarm/repl/repl.py |  |  | 0.724 |
 | walker |  | 1620 | 82 | python decl doc at swarm/types.py:29 |  |  | 0.781 |
 | walker |  | 1694 | 74 | README.md section #5 |  |  | 0.781 |

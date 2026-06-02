@@ -4,35 +4,35 @@ Score(3000)=0.564 I=0.787 C=0.404 ns_rows≤3K=20/43 (reached=8 partial=3 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 39 | 39 | listing of '.' |  |  | 0.000 |
 | ns | 41 |  | 41 | Package name + description | 1.1 |  | 0.000 |
-| walker |  | 45 | 6 | listing of 'test-d' |  |  | 0.000 |
-| ns | 106 |  | 65 | Readme lede | 1.2 |  | 0.000 |
-| walker |  | 107 | 62 | package identity in package.json |  |  | 0.612 |
+| walker |  | 101 | 62 | package identity in package.json |  |  | 1.000 |
+| ns | 106 |  | 65 | Readme lede | 1.2 |  | 0.612 |
 | ns | 145 |  | 39 | Repo root listing | 1.3 |  | 0.760 |
-| walker |  | 162 | 55 | README headline in readme.md |  |  | 0.905 |
+| walker |  | 156 | 55 | README headline in readme.md |  |  | 0.904 |
+| walker |  | 162 | 6 | listing of 'test-d' |  |  | 0.905 |
 | ns | 175 |  | 30 | PQueue default-export class declaration | 1.4 |  | 0.810 |
 | walker |  | 185 | 23 | listing of 'source' |  |  | 0.822 |
 | ns | 235 |  | 60 | source/ and test/ listings | 1.5 |  | 0.678 |
 | walker |  | 246 | 61 | export names surface in source/index.ts |  |  | 0.685 |
-| walker |  | 281 | 35 | export names surface in source/priority-queue.ts |  |  | 0.685 |
-| walker |  | 298 | 17 | export at source/priority-queue.ts:7 |  |  | 0.685 |
 | ns | 328 |  | 93 | package.json — module type, exports, engine | 1.6 | 1.1 | 0.603 |
-| ns | 380 |  | 52 | EventName union (all 10 event names) | 1.7 |  | 0.595 |
-| walker |  | 427 | 129 | export at source/priority-queue.ts:11 |  |  | 0.596 |
-| ns | 523 |  | 143 | Readme — Install + ESM warning | 1.8 |  | 0.543 |
-| walker |  | 545 | 118 | headings outline in readme.md |  |  | 0.549 |
-| walker |  | 555 | 10 | readme.md section #5 |  |  | 0.549 |
+| walker |  | 364 | 118 | headings outline in readme.md |  |  | 0.609 |
+| walker |  | 374 | 10 | readme.md section #5 |  |  | 0.609 |
+| ns | 380 |  | 52 | EventName union (all 10 event names) | 1.7 |  | 0.601 |
+| walker |  | 387 | 13 | readme.md section #24 |  |  | 0.601 |
+| walker |  | 422 | 35 | export names surface in source/priority-queue.ts |  |  | 0.601 |
+| walker |  | 439 | 17 | export at source/priority-queue.ts:7 |  |  | 0.601 |
+| walker |  | 457 | 18 | readme.md section #9 |  |  | 0.601 |
+| ns | 523 |  | 143 | Readme — Install + ESM warning | 1.8 |  | 0.548 |
+| walker |  | 586 | 129 | export at source/priority-queue.ts:11 |  |  | 0.549 |
 | ns | 685 |  | 162 | Readme — basic usage (import + single example) | 1.9 |  | 0.476 |
 | ns | 862 |  | 177 | PQueue public method signature locations | 2.1 |  | 0.427 |
 | ns | 954 |  | 92 | PQueue public getters + the public `timeout` field | 2.2 |  | 0.402 |
-| ns | 1020 |  | 66 | Module exports at the bottom of source/index.ts | 2.3 |  | 0.392 |
-| walker |  | 1090 | 535 | export at source/index.ts:16 |  |  | 0.581 |
-| walker |  | 1110 | 20 | export doc at source/index.ts:16 |  |  | 0.616 |
-| walker |  | 1123 | 13 | readme.md section #24 |  |  | 0.616 |
-| ns | 1129 |  | 109 | Options<…> field names (constructor options) | 2.4 |  | 0.581 |
-| walker |  | 1141 | 18 | imports in source/options.ts |  |  | 0.581 |
+| ns | 1020 |  | 66 | Module exports at the bottom of source/index.ts | 2.3 |  | 0.393 |
+| walker |  | 1121 | 535 | export at source/index.ts:16 |  |  | 0.581 |
+| ns | 1129 |  | 109 | Options<…> field names (constructor options) | 2.4 |  | 0.548 |
+| walker |  | 1141 | 20 | export doc at source/index.ts:16 |  |  | 0.581 |
+| walker |  | 1159 | 18 | imports in source/options.ts |  |  | 0.581 |
 | ns | 1181 |  | 52 | QueueAddOptions + TaskOptions field names (per-task options) | 2.5 |  | 0.566 |
-| walker |  | 1225 | 84 | imports in source/index.ts |  |  | 0.566 |
-| walker |  | 1243 | 18 | readme.md section #9 |  |  | 0.566 |
+| walker |  | 1243 | 84 | imports in source/index.ts |  |  | 0.566 |
 | walker |  | 1286 | 43 | readme.md section #34 |  |  | 0.566 |
 | walker |  | 1306 | 20 | readme.md section #25 |  |  | 0.566 |
 | ns | 1330 |  | 149 | Queue<…> custom queue-class interface | 2.6 |  | 0.536 |

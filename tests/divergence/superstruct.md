@@ -8,22 +8,22 @@ Score(3000)=0.642 I=0.826 C=0.499 ns_rows≤3K=21/39 (reached=10 partial=3 missi
 | walker |  | 160 | 19 | listing of 'src' |  |  | 0.000 |
 | ns | 161 |  | 65 | Repo root listing | 1.2 |  | 0.856 |
 | walker |  | 178 | 18 | listing of 'src/structs' |  |  | 0.881 |
-| walker |  | 199 | 21 | listing of 'docs' |  |  | 0.885 |
-| walker |  | 224 | 25 | export names surface in src/error.ts |  |  | 0.886 |
-| ns | 240 |  | 79 | Public entry — src/index.ts in full | 1.3 |  | 0.751 |
-| ns | 306 |  | 66 | Readme runtime-errors paragraph | 1.4 |  | 0.733 |
-| ns | 394 |  | 88 | package.json — name, version, license | 1.5 |  | 0.707 |
-| walker |  | 408 | 184 | README headline in Readme.md |  |  | 0.836 |
-| ns | 431 |  | 37 | src/ tree (flat layout) | 2.1 |  | 0.847 |
-| walker |  | 462 | 54 | headings outline in Readme.md |  |  | 0.854 |
-| walker |  | 478 | 16 | Readme.md section #10 |  |  | 0.854 |
-| walker |  | 533 | 55 | listing of 'examples' |  |  | 0.860 |
-| ns | 583 |  | 152 | package.json — module shape & engines | 2.2 |  | 0.720 |
-| walker |  | 612 | 79 | export at src/error.ts:5 |  |  | 0.722 |
-| ns | 694 |  | 111 | docs/ subtree listings | 2.3 |  | 0.610 |
-| walker |  | 703 | 91 | export at src/error.ts:25 |  |  | 0.614 |
-| ns | 802 |  | 108 | examples/ + test/ + test/api/ tree | 2.4 |  | 0.563 |
-| walker |  | 825 | 122 | README headline in docs/readme.md |  |  | 0.563 |
+| ns | 240 |  | 79 | Public entry — src/index.ts in full | 1.3 |  | 0.747 |
+| ns | 306 |  | 66 | Readme runtime-errors paragraph | 1.4 |  | 0.729 |
+| walker |  | 362 | 184 | README headline in Readme.md |  |  | 0.861 |
+| ns | 394 |  | 88 | package.json — name, version, license | 1.5 |  | 0.832 |
+| walker |  | 416 | 54 | headings outline in Readme.md |  |  | 0.839 |
+| ns | 431 |  | 37 | src/ tree (flat layout) | 2.1 |  | 0.850 |
+| walker |  | 432 | 16 | Readme.md section #10 |  |  | 0.850 |
+| walker |  | 453 | 21 | listing of 'docs' |  |  | 0.853 |
+| walker |  | 575 | 122 | README headline in docs/readme.md |  |  | 0.853 |
+| ns | 583 |  | 152 | package.json — module shape & engines | 2.2 |  | 0.714 |
+| walker |  | 600 | 25 | export names surface in src/error.ts |  |  | 0.714 |
+| walker |  | 655 | 55 | listing of 'examples' |  |  | 0.720 |
+| ns | 694 |  | 111 | docs/ subtree listings | 2.3 |  | 0.608 |
+| walker |  | 734 | 79 | export at src/error.ts:5 |  |  | 0.610 |
+| ns | 802 |  | 108 | examples/ + test/ + test/api/ tree | 2.4 |  | 0.560 |
+| walker |  | 825 | 91 | export at src/error.ts:25 |  |  | 0.563 |
 | walker |  | 848 | 23 | export names surface #1 in src/struct.ts |  |  | 0.563 |
 | walker |  | 848 | 0 | export at src/struct.ts:266 |  |  | 0.563 |
 | ns | 851 |  | 49 | Readme section headings (locations only) | 2.5 |  | 0.588 |

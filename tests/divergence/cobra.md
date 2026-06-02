@@ -8,23 +8,23 @@ Score(3000)=0.574 I=0.699 C=0.471 ns_rows≤3K=16/45 (reached=4 partial=4 missin
 | walker |  | 194 | 3 | listing of 'site' |  |  | 0.611 |
 | walker |  | 217 | 23 | go module identity in go.mod |  |  | 0.612 |
 | walker |  | 222 | 5 | listing of 'assets' |  |  | 0.612 |
-| walker |  | 266 | 44 | go package doc lede in command.go |  |  | 0.744 |
-| ns | 281 |  | 135 | Feature bullets — subcommand/flag/help capabilities | 1.3 |  | 0.600 |
-| walker |  | 351 | 85 | README headline in README.md |  |  | 0.759 |
+| ns | 281 |  | 135 | Feature bullets — subcommand/flag/help capabilities | 1.3 |  | 0.494 |
+| walker |  | 307 | 85 | README headline in README.md |  |  | 0.528 |
+| walker |  | 351 | 44 | go package doc lede in command.go |  |  | 0.759 |
 | ns | 379 |  | 98 | Feature bullets — completion/docs/aliases/viper | 1.4 | 1.3 | 0.692 |
-| walker |  | 410 | 59 | listing of 'doc' |  |  | 0.710 |
-| walker |  | 473 | 63 | headings outline in README.md |  |  | 0.710 |
-| walker |  | 487 | 14 | README.md section #0 |  |  | 0.710 |
-| ns | 575 |  | 196 | Tests + meta files + subdir listings | 1.5 |  | 0.555 |
-| walker |  | 583 | 96 | go module file go.mod |  |  | 0.561 |
-| walker |  | 656 | 73 | go decl names surface in fish_completions.go |  |  | 0.561 |
-| walker |  | 656 | 0 | go decl at fish_completions.go:25 |  |  | 0.561 |
-| walker |  | 656 | 0 | go decl at fish_completions.go:276 |  |  | 0.561 |
-| walker |  | 656 | 0 | go decl at fish_completions.go:284 |  |  | 0.561 |
-| walker |  | 670 | 14 | go decl doc at fish_completions.go:284 |  |  | 0.561 |
-| walker |  | 689 | 19 | go decl doc at fish_completions.go:276 |  |  | 0.561 |
+| walker |  | 414 | 63 | headings outline in README.md |  |  | 0.692 |
+| walker |  | 428 | 14 | README.md section #0 |  |  | 0.692 |
+| walker |  | 519 | 91 | headings outline in CONDUCT.md |  |  | 0.692 |
+| ns | 575 |  | 196 | Tests + meta files + subdir listings | 1.5 |  | 0.462 |
+| walker |  | 578 | 59 | listing of 'doc' |  |  | 0.555 |
+| walker |  | 674 | 96 | go module file go.mod |  |  | 0.561 |
 | ns | 704 |  | 129 | go.mod (module path + deps) | 1.6 |  | 0.582 |
-| walker |  | 780 | 91 | headings outline in CONDUCT.md |  |  | 0.582 |
+| walker |  | 747 | 73 | go decl names surface in fish_completions.go |  |  | 0.582 |
+| walker |  | 747 | 0 | go decl at fish_completions.go:25 |  |  | 0.582 |
+| walker |  | 747 | 0 | go decl at fish_completions.go:276 |  |  | 0.582 |
+| walker |  | 747 | 0 | go decl at fish_completions.go:284 |  |  | 0.582 |
+| walker |  | 761 | 14 | go decl doc at fish_completions.go:284 |  |  | 0.582 |
+| walker |  | 780 | 19 | go decl doc at fish_completions.go:276 |  |  | 0.582 |
 | walker |  | 958 | 178 | go decl names surface in command.go |  |  | 0.584 |
 | walker |  | 958 | 0 | go decl at command.go:42 |  |  | 0.584 |
 | walker |  | 958 | 0 | go decl at command.go:269 |  |  | 0.584 |

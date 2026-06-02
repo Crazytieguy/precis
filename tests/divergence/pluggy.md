@@ -5,15 +5,15 @@ Score(3000)=0.588 I=0.834 C=0.414 ns_rows≤3K=17/40 (reached=8 partial=2 missin
 | ns | 54 |  | 54 | README headline + tagline | 1.1 |  | 0.000 |
 | walker |  | 96 | 96 | listing of '.' |  |  | 0.000 |
 | walker |  | 100 | 4 | listing of 'src' |  |  | 0.000 |
-| walker |  | 143 | 43 | listing of 'src/pluggy' |  |  | 0.000 |
-| ns | 150 |  | 96 | Top-level fs listing | 1.2 |  | 0.679 |
-| ns | 193 |  | 43 | src/pluggy listing | 1.3 |  | 0.671 |
-| ns | 343 |  | 150 | Public API surface (__all__) | 1.4 |  | 0.538 |
-| walker |  | 459 | 316 | python imports in src/pluggy/__init__.py |  |  | 0.739 |
-| walker |  | 477 | 18 | python decl names surface in src/pluggy/__init__.py |  |  | 0.739 |
-| walker |  | 477 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.739 |
-| ns | 509 |  | 166 | __init__ re-export map (which file each symbol comes from) | 2.1 |  | 0.728 |
-| walker |  | 579 | 102 | README headline in README.rst |  |  | 1.000 |
+| ns | 150 |  | 96 | Top-level fs listing | 1.2 |  | 0.639 |
+| ns | 193 |  | 43 | src/pluggy listing | 1.3 |  | 0.550 |
+| walker |  | 202 | 102 | README headline in README.rst |  |  | 0.860 |
+| walker |  | 245 | 43 | listing of 'src/pluggy' |  |  | 1.000 |
+| ns | 343 |  | 150 | Public API surface (__all__) | 1.4 |  | 0.802 |
+| ns | 509 |  | 166 | __init__ re-export map (which file each symbol comes from) | 2.1 |  | 0.702 |
+| walker |  | 561 | 316 | python imports in src/pluggy/__init__.py |  |  | 1.000 |
+| walker |  | 579 | 18 | python decl names surface in src/pluggy/__init__.py |  |  | 1.000 |
+| walker |  | 579 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 1.000 |
 | walker |  | 598 | 19 | listing of 'changelog' |  |  | 1.000 |
 | ns | 624 |  | 115 | pyproject.toml build-system + license + authors | 2.2 |  | 0.911 |
 | walker |  | 630 | 32 | listing of 'docs' |  |  | 0.912 |

@@ -8,27 +8,27 @@ Score(3000)=0.492 I=0.804 C=0.301 ns_rows≤3K=18/45 (reached=4 partial=2 missin
 | walker |  | 143 | 61 | package identity in package.json |  |  | 0.857 |
 | walker |  | 156 | 13 | package identity metadata in package.json |  |  | 0.858 |
 | ns | 157 |  | 58 | package.json — name/version/desc | 1.3 |  | 0.824 |
-| walker |  | 159 | 3 | listing of 'test' |  |  | 0.824 |
-| walker |  | 183 | 24 | package entrypoints in package.json |  |  | 0.824 |
-| walker |  | 196 | 13 | module item at index.js:13 |  |  | 0.824 |
-| walker |  | 211 | 15 | listing of 'images' |  |  | 0.824 |
+| walker |  | 180 | 24 | package entrypoints in package.json |  |  | 0.824 |
 | ns | 220 |  | 63 | server/ directory listing | 1.4 |  | 0.616 |
-| walker |  | 226 | 15 | module item at index.js:42 |  |  | 0.617 |
-| walker |  | 242 | 16 | module item at index.js:21 |  |  | 0.617 |
-| walker |  | 260 | 18 | module item at index.js:41 |  |  | 0.617 |
-| walker |  | 279 | 19 | module item at index.js:38 |  |  | 0.617 |
-| walker |  | 298 | 19 | module item at index.js:39 |  |  | 0.617 |
-| walker |  | 317 | 19 | module item at index.js:45 |  |  | 0.617 |
-| walker |  | 340 | 23 | listing of 'docs' |  |  | 0.617 |
-| ns | 352 |  | 132 | package.json — every npm script name | 1.5 | 1.3 | 0.534 |
-| walker |  | 361 | 21 | module item at index.js:43 |  |  | 0.534 |
-| ns | 468 |  | 116 | package.json — core deps (express + sequelize + auth) | 1.6 | 1.3 | 0.495 |
-| walker |  | 502 | 141 | README headline in readme.md |  |  | 0.583 |
-| walker |  | 526 | 24 | module item at index.js:44 |  |  | 0.584 |
-| walker |  | 550 | 24 | module item at index.js:47 |  |  | 0.584 |
-| walker |  | 578 | 28 | module item at index.js:52 |  |  | 0.585 |
-| ns | 619 |  | 151 | package.json — secondary runtime deps | 1.6.1 | 1.6 | 0.544 |
-| walker |  | 669 | 91 | README headline in docs/README.md |  |  | 0.544 |
+| walker |  | 321 | 141 | README headline in readme.md |  |  | 0.726 |
+| walker |  | 324 | 3 | listing of 'test' |  |  | 0.726 |
+| walker |  | 337 | 13 | module item at index.js:13 |  |  | 0.726 |
+| walker |  | 352 | 15 | listing of 'images' |  |  | 0.628 |
+| ns | 352 |  | 132 | package.json — every npm script name | 1.5 | 1.3 | 0.628 |
+| walker |  | 367 | 15 | module item at index.js:42 |  |  | 0.628 |
+| walker |  | 383 | 16 | module item at index.js:21 |  |  | 0.628 |
+| walker |  | 401 | 18 | module item at index.js:41 |  |  | 0.628 |
+| walker |  | 420 | 19 | module item at index.js:38 |  |  | 0.628 |
+| walker |  | 439 | 19 | module item at index.js:39 |  |  | 0.628 |
+| walker |  | 458 | 19 | module item at index.js:45 |  |  | 0.628 |
+| ns | 468 |  | 116 | package.json — core deps (express + sequelize + auth) | 1.6 | 1.3 | 0.582 |
+| walker |  | 481 | 23 | listing of 'docs' |  |  | 0.583 |
+| walker |  | 572 | 91 | README headline in docs/README.md |  |  | 0.583 |
+| walker |  | 593 | 21 | module item at index.js:43 |  |  | 0.583 |
+| walker |  | 617 | 24 | module item at index.js:44 |  |  | 0.584 |
+| ns | 619 |  | 151 | package.json — secondary runtime deps | 1.6.1 | 1.6 | 0.543 |
+| walker |  | 641 | 24 | module item at index.js:47 |  |  | 0.543 |
+| walker |  | 669 | 28 | module item at index.js:52 |  |  | 0.544 |
 | walker |  | 717 | 48 | headings outline in docs/README.md |  |  | 0.544 |
 | walker |  | 780 | 63 | listing of 'server' |  |  | 0.732 |
 | ns | 804 |  | 185 | README — feature list (first half) | 1.7 | 1.1 | 0.672 |

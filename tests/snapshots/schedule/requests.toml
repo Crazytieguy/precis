@@ -125,10 +125,80 @@ kind = "ellipsis"
 
 [[batches]]
 position = 5
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 72
+cum_tokens = 355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 18
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Toml(Identity { file: "pyproject.toml" })'
+descriptor = "[package] in pyproject.toml"
+cost_tokens = 52
+cum_tokens = 407
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 5
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 144
+cum_tokens = 551
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
 key = 'Fs(DirListing { dir: "src/requests" })'
 descriptor = "listing of 'src/requests'"
 cost_tokens = 90
-cum_tokens = 373
+cum_tokens = 641
 
 [batches.content]
 kind = "fs"
@@ -138,11 +208,11 @@ parent = "src/requests"
 entries = ["__init__.py", "__version__.py", "_internal_utils.py", "_types.py", "adapters.py", "api.py", "auth.py", "certs.py", "compat.py", "cookies.py", "exceptions.py", "help.py", "hooks.py", "models.py", "packages.py", "py.typed", "sessions.py", "status_codes.py", "structures.py", "utils.py"]
 
 [[batches]]
-position = 6
+position = 9
 key = 'Python(Imports { file: "src/requests/__init__.py" })'
 descriptor = "python imports in src/requests/__init__.py"
 cost_tokens = 931
-cum_tokens = 1304
+cum_tokens = 1572
 
 [batches.content]
 kind = "lines"
@@ -276,11 +346,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 7
+position = 10
 key = 'Python(DeclNames { file: "src/requests/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/requests/__init__.py"
 cost_tokens = 34
-cum_tokens = 1338
+cum_tokens = 1606
 
 [batches.content]
 kind = "lines"
@@ -318,11 +388,11 @@ end = 100
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 11
 key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 99 })'
 descriptor = "python decl at src/requests/__init__.py:99"
 cost_tokens = 14
-cum_tokens = 1352
+cum_tokens = 1620
 
 [batches.content]
 kind = "lines"
@@ -336,11 +406,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 9
+position = 12
 key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 60 })'
 descriptor = "python decl at src/requests/__init__.py:60"
 cost_tokens = 45
-cum_tokens = 1397
+cum_tokens = 1665
 
 [batches.content]
 kind = "lines"
@@ -354,11 +424,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 10
+position = 13
 key = 'Fs(DirListing { dir: "ext" })'
 descriptor = "listing of 'ext'"
 cost_tokens = 34
-cum_tokens = 1431
+cum_tokens = 1699
 
 [batches.content]
 kind = "fs"
@@ -368,29 +438,11 @@ parent = "ext"
 entries = ["LICENSE", "kr.png", "psf.png", "requests-logo-compressed.png", "requests-logo.ai", "requests-logo.png", "requests-logo.svg"]
 
 [[batches]]
-position = 11
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 72
-cum_tokens = 1503
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 18
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
+position = 14
 key = 'Python(Imports { file: "setup.py" })'
 descriptor = "python imports in setup.py"
 cost_tokens = 16
-cum_tokens = 1519
+cum_tokens = 1715
 
 [batches.content]
 kind = "lines"
@@ -407,58 +459,6 @@ kind = "full"
 path = "setup.py"
 start = 7
 end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Toml(Identity { file: "pyproject.toml" })'
-descriptor = "[package] in pyproject.toml"
-cost_tokens = 52
-cum_tokens = 1571
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 5
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Markdown(Section { file: "README.md", section_index: 0 })'
-descriptor = "README.md section #0"
-cost_tokens = 144
-cum_tokens = 1715
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 28
-end = 28
 
 [batches.content.spans.render]
 kind = "full"

@@ -19,24 +19,10 @@ entries = [".gitattributes", ".github", ".gitignore", ".gitmodules", "AUTHORS", 
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "config" })'
-descriptor = "listing of 'config'"
-cost_tokens = 9
-cum_tokens = 90
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "config"
-entries = [".gitignore", "m4"]
-
-[[batches]]
-position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 64
-cum_tokens = 154
+cum_tokens = 145
 
 [batches.content]
 kind = "lines"
@@ -58,25 +44,25 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "m4" })'
-descriptor = "listing of 'm4'"
-cost_tokens = 23
-cum_tokens = 177
+position = 3
+key = 'Fs(DirListing { dir: "config" })'
+descriptor = "listing of 'config'"
+cost_tokens = 9
+cum_tokens = 154
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "m4"
-entries = ["ax_compare_version.m4", "ax_prog_bison_version.m4", "ax_pthread.m4"]
+parent = "config"
+entries = [".gitignore", "m4"]
 
 [[batches]]
-position = 5
+position = 4
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 71
-cum_tokens = 248
+cum_tokens = 225
 
 [batches.content]
 kind = "lines"
@@ -194,93 +180,11 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "vendor" })'
-descriptor = "listing of 'vendor'"
-cost_tokens = 9
-cum_tokens = 257
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "vendor"
-entries = ["decNumber", "oniguruma"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 52
-cum_tokens = 309
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["Pipfile", "Pipfile.lock", "README.md", "build_manpage.py", "build_mantests.py", "build_website.py", "content", "manual_schema.yml", "public", "templates", "validate_manual_schema.py"]
-
-[[batches]]
-position = 8
-key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
-descriptor = "README headline in docs/README.md"
-cost_tokens = 49
-cum_tokens = 358
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 4
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "docs/content" })'
-descriptor = "listing of 'docs/content'"
-cost_tokens = 13
-cum_tokens = 371
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/content"
-entries = ["download", "index.yml", "manual", "tutorial"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "docs/templates" })'
-descriptor = "listing of 'docs/templates'"
-cost_tokens = 21
-cum_tokens = 392
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/templates"
-entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
-
-[[batches]]
-position = 11
+position = 5
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 49
-cum_tokens = 441
+cum_tokens = 274
 
 [batches.content]
 kind = "lines"
@@ -302,11 +206,133 @@ end = 8
 kind = "full"
 
 [[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "m4" })'
+descriptor = "listing of 'm4'"
+cost_tokens = 23
+cum_tokens = 297
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "m4"
+entries = ["ax_compare_version.m4", "ax_prog_bison_version.m4", "ax_pthread.m4"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "vendor" })'
+descriptor = "listing of 'vendor'"
+cost_tokens = 9
+cum_tokens = 306
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "vendor"
+entries = ["decNumber", "oniguruma"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 52
+cum_tokens = 358
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["Pipfile", "Pipfile.lock", "README.md", "build_manpage.py", "build_mantests.py", "build_website.py", "content", "manual_schema.yml", "public", "templates", "validate_manual_schema.py"]
+
+[[batches]]
+position = 9
+key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
+descriptor = "README headline in docs/README.md"
+cost_tokens = 49
+cum_tokens = 407
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "docs/content" })'
+descriptor = "listing of 'docs/content'"
+cost_tokens = 13
+cum_tokens = 420
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/content"
+entries = ["download", "index.yml", "manual", "tutorial"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "docs/templates" })'
+descriptor = "listing of 'docs/templates'"
+cost_tokens = 21
+cum_tokens = 441
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/templates"
+entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
+
+[[batches]]
 position = 12
+key = 'Markdown(Section { file: "README.md", section_index: 7 })'
+descriptor = "README.md section #7"
+cost_tokens = 80
+cum_tokens = 521
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 69
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
 key = 'Fs(DirListing { dir: "docs/public" })'
 descriptor = "listing of 'docs/public'"
 cost_tokens = 31
-cum_tokens = 472
+cum_tokens = 552
 
 [batches.content]
 kind = "fs"
@@ -316,11 +342,11 @@ parent = "docs/public"
 entries = [".htaccess", "CNAME", "css", "icon.png", "icon.svg", "jq.svg", "js", "robots.txt"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: "config/m4" })'
 descriptor = "listing of 'config/m4'"
 cost_tokens = 47
-cum_tokens = 519
+cum_tokens = 599
 
 [batches.content]
 kind = "fs"
@@ -330,11 +356,11 @@ parent = "config/m4"
 entries = [".gitignore", "check-math-func.m4", "find-func-no-libs.m4", "find-func-no-libs2.m4", "find-func.m4", "misc.m4"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 233
-cum_tokens = 752
+cum_tokens = 832
 
 [batches.content]
 kind = "fs"
@@ -344,11 +370,11 @@ parent = "src"
 entries = ["builtin.c", "builtin.h", "builtin.jq", "bytecode.c", "bytecode.h", "compile.c", "compile.h", "exec_stack.h", "execute.c", "inject_errors.c", "jq.h", "jq_parser.h", "jq_test.c", "jv.c", "jv.h", "jv_alloc.c", "jv_alloc.h", "jv_aux.c", "jv_dtoa.c", "jv_dtoa.h", "jv_dtoa_tsd.c", "jv_dtoa_tsd.h", "jv_file.c", "jv_parse.c", "jv_print.c", "jv_private.h", "jv_thread.h", "jv_unicode.c", "jv_unicode.h", "jv_utf8_tables.h", "lexer.c", "lexer.h", "lexer.l", "libm.h", "linker.c", "linker.h", "locfile.c", "locfile.h", "main.c", "opcode_list.h", "parser.c", "parser.h", "parser.y", "util.c", "util.h"]
 
 [[batches]]
-position = 15
+position = 16
 key = 'C(Includes { file: "src/jq.h" })'
 descriptor = "c includes in src/jq.h"
 cost_tokens = 21
-cum_tokens = 773
+cum_tokens = 853
 
 [batches.content]
 kind = "lines"
@@ -362,37 +388,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
 key = 'C(DeclNames { file: "src/jv_file.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_file.c"
 cost_tokens = 21
-cum_tokens = 794
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_file.c"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_file.c"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 17
-key = 'C(Decl { file: "src/jv_file.c", start_line: 12 })'
-descriptor = "c decl at src/jv_file.c:12"
-cost_tokens = 0
-cum_tokens = 794
+cum_tokens = 874
 
 [batches.content]
 kind = "lines"
@@ -415,10 +415,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 18
+key = 'C(Decl { file: "src/jv_file.c", start_line: 12 })'
+descriptor = "c decl at src/jv_file.c:12"
+cost_tokens = 0
+cum_tokens = 874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_file.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_file.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 19
 key = 'C(Includes { file: "src/jv.h" })'
 descriptor = "c includes in src/jv.h"
 cost_tokens = 31
-cum_tokens = 825
+cum_tokens = 905
 
 [batches.content]
 kind = "lines"
@@ -432,11 +458,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'C(DeclNames { file: "src/jv_utf8_tables.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_utf8_tables.h"
 cost_tokens = 20
-cum_tokens = 845
+cum_tokens = 925
 
 [batches.content]
 kind = "lines"
@@ -458,11 +484,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 21
 key = 'C(DeclNames { file: "src/jq_test.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jq_test.c"
 cost_tokens = 36
-cum_tokens = 881
+cum_tokens = 961
 
 [batches.content]
 kind = "lines"
@@ -500,11 +526,11 @@ end = 79
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 22
 key = 'C(Decl { file: "src/jq_test.c", start_line: 21 })'
 descriptor = "c decl at src/jq_test.c:21"
 cost_tokens = 0
-cum_tokens = 881
+cum_tokens = 961
 
 [batches.content]
 kind = "lines"
@@ -526,11 +552,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 23
 key = 'C(Decl { file: "src/jq_test.c", start_line: 78 })'
 descriptor = "c decl at src/jq_test.c:78"
 cost_tokens = 14
-cum_tokens = 895
+cum_tokens = 975
 
 [batches.content]
 kind = "lines"
@@ -544,11 +570,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'C(DeclNames { file: "src/jv.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv.h"
 cost_tokens = 308
-cum_tokens = 1203
+cum_tokens = 1283
 
 [batches.content]
 kind = "lines"
@@ -706,11 +732,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 25
 key = 'C(Decl { file: "src/jv.h", start_line: 19 })'
 descriptor = "c decl at src/jv.h:19"
 cost_tokens = 79
-cum_tokens = 1282
+cum_tokens = 1362
 
 [batches.content]
 kind = "lines"
@@ -724,11 +750,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'C(Decl { file: "src/jv.h", start_line: 34 })'
 descriptor = "c decl at src/jv.h:34"
 cost_tokens = 83
-cum_tokens = 1365
+cum_tokens = 1445
 
 [batches.content]
 kind = "lines"
@@ -742,11 +768,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'C(DeclDoc { file: "src/jv.h", start_line: 34 })'
 descriptor = "c decl doc at src/jv.h:34"
 cost_tokens = 29
-cum_tokens = 1394
+cum_tokens = 1474
 
 [batches.content]
 kind = "lines"
@@ -760,11 +786,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'C(DeclNames { file: "src/jv_dtoa_tsd.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jv_dtoa_tsd.c"
 cost_tokens = 58
-cum_tokens = 1452
+cum_tokens = 1532
 
 [batches.content]
 kind = "lines"
@@ -813,42 +839,42 @@ kind = "ellipsis"
 path = "src/jv_dtoa_tsd.c"
 start = 40
 end = 40
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 28
-key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 22 })'
-descriptor = "c decl at src/jv_dtoa_tsd.c:22"
-cost_tokens = 0
-cum_tokens = 1452
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_dtoa_tsd.c"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_dtoa_tsd.c"
-start = 23
-end = 23
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 29
+key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 22 })'
+descriptor = "c decl at src/jv_dtoa_tsd.c:22"
+cost_tokens = 0
+cum_tokens = 1532
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_dtoa_tsd.c"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_dtoa_tsd.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 30
 key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 31 })'
 descriptor = "c decl at src/jv_dtoa_tsd.c:31"
 cost_tokens = 0
-cum_tokens = 1452
+cum_tokens = 1532
 
 [batches.content]
 kind = "lines"
@@ -870,11 +896,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 31
 key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 39 })'
 descriptor = "c decl at src/jv_dtoa_tsd.c:39"
 cost_tokens = 0
-cum_tokens = 1452
+cum_tokens = 1532
 
 [batches.content]
 kind = "lines"
@@ -896,11 +922,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 32
 key = 'C(DeclNames { file: "src/jq.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jq.h"
 cost_tokens = 383
-cum_tokens = 1835
+cum_tokens = 1915
 
 [batches.content]
 kind = "lines"
@@ -978,11 +1004,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 33
 key = 'C(Decl { file: "src/jq.h", start_line: 11 })'
 descriptor = "c decl at src/jq.h:11"
 cost_tokens = 52
-cum_tokens = 1887
+cum_tokens = 1967
 
 [batches.content]
 kind = "lines"
@@ -996,11 +1022,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'C(DeclNames { file: "src/linker.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/linker.c"
 cost_tokens = 70
-cum_tokens = 1957
+cum_tokens = 2037
 
 [batches.content]
 kind = "lines"
@@ -1062,11 +1088,11 @@ end = 436
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 35
 key = 'C(Decl { file: "src/linker.c", start_line: 435 })'
 descriptor = "c decl at src/linker.c:435"
 cost_tokens = 0
-cum_tokens = 1957
+cum_tokens = 2037
 
 [batches.content]
 kind = "lines"
@@ -1088,11 +1114,11 @@ end = 436
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 36
 key = 'C(Decl { file: "src/linker.c", start_line: 409 })'
 descriptor = "c decl at src/linker.c:409"
 cost_tokens = 2
-cum_tokens = 1959
+cum_tokens = 2039
 
 [batches.content]
 kind = "lines"
@@ -1114,11 +1140,11 @@ end = 410
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 37
 key = 'C(Decl { file: "src/linker.c", start_line: 28 })'
 descriptor = "c decl at src/linker.c:28"
 cost_tokens = 24
-cum_tokens = 1983
+cum_tokens = 2063
 
 [batches.content]
 kind = "lines"
@@ -1132,11 +1158,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'C(Decl { file: "src/linker.c", start_line: 23 })'
 descriptor = "c decl at src/linker.c:23"
 cost_tokens = 28
-cum_tokens = 2011
+cum_tokens = 2091
 
 [batches.content]
 kind = "lines"
@@ -1150,11 +1176,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'C(WholeFile { file: "src/jv_dtoa_tsd.h" })'
 descriptor = "c whole header in src/jv_dtoa_tsd.h"
 cost_tokens = 52
-cum_tokens = 2063
+cum_tokens = 2143
 
 [batches.content]
 kind = "lines"
@@ -1168,11 +1194,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'C(WholeFile { file: "src/jv_private.h" })'
 descriptor = "c whole header in src/jv_private.h"
 cost_tokens = 56
-cum_tokens = 2119
+cum_tokens = 2199
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1228,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Fs(DirListing { dir: "docs/content/download" })'
 descriptor = "listing of 'docs/content/download'"
 cost_tokens = 4
-cum_tokens = 2123
+cum_tokens = 2203
 
 [batches.content]
 kind = "fs"
@@ -1216,11 +1242,11 @@ parent = "docs/content/download"
 entries = ["default.yml"]
 
 [[batches]]
-position = 41
+position = 42
 key = 'Fs(DirListing { dir: "docs/content/tutorial" })'
 descriptor = "listing of 'docs/content/tutorial'"
 cost_tokens = 4
-cum_tokens = 2127
+cum_tokens = 2207
 
 [batches.content]
 kind = "fs"
@@ -1230,11 +1256,11 @@ parent = "docs/content/tutorial"
 entries = ["default.yml"]
 
 [[batches]]
-position = 42
+position = 43
 key = 'Fs(DirListing { dir: "docs/public/css" })'
 descriptor = "listing of 'docs/public/css'"
 cost_tokens = 4
-cum_tokens = 2131
+cum_tokens = 2211
 
 [batches.content]
 kind = "fs"
@@ -1244,11 +1270,11 @@ parent = "docs/public/css"
 entries = ["style.css"]
 
 [[batches]]
-position = 43
+position = 44
 key = 'C(DeclNames { file: "src/exec_stack.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/exec_stack.h"
 cost_tokens = 48
-cum_tokens = 2179
+cum_tokens = 2259
 
 [batches.content]
 kind = "lines"
@@ -1318,11 +1344,11 @@ end = 53
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 45
 key = 'C(DeclNames { file: "src/main.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/main.c"
 cost_tokens = 83
-cum_tokens = 2262
+cum_tokens = 2342
 
 [batches.content]
 kind = "lines"
@@ -1390,32 +1416,6 @@ end = 174
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 45
-key = 'Markdown(Section { file: "README.md", section_index: 7 })'
-descriptor = "README.md section #7"
-cost_tokens = 80
-cum_tokens = 2342
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 69
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 46

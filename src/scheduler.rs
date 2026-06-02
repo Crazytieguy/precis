@@ -338,6 +338,9 @@ impl<W: Walker> Scheduler<W> {
                 effective_value,
                 exact_cost.tokens,
                 entry.key.concavity_exponent(),
+            ) * crate::value::orientation_tier_multiplier(
+                self.consumed.tokens,
+                entry.key.is_orientation(),
             );
             let better = best.as_ref().is_none_or(|(br, b_id, _)| {
                 ratio > *br
@@ -384,6 +387,9 @@ impl<W: Walker> Scheduler<W> {
                 effective_value,
                 approx_tokens,
                 entry.key.concavity_exponent(),
+            ) * crate::value::orientation_tier_multiplier(
+                self.consumed.tokens,
+                entry.key.is_orientation(),
             );
             candidates.push((ratio, id));
         }

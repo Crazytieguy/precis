@@ -5,46 +5,46 @@ Score(3000)=0.517 I=0.836 C=0.320 ns_rows≤3K=12/42 (reached=3 partial=2 missin
 | ns | 62 |  | 62 | README headline + tagline + How-it-works heading | 1.1 |  | 0.000 |
 | ns | 123 |  | 61 | main.go func main body | 1.2 |  | 0.000 |
 | walker |  | 125 | 125 | listing of '.' |  |  | 0.000 |
-| walker |  | 145 | 20 | go decl names surface in main.go |  |  | 0.065 |
-| walker |  | 145 | 0 | go decl at main.go:11 |  |  | 0.065 |
-| walker |  | 145 | 0 | go decl at main.go:13 |  |  | 0.065 |
-| walker |  | 170 | 25 | go module identity in go.mod |  |  | 0.065 |
-| walker |  | 180 | 10 | plaintext config VERSION |  |  | 0.065 |
-| walker |  | 232 | 52 | README headline in README.md |  |  | 0.501 |
-| walker |  | 242 | 10 | go decl doc at main.go:11 |  |  | 0.502 |
-| ns | 248 |  | 125 | Repository root listing | 1.3 |  | 0.747 |
-| walker |  | 288 | 46 | listing of 'cmd' |  |  | 0.770 |
-| walker |  | 304 | 16 | go decl names surface in cmd/graph.go |  |  | 0.770 |
-| walker |  | 304 | 0 | go decl at cmd/graph.go:10 |  |  | 0.770 |
-| walker |  | 320 | 16 | go decl names surface in cmd/list.go |  |  | 0.770 |
-| walker |  | 320 | 0 | go decl at cmd/list.go:11 |  |  | 0.770 |
-| ns | 326 |  | 78 | main.go imports + go:embed VERSION | 1.4 | 1.2 | 0.692 |
-| walker |  | 339 | 19 | go decl names surface in cmd/platforms.go |  |  | 0.692 |
-| walker |  | 339 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.692 |
-| ns | 372 |  | 46 | cmd/ directory listing | 2.1 |  | 0.705 |
-| walker |  | 394 | 55 | headings outline in README.md |  |  | 0.763 |
-| walker |  | 435 | 41 | listing of 'pkg' |  |  | 0.768 |
-| walker |  | 468 | 33 | listing of 'pkg/lookpath' |  |  | 0.768 |
-| ns | 483 |  | 111 | cmd.Execute entry-point function | 2.2 |  | 0.697 |
-| walker |  | 490 | 22 | listing of 'pkg/exprparser' |  |  | 0.698 |
-| walker |  | 514 | 24 | listing of 'pkg/artifacts' |  |  | 0.698 |
-| walker |  | 539 | 25 | listing of 'pkg/artifactcache' |  |  | 0.699 |
-| walker |  | 595 | 56 | listing of 'pkg/model' |  |  | 0.701 |
-| walker |  | 606 | 11 | go decl names surface in pkg/model/job_context.go |  |  | 0.701 |
-| walker |  | 671 | 65 | headings outline in IMAGES.md |  |  | 0.701 |
-| walker |  | 687 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.701 |
-| ns | 695 |  | 212 | createRootCommand Cobra shape | 2.3 |  | 0.645 |
-| walker |  | 766 | 79 | listing of 'pkg/common' |  |  | 0.652 |
-| walker |  | 780 | 14 | go decl names surface in pkg/common/outbound_ip.go |  |  | 0.652 |
-| walker |  | 780 | 0 | go decl at pkg/common/outbound_ip.go:13 |  |  | 0.652 |
-| walker |  | 812 | 32 | go decl names surface in cmd/dir.go |  |  | 0.652 |
-| walker |  | 812 | 0 | go decl at cmd/dir.go:15 |  |  | 0.652 |
-| walker |  | 821 | 9 | go decl at cmd/dir.go:10 |  |  | 0.652 |
-| walker |  | 846 | 25 | README.md section #2 |  |  | 0.652 |
-| walker |  | 903 | 57 | go package + imports in main.go |  |  | 0.705 |
-| walker |  | 922 | 19 | listing of 'cmd/testdata' |  |  | 0.705 |
-| walker |  | 941 | 19 | listing of 'pkg/schema' |  |  | 0.706 |
-| walker |  | 966 | 25 | README.md section #3 |  |  | 0.706 |
+| walker |  | 177 | 52 | README headline in README.md |  |  | 0.490 |
+| walker |  | 197 | 20 | go decl names surface in main.go |  |  | 0.501 |
+| walker |  | 197 | 0 | go decl at main.go:11 |  |  | 0.501 |
+| walker |  | 197 | 0 | go decl at main.go:13 |  |  | 0.501 |
+| walker |  | 222 | 25 | go module identity in go.mod |  |  | 0.501 |
+| walker |  | 232 | 10 | plaintext config VERSION |  |  | 0.501 |
+| ns | 248 |  | 125 | Repository root listing | 1.3 |  | 0.746 |
+| walker |  | 287 | 55 | headings outline in README.md |  |  | 0.815 |
+| ns | 326 |  | 78 | main.go imports + go:embed VERSION | 1.4 | 1.2 | 0.727 |
+| walker |  | 352 | 65 | headings outline in IMAGES.md |  |  | 0.727 |
+| ns | 372 |  | 46 | cmd/ directory listing | 2.1 |  | 0.647 |
+| walker |  | 377 | 25 | README.md section #2 |  |  | 0.647 |
+| walker |  | 387 | 10 | go decl doc at main.go:11 |  |  | 0.652 |
+| walker |  | 412 | 25 | README.md section #3 |  |  | 0.652 |
+| walker |  | 458 | 46 | listing of 'cmd' |  |  | 0.763 |
+| walker |  | 474 | 16 | go decl names surface in cmd/graph.go |  |  | 0.763 |
+| walker |  | 474 | 0 | go decl at cmd/graph.go:10 |  |  | 0.763 |
+| ns | 483 |  | 111 | cmd.Execute entry-point function | 2.2 |  | 0.693 |
+| walker |  | 490 | 16 | go decl names surface in cmd/list.go |  |  | 0.693 |
+| walker |  | 490 | 0 | go decl at cmd/list.go:11 |  |  | 0.693 |
+| walker |  | 509 | 19 | go decl names surface in cmd/platforms.go |  |  | 0.693 |
+| walker |  | 509 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.693 |
+| walker |  | 550 | 41 | listing of 'pkg' |  |  | 0.697 |
+| walker |  | 583 | 33 | listing of 'pkg/lookpath' |  |  | 0.697 |
+| walker |  | 605 | 22 | listing of 'pkg/exprparser' |  |  | 0.698 |
+| walker |  | 629 | 24 | listing of 'pkg/artifacts' |  |  | 0.698 |
+| walker |  | 654 | 25 | listing of 'pkg/artifactcache' |  |  | 0.699 |
+| ns | 695 |  | 212 | createRootCommand Cobra shape | 2.3 |  | 0.643 |
+| walker |  | 710 | 56 | listing of 'pkg/model' |  |  | 0.645 |
+| walker |  | 721 | 11 | go decl names surface in pkg/model/job_context.go |  |  | 0.645 |
+| walker |  | 737 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.645 |
+| walker |  | 816 | 79 | listing of 'pkg/common' |  |  | 0.652 |
+| walker |  | 830 | 14 | go decl names surface in pkg/common/outbound_ip.go |  |  | 0.652 |
+| walker |  | 830 | 0 | go decl at pkg/common/outbound_ip.go:13 |  |  | 0.652 |
+| walker |  | 862 | 32 | go decl names surface in cmd/dir.go |  |  | 0.652 |
+| walker |  | 862 | 0 | go decl at cmd/dir.go:15 |  |  | 0.652 |
+| walker |  | 871 | 9 | go decl at cmd/dir.go:10 |  |  | 0.652 |
+| walker |  | 928 | 57 | go package + imports in main.go |  |  | 0.705 |
+| walker |  | 947 | 19 | listing of 'cmd/testdata' |  |  | 0.705 |
+| walker |  | 966 | 19 | listing of 'pkg/schema' |  |  | 0.706 |
 | ns | 992 |  | 297 | Input struct (first half) — workflow/secrets/env/platform/container fields | 3.1 |  | 0.590 |
 | walker |  | 1012 | 46 | go decl names surface in cmd/secrets.go |  |  | 0.590 |
 | walker |  | 1012 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.590 |

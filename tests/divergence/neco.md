@@ -7,18 +7,18 @@ Score(3000)=0.702 I=0.852 C=0.578 ns_rows≤3K=15/36 (reached=11 partial=1 missi
 | walker |  | 53 | 25 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 62 | 9 | README headline in docs/README.md |  |  | 0.000 |
 | ns | 71 |  | 28 | Top-level directory listing | 1.2 |  | 0.589 |
-| walker |  | 83 | 21 | listing of 'docs/assets' |  |  | 0.595 |
-| ns | 143 |  | 72 | Build instruction (drop in two files) | 1.3 |  | 0.459 |
-| walker |  | 170 | 87 | c header banner in neco.h |  |  | 0.459 |
-| ns | 265 |  | 122 | README Features — coroutines & sync | 1.4 |  | 0.392 |
-| ns | 343 |  | 78 | README Features — extra APIs (net/signals/RNG/streams) | 1.5 |  | 0.375 |
-| ns | 493 |  | 150 | README Features — runtime/platform/build | 1.6 |  | 0.333 |
-| walker |  | 578 | 408 | README headline in README.md |  |  | 0.836 |
-| ns | 632 |  | 139 | Goals & non-goals | 1.7 |  | 0.716 |
-| ns | 785 |  | 153 | Subdirectory listings: deps/docs/examples | 2.1 |  | 0.536 |
-| walker |  | 811 | 233 | headings outline in README.md |  |  | 0.539 |
-| walker |  | 857 | 46 | README.md section #0 |  |  | 0.539 |
-| walker |  | 873 | 16 | README.md section #21 |  |  | 0.539 |
+| ns | 143 |  | 72 | Build instruction (drop in two files) | 1.3 |  | 0.454 |
+| ns | 265 |  | 122 | README Features — coroutines & sync | 1.4 |  | 0.388 |
+| ns | 343 |  | 78 | README Features — extra APIs (net/signals/RNG/streams) | 1.5 |  | 0.371 |
+| walker |  | 470 | 408 | README headline in README.md |  |  | 0.825 |
+| ns | 493 |  | 150 | README Features — runtime/platform/build | 1.6 |  | 0.832 |
+| ns | 632 |  | 139 | Goals & non-goals | 1.7 |  | 0.713 |
+| walker |  | 703 | 233 | headings outline in README.md |  |  | 0.717 |
+| walker |  | 749 | 46 | README.md section #0 |  |  | 0.717 |
+| walker |  | 765 | 16 | README.md section #21 |  |  | 0.717 |
+| ns | 785 |  | 153 | Subdirectory listings: deps/docs/examples | 2.1 |  | 0.519 |
+| walker |  | 786 | 21 | listing of 'docs/assets' |  |  | 0.539 |
+| walker |  | 873 | 87 | c header banner in neco.h |  |  | 0.539 |
 | walker |  | 928 | 55 | README.md section #2 |  |  | 0.613 |
 | ns | 946 |  | 161 | Subdirectory listings: tests + .github | 2.2 |  | 0.495 |
 | walker |  | 996 | 68 | headings outline in docs/assets/API_head.md |  |  | 0.495 |

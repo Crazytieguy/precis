@@ -5,25 +5,25 @@ Score(3000)=0.636 I=0.884 C=0.457 ns_rows≤3K=15/40 (reached=9 partial=0 missin
 | ns | 69 |  | 69 | README lede + tagline | 1.1 |  | 0.000 |
 | walker |  | 79 | 79 | listing of '.' |  |  | 0.000 |
 | walker |  | 116 | 37 | package identity in package.json |  |  | 0.000 |
-| walker |  | 125 | 9 | listing of 'apps' |  |  | 0.000 |
-| walker |  | 136 | 11 | listing of 'patches' |  |  | 0.000 |
-| ns | 148 |  | 79 | Root filesystem layout | 1.2 |  | 0.683 |
-| walker |  | 151 | 15 | listing of 'packages' |  |  | 0.721 |
-| ns | 172 |  | 24 | apps/ and packages/ listings | 1.3 |  | 0.708 |
-| walker |  | 185 | 34 | package entrypoints in package.json |  |  | 0.726 |
-| ns | 206 |  | 34 | package.json — workspaces declaration | 1.4 |  | 0.720 |
-| ns | 311 |  | 105 | package.json — web + worker dev scripts | 1.5 | 1.4 | 0.666 |
-| walker |  | 369 | 184 | README headline in README.md |  |  | 0.925 |
-| walker |  | 402 | 33 | listing of 'assets' |  |  | 0.925 |
-| walker |  | 425 | 23 | listing of 'packages/prisma' |  |  | 0.925 |
-| walker |  | 435 | 10 | export names surface in packages/prisma/index.ts |  |  | 0.925 |
+| ns | 148 |  | 79 | Root filesystem layout | 1.2 |  | 0.676 |
+| walker |  | 150 | 34 | package entrypoints in package.json |  |  | 0.695 |
+| walker |  | 159 | 9 | listing of 'apps' |  |  | 0.702 |
+| walker |  | 170 | 11 | listing of 'patches' |  |  | 0.702 |
+| ns | 172 |  | 24 | apps/ and packages/ listings | 1.3 |  | 0.605 |
+| ns | 206 |  | 34 | package.json — workspaces declaration | 1.4 |  | 0.611 |
+| ns | 311 |  | 105 | package.json — web + worker dev scripts | 1.5 | 1.4 | 0.565 |
+| walker |  | 354 | 184 | README headline in README.md |  |  | 0.811 |
+| walker |  | 369 | 15 | listing of 'packages' |  |  | 0.925 |
 | ns | 444 |  | 133 | package.json — prisma + test scripts | 1.6 | 1.5 | 0.842 |
-| walker |  | 572 | 137 | headings outline in README.md |  |  | 0.842 |
-| walker |  | 581 | 9 | README.md section #18 |  |  | 0.842 |
-| walker |  | 604 | 23 | README.md section #26 |  |  | 0.842 |
-| walker |  | 614 | 10 | README.md section #17 |  |  | 0.842 |
-| walker |  | 624 | 10 | README.md section #19 |  |  | 0.842 |
-| walker |  | 635 | 11 | README.md section #23 |  |  | 0.842 |
+| walker |  | 506 | 137 | headings outline in README.md |  |  | 0.842 |
+| walker |  | 539 | 33 | listing of 'assets' |  |  | 0.842 |
+| walker |  | 548 | 9 | README.md section #18 |  |  | 0.842 |
+| walker |  | 571 | 23 | README.md section #26 |  |  | 0.842 |
+| walker |  | 581 | 10 | README.md section #17 |  |  | 0.842 |
+| walker |  | 591 | 10 | README.md section #19 |  |  | 0.842 |
+| walker |  | 602 | 11 | README.md section #23 |  |  | 0.842 |
+| walker |  | 625 | 23 | listing of 'packages/prisma' |  |  | 0.842 |
+| walker |  | 635 | 10 | export names surface in packages/prisma/index.ts |  |  | 0.842 |
 | walker |  | 647 | 12 | README.md section #21 |  |  | 0.842 |
 | walker |  | 673 | 26 | README.md section #29 |  |  | 0.842 |
 | ns | 677 |  | 233 | docker-compose — postgres + linkwarden | 1.7 |  | 0.678 |

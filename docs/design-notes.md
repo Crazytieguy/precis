@@ -227,6 +227,52 @@ fixture survey is via shell — see the survey commands in the
   0.4199 at 0.35 — so 0.35 is mildly training-overfit, but lowering it
   regresses training, the objective.) Don't re-run this sweep; the
   remaining headroom is the budget-tier scheduler, not the knobs.**
+- **Budget-tier scheduler — BUILT and SHIPPED 2026-05-31; a
+  generalization lever, NOT a training-Score(3000) lever, and NOT free.**
+  The hypothesized "explicit orientation-vs-source budget tiers" is now
+  implemented: `WalkerKey::is_orientation()` tags README/man-page
+  orientation prose + manifest identity (Markdown, `PlaintextKey::ManLede`,
+  Toml, non-`Whole` Json), and the scheduler multiplies their ratio by
+  `ORIENTATION_TIER_BOOST` while `consumed.tokens <
+  ORIENTATION_TIER_WINDOW` (applied at *both* the approx contender-pool
+  pass and the exact pass, else a boosted batch could be culled pre-exact).
+  Crucially **`FsKey` is excluded** — boosting the cheap directory-listing
+  flood is the wrong direction (a broad incl-`FsKey` window=1000/boost=2.0
+  config measured training −0.0088). The mechanism is justified on
+  principle (front-load universally-valuable orientation in the early
+  budget) and calibrated to **hold the primary training budget flat**;
+  window=500/boost=1.4 keeps training Score(3000) at 0.5908 (zero training
+  fixtures moved >0.005 at 3K). **But Score(3000)-flat HID a sub-primary
+  trade** (the `reference_score3000_hides_higher_budget` pattern, here on
+  the *low* side) — a per-budget probe (`divergence::score().vector`,
+  off-vs-on) shows training nicked below 3K while validation rises at
+  every budget:
+
+  ```
+  budget   train Δ    valid Δ
+   1000    −0.0019    +0.0295
+   1442    −0.0011    +0.0119
+   2080    −0.0007    +0.0095
+   3000    +0.0000    +0.0094   (primary)
+   4327    +0.0000    +0.0056
+   6240    +0.0000    +0.0043
+   9000    +0.0000    +0.0000
+  ```
+
+  The trade is *inherent*: front-loading orientation displaces some
+  training fixtures' rank-1 *code* atoms in the first ~1K tokens, while
+  recovering buried orientation on the untuned held-out set. So it does
+  **not** move training toward 0.65 — confirming again that 0.65 is
+  unreachable by scheduling once recall is mined — but it's a real
+  generalization gain (held-out, the tool's real-world quality proxy) at
+  a tiny sub-primary training cost. **Shipped on the user's explicit
+  call** after surfacing the full trade; the user also flagged that
+  ship/calibration decisions should NOT be driven by looking at the
+  validation score (see memory `feedback_dont_decide_on_validation_holdout`
+  — validation is an unbiased final check, not a tuning signal). Headroom:
+  a per-fixture-structure-aware tier (deep-method-heavy fixtures *want*
+  source early — nano-vllm) might break the train/valid trade where a
+  global tier can't.
 - **Prefix-stop tail effects on calibration tweaks**: any change that
   shifts a big batch's rank can leave it stuck near the budget tail
   where it no longer fits. The scheduler's prefix-monotone stop then

@@ -6,11 +6,11 @@ Score(3000)=0.504 I=0.753 C=0.337 ns_rows≤3K=18/40 (reached=6 partial=3 missin
 | ns | 62 |  | 62 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 66 | 4 | listing of 'src' |  |  | 1.000 |
 | ns | 87 |  | 25 | README title + tagline | 1.2 |  | 0.911 |
-| walker |  | 92 | 26 | listing of 'src/tomli' |  |  | 0.929 |
+| walker |  | 121 | 55 | headings outline in tomllib.md |  |  | 0.911 |
+| walker |  | 147 | 26 | listing of 'src/tomli' |  |  | 0.929 |
 | ns | 166 |  | 79 | Public API: __init__ __all__ + version | 1.3 |  | 0.840 |
 | ns | 192 |  | 26 | src/tomli/ module listing | 1.4 |  | 0.846 |
-| walker |  | 212 | 120 | python imports in src/tomli/__init__.py |  |  | 0.911 |
-| walker |  | 267 | 55 | headings outline in tomllib.md |  |  | 0.911 |
+| walker |  | 267 | 120 | python imports in src/tomli/__init__.py |  |  | 0.911 |
 | ns | 279 |  | 87 | loads / load signatures + docstrings | 1.5 |  | 0.831 |
 | ns | 403 |  | 124 | TOMLDecodeError class + docstring | 1.6 |  | 0.714 |
 | ns | 433 |  | 30 | tests/ directory listing | 2.1 |  | 0.663 |

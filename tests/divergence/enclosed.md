@@ -11,33 +11,33 @@ Score(3000)=0.640 I=0.824 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | walker |  | 214 | 99 | README headline in README.md |  |  | 0.809 |
 | walker |  | 239 | 25 | listing of 'packages' |  |  | 0.966 |
 | ns | 250 |  | 82 | Root package.json — name + version + license | 1.5 |  | 0.912 |
-| walker |  | 265 | 26 | listing of 'packages/lib' |  |  | 0.918 |
-| walker |  | 281 | 16 | listing of 'packages/lib/src' |  |  | 0.923 |
-| walker |  | 289 | 8 | export names surface in packages/lib/src/index.ts |  |  | 0.923 |
-| walker |  | 341 | 52 | README headline in packages/lib/README.md |  |  | 0.923 |
-| ns | 357 |  | 107 | Root package.json — author + repo + engines | 1.6 | 1.5 | 0.816 |
-| walker |  | 358 | 17 | listing of 'packages/docs' |  |  | 0.816 |
-| walker |  | 459 | 101 | docker-compose at docker-compose.yml |  |  | 0.816 |
-| walker |  | 482 | 23 | listing of 'packages/app-server' |  |  | 0.819 |
-| ns | 497 |  | 140 | pnpm-workspace.yaml — catalog versions | 1.7 | 1.4 | 0.731 |
-| walker |  | 503 | 21 | listing of 'packages/app-server/src' |  |  | 0.733 |
-| walker |  | 528 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.733 |
-| walker |  | 554 | 26 | listing of 'packages/crypto' |  |  | 0.736 |
-| walker |  | 618 | 64 | README headline in packages/crypto/README.md |  |  | 0.736 |
-| walker |  | 649 | 31 | headings outline in packages/crypto/README.md |  |  | 0.736 |
-| walker |  | 689 | 40 | headings outline in packages/lib/README.md |  |  | 0.736 |
-| ns | 694 |  | 197 | Root package.json — scripts + keywords + devDeps | 1.8 | 1.6 | 0.612 |
-| walker |  | 718 | 29 | listing of 'packages/cli' |  |  | 0.616 |
-| walker |  | 768 | 50 | README headline in packages/cli/README.md |  |  | 0.616 |
-| walker |  | 789 | 21 | listing of 'packages/cli/src' |  |  | 0.616 |
-| walker |  | 820 | 31 | listing of 'packages/docs/src' |  |  | 0.616 |
-| walker |  | 852 | 32 | listing of 'packages/crypto/src' |  |  | 0.616 |
-| ns | 872 |  | 178 | README — project structure (per-package one-liners) | 1.9 |  | 0.570 |
-| walker |  | 1047 | 195 | headings outline in README.md |  |  | 0.571 |
-| walker |  | 1145 | 98 | README.md section #0 |  |  | 0.571 |
-| walker |  | 1163 | 18 | README.md section #32 |  |  | 0.571 |
-| walker |  | 1194 | 31 | README.md section #18 |  |  | 0.571 |
-| walker |  | 1224 | 30 | README.md section #25 |  |  | 0.571 |
+| ns | 357 |  | 107 | Root package.json — author + repo + engines | 1.6 | 1.5 | 0.806 |
+| walker |  | 434 | 195 | headings outline in README.md |  |  | 0.806 |
+| ns | 497 |  | 140 | pnpm-workspace.yaml — catalog versions | 1.7 | 1.4 | 0.720 |
+| walker |  | 532 | 98 | README.md section #0 |  |  | 0.720 |
+| walker |  | 558 | 26 | listing of 'packages/lib' |  |  | 0.724 |
+| walker |  | 574 | 16 | listing of 'packages/lib/src' |  |  | 0.728 |
+| walker |  | 582 | 8 | export names surface in packages/lib/src/index.ts |  |  | 0.728 |
+| walker |  | 634 | 52 | README headline in packages/lib/README.md |  |  | 0.728 |
+| walker |  | 651 | 17 | listing of 'packages/docs' |  |  | 0.729 |
+| walker |  | 669 | 18 | README.md section #32 |  |  | 0.729 |
+| ns | 694 |  | 197 | Root package.json — scripts + keywords + devDeps | 1.8 | 1.6 | 0.605 |
+| walker |  | 770 | 101 | docker-compose at docker-compose.yml |  |  | 0.605 |
+| walker |  | 793 | 23 | listing of 'packages/app-server' |  |  | 0.608 |
+| walker |  | 814 | 21 | listing of 'packages/app-server/src' |  |  | 0.609 |
+| walker |  | 839 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.609 |
+| walker |  | 865 | 26 | listing of 'packages/crypto' |  |  | 0.611 |
+| ns | 872 |  | 178 | README — project structure (per-package one-liners) | 1.9 |  | 0.566 |
+| walker |  | 929 | 64 | README headline in packages/crypto/README.md |  |  | 0.566 |
+| walker |  | 960 | 31 | headings outline in packages/crypto/README.md |  |  | 0.566 |
+| walker |  | 991 | 31 | README.md section #18 |  |  | 0.566 |
+| walker |  | 1031 | 40 | headings outline in packages/lib/README.md |  |  | 0.566 |
+| walker |  | 1060 | 29 | listing of 'packages/cli' |  |  | 0.571 |
+| walker |  | 1110 | 50 | README headline in packages/cli/README.md |  |  | 0.571 |
+| walker |  | 1131 | 21 | listing of 'packages/cli/src' |  |  | 0.571 |
+| walker |  | 1161 | 30 | README.md section #25 |  |  | 0.571 |
+| walker |  | 1192 | 31 | listing of 'packages/docs/src' |  |  | 0.571 |
+| walker |  | 1224 | 32 | listing of 'packages/crypto/src' |  |  | 0.571 |
 | ns | 1225 |  | 353 | README — features list | 1.10 |  | 0.513 |
 | walker |  | 1241 | 17 | README.md section #6 |  |  | 0.515 |
 | walker |  | 1258 | 17 | README.md section #7 |  |  | 0.517 |

@@ -9,9 +9,9 @@ Score(3000)=0.560 I=0.663 C=0.473 ns_rows≤3K=20/41 (reached=7 partial=3 missin
 | ns | 195 |  | 42 | lib/ + typings/ listings | 1.3 |  | 0.727 |
 | ns | 225 |  | 30 | Readme title + tagline | 1.4 |  | 0.706 |
 | walker |  | 227 | 56 | README headline in Readme.md |  |  | 0.735 |
-| walker |  | 252 | 25 | listing of 'lib' |  |  | 0.794 |
-| walker |  | 269 | 17 | listing of 'typings' |  |  | 0.865 |
-| walker |  | 297 | 28 | Readme.md section #1 |  |  | 0.865 |
+| walker |  | 255 | 28 | Readme.md section #1 |  |  | 0.735 |
+| walker |  | 280 | 25 | listing of 'lib' |  |  | 0.794 |
+| walker |  | 297 | 17 | listing of 'typings' |  |  | 0.865 |
 | ns | 300 |  | 75 | Readme major H2 sections | 1.5 |  | 0.769 |
 | walker |  | 337 | 40 | export names surface in lib/option.js |  |  | 0.770 |
 | walker |  | 337 | 0 | export at lib/option.js:3 |  |  | 0.770 |

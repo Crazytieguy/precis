@@ -167,24 +167,10 @@ kind = "full"
 
 [[batches]]
 position = 10
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 25
-cum_tokens = 183
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["__init__.py", "mock_client.py", "test_core.py", "test_runs", "test_util.py"]
-
-[[batches]]
-position = 11
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 193
-cum_tokens = 376
+cum_tokens = 351
 
 [batches.content]
 kind = "lines"
@@ -494,561 +480,25 @@ end = 351
 kind = "ellipsis"
 
 [[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 25
+cum_tokens = 376
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["__init__.py", "mock_client.py", "test_core.py", "test_runs", "test_util.py"]
+
+[[batches]]
 position = 12
-key = 'Python(Imports { file: "swarm/util.py" })'
-descriptor = "python imports in swarm/util.py"
-cost_tokens = 16
-cum_tokens = 392
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Python(DeclNames { file: "swarm/types.py", chunk_index: 0 })'
-descriptor = "python decl names surface in swarm/types.py"
-cost_tokens = 51
-cum_tokens = 443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Python(Decl { file: "swarm/types.py", start_line: 14 })'
-descriptor = "python decl at swarm/types.py:14"
-cost_tokens = 0
-cum_tokens = 443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Python(Decl { file: "swarm/types.py", start_line: 23 })'
-descriptor = "python decl at swarm/types.py:23"
-cost_tokens = 0
-cum_tokens = 443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Python(Decl { file: "swarm/types.py", start_line: 29 })'
-descriptor = "python decl at swarm/types.py:29"
-cost_tokens = 0
-cum_tokens = 443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Python(ClassBody { file: "swarm/types.py", start_line: 23 })'
-descriptor = "python class body at swarm/types.py:23"
-cost_tokens = 33
-cum_tokens = 476
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 24
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Python(ClassBody { file: "swarm/types.py", start_line: 29 })'
-descriptor = "python class body at swarm/types.py:29"
-cost_tokens = 35
-cum_tokens = 511
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 39
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 46
-cum_tokens = 557
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["__init__.py", "airline", "basic", "customer_service", "customer_service_lite", "customer_service_streaming", "personal_shopper", "support_bot", "triage_agent", "weather_agent"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "examples/personal_shopper" })'
-descriptor = "listing of 'examples/personal_shopper'"
-cost_tokens = 18
-cum_tokens = 575
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/personal_shopper"
-entries = ["README.md", "__init__.py", "database.py", "main.py"]
-
-[[batches]]
-position = 21
-key = 'Python(MethodSigs { file: "swarm/core.py", chunk_index: 0 })'
-descriptor = "python method sigs in swarm/core.py"
-cost_tokens = 80
-cum_tokens = 655
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 139
-end = 139
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 231
-end = 231
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 140
-end = 140
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 232
-end = 232
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 22
-key = 'Python(Method { file: "swarm/core.py", start_line: 27 })'
-descriptor = "python method at swarm/core.py:27"
-cost_tokens = 0
-cum_tokens = 655
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Python(Method { file: "swarm/core.py", start_line: 71 })'
-descriptor = "python method at swarm/core.py:71"
-cost_tokens = 0
-cum_tokens = 655
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "examples/airline" })'
-descriptor = "listing of 'examples/airline'"
-cost_tokens = 24
-cum_tokens = 679
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/airline"
-entries = ["README.md", "__init__.py", "configs", "data", "evals", "main.py"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "examples/airline/configs" })'
-descriptor = "listing of 'examples/airline/configs'"
-cost_tokens = 14
-cum_tokens = 693
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/airline/configs"
-entries = ["__init__.py", "agents.py", "tools.py"]
-
-[[batches]]
-position = 26
-key = 'Python(DeclNames { file: "swarm/util.py", chunk_index: 0 })'
-descriptor = "python decl names surface in swarm/util.py"
-cost_tokens = 70
-cum_tokens = 763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 27
-key = 'Python(Decl { file: "swarm/util.py", start_line: 5 })'
-descriptor = "python decl at swarm/util.py:5"
-cost_tokens = 0
-cum_tokens = 763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Python(Decl { file: "swarm/util.py", start_line: 13 })'
-descriptor = "python decl at swarm/util.py:13"
-cost_tokens = 0
-cum_tokens = 763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Python(Decl { file: "swarm/util.py", start_line: 21 })'
-descriptor = "python decl at swarm/util.py:21"
-cost_tokens = 0
-cum_tokens = 763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Python(Decl { file: "swarm/util.py", start_line: 31 })'
-descriptor = "python decl at swarm/util.py:31"
-cost_tokens = 0
-cum_tokens = 763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Python(ClassBody { file: "swarm/types.py", start_line: 14 })'
-descriptor = "python class body at swarm/types.py:14"
-cost_tokens = 88
-cum_tokens = 851
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/types.py"
-start = 15
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "examples/weather_agent" })'
-descriptor = "listing of 'examples/weather_agent'"
-cost_tokens = 17
-cum_tokens = 868
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/weather_agent"
-entries = ["README.md", "agents.py", "evals.py", "run.py"]
-
-[[batches]]
-position = 33
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 72
-cum_tokens = 940
+cum_tokens = 448
 
 [batches.content]
 kind = "lines"
@@ -1070,29 +520,11 @@ end = 338
 kind = "full"
 
 [[batches]]
-position = 34
-key = 'Python(Method { file: "swarm/core.py", start_line: 89 })'
-descriptor = "python method at swarm/core.py:89"
-cost_tokens = 61
-cum_tokens = 1001
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 89
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
+position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 520
-cum_tokens = 1521
+cum_tokens = 968
 
 [batches.content]
 kind = "lines"
@@ -1229,6 +661,574 @@ kind = "full"
 path = "README.md"
 start = 62
 end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Python(Imports { file: "swarm/util.py" })'
+descriptor = "python imports in swarm/util.py"
+cost_tokens = 16
+cum_tokens = 984
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Python(DeclNames { file: "swarm/types.py", chunk_index: 0 })'
+descriptor = "python decl names surface in swarm/types.py"
+cost_tokens = 51
+cum_tokens = 1035
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 16
+key = 'Python(Decl { file: "swarm/types.py", start_line: 14 })'
+descriptor = "python decl at swarm/types.py:14"
+cost_tokens = 0
+cum_tokens = 1035
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Python(Decl { file: "swarm/types.py", start_line: 23 })'
+descriptor = "python decl at swarm/types.py:23"
+cost_tokens = 0
+cum_tokens = 1035
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Python(Decl { file: "swarm/types.py", start_line: 29 })'
+descriptor = "python decl at swarm/types.py:29"
+cost_tokens = 0
+cum_tokens = 1035
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Python(ClassBody { file: "swarm/types.py", start_line: 23 })'
+descriptor = "python class body at swarm/types.py:23"
+cost_tokens = 33
+cum_tokens = 1068
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 24
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Python(ClassBody { file: "swarm/types.py", start_line: 29 })'
+descriptor = "python class body at swarm/types.py:29"
+cost_tokens = 35
+cum_tokens = 1103
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 39
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 46
+cum_tokens = 1149
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["__init__.py", "airline", "basic", "customer_service", "customer_service_lite", "customer_service_streaming", "personal_shopper", "support_bot", "triage_agent", "weather_agent"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "examples/personal_shopper" })'
+descriptor = "listing of 'examples/personal_shopper'"
+cost_tokens = 18
+cum_tokens = 1167
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/personal_shopper"
+entries = ["README.md", "__init__.py", "database.py", "main.py"]
+
+[[batches]]
+position = 23
+key = 'Python(MethodSigs { file: "swarm/core.py", chunk_index: 0 })'
+descriptor = "python method sigs in swarm/core.py"
+cost_tokens = 80
+cum_tokens = 1247
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 140
+end = 140
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 232
+end = 232
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 24
+key = 'Python(Method { file: "swarm/core.py", start_line: 27 })'
+descriptor = "python method at swarm/core.py:27"
+cost_tokens = 0
+cum_tokens = 1247
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Python(Method { file: "swarm/core.py", start_line: 71 })'
+descriptor = "python method at swarm/core.py:71"
+cost_tokens = 0
+cum_tokens = 1247
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "examples/airline" })'
+descriptor = "listing of 'examples/airline'"
+cost_tokens = 24
+cum_tokens = 1271
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/airline"
+entries = ["README.md", "__init__.py", "configs", "data", "evals", "main.py"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "examples/airline/configs" })'
+descriptor = "listing of 'examples/airline/configs'"
+cost_tokens = 14
+cum_tokens = 1285
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/airline/configs"
+entries = ["__init__.py", "agents.py", "tools.py"]
+
+[[batches]]
+position = 28
+key = 'Python(DeclNames { file: "swarm/util.py", chunk_index: 0 })'
+descriptor = "python decl names surface in swarm/util.py"
+cost_tokens = 70
+cum_tokens = 1355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 29
+key = 'Python(Decl { file: "swarm/util.py", start_line: 5 })'
+descriptor = "python decl at swarm/util.py:5"
+cost_tokens = 0
+cum_tokens = 1355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Python(Decl { file: "swarm/util.py", start_line: 13 })'
+descriptor = "python decl at swarm/util.py:13"
+cost_tokens = 0
+cum_tokens = 1355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Python(Decl { file: "swarm/util.py", start_line: 21 })'
+descriptor = "python decl at swarm/util.py:21"
+cost_tokens = 0
+cum_tokens = 1355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Python(Decl { file: "swarm/util.py", start_line: 31 })'
+descriptor = "python decl at swarm/util.py:31"
+cost_tokens = 0
+cum_tokens = 1355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/util.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Python(ClassBody { file: "swarm/types.py", start_line: 14 })'
+descriptor = "python class body at swarm/types.py:14"
+cost_tokens = 88
+cum_tokens = 1443
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/types.py"
+start = 15
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Fs(DirListing { dir: "examples/weather_agent" })'
+descriptor = "listing of 'examples/weather_agent'"
+cost_tokens = 17
+cum_tokens = 1460
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/weather_agent"
+entries = ["README.md", "agents.py", "evals.py", "run.py"]
+
+[[batches]]
+position = 35
+key = 'Python(Method { file: "swarm/core.py", start_line: 89 })'
+descriptor = "python method at swarm/core.py:89"
+cost_tokens = 61
+cum_tokens = 1521
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "swarm/core.py"
+start = 89
+end = 95
 
 [batches.content.spans.render]
 kind = "full"

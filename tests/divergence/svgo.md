@@ -4,31 +4,31 @@ Score(3000)=0.609 I=0.760 C=0.488 ns_rows≤3K=20/46 (reached=8 partial=3 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 31 |  | 31 | README one-line description | 1.1 |  | 0.000 |
 | walker |  | 86 | 86 | listing of '.' |  |  | 0.000 |
-| walker |  | 89 | 3 | listing of 'test-d' |  |  | 0.000 |
-| walker |  | 94 | 5 | listing of 'bin' |  |  | 0.000 |
 | ns | 117 |  | 86 | Top-level fs listing | 1.2 |  | 0.844 |
-| walker |  | 133 | 39 | README headline in README.md |  |  | 1.000 |
-| walker |  | 207 | 74 | package identity in package.json |  |  | 1.000 |
+| walker |  | 125 | 39 | README headline in README.md |  |  | 1.000 |
+| walker |  | 128 | 3 | listing of 'test-d' |  |  | 1.000 |
+| walker |  | 202 | 74 | package identity in package.json |  |  | 1.000 |
+| walker |  | 207 | 5 | listing of 'bin' |  |  | 1.000 |
 | ns | 210 |  | 93 | package.json identity | 1.3 |  | 0.964 |
-| walker |  | 232 | 25 | listing of 'logo' |  |  | 0.964 |
-| walker |  | 275 | 43 | listing of 'docs' |  |  | 0.966 |
+| walker |  | 315 | 108 | headings outline in README.md |  |  | 0.965 |
+| walker |  | 328 | 13 | README.md section #10 |  |  | 0.966 |
 | ns | 371 |  | 161 | package.json entry-points (bin/types/exports) | 1.4 |  | 0.783 |
-| walker |  | 383 | 108 | headings outline in README.md |  |  | 0.784 |
-| walker |  | 396 | 13 | README.md section #10 |  |  | 0.784 |
-| walker |  | 408 | 12 | listing of '.github' |  |  | 0.784 |
-| walker |  | 430 | 22 | listing of '.github/workflows' |  |  | 0.784 |
-| walker |  | 520 | 90 | listing of 'lib' |  |  | 0.795 |
-| walker |  | 539 | 19 | listing of 'lib/svgo' |  |  | 0.796 |
-| walker |  | 546 | 7 | export names surface in lib/types.js |  |  | 0.796 |
-| ns | 547 |  | 176 | README CLI usage | 1.5 |  | 0.644 |
-| walker |  | 598 | 52 | README.md section #1 |  |  | 0.644 |
-| walker |  | 609 | 11 | README.md section #8 |  |  | 0.644 |
-| walker |  | 617 | 8 | listing of 'test-d/lib' |  |  | 0.644 |
-| walker |  | 631 | 14 | export names surface in lib/builtin.js |  |  | 0.644 |
-| walker |  | 646 | 15 | export names surface in lib/version.js |  |  | 0.645 |
-| walker |  | 646 | 0 | export at lib/version.js:7 |  |  | 0.645 |
-| walker |  | 665 | 19 | listing of 'docs/02-usage' |  |  | 0.646 |
-| walker |  | 714 | 49 | README.md section #14 |  |  | 0.646 |
+| walker |  | 380 | 52 | README.md section #1 |  |  | 0.783 |
+| walker |  | 391 | 11 | README.md section #8 |  |  | 0.783 |
+| walker |  | 416 | 25 | listing of 'logo' |  |  | 0.783 |
+| walker |  | 459 | 43 | listing of 'docs' |  |  | 0.784 |
+| walker |  | 508 | 49 | README.md section #14 |  |  | 0.784 |
+| walker |  | 520 | 12 | listing of '.github' |  |  | 0.784 |
+| walker |  | 542 | 22 | listing of '.github/workflows' |  |  | 0.784 |
+| ns | 547 |  | 176 | README CLI usage | 1.5 |  | 0.634 |
+| walker |  | 632 | 90 | listing of 'lib' |  |  | 0.643 |
+| walker |  | 651 | 19 | listing of 'lib/svgo' |  |  | 0.644 |
+| walker |  | 658 | 7 | export names surface in lib/types.js |  |  | 0.644 |
+| walker |  | 666 | 8 | listing of 'test-d/lib' |  |  | 0.644 |
+| walker |  | 680 | 14 | export names surface in lib/builtin.js |  |  | 0.644 |
+| walker |  | 695 | 15 | export names surface in lib/version.js |  |  | 0.645 |
+| walker |  | 695 | 0 | export at lib/version.js:7 |  |  | 0.645 |
+| walker |  | 714 | 19 | listing of 'docs/02-usage' |  |  | 0.646 |
 | walker |  | 734 | 20 | export names surface in lib/stringifier.js |  |  | 0.646 |
 | walker |  | 734 | 0 | export at lib/stringifier.js:66 |  |  | 0.646 |
 | walker |  | 768 | 34 | listing of 'test' |  |  | 0.649 |

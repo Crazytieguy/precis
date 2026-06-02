@@ -4,41 +4,41 @@ Score(3000)=0.657 I=0.830 C=0.521 ns_rows≤3K=20/45 (reached=8 partial=2 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 55 | 55 | listing of '.' |  |  | 1.000 |
 | ns | 55 |  | 55 | Repo root listing | 1.1 |  | 1.000 |
-| walker |  | 83 | 28 | go package doc lede in beszel.go |  |  | 1.000 |
-| ns | 92 |  | 37 | README one-line description | 1.2 |  | 0.897 |
-| walker |  | 110 | 27 | go module identity in go.mod |  |  | 0.909 |
-| ns | 124 |  | 32 | go.mod identity + Go toolchain | 1.3 |  | 0.877 |
-| walker |  | 142 | 32 | README headline in readme.md |  |  | 0.939 |
-| walker |  | 214 | 72 | go decl names surface in beszel.go |  |  | 0.945 |
-| walker |  | 214 | 0 | go decl at beszel.go:15 |  |  | 0.945 |
-| walker |  | 214 | 0 | go decl at beszel.go:18 |  |  | 0.945 |
-| ns | 224 |  | 100 | README Features bullets (first half) | 1.4 |  | 0.812 |
-| walker |  | 251 | 37 | go decl at beszel.go:7 |  |  | 0.818 |
-| walker |  | 270 | 19 | go decl doc at beszel.go:15 |  |  | 0.821 |
-| walker |  | 289 | 19 | go decl doc at beszel.go:18 |  |  | 0.826 |
-| walker |  | 311 | 22 | go package + imports in beszel.go |  |  | 0.831 |
-| ns | 329 |  | 105 | README Architecture section: hub + agent | 1.5 |  | 0.723 |
-| walker |  | 337 | 26 | listing of 'supplemental' |  |  | 0.724 |
-| ns | 399 |  | 70 | README Features bullets (second half) | 1.6 |  | 0.688 |
-| walker |  | 405 | 68 | headings outline in readme.md |  |  | 0.691 |
-| walker |  | 430 | 25 | readme.md section #23 |  |  | 0.691 |
-| walker |  | 440 | 10 | listing of 'supplemental/docker' |  |  | 0.691 |
-| walker |  | 457 | 17 | readme.md section #2 |  |  | 0.704 |
+| walker |  | 87 | 32 | README headline in readme.md |  |  | 1.000 |
+| ns | 92 |  | 37 | README one-line description | 1.2 |  | 0.965 |
+| walker |  | 115 | 28 | go package doc lede in beszel.go |  |  | 0.966 |
+| ns | 124 |  | 32 | go.mod identity + Go toolchain | 1.3 |  | 0.880 |
+| walker |  | 142 | 27 | go module identity in go.mod |  |  | 0.939 |
+| walker |  | 210 | 68 | headings outline in readme.md |  |  | 0.940 |
+| ns | 224 |  | 100 | README Features bullets (first half) | 1.4 |  | 0.809 |
+| walker |  | 282 | 72 | go decl names surface in beszel.go |  |  | 0.814 |
+| walker |  | 282 | 0 | go decl at beszel.go:15 |  |  | 0.814 |
+| walker |  | 282 | 0 | go decl at beszel.go:18 |  |  | 0.814 |
+| walker |  | 319 | 37 | go decl at beszel.go:7 |  |  | 0.820 |
+| ns | 329 |  | 105 | README Architecture section: hub + agent | 1.5 |  | 0.715 |
+| walker |  | 338 | 19 | go decl doc at beszel.go:15 |  |  | 0.718 |
+| walker |  | 357 | 19 | go decl doc at beszel.go:18 |  |  | 0.722 |
+| walker |  | 379 | 22 | go package + imports in beszel.go |  |  | 0.727 |
+| ns | 399 |  | 70 | README Features bullets (second half) | 1.6 |  | 0.691 |
+| walker |  | 404 | 25 | readme.md section #23 |  |  | 0.691 |
+| walker |  | 421 | 17 | readme.md section #2 |  |  | 0.703 |
+| walker |  | 447 | 26 | listing of 'supplemental' |  |  | 0.704 |
 | ns | 465 |  | 66 | internal/ subpackage listing | 1.7 |  | 0.568 |
-| ns | 493 |  | 28 | Two main packages: cmd/agent + cmd/hub entry points | 1.8 |  | 0.544 |
-| walker |  | 523 | 66 | listing of 'internal' |  |  | 0.756 |
-| walker |  | 536 | 13 | listing of 'internal/entities' |  |  | 0.757 |
-| walker |  | 566 | 30 | listing of 'internal/ghupdate' |  |  | 0.757 |
-| walker |  | 600 | 34 | go decl names surface in internal/ghupdate/selinux.go |  |  | 0.757 |
-| walker |  | 600 | 0 | go decl at internal/ghupdate/selinux.go:10 |  |  | 0.757 |
-| walker |  | 600 | 0 | go decl at internal/ghupdate/selinux.go:41 |  |  | 0.757 |
-| walker |  | 619 | 19 | readme.md section #1 |  |  | 0.772 |
-| walker |  | 655 | 36 | listing of 'internal/records' |  |  | 0.772 |
-| walker |  | 692 | 37 | listing of 'supplemental/debian' |  |  | 0.772 |
-| ns | 708 |  | 215 | Root package: Version + protocol min versions (full) | 1.9 |  | 0.775 |
-| walker |  | 714 | 22 | readme.md section #7 |  |  | 0.778 |
-| walker |  | 718 | 4 | listing of 'internal/users' |  |  | 0.778 |
-| walker |  | 731 | 13 | readme.md section #16 |  |  | 0.778 |
+| walker |  | 466 | 19 | readme.md section #1 |  |  | 0.587 |
+| walker |  | 488 | 22 | readme.md section #7 |  |  | 0.591 |
+| ns | 493 |  | 28 | Two main packages: cmd/agent + cmd/hub entry points | 1.8 |  | 0.566 |
+| walker |  | 501 | 13 | readme.md section #16 |  |  | 0.566 |
+| walker |  | 511 | 10 | listing of 'supplemental/docker' |  |  | 0.566 |
+| walker |  | 577 | 66 | listing of 'internal' |  |  | 0.776 |
+| walker |  | 590 | 13 | listing of 'internal/entities' |  |  | 0.776 |
+| walker |  | 620 | 30 | listing of 'internal/ghupdate' |  |  | 0.776 |
+| walker |  | 654 | 34 | go decl names surface in internal/ghupdate/selinux.go |  |  | 0.776 |
+| walker |  | 654 | 0 | go decl at internal/ghupdate/selinux.go:10 |  |  | 0.776 |
+| walker |  | 654 | 0 | go decl at internal/ghupdate/selinux.go:41 |  |  | 0.776 |
+| walker |  | 690 | 36 | listing of 'internal/records' |  |  | 0.776 |
+| ns | 708 |  | 215 | Root package: Version + protocol min versions (full) | 1.9 |  | 0.778 |
+| walker |  | 727 | 37 | listing of 'supplemental/debian' |  |  | 0.778 |
+| walker |  | 731 | 4 | listing of 'internal/users' |  |  | 0.778 |
 | walker |  | 744 | 13 | readme.md section #17 |  |  | 0.778 |
 | walker |  | 767 | 23 | readme.md section #3 |  |  | 0.796 |
 | walker |  | 815 | 48 | go decl names surface in internal/ghupdate/release.go |  |  | 0.796 |

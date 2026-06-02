@@ -33,58 +33,10 @@ entries = ["tomli"]
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "src/tomli" })'
-descriptor = "listing of 'src/tomli'"
-cost_tokens = 26
-cum_tokens = 92
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/tomli"
-entries = ["__init__.py", "_parser.py", "_re.py", "_types.py", "py.typed"]
-
-[[batches]]
-position = 4
-key = 'Python(Imports { file: "src/tomli/__init__.py" })'
-descriptor = "python imports in src/tomli/__init__.py"
-cost_tokens = 120
-cum_tokens = 212
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/tomli/__init__.py"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tomli/__init__.py"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tomli/__init__.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 5
 key = 'Markdown(HeadingsOutline { file: "tomllib.md" })'
 descriptor = "headings outline in tomllib.md"
 cost_tokens = 55
-cum_tokens = 267
+cum_tokens = 121
 
 [batches.content]
 kind = "lines"
@@ -152,6 +104,54 @@ end = 21
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "src/tomli" })'
+descriptor = "listing of 'src/tomli'"
+cost_tokens = 26
+cum_tokens = 147
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/tomli"
+entries = ["__init__.py", "_parser.py", "_re.py", "_types.py", "py.typed"]
+
+[[batches]]
+position = 5
+key = 'Python(Imports { file: "src/tomli/__init__.py" })'
+descriptor = "python imports in src/tomli/__init__.py"
+cost_tokens = 120
+cum_tokens = 267
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tomli/__init__.py"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tomli/__init__.py"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tomli/__init__.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 6

@@ -4,25 +4,25 @@ Score(3000)=0.470 I=0.727 C=0.304 ns_rows≤3K=14/42 (reached=6 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 27 |  | 27 | Repo README — title only | 1.1 |  | 0.000 |
 | walker |  | 91 | 91 | listing of '.' |  |  | 0.000 |
-| walker |  | 104 | 13 | listing of 'packages' |  |  | 0.000 |
-| ns | 118 |  | 91 | Fixture-root listing | 1.2 |  | 0.695 |
-| ns | 131 |  | 13 | packages/ listing | 1.3 |  | 0.690 |
-| ns | 206 |  | 75 | README lede — definition sentence | 1.4 | 1.1 | 0.675 |
-| ns | 223 |  | 17 | packages/vite/src/ layout | 1.5 |  | 0.611 |
-| walker |  | 270 | 166 | README headline in README.md |  |  | 0.828 |
-| ns | 300 |  | 77 | packages/vite/ top-level listing | 1.6 |  | 0.653 |
-| walker |  | 306 | 36 | headings outline in README.md |  |  | 0.653 |
-| walker |  | 315 | 9 | README.md section #3 |  |  | 0.653 |
-| walker |  | 331 | 16 | README.md section #2 |  |  | 0.653 |
-| walker |  | 342 | 11 | export names surface in vitest.config.e2e.ts |  |  | 0.653 |
-| walker |  | 353 | 11 | export names surface in vitest.config.ts |  |  | 0.653 |
-| walker |  | 386 | 33 | listing of 'patches' |  |  | 0.653 |
-| walker |  | 416 | 30 | listing of 'packages/plugin-legacy' |  |  | 0.653 |
+| ns | 118 |  | 91 | Fixture-root listing | 1.2 |  | 0.676 |
+| ns | 131 |  | 13 | packages/ listing | 1.3 |  | 0.630 |
+| ns | 206 |  | 75 | README lede — definition sentence | 1.4 | 1.1 | 0.616 |
+| ns | 223 |  | 17 | packages/vite/src/ layout | 1.5 |  | 0.558 |
+| walker |  | 257 | 166 | README headline in README.md |  |  | 0.769 |
+| walker |  | 293 | 36 | headings outline in README.md |  |  | 0.769 |
+| ns | 300 |  | 77 | packages/vite/ top-level listing | 1.6 |  | 0.607 |
+| walker |  | 302 | 9 | README.md section #3 |  |  | 0.607 |
+| walker |  | 318 | 16 | README.md section #2 |  |  | 0.607 |
+| walker |  | 331 | 13 | listing of 'packages' |  |  | 0.653 |
 | ns | 435 |  | 135 | packages/vite/src/node/ listing | 1.7 |  | 0.488 |
-| walker |  | 439 | 23 | listing of 'packages/plugin-legacy/src' |  |  | 0.488 |
-| walker |  | 521 | 82 | README headline in packages/plugin-legacy/README.md |  |  | 0.488 |
+| walker |  | 508 | 177 | README.md section #0 |  |  | 0.488 |
+| walker |  | 519 | 11 | export names surface in vitest.config.e2e.ts |  |  | 0.488 |
+| walker |  | 530 | 11 | export names surface in vitest.config.ts |  |  | 0.488 |
+| walker |  | 563 | 33 | listing of 'patches' |  |  | 0.488 |
+| walker |  | 593 | 30 | listing of 'packages/plugin-legacy' |  |  | 0.488 |
+| walker |  | 616 | 23 | listing of 'packages/plugin-legacy/src' |  |  | 0.488 |
 | ns | 664 |  | 229 | Vite public API — node/index.ts value re-exports | 1.8 |  | 0.430 |
-| walker |  | 698 | 177 | README.md section #0 |  |  | 0.430 |
+| walker |  | 698 | 82 | README headline in packages/plugin-legacy/README.md |  |  | 0.430 |
 | walker |  | 728 | 30 | listing of 'scripts' |  |  | 0.430 |
 | walker |  | 800 | 72 | README.md section #4 |  |  | 0.430 |
 | walker |  | 877 | 77 | listing of 'packages/vite' |  |  | 0.569 |

@@ -19,24 +19,10 @@ entries = [".azure-pipelines", ".devcontainer", ".gitattributes", ".github", ".g
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "test-results" })'
-descriptor = "listing of 'test-results'"
-cost_tokens = 6
-cum_tokens = 122
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test-results"
-entries = [".last-run.json"]
-
-[[batches]]
-position = 3
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 62
-cum_tokens = 184
+cum_tokens = 178
 
 [batches.content]
 kind = "lines"
@@ -66,11 +52,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 4
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 63
-cum_tokens = 247
+cum_tokens = 241
 
 [batches.content]
 kind = "lines"
@@ -92,11 +78,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 5
+position = 4
 key = 'Markdown(HeadingsOutline { file: "MAINTAINING.md" })'
 descriptor = "headings outline in MAINTAINING.md"
 cost_tokens = 36
-cum_tokens = 283
+cum_tokens = 277
 
 [batches.content]
 kind = "lines"
@@ -148,6 +134,20 @@ end = 51
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "test-results" })'
+descriptor = "listing of 'test-results'"
+cost_tokens = 6
+cum_tokens = 283
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test-results"
+entries = [".last-run.json"]
 
 [[batches]]
 position = 6
@@ -295,394 +295,10 @@ entries = ["languageFeatures.ts", "lib", "register.ts", "ts.worker.ts", "tsMode.
 
 [[batches]]
 position = 16
-key = 'Fs(DirListing { dir: "monaco-lsp-client" })'
-descriptor = "listing of 'monaco-lsp-client'"
-cost_tokens = 27
-cum_tokens = 518
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "monaco-lsp-client"
-entries = ["README.md", "generator", "package-lock.json", "package.json", "rolldown.config.mjs", "src"]
-
-[[batches]]
-position = 17
-key = 'Json(Identity { file: "monaco-lsp-client/package.json" })'
-descriptor = "package identity in monaco-lsp-client/package.json"
-cost_tokens = 42
-cum_tokens = 560
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 2
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Markdown(ReadmeHeadline { file: "monaco-lsp-client/README.md" })'
-descriptor = "README headline in monaco-lsp-client/README.md"
-cost_tokens = 45
-cum_tokens = 605
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "monaco-lsp-client/src" })'
-descriptor = "listing of 'monaco-lsp-client/src'"
-cost_tokens = 15
-cum_tokens = 620
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "monaco-lsp-client/src"
-entries = ["adapters", "index.ts", "types.ts", "utils.ts"]
-
-[[batches]]
-position = 20
-key = 'Json(IdentityMeta { file: "monaco-lsp-client/package.json" })'
-descriptor = "package identity metadata in monaco-lsp-client/package.json"
-cost_tokens = 12
-cum_tokens = 632
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 6
-cum_tokens = 638
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["ci", "lib"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "webpack-plugin" })'
-descriptor = "listing of 'webpack-plugin'"
-cost_tokens = 29
-cum_tokens = 667
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "webpack-plugin"
-entries = [".npmignore", "LICENSE", "README.md", "package-lock.json", "package.json", "src", "tsconfig.json"]
-
-[[batches]]
-position = 23
-key = 'Json(Identity { file: "webpack-plugin/package.json" })'
-descriptor = "package identity in webpack-plugin/package.json"
-cost_tokens = 56
-cum_tokens = 723
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/package.json"
-start = 2
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/package.json"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Markdown(ReadmeHeadline { file: "webpack-plugin/README.md" })'
-descriptor = "README headline in webpack-plugin/README.md"
-cost_tokens = 49
-cum_tokens = 772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "webpack-plugin/src" })'
-descriptor = "listing of 'webpack-plugin/src'"
-cost_tokens = 20
-cum_tokens = 792
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "webpack-plugin/src"
-entries = ["index.ts", "loader-utils.d.ts", "loaders", "plugins", "types.ts"]
-
-[[batches]]
-position = 26
-key = 'Json(Entry { file: "monaco-lsp-client/package.json" })'
-descriptor = "package entrypoints in monaco-lsp-client/package.json"
-cost_tokens = 27
-cum_tokens = 819
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Typescript(ExportNames { file: "src/languages/features/register.all.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in src/languages/features/register.all.ts"
-cost_tokens = 15
-cum_tokens = 834
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/register.all.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 38
-cum_tokens = 872
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["code-structure.dio.svg", "debugging-core.gif", "debugging-languages.gif", "integrate-esm.md", "launch config.png", "out-folders.dio.svg"]
-
-[[batches]]
-position = 29
-key = 'Markdown(HeadingsOutline { file: "webpack-plugin/README.md" })'
-descriptor = "headings outline in webpack-plugin/README.md"
-cost_tokens = 47
-cum_tokens = 919
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 104
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 105
-end = 105
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 30
-key = 'Markdown(Section { file: "webpack-plugin/README.md", section_index: 1 })'
-descriptor = "webpack-plugin/README.md section #1"
-cost_tokens = 25
-cum_tokens = 944
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 7
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Typescript(ExportNames { file: "monaco-lsp-client/src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in monaco-lsp-client/src/index.ts"
-cost_tokens = 26
-cum_tokens = 970
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/src/index.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 146
-cum_tokens = 1116
+cum_tokens = 637
 
 [batches.content]
 kind = "lines"
@@ -928,11 +544,11 @@ end = 122
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 17
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 46
-cum_tokens = 1162
+cum_tokens = 683
 
 [batches.content]
 kind = "lines"
@@ -941,6 +557,390 @@ kind = "lines"
 path = "README.md"
 start = 10
 end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "monaco-lsp-client" })'
+descriptor = "listing of 'monaco-lsp-client'"
+cost_tokens = 27
+cum_tokens = 710
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "monaco-lsp-client"
+entries = ["README.md", "generator", "package-lock.json", "package.json", "rolldown.config.mjs", "src"]
+
+[[batches]]
+position = 19
+key = 'Json(Identity { file: "monaco-lsp-client/package.json" })'
+descriptor = "package identity in monaco-lsp-client/package.json"
+cost_tokens = 42
+cum_tokens = 752
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 2
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Markdown(ReadmeHeadline { file: "monaco-lsp-client/README.md" })'
+descriptor = "README headline in monaco-lsp-client/README.md"
+cost_tokens = 45
+cum_tokens = 797
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "monaco-lsp-client/src" })'
+descriptor = "listing of 'monaco-lsp-client/src'"
+cost_tokens = 15
+cum_tokens = 812
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "monaco-lsp-client/src"
+entries = ["adapters", "index.ts", "types.ts", "utils.ts"]
+
+[[batches]]
+position = 22
+key = 'Json(IdentityMeta { file: "monaco-lsp-client/package.json" })'
+descriptor = "package identity metadata in monaco-lsp-client/package.json"
+cost_tokens = 12
+cum_tokens = 824
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 6
+cum_tokens = 830
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["ci", "lib"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "webpack-plugin" })'
+descriptor = "listing of 'webpack-plugin'"
+cost_tokens = 29
+cum_tokens = 859
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin"
+entries = [".npmignore", "LICENSE", "README.md", "package-lock.json", "package.json", "src", "tsconfig.json"]
+
+[[batches]]
+position = 25
+key = 'Json(Identity { file: "webpack-plugin/package.json" })'
+descriptor = "package identity in webpack-plugin/package.json"
+cost_tokens = 56
+cum_tokens = 915
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/package.json"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/package.json"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Markdown(ReadmeHeadline { file: "webpack-plugin/README.md" })'
+descriptor = "README headline in webpack-plugin/README.md"
+cost_tokens = 49
+cum_tokens = 964
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "webpack-plugin/src" })'
+descriptor = "listing of 'webpack-plugin/src'"
+cost_tokens = 20
+cum_tokens = 984
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin/src"
+entries = ["index.ts", "loader-utils.d.ts", "loaders", "plugins", "types.ts"]
+
+[[batches]]
+position = 28
+key = 'Json(Entry { file: "monaco-lsp-client/package.json" })'
+descriptor = "package entrypoints in monaco-lsp-client/package.json"
+cost_tokens = 27
+cum_tokens = 1011
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Typescript(ExportNames { file: "src/languages/features/register.all.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in src/languages/features/register.all.ts"
+cost_tokens = 15
+cum_tokens = 1026
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/register.all.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 38
+cum_tokens = 1064
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["code-structure.dio.svg", "debugging-core.gif", "debugging-languages.gif", "integrate-esm.md", "launch config.png", "out-folders.dio.svg"]
+
+[[batches]]
+position = 31
+key = 'Markdown(HeadingsOutline { file: "webpack-plugin/README.md" })'
+descriptor = "headings outline in webpack-plugin/README.md"
+cost_tokens = 47
+cum_tokens = 1111
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 32
+key = 'Markdown(Section { file: "webpack-plugin/README.md", section_index: 1 })'
+descriptor = "webpack-plugin/README.md section #1"
+cost_tokens = 25
+cum_tokens = 1136
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Typescript(ExportNames { file: "monaco-lsp-client/src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in monaco-lsp-client/src/index.ts"
+cost_tokens = 26
+cum_tokens = 1162
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/src/index.ts"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"

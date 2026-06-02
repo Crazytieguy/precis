@@ -5,45 +5,45 @@ Score(3000)=0.629 I=0.786 C=0.504 ns_rows≤3K=26/41 (reached=7 partial=5 missin
 | walker |  | 33 | 33 | listing of '.' |  |  | 1.000 |
 | ns | 33 |  | 33 | Top-level fixture listing | 1.1 |  | 1.000 |
 | walker |  | 76 | 43 | README headline in README.md |  |  | 1.000 |
-| walker |  | 84 | 8 | listing of 'performance' |  |  | 1.000 |
 | ns | 96 |  | 63 | middleclass.lua identity header | 1.2 |  | 0.795 |
-| walker |  | 107 | 23 | lua decl names surface in performance/run.lua |  |  | 0.795 |
+| walker |  | 122 | 46 | headings outline in UPDATING.md |  |  | 0.795 |
 | ns | 126 |  | 30 | README lede | 1.3 |  | 0.798 |
-| walker |  | 153 | 46 | headings outline in UPDATING.md |  |  | 0.798 |
+| walker |  | 130 | 8 | listing of 'performance' |  |  | 0.798 |
 | ns | 184 |  | 58 | spec/ directory listing | 2.1 |  | 0.598 |
-| walker |  | 236 | 83 | headings outline in README.md |  |  | 0.608 |
+| walker |  | 213 | 83 | headings outline in README.md |  |  | 0.608 |
+| walker |  | 236 | 23 | lua decl names surface in performance/run.lua |  |  | 0.608 |
 | ns | 264 |  | 80 | rockspecs/ directory listing | 2.2 |  | 0.523 |
 | walker |  | 294 | 58 | listing of 'spec' |  |  | 0.751 |
 | walker |  | 330 | 36 | lua decl names surface in spec/metamethods_spec.lua |  |  | 0.751 |
 | ns | 337 |  | 73 | Internal helper fn signatures in middleclass.lua | 2.3 |  | 0.654 |
-| walker |  | 410 | 80 | listing of 'rockspecs' |  |  | 0.780 |
-| ns | 426 |  | 89 | DefaultMixin instance + static method names | 2.4 |  | 0.660 |
-| walker |  | 497 | 87 | lua decl names surface #1 in middleclass.lua |  |  | 0.693 |
-| walker |  | 497 | 0 | lua decl at middleclass.lua:144 |  |  | 0.693 |
-| walker |  | 497 | 0 | lua decl at middleclass.lua:151 |  |  | 0.693 |
-| walker |  | 497 | 0 | lua decl at middleclass.lua:172 |  |  | 0.693 |
-| walker |  | 497 | 0 | lua decl at middleclass.lua:178 |  |  | 0.693 |
-| walker |  | 512 | 15 | lua decl body at middleclass.lua:172 |  |  | 0.693 |
-| walker |  | 533 | 21 | lua decl body at middleclass.lua:144 |  |  | 0.694 |
-| ns | 539 |  | 113 | Public entry point: middleclass.class + module export | 2.5 |  | 0.631 |
-| walker |  | 557 | 24 | lua decl body at middleclass.lua:178 |  |  | 0.632 |
-| ns | 577 |  | 38 | README section headings | 2.6 |  | 0.657 |
-| ns | 720 |  | 143 | Quick Look example, part 1 (basic class + static) | 3.1 |  | 0.579 |
-| walker |  | 764 | 207 | lua decl names surface in middleclass.lua |  |  | 0.727 |
-| walker |  | 764 | 0 | lua decl at middleclass.lua:31 |  |  | 0.727 |
-| walker |  | 764 | 0 | lua decl at middleclass.lua:57 |  |  | 0.727 |
-| walker |  | 764 | 0 | lua decl at middleclass.lua:68 |  |  | 0.727 |
-| walker |  | 764 | 0 | lua decl at middleclass.lua:81 |  |  | 0.727 |
-| walker |  | 764 | 0 | lua decl at middleclass.lua:109 |  |  | 0.727 |
-| walker |  | 764 | 0 | lua decl at middleclass.lua:129 |  |  | 0.727 |
-| walker |  | 801 | 37 | lua decl body at middleclass.lua:68 |  |  | 0.728 |
-| ns | 816 |  | 96 | Quick Look example, part 2 (subclassing + super) | 3.2 |  | 0.674 |
-| ns | 876 |  | 60 | Default method: allocate (signature + body) | 4.1 | 2.4 | 0.657 |
-| ns | 946 |  | 70 | Default method: new (signature + body) | 4.2 | 2.4 | 0.640 |
-| ns | 1044 |  | 98 | Default method: isInstanceOf body | 4.3 | 2.4 | 0.611 |
-| ns | 1106 |  | 62 | Default method: isSubclassOf body | 4.4 | 2.4 | 0.599 |
-| ns | 1209 |  | 103 | Default method: include body + initialize/__tostring/subclassed | 4.5 | 2.4 | 0.593 |
-| walker |  | 1283 | 482 | README.md section #0 |  |  | 0.703 |
+| ns | 426 |  | 89 | DefaultMixin instance + static method names | 2.4 |  | 0.553 |
+| ns | 539 |  | 113 | Public entry point: middleclass.class + module export | 2.5 |  | 0.501 |
+| ns | 577 |  | 38 | README section headings | 2.6 |  | 0.543 |
+| ns | 720 |  | 143 | Quick Look example, part 1 (basic class + static) | 3.1 |  | 0.478 |
+| walker |  | 812 | 482 | README.md section #0 |  |  | 0.588 |
+| ns | 816 |  | 96 | Quick Look example, part 2 (subclassing + super) | 3.2 |  | 0.598 |
+| ns | 876 |  | 60 | Default method: allocate (signature + body) | 4.1 | 2.4 | 0.581 |
+| walker |  | 892 | 80 | listing of 'rockspecs' |  |  | 0.642 |
+| ns | 946 |  | 70 | Default method: new (signature + body) | 4.2 | 2.4 | 0.617 |
+| walker |  | 979 | 87 | lua decl names surface #1 in middleclass.lua |  |  | 0.637 |
+| walker |  | 979 | 0 | lua decl at middleclass.lua:144 |  |  | 0.637 |
+| walker |  | 979 | 0 | lua decl at middleclass.lua:151 |  |  | 0.637 |
+| walker |  | 979 | 0 | lua decl at middleclass.lua:172 |  |  | 0.637 |
+| walker |  | 979 | 0 | lua decl at middleclass.lua:178 |  |  | 0.637 |
+| walker |  | 994 | 15 | lua decl body at middleclass.lua:172 |  |  | 0.638 |
+| walker |  | 1015 | 21 | lua decl body at middleclass.lua:144 |  |  | 0.646 |
+| walker |  | 1039 | 24 | lua decl body at middleclass.lua:178 |  |  | 0.647 |
+| ns | 1044 |  | 98 | Default method: isInstanceOf body | 4.3 | 2.4 | 0.616 |
+| ns | 1106 |  | 62 | Default method: isSubclassOf body | 4.4 | 2.4 | 0.604 |
+| ns | 1209 |  | 103 | Default method: include body + initialize/__tostring/subclassed | 4.5 | 2.4 | 0.584 |
+| walker |  | 1246 | 207 | lua decl names surface in middleclass.lua |  |  | 0.702 |
+| walker |  | 1246 | 0 | lua decl at middleclass.lua:31 |  |  | 0.702 |
+| walker |  | 1246 | 0 | lua decl at middleclass.lua:57 |  |  | 0.702 |
+| walker |  | 1246 | 0 | lua decl at middleclass.lua:68 |  |  | 0.702 |
+| walker |  | 1246 | 0 | lua decl at middleclass.lua:81 |  |  | 0.702 |
+| walker |  | 1246 | 0 | lua decl at middleclass.lua:109 |  |  | 0.702 |
+| walker |  | 1246 | 0 | lua decl at middleclass.lua:129 |  |  | 0.702 |
+| walker |  | 1283 | 37 | lua decl body at middleclass.lua:68 |  |  | 0.703 |
 | walker |  | 1340 | 57 | lua decl body at middleclass.lua:129 |  |  | 0.723 |
 | walker |  | 1416 | 76 | lua decl body at middleclass.lua:57 |  |  | 0.725 |
 | ns | 1444 |  | 235 | Default method: subclass body | 4.6 | 2.4 | 0.666 |

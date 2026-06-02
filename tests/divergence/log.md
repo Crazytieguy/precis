@@ -6,16 +6,16 @@ Score(3000)=0.610 I=0.839 C=0.443 ns_rows≤3K=17/44 (reached=9 partial=0 missin
 | ns | 46 |  | 46 | Crate identity (root listing) | 1.1 |  | 1.000 |
 | walker |  | 89 | 43 | README headline in README.md |  |  | 1.000 |
 | ns | 102 |  | 56 | Cargo name + description | 1.2 |  | 0.841 |
-| walker |  | 110 | 21 | listing of 'src' |  |  | 0.854 |
-| walker |  | 130 | 20 | listing of 'src/kv' |  |  | 0.874 |
-| ns | 190 |  | 88 | Crate-doc one-liner | 1.3 |  | 0.731 |
-| walker |  | 219 | 89 | crate-doc lede in src/kv/mod.rs |  |  | 0.732 |
-| ns | 231 |  | 41 | src/ + src/kv/ listing | 1.4 |  | 0.777 |
-| walker |  | 241 | 22 | pub item at src/kv/error.rs:5 |  |  | 0.777 |
-| walker |  | 294 | 53 | headings outline in README.md |  |  | 0.777 |
-| walker |  | 360 | 66 | README.md section #0 |  |  | 0.777 |
-| ns | 381 |  | 150 | Crate-doc target/level/body model | 1.5 | 1.3 | 0.669 |
-| walker |  | 544 | 184 | [package] in Cargo.toml |  |  | 0.751 |
+| walker |  | 142 | 53 | headings outline in README.md |  |  | 0.841 |
+| ns | 190 |  | 88 | Crate-doc one-liner | 1.3 |  | 0.694 |
+| walker |  | 208 | 66 | README.md section #0 |  |  | 0.694 |
+| ns | 231 |  | 41 | src/ + src/kv/ listing | 1.4 |  | 0.554 |
+| ns | 381 |  | 150 | Crate-doc target/level/body model | 1.5 | 1.3 | 0.477 |
+| walker |  | 392 | 184 | [package] in Cargo.toml |  |  | 0.567 |
+| walker |  | 413 | 21 | listing of 'src' |  |  | 0.616 |
+| walker |  | 433 | 20 | listing of 'src/kv' |  |  | 0.751 |
+| walker |  | 522 | 89 | crate-doc lede in src/kv/mod.rs |  |  | 0.751 |
+| walker |  | 544 | 22 | pub item at src/kv/error.rs:5 |  |  | 0.751 |
 | ns | 545 |  | 164 | Five-macro user-facing summary | 1.6 |  | 0.659 |
 | walker |  | 671 | 127 | mod/use plumbing in src/lib.rs |  |  | 0.659 |
 | walker |  | 695 | 24 | pub-item names surface in src/kv/key.rs |  |  | 0.659 |

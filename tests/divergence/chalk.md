@@ -6,36 +6,36 @@ Score(3000)=0.568 I=0.796 C=0.405 ns_rows≤3K=18/46 (reached=8 partial=1 missin
 | walker |  | 46 | 46 | listing of '.' |  |  | 0.000 |
 | ns | 57 |  | 46 | Repo root listing | 1.2 |  | 0.813 |
 | walker |  | 106 | 60 | package identity in package.json |  |  | 0.839 |
-| walker |  | 118 | 12 | listing of 'media' |  |  | 0.839 |
-| walker |  | 140 | 22 | listing of 'source' |  |  | 0.848 |
-| walker |  | 153 | 13 | module item at source/index.js:50 |  |  | 0.738 |
-| ns | 153 |  | 96 | package.json name/version/type | 1.3 |  | 0.738 |
-| walker |  | 160 | 7 | module item body at source/index.js:50 body 51 |  |  | 0.738 |
-| walker |  | 171 | 11 | module item at source/index.js:22 |  |  | 0.738 |
-| walker |  | 182 | 11 | module item at source/index.js:204 |  |  | 0.738 |
-| walker |  | 195 | 13 | module item at source/index.js:10 |  |  | 0.738 |
-| ns | 207 |  | 54 | Readme usage example (default import + chain) | 1.4 |  | 0.625 |
-| walker |  | 208 | 13 | module item at source/index.js:12 |  |  | 0.625 |
-| walker |  | 221 | 13 | module item at source/index.js:41 |  |  | 0.625 |
-| walker |  | 235 | 14 | module item at source/index.js:119 |  |  | 0.625 |
-| ns | 265 |  | 58 | source/ tree | 1.5 |  | 0.527 |
-| walker |  | 289 | 54 | export names surface in source/index.js |  |  | 0.528 |
-| walker |  | 297 | 8 | export at source/index.js:34 |  |  | 0.529 |
-| ns | 305 |  | 40 | package.json main + exports + types | 1.6 |  | 0.507 |
-| walker |  | 324 | 27 | export at source/index.js:220 |  |  | 0.509 |
-| walker |  | 348 | 24 | export body at source/index.js:34 body 36 |  |  | 0.510 |
-| walker |  | 363 | 15 | module item at source/index.js:11 |  |  | 0.510 |
-| walker |  | 457 | 94 | README headline in readme.md |  |  | 0.613 |
-| walker |  | 474 | 17 | module item at source/index.js:168 |  |  | 0.614 |
-| ns | 485 |  | 180 | Readme H2/H3 headings | 2.1 |  | 0.497 |
-| walker |  | 492 | 18 | module item at source/index.js:24 |  |  | 0.498 |
-| walker |  | 510 | 18 | module item at source/index.js:94 |  |  | 0.498 |
-| walker |  | 530 | 20 | module item at source/index.js:8 |  |  | 0.498 |
-| walker |  | 550 | 20 | module item at source/index.js:132 |  |  | 0.499 |
-| walker |  | 573 | 23 | module item at source/index.js:74 |  |  | 0.499 |
-| walker |  | 596 | 23 | module item at source/index.js:152 |  |  | 0.500 |
-| walker |  | 667 | 71 | headings outline in code-of-conduct.md |  |  | 0.500 |
-| walker |  | 667 | 0 | code-of-conduct.md section #0 |  |  | 0.500 |
+| ns | 153 |  | 96 | package.json name/version/type | 1.3 |  | 0.729 |
+| walker |  | 200 | 94 | README headline in readme.md |  |  | 0.885 |
+| ns | 207 |  | 54 | Readme usage example (default import + chain) | 1.4 |  | 0.749 |
+| ns | 265 |  | 58 | source/ tree | 1.5 |  | 0.599 |
+| walker |  | 271 | 71 | headings outline in code-of-conduct.md |  |  | 0.599 |
+| walker |  | 271 | 0 | code-of-conduct.md section #0 |  |  | 0.599 |
+| walker |  | 283 | 12 | listing of 'media' |  |  | 0.599 |
+| walker |  | 305 | 22 | listing of 'source' |  |  | 0.609 |
+| ns | 305 |  | 40 | package.json main + exports + types | 1.6 |  | 0.609 |
+| walker |  | 318 | 13 | module item at source/index.js:50 |  |  | 0.609 |
+| walker |  | 325 | 7 | module item body at source/index.js:50 body 51 |  |  | 0.609 |
+| walker |  | 336 | 11 | module item at source/index.js:22 |  |  | 0.609 |
+| walker |  | 347 | 11 | module item at source/index.js:204 |  |  | 0.609 |
+| walker |  | 360 | 13 | module item at source/index.js:10 |  |  | 0.609 |
+| walker |  | 373 | 13 | module item at source/index.js:12 |  |  | 0.609 |
+| walker |  | 386 | 13 | module item at source/index.js:41 |  |  | 0.609 |
+| walker |  | 400 | 14 | module item at source/index.js:119 |  |  | 0.609 |
+| walker |  | 454 | 54 | export names surface in source/index.js |  |  | 0.611 |
+| walker |  | 462 | 8 | export at source/index.js:34 |  |  | 0.611 |
+| ns | 485 |  | 180 | Readme H2/H3 headings | 2.1 |  | 0.495 |
+| walker |  | 489 | 27 | export at source/index.js:220 |  |  | 0.497 |
+| walker |  | 513 | 24 | export body at source/index.js:34 body 36 |  |  | 0.497 |
+| walker |  | 528 | 15 | module item at source/index.js:11 |  |  | 0.497 |
+| walker |  | 545 | 17 | module item at source/index.js:168 |  |  | 0.497 |
+| walker |  | 563 | 18 | module item at source/index.js:24 |  |  | 0.498 |
+| walker |  | 581 | 18 | module item at source/index.js:94 |  |  | 0.498 |
+| walker |  | 601 | 20 | module item at source/index.js:8 |  |  | 0.498 |
+| walker |  | 621 | 20 | module item at source/index.js:132 |  |  | 0.499 |
+| walker |  | 644 | 23 | module item at source/index.js:74 |  |  | 0.499 |
+| walker |  | 667 | 23 | module item at source/index.js:152 |  |  | 0.500 |
 | ns | 679 |  | 194 | index.js public exports | 2.2 |  | 0.456 |
 | walker |  | 716 | 49 | module item at source/index.js:15 |  |  | 0.457 |
 | walker |  | 725 | 9 | listing of 'source/vendor' |  |  | 0.478 |

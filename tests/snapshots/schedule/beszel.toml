@@ -19,10 +19,36 @@ entries = [".dockerignore", ".gitattributes", ".github", ".gitignore", ".gorelea
 
 [[batches]]
 position = 2
+key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
+descriptor = "README headline in readme.md"
+cost_tokens = 32
+cum_tokens = 87
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
 key = 'Go(PackageDocLede { file: "beszel.go" })'
 descriptor = "go package doc lede in beszel.go"
 cost_tokens = 28
-cum_tokens = 83
+cum_tokens = 115
 
 [batches.content]
 kind = "lines"
@@ -36,43 +62,17 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 3
+position = 4
 key = 'Go(GoModIdentity { file: "go.mod" })'
 descriptor = "go module identity in go.mod"
 cost_tokens = 27
-cum_tokens = 110
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 4
-key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
-descriptor = "README headline in readme.md"
-cost_tokens = 32
 cum_tokens = 142
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "readme.md"
+path = "go.mod"
 start = 1
 end = 1
 
@@ -80,7 +80,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "readme.md"
+path = "go.mod"
 start = 3
 end = 3
 
@@ -89,206 +89,10 @@ kind = "full"
 
 [[batches]]
 position = 5
-key = 'Go(DeclNames { file: "beszel.go", chunk_index: 0 })'
-descriptor = "go decl names surface in beszel.go"
-cost_tokens = 72
-cum_tokens = 214
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 6
-key = 'Go(Decl { file: "beszel.go", start_line: 15 })'
-descriptor = "go decl at beszel.go:15"
-cost_tokens = 0
-cum_tokens = 214
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Go(Decl { file: "beszel.go", start_line: 18 })'
-descriptor = "go decl at beszel.go:18"
-cost_tokens = 0
-cum_tokens = 214
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
-key = 'Go(Decl { file: "beszel.go", start_line: 7 })'
-descriptor = "go decl at beszel.go:7"
-cost_tokens = 37
-cum_tokens = 251
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 7
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Go(DeclDoc { file: "beszel.go", start_line: 15 })'
-descriptor = "go decl doc at beszel.go:15"
-cost_tokens = 19
-cum_tokens = 270
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
-key = 'Go(DeclDoc { file: "beszel.go", start_line: 18 })'
-descriptor = "go decl doc at beszel.go:18"
-cost_tokens = 19
-cum_tokens = 289
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Go(PackageImports { file: "beszel.go" })'
-descriptor = "go package + imports in beszel.go"
-cost_tokens = 22
-cum_tokens = 311
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "beszel.go"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "supplemental" })'
-descriptor = "listing of 'supplemental'"
-cost_tokens = 26
-cum_tokens = 337
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental"
-entries = ["CHANGELOG.md", "debian", "docker", "guides", "kubernetes", "licenses", "scripts"]
-
-[[batches]]
-position = 13
 key = 'Markdown(HeadingsOutline { file: "readme.md" })'
 descriptor = "headings outline in readme.md"
 cost_tokens = 68
-cum_tokens = 405
+cum_tokens = 210
 
 [batches.content]
 kind = "lines"
@@ -406,11 +210,193 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 6
+key = 'Go(DeclNames { file: "beszel.go", chunk_index: 0 })'
+descriptor = "go decl names surface in beszel.go"
+cost_tokens = 72
+cum_tokens = 282
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'Go(Decl { file: "beszel.go", start_line: 15 })'
+descriptor = "go decl at beszel.go:15"
+cost_tokens = 0
+cum_tokens = 282
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Go(Decl { file: "beszel.go", start_line: 18 })'
+descriptor = "go decl at beszel.go:18"
+cost_tokens = 0
+cum_tokens = 282
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Go(Decl { file: "beszel.go", start_line: 7 })'
+descriptor = "go decl at beszel.go:7"
+cost_tokens = 37
+cum_tokens = 319
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 7
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Go(DeclDoc { file: "beszel.go", start_line: 15 })'
+descriptor = "go decl doc at beszel.go:15"
+cost_tokens = 19
+cum_tokens = 338
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Go(DeclDoc { file: "beszel.go", start_line: 18 })'
+descriptor = "go decl doc at beszel.go:18"
+cost_tokens = 19
+cum_tokens = 357
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Go(PackageImports { file: "beszel.go" })'
+descriptor = "go package + imports in beszel.go"
+cost_tokens = 22
+cum_tokens = 379
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "beszel.go"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
 key = 'Markdown(Section { file: "readme.md", section_index: 23 })'
 descriptor = "readme.md section #23"
 cost_tokens = 25
-cum_tokens = 430
+cum_tokens = 404
 
 [batches.content]
 kind = "lines"
@@ -432,25 +418,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "supplemental/docker" })'
-descriptor = "listing of 'supplemental/docker'"
-cost_tokens = 10
-cum_tokens = 440
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/docker"
-entries = ["agent", "hub", "same-system"]
-
-[[batches]]
-position = 16
+position = 14
 key = 'Markdown(Section { file: "readme.md", section_index: 2 })'
 descriptor = "readme.md section #2"
 cost_tokens = 17
-cum_tokens = 457
+cum_tokens = 421
 
 [batches.content]
 kind = "lines"
@@ -464,11 +436,93 @@ end = 17
 kind = "full"
 
 [[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "supplemental" })'
+descriptor = "listing of 'supplemental'"
+cost_tokens = 26
+cum_tokens = 447
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental"
+entries = ["CHANGELOG.md", "debian", "docker", "guides", "kubernetes", "licenses", "scripts"]
+
+[[batches]]
+position = 16
+key = 'Markdown(Section { file: "readme.md", section_index: 1 })'
+descriptor = "readme.md section #1"
+cost_tokens = 19
+cum_tokens = 466
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 17
+key = 'Markdown(Section { file: "readme.md", section_index: 7 })'
+descriptor = "readme.md section #7"
+cost_tokens = 22
+cum_tokens = 488
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Markdown(Section { file: "readme.md", section_index: 16 })'
+descriptor = "readme.md section #16"
+cost_tokens = 13
+cum_tokens = 501
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "supplemental/docker" })'
+descriptor = "listing of 'supplemental/docker'"
+cost_tokens = 10
+cum_tokens = 511
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/docker"
+entries = ["agent", "hub", "same-system"]
+
+[[batches]]
+position = 20
 key = 'Fs(DirListing { dir: "internal" })'
 descriptor = "listing of 'internal'"
 cost_tokens = 66
-cum_tokens = 523
+cum_tokens = 577
 
 [batches.content]
 kind = "fs"
@@ -478,11 +532,11 @@ parent = "internal"
 entries = ["alerts", "cmd", "common", "dockerfile_agent", "dockerfile_agent_alpine", "dockerfile_agent_intel", "dockerfile_agent_nvidia", "dockerfile_hub", "entities", "ghupdate", "hub", "migrations", "records", "site", "tests", "users"]
 
 [[batches]]
-position = 18
+position = 21
 key = 'Fs(DirListing { dir: "internal/entities" })'
 descriptor = "listing of 'internal/entities'"
 cost_tokens = 13
-cum_tokens = 536
+cum_tokens = 590
 
 [batches.content]
 kind = "fs"
@@ -492,11 +546,11 @@ parent = "internal/entities"
 entries = ["container", "smart", "system", "systemd"]
 
 [[batches]]
-position = 19
+position = 22
 key = 'Fs(DirListing { dir: "internal/ghupdate" })'
 descriptor = "listing of 'internal/ghupdate'"
 cost_tokens = 30
-cum_tokens = 566
+cum_tokens = 620
 
 [batches.content]
 kind = "fs"
@@ -506,11 +560,11 @@ parent = "internal/ghupdate"
 entries = ["extract.go", "ghupdate.go", "ghupdate_test.go", "release.go", "selinux.go", "selinux_test.go"]
 
 [[batches]]
-position = 20
+position = 23
 key = 'Go(DeclNames { file: "internal/ghupdate/selinux.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/ghupdate/selinux.go"
 cost_tokens = 34
-cum_tokens = 600
+cum_tokens = 654
 
 [batches.content]
 kind = "lines"
@@ -548,11 +602,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 24
 key = 'Go(Decl { file: "internal/ghupdate/selinux.go", start_line: 10 })'
 descriptor = "go decl at internal/ghupdate/selinux.go:10"
 cost_tokens = 0
-cum_tokens = 600
+cum_tokens = 654
 
 [batches.content]
 kind = "lines"
@@ -566,11 +620,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 22
+position = 25
 key = 'Go(Decl { file: "internal/ghupdate/selinux.go", start_line: 41 })'
 descriptor = "go decl at internal/ghupdate/selinux.go:41"
 cost_tokens = 0
-cum_tokens = 600
+cum_tokens = 654
 
 [batches.content]
 kind = "lines"
@@ -584,29 +638,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 23
-key = 'Markdown(Section { file: "readme.md", section_index: 1 })'
-descriptor = "readme.md section #1"
-cost_tokens = 19
-cum_tokens = 619
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
+position = 26
 key = 'Fs(DirListing { dir: "internal/records" })'
 descriptor = "listing of 'internal/records'"
 cost_tokens = 36
-cum_tokens = 655
+cum_tokens = 690
 
 [batches.content]
 kind = "fs"
@@ -616,11 +652,11 @@ parent = "internal/records"
 entries = ["records.go", "records_averaging_test.go", "records_deletion.go", "records_deletion_test.go", "records_test.go", "records_test_helpers.go"]
 
 [[batches]]
-position = 25
+position = 27
 key = 'Fs(DirListing { dir: "supplemental/debian" })'
 descriptor = "listing of 'supplemental/debian'"
 cost_tokens = 37
-cum_tokens = 692
+cum_tokens = 727
 
 [batches.content]
 kind = "fs"
@@ -630,29 +666,11 @@ parent = "supplemental/debian"
 entries = ["beszel-agent.service", "config.sh", "copyright", "lintian-overrides", "postinstall.sh", "postrm.sh", "prerm.sh", "templates"]
 
 [[batches]]
-position = 26
-key = 'Markdown(Section { file: "readme.md", section_index: 7 })'
-descriptor = "readme.md section #7"
-cost_tokens = 22
-cum_tokens = 714
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
+position = 28
 key = 'Fs(DirListing { dir: "internal/users" })'
 descriptor = "listing of 'internal/users'"
 cost_tokens = 4
-cum_tokens = 718
+cum_tokens = 731
 
 [batches.content]
 kind = "fs"
@@ -660,24 +678,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "internal/users"
 entries = ["users.go"]
-
-[[batches]]
-position = 28
-key = 'Markdown(Section { file: "readme.md", section_index: 16 })'
-descriptor = "readme.md section #16"
-cost_tokens = 13
-cum_tokens = 731
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 29

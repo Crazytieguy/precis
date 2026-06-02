@@ -87,38 +87,10 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "lib" })'
-descriptor = "listing of 'lib'"
-cost_tokens = 25
-cum_tokens = 252
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib"
-entries = ["argument.js", "command.js", "error.js", "help.js", "option.js", "suggestSimilar.js"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "typings" })'
-descriptor = "listing of 'typings'"
-cost_tokens = 17
-cum_tokens = 269
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "typings"
-entries = ["esm.d.mts", "index.d.ts", "index.test-d.ts"]
-
-[[batches]]
-position = 6
 key = 'Markdown(Section { file: "Readme.md", section_index: 1 })'
 descriptor = "Readme.md section #1"
 cost_tokens = 28
-cum_tokens = 297
+cum_tokens = 255
 
 [batches.content]
 kind = "lines"
@@ -138,6 +110,34 @@ end = 65
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 25
+cum_tokens = 280
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib"
+entries = ["argument.js", "command.js", "error.js", "help.js", "option.js", "suggestSimilar.js"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "typings" })'
+descriptor = "listing of 'typings'"
+cost_tokens = 17
+cum_tokens = 297
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "typings"
+entries = ["esm.d.mts", "index.d.ts", "index.test-d.ts"]
 
 [[batches]]
 position = 7

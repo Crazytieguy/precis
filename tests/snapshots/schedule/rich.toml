@@ -19,38 +19,10 @@ entries = [".coveragerc", ".faq", ".github", ".gitignore", ".pre-commit-config.y
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "assets" })'
-descriptor = "listing of 'assets'"
-cost_tokens = 12
-cum_tokens = 203
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "assets"
-entries = ["logo.ai", "logo.svg", "logo.txt"]
-
-[[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 19
-cum_tokens = 222
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["Makefile", "images", "make.bat", "requirements.txt", "source"]
-
-[[batches]]
-position = 4
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 131
-cum_tokens = 353
+cum_tokens = 322
 
 [batches.content]
 kind = "lines"
@@ -88,11 +60,25 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 5
+position = 3
+key = 'Fs(DirListing { dir: "assets" })'
+descriptor = "listing of 'assets'"
+cost_tokens = 12
+cum_tokens = 334
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "assets"
+entries = ["logo.ai", "logo.svg", "logo.txt"]
+
+[[batches]]
+position = 4
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 91
-cum_tokens = 444
+cum_tokens = 425
 
 [batches.content]
 kind = "lines"
@@ -242,11 +228,11 @@ end = 442
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 5
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 24
-cum_tokens = 468
+cum_tokens = 449
 
 [batches.content]
 kind = "lines"
@@ -260,11 +246,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 7
+position = 6
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 79
-cum_tokens = 547
+cum_tokens = 528
 
 [batches.content]
 kind = "lines"
@@ -276,6 +262,20 @@ end = 33
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 19
+cum_tokens = 547
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["Makefile", "images", "make.bat", "requirements.txt", "source"]
 
 [[batches]]
 position = 8

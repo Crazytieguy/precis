@@ -4,26 +4,26 @@ Score(3000)=0.584 I=0.799 C=0.427 ns_rows≤3K=22/48 (reached=10 partial=2 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 63 | 63 | listing of '.' |  |  | 1.000 |
 | ns | 63 |  | 63 | Repository root listing | 1.1 |  | 1.000 |
-| walker |  | 72 | 9 | listing of 'notebooks' |  |  | 1.000 |
 | ns | 78 |  | 15 | README H1 — project name | 1.2 |  | 0.964 |
-| walker |  | 108 | 36 | listing of 'xlstm' |  |  | 0.972 |
-| ns | 114 |  | 36 | xlstm/ package directory listing | 1.3 |  | 0.973 |
-| walker |  | 128 | 20 | listing of 'xlstm/blocks' |  |  | 0.980 |
-| walker |  | 149 | 21 | listing of 'xlstm/blocks/slstm' |  |  | 0.980 |
-| walker |  | 169 | 20 | listing of 'xlstm/blocks/slstm/src' |  |  | 0.980 |
-| walker |  | 185 | 16 | listing of 'xlstm/blocks/slstm/src/vanilla' |  |  | 0.980 |
-| walker |  | 208 | 23 | listing of 'xlstm/blocks/mlstm' |  |  | 0.980 |
-| ns | 213 |  | 99 | Top-level __init__ — re-export names only | 1.4 |  | 0.839 |
-| walker |  | 236 | 28 | listing of 'xlstm/xlstm_large' |  |  | 0.848 |
-| walker |  | 278 | 42 | python imports in xlstm/xlstm_large/__init__.py |  |  | 0.848 |
-| walker |  | 311 | 33 | listing of 'xlstm/components' |  |  | 0.853 |
-| walker |  | 357 | 46 | listing of 'experiments' |  |  | 0.853 |
-| ns | 369 |  | 156 | README — About paragraph | 1.5 |  | 0.741 |
-| walker |  | 371 | 14 | listing of 'experiments/data' |  |  | 0.742 |
-| walker |  | 395 | 24 | listing of 'experiments/data/formal_language' |  |  | 0.744 |
-| walker |  | 421 | 26 | listing of 'experiments/data/formal_language/tasks' |  |  | 0.747 |
-| ns | 447 |  | 78 | Top-level __init__ — full content (refines 1.4) | 1.6 | 1.4 | 0.680 |
-| walker |  | 518 | 97 | README headline in README.md |  |  | 0.699 |
+| ns | 114 |  | 36 | xlstm/ package directory listing | 1.3 |  | 0.783 |
+| walker |  | 160 | 97 | README headline in README.md |  |  | 0.812 |
+| walker |  | 169 | 9 | listing of 'notebooks' |  |  | 0.812 |
+| walker |  | 205 | 36 | listing of 'xlstm' |  |  | 1.000 |
+| ns | 213 |  | 99 | Top-level __init__ — re-export names only | 1.4 |  | 0.841 |
+| walker |  | 225 | 20 | listing of 'xlstm/blocks' |  |  | 0.848 |
+| walker |  | 246 | 21 | listing of 'xlstm/blocks/slstm' |  |  | 0.851 |
+| walker |  | 266 | 20 | listing of 'xlstm/blocks/slstm/src' |  |  | 0.852 |
+| walker |  | 282 | 16 | listing of 'xlstm/blocks/slstm/src/vanilla' |  |  | 0.853 |
+| walker |  | 305 | 23 | listing of 'xlstm/blocks/mlstm' |  |  | 0.863 |
+| walker |  | 333 | 28 | listing of 'xlstm/xlstm_large' |  |  | 0.870 |
+| ns | 369 |  | 156 | README — About paragraph | 1.5 |  | 0.751 |
+| walker |  | 375 | 42 | python imports in xlstm/xlstm_large/__init__.py |  |  | 0.751 |
+| walker |  | 408 | 33 | listing of 'xlstm/components' |  |  | 0.760 |
+| ns | 447 |  | 78 | Top-level __init__ — full content (refines 1.4) | 1.6 | 1.4 | 0.691 |
+| walker |  | 454 | 46 | listing of 'experiments' |  |  | 0.693 |
+| walker |  | 468 | 14 | listing of 'experiments/data' |  |  | 0.694 |
+| walker |  | 492 | 24 | listing of 'experiments/data/formal_language' |  |  | 0.696 |
+| walker |  | 518 | 26 | listing of 'experiments/data/formal_language/tasks' |  |  | 0.699 |
 | walker |  | 530 | 12 | python decl names surface in experiments/metrics.py |  |  | 0.699 |
 | walker |  | 530 | 0 | python decl at experiments/metrics.py:9 |  |  | 0.699 |
 | walker |  | 571 | 41 | python decl names surface in xlstm/blocks/slstm/src/vanilla/__init__.py |  |  | 0.699 |

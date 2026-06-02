@@ -11,33 +11,33 @@ Score(3000)=0.640 I=0.863 C=0.475 ns_rows≤3K=20/52 (reached=11 partial=1 missi
 | ns | 169 |  | 77 | README headline + tagline | 1.3 |  | 0.861 |
 | walker |  | 182 | 27 | [dependencies] in pyproject.toml |  |  | 0.870 |
 | ns | 209 |  | 40 | Python version floor + runtime dep | 1.4 | 1.2 | 0.834 |
-| walker |  | 268 | 86 | listing of 'src/click' |  |  | 0.834 |
-| walker |  | 279 | 11 | python imports #1 in src/click/__init__.py |  |  | 0.834 |
-| ns | 310 |  | 101 | README differentiators (three-bullet pitch) | 1.5 | 1.3 | 0.705 |
-| walker |  | 352 | 73 | python imports in src/click/__init__.py |  |  | 0.705 |
-| walker |  | 368 | 16 | python imports #6 in src/click/__init__.py |  |  | 0.705 |
-| walker |  | 398 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.706 |
-| ns | 410 |  | 100 | __init__.py: core-class re-exports | 1.6 |  | 0.628 |
-| walker |  | 498 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.752 |
-| ns | 578 |  | 168 | README hello-world example | 1.7 | 1.3 | 0.628 |
-| walker |  | 659 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.641 |
-| walker |  | 677 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.641 |
-| walker |  | 677 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.641 |
-| ns | 739 |  | 161 | __init__.py: decorator re-exports | 1.8 | 1.6 | 0.678 |
-| walker |  | 823 | 146 | python imports #4 in src/click/__init__.py |  |  | 0.691 |
-| walker |  | 911 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.696 |
-| ns | 931 |  | 192 | __init__.py: exception + formatting + globals re-exports | 1.9 | 1.8 | 0.723 |
-| walker |  | 1002 | 91 | README.md section #0 |  |  | 0.787 |
-| ns | 1120 |  | 189 | __init__.py: termui re-exports | 1.10 | 1.9 | 0.723 |
-| walker |  | 1191 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.809 |
-| ns | 1302 |  | 182 | __init__.py: built-in type re-exports | 1.11 | 1.10 | 0.748 |
-| walker |  | 1373 | 182 | python imports #8 in src/click/__init__.py |  |  | 0.827 |
-| walker |  | 1386 | 13 | listing of '.github' |  |  | 0.827 |
-| ns | 1395 |  | 93 | __init__.py: utils re-exports | 1.12 | 1.11 | 0.825 |
-| walker |  | 1409 | 23 | listing of '.github/workflows' |  |  | 0.825 |
-| walker |  | 1423 | 14 | python decl names surface in src/click/_textwrap.py |  |  | 0.825 |
-| walker |  | 1423 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.825 |
-| walker |  | 1501 | 78 | [package] in pyproject.toml |  |  | 0.877 |
+| walker |  | 273 | 91 | README.md section #0 |  |  | 0.857 |
+| ns | 310 |  | 101 | README differentiators (three-bullet pitch) | 1.5 | 1.3 | 0.831 |
+| walker |  | 351 | 78 | [package] in pyproject.toml |  |  | 0.947 |
+| ns | 410 |  | 100 | __init__.py: core-class re-exports | 1.6 |  | 0.842 |
+| walker |  | 437 | 86 | listing of 'src/click' |  |  | 0.842 |
+| walker |  | 448 | 11 | python imports #1 in src/click/__init__.py |  |  | 0.842 |
+| walker |  | 521 | 73 | python imports in src/click/__init__.py |  |  | 0.842 |
+| walker |  | 537 | 16 | python imports #6 in src/click/__init__.py |  |  | 0.842 |
+| walker |  | 567 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.843 |
+| ns | 578 |  | 168 | README hello-world example | 1.7 | 1.3 | 0.704 |
+| walker |  | 667 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.798 |
+| ns | 739 |  | 161 | __init__.py: decorator re-exports | 1.8 | 1.6 | 0.723 |
+| walker |  | 828 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.825 |
+| walker |  | 846 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.825 |
+| walker |  | 846 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.825 |
+| ns | 931 |  | 192 | __init__.py: exception + formatting + globals re-exports | 1.9 | 1.8 | 0.753 |
+| walker |  | 992 | 146 | python imports #4 in src/click/__init__.py |  |  | 0.847 |
+| walker |  | 1080 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.852 |
+| ns | 1120 |  | 189 | __init__.py: termui re-exports | 1.10 | 1.9 | 0.783 |
+| walker |  | 1269 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.868 |
+| ns | 1302 |  | 182 | __init__.py: built-in type re-exports | 1.11 | 1.10 | 0.802 |
+| ns | 1395 |  | 93 | __init__.py: utils re-exports | 1.12 | 1.11 | 0.803 |
+| walker |  | 1451 | 182 | python imports #8 in src/click/__init__.py |  |  | 0.877 |
+| walker |  | 1464 | 13 | listing of '.github' |  |  | 0.877 |
+| walker |  | 1487 | 23 | listing of '.github/workflows' |  |  | 0.877 |
+| walker |  | 1501 | 14 | python decl names surface in src/click/_textwrap.py |  |  | 0.877 |
+| walker |  | 1501 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.877 |
 | walker |  | 1542 | 41 | python method sigs in src/click/_textwrap.py |  |  | 0.877 |
 | walker |  | 1542 | 0 | python method at src/click/_textwrap.py:40 |  |  | 0.877 |
 | walker |  | 1561 | 19 | python method at src/click/_textwrap.py:27 |  |  | 0.877 |

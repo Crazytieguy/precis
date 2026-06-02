@@ -93,426 +93,10 @@ entries = ["app-client", "app-server", "cli", "crypto", "deploy-cloudflare", "do
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "packages/lib" })'
-descriptor = "listing of 'packages/lib'"
-cost_tokens = 26
-cum_tokens = 265
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/lib"
-entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "packages/lib/src" })'
-descriptor = "listing of 'packages/lib/src'"
-cost_tokens = 16
-cum_tokens = 281
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/lib/src"
-entries = ["api", "crypto", "files", "index.ts", "notes"]
-
-[[batches]]
-position = 7
-key = 'Typescript(ExportNames { file: "packages/lib/src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/src/index.ts"
-cost_tokens = 8
-cum_tokens = 289
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/src/index.ts"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/src/index.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 8
-key = 'Markdown(ReadmeHeadline { file: "packages/lib/README.md" })'
-descriptor = "README headline in packages/lib/README.md"
-cost_tokens = 52
-cum_tokens = 341
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "packages/docs" })'
-descriptor = "listing of 'packages/docs'"
-cost_tokens = 17
-cum_tokens = 358
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/docs"
-entries = [".vitepress", "eslint.config.js", "package.json", "src"]
-
-[[batches]]
-position = 10
-key = 'Yaml(Whole { file: "docker-compose.yml" })'
-descriptor = "docker-compose at docker-compose.yml"
-cost_tokens = 101
-cum_tokens = 459
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docker-compose.yml"
-start = 1
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docker-compose.yml"
-start = 10
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "packages/app-server" })'
-descriptor = "listing of 'packages/app-server'"
-cost_tokens = 23
-cum_tokens = 482
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/app-server"
-entries = ["eslint.config.js", "package.json", "src", "tsconfig.json", "wrangler.toml"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "packages/app-server/src" })'
-descriptor = "listing of 'packages/app-server/src'"
-cost_tokens = 21
-cum_tokens = 503
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/app-server/src"
-entries = ["index.cloudflare.ts", "index.node.ts", "modules", "reset.d.ts", "scripts"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "packages/deploy-cloudflare" })'
-descriptor = "listing of 'packages/deploy-cloudflare'"
-cost_tokens = 25
-cum_tokens = 528
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/deploy-cloudflare"
-entries = [".nvmrc", "_routes.json", "build.sh", "package.json", "wrangler.toml"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "packages/crypto" })'
-descriptor = "listing of 'packages/crypto'"
-cost_tokens = 26
-cum_tokens = 554
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/crypto"
-entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
-
-[[batches]]
-position = 15
-key = 'Markdown(ReadmeHeadline { file: "packages/crypto/README.md" })'
-descriptor = "README headline in packages/crypto/README.md"
-cost_tokens = 64
-cum_tokens = 618
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/crypto/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/crypto/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Markdown(HeadingsOutline { file: "packages/crypto/README.md" })'
-descriptor = "headings outline in packages/crypto/README.md"
-cost_tokens = 31
-cum_tokens = 649
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/crypto/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/crypto/README.md"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/crypto/README.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/crypto/README.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/crypto/README.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/crypto/README.md"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 17
-key = 'Markdown(HeadingsOutline { file: "packages/lib/README.md" })'
-descriptor = "headings outline in packages/lib/README.md"
-cost_tokens = 40
-cum_tokens = 689
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/lib/README.md"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "packages/cli" })'
-descriptor = "listing of 'packages/cli'"
-cost_tokens = 29
-cum_tokens = 718
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/cli"
-entries = ["README.md", "bin", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
-
-[[batches]]
-position = 19
-key = 'Markdown(ReadmeHeadline { file: "packages/cli/README.md" })'
-descriptor = "README headline in packages/cli/README.md"
-cost_tokens = 50
-cum_tokens = 768
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/cli/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/cli/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "packages/cli/src" })'
-descriptor = "listing of 'packages/cli/src'"
-cost_tokens = 21
-cum_tokens = 789
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/cli/src"
-entries = ["cli.ts", "config", "create-note", "files", "shared", "view-note"]
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: "packages/docs/src" })'
-descriptor = "listing of 'packages/docs/src'"
-cost_tokens = 31
-cum_tokens = 820
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/docs/src"
-entries = ["components", "data", "how-it-works.md", "index.md", "integrations", "public", "resources", "self-hosting"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "packages/crypto/src" })'
-descriptor = "listing of 'packages/crypto/src'"
-cost_tokens = 32
-cum_tokens = 852
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/crypto/src"
-entries = ["api-definition.ts", "encryption-algorithms", "index.node.ts", "index.test.ts", "index.web.ts", "node", "web"]
-
-[[batches]]
-position = 23
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 195
-cum_tokens = 1047
+cum_tokens = 434
 
 [batches.content]
 kind = "lines"
@@ -822,11 +406,11 @@ end = 195
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 6
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 98
-cum_tokens = 1145
+cum_tokens = 532
 
 [batches.content]
 kind = "lines"
@@ -856,11 +440,105 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 25
+position = 7
+key = 'Fs(DirListing { dir: "packages/lib" })'
+descriptor = "listing of 'packages/lib'"
+cost_tokens = 26
+cum_tokens = 558
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/lib"
+entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "packages/lib/src" })'
+descriptor = "listing of 'packages/lib/src'"
+cost_tokens = 16
+cum_tokens = 574
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/lib/src"
+entries = ["api", "crypto", "files", "index.ts", "notes"]
+
+[[batches]]
+position = 9
+key = 'Typescript(ExportNames { file: "packages/lib/src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/lib/src/index.ts"
+cost_tokens = 8
+cum_tokens = 582
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/lib/src/index.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/lib/src/index.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Markdown(ReadmeHeadline { file: "packages/lib/README.md" })'
+descriptor = "README headline in packages/lib/README.md"
+cost_tokens = 52
+cum_tokens = 634
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "packages/docs" })'
+descriptor = "listing of 'packages/docs'"
+cost_tokens = 17
+cum_tokens = 651
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/docs"
+entries = [".vitepress", "eslint.config.js", "package.json", "src"]
+
+[[batches]]
+position = 12
 key = 'Markdown(Section { file: "README.md", section_index: 32 })'
 descriptor = "README.md section #32"
 cost_tokens = 18
-cum_tokens = 1163
+cum_tokens = 669
 
 [batches.content]
 kind = "lines"
@@ -882,11 +560,177 @@ end = 196
 kind = "full"
 
 [[batches]]
-position = 26
+position = 13
+key = 'Yaml(Whole { file: "docker-compose.yml" })'
+descriptor = "docker-compose at docker-compose.yml"
+cost_tokens = 101
+cum_tokens = 770
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docker-compose.yml"
+start = 1
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docker-compose.yml"
+start = 10
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "packages/app-server" })'
+descriptor = "listing of 'packages/app-server'"
+cost_tokens = 23
+cum_tokens = 793
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/app-server"
+entries = ["eslint.config.js", "package.json", "src", "tsconfig.json", "wrangler.toml"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "packages/app-server/src" })'
+descriptor = "listing of 'packages/app-server/src'"
+cost_tokens = 21
+cum_tokens = 814
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/app-server/src"
+entries = ["index.cloudflare.ts", "index.node.ts", "modules", "reset.d.ts", "scripts"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "packages/deploy-cloudflare" })'
+descriptor = "listing of 'packages/deploy-cloudflare'"
+cost_tokens = 25
+cum_tokens = 839
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/deploy-cloudflare"
+entries = [".nvmrc", "_routes.json", "build.sh", "package.json", "wrangler.toml"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "packages/crypto" })'
+descriptor = "listing of 'packages/crypto'"
+cost_tokens = 26
+cum_tokens = 865
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/crypto"
+entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
+
+[[batches]]
+position = 18
+key = 'Markdown(ReadmeHeadline { file: "packages/crypto/README.md" })'
+descriptor = "README headline in packages/crypto/README.md"
+cost_tokens = 64
+cum_tokens = 929
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/crypto/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/crypto/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Markdown(HeadingsOutline { file: "packages/crypto/README.md" })'
+descriptor = "headings outline in packages/crypto/README.md"
+cost_tokens = 31
+cum_tokens = 960
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/crypto/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/crypto/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/crypto/README.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/crypto/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/crypto/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/crypto/README.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 20
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 31
-cum_tokens = 1194
+cum_tokens = 991
 
 [batches.content]
 kind = "lines"
@@ -908,11 +752,139 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 27
+position = 21
+key = 'Markdown(HeadingsOutline { file: "packages/lib/README.md" })'
+descriptor = "headings outline in packages/lib/README.md"
+cost_tokens = 40
+cum_tokens = 1031
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/lib/README.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "packages/cli" })'
+descriptor = "listing of 'packages/cli'"
+cost_tokens = 29
+cum_tokens = 1060
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/cli"
+entries = ["README.md", "bin", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
+
+[[batches]]
+position = 23
+key = 'Markdown(ReadmeHeadline { file: "packages/cli/README.md" })'
+descriptor = "README headline in packages/cli/README.md"
+cost_tokens = 50
+cum_tokens = 1110
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/cli/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/cli/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "packages/cli/src" })'
+descriptor = "listing of 'packages/cli/src'"
+cost_tokens = 21
+cum_tokens = 1131
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/cli/src"
+entries = ["cli.ts", "config", "create-note", "files", "shared", "view-note"]
+
+[[batches]]
+position = 25
 key = 'Markdown(Section { file: "README.md", section_index: 25 })'
 descriptor = "README.md section #25"
 cost_tokens = 30
-cum_tokens = 1224
+cum_tokens = 1161
 
 [batches.content]
 kind = "lines"
@@ -932,6 +904,34 @@ end = 157
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "packages/docs/src" })'
+descriptor = "listing of 'packages/docs/src'"
+cost_tokens = 31
+cum_tokens = 1192
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/docs/src"
+entries = ["components", "data", "how-it-works.md", "index.md", "integrations", "public", "resources", "self-hosting"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "packages/crypto/src" })'
+descriptor = "listing of 'packages/crypto/src'"
+cost_tokens = 32
+cum_tokens = 1224
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/crypto/src"
+entries = ["api-definition.ts", "encryption-algorithms", "index.node.ts", "index.test.ts", "index.web.ts", "node", "web"]
 
 [[batches]]
 position = 28

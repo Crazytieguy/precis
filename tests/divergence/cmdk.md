@@ -6,25 +6,25 @@ Score(3000)=0.618 I=0.747 C=0.512 ns_rows≤3K=19/42 (reached=12 partial=0 missi
 | ns | 78 |  | 78 | README lede — one-sentence elevator pitch | 1.1 |  | 0.000 |
 | walker |  | 85 | 23 | package identity in package.json |  |  | 0.000 |
 | walker |  | 104 | 19 | package runtime metadata in package.json |  |  | 0.000 |
-| walker |  | 117 | 13 | listing of 'cmdk' |  |  | 0.000 |
-| ns | 140 |  | 62 | Top-level filesystem layout | 1.2 |  | 0.833 |
-| ns | 163 |  | 23 | Library inner layout — only two source files | 1.3 |  | 0.745 |
-| walker |  | 205 | 88 | README headline in README.md |  |  | 0.905 |
-| walker |  | 213 | 8 | export names surface in playwright.config.ts |  |  | 0.905 |
-| ns | 257 |  | 94 | Library runtime dependencies | 1.4 |  | 0.777 |
-| walker |  | 270 | 57 | headings outline in ARCHITECTURE.md |  |  | 0.777 |
+| ns | 140 |  | 62 | Top-level filesystem layout | 1.2 |  | 0.817 |
+| ns | 163 |  | 23 | Library inner layout — only two source files | 1.3 |  | 0.693 |
+| walker |  | 192 | 88 | README headline in README.md |  |  | 0.849 |
+| walker |  | 249 | 57 | headings outline in ARCHITECTURE.md |  |  | 0.849 |
+| ns | 257 |  | 94 | Library runtime dependencies | 1.4 |  | 0.729 |
+| walker |  | 262 | 13 | listing of 'cmdk' |  |  | 0.777 |
+| walker |  | 270 | 8 | export names surface in playwright.config.ts |  |  | 0.777 |
 | ns | 291 |  | 34 | pnpm workspace members | 1.5 |  | 0.715 |
 | ns | 409 |  | 118 | Test app layout — pages + test files | 1.6 |  | 0.513 |
 | walker |  | 472 | 202 | package scripts in package.json |  |  | 0.521 |
-| walker |  | 483 | 11 | export names surface in cmdk/tsup.config.ts |  |  | 0.521 |
-| walker |  | 517 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.584 |
-| ns | 549 |  | 140 | Website (showcase) layout — themes + components | 1.7 |  | 0.449 |
-| ns | 751 |  | 202 | Root scripts — how to build/run/test | 1.8 |  | 0.504 |
-| ns | 802 |  | 51 | README — top-level section headings | 2.1 |  | 0.483 |
-| walker |  | 807 | 290 | headings outline in README.md |  |  | 0.544 |
-| walker |  | 818 | 11 | README.md section #28 |  |  | 0.544 |
-| walker |  | 841 | 23 | README.md section #1 |  |  | 0.544 |
-| walker |  | 882 | 41 | README.md section #3 |  |  | 0.544 |
+| ns | 549 |  | 140 | Website (showcase) layout — themes + components | 1.7 |  | 0.401 |
+| ns | 751 |  | 202 | Root scripts — how to build/run/test | 1.8 |  | 0.464 |
+| walker |  | 762 | 290 | headings outline in README.md |  |  | 0.474 |
+| walker |  | 773 | 11 | README.md section #28 |  |  | 0.474 |
+| walker |  | 796 | 23 | README.md section #1 |  |  | 0.475 |
+| ns | 802 |  | 51 | README — top-level section headings | 2.1 |  | 0.507 |
+| walker |  | 807 | 11 | export names surface in cmdk/tsup.config.ts |  |  | 0.507 |
+| walker |  | 848 | 41 | README.md section #3 |  |  | 0.507 |
+| walker |  | 882 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.544 |
 | walker |  | 898 | 16 | README.md section #24 |  |  | 0.544 |
 | walker |  | 927 | 29 | ARCHITECTURE.md section #4 |  |  | 0.544 |
 | walker |  | 937 | 10 | listing of 'cmdk/src' |  |  | 0.577 |

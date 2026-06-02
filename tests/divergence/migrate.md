@@ -4,80 +4,80 @@ Score(3000)=0.570 I=0.657 C=0.495 ns_rows≤3K=14/33 (reached=5 partial=0 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 52 |  | 52 | Repo lede (first lines of README) | 1.1 |  | 0.000 |
 | walker |  | 125 | 125 | listing of '.' |  |  | 0.000 |
-| walker |  | 128 | 3 | listing of 'cmd' |  |  | 0.000 |
 | ns | 134 |  | 82 | migrate package doc | 1.2 |  | 0.000 |
-| walker |  | 138 | 10 | go decl names surface in log.go |  |  | 0.000 |
-| walker |  | 166 | 28 | go module identity in go.mod |  |  | 0.000 |
-| walker |  | 172 | 6 | listing of 'internal' |  |  | 0.000 |
-| walker |  | 214 | 42 | README headline in README.md |  |  | 0.402 |
+| walker |  | 167 | 42 | README headline in README.md |  |  | 0.402 |
+| walker |  | 170 | 3 | listing of 'cmd' |  |  | 0.402 |
+| walker |  | 180 | 10 | go decl names surface in log.go |  |  | 0.402 |
+| walker |  | 208 | 28 | go module identity in go.mod |  |  | 0.402 |
+| walker |  | 214 | 6 | listing of 'internal' |  |  | 0.402 |
 | ns | 223 |  | 89 | FAQ code-base layout tree | 1.3 |  | 0.285 |
-| walker |  | 225 | 11 | listing of 'dktesting' |  |  | 0.285 |
-| walker |  | 237 | 12 | listing of 'cli' |  |  | 0.285 |
-| walker |  | 261 | 24 | README headline in cli/README.md |  |  | 0.285 |
-| walker |  | 271 | 10 | go decl names surface in cli/main.go |  |  | 0.285 |
-| walker |  | 271 | 0 | go decl at cli/main.go:6 |  |  | 0.285 |
-| walker |  | 281 | 10 | go decl names surface in cli/version.go |  |  | 0.285 |
-| walker |  | 281 | 0 | go decl at cli/version.go:4 |  |  | 0.285 |
+| walker |  | 267 | 53 | headings outline in GETTING_STARTED.md |  |  | 0.285 |
+| walker |  | 278 | 11 | listing of 'dktesting' |  |  | 0.285 |
+| walker |  | 290 | 12 | listing of 'cli' |  |  | 0.285 |
+| walker |  | 314 | 24 | README headline in cli/README.md |  |  | 0.285 |
+| walker |  | 324 | 10 | go decl names surface in cli/main.go |  |  | 0.285 |
+| walker |  | 324 | 0 | go decl at cli/main.go:6 |  |  | 0.285 |
+| walker |  | 334 | 10 | go decl names surface in cli/version.go |  |  | 0.285 |
+| walker |  | 334 | 0 | go decl at cli/version.go:4 |  |  | 0.285 |
 | ns | 348 |  | 125 | Top-level fixture root listing | 1.4 |  | 0.615 |
-| walker |  | 351 | 70 | go package doc lede in migrate.go |  |  | 0.721 |
-| walker |  | 358 | 7 | go package + imports in log.go |  |  | 0.721 |
-| walker |  | 411 | 53 | headings outline in GETTING_STARTED.md |  |  | 0.721 |
-| walker |  | 418 | 7 | go package + imports in cli/version.go |  |  | 0.721 |
-| walker |  | 433 | 15 | listing of 'cmd/migrate' |  |  | 0.721 |
-| walker |  | 441 | 8 | README headline in cmd/migrate/README.md |  |  | 0.721 |
-| walker |  | 451 | 10 | go decl names surface in cmd/migrate/main.go |  |  | 0.721 |
-| walker |  | 451 | 0 | go decl at cmd/migrate/main.go:5 |  |  | 0.721 |
-| walker |  | 461 | 10 | go decl names surface in cmd/migrate/version.go |  |  | 0.721 |
-| walker |  | 461 | 0 | go decl at cmd/migrate/version.go:4 |  |  | 0.721 |
-| ns | 470 |  | 122 | database/ subpackage listing | 1.5 |  | 0.548 |
-| walker |  | 519 | 58 | go decl at log.go:5 |  |  | 0.548 |
-| walker |  | 544 | 25 | go decl doc at log.go:5 |  |  | 0.548 |
+| walker |  | 404 | 70 | go package doc lede in migrate.go |  |  | 0.721 |
+| walker |  | 411 | 7 | go package + imports in log.go |  |  | 0.721 |
+| ns | 470 |  | 122 | database/ subpackage listing | 1.5 |  | 0.547 |
+| walker |  | 548 | 137 | headings outline in README.md |  |  | 0.548 |
 | ns | 559 |  | 89 | source/ subpackage listing | 1.6 |  | 0.478 |
-| walker |  | 624 | 80 | go decl names surface in util.go |  |  | 0.478 |
-| walker |  | 624 | 0 | go decl at util.go:21 |  |  | 0.478 |
-| walker |  | 624 | 0 | go decl at util.go:32 |  |  | 0.478 |
-| walker |  | 624 | 0 | go decl at util.go:45 |  |  | 0.478 |
-| walker |  | 624 | 0 | go decl at util.go:53 |  |  | 0.478 |
-| walker |  | 636 | 12 | go decl at util.go:13 |  |  | 0.478 |
-| walker |  | 654 | 18 | go decl doc at util.go:53 |  |  | 0.478 |
+| walker |  | 563 | 15 | README.md section #5 |  |  | 0.478 |
+| walker |  | 570 | 7 | go package + imports in cli/version.go |  |  | 0.478 |
+| walker |  | 585 | 15 | listing of 'cmd/migrate' |  |  | 0.478 |
+| walker |  | 593 | 8 | README headline in cmd/migrate/README.md |  |  | 0.478 |
+| walker |  | 603 | 10 | go decl names surface in cmd/migrate/main.go |  |  | 0.478 |
+| walker |  | 603 | 0 | go decl at cmd/migrate/main.go:5 |  |  | 0.478 |
+| walker |  | 613 | 10 | go decl names surface in cmd/migrate/version.go |  |  | 0.478 |
+| walker |  | 613 | 0 | go decl at cmd/migrate/version.go:4 |  |  | 0.478 |
 | ns | 667 |  | 108 | Migration filename format | 1.7 |  | 0.457 |
-| walker |  | 673 | 19 | go decl doc at util.go:32 |  |  | 0.457 |
+| walker |  | 671 | 58 | go decl at log.go:5 |  |  | 0.457 |
+| walker |  | 696 | 25 | go decl doc at log.go:5 |  |  | 0.457 |
+| walker |  | 776 | 80 | go decl names surface in util.go |  |  | 0.457 |
+| walker |  | 776 | 0 | go decl at util.go:21 |  |  | 0.457 |
+| walker |  | 776 | 0 | go decl at util.go:32 |  |  | 0.457 |
+| walker |  | 776 | 0 | go decl at util.go:45 |  |  | 0.457 |
+| walker |  | 776 | 0 | go decl at util.go:53 |  |  | 0.457 |
+| walker |  | 788 | 12 | go decl at util.go:13 |  |  | 0.457 |
+| walker |  | 806 | 18 | go decl doc at util.go:53 |  |  | 0.457 |
+| walker |  | 825 | 19 | go decl doc at util.go:32 |  |  | 0.457 |
 | ns | 830 |  | 163 | Library usage example (Go snippet) | 1.8 |  | 0.426 |
-| walker |  | 857 | 184 | go decl names surface in migrate.go |  |  | 0.428 |
-| walker |  | 857 | 0 | go decl at migrate.go:24 |  |  | 0.428 |
-| walker |  | 857 | 0 | go decl at migrate.go:27 |  |  | 0.428 |
-| walker |  | 857 | 0 | go decl at migrate.go:44 |  |  | 0.428 |
-| walker |  | 857 | 0 | go decl at migrate.go:52 |  |  | 0.428 |
-| walker |  | 867 | 10 | go decl at migrate.go:48 |  |  | 0.428 |
-| walker |  | 878 | 11 | go decl at migrate.go:39 |  |  | 0.429 |
-| walker |  | 887 | 9 | go decl at migrate.go:29 |  |  | 0.429 |
-| walker |  | 898 | 11 | go decl doc at migrate.go:44 |  |  | 0.429 |
-| walker |  | 912 | 14 | go decl body at migrate.go:44 |  |  | 0.429 |
-| walker |  | 945 | 33 | go decl doc at migrate.go:39 |  |  | 0.430 |
-| walker |  | 966 | 21 | go decl doc at migrate.go:27 |  |  | 0.431 |
-| ns | 969 |  | 139 | Basic CLI invocation example | 1.9 |  | 0.406 |
-| walker |  | 986 | 20 | go decl body at migrate.go:52 |  |  | 0.407 |
-| walker |  | 1082 | 96 | go decl names surface in migration.go |  |  | 0.407 |
-| walker |  | 1082 | 0 | go decl at migration.go:13 |  |  | 0.407 |
-| walker |  | 1082 | 0 | go decl at migration.go:107 |  |  | 0.407 |
-| walker |  | 1082 | 0 | go decl at migration.go:112 |  |  | 0.407 |
-| walker |  | 1082 | 0 | go decl at migration.go:122 |  |  | 0.407 |
-| walker |  | 1097 | 15 | go decl at migration.go:77 |  |  | 0.407 |
-| walker |  | 1113 | 16 | go decl doc at migration.go:107 |  |  | 0.407 |
-| walker |  | 1129 | 16 | go decl doc at migration.go:112 |  |  | 0.407 |
-| walker |  | 1157 | 28 | go decl doc at migration.go:122 |  |  | 0.407 |
-| walker |  | 1180 | 23 | go decl body at migration.go:107 |  |  | 0.407 |
-| walker |  | 1187 | 7 | go package + imports in cmd/migrate/version.go |  |  | 0.407 |
-| walker |  | 1238 | 51 | go decl names surface in dktesting/dktesting.go |  |  | 0.407 |
-| walker |  | 1238 | 0 | go decl at dktesting/dktesting.go:20 |  |  | 0.407 |
-| ns | 1243 |  | 274 | Migrate struct fields | 2.1 |  | 0.368 |
-| walker |  | 1254 | 16 | go decl at dktesting/dktesting.go:44 |  |  | 0.368 |
-| walker |  | 1277 | 23 | go decl at dktesting/dktesting.go:14 |  |  | 0.368 |
-| walker |  | 1290 | 13 | go decl doc at dktesting/dktesting.go:14 |  |  | 0.368 |
-| walker |  | 1303 | 13 | go decl doc at dktesting/dktesting.go:44 |  |  | 0.368 |
-| walker |  | 1440 | 137 | headings outline in README.md |  |  | 0.370 |
-| walker |  | 1455 | 15 | README.md section #5 |  |  | 0.370 |
-| walker |  | 1577 | 122 | README.md section #0 |  |  | 0.370 |
+| walker |  | 947 | 122 | README.md section #0 |  |  | 0.426 |
+| ns | 969 |  | 139 | Basic CLI invocation example | 1.9 |  | 0.404 |
+| walker |  | 1131 | 184 | go decl names surface in migrate.go |  |  | 0.406 |
+| walker |  | 1131 | 0 | go decl at migrate.go:24 |  |  | 0.406 |
+| walker |  | 1131 | 0 | go decl at migrate.go:27 |  |  | 0.406 |
+| walker |  | 1131 | 0 | go decl at migrate.go:44 |  |  | 0.406 |
+| walker |  | 1131 | 0 | go decl at migrate.go:52 |  |  | 0.406 |
+| walker |  | 1141 | 10 | go decl at migrate.go:48 |  |  | 0.406 |
+| walker |  | 1152 | 11 | go decl at migrate.go:39 |  |  | 0.406 |
+| walker |  | 1161 | 9 | go decl at migrate.go:29 |  |  | 0.406 |
+| walker |  | 1172 | 11 | go decl doc at migrate.go:44 |  |  | 0.406 |
+| walker |  | 1186 | 14 | go decl body at migrate.go:44 |  |  | 0.406 |
+| walker |  | 1219 | 33 | go decl doc at migrate.go:39 |  |  | 0.407 |
+| walker |  | 1240 | 21 | go decl doc at migrate.go:27 |  |  | 0.408 |
+| ns | 1243 |  | 274 | Migrate struct fields | 2.1 |  | 0.369 |
+| walker |  | 1260 | 20 | go decl body at migrate.go:52 |  |  | 0.370 |
+| walker |  | 1356 | 96 | go decl names surface in migration.go |  |  | 0.370 |
+| walker |  | 1356 | 0 | go decl at migration.go:13 |  |  | 0.370 |
+| walker |  | 1356 | 0 | go decl at migration.go:107 |  |  | 0.370 |
+| walker |  | 1356 | 0 | go decl at migration.go:112 |  |  | 0.370 |
+| walker |  | 1356 | 0 | go decl at migration.go:122 |  |  | 0.370 |
+| walker |  | 1371 | 15 | go decl at migration.go:77 |  |  | 0.370 |
+| walker |  | 1387 | 16 | go decl doc at migration.go:107 |  |  | 0.370 |
+| walker |  | 1403 | 16 | go decl doc at migration.go:112 |  |  | 0.370 |
+| walker |  | 1431 | 28 | go decl doc at migration.go:122 |  |  | 0.370 |
+| walker |  | 1454 | 23 | go decl body at migration.go:107 |  |  | 0.370 |
+| walker |  | 1461 | 7 | go package + imports in cmd/migrate/version.go |  |  | 0.370 |
+| walker |  | 1512 | 51 | go decl names surface in dktesting/dktesting.go |  |  | 0.370 |
+| walker |  | 1512 | 0 | go decl at dktesting/dktesting.go:20 |  |  | 0.370 |
+| walker |  | 1528 | 16 | go decl at dktesting/dktesting.go:44 |  |  | 0.370 |
+| walker |  | 1551 | 23 | go decl at dktesting/dktesting.go:14 |  |  | 0.370 |
+| walker |  | 1564 | 13 | go decl doc at dktesting/dktesting.go:14 |  |  | 0.370 |
+| walker |  | 1577 | 13 | go decl doc at dktesting/dktesting.go:44 |  |  | 0.370 |
 | ns | 1626 |  | 383 | Sentinel errors + Default* knobs | 2.2 |  | 0.390 |
 | walker |  | 1666 | 89 | listing of 'source' |  |  | 0.474 |
 | walker |  | 1686 | 20 | listing of 'source/bitbucket' |  |  | 0.474 |

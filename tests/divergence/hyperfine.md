@@ -12,107 +12,107 @@ Score(3000)=0.527 I=0.802 C=0.346 ns_rows≤3K=23/42 (reached=7 partial=1 missin
 | ns | 254 |  | 90 | main.rs module declarations | 1.5 |  | 0.492 |
 | ns | 316 |  | 62 | src/benchmark/ + src/export/ fs listings | 1.6 |  | 0.416 |
 | walker |  | 364 | 170 | [package] in Cargo.toml |  |  | 0.495 |
-| walker |  | 389 | 25 | listing of 'doc' |  |  | 0.495 |
 | ns | 394 |  | 78 | Remaining src/ subdir fs listings | 1.7 |  | 0.424 |
-| walker |  | 461 | 72 | README.md section #0 |  |  | 0.450 |
-| walker |  | 505 | 44 | listing of 'src' |  |  | 0.606 |
-| walker |  | 515 | 10 | entry item at src/main.rs:53 |  |  | 0.606 |
-| walker |  | 528 | 13 | listing of 'src/parameter' |  |  | 0.611 |
-| walker |  | 541 | 13 | entry item at src/main.rs:29 |  |  | 0.611 |
-| walker |  | 548 | 7 | entry item body at src/main.rs:29 body 50 |  |  | 0.611 |
-| walker |  | 558 | 10 | entry item body at src/main.rs:29 body 31 |  |  | 0.612 |
-| walker |  | 568 | 10 | entry item body at src/main.rs:29 body 48 |  |  | 0.612 |
-| ns | 572 |  | 178 | main.rs run() — first half (CLI parsing + builders) | 1.8 |  | 0.550 |
-| walker |  | 580 | 12 | entry item body at src/main.rs:29 body 30 |  |  | 0.552 |
-| walker |  | 592 | 12 | entry item body at src/main.rs:29 body 46 |  |  | 0.553 |
-| walker |  | 604 | 12 | entry item body at src/main.rs:29 body 47 |  |  | 0.553 |
-| walker |  | 618 | 14 | entry item body at src/main.rs:29 body 43 |  |  | 0.558 |
-| walker |  | 634 | 16 | entry item body at src/main.rs:29 body 32 |  |  | 0.566 |
-| walker |  | 651 | 17 | entry item body at src/main.rs:29 body 34 |  |  | 0.574 |
-| walker |  | 668 | 17 | entry item body at src/main.rs:29 body 36 |  |  | 0.586 |
-| walker |  | 686 | 18 | entry item body at src/main.rs:29 body 35 |  |  | 0.600 |
-| walker |  | 708 | 22 | entry item body at src/main.rs:29 body 45 |  |  | 0.601 |
-| walker |  | 725 | 17 | listing of 'src/output' |  |  | 0.621 |
-| ns | 741 |  | 169 | main.rs run() — second half (Scheduler) + main() wrapper | 1.9 | 1.8 | 0.580 |
-| walker |  | 745 | 20 | listing of 'src/timer' |  |  | 0.611 |
-| walker |  | 778 | 33 | pub-item names surface in src/parameter/mod.rs |  |  | 0.611 |
-| walker |  | 797 | 19 | pub item at src/parameter/mod.rs:8 |  |  | 0.611 |
-| walker |  | 831 | 34 | pub-item names surface in src/timer/mod.rs |  |  | 0.611 |
-| walker |  | 831 | 0 | pub item at src/timer/mod.rs:83 |  |  | 0.611 |
-| walker |  | 859 | 28 | listing of 'src/util' |  |  | 0.681 |
-| ns | 895 |  | 154 | README features list | 1.10 |  | 0.639 |
-| walker |  | 910 | 51 | entry item body at src/main.rs:29 body 37 |  |  | 0.684 |
-| walker |  | 945 | 35 | listing of 'src/export' |  |  | 0.713 |
-| ns | 950 |  | 55 | Scheduler struct header + public method names | 2.1 |  | 0.696 |
-| walker |  | 978 | 33 | pub-item names surface in src/export/mod.rs |  |  | 0.696 |
-| ns | 979 |  | 29 | Benchmark struct header + Benchmark::run signature | 2.2 |  | 0.687 |
-| walker |  | 997 | 19 | pub item at src/export/mod.rs:56 |  |  | 0.687 |
-| walker |  | 1035 | 38 | pub item at src/export/mod.rs:67 |  |  | 0.688 |
-| walker |  | 1048 | 13 | pub item at src/util/randomized_environment_offset.rs:6 |  |  | 0.688 |
+| walker |  | 436 | 72 | README.md section #0 |  |  | 0.450 |
+| walker |  | 468 | 32 | README.md section #4 |  |  | 0.450 |
+| walker |  | 493 | 25 | listing of 'doc' |  |  | 0.450 |
+| walker |  | 568 | 75 | man-page NAME + DESCRIPTION in doc/hyperfine.1 |  |  | 0.450 |
+| ns | 572 |  | 178 | main.rs run() — first half (CLI parsing + builders) | 1.8 |  | 0.403 |
+| walker |  | 612 | 44 | listing of 'src' |  |  | 0.543 |
+| walker |  | 622 | 10 | entry item at src/main.rs:53 |  |  | 0.543 |
+| walker |  | 635 | 13 | listing of 'src/parameter' |  |  | 0.548 |
+| walker |  | 648 | 13 | entry item at src/main.rs:29 |  |  | 0.548 |
+| walker |  | 655 | 7 | entry item body at src/main.rs:29 body 50 |  |  | 0.549 |
+| walker |  | 665 | 10 | entry item body at src/main.rs:29 body 31 |  |  | 0.550 |
+| walker |  | 675 | 10 | entry item body at src/main.rs:29 body 48 |  |  | 0.550 |
+| walker |  | 687 | 12 | entry item body at src/main.rs:29 body 30 |  |  | 0.552 |
+| walker |  | 699 | 12 | entry item body at src/main.rs:29 body 46 |  |  | 0.553 |
+| walker |  | 711 | 12 | entry item body at src/main.rs:29 body 47 |  |  | 0.553 |
+| walker |  | 725 | 14 | entry item body at src/main.rs:29 body 43 |  |  | 0.558 |
+| walker |  | 741 | 16 | entry item body at src/main.rs:29 body 32 |  |  | 0.520 |
+| ns | 741 |  | 169 | main.rs run() — second half (Scheduler) + main() wrapper | 1.9 | 1.8 | 0.520 |
+| walker |  | 758 | 17 | entry item body at src/main.rs:29 body 34 |  |  | 0.528 |
+| walker |  | 775 | 17 | entry item body at src/main.rs:29 body 36 |  |  | 0.538 |
+| walker |  | 793 | 18 | entry item body at src/main.rs:29 body 35 |  |  | 0.550 |
+| walker |  | 815 | 22 | entry item body at src/main.rs:29 body 45 |  |  | 0.562 |
+| walker |  | 832 | 17 | listing of 'src/output' |  |  | 0.580 |
+| walker |  | 852 | 20 | listing of 'src/timer' |  |  | 0.611 |
+| walker |  | 885 | 33 | pub-item names surface in src/parameter/mod.rs |  |  | 0.611 |
+| ns | 895 |  | 154 | README features list | 1.10 |  | 0.574 |
+| walker |  | 904 | 19 | pub item at src/parameter/mod.rs:8 |  |  | 0.574 |
+| walker |  | 938 | 34 | pub-item names surface in src/timer/mod.rs |  |  | 0.574 |
+| walker |  | 938 | 0 | pub item at src/timer/mod.rs:83 |  |  | 0.574 |
+| ns | 950 |  | 55 | Scheduler struct header + public method names | 2.1 |  | 0.560 |
+| walker |  | 966 | 28 | listing of 'src/util' |  |  | 0.624 |
+| ns | 979 |  | 29 | Benchmark struct header + Benchmark::run signature | 2.2 |  | 0.615 |
+| walker |  | 1017 | 51 | entry item body at src/main.rs:29 body 37 |  |  | 0.658 |
+| walker |  | 1052 | 35 | listing of 'src/export' |  |  | 0.687 |
 | ns | 1058 |  | 79 | Executor trait header + impl struct names | 2.3 |  | 0.663 |
-| walker |  | 1121 | 73 | pub item at src/timer/mod.rs:42 |  |  | 0.663 |
-| walker |  | 1219 | 98 | pub item at src/export/mod.rs:28 |  |  | 0.666 |
-| walker |  | 1232 | 13 | pub-item doc lede at src/export/mod.rs:67 |  |  | 0.666 |
-| walker |  | 1303 | 71 | entry item body at src/main.rs:53 body 54 |  |  | 0.716 |
-| walker |  | 1329 | 26 | pub-item names surface in src/error.rs |  |  | 0.716 |
-| walker |  | 1346 | 17 | pub-item doc lede at src/export/mod.rs:28 |  |  | 0.716 |
-| walker |  | 1371 | 25 | mod/use plumbing in src/output/mod.rs |  |  | 0.716 |
-| walker |  | 1412 | 41 | impl method sigs in src/parameter/mod.rs |  |  | 0.716 |
+| walker |  | 1085 | 33 | pub-item names surface in src/export/mod.rs |  |  | 0.663 |
+| walker |  | 1104 | 19 | pub item at src/export/mod.rs:56 |  |  | 0.663 |
+| walker |  | 1142 | 38 | pub item at src/export/mod.rs:67 |  |  | 0.663 |
+| walker |  | 1155 | 13 | pub item at src/util/randomized_environment_offset.rs:6 |  |  | 0.663 |
+| walker |  | 1228 | 73 | pub item at src/timer/mod.rs:42 |  |  | 0.663 |
+| walker |  | 1326 | 98 | pub item at src/export/mod.rs:28 |  |  | 0.666 |
+| walker |  | 1339 | 13 | pub-item doc lede at src/export/mod.rs:67 |  |  | 0.666 |
+| walker |  | 1410 | 71 | entry item body at src/main.rs:53 body 54 |  |  | 0.716 |
 | ns | 1426 |  | 368 | Options struct field list — first half | 2.4 |  | 0.632 |
-| walker |  | 1427 | 15 | pub-item doc lede at src/timer/mod.rs:42 |  |  | 0.632 |
-| walker |  | 1442 | 15 | pub-item doc lede at src/timer/mod.rs:83 |  |  | 0.632 |
-| walker |  | 1461 | 19 | pub item at src/parameter/tokenize.rs:1 |  |  | 0.632 |
-| walker |  | 1493 | 32 | pub-item names surface in src/command.rs |  |  | 0.632 |
-| walker |  | 1493 | 0 | pub item at src/command.rs:134 |  |  | 0.632 |
-| walker |  | 1517 | 24 | pub item at src/timer/wall_clock_timer.rs:5 |  |  | 0.632 |
-| walker |  | 1548 | 31 | pub item at src/util/number.rs:10 |  |  | 0.632 |
-| walker |  | 1573 | 25 | pub item at src/timer/windows_timer.rs:49 |  |  | 0.632 |
-| walker |  | 1595 | 22 | pub-item names surface in src/export/markup.rs |  |  | 0.632 |
-| walker |  | 1612 | 17 | pub item at src/export/markup.rs:10 |  |  | 0.632 |
-| walker |  | 1635 | 23 | pub-item names surface in src/parameter/range_step.rs |  |  | 0.632 |
-| walker |  | 1658 | 23 | pub-item names surface in src/timer/unix_timer.rs |  |  | 0.632 |
+| walker |  | 1436 | 26 | pub-item names surface in src/error.rs |  |  | 0.632 |
+| walker |  | 1453 | 17 | pub-item doc lede at src/export/mod.rs:28 |  |  | 0.632 |
+| walker |  | 1478 | 25 | mod/use plumbing in src/output/mod.rs |  |  | 0.632 |
+| walker |  | 1519 | 41 | impl method sigs in src/parameter/mod.rs |  |  | 0.632 |
+| walker |  | 1534 | 15 | pub-item doc lede at src/timer/mod.rs:42 |  |  | 0.632 |
+| walker |  | 1549 | 15 | pub-item doc lede at src/timer/mod.rs:83 |  |  | 0.632 |
+| walker |  | 1568 | 19 | pub item at src/parameter/tokenize.rs:1 |  |  | 0.632 |
+| walker |  | 1600 | 32 | pub-item names surface in src/command.rs |  |  | 0.632 |
+| walker |  | 1600 | 0 | pub item at src/command.rs:134 |  |  | 0.632 |
+| walker |  | 1624 | 24 | pub item at src/timer/wall_clock_timer.rs:5 |  |  | 0.632 |
+| walker |  | 1655 | 31 | pub item at src/util/number.rs:10 |  |  | 0.632 |
 | ns | 1666 |  | 240 | Options struct field list — second half | 2.5 | 2.4 | 0.590 |
-| walker |  | 1673 | 15 | pub item at src/timer/unix_timer.rs:18 |  |  | 0.590 |
-| walker |  | 1697 | 24 | pub-item names surface in src/output/warnings.rs |  |  | 0.590 |
-| walker |  | 1725 | 28 | pub item at src/output/warnings.rs:7 |  |  | 0.590 |
-| walker |  | 1755 | 30 | pub item at src/parameter/range_step.rs:34 |  |  | 0.590 |
-| walker |  | 1796 | 41 | mod/use plumbing in src/parameter/mod.rs |  |  | 0.590 |
+| walker |  | 1680 | 25 | pub item at src/timer/windows_timer.rs:49 |  |  | 0.590 |
+| walker |  | 1702 | 22 | pub-item names surface in src/export/markup.rs |  |  | 0.590 |
+| walker |  | 1719 | 17 | pub item at src/export/markup.rs:10 |  |  | 0.590 |
+| walker |  | 1742 | 23 | pub-item names surface in src/parameter/range_step.rs |  |  | 0.590 |
+| walker |  | 1765 | 23 | pub-item names surface in src/timer/unix_timer.rs |  |  | 0.590 |
+| walker |  | 1780 | 15 | pub item at src/timer/unix_timer.rs:18 |  |  | 0.590 |
 | ns | 1798 |  | 132 | Options sibling enum/struct headers | 2.6 |  | 0.567 |
+| walker |  | 1804 | 24 | pub-item names surface in src/output/warnings.rs |  |  | 0.567 |
 | ns | 1825 |  | 27 | Options::from_cli_arguments + validate_against_command_list signatures | 2.7 |  | 0.564 |
-| walker |  | 1840 | 44 | mod/use plumbing in src/util/mod.rs |  |  | 0.564 |
-| walker |  | 1871 | 31 | pub item at src/output/progress_bar.rs:13 |  |  | 0.564 |
+| walker |  | 1832 | 28 | pub item at src/output/warnings.rs:7 |  |  | 0.564 |
+| walker |  | 1862 | 30 | pub item at src/parameter/range_step.rs:34 |  |  | 0.564 |
+| walker |  | 1903 | 41 | mod/use plumbing in src/parameter/mod.rs |  |  | 0.564 |
+| walker |  | 1947 | 44 | mod/use plumbing in src/util/mod.rs |  |  | 0.564 |
+| walker |  | 1978 | 31 | pub item at src/output/progress_bar.rs:13 |  |  | 0.564 |
 | ns | 1984 |  | 159 | Command + Commands type headers + public method names | 2.8 |  | 0.544 |
-| walker |  | 2036 | 165 | mod/use plumbing in src/main.rs |  |  | 0.597 |
-| walker |  | 2088 | 52 | pub item at src/output/warnings.rs:13 |  |  | 0.597 |
-| walker |  | 2156 | 68 | pub item at src/cli.rs:8 |  |  | 0.597 |
-| walker |  | 2176 | 20 | pub item body at src/cli.rs:8 body 13 |  |  | 0.597 |
-| walker |  | 2211 | 35 | pub-item names surface in src/util/units.rs |  |  | 0.597 |
-| walker |  | 2211 | 0 | pub item at src/util/units.rs:6 |  |  | 0.597 |
-| walker |  | 2237 | 26 | pub item at src/util/units.rs:10 |  |  | 0.597 |
-| walker |  | 2246 | 9 | pub-item doc lede at src/util/units.rs:10 |  |  | 0.597 |
+| walker |  | 2143 | 165 | mod/use plumbing in src/main.rs |  |  | 0.597 |
+| walker |  | 2195 | 52 | pub item at src/output/warnings.rs:13 |  |  | 0.597 |
 | ns | 2254 |  | 270 | BenchmarkResult fields (the in-memory result row) | 2.9 |  | 0.566 |
-| walker |  | 2261 | 15 | pub-item doc lede at src/command.rs:134 |  |  | 0.566 |
-| walker |  | 2299 | 38 | pub-item names surface in src/util/min_max.rs |  |  | 0.566 |
-| walker |  | 2299 | 0 | pub item at src/util/min_max.rs:2 |  |  | 0.566 |
-| walker |  | 2299 | 0 | pub item at src/util/min_max.rs:10 |  |  | 0.566 |
-| walker |  | 2385 | 86 | pub item at src/command.rs:22 |  |  | 0.566 |
-| walker |  | 2398 | 13 | pub-item doc lede at src/command.rs:22 |  |  | 0.566 |
-| walker |  | 2417 | 19 | pub item body at src/util/randomized_environment_offset.rs:6 body 7 |  |  | 0.566 |
-| walker |  | 2487 | 70 | pub-item names surface in src/outlier_detection.rs |  |  | 0.566 |
-| walker |  | 2487 | 0 | pub item at src/outlier_detection.rs:13 |  |  | 0.566 |
-| walker |  | 2487 | 0 | pub item at src/outlier_detection.rs:21 |  |  | 0.566 |
-| walker |  | 2487 | 0 | pub item at src/outlier_detection.rs:43 |  |  | 0.566 |
-| walker |  | 2531 | 44 | pub-item names surface in src/util/exit_code.rs |  |  | 0.566 |
-| walker |  | 2531 | 0 | pub item at src/util/exit_code.rs:4 |  |  | 0.566 |
-| walker |  | 2531 | 0 | pub item at src/util/exit_code.rs:20 |  |  | 0.566 |
-| walker |  | 2537 | 6 | pub item body at src/util/exit_code.rs:20 body 21 |  |  | 0.566 |
+| walker |  | 2263 | 68 | pub item at src/cli.rs:8 |  |  | 0.566 |
+| walker |  | 2283 | 20 | pub item body at src/cli.rs:8 body 13 |  |  | 0.566 |
+| walker |  | 2318 | 35 | pub-item names surface in src/util/units.rs |  |  | 0.566 |
+| walker |  | 2318 | 0 | pub item at src/util/units.rs:6 |  |  | 0.566 |
+| walker |  | 2344 | 26 | pub item at src/util/units.rs:10 |  |  | 0.566 |
+| walker |  | 2353 | 9 | pub-item doc lede at src/util/units.rs:10 |  |  | 0.566 |
+| walker |  | 2368 | 15 | pub-item doc lede at src/command.rs:134 |  |  | 0.566 |
+| walker |  | 2406 | 38 | pub-item names surface in src/util/min_max.rs |  |  | 0.566 |
+| walker |  | 2406 | 0 | pub item at src/util/min_max.rs:2 |  |  | 0.566 |
+| walker |  | 2406 | 0 | pub item at src/util/min_max.rs:10 |  |  | 0.566 |
+| walker |  | 2492 | 86 | pub item at src/command.rs:22 |  |  | 0.566 |
+| walker |  | 2505 | 13 | pub-item doc lede at src/command.rs:22 |  |  | 0.566 |
+| walker |  | 2524 | 19 | pub item body at src/util/randomized_environment_offset.rs:6 body 7 |  |  | 0.566 |
 | ns | 2570 |  | 316 | ExportType + Exporter trait + ExportManager headers | 2.10 |  | 0.556 |
-| walker |  | 2592 | 55 | pub item at src/timer/unix_timer.rs:10 |  |  | 0.556 |
-| walker |  | 2604 | 12 | pub-item doc lede at src/output/warnings.rs:13 |  |  | 0.556 |
+| walker |  | 2594 | 70 | pub-item names surface in src/outlier_detection.rs |  |  | 0.556 |
+| walker |  | 2594 | 0 | pub item at src/outlier_detection.rs:13 |  |  | 0.556 |
+| walker |  | 2594 | 0 | pub item at src/outlier_detection.rs:21 |  |  | 0.556 |
+| walker |  | 2594 | 0 | pub item at src/outlier_detection.rs:43 |  |  | 0.556 |
+| walker |  | 2638 | 44 | pub-item names surface in src/util/exit_code.rs |  |  | 0.556 |
+| walker |  | 2638 | 0 | pub item at src/util/exit_code.rs:4 |  |  | 0.556 |
+| walker |  | 2638 | 0 | pub item at src/util/exit_code.rs:20 |  |  | 0.556 |
+| walker |  | 2644 | 6 | pub item body at src/util/exit_code.rs:20 body 21 |  |  | 0.556 |
 | ns | 2696 |  | 126 | Benchmark module-level helpers + MIN_EXECUTION_TIME | 2.11 |  | 0.542 |
-| walker |  | 2728 | 124 | impl method sigs in src/export/mod.rs |  |  | 0.555 |
-| walker |  | 2760 | 32 | README.md section #4 |  |  | 0.555 |
-| walker |  | 2835 | 75 | man-page NAME + DESCRIPTION in doc/hyperfine.1 |  |  | 0.555 |
+| walker |  | 2699 | 55 | pub item at src/timer/unix_timer.rs:10 |  |  | 0.542 |
+| walker |  | 2711 | 12 | pub-item doc lede at src/output/warnings.rs:13 |  |  | 0.542 |
+| walker |  | 2835 | 124 | impl method sigs in src/export/mod.rs |  |  | 0.555 |
 | ns | 2874 |  | 178 | relative_speed + outlier_detection signatures | 2.12 |  | 0.540 |
 | walker |  | 2932 | 97 | pub item at src/parameter/range_step.rs:7 |  |  | 0.540 |
 | walker |  | 2945 | 13 | pub-item doc lede at src/output/progress_bar.rs:13 |  |  | 0.540 |

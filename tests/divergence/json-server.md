@@ -5,23 +5,23 @@ Score(3000)=0.636 I=0.830 C=0.487 ns_rows≤3K=21/51 (reached=9 partial=2 missin
 | walker |  | 48 | 48 | listing of '.' |  |  | 0.000 |
 | walker |  | 57 | 9 | README headline in README.md |  |  | 0.000 |
 | ns | 60 |  | 60 | README title + v1-beta notice | 1.1 |  | 0.150 |
-| walker |  | 61 | 4 | listing of 'public' |  |  | 0.150 |
-| walker |  | 65 | 4 | listing of 'views' |  |  | 0.150 |
 | ns | 108 |  | 48 | Top-level project tree | 1.2 |  | 0.644 |
-| walker |  | 126 | 61 | package identity in package.json |  |  | 0.659 |
+| walker |  | 118 | 61 | package identity in package.json |  |  | 0.659 |
+| walker |  | 122 | 4 | listing of 'public' |  |  | 0.659 |
+| walker |  | 126 | 4 | listing of 'views' |  |  | 0.659 |
 | ns | 196 |  | 88 | src/ tree | 1.3 |  | 0.434 |
-| walker |  | 197 | 71 | listing of 'src' |  |  | 0.646 |
-| walker |  | 214 | 17 | listing of 'src/adapters' |  |  | 0.738 |
-| walker |  | 227 | 13 | export names surface in src/random-id.ts |  |  | 0.738 |
-| walker |  | 227 | 0 | export at src/random-id.ts:3 |  |  | 0.738 |
-| ns | 237 |  | 41 | package.json name + version + ESM type | 1.4 |  | 0.734 |
-| ns | 338 |  | 101 | package.json bin + files + engines | 1.5 |  | 0.628 |
-| walker |  | 419 | 192 | headings outline in README.md |  |  | 0.631 |
-| walker |  | 441 | 22 | README.md section #1 |  |  | 0.634 |
-| ns | 511 |  | 173 | Install + start command from README | 1.6 |  | 0.521 |
-| walker |  | 584 | 143 | README.md section #0 |  |  | 0.706 |
-| walker |  | 611 | 27 | README.md section #18 |  |  | 0.706 |
-| walker |  | 622 | 11 | README.md section #9 |  |  | 0.707 |
+| ns | 237 |  | 41 | package.json name + version + ESM type | 1.4 |  | 0.452 |
+| walker |  | 318 | 192 | headings outline in README.md |  |  | 0.455 |
+| ns | 338 |  | 101 | package.json bin + files + engines | 1.5 |  | 0.389 |
+| walker |  | 340 | 22 | README.md section #1 |  |  | 0.391 |
+| walker |  | 483 | 143 | README.md section #0 |  |  | 0.589 |
+| walker |  | 510 | 27 | README.md section #18 |  |  | 0.590 |
+| ns | 511 |  | 173 | Install + start command from README | 1.6 |  | 0.490 |
+| walker |  | 581 | 71 | listing of 'src' |  |  | 0.641 |
+| walker |  | 598 | 17 | listing of 'src/adapters' |  |  | 0.706 |
+| walker |  | 609 | 11 | README.md section #9 |  |  | 0.707 |
+| walker |  | 622 | 13 | export names surface in src/random-id.ts |  |  | 0.707 |
+| walker |  | 622 | 0 | export at src/random-id.ts:3 |  |  | 0.707 |
 | walker |  | 639 | 17 | export names surface in src/parse-where.ts |  |  | 0.707 |
 | walker |  | 639 | 0 | export at src/parse-where.ts:58 |  |  | 0.707 |
 | walker |  | 655 | 16 | export body at src/random-id.ts:3 body 4 |  |  | 0.707 |

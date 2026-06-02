@@ -4,29 +4,29 @@ Score(3000)=0.545 I=0.771 C=0.385 ns_rows≤3K=16/51 (reached=5 partial=3 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 45 | 45 | listing of '.' |  |  | 0.000 |
 | ns | 50 |  | 50 | README headline | 1.1 |  | 0.000 |
-| walker |  | 62 | 17 | entry item at examples/hello-toasty/src/main.rs:34 |  |  | 0.000 |
-| ns | 95 |  | 45 | Workspace top-level layout | 1.2 |  | 0.571 |
-| walker |  | 107 | 45 | README headline in README.md |  |  | 0.900 |
-| walker |  | 128 | 21 | listing of 'examples' |  |  | 0.909 |
-| ns | 176 |  | 81 | README ORM positioning paragraph | 1.3 | 1.1 | 0.784 |
-| walker |  | 214 | 86 | entry item at examples/user-has-one-profile/src/main.rs:2 |  |  | 0.786 |
-| ns | 261 |  | 85 | `crates/` directory listing | 1.4 |  | 0.600 |
-| walker |  | 316 | 102 | entry item at examples/composite-key/src/main.rs:2 |  |  | 0.601 |
-| ns | 357 |  | 96 | ARCHITECTURE.md H2/H3 outline | 1.5 |  | 0.526 |
-| walker |  | 384 | 68 | headings outline in README.md |  |  | 0.526 |
-| ns | 443 |  | 86 | Top-level docs tree (architecture / design / roadmap / guide) | 1.6 |  | 0.434 |
-| walker |  | 460 | 76 | README.md section #0 |  |  | 0.493 |
-| ns | 464 |  | 21 | Examples directory listing | 1.7 |  | 0.517 |
-| walker |  | 567 | 107 | entry item at examples/user-has-one-profile/src/main.rs:14 |  |  | 0.521 |
-| walker |  | 679 | 112 | entry item at examples/hello-toasty/src/main.rs:2 |  |  | 0.523 |
-| ns | 695 |  | 231 | ARCHITECTURE.md — toasty crate + pipeline diagram | 1.8 | 1.5 | 0.456 |
-| walker |  | 792 | 113 | entry item at examples/hello-toasty/src/main.rs:19 |  |  | 0.461 |
-| walker |  | 822 | 30 | listing of 'docs' |  |  | 0.490 |
-| ns | 870 |  | 175 | ARCHITECTURE.md — toasty-core crate writeup | 1.9 | 1.5 | 0.449 |
-| walker |  | 945 | 123 | entry item at examples/composite-key/src/main.rs:18 |  |  | 0.453 |
-| walker |  | 984 | 39 | headings outline in docs/CONTEXT.md |  |  | 0.453 |
-| ns | 1223 |  | 353 | Cargo.toml [workspace] members list | 1.10 |  | 0.377 |
-| walker |  | 1307 | 323 | [package] in Cargo.toml |  |  | 0.552 |
+| walker |  | 90 | 45 | README headline in README.md |  |  | 0.863 |
+| ns | 95 |  | 45 | Workspace top-level layout | 1.2 |  | 0.900 |
+| walker |  | 107 | 17 | entry item at examples/hello-toasty/src/main.rs:34 |  |  | 0.900 |
+| walker |  | 175 | 68 | headings outline in README.md |  |  | 0.900 |
+| ns | 176 |  | 81 | README ORM positioning paragraph | 1.3 | 1.1 | 0.776 |
+| walker |  | 251 | 76 | README.md section #0 |  |  | 0.883 |
+| ns | 261 |  | 85 | `crates/` directory listing | 1.4 |  | 0.674 |
+| walker |  | 272 | 21 | listing of 'examples' |  |  | 0.680 |
+| ns | 357 |  | 96 | ARCHITECTURE.md H2/H3 outline | 1.5 |  | 0.595 |
+| ns | 443 |  | 86 | Top-level docs tree (architecture / design / roadmap / guide) | 1.6 |  | 0.491 |
+| ns | 464 |  | 21 | Examples directory listing | 1.7 |  | 0.515 |
+| walker |  | 595 | 323 | [package] in Cargo.toml |  |  | 0.534 |
+| walker |  | 681 | 86 | entry item at examples/user-has-one-profile/src/main.rs:2 |  |  | 0.535 |
+| ns | 695 |  | 231 | ARCHITECTURE.md — toasty crate + pipeline diagram | 1.8 | 1.5 | 0.467 |
+| walker |  | 783 | 102 | entry item at examples/composite-key/src/main.rs:2 |  |  | 0.468 |
+| ns | 870 |  | 175 | ARCHITECTURE.md — toasty-core crate writeup | 1.9 | 1.5 | 0.430 |
+| walker |  | 890 | 107 | entry item at examples/user-has-one-profile/src/main.rs:14 |  |  | 0.433 |
+| walker |  | 1002 | 112 | entry item at examples/hello-toasty/src/main.rs:2 |  |  | 0.434 |
+| walker |  | 1115 | 113 | entry item at examples/hello-toasty/src/main.rs:19 |  |  | 0.438 |
+| walker |  | 1145 | 30 | listing of 'docs' |  |  | 0.465 |
+| ns | 1223 |  | 353 | Cargo.toml [workspace] members list | 1.10 |  | 0.548 |
+| walker |  | 1268 | 123 | entry item at examples/composite-key/src/main.rs:18 |  |  | 0.552 |
+| walker |  | 1307 | 39 | headings outline in docs/CONTEXT.md |  |  | 0.552 |
 | walker |  | 1421 | 114 | headings outline in docs/ARCHITECTURE.md |  |  | 0.610 |
 | walker |  | 1421 | 0 | docs/ARCHITECTURE.md section #0 |  |  | 0.610 |
 | walker |  | 1454 | 33 | docs/ARCHITECTURE.md section #1 |  |  | 0.610 |

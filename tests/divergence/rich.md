@@ -6,15 +6,15 @@ Score(3000)=0.617 I=0.749 C=0.508 ns_rows≤3K=16/58 (reached=6 partial=0 missin
 | ns | 61 |  | 40 | rich/__init__.py docstring + __all__ | 1.2 |  | 0.000 |
 | ns | 153 |  | 92 | pyproject identity: name + version + description | 1.3 |  | 0.000 |
 | walker |  | 191 | 191 | listing of '.' |  |  | 0.000 |
-| walker |  | 203 | 12 | listing of 'assets' |  |  | 0.000 |
 | ns | 213 |  | 60 | README capability line | 1.4 | 1.1 | 0.000 |
-| walker |  | 222 | 19 | listing of 'docs' |  |  | 0.000 |
 | ns | 267 |  | 54 | rich/__init__.py top-level fn def lines | 1.5 | 1.2 | 0.000 |
-| walker |  | 353 | 131 | README headline in README.md |  |  | 0.300 |
+| walker |  | 322 | 131 | README headline in README.md |  |  | 0.300 |
+| walker |  | 334 | 12 | listing of 'assets' |  |  | 0.300 |
 | ns | 373 |  | 106 | pyproject deps | 1.6 | 1.3 | 0.228 |
-| walker |  | 444 | 91 | headings outline in README.md |  |  | 0.228 |
-| walker |  | 468 | 24 | README.md section #0 |  |  | 0.228 |
-| walker |  | 547 | 79 | [dependencies] in pyproject.toml |  |  | 0.408 |
+| walker |  | 425 | 91 | headings outline in README.md |  |  | 0.228 |
+| walker |  | 449 | 24 | README.md section #0 |  |  | 0.228 |
+| walker |  | 528 | 79 | [dependencies] in pyproject.toml |  |  | 0.408 |
+| walker |  | 547 | 19 | listing of 'docs' |  |  | 0.408 |
 | ns | 564 |  | 191 | Repo top-level listing | 1.7 |  | 0.620 |
 | walker |  | 568 | 21 | listing of 'benchmarks' |  |  | 0.620 |
 | walker |  | 641 | 73 | listing of 'questions' |  |  | 0.620 |

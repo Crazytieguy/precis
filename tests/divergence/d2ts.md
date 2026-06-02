@@ -10,23 +10,23 @@ Score(3000)=0.586 I=0.768 C=0.448 ns_rows≤3K=21/41 (reached=10 partial=3 missi
 | walker |  | 161 | 35 | listing of 'examples' |  |  | 0.783 |
 | ns | 179 |  | 26 | pnpm workspace globs | 1.4 |  | 0.720 |
 | walker |  | 183 | 22 | listing of 'packages' |  |  | 0.833 |
-| walker |  | 192 | 9 | export names surface in eslint.base.mjs |  |  | 0.833 |
-| walker |  | 209 | 17 | listing of 'packages/d2ts-benchmark' |  |  | 0.833 |
-| walker |  | 234 | 25 | listing of 'packages/d2ql' |  |  | 0.833 |
-| walker |  | 299 | 65 | README headline in packages/d2ql/README.md |  |  | 0.844 |
-| ns | 313 |  | 134 | README — incremental + Electric pitch | 1.5 |  | 0.784 |
-| walker |  | 332 | 33 | packages/d2ql/README.md section #0 |  |  | 0.784 |
-| walker |  | 362 | 30 | listing of 'packages/d2mini' |  |  | 0.784 |
-| walker |  | 414 | 52 | README headline in packages/d2mini/README.md |  |  | 0.788 |
-| ns | 419 |  | 106 | d2mini one-liner | 1.6 |  | 0.716 |
-| walker |  | 453 | 39 | packages/d2mini/README.md section #0 |  |  | 0.752 |
-| ns | 494 |  | 75 | d2ql one-liner | 1.7 |  | 0.733 |
-| ns | 538 |  | 44 | d2ts src layout | 2.1 |  | 0.627 |
-| ns | 608 |  | 70 | d2ts package re-exports (`index.ts`) | 2.2 |  | 0.584 |
-| walker |  | 620 | 167 | headings outline in README.md |  |  | 0.584 |
-| ns | 706 |  | 98 | Operator catalog (operators/ filenames) | 2.3 |  | 0.477 |
-| ns | 744 |  | 38 | Version + Antichain class names + factory `v(…)` | 2.4 |  | 0.463 |
-| walker |  | 784 | 164 | README.md section #0 |  |  | 0.486 |
+| ns | 313 |  | 134 | README — incremental + Electric pitch | 1.5 |  | 0.773 |
+| walker |  | 350 | 167 | headings outline in README.md |  |  | 0.773 |
+| ns | 419 |  | 106 | d2mini one-liner | 1.6 |  | 0.682 |
+| ns | 494 |  | 75 | d2ql one-liner | 1.7 |  | 0.625 |
+| walker |  | 514 | 164 | README.md section #0 |  |  | 0.664 |
+| walker |  | 523 | 9 | export names surface in eslint.base.mjs |  |  | 0.664 |
+| ns | 538 |  | 44 | d2ts src layout | 2.1 |  | 0.568 |
+| walker |  | 540 | 17 | listing of 'packages/d2ts-benchmark' |  |  | 0.568 |
+| walker |  | 565 | 25 | listing of 'packages/d2ql' |  |  | 0.568 |
+| ns | 608 |  | 70 | d2ts package re-exports (`index.ts`) | 2.2 |  | 0.529 |
+| walker |  | 630 | 65 | README headline in packages/d2ql/README.md |  |  | 0.571 |
+| walker |  | 663 | 33 | packages/d2ql/README.md section #0 |  |  | 0.571 |
+| walker |  | 693 | 30 | listing of 'packages/d2mini' |  |  | 0.571 |
+| ns | 706 |  | 98 | Operator catalog (operators/ filenames) | 2.3 |  | 0.466 |
+| ns | 744 |  | 38 | Version + Antichain class names + factory `v(…)` | 2.4 |  | 0.452 |
+| walker |  | 745 | 52 | README headline in packages/d2mini/README.md |  |  | 0.466 |
+| walker |  | 784 | 39 | packages/d2mini/README.md section #0 |  |  | 0.486 |
 | walker |  | 810 | 26 | plaintext config pnpm-workspace.yaml |  |  | 0.521 |
 | walker |  | 846 | 36 | listing of 'packages/d2ts' |  |  | 0.521 |
 | walker |  | 915 | 69 | README headline in packages/d2ts/README.md |  |  | 0.521 |

@@ -45,52 +45,10 @@ kind = "full"
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "apps" })'
-descriptor = "listing of 'apps'"
-cost_tokens = 9
-cum_tokens = 125
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps"
-entries = ["mobile", "web", "worker"]
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "patches" })'
-descriptor = "listing of 'patches'"
-cost_tokens = 11
-cum_tokens = 136
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "patches"
-entries = ["xcode+3.0.1.patch"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "packages" })'
-descriptor = "listing of 'packages'"
-cost_tokens = 15
-cum_tokens = 151
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages"
-entries = ["filesystem", "lib", "prisma", "router", "types"]
-
-[[batches]]
-position = 6
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 34
-cum_tokens = 185
+cum_tokens = 150
 
 [batches.content]
 kind = "lines"
@@ -104,11 +62,39 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 7
+position = 4
+key = 'Fs(DirListing { dir: "apps" })'
+descriptor = "listing of 'apps'"
+cost_tokens = 9
+cum_tokens = 159
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps"
+entries = ["mobile", "web", "worker"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "patches" })'
+descriptor = "listing of 'patches'"
+cost_tokens = 11
+cum_tokens = 170
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "patches"
+entries = ["xcode+3.0.1.patch"]
+
+[[batches]]
+position = 6
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 184
-cum_tokens = 369
+cum_tokens = 354
 
 [batches.content]
 kind = "lines"
@@ -146,65 +132,25 @@ end = 30
 kind = "full"
 
 [[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "packages" })'
+descriptor = "listing of 'packages'"
+cost_tokens = 15
+cum_tokens = 369
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages"
+entries = ["filesystem", "lib", "prisma", "router", "types"]
+
+[[batches]]
 position = 8
-key = 'Fs(DirListing { dir: "assets" })'
-descriptor = "listing of 'assets'"
-cost_tokens = 33
-cum_tokens = 402
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "assets"
-entries = ["app_store.png", "google_play.png", "home.png", "logo.png", "logo_small.png", "mobile_apps.png", "star_repo.gif"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "packages/prisma" })'
-descriptor = "listing of 'packages/prisma'"
-cost_tokens = 23
-cum_tokens = 425
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/prisma"
-entries = ["client", "index.ts", "migrations", "package.json", "schema.prisma", "seed.js"]
-
-[[batches]]
-position = 10
-key = 'Typescript(ExportNames { file: "packages/prisma/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/prisma/index.ts"
-cost_tokens = 10
-cum_tokens = 435
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/prisma/index.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/prisma/index.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 11
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 137
-cum_tokens = 572
+cum_tokens = 506
 
 [batches.content]
 kind = "lines"
@@ -402,11 +348,25 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 9
+key = 'Fs(DirListing { dir: "assets" })'
+descriptor = "listing of 'assets'"
+cost_tokens = 33
+cum_tokens = 539
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "assets"
+entries = ["app_store.png", "google_play.png", "home.png", "logo.png", "logo_small.png", "mobile_apps.png", "star_repo.gif"]
+
+[[batches]]
+position = 10
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 9
-cum_tokens = 581
+cum_tokens = 548
 
 [batches.content]
 kind = "lines"
@@ -420,11 +380,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 13
+position = 11
 key = 'Markdown(Section { file: "README.md", section_index: 26 })'
 descriptor = "README.md section #26"
 cost_tokens = 23
-cum_tokens = 604
+cum_tokens = 571
 
 [batches.content]
 kind = "lines"
@@ -446,11 +406,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 14
+position = 12
 key = 'Markdown(Section { file: "README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 10
-cum_tokens = 614
+cum_tokens = 581
 
 [batches.content]
 kind = "lines"
@@ -464,11 +424,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 15
+position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 10
-cum_tokens = 624
+cum_tokens = 591
 
 [batches.content]
 kind = "lines"
@@ -482,11 +442,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 16
+position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 23 })'
 descriptor = "README.md section #23"
 cost_tokens = 11
-cum_tokens = 635
+cum_tokens = 602
 
 [batches.content]
 kind = "lines"
@@ -498,6 +458,46 @@ end = 65
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "packages/prisma" })'
+descriptor = "listing of 'packages/prisma'"
+cost_tokens = 23
+cum_tokens = 625
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/prisma"
+entries = ["client", "index.ts", "migrations", "package.json", "schema.prisma", "seed.js"]
+
+[[batches]]
+position = 16
+key = 'Typescript(ExportNames { file: "packages/prisma/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/prisma/index.ts"
+cost_tokens = 10
+cum_tokens = 635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/prisma/index.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/prisma/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 17

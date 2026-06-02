@@ -9,41 +9,41 @@ Score(3000)=0.424 I=0.586 C=0.307 ns_rows≤3K=15/37 (reached=3 partial=2 missin
 | walker |  | 229 | 68 | package identity in package.json |  |  | 0.285 |
 | walker |  | 241 | 12 | listing of 'sandbox' |  |  | 0.285 |
 | ns | 251 |  | 124 | lib/core/ orientation README | 1.3 |  | 0.220 |
-| walker |  | 270 | 29 | listing of 'lib' |  |  | 0.571 |
-| walker |  | 278 | 8 | listing of 'lib/defaults' |  |  | 0.571 |
-| walker |  | 286 | 8 | export names surface in lib/defaults/index.js |  |  | 0.571 |
-| walker |  | 299 | 13 | listing of 'lib/platform' |  |  | 0.571 |
-| walker |  | 308 | 9 | export names surface in lib/platform/index.js |  |  | 0.571 |
-| walker |  | 327 | 19 | export at lib/platform/index.js:4 |  |  | 0.571 |
-| walker |  | 335 | 8 | export names surface in lib/axios.js |  |  | 0.571 |
-| ns | 353 |  | 102 | lib/helpers/ orientation README | 1.4 |  | 0.487 |
-| walker |  | 355 | 20 | listing of 'lib/adapters' |  |  | 0.487 |
-| walker |  | 373 | 18 | module item at lib/defaults/index.js:23 |  |  | 0.487 |
-| walker |  | 384 | 11 | listing of 'lib/env' |  |  | 0.487 |
-| walker |  | 397 | 13 | imports in index.js |  |  | 0.487 |
-| walker |  | 433 | 36 | README headline in lib/env/README.md |  |  | 0.487 |
-| walker |  | 449 | 16 | listing of 'lib/cancel' |  |  | 0.488 |
-| walker |  | 491 | 42 | README headline in lib/adapters/README.md |  |  | 0.488 |
-| ns | 502 |  | 149 | Public ESM named-export list (index.js destructure) | 1.5 |  | 0.364 |
-| walker |  | 540 | 49 | listing of 'lib/core' |  |  | 0.365 |
+| walker |  | 283 | 42 | headings outline in CONTRIBUTORS.md |  |  | 0.220 |
+| walker |  | 300 | 17 | CONTRIBUTORS.md section #0 |  |  | 0.220 |
+| walker |  | 329 | 29 | listing of 'lib' |  |  | 0.571 |
+| walker |  | 337 | 8 | listing of 'lib/defaults' |  |  | 0.571 |
+| walker |  | 345 | 8 | export names surface in lib/defaults/index.js |  |  | 0.571 |
+| ns | 353 |  | 102 | lib/helpers/ orientation README | 1.4 |  | 0.486 |
+| walker |  | 358 | 13 | listing of 'lib/platform' |  |  | 0.487 |
+| walker |  | 367 | 9 | export names surface in lib/platform/index.js |  |  | 0.487 |
+| walker |  | 386 | 19 | export at lib/platform/index.js:4 |  |  | 0.487 |
+| walker |  | 394 | 8 | export names surface in lib/axios.js |  |  | 0.487 |
+| walker |  | 414 | 20 | listing of 'lib/adapters' |  |  | 0.487 |
+| walker |  | 456 | 42 | README headline in lib/adapters/README.md |  |  | 0.487 |
+| walker |  | 474 | 18 | module item at lib/defaults/index.js:23 |  |  | 0.487 |
+| walker |  | 485 | 11 | listing of 'lib/env' |  |  | 0.487 |
+| ns | 502 |  | 149 | Public ESM named-export list (index.js destructure) | 1.5 |  | 0.363 |
+| walker |  | 521 | 36 | README headline in lib/env/README.md |  |  | 0.363 |
+| walker |  | 534 | 13 | imports in index.js |  |  | 0.363 |
+| walker |  | 550 | 16 | listing of 'lib/cancel' |  |  | 0.364 |
+| walker |  | 599 | 49 | listing of 'lib/core' |  |  | 0.365 |
 | ns | 655 |  | 153 | fixture-root listing | 1.6 |  | 0.540 |
-| walker |  | 687 | 147 | export at index.js:26 |  |  | 0.540 |
-| walker |  | 720 | 33 | module item at lib/defaults/index.js:11 |  |  | 0.540 |
-| walker |  | 727 | 7 | listing of 'lib/platform/browser' |  |  | 0.540 |
-| walker |  | 736 | 9 | export names surface in lib/platform/browser/index.js |  |  | 0.540 |
+| walker |  | 746 | 147 | export at index.js:26 |  |  | 0.540 |
 | ns | 776 |  | 121 | README major H2 locations (top half) | 1.7 |  | 0.494 |
-| walker |  | 812 | 76 | export at lib/platform/browser/index.js:5 |  |  | 0.494 |
-| walker |  | 827 | 15 | listing of 'lib/platform/browser/classes' |  |  | 0.494 |
-| walker |  | 834 | 7 | listing of 'lib/platform/node' |  |  | 0.494 |
-| walker |  | 843 | 9 | export names surface in lib/platform/node/index.js |  |  | 0.494 |
-| walker |  | 854 | 11 | module item at lib/platform/node/index.js:5 |  |  | 0.494 |
-| walker |  | 868 | 14 | module item at lib/platform/node/index.js:7 |  |  | 0.494 |
-| walker |  | 968 | 100 | export at lib/platform/node/index.js:27 |  |  | 0.494 |
-| walker |  | 997 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.494 |
+| walker |  | 779 | 33 | module item at lib/defaults/index.js:11 |  |  | 0.494 |
+| walker |  | 786 | 7 | listing of 'lib/platform/browser' |  |  | 0.494 |
+| walker |  | 795 | 9 | export names surface in lib/platform/browser/index.js |  |  | 0.494 |
+| walker |  | 871 | 76 | export at lib/platform/browser/index.js:5 |  |  | 0.494 |
+| walker |  | 886 | 15 | listing of 'lib/platform/browser/classes' |  |  | 0.494 |
+| walker |  | 893 | 7 | listing of 'lib/platform/node' |  |  | 0.494 |
+| walker |  | 902 | 9 | export names surface in lib/platform/node/index.js |  |  | 0.494 |
+| walker |  | 913 | 11 | module item at lib/platform/node/index.js:5 |  |  | 0.494 |
+| walker |  | 927 | 14 | module item at lib/platform/node/index.js:7 |  |  | 0.494 |
+| walker |  | 1027 | 100 | export at lib/platform/node/index.js:27 |  |  | 0.494 |
 | ns | 1040 |  | 264 | README — Features bullet list | 1.8 |  | 0.467 |
-| walker |  | 1062 | 65 | README headline in lib/core/README.md |  |  | 0.481 |
-| walker |  | 1104 | 42 | headings outline in CONTRIBUTORS.md |  |  | 0.481 |
-| walker |  | 1121 | 17 | CONTRIBUTORS.md section #0 |  |  | 0.481 |
+| walker |  | 1056 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.467 |
+| walker |  | 1121 | 65 | README headline in lib/core/README.md |  |  | 0.481 |
 | walker |  | 1147 | 26 | imports in lib/platform/index.js |  |  | 0.481 |
 | walker |  | 1162 | 15 | export names surface in gulpfile.js |  |  | 0.481 |
 | ns | 1168 |  | 128 | README major H2 locations (bottom half) | 1.9 |  | 0.455 |

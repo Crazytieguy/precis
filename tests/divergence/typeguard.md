@@ -6,21 +6,21 @@ Score(3000)=0.659 I=0.878 C=0.495 ns_rows≤3K=14/39 (reached=7 partial=3 missin
 | ns | 34 |  | 34 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 38 | 4 | listing of 'src' |  |  | 1.000 |
 | ns | 75 |  | 41 | docs/ listing | 1.2 |  | 0.682 |
-| walker |  | 110 | 72 | listing of 'src/typeguard' |  |  | 0.742 |
-| ns | 147 |  | 72 | src/typeguard/ module listing | 1.3 |  | 0.799 |
+| walker |  | 89 | 51 | [dependencies] in pyproject.toml |  |  | 0.682 |
+| ns | 147 |  | 72 | src/typeguard/ module listing | 1.3 |  | 0.484 |
+| walker |  | 155 | 66 | [package] in pyproject.toml |  |  | 0.484 |
+| walker |  | 227 | 72 | listing of 'src/typeguard' |  |  | 0.799 |
 | ns | 247 |  | 100 | tests/ listing | 1.4 |  | 0.618 |
 | ns | 349 |  | 102 | README — one-paragraph lede | 1.5 |  | 0.581 |
-| walker |  | 524 | 414 | python imports in src/typeguard/__init__.py |  |  | 0.603 |
-| ns | 550 |  | 201 | README — check_type vs. code instrumentation modes | 1.6 | 1.5 | 0.522 |
-| walker |  | 552 | 28 | python decl names surface in src/typeguard/__init__.py |  |  | 0.522 |
-| walker |  | 552 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.522 |
-| walker |  | 603 | 51 | [dependencies] in pyproject.toml |  |  | 0.522 |
-| walker |  | 644 | 41 | listing of 'docs' |  |  | 0.650 |
-| walker |  | 655 | 11 | python decl names surface in src/typeguard/_memo.py |  |  | 0.650 |
-| walker |  | 655 | 0 | python decl at src/typeguard/_memo.py:8 |  |  | 0.650 |
-| walker |  | 666 | 11 | python method sigs in src/typeguard/_memo.py |  |  | 0.650 |
-| ns | 700 |  | 150 | README — instrumentation options (@typechecked vs import hook) | 1.7 | 1.6 | 0.584 |
-| walker |  | 732 | 66 | [package] in pyproject.toml |  |  | 0.584 |
+| ns | 550 |  | 201 | README — check_type vs. code instrumentation modes | 1.6 | 1.5 | 0.503 |
+| walker |  | 641 | 414 | python imports in src/typeguard/__init__.py |  |  | 0.522 |
+| walker |  | 669 | 28 | python decl names surface in src/typeguard/__init__.py |  |  | 0.522 |
+| walker |  | 669 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.522 |
+| ns | 700 |  | 150 | README — instrumentation options (@typechecked vs import hook) | 1.7 | 1.6 | 0.468 |
+| walker |  | 710 | 41 | listing of 'docs' |  |  | 0.584 |
+| walker |  | 721 | 11 | python decl names surface in src/typeguard/_memo.py |  |  | 0.584 |
+| walker |  | 721 | 0 | python decl at src/typeguard/_memo.py:8 |  |  | 0.584 |
+| walker |  | 732 | 11 | python method sigs in src/typeguard/_memo.py |  |  | 0.584 |
 | walker |  | 754 | 22 | python class body at src/typeguard/_memo.py:8 |  |  | 0.584 |
 | ns | 964 |  | 264 | Public re-exports — head of typeguard/__init__.py | 1.8 |  | 0.640 |
 | ns | 1119 |  | 155 | Public re-exports — tail of typeguard/__init__.py | 1.9 | 1.8 | 0.662 |

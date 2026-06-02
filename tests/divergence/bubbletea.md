@@ -5,21 +5,21 @@ Score(3000)=0.509 I=0.665 C=0.389 ns_rows≤3K=14/41 (reached=5 partial=0 missin
 | ns | 72 |  | 72 | README lede — what Bubble Tea is | 1.1 |  | 0.000 |
 | ns | 141 |  | 69 | Module path + Go version | 1.2 |  | 0.000 |
 | walker |  | 202 | 202 | listing of '.' |  |  | 0.000 |
-| walker |  | 227 | 25 | go module identity in go.mod |  |  | 0.145 |
-| ns | 234 |  | 93 | tea.go package doc lede | 1.3 |  | 0.107 |
-| walker |  | 239 | 12 | go decl names surface in profile.go |  |  | 0.107 |
-| walker |  | 250 | 11 | go decl at profile.go:13 |  |  | 0.107 |
-| walker |  | 270 | 20 | go decl names surface in focus.go |  |  | 0.107 |
-| walker |  | 270 | 0 | go decl at focus.go:5 |  |  | 0.107 |
-| walker |  | 270 | 0 | go decl at focus.go:9 |  |  | 0.107 |
-| walker |  | 280 | 10 | listing of 'testdata' |  |  | 0.107 |
-| walker |  | 301 | 21 | go decl names surface in input.go |  |  | 0.107 |
-| walker |  | 301 | 0 | go decl at input.go:8 |  |  | 0.107 |
-| walker |  | 325 | 24 | go decl names surface in raw.go |  |  | 0.107 |
-| walker |  | 325 | 0 | go decl at raw.go:33 |  |  | 0.107 |
-| walker |  | 336 | 11 | go decl at raw.go:5 |  |  | 0.107 |
-| ns | 403 |  | 169 | Msg + Cmd aliases | 1.4 |  | 0.077 |
-| walker |  | 408 | 72 | README headline in README.md |  |  | 0.366 |
+| ns | 234 |  | 93 | tea.go package doc lede | 1.3 |  | 0.000 |
+| walker |  | 274 | 72 | README headline in README.md |  |  | 0.464 |
+| walker |  | 299 | 25 | go module identity in go.mod |  |  | 0.510 |
+| walker |  | 311 | 12 | go decl names surface in profile.go |  |  | 0.510 |
+| walker |  | 322 | 11 | go decl at profile.go:13 |  |  | 0.510 |
+| walker |  | 342 | 20 | go decl names surface in focus.go |  |  | 0.510 |
+| walker |  | 342 | 0 | go decl at focus.go:5 |  |  | 0.510 |
+| walker |  | 342 | 0 | go decl at focus.go:9 |  |  | 0.510 |
+| walker |  | 352 | 10 | listing of 'testdata' |  |  | 0.510 |
+| walker |  | 373 | 21 | go decl names surface in input.go |  |  | 0.510 |
+| walker |  | 373 | 0 | go decl at input.go:8 |  |  | 0.510 |
+| walker |  | 397 | 24 | go decl names surface in raw.go |  |  | 0.510 |
+| walker |  | 397 | 0 | go decl at raw.go:33 |  |  | 0.510 |
+| ns | 403 |  | 169 | Msg + Cmd aliases | 1.4 |  | 0.366 |
+| walker |  | 408 | 11 | go decl at raw.go:5 |  |  | 0.366 |
 | walker |  | 415 | 7 | go package + imports in clipboard.go |  |  | 0.366 |
 | walker |  | 422 | 7 | go package + imports in cursor.go |  |  | 0.366 |
 | walker |  | 429 | 7 | go package + imports in focus.go |  |  | 0.366 |

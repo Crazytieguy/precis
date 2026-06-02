@@ -111,62 +111,10 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'Typescript(ExportNames { file: "karma.conf.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in karma.conf.js"
-cost_tokens = 14
-cum_tokens = 200
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "karma.conf.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "karma.conf.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 7
-key = 'Typescript(Export { file: "karma.conf.js", start_line: 1 })'
-descriptor = "export at karma.conf.js:1"
-cost_tokens = 0
-cum_tokens = 200
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "karma.conf.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "karma.conf.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 8
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 193
-cum_tokens = 393
+cum_tokens = 379
 
 [batches.content]
 kind = "lines"
@@ -476,11 +424,11 @@ end = 458
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 7
 key = 'Markdown(Section { file: "README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 22
-cum_tokens = 415
+cum_tokens = 401
 
 [batches.content]
 kind = "lines"
@@ -502,431 +450,63 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 10
-key = 'Typescript(ExportNames { file: "src/common.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
-descriptor = "export names surface in src/common.js"
-cost_tokens = 20
-cum_tokens = 435
+position = 8
+key = 'Typescript(ExportNames { file: "karma.conf.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in karma.conf.js"
+cost_tokens = 14
+cum_tokens = 415
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/common.js"
-start = 7
-end = 7
+path = "karma.conf.js"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/common.js"
-start = 292
-end = 292
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 8
-end = 8
+path = "karma.conf.js"
+start = 2
+end = 2
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 11
-key = 'Typescript(Export { file: "src/common.js", start_line: 7 })'
-descriptor = "export at src/common.js:7"
+position = 9
+key = 'Typescript(Export { file: "karma.conf.js", start_line: 1 })'
+descriptor = "export at karma.conf.js:1"
 cost_tokens = 0
-cum_tokens = 435
+cum_tokens = 415
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/common.js"
-start = 7
-end = 7
+path = "karma.conf.js"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/common.js"
-start = 8
-end = 8
+path = "karma.conf.js"
+start = 2
+end = 2
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 12
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 146 })'
-descriptor = "export body at src/common.js:7 body 146"
-cost_tokens = 8
-cum_tokens = 443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 146
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 61 })'
-descriptor = "export body at src/common.js:7 body 61"
-cost_tokens = 9
-cum_tokens = 452
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 63 })'
-descriptor = "export body at src/common.js:7 body 63"
-cost_tokens = 9
-cum_tokens = 461
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 64 })'
-descriptor = "export body at src/common.js:7 body 64"
-cost_tokens = 9
-cum_tokens = 470
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 116 })'
-descriptor = "export body at src/common.js:7 body 116"
-cost_tokens = 10
-cum_tokens = 480
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 116
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 119 })'
-descriptor = "export body at src/common.js:7 body 119"
-cost_tokens = 10
-cum_tokens = 490
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 166 })'
-descriptor = "export body at src/common.js:7 body 166"
-cost_tokens = 10
-cum_tokens = 500
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 166
-end = 166
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 62 })'
-descriptor = "export body at src/common.js:7 body 62"
-cost_tokens = 11
-cum_tokens = 511
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 163 })'
-descriptor = "export body at src/common.js:7 body 163"
-cost_tokens = 11
-cum_tokens = 522
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 163
-end = 163
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 167 })'
-descriptor = "export body at src/common.js:7 body 167"
-cost_tokens = 11
-cum_tokens = 533
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 167
-end = 167
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 164 })'
-descriptor = "export body at src/common.js:7 body 164"
-cost_tokens = 12
-cum_tokens = 545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 193 })'
-descriptor = "export body at src/common.js:7 body 193"
-cost_tokens = 12
-cum_tokens = 557
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 193
-end = 193
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 194 })'
-descriptor = "export body at src/common.js:7 body 194"
-cost_tokens = 12
-cum_tokens = 569
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 194
-end = 194
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 195 })'
-descriptor = "export body at src/common.js:7 body 195"
-cost_tokens = 12
-cum_tokens = 581
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 195
-end = 195
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 196 })'
-descriptor = "export body at src/common.js:7 body 196"
-cost_tokens = 12
-cum_tokens = 593
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 196
-end = 196
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 224 })'
-descriptor = "export body at src/common.js:7 body 224"
-cost_tokens = 12
-cum_tokens = 605
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 224
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 219 })'
-descriptor = "export body at src/common.js:7 body 219"
-cost_tokens = 13
-cum_tokens = 618
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 219
-end = 219
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 117 })'
-descriptor = "export body at src/common.js:7 body 117"
-cost_tokens = 14
-cum_tokens = 632
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 118 })'
-descriptor = "export body at src/common.js:7 body 118"
-cost_tokens = 14
-cum_tokens = 646
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 118
-end = 118
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 141 })'
-descriptor = "export body at src/common.js:7 body 141"
-cost_tokens = 15
-cum_tokens = 661
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/common.js"
-start = 141
-end = 141
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
+position = 10
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 185
-cum_tokens = 846
+cum_tokens = 600
 
 [batches.content]
 kind = "lines"
@@ -956,11 +536,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 33
+position = 11
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 66
-cum_tokens = 912
+cum_tokens = 666
 
 [batches.content]
 kind = "lines"
@@ -982,11 +562,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 34
+position = 12
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 30
-cum_tokens = 942
+cum_tokens = 696
 
 [batches.content]
 kind = "lines"
@@ -1000,11 +580,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 35
+position = 13
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 108
-cum_tokens = 1050
+cum_tokens = 804
 
 [batches.content]
 kind = "lines"
@@ -1013,6 +593,426 @@ kind = "lines"
 path = "package.json"
 start = 26
 end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Typescript(ExportNames { file: "src/common.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in src/common.js"
+cost_tokens = 20
+cum_tokens = 824
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 292
+end = 292
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 15
+key = 'Typescript(Export { file: "src/common.js", start_line: 7 })'
+descriptor = "export at src/common.js:7"
+cost_tokens = 0
+cum_tokens = 824
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 16
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 146 })'
+descriptor = "export body at src/common.js:7 body 146"
+cost_tokens = 8
+cum_tokens = 832
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 61 })'
+descriptor = "export body at src/common.js:7 body 61"
+cost_tokens = 9
+cum_tokens = 841
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 63 })'
+descriptor = "export body at src/common.js:7 body 63"
+cost_tokens = 9
+cum_tokens = 850
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 64 })'
+descriptor = "export body at src/common.js:7 body 64"
+cost_tokens = 9
+cum_tokens = 859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 116 })'
+descriptor = "export body at src/common.js:7 body 116"
+cost_tokens = 10
+cum_tokens = 869
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 119 })'
+descriptor = "export body at src/common.js:7 body 119"
+cost_tokens = 10
+cum_tokens = 879
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 166 })'
+descriptor = "export body at src/common.js:7 body 166"
+cost_tokens = 10
+cum_tokens = 889
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 62 })'
+descriptor = "export body at src/common.js:7 body 62"
+cost_tokens = 11
+cum_tokens = 900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 163 })'
+descriptor = "export body at src/common.js:7 body 163"
+cost_tokens = 11
+cum_tokens = 911
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 167 })'
+descriptor = "export body at src/common.js:7 body 167"
+cost_tokens = 11
+cum_tokens = 922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 164 })'
+descriptor = "export body at src/common.js:7 body 164"
+cost_tokens = 12
+cum_tokens = 934
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 193 })'
+descriptor = "export body at src/common.js:7 body 193"
+cost_tokens = 12
+cum_tokens = 946
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 194 })'
+descriptor = "export body at src/common.js:7 body 194"
+cost_tokens = 12
+cum_tokens = 958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 195 })'
+descriptor = "export body at src/common.js:7 body 195"
+cost_tokens = 12
+cum_tokens = 970
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 196 })'
+descriptor = "export body at src/common.js:7 body 196"
+cost_tokens = 12
+cum_tokens = 982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 196
+end = 196
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 224 })'
+descriptor = "export body at src/common.js:7 body 224"
+cost_tokens = 12
+cum_tokens = 994
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 224
+end = 224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 219 })'
+descriptor = "export body at src/common.js:7 body 219"
+cost_tokens = 13
+cum_tokens = 1007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 219
+end = 219
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 117 })'
+descriptor = "export body at src/common.js:7 body 117"
+cost_tokens = 14
+cum_tokens = 1021
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 118 })'
+descriptor = "export body at src/common.js:7 body 118"
+cost_tokens = 14
+cum_tokens = 1035
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Typescript(ExportBody { file: "src/common.js", start_line: 7, body_start_line: 141 })'
+descriptor = "export body at src/common.js:7 body 141"
+cost_tokens = 15
+cum_tokens = 1050
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common.js"
+start = 141
+end = 141
 
 [batches.content.spans.render]
 kind = "full"

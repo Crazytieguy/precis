@@ -4,40 +4,40 @@ Score(3000)=0.538 I=0.809 C=0.358 ns_rows≤3K=19/47 (reached=9 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 56 |  | 56 | README one-line pitch | 1.1 |  | 0.000 |
 | walker |  | 74 | 74 | listing of '.' |  |  | 0.000 |
-| walker |  | 83 | 9 | listing of 'bindings' |  |  | 0.000 |
-| walker |  | 96 | 13 | plaintext config VERSION |  |  | 0.000 |
-| ns | 142 |  | 86 | README capability bullets | 1.2 |  | 0.000 |
-| walker |  | 152 | 56 | README headline in README.md |  |  | 0.655 |
-| ns | 216 |  | 74 | Fixture-root listing | 1.3 |  | 0.849 |
-| ns | 229 |  | 13 | VERSION line | 1.4 |  | 0.847 |
-| walker |  | 254 | 102 | [package] in sqlite-dist.toml |  |  | 0.851 |
-| walker |  | 292 | 38 | headings outline in README.md |  |  | 0.851 |
-| ns | 303 |  | 74 | README canonical vec0 create | 1.5 |  | 0.735 |
-| ns | 321 |  | 18 | TODO header item | 1.6 |  | 0.724 |
-| ns | 330 |  | 9 | bindings/ contents | 1.7 |  | 0.730 |
-| walker |  | 337 | 45 | headings outline in ARCHITECTURE.md |  |  | 0.731 |
+| walker |  | 130 | 56 | README headline in README.md |  |  | 1.000 |
+| ns | 142 |  | 86 | README capability bullets | 1.2 |  | 0.655 |
+| ns | 216 |  | 74 | Fixture-root listing | 1.3 |  | 0.835 |
+| ns | 229 |  | 13 | VERSION line | 1.4 |  | 0.817 |
+| walker |  | 232 | 102 | [package] in sqlite-dist.toml |  |  | 0.821 |
+| walker |  | 270 | 38 | headings outline in README.md |  |  | 0.821 |
+| ns | 303 |  | 74 | README canonical vec0 create | 1.5 |  | 0.709 |
+| walker |  | 315 | 45 | headings outline in ARCHITECTURE.md |  |  | 0.710 |
+| ns | 321 |  | 18 | TODO header item | 1.6 |  | 0.699 |
+| walker |  | 324 | 9 | listing of 'bindings' |  |  | 0.707 |
+| ns | 330 |  | 9 | bindings/ contents | 1.7 |  | 0.715 |
+| walker |  | 337 | 13 | plaintext config VERSION |  |  | 0.731 |
 | walker |  | 354 | 17 | python imports in tmp-static.py |  |  | 0.731 |
 | walker |  | 381 | 27 | listing of 'bindings/rust' |  |  | 0.731 |
-| walker |  | 400 | 19 | listing of 'benchmarks' |  |  | 0.731 |
-| walker |  | 404 | 4 | listing of 'bindings/rust/src' |  |  | 0.731 |
-| walker |  | 413 | 9 | mod/use plumbing in bindings/rust/src/lib.rs |  |  | 0.731 |
-| walker |  | 418 | 5 | listing of 'bindings/go' |  |  | 0.731 |
-| walker |  | 423 | 5 | listing of 'bindings/python' |  |  | 0.731 |
 | ns | 456 |  | 126 | sqlite-vec.h.tmpl entry-point declaration | 1.8 |  | 0.627 |
-| walker |  | 553 | 130 | python decl names surface in tmp-static.py |  |  | 0.627 |
-| walker |  | 553 | 0 | python decl at tmp-static.py:25 |  |  | 0.627 |
-| walker |  | 666 | 113 | ARCHITECTURE.md section #0 |  |  | 0.627 |
+| walker |  | 494 | 113 | ARCHITECTURE.md section #0 |  |  | 0.627 |
 | ns | 668 |  | 212 | README canonical KNN select + results | 1.9 |  | 0.536 |
-| walker |  | 703 | 37 | python decl names surface in bindings/python/extra_init.py |  |  | 0.536 |
-| walker |  | 703 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.536 |
-| walker |  | 703 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.536 |
-| walker |  | 720 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.536 |
-| walker |  | 737 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.536 |
-| walker |  | 759 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.536 |
-| walker |  | 781 | 22 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.536 |
 | ns | 891 |  | 223 | README canonical INSERT values | 1.10 |  | 0.506 |
-| ns | 1117 |  | 226 | TODO deferred backlog | 1.11 |  | 0.455 |
-| walker |  | 1352 | 571 | README.md section #0 |  |  | 0.538 |
+| walker |  | 1065 | 571 | README.md section #0 |  |  | 0.598 |
+| walker |  | 1084 | 19 | listing of 'benchmarks' |  |  | 0.598 |
+| walker |  | 1088 | 4 | listing of 'bindings/rust/src' |  |  | 0.598 |
+| walker |  | 1097 | 9 | mod/use plumbing in bindings/rust/src/lib.rs |  |  | 0.598 |
+| walker |  | 1102 | 5 | listing of 'bindings/go' |  |  | 0.598 |
+| walker |  | 1107 | 5 | listing of 'bindings/python' |  |  | 0.598 |
+| ns | 1117 |  | 226 | TODO deferred backlog | 1.11 |  | 0.537 |
+| walker |  | 1237 | 130 | python decl names surface in tmp-static.py |  |  | 0.537 |
+| walker |  | 1237 | 0 | python decl at tmp-static.py:25 |  |  | 0.537 |
+| walker |  | 1274 | 37 | python decl names surface in bindings/python/extra_init.py |  |  | 0.537 |
+| walker |  | 1274 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.537 |
+| walker |  | 1274 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.537 |
+| walker |  | 1291 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.537 |
+| walker |  | 1308 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.537 |
+| walker |  | 1330 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.538 |
+| walker |  | 1352 | 22 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.538 |
 | walker |  | 1376 | 24 | listing of 'benchmarks/micro' |  |  | 0.538 |
 | ns | 1385 |  | 268 | sqlite-vec.h.tmpl ABI guard + visibility macros | 1.12 |  | 0.459 |
 | walker |  | 1528 | 152 | python decl at tmp-static.py:13 |  |  | 0.459 |

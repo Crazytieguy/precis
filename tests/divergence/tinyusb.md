@@ -6,131 +6,131 @@ Score(3000)=0.458 I=0.743 C=0.282 ns_rows≤3K=19/41 (reached=6 partial=0 missin
 | ns | 62 |  | 50 | src/ subdirectory listing | 1.2 |  | 0.000 |
 | walker |  | 107 | 107 | listing of '.' |  |  | 0.000 |
 | walker |  | 114 | 7 | listing of 'hw' |  |  | 0.000 |
-| walker |  | 131 | 17 | listing of 'lib' |  |  | 0.000 |
 | ns | 136 |  | 74 | README headline overview | 1.3 |  | 0.000 |
-| walker |  | 145 | 14 | listing of 'lib/SEGGER_RTT' |  |  | 0.000 |
-| walker |  | 167 | 22 | listing of 'lib/rt-thread' |  |  | 0.000 |
-| ns | 252 |  | 116 | README repo-layout tree (top of tree) | 1.4 |  | 0.000 |
-| walker |  | 288 | 121 | README headline in README.rst |  |  | 0.344 |
+| walker |  | 235 | 121 | README headline in README.rst |  |  | 0.428 |
+| walker |  | 252 | 17 | listing of 'lib' |  |  | 0.344 |
+| ns | 252 |  | 116 | README repo-layout tree (top of tree) | 1.4 |  | 0.344 |
+| walker |  | 266 | 14 | listing of 'lib/SEGGER_RTT' |  |  | 0.344 |
+| walker |  | 288 | 22 | listing of 'lib/rt-thread' |  |  | 0.344 |
 | ns | 298 |  | 46 | Class subdirectory listing under src/class/ | 1.5 |  | 0.263 |
-| walker |  | 323 | 35 | listing of 'lib/SEGGER_RTT/RTT' |  |  | 0.263 |
+| walker |  | 346 | 58 | README headline in lib/SEGGER_RTT/README.md |  |  | 0.263 |
 | ns | 355 |  | 57 | README repo-layout tree (rest) | 1.6 | 1.4 | 0.250 |
-| walker |  | 360 | 37 | listing of 'lib/networking' |  |  | 0.250 |
-| walker |  | 413 | 53 | c decl names surface in lib/networking/dhserver.h |  |  | 0.250 |
-| walker |  | 480 | 67 | c decl names surface in lib/networking/dnserver.h |  |  | 0.250 |
-| walker |  | 525 | 45 | c decl at lib/networking/dhserver.h:42 |  |  | 0.250 |
+| walker |  | 381 | 35 | listing of 'lib/SEGGER_RTT/RTT' |  |  | 0.250 |
+| walker |  | 418 | 37 | listing of 'lib/networking' |  |  | 0.250 |
+| walker |  | 471 | 53 | c decl names surface in lib/networking/dhserver.h |  |  | 0.250 |
 | ns | 533 |  | 178 | tusb.h — tusb_rhport_init / tusb_init macro / tusb_inited / tusb_int_handler / tusb_deinit | 1.7 |  | 0.216 |
-| walker |  | 542 | 17 | c includes in lib/SEGGER_RTT/RTT/SEGGER_RTT.h |  |  | 0.216 |
-| walker |  | 548 | 6 | listing of '.claude' |  |  | 0.216 |
-| walker |  | 598 | 50 | listing of 'src' |  |  | 0.536 |
-| walker |  | 618 | 20 | listing of 'src/typec' |  |  | 0.536 |
-| walker |  | 640 | 22 | listing of 'src/device' |  |  | 0.675 |
-| ns | 640 |  | 107 | Top-level fixture listing | 1.8 |  | 0.675 |
-| walker |  | 668 | 28 | c decl names surface #1 in src/device/usbd_pvt.h |  |  | 0.675 |
-| walker |  | 698 | 30 | listing of 'src/host' |  |  | 0.680 |
-| walker |  | 714 | 16 | c decl names surface #1 in src/host/hub.h |  |  | 0.680 |
-| ns | 725 |  | 85 | Portable vendor subdirectory listing | 1.9 |  | 0.589 |
-| walker |  | 727 | 13 | c includes in src/device/usbd.h |  |  | 0.589 |
-| walker |  | 740 | 13 | c includes in src/host/hub.h |  |  | 0.589 |
-| walker |  | 779 | 39 | c decl names surface #1 in src/host/hcd.h |  |  | 0.589 |
-| walker |  | 801 | 22 | c decl at src/host/hcd.h:185 |  |  | 0.589 |
-| walker |  | 823 | 22 | c decl at src/host/hcd.h:197 |  |  | 0.589 |
-| walker |  | 835 | 12 | c decl doc at src/host/hcd.h:185 |  |  | 0.589 |
-| walker |  | 847 | 12 | c decl doc at src/host/hcd.h:197 |  |  | 0.589 |
+| walker |  | 538 | 67 | c decl names surface in lib/networking/dnserver.h |  |  | 0.216 |
+| walker |  | 583 | 45 | c decl at lib/networking/dhserver.h:42 |  |  | 0.216 |
+| walker |  | 600 | 17 | c includes in lib/SEGGER_RTT/RTT/SEGGER_RTT.h |  |  | 0.216 |
+| walker |  | 606 | 6 | listing of '.claude' |  |  | 0.216 |
+| ns | 640 |  | 107 | Top-level fixture listing | 1.8 |  | 0.432 |
+| walker |  | 656 | 50 | listing of 'src' |  |  | 0.674 |
+| walker |  | 676 | 20 | listing of 'src/typec' |  |  | 0.674 |
+| walker |  | 698 | 22 | listing of 'src/device' |  |  | 0.675 |
+| ns | 725 |  | 85 | Portable vendor subdirectory listing | 1.9 |  | 0.585 |
+| walker |  | 726 | 28 | c decl names surface #1 in src/device/usbd_pvt.h |  |  | 0.585 |
+| walker |  | 756 | 30 | listing of 'src/host' |  |  | 0.589 |
+| walker |  | 772 | 16 | c decl names surface #1 in src/host/hub.h |  |  | 0.589 |
+| walker |  | 785 | 13 | c includes in src/device/usbd.h |  |  | 0.589 |
+| walker |  | 798 | 13 | c includes in src/host/hub.h |  |  | 0.589 |
+| walker |  | 837 | 39 | c decl names surface #1 in src/host/hcd.h |  |  | 0.589 |
+| walker |  | 859 | 22 | c decl at src/host/hcd.h:185 |  |  | 0.589 |
+| walker |  | 881 | 22 | c decl at src/host/hcd.h:197 |  |  | 0.589 |
 | ns | 884 |  | 159 | README — device class support list (part 1) | 1.10 |  | 0.557 |
-| walker |  | 889 | 42 | c decl at src/host/hcd.h:209 |  |  | 0.557 |
-| walker |  | 901 | 12 | c decl doc at src/host/hcd.h:209 |  |  | 0.557 |
-| walker |  | 947 | 46 | listing of 'src/class' |  |  | 0.662 |
-| walker |  | 967 | 20 | listing of 'src/class/vendor' |  |  | 0.663 |
-| walker |  | 991 | 24 | listing of 'src/class/hid' |  |  | 0.663 |
-| walker |  | 1001 | 10 | c includes in src/class/hid/hid_device.h |  |  | 0.663 |
-| walker |  | 1011 | 10 | c includes in src/class/hid/hid_host.h |  |  | 0.663 |
-| walker |  | 1036 | 25 | listing of 'src/class/net' |  |  | 0.663 |
-| walker |  | 1065 | 29 | listing of 'src/class/msc' |  |  | 0.664 |
-| walker |  | 1075 | 10 | c includes in src/class/msc/msc_host.h |  |  | 0.664 |
-| walker |  | 1106 | 31 | listing of 'src/class/dfu' |  |  | 0.664 |
-| walker |  | 1117 | 11 | c includes in src/class/dfu/dfu_device.h |  |  | 0.664 |
-| walker |  | 1128 | 11 | c includes in src/class/dfu/dfu_rt_device.h |  |  | 0.664 |
-| ns | 1144 |  | 260 | README — device class support list (part 2) | 1.11 | 1.10 | 0.629 |
-| walker |  | 1159 | 31 | listing of 'src/class/midi' |  |  | 0.630 |
-| walker |  | 1172 | 13 | c includes in src/class/dfu/dfu.h |  |  | 0.630 |
-| walker |  | 1185 | 13 | c includes in src/class/hid/hid.h |  |  | 0.630 |
-| walker |  | 1198 | 13 | c includes in src/class/midi/midi.h |  |  | 0.630 |
-| walker |  | 1211 | 13 | c includes in src/class/msc/msc.h |  |  | 0.630 |
-| walker |  | 1224 | 13 | c includes in src/class/net/ncm.h |  |  | 0.630 |
-| walker |  | 1237 | 13 | c includes in src/class/vendor/vendor_device.h |  |  | 0.630 |
-| walker |  | 1250 | 13 | c includes in src/class/vendor/vendor_host.h |  |  | 0.630 |
-| walker |  | 1289 | 39 | c decl names surface #1 in src/class/midi/midi_device.h |  |  | 0.630 |
+| walker |  | 893 | 12 | c decl doc at src/host/hcd.h:185 |  |  | 0.557 |
+| walker |  | 905 | 12 | c decl doc at src/host/hcd.h:197 |  |  | 0.557 |
+| walker |  | 947 | 42 | c decl at src/host/hcd.h:209 |  |  | 0.557 |
+| walker |  | 959 | 12 | c decl doc at src/host/hcd.h:209 |  |  | 0.557 |
+| walker |  | 1005 | 46 | listing of 'src/class' |  |  | 0.662 |
+| walker |  | 1025 | 20 | listing of 'src/class/vendor' |  |  | 0.663 |
+| walker |  | 1049 | 24 | listing of 'src/class/hid' |  |  | 0.663 |
+| walker |  | 1059 | 10 | c includes in src/class/hid/hid_device.h |  |  | 0.663 |
+| walker |  | 1069 | 10 | c includes in src/class/hid/hid_host.h |  |  | 0.663 |
+| walker |  | 1094 | 25 | listing of 'src/class/net' |  |  | 0.663 |
+| walker |  | 1123 | 29 | listing of 'src/class/msc' |  |  | 0.664 |
+| walker |  | 1133 | 10 | c includes in src/class/msc/msc_host.h |  |  | 0.664 |
+| ns | 1144 |  | 260 | README — device class support list (part 2) | 1.11 | 1.10 | 0.628 |
+| walker |  | 1164 | 31 | listing of 'src/class/dfu' |  |  | 0.629 |
+| walker |  | 1175 | 11 | c includes in src/class/dfu/dfu_device.h |  |  | 0.629 |
+| walker |  | 1186 | 11 | c includes in src/class/dfu/dfu_rt_device.h |  |  | 0.629 |
+| walker |  | 1217 | 31 | listing of 'src/class/midi' |  |  | 0.630 |
+| walker |  | 1230 | 13 | c includes in src/class/dfu/dfu.h |  |  | 0.630 |
+| walker |  | 1243 | 13 | c includes in src/class/hid/hid.h |  |  | 0.630 |
+| walker |  | 1256 | 13 | c includes in src/class/midi/midi.h |  |  | 0.630 |
+| walker |  | 1269 | 13 | c includes in src/class/msc/msc.h |  |  | 0.630 |
+| walker |  | 1282 | 13 | c includes in src/class/net/ncm.h |  |  | 0.630 |
+| walker |  | 1295 | 13 | c includes in src/class/vendor/vendor_device.h |  |  | 0.630 |
 | ns | 1298 |  | 154 | README — host stack capabilities | 1.12 |  | 0.599 |
-| walker |  | 1303 | 14 | listing of 'src/class/audio' |  |  | 0.600 |
-| walker |  | 1313 | 10 | c includes in src/class/audio/audio_device.h |  |  | 0.600 |
-| walker |  | 1326 | 13 | c includes in src/class/audio/audio.h |  |  | 0.600 |
-| walker |  | 1340 | 14 | listing of 'src/class/printer' |  |  | 0.600 |
-| walker |  | 1362 | 22 | c decl names surface in src/class/printer/printer.h |  |  | 0.600 |
-| walker |  | 1372 | 10 | c includes in src/class/printer/printer_device.h |  |  | 0.600 |
-| walker |  | 1385 | 13 | c includes in src/class/printer/printer.h |  |  | 0.600 |
-| walker |  | 1399 | 14 | listing of 'src/class/video' |  |  | 0.601 |
-| walker |  | 1412 | 13 | c includes in src/class/video/video.h |  |  | 0.601 |
-| walker |  | 1452 | 40 | listing of 'src/class/cdc' |  |  | 0.602 |
-| walker |  | 1462 | 10 | c includes in src/class/cdc/cdc_device.h |  |  | 0.602 |
-| walker |  | 1472 | 10 | c includes in src/class/cdc/cdc_host.h |  |  | 0.602 |
-| walker |  | 1482 | 10 | c includes in src/class/cdc/cdc_rndis.h |  |  | 0.602 |
-| walker |  | 1508 | 26 | listing of 'src/class/cdc/serial' |  |  | 0.603 |
-| walker |  | 1518 | 10 | c includes in src/class/cdc/serial/ftdi_sio.h |  |  | 0.603 |
-| walker |  | 1531 | 13 | c includes in src/class/cdc/cdc.h |  |  | 0.603 |
+| walker |  | 1308 | 13 | c includes in src/class/vendor/vendor_host.h |  |  | 0.599 |
+| walker |  | 1347 | 39 | c decl names surface #1 in src/class/midi/midi_device.h |  |  | 0.599 |
+| walker |  | 1361 | 14 | listing of 'src/class/audio' |  |  | 0.600 |
+| walker |  | 1371 | 10 | c includes in src/class/audio/audio_device.h |  |  | 0.600 |
+| walker |  | 1384 | 13 | c includes in src/class/audio/audio.h |  |  | 0.600 |
+| walker |  | 1398 | 14 | listing of 'src/class/printer' |  |  | 0.600 |
+| walker |  | 1420 | 22 | c decl names surface in src/class/printer/printer.h |  |  | 0.600 |
+| walker |  | 1430 | 10 | c includes in src/class/printer/printer_device.h |  |  | 0.600 |
+| walker |  | 1443 | 13 | c includes in src/class/printer/printer.h |  |  | 0.600 |
+| walker |  | 1457 | 14 | listing of 'src/class/video' |  |  | 0.601 |
+| walker |  | 1470 | 13 | c includes in src/class/video/video.h |  |  | 0.601 |
+| walker |  | 1510 | 40 | listing of 'src/class/cdc' |  |  | 0.602 |
+| walker |  | 1520 | 10 | c includes in src/class/cdc/cdc_device.h |  |  | 0.602 |
+| walker |  | 1530 | 10 | c includes in src/class/cdc/cdc_host.h |  |  | 0.602 |
+| walker |  | 1540 | 10 | c includes in src/class/cdc/cdc_rndis.h |  |  | 0.602 |
+| walker |  | 1566 | 26 | listing of 'src/class/cdc/serial' |  |  | 0.603 |
+| walker |  | 1576 | 10 | c includes in src/class/cdc/serial/ftdi_sio.h |  |  | 0.603 |
+| walker |  | 1589 | 13 | c includes in src/class/cdc/cdc.h |  |  | 0.603 |
 | ns | 1591 |  | 293 | README — Power Delivery + OS abstraction lists | 1.13 |  | 0.565 |
 | ns | 1643 |  | 52 | device/ and host/ subdirectory listings | 2.1 |  | 0.587 |
-| walker |  | 1657 | 126 | c decl names surface in src/class/cdc/cdc_rndis.h |  |  | 0.587 |
-| walker |  | 1674 | 17 | listing of 'src/class/mtp' |  |  | 0.588 |
-| walker |  | 1687 | 13 | c includes in src/class/mtp/mtp.h |  |  | 0.588 |
-| walker |  | 1707 | 20 | c includes in src/class/cdc/serial/pl2303.h |  |  | 0.588 |
+| walker |  | 1715 | 126 | c decl names surface in src/class/cdc/cdc_rndis.h |  |  | 0.587 |
+| walker |  | 1732 | 17 | listing of 'src/class/mtp' |  |  | 0.588 |
+| walker |  | 1745 | 13 | c includes in src/class/mtp/mtp.h |  |  | 0.588 |
+| walker |  | 1765 | 20 | c includes in src/class/cdc/serial/pl2303.h |  |  | 0.588 |
 | ns | 1824 |  | 181 | usbd.h — tud_ lifecycle / status / control API names | 2.2 |  | 0.551 |
-| walker |  | 1841 | 134 | c decl names surface in src/class/dfu/dfu_rt_device.h |  |  | 0.551 |
-| walker |  | 1841 | 0 | c decl at src/class/dfu/dfu_rt_device.h:40 |  |  | 0.551 |
-| walker |  | 1841 | 0 | c decl at src/class/dfu/dfu_rt_device.h:45 |  |  | 0.551 |
-| walker |  | 1865 | 24 | c decl doc at src/class/dfu/dfu_rt_device.h:45 |  |  | 0.551 |
-| walker |  | 1886 | 21 | c includes in lib/networking/rndis_protocol.h |  |  | 0.551 |
-| walker |  | 1901 | 15 | listing of 'hw/mcu' |  |  | 0.551 |
+| walker |  | 1899 | 134 | c decl names surface in src/class/dfu/dfu_rt_device.h |  |  | 0.551 |
+| walker |  | 1899 | 0 | c decl at src/class/dfu/dfu_rt_device.h:40 |  |  | 0.551 |
+| walker |  | 1899 | 0 | c decl at src/class/dfu/dfu_rt_device.h:45 |  |  | 0.551 |
+| walker |  | 1923 | 24 | c decl doc at src/class/dfu/dfu_rt_device.h:45 |  |  | 0.551 |
+| walker |  | 1944 | 21 | c includes in lib/networking/rndis_protocol.h |  |  | 0.551 |
+| walker |  | 1959 | 15 | listing of 'hw/mcu' |  |  | 0.551 |
 | ns | 1983 |  | 159 | usbd.h — tud_ descriptor + lifecycle callback names | 2.3 |  | 0.529 |
-| walker |  | 2045 | 144 | c decl names surface in src/class/dfu/dfu.h |  |  | 0.529 |
-| walker |  | 2075 | 30 | c decl at src/class/dfu/dfu.h:48 |  |  | 0.529 |
-| walker |  | 2085 | 10 | c decl doc at src/class/dfu/dfu.h:48 |  |  | 0.529 |
-| walker |  | 2131 | 46 | c decl at src/class/dfu/dfu.h:41 |  |  | 0.529 |
-| walker |  | 2140 | 9 | c decl doc at src/class/dfu/dfu.h:41 |  |  | 0.529 |
-| walker |  | 2201 | 61 | c decl at src/class/dfu/dfu.h:105 |  |  | 0.529 |
-| walker |  | 2212 | 11 | c decl doc at src/class/dfu/dfu.h:105 |  |  | 0.529 |
+| walker |  | 2103 | 144 | c decl names surface in src/class/dfu/dfu.h |  |  | 0.529 |
+| walker |  | 2133 | 30 | c decl at src/class/dfu/dfu.h:48 |  |  | 0.529 |
+| walker |  | 2143 | 10 | c decl doc at src/class/dfu/dfu.h:48 |  |  | 0.529 |
+| walker |  | 2189 | 46 | c decl at src/class/dfu/dfu.h:41 |  |  | 0.529 |
+| walker |  | 2198 | 9 | c decl doc at src/class/dfu/dfu.h:41 |  |  | 0.529 |
 | ns | 2240 |  | 257 | usbd.h — task & control-xfer signatures (with prose) | 2.4 | 2.2 | 0.501 |
-| walker |  | 2279 | 67 | c decl at src/class/cdc/cdc_rndis.h:180 |  |  | 0.501 |
-| walker |  | 2302 | 23 | c includes in src/class/midi/midi_device.h |  |  | 0.501 |
-| walker |  | 2325 | 23 | c includes in src/class/midi/midi_host.h |  |  | 0.501 |
-| walker |  | 2348 | 23 | c includes in src/class/msc/msc_device.h |  |  | 0.501 |
-| walker |  | 2371 | 23 | c includes in src/class/mtp/mtp_device.h |  |  | 0.501 |
-| walker |  | 2394 | 23 | c includes in src/class/video/video_device.h |  |  | 0.501 |
-| walker |  | 2414 | 20 | listing of 'src/class/usbtmc' |  |  | 0.501 |
-| walker |  | 2426 | 12 | c includes in src/class/usbtmc/usbtmc_device.h |  |  | 0.501 |
-| ns | 2438 |  | 198 | usbh.h — tuh_ lifecycle / status API names | 2.5 |  | 0.478 |
-| walker |  | 2439 | 13 | c includes in src/class/usbtmc/usbtmc.h |  |  | 0.478 |
-| walker |  | 2507 | 68 | c decl at src/class/cdc/cdc_rndis.h:152 |  |  | 0.478 |
-| walker |  | 2563 | 56 | listing of 'src/common' |  |  | 0.478 |
-| walker |  | 2620 | 57 | c decl names surface in src/common/tusb_debug.h |  |  | 0.478 |
+| walker |  | 2259 | 61 | c decl at src/class/dfu/dfu.h:105 |  |  | 0.501 |
+| walker |  | 2270 | 11 | c decl doc at src/class/dfu/dfu.h:105 |  |  | 0.501 |
+| walker |  | 2337 | 67 | c decl at src/class/cdc/cdc_rndis.h:180 |  |  | 0.501 |
+| walker |  | 2360 | 23 | c includes in src/class/midi/midi_device.h |  |  | 0.501 |
+| walker |  | 2383 | 23 | c includes in src/class/midi/midi_host.h |  |  | 0.501 |
+| walker |  | 2406 | 23 | c includes in src/class/msc/msc_device.h |  |  | 0.501 |
+| walker |  | 2429 | 23 | c includes in src/class/mtp/mtp_device.h |  |  | 0.501 |
+| ns | 2438 |  | 198 | usbh.h — tuh_ lifecycle / status API names | 2.5 |  | 0.477 |
+| walker |  | 2452 | 23 | c includes in src/class/video/video_device.h |  |  | 0.477 |
+| walker |  | 2472 | 20 | listing of 'src/class/usbtmc' |  |  | 0.478 |
+| walker |  | 2484 | 12 | c includes in src/class/usbtmc/usbtmc_device.h |  |  | 0.478 |
+| walker |  | 2497 | 13 | c includes in src/class/usbtmc/usbtmc.h |  |  | 0.478 |
+| walker |  | 2565 | 68 | c decl at src/class/cdc/cdc_rndis.h:152 |  |  | 0.478 |
+| walker |  | 2621 | 56 | listing of 'src/common' |  |  | 0.478 |
 | ns | 2636 |  | 198 | usbh.h — tuh_ transfer + descriptor-get API names | 2.6 |  | 0.458 |
-| walker |  | 2644 | 24 | c includes in src/class/net/net_device.h |  |  | 0.458 |
-| walker |  | 2668 | 24 | c includes in src/typec/usbc.h |  |  | 0.458 |
-| walker |  | 2693 | 25 | c includes in src/common/tusb_fifo.h |  |  | 0.458 |
-| walker |  | 2733 | 40 | c decl names surface #2 in src/class/cdc/cdc_device.h |  |  | 0.458 |
-| walker |  | 2808 | 75 | c decl at lib/networking/dhserver.h:49 |  |  | 0.458 |
-| walker |  | 2981 | 173 | c decl names surface in src/typec/usbc.h |  |  | 0.458 |
-| walker |  | 2981 | 0 | c decl at src/typec/usbc.h:50 |  |  | 0.458 |
-| walker |  | 2981 | 0 | c decl at src/typec/usbc.h:53 |  |  | 0.458 |
-| walker |  | 2981 | 0 | c decl at src/typec/usbc.h:58 |  |  | 0.458 |
-| walker |  | 2981 | 0 | c decl at src/typec/usbc.h:71 |  |  | 0.458 |
-| walker |  | 2992 | 11 | c decl at src/typec/usbc.h:61 |  |  | 0.458 |
-| walker |  | 3004 | 12 | c decl body at src/typec/usbc.h:61 |  |  | 0.458 |
-| walker |  | 3017 | 13 | c decl doc at src/typec/usbc.h:50 |  |  | 0.458 |
-| walker |  | 3030 | 13 | c decl doc at src/typec/usbc.h:53 |  |  | 0.458 |
-| walker |  | 3047 | 17 | c decl doc at src/typec/usbc.h:61 |  |  | 0.458 |
-| walker |  | 3061 | 14 | c decl doc at src/typec/usbc.h:71 |  |  | 0.458 |
-| walker |  | 3119 | 58 | README headline in lib/SEGGER_RTT/README.md |  |  | 0.458 |
+| walker |  | 2678 | 57 | c decl names surface in src/common/tusb_debug.h |  |  | 0.458 |
+| walker |  | 2702 | 24 | c includes in src/class/net/net_device.h |  |  | 0.458 |
+| walker |  | 2726 | 24 | c includes in src/typec/usbc.h |  |  | 0.458 |
+| walker |  | 2751 | 25 | c includes in src/common/tusb_fifo.h |  |  | 0.458 |
+| walker |  | 2791 | 40 | c decl names surface #2 in src/class/cdc/cdc_device.h |  |  | 0.458 |
+| walker |  | 2866 | 75 | c decl at lib/networking/dhserver.h:49 |  |  | 0.458 |
+| walker |  | 3039 | 173 | c decl names surface in src/typec/usbc.h |  |  | 0.458 |
+| walker |  | 3039 | 0 | c decl at src/typec/usbc.h:50 |  |  | 0.458 |
+| walker |  | 3039 | 0 | c decl at src/typec/usbc.h:53 |  |  | 0.458 |
+| walker |  | 3039 | 0 | c decl at src/typec/usbc.h:58 |  |  | 0.458 |
+| walker |  | 3039 | 0 | c decl at src/typec/usbc.h:71 |  |  | 0.458 |
+| walker |  | 3050 | 11 | c decl at src/typec/usbc.h:61 |  |  | 0.458 |
+| walker |  | 3062 | 12 | c decl body at src/typec/usbc.h:61 |  |  | 0.458 |
+| walker |  | 3075 | 13 | c decl doc at src/typec/usbc.h:50 |  |  | 0.458 |
+| walker |  | 3088 | 13 | c decl doc at src/typec/usbc.h:53 |  |  | 0.458 |
+| walker |  | 3105 | 17 | c decl doc at src/typec/usbc.h:61 |  |  | 0.458 |
+| walker |  | 3119 | 14 | c decl doc at src/typec/usbc.h:71 |  |  | 0.458 |
 | walker |  | 3183 | 64 | listing of 'src/osal' |  |  | 0.459 |
 | walker |  | 3208 | 25 | c decl names surface #1 in src/osal/osal_zephyr.h |  |  | 0.459 |
 | walker |  | 3208 | 0 | c decl at src/osal/osal_zephyr.h:152 |  |  | 0.459 |

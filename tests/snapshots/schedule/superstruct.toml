@@ -73,66 +73,10 @@ entries = ["coercions.ts", "refinements.ts", "types.ts", "utilities.ts"]
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 21
-cum_tokens = 199
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
-
-[[batches]]
-position = 6
-key = 'Typescript(ExportNames { file: "src/error.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
-descriptor = "export names surface in src/error.ts"
-cost_tokens = 25
-cum_tokens = 224
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 7
 key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 184
-cum_tokens = 408
+cum_tokens = 362
 
 [batches.content]
 kind = "lines"
@@ -170,11 +114,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 8
+position = 6
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 54
-cum_tokens = 462
+cum_tokens = 416
 
 [batches.content]
 kind = "lines"
@@ -276,11 +220,11 @@ end = 232
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 7
 key = 'Markdown(Section { file: "Readme.md", section_index: 10 })'
 descriptor = "Readme.md section #10"
 cost_tokens = 16
-cum_tokens = 478
+cum_tokens = 432
 
 [batches.content]
 kind = "lines"
@@ -302,77 +246,25 @@ end = 233
 kind = "full"
 
 [[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 55
-cum_tokens = 533
+position = 8
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 21
+cum_tokens = 453
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "examples"
-entries = ["README.md", "basic-validation.js", "composing-structs.js", "custom-errors.js", "custom-types.js", "default-values.js", "optional-values.js", "package.json", "returning-errors.js", "testing-values.js", "throwing-errors.js"]
+parent = "docs"
+entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
 
 [[batches]]
-position = 11
-key = 'Typescript(Export { file: "src/error.ts", start_line: 5 })'
-descriptor = "export at src/error.ts:5"
-cost_tokens = 79
-cum_tokens = 612
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 5
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Typescript(Export { file: "src/error.ts", start_line: 25 })'
-descriptor = "export at src/error.ts:25"
-cost_tokens = 91
-cum_tokens = 703
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 25
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 13
+position = 9
 key = 'Markdown(ReadmeHeadline { file: "docs/readme.md" })'
 descriptor = "README headline in docs/readme.md"
 cost_tokens = 122
-cum_tokens = 825
+cum_tokens = 575
 
 [batches.content]
 kind = "lines"
@@ -400,6 +292,114 @@ end = 9
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 10
+key = 'Typescript(ExportNames { file: "src/error.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
+descriptor = "export names surface in src/error.ts"
+cost_tokens = 25
+cum_tokens = 600
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 55
+cum_tokens = 655
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["README.md", "basic-validation.js", "composing-structs.js", "custom-errors.js", "custom-types.js", "default-values.js", "optional-values.js", "package.json", "returning-errors.js", "testing-values.js", "throwing-errors.js"]
+
+[[batches]]
+position = 12
+key = 'Typescript(Export { file: "src/error.ts", start_line: 5 })'
+descriptor = "export at src/error.ts:5"
+cost_tokens = 79
+cum_tokens = 734
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 5
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Typescript(Export { file: "src/error.ts", start_line: 25 })'
+descriptor = "export at src/error.ts:25"
+cost_tokens = 91
+cum_tokens = 825
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 25
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 14

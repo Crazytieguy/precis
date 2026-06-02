@@ -7,18 +7,18 @@ Score(3000)=0.678 I=0.843 C=0.545 ns_rows≤3K=12/27 (reached=6 partial=3 missin
 | walker |  | 81 | 43 | README headline in README.md |  |  | 0.891 |
 | ns | 86 |  | 38 | Top-level repo listing | 1.2 |  | 0.938 |
 | walker |  | 110 | 29 | headings outline in README.md |  |  | 0.938 |
-| walker |  | 135 | 25 | listing of 'src' |  |  | 0.953 |
-| ns | 158 |  | 72 | src/ + impl/src/ listings | 1.3 |  | 0.656 |
-| walker |  | 181 | 46 | mod/use plumbing in src/lib.rs |  |  | 0.656 |
-| walker |  | 200 | 19 | listing of 'impl' |  |  | 0.656 |
-| ns | 245 |  | 87 | README example — enum head + first variant | 2.1 |  | 0.576 |
-| walker |  | 264 | 64 | README.md section #0 |  |  | 0.576 |
-| ns | 339 |  | 94 | README example — remaining variants | 2.2 |  | 0.505 |
-| walker |  | 447 | 183 | [package] in Cargo.toml |  |  | 0.521 |
+| ns | 158 |  | 72 | src/ + impl/src/ listings | 1.3 |  | 0.606 |
+| walker |  | 174 | 64 | README.md section #0 |  |  | 0.606 |
+| ns | 245 |  | 87 | README example — enum head + first variant | 2.1 |  | 0.532 |
+| ns | 339 |  | 94 | README example — remaining variants | 2.2 |  | 0.467 |
+| walker |  | 357 | 183 | [package] in Cargo.toml |  |  | 0.482 |
+| walker |  | 382 | 25 | listing of 'src' |  |  | 0.521 |
+| walker |  | 428 | 46 | mod/use plumbing in src/lib.rs |  |  | 0.521 |
 | ns | 500 |  | 161 | Cargo.toml — package head | 2.3 |  | 0.592 |
-| walker |  | 714 | 267 | crate-doc lede in src/lib.rs |  |  | 0.592 |
-| ns | 735 |  | 235 | Cargo.toml — std/no_std feature + workspace | 2.4 |  | 0.497 |
-| walker |  | 875 | 161 | [features] in Cargo.toml |  |  | 0.614 |
+| walker |  | 589 | 161 | [features] in Cargo.toml |  |  | 0.607 |
+| walker |  | 608 | 19 | listing of 'impl' |  |  | 0.607 |
+| ns | 735 |  | 235 | Cargo.toml — std/no_std feature + workspace | 2.4 |  | 0.614 |
+| walker |  | 875 | 267 | crate-doc lede in src/lib.rs |  |  | 0.614 |
 | walker |  | 922 | 47 | listing of 'impl/src' |  |  | 0.763 |
 | walker |  | 941 | 19 | pub item at impl/src/lib.rs:40 |  |  | 0.763 |
 | ns | 961 |  | 226 | Macro entry point — derive_error in impl/src/lib.rs | 2.5 |  | 0.663 |

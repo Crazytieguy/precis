@@ -9,45 +9,45 @@ Score(3000)=0.633 I=0.895 C=0.448 ns_rows≤3K=17/45 (reached=9 partial=1 missin
 | walker |  | 146 | 93 | README headline in README.md |  |  | 1.000 |
 | walker |  | 176 | 30 | headings outline in README.md |  |  | 1.000 |
 | ns | 258 |  | 122 | src/flask module listing | 1.3 |  | 0.580 |
-| walker |  | 267 | 91 | listing of 'src/flask' |  |  | 0.830 |
-| walker |  | 278 | 11 | python imports in src/flask/__init__.py |  |  | 0.830 |
-| walker |  | 290 | 12 | python imports #1 in src/flask/__init__.py |  |  | 0.831 |
-| walker |  | 303 | 13 | python imports #2 in src/flask/__init__.py |  |  | 0.833 |
-| walker |  | 315 | 12 | python imports #3 in src/flask/__init__.py |  |  | 0.835 |
-| walker |  | 327 | 12 | python imports #7 in src/flask/__init__.py |  |  | 0.835 |
-| ns | 332 |  | 74 | Public re-exports — Flask, Blueprint, Config, Request, Response | 1.4 |  | 0.804 |
-| walker |  | 341 | 14 | listing of 'src/flask/json' |  |  | 0.867 |
-| ns | 382 |  | 50 | Public re-exports — globals proxies (current_app, g, request, session) | 1.5 |  | 0.831 |
-| walker |  | 407 | 66 | python imports #4 in src/flask/__init__.py |  |  | 0.838 |
-| walker |  | 457 | 50 | python imports #5 in src/flask/__init__.py |  |  | 0.883 |
-| ns | 460 |  | 78 | Public re-exports — ctx helpers and jsonify | 1.6 |  | 0.884 |
-| walker |  | 483 | 26 | python imports #10 in src/flask/__init__.py |  |  | 0.919 |
-| walker |  | 500 | 17 | listing of 'src/flask/sansio' |  |  | 1.000 |
-| walker |  | 552 | 52 | python imports in src/flask/json/__init__.py |  |  | 1.000 |
-| ns | 606 |  | 146 | Public re-exports — helpers (url_for, redirect, abort, flash, send_file, …) | 1.7 |  | 0.915 |
-| walker |  | 616 | 64 | python imports #9 in src/flask/__init__.py |  |  | 0.916 |
-| walker |  | 762 | 146 | python imports #6 in src/flask/__init__.py |  |  | 1.000 |
-| walker |  | 772 | 10 | python imports in src/flask/__main__.py |  |  | 1.000 |
-| walker |  | 781 | 9 | listing of 'examples' |  |  | 1.000 |
-| ns | 838 |  | 232 | Public re-exports — templating + signals | 1.8 |  | 0.909 |
-| walker |  | 949 | 168 | python imports #8 in src/flask/__init__.py |  |  | 1.000 |
-| ns | 970 |  | 132 | Minimal Flask app example (README) | 1.9 |  | 0.909 |
-| ns | 1047 |  | 77 | Sansio README — what the sansio split is for | 2.1 |  | 0.879 |
-| walker |  | 1068 | 119 | README.md section #0 |  |  | 0.879 |
-| ns | 1093 |  | 46 | Class hierarchy headers — Scaffold, App, Blueprint, Flask | 2.2 |  | 0.856 |
-| walker |  | 1172 | 104 | [dependencies] in pyproject.toml |  |  | 0.856 |
-| walker |  | 1185 | 13 | listing of '.github' |  |  | 0.856 |
-| walker |  | 1208 | 23 | listing of '.github/workflows' |  |  | 0.856 |
-| walker |  | 1221 | 13 | python decl names surface in src/flask/blueprints.py |  |  | 0.857 |
-| walker |  | 1221 | 0 | python decl at src/flask/blueprints.py:18 |  |  | 0.857 |
-| walker |  | 1344 | 123 | python decl names surface in src/flask/json/__init__.py |  |  | 0.857 |
-| walker |  | 1344 | 0 | python decl at src/flask/json/__init__.py:13 |  |  | 0.857 |
-| walker |  | 1344 | 0 | python decl at src/flask/json/__init__.py:47 |  |  | 0.857 |
-| walker |  | 1344 | 0 | python decl at src/flask/json/__init__.py:77 |  |  | 0.857 |
-| walker |  | 1344 | 0 | python decl at src/flask/json/__init__.py:108 |  |  | 0.857 |
-| walker |  | 1344 | 0 | python decl at src/flask/json/__init__.py:138 |  |  | 0.857 |
+| walker |  | 295 | 119 | README.md section #0 |  |  | 0.580 |
+| ns | 332 |  | 74 | Public re-exports — Flask, Blueprint, Config, Request, Response | 1.4 |  | 0.540 |
+| ns | 382 |  | 50 | Public re-exports — globals proxies (current_app, g, request, session) | 1.5 |  | 0.517 |
+| walker |  | 399 | 104 | [dependencies] in pyproject.toml |  |  | 0.517 |
+| ns | 460 |  | 78 | Public re-exports — ctx helpers and jsonify | 1.6 |  | 0.491 |
+| walker |  | 482 | 83 | [package] in pyproject.toml |  |  | 0.491 |
+| walker |  | 573 | 91 | listing of 'src/flask' |  |  | 0.704 |
+| walker |  | 584 | 11 | python imports in src/flask/__init__.py |  |  | 0.705 |
+| walker |  | 596 | 12 | python imports #1 in src/flask/__init__.py |  |  | 0.710 |
+| ns | 606 |  | 146 | Public re-exports — helpers (url_for, redirect, abort, flash, send_file, …) | 1.7 |  | 0.649 |
+| walker |  | 609 | 13 | python imports #2 in src/flask/__init__.py |  |  | 0.659 |
+| walker |  | 621 | 12 | python imports #3 in src/flask/__init__.py |  |  | 0.670 |
+| walker |  | 633 | 12 | python imports #7 in src/flask/__init__.py |  |  | 0.671 |
+| walker |  | 647 | 14 | listing of 'src/flask/json' |  |  | 0.724 |
+| walker |  | 713 | 66 | python imports #4 in src/flask/__init__.py |  |  | 0.771 |
+| walker |  | 763 | 50 | python imports #5 in src/flask/__init__.py |  |  | 0.808 |
+| walker |  | 789 | 26 | python imports #10 in src/flask/__init__.py |  |  | 0.841 |
+| walker |  | 806 | 17 | listing of 'src/flask/sansio' |  |  | 0.915 |
+| ns | 838 |  | 232 | Public re-exports — templating + signals | 1.8 |  | 0.824 |
+| walker |  | 858 | 52 | python imports in src/flask/json/__init__.py |  |  | 0.824 |
+| walker |  | 922 | 64 | python imports #9 in src/flask/__init__.py |  |  | 0.832 |
+| ns | 970 |  | 132 | Minimal Flask app example (README) | 1.9 |  | 0.757 |
+| ns | 1047 |  | 77 | Sansio README — what the sansio split is for | 2.1 |  | 0.732 |
+| walker |  | 1068 | 146 | python imports #6 in src/flask/__init__.py |  |  | 0.799 |
+| walker |  | 1078 | 10 | python imports in src/flask/__main__.py |  |  | 0.799 |
+| walker |  | 1087 | 9 | listing of 'examples' |  |  | 0.799 |
+| ns | 1093 |  | 46 | Class hierarchy headers — Scaffold, App, Blueprint, Flask | 2.2 |  | 0.778 |
+| walker |  | 1255 | 168 | python imports #8 in src/flask/__init__.py |  |  | 0.856 |
+| walker |  | 1268 | 13 | listing of '.github' |  |  | 0.856 |
+| walker |  | 1291 | 23 | listing of '.github/workflows' |  |  | 0.856 |
+| walker |  | 1304 | 13 | python decl names surface in src/flask/blueprints.py |  |  | 0.857 |
+| walker |  | 1304 | 0 | python decl at src/flask/blueprints.py:18 |  |  | 0.857 |
 | ns | 1345 |  | 252 | Scaffold docstring — common behavior of Flask + Blueprint | 2.3 | 2.2 | 0.793 |
-| walker |  | 1427 | 83 | [package] in pyproject.toml |  |  | 0.793 |
+| walker |  | 1427 | 123 | python decl names surface in src/flask/json/__init__.py |  |  | 0.793 |
+| walker |  | 1427 | 0 | python decl at src/flask/json/__init__.py:13 |  |  | 0.793 |
+| walker |  | 1427 | 0 | python decl at src/flask/json/__init__.py:47 |  |  | 0.793 |
+| walker |  | 1427 | 0 | python decl at src/flask/json/__init__.py:77 |  |  | 0.793 |
+| walker |  | 1427 | 0 | python decl at src/flask/json/__init__.py:108 |  |  | 0.793 |
+| walker |  | 1427 | 0 | python decl at src/flask/json/__init__.py:138 |  |  | 0.793 |
 | walker |  | 1499 | 72 | README headline in src/flask/sansio/README.md |  |  | 0.819 |
 | walker |  | 1521 | 22 | python decl names surface in src/flask/wrappers.py |  |  | 0.819 |
 | walker |  | 1521 | 0 | python decl at src/flask/wrappers.py:18 |  |  | 0.819 |

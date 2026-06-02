@@ -4,11 +4,11 @@ Score(3000)=0.592 I=0.831 C=0.421 ns_rows≤3K=18/40 (reached=8 partial=2 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 38 | 38 | listing of '.' |  |  | 1.000 |
 | ns | 38 |  | 38 | Repository root listing | 1.1 |  | 1.000 |
-| walker |  | 72 | 34 | listing of 'peepdb' |  |  | 1.000 |
-| ns | 72 |  | 34 | Python package layout | 1.2 |  | 1.000 |
-| ns | 117 |  | 45 | DB adapter package listing | 1.3 |  | 0.775 |
-| ns | 159 |  | 42 | Test suite listing | 1.4 |  | 0.680 |
-| walker |  | 162 | 90 | README headline in README.md |  |  | 0.684 |
+| ns | 72 |  | 34 | Python package layout | 1.2 |  | 0.719 |
+| ns | 117 |  | 45 | DB adapter package listing | 1.3 |  | 0.557 |
+| walker |  | 128 | 90 | README headline in README.md |  |  | 0.561 |
+| ns | 159 |  | 42 | Test suite listing | 1.4 |  | 0.493 |
+| walker |  | 162 | 34 | listing of 'peepdb' |  |  | 0.684 |
 | walker |  | 207 | 45 | listing of 'peepdb/db' |  |  | 0.882 |
 | ns | 208 |  | 49 | Docs and CI directory listings | 1.5 |  | 0.743 |
 | walker |  | 219 | 12 | python decl names surface in peepdb/db/base.py |  |  | 0.743 |
@@ -18,20 +18,20 @@ Score(3000)=0.592 I=0.831 C=0.421 ns_rows≤3K=18/40 (reached=8 partial=2 missin
 | walker |  | 235 | 5 | python class body at peepdb/exceptions.py:1 |  |  | 0.744 |
 | walker |  | 263 | 28 | listing of 'images' |  |  | 0.744 |
 | walker |  | 273 | 10 | python imports in peepdb/__main__.py |  |  | 0.746 |
-| walker |  | 285 | 12 | python imports in setup.py |  |  | 0.746 |
 | ns | 303 |  | 95 | README — title + one-paragraph lede | 2.1 |  | 0.743 |
-| walker |  | 326 | 41 | listing of 'docs' |  |  | 0.854 |
-| ns | 358 |  | 55 | Package __init__, __main__, exceptions | 2.2 |  | 0.809 |
-| walker |  | 410 | 84 | README headline in docs/README.md |  |  | 0.809 |
-| walker |  | 462 | 52 | headings outline in docs/installation.md |  |  | 0.809 |
-| walker |  | 516 | 54 | headings outline in docs/index.md |  |  | 0.809 |
-| ns | 537 |  | 179 | setup.py — name/version + console_scripts entry | 2.3 |  | 0.700 |
-| ns | 716 |  | 179 | README — feature bullets | 2.4 |  | 0.654 |
-| walker |  | 726 | 210 | python imports in peepdb/db/__init__.py |  |  | 0.670 |
-| walker |  | 921 | 195 | headings outline in README.md |  |  | 0.671 |
-| ns | 931 |  | 215 | db/__init__.py re-exports (full) | 3.1 |  | 0.712 |
-| walker |  | 948 | 27 | README.md section #8 |  |  | 0.712 |
-| walker |  | 975 | 27 | README.md section #11 |  |  | 0.712 |
+| ns | 358 |  | 55 | Package __init__, __main__, exceptions | 2.2 |  | 0.707 |
+| walker |  | 468 | 195 | headings outline in README.md |  |  | 0.708 |
+| walker |  | 495 | 27 | README.md section #8 |  |  | 0.708 |
+| walker |  | 522 | 27 | README.md section #11 |  |  | 0.708 |
+| walker |  | 534 | 12 | python imports in setup.py |  |  | 0.708 |
+| ns | 537 |  | 179 | setup.py — name/version + console_scripts entry | 2.3 |  | 0.613 |
+| walker |  | 575 | 41 | listing of 'docs' |  |  | 0.700 |
+| walker |  | 659 | 84 | README headline in docs/README.md |  |  | 0.700 |
+| walker |  | 711 | 52 | headings outline in docs/installation.md |  |  | 0.700 |
+| ns | 716 |  | 179 | README — feature bullets | 2.4 |  | 0.655 |
+| walker |  | 765 | 54 | headings outline in docs/index.md |  |  | 0.655 |
+| ns | 931 |  | 215 | db/__init__.py re-exports (full) | 3.1 |  | 0.573 |
+| walker |  | 975 | 210 | python imports in peepdb/db/__init__.py |  |  | 0.712 |
 | walker |  | 1000 | 25 | README.md section #30 |  |  | 0.712 |
 | walker |  | 1017 | 17 | README.md section #5 |  |  | 0.714 |
 | walker |  | 1044 | 27 | README.md section #29 |  |  | 0.714 |

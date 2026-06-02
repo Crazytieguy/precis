@@ -11,25 +11,25 @@ Score(3000)=0.636 I=0.866 C=0.468 ns_rows≤3K=19/48 (reached=8 partial=0 missin
 | walker |  | 243 | 166 | README headline in README.md |  |  | 0.678 |
 | walker |  | 283 | 40 | headings outline in README.md |  |  | 0.678 |
 | ns | 354 |  | 140 | pyproject: name, description, Python floor, deps | 1.5 |  | 0.587 |
-| walker |  | 373 | 90 | listing of 'src/requests' |  |  | 0.859 |
-| ns | 496 |  | 142 | README usage snippet | 1.6 |  | 0.866 |
-| ns | 722 |  | 226 | Public re-exports (__all__) from package __init__ | 1.7 |  | 0.714 |
-| ns | 881 |  | 159 | Package import wiring (api, exceptions, models, sessions, status_codes) | 1.8 |  | 0.653 |
-| ns | 1229 |  | 348 | Crate-doc lede (package docstring) | 1.9 |  | 0.559 |
-| walker |  | 1304 | 931 | python imports in src/requests/__init__.py |  |  | 0.898 |
-| ns | 1308 |  | 79 | api.py module docstring | 2.1 |  | 0.868 |
-| walker |  | 1338 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.868 |
-| walker |  | 1352 | 14 | python decl at src/requests/__init__.py:99 |  |  | 0.868 |
-| walker |  | 1397 | 45 | python decl at src/requests/__init__.py:60 |  |  | 0.868 |
-| ns | 1424 |  | 116 | api.py: all eight verb names | 2.2 |  | 0.843 |
-| walker |  | 1431 | 34 | listing of 'ext' |  |  | 0.843 |
-| ns | 1459 |  | 35 | api.request() full signature | 2.3 | 2.2 | 0.834 |
-| walker |  | 1503 | 72 | [dependencies] in pyproject.toml |  |  | 0.846 |
-| walker |  | 1519 | 16 | python imports in setup.py |  |  | 0.846 |
-| ns | 1549 |  | 90 | api.request() body — delegates to a one-shot Session | 2.4 | 2.3 | 0.832 |
-| walker |  | 1571 | 52 | [package] in pyproject.toml |  |  | 0.865 |
+| walker |  | 355 | 72 | [dependencies] in pyproject.toml |  |  | 0.624 |
+| walker |  | 407 | 52 | [package] in pyproject.toml |  |  | 0.716 |
+| ns | 496 |  | 142 | README usage snippet | 1.6 |  | 0.749 |
+| walker |  | 551 | 144 | README.md section #0 |  |  | 0.749 |
+| walker |  | 641 | 90 | listing of 'src/requests' |  |  | 0.956 |
+| ns | 722 |  | 226 | Public re-exports (__all__) from package __init__ | 1.7 |  | 0.788 |
+| ns | 881 |  | 159 | Package import wiring (api, exceptions, models, sessions, status_codes) | 1.8 |  | 0.720 |
+| ns | 1229 |  | 348 | Crate-doc lede (package docstring) | 1.9 |  | 0.617 |
+| ns | 1308 |  | 79 | api.py module docstring | 2.1 |  | 0.596 |
+| ns | 1424 |  | 116 | api.py: all eight verb names | 2.2 |  | 0.579 |
+| ns | 1459 |  | 35 | api.request() full signature | 2.3 | 2.2 | 0.573 |
+| ns | 1549 |  | 90 | api.request() body — delegates to a one-shot Session | 2.4 | 2.3 | 0.563 |
+| walker |  | 1572 | 931 | python imports in src/requests/__init__.py |  |  | 0.865 |
+| walker |  | 1606 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.865 |
+| walker |  | 1620 | 14 | python decl at src/requests/__init__.py:99 |  |  | 0.865 |
+| walker |  | 1665 | 45 | python decl at src/requests/__init__.py:60 |  |  | 0.865 |
+| walker |  | 1699 | 34 | listing of 'ext' |  |  | 0.865 |
 | ns | 1705 |  | 156 | Session class header + attribute declarations | 2.5 |  | 0.829 |
-| walker |  | 1715 | 144 | README.md section #0 |  |  | 0.829 |
+| walker |  | 1715 | 16 | python imports in setup.py |  |  | 0.829 |
 | walker |  | 1769 | 54 | listing of 'docs' |  |  | 0.829 |
 | walker |  | 1790 | 21 | listing of 'docs/user' |  |  | 0.829 |
 | walker |  | 1840 | 50 | README.md section #1 |  |  | 0.829 |

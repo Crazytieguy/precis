@@ -33,10 +33,62 @@ entries = ["typeguard"]
 
 [[batches]]
 position = 3
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 51
+cum_tokens = 89
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 27
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Toml(Identity { file: "pyproject.toml" })'
+descriptor = "[package] in pyproject.toml"
+cost_tokens = 66
+cum_tokens = 155
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
 key = 'Fs(DirListing { dir: "src/typeguard" })'
 descriptor = "listing of 'src/typeguard'"
 cost_tokens = 72
-cum_tokens = 110
+cum_tokens = 227
 
 [batches.content]
 kind = "fs"
@@ -46,11 +98,11 @@ parent = "src/typeguard"
 entries = ["__init__.py", "_checkers.py", "_config.py", "_decorators.py", "_exceptions.py", "_functions.py", "_importhook.py", "_memo.py", "_pytest_plugin.py", "_suppression.py", "_transformer.py", "_utils.py", "py.typed"]
 
 [[batches]]
-position = 4
+position = 6
 key = 'Python(Imports { file: "src/typeguard/__init__.py" })'
 descriptor = "python imports in src/typeguard/__init__.py"
 cost_tokens = 414
-cum_tokens = 524
+cum_tokens = 641
 
 [batches.content]
 kind = "lines"
@@ -72,11 +124,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 5
+position = 7
 key = 'Python(DeclNames { file: "src/typeguard/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/typeguard/__init__.py"
 cost_tokens = 28
-cum_tokens = 552
+cum_tokens = 669
 
 [batches.content]
 kind = "lines"
@@ -106,11 +158,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 8
 key = 'Python(Decl { file: "src/typeguard/__init__.py", start_line: 37 })'
 descriptor = "python decl at src/typeguard/__init__.py:37"
 cost_tokens = 0
-cum_tokens = 552
+cum_tokens = 669
 
 [batches.content]
 kind = "lines"
@@ -124,29 +176,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 7
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 51
-cum_tokens = 603
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 27
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
+position = 9
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 41
-cum_tokens = 644
+cum_tokens = 710
 
 [batches.content]
 kind = "fs"
@@ -156,11 +190,11 @@ parent = "docs"
 entries = ["api.rst", "conf.py", "contributing.rst", "extending.rst", "features.rst", "index.rst", "userguide.rst", "versionhistory.rst"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Python(DeclNames { file: "src/typeguard/_memo.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/typeguard/_memo.py"
 cost_tokens = 11
-cum_tokens = 655
+cum_tokens = 721
 
 [batches.content]
 kind = "lines"
@@ -182,11 +216,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Python(Decl { file: "src/typeguard/_memo.py", start_line: 8 })'
 descriptor = "python decl at src/typeguard/_memo.py:8"
 cost_tokens = 0
-cum_tokens = 655
+cum_tokens = 721
 
 [batches.content]
 kind = "lines"
@@ -200,11 +234,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Python(MethodSigs { file: "src/typeguard/_memo.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/typeguard/_memo.py"
 cost_tokens = 11
-cum_tokens = 666
+cum_tokens = 732
 
 [batches.content]
 kind = "lines"
@@ -224,40 +258,6 @@ end = 38
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 12
-key = 'Toml(Identity { file: "pyproject.toml" })'
-descriptor = "[package] in pyproject.toml"
-cost_tokens = 66
-cum_tokens = 732
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 8
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 13

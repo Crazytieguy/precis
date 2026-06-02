@@ -19,94 +19,10 @@ entries = [".github", "LICENSE.txt", "README.md", "bench_test.go", "dynamic", "g
 
 [[batches]]
 position = 2
-key = 'Go(GoModIdentity { file: "go.mod" })'
-descriptor = "go module identity in go.mod"
-cost_tokens = 26
-cum_tokens = 109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 3
-key = 'Go(GoMod { file: "go.mod" })'
-descriptor = "go module file go.mod"
-cost_tokens = 0
-cum_tokens = 109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 4
-key = 'Go(PackageDocLede { file: "xxhash.go" })'
-descriptor = "go package doc lede in xxhash.go"
-cost_tokens = 37
-cum_tokens = 146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "xxhash.go"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "xxhsum" })'
-descriptor = "listing of 'xxhsum'"
-cost_tokens = 11
-cum_tokens = 157
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "xxhsum"
-entries = [".gitignore", "xxhsum.go"]
-
-[[batches]]
-position = 6
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 62
-cum_tokens = 219
+cum_tokens = 145
 
 [batches.content]
 kind = "lines"
@@ -128,11 +44,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 7
+position = 3
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 31
-cum_tokens = 250
+cum_tokens = 176
 
 [batches.content]
 kind = "lines"
@@ -184,6 +100,90 @@ end = 67
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 4
+key = 'Go(GoModIdentity { file: "go.mod" })'
+descriptor = "go module identity in go.mod"
+cost_tokens = 26
+cum_tokens = 202
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Go(GoMod { file: "go.mod" })'
+descriptor = "go module file go.mod"
+cost_tokens = 0
+cum_tokens = 202
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Go(PackageDocLede { file: "xxhash.go" })'
+descriptor = "go package doc lede in xxhash.go"
+cost_tokens = 37
+cum_tokens = 239
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "xxhash.go"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "xxhsum" })'
+descriptor = "listing of 'xxhsum'"
+cost_tokens = 11
+cum_tokens = 250
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "xxhsum"
+entries = [".gitignore", "xxhsum.go"]
 
 [[batches]]
 position = 8
@@ -591,10 +591,68 @@ kind = "full"
 
 [[batches]]
 position = 26
+key = 'Markdown(Section { file: "README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 222
+cum_tokens = 717
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 12
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 21
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 27
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
 key = 'Go(DeclDoc { file: "xxhash_safe.go", start_line: 9 })'
 descriptor = "go decl doc at xxhash_safe.go:9"
 cost_tokens = 23
-cum_tokens = 518
+cum_tokens = 740
 
 [batches.content]
 kind = "lines"
@@ -608,11 +666,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Go(DeclDoc { file: "xxhash_safe.go", start_line: 14 })'
 descriptor = "go decl doc at xxhash_safe.go:14"
 cost_tokens = 21
-cum_tokens = 539
+cum_tokens = 761
 
 [batches.content]
 kind = "lines"
@@ -626,11 +684,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Go(PackageImports { file: "xxhash.go" })'
 descriptor = "go package + imports in xxhash.go"
 cost_tokens = 45
-cum_tokens = 584
+cum_tokens = 806
 
 [batches.content]
 kind = "lines"
@@ -652,11 +710,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Go(DeclNames { file: "xxhsum/xxhsum.go", chunk_index: 0 })'
 descriptor = "go decl names surface in xxhsum/xxhsum.go"
 cost_tokens = 44
-cum_tokens = 628
+cum_tokens = 850
 
 [batches.content]
 kind = "lines"
@@ -710,11 +768,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Go(Decl { file: "xxhsum/xxhsum.go", start_line: 11 })'
 descriptor = "go decl at xxhsum/xxhsum.go:11"
 cost_tokens = 0
-cum_tokens = 628
+cum_tokens = 850
 
 [batches.content]
 kind = "lines"
@@ -728,11 +786,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Go(Decl { file: "xxhsum/xxhsum.go", start_line: 34 })'
 descriptor = "go decl at xxhsum/xxhsum.go:34"
 cost_tokens = 0
-cum_tokens = 628
+cum_tokens = 850
 
 [batches.content]
 kind = "lines"
@@ -746,11 +804,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Go(Decl { file: "xxhsum/xxhsum.go", start_line: 43 })'
 descriptor = "go decl at xxhsum/xxhsum.go:43"
 cost_tokens = 0
-cum_tokens = 628
+cum_tokens = 850
 
 [batches.content]
 kind = "lines"
@@ -764,11 +822,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Go(DeclDoc { file: "xxhash_asm.go", start_line: 12 })'
 descriptor = "go decl doc at xxhash_asm.go:12"
 cost_tokens = 36
-cum_tokens = 664
+cum_tokens = 886
 
 [batches.content]
 kind = "lines"
@@ -782,11 +840,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Go(PackageImports { file: "xxhash_unsafe.go" })'
 descriptor = "go package + imports in xxhash_unsafe.go"
 cost_tokens = 27
-cum_tokens = 691
+cum_tokens = 913
 
 [batches.content]
 kind = "lines"
@@ -808,11 +866,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Go(DeclBody { file: "xxhash_unsafe.go", start_line: 38 })'
 descriptor = "go decl body at xxhash_unsafe.go:38"
 cost_tokens = 29
-cum_tokens = 720
+cum_tokens = 942
 
 [batches.content]
 kind = "lines"
@@ -826,11 +884,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Go(DeclDoc { file: "xxhash_unsafe.go", start_line: 38 })'
 descriptor = "go decl doc at xxhash_unsafe.go:38"
 cost_tokens = 44
-cum_tokens = 764
+cum_tokens = 986
 
 [batches.content]
 kind = "lines"
@@ -844,11 +902,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Go(GoMod { file: "xxhashbench/go.mod" })'
 descriptor = "go module file xxhashbench/go.mod"
 cost_tokens = 105
-cum_tokens = 869
+cum_tokens = 1091
 
 [batches.content]
 kind = "lines"
@@ -886,11 +944,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Go(DeclDoc { file: "xxhash_unsafe.go", start_line: 45 })'
 descriptor = "go decl doc at xxhash_unsafe.go:45"
 cost_tokens = 41
-cum_tokens = 910
+cum_tokens = 1132
 
 [batches.content]
 kind = "lines"
@@ -904,11 +962,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Go(DeclNames { file: "dynamic/plugin.go", chunk_index: 0 })'
 descriptor = "go decl names surface in dynamic/plugin.go"
 cost_tokens = 78
-cum_tokens = 988
+cum_tokens = 1210
 
 [batches.content]
 kind = "lines"
@@ -962,11 +1020,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Go(Decl { file: "dynamic/plugin.go", start_line: 19 })'
 descriptor = "go decl at dynamic/plugin.go:19"
 cost_tokens = 0
-cum_tokens = 988
+cum_tokens = 1210
 
 [batches.content]
 kind = "lines"
@@ -980,11 +1038,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Go(Decl { file: "dynamic/plugin.go", start_line: 26 })'
 descriptor = "go decl at dynamic/plugin.go:26"
 cost_tokens = 0
-cum_tokens = 988
+cum_tokens = 1210
 
 [batches.content]
 kind = "lines"
@@ -998,11 +1056,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Go(Decl { file: "dynamic/plugin.go", start_line: 14 })'
 descriptor = "go decl at dynamic/plugin.go:14"
 cost_tokens = 9
-cum_tokens = 997
+cum_tokens = 1219
 
 [batches.content]
 kind = "lines"
@@ -1011,64 +1069,6 @@ kind = "lines"
 path = "dynamic/plugin.go"
 start = 14
 end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Markdown(Section { file: "README.md", section_index: 0 })'
-descriptor = "README.md section #0"
-cost_tokens = 222
-cum_tokens = 1219
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 12
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 21
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 27
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 31
-end = 31
 
 [batches.content.spans.render]
 kind = "full"

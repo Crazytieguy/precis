@@ -4,13 +4,13 @@ Score(3000)=0.490 I=0.766 C=0.313 ns_rows≤3K=23/40 (reached=7 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 63 |  | 63 | README lede | 1.1 |  | 0.000 |
 | walker |  | 116 | 116 | listing of '.' |  |  | 0.000 |
-| walker |  | 122 | 6 | listing of 'test-results' |  |  | 0.000 |
-| ns | 179 |  | 116 | Top-level directory listing | 1.2 |  | 0.774 |
-| walker |  | 184 | 62 | package identity in package.json |  |  | 0.777 |
+| walker |  | 178 | 62 | package identity in package.json |  |  | 0.000 |
+| ns | 179 |  | 116 | Top-level directory listing | 1.2 |  | 0.777 |
 | ns | 204 |  | 25 | src/ subdirectory listing | 1.3 |  | 0.692 |
-| walker |  | 247 | 63 | README headline in README.md |  |  | 0.893 |
+| walker |  | 241 | 63 | README headline in README.md |  |  | 0.893 |
 | ns | 269 |  | 65 | package.json — name/version/vscodeRef | 1.4 |  | 0.866 |
-| walker |  | 283 | 36 | headings outline in MAINTAINING.md |  |  | 0.866 |
+| walker |  | 277 | 36 | headings outline in MAINTAINING.md |  |  | 0.866 |
+| walker |  | 283 | 6 | listing of 'test-results' |  |  | 0.866 |
 | ns | 289 |  | 20 | src/editor.ts (re-export of monaco-editor-core) | 1.5 |  | 0.855 |
 | walker |  | 308 | 25 | listing of 'src' |  |  | 0.897 |
 | ns | 308 |  | 19 | src/languages/ + src/internal/common/ subdir listings | 1.6 |  | 0.897 |
@@ -25,29 +25,29 @@ Score(3000)=0.490 I=0.766 C=0.313 ns_rows≤3K=23/40 (reached=7 partial=1 missin
 | walker |  | 459 | 29 | listing of 'src/languages/features/json' |  |  | 0.838 |
 | ns | 488 |  | 56 | monaco-lsp-client/ and webpack-plugin/ subdirectory listings | 1.8 |  | 0.743 |
 | walker |  | 491 | 32 | listing of 'src/languages/features/typescript' |  |  | 0.746 |
-| walker |  | 518 | 27 | listing of 'monaco-lsp-client' |  |  | 0.773 |
-| walker |  | 560 | 42 | package identity in monaco-lsp-client/package.json |  |  | 0.773 |
-| ns | 576 |  | 88 | README — Models concept | 1.9 |  | 0.755 |
-| walker |  | 605 | 45 | README headline in monaco-lsp-client/README.md |  |  | 0.755 |
-| walker |  | 620 | 15 | listing of 'monaco-lsp-client/src' |  |  | 0.755 |
-| walker |  | 632 | 12 | package identity metadata in monaco-lsp-client/package.json |  |  | 0.755 |
-| walker |  | 638 | 6 | listing of 'scripts' |  |  | 0.755 |
-| walker |  | 667 | 29 | listing of 'webpack-plugin' |  |  | 0.847 |
-| ns | 687 |  | 111 | README — URIs concept | 1.10 |  | 0.828 |
-| walker |  | 723 | 56 | package identity in webpack-plugin/package.json |  |  | 0.828 |
-| ns | 748 |  | 61 | README — Editors concept | 1.11 |  | 0.809 |
-| walker |  | 772 | 49 | README headline in webpack-plugin/README.md |  |  | 0.809 |
-| walker |  | 792 | 20 | listing of 'webpack-plugin/src' |  |  | 0.809 |
-| walker |  | 819 | 27 | package entrypoints in monaco-lsp-client/package.json |  |  | 0.809 |
-| walker |  | 834 | 15 | export names surface in src/languages/features/register.all.ts |  |  | 0.809 |
-| walker |  | 872 | 38 | listing of 'docs' |  |  | 0.810 |
-| walker |  | 919 | 47 | headings outline in webpack-plugin/README.md |  |  | 0.810 |
-| walker |  | 944 | 25 | webpack-plugin/README.md section #1 |  |  | 0.810 |
-| ns | 960 |  | 212 | README — Providers and Disposables concepts | 1.12 |  | 0.755 |
-| walker |  | 970 | 26 | export names surface in monaco-lsp-client/src/index.ts |  |  | 0.755 |
-| walker |  | 1116 | 146 | headings outline in README.md |  |  | 0.758 |
+| ns | 576 |  | 88 | README — Models concept | 1.9 |  | 0.728 |
+| walker |  | 637 | 146 | headings outline in README.md |  |  | 0.729 |
+| walker |  | 683 | 46 | README.md section #0 |  |  | 0.729 |
+| ns | 687 |  | 111 | README — URIs concept | 1.10 |  | 0.712 |
+| walker |  | 710 | 27 | listing of 'monaco-lsp-client' |  |  | 0.738 |
+| ns | 748 |  | 61 | README — Editors concept | 1.11 |  | 0.722 |
+| walker |  | 752 | 42 | package identity in monaco-lsp-client/package.json |  |  | 0.722 |
+| walker |  | 797 | 45 | README headline in monaco-lsp-client/README.md |  |  | 0.722 |
+| walker |  | 812 | 15 | listing of 'monaco-lsp-client/src' |  |  | 0.722 |
+| walker |  | 824 | 12 | package identity metadata in monaco-lsp-client/package.json |  |  | 0.722 |
+| walker |  | 830 | 6 | listing of 'scripts' |  |  | 0.722 |
+| walker |  | 859 | 29 | listing of 'webpack-plugin' |  |  | 0.811 |
+| walker |  | 915 | 56 | package identity in webpack-plugin/package.json |  |  | 0.811 |
+| ns | 960 |  | 212 | README — Providers and Disposables concepts | 1.12 |  | 0.757 |
+| walker |  | 964 | 49 | README headline in webpack-plugin/README.md |  |  | 0.757 |
+| walker |  | 984 | 20 | listing of 'webpack-plugin/src' |  |  | 0.757 |
+| walker |  | 1011 | 27 | package entrypoints in monaco-lsp-client/package.json |  |  | 0.757 |
+| walker |  | 1026 | 15 | export names surface in src/languages/features/register.all.ts |  |  | 0.757 |
+| walker |  | 1064 | 38 | listing of 'docs' |  |  | 0.758 |
+| walker |  | 1111 | 47 | headings outline in webpack-plugin/README.md |  |  | 0.758 |
 | ns | 1126 |  | 166 | package.json — entry points (typings/main/module/exports) | 1.13 |  | 0.704 |
-| walker |  | 1162 | 46 | README.md section #0 |  |  | 0.704 |
+| walker |  | 1136 | 25 | webpack-plugin/README.md section #1 |  |  | 0.704 |
+| walker |  | 1162 | 26 | export names surface in monaco-lsp-client/src/index.ts |  |  | 0.704 |
 | walker |  | 1175 | 13 | listing of 'test' |  |  | 0.705 |
 | walker |  | 1178 | 3 | listing of 'src/internal' |  |  | 0.705 |
 | walker |  | 1205 | 27 | README.md section #21 |  |  | 0.705 |

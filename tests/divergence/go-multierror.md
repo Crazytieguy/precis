@@ -10,35 +10,35 @@ Score(3000)=0.746 I=0.949 C=0.585 ns_rows≤3K=19/39 (reached=15 partial=0 missi
 | walker |  | 118 | 0 | go decl at prefix.go:16 |  |  | 1.000 |
 | walker |  | 136 | 18 | go decl names surface in append.go |  |  | 1.000 |
 | walker |  | 136 | 0 | go decl at append.go:14 |  |  | 1.000 |
-| walker |  | 166 | 30 | go decl names surface in flatten.go |  |  | 1.000 |
-| walker |  | 166 | 0 | go decl at flatten.go:8 |  |  | 1.000 |
-| walker |  | 166 | 0 | go decl at flatten.go:20 |  |  | 1.000 |
-| walker |  | 174 | 8 | go package + imports in append.go |  |  | 1.000 |
-| ns | 181 |  | 103 | README lede + deprecation note | 1.2 |  | 0.955 |
-| walker |  | 182 | 8 | go package + imports in flatten.go |  |  | 0.958 |
-| walker |  | 190 | 8 | go package + imports in sort.go |  |  | 0.959 |
-| walker |  | 222 | 32 | go decl names surface in format.go |  |  | 0.959 |
-| walker |  | 222 | 0 | go decl at format.go:13 |  |  | 0.959 |
-| walker |  | 222 | 0 | go decl at format.go:17 |  |  | 0.959 |
-| ns | 252 |  | 71 | Error struct definition | 1.3 |  | 0.844 |
-| walker |  | 268 | 46 | go decl names surface in group.go |  |  | 0.847 |
-| walker |  | 268 | 0 | go decl at group.go:20 |  |  | 0.847 |
-| walker |  | 268 | 0 | go decl at group.go:36 |  |  | 0.847 |
-| walker |  | 299 | 31 | go decl at group.go:10 |  |  | 0.854 |
-| walker |  | 332 | 33 | go package + imports in multierror.go |  |  | 0.857 |
-| ns | 337 |  | 85 | Package + import declarations across all .go files | 2.1 |  | 0.783 |
-| walker |  | 385 | 53 | go decl names surface in sort.go |  |  | 0.787 |
-| walker |  | 385 | 0 | go decl at sort.go:7 |  |  | 0.787 |
-| walker |  | 385 | 0 | go decl at sort.go:16 |  |  | 0.787 |
-| walker |  | 385 | 0 | go decl at sort.go:21 |  |  | 0.787 |
-| walker |  | 398 | 13 | go decl doc at sort.go:7 |  |  | 0.788 |
-| ns | 400 |  | 63 | All public function/method first-lines (multierror.go) | 2.2 |  | 0.690 |
-| walker |  | 412 | 14 | go decl doc at sort.go:16 |  |  | 0.690 |
-| walker |  | 426 | 14 | go decl doc at sort.go:21 |  |  | 0.692 |
-| ns | 564 |  | 164 | Public function names across single-fn files | 2.3 |  | 0.668 |
-| walker |  | 575 | 149 | README headline in README.md |  |  | 0.692 |
-| ns | 592 |  | 28 | README H2 headings | 2.4 |  | 0.675 |
-| walker |  | 626 | 51 | headings outline in README.md |  |  | 0.704 |
+| ns | 181 |  | 103 | README lede + deprecation note | 1.2 |  | 0.951 |
+| ns | 252 |  | 71 | Error struct definition | 1.3 |  | 0.832 |
+| walker |  | 285 | 149 | README headline in README.md |  |  | 0.876 |
+| walker |  | 336 | 51 | headings outline in README.md |  |  | 0.881 |
+| ns | 337 |  | 85 | Package + import declarations across all .go files | 2.1 |  | 0.749 |
+| walker |  | 366 | 30 | go decl names surface in flatten.go |  |  | 0.750 |
+| walker |  | 366 | 0 | go decl at flatten.go:8 |  |  | 0.750 |
+| walker |  | 366 | 0 | go decl at flatten.go:20 |  |  | 0.750 |
+| walker |  | 374 | 8 | go package + imports in append.go |  |  | 0.761 |
+| walker |  | 382 | 8 | go package + imports in flatten.go |  |  | 0.774 |
+| walker |  | 390 | 8 | go package + imports in sort.go |  |  | 0.791 |
+| ns | 400 |  | 63 | All public function/method first-lines (multierror.go) | 2.2 |  | 0.692 |
+| walker |  | 422 | 32 | go decl names surface in format.go |  |  | 0.695 |
+| walker |  | 422 | 0 | go decl at format.go:13 |  |  | 0.695 |
+| walker |  | 422 | 0 | go decl at format.go:17 |  |  | 0.695 |
+| walker |  | 468 | 46 | go decl names surface in group.go |  |  | 0.698 |
+| walker |  | 468 | 0 | go decl at group.go:20 |  |  | 0.698 |
+| walker |  | 468 | 0 | go decl at group.go:36 |  |  | 0.698 |
+| walker |  | 499 | 31 | go decl at group.go:10 |  |  | 0.703 |
+| walker |  | 532 | 33 | go package + imports in multierror.go |  |  | 0.721 |
+| ns | 564 |  | 164 | Public function names across single-fn files | 2.3 |  | 0.667 |
+| walker |  | 585 | 53 | go decl names surface in sort.go |  |  | 0.693 |
+| walker |  | 585 | 0 | go decl at sort.go:7 |  |  | 0.693 |
+| walker |  | 585 | 0 | go decl at sort.go:16 |  |  | 0.693 |
+| walker |  | 585 | 0 | go decl at sort.go:21 |  |  | 0.693 |
+| ns | 592 |  | 28 | README H2 headings | 2.4 |  | 0.701 |
+| walker |  | 598 | 13 | go decl doc at sort.go:7 |  |  | 0.702 |
+| walker |  | 612 | 14 | go decl doc at sort.go:16 |  |  | 0.703 |
+| walker |  | 626 | 14 | go decl doc at sort.go:21 |  |  | 0.704 |
 | walker |  | 642 | 16 | go package + imports in group.go |  |  | 0.719 |
 | walker |  | 658 | 16 | go decl body at sort.go:21 |  |  | 0.720 |
 | ns | 725 |  | 133 | Append doc comment + signature | 3.1 | 2.3 | 0.672 |

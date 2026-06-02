@@ -17,22 +17,22 @@ Score(3000)=0.533 I=0.816 C=0.348 ns_rows≤3K=31/58 (reached=14 partial=0 missi
 | walker |  | 292 | 32 | python imports in py3xui/server/__init__.py |  |  | 0.804 |
 | ns | 298 |  | 57 | pyproject.toml — runtime dependencies | 1.5 |  | 0.735 |
 | walker |  | 325 | 33 | python imports in py3xui/utils/__init__.py |  |  | 0.735 |
-| walker |  | 357 | 32 | listing of 'py3xui/inbound' |  |  | 0.744 |
-| ns | 378 |  | 80 | Sync sub-API exports | 1.6 |  | 0.688 |
-| walker |  | 397 | 40 | listing of 'py3xui/api' |  |  | 0.707 |
-| walker |  | 443 | 46 | listing of 'py3xui/async_api' |  |  | 0.732 |
-| ns | 469 |  | 91 | Async sub-API exports | 1.7 |  | 0.683 |
-| walker |  | 523 | 80 | python imports in py3xui/api/__init__.py |  |  | 0.755 |
-| walker |  | 605 | 82 | python imports in py3xui/inbound/__init__.py |  |  | 0.755 |
-| ns | 629 |  | 160 | Inner-package directory listings | 1.8 |  | 0.774 |
-| ns | 678 |  | 49 | Api class signature + lede | 2.1 |  | 0.756 |
-| walker |  | 696 | 91 | python imports in py3xui/async_api/__init__.py |  |  | 0.797 |
-| walker |  | 723 | 27 | listing of 'dev' |  |  | 0.797 |
-| ns | 728 |  | 50 | AsyncApi class signature + lede | 2.2 |  | 0.780 |
-| walker |  | 780 | 57 | [dependencies] in pyproject.toml |  |  | 0.823 |
-| walker |  | 830 | 50 | README headline in py3xui/utils/README.md |  |  | 0.823 |
-| ns | 832 |  | 104 | Api constructor signature | 2.3 | 2.1 | 0.775 |
-| walker |  | 882 | 52 | README headline in py3xui/inbound/README.md |  |  | 0.775 |
+| ns | 378 |  | 80 | Sync sub-API exports | 1.6 |  | 0.679 |
+| walker |  | 382 | 57 | [dependencies] in pyproject.toml |  |  | 0.755 |
+| walker |  | 414 | 32 | listing of 'py3xui/inbound' |  |  | 0.764 |
+| walker |  | 464 | 50 | README headline in py3xui/utils/README.md |  |  | 0.764 |
+| ns | 469 |  | 91 | Async sub-API exports | 1.7 |  | 0.713 |
+| walker |  | 516 | 52 | README headline in py3xui/inbound/README.md |  |  | 0.713 |
+| walker |  | 556 | 40 | listing of 'py3xui/api' |  |  | 0.732 |
+| walker |  | 602 | 46 | listing of 'py3xui/async_api' |  |  | 0.757 |
+| ns | 629 |  | 160 | Inner-package directory listings | 1.8 |  | 0.775 |
+| ns | 678 |  | 49 | Api class signature + lede | 2.1 |  | 0.758 |
+| walker |  | 682 | 80 | python imports in py3xui/api/__init__.py |  |  | 0.800 |
+| ns | 728 |  | 50 | AsyncApi class signature + lede | 2.2 |  | 0.783 |
+| walker |  | 764 | 82 | python imports in py3xui/inbound/__init__.py |  |  | 0.783 |
+| ns | 832 |  | 104 | Api constructor signature | 2.3 | 2.1 | 0.738 |
+| walker |  | 855 | 91 | python imports in py3xui/async_api/__init__.py |  |  | 0.775 |
+| walker |  | 882 | 27 | listing of 'dev' |  |  | 0.775 |
 | walker |  | 936 | 54 | README headline in py3xui/api/README.md |  |  | 0.734 |
 | ns | 936 |  | 104 | AsyncApi constructor signature | 2.4 | 2.2 | 0.734 |
 | walker |  | 991 | 55 | README headline in py3xui/server/README.md |  |  | 0.734 |

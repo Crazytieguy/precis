@@ -19,24 +19,10 @@ entries = [".github", ".gitignore", "CONTRIBUTING.md", "LICENSE", "MANIFEST.in",
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "peepdb" })'
-descriptor = "listing of 'peepdb'"
-cost_tokens = 34
-cum_tokens = 72
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "peepdb"
-entries = ["__init__.py", "__main__.py", "cli.py", "config.py", "core.py", "db", "exceptions.py", "tests"]
-
-[[batches]]
-position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 90
-cum_tokens = 162
+cum_tokens = 128
 
 [batches.content]
 kind = "lines"
@@ -56,6 +42,20 @@ end = 3
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "peepdb" })'
+descriptor = "listing of 'peepdb'"
+cost_tokens = 34
+cum_tokens = 162
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "peepdb"
+entries = ["__init__.py", "__main__.py", "cli.py", "config.py", "core.py", "db", "exceptions.py", "tests"]
 
 [[batches]]
 position = 4
@@ -211,282 +211,10 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'Python(Imports { file: "setup.py" })'
-descriptor = "python imports in setup.py"
-cost_tokens = 12
-cum_tokens = 285
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "setup.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 41
-cum_tokens = 326
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["CNAME", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "_config.yml", "contributing.md", "index.md", "installation.md", "usage.md"]
-
-[[batches]]
-position = 14
-key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
-descriptor = "README headline in docs/README.md"
-cost_tokens = 84
-cum_tokens = 410
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 5
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Markdown(HeadingsOutline { file: "docs/installation.md" })'
-descriptor = "headings outline in docs/installation.md"
-cost_tokens = 52
-cum_tokens = 462
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 16
-key = 'Markdown(HeadingsOutline { file: "docs/index.md" })'
-descriptor = "headings outline in docs/index.md"
-cost_tokens = 54
-cum_tokens = 516
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 17
-key = 'Python(Imports { file: "peepdb/db/__init__.py" })'
-descriptor = "python imports in peepdb/db/__init__.py"
-cost_tokens = 210
-cum_tokens = 726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/db/__init__.py"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/db/__init__.py"
-start = 11
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 195
-cum_tokens = 921
+cum_tokens = 468
 
 [batches.content]
 kind = "lines"
@@ -732,11 +460,11 @@ end = 171
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 27
-cum_tokens = 948
+cum_tokens = 495
 
 [batches.content]
 kind = "lines"
@@ -766,11 +494,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 20
+position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 27
-cum_tokens = 975
+cum_tokens = 522
 
 [batches.content]
 kind = "lines"
@@ -787,6 +515,278 @@ kind = "full"
 path = "README.md"
 start = 37
 end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Python(Imports { file: "setup.py" })'
+descriptor = "python imports in setup.py"
+cost_tokens = 12
+cum_tokens = 534
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "setup.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 41
+cum_tokens = 575
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["CNAME", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "_config.yml", "contributing.md", "index.md", "installation.md", "usage.md"]
+
+[[batches]]
+position = 17
+key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
+descriptor = "README headline in docs/README.md"
+cost_tokens = 84
+cum_tokens = 659
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 5
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Markdown(HeadingsOutline { file: "docs/installation.md" })'
+descriptor = "headings outline in docs/installation.md"
+cost_tokens = 52
+cum_tokens = 711
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 19
+key = 'Markdown(HeadingsOutline { file: "docs/index.md" })'
+descriptor = "headings outline in docs/index.md"
+cost_tokens = 54
+cum_tokens = 765
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Python(Imports { file: "peepdb/db/__init__.py" })'
+descriptor = "python imports in peepdb/db/__init__.py"
+cost_tokens = 210
+cum_tokens = 975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "peepdb/db/__init__.py"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "peepdb/db/__init__.py"
+start = 11
+end = 21
 
 [batches.content.spans.render]
 kind = "full"

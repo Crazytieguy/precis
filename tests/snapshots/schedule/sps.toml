@@ -45,10 +45,28 @@ kind = "full"
 
 [[batches]]
 position = 3
+key = 'Toml(Identity { file: "Cargo.toml" })'
+descriptor = "[package] in Cargo.toml"
+cost_tokens = 75
+cum_tokens = 157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 1
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
 key = 'Fs(DirListing { dir: "sps" })'
 descriptor = "listing of 'sps'"
 cost_tokens = 8
-cum_tokens = 90
+cum_tokens = 165
 
 [batches.content]
 kind = "fs"
@@ -58,11 +76,11 @@ parent = "sps"
 entries = ["Cargo.toml", "src"]
 
 [[batches]]
-position = 4
+position = 5
 key = 'Fs(DirListing { dir: "sps/src" })'
 descriptor = "listing of 'sps/src'"
 cost_tokens = 18
-cum_tokens = 108
+cum_tokens = 183
 
 [batches.content]
 kind = "fs"
@@ -72,11 +90,11 @@ parent = "sps/src"
 entries = ["cli", "cli.rs", "main.rs", "pipeline", "pipeline.rs"]
 
 [[batches]]
-position = 5
+position = 6
 key = 'Fs(DirListing { dir: "sps/src/pipeline" })'
 descriptor = "listing of 'sps/src/pipeline'"
 cost_tokens = 12
-cum_tokens = 120
+cum_tokens = 195
 
 [batches.content]
 kind = "fs"
@@ -86,11 +104,11 @@ parent = "sps/src/pipeline"
 entries = ["downloader.rs", "planner.rs", "runner.rs"]
 
 [[batches]]
-position = 6
+position = 7
 key = 'Rust(EntryItem { file: "sps/src/main.rs", start_line: 57 })'
 descriptor = "entry item at sps/src/main.rs:57"
 cost_tokens = 15
-cum_tokens = 135
+cum_tokens = 210
 
 [batches.content]
 kind = "lines"
@@ -112,11 +130,11 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 190 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 190"
 cost_tokens = 7
-cum_tokens = 142
+cum_tokens = 217
 
 [batches.content]
 kind = "lines"
@@ -130,11 +148,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 58 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 58"
 cost_tokens = 12
-cum_tokens = 154
+cum_tokens = 229
 
 [batches.content]
 kind = "lines"
@@ -148,11 +166,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 90 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 90"
 cost_tokens = 13
-cum_tokens = 167
+cum_tokens = 242
 
 [batches.content]
 kind = "lines"
@@ -166,11 +184,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 158 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 158"
 cost_tokens = 17
-cum_tokens = 184
+cum_tokens = 259
 
 [batches.content]
 kind = "lines"
@@ -184,11 +202,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 189 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 189"
 cost_tokens = 19
-cum_tokens = 203
+cum_tokens = 278
 
 [batches.content]
 kind = "lines"
@@ -202,11 +220,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 83 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 83"
 cost_tokens = 24
-cum_tokens = 227
+cum_tokens = 302
 
 [batches.content]
 kind = "lines"
@@ -220,11 +238,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: "sps-common" })'
 descriptor = "listing of 'sps-common'"
 cost_tokens = 8
-cum_tokens = 235
+cum_tokens = 310
 
 [batches.content]
 kind = "fs"
@@ -234,11 +252,11 @@ parent = "sps-common"
 entries = ["Cargo.toml", "src"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Fs(DirListing { dir: "sps-core" })'
 descriptor = "listing of 'sps-core'"
 cost_tokens = 8
-cum_tokens = 243
+cum_tokens = 318
 
 [batches.content]
 kind = "fs"
@@ -248,11 +266,11 @@ parent = "sps-core"
 entries = ["Cargo.toml", "src"]
 
 [[batches]]
-position = 15
+position = 16
 key = 'Fs(DirListing { dir: "sps-net" })'
 descriptor = "listing of 'sps-net'"
 cost_tokens = 8
-cum_tokens = 251
+cum_tokens = 326
 
 [batches.content]
 kind = "fs"
@@ -260,24 +278,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "sps-net"
 entries = ["Cargo.toml", "src"]
-
-[[batches]]
-position = 16
-key = 'Toml(Identity { file: "Cargo.toml" })'
-descriptor = "[package] in Cargo.toml"
-cost_tokens = 75
-cum_tokens = 326
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 1
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 17

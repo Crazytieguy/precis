@@ -19,36 +19,10 @@ entries = [".github", ".gitignore", "CLAUDE.md", "Cargo.toml", "LICENSE", "READM
 
 [[batches]]
 position = 2
-key = 'Rust(EntryItem { file: "examples/hello-toasty/src/main.rs", start_line: 34 })'
-descriptor = "entry item at examples/hello-toasty/src/main.rs:34"
-cost_tokens = 17
-cum_tokens = 62
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/hello-toasty/src/main.rs"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/hello-toasty/src/main.rs"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 45
-cum_tokens = 107
+cum_tokens = 90
 
 [batches.content]
 kind = "lines"
@@ -70,101 +44,37 @@ end = 4
 kind = "full"
 
 [[batches]]
+position = 3
+key = 'Rust(EntryItem { file: "examples/hello-toasty/src/main.rs", start_line: 34 })'
+descriptor = "entry item at examples/hello-toasty/src/main.rs:34"
+cost_tokens = 17
+cum_tokens = 107
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/hello-toasty/src/main.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/hello-toasty/src/main.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 21
-cum_tokens = 128
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["composite-key", "hello-toasty", "todo-with-cli", "user-has-one-profile"]
-
-[[batches]]
-position = 5
-key = 'Rust(EntryItem { file: "examples/user-has-one-profile/src/main.rs", start_line: 2 })'
-descriptor = "entry item at examples/user-has-one-profile/src/main.rs:2"
-cost_tokens = 86
-cum_tokens = 214
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/user-has-one-profile/src/main.rs"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/user-has-one-profile/src/main.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/user-has-one-profile/src/main.rs"
-start = 9
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
-key = 'Rust(EntryItem { file: "examples/composite-key/src/main.rs", start_line: 2 })'
-descriptor = "entry item at examples/composite-key/src/main.rs:2"
-cost_tokens = 102
-cum_tokens = 316
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/composite-key/src/main.rs"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/composite-key/src/main.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/composite-key/src/main.rs"
-start = 9
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "examples/composite-key/src/main.rs"
-start = 12
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 68
-cum_tokens = 384
+cum_tokens = 175
 
 [batches.content]
 kind = "lines"
@@ -266,11 +176,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 5
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 76
-cum_tokens = 460
+cum_tokens = 251
 
 [batches.content]
 kind = "lines"
@@ -284,11 +194,167 @@ end = 9
 kind = "full"
 
 [[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 21
+cum_tokens = 272
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["composite-key", "hello-toasty", "todo-with-cli", "user-has-one-profile"]
+
+[[batches]]
+position = 7
+key = 'Toml(Identity { file: "Cargo.toml" })'
+descriptor = "[package] in Cargo.toml"
+cost_tokens = 323
+cum_tokens = 595
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 11
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 17
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 21
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 24
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 33
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Rust(EntryItem { file: "examples/user-has-one-profile/src/main.rs", start_line: 2 })'
+descriptor = "entry item at examples/user-has-one-profile/src/main.rs:2"
+cost_tokens = 86
+cum_tokens = 681
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/user-has-one-profile/src/main.rs"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/user-has-one-profile/src/main.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/user-has-one-profile/src/main.rs"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 9
+key = 'Rust(EntryItem { file: "examples/composite-key/src/main.rs", start_line: 2 })'
+descriptor = "entry item at examples/composite-key/src/main.rs:2"
+cost_tokens = 102
+cum_tokens = 783
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "examples/composite-key/src/main.rs"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/composite-key/src/main.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/composite-key/src/main.rs"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "examples/composite-key/src/main.rs"
+start = 12
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
 key = 'Rust(EntryItem { file: "examples/user-has-one-profile/src/main.rs", start_line: 14 })'
 descriptor = "entry item at examples/user-has-one-profile/src/main.rs:14"
 cost_tokens = 107
-cum_tokens = 567
+cum_tokens = 890
 
 [batches.content]
 kind = "lines"
@@ -318,11 +384,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Rust(EntryItem { file: "examples/hello-toasty/src/main.rs", start_line: 2 })'
 descriptor = "entry item at examples/hello-toasty/src/main.rs:2"
 cost_tokens = 112
-cum_tokens = 679
+cum_tokens = 1002
 
 [batches.content]
 kind = "lines"
@@ -368,11 +434,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Rust(EntryItem { file: "examples/hello-toasty/src/main.rs", start_line: 19 })'
 descriptor = "entry item at examples/hello-toasty/src/main.rs:19"
 cost_tokens = 113
-cum_tokens = 792
+cum_tokens = 1115
 
 [batches.content]
 kind = "lines"
@@ -410,11 +476,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 30
-cum_tokens = 822
+cum_tokens = 1145
 
 [batches.content]
 kind = "fs"
@@ -424,11 +490,11 @@ parent = "docs"
 entries = ["ARCHITECTURE.md", "CHANGE_GUIDE.md", "CONTEXT.md", "architecture", "design", "guide", "roadmap"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Rust(EntryItem { file: "examples/composite-key/src/main.rs", start_line: 18 })'
 descriptor = "entry item at examples/composite-key/src/main.rs:18"
 cost_tokens = 123
-cum_tokens = 945
+cum_tokens = 1268
 
 [batches.content]
 kind = "lines"
@@ -474,11 +540,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Markdown(HeadingsOutline { file: "docs/CONTEXT.md" })'
 descriptor = "headings outline in docs/CONTEXT.md"
 cost_tokens = 39
-cum_tokens = 984
+cum_tokens = 1307
 
 [batches.content]
 kind = "lines"
@@ -546,72 +612,6 @@ end = 29
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 15
-key = 'Toml(Identity { file: "Cargo.toml" })'
-descriptor = "[package] in Cargo.toml"
-cost_tokens = 323
-cum_tokens = 1307
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 11
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 17
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 21
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 24
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 30
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 33
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 16

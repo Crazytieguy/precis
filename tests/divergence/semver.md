@@ -4,24 +4,24 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 61 |  | 61 | package.json — name, description, main | 1.1 |  | 0.000 |
 | walker |  | 103 | 103 | listing of '.' |  |  | 0.000 |
-| walker |  | 106 | 3 | listing of 'tap-snapshots' |  |  | 0.000 |
-| walker |  | 116 | 10 | export names surface in index.js |  |  | 0.000 |
-| walker |  | 140 | 24 | README headline in README.md |  |  | 0.000 |
-| walker |  | 145 | 5 | listing of 'bin' |  |  | 0.000 |
+| walker |  | 127 | 24 | README headline in README.md |  |  | 0.000 |
 | ns | 164 |  | 103 | Repo top-level listing | 1.2 |  | 0.614 |
-| walker |  | 200 | 55 | package identity in package.json |  |  | 0.784 |
+| walker |  | 182 | 55 | package identity in package.json |  |  | 0.783 |
+| walker |  | 185 | 3 | listing of 'tap-snapshots' |  |  | 0.783 |
+| walker |  | 195 | 10 | export names surface in index.js |  |  | 0.783 |
+| walker |  | 200 | 5 | listing of 'bin' |  |  | 0.784 |
 | walker |  | 217 | 17 | listing of 'classes' |  |  | 0.799 |
-| walker |  | 244 | 27 | listing of 'internal' |  |  | 0.815 |
-| ns | 281 |  | 117 | package.json — bin entry and Node engines floor | 1.3 |  | 0.680 |
-| walker |  | 300 | 56 | listing of 'ranges' |  |  | 0.685 |
-| ns | 303 |  | 22 | classes/ + bin/ listings | 1.4 |  | 0.692 |
-| ns | 330 |  | 27 | internal/ listing | 1.5 |  | 0.698 |
-| ns | 354 |  | 24 | README — title (lede) | 2.1 |  | 0.699 |
-| walker |  | 360 | 60 | package identity metadata in package.json |  |  | 0.732 |
-| ns | 515 |  | 161 | functions/ + ranges/ listings | 2.2 |  | 0.567 |
-| walker |  | 542 | 182 | headings outline in README.md |  |  | 0.572 |
-| walker |  | 564 | 22 | README.md section #1 |  |  | 0.572 |
-| walker |  | 588 | 24 | README.md section #54 |  |  | 0.572 |
+| walker |  | 277 | 60 | package identity metadata in package.json |  |  | 0.810 |
+| ns | 281 |  | 117 | package.json — bin entry and Node engines floor | 1.3 |  | 0.708 |
+| ns | 303 |  | 22 | classes/ + bin/ listings | 1.4 |  | 0.711 |
+| walker |  | 304 | 27 | listing of 'internal' |  |  | 0.725 |
+| ns | 330 |  | 27 | internal/ listing | 1.5 |  | 0.727 |
+| ns | 354 |  | 24 | README — title (lede) | 2.1 |  | 0.727 |
+| walker |  | 486 | 182 | headings outline in README.md |  |  | 0.734 |
+| walker |  | 508 | 22 | README.md section #1 |  |  | 0.734 |
+| ns | 515 |  | 161 | functions/ + ranges/ listings | 2.2 |  | 0.548 |
+| walker |  | 532 | 24 | README.md section #54 |  |  | 0.548 |
+| walker |  | 588 | 56 | listing of 'ranges' |  |  | 0.572 |
 | walker |  | 723 | 135 | package entrypoints in package.json |  |  | 0.646 |
 | ns | 750 |  | 235 | README — Usage example (calls into the public API) | 2.3 |  | 0.610 |
 | walker |  | 751 | 28 | package runtime metadata in package.json |  |  | 0.645 |

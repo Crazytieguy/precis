@@ -247,124 +247,10 @@ kind = "full"
 
 [[batches]]
 position = 14
-key = 'Go(PackageImports { file: "context_appengine.go" })'
-descriptor = "go package + imports in context_appengine.go"
-cost_tokens = 7
-cum_tokens = 350
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "context_appengine.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Go(PackageImports { file: "path.go" })'
-descriptor = "go package + imports in path.go"
-cost_tokens = 7
-cum_tokens = 357
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "path.go"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Go(PackageImports { file: "version.go" })'
-descriptor = "go package + imports in version.go"
-cost_tokens = 7
-cum_tokens = 364
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "version.go"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "ginS" })'
-descriptor = "listing of 'ginS'"
-cost_tokens = 15
-cum_tokens = 379
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "ginS"
-entries = ["README.md", "gins.go", "gins_test.go"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "testdata" })'
-descriptor = "listing of 'testdata'"
-cost_tokens = 15
-cum_tokens = 394
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "testdata"
-entries = ["certificate", "protoexample", "template", "test_file.txt"]
-
-[[batches]]
-position = 19
-key = 'Go(DeclDoc { file: "version.go", start_line: 8 })'
-descriptor = "go decl doc at version.go:8"
-cost_tokens = 14
-cum_tokens = 408
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "version.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "render" })'
-descriptor = "listing of 'render'"
-cost_tokens = 75
-cum_tokens = 483
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "render"
-entries = ["bson.go", "data.go", "html.go", "json.go", "msgpack.go", "pdf.go", "protobuf.go", "reader.go", "reader_test.go", "redirect.go", "render.go", "render_msgpack_test.go", "render_test.go", "text.go", "toml.go", "xml.go", "yaml.go"]
-
-[[batches]]
-position = 21
 key = 'Markdown(Section { file: "docs/doc.md", section_index: 0 })'
 descriptor = "docs/doc.md section #0"
 cost_tokens = 9
-cum_tokens = 492
+cum_tokens = 352
 
 [batches.content]
 kind = "lines"
@@ -378,11 +264,175 @@ end = 1
 kind = "full"
 
 [[batches]]
+position = 15
+key = 'Go(PackageImports { file: "context_appengine.go" })'
+descriptor = "go package + imports in context_appengine.go"
+cost_tokens = 7
+cum_tokens = 359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "context_appengine.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Go(PackageImports { file: "path.go" })'
+descriptor = "go package + imports in path.go"
+cost_tokens = 7
+cum_tokens = 366
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "path.go"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Go(PackageImports { file: "version.go" })'
+descriptor = "go package + imports in version.go"
+cost_tokens = 7
+cum_tokens = 373
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "version.go"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "ginS" })'
+descriptor = "listing of 'ginS'"
+cost_tokens = 15
+cum_tokens = 388
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "ginS"
+entries = ["README.md", "gins.go", "gins_test.go"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "testdata" })'
+descriptor = "listing of 'testdata'"
+cost_tokens = 15
+cum_tokens = 403
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "testdata"
+entries = ["certificate", "protoexample", "template", "test_file.txt"]
+
+[[batches]]
+position = 20
+key = 'Markdown(ReadmeHeadline { file: "ginS/README.md" })'
+descriptor = "README headline in ginS/README.md"
+cost_tokens = 125
+cum_tokens = 528
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "ginS/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "ginS/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "ginS/README.md"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "ginS/README.md"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "ginS/README.md"
+start = 13
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Go(DeclDoc { file: "version.go", start_line: 8 })'
+descriptor = "go decl doc at version.go:8"
+cost_tokens = 14
+cum_tokens = 542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "version.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 22
+key = 'Fs(DirListing { dir: "render" })'
+descriptor = "listing of 'render'"
+cost_tokens = 75
+cum_tokens = 617
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "render"
+entries = ["bson.go", "data.go", "html.go", "json.go", "msgpack.go", "pdf.go", "protobuf.go", "reader.go", "reader_test.go", "redirect.go", "render.go", "render_msgpack_test.go", "render_test.go", "text.go", "toml.go", "xml.go", "yaml.go"]
+
+[[batches]]
+position = 23
 key = 'Go(PackageImports { file: "doc.go" })'
 descriptor = "go package + imports in doc.go"
 cost_tokens = 16
-cum_tokens = 508
+cum_tokens = 633
 
 [batches.content]
 kind = "lines"
@@ -396,11 +446,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Go(DeclNames { file: "path.go", chunk_index: 0 })'
 descriptor = "go decl names surface in path.go"
 cost_tokens = 69
-cum_tokens = 577
+cum_tokens = 702
 
 [batches.content]
 kind = "lines"
@@ -470,11 +520,11 @@ end = 156
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Go(Decl { file: "path.go", start_line: 23 })'
 descriptor = "go decl at path.go:23"
 cost_tokens = 0
-cum_tokens = 577
+cum_tokens = 702
 
 [batches.content]
 kind = "lines"
@@ -488,11 +538,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Go(Decl { file: "path.go", start_line: 128 })'
 descriptor = "go decl at path.go:128"
 cost_tokens = 0
-cum_tokens = 577
+cum_tokens = 702
 
 [batches.content]
 kind = "lines"
@@ -506,11 +556,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Go(Decl { file: "path.go", start_line: 155 })'
 descriptor = "go decl at path.go:155"
 cost_tokens = 0
-cum_tokens = 577
+cum_tokens = 702
 
 [batches.content]
 kind = "lines"
@@ -524,11 +574,11 @@ end = 155
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Go(DeclBody { file: "context_appengine.go", start_line: 9 })'
 descriptor = "go decl body at context_appengine.go:9"
 cost_tokens = 10
-cum_tokens = 587
+cum_tokens = 712
 
 [batches.content]
 kind = "lines"
@@ -542,11 +592,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Go(DeclNames { file: "gin.go", chunk_index: 0 })'
 descriptor = "go decl names surface in gin.go"
 cost_tokens = 171
-cum_tokens = 758
+cum_tokens = 883
 
 [batches.content]
 kind = "lines"
@@ -680,11 +730,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Go(Decl { file: "gin.go", start_line: 51 })'
 descriptor = "go decl at gin.go:51"
 cost_tokens = 0
-cum_tokens = 758
+cum_tokens = 883
 
 [batches.content]
 kind = "lines"
@@ -698,11 +748,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Go(Decl { file: "gin.go", start_line: 54 })'
 descriptor = "go decl at gin.go:54"
 cost_tokens = 0
-cum_tokens = 758
+cum_tokens = 883
 
 [batches.content]
 kind = "lines"
@@ -716,11 +766,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Go(Decl { file: "gin.go", start_line: 57 })'
 descriptor = "go decl at gin.go:57"
 cost_tokens = 0
-cum_tokens = 758
+cum_tokens = 883
 
 [batches.content]
 kind = "lines"
@@ -734,11 +784,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Go(Decl { file: "gin.go", start_line: 60 })'
 descriptor = "go decl at gin.go:60"
 cost_tokens = 0
-cum_tokens = 758
+cum_tokens = 883
 
 [batches.content]
 kind = "lines"
@@ -752,11 +802,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Go(DeclDoc { file: "gin.go", start_line: 57 })'
 descriptor = "go decl doc at gin.go:57"
 cost_tokens = 14
-cum_tokens = 772
+cum_tokens = 897
 
 [batches.content]
 kind = "lines"
@@ -770,11 +820,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Go(Decl { file: "gin.go", start_line: 25 })'
 descriptor = "go decl at gin.go:25"
 cost_tokens = 9
-cum_tokens = 781
+cum_tokens = 906
 
 [batches.content]
 kind = "lines"
@@ -788,11 +838,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Go(DeclDoc { file: "gin.go", start_line: 54 })'
 descriptor = "go decl doc at gin.go:54"
 cost_tokens = 16
-cum_tokens = 797
+cum_tokens = 922
 
 [batches.content]
 kind = "lines"
@@ -806,11 +856,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Go(Decl { file: "gin.go", start_line: 32 })'
 descriptor = "go decl at gin.go:32"
 cost_tokens = 9
-cum_tokens = 806
+cum_tokens = 931
 
 [batches.content]
 kind = "lines"
@@ -824,11 +874,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Go(DeclDoc { file: "gin.go", start_line: 51 })'
 descriptor = "go decl doc at gin.go:51"
 cost_tokens = 18
-cum_tokens = 824
+cum_tokens = 949
 
 [batches.content]
 kind = "lines"
@@ -842,11 +892,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Go(DeclDoc { file: "gin.go", start_line: 60 })'
 descriptor = "go decl doc at gin.go:60"
 cost_tokens = 25
-cum_tokens = 849
+cum_tokens = 974
 
 [batches.content]
 kind = "lines"
@@ -860,11 +910,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Go(DeclBody { file: "gin.go", start_line: 60 })'
 descriptor = "go decl body at gin.go:60"
 cost_tokens = 37
-cum_tokens = 886
+cum_tokens = 1011
 
 [batches.content]
 kind = "lines"
@@ -878,11 +928,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Fs(DirListing { dir: "codec/json" })'
 descriptor = "listing of 'codec/json'"
 cost_tokens = 22
-cum_tokens = 908
+cum_tokens = 1033
 
 [batches.content]
 kind = "fs"
@@ -892,11 +942,11 @@ parent = "codec/json"
 entries = ["api.go", "go_json.go", "json.go", "jsoniter.go", "sonic.go"]
 
 [[batches]]
-position = 41
+position = 42
 key = 'Go(DeclNames { file: "fs.go", chunk_index: 0 })'
 descriptor = "go decl names surface in fs.go"
 cost_tokens = 97
-cum_tokens = 1005
+cum_tokens = 1130
 
 [batches.content]
 kind = "lines"
@@ -982,11 +1032,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Go(Decl { file: "fs.go", start_line: 18 })'
 descriptor = "go decl at fs.go:18"
 cost_tokens = 0
-cum_tokens = 1005
+cum_tokens = 1130
 
 [batches.content]
 kind = "lines"
@@ -1000,11 +1050,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Go(Decl { file: "fs.go", start_line: 33 })'
 descriptor = "go decl at fs.go:33"
 cost_tokens = 0
-cum_tokens = 1005
+cum_tokens = 1130
 
 [batches.content]
 kind = "lines"
@@ -1018,11 +1068,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Go(Decl { file: "fs.go", start_line: 42 })'
 descriptor = "go decl at fs.go:42"
 cost_tokens = 0
-cum_tokens = 1005
+cum_tokens = 1130
 
 [batches.content]
 kind = "lines"
@@ -1036,11 +1086,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Go(Decl { file: "fs.go", start_line: 13 })'
 descriptor = "go decl at fs.go:13"
 cost_tokens = 13
-cum_tokens = 1018
+cum_tokens = 1143
 
 [batches.content]
 kind = "lines"
@@ -1054,11 +1104,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Go(Decl { file: "fs.go", start_line: 28 })'
 descriptor = "go decl at fs.go:28"
 cost_tokens = 10
-cum_tokens = 1028
+cum_tokens = 1153
 
 [batches.content]
 kind = "lines"
@@ -1072,11 +1122,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Go(DeclDoc { file: "fs.go", start_line: 13 })'
 descriptor = "go decl doc at fs.go:13"
 cost_tokens = 20
-cum_tokens = 1048
+cum_tokens = 1173
 
 [batches.content]
 kind = "lines"
@@ -1090,11 +1140,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Go(DeclDoc { file: "fs.go", start_line: 18 })'
 descriptor = "go decl doc at fs.go:18"
 cost_tokens = 21
-cum_tokens = 1069
+cum_tokens = 1194
 
 [batches.content]
 kind = "lines"
@@ -1108,11 +1158,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Go(DeclNames { file: "render/redirect.go", chunk_index: 0 })'
 descriptor = "go decl names surface in render/redirect.go"
 cost_tokens = 46
-cum_tokens = 1115
+cum_tokens = 1240
 
 [batches.content]
 kind = "lines"
@@ -1158,11 +1208,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Go(Decl { file: "render/redirect.go", start_line: 20 })'
 descriptor = "go decl at render/redirect.go:20"
 cost_tokens = 0
-cum_tokens = 1115
+cum_tokens = 1240
 
 [batches.content]
 kind = "lines"
@@ -1176,11 +1226,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Go(Decl { file: "render/redirect.go", start_line: 29 })'
 descriptor = "go decl at render/redirect.go:29"
 cost_tokens = 0
-cum_tokens = 1115
+cum_tokens = 1240
 
 [batches.content]
 kind = "lines"
@@ -1194,11 +1244,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Go(Decl { file: "render/redirect.go", start_line: 13 })'
 descriptor = "go decl at render/redirect.go:13"
 cost_tokens = 29
-cum_tokens = 1144
+cum_tokens = 1269
 
 [batches.content]
 kind = "lines"
@@ -1212,11 +1262,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Go(DeclDoc { file: "render/redirect.go", start_line: 13 })'
 descriptor = "go decl doc at render/redirect.go:13"
 cost_tokens = 18
-cum_tokens = 1162
+cum_tokens = 1287
 
 [batches.content]
 kind = "lines"
@@ -1225,56 +1275,6 @@ kind = "lines"
 path = "render/redirect.go"
 start = 12
 end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 54
-key = 'Markdown(ReadmeHeadline { file: "ginS/README.md" })'
-descriptor = "README headline in ginS/README.md"
-cost_tokens = 125
-cum_tokens = 1287
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ginS/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ginS/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ginS/README.md"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ginS/README.md"
-start = 8
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ginS/README.md"
-start = 13
-end = 17
 
 [batches.content.spans.render]
 kind = "full"

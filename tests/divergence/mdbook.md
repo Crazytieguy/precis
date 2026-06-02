@@ -12,37 +12,37 @@ Score(3000)=0.552 I=0.762 C=0.400 ns_rows≤3K=22/49 (reached=6 partial=5 missin
 | walker |  | 134 | 13 | entry item body at src/main.rs:18 body 21 |  |  | 0.000 |
 | walker |  | 148 | 14 | entry item body at src/main.rs:18 body 23 |  |  | 0.000 |
 | ns | 154 |  | 79 | Repo root listing | 1.2 |  | 0.581 |
-| walker |  | 193 | 45 | entry item body at src/main.rs:18 body 50 |  |  | 0.581 |
 | ns | 202 |  | 48 | crates/ directory listing | 1.3 |  | 0.486 |
-| walker |  | 205 | 12 | listing of 'guide' |  |  | 0.486 |
-| ns | 239 |  | 37 | Workspace package summary — name + description | 1.4 |  | 0.463 |
-| walker |  | 275 | 70 | README headline in README.md |  |  | 0.746 |
-| walker |  | 299 | 24 | README.md section #0 |  |  | 0.746 |
+| walker |  | 218 | 70 | README headline in README.md |  |  | 0.784 |
+| ns | 239 |  | 37 | Workspace package summary — name + description | 1.4 |  | 0.746 |
+| walker |  | 242 | 24 | README.md section #0 |  |  | 0.746 |
+| walker |  | 287 | 45 | entry item body at src/main.rs:18 body 50 |  |  | 0.746 |
+| walker |  | 299 | 12 | listing of 'guide' |  |  | 0.746 |
 | walker |  | 337 | 38 | listing of 'src/cmd' |  |  | 0.760 |
 | ns | 341 |  | 102 | src/cmd module map | 1.5 |  | 0.653 |
 | walker |  | 353 | 16 | crate-doc lede in src/cmd/mod.rs |  |  | 0.656 |
 | walker |  | 362 | 9 | listing of 'src/cmd/watch' |  |  | 0.661 |
-| walker |  | 369 | 7 | listing of 'tests' |  |  | 0.661 |
-| walker |  | 403 | 34 | pub-item names surface in src/cmd/build.rs |  |  | 0.661 |
-| walker |  | 403 | 0 | pub item at src/cmd/build.rs:8 |  |  | 0.661 |
-| walker |  | 403 | 0 | pub item at src/cmd/build.rs:17 |  |  | 0.661 |
-| walker |  | 437 | 34 | pub-item names surface in src/cmd/serve.rs |  |  | 0.661 |
-| walker |  | 437 | 0 | pub item at src/cmd/serve.rs:23 |  |  | 0.661 |
-| walker |  | 437 | 0 | pub item at src/cmd/serve.rs:51 |  |  | 0.661 |
-| walker |  | 471 | 34 | pub-item names surface in src/cmd/test.rs |  |  | 0.661 |
-| walker |  | 471 | 0 | pub item at src/cmd/test.rs:9 |  |  | 0.661 |
-| walker |  | 471 | 0 | pub item at src/cmd/test.rs:35 |  |  | 0.661 |
 | ns | 482 |  | 141 | Workspace members + edition | 1.6 |  | 0.580 |
-| walker |  | 506 | 35 | pub-item names surface in src/cmd/init.rs |  |  | 0.580 |
-| walker |  | 506 | 0 | pub item at src/cmd/init.rs:12 |  |  | 0.580 |
-| walker |  | 506 | 0 | pub item at src/cmd/init.rs:32 |  |  | 0.580 |
 | ns | 536 |  | 54 | src/ tree (top-level bin sources) | 1.7 |  | 0.632 |
-| walker |  | 565 | 59 | mod/use plumbing in src/cmd/mod.rs |  |  | 0.689 |
-| walker |  | 603 | 38 | pub-item names surface in src/cmd/command_prelude.rs |  |  | 0.689 |
-| walker |  | 603 | 0 | pub item at src/cmd/command_prelude.rs:62 |  |  | 0.689 |
-| ns | 741 |  | 205 | CLI subcommand dispatch — match arms | 1.8 |  | 0.630 |
-| ns | 882 |  | 141 | mdbook-driver crate role | 2.1 |  | 0.591 |
-| walker |  | 952 | 349 | [package] in Cargo.toml |  |  | 0.700 |
+| walker |  | 711 | 349 | [package] in Cargo.toml |  |  | 0.763 |
+| walker |  | 718 | 7 | listing of 'tests' |  |  | 0.763 |
+| ns | 741 |  | 205 | CLI subcommand dispatch — match arms | 1.8 |  | 0.698 |
+| walker |  | 752 | 34 | pub-item names surface in src/cmd/build.rs |  |  | 0.698 |
+| walker |  | 752 | 0 | pub item at src/cmd/build.rs:8 |  |  | 0.698 |
+| walker |  | 752 | 0 | pub item at src/cmd/build.rs:17 |  |  | 0.698 |
+| walker |  | 786 | 34 | pub-item names surface in src/cmd/serve.rs |  |  | 0.698 |
+| walker |  | 786 | 0 | pub item at src/cmd/serve.rs:23 |  |  | 0.698 |
+| walker |  | 786 | 0 | pub item at src/cmd/serve.rs:51 |  |  | 0.698 |
+| walker |  | 820 | 34 | pub-item names surface in src/cmd/test.rs |  |  | 0.698 |
+| walker |  | 820 | 0 | pub item at src/cmd/test.rs:9 |  |  | 0.698 |
+| walker |  | 820 | 0 | pub item at src/cmd/test.rs:35 |  |  | 0.698 |
+| walker |  | 855 | 35 | pub-item names surface in src/cmd/init.rs |  |  | 0.698 |
+| walker |  | 855 | 0 | pub item at src/cmd/init.rs:12 |  |  | 0.698 |
+| walker |  | 855 | 0 | pub item at src/cmd/init.rs:32 |  |  | 0.698 |
+| ns | 882 |  | 141 | mdbook-driver crate role | 2.1 |  | 0.654 |
+| walker |  | 914 | 59 | mod/use plumbing in src/cmd/mod.rs |  |  | 0.700 |
+| walker |  | 952 | 38 | pub-item names surface in src/cmd/command_prelude.rs |  |  | 0.700 |
+| walker |  | 952 | 0 | pub item at src/cmd/command_prelude.rs:62 |  |  | 0.700 |
 | walker |  | 1000 | 48 | listing of 'crates' |  |  | 0.776 |
 | walker |  | 1016 | 16 | listing of 'crates/mdbook-html' |  |  | 0.776 |
 | walker |  | 1038 | 22 | [features] in crates/mdbook-html/Cargo.toml |  |  | 0.776 |

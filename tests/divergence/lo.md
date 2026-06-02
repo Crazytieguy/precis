@@ -10,56 +10,56 @@ Score(3000)=0.527 I=0.713 C=0.389 ns_rows≤3K=16/51 (reached=5 partial=2 missin
 | walker |  | 201 | 22 | go module identity in go.mod |  |  | 0.000 |
 | walker |  | 216 | 15 | go decl names surface in constraints.go |  |  | 0.000 |
 | walker |  | 228 | 12 | go decl at constraints.go:4 |  |  | 0.000 |
-| walker |  | 237 | 9 | listing of 'parallel' |  |  | 0.000 |
-| walker |  | 248 | 11 | listing of 'internal' |  |  | 0.000 |
-| walker |  | 255 | 7 | go package + imports in condition.go |  |  | 0.000 |
-| walker |  | 262 | 7 | go package + imports in constraints.go |  |  | 0.000 |
-| walker |  | 269 | 7 | go package + imports in func.go |  |  | 0.000 |
-| walker |  | 276 | 7 | go package + imports in intersect.go |  |  | 0.000 |
-| walker |  | 283 | 7 | go package + imports in map.go |  |  | 0.000 |
-| walker |  | 290 | 7 | go package + imports in tuples.go |  |  | 0.000 |
-| walker |  | 297 | 7 | go package + imports in types.go |  |  | 0.000 |
 | ns | 308 |  | 144 | go.mod — module path, Go floor, deps | 2.1 |  | 0.073 |
-| walker |  | 312 | 15 | listing of 'mutable' |  |  | 0.073 |
-| walker |  | 331 | 19 | go decl doc at constraints.go:4 |  |  | 0.075 |
-| ns | 386 |  | 78 | Canonical four-package import block | 2.2 |  | 0.061 |
-| walker |  | 452 | 121 | README headline in README.md |  |  | 0.324 |
-| walker |  | 467 | 15 | go package + imports in type_manipulation.go |  |  | 0.324 |
+| walker |  | 349 | 121 | README headline in README.md |  |  | 0.395 |
+| walker |  | 358 | 9 | listing of 'parallel' |  |  | 0.395 |
+| walker |  | 369 | 11 | listing of 'internal' |  |  | 0.395 |
+| walker |  | 376 | 7 | go package + imports in condition.go |  |  | 0.395 |
+| walker |  | 383 | 7 | go package + imports in constraints.go |  |  | 0.396 |
+| ns | 386 |  | 78 | Canonical four-package import block | 2.2 |  | 0.321 |
+| walker |  | 390 | 7 | go package + imports in func.go |  |  | 0.321 |
+| walker |  | 397 | 7 | go package + imports in intersect.go |  |  | 0.321 |
+| walker |  | 404 | 7 | go package + imports in map.go |  |  | 0.321 |
+| walker |  | 411 | 7 | go package + imports in tuples.go |  |  | 0.321 |
+| walker |  | 418 | 7 | go package + imports in types.go |  |  | 0.321 |
+| walker |  | 433 | 15 | listing of 'mutable' |  |  | 0.322 |
+| walker |  | 452 | 19 | go decl doc at constraints.go:4 |  |  | 0.324 |
+| walker |  | 485 | 33 | README.md section #6 |  |  | 0.324 |
+| walker |  | 500 | 15 | go package + imports in type_manipulation.go |  |  | 0.324 |
 | ns | 561 |  | 175 | Repository root listing | 2.3 |  | 0.664 |
-| walker |  | 585 | 118 | go module file go.mod |  |  | 0.836 |
-| walker |  | 605 | 20 | listing of 'internal/constraints' |  |  | 0.838 |
-| ns | 619 |  | 58 | constraints.go — Clonable interface (whole file) | 2.4 |  | 0.831 |
-| walker |  | 631 | 26 | README headline in internal/constraints/README.md |  |  | 0.831 |
-| walker |  | 641 | 10 | go decl names surface in internal/constraints/ordered_go118.go |  |  | 0.831 |
-| walker |  | 652 | 11 | go decl names surface in internal/constraints/ordered_go121.go |  |  | 0.831 |
-| walker |  | 652 | 0 | go decl at internal/constraints/ordered_go121.go:13 |  |  | 0.831 |
-| walker |  | 666 | 14 | go decl at internal/constraints/ordered_go118.go:9 |  |  | 0.831 |
-| walker |  | 687 | 21 | listing of 'internal/xtime' |  |  | 0.836 |
+| walker |  | 618 | 118 | go module file go.mod |  |  | 0.836 |
+| ns | 619 |  | 58 | constraints.go — Clonable interface (whole file) | 2.4 |  | 0.828 |
+| walker |  | 638 | 20 | listing of 'internal/constraints' |  |  | 0.831 |
+| walker |  | 664 | 26 | README headline in internal/constraints/README.md |  |  | 0.831 |
+| walker |  | 674 | 10 | go decl names surface in internal/constraints/ordered_go118.go |  |  | 0.831 |
+| walker |  | 685 | 11 | go decl names surface in internal/constraints/ordered_go121.go |  |  | 0.831 |
+| walker |  | 685 | 0 | go decl at internal/constraints/ordered_go121.go:13 |  |  | 0.831 |
+| walker |  | 699 | 14 | go decl at internal/constraints/ordered_go118.go:9 |  |  | 0.831 |
+| walker |  | 720 | 21 | listing of 'internal/xtime' |  |  | 0.836 |
 | ns | 777 |  | 158 | Sub-package directory listings — it/, parallel/, mutable/ | 2.5 |  | 0.693 |
-| walker |  | 811 | 124 | listing of 'exp/simd' |  |  | 0.700 |
-| walker |  | 839 | 28 | go module identity in exp/simd/go.mod |  |  | 0.700 |
-| ns | 841 |  | 64 | Sub-package directory listings — internal/* | 2.6 |  | 0.699 |
-| walker |  | 899 | 60 | README headline in exp/simd/README.md |  |  | 0.699 |
-| walker |  | 924 | 25 | go package + imports in time.go |  |  | 0.699 |
-| walker |  | 1058 | 134 | listing of 'it' |  |  | 0.851 |
-| walker |  | 1083 | 25 | go decl names surface in it/string.go |  |  | 0.851 |
-| walker |  | 1083 | 0 | go decl at it/string.go:13 |  |  | 0.851 |
-| walker |  | 1090 | 7 | go package + imports in internal/constraints/constraints.go |  |  | 0.851 |
-| walker |  | 1097 | 7 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.851 |
+| ns | 841 |  | 64 | Sub-package directory listings — internal/* | 2.6 |  | 0.693 |
+| walker |  | 844 | 124 | listing of 'exp/simd' |  |  | 0.699 |
+| walker |  | 872 | 28 | go module identity in exp/simd/go.mod |  |  | 0.699 |
+| walker |  | 932 | 60 | README headline in exp/simd/README.md |  |  | 0.699 |
+| walker |  | 957 | 25 | go package + imports in time.go |  |  | 0.699 |
+| walker |  | 1091 | 134 | listing of 'it' |  |  | 0.851 |
+| walker |  | 1116 | 25 | go decl names surface in it/string.go |  |  | 0.851 |
+| walker |  | 1116 | 0 | go decl at it/string.go:13 |  |  | 0.851 |
 | ns | 1122 |  | 281 | Sub-package directory listings — exp/, exp/simd/, benchmark/ | 2.7 |  | 0.759 |
-| walker |  | 1148 | 51 | go module file exp/simd/go.mod |  |  | 0.759 |
-| walker |  | 1226 | 78 | README headline in internal/xtime/README.md |  |  | 0.759 |
-| walker |  | 1262 | 36 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.759 |
-| walker |  | 1262 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.759 |
-| walker |  | 1270 | 8 | go package + imports in exp/simd/simd.go |  |  | 0.759 |
-| walker |  | 1278 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.759 |
-| walker |  | 1293 | 15 | go package + imports in it/string.go |  |  | 0.759 |
-| walker |  | 1308 | 15 | go package + imports in parallel/slice.go |  |  | 0.759 |
-| walker |  | 1344 | 36 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.759 |
-| walker |  | 1344 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.759 |
-| walker |  | 1344 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.759 |
+| walker |  | 1123 | 7 | go package + imports in internal/constraints/constraints.go |  |  | 0.759 |
+| walker |  | 1130 | 7 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.759 |
+| walker |  | 1181 | 51 | go module file exp/simd/go.mod |  |  | 0.759 |
+| walker |  | 1259 | 78 | README headline in internal/xtime/README.md |  |  | 0.759 |
+| walker |  | 1295 | 36 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.759 |
+| walker |  | 1295 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.759 |
+| walker |  | 1303 | 8 | go package + imports in exp/simd/simd.go |  |  | 0.759 |
+| walker |  | 1311 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.759 |
+| walker |  | 1326 | 15 | go package + imports in it/string.go |  |  | 0.759 |
+| walker |  | 1341 | 15 | go package + imports in parallel/slice.go |  |  | 0.759 |
 | ns | 1362 |  | 240 | Helper index — slice (a): Filter..PartitionBy | 3.1 |  | 0.710 |
-| walker |  | 1377 | 33 | README.md section #6 |  |  | 0.710 |
+| walker |  | 1377 | 36 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.710 |
+| walker |  | 1377 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.710 |
+| walker |  | 1377 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.710 |
 | walker |  | 1416 | 39 | go package + imports in concurrency.go |  |  | 0.710 |
 | walker |  | 1456 | 40 | go package + imports in errors.go |  |  | 0.710 |
 | walker |  | 1497 | 41 | go package + imports in math.go |  |  | 0.710 |

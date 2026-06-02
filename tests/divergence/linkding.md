@@ -5,81 +5,81 @@ Score(3000)=0.495 I=0.743 C=0.330 ns_rows≤3K=16/40 (reached=6 partial=1 missin
 | ns | 50 |  | 50 | README lede — what linkding is | 1.1 |  | 0.000 |
 | ns | 60 |  | 10 | Version pin | 1.2 |  | 0.000 |
 | walker |  | 115 | 115 | listing of '.' |  |  | 0.000 |
-| walker |  | 125 | 10 | plaintext config version.txt |  |  | 0.348 |
-| walker |  | 134 | 9 | python decl names surface in manage.py |  |  | 0.348 |
-| walker |  | 134 | 0 | python decl at manage.py:7 |  |  | 0.348 |
-| ns | 144 |  | 84 | pyproject [project] header | 1.3 |  | 0.204 |
-| walker |  | 179 | 45 | README headline in README.md |  |  | 0.595 |
+| ns | 144 |  | 84 | pyproject [project] header | 1.3 |  | 0.000 |
+| walker |  | 160 | 45 | README headline in README.md |  |  | 0.497 |
+| walker |  | 170 | 10 | plaintext config version.txt |  |  | 0.595 |
+| walker |  | 179 | 9 | python decl names surface in manage.py |  |  | 0.595 |
+| walker |  | 179 | 0 | python decl at manage.py:7 |  |  | 0.595 |
 | walker |  | 191 | 12 | listing of 'docker' |  |  | 0.595 |
 | ns | 239 |  | 95 | Top-level root listing (essentials) | 1.4 |  | 0.755 |
 | walker |  | 288 | 97 | headings outline in README.md |  |  | 0.755 |
 | ns | 358 |  | 119 | bookmarks/ app directory listing | 1.5 |  | 0.526 |
-| walker |  | 407 | 119 | listing of 'bookmarks' |  |  | 0.814 |
-| walker |  | 425 | 18 | listing of 'bookmarks/api' |  |  | 0.814 |
-| walker |  | 443 | 18 | listing of 'bookmarks/templatetags' |  |  | 0.814 |
-| walker |  | 465 | 22 | listing of 'bookmarks/settings' |  |  | 0.814 |
-| walker |  | 495 | 30 | python imports in bookmarks/settings/__init__.py |  |  | 0.815 |
-| walker |  | 505 | 10 | python decl names surface in bookmarks/wsgi.py |  |  | 0.815 |
-| walker |  | 516 | 11 | python decl names surface in bookmarks/signals.py |  |  | 0.815 |
-| walker |  | 529 | 13 | python decl names surface in bookmarks/apps.py |  |  | 0.815 |
-| walker |  | 529 | 0 | python decl at bookmarks/apps.py:4 |  |  | 0.815 |
-| walker |  | 538 | 9 | python class body at bookmarks/apps.py:4 |  |  | 0.815 |
-| walker |  | 549 | 11 | python method sigs in bookmarks/apps.py |  |  | 0.815 |
-| ns | 561 |  | 203 | Runtime Python deps | 1.6 |  | 0.721 |
-| walker |  | 562 | 13 | python decl names surface in bookmarks/type_defs.py |  |  | 0.721 |
-| walker |  | 562 | 0 | python decl at bookmarks/type_defs.py:11 |  |  | 0.721 |
-| walker |  | 636 | 74 | listing of 'bookmarks/views' |  |  | 0.722 |
-| walker |  | 651 | 15 | python decl names surface in bookmarks/validators.py |  |  | 0.722 |
-| walker |  | 651 | 0 | python decl at bookmarks/validators.py:5 |  |  | 0.722 |
-| walker |  | 666 | 15 | python method sigs in bookmarks/validators.py |  |  | 0.722 |
-| walker |  | 666 | 0 | python method at bookmarks/validators.py:11 |  |  | 0.722 |
-| walker |  | 747 | 81 | listing of 'bookmarks/services' |  |  | 0.725 |
-| walker |  | 765 | 18 | listing of 'bookmarks/frontend' |  |  | 0.725 |
-| walker |  | 785 | 20 | python method at bookmarks/apps.py:7 |  |  | 0.725 |
-| ns | 797 |  | 236 | Makefile — core dev targets | 1.7 |  | 0.615 |
-| walker |  | 807 | 22 | python decl names surface in bookmarks/context_processors.py |  |  | 0.615 |
-| walker |  | 807 | 0 | python decl at bookmarks/context_processors.py:5 |  |  | 0.615 |
-| walker |  | 807 | 0 | python decl at bookmarks/context_processors.py:20 |  |  | 0.615 |
-| walker |  | 819 | 12 | python decl body at bookmarks/context_processors.py:20 body 21 |  |  | 0.615 |
-| walker |  | 863 | 44 | listing of 'assets' |  |  | 0.615 |
-| walker |  | 873 | 10 | python decl names surface in bookmarks/views/health.py |  |  | 0.615 |
-| walker |  | 873 | 0 | python decl at bookmarks/views/health.py:7 |  |  | 0.615 |
-| walker |  | 883 | 10 | python decl names surface in bookmarks/views/manifest.py |  |  | 0.615 |
-| walker |  | 883 | 0 | python decl at bookmarks/views/manifest.py:5 |  |  | 0.615 |
-| walker |  | 893 | 10 | python decl names surface in bookmarks/views/root.py |  |  | 0.615 |
-| walker |  | 908 | 15 | python decl at bookmarks/views/root.py:7 |  |  | 0.615 |
-| walker |  | 918 | 10 | python decl names surface in bookmarks/views/toasts.py |  |  | 0.615 |
-| ns | 922 |  | 125 | Makefile — e2e + frontend targets | 1.8 |  | 0.578 |
-| walker |  | 924 | 6 | python decl at bookmarks/views/toasts.py:9 |  |  | 0.578 |
-| walker |  | 949 | 25 | python decl names surface in bookmarks/urls.py |  |  | 0.578 |
-| walker |  | 976 | 27 | listing of 'bookmarks/templates' |  |  | 0.578 |
-| walker |  | 1008 | 32 | python class body at bookmarks/type_defs.py:11 |  |  | 0.578 |
-| walker |  | 1020 | 12 | python decl names surface in bookmarks/views/opensearch.py |  |  | 0.578 |
-| walker |  | 1020 | 0 | python decl at bookmarks/views/opensearch.py:5 |  |  | 0.578 |
-| walker |  | 1147 | 127 | docker-compose at docker-compose.yml |  |  | 0.578 |
-| walker |  | 1150 | 3 | listing of 'bookmarks/management' |  |  | 0.578 |
-| ns | 1155 |  | 233 | README feature overview | 1.9 |  | 0.544 |
-| walker |  | 1192 | 42 | python decl at bookmarks/signals.py:6 |  |  | 0.544 |
-| walker |  | 1203 | 11 | python imports in bookmarks/apps.py |  |  | 0.544 |
-| walker |  | 1217 | 14 | python decl names surface in bookmarks/api/auth.py |  |  | 0.544 |
-| walker |  | 1217 | 0 | python decl at bookmarks/api/auth.py:8 |  |  | 0.544 |
-| walker |  | 1230 | 13 | python method sigs in bookmarks/api/auth.py |  |  | 0.544 |
-| walker |  | 1230 | 0 | python method at bookmarks/api/auth.py:17 |  |  | 0.544 |
-| walker |  | 1244 | 14 | python decl names surface in bookmarks/services/wayback.py |  |  | 0.544 |
-| walker |  | 1266 | 22 | python decl at bookmarks/services/wayback.py:6 |  |  | 0.544 |
-| walker |  | 1286 | 20 | listing of 'bookmarks/templates/bundles' |  |  | 0.544 |
-| walker |  | 1306 | 20 | listing of 'bookmarks/templates/tags' |  |  | 0.544 |
-| walker |  | 1354 | 48 | python decl names surface in bookmarks/middlewares.py |  |  | 0.544 |
-| walker |  | 1354 | 0 | python decl at bookmarks/middlewares.py:7 |  |  | 0.544 |
-| walker |  | 1354 | 0 | python decl at bookmarks/middlewares.py:17 |  |  | 0.544 |
-| walker |  | 1367 | 13 | python class body at bookmarks/middlewares.py:7 |  |  | 0.545 |
-| walker |  | 1396 | 29 | python method sigs in bookmarks/middlewares.py |  |  | 0.545 |
-| walker |  | 1396 | 0 | python method at bookmarks/middlewares.py:18 |  |  | 0.545 |
-| walker |  | 1406 | 10 | python method at bookmarks/middlewares.py:21 |  |  | 0.545 |
-| walker |  | 1416 | 10 | python method body at bookmarks/middlewares.py:18 body 19 |  |  | 0.545 |
-| ns | 1511 |  | 356 | README Development setup | 1.10 |  | 0.479 |
-| ns | 1573 |  | 62 | settings/__init__.py — env-vs-prod selector | 2.1 |  | 0.474 |
-| walker |  | 1614 | 198 | [dependencies] in pyproject.toml |  |  | 0.538 |
+| walker |  | 486 | 198 | [dependencies] in pyproject.toml |  |  | 0.542 |
+| ns | 561 |  | 203 | Runtime Python deps | 1.6 |  | 0.581 |
+| walker |  | 605 | 119 | listing of 'bookmarks' |  |  | 0.821 |
+| walker |  | 623 | 18 | listing of 'bookmarks/api' |  |  | 0.821 |
+| walker |  | 641 | 18 | listing of 'bookmarks/templatetags' |  |  | 0.821 |
+| walker |  | 663 | 22 | listing of 'bookmarks/settings' |  |  | 0.821 |
+| walker |  | 693 | 30 | python imports in bookmarks/settings/__init__.py |  |  | 0.822 |
+| walker |  | 703 | 10 | python decl names surface in bookmarks/wsgi.py |  |  | 0.822 |
+| walker |  | 714 | 11 | python decl names surface in bookmarks/signals.py |  |  | 0.822 |
+| walker |  | 727 | 13 | python decl names surface in bookmarks/apps.py |  |  | 0.822 |
+| walker |  | 727 | 0 | python decl at bookmarks/apps.py:4 |  |  | 0.822 |
+| walker |  | 736 | 9 | python class body at bookmarks/apps.py:4 |  |  | 0.822 |
+| walker |  | 747 | 11 | python method sigs in bookmarks/apps.py |  |  | 0.822 |
+| walker |  | 760 | 13 | python decl names surface in bookmarks/type_defs.py |  |  | 0.822 |
+| walker |  | 760 | 0 | python decl at bookmarks/type_defs.py:11 |  |  | 0.822 |
+| ns | 797 |  | 236 | Makefile — core dev targets | 1.7 |  | 0.697 |
+| walker |  | 834 | 74 | listing of 'bookmarks/views' |  |  | 0.698 |
+| walker |  | 849 | 15 | python decl names surface in bookmarks/validators.py |  |  | 0.698 |
+| walker |  | 849 | 0 | python decl at bookmarks/validators.py:5 |  |  | 0.698 |
+| walker |  | 864 | 15 | python method sigs in bookmarks/validators.py |  |  | 0.698 |
+| walker |  | 864 | 0 | python method at bookmarks/validators.py:11 |  |  | 0.698 |
+| ns | 922 |  | 125 | Makefile — e2e + frontend targets | 1.8 |  | 0.656 |
+| walker |  | 945 | 81 | listing of 'bookmarks/services' |  |  | 0.658 |
+| walker |  | 963 | 18 | listing of 'bookmarks/frontend' |  |  | 0.658 |
+| walker |  | 983 | 20 | python method at bookmarks/apps.py:7 |  |  | 0.658 |
+| walker |  | 1005 | 22 | python decl names surface in bookmarks/context_processors.py |  |  | 0.658 |
+| walker |  | 1005 | 0 | python decl at bookmarks/context_processors.py:5 |  |  | 0.658 |
+| walker |  | 1005 | 0 | python decl at bookmarks/context_processors.py:20 |  |  | 0.658 |
+| walker |  | 1017 | 12 | python decl body at bookmarks/context_processors.py:20 body 21 |  |  | 0.658 |
+| walker |  | 1061 | 44 | listing of 'assets' |  |  | 0.658 |
+| walker |  | 1071 | 10 | python decl names surface in bookmarks/views/health.py |  |  | 0.658 |
+| walker |  | 1071 | 0 | python decl at bookmarks/views/health.py:7 |  |  | 0.658 |
+| walker |  | 1081 | 10 | python decl names surface in bookmarks/views/manifest.py |  |  | 0.658 |
+| walker |  | 1081 | 0 | python decl at bookmarks/views/manifest.py:5 |  |  | 0.658 |
+| walker |  | 1091 | 10 | python decl names surface in bookmarks/views/root.py |  |  | 0.658 |
+| walker |  | 1106 | 15 | python decl at bookmarks/views/root.py:7 |  |  | 0.658 |
+| walker |  | 1116 | 10 | python decl names surface in bookmarks/views/toasts.py |  |  | 0.658 |
+| walker |  | 1122 | 6 | python decl at bookmarks/views/toasts.py:9 |  |  | 0.658 |
+| walker |  | 1147 | 25 | python decl names surface in bookmarks/urls.py |  |  | 0.658 |
+| ns | 1155 |  | 233 | README feature overview | 1.9 |  | 0.620 |
+| walker |  | 1174 | 27 | listing of 'bookmarks/templates' |  |  | 0.620 |
+| walker |  | 1206 | 32 | python class body at bookmarks/type_defs.py:11 |  |  | 0.620 |
+| walker |  | 1218 | 12 | python decl names surface in bookmarks/views/opensearch.py |  |  | 0.620 |
+| walker |  | 1218 | 0 | python decl at bookmarks/views/opensearch.py:5 |  |  | 0.620 |
+| walker |  | 1345 | 127 | docker-compose at docker-compose.yml |  |  | 0.620 |
+| walker |  | 1348 | 3 | listing of 'bookmarks/management' |  |  | 0.620 |
+| walker |  | 1390 | 42 | python decl at bookmarks/signals.py:6 |  |  | 0.620 |
+| walker |  | 1401 | 11 | python imports in bookmarks/apps.py |  |  | 0.620 |
+| walker |  | 1415 | 14 | python decl names surface in bookmarks/api/auth.py |  |  | 0.620 |
+| walker |  | 1415 | 0 | python decl at bookmarks/api/auth.py:8 |  |  | 0.620 |
+| walker |  | 1428 | 13 | python method sigs in bookmarks/api/auth.py |  |  | 0.620 |
+| walker |  | 1428 | 0 | python method at bookmarks/api/auth.py:17 |  |  | 0.620 |
+| walker |  | 1442 | 14 | python decl names surface in bookmarks/services/wayback.py |  |  | 0.620 |
+| walker |  | 1464 | 22 | python decl at bookmarks/services/wayback.py:6 |  |  | 0.620 |
+| walker |  | 1484 | 20 | listing of 'bookmarks/templates/bundles' |  |  | 0.620 |
+| walker |  | 1504 | 20 | listing of 'bookmarks/templates/tags' |  |  | 0.620 |
+| ns | 1511 |  | 356 | README Development setup | 1.10 |  | 0.545 |
+| walker |  | 1552 | 48 | python decl names surface in bookmarks/middlewares.py |  |  | 0.545 |
+| walker |  | 1552 | 0 | python decl at bookmarks/middlewares.py:7 |  |  | 0.545 |
+| walker |  | 1552 | 0 | python decl at bookmarks/middlewares.py:17 |  |  | 0.545 |
+| walker |  | 1565 | 13 | python class body at bookmarks/middlewares.py:7 |  |  | 0.545 |
+| ns | 1573 |  | 62 | settings/__init__.py — env-vs-prod selector | 2.1 |  | 0.538 |
+| walker |  | 1594 | 29 | python method sigs in bookmarks/middlewares.py |  |  | 0.538 |
+| walker |  | 1594 | 0 | python method at bookmarks/middlewares.py:18 |  |  | 0.538 |
+| walker |  | 1604 | 10 | python method at bookmarks/middlewares.py:21 |  |  | 0.538 |
+| walker |  | 1614 | 10 | python method body at bookmarks/middlewares.py:18 body 19 |  |  | 0.538 |
 | walker |  | 1641 | 27 | listing of 'bookmarks/frontend/utils' |  |  | 0.538 |
 | walker |  | 1668 | 27 | listing of 'bookmarks/templates/settings' |  |  | 0.538 |
 | walker |  | 1689 | 21 | python decl names surface in bookmarks/templatetags/bookmarks.py |  |  | 0.538 |

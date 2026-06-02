@@ -75,6 +75,9 @@ macro_rules! impl_batchkey {
             fn gated_descendant_value_weight(&self) -> f64 {
                 match self { $(BatchKey::$variant(k) => InnerKey::gated_descendant_value_weight(k),)* }
             }
+            fn is_orientation(&self) -> bool {
+                match self { $(BatchKey::$variant(k) => InnerKey::is_orientation(k),)* }
+            }
         }
     };
 }
@@ -105,6 +108,9 @@ trait InnerKey {
     }
     fn gated_descendant_value_weight(&self) -> f64 {
         0.0
+    }
+    fn is_orientation(&self) -> bool {
+        false
     }
 }
 
@@ -474,6 +480,17 @@ pub trait WalkerKey:
     fn gated_descendant_value_weight(&self) -> f64 {
         0.0
     }
+
+    /// True for orientation-class batches — directory-structure
+    /// listings, README / man-page orientation prose, manifest
+    /// identity — as opposed to source-code bodies. The scheduler
+    /// gives these an early-budget ratio boost (see
+    /// [`crate::value::orientation_tier_multiplier`]) so high-rank
+    /// orientation atoms aren't crowded out of the first ~1K tokens by
+    /// cheap high-ratio code chunks.
+    fn is_orientation(&self) -> bool {
+        false
+    }
 }
 
 impl InnerKey for FsKey {
@@ -539,6 +556,9 @@ impl InnerKey for RustKey {
 }
 
 impl InnerKey for MarkdownKey {
+    fn is_orientation(&self) -> bool {
+        true
+    }
     fn describe(&self, root: &Path) -> String {
         match self {
             MarkdownKey::SummaryWhole { file } => {
@@ -652,6 +672,9 @@ impl InnerKey for TsKey {
 }
 
 impl InnerKey for TomlKey {
+    fn is_orientation(&self) -> bool {
+        true
+    }
     fn describe(&self, root: &Path) -> String {
         match self {
             TomlKey::Identity { file } => describe_in("[package]", file, root),
@@ -673,6 +696,12 @@ impl InnerKey for JsonKey {
         }
     }
 
+    /// Manifest sections (identity / entrypoints / scripts / deps) are
+    /// orientation; a verbatim `Whole` JSON config dump is not.
+    fn is_orientation(&self) -> bool {
+        !matches!(self, JsonKey::Whole { .. })
+    }
+
     fn describe(&self, root: &Path) -> String {
         match self {
             JsonKey::Identity { file } => describe_in("package identity", file, root),
@@ -687,6 +716,11 @@ impl InnerKey for JsonKey {
 }
 
 impl InnerKey for PlaintextKey {
+    /// A man-page NAME/DESCRIPTION lede is orientation; a verbatim
+    /// plaintext config dump is not.
+    fn is_orientation(&self) -> bool {
+        matches!(self, PlaintextKey::ManLede { .. })
+    }
     fn describe(&self, root: &Path) -> String {
         match self {
             PlaintextKey::Whole { file } => {

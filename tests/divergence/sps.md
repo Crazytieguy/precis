@@ -5,22 +5,22 @@ Score(3000)=0.704 I=0.838 C=0.592 ns_rows≤3K=19/49 (reached=9 partial=4 missin
 | walker |  | 47 | 47 | listing of '.' |  |  | 1.000 |
 | ns | 47 |  | 47 | Top-level repo listing | 1.1 |  | 1.000 |
 | walker |  | 82 | 35 | README headline in README.md |  |  | 1.000 |
-| walker |  | 90 | 8 | listing of 'sps' |  |  | 1.000 |
-| walker |  | 108 | 18 | listing of 'sps/src' |  |  | 1.000 |
-| walker |  | 120 | 12 | listing of 'sps/src/pipeline' |  |  | 1.000 |
-| walker |  | 135 | 15 | entry item at sps/src/main.rs:57 |  |  | 1.000 |
-| walker |  | 142 | 7 | entry item body at sps/src/main.rs:57 body 190 |  |  | 1.000 |
-| ns | 144 |  | 97 | README lede — what sps is | 1.2 |  | 0.773 |
-| walker |  | 154 | 12 | entry item body at sps/src/main.rs:57 body 58 |  |  | 0.773 |
-| walker |  | 167 | 13 | entry item body at sps/src/main.rs:57 body 90 |  |  | 0.773 |
-| walker |  | 184 | 17 | entry item body at sps/src/main.rs:57 body 158 |  |  | 0.773 |
-| walker |  | 203 | 19 | entry item body at sps/src/main.rs:57 body 189 |  |  | 0.773 |
-| ns | 219 |  | 75 | Workspace members | 1.3 |  | 0.626 |
-| walker |  | 227 | 24 | entry item body at sps/src/main.rs:57 body 83 |  |  | 0.626 |
-| walker |  | 235 | 8 | listing of 'sps-common' |  |  | 0.626 |
-| walker |  | 243 | 8 | listing of 'sps-core' |  |  | 0.626 |
-| walker |  | 251 | 8 | listing of 'sps-net' |  |  | 0.626 |
-| walker |  | 326 | 75 | [package] in Cargo.toml |  |  | 0.830 |
+| ns | 144 |  | 97 | README lede — what sps is | 1.2 |  | 0.772 |
+| walker |  | 157 | 75 | [package] in Cargo.toml |  |  | 0.810 |
+| walker |  | 165 | 8 | listing of 'sps' |  |  | 0.810 |
+| walker |  | 183 | 18 | listing of 'sps/src' |  |  | 0.811 |
+| walker |  | 195 | 12 | listing of 'sps/src/pipeline' |  |  | 0.811 |
+| walker |  | 210 | 15 | entry item at sps/src/main.rs:57 |  |  | 0.811 |
+| walker |  | 217 | 7 | entry item body at sps/src/main.rs:57 body 190 |  |  | 0.811 |
+| ns | 219 |  | 75 | Workspace members | 1.3 |  | 0.830 |
+| walker |  | 229 | 12 | entry item body at sps/src/main.rs:57 body 58 |  |  | 0.830 |
+| walker |  | 242 | 13 | entry item body at sps/src/main.rs:57 body 90 |  |  | 0.830 |
+| walker |  | 259 | 17 | entry item body at sps/src/main.rs:57 body 158 |  |  | 0.830 |
+| walker |  | 278 | 19 | entry item body at sps/src/main.rs:57 body 189 |  |  | 0.830 |
+| walker |  | 302 | 24 | entry item body at sps/src/main.rs:57 body 83 |  |  | 0.830 |
+| walker |  | 310 | 8 | listing of 'sps-common' |  |  | 0.830 |
+| walker |  | 318 | 8 | listing of 'sps-core' |  |  | 0.830 |
+| walker |  | 326 | 8 | listing of 'sps-net' |  |  | 0.830 |
 | ns | 327 |  | 108 | CLI subcommand enum | 1.4 |  | 0.666 |
 | walker |  | 379 | 53 | entry item body at sps/src/main.rs:57 body 85 |  |  | 0.666 |
 | walker |  | 435 | 56 | entry item body at sps/src/main.rs:57 body 141 |  |  | 0.667 |

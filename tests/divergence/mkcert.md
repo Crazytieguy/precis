@@ -4,76 +4,76 @@ Score(3000)=0.715 I=0.871 C=0.586 ns_rows≤3K=22/44 (reached=13 partial=3 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 50 | 50 | listing of '.' |  |  | 1.000 |
 | ns | 50 |  | 50 | Root directory listing | 1.1 |  | 1.000 |
-| walker |  | 69 | 19 | go package doc lede in main.go |  |  | 1.000 |
-| ns | 86 |  | 36 | README title + one-line description | 1.2 |  | 0.881 |
-| walker |  | 91 | 22 | go module identity in go.mod |  |  | 0.894 |
-| ns | 112 |  | 26 | main.go package doc line | 1.3 |  | 0.857 |
-| walker |  | 122 | 31 | README headline in README.md |  |  | 0.934 |
+| walker |  | 81 | 31 | README headline in README.md |  |  | 1.000 |
+| ns | 86 |  | 36 | README title + one-line description | 1.2 |  | 0.958 |
+| walker |  | 100 | 19 | go package doc lede in main.go |  |  | 0.965 |
+| ns | 112 |  | 26 | main.go package doc line | 1.3 |  | 0.921 |
+| walker |  | 122 | 22 | go module identity in go.mod |  |  | 0.934 |
 | ns | 139 |  | 27 | go.mod module + Go version | 1.4 |  | 0.897 |
-| walker |  | 213 | 91 | go module file go.mod |  |  | 0.920 |
-| ns | 219 |  | 80 | go.mod direct dependencies | 1.5 |  | 0.914 |
-| ns | 296 |  | 77 | README -install transcript | 1.6 |  | 0.803 |
-| ns | 441 |  | 145 | README cert generation transcript | 1.7 |  | 0.659 |
-| walker |  | 499 | 286 | go decl names surface in main.go |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:85 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:87 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:171 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:240 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:267 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:307 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:336 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:345 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:358 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:364 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:370 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:375 |  |  | 0.675 |
-| walker |  | 499 | 0 | go decl at main.go:382 |  |  | 0.675 |
-| walker |  | 518 | 19 | go decl body at main.go:370 |  |  | 0.676 |
-| walker |  | 538 | 20 | go decl body at main.go:375 |  |  | 0.676 |
-| walker |  | 601 | 63 | go decl doc at main.go:85 |  |  | 0.676 |
-| ns | 606 |  | 165 | main.go imports | 1.8 |  | 0.533 |
-| walker |  | 733 | 132 | headings outline in README.md |  |  | 0.539 |
-| walker |  | 771 | 38 | README.md section #1 |  |  | 0.539 |
+| ns | 219 |  | 80 | go.mod direct dependencies | 1.5 |  | 0.784 |
+| walker |  | 254 | 132 | headings outline in README.md |  |  | 0.793 |
+| walker |  | 292 | 38 | README.md section #1 |  |  | 0.793 |
+| ns | 296 |  | 77 | README -install transcript | 1.6 |  | 0.697 |
+| walker |  | 383 | 91 | go module file go.mod |  |  | 0.812 |
+| walker |  | 403 | 20 | README.md section #11 |  |  | 0.812 |
+| walker |  | 424 | 21 | README.md section #14 |  |  | 0.812 |
+| ns | 441 |  | 145 | README cert generation transcript | 1.7 |  | 0.667 |
+| ns | 606 |  | 165 | main.go imports | 1.8 |  | 0.526 |
+| walker |  | 710 | 286 | go decl names surface in main.go |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:85 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:87 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:171 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:240 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:267 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:307 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:336 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:345 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:358 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:364 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:370 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:375 |  |  | 0.538 |
+| walker |  | 710 | 0 | go decl at main.go:382 |  |  | 0.538 |
+| walker |  | 729 | 19 | go decl body at main.go:370 |  |  | 0.539 |
+| walker |  | 749 | 20 | go decl body at main.go:375 |  |  | 0.539 |
 | ns | 774 |  | 168 | main.go top-level fn signatures | 2.1 |  | 0.601 |
-| walker |  | 917 | 146 | go decl names surface in truststore_java.go |  |  | 0.604 |
-| walker |  | 917 | 0 | go decl at truststore_java.go:31 |  |  | 0.604 |
-| walker |  | 917 | 0 | go decl at truststore_java.go:57 |  |  | 0.604 |
-| walker |  | 917 | 0 | go decl at truststore_java.go:81 |  |  | 0.604 |
-| walker |  | 917 | 0 | go decl at truststore_java.go:94 |  |  | 0.604 |
-| walker |  | 917 | 0 | go decl at truststore_java.go:110 |  |  | 0.604 |
-| walker |  | 926 | 9 | go decl at truststore_java.go:21 |  |  | 0.604 |
-| ns | 953 |  | 179 | cert.go top-level fn signatures | 2.2 |  | 0.562 |
-| walker |  | 959 | 33 | go decl body at main.go:358 |  |  | 0.562 |
-| walker |  | 979 | 20 | README.md section #11 |  |  | 0.562 |
-| walker |  | 1152 | 173 | go decl names surface in truststore_nss.go |  |  | 0.565 |
-| walker |  | 1152 | 0 | go decl at truststore_nss.go:39 |  |  | 0.565 |
-| walker |  | 1152 | 0 | go decl at truststore_nss.go:73 |  |  | 0.565 |
-| walker |  | 1152 | 0 | go decl at truststore_nss.go:89 |  |  | 0.565 |
-| walker |  | 1152 | 0 | go decl at truststore_nss.go:106 |  |  | 0.565 |
-| walker |  | 1152 | 0 | go decl at truststore_nss.go:120 |  |  | 0.565 |
-| walker |  | 1152 | 0 | go decl at truststore_nss.go:131 |  |  | 0.565 |
-| ns | 1171 |  | 218 | mkcert struct + rootName/rootKeyName consts | 2.3 |  | 0.510 |
-| walker |  | 1194 | 42 | go decl body at main.go:364 |  |  | 0.511 |
+| walker |  | 812 | 63 | go decl doc at main.go:85 |  |  | 0.601 |
+| ns | 953 |  | 179 | cert.go top-level fn signatures | 2.2 |  | 0.559 |
+| walker |  | 958 | 146 | go decl names surface in truststore_java.go |  |  | 0.562 |
+| walker |  | 958 | 0 | go decl at truststore_java.go:31 |  |  | 0.562 |
+| walker |  | 958 | 0 | go decl at truststore_java.go:57 |  |  | 0.562 |
+| walker |  | 958 | 0 | go decl at truststore_java.go:81 |  |  | 0.562 |
+| walker |  | 958 | 0 | go decl at truststore_java.go:94 |  |  | 0.562 |
+| walker |  | 958 | 0 | go decl at truststore_java.go:110 |  |  | 0.562 |
+| walker |  | 967 | 9 | go decl at truststore_java.go:21 |  |  | 0.562 |
+| walker |  | 1000 | 33 | go decl body at main.go:358 |  |  | 0.562 |
+| ns | 1171 |  | 218 | mkcert struct + rootName/rootKeyName consts | 2.3 |  | 0.507 |
+| walker |  | 1173 | 173 | go decl names surface in truststore_nss.go |  |  | 0.510 |
+| walker |  | 1173 | 0 | go decl at truststore_nss.go:39 |  |  | 0.510 |
+| walker |  | 1173 | 0 | go decl at truststore_nss.go:73 |  |  | 0.510 |
+| walker |  | 1173 | 0 | go decl at truststore_nss.go:89 |  |  | 0.510 |
+| walker |  | 1173 | 0 | go decl at truststore_nss.go:106 |  |  | 0.510 |
+| walker |  | 1173 | 0 | go decl at truststore_nss.go:120 |  |  | 0.510 |
+| walker |  | 1173 | 0 | go decl at truststore_nss.go:131 |  |  | 0.510 |
 | ns | 1203 |  | 32 | truststore_darwin.go fn signatures | 2.4 |  | 0.505 |
+| walker |  | 1215 | 42 | go decl body at main.go:364 |  |  | 0.505 |
 | ns | 1260 |  | 57 | truststore_linux.go fn signatures | 2.5 |  | 0.494 |
 | ns | 1381 |  | 121 | truststore_windows.go fn signatures + windowsRootStore type | 2.6 |  | 0.476 |
-| walker |  | 1405 | 211 | go decl names surface in cert.go |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:37 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:50 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:148 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:166 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:176 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:202 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:209 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:282 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:310 |  |  | 0.547 |
-| walker |  | 1405 | 0 | go decl at cert.go:366 |  |  | 0.547 |
-| walker |  | 1422 | 17 | go decl doc at cert.go:282 |  |  | 0.547 |
-| walker |  | 1439 | 17 | go decl body at cert.go:366 |  |  | 0.548 |
+| walker |  | 1426 | 211 | go decl names surface in cert.go |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:37 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:50 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:148 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:166 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:176 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:202 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:209 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:282 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:310 |  |  | 0.547 |
+| walker |  | 1426 | 0 | go decl at cert.go:366 |  |  | 0.547 |
+| walker |  | 1443 | 17 | go decl doc at cert.go:282 |  |  | 0.547 |
 | ns | 1454 |  | 73 | truststore_java.go fn signatures | 2.7 |  | 0.563 |
+| walker |  | 1460 | 17 | go decl body at cert.go:366 |  |  | 0.563 |
 | ns | 1557 |  | 103 | truststore_nss.go fn signatures | 2.8 |  | 0.579 |
-| walker |  | 1606 | 167 | go package + imports in main.go |  |  | 0.712 |
-| walker |  | 1627 | 21 | README.md section #14 |  |  | 0.712 |
+| walker |  | 1627 | 167 | go package + imports in main.go |  |  | 0.712 |
 | ns | 1672 |  | 115 | README section headings (table of contents) | 2.9 |  | 0.721 |
 | walker |  | 1675 | 48 | go decl body at main.go:336 |  |  | 0.722 |
 | walker |  | 1716 | 41 | go decl doc at truststore_java.go:110 |  |  | 0.722 |

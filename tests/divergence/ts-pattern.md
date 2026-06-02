@@ -5,24 +5,24 @@ Score(3000)=0.648 I=0.765 C=0.548 ns_rows≤3K=19/45 (reached=7 partial=6 missin
 | walker |  | 48 | 48 | listing of '.' |  |  | 0.000 |
 | ns | 71 |  | 71 | README lede + tagline | 1.1 |  | 0.000 |
 | walker |  | 115 | 67 | package identity in package.json |  |  | 0.000 |
-| walker |  | 144 | 29 | listing of 'src' |  |  | 0.000 |
-| ns | 151 |  | 80 | package.json identity fields | 1.2 |  | 0.315 |
-| walker |  | 158 | 14 | export names surface in src/index.ts |  |  | 0.316 |
-| walker |  | 174 | 16 | export names surface in src/errors.ts |  |  | 0.316 |
-| walker |  | 186 | 12 | export at src/errors.ts:5 |  |  | 0.316 |
-| walker |  | 204 | 18 | export names surface in src/match.ts |  |  | 0.317 |
-| ns | 223 |  | 72 | src/index.ts — full public re-export surface | 1.3 |  | 0.246 |
-| walker |  | 224 | 20 | export at src/match.ts:32 |  |  | 0.249 |
-| walker |  | 238 | 14 | export body at src/match.ts:32 body 35 |  |  | 0.252 |
-| ns | 271 |  | 48 | Repo root listing | 1.4 |  | 0.411 |
-| ns | 364 |  | 93 | src/ + src/types/ + src/internals/ listings | 1.5 |  | 0.326 |
-| walker |  | 374 | 136 | README headline in README.md |  |  | 0.560 |
-| walker |  | 400 | 26 | listing of 'docs' |  |  | 0.560 |
-| ns | 434 |  | 70 | README features — data structures + typesafety | 1.6 |  | 0.542 |
-| walker |  | 456 | 56 | listing of 'src/types' |  |  | 0.707 |
-| walker |  | 466 | 10 | imports in src/types/index.ts |  |  | 0.707 |
-| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.672 |
-| walker |  | 570 | 104 | README.md section #0 |  |  | 0.672 |
+| ns | 151 |  | 80 | package.json identity fields | 1.2 |  | 0.305 |
+| ns | 223 |  | 72 | src/index.ts — full public re-export surface | 1.3 |  | 0.230 |
+| walker |  | 251 | 136 | README headline in README.md |  |  | 0.578 |
+| ns | 271 |  | 48 | Repo root listing | 1.4 |  | 0.693 |
+| walker |  | 355 | 104 | README.md section #0 |  |  | 0.693 |
+| ns | 364 |  | 93 | src/ + src/types/ + src/internals/ listings | 1.5 |  | 0.518 |
+| walker |  | 384 | 29 | listing of 'src' |  |  | 0.551 |
+| walker |  | 398 | 14 | export names surface in src/index.ts |  |  | 0.554 |
+| walker |  | 414 | 16 | export names surface in src/errors.ts |  |  | 0.554 |
+| walker |  | 426 | 12 | export at src/errors.ts:5 |  |  | 0.554 |
+| ns | 434 |  | 70 | README features — data structures + typesafety | 1.6 |  | 0.536 |
+| walker |  | 444 | 18 | export names surface in src/match.ts |  |  | 0.537 |
+| walker |  | 464 | 20 | export at src/match.ts:32 |  |  | 0.539 |
+| walker |  | 478 | 14 | export body at src/match.ts:32 body 35 |  |  | 0.542 |
+| walker |  | 504 | 26 | listing of 'docs' |  |  | 0.542 |
+| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.514 |
+| walker |  | 560 | 56 | listing of 'src/types' |  |  | 0.672 |
+| walker |  | 570 | 10 | imports in src/types/index.ts |  |  | 0.672 |
 | ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.672 |
 | walker |  | 609 | 39 | imports in src/index.ts |  |  | 0.715 |
 | walker |  | 619 | 10 | listing of 'examples' |  |  | 0.715 |

@@ -9,30 +9,30 @@ Score(3000)=0.647 I=0.795 C=0.527 ns_rows≤3K=18/34 (reached=11 partial=0 missi
 | walker |  | 133 | 102 | README headline in README.md |  |  | 1.000 |
 | walker |  | 165 | 32 | c includes in sds.h |  |  | 1.000 |
 | walker |  | 196 | 31 | c decl names surface in sdsalloc.h |  |  | 1.000 |
-| walker |  | 252 | 56 | c decl names surface in testhelp.h |  |  | 0.749 |
 | ns | 252 |  | 124 | README v2 lede — perf note + sdscatfmt headline | 1.4 |  | 0.749 |
 | ns | 262 |  | 10 | sds typedef — sds IS char* | 2.1 |  | 0.728 |
 | ns | 293 |  | 31 | SDS_MAX_PREALLOC + SDS_NOINIT constants | 2.2 |  | 0.691 |
 | ns | 469 |  | 176 | SDS_TYPE_* tag constants + SDS_HDR macros | 2.3 |  | 0.560 |
-| ns | 657 |  | 188 | Cardinal usage rule — must reassign return value | 2.4 |  | 0.474 |
-| walker |  | 690 | 438 | c decl names surface in sds.h |  |  | 0.703 |
-| walker |  | 690 | 0 | c decl at sds.h:87 |  |  | 0.703 |
-| walker |  | 690 | 0 | c decl at sds.h:104 |  |  | 0.703 |
-| walker |  | 690 | 0 | c decl at sds.h:130 |  |  | 0.703 |
-| walker |  | 690 | 0 | c decl at sds.h:154 |  |  | 0.703 |
-| walker |  | 690 | 0 | c decl at sds.h:180 |  |  | 0.703 |
-| walker |  | 690 | 0 | c decl at sds.h:197 |  |  | 0.703 |
-| walker |  | 727 | 37 | c decl at sds.h:47 |  |  | 0.704 |
-| walker |  | 747 | 20 | c decl doc at sds.h:180 |  |  | 0.704 |
-| walker |  | 812 | 65 | c decl at sds.h:51 |  |  | 0.707 |
-| ns | 847 |  | 190 | Public fn declarations — high-level API (creation/length/free/concat/copy) | 2.5 |  | 0.621 |
-| walker |  | 877 | 65 | c decl at sds.h:57 |  |  | 0.624 |
-| walker |  | 942 | 65 | c decl at sds.h:63 |  |  | 0.629 |
-| ns | 979 |  | 132 | Public fn declarations — printf family (sdscatvprintf/printf/fmt) | 2.6 |  | 0.576 |
-| walker |  | 1007 | 65 | c decl at sds.h:69 |  |  | 0.581 |
-| walker |  | 1050 | 43 | c decl doc at sds.h:47 |  |  | 0.584 |
-| ns | 1276 |  | 297 | Public fn declarations — utility fns (trim/range/cmp/split/case/repr/join) | 2.7 |  | 0.517 |
-| walker |  | 1449 | 399 | headings outline in README.md |  |  | 0.523 |
+| walker |  | 595 | 399 | headings outline in README.md |  |  | 0.569 |
+| walker |  | 651 | 56 | c decl names surface in testhelp.h |  |  | 0.569 |
+| ns | 657 |  | 188 | Cardinal usage rule — must reassign return value | 2.4 |  | 0.481 |
+| ns | 847 |  | 190 | Public fn declarations — high-level API (creation/length/free/concat/copy) | 2.5 |  | 0.422 |
+| ns | 979 |  | 132 | Public fn declarations — printf family (sdscatvprintf/printf/fmt) | 2.6 |  | 0.386 |
+| walker |  | 1089 | 438 | c decl names surface in sds.h |  |  | 0.573 |
+| walker |  | 1089 | 0 | c decl at sds.h:87 |  |  | 0.573 |
+| walker |  | 1089 | 0 | c decl at sds.h:104 |  |  | 0.573 |
+| walker |  | 1089 | 0 | c decl at sds.h:130 |  |  | 0.573 |
+| walker |  | 1089 | 0 | c decl at sds.h:154 |  |  | 0.573 |
+| walker |  | 1089 | 0 | c decl at sds.h:180 |  |  | 0.573 |
+| walker |  | 1089 | 0 | c decl at sds.h:197 |  |  | 0.573 |
+| walker |  | 1126 | 37 | c decl at sds.h:47 |  |  | 0.574 |
+| walker |  | 1146 | 20 | c decl doc at sds.h:180 |  |  | 0.574 |
+| walker |  | 1211 | 65 | c decl at sds.h:51 |  |  | 0.576 |
+| walker |  | 1276 | 65 | c decl at sds.h:57 |  |  | 0.512 |
+| ns | 1276 |  | 297 | Public fn declarations — utility fns (trim/range/cmp/split/case/repr/join) | 2.7 |  | 0.512 |
+| walker |  | 1341 | 65 | c decl at sds.h:63 |  |  | 0.516 |
+| walker |  | 1406 | 65 | c decl at sds.h:69 |  |  | 0.520 |
+| walker |  | 1449 | 43 | c decl doc at sds.h:47 |  |  | 0.523 |
 | ns | 1487 |  | 211 | Public fn declarations — low-level + allocator-export API | 2.8 |  | 0.476 |
 | walker |  | 1676 | 227 | c decl names surface #2 in sds.h |  |  | 0.528 |
 | walker |  | 1676 | 0 | c decl at sds.h:256 |  |  | 0.528 |

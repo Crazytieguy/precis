@@ -51,42 +51,10 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "docs/assets" })'
-descriptor = "listing of 'docs/assets'"
-cost_tokens = 21
-cum_tokens = 83
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/assets"
-entries = ["API_foot.md", "API_head.md", "logo-dark.png", "logo-light.png"]
-
-[[batches]]
-position = 5
-key = 'C(HeaderBanner { file: "neco.h" })'
-descriptor = "c header banner in neco.h"
-cost_tokens = 87
-cum_tokens = 170
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "neco.h"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 408
-cum_tokens = 578
+cum_tokens = 470
 
 [batches.content]
 kind = "lines"
@@ -124,11 +92,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 7
+position = 5
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 233
-cum_tokens = 811
+cum_tokens = 703
 
 [batches.content]
 kind = "lines"
@@ -422,11 +390,11 @@ end = 580
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 6
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 46
-cum_tokens = 857
+cum_tokens = 749
 
 [batches.content]
 kind = "lines"
@@ -440,11 +408,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 9
+position = 7
 key = 'Markdown(Section { file: "README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 16
-cum_tokens = 873
+cum_tokens = 765
 
 [batches.content]
 kind = "lines"
@@ -461,6 +429,38 @@ kind = "full"
 path = "README.md"
 start = 581
 end = 581
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "docs/assets" })'
+descriptor = "listing of 'docs/assets'"
+cost_tokens = 21
+cum_tokens = 786
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/assets"
+entries = ["API_foot.md", "API_head.md", "logo-dark.png", "logo-light.png"]
+
+[[batches]]
+position = 9
+key = 'C(HeaderBanner { file: "neco.h" })'
+descriptor = "c header banner in neco.h"
+cost_tokens = 87
+cum_tokens = 873
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "neco.h"
+start = 1
+end = 7
 
 [batches.content.spans.render]
 kind = "full"

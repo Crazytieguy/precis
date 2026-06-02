@@ -4,52 +4,52 @@ Score(3000)=0.551 I=0.786 C=0.387 ns_rows≤3K=13/40 (reached=5 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 40 | 40 | listing of '.' |  |  | 1.000 |
 | ns | 40 |  | 40 | Top-level fixture listing | 1.1 |  | 1.000 |
-| walker |  | 62 | 22 | go decl names surface in main.go |  |  | 1.000 |
-| walker |  | 62 | 0 | go decl at main.go:14 |  |  | 1.000 |
-| walker |  | 103 | 41 | go module identity in go.mod |  |  | 1.000 |
-| ns | 135 |  | 95 | README lede | 1.2 |  | 0.805 |
-| walker |  | 159 | 56 | README headline in README.md |  |  | 0.860 |
-| walker |  | 183 | 24 | README.md section #0 |  |  | 0.909 |
-| walker |  | 198 | 15 | listing of 'contribute' |  |  | 0.909 |
+| walker |  | 96 | 56 | README headline in README.md |  |  | 1.000 |
+| walker |  | 120 | 24 | README.md section #0 |  |  | 1.000 |
+| ns | 135 |  | 95 | README lede | 1.2 |  | 0.899 |
+| walker |  | 142 | 22 | go decl names surface in main.go |  |  | 0.900 |
+| walker |  | 142 | 0 | go decl at main.go:14 |  |  | 0.900 |
+| walker |  | 183 | 41 | go module identity in go.mod |  |  | 0.909 |
+| walker |  | 195 | 12 | README.md section #1 |  |  | 0.909 |
 | ns | 201 |  | 66 | internal/ + cmd/ subtree listings | 1.3 |  | 0.618 |
-| walker |  | 222 | 24 | listing of 'sdk' |  |  | 0.618 |
-| walker |  | 255 | 33 | README headline in sdk/README.md |  |  | 0.618 |
+| walker |  | 207 | 12 | README.md section #2 |  |  | 0.618 |
+| walker |  | 219 | 12 | README.md section #3 |  |  | 0.618 |
+| walker |  | 231 | 12 | README.md section #5 |  |  | 0.618 |
+| walker |  | 243 | 12 | README.md section #12 |  |  | 0.618 |
 | ns | 257 |  | 56 | go.mod — module declaration | 1.4 |  | 0.609 |
-| walker |  | 261 | 6 | listing of 'examples' |  |  | 0.609 |
-| walker |  | 294 | 33 | headings outline in contribute/contribute.md |  |  | 0.609 |
-| walker |  | 324 | 30 | listing of 'internal' |  |  | 0.717 |
-| walker |  | 341 | 17 | listing of 'internal/auth' |  |  | 0.717 |
-| ns | 353 |  | 96 | main.go — package + imports + version literal | 1.5 |  | 0.619 |
-| walker |  | 377 | 36 | listing of 'cmd' |  |  | 0.775 |
-| walker |  | 389 | 12 | README.md section #1 |  |  | 0.775 |
-| walker |  | 401 | 12 | README.md section #2 |  |  | 0.775 |
-| walker |  | 413 | 12 | README.md section #3 |  |  | 0.775 |
-| walker |  | 425 | 12 | README.md section #5 |  |  | 0.775 |
-| walker |  | 437 | 12 | README.md section #12 |  |  | 0.775 |
-| walker |  | 451 | 14 | README.md section #11 |  |  | 0.775 |
-| ns | 498 |  | 145 | main.go — version-flag short-circuit + fang.Execute | 1.6 | 1.5 | 0.677 |
-| walker |  | 522 | 71 | go package + imports in main.go |  |  | 0.768 |
-| walker |  | 537 | 15 | README.md section #4 |  |  | 0.768 |
-| walker |  | 552 | 15 | README.md section #6 |  |  | 0.768 |
-| walker |  | 580 | 28 | go decl names surface in internal/auth/browser.go |  |  | 0.768 |
-| walker |  | 580 | 0 | go decl at internal/auth/browser.go:14 |  |  | 0.768 |
-| walker |  | 580 | 0 | go decl at internal/auth/browser.go:34 |  |  | 0.768 |
-| walker |  | 591 | 11 | README.md section #20 |  |  | 0.768 |
-| walker |  | 607 | 16 | README.md section #13 |  |  | 0.768 |
-| walker |  | 619 | 12 | README.md section #15 |  |  | 0.768 |
-| walker |  | 631 | 12 | README.md section #18 |  |  | 0.768 |
-| walker |  | 641 | 10 | contribute/contribute.md section #2 |  |  | 0.768 |
-| walker |  | 659 | 18 | README.md section #9 |  |  | 0.768 |
-| walker |  | 722 | 63 | go decl names surface in sdk/types.go |  |  | 0.768 |
-| walker |  | 722 | 0 | go decl at sdk/types.go:10 |  |  | 0.768 |
-| walker |  | 722 | 0 | go decl at sdk/types.go:14 |  |  | 0.768 |
-| walker |  | 722 | 0 | go decl at sdk/types.go:18 |  |  | 0.768 |
-| walker |  | 722 | 0 | go decl at sdk/types.go:24 |  |  | 0.768 |
-| ns | 730 |  | 232 | README — supported features list | 1.7 |  | 0.677 |
-| walker |  | 731 | 9 | go decl body at sdk/types.go:18 |  |  | 0.677 |
-| walker |  | 741 | 10 | go decl body at sdk/types.go:24 |  |  | 0.677 |
-| walker |  | 761 | 20 | contribute/contribute.md section #0 |  |  | 0.677 |
-| walker |  | 774 | 13 | README.md section #21 |  |  | 0.680 |
+| walker |  | 258 | 15 | listing of 'contribute' |  |  | 0.609 |
+| walker |  | 291 | 33 | headings outline in contribute/contribute.md |  |  | 0.609 |
+| walker |  | 305 | 14 | README.md section #11 |  |  | 0.609 |
+| walker |  | 320 | 15 | README.md section #4 |  |  | 0.609 |
+| walker |  | 335 | 15 | README.md section #6 |  |  | 0.609 |
+| walker |  | 346 | 11 | README.md section #20 |  |  | 0.610 |
+| ns | 353 |  | 96 | main.go — package + imports + version literal | 1.5 |  | 0.526 |
+| walker |  | 362 | 16 | README.md section #13 |  |  | 0.526 |
+| walker |  | 374 | 12 | README.md section #15 |  |  | 0.527 |
+| walker |  | 386 | 12 | README.md section #18 |  |  | 0.527 |
+| walker |  | 396 | 10 | contribute/contribute.md section #2 |  |  | 0.527 |
+| walker |  | 420 | 24 | listing of 'sdk' |  |  | 0.527 |
+| walker |  | 453 | 33 | README headline in sdk/README.md |  |  | 0.527 |
+| walker |  | 471 | 18 | README.md section #9 |  |  | 0.527 |
+| walker |  | 491 | 20 | contribute/contribute.md section #0 |  |  | 0.527 |
+| ns | 498 |  | 145 | main.go — version-flag short-circuit + fang.Execute | 1.6 | 1.5 | 0.461 |
+| walker |  | 504 | 13 | README.md section #21 |  |  | 0.461 |
+| walker |  | 510 | 6 | listing of 'examples' |  |  | 0.461 |
+| walker |  | 540 | 30 | listing of 'internal' |  |  | 0.541 |
+| walker |  | 557 | 17 | listing of 'internal/auth' |  |  | 0.541 |
+| walker |  | 593 | 36 | listing of 'cmd' |  |  | 0.678 |
+| walker |  | 664 | 71 | go package + imports in main.go |  |  | 0.769 |
+| walker |  | 692 | 28 | go decl names surface in internal/auth/browser.go |  |  | 0.769 |
+| walker |  | 692 | 0 | go decl at internal/auth/browser.go:14 |  |  | 0.769 |
+| walker |  | 692 | 0 | go decl at internal/auth/browser.go:34 |  |  | 0.769 |
+| ns | 730 |  | 232 | README — supported features list | 1.7 |  | 0.680 |
+| walker |  | 755 | 63 | go decl names surface in sdk/types.go |  |  | 0.680 |
+| walker |  | 755 | 0 | go decl at sdk/types.go:10 |  |  | 0.680 |
+| walker |  | 755 | 0 | go decl at sdk/types.go:14 |  |  | 0.680 |
+| walker |  | 755 | 0 | go decl at sdk/types.go:18 |  |  | 0.680 |
+| walker |  | 755 | 0 | go decl at sdk/types.go:24 |  |  | 0.680 |
+| walker |  | 764 | 9 | go decl body at sdk/types.go:18 |  |  | 0.680 |
+| walker |  | 774 | 10 | go decl body at sdk/types.go:24 |  |  | 0.680 |
 | walker |  | 787 | 13 | README.md section #22 |  |  | 0.685 |
 | walker |  | 800 | 13 | README.md section #23 |  |  | 0.690 |
 | walker |  | 869 | 69 | go decl names surface in cmd/hooks.go |  |  | 0.690 |

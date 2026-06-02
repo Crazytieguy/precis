@@ -4,77 +4,77 @@ Score(3000)=0.608 I=0.801 C=0.461 ns_rows≤3K=20/50 (reached=7 partial=5 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 35 | 35 | listing of '.' |  |  | 1.000 |
 | ns | 35 |  | 35 | Repo root listing | 1.1 |  | 1.000 |
-| walker |  | 39 | 4 | listing of 'assets' |  |  | 1.000 |
 | ns | 54 |  | 19 | README H1 + crate one-liner | 1.2 |  | 0.911 |
-| walker |  | 79 | 40 | README headline in README.md |  |  | 0.955 |
-| walker |  | 87 | 8 | listing of 'config' |  |  | 0.955 |
+| walker |  | 75 | 40 | README headline in README.md |  |  | 0.955 |
+| walker |  | 79 | 4 | listing of 'assets' |  |  | 0.955 |
 | ns | 92 |  | 38 | src/ module layout | 1.3 |  | 0.690 |
-| walker |  | 100 | 13 | listing of 'docs' |  |  | 0.690 |
 | ns | 156 |  | 64 | main.rs module declarations | 1.4 |  | 0.569 |
 | ns | 185 |  | 29 | README section headings | 1.5 |  | 0.532 |
-| walker |  | 239 | 139 | [package] in Cargo.toml |  |  | 0.552 |
-| walker |  | 277 | 38 | listing of 'src' |  |  | 0.772 |
-| walker |  | 288 | 11 | macro_export names across src |  |  | 0.772 |
-| walker |  | 298 | 10 | entry item at src/main.rs:111 |  |  | 0.772 |
-| walker |  | 314 | 16 | listing of 'src/config' |  |  | 0.773 |
-| walker |  | 327 | 13 | entry item at src/main.rs:27 |  |  | 0.773 |
-| ns | 329 |  | 144 | Cargo package metadata | 1.6 |  | 0.789 |
-| walker |  | 336 | 9 | entry item body at src/main.rs:27 body 52 |  |  | 0.789 |
-| walker |  | 346 | 10 | entry item body at src/main.rs:27 body 108 |  |  | 0.789 |
-| walker |  | 357 | 11 | entry item body at src/main.rs:27 body 54 |  |  | 0.789 |
-| walker |  | 368 | 11 | entry item body at src/main.rs:27 body 58 |  |  | 0.789 |
-| walker |  | 380 | 12 | entry item body at src/main.rs:27 body 38 |  |  | 0.789 |
-| ns | 391 |  | 62 | ContentType variants — locations only | 2.1 |  | 0.721 |
-| walker |  | 392 | 12 | entry item body at src/main.rs:27 body 99 |  |  | 0.721 |
-| walker |  | 405 | 13 | entry item body at src/main.rs:27 body 41 |  |  | 0.721 |
-| walker |  | 419 | 14 | entry item body at src/main.rs:27 body 39 |  |  | 0.721 |
-| walker |  | 433 | 14 | entry item body at src/main.rs:27 body 55 |  |  | 0.722 |
-| walker |  | 452 | 19 | entry item body at src/main.rs:27 body 101 |  |  | 0.722 |
-| walker |  | 476 | 24 | entry item body at src/main.rs:27 body 51 |  |  | 0.722 |
-| walker |  | 501 | 25 | entry item body at src/main.rs:27 body 43 |  |  | 0.723 |
-| walker |  | 527 | 26 | entry item body at src/main.rs:27 body 98 |  |  | 0.723 |
-| ns | 534 |  | 143 | ContentType enum context | 2.2 | 2.1 | 0.657 |
-| walker |  | 554 | 27 | entry item body at src/main.rs:27 body 53 |  |  | 0.657 |
-| walker |  | 584 | 30 | entry item body at src/main.rs:27 body 28 |  |  | 0.659 |
-| walker |  | 615 | 31 | entry item body at src/main.rs:27 body 57 |  |  | 0.659 |
-| walker |  | 650 | 35 | entry item body at src/main.rs:27 body 47 |  |  | 0.662 |
-| ns | 653 |  | 119 | Parser trait method signatures | 2.3 |  | 0.624 |
-| walker |  | 693 | 43 | entry item body at src/main.rs:111 body 112 |  |  | 0.624 |
-| walker |  | 743 | 50 | entry item body at src/main.rs:27 body 32 |  |  | 0.628 |
-| walker |  | 793 | 50 | entry item body at src/main.rs:27 body 103 |  |  | 0.629 |
-| walker |  | 813 | 20 | pub item at src/clipboard.rs:28 |  |  | 0.629 |
-| ns | 836 |  | 183 | ContentType::new_parser dispatch | 2.4 |  | 0.572 |
-| walker |  | 848 | 35 | listing of 'src/ui' |  |  | 0.574 |
-| walker |  | 866 | 18 | pub item at src/ui/mod.rs:35 |  |  | 0.574 |
-| walker |  | 909 | 43 | listing of 'src/parse' |  |  | 0.576 |
-| walker |  | 930 | 21 | pub-item names surface in src/parse/mod.rs |  |  | 0.579 |
-| ns | 931 |  | 95 | Tree struct fields | 2.5 |  | 0.543 |
-| walker |  | 958 | 28 | impl method sigs in src/parse/mod.rs |  |  | 0.546 |
-| walker |  | 998 | 40 | pub item at src/edit.rs:10 |  |  | 0.546 |
-| walker |  | 1089 | 91 | pub-item names surface in src/config/mod.rs |  |  | 0.546 |
-| walker |  | 1116 | 27 | pub item at src/config/mod.rs:100 |  |  | 0.546 |
-| ns | 1144 |  | 213 | ItemValue + FieldType | 2.6 |  | 0.477 |
-| walker |  | 1157 | 41 | pub item at src/config/mod.rs:83 |  |  | 0.477 |
-| walker |  | 1209 | 52 | pub item at src/config/mod.rs:91 |  |  | 0.477 |
-| ns | 1215 |  | 71 | Tree public fn signatures | 2.7 |  | 0.462 |
-| walker |  | 1264 | 55 | pub item at src/config/mod.rs:53 |  |  | 0.462 |
-| walker |  | 1321 | 57 | pub item at src/config/mod.rs:74 |  |  | 0.462 |
-| walker |  | 1400 | 79 | pub item at src/config/mod.rs:62 |  |  | 0.463 |
-| ns | 1432 |  | 217 | main.rs run() — config + flag dispatch | 2.8 |  | 0.515 |
-| walker |  | 1482 | 82 | pub item at src/config/mod.rs:106 |  |  | 0.516 |
-| walker |  | 1564 | 82 | pub item at src/config/mod.rs:118 |  |  | 0.517 |
-| walker |  | 1598 | 34 | pub-item names surface in src/debug.rs |  |  | 0.517 |
-| walker |  | 1598 | 0 | pub item at src/debug.rs:19 |  |  | 0.517 |
-| walker |  | 1598 | 0 | pub item at src/debug.rs:23 |  |  | 0.517 |
-| walker |  | 1607 | 9 | pub item body at src/debug.rs:19 body 20 |  |  | 0.517 |
-| walker |  | 1707 | 100 | entry item body at src/main.rs:27 body 94 |  |  | 0.519 |
-| walker |  | 1728 | 21 | pub-item names surface in src/ui/header.rs |  |  | 0.519 |
-| walker |  | 1751 | 23 | pub item at src/ui/header.rs:41 |  |  | 0.519 |
-| ns | 1755 |  | 323 | main.rs run() — content type + data read | 2.9 |  | 0.484 |
-| walker |  | 1772 | 21 | pub-item names surface in src/ui/popup.rs |  |  | 0.484 |
-| ns | 1929 |  | 174 | main.rs run() — --to short-circuit | 2.10 |  | 0.463 |
-| walker |  | 1933 | 161 | pub item at src/parse/mod.rs:18 |  |  | 0.526 |
-| walker |  | 1998 | 65 | headings outline in README.md |  |  | 0.548 |
+| walker |  | 218 | 139 | [package] in Cargo.toml |  |  | 0.552 |
+| walker |  | 226 | 8 | listing of 'config' |  |  | 0.552 |
+| walker |  | 291 | 65 | headings outline in README.md |  |  | 0.635 |
+| walker |  | 304 | 13 | listing of 'docs' |  |  | 0.635 |
+| ns | 329 |  | 144 | Cargo package metadata | 1.6 |  | 0.681 |
+| walker |  | 342 | 38 | listing of 'src' |  |  | 0.843 |
+| walker |  | 353 | 11 | macro_export names across src |  |  | 0.843 |
+| walker |  | 363 | 10 | entry item at src/main.rs:111 |  |  | 0.843 |
+| walker |  | 379 | 16 | listing of 'src/config' |  |  | 0.844 |
+| ns | 391 |  | 62 | ContentType variants — locations only | 2.1 |  | 0.771 |
+| walker |  | 392 | 13 | entry item at src/main.rs:27 |  |  | 0.771 |
+| walker |  | 401 | 9 | entry item body at src/main.rs:27 body 52 |  |  | 0.771 |
+| walker |  | 411 | 10 | entry item body at src/main.rs:27 body 108 |  |  | 0.771 |
+| walker |  | 422 | 11 | entry item body at src/main.rs:27 body 54 |  |  | 0.771 |
+| walker |  | 433 | 11 | entry item body at src/main.rs:27 body 58 |  |  | 0.771 |
+| walker |  | 445 | 12 | entry item body at src/main.rs:27 body 38 |  |  | 0.771 |
+| walker |  | 457 | 12 | entry item body at src/main.rs:27 body 99 |  |  | 0.771 |
+| walker |  | 470 | 13 | entry item body at src/main.rs:27 body 41 |  |  | 0.772 |
+| walker |  | 484 | 14 | entry item body at src/main.rs:27 body 39 |  |  | 0.772 |
+| walker |  | 498 | 14 | entry item body at src/main.rs:27 body 55 |  |  | 0.772 |
+| walker |  | 517 | 19 | entry item body at src/main.rs:27 body 101 |  |  | 0.772 |
+| ns | 534 |  | 143 | ContentType enum context | 2.2 | 2.1 | 0.701 |
+| walker |  | 541 | 24 | entry item body at src/main.rs:27 body 51 |  |  | 0.702 |
+| walker |  | 566 | 25 | entry item body at src/main.rs:27 body 43 |  |  | 0.703 |
+| walker |  | 592 | 26 | entry item body at src/main.rs:27 body 98 |  |  | 0.703 |
+| walker |  | 619 | 27 | entry item body at src/main.rs:27 body 53 |  |  | 0.703 |
+| walker |  | 649 | 30 | entry item body at src/main.rs:27 body 28 |  |  | 0.705 |
+| ns | 653 |  | 119 | Parser trait method signatures | 2.3 |  | 0.665 |
+| walker |  | 680 | 31 | entry item body at src/main.rs:27 body 57 |  |  | 0.665 |
+| walker |  | 715 | 35 | entry item body at src/main.rs:27 body 47 |  |  | 0.667 |
+| walker |  | 758 | 43 | entry item body at src/main.rs:111 body 112 |  |  | 0.667 |
+| walker |  | 808 | 50 | entry item body at src/main.rs:27 body 32 |  |  | 0.672 |
+| ns | 836 |  | 183 | ContentType::new_parser dispatch | 2.4 |  | 0.611 |
+| walker |  | 858 | 50 | entry item body at src/main.rs:27 body 103 |  |  | 0.612 |
+| walker |  | 878 | 20 | pub item at src/clipboard.rs:28 |  |  | 0.612 |
+| walker |  | 913 | 35 | listing of 'src/ui' |  |  | 0.614 |
+| walker |  | 931 | 18 | pub item at src/ui/mod.rs:35 |  |  | 0.576 |
+| ns | 931 |  | 95 | Tree struct fields | 2.5 |  | 0.576 |
+| walker |  | 974 | 43 | listing of 'src/parse' |  |  | 0.577 |
+| walker |  | 995 | 21 | pub-item names surface in src/parse/mod.rs |  |  | 0.581 |
+| walker |  | 1023 | 28 | impl method sigs in src/parse/mod.rs |  |  | 0.583 |
+| walker |  | 1063 | 40 | pub item at src/edit.rs:10 |  |  | 0.583 |
+| ns | 1144 |  | 213 | ItemValue + FieldType | 2.6 |  | 0.509 |
+| walker |  | 1154 | 91 | pub-item names surface in src/config/mod.rs |  |  | 0.509 |
+| walker |  | 1181 | 27 | pub item at src/config/mod.rs:100 |  |  | 0.509 |
+| ns | 1215 |  | 71 | Tree public fn signatures | 2.7 |  | 0.493 |
+| walker |  | 1222 | 41 | pub item at src/config/mod.rs:83 |  |  | 0.493 |
+| walker |  | 1274 | 52 | pub item at src/config/mod.rs:91 |  |  | 0.493 |
+| walker |  | 1329 | 55 | pub item at src/config/mod.rs:53 |  |  | 0.494 |
+| walker |  | 1386 | 57 | pub item at src/config/mod.rs:74 |  |  | 0.494 |
+| ns | 1432 |  | 217 | main.rs run() — config + flag dispatch | 2.8 |  | 0.540 |
+| walker |  | 1465 | 79 | pub item at src/config/mod.rs:62 |  |  | 0.541 |
+| walker |  | 1547 | 82 | pub item at src/config/mod.rs:106 |  |  | 0.542 |
+| walker |  | 1629 | 82 | pub item at src/config/mod.rs:118 |  |  | 0.542 |
+| walker |  | 1663 | 34 | pub-item names surface in src/debug.rs |  |  | 0.542 |
+| walker |  | 1663 | 0 | pub item at src/debug.rs:19 |  |  | 0.542 |
+| walker |  | 1663 | 0 | pub item at src/debug.rs:23 |  |  | 0.542 |
+| walker |  | 1672 | 9 | pub item body at src/debug.rs:19 body 20 |  |  | 0.542 |
+| ns | 1755 |  | 323 | main.rs run() — content type + data read | 2.9 |  | 0.505 |
+| walker |  | 1772 | 100 | entry item body at src/main.rs:27 body 94 |  |  | 0.507 |
+| walker |  | 1793 | 21 | pub-item names surface in src/ui/header.rs |  |  | 0.507 |
+| walker |  | 1816 | 23 | pub item at src/ui/header.rs:41 |  |  | 0.507 |
+| walker |  | 1837 | 21 | pub-item names surface in src/ui/popup.rs |  |  | 0.507 |
+| ns | 1929 |  | 174 | main.rs run() — --to short-circuit | 2.10 |  | 0.486 |
+| walker |  | 1998 | 161 | pub item at src/parse/mod.rs:18 |  |  | 0.548 |
 | walker |  | 2027 | 29 | pub item at src/ui/popup.rs:13 |  |  | 0.548 |
 | walker |  | 2051 | 24 | pub-item names surface in src/ui/footer.rs |  |  | 0.548 |
 | walker |  | 2065 | 14 | pub item at src/ui/footer.rs:16 |  |  | 0.548 |

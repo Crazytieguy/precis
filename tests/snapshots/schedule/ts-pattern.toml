@@ -45,172 +45,10 @@ kind = "full"
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 29
-cum_tokens = 144
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["errors.ts", "index.ts", "internals", "is-matching.ts", "match.ts", "patterns.ts", "types"]
-
-[[batches]]
-position = 4
-key = 'Typescript(ExportNames { file: "src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in src/index.ts"
-cost_tokens = 14
-cum_tokens = 158
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/index.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/index.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 5
-key = 'Typescript(ExportNames { file: "src/errors.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in src/errors.ts"
-cost_tokens = 16
-cum_tokens = 174
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/errors.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/errors.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 6
-key = 'Typescript(Export { file: "src/errors.ts", start_line: 5 })'
-descriptor = "export at src/errors.ts:5"
-cost_tokens = 12
-cum_tokens = 186
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/errors.ts"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/errors.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 7
-key = 'Typescript(ExportNames { file: "src/match.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in src/match.ts"
-cost_tokens = 18
-cum_tokens = 204
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 8
-key = 'Typescript(Export { file: "src/match.ts", start_line: 32 })'
-descriptor = "export at src/match.ts:32"
-cost_tokens = 20
-cum_tokens = 224
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 32
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 9
-key = 'Typescript(ExportBody { file: "src/match.ts", start_line: 32, body_start_line: 35 })'
-descriptor = "export body at src/match.ts:32 body 35"
-cost_tokens = 14
-cum_tokens = 238
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 136
-cum_tokens = 374
+cum_tokens = 251
 
 [batches.content]
 kind = "lines"
@@ -248,57 +86,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 26
-cum_tokens = 400
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["roadmap.md", "v3-to-v4-migration-guide.md", "v4-to-v5-migration-guide.md"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "src/types" })'
-descriptor = "listing of 'src/types'"
-cost_tokens = 56
-cum_tokens = 456
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/types"
-entries = ["BuildMany.ts", "DeepExclude.ts", "DistributeUnions.ts", "ExtractPreciseValue.ts", "FindSelected.ts", "InvertPattern.ts", "IsMatching.ts", "Match.ts", "Pattern.ts", "helpers.ts", "index.ts"]
-
-[[batches]]
-position = 13
-key = 'Typescript(Imports { file: "src/types/index.ts" })'
-descriptor = "imports in src/types/index.ts"
-cost_tokens = 10
-cum_tokens = 466
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/types/index.ts"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
+position = 4
 key = 'Markdown(Section { file: "README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 104
-cum_tokens = 570
+cum_tokens = 355
 
 [batches.content]
 kind = "lines"
@@ -315,6 +107,214 @@ kind = "full"
 path = "README.md"
 start = 46
 end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 29
+cum_tokens = 384
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["errors.ts", "index.ts", "internals", "is-matching.ts", "match.ts", "patterns.ts", "types"]
+
+[[batches]]
+position = 6
+key = 'Typescript(ExportNames { file: "src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in src/index.ts"
+cost_tokens = 14
+cum_tokens = 398
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'Typescript(ExportNames { file: "src/errors.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in src/errors.ts"
+cost_tokens = 16
+cum_tokens = 414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/errors.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/errors.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 8
+key = 'Typescript(Export { file: "src/errors.ts", start_line: 5 })'
+descriptor = "export at src/errors.ts:5"
+cost_tokens = 12
+cum_tokens = 426
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/errors.ts"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/errors.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Typescript(ExportNames { file: "src/match.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in src/match.ts"
+cost_tokens = 18
+cum_tokens = 444
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/match.ts"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/match.ts"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Typescript(Export { file: "src/match.ts", start_line: 32 })'
+descriptor = "export at src/match.ts:32"
+cost_tokens = 20
+cum_tokens = 464
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/match.ts"
+start = 32
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/match.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
+key = 'Typescript(ExportBody { file: "src/match.ts", start_line: 32, body_start_line: 35 })'
+descriptor = "export body at src/match.ts:32 body 35"
+cost_tokens = 14
+cum_tokens = 478
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/match.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 26
+cum_tokens = 504
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["roadmap.md", "v3-to-v4-migration-guide.md", "v4-to-v5-migration-guide.md"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "src/types" })'
+descriptor = "listing of 'src/types'"
+cost_tokens = 56
+cum_tokens = 560
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/types"
+entries = ["BuildMany.ts", "DeepExclude.ts", "DistributeUnions.ts", "ExtractPreciseValue.ts", "FindSelected.ts", "InvertPattern.ts", "IsMatching.ts", "Match.ts", "Pattern.ts", "helpers.ts", "index.ts"]
+
+[[batches]]
+position = 14
+key = 'Typescript(Imports { file: "src/types/index.ts" })'
+descriptor = "imports in src/types/index.ts"
+cost_tokens = 10
+cum_tokens = 570
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/types/index.ts"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"

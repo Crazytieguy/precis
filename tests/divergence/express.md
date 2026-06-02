@@ -4,11 +4,11 @@ Score(3000)=0.540 I=0.766 C=0.380 ns_rows≤3K=16/40 (reached=4 partial=4 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 43 | 43 | listing of '.' |  |  | 1.000 |
 | ns | 43 |  | 43 | Top-level directory listing | 1.1 |  | 1.000 |
-| walker |  | 56 | 13 | export names surface in index.js |  |  | 1.000 |
-| ns | 70 |  | 27 | Readme lede | 1.2 |  | 0.963 |
-| ns | 94 |  | 24 | lib/ directory contents | 1.3 |  | 0.777 |
-| ns | 107 |  | 13 | index.js entry stub | 1.4 |  | 0.780 |
-| walker |  | 113 | 57 | package identity in package.json |  |  | 0.783 |
+| ns | 70 |  | 27 | Readme lede | 1.2 |  | 0.956 |
+| ns | 94 |  | 24 | lib/ directory contents | 1.3 |  | 0.771 |
+| walker |  | 100 | 57 | package identity in package.json |  |  | 0.774 |
+| ns | 107 |  | 13 | index.js entry stub | 1.4 |  | 0.751 |
+| walker |  | 113 | 13 | export names surface in index.js |  |  | 0.783 |
 | walker |  | 121 | 8 | imports in index.js |  |  | 0.783 |
 | walker |  | 145 | 24 | listing of 'lib' |  |  | 0.971 |
 | ns | 221 |  | 114 | Readme hello-world snippet | 1.5 |  | 0.726 |

@@ -45,344 +45,10 @@ kind = "full"
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "media" })'
-descriptor = "listing of 'media'"
-cost_tokens = 12
-cum_tokens = 118
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "media"
-entries = ["logo.png", "logo.svg", "screenshot.png"]
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "source" })'
-descriptor = "listing of 'source'"
-cost_tokens = 22
-cum_tokens = 140
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source"
-entries = ["index.d.ts", "index.js", "index.test-d.ts", "utilities.js", "vendor"]
-
-[[batches]]
-position = 5
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 50 })'
-descriptor = "module item at source/index.js:50"
-cost_tokens = 13
-cum_tokens = 153
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 6
-key = 'Typescript(ModuleItemBody { file: "source/index.js", start_line: 50, body_start_line: 51 })'
-descriptor = "module item body at source/index.js:50 body 51"
-cost_tokens = 7
-cum_tokens = 160
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 22 })'
-descriptor = "module item at source/index.js:22"
-cost_tokens = 11
-cum_tokens = 171
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 204 })'
-descriptor = "module item at source/index.js:204"
-cost_tokens = 11
-cum_tokens = 182
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 204
-end = 204
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 10 })'
-descriptor = "module item at source/index.js:10"
-cost_tokens = 13
-cum_tokens = 195
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 12 })'
-descriptor = "module item at source/index.js:12"
-cost_tokens = 13
-cum_tokens = 208
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 41 })'
-descriptor = "module item at source/index.js:41"
-cost_tokens = 13
-cum_tokens = 221
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 12
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 119 })'
-descriptor = "module item at source/index.js:119"
-cost_tokens = 14
-cum_tokens = 235
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Typescript(ExportNames { file: "source/index.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
-descriptor = "export names surface in source/index.js"
-cost_tokens = 54
-cum_tokens = 289
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 205
-end = 205
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 220
-end = 220
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 206
-end = 206
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 221
-end = 221
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Typescript(Export { file: "source/index.js", start_line: 34 })'
-descriptor = "export at source/index.js:34"
-cost_tokens = 8
-cum_tokens = 297
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 34
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 15
-key = 'Typescript(Export { file: "source/index.js", start_line: 220 })'
-descriptor = "export at source/index.js:220"
-cost_tokens = 27
-cum_tokens = 324
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 220
-end = 223
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Typescript(ExportBody { file: "source/index.js", start_line: 34, body_start_line: 36 })'
-descriptor = "export body at source/index.js:34 body 36"
-cost_tokens = 24
-cum_tokens = 348
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 36
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 11 })'
-descriptor = "module item at source/index.js:11"
-cost_tokens = 15
-cum_tokens = 363
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
 key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
 descriptor = "README headline in readme.md"
 cost_tokens = 94
-cum_tokens = 457
+cum_tokens = 200
 
 [batches.content]
 kind = "lines"
@@ -412,177 +78,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 19
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 168 })'
-descriptor = "module item at source/index.js:168"
-cost_tokens = 17
-cum_tokens = 474
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 168
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 169
-end = 169
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 20
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 24 })'
-descriptor = "module item at source/index.js:24"
-cost_tokens = 18
-cum_tokens = 492
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 21
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 94 })'
-descriptor = "module item at source/index.js:94"
-cost_tokens = 18
-cum_tokens = 510
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 8 })'
-descriptor = "module item at source/index.js:8"
-cost_tokens = 20
-cum_tokens = 530
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 132 })'
-descriptor = "module item at source/index.js:132"
-cost_tokens = 20
-cum_tokens = 550
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 133
-end = 133
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 24
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 74 })'
-descriptor = "module item at source/index.js:74"
-cost_tokens = 23
-cum_tokens = 573
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 25
-key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 152 })'
-descriptor = "module item at source/index.js:152"
-cost_tokens = 23
-cum_tokens = 596
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 152
-end = 152
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 153
-end = 153
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 26
+position = 4
 key = 'Markdown(HeadingsOutline { file: "code-of-conduct.md" })'
 descriptor = "headings outline in code-of-conduct.md"
 cost_tokens = 71
-cum_tokens = 667
+cum_tokens = 271
 
 [batches.content]
 kind = "lines"
@@ -700,11 +200,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 5
 key = 'Markdown(Section { file: "code-of-conduct.md", section_index: 0 })'
 descriptor = "code-of-conduct.md section #0"
 cost_tokens = 0
-cum_tokens = 667
+cum_tokens = 271
 
 [batches.content]
 kind = "lines"
@@ -716,6 +216,506 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "media" })'
+descriptor = "listing of 'media'"
+cost_tokens = 12
+cum_tokens = 283
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "media"
+entries = ["logo.png", "logo.svg", "screenshot.png"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "source" })'
+descriptor = "listing of 'source'"
+cost_tokens = 22
+cum_tokens = 305
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source"
+entries = ["index.d.ts", "index.js", "index.test-d.ts", "utilities.js", "vendor"]
+
+[[batches]]
+position = 8
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 50 })'
+descriptor = "module item at source/index.js:50"
+cost_tokens = 13
+cum_tokens = 318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Typescript(ModuleItemBody { file: "source/index.js", start_line: 50, body_start_line: 51 })'
+descriptor = "module item body at source/index.js:50 body 51"
+cost_tokens = 7
+cum_tokens = 325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 22 })'
+descriptor = "module item at source/index.js:22"
+cost_tokens = 11
+cum_tokens = 336
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 204 })'
+descriptor = "module item at source/index.js:204"
+cost_tokens = 11
+cum_tokens = 347
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 10 })'
+descriptor = "module item at source/index.js:10"
+cost_tokens = 13
+cum_tokens = 360
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 12 })'
+descriptor = "module item at source/index.js:12"
+cost_tokens = 13
+cum_tokens = 373
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 41 })'
+descriptor = "module item at source/index.js:41"
+cost_tokens = 13
+cum_tokens = 386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 15
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 119 })'
+descriptor = "module item at source/index.js:119"
+cost_tokens = 14
+cum_tokens = 400
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Typescript(ExportNames { file: "source/index.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
+descriptor = "export names surface in source/index.js"
+cost_tokens = 54
+cum_tokens = 454
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 220
+end = 220
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 206
+end = 206
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 221
+end = 221
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Typescript(Export { file: "source/index.js", start_line: 34 })'
+descriptor = "export at source/index.js:34"
+cost_tokens = 8
+cum_tokens = 462
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 34
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 18
+key = 'Typescript(Export { file: "source/index.js", start_line: 220 })'
+descriptor = "export at source/index.js:220"
+cost_tokens = 27
+cum_tokens = 489
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 220
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Typescript(ExportBody { file: "source/index.js", start_line: 34, body_start_line: 36 })'
+descriptor = "export body at source/index.js:34 body 36"
+cost_tokens = 24
+cum_tokens = 513
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 36
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 11 })'
+descriptor = "module item at source/index.js:11"
+cost_tokens = 15
+cum_tokens = 528
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 168 })'
+descriptor = "module item at source/index.js:168"
+cost_tokens = 17
+cum_tokens = 545
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 22
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 24 })'
+descriptor = "module item at source/index.js:24"
+cost_tokens = 18
+cum_tokens = 563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 23
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 94 })'
+descriptor = "module item at source/index.js:94"
+cost_tokens = 18
+cum_tokens = 581
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 8 })'
+descriptor = "module item at source/index.js:8"
+cost_tokens = 20
+cum_tokens = 601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 132 })'
+descriptor = "module item at source/index.js:132"
+cost_tokens = 20
+cum_tokens = 621
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 26
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 74 })'
+descriptor = "module item at source/index.js:74"
+cost_tokens = 23
+cum_tokens = 644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 27
+key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 152 })'
+descriptor = "module item at source/index.js:152"
+cost_tokens = 23
+cum_tokens = 667
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 28

@@ -19,28 +19,10 @@ entries = [".editorconfig", ".eslintignore", ".eslintrc.yml", ".github", ".gitig
 
 [[batches]]
 position = 2
-key = 'Typescript(ExportNames { file: "index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in index.js"
-cost_tokens = 13
-cum_tokens = 56
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 3
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 57
-cum_tokens = 113
+cum_tokens = 100
 
 [batches.content]
 kind = "lines"
@@ -57,6 +39,24 @@ kind = "full"
 path = "package.json"
 start = 15
 end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Typescript(ExportNames { file: "index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in index.js"
+cost_tokens = 13
+cum_tokens = 113
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 11
+end = 11
 
 [batches.content.spans.render]
 kind = "full"

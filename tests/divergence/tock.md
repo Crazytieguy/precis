@@ -11,34 +11,34 @@ Score(3000)=0.662 I=0.839 C=0.523 ns_rows≤3K=18/43 (reached=6 partial=5 missin
 | ns | 134 |  | 74 | README feature lede (first half) | 1.3 |  | 0.704 |
 | walker |  | 173 | 87 | README headline in README.md |  |  | 0.857 |
 | ns | 178 |  | 44 | internal/ subpackage listing | 1.4 |  | 0.637 |
-| walker |  | 192 | 19 | listing of 'internal' |  |  | 0.690 |
-| walker |  | 212 | 20 | listing of 'assets' |  |  | 0.690 |
-| walker |  | 224 | 12 | listing of 'internal/core' |  |  | 0.780 |
-| walker |  | 244 | 20 | README.md section #11 |  |  | 0.780 |
+| walker |  | 193 | 20 | README.md section #11 |  |  | 0.637 |
+| walker |  | 212 | 19 | listing of 'internal' |  |  | 0.690 |
+| walker |  | 232 | 20 | listing of 'assets' |  |  | 0.690 |
+| walker |  | 244 | 12 | listing of 'internal/core' |  |  | 0.780 |
 | ns | 316 |  | 138 | README feature lede (rest) | 1.5 | 1.3 | 0.711 |
+| walker |  | 426 | 182 | headings outline in docs/commands.md |  |  | 0.711 |
+| walker |  | 431 | 5 | docs/commands.md section #5 |  |  | 0.711 |
 | ns | 435 |  | 119 | go.mod module + Go version + UI deps | 1.6 |  | 0.645 |
-| walker |  | 492 | 248 | go module file go.mod |  |  | 0.738 |
-| walker |  | 496 | 4 | listing of 'cmd/tock' |  |  | 0.738 |
-| walker |  | 506 | 10 | go decl names surface in cmd/tock/main.go |  |  | 0.738 |
-| walker |  | 506 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.738 |
-| walker |  | 512 | 6 | go decl body at cmd/tock/main.go:7 |  |  | 0.738 |
-| walker |  | 518 | 6 | listing of 'internal/adapters' |  |  | 0.784 |
-| walker |  | 529 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.784 |
-| walker |  | 547 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.784 |
-| walker |  | 554 | 7 | listing of 'internal/services' |  |  | 0.837 |
-| walker |  | 558 | 4 | listing of 'internal/core/errors' |  |  | 0.837 |
-| walker |  | 562 | 4 | listing of 'internal/core/models' |  |  | 0.837 |
-| walker |  | 566 | 4 | listing of 'internal/services/ics' |  |  | 0.837 |
-| ns | 589 |  | 154 | go.mod remaining direct deps | 1.7 | 1.6 | 0.843 |
-| ns | 690 |  | 101 | Sentinel errors (whole file) | 2.1 |  | 0.768 |
-| walker |  | 748 | 182 | headings outline in docs/commands.md |  |  | 0.768 |
-| walker |  | 753 | 5 | docs/commands.md section #5 |  |  | 0.768 |
-| walker |  | 758 | 5 | docs/commands.md section #10 |  |  | 0.768 |
-| walker |  | 763 | 5 | docs/commands.md section #15 |  |  | 0.768 |
-| walker |  | 768 | 5 | docs/commands.md section #20 |  |  | 0.768 |
-| walker |  | 773 | 5 | docs/commands.md section #30 |  |  | 0.768 |
-| walker |  | 778 | 5 | docs/commands.md section #35 |  |  | 0.768 |
-| walker |  | 783 | 5 | docs/commands.md section #40 |  |  | 0.768 |
+| walker |  | 436 | 5 | docs/commands.md section #10 |  |  | 0.645 |
+| walker |  | 441 | 5 | docs/commands.md section #15 |  |  | 0.645 |
+| walker |  | 446 | 5 | docs/commands.md section #20 |  |  | 0.645 |
+| walker |  | 451 | 5 | docs/commands.md section #30 |  |  | 0.645 |
+| walker |  | 456 | 5 | docs/commands.md section #35 |  |  | 0.645 |
+| walker |  | 461 | 5 | docs/commands.md section #40 |  |  | 0.645 |
+| ns | 589 |  | 154 | go.mod remaining direct deps | 1.7 | 1.6 | 0.585 |
+| ns | 690 |  | 101 | Sentinel errors (whole file) | 2.1 |  | 0.533 |
+| walker |  | 709 | 248 | go module file go.mod |  |  | 0.691 |
+| walker |  | 713 | 4 | listing of 'cmd/tock' |  |  | 0.691 |
+| walker |  | 723 | 10 | go decl names surface in cmd/tock/main.go |  |  | 0.691 |
+| walker |  | 723 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.691 |
+| walker |  | 729 | 6 | go decl body at cmd/tock/main.go:7 |  |  | 0.692 |
+| walker |  | 735 | 6 | listing of 'internal/adapters' |  |  | 0.727 |
+| walker |  | 746 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.727 |
+| walker |  | 764 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.727 |
+| walker |  | 771 | 7 | listing of 'internal/services' |  |  | 0.768 |
+| walker |  | 775 | 4 | listing of 'internal/core/errors' |  |  | 0.768 |
+| walker |  | 779 | 4 | listing of 'internal/core/models' |  |  | 0.768 |
+| walker |  | 783 | 4 | listing of 'internal/services/ics' |  |  | 0.768 |
 | walker |  | 798 | 15 | go package + imports in internal/core/errors/errors.go |  |  | 0.770 |
 | walker |  | 807 | 9 | listing of 'internal/config' |  |  | 0.770 |
 | ns | 810 |  | 120 | models.Activity struct fields | 2.2 |  | 0.716 |

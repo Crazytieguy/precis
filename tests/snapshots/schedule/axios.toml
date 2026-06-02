@@ -93,538 +93,10 @@ entries = ["client.html", "client.js", "server.js"]
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "lib" })'
-descriptor = "listing of 'lib'"
-cost_tokens = 29
-cum_tokens = 270
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib"
-entries = ["adapters", "axios.js", "cancel", "core", "defaults", "env", "helpers", "platform", "utils.js"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "lib/defaults" })'
-descriptor = "listing of 'lib/defaults'"
-cost_tokens = 8
-cum_tokens = 278
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/defaults"
-entries = ["index.js", "transitional.js"]
-
-[[batches]]
-position = 7
-key = 'Typescript(ExportNames { file: "lib/defaults/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/defaults/index.js"
-cost_tokens = 8
-cum_tokens = 286
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/defaults/index.js"
-start = 177
-end = 177
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "lib/platform" })'
-descriptor = "listing of 'lib/platform'"
-cost_tokens = 13
-cum_tokens = 299
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/platform"
-entries = ["browser", "common", "index.js", "node"]
-
-[[batches]]
-position = 9
-key = 'Typescript(ExportNames { file: "lib/platform/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/platform/index.js"
-cost_tokens = 9
-cum_tokens = 308
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/index.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/platform/index.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 10
-key = 'Typescript(Export { file: "lib/platform/index.js", start_line: 4 })'
-descriptor = "export at lib/platform/index.js:4"
-cost_tokens = 19
-cum_tokens = 327
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/index.js"
-start = 4
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Typescript(ExportNames { file: "lib/axios.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/axios.js"
-cost_tokens = 8
-cum_tokens = 335
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/axios.js"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "lib/adapters" })'
-descriptor = "listing of 'lib/adapters'"
-cost_tokens = 20
-cum_tokens = 355
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/adapters"
-entries = ["README.md", "adapters.js", "fetch.js", "http.js", "xhr.js"]
-
-[[batches]]
-position = 13
-key = 'Typescript(ModuleItem { file: "lib/defaults/index.js", start_line: 23 })'
-descriptor = "module item at lib/defaults/index.js:23"
-cost_tokens = 18
-cum_tokens = 373
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/defaults/index.js"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/defaults/index.js"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "lib/env" })'
-descriptor = "listing of 'lib/env'"
-cost_tokens = 11
-cum_tokens = 384
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/env"
-entries = ["README.md", "classes", "data.js"]
-
-[[batches]]
-position = 15
-key = 'Typescript(Imports { file: "index.js" })'
-descriptor = "imports in index.js"
-cost_tokens = 13
-cum_tokens = 397
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Markdown(ReadmeHeadline { file: "lib/env/README.md" })'
-descriptor = "README headline in lib/env/README.md"
-cost_tokens = 36
-cum_tokens = 433
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/env/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/env/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "lib/cancel" })'
-descriptor = "listing of 'lib/cancel'"
-cost_tokens = 16
-cum_tokens = 449
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/cancel"
-entries = ["CancelToken.js", "CanceledError.js", "isCancel.js"]
-
-[[batches]]
-position = 18
-key = 'Markdown(ReadmeHeadline { file: "lib/adapters/README.md" })'
-descriptor = "README headline in lib/adapters/README.md"
-cost_tokens = 42
-cum_tokens = 491
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/adapters/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/adapters/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "lib/core" })'
-descriptor = "listing of 'lib/core'"
-cost_tokens = 49
-cum_tokens = 540
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/core"
-entries = ["Axios.js", "AxiosError.js", "AxiosHeaders.js", "InterceptorManager.js", "README.md", "buildFullPath.js", "dispatchRequest.js", "mergeConfig.js", "settle.js", "transformData.js"]
-
-[[batches]]
-position = 20
-key = 'Typescript(Export { file: "index.js", start_line: 26 })'
-descriptor = "export at index.js:26"
-cost_tokens = 147
-cum_tokens = 687
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 26
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Typescript(ModuleItem { file: "lib/defaults/index.js", start_line: 11 })'
-descriptor = "module item at lib/defaults/index.js:11"
-cost_tokens = 33
-cum_tokens = 720
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/defaults/index.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "lib/platform/browser" })'
-descriptor = "listing of 'lib/platform/browser'"
-cost_tokens = 7
-cum_tokens = 727
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/platform/browser"
-entries = ["classes", "index.js"]
-
-[[batches]]
-position = 23
-key = 'Typescript(ExportNames { file: "lib/platform/browser/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/platform/browser/index.js"
-cost_tokens = 9
-cum_tokens = 736
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/browser/index.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/platform/browser/index.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 24
-key = 'Typescript(Export { file: "lib/platform/browser/index.js", start_line: 5 })'
-descriptor = "export at lib/platform/browser/index.js:5"
-cost_tokens = 76
-cum_tokens = 812
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/browser/index.js"
-start = 5
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "lib/platform/browser/classes" })'
-descriptor = "listing of 'lib/platform/browser/classes'"
-cost_tokens = 15
-cum_tokens = 827
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/platform/browser/classes"
-entries = ["Blob.js", "FormData.js", "URLSearchParams.js"]
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "lib/platform/node" })'
-descriptor = "listing of 'lib/platform/node'"
-cost_tokens = 7
-cum_tokens = 834
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/platform/node"
-entries = ["classes", "index.js"]
-
-[[batches]]
-position = 27
-key = 'Typescript(ExportNames { file: "lib/platform/node/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/platform/node/index.js"
-cost_tokens = 9
-cum_tokens = 843
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/node/index.js"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/platform/node/index.js"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 28
-key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 5 })'
-descriptor = "module item at lib/platform/node/index.js:5"
-cost_tokens = 11
-cum_tokens = 854
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/node/index.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 7 })'
-descriptor = "module item at lib/platform/node/index.js:7"
-cost_tokens = 14
-cum_tokens = 868
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/node/index.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Typescript(Export { file: "lib/platform/node/index.js", start_line: 27 })'
-descriptor = "export at lib/platform/node/index.js:27"
-cost_tokens = 100
-cum_tokens = 968
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/node/index.js"
-start = 27
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 15 })'
-descriptor = "module item at lib/platform/node/index.js:15"
-cost_tokens = 29
-cum_tokens = 997
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/platform/node/index.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/platform/node/index.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 32
-key = 'Markdown(ReadmeHeadline { file: "lib/core/README.md" })'
-descriptor = "README headline in lib/core/README.md"
-cost_tokens = 65
-cum_tokens = 1062
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/core/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/core/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
 key = 'Markdown(HeadingsOutline { file: "CONTRIBUTORS.md" })'
 descriptor = "headings outline in CONTRIBUTORS.md"
 cost_tokens = 42
-cum_tokens = 1104
+cum_tokens = 283
 
 [batches.content]
 kind = "lines"
@@ -694,11 +166,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 6
 key = 'Markdown(Section { file: "CONTRIBUTORS.md", section_index: 0 })'
 descriptor = "CONTRIBUTORS.md section #0"
 cost_tokens = 17
-cum_tokens = 1121
+cum_tokens = 300
 
 [batches.content]
 kind = "lines"
@@ -713,6 +185,534 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "CONTRIBUTORS.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 29
+cum_tokens = 329
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib"
+entries = ["adapters", "axios.js", "cancel", "core", "defaults", "env", "helpers", "platform", "utils.js"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "lib/defaults" })'
+descriptor = "listing of 'lib/defaults'"
+cost_tokens = 8
+cum_tokens = 337
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/defaults"
+entries = ["index.js", "transitional.js"]
+
+[[batches]]
+position = 9
+key = 'Typescript(ExportNames { file: "lib/defaults/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/defaults/index.js"
+cost_tokens = 8
+cum_tokens = 345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/defaults/index.js"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "lib/platform" })'
+descriptor = "listing of 'lib/platform'"
+cost_tokens = 13
+cum_tokens = 358
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform"
+entries = ["browser", "common", "index.js", "node"]
+
+[[batches]]
+position = 11
+key = 'Typescript(ExportNames { file: "lib/platform/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/platform/index.js"
+cost_tokens = 9
+cum_tokens = 367
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/index.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/platform/index.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 12
+key = 'Typescript(Export { file: "lib/platform/index.js", start_line: 4 })'
+descriptor = "export at lib/platform/index.js:4"
+cost_tokens = 19
+cum_tokens = 386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/index.js"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Typescript(ExportNames { file: "lib/axios.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/axios.js"
+cost_tokens = 8
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/axios.js"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "lib/adapters" })'
+descriptor = "listing of 'lib/adapters'"
+cost_tokens = 20
+cum_tokens = 414
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/adapters"
+entries = ["README.md", "adapters.js", "fetch.js", "http.js", "xhr.js"]
+
+[[batches]]
+position = 15
+key = 'Markdown(ReadmeHeadline { file: "lib/adapters/README.md" })'
+descriptor = "README headline in lib/adapters/README.md"
+cost_tokens = 42
+cum_tokens = 456
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Typescript(ModuleItem { file: "lib/defaults/index.js", start_line: 23 })'
+descriptor = "module item at lib/defaults/index.js:23"
+cost_tokens = 18
+cum_tokens = 474
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/defaults/index.js"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/defaults/index.js"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "lib/env" })'
+descriptor = "listing of 'lib/env'"
+cost_tokens = 11
+cum_tokens = 485
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/env"
+entries = ["README.md", "classes", "data.js"]
+
+[[batches]]
+position = 18
+key = 'Markdown(ReadmeHeadline { file: "lib/env/README.md" })'
+descriptor = "README headline in lib/env/README.md"
+cost_tokens = 36
+cum_tokens = 521
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/env/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/env/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Typescript(Imports { file: "index.js" })'
+descriptor = "imports in index.js"
+cost_tokens = 13
+cum_tokens = 534
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: "lib/cancel" })'
+descriptor = "listing of 'lib/cancel'"
+cost_tokens = 16
+cum_tokens = 550
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/cancel"
+entries = ["CancelToken.js", "CanceledError.js", "isCancel.js"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "lib/core" })'
+descriptor = "listing of 'lib/core'"
+cost_tokens = 49
+cum_tokens = 599
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/core"
+entries = ["Axios.js", "AxiosError.js", "AxiosHeaders.js", "InterceptorManager.js", "README.md", "buildFullPath.js", "dispatchRequest.js", "mergeConfig.js", "settle.js", "transformData.js"]
+
+[[batches]]
+position = 22
+key = 'Typescript(Export { file: "index.js", start_line: 26 })'
+descriptor = "export at index.js:26"
+cost_tokens = 147
+cum_tokens = 746
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 26
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Typescript(ModuleItem { file: "lib/defaults/index.js", start_line: 11 })'
+descriptor = "module item at lib/defaults/index.js:11"
+cost_tokens = 33
+cum_tokens = 779
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/defaults/index.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "lib/platform/browser" })'
+descriptor = "listing of 'lib/platform/browser'"
+cost_tokens = 7
+cum_tokens = 786
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform/browser"
+entries = ["classes", "index.js"]
+
+[[batches]]
+position = 25
+key = 'Typescript(ExportNames { file: "lib/platform/browser/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/platform/browser/index.js"
+cost_tokens = 9
+cum_tokens = 795
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/browser/index.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/platform/browser/index.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 26
+key = 'Typescript(Export { file: "lib/platform/browser/index.js", start_line: 5 })'
+descriptor = "export at lib/platform/browser/index.js:5"
+cost_tokens = 76
+cum_tokens = 871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/browser/index.js"
+start = 5
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "lib/platform/browser/classes" })'
+descriptor = "listing of 'lib/platform/browser/classes'"
+cost_tokens = 15
+cum_tokens = 886
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform/browser/classes"
+entries = ["Blob.js", "FormData.js", "URLSearchParams.js"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "lib/platform/node" })'
+descriptor = "listing of 'lib/platform/node'"
+cost_tokens = 7
+cum_tokens = 893
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform/node"
+entries = ["classes", "index.js"]
+
+[[batches]]
+position = 29
+key = 'Typescript(ExportNames { file: "lib/platform/node/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/platform/node/index.js"
+cost_tokens = 9
+cum_tokens = 902
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/node/index.js"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/platform/node/index.js"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 30
+key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 5 })'
+descriptor = "module item at lib/platform/node/index.js:5"
+cost_tokens = 11
+cum_tokens = 913
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/node/index.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 7 })'
+descriptor = "module item at lib/platform/node/index.js:7"
+cost_tokens = 14
+cum_tokens = 927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/node/index.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Typescript(Export { file: "lib/platform/node/index.js", start_line: 27 })'
+descriptor = "export at lib/platform/node/index.js:27"
+cost_tokens = 100
+cum_tokens = 1027
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/node/index.js"
+start = 27
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 15 })'
+descriptor = "module item at lib/platform/node/index.js:15"
+cost_tokens = 29
+cum_tokens = 1056
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/node/index.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/platform/node/index.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 34
+key = 'Markdown(ReadmeHeadline { file: "lib/core/README.md" })'
+descriptor = "README headline in lib/core/README.md"
+cost_tokens = 65
+cum_tokens = 1121
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/core/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/core/README.md"
 start = 3
 end = 3
 
