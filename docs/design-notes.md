@@ -227,6 +227,17 @@ fixture survey is via shell — see the survey commands in the
   0.4199 at 0.35 — so 0.35 is mildly training-overfit, but lowering it
   regresses training, the objective.) Don't re-run this sweep; the
   remaining headroom is the budget-tier scheduler, not the knobs.**
+  **FOURTH knob also confirmed optimal (2026-06): the `mix_signals`
+  value-axis weights `1000·cat + 400·fu + 300·ztu` are a TRAINING peak —
+  every direction regresses (cat+ 1200 → 0.5849, cat− 800 → 0.5843, fu+
+  550 → 0.5807, ztu+ 450 → 0.5847, fu−ztu− → 0.5818, vs baseline 0.5916).
+  The design-notes call these "first-pass," but they're at their local
+  optimum for training. Same overfit signature: shifting weight off `cat`
+  toward `fu`/`ztu` lifts validation (cat− 0.4310, fu+ 0.4319, ztu+
+  0.4327 vs 0.4297) while lowering training. So ALL FOUR global value/cost
+  knobs (exponent, cost-floor, FS value, mix-weights) are training-optimal;
+  recall is mined, re-ranking regresses — 0.65 is unreachable below the NS
+  answer key / metric. Don't re-sweep any of these.**
 - **Budget-tier scheduler — BUILT and SHIPPED 2026-05-31; a
   generalization lever, NOT a training-Score(3000) lever, and NOT free.**
   The hypothesized "explicit orientation-vs-source budget tiers" is now
