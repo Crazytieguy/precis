@@ -204,6 +204,8 @@ pyproject.toml
     28→    "markupsafe>=2.1.1",
     29→    "werkzeug>=3.1.0",
     30→]
+    81→[project.scripts]
+    82→flask = "flask.cli:main"
 src/
     flask/
         __init__.py
@@ -289,8 +291,6 @@ src/
                 74→        _json.dump(obj, fp, **kwargs)
                 77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
                 …
-                102→    if current_app:
-                103→        return current_app.json.loads(s, **kwargs)
                 105→    return _json.loads(s, **kwargs)
                 108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
                 …

@@ -52,6 +52,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: identity_value(&file, ctx),
             });
         }
+        if let Some(content) = build_section_content(&file, ctx, |n| {
+            matches!(n, "project.scripts" | "tool.poetry.scripts")
+        }) {
+            out.push(Batch {
+                key: TomlKey::Scripts { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: scripts_value(&file, ctx),
+            });
+        }
         if let Some(content) = build_section_content(&file, ctx, |n| n == "features") {
             out.push(Batch {
                 key: TomlKey::Features { file: file.clone() }.into(),
@@ -277,6 +287,12 @@ fn is_pyproject_identity_table(name: &str) -> bool {
 
 fn features_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.75, 0.6, 0.5, path_depth_factor(file, ctx))
+}
+
+fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // Console entry points answer "how do I run this" — orientation that
+    // a reader otherwise has to reconstruct from the source tree.
+    mix_signals(0.70, 0.6, 0.65, path_depth_factor(file, ctx))
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {

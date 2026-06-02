@@ -196,10 +196,6 @@ peepdb/
         104→    Example:
         105→    peepdb remove mydb
         106→    """
-        107→    if remove_connection(connection_name):
-        108→        click.echo(f"Connection '{connection_name}' has been removed.")
-        109→    else:
-        110→        click.echo(f"No connection named '{connection_name}' found.")
         113→@cli.command()
         114→@click.confirmation_option(prompt='Are you sure you want to remove ALL saved connections?')
         115→def remove_all():
@@ -301,6 +297,8 @@ peepdb/
         test_peepdb.py
         test_sqlite.py
 project.toml
+    46→[project.scripts]
+    47→peepdb = "peepdb.cli:main"
 requirements.txt
 setup.py
     1→from setuptools import setup, find_packages

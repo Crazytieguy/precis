@@ -118,6 +118,8 @@ pyproject.toml
     24→]
     25→readme = "README.md"
     26→requires-python = ">= 3.11"
+    49→[project.scripts]
+    50→posting = "posting.__main__:cli"
 src/
     posting/
         __init__.py
@@ -218,9 +220,6 @@ src/
             …
         collection.py
         commands.py
-            11→CommandType = tuple[str, IgnoreReturnCallbackType, str, bool]
-            14→class PostingProvider(Provider):
-            …
         config.py
         exit_codes.py
             1→GENERAL_ERROR = 1

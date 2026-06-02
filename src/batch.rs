@@ -449,6 +449,9 @@ pub enum LuaKey {
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block.
     Identity { file: PathBuf },
+    /// Entry-point console scripts: `[project.scripts]` (PEP 621) or
+    /// `[tool.poetry.scripts]` — the "how do I run this" surface.
+    Scripts { file: PathBuf },
     /// `[features]` table.
     Features { file: PathBuf },
     /// `[dependencies]` / `[dev-dependencies]` / `[build-dependencies]` /
@@ -683,6 +686,7 @@ impl InnerKey for TomlKey {
     fn describe(&self, root: &Path) -> String {
         match self {
             TomlKey::Identity { file } => describe_in("[package]", file, root),
+            TomlKey::Scripts { file } => describe_in("entry-point scripts", file, root),
             TomlKey::Features { file } => describe_in("[features]", file, root),
             TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
         }
