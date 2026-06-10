@@ -139,8 +139,8 @@ Two related conventions worth resisting drift on:
 
 - Walker dispatch is a closed-set enum. Resist adding extension points
   unless multiple languages actually want them.
-- Per-walker run state goes in named fields on `WalkCtx` (today only
-  `rust_state`), not a `TypeId` bag or thread-local.
+- Per-walker run state goes in named fields on `WalkCtx` (`rust_state`,
+  `typescript_state`, …), not a `TypeId` bag or thread-local.
 
 ## Value/cost ranking — open lever on NS divergence
 
