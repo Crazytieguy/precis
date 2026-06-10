@@ -28,8 +28,15 @@ fn main() {
             let pin = target.join(".precis-pin");
             match std::fs::read_to_string(&pin) {
                 Err(_) => {
-                    // Backfill pre-pin-tracking clones so they satisfy the staleness test.
-                    std::fs::write(&pin, rev).expect("write .precis-pin");
+                    // No pin and no .git — the tree's real revision is
+                    // unknowable. Stamping the declared rev would certify
+                    // a possibly-stale tree as fresh; demand a re-clone.
+                    eprintln!(
+                        "  NO PIN: {} — tree revision unknown (rm -rf {} && re-run to re-clone at {})",
+                        dir,
+                        target.display(),
+                        rev
+                    );
                 }
                 Ok(existing) if existing.trim() != rev => {
                     eprintln!(

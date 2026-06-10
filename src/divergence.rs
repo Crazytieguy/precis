@@ -104,7 +104,7 @@ use std::path::Path;
 use anyhow::{Context, Result};
 
 use crate::batch::BatchId;
-use crate::content::{BatchContent, FsEntries, Render, explode_spans, truncate_regex};
+use crate::content::{BatchContent, FsEntries, Render, explode_spans, with_truncate_regex};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache};
@@ -160,6 +160,13 @@ pub struct Scores {
 }
 
 impl Scores {
+    /// A zero primary score with no reached/partial rows — the
+    /// signature of an infrastructure failure (path canonicalization),
+    /// not a real walker result.
+    pub fn is_degenerate(&self) -> bool {
+        self.vector[PRIMARY_BUDGET_INDEX].score == 0.0 && self.reached == 0 && self.partial == 0
+    }
+
     /// First line of any divergence report; full contents of a
     /// validation-tier baseline.
     pub fn headline(&self) -> String {
@@ -187,16 +194,19 @@ pub fn score(ns: &NorthStar, schedule: &Schedule, fixture_root: &Path) -> Result
     Ok(build_scores(&ctx, &walker))
 }
 
-/// Generate the markdown divergence report (one per fixture).
+/// Generate the markdown divergence report (one per fixture), plus the
+/// [`Scores`] it was formatted from so callers can gate on the typed
+/// values rather than re-parsing the headline.
 pub fn generate_divergence_report(
     ns: &NorthStar,
     schedule: &Schedule,
     fixture_root: &Path,
-) -> Result<String> {
+) -> Result<(String, Scores)> {
     let ctx = BuildCtx::new(ns, schedule, fixture_root)?;
     let walker = WalkerSnapshots::build(&ctx);
     let scores = build_scores(&ctx, &walker);
-    Ok(format_report(&scores, &ctx))
+    let report = format_report(&scores, &ctx);
+    Ok((report, scores))
 }
 
 // ---- graded atoms ------------------------------------------------------
@@ -272,10 +282,11 @@ fn byte_end_for(render: &Render, source_line: &str) -> usize {
     match render {
         Render::Full => source_line.len().max(1),
         Render::Ellipsis => 1,
-        Render::Truncated { pattern } => truncate_regex(pattern)
-            .and_then(|re| re.find(source_line).map(|m| m.end()))
-            .unwrap_or(0)
-            .max(1),
+        Render::Truncated { pattern } => with_truncate_regex(pattern, |re| {
+            re.and_then(|re| re.find(source_line).map(|m| m.end()))
+        })
+        .unwrap_or(0)
+        .max(1),
     }
 }
 

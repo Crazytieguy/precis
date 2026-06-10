@@ -266,13 +266,13 @@ fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
     }
     let ns = load_ns_checked(&ns_toml, fixture_dir)
         .unwrap_or_else(|e| panic!("load_ns_checked({fixture}): {e}"));
-    let report = divergence::generate_divergence_report(&ns, schedule, fixture_dir)
+    let (report, scores) = divergence::generate_divergence_report(&ns, schedule, fixture_dir)
         .unwrap_or_else(|e| panic!("generate_divergence_report({fixture}): {e}"));
 
     if let Some(first_line) = report.lines().next() {
         println!("{fixture}: {first_line}");
-        assert_headline_sane(fixture, first_line);
     }
+    assert_scores_sane(fixture, &scores);
 
     compare_or_update(
         "divergence report",
@@ -299,7 +299,7 @@ fn check_validation_fixture_baselines(fixture: &str) {
 
     let headline = format!("{}\n", scores.headline());
     println!("{fixture} (validation): {}", scores.headline());
-    assert_headline_sane(fixture, &scores.headline());
+    assert_scores_sane(fixture, &scores);
 
     compare_or_update(
         "validation score",
@@ -327,21 +327,20 @@ fn check_rendered(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
     );
 }
 
-/// A 0.000 primary score with no reached/partial rows has historically
+/// A zero primary score with no reached/partial rows has historically
 /// meant an infrastructure failure (fixture-path canonicalization), not
 /// a bad walker — refuse to bake it into a baseline. `ALLOW_ZERO_SCORE=1`
 /// overrides for a genuinely degenerate fixture.
-fn assert_headline_sane(fixture: &str, headline: &str) {
-    if std::env::var_os("ALLOW_ZERO_SCORE").is_some() {
+fn assert_scores_sane(fixture: &str, scores: &divergence::Scores) {
+    if std::env::var_os("ALLOW_ZERO_SCORE").is_some() || !scores.is_degenerate() {
         return;
     }
-    if headline.contains("Score(3000)=0.000") && headline.contains("reached=0 partial=0") {
-        panic!(
-            "{fixture}: degenerate divergence headline `{headline}` — \
-             likely a path or canonicalization bug rather than a real score; \
-             set ALLOW_ZERO_SCORE=1 to accept it as a baseline"
-        );
-    }
+    panic!(
+        "{fixture}: degenerate divergence scores `{}` — \
+         likely a path or canonicalization bug rather than a real score; \
+         set ALLOW_ZERO_SCORE=1 to accept it as a baseline",
+        scores.headline()
+    );
 }
 
 // ---- comparison + regen ------------------------------------------------

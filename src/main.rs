@@ -7,13 +7,11 @@ use std::path::PathBuf;
 const PLUGIN_BYTE_BUDGET: usize = 9500;
 
 #[derive(Parser)]
-#[command(
-    about = "Extract a token-efficient summary of one or more paths",
-    version
-)]
+#[command(about = "Extract a token-efficient summary of a directory", version)]
 struct Cli {
-    /// Directory to summarize (defaults to the current directory)
-    paths: Vec<PathBuf>,
+    /// Directory to summarize
+    #[arg(default_value = ".")]
+    path: PathBuf,
 
     /// Token budget for output
     #[arg(long, default_value = "3000")]
@@ -26,28 +24,17 @@ struct Cli {
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
-    if cli.paths.len() > 1 {
-        // `render` would silently use only the first path.
-        bail!("multiple paths aren't supported yet; pass one directory");
-    }
-    let paths = if cli.paths.is_empty() {
-        vec![PathBuf::from(".")]
-    } else {
-        cli.paths
-    };
     let byte_budget = cli.byte_budget.or_else(|| {
         std::env::var("CLAUDE_PLUGIN_ROOT")
             .ok()
             .map(|_| PLUGIN_BYTE_BUDGET)
     });
 
-    for path in &paths {
-        if !path.exists() {
-            bail!("{:?} does not exist", path);
-        }
+    if !cli.path.exists() {
+        bail!("{:?} does not exist", cli.path);
     }
 
-    let output = precis::render(&paths, cli.token_budget, byte_budget)?;
+    let output = precis::render(&[&cli.path], cli.token_budget, byte_budget)?;
     print!("{}", output);
     Ok(())
 }
