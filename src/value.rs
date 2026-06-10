@@ -7,10 +7,11 @@
 //! to express per-batch tuning as a `(catastrophic, follow-up, zero-call)`
 //! triple — the weights live here so per-batch numbers stay comparable
 //! across walkers. It's not load-bearing: a walker is free to skip the
-//! helper and compute its value however. First-pass weights; calibration
-//! is experimentation territory (see `docs/design-notes.md`).
+//! helper and compute its value however. The weights are sweep-confirmed
+//! at the training optimum (2026-06) — every direction regresses; don't
+//! re-sweep (see `docs/design-notes.md`).
 
-/// Mix three first-pass signal axes — catastrophic-omission,
+/// Mix three signal axes — catastrophic-omission,
 /// follow-up minimization, zero-tool-call understanding — into a scalar
 /// value, scaled by the path-relative depth/non-essential factor.
 pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
