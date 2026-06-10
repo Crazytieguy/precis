@@ -57,13 +57,28 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
         BatchContent::Lines { spans } => {
             let spans = spans
                 .iter()
-                .map(|s| Span {
-                    path: fixture_root.join(&s.path),
-                    start: s.start,
-                    end: s.end,
-                    render: s.render.clone(),
+                .map(|s| {
+                    // Same root-boundary invariant as fs parents: every
+                    // resolve_content caller (divergence scoring included,
+                    // not just validate-ns) rejects escaping spans.
+                    if s.path.is_absolute()
+                        || s.path
+                            .components()
+                            .any(|c| matches!(c, std::path::Component::ParentDir))
+                    {
+                        bail!(
+                            "NS span path must be fixture-root-relative: {}",
+                            s.path.display()
+                        );
+                    }
+                    Ok(Span {
+                        path: fixture_root.join(&s.path),
+                        start: s.start,
+                        end: s.end,
+                        render: s.render.clone(),
+                    })
                 })
-                .collect();
+                .collect::<Result<Vec<_>>>()?;
             Ok(BatchContent::Lines { spans })
         }
         BatchContent::Fs { groups } => {
@@ -125,4 +140,32 @@ fn resolve_fs_group(group: &FsGroup, fixture_root: &Path) -> Result<FsGroup> {
         parent: parent_abs,
         entries,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::content::Render;
+
+    fn lines_content(path: &str) -> BatchContent {
+        BatchContent::Lines {
+            spans: vec![Span {
+                path: PathBuf::from(path),
+                start: 1,
+                end: 1,
+                render: Render::Full,
+            }],
+        }
+    }
+
+    /// Escaping span paths must fail in `resolve_content` itself, so
+    /// every caller — divergence scoring included, not only the
+    /// validator — enforces the root boundary.
+    #[test]
+    fn ns_loader_rejects_escaping_span_paths() {
+        let root = Path::new("/repo");
+        assert!(resolve_content(&lines_content("../outside.rs"), root).is_err());
+        assert!(resolve_content(&lines_content("/etc/passwd"), root).is_err());
+        assert!(resolve_content(&lines_content("src/a/../b.rs"), root).is_err());
+    }
 }
