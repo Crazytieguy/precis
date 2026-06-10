@@ -784,7 +784,12 @@ fn is_docstring_statement(node: Node) -> bool {
 }
 
 /// Body parts of a def, split by top-level statement, sans leading
-/// docstring + blank lines.
+/// docstring + blank lines. When the whole body collapses into one
+/// part containing the docstring, the `block_child_parts` fallback
+/// splits per-statement regardless of `BODY_SPLIT_MIN_LINES` — so a
+/// documented def splits below the threshold an undocumented one
+/// respects. Calibrated-in: the threshold-respecting variant is a
+/// walker-machinery re-calibration judged not worth the risk.
 fn def_body_parts(inner: Node, src_lines: &[&str]) -> Vec<BodyPart> {
     let Some(body) = inner.child_by_field_name("body") else {
         return Vec::new();
