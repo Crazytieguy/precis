@@ -594,13 +594,15 @@ fn build_rst_readme_content(file: &Path, source: &str) -> Option<BatchContent> {
         // Overline form (title surrounded by underline rows). Detect:
         // a punctuation row followed by a title row followed by the
         // same punctuation row.
-        if !seen_title
-            && i + 2 < src_lines.len()
+        if i + 2 < src_lines.len()
             && is_rst_underline(src_lines[i], 1)
             && is_rst_underline(src_lines[i + 2], 1)
             && src_lines[i].trim() == src_lines[i + 2].trim()
             && !src_lines[i + 1].trim().is_empty()
         {
+            if seen_title {
+                break;
+            }
             keep.push(i + 1);
             keep.push(i + 2);
             keep.push(i + 3);
@@ -747,8 +749,12 @@ struct RstSection {
 }
 
 /// A scanned RST heading: the 1-based row of the title text and the
-/// 1-based row of the underline that closes it.
+/// 1-based row of the underline that closes it. `start_row` is the
+/// heading's first row — the overline row for overline form, the title
+/// row for setext form — so a following section can bound itself at
+/// `start_row - 1` and not swallow this heading's overline punctuation.
 struct RstHeading {
+    start_row: usize,
     title_row: usize,
     underline_row: usize,
     is_canonical_usage: bool,
@@ -769,6 +775,7 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
             && !src_lines[i + 1].trim().is_empty()
         {
             headings.push(RstHeading {
+                start_row: i + 1,
                 title_row: i + 2,
                 underline_row: i + 3,
                 is_canonical_usage: is_rst_canonical_usage_title(src_lines[i + 1]),
@@ -783,6 +790,7 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
             && is_rst_underline(src_lines[i + 1], title.trim_end().chars().count())
         {
             headings.push(RstHeading {
+                start_row: i + 1,
                 title_row: i + 1,
                 underline_row: i + 2,
                 is_canonical_usage: is_rst_canonical_usage_title(title),
@@ -812,7 +820,7 @@ fn rst_body_sections(source: &str) -> Vec<RstSection> {
         let start_row = heading.title_row; // 1-based
         let end_row = headings
             .get(body_idx + 2) // +1 to undo skip(1), +1 for the next heading
-            .map(|next| next.title_row - 1)
+            .map(|next| next.start_row - 1)
             .unwrap_or(src_lines.len());
         let rows = collect_rst_section_rows(&src_lines, start_row, end_row, heading.underline_row);
         if rows.is_empty() {
@@ -1368,25 +1376,21 @@ const HEADLINE_TAGLINE_MAX_CHARS: usize = 90;
 /// underlying prose rather than its punctuation.
 fn strip_block_for_length(raw: &str) -> String {
     let mut out = String::with_capacity(raw.len());
-    let bytes = raw.as_bytes();
-    let mut i = 0;
-    while i < bytes.len() {
-        let b = bytes[i];
-        if b == b'<' {
-            while i < bytes.len() && bytes[i] != b'>' {
-                i += 1;
-            }
-            if i < bytes.len() {
-                i += 1;
+    let mut chars = raw.chars();
+    while let Some(c) = chars.next() {
+        if c == '<' {
+            // Skip the tag through its closing '>', then drop the '>'.
+            for inner in chars.by_ref() {
+                if inner == '>' {
+                    break;
+                }
             }
             continue;
         }
-        if matches!(b, b'>' | b'*' | b'_' | b'`') {
-            i += 1;
+        if matches!(c, '>' | '*' | '_' | '`') {
             continue;
         }
-        out.push(b as char);
-        i += 1;
+        out.push(c);
     }
     out
 }
@@ -1403,19 +1407,17 @@ enum HeadlineExtend {
 
 fn strip_html_tags(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
-    let bytes = s.as_bytes();
-    let mut i = 0;
-    while i < bytes.len() {
-        if bytes[i] == b'<' {
-            while i < bytes.len() && bytes[i] != b'>' {
-                i += 1;
-            }
-            if i < bytes.len() {
-                i += 1;
+    let mut chars = s.chars();
+    while let Some(c) = chars.next() {
+        if c == '<' {
+            // Skip the tag through its closing '>', then drop the '>'.
+            for inner in chars.by_ref() {
+                if inner == '>' {
+                    break;
+                }
             }
         } else {
-            out.push(bytes[i] as char);
-            i += 1;
+            out.push(c);
         }
     }
     out
@@ -2190,13 +2192,6 @@ fn heading_level(heading: Node) -> usize {
     0
 }
 
-/// Collect prelude lede rows for [`headline_spec`]: walk the `section`
-/// children of the root that appear *before* `first_headed` (i.e. the
-/// heading-less prelude tree-sitter-md wraps when the README opens with
-/// HTML title blocks or badges), skip leading decorative paragraphs /
-/// image-only HTML, then include blocks until the first substantive
-/// paragraph (inclusive) or end of prelude. Mirrors the
-/// post-heading-skip-then-include walk inside `headline_spec`.
 /// True for an HTML nav / table-of-contents block — a `<p>`/`<div>` whose
 /// links point at page sections (`href="#…"`), e.g. py3xui's
 /// `Overview • Quick Start • Examples` menu. Decorative chrome, not lede.
@@ -2230,6 +2225,13 @@ fn is_admin_warning_paragraph(para: Node, source: &str) -> bool {
         || head.starts_with("breaking change")
 }
 
+/// Collect prelude lede rows for [`headline_spec`]: walk the `section`
+/// children of the root that appear *before* `first_headed` (i.e. the
+/// heading-less prelude tree-sitter-md wraps when the README opens with
+/// HTML title blocks or badges), skip leading decorative paragraphs /
+/// image-only HTML, then include blocks until the first substantive
+/// paragraph (inclusive) or end of prelude. Mirrors the
+/// post-heading-skip-then-include walk inside `headline_spec`.
 fn extend_prelude_lede(
     covered: &mut BTreeSet<usize>,
     root: Node<'_>,
@@ -3320,5 +3322,73 @@ mod tests {
             "outline must not claim H1 row; would override headline truncation. got {starts:?}"
         );
         assert_eq!(starts, vec![5, 9, 13]);
+    }
+
+    /// Overline-form headings must not leak their overline punctuation row
+    /// into the *preceding* section's span: a section bounds at the next
+    /// heading's `start_row - 1` (the overline row), not its title row.
+    #[test]
+    fn walker_markdown_rst_overline_section_excludes_next_overline_row() {
+        let src = "\
+======
+Title
+======
+
+Intro prose for the title.
+
+========
+Overview
+========
+
+Overview prose paragraph one.
+
+=======
+Details
+=======
+
+Details prose paragraph one.
+";
+        let src_lines: Vec<&str> = src.lines().collect();
+        let headings = scan_rst_headings(&src_lines);
+        // title + Overview + Details
+        assert_eq!(headings.len(), 3);
+        let sections = rst_body_sections(src);
+        assert_eq!(sections.len(), 2, "Overview + Details");
+        for section in &sections {
+            let own_start = section.rows.first().copied();
+            for &row in &section.rows {
+                // A section legitimately starts at its own overline row;
+                // it must not contain any *other* heading's overline row.
+                let foreign_overline = headings
+                    .iter()
+                    .any(|h| h.start_row == row && Some(row) != own_start);
+                assert!(
+                    !foreign_overline,
+                    "section row {row} landed on another heading's overline punctuation"
+                );
+            }
+        }
+    }
+
+    /// A non-ASCII tagline whose UTF-8 byte length exceeds the tagline
+    /// max but whose char count is under it must measure as short — length
+    /// is counted in chars, not bytes.
+    #[test]
+    fn walker_markdown_strip_block_for_length_counts_chars_not_bytes() {
+        // 40 CJK chars = 120 bytes (> 90), but 40 chars (< 90). Wrapped in
+        // bold markup the stripper must remove.
+        let tagline: String = "字".repeat(40);
+        let raw = format!("**{tagline}**");
+        assert!(raw.len() > 90, "fixture must exceed byte threshold");
+        let stripped = strip_block_for_length(&raw);
+        assert_eq!(
+            stripped.chars().count(),
+            40,
+            "char count must ignore markup and multi-byte width"
+        );
+        assert!(
+            stripped.chars().count() <= HEADLINE_TAGLINE_MAX_CHARS,
+            "tagline is short by char count despite exceeding byte threshold"
+        );
     }
 }

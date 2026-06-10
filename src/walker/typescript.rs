@@ -391,15 +391,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         }
         let module_items = find_module_items(&tree, &source, &src_lines, &export_start_lines);
-        // README-cited JS files (canonical example scripts referenced
-        // from the root README) and entrypoint siblings (`src/node.js` /
-        // `src/browser.js` alongside `src/index.js`) emit private
-        // statements as module items even though they aren't entrypoints.
-        // For platform-plugin siblings the entrypoint typically just
-        // dispatches via conditional `require`, so the public-surface
-        // BFS can miss them — but their private helpers (an internal
-        // `getDate` / `localstorage` function) are still part of the
-        // surface NS authors anchor on as function-name locations.
+        // README-cited JS files (canonical example scripts referenced from
+        // the root README) emit private statements as module items even
+        // though they aren't entrypoints — those statements ARE the
+        // example's content the NS author anchored on.
         let emit_private_nonclass = (is_entrypoint_file(file) || ctx.is_readme_cited(file))
             && (is_tsx_file(file) || is_js_file(file));
         for item in module_items {
@@ -1870,9 +1865,7 @@ fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<Impor
             "import_statement" => {
                 push_import_group(
                     &mut groups,
-                    source_literal(child, source).unwrap_or_else(|| {
-                        source[child.start_byte()..child.end_byte()].to_string()
-                    }),
+                    import_source_key(child, source),
                     true,
                     child,
                     source,
@@ -1883,9 +1876,7 @@ fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<Impor
             {
                 push_import_group(
                     &mut groups,
-                    source_literal(child, source).unwrap_or_else(|| {
-                        source[child.start_byte()..child.end_byte()].to_string()
-                    }),
+                    import_source_key(child, source),
                     true,
                     child,
                     source,
@@ -1894,9 +1885,7 @@ fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<Impor
             "export_statement" if is_bare_reexport(child) => {
                 push_import_group(
                     &mut groups,
-                    source_literal(child, source).unwrap_or_else(|| {
-                        source[child.start_byte()..child.end_byte()].to_string()
-                    }),
+                    import_source_key(child, source),
                     true,
                     child,
                     source,
@@ -1934,6 +1923,11 @@ fn source_literal(node: Node, source: &str) -> Option<String> {
     node.children(&mut cursor)
         .find(|child| child.kind() == "string")
         .map(|child| source[child.start_byte()..child.end_byte()].to_string())
+}
+
+fn import_source_key(node: Node, source: &str) -> String {
+    source_literal(node, source)
+        .unwrap_or_else(|| source[node.start_byte()..node.end_byte()].to_string())
 }
 
 fn is_require_declaration(node: Node, source: &str) -> bool {
@@ -3363,23 +3357,12 @@ export type { X };
     }
 
     #[test]
-    fn walker_typescript_synthetic_export_skipped_when_real_export_shares_line() {
-        // Same-line collision: `const X = () => {...}; export { X };`
-        // The synthetic candidate would alias on `(file, start_line)`
-        // with the real export_statement; drop the synthetic, keep the
-        // real NamedReexport.
-        let src = "const X = () => { return 1; }; export { X };\n";
-        let tree = parse(src);
-        let exports = export_infos(&tree, src);
-        assert_eq!(exports.len(), 1, "should keep only the real export");
-        assert!(matches!(exports[0].kind, ItemKind::NamedReexport));
-    }
-
-    #[test]
     fn walker_typescript_export_lines_real_wins_on_same_line() {
-        // Materializer-side mirror of the §4c collision filter: when a
-        // real export_statement shares a line with a `const X = …` whose
-        // name is re-exported, the synthetic candidate is dropped.
+        // §4c collision filter: when a real export_statement shares a line
+        // with a `const X = …` whose name is re-exported, the synthetic
+        // candidate is dropped (real NamedReexport wins); also checks the
+        // rendered export line is the single-line clause and that a
+        // NamedReexport has no body parts.
         let src = "const X = () => { return 1; }; export { X };\n";
         let tree = parse(src);
         let exports = export_infos(&tree, src);
