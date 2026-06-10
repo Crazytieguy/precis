@@ -271,6 +271,7 @@ fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
 
     if let Some(first_line) = report.lines().next() {
         println!("{fixture}: {first_line}");
+        assert_headline_sane(fixture, first_line);
     }
 
     compare_or_update(
@@ -298,6 +299,7 @@ fn check_validation_fixture_baselines(fixture: &str) {
 
     let headline = format!("{}\n", scores.headline());
     println!("{fixture} (validation): {}", scores.headline());
+    assert_headline_sane(fixture, &scores.headline());
 
     compare_or_update(
         "validation score",
@@ -323,6 +325,23 @@ fn check_rendered(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
             insta::assert_snapshot!(format!("{fixture}"), rendered);
         }
     );
+}
+
+/// A 0.000 primary score with no reached/partial rows has historically
+/// meant an infrastructure failure (fixture-path canonicalization), not
+/// a bad walker — refuse to bake it into a baseline. `ALLOW_ZERO_SCORE=1`
+/// overrides for a genuinely degenerate fixture.
+fn assert_headline_sane(fixture: &str, headline: &str) {
+    if std::env::var_os("ALLOW_ZERO_SCORE").is_some() {
+        return;
+    }
+    if headline.contains("Score(3000)=0.000") && headline.contains("reached=0 partial=0") {
+        panic!(
+            "{fixture}: degenerate divergence headline `{headline}` — \
+             likely a path or canonicalization bug rather than a real score; \
+             set ALLOW_ZERO_SCORE=1 to accept it as a baseline"
+        );
+    }
 }
 
 // ---- comparison + regen ------------------------------------------------
