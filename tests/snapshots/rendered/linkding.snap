@@ -86,10 +86,7 @@ bookmarks/
         __init__.py
         auth.py
             8→class LinkdingTokenAuthentication(TokenAuthentication):
-            9→    """
-            10→    Extends DRF TokenAuthentication to add support for multiple keywords and
-            11→    multiple tokens per user.
-            12→    """
+            …
             14→    model = ApiToken
             15→    keywords = [keyword.lower().encode() for keyword in ["Token", "Bearer"]]
             17→    def authenticate(self, request):
@@ -127,20 +124,6 @@ bookmarks/
             tag-cache.js
     management/
         commands/
-            backup.py
-                7→class Command(BaseCommand):
-                8→    help = "Creates a backup of the linkding database"
-            create_initial_superuser.py
-            enable_wal.py
-            ensure_superuser.py
-                5→class Command(BaseCommand):
-                …
-            full_backup.py
-                9→class Command(BaseCommand):
-                …
-            generate_secret_key.py
-            import_netscape.py
-            migrate_tasks.py
     middlewares.py
         7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
         8→    header = settings.LD_AUTH_PROXY_USERNAME_HEADER
@@ -222,9 +205,6 @@ bookmarks/
             preview.html
         opensearch.xml
         registration/
-            login.html
-            password_change_done.html
-            password_change_form.html
         settings/
             bookmarklet.js
             bookmarklet_clientside.js
@@ -311,6 +291,20 @@ bookmarks/
             10→def acknowledge(request):
         turbo.py
     widgets.py
+        7→class FormErrorList(ErrorList):
+        8→    template_name = "shared/error_list.html"
+        11→class FormInput(forms.TextInput):
+        …
+        19→class FormNumberInput(forms.NumberInput):
+        …
+        27→class FormSelect(forms.Select):
+        …
+        35→class FormTextarea(forms.Textarea):
+        …
+        43→class FormCheckbox(forms.CheckboxInput):
+        …
+        63→class TagAutocomplete(forms.TextInput):
+        …
     wsgi.py
         13→application = get_wsgi_application()
 bootstrap.sh

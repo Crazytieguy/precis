@@ -43,7 +43,6 @@ README.md
     …
     179→### Rendering
     …
-    181→`htmy.Renderer` is the built-in, default renderer of the library.
     211→### Context
     …
     279→### Formatter
@@ -52,7 +51,6 @@ README.md
     …
     299→### Sync or async?
     …
-    301→In general, a component should be async if it must await some async call inside.
     305→In all other cases, it's best to use sync components.
     307→## XSS prevention
     …
@@ -71,8 +69,6 @@ README.md
     …
     361→## Development
     …
-    363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
-    365→The documentation is built with `zensical` and `mkdocstrings`.
     367→## Contributing
     …
     377→## License - MIT
@@ -185,6 +181,31 @@ htmy/
         46→join_classes = join
         48→HTMY = Renderer
     core.py
+        19→class Fragment:
+        20→    """Fragment utility component that simply wraps some children components."""
+        22→    __slots__ = ("_children",)
+        38→class WithContext(Fragment):
+        …
+        43→    __slots__ = ("_context",)
+        64→class ContextAware:
+        …
+        146→class SkipProperty(Exception):
+        …
+        149→    ...
+        157→class Text(str):
+        158→    """Marker class for differentiating text content from other strings."""
+        160→    ...
+        163→class SafeStr(Text):
+        …
+        172→    ...
+        175→class XBool(enum.Enum):
+        …
+        183→    true = True
+        184→    false = False
+        196→def xml_format_string(value: str) -> str:
+        …
+        201→class Formatter(ContextAware):
+        …
     error_boundary.py
         15→class ErrorBoundary:
         16→    """
@@ -194,11 +215,7 @@ htmy/
         21→    """
         23→    __slots__ = ("_children", "_errors", "_fallback")
         25→    def __init__(
-        26→        self,
-        27→        *children: ComponentType,
-        28→        fallback: Component = None,
-        29→        errors: Container[type[Exception]] | None = None,
-        30→    ) -> None:
+        …
         45→    async def htmy(self, context: Context) -> Component:
         …
         56→    def _fallback_component(self, error: Exception) -> ComponentType:
@@ -299,14 +316,3 @@ pyproject.toml
     12→    "markdown>=3.8,<4",
     13→]
 tests/
-    __init__.py
-    conftest.py
-    data/
-    renderer/
-    test_formatter.py
-    test_function_component.py
-    test_i18n.py
-    test_main_components.py
-    test_md.py
-    test_snippet.py
-    utils.py

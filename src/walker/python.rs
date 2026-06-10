@@ -49,7 +49,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, PythonKey};
 use crate::value::{
     NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
-    names_surface_chunk_index, reexport_import_chunk_factor,
+    names_surface_chunk_index, reexport_import_chunk_factor, roster_mass_factor_with_baseline,
 };
 
 use super::import_chunks::{
@@ -64,6 +64,25 @@ use super::{
 
 const VISIBILITY_PUBLIC: f64 = 1.0;
 const VISIBILITY_UNDERSCORE: f64 = 0.6;
+
+/// Neutral roster size for Python decl/method/field surfaces. Small and
+/// mid-size surfaces already rank acceptably; catalog-sized surfaces
+/// (a 12-decl names chunk, a 30-method sigs batch) otherwise lose
+/// `value/cost^k` rank to trinket files because their value is flat
+/// while cost grows with entry count. Calibrated: a baseline of 2
+/// lifts nearly every multi-decl file and floods orientation content
+/// (README sections, re-export walls) out of the early budget.
+const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
+
+/// `__init__.py` rosters are excluded: the entrypoint depth pin already
+/// privileges them, and boosting on top floods nested-package
+/// `__init__` surfaces ahead of the re-export walls NS authors rank.
+fn python_roster_mass_factor(file: &Path, entries: usize) -> f64 {
+    if is_python_entrypoint(file) {
+        return 1.0;
+    }
+    roster_mass_factor_with_baseline(entries, PYTHON_ROSTER_MASS_BASELINE)
+}
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let py_files = files_with_extension(dir, "py");
@@ -162,11 +181,16 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             else {
                 continue;
             };
+            let chunk_entry_count = decls
+                .len()
+                .min((chunk_index + 1) * NAMES_SURFACE_CHUNK_SIZE)
+                - chunk_index * NAMES_SURFACE_CHUNK_SIZE;
             out.push(Batch {
                 key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
+                value: decl_names_value(file, ctx, chunk_index, names_chunk_count)
+                    * python_roster_mass_factor(file, chunk_entry_count),
             });
         }
 
@@ -179,6 +203,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             if methods_by_class.is_empty() {
                 continue;
             }
+            let method_count: usize = methods_by_class.iter().map(|(_, ms)| ms.len()).sum();
             let Some(content) = single_file_lines_content(
                 file,
                 &source,
@@ -201,7 +226,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     chunk_index,
                 })),
                 content,
-                value: method_sigs_value(file, ctx),
+                value: method_sigs_value(file, ctx) * python_roster_mass_factor(file, method_count),
             });
             method_sigs_predecessors[chunk_index] = Some(BatchKey::Python(key));
         }
@@ -269,11 +294,11 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     }
                 }
                 DeclKind::Class => {
-                    if let Some(content) = single_file_lines_content(
-                        file,
-                        &source,
-                        collect_class_body(decl.inner_node, &src_lines),
-                    ) {
+                    let class_body_lines = collect_class_body(decl.inner_node, &src_lines);
+                    let field_row_count = class_body_lines.full.len();
+                    if let Some(content) =
+                        single_file_lines_content(file, &source, class_body_lines)
+                    {
                         out.push(Batch {
                             key: PythonKey::ClassBody {
                                 file: file.clone(),
@@ -282,7 +307,8 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                             .into(),
                             predecessor: Some(decl_predecessor.clone()),
                             content,
-                            value: class_body_value(file, decl, ctx),
+                            value: class_body_value(file, decl, ctx)
+                                * python_roster_mass_factor(file, field_row_count),
                         });
                     }
                     out.extend(emit_methods(

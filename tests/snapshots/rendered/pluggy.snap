@@ -153,10 +153,6 @@ src/
             85→    caller_kwargs: Mapping[str, object],
             86→    firstresult: bool,
             87→) -> object | list[object]:
-            88→    """Execute a call into multiple python functions/methods and return the
-            89→    result(s).
-            91→    ``caller_kwargs`` comes from HookCaller.__call__().
-            92→    """
         _hooks.py
         _manager.py
             36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
@@ -173,17 +169,7 @@ src/
             65→class DistFacade:
             66→    """Emulate a pkg_resources Distribution"""
             83→class PluginManager:
-            84→    """Core class which manages registration of plugin objects and 1:N hook
-            85→    calling.
-            87→    You can register new hooks by calling :meth:`add_hookspecs(module_or_class)
-            88→    <PluginManager.add_hookspecs>`.
-            90→    You can register plugin objects (which contain hook implementations) by
-            91→    calling :meth:`register(plugin) <PluginManager.register>`.
-            93→    For debugging purposes you can call :meth:`PluginManager.enable_tracing`
-            94→    which will subsequently send debug information to the trace helper.
-            96→    :param project_name:
-            97→        The short project name. Prefer snake case. Make sure it's unique!
-            98→    """
+            …
             525→def _formatdef(func: Callable[..., object]) -> str:
             526→    return f"{func.__name__}{inspect.signature(func)}"
         _result.py
@@ -226,13 +212,6 @@ src/
             96→        """
             107→_Result = Result
         _tracing.py
-            1→"""
-            2→Tracing utils
-            3→"""
-            5→from __future__ import annotations
-            7→from collections.abc import Callable
-            8→from collections.abc import Sequence
-            9→from typing import Any
             12→_Writer = Callable[[str], object]
             13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
             16→class TagTracer:

@@ -204,13 +204,6 @@ microbootstrap/
         10→    """Raises when attempting to configure instrument, that is not supported yet."""
     granian_server.py
         16→GRANIAN_LOG_LEVELS_MAP = {
-        17→    logging.CRITICAL: LogLevels.critical,
-        18→    logging.ERROR: LogLevels.error,
-        19→    logging.WARNING: LogLevels.warning,
-        20→    logging.WARNING: LogLevels.warn,
-        21→    logging.INFO: LogLevels.info,
-        22→    logging.DEBUG: LogLevels.debug,
-        23→}
         27→def create_granian_server(
         28→    target: str,
         29→    settings: ServerConfig,
@@ -264,6 +257,24 @@ microbootstrap/
         19→class InstrumentsSetupper:
         20→    console_writer: ConsoleWriter
         21→    instrument_box: InstrumentBox
+        23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
+        …
+        28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
+        …
+        32→    def configure_instruments(
+        33→        self,
+        34→        *instrument_configs: InstrumentConfigT,
+        35→    ) -> typing_extensions.Self:
+        40→    @classmethod
+        …
+        51→    def setup(self) -> None:
+        …
+        57→    def teardown(self) -> None:
+        …
+        62→    def __enter__(self) -> None:
+        63→        self.setup()
+        65→    def __exit__(self, *args: object) -> None:
+        66→        self.teardown()
     middlewares/
         __init__.py
         fastapi.py
@@ -288,11 +299,6 @@ pyproject.toml
 tests/
     __init__.py
     bootstrappers/
-        __init__.py
-        test_fastapi.py
-        test_faststream.py
-        test_litestar.py
-        test_litestar_opentelemetry.py
     conftest.py
     instruments/
     test_granian_server.py

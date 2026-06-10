@@ -65,7 +65,19 @@ README.md
 SECURITY.md
 demo.py
     1→from py3xui import Api
+    12→host = "**********"
+    13→username = "**********"
+    14→password = "**********"
+    16→email = "iwatkot"
+    18→api = Api(host, username, password)
+    23→inbound_id = 1  # ⬅️ Your inbound ID here.
+    26→inbound = api.inbound.get_by_id(inbound_id)
+    30→client = None
+    41→cliend_uuid = client.id
+    44→client_by_email = api.client.get_by_email(email)
     63→from py3xui import Inbound
+    65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
+    66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
     98→import os
     100→import qrcode
 dev/
@@ -155,12 +167,6 @@ py3xui/
             8→class AsyncServerApi(AsyncBaseApi):
             …
             43→    # pylint: disable=R0801
-            44→    async def get_db(self, save_path: str) -> None:
-            …
-            76→    async def get_status(self) -> Server:
-            …
-            105→    async def generate_reality_keys(self) -> RealityKeyPair:
-            …
     client/
         README.md
             1→<a id="client.client"></a>
@@ -195,10 +201,7 @@ py3xui/
             9→class JsonStringModel(BaseModel):
             10→    """Base class for models that have a JSON string as a field."""
             12→    @model_validator(mode="before")
-            13→    def model_validate(
-            14→        cls,
-            15→        values,
-            16→    ):  # pylint: disable=no-self-argument, arguments-differ
+            …
         inbound.py
             15→class InboundFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
@@ -222,10 +225,6 @@ py3xui/
         sniffing.py
             9→class SniffingFields:
             10→    """Stores the fields returned by the XUI API for parsing."""
-            12→    ENABLED = "enabled"
-            14→    DEST_OVERRIDE = "destOverride"
-            16→    METADATA_ONLY = "metadataOnly"
-            17→    ROUTE_ONLY = "routeOnly"
             20→class Sniffing(JsonStringModel):
             …
         stream_settings.py
@@ -239,24 +238,6 @@ py3xui/
             3→# server.server
             5→This module contains the Server class which represents server information in XUI API.
             7→<a id="server.server.ServerFields"></a>
-            9→## ServerFields Objects
-            …
-            19→## MemoryInfo Objects
-            …
-            34→## XRayInfo Objects
-            …
-            56→## NetworkIO Objects
-            …
-            71→## NetworkTraffic Objects
-            …
-            86→## PublicIP Objects
-            …
-            101→## AppStats Objects
-            …
-            117→## RealityKeyPair Objects
-            …
-            132→## Server Objects
-            …
         __init__.py
             1→# pylint: disable=missing-module-docstring
             2→from py3xui.server.server import RealityKeyPair, Server

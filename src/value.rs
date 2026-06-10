@@ -36,7 +36,15 @@ pub const ROSTER_MASS_FACTOR_CAP: f64 = 2.2;
 /// the ratio roster-size-neutral. Boost-only (≥ 1) and capped: small
 /// rosters keep their existing rank rather than being demoted.
 pub fn roster_mass_factor(entries: usize) -> f64 {
-    (entries as f64 / ROSTER_MASS_BASELINE)
+    roster_mass_factor_with_baseline(entries, ROSTER_MASS_BASELINE)
+}
+
+/// [`roster_mass_factor`] with a caller-chosen neutral size, for roster
+/// shapes whose acceptably-ranked size differs from directory listings —
+/// e.g. Python decl/method/field surfaces, where one- and two-entry
+/// surfaces already rank fine and the catalog-sized ones lose.
+pub fn roster_mass_factor_with_baseline(entries: usize, baseline: f64) -> f64 {
+    (entries as f64 / baseline)
         .powf(DEFAULT_CONCAVITY_EXPONENT)
         .clamp(1.0, ROSTER_MASS_FACTOR_CAP)
 }

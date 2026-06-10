@@ -49,155 +49,155 @@ Score(3000)=0.504 I=0.753 C=0.337 ns_rows≤3K=18/40 (reached=6 partial=3 missin
 | ns | 2100 |  | 196 | README usage: parse a TOML string | 2.8 |  | 0.504 |
 | walker |  | 2228 | 288 | README.md section #1 |  |  | 0.582 |
 | walker |  | 2236 | 8 | CHANGELOG.md section #0 |  |  | 0.582 |
-| walker |  | 2307 | 71 | README.md section #10 |  |  | 0.582 |
-| walker |  | 2341 | 34 | tomllib.md section #2 |  |  | 0.582 |
-| ns | 2392 |  | 292 | README usage: parse a file + handle errors | 2.9 |  | 0.559 |
-| walker |  | 2400 | 59 | python imports in src/tomli/_types.py |  |  | 0.568 |
-| walker |  | 2473 | 73 | README.md section #20 |  |  | 0.568 |
-| ns | 2491 |  | 99 | load body | 3.1 | 1.5 | 0.554 |
-| walker |  | 2548 | 75 | README.md section #15 |  |  | 0.554 |
-| walker |  | 2556 | 8 | listing of 'fuzzer' |  |  | 0.554 |
-| walker |  | 2648 | 92 | README.md section #11 |  |  | 0.555 |
-| ns | 2746 |  | 255 | tests/data/{valid,invalid}/ top listing | 3.2 |  | 0.497 |
-| walker |  | 2799 | 151 | python decl names surface in src/tomli/_re.py |  |  | 0.519 |
-| walker |  | 2799 | 0 | python decl at src/tomli/_re.py:59 |  |  | 0.519 |
-| walker |  | 2799 | 0 | python decl at src/tomli/_re.py:109 |  |  | 0.519 |
-| walker |  | 2799 | 0 | python decl at src/tomli/_re.py:116 |  |  | 0.519 |
-| walker |  | 2823 | 24 | python decl at src/tomli/_re.py:98 |  |  | 0.528 |
-| walker |  | 2857 | 34 | python decl body at src/tomli/_re.py:116 body 117 |  |  | 0.528 |
-| walker |  | 2912 | 55 | python decl doc at src/tomli/_re.py:59 |  |  | 0.528 |
+| walker |  | 2387 | 151 | python decl names surface in src/tomli/_re.py |  |  | 0.611 |
+| walker |  | 2387 | 0 | python decl at src/tomli/_re.py:59 |  |  | 0.611 |
+| walker |  | 2387 | 0 | python decl at src/tomli/_re.py:109 |  |  | 0.611 |
+| walker |  | 2387 | 0 | python decl at src/tomli/_re.py:116 |  |  | 0.611 |
+| ns | 2392 |  | 292 | README usage: parse a file + handle errors | 2.9 |  | 0.585 |
+| walker |  | 2411 | 24 | python decl at src/tomli/_re.py:98 |  |  | 0.595 |
+| walker |  | 2445 | 34 | python decl body at src/tomli/_re.py:116 body 117 |  |  | 0.595 |
+| ns | 2491 |  | 99 | load body | 3.1 | 1.5 | 0.580 |
+| walker |  | 2500 | 55 | python decl doc at src/tomli/_re.py:59 |  |  | 0.580 |
+| walker |  | 2571 | 71 | README.md section #10 |  |  | 0.580 |
+| walker |  | 2605 | 34 | tomllib.md section #2 |  |  | 0.580 |
+| walker |  | 2664 | 59 | python imports in src/tomli/_types.py |  |  | 0.589 |
+| walker |  | 2737 | 73 | README.md section #20 |  |  | 0.589 |
+| ns | 2746 |  | 255 | tests/data/{valid,invalid}/ top listing | 3.2 |  | 0.527 |
+| walker |  | 2809 | 72 | python decl body at src/tomli/_re.py:98 body 100 |  |  | 0.527 |
+| walker |  | 2884 | 75 | README.md section #15 |  |  | 0.527 |
+| walker |  | 2892 | 8 | listing of 'fuzzer' |  |  | 0.527 |
 | ns | 2972 |  | 226 | tests/* test method names | 3.3 |  | 0.504 |
-| walker |  | 2984 | 72 | python decl body at src/tomli/_re.py:98 body 100 |  |  | 0.504 |
+| walker |  | 2984 | 92 | README.md section #11 |  |  | 0.504 |
 | walker |  | 3067 | 83 | python decl body at src/tomli/_re.py:109 body 110 |  |  | 0.504 |
 | walker |  | 3076 | 9 | listing of 'profiler' |  |  | 0.504 |
 | walker |  | 3174 | 98 | README.md section #7 |  |  | 0.505 |
 | ns | 3320 |  | 348 | loads body — prelude + skip / dispatch comments | 3.4 | 1.5 | 0.476 |
 | walker |  | 3335 | 161 | python decl at src/tomli/_re.py:46 |  |  | 0.476 |
 | walker |  | 3438 | 103 | README.md section #12 |  |  | 0.477 |
-| walker |  | 3489 | 51 | tomllib.md section #7 |  |  | 0.477 |
-| walker |  | 3584 | 95 | python imports in src/tomli/_re.py |  |  | 0.477 |
-| walker |  | 3688 | 104 | README.md section #6 |  |  | 0.519 |
-| walker |  | 3751 | 63 | tomllib.md section #5 |  |  | 0.519 |
-| ns | 3755 |  | 435 | loads body — rule dispatch + statement terminator | 3.5 | 3.4 | 0.481 |
+| walker |  | 3689 | 251 | python decl names surface in src/tomli/_parser.py |  |  | 0.477 |
+| walker |  | 3714 | 25 | python decl at src/tomli/_parser.py:51 |  |  | 0.477 |
+| ns | 3755 |  | 435 | loads body — rule dispatch + statement terminator | 3.5 | 3.4 | 0.442 |
+| walker |  | 3765 | 51 | tomllib.md section #7 |  |  | 0.442 |
+| walker |  | 3860 | 95 | python imports in src/tomli/_re.py |  |  | 0.442 |
+| walker |  | 3964 | 104 | README.md section #6 |  |  | 0.481 |
 | ns | 3977 |  | 222 | TOMLDecodeError.__init__ — pos→line/col body | 3.6 | 1.6 | 0.466 |
-| walker |  | 3990 | 239 | python decl at src/tomli/_re.py:26 |  |  | 0.466 |
-| walker |  | 4061 | 71 | tomllib.md section #4 |  |  | 0.466 |
-| walker |  | 4205 | 144 | python imports in src/tomli/_parser.py |  |  | 0.466 |
-| walker |  | 4222 | 17 | listing of 'scripts' |  |  | 0.466 |
-| walker |  | 4328 | 106 | python decl at src/tomli/_re.py:17 |  |  | 0.466 |
-| walker |  | 4338 | 10 | python decl names surface in profiler/profiler_script.py |  |  | 0.466 |
-| walker |  | 4408 | 70 | python imports in tests/__init__.py |  |  | 0.466 |
-| walker |  | 4428 | 20 | listing of 'benchmark' |  |  | 0.466 |
-| walker |  | 4435 | 7 | README headline in benchmark/README.md |  |  | 0.466 |
+| walker |  | 4027 | 63 | tomllib.md section #5 |  |  | 0.466 |
+| walker |  | 4266 | 239 | python decl at src/tomli/_re.py:26 |  |  | 0.466 |
+| walker |  | 4337 | 71 | tomllib.md section #4 |  |  | 0.466 |
 | ns | 4502 |  | 525 | parse_value — dispatch head (strings/bools/array/inline-table) | 3.7 | 2.7 | 0.434 |
-| walker |  | 4686 | 251 | python decl names surface in src/tomli/_parser.py |  |  | 0.434 |
-| walker |  | 4711 | 25 | python decl at src/tomli/_parser.py:51 |  |  | 0.434 |
-| walker |  | 4865 | 154 | README.md section #3 |  |  | 0.475 |
-| walker |  | 4879 | 14 | python decl names surface in scripts/use_setuptools.py |  |  | 0.475 |
-| walker |  | 4879 | 0 | python decl at scripts/use_setuptools.py:12 |  |  | 0.475 |
-| ns | 4897 |  | 395 | parse_value — datetime/number/special-float tail | 3.8 | 3.7 | 0.455 |
-| walker |  | 4989 | 110 | tomllib.md section #6 |  |  | 0.455 |
-| ns | 5138 |  | 241 | Flags — __init__, add_pending, finalize_pending, unset_all | 3.9 | 2.3 | 0.443 |
-| walker |  | 5170 | 181 | README.md section #27 |  |  | 0.443 |
-| walker |  | 5383 | 213 | python decl names surface #1 in src/tomli/_parser.py |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:71 |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:76 |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:137 |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:149 |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:220 |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:278 |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:312 |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:318 |  |  | 0.450 |
-| walker |  | 5383 | 0 | python decl at src/tomli/_parser.py:349 |  |  | 0.450 |
-| walker |  | 5394 | 11 | python decl doc at src/tomli/_parser.py:149 |  |  | 0.454 |
-| walker |  | 5408 | 14 | python decl doc at src/tomli/_parser.py:220 |  |  | 0.455 |
-| walker |  | 5421 | 13 | python decl doc at src/tomli/_parser.py:137 |  |  | 0.460 |
-| walker |  | 5453 | 32 | python decl doc at src/tomli/_parser.py:71 |  |  | 0.465 |
-| walker |  | 5517 | 64 | python decl at src/tomli/_parser.py:327 |  |  | 0.465 |
-| ns | 5527 |  | 389 | Flags — set + is_ (the actual lookup) | 3.10 | 3.9 | 0.449 |
-| walker |  | 5597 | 80 | python class body at src/tomli/_parser.py:220 |  |  | 0.467 |
-| walker |  | 5702 | 105 | python decl doc at src/tomli/_parser.py:76 |  |  | 0.493 |
-| walker |  | 5753 | 51 | python decl body at src/tomli/_parser.py:318 body 319 |  |  | 0.493 |
-| ns | 5894 |  | 367 | NestedDict body — table-tree builder | 3.11 | 2.3 | 0.474 |
-| walker |  | 5958 | 205 | python method sigs #1 in src/tomli/_parser.py |  |  | 0.481 |
-| walker |  | 5958 | 0 | python method at src/tomli/_parser.py:229 |  |  | 0.481 |
-| walker |  | 5958 | 0 | python method at src/tomli/_parser.py:233 |  |  | 0.481 |
-| walker |  | 5958 | 0 | python method at src/tomli/_parser.py:236 |  |  | 0.481 |
-| walker |  | 5958 | 0 | python method at src/tomli/_parser.py:241 |  |  | 0.481 |
-| walker |  | 5958 | 0 | python method at src/tomli/_parser.py:249 |  |  | 0.481 |
-| walker |  | 5958 | 0 | python method at src/tomli/_parser.py:260 |  |  | 0.481 |
-| walker |  | 5958 | 0 | python method at src/tomli/_parser.py:300 |  |  | 0.481 |
-| walker |  | 5958 | 0 | python method at src/tomli/_parser.py:313 |  |  | 0.481 |
-| walker |  | 5971 | 13 | python method at src/tomli/_parser.py:279 |  |  | 0.482 |
-| walker |  | 5984 | 13 | python method body at src/tomli/_parser.py:233 body 234 |  |  | 0.483 |
-| walker |  | 6028 | 44 | python method at src/tomli/_parser.py:283 |  |  | 0.486 |
-| walker |  | 6043 | 15 | python method body at src/tomli/_parser.py:279 body 281 |  |  | 0.487 |
-| walker |  | 6062 | 19 | python method body at src/tomli/_parser.py:313 body 314 |  |  | 0.495 |
-| walker |  | 6143 | 81 | python method at src/tomli/_parser.py:87 |  |  | 0.495 |
-| ns | 6145 |  | 251 | README usage: Decimal floats | 3.12 |  | 0.506 |
-| walker |  | 6181 | 38 | python method body at src/tomli/_parser.py:229 body 230 |  |  | 0.509 |
-| walker |  | 6219 | 38 | python method body at src/tomli/_parser.py:236 body 237 |  |  | 0.515 |
-| walker |  | 6377 | 158 | python decl at src/tomli/_parser.py:57 |  |  | 0.515 |
-| ns | 6395 |  | 250 | create_dict_rule body — [table] header | 4.1 | 2.7 | 0.505 |
-| walker |  | 6477 | 100 | python decl body at src/tomli/_parser.py:349 body 350 |  |  | 0.505 |
-| walker |  | 6541 | 64 | python method body at src/tomli/_parser.py:241 body 242 |  |  | 0.519 |
-| walker |  | 6552 | 11 | python decl body at src/tomli/_parser.py:137 body 139 |  |  | 0.519 |
-| ns | 6679 |  | 284 | create_list_rule body — [[arr]] header | 4.2 | 2.7 | 0.508 |
-| walker |  | 6705 | 153 | python decl body at src/tomli/_parser.py:327 body 335 |  |  | 0.509 |
-| walker |  | 6719 | 14 | python decl body at src/tomli/_parser.py:137 body 146 |  |  | 0.509 |
-| walker |  | 6828 | 109 | python method body at src/tomli/_parser.py:300 body 301 |  |  | 0.523 |
-| walker |  | 6952 | 124 | python method body at src/tomli/_parser.py:283 body 289 |  |  | 0.549 |
-| walker |  | 7102 | 150 | python method body at src/tomli/_parser.py:249 body 250 |  |  | 0.557 |
-| walker |  | 7152 | 50 | headings outline in benchmark/README.md |  |  | 0.557 |
-| ns | 7159 |  | 480 | key_value_rule body | 4.3 | 2.7 | 0.539 |
-| walker |  | 7410 | 258 | README.md section #24 |  |  | 0.540 |
-| walker |  | 7435 | 25 | python decl names surface in benchmark/run.py |  |  | 0.540 |
-| walker |  | 7435 | 0 | python decl at benchmark/run.py:37 |  |  | 0.540 |
-| ns | 7480 |  | 321 | parse_inline_table — head + first key/value insert | 4.4 | 2.7 | 0.529 |
-| walker |  | 7529 | 94 | tomllib.md section #1 |  |  | 0.529 |
-| walker |  | 7538 | 9 | python imports in fuzzer/fuzz.py |  |  | 0.529 |
-| ns | 7650 |  | 170 | parse_inline_table — comma/close loop tail | 4.5 | 4.4 | 0.523 |
-| walker |  | 7839 | 301 | README.md section #26 |  |  | 0.523 |
-| ns | 7937 |  | 287 | parse_array body | 4.6 | 2.7 | 0.512 |
-| walker |  | 8080 | 241 | python decl names surface #2 in src/tomli/_parser.py |  |  | 0.527 |
-| walker |  | 8080 | 0 | python decl at src/tomli/_parser.py:361 |  |  | 0.527 |
-| walker |  | 8080 | 0 | python decl at src/tomli/_parser.py:370 |  |  | 0.527 |
-| walker |  | 8080 | 0 | python decl at src/tomli/_parser.py:390 |  |  | 0.527 |
-| walker |  | 8080 | 0 | python decl at src/tomli/_parser.py:463 |  |  | 0.527 |
-| walker |  | 8080 | 0 | python decl at src/tomli/_parser.py:481 |  |  | 0.527 |
-| walker |  | 8080 | 0 | python decl at src/tomli/_parser.py:497 |  |  | 0.527 |
-| walker |  | 8080 | 0 | python decl at src/tomli/_parser.py:595 |  |  | 0.527 |
-| walker |  | 8110 | 30 | python decl at src/tomli/_parser.py:564 |  |  | 0.527 |
-| walker |  | 8143 | 33 | python decl at src/tomli/_parser.py:413 |  |  | 0.527 |
-| walker |  | 8178 | 35 | python decl at src/tomli/_parser.py:502 |  |  | 0.527 |
-| walker |  | 8214 | 36 | python decl at src/tomli/_parser.py:447 |  |  | 0.527 |
-| walker |  | 8229 | 15 | python decl body at src/tomli/_parser.py:595 body 596 |  |  | 0.527 |
-| walker |  | 8266 | 37 | python decl at src/tomli/_parser.py:528 |  |  | 0.528 |
-| walker |  | 8290 | 24 | python decl body at src/tomli/_parser.py:497 body 498 |  |  | 0.514 |
-| ns | 8290 |  | 353 | parse_basic_str body | 4.7 | 2.7 | 0.514 |
-| walker |  | 8360 | 70 | python decl body at src/tomli/_parser.py:361 body 362 |  |  | 0.515 |
-| walker |  | 8510 | 150 | python decl body at src/tomli/_parser.py:447 body 450 |  |  | 0.515 |
-| walker |  | 8523 | 13 | python decl body at src/tomli/_parser.py:463 body 465 |  |  | 0.515 |
-| walker |  | 8538 | 15 | python decl body at src/tomli/_parser.py:463 body 464 |  |  | 0.515 |
-| walker |  | 8548 | 10 | python decl body at src/tomli/_parser.py:502 body 505 |  |  | 0.515 |
-| walker |  | 8565 | 17 | python decl body at src/tomli/_parser.py:463 body 466 |  |  | 0.515 |
-| ns | 8626 |  | 336 | README usage: tomllib compat shim | 4.8 |  | 0.528 |
-| walker |  | 8731 | 166 | python decl names surface #3 in src/tomli/_parser.py |  |  | 0.546 |
-| walker |  | 8731 | 0 | python decl at src/tomli/_parser.py:599 |  |  | 0.546 |
-| walker |  | 8731 | 0 | python decl at src/tomli/_parser.py:612 |  |  | 0.546 |
-| walker |  | 8731 | 0 | python decl at src/tomli/_parser.py:621 |  |  | 0.546 |
-| walker |  | 8731 | 0 | python decl at src/tomli/_parser.py:652 |  |  | 0.546 |
-| walker |  | 8731 | 0 | python decl at src/tomli/_parser.py:760 |  |  | 0.546 |
-| walker |  | 8731 | 0 | python decl at src/tomli/_parser.py:764 |  |  | 0.546 |
-| walker |  | 8765 | 34 | python decl at src/tomli/_parser.py:684 |  |  | 0.546 |
-| walker |  | 8792 | 27 | python decl body at src/tomli/_parser.py:760 body 761 |  |  | 0.546 |
-| walker |  | 8880 | 88 | python decl doc at src/tomli/_parser.py:764 |  |  | 0.546 |
+| walker |  | 4550 | 213 | python decl names surface #1 in src/tomli/_parser.py |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:71 |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:76 |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:137 |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:149 |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:220 |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:278 |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:312 |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:318 |  |  | 0.441 |
+| walker |  | 4550 | 0 | python decl at src/tomli/_parser.py:349 |  |  | 0.441 |
+| walker |  | 4561 | 11 | python decl doc at src/tomli/_parser.py:149 |  |  | 0.445 |
+| walker |  | 4575 | 14 | python decl doc at src/tomli/_parser.py:220 |  |  | 0.447 |
+| walker |  | 4588 | 13 | python decl doc at src/tomli/_parser.py:137 |  |  | 0.452 |
+| walker |  | 4620 | 32 | python decl doc at src/tomli/_parser.py:71 |  |  | 0.458 |
+| walker |  | 4684 | 64 | python decl at src/tomli/_parser.py:327 |  |  | 0.458 |
+| walker |  | 4764 | 80 | python class body at src/tomli/_parser.py:220 |  |  | 0.478 |
+| ns | 4897 |  | 395 | parse_value — datetime/number/special-float tail | 3.8 | 3.7 | 0.458 |
+| walker |  | 4969 | 205 | python method sigs #1 in src/tomli/_parser.py |  |  | 0.462 |
+| walker |  | 4969 | 0 | python method at src/tomli/_parser.py:229 |  |  | 0.462 |
+| walker |  | 4969 | 0 | python method at src/tomli/_parser.py:233 |  |  | 0.462 |
+| walker |  | 4969 | 0 | python method at src/tomli/_parser.py:236 |  |  | 0.462 |
+| walker |  | 4969 | 0 | python method at src/tomli/_parser.py:241 |  |  | 0.462 |
+| walker |  | 4969 | 0 | python method at src/tomli/_parser.py:249 |  |  | 0.462 |
+| walker |  | 4969 | 0 | python method at src/tomli/_parser.py:260 |  |  | 0.462 |
+| walker |  | 4969 | 0 | python method at src/tomli/_parser.py:300 |  |  | 0.462 |
+| walker |  | 4969 | 0 | python method at src/tomli/_parser.py:313 |  |  | 0.462 |
+| walker |  | 4982 | 13 | python method at src/tomli/_parser.py:279 |  |  | 0.463 |
+| walker |  | 4995 | 13 | python method body at src/tomli/_parser.py:233 body 234 |  |  | 0.463 |
+| walker |  | 5039 | 44 | python method at src/tomli/_parser.py:283 |  |  | 0.463 |
+| walker |  | 5054 | 15 | python method body at src/tomli/_parser.py:279 body 281 |  |  | 0.463 |
+| walker |  | 5073 | 19 | python method body at src/tomli/_parser.py:313 body 314 |  |  | 0.472 |
+| ns | 5138 |  | 241 | Flags — __init__, add_pending, finalize_pending, unset_all | 3.9 | 2.3 | 0.463 |
+| walker |  | 5178 | 105 | python decl doc at src/tomli/_parser.py:76 |  |  | 0.490 |
+| walker |  | 5229 | 51 | python decl body at src/tomli/_parser.py:318 body 319 |  |  | 0.490 |
+| walker |  | 5310 | 81 | python method at src/tomli/_parser.py:87 |  |  | 0.490 |
+| walker |  | 5348 | 38 | python method body at src/tomli/_parser.py:229 body 230 |  |  | 0.494 |
+| walker |  | 5386 | 38 | python method body at src/tomli/_parser.py:236 body 237 |  |  | 0.501 |
+| ns | 5527 |  | 389 | Flags — set + is_ (the actual lookup) | 3.10 | 3.9 | 0.484 |
+| walker |  | 5544 | 158 | python decl at src/tomli/_parser.py:57 |  |  | 0.484 |
+| walker |  | 5644 | 100 | python decl body at src/tomli/_parser.py:349 body 350 |  |  | 0.484 |
+| walker |  | 5708 | 64 | python method body at src/tomli/_parser.py:241 body 242 |  |  | 0.501 |
+| walker |  | 5719 | 11 | python decl body at src/tomli/_parser.py:137 body 139 |  |  | 0.501 |
+| walker |  | 5863 | 144 | python imports in src/tomli/_parser.py |  |  | 0.501 |
+| walker |  | 5880 | 17 | listing of 'scripts' |  |  | 0.501 |
+| ns | 5894 |  | 367 | NestedDict body — table-tree builder | 3.11 | 2.3 | 0.487 |
+| walker |  | 5986 | 106 | python decl at src/tomli/_re.py:17 |  |  | 0.487 |
+| walker |  | 5996 | 10 | python decl names surface in profiler/profiler_script.py |  |  | 0.487 |
+| ns | 6145 |  | 251 | README usage: Decimal floats | 3.12 |  | 0.499 |
+| walker |  | 6149 | 153 | python decl body at src/tomli/_parser.py:327 body 335 |  |  | 0.500 |
+| walker |  | 6219 | 70 | python imports in tests/__init__.py |  |  | 0.500 |
+| walker |  | 6239 | 20 | listing of 'benchmark' |  |  | 0.500 |
+| walker |  | 6246 | 7 | README headline in benchmark/README.md |  |  | 0.500 |
+| walker |  | 6260 | 14 | python decl body at src/tomli/_parser.py:137 body 146 |  |  | 0.501 |
+| ns | 6395 |  | 250 | create_dict_rule body — [table] header | 4.1 | 2.7 | 0.491 |
+| walker |  | 6414 | 154 | README.md section #3 |  |  | 0.521 |
+| walker |  | 6428 | 14 | python decl names surface in scripts/use_setuptools.py |  |  | 0.521 |
+| walker |  | 6428 | 0 | python decl at scripts/use_setuptools.py:12 |  |  | 0.521 |
+| walker |  | 6537 | 109 | python method body at src/tomli/_parser.py:300 body 301 |  |  | 0.535 |
+| walker |  | 6647 | 110 | tomllib.md section #6 |  |  | 0.535 |
+| ns | 6679 |  | 284 | create_list_rule body — [[arr]] header | 4.2 | 2.7 | 0.523 |
+| walker |  | 6888 | 241 | python decl names surface #2 in src/tomli/_parser.py |  |  | 0.539 |
+| walker |  | 6888 | 0 | python decl at src/tomli/_parser.py:361 |  |  | 0.539 |
+| walker |  | 6888 | 0 | python decl at src/tomli/_parser.py:370 |  |  | 0.539 |
+| walker |  | 6888 | 0 | python decl at src/tomli/_parser.py:390 |  |  | 0.539 |
+| walker |  | 6888 | 0 | python decl at src/tomli/_parser.py:463 |  |  | 0.539 |
+| walker |  | 6888 | 0 | python decl at src/tomli/_parser.py:481 |  |  | 0.539 |
+| walker |  | 6888 | 0 | python decl at src/tomli/_parser.py:497 |  |  | 0.539 |
+| walker |  | 6888 | 0 | python decl at src/tomli/_parser.py:595 |  |  | 0.539 |
+| walker |  | 6918 | 30 | python decl at src/tomli/_parser.py:564 |  |  | 0.539 |
+| walker |  | 6951 | 33 | python decl at src/tomli/_parser.py:413 |  |  | 0.539 |
+| walker |  | 6986 | 35 | python decl at src/tomli/_parser.py:502 |  |  | 0.539 |
+| walker |  | 7022 | 36 | python decl at src/tomli/_parser.py:447 |  |  | 0.539 |
+| walker |  | 7037 | 15 | python decl body at src/tomli/_parser.py:595 body 596 |  |  | 0.539 |
+| walker |  | 7074 | 37 | python decl at src/tomli/_parser.py:528 |  |  | 0.539 |
+| walker |  | 7098 | 24 | python decl body at src/tomli/_parser.py:497 body 498 |  |  | 0.539 |
+| ns | 7159 |  | 480 | key_value_rule body | 4.3 | 2.7 | 0.523 |
+| walker |  | 7168 | 70 | python decl body at src/tomli/_parser.py:361 body 362 |  |  | 0.523 |
+| walker |  | 7318 | 150 | python decl body at src/tomli/_parser.py:447 body 450 |  |  | 0.523 |
+| ns | 7480 |  | 321 | parse_inline_table — head + first key/value insert | 4.4 | 2.7 | 0.513 |
+| walker |  | 7499 | 181 | README.md section #27 |  |  | 0.513 |
+| walker |  | 7623 | 124 | python method body at src/tomli/_parser.py:283 body 289 |  |  | 0.537 |
+| ns | 7650 |  | 170 | parse_inline_table — comma/close loop tail | 4.5 | 4.4 | 0.531 |
+| walker |  | 7773 | 150 | python method body at src/tomli/_parser.py:249 body 250 |  |  | 0.538 |
+| walker |  | 7786 | 13 | python decl body at src/tomli/_parser.py:463 body 465 |  |  | 0.538 |
+| walker |  | 7836 | 50 | headings outline in benchmark/README.md |  |  | 0.538 |
+| ns | 7937 |  | 287 | parse_array body | 4.6 | 2.7 | 0.527 |
+| walker |  | 8094 | 258 | README.md section #24 |  |  | 0.528 |
+| walker |  | 8119 | 25 | python decl names surface in benchmark/run.py |  |  | 0.528 |
+| walker |  | 8119 | 0 | python decl at benchmark/run.py:37 |  |  | 0.528 |
+| walker |  | 8134 | 15 | python decl body at src/tomli/_parser.py:463 body 464 |  |  | 0.528 |
+| walker |  | 8228 | 94 | tomllib.md section #1 |  |  | 0.528 |
+| ns | 8290 |  | 353 | parse_basic_str body | 4.7 | 2.7 | 0.515 |
+| walker |  | 8394 | 166 | python decl names surface #3 in src/tomli/_parser.py |  |  | 0.534 |
+| walker |  | 8394 | 0 | python decl at src/tomli/_parser.py:599 |  |  | 0.534 |
+| walker |  | 8394 | 0 | python decl at src/tomli/_parser.py:612 |  |  | 0.534 |
+| walker |  | 8394 | 0 | python decl at src/tomli/_parser.py:621 |  |  | 0.534 |
+| walker |  | 8394 | 0 | python decl at src/tomli/_parser.py:652 |  |  | 0.534 |
+| walker |  | 8394 | 0 | python decl at src/tomli/_parser.py:760 |  |  | 0.534 |
+| walker |  | 8394 | 0 | python decl at src/tomli/_parser.py:764 |  |  | 0.534 |
+| walker |  | 8428 | 34 | python decl at src/tomli/_parser.py:684 |  |  | 0.534 |
+| walker |  | 8455 | 27 | python decl body at src/tomli/_parser.py:760 body 761 |  |  | 0.534 |
+| walker |  | 8543 | 88 | python decl doc at src/tomli/_parser.py:764 |  |  | 0.534 |
+| ns | 8626 |  | 336 | README usage: tomllib compat shim | 4.8 |  | 0.546 |
+| walker |  | 8633 | 90 | python decl body at src/tomli/_parser.py:612 body 613 |  |  | 0.546 |
+| walker |  | 8781 | 148 | python decl body at src/tomli/_parser.py:599 body 600 |  |  | 0.546 |
+| walker |  | 8789 | 8 | python decl body at src/tomli/_parser.py:652 body 659 |  |  | 0.546 |
+| walker |  | 8799 | 10 | python decl body at src/tomli/_parser.py:652 body 660 |  |  | 0.546 |
+| walker |  | 8809 | 10 | python decl body at src/tomli/_parser.py:764 body 782 |  |  | 0.546 |
+| walker |  | 8818 | 9 | python imports in fuzzer/fuzz.py |  |  | 0.546 |
+| walker |  | 8828 | 10 | python decl body at src/tomli/_parser.py:502 body 505 |  |  | 0.546 |
+| walker |  | 8845 | 17 | python decl body at src/tomli/_parser.py:463 body 466 |  |  | 0.546 |
 | ns | 8921 |  | 295 | README FAQ: type mapping table | 5.1 |  | 0.557 |
-| walker |  | 8970 | 90 | python decl body at src/tomli/_parser.py:612 body 613 |  |  | 0.557 |
-| walker |  | 9118 | 148 | python decl body at src/tomli/_parser.py:599 body 600 |  |  | 0.557 |
-| walker |  | 9126 | 8 | python decl body at src/tomli/_parser.py:652 body 659 |  |  | 0.557 |
-| walker |  | 9136 | 10 | python decl body at src/tomli/_parser.py:652 body 660 |  |  | 0.557 |
-| walker |  | 9146 | 10 | python decl body at src/tomli/_parser.py:764 body 782 |  |  | 0.557 |
+| walker |  | 9146 | 301 | README.md section #26 |  |  | 0.557 |
 | walker |  | 9178 | 32 | python decl at profiler/profiler_script.py:12 |  |  | 0.557 |
 | walker |  | 9197 | 19 | python decl body at src/tomli/_parser.py:764 body 773 |  |  | 0.557 |
 | walker |  | 9209 | 12 | python decl body at src/tomli/_parser.py:502 body 506 |  |  | 0.557 |

@@ -47,45 +47,45 @@ Score(3000)=0.591 I=0.828 C=0.421 ns_rows≤3K=18/40 (reached=8 partial=2 missin
 | walker |  | 1298 | 22 | README.md section #6 |  |  | 0.637 |
 | walker |  | 1346 | 48 | README.md section #9 |  |  | 0.637 |
 | walker |  | 1369 | 23 | README.md section #2 |  |  | 0.645 |
-| walker |  | 1393 | 24 | README.md section #4 |  |  | 0.657 |
-| walker |  | 1422 | 29 | docs/usage.md section #0 |  |  | 0.657 |
-| walker |  | 1537 | 115 | python method sigs in peepdb/db/base.py |  |  | 0.667 |
-| walker |  | 1537 | 0 | python method at peepdb/db/base.py:6 |  |  | 0.667 |
-| walker |  | 1537 | 0 | python method at peepdb/db/base.py:33 |  |  | 0.667 |
-| walker |  | 1537 | 0 | python method at peepdb/db/base.py:37 |  |  | 0.667 |
-| ns | 1545 |  | 284 | BaseDatabase — constructor + context-manager (full body) | 3.5 | 3.2 | 0.597 |
-| walker |  | 1547 | 10 | python method at peepdb/db/base.py:17 |  |  | 0.601 |
-| walker |  | 1557 | 10 | python method at peepdb/db/base.py:21 |  |  | 0.607 |
-| walker |  | 1569 | 12 | python method at peepdb/db/base.py:25 |  |  | 0.615 |
-| walker |  | 1602 | 33 | python method at peepdb/db/base.py:29 |  |  | 0.631 |
-| walker |  | 1608 | 6 | python method body at peepdb/db/base.py:37 body 38 |  |  | 0.633 |
-| walker |  | 1615 | 7 | python method body at peepdb/db/base.py:17 body 19 |  |  | 0.634 |
-| walker |  | 1622 | 7 | python method body at peepdb/db/base.py:21 body 23 |  |  | 0.636 |
-| walker |  | 1629 | 7 | python method body at peepdb/db/base.py:25 body 27 |  |  | 0.638 |
-| walker |  | 1636 | 7 | python method body at peepdb/db/base.py:29 body 31 |  |  | 0.641 |
-| walker |  | 1790 | 154 | headings outline in docs/README.md |  |  | 0.641 |
-| walker |  | 1807 | 17 | docs/README.md section #2 |  |  | 0.641 |
-| walker |  | 1822 | 15 | docs/README.md section #8 |  |  | 0.641 |
-| walker |  | 1872 | 50 | docs/README.md section #1 |  |  | 0.641 |
-| ns | 2006 |  | 461 | connect_to_database dispatcher (full if/elif chain) | 3.6 |  | 0.585 |
-| walker |  | 2064 | 192 | docs/README.md section #0 |  |  | 0.585 |
-| walker |  | 2101 | 37 | README.md section #1 |  |  | 0.596 |
-| walker |  | 2183 | 82 | python decl names surface in peepdb/cli.py |  |  | 0.596 |
-| walker |  | 2183 | 0 | python decl at peepdb/cli.py:16 |  |  | 0.596 |
-| walker |  | 2183 | 0 | python decl at peepdb/cli.py:181 |  |  | 0.596 |
-| walker |  | 2188 | 5 | python decl at peepdb/cli.py:86 |  |  | 0.597 |
-| walker |  | 2193 | 5 | python decl body at peepdb/cli.py:181 body 182 |  |  | 0.598 |
-| walker |  | 2207 | 14 | python decl at peepdb/cli.py:25 |  |  | 0.599 |
-| walker |  | 2218 | 11 | python method sigs in peepdb/cli.py |  |  | 0.599 |
-| walker |  | 2218 | 0 | python method at peepdb/cli.py:17 |  |  | 0.599 |
-| walker |  | 2225 | 7 | python decl body at peepdb/cli.py:25 body 50 |  |  | 0.599 |
-| walker |  | 2233 | 8 | python decl body at peepdb/cli.py:86 body 94 |  |  | 0.599 |
-| walker |  | 2262 | 29 | python decl at peepdb/cli.py:113 |  |  | 0.601 |
-| walker |  | 2302 | 40 | python decl at peepdb/cli.py:97 |  |  | 0.605 |
-| walker |  | 2340 | 38 | python decl doc at peepdb/cli.py:86 |  |  | 0.605 |
-| ns | 2341 |  | 335 | MySQL + PostgreSQL + MariaDB + SQLite adapters — class + method locations | 4.1 | 3.2 | 0.571 |
-| walker |  | 2380 | 40 | python decl doc at peepdb/cli.py:113 |  |  | 0.571 |
-| walker |  | 2422 | 42 | python decl doc at peepdb/cli.py:97 |  |  | 0.572 |
+| walker |  | 1484 | 115 | python method sigs in peepdb/db/base.py |  |  | 0.655 |
+| walker |  | 1484 | 0 | python method at peepdb/db/base.py:6 |  |  | 0.655 |
+| walker |  | 1484 | 0 | python method at peepdb/db/base.py:33 |  |  | 0.655 |
+| walker |  | 1484 | 0 | python method at peepdb/db/base.py:37 |  |  | 0.655 |
+| walker |  | 1494 | 10 | python method at peepdb/db/base.py:17 |  |  | 0.660 |
+| walker |  | 1504 | 10 | python method at peepdb/db/base.py:21 |  |  | 0.667 |
+| walker |  | 1516 | 12 | python method at peepdb/db/base.py:25 |  |  | 0.675 |
+| ns | 1545 |  | 284 | BaseDatabase — constructor + context-manager (full body) | 3.5 | 3.2 | 0.605 |
+| walker |  | 1549 | 33 | python method at peepdb/db/base.py:29 |  |  | 0.621 |
+| walker |  | 1555 | 6 | python method body at peepdb/db/base.py:37 body 38 |  |  | 0.623 |
+| walker |  | 1562 | 7 | python method body at peepdb/db/base.py:17 body 19 |  |  | 0.624 |
+| walker |  | 1569 | 7 | python method body at peepdb/db/base.py:21 body 23 |  |  | 0.626 |
+| walker |  | 1576 | 7 | python method body at peepdb/db/base.py:25 body 27 |  |  | 0.628 |
+| walker |  | 1583 | 7 | python method body at peepdb/db/base.py:29 body 31 |  |  | 0.631 |
+| walker |  | 1607 | 24 | README.md section #4 |  |  | 0.641 |
+| walker |  | 1636 | 29 | docs/usage.md section #0 |  |  | 0.641 |
+| walker |  | 1718 | 82 | python decl names surface in peepdb/cli.py |  |  | 0.641 |
+| walker |  | 1718 | 0 | python decl at peepdb/cli.py:16 |  |  | 0.641 |
+| walker |  | 1718 | 0 | python decl at peepdb/cli.py:181 |  |  | 0.641 |
+| walker |  | 1723 | 5 | python decl at peepdb/cli.py:86 |  |  | 0.641 |
+| walker |  | 1728 | 5 | python decl body at peepdb/cli.py:181 body 182 |  |  | 0.642 |
+| walker |  | 1742 | 14 | python decl at peepdb/cli.py:25 |  |  | 0.644 |
+| walker |  | 1753 | 11 | python method sigs in peepdb/cli.py |  |  | 0.644 |
+| walker |  | 1753 | 0 | python method at peepdb/cli.py:17 |  |  | 0.644 |
+| walker |  | 1760 | 7 | python decl body at peepdb/cli.py:25 body 50 |  |  | 0.644 |
+| walker |  | 1768 | 8 | python decl body at peepdb/cli.py:86 body 94 |  |  | 0.644 |
+| walker |  | 1797 | 29 | python decl at peepdb/cli.py:113 |  |  | 0.646 |
+| walker |  | 1837 | 40 | python decl at peepdb/cli.py:97 |  |  | 0.651 |
+| walker |  | 1875 | 38 | python decl doc at peepdb/cli.py:86 |  |  | 0.651 |
+| walker |  | 1915 | 40 | python decl doc at peepdb/cli.py:113 |  |  | 0.651 |
+| walker |  | 1957 | 42 | python decl doc at peepdb/cli.py:97 |  |  | 0.652 |
+| ns | 2006 |  | 461 | connect_to_database dispatcher (full if/elif chain) | 3.6 |  | 0.596 |
+| walker |  | 2111 | 154 | headings outline in docs/README.md |  |  | 0.596 |
+| walker |  | 2128 | 17 | docs/README.md section #2 |  |  | 0.596 |
+| walker |  | 2143 | 15 | docs/README.md section #8 |  |  | 0.596 |
+| walker |  | 2193 | 50 | docs/README.md section #1 |  |  | 0.596 |
+| ns | 2341 |  | 335 | MySQL + PostgreSQL + MariaDB + SQLite adapters — class + method locations | 4.1 | 3.2 | 0.562 |
+| walker |  | 2385 | 192 | docs/README.md section #0 |  |  | 0.562 |
+| walker |  | 2422 | 37 | README.md section #1 |  |  | 0.572 |
 | walker |  | 2445 | 23 | README.md section #16 |  |  | 0.572 |
 | walker |  | 2469 | 24 | docs/installation.md section #1 |  |  | 0.572 |
 | walker |  | 2529 | 60 | docs/installation.md section #0 |  |  | 0.572 |
@@ -117,61 +117,61 @@ Score(3000)=0.591 I=0.828 C=0.421 ns_rows≤3K=18/40 (reached=8 partial=2 missin
 | walker |  | 3089 | 0 | python decl at peepdb/db/mysql.py:5 |  |  | 0.593 |
 | walker |  | 3102 | 13 | python decl names surface in peepdb/db/postgresql.py |  |  | 0.594 |
 | walker |  | 3102 | 0 | python decl at peepdb/db/postgresql.py:6 |  |  | 0.594 |
-| walker |  | 3136 | 34 | README.md section #20 |  |  | 0.594 |
-| walker |  | 3169 | 33 | docs/installation.md section #4 |  |  | 0.594 |
-| walker |  | 3202 | 33 | docs/usage.md section #2 |  |  | 0.594 |
-| walker |  | 3223 | 21 | docs/README.md section #5 |  |  | 0.594 |
-| walker |  | 3226 | 3 | listing of '.github' |  |  | 0.594 |
-| walker |  | 3234 | 8 | listing of '.github/workflows' |  |  | 0.609 |
-| walker |  | 3271 | 37 | README.md section #24 |  |  | 0.609 |
-| ns | 3400 |  | 501 | cli.view — decorators + signature + dispatch into peep_db | 4.4 | 3.4 | 0.555 |
-| walker |  | 3423 | 152 | python decl at peepdb/cli.py:126 |  |  | 0.570 |
-| walker |  | 3470 | 47 | python decl doc at peepdb/cli.py:126 |  |  | 0.578 |
-| walker |  | 3509 | 39 | README.md section #23 |  |  | 0.578 |
-| ns | 3604 |  | 204 | cli.view — table vs JSON output handling + main() | 4.5 | 4.4 | 0.561 |
-| walker |  | 3625 | 116 | README.md section #27 |  |  | 0.561 |
-| walker |  | 3665 | 40 | README.md section #19 |  |  | 0.561 |
-| walker |  | 3697 | 32 | python imports in peepdb/db/base.py |  |  | 0.569 |
-| walker |  | 3729 | 32 | python imports in peepdb/db/mariadb.py |  |  | 0.569 |
-| walker |  | 3761 | 32 | python imports in peepdb/db/mysql.py |  |  | 0.569 |
-| walker |  | 3800 | 39 | python imports in peepdb/db/sqlite.py |  |  | 0.569 |
-| walker |  | 3847 | 47 | README.md section #12 |  |  | 0.569 |
-| walker |  | 3887 | 40 | python imports in peepdb/db/mssql.py |  |  | 0.569 |
-| walker |  | 3894 | 7 | python decl body at peepdb/core.py:101 body 102 |  |  | 0.569 |
-| ns | 3909 |  | 305 | config.py — module-level constants + KeySecurity | 5.1 |  | 0.542 |
-| walker |  | 3935 | 41 | python imports in peepdb/db/oracle.py |  |  | 0.542 |
-| walker |  | 3982 | 47 | docs/index.md section #10 |  |  | 0.542 |
-| walker |  | 4029 | 47 | docs/usage.md section #7 |  |  | 0.542 |
-| walker |  | 4079 | 50 | README.md section #15 |  |  | 0.542 |
-| walker |  | 4097 | 18 | python decl body at peepdb/cli.py:113 body 123 |  |  | 0.542 |
-| walker |  | 4192 | 95 | python decl names surface #1 in peepdb/config.py |  |  | 0.553 |
-| walker |  | 4192 | 0 | python decl at peepdb/config.py:73 |  |  | 0.553 |
-| walker |  | 4192 | 0 | python decl at peepdb/config.py:76 |  |  | 0.553 |
-| walker |  | 4192 | 0 | python decl at peepdb/config.py:112 |  |  | 0.553 |
-| walker |  | 4192 | 0 | python decl at peepdb/config.py:144 |  |  | 0.553 |
-| walker |  | 4192 | 0 | python decl at peepdb/config.py:161 |  |  | 0.553 |
-| walker |  | 4192 | 0 | python decl at peepdb/config.py:178 |  |  | 0.553 |
-| walker |  | 4192 | 0 | python decl at peepdb/config.py:196 |  |  | 0.553 |
-| walker |  | 4207 | 15 | python decl body at peepdb/config.py:73 body 74 |  |  | 0.553 |
-| walker |  | 4231 | 24 | python decl names surface in peepdb/db/firebase.py |  |  | 0.554 |
-| walker |  | 4231 | 0 | python decl at peepdb/db/firebase.py:9 |  |  | 0.554 |
-| walker |  | 4279 | 48 | python imports in peepdb/db/mongodb.py |  |  | 0.554 |
-| ns | 4290 |  | 381 | save_connection — full body (sqlite/firebase shortcut + encrypt) | 5.2 | 4.3 | 0.524 |
-| walker |  | 4296 | 17 | docs/index.md section #5 |  |  | 0.524 |
-| walker |  | 4323 | 27 | docs/README.md section #12 |  |  | 0.524 |
-| walker |  | 4373 | 50 | python imports in peepdb/db/postgresql.py |  |  | 0.524 |
-| walker |  | 4472 | 99 | docs/README.md section #7 |  |  | 0.524 |
-| ns | 4589 |  | 299 | get_connection — full body (decrypt + InvalidPassword) | 5.3 | 4.3 | 0.501 |
-| walker |  | 4660 | 188 | python decl names surface in peepdb/config.py |  |  | 0.515 |
-| walker |  | 4660 | 0 | python decl at peepdb/config.py:49 |  |  | 0.515 |
-| walker |  | 4660 | 0 | python decl at peepdb/config.py:60 |  |  | 0.515 |
-| walker |  | 4660 | 0 | python decl at peepdb/config.py:70 |  |  | 0.515 |
-| walker |  | 4666 | 6 | python decl at peepdb/config.py:15 |  |  | 0.516 |
-| walker |  | 4675 | 9 | python decl at peepdb/config.py:41 |  |  | 0.520 |
-| walker |  | 4685 | 10 | python decl at peepdb/config.py:29 |  |  | 0.524 |
-| walker |  | 4709 | 24 | python class body at peepdb/config.py:15 |  |  | 0.527 |
-| walker |  | 4724 | 15 | python decl body at peepdb/config.py:70 body 71 |  |  | 0.527 |
-| walker |  | 4803 | 79 | python decl body at peepdb/config.py:41 body 43 |  |  | 0.527 |
+| walker |  | 3290 | 188 | python decl names surface in peepdb/config.py |  |  | 0.597 |
+| walker |  | 3290 | 0 | python decl at peepdb/config.py:49 |  |  | 0.597 |
+| walker |  | 3290 | 0 | python decl at peepdb/config.py:60 |  |  | 0.597 |
+| walker |  | 3290 | 0 | python decl at peepdb/config.py:70 |  |  | 0.597 |
+| walker |  | 3296 | 6 | python decl at peepdb/config.py:15 |  |  | 0.597 |
+| walker |  | 3305 | 9 | python decl at peepdb/config.py:41 |  |  | 0.598 |
+| walker |  | 3315 | 10 | python decl at peepdb/config.py:29 |  |  | 0.601 |
+| walker |  | 3339 | 24 | python class body at peepdb/config.py:15 |  |  | 0.601 |
+| walker |  | 3354 | 15 | python decl body at peepdb/config.py:70 body 71 |  |  | 0.601 |
+| walker |  | 3388 | 34 | README.md section #20 |  |  | 0.601 |
+| ns | 3400 |  | 501 | cli.view — decorators + signature + dispatch into peep_db | 4.4 | 3.4 | 0.548 |
+| walker |  | 3421 | 33 | docs/installation.md section #4 |  |  | 0.548 |
+| walker |  | 3454 | 33 | docs/usage.md section #2 |  |  | 0.548 |
+| walker |  | 3475 | 21 | docs/README.md section #5 |  |  | 0.548 |
+| walker |  | 3478 | 3 | listing of '.github' |  |  | 0.548 |
+| walker |  | 3486 | 8 | listing of '.github/workflows' |  |  | 0.561 |
+| walker |  | 3523 | 37 | README.md section #24 |  |  | 0.561 |
+| ns | 3604 |  | 204 | cli.view — table vs JSON output handling + main() | 4.5 | 4.4 | 0.545 |
+| walker |  | 3675 | 152 | python decl at peepdb/cli.py:126 |  |  | 0.560 |
+| walker |  | 3722 | 47 | python decl doc at peepdb/cli.py:126 |  |  | 0.567 |
+| walker |  | 3761 | 39 | README.md section #23 |  |  | 0.567 |
+| walker |  | 3877 | 116 | README.md section #27 |  |  | 0.567 |
+| ns | 3909 |  | 305 | config.py — module-level constants + KeySecurity | 5.1 |  | 0.550 |
+| walker |  | 3917 | 40 | README.md section #19 |  |  | 0.550 |
+| walker |  | 3949 | 32 | python imports in peepdb/db/base.py |  |  | 0.558 |
+| walker |  | 3981 | 32 | python imports in peepdb/db/mariadb.py |  |  | 0.558 |
+| walker |  | 4013 | 32 | python imports in peepdb/db/mysql.py |  |  | 0.558 |
+| walker |  | 4052 | 39 | python imports in peepdb/db/sqlite.py |  |  | 0.558 |
+| walker |  | 4099 | 47 | README.md section #12 |  |  | 0.558 |
+| walker |  | 4194 | 95 | python decl names surface #1 in peepdb/config.py |  |  | 0.582 |
+| walker |  | 4194 | 0 | python decl at peepdb/config.py:73 |  |  | 0.582 |
+| walker |  | 4194 | 0 | python decl at peepdb/config.py:76 |  |  | 0.582 |
+| walker |  | 4194 | 0 | python decl at peepdb/config.py:112 |  |  | 0.582 |
+| walker |  | 4194 | 0 | python decl at peepdb/config.py:144 |  |  | 0.582 |
+| walker |  | 4194 | 0 | python decl at peepdb/config.py:161 |  |  | 0.582 |
+| walker |  | 4194 | 0 | python decl at peepdb/config.py:178 |  |  | 0.582 |
+| walker |  | 4194 | 0 | python decl at peepdb/config.py:196 |  |  | 0.582 |
+| walker |  | 4209 | 15 | python decl body at peepdb/config.py:73 body 74 |  |  | 0.582 |
+| walker |  | 4288 | 79 | python decl body at peepdb/config.py:41 body 43 |  |  | 0.582 |
+| ns | 4290 |  | 381 | save_connection — full body (sqlite/firebase shortcut + encrypt) | 5.2 | 4.3 | 0.551 |
+| walker |  | 4328 | 40 | python imports in peepdb/db/mssql.py |  |  | 0.551 |
+| walker |  | 4335 | 7 | python decl body at peepdb/core.py:101 body 102 |  |  | 0.551 |
+| walker |  | 4376 | 41 | python imports in peepdb/db/oracle.py |  |  | 0.551 |
+| walker |  | 4423 | 47 | docs/index.md section #10 |  |  | 0.551 |
+| walker |  | 4470 | 47 | docs/usage.md section #7 |  |  | 0.551 |
+| walker |  | 4520 | 50 | README.md section #15 |  |  | 0.551 |
+| walker |  | 4538 | 18 | python decl body at peepdb/cli.py:113 body 123 |  |  | 0.551 |
+| walker |  | 4562 | 24 | python decl names surface in peepdb/db/firebase.py |  |  | 0.552 |
+| walker |  | 4562 | 0 | python decl at peepdb/db/firebase.py:9 |  |  | 0.552 |
+| ns | 4589 |  | 299 | get_connection — full body (decrypt + InvalidPassword) | 5.3 | 4.3 | 0.527 |
+| walker |  | 4610 | 48 | python imports in peepdb/db/mongodb.py |  |  | 0.527 |
+| walker |  | 4627 | 17 | docs/index.md section #5 |  |  | 0.527 |
+| walker |  | 4654 | 27 | docs/README.md section #12 |  |  | 0.527 |
+| walker |  | 4704 | 50 | python imports in peepdb/db/postgresql.py |  |  | 0.527 |
+| walker |  | 4803 | 99 | docs/README.md section #7 |  |  | 0.527 |
 | walker |  | 4854 | 51 | python imports in peepdb/db/firebase.py |  |  | 0.527 |
 | walker |  | 4910 | 56 | docs/usage.md section #4 |  |  | 0.527 |
 | walker |  | 4966 | 56 | docs/usage.md section #5 |  |  | 0.527 |

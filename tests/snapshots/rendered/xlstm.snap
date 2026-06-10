@@ -235,8 +235,26 @@ xlstm/
     xlstm_block_stack.py
         15→@dataclass
         16→class xLSTMBlockStackConfig:
+        36→    @property
+        37→    def block_map(self) -> list[int]:
+        38→        return list(map(int, self._block_map.split(",")))
+        40→    def _create_block_map(self) -> str:
+        …
+        52→    def __post_init__(self):
+        …
         77→class xLSTMBlockStack(nn.Module):
         78→    config_class = xLSTMBlockStackConfig
+        80→    def __init__(self, config: xLSTMBlockStackConfig):
+        …
+        90→    def _create_blocks(self, config: xLSTMBlockStackConfig):
+        …
+        111→    def reset_parameters(self) -> None:
+        …
+        117→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
+        …
+        126→    def step(
+        127→        self, x: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None
+        128→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
     xlstm_large/
         __init__.py
             1→from .model import xLSTMLarge, xLSTMLargeConfig
