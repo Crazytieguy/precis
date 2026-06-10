@@ -77,11 +77,21 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
 }
 
 fn resolve_fs_group(group: &FsGroup, fixture_root: &Path) -> Result<FsGroup> {
-    let parent_abs = if group.parent.is_absolute() {
-        group.parent.clone()
-    } else {
-        fixture_root.join(&group.parent)
-    };
+    // Fs parents must stay inside the fixture root: reject absolute paths
+    // and any `..` traversal. Surfaces via FsResolveFailed so a frozen NS
+    // with an escaping parent fails divergence scoring loudly.
+    if group.parent.is_absolute()
+        || group
+            .parent
+            .components()
+            .any(|c| matches!(c, std::path::Component::ParentDir))
+    {
+        bail!(
+            "NS fs group parent must be fixture-root-relative: {}",
+            group.parent.display()
+        );
+    }
+    let parent_abs = fixture_root.join(&group.parent);
     let entries = match &group.entries {
         FsEntries::All => {
             let listed = list_dir(&parent_abs);

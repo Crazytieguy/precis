@@ -21,9 +21,6 @@ pub struct SimulatedBatch {
     pub descriptor: String,
     pub marginal_cost: Cost,
     pub cumulative_tokens: usize,
-    /// Parent NS-id this batch declared as predecessor. Copied verbatim
-    /// from the NS; closure is verified separately.
-    pub predecessor: Option<String>,
     pub violations: Vec<Violation>,
 }
 
@@ -104,6 +101,12 @@ pub enum Violation {
     },
     /// Cumulative cost exceeds the token cap after this batch.
     CapExceeded { cumulative: usize, cap: usize },
+    /// Resolved content yields zero atoms (empty spans, or an Fs batch
+    /// whose every group lists nothing). Not render-blocking — the batch
+    /// is a harmless no-op — but it can never be credited by divergence.
+    EmptyBatch,
+    /// Span path is absolute or contains `..` — must be fixture-root-relative.
+    SpanPathEscapesRoot { path: PathBuf },
 }
 
 /// Result of simulating an NS end-to-end.
@@ -193,6 +196,9 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
                 continue;
             }
         };
+        if is_zero_atom(&content) {
+            violations.push(Violation::EmptyBatch);
+        }
         violations.extend(validate_fs_entries(
             &content,
             &ns_batch.id,
@@ -246,7 +252,6 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
             descriptor: ns_batch.descriptor.clone(),
             marginal_cost: cost,
             cumulative_tokens: cumulative,
-            predecessor: ns_batch.predecessor.clone(),
             violations,
         });
     }
@@ -267,7 +272,22 @@ fn is_render_blocking(v: &Violation) -> bool {
             | Violation::RegexInvalid { .. }
             | Violation::RegexNoMatch { .. }
             | Violation::OverlappingSpans { .. }
+            | Violation::SpanPathEscapesRoot { .. }
     )
+}
+
+/// Resolved content with no atoms. `Fs` resolution has already expanded
+/// `All` into `Listed`, so a group contributes nothing iff its `Listed`
+/// set is empty (covers `groups = []`, explicit `entries = []`, and
+/// `All` over an existing-but-empty directory).
+fn is_zero_atom(content: &BatchContent) -> bool {
+    match content {
+        BatchContent::Lines { spans } => spans.is_empty(),
+        BatchContent::Fs { groups } => groups.iter().all(|g| match &g.entries {
+            FsEntries::Listed(paths) => paths.is_empty(),
+            FsEntries::All => true,
+        }),
+    }
 }
 
 /// Record for an NS batch whose cost/apply was skipped — span
@@ -282,7 +302,6 @@ fn skipped_batch(
         descriptor: ns_batch.descriptor.clone(),
         marginal_cost: Cost::default(),
         cumulative_tokens: cumulative,
-        predecessor: ns_batch.predecessor.clone(),
         violations,
     }
 }
@@ -324,6 +343,17 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
     let mut compiled: HashMap<String, regex::Regex> = HashMap::new();
     let mut seen_lines: HashSet<(PathBuf, usize)> = HashSet::new();
     for span in spans {
+        if span.path.is_absolute()
+            || span
+                .path
+                .components()
+                .any(|c| matches!(c, std::path::Component::ParentDir))
+        {
+            out.push(Violation::SpanPathEscapesRoot {
+                path: span.path.clone(),
+            });
+            continue;
+        }
         let abs = fixture_root.join(&span.path);
         let Some(source) = cache.get(&abs) else {
             out.push(Violation::SpanFileMissing(span.path.clone()));

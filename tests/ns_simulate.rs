@@ -316,3 +316,119 @@ spans = [{{ path = "src/lib.rs", start = 1, end = 99999, render = {{ kind = "ful
         report.batches[0].violations
     );
 }
+
+/// A `lines` batch with no spans resolves to zero atoms — it renders as a
+/// no-op and can never be credited by divergence. Expected: `EmptyBatch`.
+#[test]
+fn ns_simulate_detects_empty_lines_batch() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "no spans"
+justification = "zero-atom no-op"
+[batches.content]
+kind = "lines"
+spans = []
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert!(
+        report.batches[0]
+            .violations
+            .iter()
+            .any(|v| matches!(v, Violation::EmptyBatch)),
+        "expected EmptyBatch, got {:?}",
+        report.batches[0].violations
+    );
+}
+
+/// An `fs` batch whose only group lists nothing resolves to zero atoms.
+/// Expected: `EmptyBatch`.
+#[test]
+fn ns_simulate_detects_empty_fs_batch() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "empty listing"
+justification = "zero-atom no-op"
+[batches.content]
+kind = "fs"
+groups = [{{ parent = ".", entries = [] }}]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert!(
+        report.batches[0]
+            .violations
+            .iter()
+            .any(|v| matches!(v, Violation::EmptyBatch)),
+        "expected EmptyBatch, got {:?}",
+        report.batches[0].violations
+    );
+}
+
+/// An absolute span path escapes the fixture root. Expected:
+/// `SpanPathEscapesRoot` (render-blocking — the batch is skipped).
+#[test]
+fn ns_simulate_detects_absolute_span_path() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "absolute path"
+justification = "escapes fixture root"
+[batches.content]
+kind = "lines"
+spans = [{{ path = "/etc/passwd", start = 1, end = 1, render = {{ kind = "full" }} }}]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert!(
+        report.batches[0]
+            .violations
+            .iter()
+            .any(|v| matches!(v, Violation::SpanPathEscapesRoot { .. })),
+        "expected SpanPathEscapesRoot, got {:?}",
+        report.batches[0].violations
+    );
+}
+
+/// A `..`-traversing span path escapes the fixture root. Expected:
+/// `SpanPathEscapesRoot`.
+#[test]
+fn ns_simulate_detects_parent_traversal_span_path() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "parent traversal"
+justification = "escapes fixture root"
+[batches.content]
+kind = "lines"
+spans = [{{ path = "../Cargo.toml", start = 1, end = 1, render = {{ kind = "full" }} }}]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert!(
+        report.batches[0]
+            .violations
+            .iter()
+            .any(|v| matches!(v, Violation::SpanPathEscapesRoot { .. })),
+        "expected SpanPathEscapesRoot, got {:?}",
+        report.batches[0].violations
+    );
+}

@@ -1,6 +1,6 @@
-// Shared fixture repo list, included by src/bin/clone_fixtures.rs and future
-// test consumers. Includers must define a `with_fixtures!` macro that accepts
-// `($dir, $url, $rev)` tuples.
+// Shared fixture repo list, included by src/bin/clone_fixtures.rs and
+// tests/fixture_pins.rs. Includers must define a `with_fixtures!` macro that
+// accepts `($dir, $url, $rev)` tuples.
 //
 // Declaring a fixture here only makes it cloneable. To activate it, register
 // it in `tests/fixture_baselines.rs` with `per_fixture_tests!` (training) or

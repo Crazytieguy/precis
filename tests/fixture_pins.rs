@@ -12,7 +12,7 @@ macro_rules! with_fixtures {
 include!("data/fixtures.rs");
 
 #[test]
-fn reviews_fresh_fixture_pins_match_declarations() {
+fn fixture_pins_match_declarations() {
     let fixtures_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
     let mut problems = Vec::new();
     for &(name, _url, expected) in DECLARED_FIXTURES {

@@ -25,9 +25,23 @@ fn main() {
     for &(dir, url, rev) in FIXTURES {
         let target = fixtures_dir.join(dir);
         if target.exists() {
-            // Backfill the pin file on existing checkouts so older clones
-            // (from before pin tracking) also satisfy the staleness test.
-            let _ = std::fs::write(target.join(".precis-pin"), rev);
+            let pin = target.join(".precis-pin");
+            match std::fs::read_to_string(&pin) {
+                Err(_) => {
+                    // Backfill pre-pin-tracking clones so they satisfy the staleness test.
+                    std::fs::write(&pin, rev).expect("write .precis-pin");
+                }
+                Ok(existing) if existing.trim() != rev => {
+                    eprintln!(
+                        "  STALE: {} pinned at {} but fixtures.rs declares {} (rm -rf {} && re-run to update)",
+                        dir,
+                        existing.trim(),
+                        rev,
+                        target.display()
+                    );
+                }
+                Ok(_) => {}
+            }
             skipped += 1;
             continue;
         }
@@ -45,7 +59,8 @@ fn main() {
                 .expect("failed to run git")
                 .success();
         if !ok {
-            eprintln!("  FAILED: {}", dir);
+            eprintln!("  FAILED: {dir} (removing partial clone)");
+            let _ = std::fs::remove_dir_all(&target);
             continue;
         }
         std::fs::remove_dir_all(target.join(".git")).ok();

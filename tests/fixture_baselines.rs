@@ -392,15 +392,16 @@ fn compare_or_update(kind: &str, path: &Path, actual: &[u8]) {
 #[test]
 fn fixture_baselines_ns_pins_match_fixture_pins() {
     let ns_dir = manifest_dir().join(NS_DIR);
-    let Ok(read_dir) = fs::read_dir(&ns_dir) else {
-        return;
-    };
+    let read_dir =
+        fs::read_dir(&ns_dir).unwrap_or_else(|e| panic!("reading {}: {e}", ns_dir.display()));
     let mut problems = Vec::new();
+    let mut ns_count = 0;
     for entry in read_dir.flatten() {
         let path = entry.path();
         if path.extension().and_then(|s| s.to_str()) != Some("toml") {
             continue;
         }
+        ns_count += 1;
         let ns = match precis::ns_loader::load_ns(&path) {
             Ok(ns) => ns,
             Err(e) => {
@@ -432,4 +433,9 @@ fn fixture_baselines_ns_pins_match_fixture_pins() {
     if !problems.is_empty() {
         panic!("NS pin mismatches:\n  {}", problems.join("\n  "));
     }
+    assert!(
+        ns_count > 0,
+        "no NS TOMLs found under {} — directory moved or emptied?",
+        ns_dir.display()
+    );
 }

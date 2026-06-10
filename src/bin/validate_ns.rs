@@ -67,10 +67,9 @@ fn run() -> Result<ExitCode> {
 /// Print per-batch table + any violations. Returns `true` iff any batch
 /// had violations (so main can exit non-zero).
 fn print_report(ns_path: &std::path::Path, fixture: &str, report: &SimulationReport) -> bool {
-    let cap_note = report.total_tokens > TOKEN_CAP;
     let violation_count: usize = report.batches.iter().map(|b| b.violations.len()).sum();
 
-    if violation_count == 0 && !cap_note {
+    if violation_count == 0 {
         println!(
             "{}: OK ({} batches, cumulative {} / {})",
             ns_path.display(),
@@ -209,5 +208,12 @@ fn format_violation(v: &Violation) -> String {
         Violation::CapExceeded { cumulative, cap } => {
             format!("cap exceeded: cumulative {cumulative} > {cap} tokens")
         }
+        Violation::EmptyBatch => {
+            "batch resolves to zero atoms — it renders as a no-op, so divergence can never credit it and it is counted missing forever. Delete the batch or point it at real content.".to_string()
+        }
+        Violation::SpanPathEscapesRoot { path } => format!(
+            "span path {} escapes the fixture root (span paths must be fixture-root-relative — no absolute paths or `..`)",
+            path.display()
+        ),
     }
 }
