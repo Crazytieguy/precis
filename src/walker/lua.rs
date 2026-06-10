@@ -408,30 +408,32 @@ fn collect_decl(
     let mut ellipses = Vec::new();
     push_rows(&mut full, start_row, sig_end);
 
-    // Body-elision marker after the signature, when interior exists.
+    // Body-elision marker after the signature, whenever the body has
+    // rows the DeclBody batch will deliver (mirrors `collect_decl_body`).
     if let Some(body) = body_node {
         let bs = body.start_position().row;
         let be = body.end_position().row;
         let ellipsis_line = sig_end + 2;
-        if be > bs + 1 && !all_starts.contains(&ellipsis_line) {
+        if be >= bs.max(start_row + 1) && !all_starts.contains(&ellipsis_line) {
             ellipses.push(ellipsis_line);
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-/// Non-blank interior rows of a function-like decl's body.
+/// Non-blank rows of a function-like decl's body block. A Lua `block`
+/// node spans exactly the statement rows (no brace rows to exclude —
+/// `function`/`end` belong to the parent), so every row is content;
+/// only a block starting on the signature row itself is clamped past
+/// the signature.
 fn collect_decl_body(node: Node, src_lines: &[&str]) -> FileLines {
     let Some(body) = body_node_for_decl(node) else {
         return FileLines::new(Vec::new());
     };
-    let s = body.start_position().row;
-    let e = body.end_position().row;
-    if e <= s + 1 {
-        return FileLines::new(Vec::new());
-    }
+    let first = body.start_position().row.max(node.start_position().row + 1);
+    let last = body.end_position().row;
     let mut out = Vec::new();
-    for row in (s + 1)..e {
+    for row in first..=last {
         if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
             out.push(row + 1);
         }
@@ -560,6 +562,39 @@ return M
             !starts.contains(&7),
             "data=42 must not be a decl: {decls:?}"
         );
+    }
+
+    #[test]
+    fn lua_decl_body_covers_first_and_last_statement_rows() {
+        let src = "\
+local function foo(x)
+  local y = x + 1
+  if y > 2 then
+    y = y - 1
+  end
+  return y
+end
+";
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree);
+        assert_eq!(decls.len(), 1);
+        let src_lines: Vec<&str> = source.lines().collect();
+        let body = collect_decl_body(decls[0].0, &src_lines);
+        assert_eq!(body.full, vec![2, 3, 4, 5, 6], "body rows: {:?}", body.full);
+    }
+
+    #[test]
+    fn lua_decl_body_single_statement_is_nonempty() {
+        let src = "\
+local function foo(x)
+  return x + 1
+end
+";
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree);
+        let src_lines: Vec<&str> = source.lines().collect();
+        let body = collect_decl_body(decls[0].0, &src_lines);
+        assert_eq!(body.full, vec![2], "body rows: {:?}", body.full);
     }
 
     #[test]

@@ -65,59 +65,16 @@ UPDATING.md
     1→Updating from 3.x to 4.x
     2→========================
     …
-    4→In middleclass 4.0 there is no global `Object` class any more. Classes created with `class(<name>)` don't have a superclass any more.
-    5→If you need a global `Object` class, you must create it explicitly and then use it when creating new classes:
-    7→```lua
-    8→local Object = class('Object')
-    10→...
-    12→local MyClass = class('MyClass', Object)
-    13→```
-    15→If you are using a library which depends on the internal implementation of middleclass they might not work with middleclass 4.0. You might need to update those other libraries.
-    17→Middleclass 4.0 comes with support for `__index` metamethod support. If your library manipulated the classes' `__instanceDict` internal attribute, you might do the same thing now using `__index` instead.
-    19→Also note that the class method `:implements` has been removed.
     21→Updating from 2.x to 3.x
     22→========================
     …
-    24→Middleclass used to expose several global variables on the main scope. It does not do that anymore.
-    26→`class` is now returned by `require 'middleclass'`, and it is not set globally. So you can do this:
-    28→```lua
-    29→local class = require 'middleclass'
-    30→local MyClass = class('MyClass') -- works as before
-    31→```
-    33→`Object` is not a global variable any more. But you can get it from `class.Object`
-    35→```lua
-    36→local class = require 'middleclass'
-    37→local Object = class.Object
-    39→print(Object) -- prints 'class Object'
-    40→```
-    42→The public functions `instanceOf`, `subclassOf` and `includes` have been replaced by `Object.isInstanceOf`, `Object.static.isSubclassOf` and `Object.static.includes`.
-    44→Prior to 3.x:
-    46→```lua
-    47→instanceOf(MyClass, obj)
-    48→subclassOf(Object, aClass)
-    49→includes(aMixin, aClass)
-    50→```
-    52→Since 3.x:
-    54→```lua
-    55→obj:isInstanceOf(MyClass)
-    56→aClass:isSubclassOf(Object)
-    57→aClass:includes(aMixin)
-    58→```
-    60→The 3.x code snippet will throw an error if `obj` is not an object, or if `aClass` is not a class (since they will not implement `isInstanceOf`, `isSubclassOf` or `includes`).
-    61→If you are unsure of whether `obj` and `aClass` are an object or a class, you can use the methods in `Object`. They are prepared to work with random types, not just classes and instances:
-    63→```lua
-    64→Object.isInstanceOf(obj, MyClass)
-    65→Object.isSubclassOf(aClass, Object)
-    66→Object.includes(aClass, aMixin)
-    67→```
-    69→Notice that the parameter order is not the same now as it was in 2.x. Also note the change in naming: `isInstanceOf` instead of `instanceOf`, and `isSubclassOf` instead of `subclassOf`.
 middleclass.lua
     1→local middleclass = {
     2→  _VERSION     = 'middleclass v4.1.1',
     3→  _DESCRIPTION = 'Object Orientation for Lua',
     4→  _URL         = 'https://github.com/kikito/middleclass',
     31→local function _createIndexWrapper(aClass, f)
-    …
+    32→  if f == nil then
     33→    return aClass.__instanceDict
     34→  elseif type(f) == "function" then
     35→    return function(self, name)
@@ -137,44 +94,28 @@ middleclass.lua
     51→        return f[name]
     52→      end
     53→    end
+    54→  end
     57→local function _propagateInstanceMethod(aClass, name, f)
-    …
+    58→  f = name == "__index" and _createIndexWrapper(aClass, f) or f
     59→  aClass.__instanceDict[name] = f
     61→  for subclass in pairs(aClass.subclasses) do
     62→    if rawget(subclass.__declaredMethods, name) == nil then
     63→      _propagateInstanceMethod(subclass, name, f)
     64→    end
+    65→  end
     68→local function _declareInstanceMethod(aClass, name, f)
-    …
+    69→  aClass.__declaredMethods[name] = f
     71→  if f == nil and aClass.super then
     72→    f = aClass.super.__instanceDict[name]
     73→  end
+    75→  _propagateInstanceMethod(aClass, name, f)
     78→local function _tostring(self) return "class " .. self.name end
     79→local function _call(self, ...) return self:new(...) end
     …
     81→local function _createClass(name, super)
     …
-    83→  dict.__index = dict
-    85→  local aClass = { name = name, super = super, static = {},
-    86→                   __instanceDict = dict, __declaredMethods = {},
-    87→                   subclasses = setmetatable({}, {__mode='k'})  }
-    89→  if super then
-    90→    setmetatable(aClass.static, {
-    91→      __index = function(_,k)
-    92→        local result = rawget(dict,k)
-    93→        if result == nil then
-    94→          return super.static[k]
-    95→        end
-    96→        return result
-    97→      end
-    98→    })
-    99→  else
-    100→    setmetatable(aClass.static, { __index = function(_,k) return rawget(dict,k) end })
-    101→  end
-    103→  setmetatable(aClass, { __index = aClass.static, __tostring = _tostring,
-    104→                         __call = _call, __newindex = _declareInstanceMethod })
     109→local function _includeMixin(aClass, mixin)
-    …
+    110→  assert(type(mixin) == 'table', "mixin must be a table")
     112→  for name,method in pairs(mixin) do
     113→    if name ~= "included" and name ~= "static" then aClass[name] = method end
     114→  end
@@ -182,25 +123,29 @@ middleclass.lua
     117→    aClass.static[name] = method
     118→  end
     120→  if type(mixin.included)=="function" then mixin:included(aClass) end
+    121→  return aClass
     125→  __tostring   = function(self) return "instance of " .. tostring(self.class) end,
     …
     127→  initialize   = function(self, ...) end,
     …
     129→  isInstanceOf = function(self, aClass)
-    …
+    130→    return type(aClass) == 'table'
     131→       and type(self) == 'table'
     132→       and (self.class == aClass
     133→            or type(self.class) == 'table'
     134→            and type(self.class.isSubclassOf) == 'function'
+    135→            and self.class:isSubclassOf(aClass))
     138→  static = {
     139→    allocate = function(self)
-    …
+    140→      assert(type(self) == 'table', "Make sure that you are using 'Class:allocate' instead of 'Class.allocate'")
+    141→      return setmetatable({ class = self }, self.__instanceDict)
     144→    new = function(self, ...)
-    …
+    145→      assert(type(self) == 'table', "Make sure that you are using 'Class:new' instead of 'Class.new'")
     146→      local instance = self:allocate()
     147→      instance:initialize(...)
+    148→      return instance
     151→    subclass = function(self, name)
-    …
+    152→      assert(type(self) == 'table', "Make sure that you are using 'Class:subclass' instead of 'Class.subclass'")
     153→      assert(type(name) == "string", "You must provide a name(string) for your class")
     155→      local subclass = _createClass(name, self)
     157→      for methodName, f in pairs(self.__instanceDict) do
@@ -211,22 +156,26 @@ middleclass.lua
     162→      subclass.initialize = function(instance, ...) return self.initialize(instance, ...) end
     164→      self.subclasses[subclass] = true
     165→      self:subclassed(subclass)
+    167→      return subclass
     170→    subclassed = function(self, other) end,
     …
     172→    isSubclassOf = function(self, other)
-    …
+    173→      return type(other)      == 'table' and
     174→             type(self.super) == 'table' and
+    175→             ( self.super == other or self.super:isSubclassOf(other) )
     178→    include = function(self, ...)
-    …
+    179→      assert(type(self) == 'table', "Make sure you that you are using 'Class:include' instead of 'Class.include'")
     180→      for _,mixin in ipairs({...}) do _includeMixin(self, mixin) end
+    181→      return self
     186→function middleclass.class(name, super)
-    …
+    187→  assert(type(name) == 'string', "A name (string) is needed for the new class")
+    188→  return super and super:subclass(name) or _includeMixin(_createClass(name), DefaultMixin)
 performance/
     run.lua
         19→function A:foo()
-        …
+        20→  return 1
         37→function A.static:bar()
-        …
+        38→  return 2
     time.lua
 rockspecs/
     middleclass-3.0-0.rockspec
@@ -244,7 +193,7 @@ spec/
     metamethods_lua_5_3.lua
     metamethods_spec.lua
         3→local function is_lua_5_2_compatible()
-        …
+        4→  return type(rawlen) == 'function'
         7→local function is_lua_5_3_compatible()
-        …
+        8→  return type(string.unpack) == 'function'
     mixins_spec.lua
