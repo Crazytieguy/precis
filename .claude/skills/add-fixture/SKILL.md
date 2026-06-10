@@ -114,7 +114,10 @@ Validation fixtures produce only:
 
 - `tests/validation/<name>.md` (one line — the `Score(3000)=…` headline)
 
-Score lines print to stdout as tests run, for fast eyeballing.
+After the run, check the headline: `head -1 tests/divergence/<name>.md`
+(training) or `head -1 tests/validation/<name>.md` (validation).
+(nextest captures passing tests' stdout, so score lines don't print
+during the run.)
 `git diff tests/divergence/` shows the per-batch story for training
 fixtures whose reports shifted.
 

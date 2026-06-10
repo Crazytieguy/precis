@@ -109,8 +109,9 @@ blocks small budgets, split it or lower its rank) and on NS authoring
 ## Auto-injected docs don't belong in precis output
 
 Files the host harness already loads into the model's context —
-top-level `AGENTS.md`, `CLAUDE.md`, and text files under
-`.claude/skills/`, `.agent/skills/`, `.cursor/rules/` — should not
+`AGENTS.md` / `CLAUDE.md` at any depth (Claude Code's CLAUDE.md
+hierarchy is recursive), and text files under `.claude/skills/`,
+`.agent/skills/`, `.cursor/rules/` — should not
 have their bodies scheduled by precis. The file paths *should*
 remain discoverable via fs listings (so the agent knows the file
 exists and can read it if not auto-injected), but the prose-body
@@ -142,169 +143,101 @@ Two related conventions worth resisting drift on:
 - Per-walker run state goes in named fields on `WalkCtx` (`rust_state`,
   `typescript_state`, …), not a `TypeId` bag or thread-local.
 
-## Value/cost ranking — open lever on NS divergence
+## Value/cost ranking — settled vs open
 
-One of the open levers on NS divergence; current per-fixture priority
-should be read from the per-fixture reports
-(`tests/divergence/<fixture>.md`) rather than from this section. Cross-
-fixture survey is via shell — see the survey commands in the
-`iterate-divergence` skill. Open sub-symptoms:
+Per-fixture priority lives in the per-fixture reports
+(`tests/divergence/<fixture>.md`); cross-fixture survey via
+`head -1 tests/divergence/*.md`.
 
-- **Sibling-count devaluation**: when a file emits many per-item
-  batches (a config module with 20 `pub struct` children), each one's
-  individual value/cost ratio beats the value/cost of a single
-  important body elsewhere (`CommandArgs` in `src/cmd.rs`), producing
-  a "wide-but-shallow signature sweep" across deep files at the
-  expense of root-level anchors. The naive fix — folding a uniform
-  `sibling_factor(n_siblings)` into `PubItem`'s depth factor —
-  regresses, because dense core files (anyhow's `src/lib.rs` with
-  ~25 pub items) are *legitimately* dense and decoration-heavy dense
-  files (otree's `src/config/colors.rs` with 7 color sub-structs)
-  look structurally identical. `is_entrypoint_file` doesn't reliably
-  distinguish them; a working version needs a signal that does.
-  A second variant — devaluing the per-file *names surface* (rather
-  than per-decl) by `sqrt(K / n_siblings_in_dir)` across C / Python /
-  Go / Lua / Rust / TS walkers — was tested at K=5, K=10, K=20 with
-  matching floors. All three regressed the corpus average: K=5
-  delivered htop +nothing / cobra -0.118 / bubbletea -0.093 / vaul
-  -0.231; K=10 still hit bubbletea -0.100; K=20 was flat with no
-  meaningful wins. The "uniform demotion across all surfaces in a
-  dir" doesn't change the *relative* order among those surfaces, but
-  it lets non-surface batches (`package.json`, `tsconfig.json`,
-  README sections) jump ahead of the dir's load-bearing primary
-  (vaul's `src/index.tsx`, bubbletea's `tea.go`). The same dir-shape
-  hosts both "wide-but-shallow sweep" patterns (htop's `darwin/`)
-  and "one primary surrounded by helpers" patterns (vaul's `src/`);
-  sibling count alone can't distinguish them.
-- **The early-budget ratio wall (why Score(3000) expansion stalls).**
-  Two independent scheduler probes (2026-05) measured it: in the first
-  ~3000 tokens the winners are cheap `Fs` dir-listings / `Json` /
-  package-identity orientation batches with `value/cost^0.35` ratios of
-  ~120–291, while a deep source file's names-surface sits at ratio ~36 —
-  a 3–8× gap. Deep source (a require-hub class, a `src/` table) often
-  doesn't schedule within 10000 tokens, not just 3000. Closing the gap
-  by value tuning needs a 6–7× boost, which fires on *every* sibling at
-  that tier and reorders destructively (e.g. boosting entrypoint-required
-  classes regressed commander −0.138 / dockly −0.092 while the target
-  didn't move). The orientation batches it would displace are themselves
-  NS-wanted (NS authors front-load the file tree), so this isn't noise to
-  cut — it's a genuine local optimum *for re-ranking already-emitted
-  content*. The wall does NOT cap new-content recall: levers that surface
-  content the walker emitted nowhere keep paying, and the highest-yield
-  ones target **early / high-importance-weight (rank-1/2) atoms** —
-  Importance is `Σ damped/rank`, so a rank-1 atom is worth ~6× a rank-6
-  one. Cleared it (2026-05): RST sections, prisma bodies, small-header
-  bodies, C platform-port demotion, man-page NAME/DESC extraction
-  (`plaintext.rs`), decorative-H1 lede descent (`markdown.rs`) — the last
-  three took htop 0.182 → 0.263 and the corpus 0.5876 → 0.5890. So the
-  walker-side ceiling is NOT fixed; only *re-ranking* is at a local
-  optimum. Remaining headroom is more early-atom recall (plus a
-  core-header in-degree boost for OOP-spine ratio-wall fixtures like
-  htop, whose `Object/Row/Process/Meter/Panel` headers still lose the
-  ratio race). A lift via *re-ranking* would need a structural change
-  (FS-descent-order signal, per-tier rebalance), not per-key nudges.
-  Measured
-  (2026-05): the global `DEFAULT_CONCAVITY_EXPONENT` is already at its
-  peak — 0.35 → corpus avg 0.5876; 0.30 → 0.5739; 0.40 → 0.5551 — and the
-  win/loss split is by fixture *structure* (deep-method-heavy like
-  nano-vllm +0.100 vs orientation-heavy like sqlite-vec −0.120),
-  crossing languages, so neither a single exponent nor a per-language
-  override captures it. A real rebalance needs a per-batch-shape (not
-  per-key) cost model or a budget-tier-aware scheduler. The per-batch-
-  shape model was also tested and is walled: an additive ranking-cost
-  floor `value/(cost+C0)^k` (models fixed per-batch framing overhead,
-  demotes the ~5-token orientation flood) regressed at C0=20 → 0.5838
-  (otree +0.078 / toasty +0.049 vs tock −0.130 / mcphost −0.058); C0=0
-  is optimal. So all three accessible ranking knobs — multiplicative
-  exponent, additive cost floor, FS source-dir value — sit at their
-  optimum. A lift past 0.5876 needs a genuinely different scheduling
-  *algorithm* (explicit orientation-vs-source budget tiers), not the
-  value/cost greedy. **Re-confirmed 2026-05-31 *after* the early-atom
-  recall levers (corpus 0.5908): a fresh exponent sweep — 0.32 → 0.5817,
-  0.34 → 0.5876, 0.35 → 0.5908, 0.36 → 0.5854, 0.38 → 0.5711 — keeps 0.35
-  as a clean training peak; the added recall content did not shift the
-  optimum. (Aside: lower exponents *raise* validation — 0.32 → 0.4264 vs
-  0.4199 at 0.35 — so 0.35 is mildly training-overfit, but lowering it
-  regresses training, the objective.) Don't re-run this sweep; the
-  remaining headroom is the budget-tier scheduler, not the knobs.**
-  **FOURTH knob also confirmed optimal (2026-06): the `mix_signals`
-  value-axis weights `1000·cat + 400·fu + 300·ztu` are a TRAINING peak —
-  every direction regresses (cat+ 1200 → 0.5849, cat− 800 → 0.5843, fu+
-  550 → 0.5807, ztu+ 450 → 0.5847, fu−ztu− → 0.5818, vs baseline 0.5916).
-  The design-notes call these "first-pass," but they're at their local
-  optimum for training. Same overfit signature: shifting weight off `cat`
-  toward `fu`/`ztu` lifts validation (cat− 0.4310, fu+ 0.4319, ztu+
-  0.4327 vs 0.4297) while lowering training. So ALL FOUR global value/cost
-  knobs (exponent, cost-floor, FS value, mix-weights) are training-optimal;
-  recall is mined, re-ranking regresses — 0.65 is unreachable below the NS
-  answer key / metric. Don't re-sweep any of these.**
-- **Budget-tier scheduler — BUILT and SHIPPED 2026-05-31; a
-  generalization lever, NOT a training-Score(3000) lever, and NOT free.**
-  The hypothesized "explicit orientation-vs-source budget tiers" is now
-  implemented: `WalkerKey::is_orientation()` tags README/man-page
-  orientation prose + manifest identity (Markdown, `PlaintextKey::ManLede`,
-  Toml, non-`Whole` Json), and the scheduler multiplies their ratio by
-  `ORIENTATION_TIER_BOOST` while `consumed.tokens <
-  ORIENTATION_TIER_WINDOW` (applied at *both* the approx contender-pool
-  pass and the exact pass, else a boosted batch could be culled pre-exact).
-  Crucially **`FsKey` is excluded** — boosting the cheap directory-listing
-  flood is the wrong direction (a broad incl-`FsKey` window=1000/boost=2.0
-  config measured training −0.0088). The mechanism is justified on
-  principle (front-load universally-valuable orientation in the early
-  budget) and calibrated to **hold the primary training budget flat**;
-  window=500/boost=1.4 keeps training Score(3000) at 0.5908 (zero training
-  fixtures moved >0.005 at 3K). **But Score(3000)-flat HID a sub-primary
-  trade** (the `reference_score3000_hides_higher_budget` pattern, here on
-  the *low* side) — a per-budget probe (`divergence::score().vector`,
-  off-vs-on) shows training nicked below 3K while validation rises at
-  every budget:
+### Settled — measured training optima; don't re-sweep
 
-  ```
-  budget   train Δ    valid Δ
-   1000    −0.0019    +0.0295
-   1442    −0.0011    +0.0119
-   2080    −0.0007    +0.0095
-   3000    +0.0000    +0.0094   (primary)
-   4327    +0.0000    +0.0056
-   6240    +0.0000    +0.0043
-   9000    +0.0000    +0.0000
-  ```
+All four global ranking knobs are at their training peak (sweeps
+2026-05/06; every direction regresses):
 
-  The trade is *inherent*: front-loading orientation displaces some
-  training fixtures' rank-1 *code* atoms in the first ~1K tokens, while
-  recovering buried orientation on the untuned held-out set. So it does
-  **not** move training toward 0.65 — confirming again that 0.65 is
-  unreachable by scheduling once recall is mined — but it's a real
-  generalization gain (held-out, the tool's real-world quality proxy) at
-  a tiny sub-primary training cost. **Shipped on the user's explicit
-  call** after surfacing the full trade; the user also flagged that
-  ship/calibration decisions should NOT be driven by looking at the
-  validation score (see memory `feedback_dont_decide_on_validation_holdout`
-  — validation is an unbiased final check, not a tuning signal). Headroom:
-  a per-fixture-structure-aware tier (deep-method-heavy fixtures *want*
-  source early — nano-vllm) might break the train/valid trade where a
-  global tier can't.
-- **Prefix-stop tail effects on calibration tweaks**: any change that
-  shifts a big batch's rank can leave it stuck near the budget tail
-  where it no longer fits. The scheduler's prefix-monotone stop then
-  truncates the schedule, dropping the trailing `walker_used`. Saw
-  this on the per-key concavity bump: cmdk dropped from
-  `walker_used`=9484 to 7302 at B=10K. Score(3000) is invisible to
-  this (the prefix is identical at small budgets), but Score(9000)
-  and the `walker_used` column at high B get thinner. Mitigation
-  lever exists if needed — walker-side filter on absolute-cost — but
-  it's a separate change.
-- **Uncalibrated v0.2 JavaScript class-member levers**: the first JS
-  class-member split pass introduced seed values that still need a
-  calibration sweep: `JS_CLASS_MEMBER_SPLIT_MIN = 12`,
-  `ExportMember` concavity `0.45`, split names factor `1.12`, and
-  `export_member_value` weights `0.62 / 0.95 / 0.55`.
+- **Concavity exponent 0.35** (`DEFAULT_CONCAVITY_EXPONENT`): 0.32 →
+  0.5817, 0.34 → 0.5876, 0.35 → 0.5908, 0.36 → 0.5854, 0.38 → 0.5711.
+  Re-confirmed after the early-atom recall levers landed.
+- **Additive ranking-cost floor** `value/(cost+C0)^k`: C0=0 optimal
+  (C0=20 → 0.5838; otree +0.078 / toasty +0.049 vs tock −0.130 /
+  mcphost −0.058).
+- **FS source-dir value**: at optimum.
+- **`mix_signals` weights** `1000·cat + 400·fu + 300·ztu`: cat ±,
+  fu +, ztu +, fu−ztu− all regress (0.5807–0.5849 vs baseline 0.5916).
 
-Explicit experimentation territory — different exponents per key,
-richer sibling/density signals, NS-author updates that rank
-`PubItemNames`-style location hints as first-class. Calibration drives
-divergence; expect to iterate against the metric across the fixture
-set rather than land it on the first try.
+Common overfit signature: shifting any of these toward the validation
+optimum raises validation but lowers training — training is the
+objective; don't chase it (see
+`feedback_dont_decide_on_validation_holdout`).
+
+Consequence: 0.65 is unreachable below the NS answer key / metric by
+re-ranking. Recall is mined, the greedy's knobs are at their peak; a
+lift past ~0.59 needs a different scheduling *algorithm* (per-fixture-
+structure-aware tiers), not knob nudges. New-content recall levers keep
+paying, best on early / rank-1/2 atoms (Importance is `Σ damped/rank`,
+so a rank-1 atom ≈ 6× a rank-6 one).
+
+### Tested-and-failed lever shapes (specifics block re-tries)
+
+- **Sibling-count devaluation**, two variants: (a) uniform
+  `sibling_factor(n_siblings)` folded into `PubItem` depth factor —
+  regresses; anyhow's dense `src/lib.rs` (~25 pub items) is
+  *legitimately* dense while otree's `src/config/colors.rs` isn't, and
+  they look structurally identical. (b) per-file names-surface
+  `sqrt(K / n_siblings_in_dir)` across C/Python/Go/Lua/Rust/TS at
+  K=5/10/20 — all regress (K=5: cobra −0.118 / bubbletea −0.093 / vaul
+  −0.231; K=10: bubbletea −0.100; K=20 flat, no wins). Uniform demotion
+  preserves relative order *within* the dir but lets `package.json` /
+  README sections jump the dir's load-bearing primary (vaul's
+  `src/index.tsx`, bubbletea's `tea.go`). A working version needs a
+  signal that distinguishes "wide-but-shallow sweep" (htop's `darwin/`)
+  from "one primary + helpers" (vaul's `src/`); sibling count alone
+  can't.
+- **Early-budget ratio wall**: in the first ~3K tokens, cheap
+  orientation batches win the `value/cost^0.35` race 3–8× over deep
+  names surfaces (~120–291 vs ~36). Boosting deep source to compete
+  fires on every sibling at that tier and reorders destructively
+  (entrypoint-required-class boost: commander −0.138 / dockly −0.092,
+  target unmoved). The displaced orientation is NS-wanted, so this is a
+  genuine local optimum for re-ranking *already-emitted* content — only
+  new-content recall moves it.
+
+### Shipped: budget-tier scheduler (2026-05-31)
+
+`WalkerKey::is_orientation()` tags orientation-class batches
+(authoritative set = the `is_orientation()` impls in `src/batch.rs`:
+Markdown, man-page ledes, Toml, non-`Whole` Json, Lua module identity);
+the scheduler multiplies their ratio by `ORIENTATION_TIER_BOOST` while
+`consumed.tokens < ORIENTATION_TIER_WINDOW` (500/1.4), at both the
+approx contender pass and the exact pass. **`FsKey` is deliberately
+excluded** — boosting the cheap dir-listing flood is the wrong
+direction (incl-FsKey window=1000/boost=2.0 measured training
+−0.0088). Calibrated to hold training Score(3000) flat (0.5908); the
+sub-primary budgets take a tiny training nick that buys a held-out
+gain at every budget (train Δ −0.0019 at 1000 → 0.0000 at 3000+;
+valid Δ +0.0295 at 1000 → +0.0094 at 3000). The trade is inherent
+(front-loaded orientation displaces some training fixtures' rank-1
+code atoms under 1K) and was **shipped on the user's explicit call**
+after surfacing it. Headroom: a per-fixture-structure-aware tier —
+deep-method-heavy fixtures (nano-vllm) want source early,
+orientation-heavy ones (sqlite-vec) don't, and the split crosses
+languages, so neither a global exponent nor a per-language override
+captures it.
+
+### Open
+
+- **Prefix-stop tail effects**: a rank shift can strand a big batch at
+  the budget tail where it no longer fits (per-key concavity bump:
+  cmdk `walker_used` 9484 → 7302 at B=10K). Score(3000) is blind to
+  this; check Score(9000) and high-B `walker_used`. Mitigation lever
+  if needed: walker-side filter on absolute cost.
+- **Uncalibrated v0.2 JS class-member seeds**:
+  `JS_CLASS_MEMBER_SPLIT_MIN = 12`, `ExportMember` concavity `0.45`,
+  split names factor `1.12`, `export_member_value` weights
+  `0.62 / 0.95 / 0.55` — first-pass values, never swept.
+- **htop-class OOP-spine recall**: a core-header in-degree boost
+  (htop's `Object/Row/Process/Meter/Panel` headers still lose the
+  ratio race) is the one identified lever class still viable —
+  structural pattern recognition, not value/ordering tuning.
 
 ## Divergence open items
 
@@ -337,18 +270,6 @@ set rather than land it on the first try.
   where partial delivery scores poorly. Investigate when chunking fires
   and whether the granularity is worth the cost. Walker / value tuning
   question, not a divergence-report one.
-
-- **Schedule TOML `key` / `parent` / `path` fields still embed
-  absolute paths.** The walker descriptor fix (2026-05) made the
-  `descriptor` field root-relative, but `ScheduledBatch.key` is the
-  debug-formatted `BatchKey` enum which holds canonical `PathBuf`s,
-  `FsGroup.parent` is the raw absolute path, and `Span.path` inside
-  `BatchContent::Lines` likewise. These persist in
-  `tests/snapshots/schedule/*.toml` but aren't user-facing through the
-  new divergence reports. Fix would require either custom
-  `Display`/`Serialize` impls on each `BatchKey` variant, or holding
-  fixture-root-relative paths in the walker state. Not blocking; the
-  user-visible artifact (divergence reports) is clean.
 
 ## NS-rank vs walker-rank: the 3K headline measures what the NS ranks, not what the walker delivers
 

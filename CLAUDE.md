@@ -1,6 +1,6 @@
 # Precis
 
-Canonical commands: `cargo t` (nextest, debug), `cargo lint`, `cargo fmt`, `cargo run --release -- <paths>`, `cargo run --bin clone_fixtures`.
+Canonical commands: `cargo t` (nextest, debug), `cargo lint`, `cargo fmt`, `cargo run --release -- <path>`, `cargo run --bin clone_fixtures`.
 
 ## Documentation
 
