@@ -1,6 +1,6 @@
-//! Lua walker. LuaCATS-meta files (`---@meta` / dense `---@` tags) get
-//! a whole-file batch; other Lua sources use per-decl breakdown
-//! mirroring the C/Python shape. Recognized decl shapes:
+//! Lua walker. LuaCATS-meta files (`---@meta` / dense `---` LuaDoc
+//! comments) get a whole-file batch; other Lua sources use per-decl
+//! breakdown mirroring the C/Python shape. Recognized decl shapes:
 //!  - `function_declaration` (incl. `local function`),
 //!  - `assignment_statement` / `variable_declaration` with a
 //!    `function_definition` RHS, and
@@ -30,8 +30,9 @@ use super::{
 
 /// Token cap for `MetaFileWhole` — above, fall back to per-decl.
 const META_FILE_TOKEN_CAP: usize = 400;
-/// Treat as meta-file when ≥60% of comment lines start with `---@`.
-const META_TAG_DENSITY_THRESHOLD: f64 = 0.60;
+/// Treat as meta-file when ≥60% of comment lines are `---`-prefixed
+/// (LuaDoc-style, tagged or prose).
+const META_DOC_DENSITY_THRESHOLD: f64 = 0.60;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let lua_files = files_with_extension(dir, "lua");
@@ -461,7 +462,7 @@ fn body_node_for_decl<'a>(node: Node<'a>) -> Option<Node<'a>> {
 // --- meta-file detection ------------------------------------------------
 
 /// True iff `source` is a LuaCATS `---@meta` spec — by leader line
-/// or by `---@`-tag density on comments.
+/// or by density of `---`-prefixed (LuaDoc-style) comment lines.
 fn is_meta_file(source: &str) -> bool {
     // Quick check for `---@meta` leader.
     for line in source.lines() {
@@ -475,18 +476,18 @@ fn is_meta_file(source: &str) -> bool {
         break;
     }
     // Density: `---`-prefixed comments vs plain `--` comments.
-    let mut tagged = 0usize;
+    let mut luadoc = 0usize;
     let mut commented = 0usize;
     for line in source.lines() {
         let t = line.trim_start();
         if t.starts_with("---") {
-            tagged += 1;
+            luadoc += 1;
             commented += 1;
         } else if t.starts_with("--") {
             commented += 1;
         }
     }
-    commented > 0 && (tagged as f64 / commented as f64) >= META_TAG_DENSITY_THRESHOLD
+    commented > 0 && (luadoc as f64 / commented as f64) >= META_DOC_DENSITY_THRESHOLD
 }
 
 fn collect_meta_file_whole(file: &Path, source: &str) -> Option<crate::content::BatchContent> {

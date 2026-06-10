@@ -67,8 +67,8 @@ const FULL_VALUE_FIELD_ROWS: f64 = 24.0;
 /// resolves against, and individually they're cheap.
 const MIN_MODEL_FIELDS: usize = 18;
 
-/// A `model` body longer than this many rows is split at a field
-/// boundary into a head `Decl` + a `DeclTail`, so the high-value
+/// A `model` body longer than this many rows is split at its row
+/// midpoint into a head `Decl` + a `DeclTail`, so the high-value
 /// identity / relation fields at the top schedule ahead of the
 /// archival-default fields that trail a wide model.
 const MODEL_SPLIT_MIN_ROWS: usize = 32;
@@ -211,10 +211,13 @@ fn push_decl_batches(
     });
 }
 
-/// Field-boundary split line for a wide model: the midpoint of its body
-/// rows, snapped to the start of a field line so the closing-`}` row
-/// and blank rows stay attached to their half. `None` if no clean
-/// interior boundary exists.
+/// Split line for a wide model: the midpoint row of the block, kept
+/// strictly interior. No field-line awareness — the split can land on a
+/// blank/comment/continuation row, which is harmless because
+/// `build_file_spans` drops blank rows and the head/tail spans stay
+/// contiguous. Returns `None` only when the block has no strictly
+/// interior row (< 3 rows), which the `MODEL_SPLIT_MIN_ROWS` gate at the
+/// sole call site makes unreachable in production.
 fn model_split_line(decl: &Decl) -> Option<usize> {
     let mid = decl.open_line + (decl.close_line - decl.open_line) / 2;
     // Keep the split strictly interior to the block.
@@ -416,7 +419,7 @@ model Real {
     }
 
     #[test]
-    fn prisma_wide_model_splits_at_interior_field_boundary() {
+    fn prisma_wide_model_splits_strictly_interior() {
         // 40-row model: open at 1, close at 40.
         let decl = Decl {
             open_line: 1,

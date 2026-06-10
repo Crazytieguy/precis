@@ -20,13 +20,8 @@
 //! Per-decl keys (keyed by start line):
 //! - [`PythonKey::Decl`]: one top-level class / def / non-dunder
 //!   constant. For decorated forms, the span starts at the
-//!   `@decorator` row. Class and def decls pull in up to two
-//!   non-blank rows of their docstring's first paragraph so the
-//!   per-decl batch carries the PEP 257 summary alongside the
-//!   header.
-//! - [`PythonKey::DeclDoc`]: top-level def / class docstring (full;
-//!   the first-paragraph rows are also covered by [`PythonKey::Decl`]
-//!   and are skipped at render time as ancestor-covered).
+//!   `@decorator` row.
+//! - [`PythonKey::DeclDoc`]: top-level def / class docstring.
 //! - [`PythonKey::DeclBody`]: top-level def body slices, sans
 //!   leading docstring.
 //! - [`PythonKey::ClassBody`]: top-level class body excluding methods
@@ -935,8 +930,10 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // import Y as Y` re-exports + `__all__` + `__version__`) — both
     // catastrophic-omission and follow-up axes are pinned high so a
     // hundreds-of-tokens import block still beats individual per-decl
-    // batches in cost^0.35-penalised ratio. A top-level `__main__.py`
-    // gets a smaller secondary boost via
+    // batches in cost^0.35-penalised ratio. `__main__.py` is not
+    // boosted (its imports are plumbing for a CLI body, not a
+    // re-export anchor); the depth pin in `python_depth_factor`
+    // already keeps it visible at small budgets.
     let (cat, fu) = if is_init_py(file) {
         (0.70, 1.0)
     } else {

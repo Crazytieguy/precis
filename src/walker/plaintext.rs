@@ -76,12 +76,12 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         }
         _ => {}
     }
-    // Extensionless orientation files matched case-insensitively. Kept
-    // separate from the `LICENSE` block so we don't accidentally match
-    // `version.h` or similar — `lower` is only used here. `version.txt`
-    // is the de-facto Python-project variant when a project ships its
-    // canonical version stamp as a sibling of `pyproject.toml` rather
-    // than baking it into the `[project].version` scalar (linkding).
+    // Orientation stamps matched case-insensitively by exact name —
+    // exact equality (no stem matching) is what keeps `version.h` and
+    // similar source headers out. `version.txt` is the de-facto
+    // Python-project variant when a project ships its canonical version
+    // stamp as a sibling of `pyproject.toml` rather than baking it into
+    // the `[project].version` scalar (linkding).
     if lower == "version" || lower == "version.txt" {
         return Some(Class::Version);
     }

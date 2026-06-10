@@ -207,7 +207,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     FileLines::new(collect_module_doc_lines(tree, source, section))
                 }
             };
-            if let Some(content) =
+            let lede_emitted = if let Some(content) =
                 build_per_file_content(file, ctx, parse_rust, collect_section(DocSection::Lede))
             {
                 out.push(batch(
@@ -216,13 +216,21 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     content,
                     crate_doc_lede_value(file, ctx),
                 ));
-            }
+                true
+            } else {
+                false
+            };
             if let Some(content) =
                 build_per_file_content(file, ctx, parse_rust, collect_section(DocSection::Body))
             {
+                // The lede batch is the predecessor only when it was
+                // actually emitted — a crate doc that opens with a
+                // heading has no lede, so the body would otherwise
+                // orphan itself on a never-resolved predecessor key.
+                let predecessor = lede_emitted.then_some(BatchKey::Rust(lede_key));
                 out.push(batch(
                     RustKey::CrateDocBody { file: file.clone() },
-                    Some(BatchKey::Rust(lede_key)),
+                    predecessor,
                     content,
                     crate_doc_body_value(file, ctx),
                 ));
@@ -2380,6 +2388,33 @@ use self::not_pub::Hidden;
         let (_dir, map, src) =
             vis_map(&[("lib.rs", "mod child;\npub mod child;\n"), ("child.rs", "")]);
         assert_eq!(map.get(&src.join("child.rs")), Some(&Visibility::Public));
+    }
+
+    /// A crate doc that opens with a heading has no lede paragraph, so
+    /// no `CrateDocLede` batch is emitted; the `CrateDocBody` batch must
+    /// then carry no predecessor rather than orphan on a missing key.
+    #[test]
+    fn rust_crate_doc_body_no_predecessor_when_heading_first() {
+        let (dir, src) = write_vis_tree(&[(
+            "lib.rs",
+            "//! # Overview\n//!\n//! Body prose after the heading.\n\npub struct A;\n",
+        )]);
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_in_dir(&src, &ctx);
+        let body = batches
+            .iter()
+            .find(|b| matches!(&b.key, BatchKey::Rust(RustKey::CrateDocBody { .. })))
+            .expect("CrateDocBody emitted");
+        assert!(
+            body.predecessor.is_none(),
+            "no predecessor with heading-first doc"
+        );
+        assert!(
+            !batches
+                .iter()
+                .any(|b| matches!(&b.key, BatchKey::Rust(RustKey::CrateDocLede { .. }))),
+            "no CrateDocLede batch when the doc opens with a heading"
+        );
     }
 
     /// Minimal scratch-dir helper. Avoids pulling in the `tempfile` crate

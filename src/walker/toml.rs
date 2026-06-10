@@ -1,13 +1,16 @@
 //! TOML walker. Uses `tree-sitter-toml-ng` to identify top-level `[table]`
 //! headers and their line ranges. Emits one batch per ontology-recognized
-//! section group (identity / features / dependencies).
+//! section group (identity / scripts / features / dependencies).
 //!
 //! Keys:
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
-//!   `[project]`
+//!   `[project]`, `[tool.poetry]`
+//! - `Scripts { file }` — `[project.scripts]`, `[tool.poetry.scripts]`
 //! - `Features { file }` — `[features]`
 //! - `Dependencies { file }` — `[dependencies]`, `[dev-dependencies]`,
-//!   `[build-dependencies]`, `[workspace.dependencies]`
+//!   `[build-dependencies]`, `[workspace.dependencies]`,
+//!   `[tool.poetry.dependencies]`, and the PEP 621 `dependencies = [...]`
+//!   array under `[project]` in `pyproject.toml`
 
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};

@@ -120,8 +120,9 @@ trait InnerKey {
 pub enum RustKey {
     /// `//!` module-doc lede — first paragraph only, entrypoint files.
     CrateDocLede { file: PathBuf },
-    /// `//!` module-doc body — after the first paragraph.
-    /// Predecessor: `CrateDocLede`.
+    /// `//!` module-doc body — after the first paragraph. Predecessor:
+    /// matching `CrateDocLede`, or `None` when the crate doc opens with
+    /// a heading and no Lede candidate is emitted.
     CrateDocBody { file: PathBuf },
     /// `use` + `mod` + `pub use` plumbing at the top of a file.
     ModUse { file: PathBuf },
@@ -287,7 +288,7 @@ pub enum PrismaKey {
     /// Full brace-block body of one top-level `model` / `enum` /
     /// `datasource` / `generator` declaration. Predecessor: the
     /// enclosing `Toc`. A very large `model` is split into a
-    /// head + tail along a field boundary so high-value identity /
+    /// head + tail at its row midpoint so high-value identity /
     /// relation fields schedule ahead of archival-default fields.
     Decl { file: PathBuf, start_line: usize },
     /// Tail slice of a split large `model` body. Predecessor: the

@@ -55,7 +55,7 @@ use crate::value::{mix_signals, names_surface_chunk_factor};
 
 use super::{
     FileLines, WalkCtx, collect_blank_line_groups, collect_doc_comments_above, dedup_sorted,
-    extend_span, file_depth_factor, file_lines_covered_by,
+    extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
     fs::{files_with_extension, list_dir},
     push_rows, signature_end_row, single_file_lines_content,
 };
@@ -114,16 +114,17 @@ fn expand_gomod(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 }
 
 /// Identity slice of `go.mod` / `go.work` — `module`/`go`/`toolchain`
-/// directives only, before any block bodies.
+/// directives only; block bodies are skipped.
 fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let mut lines = Vec::new();
     let mut in_block = false;
     for (i, raw) in source.lines().enumerate() {
         let trimmed = raw.trim();
-        // Once any block (`require ( … )`, etc.) opens we stop
-        // collecting identity lines — module/go/toolchain are
-        // top-level directives that appear before the block bodies.
+        // Skip block bodies (`require ( … )`, etc.) so block entries
+        // can't shadow identity keywords; go.mod allows directives in
+        // any order, so module/go/toolchain are collected wherever
+        // they appear at top level.
         if trimmed.ends_with('(') && !trimmed.starts_with("//") {
             in_block = true;
             continue;
@@ -922,11 +923,7 @@ fn collect_decl_body(info: &DeclInfo, src_lines: &[&str]) -> FileLines {
         return FileLines::new(Vec::new());
     };
     let mut out = Vec::new();
-    for row in (s + 1)..e {
-        if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
-            out.push(row + 1);
-        }
-    }
+    extend_nonblank_rows(&mut out, src_lines, s + 1, e - 1);
     FileLines::new(out)
 }
 
@@ -1232,7 +1229,7 @@ replace github.com/x/y => github.com/forked/y v2.0.0
         assert!(!lines.contains(&8), "require body excluded from identity");
         assert!(
             !lines.contains(&11),
-            "replace excluded from identity (post-block directive)"
+            "replace excluded from identity (not an identity directive)"
         );
     }
 

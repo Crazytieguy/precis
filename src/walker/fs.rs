@@ -119,8 +119,7 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
 }
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
-    let sibling_module_dir = is_sibling_module_source_dir(dir, has_module_sibling_file(dir));
-    let module_source_dir = is_module_source_dir(dir, sibling_module_dir);
+    let module_source_dir = is_module_source_dir(dir);
     let source_dir = is_source_dir(dir) || is_go_pkg_wrapper(dir);
     let src_of_sibling_modules = source_dir
         && module_sibling_child_dir_count(
@@ -152,7 +151,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     let readme_cited = ctx.is_readme_cited(dir);
     let (cat, fu, ztu) = if dir == ctx.root() {
         (0.95, 0.6, 0.5)
-    } else if src_of_sibling_modules || sibling_module_dir || module_source_dir {
+    } else if src_of_sibling_modules || module_source_dir {
         // `module_source_dir` joins the sibling-module tier: a directory
         // with its own module entrypoint (`__init__.py` / `index.ts` /
         // `mod.rs`) is the package's API surface root, and its listing
@@ -186,8 +185,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         path_depth_factor(dir, ctx)
     };
-    let small_listing_factor = if module_source_dir || src_of_sibling_modules || sibling_module_dir
-    {
+    let small_listing_factor = if module_source_dir || src_of_sibling_modules {
         // Module-source directories (htmy/renderer/, sps-core/src/install/)
         // anchor on their own listings — keep them at full weight.
         1.0
@@ -286,13 +284,13 @@ fn count_go_package_source(dir: &Path, target: usize) -> usize {
     count
 }
 
-fn is_module_source_dir(dir: &Path, sibling_module_dir: bool) -> bool {
+fn is_module_source_dir(dir: &Path) -> bool {
     if is_type_surface_dir(dir) {
         return false;
     }
     let entrypoint_module = has_module_entrypoint(dir)
         && (dir.parent().is_some_and(is_source_dir) || has_python_module_entrypoint(dir));
-    entrypoint_module || sibling_module_dir || is_go_module_subpackage(dir)
+    entrypoint_module || is_sibling_module_source_dir(dir) || is_go_module_subpackage(dir)
 }
 
 fn is_type_surface_dir(dir: &Path) -> bool {
@@ -305,8 +303,8 @@ fn has_python_module_entrypoint(dir: &Path) -> bool {
     dir.join("__init__.py").is_file()
 }
 
-fn is_sibling_module_source_dir(dir: &Path, has_module_sibling_file: bool) -> bool {
-    has_module_sibling_file && !is_type_surface_dir(dir)
+fn is_sibling_module_source_dir(dir: &Path) -> bool {
+    has_module_sibling_file(dir) && !is_type_surface_dir(dir)
 }
 
 fn has_module_sibling_file(dir: &Path) -> bool {

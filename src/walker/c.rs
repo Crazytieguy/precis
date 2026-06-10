@@ -175,6 +175,7 @@ fn collect_port_dirs(root: &Path) -> HashSet<PathBuf> {
         let subdirs: Vec<PathBuf> = read_dir
             .flatten()
             .filter(|e| e.file_type().map(|t| t.is_dir()).unwrap_or(false))
+            .filter(|e| !super::fs::should_skip_dir(&e.file_name().to_string_lossy()))
             .map(|e| e.path())
             .collect();
         for sd in &subdirs {
@@ -246,7 +247,9 @@ fn count_small_headers(root: &Path) -> usize {
                 continue;
             };
             if file_type.is_dir() {
-                stack.push(path);
+                if !super::fs::should_skip_dir(&entry.file_name().to_string_lossy()) {
+                    stack.push(path);
+                }
             } else if file_type.is_file() && is_header_file(&path) && header_is_small_by_size(&path)
             {
                 count += 1;
@@ -267,9 +270,10 @@ fn header_is_small_by_size(file: &Path) -> bool {
 }
 
 /// Parse `Makefile.am` at `root` for `include_HEADERS` /
-/// `nobase_include_HEADERS` / `pkginclude_HEADERS` declarations.
-/// Returns canonical paths of every listed `.h`, or `None` if the
-/// file is missing / unreadable / declares no public headers.
+/// `pkginclude_HEADERS` declarations, including their `nobase_` /
+/// `dist_` / `nodist_` automake-prefix variants. Returns canonical
+/// paths of every listed `.h`, or `None` if the file is missing /
+/// unreadable / declares no public headers.
 /// Fails open on `+=`, conditional assignment, or `$(VAR)`-valued
 /// lines — a partial set would silently demote real public headers.
 fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
@@ -279,18 +283,19 @@ fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
     let mut iter = text.lines();
     while let Some(line) = iter.next() {
         let trimmed = line.trim_start();
-        // The three installing variables this walker understands.
-        // Any other `*_HEADERS` we accept literally — `noinst_HEADERS`,
-        // `EXTRA_HEADERS`, etc. are not installed into the include
-        // path, so they aren't part of the public-API surface and we
-        // ignore them. Only the three below add to the public set.
-        let after_name = [
-            "include_HEADERS",
-            "nobase_include_HEADERS",
-            "pkginclude_HEADERS",
-        ]
-        .iter()
-        .find_map(|name| trimmed.strip_prefix(name));
+        // The installing variables this walker understands, modulo the
+        // automake prefixes `nobase_`, `dist_`, and `nodist_` that may
+        // decorate them in canonical order. Variables that don't install
+        // into the include path (`noinst_HEADERS`, `EXTRA_HEADERS`, …)
+        // aren't part of the public-API surface, so they're ignored.
+        let stem = trimmed.strip_prefix("nobase_").unwrap_or(trimmed);
+        let stem = stem
+            .strip_prefix("dist_")
+            .or_else(|| stem.strip_prefix("nodist_"))
+            .unwrap_or(stem);
+        let after_name = ["include_HEADERS", "pkginclude_HEADERS"]
+            .iter()
+            .find_map(|name| stem.strip_prefix(name));
         let Some(after_name) = after_name else {
             continue;
         };
@@ -338,8 +343,8 @@ fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, collect_blank_line_groups,
-    collect_doc_comments_above_filtered, dedup_sorted, extend_span, file_depth_factor,
-    file_lines_covered_by, node_end_row_trimmed, push_rows, signature_end_row,
+    collect_doc_comments_above_filtered, dedup_sorted, extend_nonblank_rows, extend_span,
+    file_depth_factor, file_lines_covered_by, node_end_row_trimmed, push_rows, signature_end_row,
     single_file_lines_content, trim_end_before_next_decl,
 };
 
@@ -1485,11 +1490,7 @@ fn collect_decl_body(node: Node, src_lines: &[&str]) -> FileLines {
         return FileLines::new(Vec::new());
     }
     let mut out = Vec::new();
-    for row in (s + 1)..e {
-        if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
-            out.push(row + 1);
-        }
-    }
+    extend_nonblank_rows(&mut out, src_lines, s + 1, e - 1);
     FileLines::new(out)
 }
 
@@ -1885,13 +1886,14 @@ typedef int x;
 
     /// `Makefile.am`'s `include_HEADERS` line, with `$(srcdir)/` refs
     /// and `\` line continuations, parses to the set of declared
-    /// public-API header paths.
+    /// public-API header paths. `dist_` / `nodist_` / `nobase_`
+    /// automake prefixes on the installing variable are honored too.
     #[test]
     fn c_include_headers_parsed_from_makefile_am() {
         let tmp = tempfile::tempdir().expect("tmpdir");
         let root = tmp.path();
         std::fs::create_dir_all(root.join("src")).expect("mkdir");
-        for name in ["jv.h", "jq.h", "jv_private.h"] {
+        for name in ["jv.h", "jq.h", "dist.h", "pub.h", "jv_private.h"] {
             std::fs::write(root.join("src").join(name), "").expect("write header");
         }
         std::fs::write(
@@ -1899,13 +1901,17 @@ typedef int x;
             "AM_CFLAGS = -Wall\n\
              include_HEADERS = src/jv.h \\\n\
                                src/jq.h\n\
+             dist_include_HEADERS = src/dist.h\n\
+             nodist_pkginclude_HEADERS = src/pub.h\n\
              nobase_include_HEADERS = $(srcdir)/src/jv.h\n",
         )
         .expect("write Makefile.am");
         let set = parse_include_headers(root).expect("set");
-        assert_eq!(set.len(), 2);
+        assert_eq!(set.len(), 4);
         assert!(set.contains(&root.join("src/jv.h").canonicalize().unwrap()));
         assert!(set.contains(&root.join("src/jq.h").canonicalize().unwrap()));
+        assert!(set.contains(&root.join("src/dist.h").canonicalize().unwrap()));
+        assert!(set.contains(&root.join("src/pub.h").canonicalize().unwrap()));
         assert!(!set.contains(&root.join("src/jv_private.h").canonicalize().unwrap()));
     }
 
@@ -2072,6 +2078,8 @@ typedef int x;
             "include_HEADERS = src/jv.h $(EXTRA_API_HEADERS)\n",
             "include_HEADERS = src/jv.h ${EXTRA_API_HEADERS}\n",
             "include_HEADERS += src/jv.h\n",
+            "dist_include_HEADERS = src/jv.h $(EXTRA_API_HEADERS)\n",
+            "nodist_pkginclude_HEADERS += src/jv.h\n",
         ] {
             let tmp = tempfile::tempdir().expect("tmpdir");
             std::fs::write(tmp.path().join("Makefile.am"), body).expect("write");
