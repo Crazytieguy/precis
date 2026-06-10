@@ -21,6 +21,26 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
 /// Chunk size for names-surface gates — roughly one screenful of API.
 pub const NAMES_SURFACE_CHUNK_SIZE: usize = 12;
 
+/// Roster size at which [`roster_mass_factor`] is neutral; rosters this
+/// small already rank acceptably without help.
+pub const ROSTER_MASS_BASELINE: f64 = NAMES_SURFACE_CHUNK_SIZE as f64;
+/// Cap on the roster-mass boost (reached around ~110 entries).
+pub const ROSTER_MASS_FACTOR_CAP: f64 = 2.2;
+
+/// Ratio-neutralizing factor for "roster" batches — complete catalogs of
+/// N peer entries (directory listings, names surfaces, member catalogs)
+/// whose value is otherwise size-invariant while cost grows linearly
+/// with N, so `value/cost^k` systematically prefers tiny rosters over
+/// the complete catalogs NS authors anchor on. Scaling value by
+/// `(N / baseline)^k` (the same exponent as the cost concavity) makes
+/// the ratio roster-size-neutral. Boost-only (≥ 1) and capped: small
+/// rosters keep their existing rank rather than being demoted.
+pub fn roster_mass_factor(entries: usize) -> f64 {
+    (entries as f64 / ROSTER_MASS_BASELINE)
+        .powf(DEFAULT_CONCAVITY_EXPONENT)
+        .clamp(1.0, ROSTER_MASS_FACTOR_CAP)
+}
+
 /// First-chunk factor (slightly below unchunked) so small unchunked
 /// files win comparable rank races.
 const CHUNKED_NAMES_FIRST_CHUNK_FACTOR: f64 = 0.9;

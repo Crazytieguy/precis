@@ -192,7 +192,19 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         small_listing_decay(children.len(), ctx.depth_from_root(dir))
     };
-    mix_signals(cat, fu, ztu, depth) * small_listing_factor
+    // Source-inventory catalogs keep size-neutral ranking: a flat
+    // partition's complete listing is the API map NS authors anchor on,
+    // and without the factor an N-entry listing's ratio falls as N^-k
+    // against tiny same-tier sibling listings. Gated to the inventory
+    // tier only — boosting plain `src/`-named or module dirs lets the
+    // big listing itself displace NS-wanted content (measured: soluna
+    // −0.210, beszel −0.073 with the looser gate).
+    let fanout = if source_inventory_dir {
+        crate::value::roster_mass_factor(children.len())
+    } else {
+        1.0
+    };
+    mix_signals(cat, fu, ztu, depth) * small_listing_factor * fanout
 }
 
 /// Damp deeply-nested tiny directory listings — they're redundant
