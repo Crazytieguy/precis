@@ -317,31 +317,40 @@ fn parse_toml(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
 // --- section collection ---
 
 /// `(header_name, start_1based, end_1based)` for every top-level
-/// `table`. End is the row before the next table or EOF.
+/// `table`. End is the row before the next table, the next
+/// `[[array-of-tables]]` block, or EOF — `[[bin]]`-style blocks bound
+/// the preceding section but don't emit one themselves.
 fn collect_sections(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut raw: Vec<(String, usize)> = Vec::new();
+    // (name, start_row); `name` is None for boundary-only nodes.
+    let mut raw: Vec<(Option<String>, usize)> = Vec::new();
     for child in root.children(&mut cursor) {
-        if child.kind() != "table" {
-            continue;
-        }
-        let Some(name) = extract_table_name(child, source) else {
-            continue;
+        let name = match child.kind() {
+            "table" => {
+                let Some(name) = extract_table_name(child, source) else {
+                    continue;
+                };
+                Some(name)
+            }
+            "table_array_element" => None,
+            _ => continue,
         };
-        let start_row = child.start_position().row;
-        raw.push((name, start_row));
+        raw.push((name, child.start_position().row));
     }
     let total_rows = source.lines().count();
-    let mut out = Vec::with_capacity(raw.len());
+    let mut out = Vec::new();
     for i in 0..raw.len() {
+        let Some(name) = raw[i].0.clone() else {
+            continue;
+        };
         let start = raw[i].1 + 1;
         let end = if i + 1 < raw.len() {
             raw[i + 1].1
         } else {
             total_rows
         };
-        out.push((raw[i].0.clone(), start, end));
+        out.push((name, start, end));
     }
     out
 }
@@ -456,6 +465,26 @@ mod tests {
         }
         let members = collect_workspace_members(dir.path());
         (dir, members)
+    }
+
+    #[test]
+    fn walker_toml_sections_end_at_array_of_tables() {
+        let source = "[package]\nname = \"demo\"\nversion = \"1.0\"\n\n\
+                      [[bin]]\nname = \"demo-cli\"\n\n\
+                      [dependencies]\nserde = \"1\"\n";
+        let mut parser = tree_sitter::Parser::new();
+        parser
+            .set_language(&tree_sitter_toml_ng::LANGUAGE.into())
+            .unwrap();
+        let tree = parser.parse(source, None).unwrap();
+        let sections = collect_sections(&tree, source);
+        assert_eq!(
+            sections,
+            vec![
+                ("package".to_string(), 1, 4),
+                ("dependencies".to_string(), 8, 9),
+            ],
+        );
     }
 
     #[test]
