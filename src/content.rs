@@ -111,15 +111,22 @@ thread_local! {
         RefCell::new(HashMap::new());
 }
 
-/// Compiled regex for a [`Render::Truncated`] pattern, memoized per
-/// thread. `None` for an invalid pattern — validation rejects those
-/// upstream; callers degrade to a zero-width match.
-pub(crate) fn truncate_regex(pattern: &str) -> Option<regex::Regex> {
+/// Run `f` with the compiled regex for a [`Render::Truncated`]
+/// pattern, memoized per thread. `None` for an invalid pattern —
+/// validation rejects those upstream; callers degrade to a zero-width
+/// match. Closure-based so the cached `Regex` (and its lazy-DFA
+/// scratch pool) is borrowed rather than cloned per call; `f` must not
+/// re-enter this cache.
+pub(crate) fn with_truncate_regex<R>(
+    pattern: &str,
+    f: impl FnOnce(Option<&regex::Regex>) -> R,
+) -> R {
     TRUNCATE_RE_CACHE.with(|c| {
-        c.borrow_mut()
-            .entry(pattern.to_string())
-            .or_insert_with(|| regex::Regex::new(pattern).ok())
-            .clone()
+        let mut map = c.borrow_mut();
+        if !map.contains_key(pattern) {
+            map.insert(pattern.to_string(), regex::Regex::new(pattern).ok());
+        }
+        f(map[pattern].as_ref())
     })
 }
 

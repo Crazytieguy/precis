@@ -345,7 +345,7 @@ use super::{
     FileLines, WalkCtx, build_per_file_content, collect_blank_line_groups,
     collect_doc_comments_above_filtered, dedup_sorted, extend_nonblank_rows, extend_span,
     file_depth_factor, file_lines_covered_by, node_end_row_trimmed, push_rows, signature_end_row,
-    single_file_lines_content, trim_end_before_next_decl,
+    single_file_lines_content, trim_end_before_next_decl, whole_file_lines_content,
 };
 
 /// Fixed-size source-order chunks of `C_DECL_NAMES_CHUNK_SIZE` decls.
@@ -1057,8 +1057,7 @@ fn whole_small_header_content(file: &Path, source: &str, ctx: &WalkCtx) -> Optio
     if !whole_small_header_eligible(file, ctx) {
         return None;
     }
-    let all_lines = FileLines::new((1..=source.lines().count()).collect());
-    single_file_lines_content(file, source, all_lines)
+    whole_file_lines_content(file, source)
 }
 
 /// Damp internal headers explicitly marked non-public by `Makefile.am`.

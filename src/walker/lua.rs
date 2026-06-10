@@ -23,9 +23,9 @@ use crate::value::{
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
-    extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_extension,
-    node_end_row_trimmed, path_depth_factor, push_rows, single_file_lines_content,
-    trim_end_before_next_decl, whole_file_lines_content,
+    extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
+    fs::files_with_extension, node_end_row_trimmed, path_depth_factor, push_rows,
+    single_file_lines_content, trim_end_before_next_decl, whole_file_lines_content,
 };
 
 /// Token cap for `MetaFileWhole` — above, fall back to per-decl.
@@ -126,9 +126,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 file: file.clone(),
                 start_line: info.start_line,
             };
-            let decl_lines = collect_decl(*node, &source, &all_starts);
             let doc_lines = collect_doc_comments_above(*node, &source);
             let body_lines = collect_decl_body(*node, &src_lines);
+            let decl_lines = collect_decl(*node, &source, &all_starts, !body_lines.full.is_empty());
             let decl_has_descendants = !doc_lines.full.is_empty() || !body_lines.full.is_empty();
             if (!file_lines_covered_by(&decl_lines, chunk_names_lines) || decl_has_descendants)
                 && let Some(content) = single_file_lines_content(file, &source, decl_lines)
@@ -391,10 +391,14 @@ fn collect_decl_names_from_with_global_starts(
 
 /// Signature lines for a decl — statement start through pre-body row,
 /// trimmed at the next sibling decl's start_line (no anchor overlap).
+/// `body_has_rows` is whether `collect_decl_body` delivered rows for
+/// this decl — the body-elision `…` marker only makes sense when a
+/// DeclBody batch will later replace it.
 fn collect_decl(
     node: Node,
     source: &str,
     all_starts: &std::collections::HashSet<usize>,
+    body_has_rows: bool,
 ) -> FileLines {
     let start_row = node.start_position().row;
     let body_node = body_node_for_decl(node);
@@ -408,15 +412,9 @@ fn collect_decl(
     let mut ellipses = Vec::new();
     push_rows(&mut full, start_row, sig_end);
 
-    // Body-elision marker after the signature, whenever the body has
-    // rows the DeclBody batch will deliver (mirrors `collect_decl_body`).
-    if let Some(body) = body_node {
-        let bs = body.start_position().row;
-        let be = body.end_position().row;
-        let ellipsis_line = sig_end + 2;
-        if be >= bs.max(start_row + 1) && !all_starts.contains(&ellipsis_line) {
-            ellipses.push(ellipsis_line);
-        }
+    let ellipsis_line = sig_end + 2;
+    if body_has_rows && !all_starts.contains(&ellipsis_line) {
+        ellipses.push(ellipsis_line);
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
@@ -431,13 +429,8 @@ fn collect_decl_body(node: Node, src_lines: &[&str]) -> FileLines {
         return FileLines::new(Vec::new());
     };
     let first = body.start_position().row.max(node.start_position().row + 1);
-    let last = body.end_position().row;
     let mut out = Vec::new();
-    for row in first..=last {
-        if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
-            out.push(row + 1);
-        }
-    }
+    extend_nonblank_rows(&mut out, src_lines, first, body.end_position().row);
     FileLines::new(out)
 }
 
@@ -715,8 +708,10 @@ local function second(x) return x end
         let all_starts: std::collections::HashSet<usize> =
             decls.iter().map(|(_, i)| i.start_line).collect();
         let mut claimed: std::collections::HashMap<usize, usize> = std::collections::HashMap::new();
+        let src_lines: Vec<&str> = source.lines().collect();
         for (node, info) in &decls {
-            let lines = collect_decl(*node, &source, &all_starts);
+            let body_lines = collect_decl_body(*node, &src_lines);
+            let lines = collect_decl(*node, &source, &all_starts, !body_lines.full.is_empty());
             for line in &lines.full {
                 let prev = claimed.insert(*line, info.start_line);
                 assert!(prev.is_none(), "overlap at line {line}");

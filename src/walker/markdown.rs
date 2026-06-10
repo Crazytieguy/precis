@@ -160,22 +160,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some((source, tree)) = parse_md(ctx, &file) else {
             continue;
         };
-        // Single derivation per file: the headline spec feeds the
-        // outline rows, the outline gate feeds the section splits —
-        // "splits require the outline to preserve heading rows" is
-        // structural rather than re-derived at each consumer.
-        let headline = is_readme(&file)
-            .then(|| headline_spec(&tree, &source))
-            .flatten();
-        let outline_rows = collectable_outline_rows(&tree, &source, headline.as_ref());
-        let outline_emits = outline_emits_for(&outline_rows, &source);
+        let (headline, outline_rows, outline_emits) = derive_outline_gates(&file, &tree, &source);
         let ranges = logical_sections(&file, &tree, &source, outline_emits);
         if ranges.is_empty() {
             continue;
         }
-
-        let outline_key =
-            outline_emits.then(|| MarkdownKey::HeadingsOutline { file: file.clone() });
 
         let mut headline_emitted: Option<BatchKey> = None;
         if let Some(spec) = &headline
@@ -191,16 +180,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             headline_emitted = Some(BatchKey::Markdown(key));
         }
         let mut outline_emitted: Option<BatchKey> = None;
-        if let Some(o) = &outline_key
-            && let Some(content) = build_outline_content(&file, &source, &outline_rows)
+        if outline_emits && let Some(content) = build_outline_content(&file, &source, &outline_rows)
         {
+            let key = MarkdownKey::HeadingsOutline { file: file.clone() };
             out.push(Batch {
-                key: o.clone().into(),
+                key: key.clone().into(),
                 predecessor: headline_emitted.clone(),
                 content,
                 value: headings_outline_value(&file, ctx, sibling_md_count),
             });
-            outline_emitted = Some(BatchKey::Markdown(o.clone()));
+            outline_emitted = Some(BatchKey::Markdown(key));
         }
 
         let section_predecessor = outline_emitted.or(headline_emitted);
@@ -466,6 +455,23 @@ fn build_outline_content(
         ellipses.push(end + 1);
     }
     single_file_lines_content(file, source, FileLines::new(full).with_ellipses(ellipses))
+}
+
+/// Per-file derivation chain shared by `expand_in_dir` and the unit-test
+/// helpers, so "splits require the outline to preserve heading rows" is
+/// wired in exactly one place: headline spec (READMEs only) → outline
+/// rows → outline gate.
+fn derive_outline_gates(
+    file: &Path,
+    tree: &Tree,
+    source: &str,
+) -> (Option<HeadlineSpec>, Vec<(usize, usize)>, bool) {
+    let headline = is_readme(file)
+        .then(|| headline_spec(tree, source))
+        .flatten();
+    let outline_rows = collectable_outline_rows(tree, source, headline.as_ref());
+    let outline_emits = outline_emits_for(&outline_rows, source);
+    (headline, outline_rows, outline_emits)
 }
 
 /// Heading row ranges for `HeadingsOutline` — H1-H3 only, with any
@@ -1381,24 +1387,10 @@ const HEADLINE_TAGLINE_MAX_CHARS: usize = 90;
 /// (`**`, `*`, `_`, `` ` ``) so a bolded tagline measures by its
 /// underlying prose rather than its punctuation.
 fn strip_block_for_length(raw: &str) -> String {
-    let mut out = String::with_capacity(raw.len());
-    let mut chars = raw.chars();
-    while let Some(c) = chars.next() {
-        if c == '<' {
-            // Skip the tag through its closing '>', then drop the '>'.
-            for inner in chars.by_ref() {
-                if inner == '>' {
-                    break;
-                }
-            }
-            continue;
-        }
-        if matches!(c, '>' | '*' | '_' | '`') {
-            continue;
-        }
-        out.push(c);
-    }
-    out
+    strip_html_tags(raw)
+        .chars()
+        .filter(|c| !matches!(c, '>' | '*' | '_' | '`'))
+        .collect()
 }
 
 /// State for the post-heading walk inside [`headline_spec`].
@@ -2624,10 +2616,7 @@ mod tests {
 
     fn outline_rows(file: &str, source: &str) -> Vec<(usize, usize)> {
         let tree = parse(source);
-        let spec = is_readme(&PathBuf::from(file))
-            .then(|| headline_spec(&tree, source))
-            .flatten();
-        collectable_outline_rows(&tree, source, spec.as_ref())
+        derive_outline_gates(&PathBuf::from(file), &tree, source).1
     }
 
     /// README with H1 + 4 H2s. Outline collects only the H2 rows; the
@@ -2744,11 +2733,8 @@ mod tests {
     fn sections(file: &str, source: &str) -> Vec<SectionRange> {
         let tree = parse(source);
         let file = PathBuf::from(file);
-        let spec = is_readme(&file)
-            .then(|| headline_spec(&tree, source))
-            .flatten();
-        let rows = collectable_outline_rows(&tree, source, spec.as_ref());
-        logical_sections(&file, &tree, source, outline_emits_for(&rows, source))
+        let (_, _, outline_emits) = derive_outline_gates(&file, &tree, source);
+        logical_sections(&file, &tree, source, outline_emits)
     }
 
     /// Build a `## Heading\n\n### Sub\n<filler>` shape sized to clear

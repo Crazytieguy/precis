@@ -47,11 +47,22 @@ pub fn load_ns(ns_path: &Path) -> Result<NorthStar> {
     Ok(ns)
 }
 
-/// Resolve an NS `BatchContent` against the fixture root. Absolutizes
-/// span paths; expands `FsEntries::All` into a concrete `Listed(paths)`
-/// via [`list_dir`] (same utility the walker uses, so NS and walker
-/// see identical filesystem content); verifies each `Listed` child
-/// exists.
+/// Absolute or `..`-traversing — a path that can leave the fixture
+/// root when joined onto it. One predicate for span paths and fs-group
+/// parents so the two containment checks can't drift.
+pub(crate) fn path_escapes_root(path: &Path) -> bool {
+    path.is_absolute()
+        || path
+            .components()
+            .any(|c| matches!(c, std::path::Component::ParentDir))
+}
+
+/// Resolve an NS `BatchContent` against the fixture root. Input must be
+/// raw NS content (root-relative paths) — resolved output doesn't
+/// round-trip. Absolutizes span paths; expands `FsEntries::All` into a
+/// concrete `Listed(paths)` via [`list_dir`] (same utility the walker
+/// uses, so NS and walker see identical filesystem content); verifies
+/// each `Listed` child exists.
 pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<BatchContent> {
     match content {
         BatchContent::Lines { spans } => {
@@ -61,11 +72,7 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
                     // Same root-boundary invariant as fs parents: every
                     // resolve_content caller (divergence scoring included,
                     // not just validate-ns) rejects escaping spans.
-                    if s.path.is_absolute()
-                        || s.path
-                            .components()
-                            .any(|c| matches!(c, std::path::Component::ParentDir))
-                    {
+                    if path_escapes_root(&s.path) {
                         bail!(
                             "NS span path must be fixture-root-relative: {}",
                             s.path.display()
@@ -92,15 +99,10 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
 }
 
 fn resolve_fs_group(group: &FsGroup, fixture_root: &Path) -> Result<FsGroup> {
-    // Fs parents must stay inside the fixture root: reject absolute paths
-    // and any `..` traversal. Surfaces via FsResolveFailed so a frozen NS
-    // with an escaping parent fails divergence scoring loudly.
-    if group.parent.is_absolute()
-        || group
-            .parent
-            .components()
-            .any(|c| matches!(c, std::path::Component::ParentDir))
-    {
+    // Fs parents must stay inside the fixture root. Surfaces via
+    // FsResolveFailed so a frozen NS with an escaping parent fails
+    // divergence scoring loudly.
+    if path_escapes_root(&group.parent) {
         bail!(
             "NS fs group parent must be fixture-root-relative: {}",
             group.parent.display()

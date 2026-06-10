@@ -18,7 +18,7 @@ use std::sync::Arc;
 
 use crate::batch::BatchId;
 use crate::content::{
-    BatchContent, FsEntries, FsGroup, Render, Span, explode_spans, truncate_regex,
+    BatchContent, FsEntries, FsGroup, Render, Span, explode_spans, with_truncate_regex,
 };
 use crate::fs_util::{EntryKind, list_dir};
 use crate::tokenizer;
@@ -455,22 +455,23 @@ fn format_line_row(
         Render::Truncated { pattern } => {
             s.push_str(&number.to_string());
             s.push('→');
-            let compiled = truncate_regex(pattern);
-            debug_assert!(
-                compiled.is_some(),
-                "invalid Truncated regex `{pattern}` — should have been rejected at schema load"
-            );
-            if let Some(re) = compiled {
-                let m = re.find(source_line);
+            with_truncate_regex(pattern, |re| {
                 debug_assert!(
-                    m.as_ref().is_some_and(|m| !m.as_str().is_empty()),
-                    "Truncated regex `{pattern}` produced empty or no match on line {number} \
-                     — schema loader should have rejected this span"
+                    re.is_some(),
+                    "invalid Truncated regex `{pattern}` — should have been rejected at schema load"
                 );
-                if let Some(m) = m {
-                    s.push_str(m.as_str());
+                if let Some(re) = re {
+                    let m = re.find(source_line);
+                    debug_assert!(
+                        m.as_ref().is_some_and(|m| !m.as_str().is_empty()),
+                        "Truncated regex `{pattern}` produced empty or no match on line {number} \
+                         — schema loader should have rejected this span"
+                    );
+                    if let Some(m) = m {
+                        s.push_str(m.as_str());
+                    }
                 }
-            }
+            });
             s.push('…');
         }
     }

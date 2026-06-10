@@ -285,7 +285,10 @@ fn is_zero_atom(content: &BatchContent) -> bool {
         BatchContent::Lines { spans } => spans.is_empty(),
         BatchContent::Fs { groups } => groups.iter().all(|g| match &g.entries {
             FsEntries::Listed(paths) => paths.is_empty(),
-            FsEntries::All => true,
+            // Unresolved `All` is unreachable post-resolution; if a
+            // caller ever passes raw content, an `All` group is not
+            // provably empty.
+            FsEntries::All => false,
         }),
     }
 }
@@ -340,15 +343,9 @@ fn validate_fs_entries(
 
 fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> Vec<Violation> {
     let mut out = Vec::new();
-    let mut compiled: HashMap<String, regex::Regex> = HashMap::new();
     let mut seen_lines: HashSet<(PathBuf, usize)> = HashSet::new();
     for span in spans {
-        if span.path.is_absolute()
-            || span
-                .path
-                .components()
-                .any(|c| matches!(c, std::path::Component::ParentDir))
-        {
+        if crate::ns_loader::path_escapes_root(&span.path) {
             out.push(Violation::SpanPathEscapesRoot {
                 path: span.path.clone(),
             });
@@ -393,46 +390,42 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
             });
         }
         if let Render::Truncated { pattern } = &span.render {
-            if !compiled.contains_key(pattern) {
-                match regex::Regex::new(pattern) {
-                    Ok(re) => {
-                        compiled.insert(pattern.clone(), re);
-                    }
-                    Err(_) => {
-                        out.push(Violation::RegexInvalid {
+            let span_violations = crate::content::with_truncate_regex(pattern, |re| {
+                let Some(re) = re else {
+                    return vec![Violation::RegexInvalid {
+                        path: span.path.clone(),
+                        start: span.start,
+                        end: span.end,
+                        pattern: pattern.clone(),
+                    }];
+                };
+                let mut vs = Vec::new();
+                for ln in span.start..=span.end {
+                    let line = src_lines[ln - 1];
+                    let m = re.find(line);
+                    let Some(m) = m.filter(|m| !m.as_str().is_empty()) else {
+                        vs.push(Violation::RegexNoMatch {
                             path: span.path.clone(),
-                            start: span.start,
-                            end: span.end,
+                            line: ln,
                             pattern: pattern.clone(),
                         });
                         continue;
+                    };
+                    let full_tokens = crate::tokenizer::count(line);
+                    let truncated_tokens = crate::tokenizer::count(&format!("{}…", m.as_str()));
+                    if truncated_tokens >= full_tokens {
+                        vs.push(Violation::TruncationSavesNothing {
+                            path: span.path.clone(),
+                            line: ln,
+                            pattern: pattern.clone(),
+                            full_tokens,
+                            truncated_tokens,
+                        });
                     }
                 }
-            }
-            let re = &compiled[pattern];
-            for ln in span.start..=span.end {
-                let line = src_lines[ln - 1];
-                let m = re.find(line);
-                let Some(m) = m.filter(|m| !m.as_str().is_empty()) else {
-                    out.push(Violation::RegexNoMatch {
-                        path: span.path.clone(),
-                        line: ln,
-                        pattern: pattern.clone(),
-                    });
-                    continue;
-                };
-                let full_tokens = crate::tokenizer::count(line);
-                let truncated_tokens = crate::tokenizer::count(&format!("{}…", m.as_str()));
-                if truncated_tokens >= full_tokens {
-                    out.push(Violation::TruncationSavesNothing {
-                        path: span.path.clone(),
-                        line: ln,
-                        pattern: pattern.clone(),
-                        full_tokens,
-                        truncated_tokens,
-                    });
-                }
-            }
+                vs
+            });
+            out.extend(span_violations);
         }
     }
     out
