@@ -110,6 +110,7 @@ use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache};
 use crate::schedule_types::{Atom, Schedule, ScheduledBatch};
 
+pub mod diagnose;
 mod render;
 use render::format_report;
 
