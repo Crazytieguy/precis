@@ -347,10 +347,11 @@ pub fn is_orientation_doc(file: &std::path::Path) -> bool {
 }
 
 /// True for `README.<locale>.<ext>` or `Readme_<locale>.<ext>`
-/// anywhere in the tree, where `<locale>` is a known ISO-639-style
-/// code. The whitelist (rather than a
-/// `[a-z]{2,3}([-_][A-Z]{2,4})?` regex) is what rules out
-/// `README.api.md` / `README.dev.md` / `README.old.md`.
+/// anywhere in the tree, where `<locale>` is shaped like an
+/// ISO-639-style code (2-3 lowercase ASCII letters, optional `-`/`_`
+/// region suffix). A small blocklist in `is_locale_language` rules out
+/// non-locale suffixes sharing that shape (`README.api.md` /
+/// `README.dev.md` / `README.old.md`).
 pub fn is_localized_readme(target: &std::path::Path) -> bool {
     let Some(name) = target.file_name().and_then(|n| n.to_str()) else {
         return false;

@@ -19,9 +19,10 @@ pub mod value;
 pub mod walker;
 
 // Zero-cost without the `timing` feature: both macros expand to nothing.
-// One `time_span!` or `time_counter!` per `{}` block — the underscore-prefixed
-// binding makes a second invocation in the same block shadow (and prematurely
-// drop) the first. Nest into a child block to time two adjacent phases.
+// One `time_span!` or `time_counter!` per `{}` block — a second invocation
+// in the same block just adds a second guard; both live to the end of the
+// block, so the first span/counter silently keeps accruing through the
+// second phase. Nest into a child block to time two adjacent phases.
 macro_rules! time_span {
     ($name:literal) => {
         #[cfg(feature = "timing")]
@@ -38,7 +39,7 @@ macro_rules! time_counter {
 
 pub(crate) use {time_counter, time_span};
 
-pub use batch::{Batch, BatchKey, FsKey, MarkdownKey, RustKey, TomlKey, WalkerKey};
+pub use batch::{Batch, BatchKey, WalkerKey};
 pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
 pub use fs_util::{EntryKind, list_dir};
 pub use render::{Cost, RenderedTree, SourceCache};

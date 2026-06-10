@@ -104,7 +104,7 @@ use std::path::Path;
 use anyhow::{Context, Result};
 
 use crate::batch::BatchId;
-use crate::content::{BatchContent, FsEntries, Render, explode_spans};
+use crate::content::{BatchContent, FsEntries, Render, explode_spans, truncate_regex};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache};
@@ -142,8 +142,8 @@ pub struct ScoreAtBudget {
     pub score: f64,
 }
 
-/// Headline scores. Bucket counts gate on atoms reachable at the
-/// primary budget (`reached + partial + missing == rows_in_primary`).
+/// Headline scores. Bucket counts gate on NS rows with `exp_t ≤
+/// PRIMARY_BUDGET` (`reached + partial + missing == rows_in_primary`).
 #[derive(Debug, Clone)]
 pub struct Scores {
     pub vector: [ScoreAtBudget; BUDGETS.len()],
@@ -151,20 +151,15 @@ pub struct Scores {
     pub total_ns: usize,
     /// NS batches with `exp_t ≤ PRIMARY_BUDGET`.
     pub rows_in_primary: usize,
-    /// Credit ≥ [`REACH_THRESHOLD`].
+    /// Damped credit (credit × completion) ≥ [`REACH_THRESHOLD`].
     pub reached: usize,
-    /// Credit in `[MISSING_FLOOR, REACH_THRESHOLD)`.
+    /// Damped credit in `[MISSING_FLOOR, REACH_THRESHOLD)`.
     pub partial: usize,
-    /// Credit < [`MISSING_FLOOR`].
+    /// Damped credit < [`MISSING_FLOOR`].
     pub missing: usize,
 }
 
 impl Scores {
-    /// `Score(3000)` — the primary objective.
-    pub fn primary(&self) -> f64 {
-        self.vector[PRIMARY_BUDGET_INDEX].score
-    }
-
     /// First line of any divergence report; full contents of a
     /// validation-tier baseline.
     pub fn headline(&self) -> String {
@@ -277,8 +272,7 @@ fn byte_end_for(render: &Render, source_line: &str) -> usize {
     match render {
         Render::Full => source_line.len().max(1),
         Render::Ellipsis => 1,
-        Render::Truncated { pattern } => regex::Regex::new(pattern)
-            .ok()
+        Render::Truncated { pattern } => truncate_regex(pattern)
             .and_then(|re| re.find(source_line).map(|m| m.end()))
             .unwrap_or(0)
             .max(1),

@@ -2,7 +2,8 @@
 //! data model both the North Star schema (see [`crate::north_star`]) and
 //! the walker/render pipeline speak. No walker-implementation details.
 
-use std::collections::BTreeMap;
+use std::cell::RefCell;
+use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -90,15 +91,36 @@ pub struct Span {
 /// - `Ellipsis`: emit a bare `…` marker at one line, with no line
 ///   number and no content. A later batch can replace it with `Full`
 ///   or `Truncated` at the same `(path, line)`. **Single-line only**:
-///   `start` and `end` must be equal. A multi-line `Ellipsis` span
-///   renders as one `…` marker at `start` and produces nothing for the
-///   remaining lines — almost certainly not what the author intended.
+///   `start` and `end` must be equal. A multi-line `Ellipsis` span is
+///   rejected by the validator (`EllipsisMultiLine`): it would render
+///   one `…` marker per covered line — redundant noise. Use one
+///   single-line `Ellipsis` span per line, or `Full`/`Truncated` if
+///   the lines should render.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "kind", rename_all = "lowercase")]
 pub enum Render {
     Full,
     Truncated { pattern: String },
     Ellipsis,
+}
+
+thread_local! {
+    /// Per-thread memo of compiled [`Render::Truncated`] patterns — a
+    /// handful of distinct patterns recur across thousands of spans.
+    static TRUNCATE_RE_CACHE: RefCell<HashMap<String, Option<regex::Regex>>> =
+        RefCell::new(HashMap::new());
+}
+
+/// Compiled regex for a [`Render::Truncated`] pattern, memoized per
+/// thread. `None` for an invalid pattern — validation rejects those
+/// upstream; callers degrade to a zero-width match.
+pub(crate) fn truncate_regex(pattern: &str) -> Option<regex::Regex> {
+    TRUNCATE_RE_CACHE.with(|c| {
+        c.borrow_mut()
+            .entry(pattern.to_string())
+            .or_insert_with(|| regex::Regex::new(pattern).ok())
+            .clone()
+    })
 }
 
 /// Expand a batch's spans into per-(path, line) entries, sorted by

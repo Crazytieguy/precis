@@ -106,12 +106,13 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     let pairs = top_level_pairs(&tree, &source);
     // `*-monorepo` shells are pure orchestration; damp so per-member
     // packages and primary-language anchors win the budget.
-    let shell_factor =
-        if file.parent() == Some(ctx.root()) && package_json_name_ends_with(&source, "-monorepo") {
-            0.2
-        } else {
-            1.0
-        };
+    let shell_factor = if file.parent() == Some(ctx.root())
+        && package_json_name_ends_with(&tree, &source, "-monorepo")
+    {
+        0.2
+    } else {
+        1.0
+    };
     // App-style manifests get a Scripts/Dependencies boost — see
     // `is_app_package_json` for the predicate.
     let app_factor = if is_app_package_json(&pairs) {
@@ -188,25 +189,11 @@ fn is_app_package_json(pairs: &[(String, usize, usize, bool)]) -> bool {
     has_bin && !has_files
 }
 
-/// True iff the source's top-level `"name"` ends with `suffix`.
-fn package_json_name_ends_with(source: &str, suffix: &str) -> bool {
-    let Some(idx) = source.find("\"name\"") else {
-        return false;
-    };
-    let rest = &source[idx + "\"name\"".len()..];
-    let Some(colon) = rest.find(':') else {
-        return false;
-    };
-    let after = &rest[colon + 1..];
-    let Some(qs) = after.find('"') else {
-        return false;
-    };
-    let value_start = qs + 1;
-    let Some(qe) = after[value_start..].find('"') else {
-        return false;
-    };
-    let value = &after[value_start..value_start + qe];
-    value.ends_with(suffix)
+/// True iff the manifest's top-level `"name"` ends with `suffix`.
+fn package_json_name_ends_with(tree: &Tree, source: &str, suffix: &str) -> bool {
+    first_child_of_kind(tree.root_node(), "object")
+        .and_then(|o| object_field_value(o, "name", source))
+        .is_some_and(|v| v.kind() == "string" && unquote_string(v, source).ends_with(suffix))
 }
 
 fn section_content(
@@ -233,12 +220,11 @@ fn is_package_json(name: &str) -> bool {
     name.eq_ignore_ascii_case("package.json")
 }
 
-/// Files that never produce JSON batches — lockfiles and `.tsbuildinfo`.
+/// Files that never produce JSON batches — lockfiles.
 fn is_skipped_json(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
     matches!(lower.as_str(), "package-lock.json" | "npm-shrinkwrap.json")
         || lower.ends_with(".lock.json")
-        || lower.ends_with(".tsbuildinfo")
 }
 
 // --- key classification ---

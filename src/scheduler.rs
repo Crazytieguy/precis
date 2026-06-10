@@ -164,7 +164,7 @@ impl<W: Walker> Scheduler<W> {
         {
             crate::time_span!("scheduler_loop");
             loop {
-                let Some((id, _, cost)) = self.best_exact() else {
+                let Some((id, cost)) = self.best_exact() else {
                     break;
                 };
                 if !self.fits(cost) {
@@ -292,9 +292,8 @@ impl<W: Walker> Scheduler<W> {
 
     // ---- exact pool ----
 
-    /// Top-ranked eligible batch + its cost. `PRECIS_VERIFY_COST_CACHE=1`
-    /// (debug) recomputes every hit and asserts against the cache.
-    fn best_exact(&mut self) -> Option<(BatchId, f64, Cost)> {
+    /// Top-ranked eligible batch + its cost.
+    fn best_exact(&mut self) -> Option<(BatchId, Cost)> {
         crate::time_counter!(best_exact);
 
         let eligible: Vec<BatchId> = (0..self.entries.len())
@@ -351,7 +350,7 @@ impl<W: Walker> Scheduler<W> {
                 best = Some((ratio, id, exact_cost));
             }
         }
-        best.map(|(ratio, id, cost)| (id, ratio, cost))
+        best.map(|(_, id, cost)| (id, cost))
     }
 
     /// Narrow `eligible` to the top-K contender pool by approx score

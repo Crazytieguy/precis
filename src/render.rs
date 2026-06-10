@@ -17,7 +17,9 @@ use std::rc::Rc;
 use std::sync::Arc;
 
 use crate::batch::BatchId;
-use crate::content::{BatchContent, FsEntries, FsGroup, Render, Span, explode_spans};
+use crate::content::{
+    BatchContent, FsEntries, FsGroup, Render, Span, explode_spans, truncate_regex,
+};
 use crate::fs_util::{EntryKind, list_dir};
 use crate::tokenizer;
 
@@ -375,17 +377,13 @@ impl RenderedTree {
         let Some(TreeNode::Dir { children }) = self.nodes.get(path) else {
             return;
         };
-        let indent = INDENT_UNIT.repeat(indent_depth);
         for (name, kind) in children {
-            out.push_str(&indent);
-            out.push_str(name);
+            out.push_str(&format_entry_row(name, *kind, indent_depth));
             match kind {
                 EntryKind::Directory => {
-                    out.push_str("/\n");
                     self.render_dir(&path.join(name), indent_depth + 1, out);
                 }
                 EntryKind::File => {
-                    out.push('\n');
                     self.render_file(&path.join(name), indent_depth + 1, out);
                 }
             }
@@ -457,12 +455,12 @@ fn format_line_row(
         Render::Truncated { pattern } => {
             s.push_str(&number.to_string());
             s.push('→');
-            let compiled = regex::Regex::new(pattern);
+            let compiled = truncate_regex(pattern);
             debug_assert!(
-                compiled.is_ok(),
+                compiled.is_some(),
                 "invalid Truncated regex `{pattern}` — should have been rejected at schema load"
             );
-            if let Ok(re) = compiled {
+            if let Some(re) = compiled {
                 let m = re.find(source_line);
                 debug_assert!(
                     m.as_ref().is_some_and(|m| !m.as_str().is_empty()),
