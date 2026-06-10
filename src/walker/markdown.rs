@@ -160,29 +160,35 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some((source, tree)) = parse_md(ctx, &file) else {
             continue;
         };
-        let ranges = logical_sections(&file, &tree, &source);
+        // Single derivation per file: the headline spec feeds the
+        // outline rows, the outline gate feeds the section splits —
+        // "splits require the outline to preserve heading rows" is
+        // structural rather than re-derived at each consumer.
+        let headline = is_readme(&file)
+            .then(|| headline_spec(&tree, &source))
+            .flatten();
+        let outline_rows = collectable_outline_rows(&tree, &source, headline.as_ref());
+        let outline_emits = outline_emits_for(&outline_rows, &source);
+        let ranges = logical_sections(&file, &tree, &source, outline_emits);
         if ranges.is_empty() {
             continue;
         }
 
-        let is_readme = is_readme(&file);
-        let headline_key = is_readme.then(|| MarkdownKey::ReadmeHeadline { file: file.clone() });
-        let outline_rows = collectable_outline_rows(&file, &tree, &source);
-        let outline_emits = outline_emits_for(&outline_rows, &source);
         let outline_key =
             outline_emits.then(|| MarkdownKey::HeadingsOutline { file: file.clone() });
 
         let mut headline_emitted: Option<BatchKey> = None;
-        if let Some(h) = &headline_key
-            && let Some(content) = build_headline_content(&file, &source, &tree)
+        if let Some(spec) = &headline
+            && let Some(content) = build_headline_content(&file, &source, spec)
         {
+            let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
             out.push(Batch {
-                key: h.clone().into(),
+                key: key.clone().into(),
                 predecessor: None,
                 content,
                 value: readme_headline_value(&file, ctx),
             });
-            headline_emitted = Some(BatchKey::Markdown(h.clone()));
+            headline_emitted = Some(BatchKey::Markdown(key));
         }
         let mut outline_emitted: Option<BatchKey> = None;
         if let Some(o) = &outline_key
@@ -205,7 +211,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
         let total_h2_count = section_h2_count(&ranges);
         for (idx, range) in ranges.iter().enumerate() {
-            if let Some(content) = build_section_content(&file, &source, &tree, idx, range) {
+            if let Some(content) =
+                build_section_content(&file, &source, idx, range, headline.as_ref())
+            {
                 out.push(Batch {
                     key: MarkdownKey::Section {
                         file: file.clone(),
@@ -433,9 +441,8 @@ fn build_summary_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     whole_file_lines_content(file, &source)
 }
 
-fn build_headline_content(file: &Path, source: &str, tree: &Tree) -> Option<BatchContent> {
-    let spec = headline_spec(tree, source)?;
-    let spans = build_headline_spans(file, source, &spec);
+fn build_headline_content(file: &Path, source: &str, spec: &HeadlineSpec) -> Option<BatchContent> {
+    let spans = build_headline_spans(file, source, spec);
     if spans.is_empty() {
         return None;
     }
@@ -462,15 +469,16 @@ fn build_outline_content(
 }
 
 /// Heading row ranges for `HeadingsOutline` — H1-H3 only, with any
-/// headline-covered headings dropped on READMEs.
-fn collectable_outline_rows(file: &Path, tree: &Tree, source: &str) -> Vec<(usize, usize)> {
-    let headline_covered: BTreeSet<usize> = if is_readme(file) {
-        headline_spec(tree, source)
-            .map(|s| s.covered_rows.iter().copied().collect())
-            .unwrap_or_default()
-    } else {
-        BTreeSet::new()
-    };
+/// headline-covered headings dropped (`headline` is `Some` only for
+/// READMEs; the caller derives it once per file).
+fn collectable_outline_rows(
+    tree: &Tree,
+    source: &str,
+    headline: Option<&HeadlineSpec>,
+) -> Vec<(usize, usize)> {
+    let headline_covered: BTreeSet<usize> = headline
+        .map(|s| s.covered_rows.iter().copied().collect())
+        .unwrap_or_default();
     let mut nodes = Vec::new();
     collect_heading_nodes(tree.root_node(), &mut nodes);
     let mut out = Vec::new();
@@ -503,17 +511,17 @@ fn collect_heading_nodes<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
 fn build_section_content(
     file: &Path,
     source: &str,
-    tree: &Tree,
     section_index: usize,
     range: &SectionRange,
+    headline: Option<&HeadlineSpec>,
 ) -> Option<BatchContent> {
     let (start, end) = (range.start, range.end);
 
     // For README section 0, skip lines `ReadmeHeadline` covers — else
     // their marginal cost goes to 0 and `ratio(value, 0) = ∞`.
+    // (`headline` is `Some` only for READMEs.)
     let effective_start = if section_index == 0
-        && is_readme(file)
-        && let Some(spec) = headline_spec(tree, source)
+        && let Some(spec) = headline
         && let Some(max_row) = spec.last_covered_row()
     {
         (max_row + 1).max(start)
@@ -1524,12 +1532,13 @@ enum SectionKind {
 /// to an optional `Intro` plus per-child sub-ranges (bullet split,
 /// H3 split, or body-block split). Other top-level entries emit one
 /// `Whole`. Splits require the outline to preserve heading rows.
-fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange> {
+fn logical_sections(
+    file: &Path,
+    tree: &Tree,
+    source: &str,
+    outline_will_emit: bool,
+) -> Vec<SectionRange> {
     let entries = top_level_entries(tree.root_node(), source);
-    let outline_will_emit = {
-        let rows = collectable_outline_rows(file, tree, source);
-        outline_emits_for(&rows, source)
-    };
     let split_eligible_file = !is_changelog_class(file);
     let synthetic_intro_present =
         matches!(entries.first(), Some(TopLevelEntry::SyntheticIntro { .. }));
@@ -2615,7 +2624,10 @@ mod tests {
 
     fn outline_rows(file: &str, source: &str) -> Vec<(usize, usize)> {
         let tree = parse(source);
-        collectable_outline_rows(&PathBuf::from(file), &tree, source)
+        let spec = is_readme(&PathBuf::from(file))
+            .then(|| headline_spec(&tree, source))
+            .flatten();
+        collectable_outline_rows(&tree, source, spec.as_ref())
     }
 
     /// README with H1 + 4 H2s. Outline collects only the H2 rows; the
@@ -2731,7 +2743,12 @@ mod tests {
 
     fn sections(file: &str, source: &str) -> Vec<SectionRange> {
         let tree = parse(source);
-        logical_sections(&PathBuf::from(file), &tree, source)
+        let file = PathBuf::from(file);
+        let spec = is_readme(&file)
+            .then(|| headline_spec(&tree, source))
+            .flatten();
+        let rows = collectable_outline_rows(&tree, source, spec.as_ref());
+        logical_sections(&file, &tree, source, outline_emits_for(&rows, source))
     }
 
     /// Build a `## Heading\n\n### Sub\n<filler>` shape sized to clear
