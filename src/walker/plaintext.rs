@@ -23,7 +23,10 @@ use std::path::Path;
 use crate::batch::{Batch, BatchKey, PlaintextKey};
 use crate::value::mix_signals;
 
-use super::{FileLines, WalkCtx, fs::list_dir, path_depth_factor, single_file_lines_content};
+use super::{
+    FileLines, WalkCtx, fs::list_dir, gated_whole_file_content, path_depth_factor,
+    single_file_lines_content,
+};
 
 /// Line cap on a `Whole` plaintext batch.
 const PLAINTEXT_LINE_CAP: usize = 60;
@@ -108,21 +111,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some(class) = classify_plaintext(&name) else {
             continue;
         };
-        let byte_len = std::fs::metadata(&file)
-            .map(|m| m.len() as usize)
-            .unwrap_or(usize::MAX);
-        if byte_len > PLAINTEXT_BYTE_GATE {
-            continue;
-        }
-        let Some(source) = ctx.read_source(&file) else {
-            continue;
-        };
-        let line_count = source.lines().count();
-        if line_count == 0 || line_count > PLAINTEXT_LINE_CAP {
-            continue;
-        }
-        let lines: Vec<usize> = (1..=line_count).collect();
-        let Some(content) = single_file_lines_content(&file, &source, FileLines::new(lines)) else {
+        let Some(content) =
+            gated_whole_file_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP)
+        else {
             continue;
         };
         out.push(Batch {

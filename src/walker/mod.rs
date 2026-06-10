@@ -413,6 +413,37 @@ pub(crate) fn single_file_lines_content(
     Some(BatchContent::Lines { spans })
 }
 
+/// `BatchContent::Lines` covering every line of `source`. `None` when
+/// the file is empty (all-blank files fall out via empty spans).
+pub(crate) fn whole_file_lines_content(file: &Path, source: &str) -> Option<BatchContent> {
+    let lines: Vec<usize> = (1..=source.lines().count()).collect();
+    single_file_lines_content(file, source, FileLines::new(lines))
+}
+
+/// Whole-file content behind a size gate: FS-metadata byte pre-flight
+/// (skips the read when the size hint alone disqualifies), then a line
+/// cap on the read source. Bytes-per-line multipliers are per-format —
+/// callers keep their own gate constants.
+pub(crate) fn gated_whole_file_content(
+    file: &Path,
+    ctx: &WalkCtx,
+    byte_gate: usize,
+    line_cap: usize,
+) -> Option<BatchContent> {
+    let byte_len = std::fs::metadata(file)
+        .map(|m| m.len() as usize)
+        .unwrap_or(usize::MAX);
+    if byte_len > byte_gate {
+        return None;
+    }
+    let source = ctx.read_source(file)?;
+    let line_count = source.lines().count();
+    if line_count == 0 || line_count > line_cap {
+        return None;
+    }
+    whole_file_lines_content(file, &source)
+}
+
 /// Parse + collect spans for per-file walker batches. Caller-supplied
 /// parser closure handles language-specific parser dispatch.
 pub(crate) fn build_per_file_content(

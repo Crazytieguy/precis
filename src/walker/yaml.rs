@@ -30,9 +30,7 @@ use std::path::Path;
 use crate::batch::{Batch, BatchKey, YamlKey};
 use crate::value::mix_signals;
 
-use super::{
-    FileLines, WalkCtx, fs::files_with_any_extension, path_depth_factor, single_file_lines_content,
-};
+use super::{WalkCtx, fs::files_with_any_extension, gated_whole_file_content, path_depth_factor};
 
 /// Hard cap on the number of source lines a docker-compose file may
 /// have to be considered for a `Whole` batch. Typical real-world
@@ -58,21 +56,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if !is_docker_compose_name(name) {
             continue;
         }
-        let byte_len = std::fs::metadata(&file)
-            .map(|m| m.len() as usize)
-            .unwrap_or(usize::MAX);
-        if byte_len > COMPOSE_BYTE_GATE {
-            continue;
-        }
-        let Some(source) = ctx.read_source(&file) else {
-            continue;
-        };
-        let line_count = source.lines().count();
-        if line_count == 0 || line_count > COMPOSE_LINE_CAP {
-            continue;
-        }
-        let lines: Vec<usize> = (1..=line_count).collect();
-        let Some(content) = single_file_lines_content(&file, &source, FileLines::new(lines)) else {
+        let Some(content) =
+            gated_whole_file_content(&file, ctx, COMPOSE_BYTE_GATE, COMPOSE_LINE_CAP)
+        else {
             continue;
         };
         out.push(Batch {

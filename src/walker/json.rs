@@ -19,13 +19,17 @@ use crate::value::mix_signals;
 
 use super::workspace::{WorkspaceMembership, canonical_member, expand_member_entry};
 use super::{
-    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
-    single_file_lines_content,
+    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, gated_whole_file_content,
+    path_depth_factor, single_file_lines_content,
 };
 
 /// Hard cap on `Whole` JSON config rendering — generated files
 /// (lockfiles, manifests in node_modules) skip the batch entirely.
 const WHOLE_LINE_CAP: usize = 60;
+
+/// FS-metadata pre-flight gate (≈200 bytes/line × line cap) — typical
+/// generated JSONs are huge; skip without reading.
+const WHOLE_BYTE_GATE: usize = WHOLE_LINE_CAP * 200;
 
 /// Damp `Identity` signals on workspace-member `package.json` files —
 /// sub-package identity is mostly inherited from the root.
@@ -69,21 +73,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 }
 
 fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
-    // FS metadata avoids reading the file when the size hint alone
-    // already disqualifies it — typical generated JSONs are huge.
-    let byte_len = std::fs::metadata(file)
-        .map(|m| m.len() as usize)
-        .unwrap_or(usize::MAX);
-    if byte_len > WHOLE_LINE_CAP * 200 {
-        return None;
-    }
-    let source = ctx.read_source(file)?;
-    let line_count = source.lines().count();
-    if line_count == 0 || line_count > WHOLE_LINE_CAP {
-        return None;
-    }
-    let lines: Vec<usize> = (1..=line_count).collect();
-    let content = single_file_lines_content(file, &source, FileLines::new(lines))?;
+    let content = gated_whole_file_content(file, ctx, WHOLE_BYTE_GATE, WHOLE_LINE_CAP)?;
     Some(Batch {
         key: JsonKey::Whole {
             file: file.to_path_buf(),

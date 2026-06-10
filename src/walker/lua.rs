@@ -25,7 +25,7 @@ use super::{
     FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
     extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_extension,
     node_end_row_trimmed, path_depth_factor, push_rows, single_file_lines_content,
-    trim_end_before_next_decl,
+    trim_end_before_next_decl, whole_file_lines_content,
 };
 
 /// Token cap for `MetaFileWhole` — above, fall back to per-decl.
@@ -51,7 +51,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // the whole-file span.
         if is_meta_file(&source)
             && crate::tokenizer::count(&source) <= META_FILE_TOKEN_CAP
-            && let Some(content) = collect_meta_file_whole(file, &source)
+            && let Some(content) = whole_file_lines_content(file, &source)
         {
             out.push(Batch {
                 key: LuaKey::MetaFileWhole { file: file.clone() }.into(),
@@ -488,15 +488,6 @@ fn is_meta_file(source: &str) -> bool {
         }
     }
     commented > 0 && (luadoc as f64 / commented as f64) >= META_DOC_DENSITY_THRESHOLD
-}
-
-fn collect_meta_file_whole(file: &Path, source: &str) -> Option<crate::content::BatchContent> {
-    let line_count = source.lines().count();
-    if line_count == 0 {
-        return None;
-    }
-    let lines: Vec<usize> = (1..=line_count).collect();
-    single_file_lines_content(file, source, FileLines::new(lines))
 }
 
 // --- value functions ----------------------------------------------------

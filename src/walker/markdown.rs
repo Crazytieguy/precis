@@ -52,7 +52,7 @@ use crate::value::{is_orientation_doc, mix_signals};
 
 use super::{
     FileLines, WalkCtx, extend_nonblank_rows, fs::files_with_extension, node_end_row_trimmed,
-    path_depth_factor, single_file_lines_content,
+    path_depth_factor, single_file_lines_content, whole_file_lines_content,
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
@@ -430,9 +430,7 @@ fn parse_inline(text: &str) -> Option<Tree> {
 
 fn build_summary_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
-    let line_count = source.lines().count();
-    let lines: Vec<usize> = (1..=line_count).collect();
-    single_file_lines_content(file, &source, FileLines::new(lines))
+    whole_file_lines_content(file, &source)
 }
 
 fn build_headline_content(file: &Path, source: &str, tree: &Tree) -> Option<BatchContent> {
