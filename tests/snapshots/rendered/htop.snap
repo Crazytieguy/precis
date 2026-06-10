@@ -24,7 +24,10 @@ BatteryMeter.c
 BatteryMeter.h
     2→#define HEADER_BatteryMeter
     15→typedef enum ACPresence_ {
-    …
+    16→   AC_ABSENT,
+    17→   AC_PRESENT,
+    18→   AC_ERROR
+    19→} ACPresence;
     21→extern const MeterClass BatteryMeter_class;
     …
 CLAUDE.md
@@ -46,7 +49,10 @@ CommandLine.c
 CommandLine.h
     2→#define HEADER_CommandLine
     11→typedef enum {
-    …
+    12→   STATUS_OK,
+    13→   STATUS_ERROR_EXIT,
+    14→   STATUS_OK_EXIT
+    15→} CommandLineStatus;
     17→extern const char* program;
     …
     19→int CommandLine_run(int argc, char** argv);
@@ -59,6 +65,15 @@ Debug.h
     2→#define HEADER_Debug
 DiskIOMeter.c
 DiskIOMeter.h
+    2→#define HEADER_DiskIOMeter
+    15→typedef struct DiskIOData_ {
+    …
+    22→extern const MeterClass DiskIORateMeter_class;
+    …
+    24→extern const MeterClass DiskIOTimeMeter_class;
+    …
+    26→extern const MeterClass DiskIOMeter_class;
+    …
 DisplayOptionsPanel.c
 DisplayOptionsPanel.h
 DynamicColumn.c
@@ -221,6 +236,15 @@ Settings.c
 Settings.h
 SignalsPanel.c
 SignalsPanel.h
+    2→#define HEADER_SignalsPanel
+    17→typedef struct SignalItem_ {
+    18→   const char* name;
+    19→   int number;
+    20→} SignalItem;
+    22→#define SIGNALSPANEL_INITSELECTEDSIGNAL SIGTERM
+    …
+    24→Panel* SignalsPanel_new(int preSelectedSignal);
+    …
 SwapMeter.c
 SwapMeter.h
     2→#define HEADER_SwapMeter
@@ -245,13 +269,20 @@ TraceScreen.c
 TraceScreen.h
 UptimeMeter.c
 UptimeMeter.h
-    2→#define HEADER_UptimeMeter
-    13→extern const MeterClass UptimeMeter_class;
-    …
-    15→extern const MeterClass SecondsUptimeMeter_class;
-    …
 UsersTable.c
 UsersTable.h
+    2→#define HEADER_UsersTable
+    13→typedef struct UsersTable_ {
+    14→   Hashtable* users;
+    15→} UsersTable;
+    17→UsersTable* UsersTable_new(void);
+    …
+    19→void UsersTable_delete(UsersTable* this);
+    …
+    21→char* UsersTable_getRef(UsersTable* this, unsigned int uid);
+    …
+    23→void UsersTable_foreach(UsersTable* this, Hashtable_PairFunction f, void* userData);
+    …
 Vector.c
 Vector.h
 XUtils.c
@@ -278,7 +309,6 @@ darwin/
 docs/
     ai-contributions-policy.md
     images/
-        screenshot.png
     styleguide.md
     understanding-htop-versions.md
         1→Understanding htop versions
@@ -311,38 +341,6 @@ freebsd/
     Platform.h
     ProcessField.h
 generic/
-    Demangle.c
-    Demangle.h
-        2→#define HEADER_Demangle
-        10→#include "Macros.h"
-    ProvideDemangle.h
-        2→#define HEADER_ProvideDemangle
-    UnwindPtrace.c
-    UnwindPtrace.h
-        2→#define HEADER_UnwindPtrace
-    fdstat_sysctl.c
-    fdstat_sysctl.h
-        2→#define HEADER_fdstat_sysctl
-        11→void Generic_getFileDescriptors_sysctl(double* used, double* max);
-        …
-    gettime.c
-    gettime.h
-    hostname.c
-    hostname.h
-        2→#define HEADER_hostname
-        10→#include <stddef.h>
-        13→void Generic_hostname(char* buffer, size_t size);
-        …
-    openzfs_sysctl.c
-    openzfs_sysctl.h
-        2→#define HEADER_openzfs_sysctl
-        13→void openzfs_sysctl_init(ZfsArcStats* stats);
-        …
-        15→void openzfs_sysctl_updateArcStats(ZfsArcStats* stats);
-        …
-    uname.c
-    uname.h
-        10→#include <stddef.h>
 htop-logo.png
 htop.1.in
     2→.SH "NAME"
@@ -377,7 +375,6 @@ netbsd/
     Platform.c
     Platform.h
     ProcessField.h
-        2→#define HEADER_NetBSDProcessField
     README.md
         1→NetBSD support in htop(1)
         2→===
@@ -399,7 +396,6 @@ openbsd/
     Platform.c
     Platform.h
     ProcessField.h
-        2→#define HEADER_OpenBSDProcessField
 pcp/
 pcp-htop.5.in
     2→.SH "NAME"
@@ -427,7 +423,6 @@ unsupported/
     Platform.c
     Platform.h
     ProcessField.h
-        2→#define HEADER_UnsupportedProcessField
     UnsupportedMachine.c
     UnsupportedMachine.h
     UnsupportedProcess.c
@@ -436,10 +431,6 @@ unsupported/
     UnsupportedProcessTable.h
 zfs/
     ZfsArcMeter.c
-        26→void ZfsArcMeter_readStats(Meter* this, const ZfsArcStats* stats) {
-        …
-        86→const MeterClass ZfsArcMeter_class = {
-        …
     ZfsArcMeter.h
         2→#define HEADER_ZfsArcMeter
         10→#include "zfs/ZfsArcStats.h"
@@ -451,12 +442,20 @@ zfs/
     ZfsArcStats.h
         2→#define HEADER_ZfsArcStats
         10→typedef struct ZfsArcStats_ {
-        …
+        11→   int enabled;
+        12→   int isCompressed;
+        13→   unsigned long long int min;
+        14→   unsigned long long int max;
+        15→   unsigned long long int size;
+        16→   unsigned long long int MFU;
+        17→   unsigned long long int MRU;
+        18→   unsigned long long int anon;
+        19→   unsigned long long int header;
+        20→   unsigned long long int other;
+        21→   unsigned long long int compressed;
+        22→   unsigned long long int uncompressed;
+        23→} ZfsArcStats;
     ZfsCompressedArcMeter.c
-        27→void ZfsCompressedArcMeter_readStats(Meter* this, const ZfsArcStats* stats) {
-        …
-        74→const MeterClass ZfsCompressedArcMeter_class = {
-        …
     ZfsCompressedArcMeter.h
         2→#define HEADER_ZfsCompressedArcMeter
         10→#include "zfs/ZfsArcStats.h"

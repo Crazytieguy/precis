@@ -116,14 +116,6 @@ src/
     compile.c
     compile.h
     exec_stack.h
-        40→struct determine_alignment {
-        …
-        44→enum {ALIGNMENT = offsetof(struct determine_alignment, u)};
-        …
-        50→typedef int stack_ptr;
-        …
-        52→struct stack {
-        …
     execute.c
     inject_errors.c
     jq.h
