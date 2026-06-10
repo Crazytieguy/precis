@@ -12,7 +12,7 @@ const PLUGIN_BYTE_BUDGET: usize = 9500;
     version
 )]
 struct Cli {
-    /// Directories or files to summarize (defaults to the current directory)
+    /// Directory to summarize (defaults to the current directory)
     paths: Vec<PathBuf>,
 
     /// Token budget for output
@@ -26,6 +26,10 @@ struct Cli {
 
 fn main() -> Result<()> {
     let cli = Cli::parse();
+    if cli.paths.len() > 1 {
+        // `render` would silently use only the first path.
+        bail!("multiple paths aren't supported yet; pass one directory");
+    }
     let paths = if cli.paths.is_empty() {
         vec![PathBuf::from(".")]
     } else {
