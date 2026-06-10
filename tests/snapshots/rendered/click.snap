@@ -135,30 +135,11 @@ docs/
     extending-click.md
         1→# Extending Click
         …
-        3→```{currentmodule} click
-        4→```
-        6→In addition to common functionality that is implemented in the library itself, there are countless patterns that can be
-        7→implemented by extending Click. This page should give some insight into what can be accomplished.
-        9→```{contents}
-        10→:depth: 2
-        11→:local: true
-        12→```
-        14→(custom-groups)=
         16→## Custom Groups
         …
         73→## Command Aliases
         …
     faqs.md
-        1→# Frequently Asked Questions
-        …
-        3→```{contents}
-        4→:depth: 2
-        5→:local: true
-        6→```
-        8→## General
-        …
-        10→### Shell Variable Expansion On Windows
-        …
     handling-files.md
     index.rst
     license.md
@@ -341,4 +322,27 @@ src/
         types.py
         utils.py
 tests/
+    conftest.py
+    test_arguments.py
+    test_basic.py
+    test_chain.py
+    test_command_decorators.py
+    test_commands.py
+    test_compat.py
+    test_context.py
+    test_custom_classes.py
+    test_defaults.py
+    test_formatting.py
+    test_imports.py
+    test_info_dict.py
+    test_normalization.py
+    test_options.py
+    test_parser.py
+    test_shell_completion.py
+    test_stream_lifecycle.py
+    test_termui.py
+    test_testing.py
+    test_types.py
+    test_utils.py
+    typing/
 uv.lock

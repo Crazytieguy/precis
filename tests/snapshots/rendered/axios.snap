@@ -78,6 +78,20 @@ README.md
 SECURITY.md
 THREATMODEL.md
 docs/
+    .vitepress/
+    data/
+    es/
+    favicon.ico
+    fr/
+    index.md
+    package-lock.json
+    package.json
+    pages/
+    patches/
+    public/
+    scripts/
+    site.webmanifest
+    zh/
 eslint.config.js
 examples/
 gulpfile.js
@@ -173,14 +187,6 @@ lib/
         transformData.js
     defaults/
         index.js
-            1→'use strict';
-            3→import utils from '../utils.js';
-            4→import AxiosError from '../core/AxiosError.js';
-            5→import transitionalDefaults from './transitional.js';
-            6→import toFormData from '../helpers/toFormData.js';
-            7→import toURLEncodedForm from '../helpers/toURLEncodedForm.js';
-            8→import platform from '../platform/index.js';
-            9→import formDataToJSON from '../helpers/formDataToJSON.js';
             11→const own = (obj, key) => (obj != null && utils.hasOwnProp(obj, key) ? obj[key] : undefined);
             23→function stringifySafely(rawValue, parser, encoder) {
             24→  if (utils.isString(rawValue)) {

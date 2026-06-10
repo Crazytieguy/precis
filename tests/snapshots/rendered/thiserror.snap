@@ -205,8 +205,6 @@ impl/
             2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
             3→use syn::parse::{ParseStream, Result};
             4→use syn::{AngleBracketedGenericArguments, BinOp, Expr, ExprPath, Lifetime, Lit, Token, Type};
-            192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
-            …
         unraw.rs
             12→pub struct IdentUnraw(Ident);
             …

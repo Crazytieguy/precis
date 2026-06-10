@@ -1,4 +1,4 @@
-Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missing=5)
+Score(3000)=0.656 I=0.734 C=0.586 ns_rows≤3K=14/40 (reached=8 partial=1 missing=5)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -62,21 +62,21 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 2325 | 45 | README.md section #28 |  |  | 0.780 |
 | walker |  | 2370 | 45 | README.md section #52 |  |  | 0.780 |
 | ns | 2375 |  | 600 | README — Ranges intro (operators, comparator sets, \|\|) | 3.2 | 2.6 | 0.708 |
-| walker |  | 2422 | 52 | README.md section #29 |  |  | 0.708 |
-| walker |  | 2478 | 56 | listing of 'test/ranges' |  |  | 0.708 |
-| walker |  | 2486 | 8 | CHANGELOG.md section #0 |  |  | 0.708 |
-| walker |  | 2543 | 57 | README.md section #24 |  |  | 0.708 |
-| walker |  | 2614 | 71 | README.md section #27 |  |  | 0.708 |
-| walker |  | 2698 | 84 | listing of 'test/fixtures' |  |  | 0.708 |
-| walker |  | 2770 | 72 | README.md section #31 |  |  | 0.708 |
-| walker |  | 2847 | 77 | README.md section #5 |  |  | 0.709 |
-| walker |  | 2927 | 80 | README.md section #7 |  |  | 0.709 |
-| ns | 2947 |  | 572 | README — Prerelease Tags semantics | 3.3 | 2.6 | 0.662 |
-| walker |  | 2987 | 60 | README.md section #56 |  |  | 0.662 |
-| walker |  | 3065 | 78 | README.md section #26 |  |  | 0.662 |
-| walker |  | 3154 | 89 | README.md section #9 |  |  | 0.673 |
-| ns | 3219 |  | 272 | README — Hyphen Ranges desugaring | 3.4 | 2.6 | 0.647 |
-| walker |  | 3259 | 105 | listing of 'test/functions' |  |  | 0.647 |
+| walker |  | 2475 | 105 | listing of 'test/functions' |  |  | 0.708 |
+| walker |  | 2527 | 52 | README.md section #29 |  |  | 0.708 |
+| walker |  | 2583 | 56 | listing of 'test/ranges' |  |  | 0.708 |
+| walker |  | 2591 | 8 | CHANGELOG.md section #0 |  |  | 0.708 |
+| walker |  | 2648 | 57 | README.md section #24 |  |  | 0.708 |
+| walker |  | 2732 | 84 | listing of 'test/fixtures' |  |  | 0.708 |
+| walker |  | 2803 | 71 | README.md section #27 |  |  | 0.708 |
+| walker |  | 2875 | 72 | README.md section #31 |  |  | 0.708 |
+| ns | 2947 |  | 572 | README — Prerelease Tags semantics | 3.3 | 2.6 | 0.654 |
+| walker |  | 2952 | 77 | README.md section #5 |  |  | 0.656 |
+| walker |  | 3032 | 80 | README.md section #7 |  |  | 0.662 |
+| walker |  | 3092 | 60 | README.md section #56 |  |  | 0.662 |
+| walker |  | 3170 | 78 | README.md section #26 |  |  | 0.662 |
+| ns | 3219 |  | 272 | README — Hyphen Ranges desugaring | 3.4 | 2.6 | 0.636 |
+| walker |  | 3259 | 89 | README.md section #9 |  |  | 0.647 |
 | walker |  | 3344 | 85 | README.md section #50 |  |  | 0.647 |
 | ns | 3533 |  | 314 | README — X-Ranges desugaring | 3.5 | 2.6 | 0.624 |
 | walker |  | 3920 | 576 | imports in index.js |  |  | 0.624 |

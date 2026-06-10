@@ -64,14 +64,7 @@ lib/
             46→	uint32_t   lease;
             47→} dhcp_entry_t;
             49→typedef struct dhcp_config
-            50→{
-            51→	ip4_addr_t    router;
-            52→	uint16_t      port;
-            53→	ip4_addr_t    dns;
-            54→	const char   *domain;
-            55→	int           num_entry;
-            56→	dhcp_entry_t *entries;
-            57→} dhcp_config_t;
+            …
             62→err_t dhserv_init(const dhcp_config_t *c);
             63→void dhserv_free(void);
             …
@@ -112,8 +105,6 @@ src/
             cdc_device.c
             cdc_device.h
                 30→#include "cdc.h"
-                305→bool     cdcd_xfer_cb         (uint8_t rhport, uint8_t ep_addr, xfer_result_t result, uint32_t xferred_bytes);
-                …
             cdc_host.c
             cdc_host.h
                 30→#include "cdc.h"
@@ -132,17 +123,11 @@ src/
                 137→typedef struct {
                 …
                 152→typedef struct {
-                153→  uint32_t type     ; ///< Message Type, must be \ref RNDIS_MSG_RESET
-                154→  uint32_t length   ; ///< Message length in bytes, MUST be 0x06
-                155→  uint32_t reserved ;
-                156→} rndis_msg_reset_t;
+                …
                 160→typedef struct {
                 …
                 180→typedef struct {
-                181→  uint32_t type       ; ///< Message Type
-                182→  uint32_t length     ; ///< Message length in bytes, MUST be 0x10
-                183→  uint32_t request_id ;
-                184→} rndis_msg_keep_alive_t, rndis_msg_halt_t;
+                …
                 188→typedef struct {
                 …
                 197→typedef struct {
@@ -164,36 +149,6 @@ src/
         dfu/
             dfu.h
                 30→#include "common/tusb_common.h"
-                40→// DFU Protocol
-                41→typedef enum
-                42→{
-                43→  DFU_PROTOCOL_RT  = 0x01,
-                44→  DFU_PROTOCOL_DFU = 0x02,
-                45→} dfu_protocol_type_t;
-                47→// DFU Descriptor Type
-                48→typedef enum
-                49→{
-                50→  DFU_DESC_FUNCTIONAL = 0x21,
-                51→} dfu_descriptor_type_t;
-                54→typedef enum {
-                …
-                65→typedef enum {
-                …
-                80→typedef enum {
-                …
-                99→#define DFU_ATTR_CAN_DOWNLOAD              (1u << 0)
-                100→#define DFU_ATTR_CAN_UPLOAD                (1u << 1)
-                101→#define DFU_ATTR_MANIFESTATION_TOLERANT    (1u << 2)
-                102→#define DFU_ATTR_WILL_DETACH               (1u << 3)
-                …
-                104→// DFU Status Request Payload
-                105→typedef struct TU_ATTR_PACKED
-                106→{
-                107→  uint8_t bStatus;
-                108→  uint8_t bwPollTimeout[3];
-                109→  uint8_t bState;
-                110→  uint8_t iString;
-                111→} dfu_status_response_t;
             dfu_device.c
             dfu_device.h
                 30→#include "dfu.h"
@@ -226,21 +181,15 @@ src/
                 30→#include "common/tusb_common.h"
             midi_device.c
             midi_device.h
-                30→#include "class/audio/audio.h"
-                31→#include "midi.h"
                 147→bool     midid_xfer_cb(uint8_t rhport, uint8_t edpt_addr, xfer_result_t result, uint32_t xferred_bytes);
                 …
             midi_host.c
             midi_host.h
-                30→#include "class/audio/audio.h"
-                31→#include "midi.h"
         msc/
             msc.h
                 30→#include "common/tusb_common.h"
             msc_device.c
             msc_device.h
-                30→#include "common/tusb_common.h"
-                31→#include "msc.h"
             msc_host.c
             msc_host.h
                 30→#include "msc.h"
@@ -249,16 +198,12 @@ src/
                 30→#include "common/tusb_common.h"
             mtp_device.c
             mtp_device.h
-                30→#include "common/tusb_common.h"
-                31→#include "mtp.h"
         net/
             ecm_rndis_device.c
             ncm.h
                 31→#include "common/tusb_common.h"
             ncm_device.c
             net_device.h
-                31→#include <stdint.h>
-                32→#include "class/cdc/cdc.h"
         printer/
             printer.h
                 30→#include "common/tusb_common.h"
@@ -270,11 +215,6 @@ src/
             printer_device.h
                 34→#include "printer.h"
         usbtmc/
-            usbtmc.h
-                31→#include "common/tusb_common.h"
-            usbtmc_device.c
-            usbtmc_device.h
-                31→#include "usbtmc.h"
         vendor/
             vendor_device.c
             vendor_device.h
@@ -287,26 +227,7 @@ src/
                 30→#include "common/tusb_common.h"
             video_device.c
             video_device.h
-                31→#include "common/tusb_common.h"
-                32→#include "video.h"
     common/
-        tusb_common.h
-        tusb_compiler.h
-        tusb_debug.h
-            144→#define TU_LOG0(...)
-            145→#define TU_LOG0_MEM(...)
-            146→#define TU_LOG0_BUF(...)
-            147→#define TU_LOG0_INT(...)
-            148→#define TU_LOG0_HEX(...)
-            …
-        tusb_fifo.c
-        tusb_fifo.h
-            35→#include "common/tusb_common.h"
-            36→#include "osal/osal.h"
-        tusb_mcu.h
-        tusb_private.h
-        tusb_types.h
-        tusb_verify.h
     device/
         dcd.h
         usbd.c
@@ -339,6 +260,138 @@ src/
         usbh_pvt.h
     osal/
     portable/
+        analog/
+        bridgetek/
+        chipidea/
+        dialog/
+        ehci/
+            ehci.c
+            ehci.h
+                50→// TODO merge OHCI with EHCI
+                51→enum {
+                52→	EHCI_MAX_ITD  = 4,
+                53→  EHCI_MAX_SITD = 16
+                54→};
+                56→//--------------------------------------------------------------------+
+                57→// EHCI Data Structure
+                58→//--------------------------------------------------------------------+
+                59→enum {
+                60→  EHCI_QTYPE_ITD = 0 ,
+                61→  EHCI_QTYPE_QHD     ,
+                62→  EHCI_QTYPE_SITD    ,
+                63→  EHCI_QTYPE_FSTN
+                64→};
+                66→/// EHCI PID
+                67→enum {
+                68→  EHCI_PID_OUT = 0 ,
+                69→  EHCI_PID_IN      ,
+                70→  EHCI_PID_SETUP
+                71→};
+                73→/// Link pointer
+                74→typedef union {
+                75→  uint32_t address;
+                76→  struct {
+                77→    uint32_t terminate : 1;
+                78→    uint32_t type      : 2;
+                79→  };
+                80→} ehci_link_t;
+                86→typedef struct {
+                87→  // Word 0 Next QTD Pointer
+                88→  ehci_link_t next;
+                121→} ehci_qtd_t;
+                258→enum {
+                280→enum {
+                …
+                286→enum {
+                …
+                294→enum {
+                …
+                311→typedef volatile struct {
+                312→  union {
+                313→    uint32_t command; // 0x00
+                332→  union {
+                333→    uint32_t status; // 0x04
+                356→  union{
+                357→    uint32_t inten; // 0x08
+                412→} ehci_registers_t;
+                414→//--------------------------------------------------------------------+
+                415→// Capability Registers
+                416→//--------------------------------------------------------------------+
+                417→typedef volatile struct {
+                …
+                452→  uint32_t hcsp_portroute; // 0x0C HCSP Port Route Register
+                453→} ehci_cap_registers_t;
+            ehci_api.h
+                38→// Initialize EHCI driver
+                39→bool ehci_init(uint8_t rhport, uint32_t capability_reg, uint32_t operatial_reg);
+                …
+                41→// De-initialize EHCI driver
+                42→bool ehci_deinit(uint8_t rhport);
+                …
+        mentor/
+            musb/
+                dcd_musb.c
+                hcd_musb.c
+                musb_max32.h
+                    47→#define MUSB_CFG_SHARED_FIFO   1 // shared FIFO for TX and RX endpoints
+                    48→#define MUSB_CFG_DYNAMIC_FIFO  0 // dynamic EP FIFO sizing
+                    …
+                    50→const uintptr_t MUSB_BASES[] = { MXC_BASE_USBHS };
+                    …
+                musb_ti.h
+                    48→#define MUSB_CFG_SHARED_FIFO       0
+                    49→#define MUSB_CFG_DYNAMIC_FIFO      1
+                    50→#define MUSB_CFG_DYNAMIC_FIFO_SIZE 4096
+                    …
+                    52→const uintptr_t MUSB_BASES[] = { USB0_BASE };
+                    …
+                musb_type.h
+                    64→#include "stdint.h"
+        microchip/
+            pic/
+            pic32mz/
+            samd/
+            samg/
+            samx7x/
+        mindmotion/
+        nordic/
+        nuvoton/
+            nuc120/
+            nuc121/
+            nuc505/
+        nxp/
+            khci/
+            lpc17_40/
+            lpc_ip3511/
+            lpc_ip3516/
+        ohci/
+            ohci.c
+            ohci.h
+            ohci_nxp.h
+        raspberrypi/
+        renesas/
+            rusb2/
+                dcd_rusb2.c
+                hcd_rusb2.c
+                rusb2_common.c
+                rusb2_common.h
+                rusb2_ra.h
+                rusb2_rx.h
+                rusb2_type.h
+        sony/
+        st/
+        sunxi/
+        synopsys/
+            dwc2/
+        template/
+        ti/
+        valentyusb/
+        wch/
+            ch32_usbfs_reg.h
+            ch32_usbhs_reg.h
+            dcd_ch32_usbfs.c
+            dcd_ch32_usbhs.c
+            hcd_ch32_usbfs.c
     tinyusb.mk
     tusb.c
     tusb.h
@@ -348,8 +401,6 @@ src/
         tcd.h
         usbc.c
         usbc.h
-            30→#include "common/tusb_common.h"
-            31→#include "pd_types.h"
 test/
 tools/
 version.yml

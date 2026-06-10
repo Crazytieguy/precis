@@ -39,11 +39,6 @@ README.md
     187→it will only be allowed to satisfy comparator sets if at least one
     188→comparator with the same `[major, minor, patch]` tuple also has a
     189→prerelease tag.
-    199→The purpose of this behavior is twofold.  First, prerelease versions
-    200→frequently are updated very quickly, and contain many breaking changes
-    201→that are (by the author's design) not yet fit for public consumption.
-    202→Therefore, by default, they are excluded from range-matching
-    203→semantics.
     279→### Advanced Range Syntax
     …
     281→Advanced range syntax desugars to primitive comparators in
@@ -115,11 +110,6 @@ README.md
     …
     600→### `SEMVER_SPEC_VERSION`
     …
-    602→2.0.0
-    604→```
-    605→const semver = require('semver');
-    607→console.log('We are currently using the semver specification version:', semver.SEMVER_SPEC_VERSION);
-    608→```
     610→## Exported Modules
     …
 SECURITY.md
@@ -302,6 +292,30 @@ test/
         version-not-gt-range.js
         version-not-lt-range.js
     functions/
+        clean.js
+        cmp.js
+        coerce.js
+        compare-build.js
+        compare-loose.js
+        compare.js
+        diff.js
+        eq.js
+        gt.js
+        gte.js
+        inc.js
+        lt.js
+        lte.js
+        major.js
+        minor.js
+        neq.js
+        parse.js
+        patch.js
+        prerelease.js
+        rcompare.js
+        rsort.js
+        satisfies.js
+        sort.js
+        valid.js
     index.js
     integration/
     internal/

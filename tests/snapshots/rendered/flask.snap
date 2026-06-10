@@ -101,31 +101,6 @@ docs/
     logging.rst
     make.bat
     patterns/
-        appdispatch.rst
-        appfactories.rst
-        caching.rst
-        celery.rst
-        deferredcallbacks.rst
-        favicon.rst
-        fileuploads.rst
-        flashing.rst
-        index.rst
-        javascript.rst
-        jquery.rst
-        lazyloading.rst
-        methodoverrides.rst
-        mongoengine.rst
-        packages.rst
-        requestchecksum.rst
-        singlepageapplications.rst
-        sqlalchemy.rst
-        sqlite3.rst
-        streaming.rst
-        subclassing.rst
-        templateinheritance.rst
-        urlprocessors.rst
-        viewdecorators.rst
-        wtforms.rst
     quickstart.rst
     reqcontext.rst
     server.rst
@@ -350,4 +325,31 @@ src/
             242→    json_module = json
             244→    autocorrect_location_header = False
 tests/
+    conftest.py
+    static/
+    templates/
+    test_appctx.py
+    test_apps/
+    test_async.py
+    test_basic.py
+    test_blueprints.py
+    test_cli.py
+    test_config.py
+    test_converters.py
+    test_helpers.py
+    test_instance_config.py
+    test_json.py
+    test_json_tag.py
+    test_logging.py
+    test_regression.py
+    test_reqctx.py
+    test_request.py
+    test_session_interface.py
+    test_signals.py
+    test_subclassing.py
+    test_templating.py
+    test_testing.py
+    test_user_error_handler.py
+    test_views.py
+    type_check/
 uv.lock

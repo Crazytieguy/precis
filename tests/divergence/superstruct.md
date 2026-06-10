@@ -154,38 +154,58 @@ Score(3000)=0.642 I=0.826 C=0.499 ns_rows≤3K=21/39 (reached=10 partial=3 missi
 | walker |  | 7629 | 48 | imports in src/structs/coercions.ts |  |  | 0.553 |
 | ns | 7742 |  | 183 | test/typings/ tree — all type-level test files | 6.2 |  | 0.535 |
 | walker |  | 7838 | 209 | export body at src/structs/coercions.ts:38 body 45 |  |  | 0.560 |
-| walker |  | 7898 | 60 | docs/reference/coercions.md section #0 |  |  | 0.560 |
-| walker |  | 7948 | 50 | Readme.md section #3 |  |  | 0.560 |
-| ns | 8099 |  | 357 | Sample validation fixture — three exemplar modules | 6.3 |  | 0.543 |
-| walker |  | 8133 | 185 | json config tsconfig.json |  |  | 0.543 |
-| walker |  | 8137 | 4 | listing of '.vscode' |  |  | 0.543 |
-| walker |  | 8192 | 55 | Readme.md section #2 |  |  | 0.543 |
-| walker |  | 8269 | 77 | export doc at src/structs/coercions.ts:79 |  |  | 0.543 |
-| walker |  | 8351 | 82 | export doc at src/structs/coercions.ts:38 |  |  | 0.557 |
-| walker |  | 8544 | 193 | export names surface in src/structs/utilities.ts |  |  | 0.567 |
-| walker |  | 8544 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.567 |
-| walker |  | 8544 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.567 |
-| walker |  | 8544 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.567 |
-| walker |  | 8561 | 17 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.567 |
-| walker |  | 8594 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.567 |
-| walker |  | 8631 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.567 |
-| walker |  | 8669 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.567 |
-| walker |  | 8712 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.567 |
-| walker |  | 8756 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.567 |
-| walker |  | 8801 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.567 |
-| walker |  | 8903 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.567 |
-| walker |  | 8968 | 65 | export body at src/structs/utilities.ts:60 body 61 |  |  | 0.567 |
-| walker |  | 8994 | 26 | export doc at src/structs/utilities.ts:71 |  |  | 0.567 |
-| ns | 8999 |  | 900 | test/index.test.ts — the validation-fixture harness | 6.4 |  | 0.538 |
-| walker |  | 9144 | 150 | export at src/structs/utilities.ts:30 |  |  | 0.538 |
-| walker |  | 9326 | 182 | export at src/structs/utilities.ts:44 |  |  | 0.538 |
-| walker |  | 9445 | 119 | export body at src/structs/utilities.ts:80 body 84 |  |  | 0.538 |
-| ns | 9499 |  | 500 | types.ts — `object` and `type` reference bodies | 6.5 | 4.1 | 0.524 |
-| walker |  | 9500 | 55 | export doc at src/structs/utilities.ts:80 |  |  | 0.524 |
-| walker |  | 9557 | 57 | export doc at src/structs/utilities.ts:171 |  |  | 0.524 |
-| walker |  | 9614 | 57 | export doc at src/structs/utilities.ts:221 |  |  | 0.524 |
-| walker |  | 9820 | 206 | export body at src/structs/utilities.ts:106 body 109 |  |  | 0.524 |
-| ns | 9863 |  | 364 | examples/default-values.js — defaulted + create | 6.6 |  | 0.512 |
-| walker |  | 9883 | 63 | export doc at src/structs/utilities.ts:197 |  |  | 0.512 |
-| walker |  | 9951 | 68 | export doc at src/structs/utilities.ts:17 |  |  | 0.512 |
-| ns | 9978 |  | 115 | Guide H2 headings — all 14 across guides 02-06 | 6.7 |  | 0.519 |
+| walker |  | 7963 | 125 | listing of 'test/validation' |  |  | 0.600 |
+| walker |  | 7981 | 18 | listing of 'test/validation/max' |  |  | 0.600 |
+| walker |  | 7999 | 18 | listing of 'test/validation/min' |  |  | 0.600 |
+| walker |  | 8019 | 20 | listing of 'test/validation/assign' |  |  | 0.600 |
+| walker |  | 8039 | 20 | listing of 'test/validation/intersection' |  |  | 0.600 |
+| walker |  | 8062 | 23 | listing of 'test/validation/refine' |  |  | 0.600 |
+| walker |  | 8086 | 24 | listing of 'test/validation/dynamic' |  |  | 0.600 |
+| ns | 8099 |  | 357 | Sample validation fixture — three exemplar modules | 6.3 |  | 0.583 |
+| walker |  | 8110 | 24 | listing of 'test/validation/record' |  |  | 0.583 |
+| walker |  | 8135 | 25 | listing of 'test/validation/map' |  |  | 0.583 |
+| walker |  | 8160 | 25 | listing of 'test/validation/set' |  |  | 0.583 |
+| walker |  | 8185 | 25 | listing of 'test/validation/union' |  |  | 0.583 |
+| walker |  | 8211 | 26 | listing of 'test/validation/defaulted' |  |  | 0.583 |
+| walker |  | 8239 | 28 | listing of 'test/validation/nullable' |  |  | 0.583 |
+| walker |  | 8268 | 29 | listing of 'test/validation/deprecated' |  |  | 0.583 |
+| walker |  | 8298 | 30 | listing of 'test/validation/optional' |  |  | 0.583 |
+| walker |  | 8331 | 33 | listing of 'test/validation/tuple' |  |  | 0.583 |
+| walker |  | 8367 | 36 | listing of 'test/validation/type' |  |  | 0.583 |
+| walker |  | 8380 | 13 | listing of 'test/validation/bigint' |  |  | 0.583 |
+| walker |  | 8393 | 13 | listing of 'test/validation/date' |  |  | 0.583 |
+| walker |  | 8453 | 60 | docs/reference/coercions.md section #0 |  |  | 0.583 |
+| walker |  | 8490 | 37 | listing of 'test/validation/array' |  |  | 0.583 |
+| walker |  | 8504 | 14 | listing of 'test/validation/coerce' |  |  | 0.583 |
+| walker |  | 8518 | 14 | listing of 'test/validation/integer' |  |  | 0.583 |
+| walker |  | 8532 | 14 | listing of 'test/validation/lazy' |  |  | 0.583 |
+| walker |  | 8582 | 50 | Readme.md section #3 |  |  | 0.583 |
+| walker |  | 8622 | 40 | listing of 'test/validation/empty' |  |  | 0.583 |
+| walker |  | 8807 | 185 | json config tsconfig.json |  |  | 0.583 |
+| walker |  | 8848 | 41 | listing of 'test/validation/partial' |  |  | 0.583 |
+| walker |  | 8852 | 4 | listing of '.vscode' |  |  | 0.583 |
+| walker |  | 8868 | 16 | listing of 'test/validation/any' |  |  | 0.583 |
+| walker |  | 8884 | 16 | listing of 'test/validation/enums' |  |  | 0.583 |
+| walker |  | 8900 | 16 | listing of 'test/validation/unknown' |  |  | 0.583 |
+| walker |  | 8955 | 55 | Readme.md section #2 |  |  | 0.583 |
+| ns | 8999 |  | 900 | test/index.test.ts — the validation-fixture harness | 6.4 |  | 0.552 |
+| walker |  | 9000 | 45 | listing of 'test/validation/omit' |  |  | 0.552 |
+| walker |  | 9045 | 45 | listing of 'test/validation/pick' |  |  | 0.552 |
+| walker |  | 9122 | 77 | export doc at src/structs/coercions.ts:79 |  |  | 0.552 |
+| walker |  | 9204 | 82 | export doc at src/structs/coercions.ts:38 |  |  | 0.564 |
+| walker |  | 9387 | 183 | listing of 'test/typings' |  |  | 0.602 |
+| ns | 9499 |  | 500 | types.ts — `object` and `type` reference bodies | 6.5 | 4.1 | 0.587 |
+| walker |  | 9580 | 193 | export names surface in src/structs/utilities.ts |  |  | 0.596 |
+| walker |  | 9580 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.596 |
+| walker |  | 9580 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.596 |
+| walker |  | 9580 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.596 |
+| walker |  | 9597 | 17 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.596 |
+| walker |  | 9630 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.596 |
+| walker |  | 9667 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.596 |
+| walker |  | 9705 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.596 |
+| walker |  | 9748 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.596 |
+| walker |  | 9792 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.596 |
+| walker |  | 9837 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.596 |
+| ns | 9863 |  | 364 | examples/default-values.js — defaulted + create | 6.6 |  | 0.583 |
+| walker |  | 9939 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.583 |
+| ns | 9978 |  | 115 | Guide H2 headings — all 14 across guides 02-06 | 6.7 |  | 0.588 |

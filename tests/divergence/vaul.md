@@ -74,40 +74,40 @@ Score(3000)=0.823 I=0.771 C=0.878 ns_rows≤3K=14/33 (reached=10 partial=1 missi
 | ns | 5503 |  | 332 | useSnapPoints — full parameter shape | 3.6 |  | 0.592 |
 | walker |  | 5633 | 512 | export at playwright.config.ts:12 |  |  | 0.592 |
 | walker |  | 5659 | 26 | export doc at playwright.config.ts:12 |  |  | 0.592 |
-| ns | 6032 |  | 529 | useSnapPoints — return shape + snapPointsOffset memo | 3.7 |  | 0.557 |
-| ns | 6394 |  | 362 | helpers.ts — dampenValue, getTranslate, isVertical bodies | 3.8 | 3.3 | 0.535 |
-| ns | 7179 |  | 785 | Root onRelease — close-threshold + velocity decision | 3.9 | 3.4 | 0.499 |
-| walker |  | 7350 | 1691 | export body at src/index.tsx:833 body 837 |  |  | 0.522 |
-| walker |  | 7416 | 66 | listing of 'test/tests' |  |  | 0.522 |
-| walker |  | 7527 | 111 | json config turbo.json |  |  | 0.522 |
-| walker |  | 7550 | 23 | imports in src/context.ts |  |  | 0.523 |
-| walker |  | 7573 | 23 | imports in src/use-position-fixed.ts |  |  | 0.523 |
-| ns | 7585 |  | 406 | browser.ts — every UA-detection function (full file) | 3.10 |  | 0.504 |
-| walker |  | 7668 | 95 | export names surface in src/use-prevent-scroll.ts |  |  | 0.504 |
-| walker |  | 7668 | 0 | export at src/use-prevent-scroll.ts:29 |  |  | 0.504 |
-| walker |  | 7668 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.504 |
-| walker |  | 7668 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.504 |
-| walker |  | 7668 | 0 | export at src/use-prevent-scroll.ts:294 |  |  | 0.504 |
-| walker |  | 7707 | 39 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.504 |
-| walker |  | 7767 | 60 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.504 |
-| walker |  | 7847 | 80 | export body at src/use-prevent-scroll.ts:34 body 35 |  |  | 0.504 |
-| walker |  | 7959 | 112 | export names surface in src/browser.ts |  |  | 0.508 |
-| walker |  | 7959 | 0 | export at src/browser.ts:1 |  |  | 0.508 |
-| walker |  | 7959 | 0 | export at src/browser.ts:10 |  |  | 0.508 |
-| walker |  | 7959 | 0 | export at src/browser.ts:14 |  |  | 0.508 |
-| walker |  | 7959 | 0 | export at src/browser.ts:18 |  |  | 0.508 |
-| walker |  | 7959 | 0 | export at src/browser.ts:22 |  |  | 0.508 |
-| walker |  | 7959 | 0 | export at src/browser.ts:30 |  |  | 0.508 |
-| walker |  | 7959 | 0 | export at src/browser.ts:34 |  |  | 0.508 |
-| walker |  | 7969 | 10 | export body at src/browser.ts:10 body 11 |  |  | 0.508 |
-| walker |  | 7980 | 11 | export body at src/browser.ts:14 body 15 |  |  | 0.509 |
-| walker |  | 8001 | 21 | export body at src/browser.ts:18 body 19 |  |  | 0.510 |
-| walker |  | 8082 | 81 | export body at src/browser.ts:1 body 2 |  |  | 0.518 |
-| walker |  | 8112 | 30 | imports in src/use-prevent-scroll.ts |  |  | 0.518 |
-| walker |  | 8238 | 126 | export names surface in src/constants.ts |  |  | 0.533 |
-| walker |  | 8278 | 40 | export at src/constants.ts:1 |  |  | 0.539 |
-| ns | 8357 |  | 772 | useScaleBackground — wrapper-scale effect (full hook) | 3.11 |  | 0.511 |
-| walker |  | 8377 | 99 | listing of 'test/src/app' |  |  | 0.512 |
+| walker |  | 5758 | 99 | listing of 'test/src/app' |  |  | 0.594 |
+| ns | 6032 |  | 529 | useSnapPoints — return shape + snapPointsOffset memo | 3.7 |  | 0.559 |
+| ns | 6394 |  | 362 | helpers.ts — dampenValue, getTranslate, isVertical bodies | 3.8 | 3.3 | 0.537 |
+| ns | 7179 |  | 785 | Root onRelease — close-threshold + velocity decision | 3.9 | 3.4 | 0.501 |
+| walker |  | 7449 | 1691 | export body at src/index.tsx:833 body 837 |  |  | 0.523 |
+| walker |  | 7515 | 66 | listing of 'test/tests' |  |  | 0.524 |
+| ns | 7585 |  | 406 | browser.ts — every UA-detection function (full file) | 3.10 |  | 0.506 |
+| walker |  | 7626 | 111 | json config turbo.json |  |  | 0.506 |
+| walker |  | 7649 | 23 | imports in src/context.ts |  |  | 0.506 |
+| walker |  | 7672 | 23 | imports in src/use-position-fixed.ts |  |  | 0.506 |
+| walker |  | 7767 | 95 | export names surface in src/use-prevent-scroll.ts |  |  | 0.506 |
+| walker |  | 7767 | 0 | export at src/use-prevent-scroll.ts:29 |  |  | 0.506 |
+| walker |  | 7767 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.506 |
+| walker |  | 7767 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.506 |
+| walker |  | 7767 | 0 | export at src/use-prevent-scroll.ts:294 |  |  | 0.506 |
+| walker |  | 7806 | 39 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.506 |
+| walker |  | 7866 | 60 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.506 |
+| walker |  | 7946 | 80 | export body at src/use-prevent-scroll.ts:34 body 35 |  |  | 0.506 |
+| walker |  | 8058 | 112 | export names surface in src/browser.ts |  |  | 0.509 |
+| walker |  | 8058 | 0 | export at src/browser.ts:1 |  |  | 0.509 |
+| walker |  | 8058 | 0 | export at src/browser.ts:10 |  |  | 0.509 |
+| walker |  | 8058 | 0 | export at src/browser.ts:14 |  |  | 0.509 |
+| walker |  | 8058 | 0 | export at src/browser.ts:18 |  |  | 0.509 |
+| walker |  | 8058 | 0 | export at src/browser.ts:22 |  |  | 0.509 |
+| walker |  | 8058 | 0 | export at src/browser.ts:30 |  |  | 0.509 |
+| walker |  | 8058 | 0 | export at src/browser.ts:34 |  |  | 0.509 |
+| walker |  | 8068 | 10 | export body at src/browser.ts:10 body 11 |  |  | 0.510 |
+| walker |  | 8079 | 11 | export body at src/browser.ts:14 body 15 |  |  | 0.510 |
+| walker |  | 8100 | 21 | export body at src/browser.ts:18 body 19 |  |  | 0.512 |
+| walker |  | 8181 | 81 | export body at src/browser.ts:1 body 2 |  |  | 0.519 |
+| walker |  | 8211 | 30 | imports in src/use-prevent-scroll.ts |  |  | 0.519 |
+| walker |  | 8337 | 126 | export names surface in src/constants.ts |  |  | 0.534 |
+| ns | 8357 |  | 772 | useScaleBackground — wrapper-scale effect (full hook) | 3.11 |  | 0.506 |
+| walker |  | 8377 | 40 | export at src/constants.ts:1 |  |  | 0.512 |
 | walker |  | 8715 | 338 | package dependencies in package.json |  |  | 0.528 |
 | walker |  | 8964 | 249 | export at src/use-snap-points.ts:7 |  |  | 0.548 |
 | ns | 9050 |  | 693 | use-prevent-scroll — exports + the six mobile-Safari quirks | 3.12 |  | 0.533 |

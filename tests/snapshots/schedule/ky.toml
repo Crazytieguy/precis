@@ -1591,10 +1591,24 @@ kind = "full"
 
 [[batches]]
 position = 52
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 66
+cum_tokens = 2253
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["browser.ts", "bytes.ts", "context.ts", "fetch.ts", "formdata-searchparams.ts", "headers.ts", "helpers", "hooks.ts", "http-error.ts", "main.ts", "memory-leak.ts", "methods.ts", "prefix-url.ts", "retry.ts", "stream.ts"]
+
+[[batches]]
+position = 53
 key = 'Markdown(Section { file: "readme.md", section_index: 8 })'
 descriptor = "readme.md section #8"
 cost_tokens = 33
-cum_tokens = 2220
+cum_tokens = 2286
 
 [batches.content]
 kind = "lines"
@@ -1608,11 +1622,11 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Typescript(Export { file: "source/core/Ky.ts", start_line: 33 })'
 descriptor = "export at source/core/Ky.ts:33"
 cost_tokens = 43
-cum_tokens = 2263
+cum_tokens = 2329
 
 [batches.content]
 kind = "lines"
@@ -1658,11 +1672,11 @@ end = 201
 kind = "ellipsis"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Typescript(ExportNames { file: "source/utils/delay.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
 descriptor = "export names surface in source/utils/delay.ts"
 cost_tokens = 24
-cum_tokens = 2287
+cum_tokens = 2353
 
 [batches.content]
 kind = "lines"
@@ -1700,11 +1714,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Typescript(Export { file: "source/utils/delay.ts", start_line: 5 })'
 descriptor = "export at source/utils/delay.ts:5"
 cost_tokens = 15
-cum_tokens = 2302
+cum_tokens = 2368
 
 [batches.content]
 kind = "lines"
@@ -1718,11 +1732,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Typescript(Export { file: "source/utils/delay.ts", start_line: 9 })'
 descriptor = "export at source/utils/delay.ts:9"
 cost_tokens = 28
-cum_tokens = 2330
+cum_tokens = 2396
 
 [batches.content]
 kind = "lines"
@@ -1744,11 +1758,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Typescript(ExportNames { file: "source/utils/timeout.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
 descriptor = "export names surface in source/utils/timeout.ts"
 cost_tokens = 24
-cum_tokens = 2354
+cum_tokens = 2420
 
 [batches.content]
 kind = "lines"
@@ -1786,11 +1800,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Typescript(Export { file: "source/utils/timeout.ts", start_line: 3 })'
 descriptor = "export at source/utils/timeout.ts:3"
 cost_tokens = 21
-cum_tokens = 2375
+cum_tokens = 2441
 
 [batches.content]
 kind = "lines"
@@ -1804,11 +1818,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Typescript(Export { file: "source/utils/timeout.ts", start_line: 9 })'
 descriptor = "export at source/utils/timeout.ts:9"
 cost_tokens = 48
-cum_tokens = 2423
+cum_tokens = 2489
 
 [batches.content]
 kind = "lines"
@@ -1830,11 +1844,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Markdown(Section { file: "readme.md", section_index: 19 })'
 descriptor = "readme.md section #19"
 cost_tokens = 37
-cum_tokens = 2460
+cum_tokens = 2526
 
 [batches.content]
 kind = "lines"
@@ -1846,20 +1860,6 @@ end = 835
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 66
-cum_tokens = 2526
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["browser.ts", "bytes.ts", "context.ts", "fetch.ts", "formdata-searchparams.ts", "headers.ts", "helpers", "hooks.ts", "http-error.ts", "main.ts", "memory-leak.ts", "methods.ts", "prefix-url.ts", "retry.ts", "stream.ts"]
 
 [[batches]]
 position = 62

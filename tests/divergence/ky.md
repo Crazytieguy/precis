@@ -67,18 +67,18 @@ Score(3000)=0.614 I=0.858 C=0.439 ns_rows≤3K=17/38 (reached=8 partial=0 missin
 | walker |  | 1982 | 47 | export doc at source/errors/ForceRetryError.ts:8 |  |  | 0.572 |
 | walker |  | 2014 | 32 | imports in source/errors/ForceRetryError.ts |  |  | 0.572 |
 | walker |  | 2187 | 173 | export body at source/errors/ForceRetryError.ts:8 body 15 |  |  | 0.573 |
-| walker |  | 2220 | 33 | readme.md section #8 |  |  | 0.573 |
 | ns | 2246 |  | 293 | source/index.ts createInstance body | 2.6 | 2.5 | 0.543 |
-| walker |  | 2263 | 43 | export at source/core/Ky.ts:33 |  |  | 0.543 |
-| walker |  | 2287 | 24 | export names surface in source/utils/delay.ts |  |  | 0.543 |
-| walker |  | 2302 | 15 | export at source/utils/delay.ts:5 |  |  | 0.543 |
-| walker |  | 2330 | 28 | export at source/utils/delay.ts:9 |  |  | 0.543 |
-| walker |  | 2354 | 24 | export names surface in source/utils/timeout.ts |  |  | 0.543 |
-| walker |  | 2375 | 21 | export at source/utils/timeout.ts:3 |  |  | 0.543 |
-| walker |  | 2423 | 48 | export at source/utils/timeout.ts:9 |  |  | 0.543 |
-| walker |  | 2460 | 37 | readme.md section #19 |  |  | 0.543 |
-| ns | 2473 |  | 227 | Default ky() body-method behavior + body shortcuts list | 2.7 |  | 0.539 |
-| walker |  | 2526 | 66 | listing of 'test' |  |  | 0.582 |
+| walker |  | 2253 | 66 | listing of 'test' |  |  | 0.586 |
+| walker |  | 2286 | 33 | readme.md section #8 |  |  | 0.586 |
+| walker |  | 2329 | 43 | export at source/core/Ky.ts:33 |  |  | 0.586 |
+| walker |  | 2353 | 24 | export names surface in source/utils/delay.ts |  |  | 0.586 |
+| walker |  | 2368 | 15 | export at source/utils/delay.ts:5 |  |  | 0.586 |
+| walker |  | 2396 | 28 | export at source/utils/delay.ts:9 |  |  | 0.586 |
+| walker |  | 2420 | 24 | export names surface in source/utils/timeout.ts |  |  | 0.586 |
+| walker |  | 2441 | 21 | export at source/utils/timeout.ts:3 |  |  | 0.586 |
+| ns | 2473 |  | 227 | Default ky() body-method behavior + body shortcuts list | 2.7 |  | 0.581 |
+| walker |  | 2489 | 48 | export at source/utils/timeout.ts:9 |  |  | 0.582 |
+| walker |  | 2526 | 37 | readme.md section #19 |  |  | 0.582 |
 | walker |  | 2558 | 32 | listing of 'test/helpers' |  |  | 0.621 |
 | walker |  | 2859 | 301 | package identity metadata in package.json |  |  | 0.621 |
 | ns | 2901 |  | 428 | core/constants.ts: feature-detection flags | 2.8 |  | 0.573 |

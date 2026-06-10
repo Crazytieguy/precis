@@ -53,10 +53,6 @@ Readme.md
     77→  * Executable for generating applications quickly
     79→## Docs & Community
     …
-    81→  * [Website and Documentation](https://expressjs.com/) - [[website repo](https://github.com/expressjs/expressjs.com)]
-    82→  * [GitHub Organization](https://github.com/expressjs) for Official Middleware & Modules
-    83→  * [Github Discussions](https://github.com/expressjs/discussions) for discussion on the development and usage of Express
-    85→**PROTIP** Be sure to read the [migration guide to v5](https://expressjs.com/en/guide/migrating-5)
     87→## Quick Start
     …
     117→## Philosophy
@@ -95,13 +91,54 @@ Readme.md
     209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
     210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
     213→* [Phillip9587](https://github.com/Phillip9587) - **Phillip Barta**
-    215→* [rxmarbles](https://github.com/rxmarbles) - **Rick Markins** (he/him)
     216→* [krzysdz](https://github.com/krzysdz)
     219→<details>
     220→<summary>Triagers emeriti members</summary>
     263→## License
     …
 examples/
+    README.md
+    auth/
+    content-negotiation/
+    cookie-sessions/
+    cookies/
+    downloads/
+    ejs/
+    error/
+    error-pages/
+    hello-world/
+    markdown/
+    multi-router/
+    mvc/
+        controllers/
+            main/
+            pet/
+            user/
+            user-pet/
+        db.js
+        index.js
+        lib/
+        public/
+        views/
+    online/
+    params/
+    resource/
+    route-map/
+    route-middleware/
+    route-separation/
+        index.js
+        post.js
+        public/
+        site.js
+        user.js
+        views/
+    search/
+    session/
+    static-files/
+    vhost/
+    view-constructor/
+    view-locals/
+    web-service/
 index.js
     9→'use strict';
     11→module.exports = require('./lib/express');
@@ -230,13 +267,6 @@ lib/
         127→req.accepts = function(){
         128→  var accept = accepts(this);
         129→  return accept.types.apply(accept, arguments);
-        132→/**
-        133→ * Check if the given `encoding`s are accepted.
-        134→ *
-        135→ * @param {String} ...encoding
-        136→ * @return {String|Array}
-        137→ * @public
-        138→ */
         140→req.acceptsEncodings = function(){
         141→  var accept = accepts(this);
         142→  return accept.encodings.apply(accept, arguments);
@@ -253,48 +283,6 @@ lib/
         8→'use strict';
         15→var contentDisposition = require('content-disposition');
         16→var createError = require('http-errors')
-        49→module.exports = res
-        …
-        64→res.status = function status(code) {
-        …
-        97→res.links = function(links) {
-        …
-        125→res.send = function send(body) {
-        …
-        232→res.json = function json(obj) {
-        …
-        260→res.jsonp = function jsonp(obj) {
-        …
-        321→res.sendStatus = function sendStatus(statusCode) {
-        …
-        371→res.sendFile = function sendFile(path, options, callback) {
-        …
-        433→res.download = function download (path, filename, options, callback) {
-        …
-        503→res.contentType =
-        …
-        569→res.format = function(obj){
-        …
-        604→res.attachment = function attachment(filename) {
-        …
-        629→res.append = function append(field, val) {
-        …
-        664→res.set =
-        …
-        696→res.get = function(field){
-        …
-        709→res.clearCookie = function clearCookie(name, options) {
-        …
-        742→res.cookie = function (name, value, options) {
-        …
-        794→res.location = function location(url) {
-        …
-        812→res.redirect = function redirect(url) {
-        …
-        875→res.vary = function(field){
-        …
-        894→res.render = function render(view, options, callback) {
-        …
     utils.js
     view.js
 package.json
@@ -303,3 +291,76 @@ package.json
     4→  "version": "5.2.1",
     15→  "license": "MIT",
 test/
+    Route.js
+    Router.js
+    acceptance/
+    app.all.js
+    app.engine.js
+    app.head.js
+    app.js
+    app.listen.js
+    app.locals.js
+    app.options.js
+    app.param.js
+    app.render.js
+    app.request.js
+    app.response.js
+    app.route.js
+    app.router.js
+    app.routes.error.js
+    app.use.js
+    config.js
+    exports.js
+    express.json.js
+    express.raw.js
+    express.static.js
+    express.text.js
+    express.urlencoded.js
+    fixtures/
+    middleware.basic.js
+    regression.js
+    req.accepts.js
+    req.acceptsCharsets.js
+    req.acceptsEncodings.js
+    req.acceptsLanguages.js
+    req.baseUrl.js
+    req.fresh.js
+    req.get.js
+    req.host.js
+    req.hostname.js
+    req.ip.js
+    req.ips.js
+    req.is.js
+    req.path.js
+    req.protocol.js
+    req.query.js
+    req.range.js
+    req.route.js
+    req.secure.js
+    req.signedCookies.js
+    req.stale.js
+    req.subdomains.js
+    req.xhr.js
+    res.append.js
+    res.attachment.js
+    res.clearCookie.js
+    res.cookie.js
+    res.download.js
+    res.format.js
+    res.get.js
+    res.json.js
+    res.jsonp.js
+    res.links.js
+    res.locals.js
+    res.location.js
+    res.redirect.js
+    res.render.js
+    res.send.js
+    res.sendFile.js
+    res.sendStatus.js
+    res.set.js
+    res.status.js
+    res.type.js
+    res.vary.js
+    support/
+    utils.js

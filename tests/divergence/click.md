@@ -70,95 +70,95 @@ Score(3000)=0.640 I=0.863 C=0.475 ns_rows≤3K=20/52 (reached=11 partial=1 missi
 | walker |  | 2397 | 0 | python method at src/click/exceptions.py:343 |  |  | 0.657 |
 | walker |  | 2408 | 11 | python method body at src/click/exceptions.py:343 body 344 |  |  | 0.657 |
 | walker |  | 2454 | 46 | python decl doc at src/click/exceptions.py:334 |  |  | 0.657 |
-| walker |  | 2481 | 27 | python imports in src/click/_utils.py |  |  | 0.657 |
-| walker |  | 2511 | 30 | headings outline in docs/entry-points.md |  |  | 0.657 |
-| walker |  | 2523 | 12 | listing of 'examples/complex' |  |  | 0.657 |
 | ns | 2525 |  | 158 | @argument: signature + 1-liner | 2.4 | 2.1 | 0.638 |
-| walker |  | 2536 | 13 | listing of 'examples/complex/complex' |  |  | 0.638 |
-| walker |  | 2552 | 16 | listing of 'examples/complex/complex/commands' |  |  | 0.638 |
-| walker |  | 2581 | 29 | python imports in src/click/globals.py |  |  | 0.638 |
+| walker |  | 2581 | 127 | listing of 'tests' |  |  | 0.638 |
+| walker |  | 2608 | 27 | python imports in src/click/_utils.py |  |  | 0.638 |
+| walker |  | 2638 | 30 | headings outline in docs/entry-points.md |  |  | 0.638 |
+| walker |  | 2650 | 12 | listing of 'examples/complex' |  |  | 0.638 |
+| walker |  | 2663 | 13 | listing of 'examples/complex/complex' |  |  | 0.638 |
+| walker |  | 2679 | 16 | listing of 'examples/complex/complex/commands' |  |  | 0.638 |
 | ns | 2688 |  | 163 | @group: signature + 1-liner | 2.5 | 2.1 | 0.617 |
-| walker |  | 2783 | 202 | README.md section #1 |  |  | 0.675 |
-| walker |  | 2815 | 32 | headings outline in docs/extending-click.md |  |  | 0.675 |
-| walker |  | 2921 | 106 | docs/extending-click.md section #0 |  |  | 0.675 |
+| walker |  | 2708 | 29 | python imports in src/click/globals.py |  |  | 0.617 |
+| walker |  | 2910 | 202 | README.md section #1 |  |  | 0.675 |
 | ns | 2923 |  | 235 | @pass_context / @pass_obj signatures + docstrings | 2.6 | 2.1 | 0.640 |
-| walker |  | 2954 | 33 | headings outline in docs/faqs.md |  |  | 0.640 |
-| walker |  | 2987 | 33 | docs/faqs.md section #0 |  |  | 0.640 |
-| walker |  | 3020 | 33 | headings outline in docs/wincmd.md |  |  | 0.640 |
-| walker |  | 3094 | 74 | docs/wincmd.md section #0 |  |  | 0.640 |
-| walker |  | 3129 | 35 | headings outline in docs/virtualenv.md |  |  | 0.640 |
-| walker |  | 3129 | 0 | docs/virtualenv.md section #0 |  |  | 0.640 |
-| walker |  | 3166 | 37 | headings outline in docs/parameters.md |  |  | 0.640 |
-| walker |  | 3205 | 39 | docs/parameters.md section #0 |  |  | 0.640 |
+| walker |  | 2942 | 32 | headings outline in docs/extending-click.md |  |  | 0.640 |
+| walker |  | 3048 | 106 | docs/extending-click.md section #0 |  |  | 0.640 |
+| walker |  | 3081 | 33 | headings outline in docs/faqs.md |  |  | 0.640 |
+| walker |  | 3114 | 33 | docs/faqs.md section #0 |  |  | 0.640 |
+| walker |  | 3147 | 33 | headings outline in docs/wincmd.md |  |  | 0.640 |
+| walker |  | 3221 | 74 | docs/wincmd.md section #0 |  |  | 0.640 |
 | ns | 3240 |  | 317 | @make_pass_decorator: signature + docstring + how-it-works | 2.7 | 2.1 | 0.604 |
-| walker |  | 3247 | 42 | headings outline in docs/option-decorators.md |  |  | 0.604 |
-| walker |  | 3275 | 28 | docs/option-decorators.md section #3 |  |  | 0.604 |
-| walker |  | 3352 | 77 | docs/option-decorators.md section #0 |  |  | 0.604 |
-| walker |  | 3395 | 43 | headings outline in docs/handling-files.md |  |  | 0.604 |
-| walker |  | 3459 | 64 | docs/handling-files.md section #0 |  |  | 0.604 |
+| walker |  | 3256 | 35 | headings outline in docs/virtualenv.md |  |  | 0.604 |
+| walker |  | 3256 | 0 | docs/virtualenv.md section #0 |  |  | 0.604 |
+| walker |  | 3293 | 37 | headings outline in docs/parameters.md |  |  | 0.604 |
+| walker |  | 3332 | 39 | docs/parameters.md section #0 |  |  | 0.604 |
+| walker |  | 3374 | 42 | headings outline in docs/option-decorators.md |  |  | 0.604 |
+| walker |  | 3402 | 28 | docs/option-decorators.md section #3 |  |  | 0.604 |
+| walker |  | 3479 | 77 | docs/option-decorators.md section #0 |  |  | 0.604 |
 | ns | 3498 |  | 258 | @confirmation_option / @password_option full bodies | 2.8 | 2.1 | 0.575 |
-| walker |  | 3501 | 42 | python imports in src/click/_textwrap.py |  |  | 0.575 |
-| walker |  | 3594 | 93 | python decl names surface in src/click/formatting.py |  |  | 0.575 |
-| walker |  | 3594 | 0 | python decl at src/click/formatting.py:14 |  |  | 0.575 |
-| walker |  | 3594 | 0 | python decl at src/click/formatting.py:104 |  |  | 0.575 |
-| walker |  | 3594 | 0 | python decl at src/click/formatting.py:283 |  |  | 0.575 |
-| walker |  | 3629 | 35 | python decl at src/click/formatting.py:24 |  |  | 0.575 |
-| walker |  | 3692 | 63 | python decl at src/click/formatting.py:31 |  |  | 0.575 |
-| walker |  | 3721 | 29 | python decl body at src/click/formatting.py:24 body 27 |  |  | 0.575 |
+| walker |  | 3522 | 43 | headings outline in docs/handling-files.md |  |  | 0.575 |
+| walker |  | 3586 | 64 | docs/handling-files.md section #0 |  |  | 0.575 |
+| walker |  | 3628 | 42 | python imports in src/click/_textwrap.py |  |  | 0.575 |
+| walker |  | 3721 | 93 | python decl names surface in src/click/formatting.py |  |  | 0.575 |
+| walker |  | 3721 | 0 | python decl at src/click/formatting.py:14 |  |  | 0.575 |
+| walker |  | 3721 | 0 | python decl at src/click/formatting.py:104 |  |  | 0.575 |
+| walker |  | 3721 | 0 | python decl at src/click/formatting.py:283 |  |  | 0.575 |
 | ns | 3738 |  | 240 | @version_option signature + key kwargs | 2.9 | 2.1 | 0.555 |
-| walker |  | 3802 | 81 | python decl doc at src/click/formatting.py:283 |  |  | 0.555 |
-| walker |  | 3897 | 95 | python decl names surface in src/click/testing.py |  |  | 0.555 |
-| walker |  | 3897 | 0 | python decl at src/click/testing.py:26 |  |  | 0.555 |
-| walker |  | 3897 | 0 | python decl at src/click/testing.py:70 |  |  | 0.555 |
-| walker |  | 3897 | 0 | python decl at src/click/testing.py:89 |  |  | 0.555 |
-| walker |  | 3897 | 0 | python decl at src/click/testing.py:103 |  |  | 0.555 |
-| walker |  | 3897 | 0 | python decl at src/click/testing.py:183 |  |  | 0.555 |
-| walker |  | 3897 | 0 | python decl at src/click/testing.py:261 |  |  | 0.555 |
-| walker |  | 3940 | 43 | python decl at src/click/testing.py:163 |  |  | 0.555 |
-| walker |  | 3962 | 22 | python decl at src/click/testing.py:60 |  |  | 0.555 |
-| walker |  | 4002 | 40 | python decl doc at src/click/testing.py:70 |  |  | 0.555 |
-| walker |  | 4053 | 51 | python decl doc at src/click/testing.py:89 |  |  | 0.555 |
+| walker |  | 3756 | 35 | python decl at src/click/formatting.py:24 |  |  | 0.555 |
+| walker |  | 3819 | 63 | python decl at src/click/formatting.py:31 |  |  | 0.555 |
+| walker |  | 3848 | 29 | python decl body at src/click/formatting.py:24 body 27 |  |  | 0.555 |
+| walker |  | 3929 | 81 | python decl doc at src/click/formatting.py:283 |  |  | 0.555 |
+| walker |  | 4024 | 95 | python decl names surface in src/click/testing.py |  |  | 0.555 |
+| walker |  | 4024 | 0 | python decl at src/click/testing.py:26 |  |  | 0.555 |
+| walker |  | 4024 | 0 | python decl at src/click/testing.py:70 |  |  | 0.555 |
+| walker |  | 4024 | 0 | python decl at src/click/testing.py:89 |  |  | 0.555 |
+| walker |  | 4024 | 0 | python decl at src/click/testing.py:103 |  |  | 0.555 |
+| walker |  | 4024 | 0 | python decl at src/click/testing.py:183 |  |  | 0.555 |
+| walker |  | 4024 | 0 | python decl at src/click/testing.py:261 |  |  | 0.555 |
+| walker |  | 4067 | 43 | python decl at src/click/testing.py:163 |  |  | 0.555 |
 | ns | 4085 |  | 347 | quickstart.md: 'Basic Concepts - Creating a Command' section | 2.10 |  | 0.523 |
-| walker |  | 4104 | 51 | headings outline in docs/arguments.md |  |  | 0.523 |
+| walker |  | 4089 | 22 | python decl at src/click/testing.py:60 |  |  | 0.523 |
+| walker |  | 4129 | 40 | python decl doc at src/click/testing.py:70 |  |  | 0.523 |
+| walker |  | 4180 | 51 | python decl doc at src/click/testing.py:89 |  |  | 0.523 |
 | ns | 4205 |  | 120 | core.py: every class header (top-level inventory) | 3.1 |  | 0.514 |
-| walker |  | 4238 | 134 | docs/arguments.md section #0 |  |  | 0.514 |
+| walker |  | 4236 | 56 | listing of 'tests/typing' |  |  | 0.514 |
+| walker |  | 4287 | 51 | headings outline in docs/arguments.md |  |  | 0.514 |
 | ns | 4349 |  | 144 | Context: one-paragraph lede | 3.2 | 3.1 | 0.504 |
-| walker |  | 4363 | 125 | python decl doc at src/click/formatting.py:104 |  |  | 0.504 |
-| walker |  | 4555 | 192 | python method sigs in src/click/formatting.py |  |  | 0.504 |
-| walker |  | 4555 | 0 | python method at src/click/formatting.py:135 |  |  | 0.504 |
-| walker |  | 4555 | 0 | python method at src/click/formatting.py:139 |  |  | 0.504 |
-| walker |  | 4555 | 0 | python method at src/click/formatting.py:143 |  |  | 0.504 |
-| walker |  | 4555 | 0 | python method at src/click/formatting.py:147 |  |  | 0.504 |
-| walker |  | 4555 | 0 | python method at src/click/formatting.py:185 |  |  | 0.504 |
-| walker |  | 4555 | 0 | python method at src/click/formatting.py:189 |  |  | 0.504 |
-| walker |  | 4555 | 0 | python method at src/click/formatting.py:194 |  |  | 0.504 |
-| walker |  | 4555 | 0 | python method at src/click/formatting.py:278 |  |  | 0.504 |
-| walker |  | 4569 | 14 | python method at src/click/formatting.py:269 |  |  | 0.504 |
-| walker |  | 4587 | 18 | python method at src/click/formatting.py:254 |  |  | 0.504 |
-| walker |  | 4596 | 9 | python method doc at src/click/formatting.py:139 |  |  | 0.504 |
-| walker |  | 4605 | 9 | python method doc at src/click/formatting.py:143 |  |  | 0.504 |
-| walker |  | 4614 | 9 | python method doc at src/click/formatting.py:278 |  |  | 0.504 |
+| walker |  | 4421 | 134 | docs/arguments.md section #0 |  |  | 0.504 |
+| walker |  | 4546 | 125 | python decl doc at src/click/formatting.py:104 |  |  | 0.504 |
 | ns | 4618 |  | 269 | Context.__init__ signature | 3.3 | 3.2 | 0.489 |
-| walker |  | 4625 | 11 | python method doc at src/click/formatting.py:185 |  |  | 0.489 |
-| walker |  | 4636 | 11 | python method doc at src/click/formatting.py:189 |  |  | 0.489 |
-| walker |  | 4649 | 13 | python method doc at src/click/formatting.py:135 |  |  | 0.489 |
-| walker |  | 4663 | 14 | python method doc at src/click/formatting.py:269 |  |  | 0.489 |
-| walker |  | 4673 | 10 | python method body at src/click/formatting.py:135 body 137 |  |  | 0.489 |
-| walker |  | 4684 | 11 | python method body at src/click/formatting.py:278 body 280 |  |  | 0.489 |
-| walker |  | 4698 | 14 | python method body at src/click/formatting.py:139 body 141 |  |  | 0.489 |
-| walker |  | 4712 | 14 | python method body at src/click/formatting.py:143 body 145 |  |  | 0.489 |
-| walker |  | 4766 | 54 | python method at src/click/formatting.py:116 |  |  | 0.489 |
-| walker |  | 4785 | 19 | python method body at src/click/formatting.py:189 body 191 |  |  | 0.489 |
-| walker |  | 4841 | 56 | python method at src/click/formatting.py:210 |  |  | 0.489 |
-| walker |  | 4875 | 34 | python method doc at src/click/formatting.py:194 |  |  | 0.489 |
-| walker |  | 4897 | 22 | python method body at src/click/formatting.py:185 body 187 |  |  | 0.489 |
-| walker |  | 4948 | 51 | python method doc at src/click/formatting.py:254 |  |  | 0.489 |
-| walker |  | 5000 | 52 | headings outline in docs/support-multiple-versions.md |  |  | 0.489 |
+| walker |  | 4738 | 192 | python method sigs in src/click/formatting.py |  |  | 0.489 |
+| walker |  | 4738 | 0 | python method at src/click/formatting.py:135 |  |  | 0.489 |
+| walker |  | 4738 | 0 | python method at src/click/formatting.py:139 |  |  | 0.489 |
+| walker |  | 4738 | 0 | python method at src/click/formatting.py:143 |  |  | 0.489 |
+| walker |  | 4738 | 0 | python method at src/click/formatting.py:147 |  |  | 0.489 |
+| walker |  | 4738 | 0 | python method at src/click/formatting.py:185 |  |  | 0.489 |
+| walker |  | 4738 | 0 | python method at src/click/formatting.py:189 |  |  | 0.489 |
+| walker |  | 4738 | 0 | python method at src/click/formatting.py:194 |  |  | 0.489 |
+| walker |  | 4738 | 0 | python method at src/click/formatting.py:278 |  |  | 0.489 |
+| walker |  | 4752 | 14 | python method at src/click/formatting.py:269 |  |  | 0.489 |
+| walker |  | 4770 | 18 | python method at src/click/formatting.py:254 |  |  | 0.489 |
+| walker |  | 4779 | 9 | python method doc at src/click/formatting.py:139 |  |  | 0.489 |
+| walker |  | 4788 | 9 | python method doc at src/click/formatting.py:143 |  |  | 0.489 |
+| walker |  | 4797 | 9 | python method doc at src/click/formatting.py:278 |  |  | 0.489 |
+| walker |  | 4808 | 11 | python method doc at src/click/formatting.py:185 |  |  | 0.489 |
+| walker |  | 4819 | 11 | python method doc at src/click/formatting.py:189 |  |  | 0.489 |
+| walker |  | 4832 | 13 | python method doc at src/click/formatting.py:135 |  |  | 0.489 |
+| walker |  | 4846 | 14 | python method doc at src/click/formatting.py:269 |  |  | 0.489 |
+| walker |  | 4856 | 10 | python method body at src/click/formatting.py:135 body 137 |  |  | 0.489 |
+| walker |  | 4867 | 11 | python method body at src/click/formatting.py:278 body 280 |  |  | 0.489 |
+| walker |  | 4881 | 14 | python method body at src/click/formatting.py:139 body 141 |  |  | 0.489 |
+| walker |  | 4895 | 14 | python method body at src/click/formatting.py:143 body 145 |  |  | 0.489 |
+| walker |  | 4949 | 54 | python method at src/click/formatting.py:116 |  |  | 0.489 |
+| walker |  | 4968 | 19 | python method body at src/click/formatting.py:189 body 191 |  |  | 0.489 |
+| walker |  | 5024 | 56 | python method at src/click/formatting.py:210 |  |  | 0.489 |
 | ns | 5031 |  | 413 | Context: location of every method | 3.4 | 3.2 | 0.473 |
-| walker |  | 5117 | 117 | docs/support-multiple-versions.md section #0 |  |  | 0.473 |
+| walker |  | 5058 | 34 | python method doc at src/click/formatting.py:194 |  |  | 0.473 |
+| walker |  | 5080 | 22 | python method body at src/click/formatting.py:185 body 187 |  |  | 0.473 |
+| walker |  | 5131 | 51 | python method doc at src/click/formatting.py:254 |  |  | 0.473 |
 | ns | 5156 |  | 125 | Command: one-paragraph lede + headline kwargs | 3.5 | 3.1 | 0.467 |
-| walker |  | 5244 | 127 | listing of 'tests' |  |  | 0.467 |
-| walker |  | 5300 | 56 | listing of 'tests/typing' |  |  | 0.467 |
+| walker |  | 5183 | 52 | headings outline in docs/support-multiple-versions.md |  |  | 0.467 |
+| walker |  | 5300 | 117 | docs/support-multiple-versions.md section #0 |  |  | 0.467 |
 | ns | 5357 |  | 201 | Command.__init__ signature | 3.6 | 3.5 | 0.458 |
 | walker |  | 5405 | 105 | python decl names surface in src/click/_utils.py |  |  | 0.458 |
 | walker |  | 5405 | 0 | python decl at src/click/_utils.py:7 |  |  | 0.458 |

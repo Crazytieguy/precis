@@ -175,25 +175,11 @@ Score(3000)=0.609 I=0.760 C=0.488 ns_rows≤3K=20/46 (reached=8 partial=3 missin
 | walker |  | 7979 | 74 | export doc at lib/parser.js:80 |  |  | 0.549 |
 | walker |  | 8055 | 76 | export doc at lib/stringifier.js:66 |  |  | 0.549 |
 | ns | 8057 |  | 108 | bin/svgo.js — CLI bootstrap | 4.1 |  | 0.545 |
-| walker |  | 8107 | 52 | export doc at lib/svgo/coa.js:19 |  |  | 0.545 |
-| walker |  | 8153 | 46 | export at lib/types.ts:161 |  |  | 0.545 |
-| walker |  | 8198 | 45 | export doc at lib/svgo/tools.js:215 |  |  | 0.545 |
 | ns | 8271 |  | 214 | lib/parser.js — SAX config + parseSvg signature | 4.2 |  | 0.540 |
-| walker |  | 8280 | 82 | export doc at lib/xast.js:42 |  |  | 0.540 |
 | ns | 8328 |  | 57 | plugins/_transforms.js — exports list (locations) | 4.3 |  | 0.538 |
 | ns | 8356 |  | 28 | plugins/_path.js — exports list (locations) | 4.4 |  | 0.537 |
-| walker |  | 8551 | 271 | export body at lib/style.js:286 body 292 |  |  | 0.537 |
-| walker |  | 8647 | 96 | headings outline in CONTRIBUTING.md |  |  | 0.537 |
-| walker |  | 8647 | 0 | CONTRIBUTING.md section #0 |  |  | 0.537 |
-| walker |  | 8698 | 51 | export at lib/types.ts:133 |  |  | 0.540 |
-| ns | 8706 |  | 350 | lib/path.js — argsCountPerCommand + parsePathData/stringifyPathData sigs | 4.5 |  | 0.535 |
-| walker |  | 8857 | 159 | export body at lib/svgo/tools.js:21 body 22 |  |  | 0.535 |
-| walker |  | 8909 | 52 | export doc at lib/svgo/tools.js:43 |  |  | 0.535 |
-| ns | 9022 |  | 316 | lib/stringifier.js — defaults dict | 4.6 |  | 0.525 |
-| walker |  | 9228 | 319 | export body at lib/svgo-node.js:44 body 45 |  |  | 0.525 |
-| walker |  | 9728 | 500 | export at lib/builtin.js:62 |  |  | 0.526 |
-| ns | 9736 |  | 714 | lib/svgo/coa.js — commander flags declarations | 4.7 |  | 0.508 |
-| walker |  | 9830 | 102 | export doc at lib/xast.js:22 |  |  | 0.508 |
-| ns | 9833 |  | 97 | plugins/removeDoctype.js — minimal-plugin pattern | 5.1 | 3.8 | 0.504 |
-| ns | 9973 |  | 140 | plugins/removeComments.js — params shape + default | 5.2 | 3.8 | 0.501 |
-| walker |  | 9997 | 167 | export names surface #1 in lib/types.ts |  |  | 0.502 |
+| ns | 8706 |  | 350 | lib/path.js — argsCountPerCommand + parsePathData/stringifyPathData sigs | 4.5 |  | 0.532 |
+| ns | 9022 |  | 316 | lib/stringifier.js — defaults dict | 4.6 |  | 0.522 |
+| ns | 9736 |  | 714 | lib/svgo/coa.js — commander flags declarations | 4.7 |  | 0.504 |
+| ns | 9833 |  | 97 | plugins/removeDoctype.js — minimal-plugin pattern | 5.1 | 3.8 | 0.500 |
+| ns | 9973 |  | 140 | plugins/removeComments.js — params shape + default | 5.2 | 3.8 | 0.497 |

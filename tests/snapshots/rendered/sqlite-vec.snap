@@ -220,6 +220,44 @@ sqlite-vec.c
 sqlite-vec.h.tmpl
 test.sql
 tests/
+    .gitignore
+    .python-version
+    Cargo.lock
+    Cargo.toml
+    __snapshots__/
+    afbd/
+    build.rs
+    conftest.py
+    correctness/
+    fuzz/
+        .gitignore
+        Makefile
+        README.md
+        corpus/
+        exec.c
+        exec.dict
+        json.c
+        numpy.c
+        numpy.dict
+        vec0-create.c
+        vec0-create.dict
+    fuzz.py
+    leak-fixtures/
+    minimum/
+    pyproject.toml
+    skip.test-correctness.py
+    sqlite-vec-internal.h
+    test-auxiliary.py
+    test-general.py
+    test-knn-distance-constraints.py
+    test-loadable.py
+    test-metadata.py
+    test-partition-keys.py
+    test-unit.c
+    test-wasm.mjs
+    unittest.rs
+    utils.py
+    uv.lock
 tmp-static.py
     1→import sqlite3
     2→import numpy as np

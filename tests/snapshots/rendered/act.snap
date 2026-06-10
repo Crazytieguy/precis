@@ -33,11 +33,6 @@ README.md
     3→# Overview…
     5→> "Think globally, `act` locally"
     7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
-    9→- **Fast Feedback** - Rather than having to commit/push every time you want to test out the changes you are making to your `.github/workflows/` files (or for any changes to embedded GitHub actions), you can use `act` to run the actions locally. The [environment variables](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables) and [filesystem](https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners#filesystems-on-github-hosted-runners) are all configured to match what GitHub provides.
-    10→- **Local Task Runner** - I love [make](<https://en.wikipedia.org/wiki/Make_(software)>). However, I also hate repeating myself. With `act`, you can use the GitHub Actions defined in your `.github/workflows/` to replace your `Makefile`!
-    12→> [!TIP]
-    13→> **Now Manage and Run Act Directly From VS Code!**<br/>
-    14→> Check out the [GitHub Local Actions](https://sanjulaganepola.github.io/github-local-actions-docs/) Visual Studio Code extension which allows you to leverage the power of `act` to run and test workflows locally without leaving your editor.
     16→# How Does It Work?
     …
     24→# Act User Guide
@@ -72,10 +67,6 @@ cmd/
         …
     notices.go
     platforms.go
-        1→package cmd
-        3→import (
-        4→	"strings"
-        5→)
         7→func (i *Input) newPlatforms() map[string]string {
         …
     root.go
@@ -133,7 +124,6 @@ pkg/
             …
         storage.go
         testdata/
-            example/
     artifacts/
         artifact.pb.go
         artifacts_v4.go
@@ -159,16 +149,6 @@ pkg/
         context_test.go
         draw.go
         dryrun.go
-            7→type dryrunContextKey string
-            …
-            9→const dryrunContextKeyVal = dryrunContextKey("dryrun")
-            …
-            11→// Dryrun returns true if the current context is dryrun
-            12→func Dryrun(ctx context.Context) bool {
-            …
-            22→// WithDryrun adds a value to the context for dryrun
-            23→func WithDryrun(ctx context.Context, dryrun bool) context.Context {
-            24→	return context.WithValue(ctx, dryrunContextKeyVal, dryrun)
         executor.go
         executor_test.go
         file.go
@@ -195,18 +175,9 @@ pkg/
             42→func LoadDockerAuthConfigs(ctx context.Context) map[string]registry.AuthConfig {
             …
         docker_build.go
-            22→// NewDockerBuildExecutor function to create a run executor for the container
-            23→func NewDockerBuildExecutor(input NewDockerBuildExecutorInput) common.Executor {
-            …
-            78→func createBuildContext(ctx context.Context, contextDir string, relDockerfile string) (io.ReadCloser, error) {
-            …
         docker_cli.go
         docker_cli_test.go
         docker_images.go
-            16→func ImageExistsLocally(ctx context.Context, imageName string, platform string) (bool, error) {
-            …
-            44→func RemoveImage(ctx context.Context, imageName string, force bool, pruneChildren bool) (bool, error) {
-            …
         docker_images_test.go
         docker_logger.go
         docker_network.go
@@ -215,13 +186,6 @@ pkg/
             45→func NewDockerNetworkRemoveExecutor(name string) common.Executor {
             …
         docker_pull.go
-            20→// NewDockerPullExecutor function to create a run executor for the container
-            21→func NewDockerPullExecutor(input NewDockerPullExecutorInput) common.Executor {
-            …
-            78→func getImagePullOptions(ctx context.Context, input NewDockerPullExecutorInput) (client.ImagePullOptions, error) {
-            …
-            123→func cleanImage(ctx context.Context, image string) string {
-            …
         docker_pull_test.go
         docker_run.go
         docker_run_test.go
@@ -234,8 +198,6 @@ pkg/
             36→func removeExecutor(volume string, force bool) common.Executor {
             …
         executions_environment.go
-            1→package container
-            3→import "context"
             5→type ExecutionsEnvironment interface {
             …
         host_environment.go
@@ -250,7 +212,7 @@ pkg/
             12→func getSysProcAttr(_ string, tty bool) *syscall.SysProcAttr {
             …
             24→func openPty() (*os.File, *os.File, error) {
-            25→	return pty.Open()
+            …
         util_openbsd_mips64.go
             9→func getSysProcAttr(cmdLine string, tty bool) *syscall.SysProcAttr {
             …
@@ -269,17 +231,6 @@ pkg/
     lookpath/
         LICENSE
         env.go
-            1→package lookpath
-            3→import "os"
-            5→type Env interface {
-            6→	Getenv(name string) string
-            7→}
-            9→type defaultEnv struct {
-            10→}
-            12→func (*defaultEnv) Getenv(name string) string {
-            13→	return os.Getenv(name)
-            16→func LookPath(file string) (string, error) {
-            17→	return LookPath2(file, &defaultEnv{})
         error.go
             1→package lookpath
             3→type Error struct {
@@ -309,8 +260,6 @@ pkg/
         planner.go
         planner_test.go
         step_result.go
-            1→package model
-            3→import "fmt"
         testdata/
             container-volumes/
             empty-workflow/
@@ -350,17 +299,157 @@ pkg/
         step_docker.go
         step_docker_test.go
         step_factory.go
-            9→type stepFactory interface {
-            …
-            13→type stepFactoryImpl struct{}
-            …
-            15→func (sf *stepFactoryImpl) newStep(stepModel *model.Step, rc *RunContext) (step, error) {
-            …
         step_factory_test.go
         step_run.go
         step_run_test.go
         step_test.go
         testdata/
+            .github/
+            GITHUB_ENV-use-in-env-ctx/
+            GITHUB_STATE/
+            act-composite-env-test/
+            action-cache-v2-fetch-failure-is-job-error/
+            actions/
+                action1/
+                composite-fail-with-output/
+                docker-local/
+                docker-local-noargs/
+                docker-url/
+                node12/
+                node16/
+                node20/
+            actions-environment-and-context-tests/
+            basic/
+            checkout/
+            commands/
+            composite-fail-with-output/
+            container-hostname/
+            defaults-run/
+            dir with spaces/
+            do-not-leak-step-env-in-composite/
+            docker-action-custom-path/
+            docker-action-host-env/
+            ensure-post-steps/
+            env-and-path/
+            environment-files/
+            environment-files-parser-bug/
+            environment-variables/
+            evalenv/
+            evalmatrix/
+            evalmatrix-merge-array/
+            evalmatrix-merge-map/
+            evalmatrixneeds/
+            evalmatrixneeds2/
+            fail/
+            if-env-act/
+            if-expressions/
+            input-from-cli/
+            inputs-via-env-context/
+            issue-104/
+            issue-1195/
+            issue-122/
+            issue-141/
+            issue-1595/
+            issue-597/
+            issue-598/
+            job-container/
+            job-container-invalid-credentials/
+            job-container-non-root/
+            job-needs-context-contains-result/
+            job-nil-step/
+            job-status-check/
+            local-action-docker-url/
+            local-action-dockerfile/
+            local-action-js/
+            local-action-via-composite-dockerfile/
+            local-remote-action-overrides/
+            localdockerimagetest_/
+            mask-values/
+            matrix/
+            matrix-exitcode/
+            matrix-include-exclude/
+            matrix-with-user-inclusions/
+            mysql-service-container-with-health-check/
+            networking/
+            nix-prepend-path/
+            no-panic-on-invalid-composite-action/
+            node/
+            non-existent-action/
+            outputs/
+            parallel/
+            path-handling/
+            post-step-failure-is-job-failure/
+            pull-request/
+            python/
+            remote-action-composite-action-ref/
+            remote-action-composite-js-pre-with-defaults/
+            remote-action-docker/
+            remote-action-docker-new-cache/
+            remote-action-js/
+            remote-action-js-node-user/
+            runs-on/
+            secrets/
+            services/
+            services-empty-image/
+            services-host-network/
+            services-with-container/
+            set-env-new-env-file-per-step/
+            set-env-step-env-override/
+            shells/
+            steps-context/
+            stepsummary/
+            uses-action-with-pre-and-post-step/
+            uses-and-run-in-one-step/
+            uses-composite/
+            uses-composite-check-for-input-collision/
+                action-with-pre-and-post/
+                    action.yml
+                    main.js
+                    post.js
+                    pre.js
+                composite_action/
+                push.yml
+            uses-composite-check-for-input-in-if-uses/
+            uses-composite-check-for-input-shadowing/
+                action-with-pre-and-post/
+                    action.yml
+                    main.js
+                    post.js
+                    pre.js
+                composite_action/
+                push.yml
+            uses-composite-with-error/
+            uses-composite-with-inputs/
+            uses-composite-with-pre-and-post-steps/
+                action-with-pre-and-post/
+                    action.yml
+                    main.js
+                    post.js
+                    pre.js
+                composite_action/
+                last-action/
+                push.yml
+            uses-docker-url/
+            uses-github-empty/
+            uses-github-full-sha/
+            uses-github-noref/
+            uses-github-path/
+            uses-github-root/
+            uses-github-short-sha/
+            uses-nested-composite/
+            uses-workflow/
+            uses-workflow-defaults/
+            windows-add-env/
+            windows-add-env-powershell-5/
+            windows-prepend-path/
+            windows-prepend-path-powershell-5/
+            windows-shell-cmd/
+            workdir/
+            workflow_call_inputs/
+            workflow_dispatch/
+            workflow_dispatch-scalar/
+            workflow_dispatch-scalar-composite-action/
+            workflow_dispatch_no_inputs_mapping/
     schema/
         action_schema.json
         schema.go
@@ -368,7 +457,5 @@ pkg/
         workflow_schema.json
     workflowpattern/
         trace_writer.go
-            1→package workflowpattern
-            3→import "fmt"
         workflow_pattern.go
         workflow_pattern_test.go
