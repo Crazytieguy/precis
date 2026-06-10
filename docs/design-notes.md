@@ -230,10 +230,15 @@ captures it.
   cmdk `walker_used` 9484 → 7302 at B=10K). Score(3000) is blind to
   this; check Score(9000) and high-B `walker_used`. Mitigation lever
   if needed: walker-side filter on absolute cost.
-- **Uncalibrated v0.2 JS class-member seeds**:
-  `JS_CLASS_MEMBER_SPLIT_MIN = 12`, `ExportMember` concavity `0.45`,
-  split names factor `1.12`, `export_member_value` weights
-  `0.62 / 0.95 / 0.55` — first-pass values, never swept.
+- **JS class-member seeds swept (2026-06-10): inert at the primary
+  budget; keep the first-pass values.** Every direction tested leaves
+  training avg at 0.5921 with flat per-fixture headlines (commander /
+  dockly reorder sub-3K rows only): `ExportMember` concavity 0.35 /
+  0.40 / 0.55, `JS_CLASS_MEMBER_SPLIT_MIN` 8 / 16 (16 → dockly +0.001,
+  noise), split names factor 1.0 / 1.3, `export_member_value` weights
+  +cat 0.80 and all-down 0.45/0.70/0.40. The knobs sit in a flat
+  region of the training objective — don't re-sweep; a lift on the
+  JS-class fixtures needs new recall, not these values.
 - **htop-class OOP-spine recall**: a core-header in-degree boost
   (htop's `Object/Row/Process/Meter/Panel` headers still lose the
   ratio race) is the one identified lever class still viable —
