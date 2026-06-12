@@ -217,6 +217,18 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // — the previous design recomputed inside each value call,
         // re-walking the tree per decl.
         let entry_factor = go_entry_factor_for(file, ctx, pkg.as_deref(), &decls);
+        // Exportedness is meaningless in `package main` — nothing can
+        // import it, and NS authors rank entrypoint internals (flag
+        // tables, `func main` wiring) without a visibility discount.
+        //
+        // Tried and reverted alongside this: a `cmd/`-subtree surface
+        // boost (1.4× and 1.2×, names/decl/struct-group roles only).
+        // act's NS anchors its cmd/ files (+0.037 at 1.4×) but
+        // mcphost's equally-conventional cmd/ subcommand files are
+        // NS-peripheral (−0.087 at 1.4×, −0.032 at 1.2× with act's
+        // gain gone) — same layout, same cobra idioms, no walk-time
+        // signal separating them.
+        let package_main = pkg.as_deref() == Some("main");
 
         // `PackageDocLede` fires for entry-shaped files (see
         // `go_entry_factor_for`) — internal subpackage ledes carry low
@@ -314,7 +326,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     key: decl_key.clone().into(),
                     predecessor: Some(names_predecessor.clone()),
                     content,
-                    value: GoRole::Decl.value(file, ctx, entry_factor, info.kv()),
+                    value: GoRole::Decl.value(file, ctx, entry_factor, info.kv(package_main)),
                 });
             }
             let decl_predecessor = BatchKey::Go(decl_key);
@@ -327,7 +339,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
-                    value: GoRole::DeclDoc.value(file, ctx, entry_factor, info.kv()),
+                    value: GoRole::DeclDoc.value(file, ctx, entry_factor, info.kv(package_main)),
                 });
             }
             if info.kind.has_body()
@@ -341,7 +353,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
-                    value: GoRole::DeclBody.value(file, ctx, entry_factor, info.kv()),
+                    value: GoRole::DeclBody.value(file, ctx, entry_factor, info.kv(package_main)),
                 });
             }
             // Big-struct field-group split. Each blank-line-separated
@@ -361,7 +373,12 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         .into(),
                         predecessor: Some(decl_predecessor.clone()),
                         content,
-                        value: GoRole::StructFieldGroup.value(file, ctx, entry_factor, info.kv()),
+                        value: GoRole::StructFieldGroup.value(
+                            file,
+                            ctx,
+                            entry_factor,
+                            info.kv(package_main),
+                        ),
                     });
                 }
             }
@@ -437,8 +454,15 @@ impl DeclInfo {
         }
     }
 
-    fn kv(&self) -> f64 {
-        self.kind.kind_weight() * self.visibility_factor()
+    /// `package_main`: exportedness carries no signal in `package main`
+    /// (nothing imports it), so the visibility discount is waived.
+    fn kv(&self, package_main: bool) -> f64 {
+        let visibility = if package_main {
+            VISIBILITY_FACTOR_EXPORTED
+        } else {
+            self.visibility_factor()
+        };
+        self.kind.kind_weight() * visibility
     }
 }
 
@@ -726,6 +750,10 @@ impl GoRole {
     }
 }
 
+/// Boost for entry-shaped Go surfaces (package-name match or exported
+/// chunked struct, root-level only — see `go_entry_factor_for`).
+const GO_ENTRY_FACTOR: f64 = 1.4;
+
 /// 1.4× boost for files anchoring the package API surface —
 /// package-name match or an exported chunked struct. Root-level only.
 ///
@@ -757,7 +785,7 @@ fn go_entry_factor_for(
         .iter()
         .any(|(_, info)| info.exported && !info.struct_field_groups.is_empty());
     if pkg == Some(stem) || big_struct_anchor {
-        1.4
+        GO_ENTRY_FACTOR
     } else {
         1.0
     }
