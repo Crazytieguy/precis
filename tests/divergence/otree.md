@@ -143,39 +143,48 @@ Score(3000)=0.608 I=0.801 C=0.461 ns_rows≤3K=20/50 (reached=7 partial=5 missin
 | walker |  | 5788 | 8 | listing of 'config/themes' |  |  | 0.612 |
 | ns | 5796 |  | 305 | AnyParser auto-detect parse_root | 4.5 |  | 0.594 |
 | ns | 5872 |  | 76 | syntax helper signatures | 4.6 |  | 0.597 |
-| ns | 5888 |  | 16 | config/ module layout | 5.1 |  | 0.599 |
-| walker |  | 5974 | 186 | pub item at src/config/colors.rs:21 |  |  | 0.600 |
-| ns | 6234 |  | 346 | Config struct field names | 5.2 |  | 0.605 |
-| walker |  | 6399 | 425 | impl method sigs in src/config/mod.rs |  |  | 0.605 |
-| ns | 6578 |  | 344 | Action enum variants | 5.3 |  | 0.589 |
-| walker |  | 6633 | 234 | pub item at src/ui/app.rs:53 |  |  | 0.616 |
-| walker |  | 6729 | 96 | README.md section #6 |  |  | 0.616 |
-| walker |  | 6829 | 100 | pub item body at src/parse/syntax.rs:201 body 202 |  |  | 0.616 |
-| ns | 6976 |  | 398 | Default key bindings | 5.4 |  | 0.600 |
-| walker |  | 7088 | 259 | pub item at src/config/colors.rs:78 |  |  | 0.601 |
-| ns | 7174 |  | 198 | Key enum + KeyAction | 5.5 |  | 0.603 |
-| walker |  | 7409 | 321 | [dependencies] in Cargo.toml |  |  | 0.603 |
-| ns | 7644 |  | 470 | Per-branch struct fields (Tree / Layout / Filter / Data) | 5.6 |  | 0.607 |
-| walker |  | 7704 | 295 | pub item at src/config/colors.rs:162 |  |  | 0.608 |
-| walker |  | 7822 | 118 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.608 |
-| walker |  | 7878 | 56 | README.md section #3 |  |  | 0.608 |
-| ns | 7894 |  | 250 | Editor + Header + Footer struct fields | 5.7 |  | 0.608 |
-| walker |  | 8065 | 187 | README.md section #4 |  |  | 0.608 |
-| walker |  | 8135 | 70 | README.md section #2 |  |  | 0.608 |
-| ns | 8331 |  | 437 | Config::load + Config::parse | 5.8 |  | 0.592 |
-| ns | 8613 |  | 282 | Config::get_path resolution | 5.9 |  | 0.583 |
-| ns | 8986 |  | 373 | Color struct + Colors namespaces | 5.10 |  | 0.587 |
-| walker |  | 9051 | 916 | pub item at src/cmd.rs:13 |  |  | 0.588 |
-| walker |  | 9059 | 8 | listing of '.github' |  |  | 0.588 |
-| walker |  | 9075 | 16 | listing of '.github/workflows' |  |  | 0.588 |
-| ns | 9095 |  | 109 | DataColors fields | 5.11 |  | 0.592 |
-| ns | 9221 |  | 126 | TreeColors fields | 5.12 |  | 0.596 |
-| ns | 9311 |  | 90 | Types config struct | 5.13 |  | 0.597 |
-| ns | 9599 |  | 288 | CommandArgs flag list | 6.1 |  | 0.605 |
-| ns | 9652 |  | 53 | examples/ + docs/ listings | 6.2 |  | 0.602 |
-| ns | 9808 |  | 156 | Changelog version headings | 6.3 |  | 0.597 |
-| walker |  | 9945 | 870 | pub item at src/config/keys.rs:195 |  |  | 0.597 |
-| walker |  | 9952 | 7 | pub item body at src/ui/mod.rs:35 body 60 |  |  | 0.597 |
-| walker |  | 9959 | 7 | pub item body at src/parse/json.rs:26 body 80 |  |  | 0.597 |
-| ns | 9967 |  | 159 | clipboard OS routing | 6.4 |  | 0.593 |
-| walker |  | 9969 | 10 | pub item body at src/ui/mod.rs:35 body 59 |  |  | 0.593 |
+| walker |  | 5885 | 97 | impl method sigs in src/parse/xml.rs |  |  | 0.597 |
+| ns | 5888 |  | 16 | config/ module layout | 5.1 |  | 0.600 |
+| walker |  | 6071 | 186 | pub item at src/config/colors.rs:21 |  |  | 0.601 |
+| walker |  | 6169 | 98 | impl method sigs in src/parse/hcl.rs |  |  | 0.602 |
+| ns | 6234 |  | 346 | Config struct field names | 5.2 |  | 0.607 |
+| walker |  | 6267 | 98 | impl method sigs in src/parse/json.rs |  |  | 0.609 |
+| walker |  | 6365 | 98 | impl method sigs in src/parse/toml.rs |  |  | 0.612 |
+| walker |  | 6464 | 99 | impl method sigs in src/parse/jsonl.rs |  |  | 0.617 |
+| walker |  | 6563 | 99 | impl method sigs in src/parse/yaml.rs |  |  | 0.621 |
+| ns | 6578 |  | 344 | Action enum variants | 5.3 |  | 0.605 |
+| ns | 6976 |  | 398 | Default key bindings | 5.4 |  | 0.589 |
+| walker |  | 6988 | 425 | impl method sigs in src/config/mod.rs |  |  | 0.589 |
+| ns | 7174 |  | 198 | Key enum + KeyAction | 5.5 |  | 0.592 |
+| walker |  | 7181 | 193 | impl method sigs in src/tree.rs |  |  | 0.601 |
+| walker |  | 7415 | 234 | pub item at src/ui/app.rs:53 |  |  | 0.627 |
+| walker |  | 7511 | 96 | README.md section #6 |  |  | 0.627 |
+| walker |  | 7611 | 100 | pub item body at src/parse/syntax.rs:201 body 202 |  |  | 0.627 |
+| ns | 7644 |  | 470 | Per-branch struct fields (Tree / Layout / Filter / Data) | 5.6 |  | 0.629 |
+| walker |  | 7870 | 259 | pub item at src/config/colors.rs:78 |  |  | 0.629 |
+| walker |  | 7891 | 21 | impl method sigs in src/config/colors.rs |  |  | 0.629 |
+| ns | 7894 |  | 250 | Editor + Header + Footer struct fields | 5.7 |  | 0.629 |
+| walker |  | 8037 | 146 | impl method sigs in src/ui/popup.rs |  |  | 0.629 |
+| ns | 8331 |  | 437 | Config::load + Config::parse | 5.8 |  | 0.613 |
+| walker |  | 8358 | 321 | [dependencies] in Cargo.toml |  |  | 0.613 |
+| ns | 8613 |  | 282 | Config::get_path resolution | 5.9 |  | 0.603 |
+| walker |  | 8653 | 295 | pub item at src/config/colors.rs:162 |  |  | 0.604 |
+| walker |  | 8771 | 118 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.604 |
+| walker |  | 8941 | 170 | impl method sigs in src/ui/filter.rs |  |  | 0.615 |
+| ns | 8986 |  | 373 | Color struct + Colors namespaces | 5.10 |  | 0.617 |
+| ns | 9095 |  | 109 | DataColors fields | 5.11 |  | 0.621 |
+| walker |  | 9113 | 172 | impl method sigs in src/parse/any.rs |  |  | 0.623 |
+| walker |  | 9169 | 56 | README.md section #3 |  |  | 0.623 |
+| ns | 9221 |  | 126 | TreeColors fields | 5.12 |  | 0.626 |
+| walker |  | 9223 | 54 | impl method sigs in src/edit.rs |  |  | 0.626 |
+| ns | 9311 |  | 90 | Types config struct | 5.13 |  | 0.627 |
+| walker |  | 9430 | 207 | impl method sigs in src/ui/data_block.rs |  |  | 0.638 |
+| walker |  | 9487 | 57 | impl method sigs in src/live_reload.rs |  |  | 0.638 |
+| walker |  | 9520 | 33 | impl method sigs in src/config/keys.rs |  |  | 0.638 |
+| ns | 9599 |  | 288 | CommandArgs flag list | 6.1 |  | 0.629 |
+| ns | 9652 |  | 53 | examples/ + docs/ listings | 6.2 |  | 0.625 |
+| walker |  | 9707 | 187 | README.md section #4 |  |  | 0.625 |
+| walker |  | 9772 | 65 | impl method sigs in src/cmd.rs |  |  | 0.625 |
+| ns | 9808 |  | 156 | Changelog version headings | 6.3 |  | 0.620 |
+| walker |  | 9842 | 70 | README.md section #2 |  |  | 0.620 |
+| ns | 9967 |  | 159 | clipboard OS routing | 6.4 |  | 0.615 |

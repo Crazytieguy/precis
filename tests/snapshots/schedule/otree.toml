@@ -1,7 +1,7 @@
 fixture = "otree"
 budget = 10000
-cumulative_tokens = 9969
-batch_count = 127
+cumulative_tokens = 9842
+batch_count = 136
 
 [[batches]]
 position = 1
@@ -3353,10 +3353,84 @@ entries = ["catppuccin.toml"]
 
 [[batches]]
 position = 109
+key = 'Rust(MethodSigs { file: "src/parse/xml.rs" })'
+descriptor = "impl method sigs in src/parse/xml.rs"
+cost_tokens = 97
+cum_tokens = 5885
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/xml.rs"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/xml.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/xml.rs"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/xml.rs"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/xml.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/xml.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/xml.rs"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/xml.rs"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 110
 key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 21 })'
 descriptor = "pub item at src/config/colors.rs:21"
 cost_tokens = 186
-cum_tokens = 5974
+cum_tokens = 6071
 
 [batches.content]
 kind = "lines"
@@ -3418,11 +3492,381 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
+key = 'Rust(MethodSigs { file: "src/parse/hcl.rs" })'
+descriptor = "impl method sigs in src/parse/hcl.rs"
+cost_tokens = 98
+cum_tokens = 6169
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'Rust(MethodSigs { file: "src/parse/json.rs" })'
+descriptor = "impl method sigs in src/parse/json.rs"
+cost_tokens = 98
+cum_tokens = 6267
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 113
+key = 'Rust(MethodSigs { file: "src/parse/toml.rs" })'
+descriptor = "impl method sigs in src/parse/toml.rs"
+cost_tokens = 98
+cum_tokens = 6365
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 114
+key = 'Rust(MethodSigs { file: "src/parse/jsonl.rs" })'
+descriptor = "impl method sigs in src/parse/jsonl.rs"
+cost_tokens = 99
+cum_tokens = 6464
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 115
+key = 'Rust(MethodSigs { file: "src/parse/yaml.rs" })'
+descriptor = "impl method sigs in src/parse/yaml.rs"
+cost_tokens = 99
+cum_tokens = 6563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 116
 key = 'Rust(MethodSigs { file: "src/config/mod.rs" })'
 descriptor = "impl method sigs in src/config/mod.rs"
 cost_tokens = 425
-cum_tokens = 6399
+cum_tokens = 6988
 
 [batches.content]
 kind = "lines"
@@ -3820,11 +4264,133 @@ end = 323
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 117
+key = 'Rust(MethodSigs { file: "src/tree.rs" })'
+descriptor = "impl method sigs in src/tree.rs"
+cost_tokens = 193
+cum_tokens = 7181
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 51
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 385
+end = 386
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 390
+end = 390
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 394
+end = 394
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 387
+end = 387
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 395
+end = 395
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 118
 key = 'Rust(PubItem { file: "src/ui/app.rs", start_line: 53 })'
 descriptor = "pub item at src/ui/app.rs:53"
 cost_tokens = 234
-cum_tokens = 6633
+cum_tokens = 7415
 
 [batches.content]
 kind = "lines"
@@ -3910,11 +4476,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 112
+position = 119
 key = 'Markdown(Section { file: "README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 96
-cum_tokens = 6729
+cum_tokens = 7511
 
 [batches.content]
 kind = "lines"
@@ -3944,11 +4510,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 113
+position = 120
 key = 'Rust(PubItemBody { file: "src/parse/syntax.rs", start_line: 201, body_start_line: 202 })'
 descriptor = "pub item body at src/parse/syntax.rs:201 body 202"
 cost_tokens = 100
-cum_tokens = 6829
+cum_tokens = 7611
 
 [batches.content]
 kind = "lines"
@@ -3962,11 +4528,11 @@ end = 213
 kind = "full"
 
 [[batches]]
-position = 114
+position = 121
 key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 78 })'
 descriptor = "pub item at src/config/colors.rs:78"
 cost_tokens = 259
-cum_tokens = 7088
+cum_tokens = 7870
 
 [batches.content]
 kind = "lines"
@@ -4052,11 +4618,159 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 115
+position = 122
+key = 'Rust(MethodSigs { file: "src/config/colors.rs" })'
+descriptor = "impl method sigs in src/config/colors.rs"
+cost_tokens = 21
+cum_tokens = 7891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 55
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 123
+key = 'Rust(MethodSigs { file: "src/ui/popup.rs" })'
+descriptor = "impl method sigs in src/ui/popup.rs"
+cost_tokens = 146
+cum_tokens = 8037
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/popup.rs"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 124
 key = 'Toml(Dependencies { file: "Cargo.toml" })'
 descriptor = "[dependencies] in Cargo.toml"
 cost_tokens = 321
-cum_tokens = 7409
+cum_tokens = 8358
 
 [batches.content]
 kind = "lines"
@@ -4078,11 +4792,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 116
+position = 125
 key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 162 })'
 descriptor = "pub item at src/config/colors.rs:162"
 cost_tokens = 295
-cum_tokens = 7704
+cum_tokens = 8653
 
 [batches.content]
 kind = "lines"
@@ -4176,11 +4890,11 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 117
+position = 126
 key = 'Rust(PubItemBody { file: "src/parse/syntax.rs", start_line: 139, body_start_line: 140 })'
 descriptor = "pub item body at src/parse/syntax.rs:139 body 140"
 cost_tokens = 118
-cum_tokens = 7822
+cum_tokens = 8771
 
 [batches.content]
 kind = "lines"
@@ -4194,11 +4908,255 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 118
+position = 127
+key = 'Rust(MethodSigs { file: "src/ui/filter.rs" })'
+descriptor = "impl method sigs in src/ui/filter.rs"
+cost_tokens = 170
+cum_tokens = 8941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 40
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 152
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/filter.rs"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 128
+key = 'Rust(MethodSigs { file: "src/parse/any.rs" })'
+descriptor = "impl method sigs in src/parse/any.rs"
+cost_tokens = 172
+cum_tokens = 9113
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 13
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 25
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/parse/any.rs"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 129
 key = 'Markdown(Section { file: "README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 56
-cum_tokens = 7878
+cum_tokens = 9169
 
 [batches.content]
 kind = "lines"
@@ -4228,11 +5186,315 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 119
+position = 130
+key = 'Rust(MethodSigs { file: "src/edit.rs" })'
+descriptor = "impl method sigs in src/edit.rs"
+cost_tokens = 54
+cum_tokens = 9223
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 131
+key = 'Rust(MethodSigs { file: "src/ui/data_block.rs" })'
+descriptor = "impl method sigs in src/ui/data_block.rs"
+cost_tokens = 207
+cum_tokens = 9430
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 137
+end = 137
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 132
+key = 'Rust(MethodSigs { file: "src/live_reload.rs" })'
+descriptor = "impl method sigs in src/live_reload.rs"
+cost_tokens = 57
+cum_tokens = 9487
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 27
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'Rust(MethodSigs { file: "src/config/keys.rs" })'
+descriptor = "impl method sigs in src/config/keys.rs"
+cost_tokens = 33
+cum_tokens = 9520
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 356
+end = 357
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 358
+end = 358
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 134
 key = 'Markdown(Section { file: "README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 187
-cum_tokens = 8065
+cum_tokens = 9707
 
 [batches.content]
 kind = "lines"
@@ -4294,11 +5556,69 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 120
+position = 135
+key = 'Rust(MethodSigs { file: "src/cmd.rs" })'
+descriptor = "impl method sigs in src/cmd.rs"
+cost_tokens = 65
+cum_tokens = 9772
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 111
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 202
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 136
 key = 'Markdown(Section { file: "README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 70
-cum_tokens = 8135
+cum_tokens = 9842
 
 [batches.content]
 kind = "lines"
@@ -4323,500 +5643,6 @@ kind = "full"
 path = "README.md"
 start = 21
 end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
-key = 'Rust(PubItem { file: "src/cmd.rs", start_line: 13 })'
-descriptor = "pub item at src/cmd.rs:13"
-cost_tokens = 916
-cum_tokens = 9051
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 13
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 17
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 21
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 26
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 30
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 34
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 38
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 42
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 46
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 50
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 54
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 58
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 62
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 66
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 70
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 74
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 78
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 82
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 86
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 90
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 94
-end = 96
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 98
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 102
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cmd.rs"
-start = 106
-end = 109
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 8
-cum_tokens = 9059
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "workflows"]
-
-[[batches]]
-position = 123
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 16
-cum_tokens = 9075
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["cargo-check.yml", "release-binary.yml", "spell-check.yml"]
-
-[[batches]]
-position = 124
-key = 'Rust(PubItem { file: "src/config/keys.rs", start_line: 195 })'
-descriptor = "pub item at src/config/keys.rs:195"
-cost_tokens = 870
-cum_tokens = 9945
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 195
-end = 199
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 201
-end = 204
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 206
-end = 213
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 215
-end = 216
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 218
-end = 219
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 221
-end = 222
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 224
-end = 227
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 229
-end = 230
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 232
-end = 233
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 235
-end = 236
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 238
-end = 239
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 241
-end = 242
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 244
-end = 245
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 247
-end = 248
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 250
-end = 251
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 253
-end = 254
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 256
-end = 257
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 259
-end = 260
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 262
-end = 263
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 265
-end = 266
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 268
-end = 269
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 271
-end = 272
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 274
-end = 275
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 277
-end = 278
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 280
-end = 282
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
-key = 'Rust(PubItemBody { file: "src/ui/mod.rs", start_line: 35, body_start_line: 60 })'
-descriptor = "pub item body at src/ui/mod.rs:35 body 60"
-cost_tokens = 7
-cum_tokens = 9952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ui/mod.rs"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 126
-key = 'Rust(PubItemBody { file: "src/parse/json.rs", start_line: 26, body_start_line: 80 })'
-descriptor = "pub item body at src/parse/json.rs:26 body 80"
-cost_tokens = 7
-cum_tokens = 9959
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/parse/json.rs"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
-key = 'Rust(PubItemBody { file: "src/ui/mod.rs", start_line: 35, body_start_line: 59 })'
-descriptor = "pub item body at src/ui/mod.rs:35 body 59"
-cost_tokens = 10
-cum_tokens = 9969
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ui/mod.rs"
-start = 59
-end = 59
 
 [batches.content.spans.render]
 kind = "full"

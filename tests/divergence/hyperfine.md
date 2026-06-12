@@ -161,53 +161,63 @@ Score(3000)=0.527 I=0.802 C=0.346 ns_rows≤3K=23/42 (reached=7 partial=1 missin
 | ns | 5047 |  | 542 | Per-format markup exporters — Markdown / Orgmode | 3.7 | 2.10 | 0.447 |
 | walker |  | 5219 | 363 | pub item at src/error.rs:37 |  |  | 0.448 |
 | walker |  | 5246 | 27 | listing of 'src/benchmark' |  |  | 0.472 |
-| walker |  | 5312 | 66 | README.md section #8 |  |  | 0.472 |
-| walker |  | 5389 | 77 | README.md section #6 |  |  | 0.472 |
-| ns | 5447 |  | 400 | AsciidocExporter body | 3.8 | 2.10 | 0.453 |
-| walker |  | 5653 | 264 | [dependencies] in Cargo.toml |  |  | 0.453 |
-| ns | 5665 |  | 218 | JsonExporter body | 3.9 | 2.10 | 0.443 |
-| walker |  | 5716 | 63 | pub-item doc lede at src/outlier_detection.rs:13 |  |  | 0.443 |
-| walker |  | 5905 | 189 | pub item body at src/outlier_detection.rs:21 body 22 |  |  | 0.443 |
-| walker |  | 5961 | 56 | listing of 'scripts' |  |  | 0.463 |
-| ns | 6202 |  | 537 | CsvExporter body | 3.10 | 2.10 | 0.441 |
-| walker |  | 6464 | 503 | pub item at src/options.rs:198 |  |  | 0.498 |
-| walker |  | 6479 | 15 | pub-item doc lede at src/options.rs:198 |  |  | 0.502 |
-| walker |  | 6601 | 122 | pub item body at src/output/format.rs:18 body 19 |  |  | 0.502 |
-| walker |  | 6652 | 51 | pub-item doc lede at src/output/format.rs:5 |  |  | 0.502 |
-| walker |  | 6758 | 106 | pub-item doc lede at src/outlier_detection.rs:21 |  |  | 0.502 |
-| ns | 6887 |  | 685 | ShellExecutor::calibrate — shell spawning time measurement | 3.11 | 2.3 | 0.473 |
-| walker |  | 6938 | 180 | pub item body at src/util/exit_code.rs:4 body 5 |  |  | 0.473 |
-| ns | 7425 |  | 538 | ShellExecutor::run_command_and_measure body | 3.12 | 3.11 | 0.456 |
-| walker |  | 7784 | 846 | pub item at src/export/markup.rs:15 |  |  | 0.456 |
-| walker |  | 7893 | 109 | pub-item doc lede at src/util/randomized_environment_offset.rs:6 |  |  | 0.456 |
-| ns | 7997 |  | 572 | MockExecutor body (debug-mode) | 3.13 | 2.3 | 0.437 |
-| walker |  | 8087 | 194 | README.md section #5 |  |  | 0.437 |
-| walker |  | 8121 | 34 | pub-item names surface in src/benchmark/mod.rs |  |  | 0.438 |
-| walker |  | 8121 | 0 | pub item at src/benchmark/mod.rs:32 |  |  | 0.438 |
-| walker |  | 8129 | 8 | listing of '.github' |  |  | 0.438 |
-| walker |  | 8134 | 5 | listing of '.github/workflows' |  |  | 0.438 |
-| walker |  | 8182 | 48 | pub item at src/benchmark/mod.rs:34 |  |  | 0.438 |
-| walker |  | 8200 | 18 | pub item at tests/integration_tests.rs:12 |  |  | 0.438 |
-| walker |  | 8213 | 13 | pub-item doc lede at src/benchmark/mod.rs:32 |  |  | 0.438 |
-| walker |  | 8246 | 33 | pub-item names surface in tests/common.rs |  |  | 0.438 |
-| walker |  | 8246 | 0 | pub item at tests/common.rs:5 |  |  | 0.438 |
-| walker |  | 8246 | 0 | pub item at tests/common.rs:11 |  |  | 0.438 |
-| walker |  | 8262 | 16 | pub item body at tests/common.rs:11 body 12 |  |  | 0.438 |
-| walker |  | 8269 | 7 | pub item body at src/parameter/tokenize.rs:1 body 30 |  |  | 0.438 |
-| walker |  | 8277 | 8 | pub item body at src/output/progress_bar.rs:13 body 30 |  |  | 0.438 |
-| walker |  | 8368 | 91 | README headline in scripts/README.md |  |  | 0.438 |
-| walker |  | 8377 | 9 | pub item body at src/parameter/tokenize.rs:1 body 28 |  |  | 0.438 |
-| walker |  | 8405 | 28 | pub item body at tests/integration_tests.rs:12 body 13 |  |  | 0.438 |
-| ns | 8406 |  | 409 | outlier_detection module + OUTLIER_THRESHOLD const | 3.14 | 2.12 | 0.441 |
-| walker |  | 8415 | 10 | pub item body at src/parameter/tokenize.rs:1 body 2 |  |  | 0.441 |
-| walker |  | 8450 | 35 | pub item body at tests/common.rs:5 body 6 |  |  | 0.441 |
-| walker |  | 8463 | 13 | pub item body at src/output/progress_bar.rs:13 body 26 |  |  | 0.441 |
-| walker |  | 8476 | 13 | pub item body at src/output/progress_bar.rs:13 body 28 |  |  | 0.441 |
-| walker |  | 8489 | 13 | pub item body at src/parameter/tokenize.rs:1 body 3 |  |  | 0.441 |
-| walker |  | 8502 | 13 | pub item body at src/parameter/tokenize.rs:1 body 5 |  |  | 0.441 |
-| walker |  | 8567 | 65 | pub item at src/benchmark/scheduler.rs:13 |  |  | 0.442 |
-| ns | 8958 |  | 552 | format_duration auto-unit selection + Unit::short_name/format | 3.15 |  | 0.440 |
-| ns | 9144 |  | 186 | Warnings enum + OutlierWarningOptions struct | 3.16 |  | 0.442 |
-| ns | 9531 |  | 387 | OptionsError enum + variants | 4.1 |  | 0.457 |
-| ns | 9788 |  | 257 | ParameterScanError enum + variants | 4.2 |  | 0.466 |
-| ns | 9922 |  | 134 | common.rs test helpers | 4.3 |  | 0.467 |
+| walker |  | 5434 | 188 | impl method sigs in src/options.rs |  |  | 0.476 |
+| ns | 5447 |  | 400 | AsciidocExporter body | 3.8 | 2.10 | 0.457 |
+| walker |  | 5500 | 66 | README.md section #8 |  |  | 0.457 |
+| walker |  | 5577 | 77 | README.md section #6 |  |  | 0.457 |
+| ns | 5665 |  | 218 | JsonExporter body | 3.9 | 2.10 | 0.446 |
+| walker |  | 5841 | 264 | [dependencies] in Cargo.toml |  |  | 0.446 |
+| walker |  | 5904 | 63 | pub-item doc lede at src/outlier_detection.rs:13 |  |  | 0.446 |
+| walker |  | 6039 | 135 | impl method sigs in src/export/asciidoc.rs |  |  | 0.450 |
+| ns | 6202 |  | 537 | CsvExporter body | 3.10 | 2.10 | 0.429 |
+| walker |  | 6228 | 189 | pub item body at src/outlier_detection.rs:21 body 22 |  |  | 0.429 |
+| walker |  | 6284 | 56 | listing of 'scripts' |  |  | 0.448 |
+| walker |  | 6787 | 503 | pub item at src/options.rs:198 |  |  | 0.505 |
+| walker |  | 6802 | 15 | pub-item doc lede at src/options.rs:198 |  |  | 0.508 |
+| ns | 6887 |  | 685 | ShellExecutor::calibrate — shell spawning time measurement | 3.11 | 2.3 | 0.479 |
+| walker |  | 7079 | 277 | impl method sigs in src/command.rs |  |  | 0.495 |
+| walker |  | 7201 | 122 | pub item body at src/output/format.rs:18 body 19 |  |  | 0.495 |
+| walker |  | 7252 | 51 | pub-item doc lede at src/output/format.rs:5 |  |  | 0.495 |
+| walker |  | 7358 | 106 | pub-item doc lede at src/outlier_detection.rs:21 |  |  | 0.495 |
+| ns | 7425 |  | 538 | ShellExecutor::run_command_and_measure body | 3.12 | 3.11 | 0.478 |
+| walker |  | 7538 | 180 | pub item body at src/util/exit_code.rs:4 body 5 |  |  | 0.478 |
+| walker |  | 7579 | 41 | impl method sigs in src/timer/wall_clock_timer.rs |  |  | 0.478 |
+| walker |  | 7621 | 42 | impl method sigs in src/util/units.rs |  |  | 0.478 |
+| walker |  | 7666 | 45 | impl method sigs in src/parameter/range_step.rs |  |  | 0.478 |
+| walker |  | 7712 | 46 | impl method sigs in src/timer/unix_timer.rs |  |  | 0.478 |
+| ns | 7997 |  | 572 | MockExecutor body (debug-mode) | 3.13 | 2.3 | 0.457 |
+| ns | 8406 |  | 409 | outlier_detection module + OUTLIER_THRESHOLD const | 3.14 | 2.12 | 0.460 |
+| walker |  | 8558 | 846 | pub item at src/export/markup.rs:15 |  |  | 0.460 |
+| walker |  | 8667 | 109 | pub-item doc lede at src/util/randomized_environment_offset.rs:6 |  |  | 0.460 |
+| walker |  | 8861 | 194 | README.md section #5 |  |  | 0.460 |
+| walker |  | 8917 | 56 | impl method sigs in src/timer/windows_timer.rs |  |  | 0.460 |
+| walker |  | 8951 | 34 | pub-item names surface in src/benchmark/mod.rs |  |  | 0.461 |
+| walker |  | 8951 | 0 | pub item at src/benchmark/mod.rs:32 |  |  | 0.461 |
+| ns | 8958 |  | 552 | format_duration auto-unit selection + Unit::short_name/format | 3.15 |  | 0.461 |
+| walker |  | 8959 | 8 | listing of '.github' |  |  | 0.461 |
+| walker |  | 8964 | 5 | listing of '.github/workflows' |  |  | 0.461 |
+| walker |  | 9012 | 48 | pub item at src/benchmark/mod.rs:34 |  |  | 0.461 |
+| walker |  | 9092 | 80 | impl method sigs in src/export/markdown.rs |  |  | 0.462 |
+| ns | 9144 |  | 186 | Warnings enum + OutlierWarningOptions struct | 3.16 |  | 0.464 |
+| walker |  | 9173 | 81 | impl method sigs in src/export/orgmode.rs |  |  | 0.466 |
+| walker |  | 9191 | 18 | pub item at tests/integration_tests.rs:12 |  |  | 0.466 |
+| walker |  | 9204 | 13 | pub-item doc lede at src/benchmark/mod.rs:32 |  |  | 0.466 |
+| walker |  | 9237 | 33 | pub-item names surface in tests/common.rs |  |  | 0.466 |
+| walker |  | 9237 | 0 | pub item at tests/common.rs:5 |  |  | 0.466 |
+| walker |  | 9237 | 0 | pub item at tests/common.rs:11 |  |  | 0.466 |
+| walker |  | 9253 | 16 | pub item body at tests/common.rs:11 body 12 |  |  | 0.466 |
+| walker |  | 9260 | 7 | pub item body at src/parameter/tokenize.rs:1 body 30 |  |  | 0.466 |
+| walker |  | 9268 | 8 | pub item body at src/output/progress_bar.rs:13 body 30 |  |  | 0.466 |
+| walker |  | 9359 | 91 | README headline in scripts/README.md |  |  | 0.466 |
+| walker |  | 9368 | 9 | pub item body at src/parameter/tokenize.rs:1 body 28 |  |  | 0.466 |
+| walker |  | 9396 | 28 | pub item body at tests/integration_tests.rs:12 body 13 |  |  | 0.466 |
+| walker |  | 9406 | 10 | pub item body at src/parameter/tokenize.rs:1 body 2 |  |  | 0.466 |
+| walker |  | 9441 | 35 | pub item body at tests/common.rs:5 body 6 |  |  | 0.466 |
+| walker |  | 9454 | 13 | pub item body at src/output/progress_bar.rs:13 body 26 |  |  | 0.466 |
+| walker |  | 9467 | 13 | pub item body at src/output/progress_bar.rs:13 body 28 |  |  | 0.466 |
+| walker |  | 9480 | 13 | pub item body at src/parameter/tokenize.rs:1 body 3 |  |  | 0.466 |
+| walker |  | 9493 | 13 | pub item body at src/parameter/tokenize.rs:1 body 5 |  |  | 0.466 |
+| ns | 9531 |  | 387 | OptionsError enum + variants | 4.1 |  | 0.480 |
+| walker |  | 9558 | 65 | pub item at src/benchmark/scheduler.rs:13 |  |  | 0.480 |
+| ns | 9788 |  | 257 | ParameterScanError enum + variants | 4.2 |  | 0.489 |
+| ns | 9922 |  | 134 | common.rs test helpers | 4.3 |  | 0.489 |

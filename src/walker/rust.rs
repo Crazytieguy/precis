@@ -59,6 +59,7 @@ pub struct RustState {
     cargo_source_dirs: OnceCell<Vec<PathBuf>>,
     expanded_dirs: RefCell<HashSet<PathBuf>>,
     manifest_package_lookup: RefCell<HashMap<PathBuf, bool>>,
+    crate_pub_traits: OnceCell<HashSet<String>>,
 }
 
 impl RustState {
@@ -70,7 +71,17 @@ impl RustState {
             cargo_source_dirs: OnceCell::new(),
             expanded_dirs: RefCell::new(HashSet::new()),
             manifest_package_lookup: RefCell::new(HashMap::new()),
+            crate_pub_traits: OnceCell::new(),
         }
+    }
+
+    /// Names of `pub trait`s (not doc-hidden) declared at the top level
+    /// of any crate source file in the repo. Impls of these traits are
+    /// exported API surface even when the impl lives in another file
+    /// (anyhow's `Context` impls in `context.rs` for the trait declared
+    /// in `lib.rs`).
+    fn crate_pub_traits(&self, init: impl FnOnce() -> HashSet<String>) -> &HashSet<String> {
+        self.crate_pub_traits.get_or_init(init)
     }
 
     pub(in crate::walker) fn module_visibility_map(
@@ -236,26 +247,51 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 ));
             }
         }
-        if ep || is_workspace_member_source_file(file, ctx) {
-            if let Some(content) = build_per_file_content(file, ctx, parse_rust, collect_mod_use) {
-                let mod_decl_count = parse_rust(ctx, file)
-                    .map(|(source, tree)| count_top_level_mod_items(&tree, &source))
-                    .unwrap_or(0);
-                out.push(batch(
-                    RustKey::ModUse { file: file.clone() },
-                    None,
-                    content,
-                    mod_use_value(file, ctx, mod_decl_count),
-                ));
-            }
-            if let Some(content) =
-                build_per_file_content(file, ctx, parse_rust, collect_method_sigs)
-            {
+        // ModUse stays gated to entrypoints + workspace members: `use`
+        // plumbing of an arbitrary single-crate file is tiny-cost /
+        // high-ratio noise that floods the mid-budget (measured: corpus
+        // −0.0007, thiserror −0.045 when opened up). MethodSigs opens up
+        // to every [package] source file — impl-method surface is the
+        // only batch shape covering impl-dominated files (anyhow's
+        // context.rs has zero other batches).
+        if (ep || is_workspace_member_source_file(file, ctx))
+            && let Some(content) = build_per_file_content(file, ctx, parse_rust, collect_mod_use)
+        {
+            let mod_decl_count = parse_rust(ctx, file)
+                .map(|(source, tree)| count_top_level_mod_items(&tree, &source))
+                .unwrap_or(0);
+            out.push(batch(
+                RustKey::ModUse { file: file.clone() },
+                None,
+                content,
+                mod_use_value(file, ctx, mod_decl_count),
+            ));
+        }
+        // MethodSigs covers every [package] source file — impl-method
+        // surface is the only batch shape covering impl-dominated files
+        // (anyhow's context.rs has zero other batches). Entrypoints keep
+        // the full impl surface; other files render the exported API
+        // surface only, which is the shape NS "method signatures
+        // (locations)" rows take.
+        if (ep || is_package_source_file(file, ctx))
+            && let Some((source, tree)) = parse_rust(ctx, file)
+        {
+            let pub_traits = ctx
+                .rust_state()
+                .crate_pub_traits(|| collect_crate_pub_trait_names(ctx));
+            let scope = if ep {
+                MethodSigScope::All
+            } else {
+                MethodSigScope::ExportedOnly
+            };
+            let lines = collect_method_sigs(&tree, &source, scope, pub_traits);
+            let method_count = count_exported_impl_methods(&tree, &source, pub_traits);
+            if let Some(content) = single_file_lines_content(file, &source, lines) {
                 out.push(batch(
                     RustKey::MethodSigs { file: file.clone() },
                     None,
                     content,
-                    method_sigs_value(file, ctx),
+                    method_sigs_value(file, ctx, method_count),
                 ));
             }
         }
@@ -753,6 +789,26 @@ fn is_workspace_member_source_file(file: &Path, ctx: &WalkCtx) -> bool {
         .is_some()
 }
 
+/// `true` iff `file` sits under a `Cargo.toml` carrying a `[package]`
+/// table — its crate's source tree, whether or not the crate is a
+/// workspace member. Plain single-crate repos have no `[workspace]`
+/// table, so the workspace-membership check alone would leave every
+/// non-entrypoint file without an impl-method surface.
+fn is_package_source_file(file: &Path, ctx: &WalkCtx) -> bool {
+    let mut dir = file.parent();
+    while let Some(current) = dir {
+        if !current.starts_with(ctx.root()) {
+            break;
+        }
+        let manifest = current.join("Cargo.toml");
+        if manifest.is_file() {
+            return ctx.rust_state().manifest_has_package(&manifest, ctx);
+        }
+        dir = current.parent();
+    }
+    false
+}
+
 fn entrypoint_boost(path: &Path) -> f64 {
     let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
         return 1.0;
@@ -950,13 +1006,28 @@ fn file_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-fn method_sigs_value(file: &Path, ctx: &WalkCtx) -> f64 {
+/// Exported-method count at which a file's impl surface stops being
+/// plumbing and becomes the API roster NS authors anchor "method
+/// signatures (locations)" rows on.
+const METHOD_ROSTER_MIN: usize = 4;
+
+fn method_sigs_value(file: &Path, ctx: &WalkCtx, exported_method_count: usize) -> f64 {
     let (cat, fu, ztu) = if is_entrypoint_file(file) {
         ((0.5 * entrypoint_boost(file)).min(1.0), 0.8, 0.4)
+    } else if exported_method_count >= METHOD_ROSTER_MIN {
+        // Impl-heavy API file: the method-sig surface is the file's
+        // primary API partition, not a secondary follow-up.
+        (0.6, 0.7, 0.35)
     } else {
         (0.25, 0.45, 0.25)
     };
+    // Method-signature surfaces are rosters: per-batch value is
+    // otherwise size-invariant while cost grows with method count, so
+    // impl-heavy API files (the ones NS authors anchor "method
+    // signatures" rows on) lose every ratio race to trivial two-method
+    // files. Same neutralizer as dir listings / names surfaces.
     mix_signals(cat, fu, ztu, rust_depth_factor(file, ctx))
+        * crate::value::roster_mass_factor(exported_method_count)
 }
 
 fn macro_names_value(depth: usize) -> f64 {
@@ -1403,7 +1474,55 @@ fn collect_pub_item_doc_raw(child: Node, source: &str) -> Vec<usize> {
     .full
 }
 
-fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
+/// Which impl methods the `MethodSigs` surface renders.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum MethodSigScope {
+    /// Every impl header + method signature (entrypoint files).
+    All,
+    /// Exported API only: `pub fn`s of inherent impls plus all methods
+    /// of impls of crate-public traits. Trait-integration plumbing
+    /// (`Display` / `Debug` / sealed-trait blanket impls) is skipped —
+    /// NS method-signature rows never anchor on it, and including it
+    /// makes impl-heavy files' surfaces unaffordable.
+    ExportedOnly,
+}
+
+/// Whether `method` (a fn inside `impl_node`'s body) is on the exported
+/// API surface — see [`MethodSigScope::ExportedOnly`].
+fn is_exported_method(
+    impl_node: Node,
+    method: Node,
+    source: &str,
+    pub_traits: &HashSet<String>,
+) -> bool {
+    match impl_trait_name(impl_node, source) {
+        Some(trait_name) => pub_traits.contains(trait_name),
+        None => matches!(item_visibility(method, source), Some(Visibility::Public)),
+    }
+}
+
+/// Base name of the trait a trait-impl implements (`None` for inherent
+/// impls). Strips generics and path qualifiers: `ser::Serialize<'a>` →
+/// `Serialize`.
+fn impl_trait_name<'a>(impl_node: Node, source: &'a str) -> Option<&'a str> {
+    base_type_name(impl_node.child_by_field_name("trait")?, source)
+}
+
+fn base_type_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
+    match node.kind() {
+        "type_identifier" => Some(&source[node.start_byte()..node.end_byte()]),
+        "generic_type" => base_type_name(node.child_by_field_name("type")?, source),
+        "scoped_type_identifier" => base_type_name(node.child_by_field_name("name")?, source),
+        _ => None,
+    }
+}
+
+fn collect_method_sigs(
+    tree: &Tree,
+    source: &str,
+    scope: MethodSigScope,
+    pub_traits: &HashSet<String>,
+) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut full = Vec::new();
@@ -1417,15 +1536,31 @@ fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
         };
         let start_len = full.len();
         let mut added_method = false;
-        let sig_end = signature_end_row(child);
+        // ExportedOnly renders one line per impl header / method — the
+        // truncated-at-the-paren shape NS "method signatures
+        // (locations)" rows take. Full multi-line signatures (params +
+        // where-clauses) triple the cost without adding location info.
+        let first_line_only = scope == MethodSigScope::ExportedOnly;
+        let sig_end = if first_line_only {
+            child.start_position().row
+        } else {
+            signature_end_row(child)
+        };
         push_rows(&mut full, child.start_position().row, sig_end);
         let mut body_cursor = body.walk();
         for inner in body.children(&mut body_cursor) {
             if matches!(inner.kind(), "function_item" | "function_signature_item") {
-                let inner_end = signature_end_row(inner);
+                if first_line_only && !is_exported_method(child, inner, source, pub_traits) {
+                    continue;
+                }
+                let inner_end = if first_line_only {
+                    inner.start_position().row
+                } else {
+                    signature_end_row(inner)
+                };
                 push_rows(&mut full, inner.start_position().row, inner_end);
                 added_method = true;
-                if inner.child_by_field_name("body").is_some() {
+                if first_line_only || inner.child_by_field_name("body").is_some() {
                     ellipses.push(inner_end + 2);
                 }
             }
@@ -1435,6 +1570,62 @@ fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
+}
+
+/// Top-level `pub trait` names (not doc-hidden) across every crate
+/// source dir in the repo. Feeds [`is_exported_method`]'s trait-impl
+/// check; memoized in [`RustState`].
+fn collect_crate_pub_trait_names(ctx: &WalkCtx) -> HashSet<String> {
+    let mut out = HashSet::new();
+    let source_dirs = ctx
+        .rust_state()
+        .cargo_source_dirs(|| collect_cargo_source_dirs(ctx.root(), ctx))
+        .clone();
+    for dir in &source_dirs {
+        for file in files_with_extension(dir, "rs") {
+            let Some((source, tree)) = parse_rust(ctx, &file) else {
+                continue;
+            };
+            let root = tree.root_node();
+            let mut cursor = root.walk();
+            for child in root.children(&mut cursor) {
+                if child.kind() == "trait_item"
+                    && matches!(item_visibility(child, &source), Some(Visibility::Public))
+                    && !has_doc_hidden(child, &source)
+                    && let Some(name) = name_of(child, &source)
+                {
+                    out.insert(name.to_string());
+                }
+            }
+        }
+    }
+    out
+}
+
+/// Count the impl methods on the file's exported surface (the
+/// [`MethodSigScope::ExportedOnly`] set). Feeds the roster tier and
+/// roster-mass factor in [`method_sigs_value`].
+fn count_exported_impl_methods(tree: &Tree, source: &str, pub_traits: &HashSet<String>) -> usize {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut count = 0;
+    for child in root.children(&mut cursor) {
+        if child.kind() != "impl_item" {
+            continue;
+        }
+        let Some(body) = child.child_by_field_name("body") else {
+            continue;
+        };
+        let mut body_cursor = body.walk();
+        for inner in body.children(&mut body_cursor) {
+            if matches!(inner.kind(), "function_item" | "function_signature_item")
+                && is_exported_method(child, inner, source, pub_traits)
+            {
+                count += 1;
+            }
+        }
+    }
+    count
 }
 
 fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {

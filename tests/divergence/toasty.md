@@ -212,10 +212,10 @@ Score(3000)=0.545 I=0.771 C=0.385 ns_rows≤3K=16/51 (reached=5 partial=3 missin
 | walker |  | 6997 | 39 | listing of 'crates/toasty-driver-dynamodb/src/op' |  |  | 0.515 |
 | ns | 7128 |  | 261 | Driver Operation enum (8 variants) | 5.2 |  | 0.506 |
 | walker |  | 7286 | 289 | mod/use plumbing in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.506 |
-| walker |  | 7336 | 50 | pub item at crates/toasty-driver-dynamodb/src/type.rs:4 |  |  | 0.506 |
 | ns | 7484 |  | 356 | Driver trait (toasty-core) | 5.3 |  | 0.496 |
 | ns | 7771 |  | 287 | Capability struct head — feature flags drivers advertise | 5.4 |  | 0.488 |
-| walker |  | 7849 | 513 | impl method sigs in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.488 |
+| walker |  | 7799 | 513 | impl method sigs in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.488 |
+| walker |  | 7849 | 50 | pub item at crates/toasty-driver-dynamodb/src/type.rs:4 |  |  | 0.488 |
 | walker |  | 7857 | 8 | listing of 'crates/toasty-driver-integration-suite' |  |  | 0.488 |
 | walker |  | 7906 | 49 | listing of 'crates/toasty-driver-integration-suite/src' |  |  | 0.488 |
 | walker |  | 7920 | 14 | macro_export names across crates/toasty-driver-integration-suite/src |  |  | 0.488 |
@@ -237,11 +237,11 @@ Score(3000)=0.545 I=0.771 C=0.385 ns_rows≤3K=16/51 (reached=5 partial=3 missin
 | walker |  | 8640 | 80 | [features] in crates/toasty-driver-postgresql/Cargo.toml |  |  | 0.497 |
 | ns | 8641 |  | 368 | Flavor enum + per-flavor Serializer constructors | 6.3 |  | 0.485 |
 | walker |  | 8670 | 30 | pub item at crates/toasty-driver-postgresql/src/statement_cache.rs:9 |  |  | 0.485 |
-| walker |  | 8717 | 47 | pub item at crates/toasty-driver-postgresql/src/type.rs:4 |  |  | 0.485 |
 | ns | 8809 |  | 168 | toasty-sql Statement enum (SQL-specific variants) | 6.4 |  | 0.480 |
 | ns | 9016 |  | 207 | toasty-codegen entrypoints | 7.1 |  | 0.482 |
 | ns | 9113 |  | 97 | codegen schema/ + expand/ dir listings | 7.2 |  | 0.492 |
-| walker |  | 9200 | 483 | impl method sigs in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.492 |
+| walker |  | 9153 | 483 | impl method sigs in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.492 |
+| walker |  | 9200 | 47 | pub item at crates/toasty-driver-postgresql/src/type.rs:4 |  |  | 0.492 |
 | walker |  | 9269 | 69 | README.md section #5 |  |  | 0.492 |
 | walker |  | 9283 | 14 | mod/use plumbing in crates/toasty/src/engine/exec/output.rs |  |  | 0.492 |
 | walker |  | 9296 | 13 | pub-item doc lede at crates/toasty/src/db/pool.rs:41 |  |  | 0.492 |

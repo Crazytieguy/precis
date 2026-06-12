@@ -3,9 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
-    FUNDING.yml
-    workflows/
-        ci.yml
 .gitignore
 Cargo.toml
     1→[package]
@@ -170,10 +167,22 @@ impl/
             8→pub struct ParamsInScope<'a> {
             9→    names: Set<&'a Ident>,
             10→}
+            12→impl<'a> ParamsInScope<'a> {
+            13→    pub fn new(generics: &'a Generics) -> Self {
+            …
+            19→    pub fn intersects(&self, ty: &Type) -> bool {
+            …
             48→pub struct InferredBounds {
             49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
             50→    order: Vec<TokenStream>,
             51→}
+            53→impl InferredBounds {
+            54→    pub fn new() -> Self {
+            …
+            61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
+            …
+            74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
+            …
         lib.rs
             23→mod ast;
             24→mod attr;
@@ -208,10 +217,20 @@ impl/
         unraw.rs
             12→pub struct IdentUnraw(Ident);
             …
+            14→impl IdentUnraw {
+            15→    pub fn new(ident: Ident) -> Self {
+            …
+            19→    pub fn to_local(&self) -> Ident {
+            …
+            32→    pub fn set_span(&mut self, span: Span) {
+            …
             82→pub enum MemberUnraw {
             83→    Named(IdentUnraw),
             84→    Unnamed(Index),
             85→}
+            87→impl MemberUnraw {
+            88→    pub fn span(&self) -> Span {
+            …
         valid.rs
             1→use crate::ast::{Enum, Field, Input, Struct, Variant};
             2→use crate::attr::Attrs;

@@ -98,50 +98,45 @@ Score(3000)=0.610 I=0.839 C=0.443 ns_rows≤3K=17/44 (reached=9 partial=0 missin
 | walker |  | 5242 | 387 | [features] in Cargo.toml |  |  | 0.527 |
 | ns | 5290 |  | 205 | kv module re-exports | 4.2 | 4.1 | 0.524 |
 | walker |  | 5317 | 75 | README.md section #1 |  |  | 0.524 |
-| walker |  | 5442 | 125 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.524 |
 | ns | 5477 |  | 187 | kv capture-modifier table | 4.3 | 4.1 | 0.517 |
-| walker |  | 5568 | 126 | pub-item doc lede at src/lib.rs:1611 |  |  | 0.517 |
-| walker |  | 5605 | 37 | pub-item doc lede at src/kv/value.rs:119 |  |  | 0.517 |
 | ns | 5612 |  | 135 | kv::Source trait surface | 4.4 |  | 0.516 |
-| walker |  | 5818 | 213 | pub-item doc lede at src/lib.rs:1396 |  |  | 0.516 |
 | ns | 5889 |  | 277 | kv::Value capture constructors | 4.5 |  | 0.506 |
 | ns | 6053 |  | 164 | kv::Key surface | 4.6 |  | 0.504 |
-| walker |  | 6243 | 425 | pub item at src/kv/source.rs:51 |  |  | 0.514 |
-| walker |  | 6246 | 3 | listing of '.github' |  |  | 0.514 |
-| walker |  | 6250 | 4 | listing of '.github/workflows' |  |  | 0.514 |
-| ns | 6361 |  | 308 | VisitValue trait method index | 4.7 |  | 0.505 |
-| ns | 6552 |  | 191 | kv::Value to_* primitive accessors | 4.8 | 4.5 | 0.500 |
-| walker |  | 6647 | 397 | [dependencies] in Cargo.toml |  |  | 0.500 |
-| ns | 6964 |  | 412 | Cargo features list | 5.1 |  | 0.523 |
-| walker |  | 6965 | 318 | macro_export body at src/macros.rs:391 |  |  | 0.523 |
-| walker |  | 6969 | 4 | listing of 'benches' |  |  | 0.523 |
-| walker |  | 7060 | 91 | pub-item names surface in src/__private_api.rs |  |  | 0.524 |
-| walker |  | 7060 | 0 | pub item at src/__private_api.rs:39 |  |  | 0.524 |
-| walker |  | 7060 | 0 | pub item at src/__private_api.rs:103 |  |  | 0.524 |
-| walker |  | 7060 | 0 | pub item at src/__private_api.rs:108 |  |  | 0.524 |
-| walker |  | 7067 | 7 | pub item body at src/__private_api.rs:108 body 109 |  |  | 0.524 |
-| walker |  | 7085 | 18 | pub item body at src/__private_api.rs:103 body 104 |  |  | 0.525 |
-| walker |  | 7095 | 10 | pub-item doc lede at src/__private_api.rs:39 |  |  | 0.525 |
-| ns | 7149 |  | 185 | Implementing-a-Logger doc snippet | 5.2 | 2.3 | 0.515 |
-| walker |  | 7188 | 93 | pub item at src/__private_api.rs:84 |  |  | 0.520 |
-| ns | 7366 |  | 217 | Default-Off warning + STATIC_MAX_LEVEL note | 5.3 |  | 0.514 |
-| walker |  | 7598 | 410 | macro_export body at src/macros.rs:165 |  |  | 0.514 |
-| ns | 7693 |  | 327 | Compile-time max_level_* conflict guards | 5.4 |  | 0.505 |
-| ns | 7986 |  | 293 | FromStr impls for Level/LevelFilter | 5.5 | 2.4 | 0.494 |
-| walker |  | 8008 | 410 | macro_export body at src/macros.rs:204 |  |  | 0.494 |
-| ns | 8318 |  | 332 | RecordBuilder method index | 5.6 | 3.1 | 0.488 |
-| ns | 8407 |  | 89 | MetadataBuilder method index | 5.7 | 3.2 | 0.486 |
-| walker |  | 8418 | 410 | macro_export body at src/macros.rs:252 |  |  | 0.486 |
-| ns | 8659 |  | 252 | Logger blanket impls (&T, Box, Arc) | 5.8 | 2.3 | 0.477 |
-| walker |  | 8828 | 410 | macro_export body at src/macros.rs:292 |  |  | 0.477 |
-| ns | 8977 |  | 318 | non-atomic AtomicUsize fallback | 5.9 |  | 0.465 |
-| ns | 8998 |  | 21 | tests/ + benches/ + harness listings | 5.10 |  | 0.464 |
-| ns | 9234 |  | 236 | Macro test-fn names (tests/macros.rs) | 5.11 |  | 0.455 |
-| walker |  | 9238 | 410 | macro_export body at src/macros.rs:336 |  |  | 0.455 |
-| walker |  | 9358 | 120 | pub-item doc lede at src/kv/source.rs:51 |  |  | 0.455 |
-| walker |  | 9419 | 61 | README.md section #5 |  |  | 0.455 |
-| walker |  | 9474 | 55 | pub item body at src/__private_api.rs:84 body 94 |  |  | 0.460 |
-| walker |  | 9529 | 55 | pub-item doc body at src/lib.rs:1420 |  |  | 0.460 |
-| ns | 9640 |  | 406 | kv::Source impl matrix | 5.12 | 4.4 | 0.447 |
-| ns | 9784 |  | 144 | kv::Error variants | 5.13 |  | 0.443 |
-| ns | 9861 |  | 77 | logger() global accessor | 5.14 | 3.5 | 0.441 |
+| ns | 6361 |  | 308 | VisitValue trait method index | 4.7 |  | 0.496 |
+| ns | 6552 |  | 191 | kv::Value to_* primitive accessors | 4.8 | 4.5 | 0.490 |
+| ns | 6964 |  | 412 | Cargo features list | 5.1 |  | 0.514 |
+| ns | 7149 |  | 185 | Implementing-a-Logger doc snippet | 5.2 | 2.3 | 0.505 |
+| walker |  | 7325 | 2008 | impl method sigs in src/lib.rs |  |  | 0.553 |
+| ns | 7366 |  | 217 | Default-Off warning + STATIC_MAX_LEVEL note | 5.3 |  | 0.547 |
+| walker |  | 7450 | 125 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.547 |
+| walker |  | 7576 | 126 | pub-item doc lede at src/lib.rs:1611 |  |  | 0.547 |
+| walker |  | 7613 | 37 | pub-item doc lede at src/kv/value.rs:119 |  |  | 0.547 |
+| ns | 7693 |  | 327 | Compile-time max_level_* conflict guards | 5.4 |  | 0.537 |
+| walker |  | 7826 | 213 | pub-item doc lede at src/lib.rs:1396 |  |  | 0.537 |
+| ns | 7986 |  | 293 | FromStr impls for Level/LevelFilter | 5.5 | 2.4 | 0.526 |
+| walker |  | 8251 | 425 | pub item at src/kv/source.rs:51 |  |  | 0.533 |
+| walker |  | 8254 | 3 | listing of '.github' |  |  | 0.533 |
+| walker |  | 8258 | 4 | listing of '.github/workflows' |  |  | 0.533 |
+| ns | 8318 |  | 332 | RecordBuilder method index | 5.6 | 3.1 | 0.542 |
+| ns | 8407 |  | 89 | MetadataBuilder method index | 5.7 | 3.2 | 0.545 |
+| walker |  | 8430 | 172 | impl method sigs in src/kv/key.rs |  |  | 0.551 |
+| walker |  | 8456 | 26 | impl method sigs in src/kv/error.rs |  |  | 0.551 |
+| ns | 8659 |  | 252 | Logger blanket impls (&T, Box, Arc) | 5.8 | 2.3 | 0.552 |
+| walker |  | 8853 | 397 | [dependencies] in Cargo.toml |  |  | 0.552 |
+| ns | 8977 |  | 318 | non-atomic AtomicUsize fallback | 5.9 |  | 0.541 |
+| ns | 8998 |  | 21 | tests/ + benches/ + harness listings | 5.10 |  | 0.538 |
+| walker |  | 9171 | 318 | macro_export body at src/macros.rs:391 |  |  | 0.538 |
+| walker |  | 9175 | 4 | listing of 'benches' |  |  | 0.539 |
+| ns | 9234 |  | 236 | Macro test-fn names (tests/macros.rs) | 5.11 |  | 0.528 |
+| walker |  | 9266 | 91 | pub-item names surface in src/__private_api.rs |  |  | 0.528 |
+| walker |  | 9266 | 0 | pub item at src/__private_api.rs:39 |  |  | 0.528 |
+| walker |  | 9266 | 0 | pub item at src/__private_api.rs:103 |  |  | 0.528 |
+| walker |  | 9266 | 0 | pub item at src/__private_api.rs:108 |  |  | 0.528 |
+| walker |  | 9273 | 7 | pub item body at src/__private_api.rs:108 body 109 |  |  | 0.529 |
+| walker |  | 9291 | 18 | pub item body at src/__private_api.rs:103 body 104 |  |  | 0.529 |
+| walker |  | 9301 | 10 | pub-item doc lede at src/__private_api.rs:39 |  |  | 0.529 |
+| walker |  | 9394 | 93 | pub item at src/__private_api.rs:84 |  |  | 0.534 |
+| ns | 9640 |  | 406 | kv::Source impl matrix | 5.12 | 4.4 | 0.518 |
+| ns | 9784 |  | 144 | kv::Error variants | 5.13 |  | 0.513 |
+| walker |  | 9804 | 410 | macro_export body at src/macros.rs:165 |  |  | 0.513 |
+| ns | 9861 |  | 77 | logger() global accessor | 5.14 | 3.5 | 0.511 |
