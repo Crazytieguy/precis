@@ -169,15 +169,40 @@ optimum raises validation but lowers training — training is the
 objective; don't chase it (see
 `feedback_dont_decide_on_validation_holdout`).
 
-Consequence: 0.65 is unreachable below the NS answer key / metric by
-re-ranking. Recall is mined, the greedy's knobs are at their peak; a
-lift past ~0.59 needs a different scheduling *algorithm* (per-fixture-
-structure-aware tiers), not knob nudges. New-content recall levers keep
-paying, best on early / rank-1/2 atoms (Importance is `Σ damped/rank`,
-so a rank-1 atom ≈ 6× a rank-6 one).
+~~Consequence: 0.65 is unreachable below the NS answer key / metric by
+re-ranking.~~ **Superseded 2026-06-12.** The loss-decomposition
+diagnostic (`cargo run --release --bin diagnose_loss`, see its module
+doc) showed 0.37 of A_3K mass was emitted-but-unbought and the NS-aware
+oracle ceiling over the existing pool was 0.8046 — the "~0.59 ceiling"
+was an artifact of *knob* sweeps, not of re-ranking as such. The binding
+bias was **roster-mass blindness**: roster batches (names surfaces,
+listings, member catalogs) had size-invariant value but linear cost, so
+`value/cost^k` always bought tiny rosters over the complete catalogs NS
+authors anchor on. `value::roster_mass_factor` (= `(n/12)^k` clamped
+`[1, 2.2]`, boost-only) is the fix class; wave-1 adoption across
+fs/python/C/markdown/rust/go/ts walkers plus spine-centrality signals
+(C include-graph hubs, python re-export pins, package-main visibility)
+moved training 0.5921 → 0.6105 in one day. Recall levers still pay,
+best on early / rank-1/2 atoms (Importance is `Σ damped/rank`, so a
+rank-1 atom ≈ 6× a rank-6 one).
+
+Adoption discipline learned the hard way: roster/centrality boosts must
+be gated to a *structurally selective* tier. Class-wide gates measured
+large single-fixture collapses before tightening (listings: plain
+`src/`-named or Go-subpackage gates → soluna −0.210 / beszel −0.073;
+inventory-only gate kept monaco +0.213 with one −0.006).
 
 ### Tested-and-failed lever shapes (specifics block re-tries)
 
+- **Entrypoint-named `.d.ts` promotion (2026-06-12)**, two variants:
+  (a) global `.d`-stem strip in `is_entrypoint_file` — chalk −0.249 /
+  commander −0.165 (nested `source/index.d.ts` twins are type plumbing);
+  (b) root-scoped only (surface-seed + machinery-exempt the package
+  root's entrypoint-named `.d.ts`) — the target fixture itself regressed
+  (axios −0.086): whole-file promotion floods the early budget with the
+  wrong exports and displaces NS-first orientation. The axios
+  `index.d.ts` mass (0.506 of its A_3K) needs per-export / chunk-level
+  granularity driven by its divergence report, not a file-level flip.
 - **Sibling-count devaluation**, two variants: (a) uniform
   `sibling_factor(n_siblings)` folded into `PubItem` depth factor —
   regresses; anyhow's dense `src/lib.rs` (~25 pub items) is
