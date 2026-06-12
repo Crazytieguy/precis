@@ -22,11 +22,6 @@ BacktraceScreen.c
 BacktraceScreen.h
 BatteryMeter.c
 BatteryMeter.h
-    2→#define HEADER_BatteryMeter
-    15→typedef enum ACPresence_ {
-    …
-    21→extern const MeterClass BatteryMeter_class;
-    …
 CLAUDE.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
@@ -44,13 +39,6 @@ ColumnsPanel.c
 ColumnsPanel.h
 CommandLine.c
 CommandLine.h
-    2→#define HEADER_CommandLine
-    11→typedef enum {
-    …
-    17→extern const char* program;
-    …
-    19→int CommandLine_run(int argc, char** argv);
-    …
 CommandScreen.c
 CommandScreen.h
 DateTimeMeter.c
@@ -77,8 +65,6 @@ GPUMeter.h
 Hashtable.c
 Hashtable.h
     2→#define HEADER_Hashtable
-    10→#include <stdbool.h>
-    11→#include <stddef.h>
     14→typedef unsigned int ht_key_t;
     …
     16→typedef void(*Hashtable_PairFunction)(ht_key_t key, void* value, void* userdata);
@@ -139,10 +125,6 @@ Machine.h
     57→   memory_t cachedSwap;
     59→   unsigned int activeCPUs;
     60→   unsigned int existingCPUs;
-    62→   UsersTable* usersTable;
-    63→   uid_t htopUserId;
-    64→   uid_t maxUserId;  /* recently observed */
-    65→   uid_t userId;  /* selected row user ID */
     67→   pid_t maxProcessId; /* largest PID seen at runtime */
     69→   size_t tableCount;
     70→   Table **tables;
@@ -177,11 +159,6 @@ MainPanel.h
 Makefile.am
 MemoryMeter.c
 MemoryMeter.h
-    2→#define HEADER_MemoryMeter
-    13→typedef struct MemoryClass_s {
-    …
-    20→extern const MeterClass MemoryMeter_class;
-    …
 MemorySwapMeter.c
 MemorySwapMeter.h
 Meter.c
@@ -192,11 +169,6 @@ MetersPanel.h
 NEWS
 NetworkIOMeter.c
 NetworkIOMeter.h
-    2→#define HEADER_NetworkIOMeter
-    15→typedef struct NetworkIOData_ {
-    …
-    22→extern const MeterClass NetworkIOMeter_class;
-    …
 Object.c
 Object.h
     2→#define HEADER_Object
@@ -276,26 +248,50 @@ Process.h
     89→   int session;
     91→   /* Foreground group identifier of the controlling terminal */
     92→   int tpgid;
+    94→   /* This is a kernel (helper) task */
+    95→   bool isKernelThread;
+    97→   /* This is a userland thread / LWP */
+    98→   bool isUserlandThread;
+    100→   /* This process is running inside a container */
+    101→   Tristate isRunningInContainer;
+    103→   /* Controlling terminal identifier of the process */
+    104→   unsigned long int tty_nr;
     106→   /* Controlling terminal name of the process */
     107→   char* tty_name;
     109→   /* User identifier */
     110→   uid_t st_uid;
     112→   /* User name */
     113→   const char* user;
+    122→   /* Process runtime (in hundredth of a second) */
+    123→   unsigned long long int time;
     137→   /* The process' "command" name */
     138→   char* procComm;
     140→   /* The main process executable */
     141→   char* procExe;
     143→   /* The process/thread working directory */
     144→   char* procCwd;
+    146→   /* Offset in procExe of the process basename */
+    147→   size_t procExeBasenameOffset;
+    152→   /* Tells if the process uses replaced shared libraries since start */
+    153→   bool usesDeletedLib;
     155→   /* CPU number last executed on */
     156→   int processor;
+    158→   /* CPU usage during last cycle (in percent) */
+    159→   float percent_cpu;
+    161→   /* Memory usage during last cycle (in percent) */
+    162→   float percent_mem;
     164→   /* Scheduling priority */
     165→   long int priority;
     167→   /* Nice value */
     168→   int nice;
     170→   /* Number of threads in this process */
     171→   long int nlwp;
+    176→   /* Process start time (cached formatted string) */
+    177→   char starttime_show[8];
+    179→   /* Total program size (in kilobytes) */
+    180→   long m_virt;
+    182→   /* Resident set size (in kilobytes) */
+    183→   long m_resident;
     191→   /* Process state enum field (platform dependent) */
     192→   ProcessState state;
     194→   /* Current scheduling policy */
@@ -333,7 +329,6 @@ Row.h
 RowField.h
 Scheduling.c
 Scheduling.h
-    2→#define HEADER_Scheduling
 ScreenManager.c
 ScreenManager.h
 ScreenTabsPanel.c
@@ -368,20 +363,12 @@ check-pcp-style.sh
 configure.ac
 darwin/
 docs/
-    ai-contributions-policy.md
-    images/
-    styleguide.md
-    understanding-htop-versions.md
 dragonflybsd/
 freebsd/
 generic/
 htop-logo.png
 htop.1.in
 htop.c
-    14→const char* program = PACKAGE;
-    …
-    16→int main(int argc, char** argv) {
-    …
 htop.desktop
 htop.png
 htop.svg

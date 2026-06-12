@@ -53,7 +53,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, CKey};
 use crate::content::BatchContent;
-use crate::value::{mix_signals, names_surface_chunk_factor};
+use crate::value::{mix_signals, names_surface_chunk_factor, roster_mass_factor};
 
 /// Chunk size for C decl-name surfaces with no structural signal.
 /// Larger than Python/TS's 12 because C headers regularly expose 50+
@@ -639,7 +639,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
+                value: decl_names_value(
+                    file,
+                    ctx,
+                    chunk_index,
+                    names_chunk_count,
+                    chunk_ranges[chunk_index].len(),
+                ),
             });
         }
         for (decl_index, (node, info)) in decls.iter().enumerate() {
@@ -1183,7 +1189,7 @@ fn is_c_source_file_name(name: &str) -> bool {
     lower.ends_with(".c") || lower.ends_with(".h")
 }
 
-fn is_header_file(path: &Path) -> bool {
+pub(crate) fn is_header_file(path: &Path) -> bool {
     let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
         return false;
     };
@@ -1338,10 +1344,29 @@ fn includes_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.55, 0.3, c_depth_factor(file, ctx))
 }
 
-fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
+fn decl_names_value(
+    file: &Path,
+    ctx: &WalkCtx,
+    chunk_index: usize,
+    chunk_count: usize,
+    chunk_decl_count: usize,
+) -> f64 {
     let cat = (0.80 * header_cat_factor(file)).min(1.0);
     let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
+    // Roster mass only for top include hubs: their catalog chunks lose
+    // the breadth race to tiny-roster siblings (htop's per-meter
+    // headers) that the size-invariant value otherwise prefers.
+    // Anywhere else the boost just reorders an already-scheduled chunk
+    // ahead of NS tier-1 orientation content (krep, chibicc, neco) or
+    // promotes big-roster type catalogs the NS ignores (tinyusb
+    // pd_types.h), dragging the gated per-decl train along.
+    let mass = if is_top_include_hub(file, ctx) {
+        roster_mass_factor(chunk_decl_count)
+    } else {
+        1.0
+    };
     base * names_surface_chunk_factor(chunk_index, chunk_count)
+        * mass
         * include_centrality_factor(file, ctx)
 }
 
