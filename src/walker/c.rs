@@ -1177,14 +1177,50 @@ fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMem
 }
 
 /// Blank-line-separated field groups for a struct/union body.
+/// Standalone full-line comment rows are elided — NS struct renders
+/// skip them, and comment-per-field styles (htop `Process.h`) otherwise
+/// cost ~3x the field lines alone. Same-line trailing comments share a
+/// row with their field and stay. Groups left empty (pure comment
+/// dividers) are dropped.
 fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
+    let comment_rows = comment_only_rows(body);
     collect_blank_line_groups(body, source)
         .into_iter()
-        .map(|(group_start_line, rows)| AggregateMemberGroup {
-            group_start_line,
-            rows,
+        .filter_map(|(_, rows)| {
+            let rows: Vec<usize> = rows
+                .into_iter()
+                .filter(|row| !comment_rows.contains(&(row - 1)))
+                .collect();
+            let group_start_line = *rows.first()?;
+            Some(AggregateMemberGroup {
+                group_start_line,
+                rows,
+            })
         })
         .collect()
+}
+
+/// 0-based rows inside `body` whose only content is comment text: rows
+/// touched by a `comment` node and by no non-comment token.
+fn comment_only_rows(body: Node) -> HashSet<usize> {
+    let mut comment_rows = HashSet::new();
+    let mut code_rows = HashSet::new();
+    fn walk(node: Node, comment_rows: &mut HashSet<usize>, code_rows: &mut HashSet<usize>) {
+        if node.kind() == "comment" {
+            comment_rows.extend(node.start_position().row..=node.end_position().row);
+            return;
+        }
+        if node.child_count() == 0 {
+            code_rows.extend(node.start_position().row..=node.end_position().row);
+            return;
+        }
+        let mut cursor = node.walk();
+        for child in node.children(&mut cursor) {
+            walk(child, comment_rows, code_rows);
+        }
+    }
+    walk(body, &mut comment_rows, &mut code_rows);
+    &comment_rows - &code_rows
 }
 
 /// Fixed-size enumerator chunks. Continuation rows of multi-line

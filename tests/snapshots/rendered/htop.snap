@@ -127,6 +127,10 @@ Machine.h
     57→   memory_t cachedSwap;
     59→   unsigned int activeCPUs;
     60→   unsigned int existingCPUs;
+    62→   UsersTable* usersTable;
+    63→   uid_t htopUserId;
+    64→   uid_t maxUserId;  /* recently observed */
+    65→   uid_t userId;  /* selected row user ID */
     67→   pid_t maxProcessId; /* largest PID seen at runtime */
     69→   size_t tableCount;
     70→   Table **tables;
@@ -238,69 +242,61 @@ Process.h
     59→struct Settings_; // IWYU pragma: keep
     …
     63→typedef struct ProcessCmdlineHighlight_ {
-    …
+    64→   size_t offset; /* first character to highlight */
+    65→   size_t length; /* How many characters to highlight, zero if unused */
+    66→   int attr;      /* The attributes used to highlight */
+    67→   int flags;     /* Special flags used for selective highlighting, zero for always */
+    68→} ProcessCmdlineHighlight;
     74→typedef struct ProcessMergedCommand_ {
-    …
+    75→   uint64_t lastUpdate;                        /* Marker based on settings->lastUpdate to track when the rendering needs refreshing */
+    76→   char* str;                                  /* merged Command string */
+    77→   size_t highlightCount;                      /* how many portions of cmdline to highlight */
+    78→   ProcessCmdlineHighlight highlights[8];      /* which portions of cmdline to highlight */
+    79→} ProcessMergedCommand;
     81→typedef struct Process_ {
-    82→   /* Super object for emulated OOP */
     83→   Row super;
-    85→   /* Process group identifier */
     86→   int pgrp;
-    88→   /* Session identifier */
     89→   int session;
-    91→   /* Foreground group identifier of the controlling terminal */
     92→   int tpgid;
-    94→   /* This is a kernel (helper) task */
     95→   bool isKernelThread;
-    97→   /* This is a userland thread / LWP */
     98→   bool isUserlandThread;
-    100→   /* This process is running inside a container */
     101→   Tristate isRunningInContainer;
-    103→   /* Controlling terminal identifier of the process */
     104→   unsigned long int tty_nr;
-    106→   /* Controlling terminal name of the process */
     107→   char* tty_name;
-    109→   /* User identifier */
     110→   uid_t st_uid;
-    112→   /* User name */
     113→   const char* user;
-    122→   /* Process runtime (in hundredth of a second) */
+    120→   Tristate elevated_priv;
     123→   unsigned long long int time;
-    137→   /* The process' "command" name */
+    129→   char* cmdline;
+    132→   size_t cmdlineBasenameEnd;
+    135→   size_t cmdlineBasenameStart;
     138→   char* procComm;
-    140→   /* The main process executable */
     141→   char* procExe;
-    143→   /* The process/thread working directory */
     144→   char* procCwd;
-    146→   /* Offset in procExe of the process basename */
     147→   size_t procExeBasenameOffset;
-    155→   /* CPU number last executed on */
+    150→   bool procExeDeleted;
+    153→   bool usesDeletedLib;
     156→   int processor;
-    158→   /* CPU usage during last cycle (in percent) */
     159→   float percent_cpu;
-    161→   /* Memory usage during last cycle (in percent) */
     162→   float percent_mem;
-    164→   /* Scheduling priority */
     165→   long int priority;
-    167→   /* Nice value */
     168→   int nice;
-    170→   /* Number of threads in this process */
     171→   long int nlwp;
-    176→   /* Process start time (cached formatted string) */
+    174→   time_t starttime_ctime;
     177→   char starttime_show[8];
-    179→   /* Total program size (in kilobytes) */
     180→   long m_virt;
-    182→   /* Resident set size (in kilobytes) */
     183→   long m_resident;
-    191→   /* Process state enum field (platform dependent) */
+    186→   unsigned long int minflt;
+    189→   unsigned long int majflt;
     192→   ProcessState state;
-    194→   /* Current scheduling policy */
     195→   int scheduling_policy;
+    200→   ProcessMergedCommand mergedCommand;
     201→} Process;
     203→typedef struct ProcessFieldData_ {
     229→#define LAST_PROCESSFIELD LAST_RESERVED_FIELD
     230→typedef int32_t ProcessField;  /* see ReservedField list in RowField.h */
     …
+    232→// Implemented in platform-specific code:
     233→void Process_writeField(const Process* this, RichString* str, ProcessField field);
     234→int Process_compare(const void* v1, const void* v2);
     235→int Process_compareByParent(const Row* r1, const Row* r2);
