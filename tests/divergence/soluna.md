@@ -128,61 +128,61 @@ Score(3000)=0.604 I=0.727 C=0.502 ns_rows≤3K=18/40 (reached=6 partial=6 missin
 | walker |  | 7193 | 28 | c decl at src/ime_char_filter.h:27 |  |  | 0.740 |
 | walker |  | 7221 | 28 | c decl at src/ime_char_filter.h:47 |  |  | 0.740 |
 | walker |  | 7249 | 28 | c decl at src/ime_char_filter.h:52 |  |  | 0.740 |
-| walker |  | 7259 | 10 | c includes in src/batch.h |  |  | 0.740 |
-| walker |  | 7269 | 10 | c includes in src/font_define.h |  |  | 0.740 |
-| walker |  | 7279 | 10 | c includes in src/loginfo.h |  |  | 0.740 |
-| walker |  | 7289 | 10 | c includes in src/transform.h |  |  | 0.740 |
-| walker |  | 7297 | 8 | c decl names surface in src/font_system.c |  |  | 0.740 |
-| walker |  | 7305 | 8 | c decl names surface in src/lfs.c |  |  | 0.740 |
-| walker |  | 7313 | 8 | c decl names surface in src/openurl.c |  |  | 0.740 |
-| walker |  | 7321 | 8 | c decl names surface in src/truetype.c |  |  | 0.740 |
-| walker |  | 7329 | 8 | c decl names surface in src/writelog.c |  |  | 0.740 |
-| walker |  | 7359 | 30 | c decl at src/ime_char_filter.h:16 |  |  | 0.740 |
-| walker |  | 7437 | 78 | c decl names surface in src/tmpbuffer.h |  |  | 0.740 |
-| walker |  | 7456 | 19 | c decl at src/tmpbuffer.h:7 |  |  | 0.740 |
-| walker |  | 7484 | 28 | c decl at src/tmpbuffer.h:15 |  |  | 0.740 |
-| walker |  | 7528 | 44 | c decl at src/spritemgr.h:16 |  |  | 0.740 |
-| walker |  | 7619 | 91 | c decl names surface in src/batch.h |  |  | 0.740 |
-| walker |  | 7629 | 10 | c decl at src/batch.h:13 |  |  | 0.740 |
-| walker |  | 7644 | 15 | c includes in src/render_bindings.h |  |  | 0.740 |
-| walker |  | 7747 | 103 | c decl names surface in src/srbuffer.h |  |  | 0.740 |
-| walker |  | 7759 | 12 | c decl at src/srbuffer.h:7 |  |  | 0.740 |
+| walker |  | 7259 | 10 | c includes in src/loginfo.h |  |  | 0.740 |
+| walker |  | 7267 | 8 | c decl names surface in src/font_system.c |  |  | 0.740 |
+| walker |  | 7275 | 8 | c decl names surface in src/lfs.c |  |  | 0.740 |
+| walker |  | 7283 | 8 | c decl names surface in src/openurl.c |  |  | 0.740 |
+| walker |  | 7291 | 8 | c decl names surface in src/truetype.c |  |  | 0.740 |
+| walker |  | 7299 | 8 | c decl names surface in src/writelog.c |  |  | 0.740 |
+| walker |  | 7329 | 30 | c decl at src/ime_char_filter.h:16 |  |  | 0.740 |
+| walker |  | 7407 | 78 | c decl names surface in src/tmpbuffer.h |  |  | 0.740 |
+| walker |  | 7426 | 19 | c decl at src/tmpbuffer.h:7 |  |  | 0.740 |
+| walker |  | 7454 | 28 | c decl at src/tmpbuffer.h:15 |  |  | 0.740 |
+| walker |  | 7498 | 44 | c decl at src/spritemgr.h:16 |  |  | 0.740 |
+| walker |  | 7589 | 91 | c decl names surface in src/batch.h |  |  | 0.740 |
+| walker |  | 7599 | 10 | c decl at src/batch.h:13 |  |  | 0.740 |
+| walker |  | 7609 | 10 | c includes in src/batch.h |  |  | 0.740 |
+| walker |  | 7624 | 15 | c includes in src/render_bindings.h |  |  | 0.740 |
+| walker |  | 7727 | 103 | c decl names surface in src/srbuffer.h |  |  | 0.740 |
+| walker |  | 7739 | 12 | c decl at src/srbuffer.h:7 |  |  | 0.740 |
+| walker |  | 7793 | 54 | c decl at src/ime_state.h:7 |  |  | 0.740 |
 | ns | 7796 |  | 609 | docs/soluna.lua — `require 'soluna'` API | 3.13 |  | 0.704 |
-| walker |  | 7813 | 54 | c decl at src/ime_state.h:7 |  |  | 0.704 |
-| walker |  | 7868 | 55 | c decl at src/ime_char_filter.h:8 |  |  | 0.704 |
+| walker |  | 7848 | 55 | c decl at src/ime_char_filter.h:8 |  |  | 0.704 |
 | ns | 7917 |  | 121 | test/window.lua — minimal entry skeleton | 4.1 |  | 0.698 |
-| walker |  | 7986 | 118 | c decl names surface in src/sprite_submit.h |  |  | 0.698 |
-| walker |  | 7997 | 11 | c decl at src/sprite_submit.h:27 |  |  | 0.698 |
-| walker |  | 8008 | 11 | c decl at src/sprite_submit.h:56 |  |  | 0.698 |
-| walker |  | 8020 | 12 | c decl at src/sprite_submit.h:9 |  |  | 0.698 |
-| walker |  | 8035 | 15 | c decl at src/sprite_submit.h:43 |  |  | 0.698 |
-| walker |  | 8053 | 18 | c decl at src/sprite_submit.h:66 |  |  | 0.698 |
-| walker |  | 8071 | 18 | c decl at src/sprite_submit.h:71 |  |  | 0.698 |
+| walker |  | 7966 | 118 | c decl names surface in src/sprite_submit.h |  |  | 0.698 |
+| walker |  | 7977 | 11 | c decl at src/sprite_submit.h:27 |  |  | 0.698 |
+| walker |  | 7988 | 11 | c decl at src/sprite_submit.h:56 |  |  | 0.698 |
+| walker |  | 8000 | 12 | c decl at src/sprite_submit.h:9 |  |  | 0.698 |
+| walker |  | 8015 | 15 | c decl at src/sprite_submit.h:43 |  |  | 0.698 |
+| walker |  | 8033 | 18 | c decl at src/sprite_submit.h:66 |  |  | 0.698 |
+| walker |  | 8051 | 18 | c decl at src/sprite_submit.h:71 |  |  | 0.698 |
+| walker |  | 8072 | 21 | c decl at src/sprite_submit.h:15 |  |  | 0.698 |
 | ns | 8073 |  | 156 | src/data/settingdefault.dl — default game settings | 4.2 |  | 0.691 |
-| walker |  | 8092 | 21 | c decl at src/sprite_submit.h:15 |  |  | 0.691 |
-| walker |  | 8113 | 21 | c decl at src/sprite_submit.h:21 |  |  | 0.691 |
-| walker |  | 8134 | 21 | c decl at src/sprite_submit.h:76 |  |  | 0.691 |
-| walker |  | 8156 | 22 | c decl at src/sprite_submit.h:81 |  |  | 0.691 |
-| walker |  | 8167 | 11 | c decl body at src/sprite_submit.h:71 |  |  | 0.691 |
-| walker |  | 8182 | 15 | c decl body at src/sprite_submit.h:66 |  |  | 0.691 |
-| walker |  | 8198 | 16 | c decl body at src/sprite_submit.h:9 |  |  | 0.691 |
+| walker |  | 8093 | 21 | c decl at src/sprite_submit.h:21 |  |  | 0.691 |
+| walker |  | 8114 | 21 | c decl at src/sprite_submit.h:76 |  |  | 0.691 |
+| walker |  | 8136 | 22 | c decl at src/sprite_submit.h:81 |  |  | 0.691 |
+| walker |  | 8147 | 11 | c decl body at src/sprite_submit.h:71 |  |  | 0.691 |
+| walker |  | 8162 | 15 | c decl body at src/sprite_submit.h:66 |  |  | 0.691 |
+| walker |  | 8178 | 16 | c decl body at src/sprite_submit.h:9 |  |  | 0.691 |
 | ns | 8257 |  | 184 | Tiny .game + setting + version + asset/sprites.dl | 4.3 |  | 0.682 |
-| walker |  | 8317 | 119 | c decl names surface in src/transform.h |  |  | 0.682 |
-| walker |  | 8330 | 13 | c decl at src/transform.h:16 |  |  | 0.682 |
-| walker |  | 8350 | 20 | c includes in src/ime_state.h |  |  | 0.682 |
+| walker |  | 8297 | 119 | c decl names surface in src/transform.h |  |  | 0.682 |
+| walker |  | 8310 | 13 | c decl at src/transform.h:16 |  |  | 0.682 |
+| walker |  | 8320 | 10 | c includes in src/transform.h |  |  | 0.682 |
+| walker |  | 8340 | 20 | c includes in src/ime_state.h |  |  | 0.682 |
 | ns | 8357 |  | 100 | src/lualib/soluna.lua — function signature locations | 5.1 |  | 0.678 |
-| walker |  | 8370 | 20 | c includes in src/spritemgr.h |  |  | 0.678 |
-| walker |  | 8390 | 20 | c includes in src/srbuffer.h |  |  | 0.678 |
-| walker |  | 8451 | 61 | c decl at src/loginfo.h:6 |  |  | 0.678 |
-| walker |  | 8471 | 20 | c decl body at src/sprite_submit.h:76 |  |  | 0.678 |
-| walker |  | 8493 | 22 | c includes in src/tmpbuffer.h |  |  | 0.678 |
-| walker |  | 8560 | 67 | c decl at src/batch.h:6 |  |  | 0.678 |
-| walker |  | 8579 | 19 | c decl names surface in src/material_blit.c |  |  | 0.678 |
-| walker |  | 8602 | 23 | c decl body at src/ime_char_filter.h:47 |  |  | 0.678 |
+| walker |  | 8360 | 20 | c includes in src/spritemgr.h |  |  | 0.678 |
+| walker |  | 8380 | 20 | c includes in src/srbuffer.h |  |  | 0.678 |
+| walker |  | 8441 | 61 | c decl at src/loginfo.h:6 |  |  | 0.678 |
+| walker |  | 8461 | 20 | c decl body at src/sprite_submit.h:76 |  |  | 0.678 |
+| walker |  | 8483 | 22 | c includes in src/tmpbuffer.h |  |  | 0.678 |
+| walker |  | 8550 | 67 | c decl at src/batch.h:6 |  |  | 0.678 |
+| walker |  | 8569 | 19 | c decl names surface in src/material_blit.c |  |  | 0.678 |
+| walker |  | 8592 | 23 | c decl body at src/ime_char_filter.h:47 |  |  | 0.678 |
 | ns | 8662 |  | 305 | src/lualib/soluna.lua — gamedir() body (per-platform path) | 5.2 | 5.1 | 0.666 |
-| walker |  | 8765 | 163 | c decl names surface in src/font_define.h |  |  | 0.666 |
-| walker |  | 8775 | 10 | c decl at src/font_define.h:31 |  |  | 0.666 |
-| walker |  | 8790 | 15 | c decl at src/font_define.h:26 |  |  | 0.666 |
+| walker |  | 8755 | 163 | c decl names surface in src/font_define.h |  |  | 0.666 |
+| walker |  | 8765 | 10 | c decl at src/font_define.h:31 |  |  | 0.666 |
+| walker |  | 8780 | 15 | c decl at src/font_define.h:26 |  |  | 0.666 |
+| walker |  | 8790 | 10 | c includes in src/font_define.h |  |  | 0.666 |
 | walker |  | 8806 | 16 | c decl body at src/font_define.h:31 |  |  | 0.666 |
 | walker |  | 8823 | 17 | c decl body at src/font_define.h:26 |  |  | 0.666 |
 | walker |  | 8847 | 24 | c decl body at src/ime_char_filter.h:41 |  |  | 0.666 |

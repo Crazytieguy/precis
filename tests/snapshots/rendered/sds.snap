@@ -89,14 +89,6 @@ README.md
     912→===
     …
 sds.c
-    33→#include <stdio.h>
-    34→#include <stdlib.h>
-    35→#include <string.h>
-    36→#include <ctype.h>
-    37→#include <assert.h>
-    38→#include <limits.h>
-    39→#include "sds.h"
-    40→#include "sdsalloc.h"
 sds.h
     1→/* SDSLib 2.0 -- A C dynamic strings library
     2→ *
@@ -179,7 +171,20 @@ sds.h
     85→#define SDS_TYPE_5_LEN(f) ((f)>>SDS_TYPE_BITS)
     …
     87→static inline size_t sdslen(const sds s) {
-    …
+    88→    unsigned char flags = s[-1];
+    89→    switch(flags&SDS_TYPE_MASK) {
+    90→        case SDS_TYPE_5:
+    91→            return SDS_TYPE_5_LEN(flags);
+    92→        case SDS_TYPE_8:
+    93→            return SDS_HDR(8,s)->len;
+    94→        case SDS_TYPE_16:
+    95→            return SDS_HDR(16,s)->len;
+    96→        case SDS_TYPE_32:
+    97→            return SDS_HDR(32,s)->len;
+    98→        case SDS_TYPE_64:
+    99→            return SDS_HDR(64,s)->len;
+    100→    }
+    101→    return 0;
     104→static inline size_t sdsavail(const sds s) {
     …
     130→static inline void sdssetlen(sds s, size_t newlen) {

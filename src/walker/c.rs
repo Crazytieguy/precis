@@ -581,18 +581,29 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
 
+        // NS authors rank include blocks tier 4+; the walker's tiny
+        // includes batches otherwise flood the early budget on header-
+        // rich trees (tinyusb's ~40 class-header includes inside 3K).
+        // Gate them behind the file's first names-surface chunk — the
+        // include map is reference detail once the file's surface is
+        // on the table. Files with no decl surface keep an ungated
+        // batch: there the includes ARE the file's content.
         let includes_lines = collect_includes(&tree, &source);
-        if let Some(content) = single_file_lines_content(file, &source, includes_lines) {
-            out.push(Batch {
-                key: CKey::Includes { file: file.clone() }.into(),
-                predecessor: None,
-                content,
-                value: includes_value(file, ctx),
-            });
-        }
+        let includes_content = single_file_lines_content(file, &source, includes_lines);
+        let push_includes = |out: &mut Vec<Batch<BatchKey>>, predecessor: Option<BatchKey>| {
+            if let Some(content) = includes_content.clone() {
+                out.push(Batch {
+                    key: CKey::Includes { file: file.clone() }.into(),
+                    predecessor,
+                    content,
+                    value: includes_value(file, ctx),
+                });
+            }
+        };
 
         let decls = find_decls(&tree, &source, file);
         if decls.is_empty() {
+            push_includes(&mut out, None);
             continue;
         }
         // Last 0-based row claimed by the file's HeaderBanner (the
@@ -640,11 +651,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
             v
         };
+        let mut names_chunk0_emitted = false;
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
             else {
                 continue;
             };
+            names_chunk0_emitted |= chunk_index == 0;
             out.push(Batch {
                 key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
@@ -658,6 +671,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 ),
             });
         }
+        push_includes(
+            &mut out,
+            names_chunk0_emitted.then(|| names_predecessors[0].clone()),
+        );
         for (decl_index, (node, info)) in decls.iter().enumerate() {
             let names_chunk_index = decl_to_chunk[decl_index];
             let names_predecessor = names_predecessors[names_chunk_index].clone();

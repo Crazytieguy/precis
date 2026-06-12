@@ -46,7 +46,6 @@ lib/
         RTT/
             SEGGER_RTT.c
             SEGGER_RTT.h
-                56→#include "../Config/SEGGER_RTT_Conf.h"
             SEGGER_RTT_ASM_ARMv7M.S
             SEGGER_RTT_printf.c
     embedded-cli/
@@ -91,24 +90,18 @@ src/
                 36→#include "common/tusb_common.h"
             audio_device.c
             audio_device.h
-                32→#include "audio.h"
         bth/
         cdc/
             cdc.h
-                35→#include "common/tusb_common.h"
             cdc_device.c
             cdc_device.h
-                30→#include "cdc.h"
             cdc_host.c
             cdc_host.h
-                30→#include "cdc.h"
             cdc_rndis.h
-                36→#include "cdc.h"
             serial/
                 ch34x.h
                 cp210x.h
                 ftdi_sio.h
-                    28→#include <stdint.h>
                 pl2303.h
         dfu/
             dfu.h
@@ -145,7 +138,6 @@ src/
                 111→} dfu_status_response_t;
             dfu_device.c
             dfu_device.h
-                30→#include "dfu.h"
             dfu_rt_device.c
             dfu_rt_device.h
                 30→#include "dfu.h"
@@ -159,27 +151,35 @@ src/
                 …
         hid/
             hid.h
-                34→#include "common/tusb_common.h"
             hid_device.c
             hid_device.h
-                30→#include "hid.h"
             hid_host.c
             hid_host.h
-                30→#include "hid.h"
         midi/
             README_midi_host.md
             midi.h
                 30→#include "common/tusb_common.h"
+                36→//--------------------------------------------------------------------+
+                37→// Constants
+                38→//--------------------------------------------------------------------+
                 39→enum {
                 40→  MIDI_VERSION_1_0 = 0x0100,
                 41→  MIDI_VERSION_2_0 = 0x0200,
                 42→};
                 44→typedef enum {
-                …
+                45→  MIDI_CS_INTERFACE_HEADER    = 0x01,
+                46→  MIDI_CS_INTERFACE_IN_JACK   = 0x02,
+                47→  MIDI_CS_INTERFACE_OUT_JACK  = 0x03,
+                48→  MIDI_CS_INTERFACE_ELEMENT   = 0x04,
+                49→} midi_cs_interface_subtype_t;
                 51→typedef enum {
-                …
+                52→  MIDI_CS_ENDPOINT_GENERAL = 0x01,
+                53→  MIDI_CS_ENDPOINT_GENERAL_2_0 = 0x02,
+                54→} midi_cs_endpoint_subtype_t;
                 56→typedef enum {
-                …
+                57→  MIDI_JACK_EMBEDDED = 0x01,
+                58→  MIDI_JACK_EXTERNAL = 0x02
+                59→} midi_jack_type_t;
                 61→typedef enum {
                 …
                 81→enum {
@@ -200,25 +200,32 @@ src/
                 …
                 183→typedef midi_desc_cs_endpoint_n_t() midi_desc_cs_endpoint_t; // empty/flexible jack list
                 …
+                188→//--------------------------------------------------------------------+
+                189→// For Internal Driver Use
+                190→//--------------------------------------------------------------------+
                 191→typedef struct {
-                …
+                192→  uint8_t buffer[4];
+                193→  uint8_t index;
+                194→  uint8_t total;
+                195→} midi_driver_stream_t;
             midi_device.c
             midi_device.h
             midi_host.c
             midi_host.h
         msc/
             msc.h
-                30→#include "common/tusb_common.h"
             msc_device.c
             msc_device.h
             msc_host.c
             msc_host.h
-                30→#include "msc.h"
         mtp/
+            mtp.h
+                30→#include "common/tusb_common.h"
+            mtp_device.c
+            mtp_device.h
         net/
             ecm_rndis_device.c
             ncm.h
-                31→#include "common/tusb_common.h"
             ncm_device.c
             net_device.h
         printer/
@@ -230,18 +237,14 @@ src/
                 …
             printer_device.c
             printer_device.h
-                34→#include "printer.h"
         usbtmc/
         vendor/
             vendor_device.c
             vendor_device.h
-                34→#include "common/tusb_common.h"
             vendor_host.c
             vendor_host.h
-                30→#include "common/tusb_common.h"
         video/
             video.h
-                30→#include "common/tusb_common.h"
             video_device.c
             video_device.h
     common/
@@ -249,13 +252,11 @@ src/
         dcd.h
         usbd.c
         usbd.h
-            30→#include "common/tusb_common.h"
         usbd_pvt.h
     host/
         hcd.h
         hub.c
         hub.h
-            30→#include "common/tusb_common.h"
         usbh.c
         usbh.h
         usbh_pvt.h
@@ -288,7 +289,6 @@ src/
                     52→const uintptr_t MUSB_BASES[] = { USB0_BASE };
                     …
                 musb_type.h
-                    64→#include "stdint.h"
         microchip/
             pic/
             pic32mz/
