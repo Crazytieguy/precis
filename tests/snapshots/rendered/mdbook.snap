@@ -148,7 +148,6 @@ crates/
                 tree.rs
             html_handlebars/
                 hbs_renderer.rs
-                    22→pub struct HtmlHandlebars;
                 helpers/
                 mod.rs
                     1→mod hbs_renderer;
@@ -169,6 +168,7 @@ crates/
                 fonts.rs
                 mod.rs
                     1→//! Support for theme files.
+                    39→#[derive(Debug, PartialEq)]
                     40→pub struct Theme {
                     41→    pub(crate) index: Vec<u8>,
                     42→    pub(crate) head: Vec<u8>,

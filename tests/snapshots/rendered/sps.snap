@@ -49,11 +49,6 @@ sps/
         cli/
             info.rs
             init.rs
-                16→pub struct InitArgs {
-                17→    /// Force initialization even if /opt/sps appears to be an sps root already.
-                18→    #[arg(long)]
-                19→    pub force: bool,
-                20→}
             install.rs
             list.rs
             reinstall.rs
@@ -63,14 +58,18 @@ sps/
                 …
             uninstall.rs
             update.rs
+                10→#[derive(clap::Args, Debug)]
+                11→pub struct Update;
             upgrade.rs
         cli.rs
+            32→#[derive(Parser, Debug)]
             35→pub struct CliArgs {
             36→    #[arg(short, long, action = ArgAction::Count, global = true)]
             37→    pub verbose: u8,
             39→    #[command(subcommand)]
             40→    pub command: Command,
             41→}
+            43→#[derive(Subcommand, Debug)]
             44→pub enum Command {
             45→    Init(InitArgs),
             46→    Search(Search),
@@ -218,13 +217,13 @@ sps-common/
                 12→pub use artifact::InstalledArtifact;
                 13→pub use cask::Cask;
                 14→pub use formula::Formula;
+                16→#[derive(Debug, Clone)]
                 17→pub enum InstallTargetIdentifier {
                 18→    Formula(Arc<Formula>),
                 19→    Cask(Arc<Cask>),
                 20→}
             tap.rs
             version.rs
-                11→pub struct Version(semver::Version);
         pipeline.rs
 sps-core/
     Cargo.toml

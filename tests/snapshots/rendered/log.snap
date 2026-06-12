@@ -49,6 +49,7 @@ src/
     __private_api.rs
     kv/
         error.rs
+            4→#[derive(Debug)]
             5→pub struct Error {
             6→    inner: Inner,
             7→}
@@ -57,6 +58,7 @@ src/
             8→    /// Perform the conversion.
             9→    fn to_key(&self) -> Key<'_>;
             10→}
+            36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
             37→pub struct Key<'k> {
             38→    // NOTE: This may become `Cow<'k, str>`
             39→    key: &'k str,
@@ -84,6 +86,7 @@ src/
             12→    /// Perform the conversion.
             13→    fn to_value(&self) -> Value<'_>;
             14→}
+            118→#[derive(Clone)]
             119→pub struct Value<'v> {
             120→    inner: inner::Inner<'v>,
             121→}
@@ -126,6 +129,8 @@ src/
         413→use std::sync::atomic::{AtomicUsize, Ordering};
         416→use std::cell::Cell;
         418→use std::sync::atomic::Ordering;
+        473→#[repr(usize)]
+        474→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
         475→pub enum Level {
         476→    /// The "error" level.
         477→    ///
@@ -151,6 +156,8 @@ src/
         497→    /// Designates very low priority, often extremely verbose, information.
         498→    Trace,
         499→}
+        634→#[repr(usize)]
+        635→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
         636→pub enum LevelFilter {
         637→    /// A level lower than all log levels.
         638→    Off,
@@ -167,6 +174,7 @@ src/
         649→}
         796→/// The "payload" of a log message.
         797→///
+        841→#[derive(Clone, Debug)]
         842→pub struct Record<'a> {
         843→    metadata: Metadata<'a>,
         844→    args: fmt::Arguments<'a>,
@@ -176,15 +184,18 @@ src/
         848→    #[cfg(feature = "kv")]
         849→    key_values: KeyValues<'a>,
         850→}
+        1002→#[derive(Debug)]
         1003→pub struct RecordBuilder<'a> {
         1004→    record: Record<'a>,
         1005→}
         1119→/// Metadata about a log message.
         1120→///
+        1157→#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
         1158→pub struct Metadata<'a> {
         1159→    level: Level,
         1160→    target: &'a str,
         1161→}
+        1199→#[derive(Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
         1200→pub struct MetadataBuilder<'a> {
         1201→    metadata: Metadata<'a>,
         1202→}
@@ -233,23 +244,16 @@ src/
         1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
         1479→    set_logger_inner(|| logger)
         1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
-        1530→    match STATE.load(Ordering::Acquire) {
-        1531→        UNINITIALIZED => {
-        1532→            LOGGER = logger;
-        1533→            STATE.store(INITIALIZED, Ordering::Release);
-        1534→            Ok(())
-        1535→        }
-        1536→        INITIALIZING => {
-        1537→            // This is just plain UB, since we were racing another initialization function
-        1538→            unreachable!("set_logger_racy must not be used with other initialization functions")
-        1539→        }
-        1540→        _ => Err(SetLoggerError(())),
-        1541→    }
+        …
         1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
         1545→///
         1546→/// [`set_logger`]: fn.set_logger.html
+        1547→#[allow(missing_copy_implementations)]
+        1548→#[derive(Debug)]
         1549→pub struct SetLoggerError(());
         …
+        1564→#[allow(missing_copy_implementations)]
+        1565→#[derive(Debug, PartialEq, Eq)]
         1566→pub struct ParseLevelError(());
         …
         1578→/// Returns a reference to the logger.
