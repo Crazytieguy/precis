@@ -175,6 +175,7 @@ Score(3000)=0.568 I=0.796 C=0.405 ns_rows≤3K=18/46 (reached=8 partial=1 missin
 | walker |  | 8452 | 40 | export doc at source/index.d.ts:323 |  |  | 0.595 |
 | walker |  | 8638 | 186 | export names surface in source/index.d.ts |  |  | 0.596 |
 | walker |  | 8638 | 0 | export at source/index.d.ts:30 |  |  | 0.596 |
+| walker |  | 8638 | 0 | export at source/index.d.ts:32 |  |  | 0.596 |
 | walker |  | 8638 | 0 | export at source/index.d.ts:268 |  |  | 0.596 |
 | walker |  | 8638 | 0 | export at source/index.d.ts:277 |  |  | 0.596 |
 | walker |  | 8638 | 0 | export at source/index.d.ts:286 |  |  | 0.596 |
@@ -182,27 +183,26 @@ Score(3000)=0.568 I=0.796 C=0.405 ns_rows≤3K=18/46 (reached=8 partial=1 missin
 | walker |  | 8638 | 0 | export at source/index.d.ts:302 |  |  | 0.596 |
 | walker |  | 8638 | 0 | export at source/index.d.ts:309 |  |  | 0.596 |
 | ns | 8692 |  | 892 | supports-color: platform / CI / TERM heuristics | 5.5 | 5.1 | 0.559 |
-| walker |  | 8766 | 128 | export at source/index.d.ts:12 |  |  | 0.559 |
-| walker |  | 8786 | 20 | export doc at source/index.d.ts:30 |  |  | 0.559 |
-| walker |  | 8817 | 31 | export doc at source/index.d.ts:268 |  |  | 0.559 |
-| walker |  | 8848 | 31 | export doc at source/index.d.ts:302 |  |  | 0.559 |
-| walker |  | 8881 | 33 | export doc at source/index.d.ts:309 |  |  | 0.559 |
-| walker |  | 8976 | 95 | export names surface in source/vendor/supports-color/index.d.ts |  |  | 0.559 |
-| walker |  | 8976 | 0 | export at source/vendor/supports-color/index.d.ts:19 |  |  | 0.559 |
-| walker |  | 9038 | 62 | export at source/vendor/supports-color/index.d.ts:3 |  |  | 0.559 |
+| walker |  | 8806 | 168 | export member names at source/index.d.ts:32 chunk 0 |  |  | 0.560 |
+| walker |  | 8931 | 125 | export member names at source/index.d.ts:32 chunk 1 |  |  | 0.560 |
+| walker |  | 9059 | 128 | export at source/index.d.ts:12 |  |  | 0.560 |
 | ns | 9091 |  | 399 | utilities.js: stringReplaceAll + stringEncaseCRLFWithFirstIndex | 5.6 |  | 0.568 |
-| walker |  | 9103 | 65 | export doc at source/index.d.ts:277 |  |  | 0.568 |
-| walker |  | 9168 | 65 | export doc at source/index.d.ts:286 |  |  | 0.568 |
-| walker |  | 9240 | 72 | export doc at source/index.d.ts:295 |  |  | 0.568 |
-| walker |  | 9257 | 17 | module item body at source/vendor/ansi-styles/index.js:73 body 99 |  |  | 0.568 |
+| walker |  | 9188 | 129 | export member names at source/index.d.ts:32 chunk 2 |  |  | 0.568 |
+| walker |  | 9208 | 20 | export doc at source/index.d.ts:30 |  |  | 0.568 |
+| walker |  | 9239 | 31 | export doc at source/index.d.ts:268 |  |  | 0.568 |
 | ns | 9274 |  | 183 | supports-color: browser variant detection | 5.7 |  | 0.561 |
-| walker |  | 9395 | 138 | export at source/vendor/supports-color/index.d.ts:24 |  |  | 0.562 |
-| walker |  | 9416 | 21 | export doc at source/vendor/supports-color/index.d.ts:24 |  |  | 0.562 |
-| ns | 9483 |  | 209 | index.d.ts top-level declarations (locations) | 6.1 |  | 0.568 |
-| walker |  | 9510 | 94 | plaintext config .editorconfig |  |  | 0.568 |
-| ns | 9613 |  | 130 | ChalkInstance call signature + level + color methods | 6.2 | 6.1 | 0.565 |
-| walker |  | 9752 | 242 | plaintext config license |  |  | 0.565 |
-| walker |  | 9791 | 39 | module item body at source/vendor/ansi-styles/index.js:73 body 94 |  |  | 0.565 |
-| ns | 9840 |  | 227 | supports-color types: ColorSupportLevel + ColorSupport + ColorInfo | 6.3 |  | 0.573 |
-| walker |  | 9867 | 76 | export doc at source/vendor/supports-color/index.d.ts:19 |  |  | 0.573 |
-| ns | 9890 |  | 50 | test/ + examples/ + .github/ listings | 7.1 |  | 0.578 |
+| walker |  | 9375 | 136 | export member names at source/index.d.ts:32 chunk 3 |  |  | 0.561 |
+| walker |  | 9449 | 74 | export member names at source/index.d.ts:32 chunk 4 |  |  | 0.561 |
+| walker |  | 9480 | 31 | export doc at source/index.d.ts:302 |  |  | 0.561 |
+| ns | 9483 |  | 209 | index.d.ts top-level declarations (locations) | 6.1 |  | 0.567 |
+| walker |  | 9513 | 33 | export doc at source/index.d.ts:309 |  |  | 0.567 |
+| walker |  | 9608 | 95 | export names surface in source/vendor/supports-color/index.d.ts |  |  | 0.567 |
+| walker |  | 9608 | 0 | export at source/vendor/supports-color/index.d.ts:19 |  |  | 0.567 |
+| ns | 9613 |  | 130 | ChalkInstance call signature + level + color methods | 6.2 | 6.1 | 0.571 |
+| walker |  | 9670 | 62 | export at source/vendor/supports-color/index.d.ts:3 |  |  | 0.571 |
+| walker |  | 9735 | 65 | export doc at source/index.d.ts:277 |  |  | 0.571 |
+| walker |  | 9800 | 65 | export doc at source/index.d.ts:286 |  |  | 0.571 |
+| ns | 9840 |  | 227 | supports-color types: ColorSupportLevel + ColorSupport + ColorInfo | 6.3 |  | 0.562 |
+| walker |  | 9872 | 72 | export doc at source/index.d.ts:295 |  |  | 0.562 |
+| walker |  | 9889 | 17 | module item body at source/vendor/ansi-styles/index.js:73 body 99 |  |  | 0.562 |
+| ns | 9890 |  | 50 | test/ + examples/ + .github/ listings | 7.1 |  | 0.567 |

@@ -47,9 +47,10 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TsKey};
+use crate::content::{BatchContent, Render, Span};
 use crate::value::{
     NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
-    reexport_import_chunk_factor,
+    reexport_import_chunk_factor, roster_mass_factor,
 };
 
 use super::import_chunks::{
@@ -291,8 +292,21 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     start_line: item.start_line,
                 };
                 let split_js_class = should_split_js_class_export(file, item);
-                let export_lines = if split_js_class {
-                    class_header_surface_lines(item.anchor, item.decl, &source)
+                let member_names_chunks = if split_js_class {
+                    None
+                } else {
+                    member_names_chunk_lines(item.kind, item.decl, &source)
+                };
+                let export_lines = if split_js_class || member_names_chunks.is_some() {
+                    // Chunked declarations trade the whole-member surface
+                    // for a cheap header; the members arrive via the
+                    // gated `ExportMemberNames` chunks instead.
+                    header_surface_lines(
+                        item.anchor,
+                        member_surface_body(item.kind, item.decl),
+                        item.decl,
+                        &source,
+                    )
                 } else {
                     decl_surface_lines(item.kind, item.anchor, item.decl, &source, true)
                 };
@@ -305,6 +319,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 );
                 let export_has_descendants = !doc_lines.is_empty()
                     || (split_js_class && !item.class_members.is_empty())
+                    || member_names_chunks.is_some()
                     || (!split_js_class && !item.body_parts.is_empty());
                 if (!file_lines_covered_by(&export_lines, &names_lines_by_chunk[chunk_index])
                     || export_has_descendants)
@@ -318,6 +333,51 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     });
                 }
                 let export_predecessor = BatchKey::Typescript(export_key);
+                // Body parts of a chunked declaration hang behind the
+                // final chunk: the member catalog is the better buy at
+                // every budget, and a sibling body batch could collide
+                // with chunk ellipsis markers (non-ancestor overlap).
+                let mut body_parts_predecessor = export_predecessor.clone();
+                if let Some(member_chunks) = member_names_chunks {
+                    let chunk_count = member_chunks.chunks.len();
+                    let member_count: usize = member_chunks
+                        .chunks
+                        .iter()
+                        .map(|chunk| chunk.full.len())
+                        .sum();
+                    let mut chunk_predecessor = export_predecessor.clone();
+                    for (chunk_index, lines) in member_chunks.chunks.into_iter().enumerate() {
+                        let content = if member_chunks.truncate_to_name {
+                            truncated_member_names_content(file, &source, &lines)
+                        } else {
+                            single_file_lines_content(file, &source, lines)
+                        };
+                        let Some(content) = content else {
+                            continue;
+                        };
+                        let key = TsKey::ExportMemberNames {
+                            file: file.clone(),
+                            start_line: item.start_line,
+                            chunk_index,
+                        };
+                        out.push(Batch {
+                            key: key.clone().into(),
+                            predecessor: Some(chunk_predecessor),
+                            content,
+                            value: export_member_names_value(
+                                file,
+                                item.kind,
+                                ctx,
+                                js_factor,
+                                chunk_index,
+                                chunk_count,
+                                member_count,
+                            ) * per_export_factor,
+                        });
+                        chunk_predecessor = BatchKey::Typescript(key);
+                    }
+                    body_parts_predecessor = chunk_predecessor;
+                }
                 if split_js_class {
                     for member in &item.class_members {
                         let member_key = TsKey::ExportMember {
@@ -385,7 +445,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         &mut emit_ctx,
                         item,
                         item.body_parts.clone(),
-                        &export_predecessor,
+                        &body_parts_predecessor,
                     );
                 }
             }
@@ -1720,6 +1780,24 @@ fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f6
     mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
+/// One chunk of a big declaration's member-name catalog — the
+/// per-member surface priced as a roster slice: names-surface falloff
+/// across chunks, roster-mass boost for the catalog's total size so
+/// complete catalogs stay ratio-competitive with tiny exports.
+fn export_member_names_value(
+    file: &Path,
+    kind: ItemKind,
+    ctx: &WalkCtx,
+    js_factor: f64,
+    chunk_index: usize,
+    chunk_count: usize,
+    member_count: usize,
+) -> f64 {
+    export_member_value(file, kind, ctx, js_factor)
+        * names_surface_chunk_factor(chunk_index, chunk_count)
+        * roster_mass_factor(member_count)
+}
+
 /// Module-private classes carry per-method query value (constructors,
 /// member sigs) — lift cat so each surface can compete against
 /// peer-level orientation batches in the early budget.
@@ -2114,11 +2192,13 @@ fn decl_surface_lines(
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-fn class_header_surface_lines(anchor: Node, decl: Node, source: &str) -> FileLines {
+/// Declaration surface truncated at its member body — the cheap
+/// "header + ellipsis" render shared by split JS classes and
+/// member-names-chunked declarations.
+fn header_surface_lines(anchor: Node, body: Option<Node>, decl: Node, source: &str) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     let export_start_row = anchor.start_position().row;
-    let body = decl.child_by_field_name("body");
     let header_end = body
         .map(|body| body.start_position().row)
         .unwrap_or_else(|| node_end_row_trimmed(decl, source));
@@ -2127,6 +2207,150 @@ fn class_header_surface_lines(anchor: Node, decl: Node, source: &str) -> FileLin
         ellipses.push(header_end + 2);
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(ellipses)
+}
+
+/// Body node holding a declaration's member list — class body,
+/// interface body, or the object-literal type of a type alias.
+fn member_surface_body<'a>(kind: ItemKind, decl: Node<'a>) -> Option<Node<'a>> {
+    match kind {
+        ItemKind::Interface => decl.child_by_field_name("body"),
+        ItemKind::TypeAlias => decl
+            .child_by_field_name("value")
+            .filter(|value| value.kind() == "object_type"),
+        ItemKind::Class | ItemKind::Default if is_class_node(decl) => {
+            decl.child_by_field_name("body")
+        }
+        _ => None,
+    }
+}
+
+/// `(first_line, end_line)` of every member surfaced by a declaration's
+/// member catalog — interface/object-type signatures, or public class
+/// members. Underscore-prefixed names are conventionally private and
+/// excluded: NS catalogs list the consumer-facing surface only.
+fn member_surface_spans(kind: ItemKind, decl: Node, source: &str) -> Vec<(usize, usize)> {
+    let Some(body) = member_surface_body(kind, decl) else {
+        return Vec::new();
+    };
+    let is_class = is_class_node(decl);
+    let mut cursor = body.walk();
+    body.children(&mut cursor)
+        .filter(|member| {
+            let surfaced = if is_class {
+                class_surface_member_kind(member.kind())
+                    && !is_non_public_class_member(*member, source)
+            } else {
+                matches!(
+                    member.kind(),
+                    "property_signature"
+                        | "method_signature"
+                        | "call_signature"
+                        | "construct_signature"
+                        | "index_signature"
+                )
+            };
+            surfaced && !name_of(*member, source).is_some_and(|name| name.starts_with('_'))
+        })
+        .map(|member| {
+            (
+                member.start_position().row + 1,
+                member.end_position().row + 1,
+            )
+        })
+        .collect()
+}
+
+/// Member-name catalog chunks for one big declaration.
+struct MemberNamesChunks {
+    chunks: Vec<FileLines>,
+    /// Class catalogs render truncated-to-name (the catalog is *which
+    /// methods exist*); interface/object-type catalogs keep full lines
+    /// (the field's type IS the content).
+    truncate_to_name: bool,
+}
+
+/// Chunked member-first-line surfaces for a big declaration — the
+/// "header then one line per member" catalog shape NS authors anchor
+/// on. `None` below one chunk's worth of members; multi-line members
+/// keep an ellipsis marker unless the next line is another member.
+///
+/// Classes only chunk above the per-member split range: a mid-size
+/// class's whole-surface slab is affordable and NS rows want its full
+/// signature lines, while an oversize class's slab never schedules —
+/// the truncated name catalog is the only deliverable shape.
+fn member_names_chunk_lines(kind: ItemKind, decl: Node, source: &str) -> Option<MemberNamesChunks> {
+    let spans = member_surface_spans(kind, decl, source);
+    let min_members = if is_class_node(decl) {
+        JS_CLASS_MEMBER_SPLIT_MAX + 1
+    } else {
+        NAMES_SURFACE_CHUNK_SIZE
+    };
+    if spans.len() < min_members {
+        return None;
+    }
+    let truncate_to_name = is_class_node(decl);
+    let first_lines: HashSet<usize> = spans.iter().map(|&(first, _)| first).collect();
+    let chunks = spans
+        .chunks(NAMES_SURFACE_CHUNK_SIZE)
+        .map(|chunk| {
+            let mut full = Vec::new();
+            let mut ellipses = Vec::new();
+            for &(first, end) in chunk {
+                full.push(first);
+                if !truncate_to_name && end > first && !first_lines.contains(&(first + 1)) {
+                    ellipses.push(first + 1);
+                }
+            }
+            FileLines::new(full).with_ellipses(ellipses)
+        })
+        .collect();
+    Some(MemberNamesChunks {
+        chunks,
+        truncate_to_name,
+    })
+}
+
+/// Regex for truncated member-name renders — everything before the
+/// parameter list, mirroring the NS authoring convention for method
+/// catalogs.
+const MEMBER_NAME_TRUNCATE_PATTERN: &str = "^[^(]+";
+
+/// Lines content rendering each member line truncated to its name.
+/// Lines without a leading non-`(` prefix fall back to `Full` so the
+/// truncate regex always matches non-empty.
+fn truncated_member_names_content(
+    file: &Path,
+    source: &str,
+    lines: &FileLines,
+) -> Option<BatchContent> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let mut spans = Vec::new();
+    for &line in &lines.full {
+        let Some(text) = src_lines.get(line - 1) else {
+            continue;
+        };
+        if text.trim().is_empty() {
+            continue;
+        }
+        let render = if text.starts_with('(') {
+            Render::Full
+        } else {
+            Render::Truncated {
+                pattern: MEMBER_NAME_TRUNCATE_PATTERN.to_string(),
+            }
+        };
+        spans.push(Span {
+            path: file.to_path_buf(),
+            start: line,
+            end: line,
+            render,
+        });
+    }
+    if spans.is_empty() {
+        None
+    } else {
+        Some(BatchContent::Lines { spans })
+    }
 }
 
 fn class_member_infos(class_decl: Node, src_lines: &[&str]) -> Vec<ClassMemberInfo> {

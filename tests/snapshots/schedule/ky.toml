@@ -1,7 +1,7 @@
 fixture = "ky"
 budget = 10000
-cumulative_tokens = 9961
-batch_count = 149
+cumulative_tokens = 9979
+batch_count = 151
 
 [[batches]]
 position = 1
@@ -4205,6 +4205,32 @@ kind = "ellipsis"
 
 [[batches]]
 position = 139
+key = 'Typescript(Export { file: "source/types/options.ts", start_line: 33 })'
+descriptor = "export at source/types/options.ts:33"
+cost_tokens = 0
+cum_tokens = 8813
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/types/options.ts"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/types/options.ts"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 140
 key = 'Typescript(Export { file: "source/types/options.ts", start_line: 307 })'
 descriptor = "export at source/types/options.ts:307"
 cost_tokens = 0
@@ -4222,7 +4248,7 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Typescript(Export { file: "source/types/options.ts", start_line: 16 })'
 descriptor = "export at source/types/options.ts:16"
 cost_tokens = 66
@@ -4248,11 +4274,29 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
+key = 'Typescript(ExportDoc { file: "source/types/options.ts", start_line: 33 })'
+descriptor = "export doc at source/types/options.ts:33"
+cost_tokens = 18
+cum_tokens = 8897
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/types/options.ts"
+start = 29
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
 key = 'Typescript(Export { file: "source/types/options.ts", start_line: 373 })'
 descriptor = "export at source/types/options.ts:373"
 cost_tokens = 132
-cum_tokens = 9011
+cum_tokens = 9029
 
 [batches.content]
 kind = "lines"
@@ -4274,11 +4318,11 @@ end = 384
 kind = "full"
 
 [[batches]]
-position = 142
+position = 144
 key = 'Typescript(Imports { file: "source/utils/options.ts" })'
 descriptor = "imports in source/utils/options.ts"
 cost_tokens = 41
-cum_tokens = 9052
+cum_tokens = 9070
 
 [batches.content]
 kind = "lines"
@@ -4292,11 +4336,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 143
+position = 145
 key = 'Typescript(ExportBody { file: "source/utils/merge.ts", start_line: 16, body_start_line: 17 })'
 descriptor = "export body at source/utils/merge.ts:16 body 17"
 cost_tokens = 140
-cum_tokens = 9192
+cum_tokens = 9210
 
 [batches.content]
 kind = "lines"
@@ -4326,11 +4370,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 144
+position = 146
 key = 'Markdown(Section { file: "readme.md", section_index: 42 })'
 descriptor = "readme.md section #42"
 cost_tokens = 166
-cum_tokens = 9358
+cum_tokens = 9376
 
 [batches.content]
 kind = "lines"
@@ -4368,11 +4412,11 @@ end = 1247
 kind = "full"
 
 [[batches]]
-position = 145
+position = 147
 key = 'Markdown(Section { file: "readme.md", section_index: 33 })'
 descriptor = "readme.md section #33"
 cost_tokens = 169
-cum_tokens = 9527
+cum_tokens = 9545
 
 [batches.content]
 kind = "lines"
@@ -4410,11 +4454,11 @@ end = 1065
 kind = "full"
 
 [[batches]]
-position = 146
+position = 148
 key = 'Markdown(Section { file: "readme.md", section_index: 34 })'
 descriptor = "readme.md section #34"
 cost_tokens = 169
-cum_tokens = 9696
+cum_tokens = 9714
 
 [batches.content]
 kind = "lines"
@@ -4452,11 +4496,11 @@ end = 1078
 kind = "full"
 
 [[batches]]
-position = 147
+position = 149
 key = 'Markdown(Section { file: "readme.md", section_index: 38 })'
 descriptor = "readme.md section #38"
 cost_tokens = 182
-cum_tokens = 9878
+cum_tokens = 9896
 
 [batches.content]
 kind = "lines"
@@ -4502,11 +4546,11 @@ end = 1154
 kind = "full"
 
 [[batches]]
-position = 148
+position = 150
 key = 'Typescript(Imports { file: "source/utils/normalize.ts" })'
 descriptor = "imports in source/utils/normalize.ts"
 cost_tokens = 52
-cum_tokens = 9930
+cum_tokens = 9948
 
 [batches.content]
 kind = "lines"
@@ -4520,11 +4564,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 149
+position = 151
 key = 'Typescript(ExportDoc { file: "source/types/options.ts", start_line: 373 })'
 descriptor = "export doc at source/types/options.ts:373"
 cost_tokens = 31
-cum_tokens = 9961
+cum_tokens = 9979
 
 [batches.content]
 kind = "lines"

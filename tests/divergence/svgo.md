@@ -138,6 +138,7 @@ Score(3000)=0.609 I=0.760 C=0.488 ns_rows≤3K=20/46 (reached=8 partial=3 missin
 | walker |  | 6079 | 162 | README.md section #9 |  |  | 0.548 |
 | ns | 6217 |  | 156 | Plugin name+description: doctype/proc-inst/comments/metadata/deprecatedAttrs | 3.8 |  | 0.542 |
 | walker |  | 6265 | 186 | export names surface in lib/types.ts |  |  | 0.543 |
+| walker |  | 6265 | 0 | export at lib/types.ts:30 |  |  | 0.543 |
 | walker |  | 6274 | 9 | export at lib/types.ts:108 |  |  | 0.543 |
 | walker |  | 6296 | 22 | export at lib/types.ts:175 |  |  | 0.543 |
 | walker |  | 6320 | 24 | export at lib/types.ts:67 |  |  | 0.543 |

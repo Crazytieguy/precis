@@ -173,19 +173,21 @@ Score(3000)=0.614 I=0.858 C=0.439 ns_rows≤3K=17/38 (reached=8 partial=0 missin
 | walker |  | 8482 | 169 | readme.md section #4 |  |  | 0.482 |
 | ns | 8679 |  | 824 | merge.ts deepMerge: special-cased keys (signal/context/searchParams/hooks/headers) | 6.2 |  | 0.458 |
 | walker |  | 8813 | 331 | export names surface in source/types/options.ts |  |  | 0.467 |
+| walker |  | 8813 | 0 | export at source/types/options.ts:33 |  |  | 0.467 |
 | walker |  | 8813 | 0 | export at source/types/options.ts:307 |  |  | 0.467 |
 | walker |  | 8879 | 66 | export at source/types/options.ts:16 |  |  | 0.476 |
+| walker |  | 8897 | 18 | export doc at source/types/options.ts:33 |  |  | 0.476 |
 | ns | 8901 |  | 222 | timeout.ts body | 6.3 |  | 0.490 |
-| walker |  | 9011 | 132 | export at source/types/options.ts:373 |  |  | 0.497 |
-| walker |  | 9052 | 41 | imports in source/utils/options.ts |  |  | 0.497 |
+| walker |  | 9029 | 132 | export at source/types/options.ts:373 |  |  | 0.497 |
+| walker |  | 9070 | 41 | imports in source/utils/options.ts |  |  | 0.497 |
 | ns | 9072 |  | 171 | options.ts utils + body.ts streaming exports + small util one-liners | 6.4 |  | 0.503 |
-| walker |  | 9192 | 140 | export body at source/utils/merge.ts:16 body 17 |  |  | 0.503 |
-| walker |  | 9358 | 166 | readme.md section #42 |  |  | 0.503 |
-| walker |  | 9527 | 169 | readme.md section #33 |  |  | 0.503 |
+| walker |  | 9210 | 140 | export body at source/utils/merge.ts:16 body 17 |  |  | 0.503 |
+| walker |  | 9376 | 166 | readme.md section #42 |  |  | 0.503 |
 | ns | 9532 |  | 460 | test/main.ts: representative test names (truncated) | 7.1 |  | 0.491 |
-| walker |  | 9696 | 169 | readme.md section #34 |  |  | 0.491 |
-| walker |  | 9878 | 182 | readme.md section #38 |  |  | 0.491 |
+| walker |  | 9545 | 169 | readme.md section #33 |  |  | 0.491 |
+| walker |  | 9714 | 169 | readme.md section #34 |  |  | 0.491 |
+| walker |  | 9896 | 182 | readme.md section #38 |  |  | 0.491 |
 | ns | 9911 |  | 379 | test/{http-error,methods,prefix-url,bytes,memory-leak,fetch,context}.ts test names | 7.2 |  | 0.482 |
-| walker |  | 9930 | 52 | imports in source/utils/normalize.ts |  |  | 0.482 |
-| walker |  | 9961 | 31 | export doc at source/types/options.ts:373 |  |  | 0.485 |
+| walker |  | 9948 | 52 | imports in source/utils/normalize.ts |  |  | 0.482 |
+| walker |  | 9979 | 31 | export doc at source/types/options.ts:373 |  |  | 0.485 |
 | ns | 9987 |  | 76 | test/retry.ts: 4 most-distinctive test names (truncated) | 7.3 |  | 0.483 |

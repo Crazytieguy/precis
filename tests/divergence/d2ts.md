@@ -57,6 +57,7 @@ Score(3000)=0.586 I=0.768 C=0.448 ns_rows≤3K=21/41 (reached=10 partial=3 missi
 | walker |  | 2318 | 70 | imports in packages/d2ts/src/index.ts |  |  | 0.500 |
 | ns | 2436 |  | 380 | Top-level README — operator catalog with descriptions | 2.12 |  | 0.474 |
 | walker |  | 2501 | 183 | export names surface in packages/d2ts/src/types.ts |  |  | 0.498 |
+| walker |  | 2501 | 0 | export at packages/d2ts/src/types.ts:64 |  |  | 0.498 |
 | walker |  | 2522 | 21 | export at packages/d2ts/src/types.ts:117 |  |  | 0.508 |
 | walker |  | 2545 | 23 | export at packages/d2ts/src/types.ts:24 |  |  | 0.524 |
 | walker |  | 2585 | 40 | export at packages/d2ts/src/types.ts:31 |  |  | 0.531 |
