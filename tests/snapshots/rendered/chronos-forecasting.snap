@@ -114,7 +114,12 @@ src/
             45→    forecast_type: ForecastType
             46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
             48→    def __init__(self, inner_model: "PreTrainedModel"):
-            …
+            49→        """
+            50→        Parameters
+            51→        ----------
+            52→        inner_model : PreTrainedModel
+            53→            A hugging-face transformers PreTrainedModel, e.g., T5ForConditionalGeneration
+            54→        """
             58→    @property
             59→    def model_context_length(self) -> int:
             60→        raise NotImplementedError()
@@ -135,7 +140,18 @@ src/
             106→    ) -> Tuple[torch.Tensor, torch.Tensor]:
             133→        raise NotImplementedError()
             135→    def predict_df(
-            …
+            136→        self,
+            137→        df: "pd.DataFrame",
+            138→        *,
+            139→        id_column: str = "item_id",
+            140→        timestamp_column: str = "timestamp",
+            141→        target: str = "target",
+            142→        prediction_length: int | None = None,
+            143→        quantile_levels: list[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+            144→        validate_inputs: bool = True,
+            145→        freq: str | None = None,
+            146→        **predict_kwargs,
+            147→    ) -> "pd.DataFrame":
             252→    def predict_fev(
             253→        self, task: "fev.Task", batch_size: int = 32, **kwargs
             254→    ) -> tuple[list["datasets.DatasetDict"], float]:
@@ -147,6 +163,10 @@ src/
             341→        force_s3_download=False,
             342→        **kwargs,
             343→    ):
+            344→        """
+            345→        Load the model, either from a local path, S3 prefix, or from the HuggingFace Hub.
+            346→        Supports the same arguments as ``AutoConfig`` and ``AutoModel`` from ``transformers``.
+            347→        """
         boto_utils.py
         chronos.py
         chronos2/
@@ -162,20 +182,12 @@ src/
             config.py
                 12→class Chronos2CoreConfig(PretrainedConfig):
                 …
-                46→    model_type = "t5"
-                47→    attribute_map = {
-                48→        "hidden_size": "d_model",
-                49→        "num_attention_heads": "num_heads",
-                50→        "num_hidden_layers": "num_layers",
-                51→        "head_dim": "d_kv",
-                52→    }
                 54→    def __init__(
                 …
                 102→@dataclass
                 103→class Chronos2ForecastingConfig:
                 114→    @classmethod
                 115→    def editable_fields(cls) -> list[str]:
-                119→        return ["context_length", "max_output_patches"]
             dataset.py
             layers.py
             model.py
@@ -190,17 +202,14 @@ src/
                 …
                 76→    @property
                 77→    def model_context_length(self) -> int:
-                78→        return self.model.chronos_config.context_length
                 80→    @property
-                81→    def model_output_patch_size(self) -> int:
-                82→        return self.model.chronos_config.output_patch_size
+                …
                 84→    @property
-                85→    def model_prediction_length(self) -> int:
+                …
                 88→    @property
-                89→    def quantiles(self) -> list[float]:
-                90→        return self.model.chronos_config.quantiles
+                …
                 92→    @property
-                93→    def max_output_patches(self) -> int:
+                …
                 96→    def fit(
                 …
                 372→    def _prepare_inputs_for_long_horizon_unrolling(
@@ -226,16 +235,10 @@ src/
                 1105→    @torch.no_grad()
                 …
                 1185→    @classmethod
-                1186→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
+                …
                 1224→    def save_pretrained(self, save_directory: str | Path, *args, **kwargs):
                 …
             trainer.py
-                17→def seed_worker(worker_id: int):
-                …
-                30→class EvaluateAndSaveFinalStepCallback(TrainerCallback):
-                31→    """Callback to evaluate and save the model at last training step."""
-                40→class Chronos2Trainer(Trainer):
-                …
         chronos_bolt.py
         df_utils.py
         utils.py

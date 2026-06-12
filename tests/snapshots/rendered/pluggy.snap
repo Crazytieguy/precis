@@ -3,7 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .claude/
-    settings.json
 .coveragerc
 .github/
 .gitignore
@@ -74,9 +73,6 @@ docs/
     changelog.rst
     conf.py
     examples/
-        eggsample/
-        eggsample-spam/
-        toy-example.py
     index.rst
     requirements.txt
 downstream/
@@ -133,26 +129,6 @@ src/
             36→        return version("pluggy")
             38→    raise AttributeError(f"module {__name__} has no attribute {name!r}")
         _callers.py
-            24→Teardown: TypeAlias = Generator[None, object, object]
-            27→def run_old_style_hookwrapper(
-            28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
-            29→) -> Teardown:
-            30→    """
-            31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
-            32→    """
-            60→def _raise_wrapfail(
-            61→    wrap_controller: Generator[None, object, object],
-            62→    msg: str,
-            63→) -> NoReturn:
-            70→def _warn_teardown_exception(
-            71→    hook_name: str, hook_impl: HookImpl, e: BaseException
-            72→) -> None:
-            82→def _multicall(
-            83→    hook_name: str,
-            84→    hook_impls: Sequence[HookImpl],
-            85→    caller_kwargs: Mapping[str, object],
-            86→    firstresult: bool,
-            87→) -> object | list[object]:
         _hooks.py
         _manager.py
             36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
@@ -166,10 +142,83 @@ src/
             55→    :param plugin: The plugin which failed validation.
             56→    :param message: Error message.
             57→    """
+            59→    def __init__(self, plugin: _Plugin, message: str) -> None:
+            …
             65→class DistFacade:
             66→    """Emulate a pkg_resources Distribution"""
+            68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
+            69→        self._dist = dist
+            71→    @property
+            72→    def project_name(self) -> str:
+            76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
+            77→        return getattr(self._dist, attr, default)
+            79→    def __dir__(self) -> list[str]:
+            80→        return sorted(dir(self._dist) + ["_dist", "project_name"])
             83→class PluginManager:
             …
+            100→    def __init__(self, project_name: str) -> None:
+            101→        #: The project name.
+            114→    def _hookexec(
+            …
+            125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
+            …
+            176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
+            …
+            201→    def unregister(
+            202→        self, plugin: _Plugin | None = None, name: str | None = None
+            203→    ) -> Any | None:
+            233→    def set_blocked(self, name: str) -> None:
+            234→        """Block registrations of the given name, unregister if already registered."""
+            238→    def is_blocked(self, name: str) -> bool:
+            239→        """Return whether the given plugin name is blocked."""
+            242→    def unblock(self, name: str) -> bool:
+            243→        """Unblocks a name.
+            245→        Returns whether the name was actually blocked.
+            246→        """
+            252→    def add_hookspecs(self, module_or_class: _Namespace) -> None:
+            …
+            278→    def parse_hookspec_opts(
+            279→        self, module_or_class: _Namespace, name: str
+            280→    ) -> HookspecOpts | None:
+            296→    def get_plugins(self) -> set[Any]:
+            297→        """Return a set of all registered plugin objects."""
+            300→    def is_registered(self, plugin: _Plugin) -> bool:
+            301→        """Return whether the plugin is already registered."""
+            302→        return any(plugin == val for val in self._name2plugin.values())
+            304→    def get_canonical_name(self, plugin: _Plugin) -> str:
+            …
+            315→    def get_plugin(self, name: str) -> Any | None:
+            316→        """Return the plugin registered under the given name, if any."""
+            317→        return self._name2plugin.get(name)
+            319→    def has_plugin(self, name: str) -> bool:
+            320→        """Return whether a plugin with the given name is registered."""
+            321→        return self.get_plugin(name) is not None
+            323→    def get_name(self, plugin: _Plugin) -> str | None:
+            324→        """Return the name the plugin is registered under, or ``None`` if
+            325→        is isn't."""
+            331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
+            …
+            379→    def check_pending(self) -> None:
+            …
+            395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
+            …
+            425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
+            426→        """Return a list of (plugin, distinfo) pairs for all
+            427→        setuptools-registered plugins."""
+            428→        return list(self._plugin_distinfo)
+            430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
+            431→        """Return a list of (name, plugin) pairs for all registered plugins."""
+            432→        return list(self._name2plugin.items())
+            434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
+            …
+            450→    def add_hookcall_monitoring(
+            451→        self, before: _BeforeTrace, after: _AfterTrace
+            452→    ) -> Callable[[], None]:
+            487→    def enable_tracing(self) -> Callable[[], None]:
+            …
+            512→    def subset_hook_caller(
+            513→        self, name: str, remove_plugins: Iterable[_Plugin]
+            514→    ) -> HookCaller:
             525→def _formatdef(func: Callable[..., object]) -> str:
             526→    return f"{func.__name__}{inspect.signature(func)}"
         _result.py
@@ -201,40 +250,11 @@ src/
             67→    def force_result(self, result: ResultType) -> None:
             …
             80→    def force_exception(self, exception: BaseException) -> None:
-            81→        """Force the result to fail with ``exception``.
-            83→        This overrides any previous result or exception.
-            85→        .. versionadded:: 1.1.0
-            86→        """
+            …
             91→    def get_result(self) -> ResultType:
-            92→        """Get the result(s) for this hook call.
-            94→        If the hook was marked as a ``firstresult`` only a single value
-            95→        will be returned, otherwise a list of results.
-            96→        """
+            …
             107→_Result = Result
         _tracing.py
-            12→_Writer = Callable[[str], object]
-            13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
-            16→class TagTracer:
-            17→    def __init__(self) -> None:
-            …
-            22→    def get(self, name: str) -> TagTracerSub:
-            23→        return TagTracerSub(self, (name,))
-            25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
-            …
-            42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
-            …
-            48→    def setwriter(self, writer: _Writer | None) -> None:
-            49→        self._writer = writer
-            51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
-            …
-            59→class TagTracerSub:
-            60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
-            61→        self.root = root
-            62→        self.tags = tags
-            64→    def __call__(self, *args: object) -> None:
-            65→        self.root._processmessage(self.tags, args)
-            67→    def get(self, name: str) -> TagTracerSub:
-            68→        return self.__class__(self.root, self.tags + (name,))
         _warnings.py
             1→from typing import final
             4→class PluggyWarning(UserWarning):
@@ -245,16 +265,5 @@ src/
             27→    __module__ = "pluggy"
         py.typed
 testing/
-    benchmark.py
-    conftest.py
-    test_details.py
-    test_helpers.py
-    test_hookcaller.py
-    test_invocations.py
-    test_multicall.py
-    test_pluginmanager.py
-    test_result.py
-    test_tracer.py
-    test_warnings.py
 tox.ini
 uv.lock

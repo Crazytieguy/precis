@@ -41,6 +41,8 @@
 //!
 //! Parse trees are cached in [`WalkCtx`].
 
+use std::cell::RefCell;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -48,8 +50,9 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
 use crate::value::{
-    NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
-    names_surface_chunk_index, reexport_import_chunk_factor, roster_mass_factor_with_baseline,
+    NAMES_SURFACE_CHUNK_SIZE, depth_factor, mix_signals, names_surface_chunk_count,
+    names_surface_chunk_factor, names_surface_chunk_index, reexport_import_chunk_factor,
+    roster_mass_factor_with_baseline,
 };
 
 use super::import_chunks::{
@@ -82,6 +85,13 @@ fn python_roster_mass_factor(file: &Path, entries: usize) -> f64 {
         return 1.0;
     }
     roster_mass_factor_with_baseline(entries, PYTHON_ROSTER_MASS_BASELINE)
+}
+
+/// Per-run Python walker state: spine-module sets cached per package
+/// root (computed once from the root `__init__.py`'s re-exports).
+#[derive(Default)]
+pub(in crate::walker) struct PythonState {
+    spine_modules: RefCell<HashMap<PathBuf, Arc<HashSet<PathBuf>>>>,
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -944,10 +954,172 @@ fn collect_test_methods_in_class(class_node: Node, source: &str, out: &mut Vec<u
     }
 }
 
+// --- spine modules -------------------------------------------------------
+
+/// Depth that spine modules rank at — between the package-root anchors
+/// (entrypoint pin, depth ≤ 1) and ordinary implementation modules.
+const SPINE_MODULE_DEPTH_PIN: usize = 2;
+
+/// A re-export wall naming more modules than this carries no curation
+/// signal — the `__init__.py` is just assembling the whole package, so
+/// pinning its sources lifts most files at once and displaces
+/// orientation rows. Measured on the training corpus: curated walls
+/// (pluggy 4, chronos 5 spine modules) win from the pin; assembly
+/// walls (requests/click 8, typeguard 9, flask 10) regress. No package
+/// sits at 6-7, so the boundary inside that span is unmeasured.
+const SPINE_MODULES_MAX: usize = 6;
+
+/// True when the package root `__init__.py` imports names from `file` —
+/// the module is a re-export source implementing the package's public
+/// API. NS authors rank these spine modules right after orientation;
+/// the depth/cat priors otherwise demote them (a src-layout module is
+/// always depth ≥ 3).
+fn is_package_spine_module(file: &Path, ctx: &WalkCtx) -> bool {
+    if is_python_entrypoint(file) {
+        return false;
+    }
+    let Some(package_root) = python_package_root(file, ctx) else {
+        return false;
+    };
+    package_spine_modules(ctx, &package_root).contains(file)
+}
+
+/// Topmost ancestor package dir of `file` (contiguous `__init__.py`
+/// chain, clipped to the walk root). `None` when the containing dir is
+/// not a package.
+fn python_package_root(file: &Path, ctx: &WalkCtx) -> Option<PathBuf> {
+    let mut dir = file.parent()?;
+    if !dir.join("__init__.py").is_file() {
+        return None;
+    }
+    while let Some(parent) = dir.parent() {
+        if !parent.starts_with(ctx.root()) || !parent.join("__init__.py").is_file() {
+            break;
+        }
+        dir = parent;
+    }
+    Some(dir.to_path_buf())
+}
+
+fn package_spine_modules(ctx: &WalkCtx, package_root: &Path) -> Arc<HashSet<PathBuf>> {
+    if let Some(cached) = ctx.python_state().spine_modules.borrow().get(package_root) {
+        return Arc::clone(cached);
+    }
+    let computed = Arc::new(collect_spine_modules_uncached(ctx, package_root));
+    ctx.python_state()
+        .spine_modules
+        .borrow_mut()
+        .insert(package_root.to_path_buf(), Arc::clone(&computed));
+    computed
+}
+
+fn collect_spine_modules_uncached(ctx: &WalkCtx, package_root: &Path) -> HashSet<PathBuf> {
+    let mut out = HashSet::new();
+    let init = package_root.join("__init__.py");
+    let Some((source, tree)) = parse_python(ctx, &init) else {
+        return out;
+    };
+    let package_name = package_root
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or_default();
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "import_from_statement" {
+            continue;
+        }
+        let Some(module_node) = child.child_by_field_name("module_name") else {
+            continue;
+        };
+        let text = source[module_node.start_byte()..module_node.end_byte()].trim();
+        let module_path = match text.strip_prefix('.') {
+            // `from .mod import …` / `from .pkg.mod import …`. Deeper
+            // relative levels (`..`) cannot resolve at the package root.
+            Some(rest) if !rest.starts_with('.') => rest,
+            Some(_) => continue,
+            // Absolute self-import (`from pkg.mod import …`).
+            None => match text
+                .strip_prefix(package_name)
+                .filter(|_| !package_name.is_empty())
+            {
+                Some("") => "",
+                Some(rest) => match rest.strip_prefix('.') {
+                    Some(suffix) => suffix,
+                    None => continue,
+                },
+                None => continue,
+            },
+        };
+        if module_path.is_empty() {
+            // `from . import a, b` — each imported name is a module.
+            for name in import_from_statement_names(child, &source) {
+                if let Some(path) = resolve_package_module(package_root, &name) {
+                    out.insert(path);
+                }
+            }
+        } else if let Some(path) = resolve_package_module(package_root, module_path) {
+            out.insert(path);
+        }
+    }
+    if out.len() > SPINE_MODULES_MAX {
+        out.clear();
+    }
+    out
+}
+
+/// Imported names of a `from … import a, b as c` statement (alias
+/// sources, first dotted component).
+fn import_from_statement_names(node: Node, source: &str) -> Vec<String> {
+    let mut cursor = node.walk();
+    let mut out = Vec::new();
+    for name_node in node.children_by_field_name("name", &mut cursor) {
+        let target = if name_node.kind() == "aliased_import" {
+            name_node.child_by_field_name("name")
+        } else {
+            Some(name_node)
+        };
+        let Some(target) = target else { continue };
+        let text = source[target.start_byte()..target.end_byte()].trim();
+        let first = text.split('.').next().unwrap_or(text);
+        if !first.is_empty() {
+            out.push(first.to_string());
+        }
+    }
+    out
+}
+
+/// Resolve a dotted module path relative to the package root to a real
+/// file: `pkg/a/b.py`, falling back to `pkg/a/b/__init__.py`.
+fn resolve_package_module(package_root: &Path, dotted: &str) -> Option<PathBuf> {
+    let mut path = package_root.to_path_buf();
+    for part in dotted.split('.') {
+        if part.is_empty() {
+            return None;
+        }
+        path.push(part);
+    }
+    let module_file = path.with_extension("py");
+    if module_file.is_file() {
+        return Some(module_file);
+    }
+    let init = path.join("__init__.py");
+    init.is_file().then_some(init)
+}
+
 // --- value functions ----------------------------------------------------
 
 fn python_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(file, ctx, is_python_entrypoint(file))
+    if is_python_entrypoint(file) {
+        return file_depth_factor(file, ctx, true);
+    }
+    let depth = ctx.depth_from_root(file);
+    let pinned_depth = if is_package_spine_module(file, ctx) {
+        depth.min(SPINE_MODULE_DEPTH_PIN)
+    } else {
+        depth
+    };
+    depth_factor(pinned_depth) * ctx.non_essential_factor(file)
 }
 
 fn is_python_entrypoint(file: &Path) -> bool {
@@ -1016,7 +1188,7 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
     // not crowd README / public-export batches in the early budget.
     let cat = if is_init_py(file) {
         0.65
-    } else if ctx.depth_from_root(file) >= 3 {
+    } else if ctx.depth_from_root(file) >= 3 && !is_package_spine_module(file, ctx) {
         0.4
     } else {
         0.5

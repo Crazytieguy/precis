@@ -34,9 +34,7 @@ README.md
     43→## Quick Start
     …
     48→### Installation
-    49→```bash
-    50→pip install py3xui
-    51→```
+    …
     53→### Create a new instance of the API
     …
     89→### Using TLS and custom certificates
@@ -65,19 +63,7 @@ README.md
 SECURITY.md
 demo.py
     1→from py3xui import Api
-    12→host = "**********"
-    13→username = "**********"
-    14→password = "**********"
-    16→email = "iwatkot"
-    18→api = Api(host, username, password)
-    23→inbound_id = 1  # ⬅️ Your inbound ID here.
-    26→inbound = api.inbound.get_by_id(inbound_id)
-    30→client = None
-    41→cliend_uuid = client.id
-    44→client_by_email = api.client.get_by_email(email)
     63→from py3xui import Inbound
-    65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
-    66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
     98→import os
     100→import qrcode
 dev/
@@ -109,6 +95,22 @@ py3xui/
         api.py
             13→class Api:
             …
+            67→    def __init__(
+            …
+            93→    @property
+            94→    def session(self) -> str | None:
+            100→        return self._session
+            102→    @session.setter
+            103→    def session(self, value: str) -> None:
+            115→    @property
+            116→    def cookie_name(self) -> str | None:
+            122→        return self._cookie_name
+            124→    @cookie_name.setter
+            125→    def cookie_name(self, value: str | None) -> None:
+            139→    @classmethod
+            …
+            189→    def login(self, two_factor_code: str | int | None = None) -> None:
+            …
         api_base.py
             15→class ApiFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
@@ -127,12 +129,6 @@ py3xui/
             …
         api_server.py
             7→class ServerApi(BaseApi):
-            …
-            35→    def get_db(self, save_path: str) -> None:
-            …
-            67→    def get_status(self) -> Server:
-            …
-            97→    def generate_reality_keys(self) -> RealityKeyPair:
             …
     async_api/
         README.md
@@ -183,6 +179,24 @@ py3xui/
         client.py
             7→class ClientFields:
             8→    """Stores the fields returned by the XUI API for parsing."""
+            10→    EMAIL = "email"
+            11→    ENABLE = "enable"
+            12→    PASSWORD = "password"
+            14→    ID = "id"
+            15→    INBOUND_ID = "inboundId"
+            17→    UP = "up"
+            18→    DOWN = "down"
+            20→    EXPIRY_TIME = "expiryTime"
+            22→    TOTAL = "total"
+            23→    RESET = "reset"
+            25→    FLOW = "flow"
+            26→    METHOD = "method"
+            27→    LIMIT_IP = "limitIp"
+            28→    SUB_ID = "subId"
+            29→    COMMENT = "comment"
+            30→    TG_ID = "tgId"
+            31→    TOTAL_GB = "totalGB"
+            33→    UUID = "uuid"
             36→class Client(BaseModel):
             …
     inbound/
@@ -208,30 +222,21 @@ py3xui/
             38→class Inbound(BaseModel):
             …
             88→    @field_validator("stream_settings")
-            …
+            89→    def validate_stream_settings(  # pylint: disable=no-self-argument
+            90→        cls, value: StreamSettings | str
+            91→    ) -> StreamSettings | str:
             114→    def to_json(self) -> dict[str, Any]:
             …
         settings.py
             9→class SettingsFields:
             10→    """Stores the fields returned by the XUI API for parsing."""
-            12→    CLIENTS = "clients"
-            13→    DECRYPTION = "decryption"
-            14→    FALLBACKS = "fallbacks"
             17→class Settings(JsonStringModel):
             …
             26→    clients: list[Client] = []
             27→    decryption: str = ""
             28→    fallbacks: list = []
         sniffing.py
-            9→class SniffingFields:
-            10→    """Stores the fields returned by the XUI API for parsing."""
-            20→class Sniffing(JsonStringModel):
-            …
         stream_settings.py
-            9→class StreamSettingsFields:
-            10→    """Stores the fields returned by the XUI API for parsing."""
-            25→class StreamSettings(JsonStringModel):
-            …
     server/
         README.md
             1→<a id="server.server"></a>
