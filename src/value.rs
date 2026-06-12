@@ -146,11 +146,13 @@ pub(crate) fn non_essential_factor_inner(
         return 0.2;
     }
     if !skip_dir_classifier {
+        let mut prefix = root.to_path_buf();
         for component in target.components() {
+            prefix.push(component);
             let Some(s) = component.as_os_str().to_str() else {
                 continue;
             };
-            if matches!(
+            if (matches!(
                 s,
                 "tests"
                     | "test"
@@ -177,7 +179,8 @@ pub(crate) fn non_essential_factor_inner(
             ) || s.starts_with("test_")
                 || s.starts_with("tests_")
                 || s.starts_with("guide-helper")
-                || is_proc_macro_crate_dir_name(s)
+                || is_proc_macro_crate_dir_name(s))
+                && !is_declared_crate_module_dir(&prefix, root)
             {
                 return 0.2;
             }
@@ -244,6 +247,32 @@ fn is_root_level_vendor_dir_name(s: &str) -> bool {
         lower.as_str(),
         "deps" | "vendor" | "third_party" | "third-party" | "external" | "3rd" | "sig"
     )
+}
+
+/// A blocklist-named directory that is nonetheless a declared Rust
+/// module of a Cargo package — `mod.rs` inside it (or a sibling
+/// `<name>.rs`, 2018 layout) under a `src/` root whose parent carries
+/// `Cargo.toml` — is primary source, not a test/bench corpus: the
+/// language-level module declaration overrides the dir-name heuristic
+/// (hyperfine's core module is literally `src/benchmark/`). Root-level
+/// `tests/` / `benches/` dirs sit outside `src/` and keep the discount.
+fn is_declared_crate_module_dir(dir: &std::path::Path, root: &std::path::Path) -> bool {
+    if !dir.join("mod.rs").is_file() && !dir.with_extension("rs").is_file() {
+        return false;
+    }
+    let mut cur = dir.parent();
+    while let Some(d) = cur {
+        if d == root || !d.starts_with(root) {
+            return false;
+        }
+        if d.file_name().is_some_and(|n| n == "src")
+            && d.parent().is_some_and(|p| p.join("Cargo.toml").is_file())
+        {
+            return true;
+        }
+        cur = d.parent();
+    }
+    false
 }
 
 /// Rust proc-macro helper-crate convention (`<name>-macros` etc.).
@@ -556,6 +585,32 @@ mod tests {
                     "{path}",
                 );
             }
+        }
+    }
+
+    /// Blocklist dir names that are declared crate modules (`mod.rs` or
+    /// 2018-layout sibling `<name>.rs` under a package `src/`) escape
+    /// the dir-name discount; root-level corpora keep it.
+    #[test]
+    fn value_non_essential_declared_crate_module_escape() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        for dir in ["src/benchmark", "src/tools", "tests", "benches"] {
+            std::fs::create_dir_all(root.join(dir)).unwrap();
+        }
+        std::fs::write(root.join("Cargo.toml"), "[package]\nname = \"x\"\n").unwrap();
+        std::fs::write(root.join("src/benchmark/mod.rs"), "").unwrap();
+        std::fs::write(root.join("src/tools.rs"), "").unwrap();
+        std::fs::write(root.join("tests/mod.rs"), "").unwrap();
+        // mod.rs layout and 2018 sibling-file layout both escape.
+        for path in ["src/benchmark/scheduler.rs", "src/tools/lint.rs"] {
+            assert_eq!(non_essential_factor(&root.join(path), root), 1.0, "{path}");
+        }
+        // Root-level corpora (outside any `src/`) keep the discount even
+        // with a stray mod.rs; an undeclared src dir keeps it too.
+        std::fs::create_dir_all(root.join("src/examples")).unwrap();
+        for path in ["tests/it.rs", "benches/bench.rs", "src/examples/demo.rs"] {
+            assert_eq!(non_essential_factor(&root.join(path), root), 0.2, "{path}");
         }
     }
 }
