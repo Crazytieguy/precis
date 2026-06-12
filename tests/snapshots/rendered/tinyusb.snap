@@ -27,6 +27,22 @@ README.rst
     31→TinyUSB is an open-source cross-platform USB Host/Device stack for embedded systems. It’s designed for memory safety
     32→(no dynamic allocation) and thread safety (all interrupts deferred to non-ISR task functions). The stack emphasizes portability,
     33→small footprint, and real-time performance across 50+ MCU families.
+    102→Host Stack
+    103→----------
+    105→- Communication Device Class: CDC-ACM
+    106→- Vendor serial over USB: FTDI, CP210x, CH34x, PL2303
+    107→- Human Interface Device (HID): Keyboard, Mouse, Generic
+    108→- Mass Storage Class (MSC)
+    109→- Musical Instrument Digital Interface (MIDI)
+    110→- Hub with multiple-level support
+    112→Similar to the Device Stack, if you have a special requirement, ``usbh_app_driver_get_cb()`` can be used to write your own class driver without modifying the stack.
+    121→OS Abstraction layer
+    122→--------------------
+    124→TinyUSB is completely thread-safe by pushing all Interrupt Service Request (ISR) events into a central queue, then processing them later in the non-ISR context task function. It also uses semaphore/mutex to access shared resources such as Communication Device Class (CDC) FIFO. Therefore the stack needs to use some of the OS's basic APIs. Following OSes are already supported out of the box.
+    126→- **No OS**
+    127→- **FreeRTOS**
+    128→- `RT-Thread <https://github.com/RT-Thread/rt-thread>`_: `repo <https://github.com/RT-Thread-packages/tinyusb>`_
+    129→- **Mynewt** Due to the newt package build system, Mynewt examples are better to be on its `own repo <https://github.com/hathach/mynewt-tinyusb-example>`_
 SConscript
 docs/
 examples/
@@ -158,28 +174,14 @@ src/
         midi/
             README_midi_host.md
             midi.h
-                30→#include "common/tusb_common.h"
-                36→//--------------------------------------------------------------------+
-                37→// Constants
-                38→//--------------------------------------------------------------------+
                 39→enum {
-                40→  MIDI_VERSION_1_0 = 0x0100,
-                41→  MIDI_VERSION_2_0 = 0x0200,
-                42→};
+                …
                 44→typedef enum {
-                45→  MIDI_CS_INTERFACE_HEADER    = 0x01,
-                46→  MIDI_CS_INTERFACE_IN_JACK   = 0x02,
-                47→  MIDI_CS_INTERFACE_OUT_JACK  = 0x03,
-                48→  MIDI_CS_INTERFACE_ELEMENT   = 0x04,
-                49→} midi_cs_interface_subtype_t;
+                …
                 51→typedef enum {
-                52→  MIDI_CS_ENDPOINT_GENERAL = 0x01,
-                53→  MIDI_CS_ENDPOINT_GENERAL_2_0 = 0x02,
-                54→} midi_cs_endpoint_subtype_t;
+                …
                 56→typedef enum {
-                57→  MIDI_JACK_EMBEDDED = 0x01,
-                58→  MIDI_JACK_EXTERNAL = 0x02
-                59→} midi_jack_type_t;
+                …
                 61→typedef enum {
                 …
                 81→enum {
@@ -193,21 +195,15 @@ src/
                 134→#define midi_desc_out_jack_n_t(input_num) \
                 …
                 149→typedef midi_desc_out_jack_n_t(1)  midi_desc_out_jack_1in_t; // 1 input
-                150→typedef midi_desc_out_jack_1in_t midi_desc_out_jack_t; // backward compatible
+                …
                 154→#define midi_desc_element_n_t(input_num) \
                 …
                 174→#define midi_desc_cs_endpoint_n_t(jack_num) \
                 …
                 183→typedef midi_desc_cs_endpoint_n_t() midi_desc_cs_endpoint_t; // empty/flexible jack list
                 …
-                188→//--------------------------------------------------------------------+
-                189→// For Internal Driver Use
-                190→//--------------------------------------------------------------------+
                 191→typedef struct {
-                192→  uint8_t buffer[4];
-                193→  uint8_t index;
-                194→  uint8_t total;
-                195→} midi_driver_stream_t;
+                …
             midi_device.c
             midi_device.h
             midi_host.c
@@ -219,10 +215,6 @@ src/
             msc_host.c
             msc_host.h
         mtp/
-            mtp.h
-                30→#include "common/tusb_common.h"
-            mtp_device.c
-            mtp_device.h
         net/
             ecm_rndis_device.c
             ncm.h

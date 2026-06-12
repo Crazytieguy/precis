@@ -35,6 +35,16 @@ README.md
     8→**Demo**: Benchmarking [`fd`](https://github.com/sharkdp/fd) and
     9→[`find`](https://www.gnu.org/software/findutils/):
     11→![hyperfine](https://i.imgur.com/z19OYxE.gif)
+    13→## Features
+    15→* Statistical analysis across multiple runs.
+    16→* Support for arbitrary shell commands.
+    17→* Constant feedback about the benchmark progress and current estimates.
+    18→* Warmup runs can be executed before the actual benchmark.
+    19→* Cache-clearing commands can be set up before each timing run.
+    20→* Statistical outlier detection to detect interference from other programs and caching effects.
+    21→* Export results to various formats: CSV, JSON, Markdown, AsciiDoc.
+    22→* Parameterized benchmarks (e.g. vary the number of threads).
+    23→* Cross-platform
     314→## Alternative tools
     316→Hyperfine is inspired by [bench](https://github.com/Gabriella439/bench).
 build.rs
@@ -191,7 +201,6 @@ src/
             2→pub mod progress_bar;
             3→pub mod warnings;
         progress_bar.rs
-            12→/// Return a pre-configured progress bar
             13→pub fn get_progress_bar(length: u64, msg: &str, option: OutputStyleOption) -> ProgressBar {
             …
         warnings.rs
@@ -222,17 +231,7 @@ src/
             23→pub type ParameterNameAndValue<'a> = (&'a str, ParameterValue);
         range_step.rs
             7→pub trait Numeric:
-            8→    Add<Output = Self>
-            9→    + Sub<Output = Self>
-            10→    + Div<Output = Self>
-            11→    + AddAssign
-            12→    + PartialOrd
-            13→    + Copy
-            14→    + Clone
-            15→    + From<i32>
-            16→    + Into<Number>
-            17→{
-            18→}
+            …
             34→pub struct RangeStep<T> {
             35→    state: T,
             36→    end: T,
@@ -301,7 +300,6 @@ src/
         units.rs
             3→pub type Scalar = f64;
             …
-            5→/// Type alias for unit of time
             6→pub type Second = Scalar;
             …
             8→/// Supported time units

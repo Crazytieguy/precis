@@ -1,4 +1,4 @@
-Score(3000)=0.527 I=0.713 C=0.389 ns_rows≤3K=16/51 (reached=5 partial=2 missing=9)
+Score(3000)=0.732 I=0.780 C=0.686 ns_rows≤3K=16/51 (reached=9 partial=2 missing=5)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,303 +22,271 @@ Score(3000)=0.527 I=0.713 C=0.389 ns_rows≤3K=16/51 (reached=5 partial=2 missin
 | walker |  | 404 | 7 | go package + imports in map.go |  |  | 0.321 |
 | walker |  | 411 | 7 | go package + imports in tuples.go |  |  | 0.321 |
 | walker |  | 418 | 7 | go package + imports in types.go |  |  | 0.321 |
-| walker |  | 433 | 15 | listing of 'mutable' |  |  | 0.322 |
-| walker |  | 452 | 19 | go decl doc at constraints.go:4 |  |  | 0.324 |
-| walker |  | 485 | 33 | README.md section #6 |  |  | 0.324 |
-| walker |  | 500 | 15 | go package + imports in type_manipulation.go |  |  | 0.324 |
+| walker |  | 515 | 97 | headings outline in README.md |  |  | 0.321 |
+| walker |  | 530 | 15 | listing of 'mutable' |  |  | 0.322 |
+| walker |  | 549 | 19 | go decl doc at constraints.go:4 |  |  | 0.324 |
 | ns | 561 |  | 175 | Repository root listing | 2.3 |  | 0.664 |
-| walker |  | 618 | 118 | go module file go.mod |  |  | 0.836 |
-| ns | 619 |  | 58 | constraints.go — Clonable interface (whole file) | 2.4 |  | 0.828 |
-| walker |  | 638 | 20 | listing of 'internal/constraints' |  |  | 0.831 |
-| walker |  | 664 | 26 | README headline in internal/constraints/README.md |  |  | 0.831 |
-| walker |  | 674 | 10 | go decl names surface in internal/constraints/ordered_go118.go |  |  | 0.831 |
-| walker |  | 685 | 11 | go decl names surface in internal/constraints/ordered_go121.go |  |  | 0.831 |
-| walker |  | 685 | 0 | go decl at internal/constraints/ordered_go121.go:13 |  |  | 0.831 |
-| walker |  | 699 | 14 | go decl at internal/constraints/ordered_go118.go:9 |  |  | 0.831 |
-| walker |  | 720 | 21 | listing of 'internal/xtime' |  |  | 0.836 |
-| ns | 777 |  | 158 | Sub-package directory listings — it/, parallel/, mutable/ | 2.5 |  | 0.693 |
+| walker |  | 564 | 15 | go package + imports in type_manipulation.go |  |  | 0.664 |
+| ns | 619 |  | 58 | constraints.go — Clonable interface (whole file) | 2.4 |  | 0.663 |
+| walker |  | 682 | 118 | go module file go.mod |  |  | 0.828 |
+| walker |  | 702 | 20 | listing of 'internal/constraints' |  |  | 0.831 |
+| walker |  | 728 | 26 | README headline in internal/constraints/README.md |  |  | 0.831 |
+| walker |  | 738 | 10 | go decl names surface in internal/constraints/ordered_go118.go |  |  | 0.831 |
+| walker |  | 749 | 11 | go decl names surface in internal/constraints/ordered_go121.go |  |  | 0.831 |
+| walker |  | 749 | 0 | go decl at internal/constraints/ordered_go121.go:13 |  |  | 0.831 |
+| walker |  | 763 | 14 | go decl at internal/constraints/ordered_go118.go:9 |  |  | 0.831 |
+| ns | 777 |  | 158 | Sub-package directory listings — it/, parallel/, mutable/ | 2.5 |  | 0.689 |
+| walker |  | 786 | 23 | README.md section #436 |  |  | 0.689 |
+| walker |  | 807 | 21 | listing of 'internal/xtime' |  |  | 0.693 |
 | ns | 841 |  | 64 | Sub-package directory listings — internal/* | 2.6 |  | 0.693 |
-| walker |  | 844 | 124 | listing of 'exp/simd' |  |  | 0.699 |
-| walker |  | 872 | 28 | go module identity in exp/simd/go.mod |  |  | 0.699 |
-| walker |  | 932 | 60 | README headline in exp/simd/README.md |  |  | 0.699 |
-| walker |  | 957 | 25 | go package + imports in time.go |  |  | 0.699 |
-| walker |  | 1091 | 134 | listing of 'it' |  |  | 0.851 |
-| walker |  | 1116 | 25 | go decl names surface in it/string.go |  |  | 0.851 |
-| walker |  | 1116 | 0 | go decl at it/string.go:13 |  |  | 0.851 |
-| ns | 1122 |  | 281 | Sub-package directory listings — exp/, exp/simd/, benchmark/ | 2.7 |  | 0.759 |
-| walker |  | 1123 | 7 | go package + imports in internal/constraints/constraints.go |  |  | 0.759 |
-| walker |  | 1130 | 7 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.759 |
-| walker |  | 1181 | 51 | go module file exp/simd/go.mod |  |  | 0.759 |
-| walker |  | 1259 | 78 | README headline in internal/xtime/README.md |  |  | 0.759 |
-| walker |  | 1295 | 36 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.759 |
-| walker |  | 1295 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.759 |
-| walker |  | 1303 | 8 | go package + imports in exp/simd/simd.go |  |  | 0.759 |
-| walker |  | 1311 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.759 |
-| walker |  | 1326 | 15 | go package + imports in it/string.go |  |  | 0.759 |
-| walker |  | 1341 | 15 | go package + imports in parallel/slice.go |  |  | 0.759 |
+| walker |  | 931 | 124 | listing of 'exp/simd' |  |  | 0.699 |
+| walker |  | 959 | 28 | go module identity in exp/simd/go.mod |  |  | 0.699 |
+| walker |  | 1019 | 60 | README headline in exp/simd/README.md |  |  | 0.699 |
+| walker |  | 1044 | 25 | go package + imports in time.go |  |  | 0.699 |
+| ns | 1122 |  | 281 | Sub-package directory listings — exp/, exp/simd/, benchmark/ | 2.7 |  | 0.634 |
+| walker |  | 1178 | 134 | listing of 'it' |  |  | 0.759 |
+| walker |  | 1203 | 25 | go decl names surface in it/string.go |  |  | 0.759 |
+| walker |  | 1203 | 0 | go decl at it/string.go:13 |  |  | 0.759 |
+| walker |  | 1210 | 7 | go package + imports in internal/constraints/constraints.go |  |  | 0.759 |
+| walker |  | 1217 | 7 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.759 |
+| walker |  | 1268 | 51 | go module file exp/simd/go.mod |  |  | 0.759 |
+| walker |  | 1346 | 78 | README headline in internal/xtime/README.md |  |  | 0.759 |
 | ns | 1362 |  | 240 | Helper index — slice (a): Filter..PartitionBy | 3.1 |  | 0.710 |
-| walker |  | 1377 | 36 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.710 |
-| walker |  | 1377 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.710 |
-| walker |  | 1377 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.710 |
-| walker |  | 1416 | 39 | go package + imports in concurrency.go |  |  | 0.710 |
-| walker |  | 1456 | 40 | go package + imports in errors.go |  |  | 0.710 |
-| walker |  | 1497 | 41 | go package + imports in math.go |  |  | 0.710 |
-| walker |  | 1549 | 52 | headings outline in exp/simd/README.md |  |  | 0.710 |
-| walker |  | 1597 | 48 | go package + imports in retry.go |  |  | 0.710 |
-| walker |  | 1620 | 23 | go package + imports in mutable/slice.go |  |  | 0.710 |
+| walker |  | 1382 | 36 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.710 |
+| walker |  | 1382 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.710 |
+| walker |  | 1390 | 8 | go package + imports in exp/simd/simd.go |  |  | 0.710 |
+| walker |  | 1398 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.710 |
+| walker |  | 1413 | 15 | go package + imports in it/string.go |  |  | 0.710 |
+| walker |  | 1428 | 15 | go package + imports in parallel/slice.go |  |  | 0.710 |
+| walker |  | 1464 | 36 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.710 |
+| walker |  | 1464 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.710 |
+| walker |  | 1464 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.710 |
+| walker |  | 1477 | 13 | README.md section #139 |  |  | 0.710 |
+| walker |  | 1490 | 13 | README.md section #144 |  |  | 0.710 |
+| walker |  | 1529 | 39 | go package + imports in concurrency.go |  |  | 0.710 |
 | ns | 1673 |  | 311 | Helper index — slice (b): Flatten..Reject and friends | 3.2 |  | 0.661 |
-| walker |  | 1710 | 90 | go decl names surface in it/channel.go |  |  | 0.661 |
-| walker |  | 1710 | 0 | go decl at it/channel.go:13 |  |  | 0.661 |
-| walker |  | 1710 | 0 | go decl at it/channel.go:29 |  |  | 0.661 |
-| walker |  | 1710 | 0 | go decl at it/channel.go:45 |  |  | 0.661 |
-| walker |  | 1761 | 51 | go decl names surface in internal/constraints/constraints.go |  |  | 0.661 |
-| walker |  | 1774 | 13 | go decl at internal/constraints/constraints.go:26 |  |  | 0.662 |
-| walker |  | 1790 | 16 | go decl at internal/constraints/constraints.go:33 |  |  | 0.662 |
-| walker |  | 1806 | 16 | go decl at internal/constraints/constraints.go:40 |  |  | 0.662 |
-| walker |  | 1833 | 27 | go decl at internal/constraints/constraints.go:12 |  |  | 0.662 |
-| walker |  | 1863 | 30 | go decl at internal/constraints/constraints.go:19 |  |  | 0.662 |
-| walker |  | 1917 | 54 | go package + imports in channel.go |  |  | 0.662 |
 | ns | 1928 |  | 255 | Helper index — slice (c): Count..TrimSuffix | 3.3 |  | 0.626 |
-| walker |  | 1972 | 55 | go package + imports in find.go |  |  | 0.626 |
-| walker |  | 2027 | 55 | go package + imports in slice.go |  |  | 0.626 |
-| walker |  | 2065 | 38 | go decl doc at it/channel.go:13 |  |  | 0.626 |
-| walker |  | 2081 | 16 | go package + imports in exp/simd/unsafe.go |  |  | 0.626 |
-| walker |  | 2097 | 16 | go package + imports in internal/xtime/time.go |  |  | 0.626 |
-| walker |  | 2107 | 10 | exp/simd/README.md section #3 |  |  | 0.626 |
-| walker |  | 2148 | 41 | go decl doc at it/channel.go:29 |  |  | 0.626 |
-| walker |  | 2191 | 43 | go decl doc at it/channel.go:45 |  |  | 0.626 |
-| walker |  | 2224 | 33 | exp/simd/README.md section #1 |  |  | 0.626 |
-| walker |  | 2273 | 49 | README.md section #8 |  |  | 0.626 |
 | ns | 2288 |  | 360 | Helper index — map helpers | 3.4 |  | 0.587 |
-| walker |  | 2307 | 34 | go package + imports in it/map.go |  |  | 0.587 |
-| walker |  | 2515 | 208 | go decl names surface in find.go |  |  | 0.587 |
-| walker |  | 2515 | 0 | go decl at find.go:13 |  |  | 0.587 |
-| walker |  | 2515 | 0 | go decl at find.go:26 |  |  | 0.587 |
-| walker |  | 2515 | 0 | go decl at find.go:40 |  |  | 0.587 |
-| walker |  | 2515 | 0 | go decl at find.go:56 |  |  | 0.587 |
-| walker |  | 2515 | 0 | go decl at find.go:72 |  |  | 0.587 |
-| walker |  | 2515 | 0 | go decl at find.go:88 |  |  | 0.587 |
-| walker |  | 2515 | 0 | go decl at find.go:107 |  |  | 0.587 |
-| walker |  | 2515 | 0 | go decl at find.go:121 |  |  | 0.587 |
-| walker |  | 2551 | 36 | go decl doc at find.go:56 |  |  | 0.587 |
-| ns | 2588 |  | 300 | Helper index — math + strings | 3.5 |  | 0.555 |
-| walker |  | 2589 | 38 | go decl doc at find.go:40 |  |  | 0.555 |
-| walker |  | 2638 | 49 | go decl doc at find.go:72 |  |  | 0.555 |
-| walker |  | 2699 | 61 | go decl doc at find.go:13 |  |  | 0.555 |
-| walker |  | 2761 | 62 | go decl doc at find.go:26 |  |  | 0.555 |
-| walker |  | 2825 | 64 | go decl doc at find.go:107 |  |  | 0.555 |
-| walker |  | 2894 | 69 | go decl doc at find.go:121 |  |  | 0.555 |
-| walker |  | 2943 | 49 | go decl body at find.go:13 |  |  | 0.555 |
-| ns | 2984 |  | 396 | Helper index — tuples + time + channels | 3.6 |  | 0.527 |
-| walker |  | 3047 | 104 | go decl doc at find.go:88 |  |  | 0.527 |
-| walker |  | 3107 | 60 | go decl body at find.go:72 |  |  | 0.527 |
-| walker |  | 3145 | 38 | go package + imports in it/channel.go |  |  | 0.527 |
-| walker |  | 3183 | 38 | go package + imports in it/intersect.go |  |  | 0.527 |
-| walker |  | 3221 | 38 | go package + imports in it/tuples.go |  |  | 0.527 |
-| ns | 3229 |  | 245 | Helper index — intersection helpers | 3.7 |  | 0.506 |
-| walker |  | 3259 | 38 | go package + imports in it/type_manipulation.go |  |  | 0.506 |
-| walker |  | 3410 | 151 | go decl names surface in parallel/slice.go |  |  | 0.507 |
-| walker |  | 3410 | 0 | go decl at parallel/slice.go:8 |  |  | 0.507 |
-| walker |  | 3410 | 0 | go decl at parallel/slice.go:32 |  |  | 0.507 |
-| walker |  | 3410 | 0 | go decl at parallel/slice.go:50 |  |  | 0.507 |
-| walker |  | 3410 | 0 | go decl at parallel/slice.go:75 |  |  | 0.507 |
-| walker |  | 3410 | 0 | go decl at parallel/slice.go:95 |  |  | 0.507 |
-| walker |  | 3735 | 325 | go decl names surface in func.go |  |  | 0.507 |
-| walker |  | 3735 | 0 | go decl at func.go:5 |  |  | 0.507 |
-| walker |  | 3735 | 0 | go decl at func.go:13 |  |  | 0.507 |
-| walker |  | 3735 | 0 | go decl at func.go:19 |  |  | 0.507 |
-| walker |  | 3735 | 0 | go decl at func.go:27 |  |  | 0.507 |
-| walker |  | 3735 | 0 | go decl at func.go:35 |  |  | 0.507 |
-| walker |  | 3735 | 0 | go decl at func.go:43 |  |  | 0.507 |
-| walker |  | 3744 | 9 | go decl body at func.go:13 |  |  | 0.507 |
-| ns | 3769 |  | 540 | Helper index — search/find helpers | 3.8 |  | 0.474 |
-| walker |  | 3774 | 30 | go decl body at func.go:5 |  |  | 0.474 |
-| walker |  | 3820 | 46 | go decl doc at func.go:13 |  |  | 0.474 |
-| walker |  | 3867 | 47 | go decl doc at func.go:19 |  |  | 0.474 |
-| walker |  | 3914 | 47 | go decl doc at func.go:27 |  |  | 0.474 |
-| walker |  | 3961 | 47 | go decl doc at func.go:35 |  |  | 0.474 |
-| walker |  | 4009 | 48 | go decl doc at func.go:5 |  |  | 0.474 |
-| walker |  | 4058 | 49 | go decl doc at func.go:43 |  |  | 0.474 |
-| walker |  | 4096 | 38 | go decl body at func.go:19 |  |  | 0.474 |
-| walker |  | 4142 | 46 | go decl body at func.go:27 |  |  | 0.474 |
-| ns | 4192 |  | 423 | Helper index — conditional + type manipulation | 3.9 |  | 0.453 |
-| walker |  | 4196 | 54 | go decl body at func.go:35 |  |  | 0.453 |
-| walker |  | 4258 | 62 | go decl body at func.go:43 |  |  | 0.453 |
-| walker |  | 4314 | 56 | go decl doc at parallel/slice.go:32 |  |  | 0.453 |
-| walker |  | 4472 | 158 | go decl names surface in mutable/slice.go |  |  | 0.453 |
-| walker |  | 4472 | 0 | go decl at mutable/slice.go:11 |  |  | 0.453 |
-| walker |  | 4472 | 0 | go decl at mutable/slice.go:27 |  |  | 0.453 |
-| walker |  | 4472 | 0 | go decl at mutable/slice.go:41 |  |  | 0.453 |
-| walker |  | 4472 | 0 | go decl at mutable/slice.go:49 |  |  | 0.453 |
-| walker |  | 4472 | 0 | go decl at mutable/slice.go:57 |  |  | 0.453 |
-| walker |  | 4472 | 0 | go decl at mutable/slice.go:65 |  |  | 0.453 |
-| ns | 4478 |  | 286 | Helper index — function + concurrency | 3.10 |  | 0.438 |
-| walker |  | 4500 | 28 | go decl body at mutable/slice.go:41 |  |  | 0.438 |
-| walker |  | 4543 | 43 | go decl doc at mutable/slice.go:57 |  |  | 0.438 |
-| walker |  | 4573 | 30 | go decl body at mutable/slice.go:49 |  |  | 0.438 |
-| walker |  | 4626 | 53 | go decl doc at mutable/slice.go:65 |  |  | 0.438 |
-| walker |  | 4682 | 56 | go decl doc at mutable/slice.go:49 |  |  | 0.438 |
-| ns | 4691 |  | 213 | Helper index — error handling + constraints | 3.11 |  | 0.427 |
-| walker |  | 4747 | 65 | go decl body at find.go:107 |  |  | 0.427 |
-| walker |  | 4839 | 92 | go decl names surface in internal/xtime/time.go |  |  | 0.428 |
-| walker |  | 4839 | 0 | go decl at internal/xtime/time.go:8 |  |  | 0.428 |
-| walker |  | 4839 | 0 | go decl at internal/xtime/time.go:12 |  |  | 0.428 |
-| walker |  | 4839 | 0 | go decl at internal/xtime/time.go:16 |  |  | 0.428 |
-| walker |  | 4839 | 0 | go decl at internal/xtime/time.go:20 |  |  | 0.428 |
-| walker |  | 4839 | 0 | go decl at internal/xtime/time.go:24 |  |  | 0.428 |
-| walker |  | 4845 | 6 | go decl body at internal/xtime/time.go:12 |  |  | 0.428 |
-| walker |  | 4852 | 7 | go decl body at internal/xtime/time.go:8 |  |  | 0.428 |
-| walker |  | 4859 | 7 | go decl body at internal/xtime/time.go:24 |  |  | 0.428 |
-| walker |  | 4867 | 8 | go decl body at internal/xtime/time.go:16 |  |  | 0.428 |
-| walker |  | 4875 | 8 | go decl body at internal/xtime/time.go:20 |  |  | 0.428 |
-| walker |  | 4924 | 49 | go decl at internal/xtime/time.go:28 |  |  | 0.429 |
-| ns | 5146 |  | 455 | internal/constraints — Signed/Unsigned/Integer/Float/Complex | 4.1 |  | 0.416 |
-| ns | 5299 |  | 153 | types.go — Entry + Tuple2 + Tuple3 declarations | 4.2 |  | 0.408 |
-| ns | 5389 |  | 90 | types.go — Tuple4..Tuple9 type-declaration locations | 4.3 |  | 0.405 |
-| walker |  | 5401 | 477 | README.md section #0 |  |  | 0.418 |
-| walker |  | 5469 | 68 | go decl body at find.go:26 |  |  | 0.418 |
-| walker |  | 5530 | 61 | go decl doc at parallel/slice.go:8 |  |  | 0.418 |
-| ns | 5619 |  | 230 | internal/xtime/time.go — Clock interface + global wrappers | 4.4 |  | 0.433 |
-| ns | 5665 |  | 46 | lo_test.go — TestMain (goleak + fake clock) | 4.5 |  | 0.431 |
-| walker |  | 5804 | 274 | go decl names surface in slice.go |  |  | 0.431 |
-| walker |  | 5804 | 0 | go decl at slice.go:12 |  |  | 0.431 |
-| walker |  | 5804 | 0 | go decl at slice.go:27 |  |  | 0.431 |
-| walker |  | 5804 | 0 | go decl at slice.go:45 |  |  | 0.431 |
-| walker |  | 5804 | 0 | go decl at slice.go:57 |  |  | 0.431 |
-| walker |  | 5804 | 0 | go decl at slice.go:73 |  |  | 0.431 |
-| walker |  | 5804 | 0 | go decl at slice.go:94 |  |  | 0.431 |
-| walker |  | 5804 | 0 | go decl at slice.go:110 |  |  | 0.431 |
-| walker |  | 5804 | 0 | go decl at slice.go:124 |  |  | 0.431 |
-| walker |  | 5841 | 37 | go decl doc at slice.go:57 |  |  | 0.431 |
-| walker |  | 5883 | 42 | go decl doc at slice.go:45 |  |  | 0.431 |
-| walker |  | 5929 | 46 | go decl doc at slice.go:12 |  |  | 0.431 |
-| walker |  | 5975 | 46 | go decl doc at slice.go:73 |  |  | 0.431 |
-| ns | 5983 |  | 318 | .golangci.yml — enabled linter list | 4.6 |  | 0.416 |
-| walker |  | 6042 | 67 | go decl doc at slice.go:27 |  |  | 0.416 |
-| walker |  | 6124 | 82 | go decl doc at slice.go:124 |  |  | 0.416 |
-| ns | 6128 |  | 145 | .golangci.yml — settings (funlen/gocyclo/goconst/dupl/testifylint) | 4.7 |  | 0.410 |
-| walker |  | 6173 | 49 | go decl body at slice.go:45 |  |  | 0.410 |
-| ns | 6212 |  | 84 | Makefile — target headers (locations) | 4.8 |  | 0.405 |
-| walker |  | 6259 | 86 | go decl doc at slice.go:110 |  |  | 0.411 |
-| ns | 6259 |  | 47 | func.go — Partial..Partial5 name locations | 5.1 |  | 0.411 |
-| walker |  | 6353 | 94 | go decl doc at slice.go:94 |  |  | 0.411 |
-| ns | 6354 |  | 95 | time.go — Duration..Duration10 name locations | 5.2 |  | 0.407 |
-| walker |  | 6407 | 54 | go decl body at slice.go:110 |  |  | 0.407 |
-| ns | 6443 |  | 89 | concurrency.go — Synchronize/Async*/WaitFor name locations | 5.3 |  | 0.403 |
-| walker |  | 6477 | 70 | go decl body at slice.go:12 |  |  | 0.403 |
-| walker |  | 6503 | 26 | go package + imports in internal/constraints/ordered_go121.go |  |  | 0.403 |
-| walker |  | 6529 | 26 | go package + imports in internal/xtime/fake.go |  |  | 0.403 |
-| walker |  | 6555 | 26 | go package + imports in internal/xtime/real.go |  |  | 0.403 |
-| ns | 6655 |  | 212 | condition.go — Ternary/If/Switch + ifElse/switchCase types | 5.4 |  | 0.398 |
-| walker |  | 6936 | 381 | go decl names surface in condition.go |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:6 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:16 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:33 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:44 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:55 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:66 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:77 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:87 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:105 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:117 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:128 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:139 |  |  | 0.406 |
-| walker |  | 6936 | 0 | go decl at condition.go:149 |  |  | 0.406 |
-| walker |  | 6954 | 18 | go decl at condition.go:26 |  |  | 0.410 |
-| walker |  | 6981 | 27 | go decl at condition.go:97 |  |  | 0.417 |
-| walker |  | 7018 | 37 | go decl doc at condition.go:33 |  |  | 0.417 |
-| ns | 7050 |  | 395 | math.go — public helper signatures (Range/Clamp/Sum*/Product*/Mean*/Mode) | 5.5 |  | 0.412 |
-| walker |  | 7055 | 37 | go decl doc at condition.go:105 |  |  | 0.412 |
-| walker |  | 7083 | 28 | go decl body at condition.go:6 |  |  | 0.412 |
-| walker |  | 7111 | 28 | go decl body at condition.go:16 |  |  | 0.412 |
-| walker |  | 7153 | 42 | go decl doc at condition.go:44 |  |  | 0.412 |
-| walker |  | 7197 | 44 | go decl doc at condition.go:16 |  |  | 0.412 |
-| walker |  | 7225 | 28 | go decl doc at condition.go:117 |  |  | 0.412 |
-| walker |  | 7253 | 28 | go decl doc at condition.go:139 |  |  | 0.412 |
-| walker |  | 7282 | 29 | go decl doc at condition.go:77 |  |  | 0.412 |
-| walker |  | 7311 | 29 | go decl doc at condition.go:128 |  |  | 0.412 |
-| walker |  | 7340 | 29 | go decl doc at condition.go:149 |  |  | 0.412 |
-| ns | 7348 |  | 298 | string.go — charset vars + helper signatures | 5.6 |  | 0.405 |
-| walker |  | 7415 | 75 | go decl doc at condition.go:6 |  |  | 0.405 |
-| walker |  | 7445 | 30 | go decl doc at condition.go:55 |  |  | 0.405 |
-| walker |  | 7475 | 30 | go decl doc at condition.go:87 |  |  | 0.405 |
-| ns | 7496 |  | 148 | intersect.go — name locations | 5.7 |  | 0.399 |
-| walker |  | 7521 | 46 | go decl body at condition.go:33 |  |  | 0.399 |
-| walker |  | 7567 | 46 | go decl body at condition.go:105 |  |  | 0.399 |
-| walker |  | 7598 | 31 | go decl doc at condition.go:66 |  |  | 0.399 |
-| walker |  | 7645 | 47 | go decl body at condition.go:44 |  |  | 0.399 |
-| ns | 7683 |  | 187 | type_manipulation.go — name locations | 5.8 |  | 0.392 |
-| walker |  | 7686 | 41 | go decl doc at condition.go:97 |  |  | 0.392 |
-| walker |  | 7728 | 42 | go decl doc at condition.go:26 |  |  | 0.392 |
-| walker |  | 7756 | 28 | go decl body at condition.go:77 |  |  | 0.392 |
-| walker |  | 7785 | 29 | go decl body at condition.go:87 |  |  | 0.392 |
-| walker |  | 7852 | 67 | README.md section #7 |  |  | 0.392 |
-| ns | 7863 |  | 180 | channel.go — name locations + DispatchingStrategy type | 5.9 |  | 0.387 |
-| walker |  | 7955 | 103 | go package + imports in string.go |  |  | 0.387 |
-| walker |  | 7986 | 31 | go decl body at condition.go:139 |  |  | 0.387 |
-| walker |  | 8017 | 31 | go decl body at condition.go:149 |  |  | 0.387 |
-| walker |  | 8058 | 41 | go decl body at mutable/slice.go:57 |  |  | 0.387 |
-| ns | 8131 |  | 268 | errors.go — name locations + Assert/Assertf var declarations | 5.10 |  | 0.378 |
-| walker |  | 8132 | 74 | go decl body at slice.go:94 |  |  | 0.378 |
-| walker |  | 8237 | 105 | go decl names surface in internal/xtime/real.go |  |  | 0.378 |
-| walker |  | 8237 | 0 | go decl at internal/xtime/real.go:8 |  |  | 0.378 |
-| walker |  | 8237 | 0 | go decl at internal/xtime/real.go:16 |  |  | 0.378 |
-| walker |  | 8237 | 0 | go decl at internal/xtime/real.go:20 |  |  | 0.378 |
-| walker |  | 8237 | 0 | go decl at internal/xtime/real.go:24 |  |  | 0.378 |
-| walker |  | 8237 | 0 | go decl at internal/xtime/real.go:28 |  |  | 0.378 |
-| walker |  | 8249 | 12 | go decl at internal/xtime/real.go:12 |  |  | 0.378 |
-| walker |  | 8255 | 6 | go decl body at internal/xtime/real.go:16 |  |  | 0.378 |
-| walker |  | 8261 | 6 | go decl body at internal/xtime/real.go:28 |  |  | 0.378 |
-| walker |  | 8268 | 7 | go decl body at internal/xtime/real.go:8 |  |  | 0.378 |
-| walker |  | 8276 | 8 | go decl body at internal/xtime/real.go:20 |  |  | 0.378 |
-| walker |  | 8284 | 8 | go decl body at internal/xtime/real.go:24 |  |  | 0.378 |
-| ns | 8418 |  | 287 | retry.go — Attempt/Debounce/Throttle/Transaction name locations + Transaction type | 5.11 |  | 0.374 |
-| walker |  | 8419 | 135 | README.md section #1 |  |  | 0.374 |
-| ns | 8719 |  | 301 | map.go — name locations | 5.12 |  | 0.365 |
-| walker |  | 8831 | 412 | go decl names surface in concurrency.go |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:13 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:21 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:35 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:45 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:56 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:62 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:72 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:82 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:92 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:102 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:112 |  |  | 0.377 |
-| walker |  | 8831 | 0 | go decl at concurrency.go:121 |  |  | 0.377 |
-| walker |  | 8837 | 6 | go decl body at concurrency.go:56 |  |  | 0.377 |
-| walker |  | 8850 | 13 | go decl at concurrency.go:9 |  |  | 0.377 |
-| walker |  | 8884 | 34 | go decl doc at concurrency.go:56 |  |  | 0.377 |
-| walker |  | 8920 | 36 | go decl doc at concurrency.go:112 |  |  | 0.377 |
-| walker |  | 8962 | 42 | go decl doc at concurrency.go:21 |  |  | 0.377 |
-| walker |  | 9004 | 42 | go decl doc at concurrency.go:35 |  |  | 0.377 |
-| ns | 9040 |  | 321 | slice.go — name locations (a) | 5.13 |  | 0.369 |
-| walker |  | 9046 | 42 | go decl doc at concurrency.go:121 |  |  | 0.369 |
-| walker |  | 9093 | 47 | go decl doc at concurrency.go:45 |  |  | 0.369 |
-| walker |  | 9141 | 48 | go decl doc at concurrency.go:92 |  |  | 0.369 |
-| ns | 9145 |  | 105 | slice.go — name locations (b: sample) | 5.14 |  | 0.366 |
-| walker |  | 9190 | 49 | go decl doc at concurrency.go:62 |  |  | 0.366 |
-| walker |  | 9239 | 49 | go decl doc at concurrency.go:72 |  |  | 0.366 |
-| ns | 9266 |  | 121 | find.go — name locations (sample) | 5.15 |  | 0.362 |
-| walker |  | 9288 | 49 | go decl doc at concurrency.go:102 |  |  | 0.362 |
-| walker |  | 9339 | 51 | go decl doc at concurrency.go:82 |  |  | 0.362 |
-| walker |  | 9380 | 41 | go decl body at concurrency.go:35 |  |  | 0.362 |
-| ns | 9385 |  | 119 | tuples.go — family head pointers (T2/Unpack2/Zip2/ZipBy2/Unzip2/UnzipBy2/CrossJoin2/CrossJoinByErr9) | 5.16 |  | 0.360 |
-| walker |  | 9427 | 47 | go decl body at concurrency.go:62 |  |  | 0.360 |
-| walker |  | 9476 | 49 | go decl body at concurrency.go:45 |  |  | 0.360 |
-| walker |  | 9525 | 49 | go decl body at concurrency.go:72 |  |  | 0.360 |
-| ns | 9533 |  | 148 | parallel/slice.go — all 5 helper signatures | 6.1 |  | 0.364 |
-| walker |  | 9576 | 51 | go decl body at concurrency.go:82 |  |  | 0.364 |
-| walker |  | 9629 | 53 | go decl body at concurrency.go:92 |  |  | 0.364 |
-| walker |  | 9684 | 55 | go decl body at concurrency.go:102 |  |  | 0.364 |
-| ns | 9686 |  | 153 | mutable/slice.go — all 6 helper signatures | 6.2 |  | 0.370 |
-| walker |  | 9739 | 55 | go decl body at concurrency.go:112 |  |  | 0.370 |
-| ns | 9758 |  | 72 | types.go — Unpack methods (Tuple2.Unpack + family endpoint) | 6.3 |  | 0.369 |
-| walker |  | 9764 | 25 | go decl body at concurrency.go:13 |  |  | 0.369 |
-| walker |  | 9811 | 47 | go decl doc at internal/constraints/constraints.go:26 |  |  | 0.373 |
-| walker |  | 9888 | 77 | go decl body at find.go:40 |  |  | 0.373 |
-| ns | 9917 |  | 159 | it/seq.go — head + family pointers (Length/Filter/Map/Reduce/ForEach/Chunk/Window/Drop/Take/Buffer) | 6.4 |  | 0.371 |
-| ns | 9936 |  | 19 | exp/simd/math.go — build tag + SumInt8 dispatcher signature | 6.5 |  | 0.371 |
-| ns | 9989 |  | 53 | docs/CLAUDE.md — per-helper frontmatter schema (locations) | 7.1 |  | 0.370 |
+| walker |  | 2376 | 847 | README.md section #3 |  |  | 0.748 |
+| walker |  | 2416 | 40 | go package + imports in errors.go |  |  | 0.748 |
+| walker |  | 2457 | 41 | go package + imports in math.go |  |  | 0.748 |
+| ns | 2588 |  | 300 | Helper index — math + strings | 3.5 |  | 0.708 |
+| walker |  | 2807 | 350 | README.md section #4 |  |  | 0.762 |
+| walker |  | 2936 | 129 | README.md section #5 |  |  | 0.771 |
+| ns | 2984 |  | 396 | Helper index — tuples + time + channels | 3.6 |  | 0.732 |
+| walker |  | 3087 | 151 | README.md section #6 |  |  | 0.766 |
+| walker |  | 3139 | 52 | headings outline in exp/simd/README.md |  |  | 0.766 |
+| ns | 3229 |  | 245 | Helper index — intersection helpers | 3.7 |  | 0.736 |
+| walker |  | 3332 | 193 | README.md section #7 |  |  | 0.744 |
+| walker |  | 3510 | 178 | README.md section #8 |  |  | 0.776 |
+| walker |  | 3740 | 230 | README.md section #9 |  |  | 0.809 |
+| ns | 3769 |  | 540 | Helper index — search/find helpers | 3.8 |  | 0.755 |
+| ns | 4192 |  | 423 | Helper index — conditional + type manipulation | 3.9 |  | 0.722 |
+| walker |  | 4270 | 530 | README.md section #10 |  |  | 0.781 |
+| ns | 4478 |  | 286 | Helper index — function + concurrency | 3.10 |  | 0.756 |
+| walker |  | 4673 | 403 | README.md section #11 |  |  | 0.793 |
+| ns | 4691 |  | 213 | Helper index — error handling + constraints | 3.11 |  | 0.774 |
+| walker |  | 4939 | 266 | README.md section #12 |  |  | 0.799 |
+| walker |  | 5117 | 178 | README.md section #13 |  |  | 0.815 |
+| walker |  | 5132 | 15 | README.md section #14 |  |  | 0.818 |
+| ns | 5146 |  | 455 | internal/constraints — Signed/Unsigned/Integer/Float/Complex | 4.1 |  | 0.781 |
+| walker |  | 5180 | 48 | go package + imports in retry.go |  |  | 0.781 |
+| walker |  | 5203 | 23 | go package + imports in mutable/slice.go |  |  | 0.781 |
+| walker |  | 5293 | 90 | go decl names surface in it/channel.go |  |  | 0.781 |
+| walker |  | 5293 | 0 | go decl at it/channel.go:13 |  |  | 0.781 |
+| walker |  | 5293 | 0 | go decl at it/channel.go:29 |  |  | 0.781 |
+| walker |  | 5293 | 0 | go decl at it/channel.go:45 |  |  | 0.781 |
+| ns | 5299 |  | 153 | types.go — Entry + Tuple2 + Tuple3 declarations | 4.2 |  | 0.767 |
+| walker |  | 5344 | 51 | go decl names surface in internal/constraints/constraints.go |  |  | 0.768 |
+| walker |  | 5357 | 13 | go decl at internal/constraints/constraints.go:26 |  |  | 0.768 |
+| walker |  | 5373 | 16 | go decl at internal/constraints/constraints.go:33 |  |  | 0.768 |
+| walker |  | 5389 | 16 | go decl at internal/constraints/constraints.go:40 |  |  | 0.764 |
+| ns | 5389 |  | 90 | types.go — Tuple4..Tuple9 type-declaration locations | 4.3 |  | 0.764 |
+| walker |  | 5416 | 27 | go decl at internal/constraints/constraints.go:12 |  |  | 0.765 |
+| walker |  | 5446 | 30 | go decl at internal/constraints/constraints.go:19 |  |  | 0.766 |
+| walker |  | 5463 | 17 | README.md section #408 |  |  | 0.766 |
+| walker |  | 5502 | 39 | README.md section #438 |  |  | 0.766 |
+| walker |  | 5556 | 54 | go package + imports in channel.go |  |  | 0.766 |
+| walker |  | 5611 | 55 | go package + imports in find.go |  |  | 0.766 |
+| ns | 5619 |  | 230 | internal/xtime/time.go — Clock interface + global wrappers | 4.4 |  | 0.743 |
+| ns | 5665 |  | 46 | lo_test.go — TestMain (goleak + fake clock) | 4.5 |  | 0.740 |
+| walker |  | 5666 | 55 | go package + imports in slice.go |  |  | 0.740 |
+| walker |  | 5684 | 18 | README.md section #302 |  |  | 0.740 |
+| walker |  | 5702 | 18 | README.md section #316 |  |  | 0.740 |
+| walker |  | 5740 | 38 | go decl doc at it/channel.go:13 |  |  | 0.740 |
+| walker |  | 5759 | 19 | README.md section #28 |  |  | 0.740 |
+| walker |  | 5775 | 16 | go package + imports in exp/simd/unsafe.go |  |  | 0.740 |
+| walker |  | 5791 | 16 | go package + imports in internal/xtime/time.go |  |  | 0.740 |
+| walker |  | 5801 | 10 | exp/simd/README.md section #3 |  |  | 0.740 |
+| walker |  | 5821 | 20 | README.md section #206 |  |  | 0.740 |
+| walker |  | 5841 | 20 | README.md section #207 |  |  | 0.740 |
+| walker |  | 5861 | 20 | README.md section #311 |  |  | 0.740 |
+| walker |  | 5881 | 20 | README.md section #327 |  |  | 0.740 |
+| walker |  | 5901 | 20 | README.md section #398 |  |  | 0.740 |
+| walker |  | 5942 | 41 | go decl doc at it/channel.go:29 |  |  | 0.740 |
+| ns | 5983 |  | 318 | .golangci.yml — enabled linter list | 4.6 |  | 0.713 |
+| walker |  | 5985 | 43 | go decl doc at it/channel.go:45 |  |  | 0.713 |
+| walker |  | 6018 | 33 | exp/simd/README.md section #1 |  |  | 0.713 |
+| walker |  | 6039 | 21 | README.md section #27 |  |  | 0.713 |
+| walker |  | 6060 | 21 | README.md section #30 |  |  | 0.713 |
+| walker |  | 6081 | 21 | README.md section #33 |  |  | 0.713 |
+| walker |  | 6102 | 21 | README.md section #36 |  |  | 0.713 |
+| walker |  | 6123 | 21 | README.md section #41 |  |  | 0.713 |
+| ns | 6128 |  | 145 | .golangci.yml — settings (funlen/gocyclo/goconst/dupl/testifylint) | 4.7 |  | 0.704 |
+| walker |  | 6144 | 21 | README.md section #44 |  |  | 0.704 |
+| walker |  | 6165 | 21 | README.md section #58 |  |  | 0.704 |
+| walker |  | 6186 | 21 | README.md section #60 |  |  | 0.704 |
+| walker |  | 6207 | 21 | README.md section #74 |  |  | 0.704 |
+| ns | 6212 |  | 84 | Makefile — target headers (locations) | 4.8 |  | 0.696 |
+| walker |  | 6228 | 21 | README.md section #200 |  |  | 0.696 |
+| walker |  | 6249 | 21 | README.md section #213 |  |  | 0.696 |
+| ns | 6259 |  | 47 | func.go — Partial..Partial5 name locations | 5.1 |  | 0.692 |
+| walker |  | 6270 | 21 | README.md section #272 |  |  | 0.692 |
+| walker |  | 6291 | 21 | README.md section #279 |  |  | 0.692 |
+| walker |  | 6313 | 22 | README.md section #17 |  |  | 0.692 |
+| walker |  | 6335 | 22 | README.md section #21 |  |  | 0.692 |
+| ns | 6354 |  | 95 | time.go — Duration..Duration10 name locations | 5.2 |  | 0.684 |
+| walker |  | 6357 | 22 | README.md section #23 |  |  | 0.684 |
+| walker |  | 6379 | 22 | README.md section #51 |  |  | 0.684 |
+| walker |  | 6401 | 22 | README.md section #54 |  |  | 0.684 |
+| walker |  | 6423 | 22 | README.md section #65 |  |  | 0.684 |
+| ns | 6443 |  | 89 | concurrency.go — Synchronize/Async*/WaitFor name locations | 5.3 |  | 0.677 |
+| walker |  | 6445 | 22 | README.md section #70 |  |  | 0.677 |
+| walker |  | 6467 | 22 | README.md section #78 |  |  | 0.677 |
+| walker |  | 6489 | 22 | README.md section #82 |  |  | 0.677 |
+| walker |  | 6511 | 22 | README.md section #116 |  |  | 0.677 |
+| walker |  | 6533 | 22 | README.md section #127 |  |  | 0.677 |
+| walker |  | 6555 | 22 | README.md section #141 |  |  | 0.677 |
+| walker |  | 6577 | 22 | README.md section #152 |  |  | 0.677 |
+| walker |  | 6599 | 22 | README.md section #176 |  |  | 0.677 |
+| walker |  | 6621 | 22 | README.md section #179 |  |  | 0.677 |
+| walker |  | 6643 | 22 | README.md section #222 |  |  | 0.677 |
+| ns | 6655 |  | 212 | condition.go — Ternary/If/Switch + ifElse/switchCase types | 5.4 |  | 0.669 |
+| walker |  | 6665 | 22 | README.md section #243 |  |  | 0.669 |
+| walker |  | 6687 | 22 | README.md section #269 |  |  | 0.669 |
+| walker |  | 6709 | 22 | README.md section #278 |  |  | 0.669 |
+| walker |  | 6731 | 22 | README.md section #289 |  |  | 0.669 |
+| walker |  | 6753 | 22 | README.md section #354 |  |  | 0.669 |
+| walker |  | 6775 | 22 | README.md section #407 |  |  | 0.669 |
+| walker |  | 6797 | 22 | README.md section #410 |  |  | 0.669 |
+| walker |  | 6819 | 22 | README.md section #412 |  |  | 0.669 |
+| walker |  | 6841 | 22 | README.md section #417 |  |  | 0.669 |
+| walker |  | 6875 | 34 | go package + imports in it/map.go |  |  | 0.669 |
+| ns | 7050 |  | 395 | math.go — public helper signatures (Range/Clamp/Sum*/Product*/Mean*/Mode) | 5.5 |  | 0.661 |
+| walker |  | 7083 | 208 | go decl names surface in find.go |  |  | 0.661 |
+| walker |  | 7083 | 0 | go decl at find.go:13 |  |  | 0.661 |
+| walker |  | 7083 | 0 | go decl at find.go:26 |  |  | 0.661 |
+| walker |  | 7083 | 0 | go decl at find.go:40 |  |  | 0.661 |
+| walker |  | 7083 | 0 | go decl at find.go:56 |  |  | 0.661 |
+| walker |  | 7083 | 0 | go decl at find.go:72 |  |  | 0.661 |
+| walker |  | 7083 | 0 | go decl at find.go:88 |  |  | 0.661 |
+| walker |  | 7083 | 0 | go decl at find.go:107 |  |  | 0.661 |
+| walker |  | 7083 | 0 | go decl at find.go:121 |  |  | 0.661 |
+| walker |  | 7119 | 36 | go decl doc at find.go:56 |  |  | 0.661 |
+| walker |  | 7157 | 38 | go decl doc at find.go:40 |  |  | 0.661 |
+| walker |  | 7206 | 49 | go decl doc at find.go:72 |  |  | 0.661 |
+| walker |  | 7267 | 61 | go decl doc at find.go:13 |  |  | 0.661 |
+| walker |  | 7329 | 62 | go decl doc at find.go:26 |  |  | 0.661 |
+| ns | 7348 |  | 298 | string.go — charset vars + helper signatures | 5.6 |  | 0.651 |
+| walker |  | 7393 | 64 | go decl doc at find.go:107 |  |  | 0.651 |
+| walker |  | 7462 | 69 | go decl doc at find.go:121 |  |  | 0.651 |
+| ns | 7496 |  | 148 | intersect.go — name locations | 5.7 |  | 0.640 |
+| walker |  | 7511 | 49 | go decl body at find.go:13 |  |  | 0.640 |
+| walker |  | 7534 | 23 | README.md section #39 |  |  | 0.640 |
+| walker |  | 7557 | 23 | README.md section #87 |  |  | 0.640 |
+| walker |  | 7580 | 23 | README.md section #102 |  |  | 0.640 |
+| walker |  | 7603 | 23 | README.md section #112 |  |  | 0.640 |
+| walker |  | 7626 | 23 | README.md section #157 |  |  | 0.640 |
+| walker |  | 7649 | 23 | README.md section #161 |  |  | 0.640 |
+| walker |  | 7672 | 23 | README.md section #167 |  |  | 0.640 |
+| ns | 7683 |  | 187 | type_manipulation.go — name locations | 5.8 |  | 0.630 |
+| walker |  | 7695 | 23 | README.md section #185 |  |  | 0.630 |
+| walker |  | 7718 | 23 | README.md section #188 |  |  | 0.630 |
+| walker |  | 7741 | 23 | README.md section #193 |  |  | 0.630 |
+| walker |  | 7764 | 23 | README.md section #227 |  |  | 0.630 |
+| walker |  | 7787 | 23 | README.md section #239 |  |  | 0.630 |
+| walker |  | 7810 | 23 | README.md section #287 |  |  | 0.630 |
+| walker |  | 7833 | 23 | README.md section #291 |  |  | 0.630 |
+| walker |  | 7856 | 23 | README.md section #325 |  |  | 0.630 |
+| ns | 7863 |  | 180 | channel.go — name locations + DispatchingStrategy type | 5.9 |  | 0.621 |
+| walker |  | 7879 | 23 | README.md section #346 |  |  | 0.621 |
+| walker |  | 7902 | 23 | README.md section #350 |  |  | 0.621 |
+| walker |  | 7925 | 23 | README.md section #389 |  |  | 0.621 |
+| walker |  | 7948 | 23 | README.md section #395 |  |  | 0.621 |
+| walker |  | 7971 | 23 | README.md section #429 |  |  | 0.621 |
+| walker |  | 7994 | 23 | README.md section #432 |  |  | 0.621 |
+| walker |  | 8098 | 104 | go decl doc at find.go:88 |  |  | 0.621 |
+| ns | 8131 |  | 268 | errors.go — name locations + Assert/Assertf var declarations | 5.10 |  | 0.607 |
+| walker |  | 8153 | 55 | README.md section #437 |  |  | 0.607 |
+| walker |  | 8177 | 24 | README.md section #46 |  |  | 0.607 |
+| walker |  | 8201 | 24 | README.md section #85 |  |  | 0.607 |
+| walker |  | 8225 | 24 | README.md section #86 |  |  | 0.607 |
+| walker |  | 8249 | 24 | README.md section #110 |  |  | 0.607 |
+| walker |  | 8273 | 24 | README.md section #118 |  |  | 0.607 |
+| walker |  | 8297 | 24 | README.md section #120 |  |  | 0.607 |
+| walker |  | 8321 | 24 | README.md section #129 |  |  | 0.607 |
+| walker |  | 8345 | 24 | README.md section #131 |  |  | 0.607 |
+| walker |  | 8369 | 24 | README.md section #133 |  |  | 0.607 |
+| walker |  | 8393 | 24 | README.md section #164 |  |  | 0.607 |
+| walker |  | 8417 | 24 | README.md section #173 |  |  | 0.607 |
+| ns | 8418 |  | 287 | retry.go — Attempt/Debounce/Throttle/Transaction name locations + Transaction type | 5.11 |  | 0.600 |
+| walker |  | 8441 | 24 | README.md section #202 |  |  | 0.600 |
+| walker |  | 8465 | 24 | README.md section #205 |  |  | 0.600 |
+| walker |  | 8489 | 24 | README.md section #303 |  |  | 0.600 |
+| walker |  | 8513 | 24 | README.md section #307 |  |  | 0.600 |
+| walker |  | 8537 | 24 | README.md section #317 |  |  | 0.600 |
+| walker |  | 8561 | 24 | README.md section #320 |  |  | 0.600 |
+| walker |  | 8585 | 24 | README.md section #322 |  |  | 0.600 |
+| walker |  | 8609 | 24 | README.md section #385 |  |  | 0.600 |
+| walker |  | 8633 | 24 | README.md section #393 |  |  | 0.600 |
+| walker |  | 8657 | 24 | README.md section #397 |  |  | 0.600 |
+| walker |  | 8717 | 60 | go decl body at find.go:72 |  |  | 0.600 |
+| ns | 8719 |  | 301 | map.go — name locations | 5.12 |  | 0.585 |
+| walker |  | 8755 | 38 | go package + imports in it/channel.go |  |  | 0.585 |
+| walker |  | 8793 | 38 | go package + imports in it/intersect.go |  |  | 0.585 |
+| walker |  | 8831 | 38 | go package + imports in it/tuples.go |  |  | 0.585 |
+| walker |  | 8869 | 38 | go package + imports in it/type_manipulation.go |  |  | 0.585 |
+| walker |  | 9020 | 151 | go decl names surface in parallel/slice.go |  |  | 0.585 |
+| walker |  | 9020 | 0 | go decl at parallel/slice.go:8 |  |  | 0.585 |
+| walker |  | 9020 | 0 | go decl at parallel/slice.go:32 |  |  | 0.585 |
+| walker |  | 9020 | 0 | go decl at parallel/slice.go:50 |  |  | 0.585 |
+| walker |  | 9020 | 0 | go decl at parallel/slice.go:75 |  |  | 0.585 |
+| walker |  | 9020 | 0 | go decl at parallel/slice.go:95 |  |  | 0.585 |
+| ns | 9040 |  | 321 | slice.go — name locations (a) | 5.13 |  | 0.570 |
+| walker |  | 9045 | 25 | README.md section #90 |  |  | 0.570 |
+| walker |  | 9070 | 25 | README.md section #114 |  |  | 0.570 |
+| walker |  | 9095 | 25 | README.md section #146 |  |  | 0.570 |
+| walker |  | 9120 | 25 | README.md section #148 |  |  | 0.570 |
+| walker |  | 9145 | 25 | README.md section #170 |  |  | 0.565 |
+| ns | 9145 |  | 105 | slice.go — name locations (b: sample) | 5.14 |  | 0.565 |
+| walker |  | 9170 | 25 | README.md section #190 |  |  | 0.565 |
+| walker |  | 9195 | 25 | README.md section #197 |  |  | 0.565 |
+| walker |  | 9220 | 25 | README.md section #241 |  |  | 0.565 |
+| walker |  | 9245 | 25 | README.md section #306 |  |  | 0.565 |
+| ns | 9266 |  | 121 | find.go — name locations (sample) | 5.15 |  | 0.559 |
+| walker |  | 9270 | 25 | README.md section #321 |  |  | 0.559 |
+| walker |  | 9295 | 25 | README.md section #378 |  |  | 0.559 |
+| walker |  | 9320 | 25 | README.md section #381 |  |  | 0.559 |
+| walker |  | 9345 | 25 | README.md section #421 |  |  | 0.559 |
+| walker |  | 9370 | 25 | README.md section #428 |  |  | 0.559 |
+| ns | 9385 |  | 119 | tuples.go — family head pointers (T2/Unpack2/Zip2/ZipBy2/Unzip2/UnzipBy2/CrossJoin2/CrossJoinByErr9) | 5.16 |  | 0.555 |
+| ns | 9533 |  | 148 | parallel/slice.go — all 5 helper signatures | 6.1 |  | 0.557 |
+| ns | 9686 |  | 153 | mutable/slice.go — all 6 helper signatures | 6.2 |  | 0.555 |
+| walker |  | 9695 | 325 | go decl names surface in func.go |  |  | 0.560 |
+| walker |  | 9695 | 0 | go decl at func.go:5 |  |  | 0.560 |
+| walker |  | 9695 | 0 | go decl at func.go:13 |  |  | 0.560 |
+| walker |  | 9695 | 0 | go decl at func.go:19 |  |  | 0.560 |
+| walker |  | 9695 | 0 | go decl at func.go:27 |  |  | 0.560 |
+| walker |  | 9695 | 0 | go decl at func.go:35 |  |  | 0.560 |
+| walker |  | 9695 | 0 | go decl at func.go:43 |  |  | 0.560 |
+| walker |  | 9704 | 9 | go decl body at func.go:13 |  |  | 0.560 |
+| walker |  | 9734 | 30 | go decl body at func.go:5 |  |  | 0.560 |
+| ns | 9758 |  | 72 | types.go — Unpack methods (Tuple2.Unpack + family endpoint) | 6.3 |  | 0.559 |
+| walker |  | 9780 | 46 | go decl doc at func.go:13 |  |  | 0.559 |
+| walker |  | 9827 | 47 | go decl doc at func.go:19 |  |  | 0.559 |
+| walker |  | 9874 | 47 | go decl doc at func.go:27 |  |  | 0.559 |
+| ns | 9917 |  | 159 | it/seq.go — head + family pointers (Length/Filter/Map/Reduce/ForEach/Chunk/Window/Drop/Take/Buffer) | 6.4 |  | 0.557 |
+| walker |  | 9921 | 47 | go decl doc at func.go:35 |  |  | 0.557 |
+| ns | 9936 |  | 19 | exp/simd/math.go — build tag + SumInt8 dispatcher signature | 6.5 |  | 0.557 |
+| walker |  | 9969 | 48 | go decl doc at func.go:5 |  |  | 0.557 |
+| ns | 9989 |  | 53 | docs/CLAUDE.md — per-helper frontmatter schema (locations) | 7.1 |  | 0.555 |

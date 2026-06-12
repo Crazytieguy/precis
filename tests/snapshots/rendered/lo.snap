@@ -11,20 +11,127 @@ README.md
     2→# lo - Iterate over slices, maps, channels...
     13→✨ **`samber/lo` is a Lodash-style Go library based on Go 1.18+ Generics.**
     15→A utility library based on Go 1.18+ generics that makes it easier to work with slices, maps, strings, channels, and functions. It provides dozens of handy methods to simplify common coding tasks and improve code readability. It may look like [Lodash](https://github.com/lodash/lodash) in some aspects.
+    53→## 🚀 Install
+    …
+    68→## 💡 Usage
+    …
+    100→## 🤠 Spec
+    …
+    102→GoDoc: [godoc.org/github.com/samber/lo](https://godoc.org/github.com/samber/lo)
+    104→Documentation: [lo.samber.dev](https://lo.samber.dev/docs/about)
+    106→Supported helpers for slices:
+    108→- [Filter](#filter)
+    109→- [Map](#map)
+    110→- [UniqMap](#uniqmap)
+    111→- [FilterMap](#filtermap)
+    112→- [FlatMap](#flatmap)
+    113→- [Reduce](#reduce)
+    114→- [ReduceRight](#reduceright)
+    115→- [ForEach](#foreach)
+    116→- [ForEachWhile](#foreachwhile)
+    117→- [Times](#times)
+    118→- [Uniq](#uniq)
+    119→- [UniqBy](#uniqby)
+    120→- [GroupBy](#groupby)
+    121→- [GroupByMap](#groupbymap)
+    122→- [Chunk](#chunk)
+    123→- [Window](#window)
+    124→- [Sliding](#sliding)
+    125→- [PartitionBy](#partitionby)
+    126→- [Flatten](#flatten)
+    127→- [Concat](#concat)
+    128→- [Interleave](#interleave)
+    129→- [Shuffle](#shuffle)
+    130→- [Reverse](#reverse)
+    131→- [Fill](#fill)
+    132→- [Repeat](#repeat)
+    133→- [RepeatBy](#repeatby)
+    134→- [KeyBy](#keyby)
+    135→- [SliceToMap / Associate](#slicetomap-alias-associate)
+    136→- [FilterSliceToMap](#filterslicetomap)
+    137→- [Keyify](#keyify)
+    138→- [Take](#take)
+    139→- [TakeWhile](#takewhile)
+    140→- [TakeFilter](#takefilter)
+    141→- [Drop](#drop)
+    142→- [DropRight](#dropright)
+    143→- [DropWhile](#dropwhile)
+    144→- [DropRightWhile](#droprightwhile)
+    145→- [DropByIndex](#DropByIndex)
+    146→- [Reject](#reject)
+    147→- [RejectMap](#rejectmap)
+    148→- [FilterReject](#filterreject)
+    149→- [Count](#count)
+    150→- [CountBy](#countby)
+    151→- [CountValues](#countvalues)
+    152→- [CountValuesBy](#countvaluesby)
+    153→- [Subset](#subset)
+    154→- [Slice](#slice)
+    155→- [Replace](#replace)
+    156→- [ReplaceAll](#replaceall)
+    157→- [Clone](#clone)
+    158→- [Compact](#compact)
+    159→- [IsSorted](#issorted)
+    160→- [IsSortedBy](#issortedby)
+    161→- [Splice](#Splice)
+    162→- [Cut](#Cut)
+    163→- [CutPrefix](#CutPrefix)
+    164→- [CutSuffix](#CutSuffix)
+    165→- [Trim](#Trim)
+    166→- [TrimLeft](#TrimLeft)
+    167→- [TrimPrefix](#TrimPrefix)
+    168→- [TrimRight](#TrimRight)
+    169→- [TrimSuffix](#TrimSuffix)
+    171→Supported helpers for maps:
+    173→- [Keys](#keys)
+    174→- [UniqKeys](#uniqkeys)
+    175→- [HasKey](#haskey)
+    176→- [ValueOr](#valueor)
+    177→- [Values](#values)
+    178→- [UniqValues](#uniqvalues)
+    179→- [PickBy](#pickby)
+    180→- [PickByKeys](#pickbykeys)
+    181→- [PickByValues](#pickbyvalues)
+    182→- [OmitBy](#omitby)
+    183→- [OmitByKeys](#omitbykeys)
+    184→- [OmitByValues](#omitbyvalues)
+    185→- [Entries / ToPairs](#entries-alias-topairs)
+    186→- [FromEntries / FromPairs](#fromentries-alias-frompairs)
+    187→- [Invert](#invert)
+    188→- [Assign (merge of maps)](#assign)
+    189→- [ChunkEntries](#chunkentries)
+    190→- [MapKeys](#mapkeys)
+    191→- [MapValues](#mapvalues)
+    192→- [MapEntries](#mapentries)
+    193→- [MapToSlice](#maptoslice)
+    194→- [FilterMapToSlice](#FilterMapToSlice)
+    195→- [FilterKeys](#FilterKeys)
+    196→- [FilterValues](#FilterValues)
+    198→Supported math helpers:
+    200→- [Range / RangeFrom / RangeWithSteps](#range--rangefrom--rangewithsteps)
+    201→- [Clamp](#clamp)
+    202→- [Sum](#sum)
+    203→- [SumBy](#sumby)
+    204→- [Product](#product)
+    205→- [ProductBy](#productby)
+    206→- [Mean](#mean)
+    207→- [MeanBy](#meanby)
+    208→- [Mode](#mode)
+    1624→Creates a slice of the map keys.
+    1671→Creates a slice of the map values.
+    5036→## 🛩 Benchmark
+    …
+    5073→## 🤝 Contributing
+    …
     5093→## 👤 Contributors
+    …
     5095→![Contributors](https://contrib.rocks/image?repo=samber/lo)
+    5097→## 💫 Show your support
+    …
     5103→## 📝 License
-    5105→Copyright © 2022 [Samuel Berthe](https://github.com/samber).
-    5107→This project is under [MIT](./LICENSE) license.
+    …
 benchmark/
 channel.go
-    1→package lo
-    3→import (
-    4→	"context"
-    5→	"sync"
-    6→	"time"
-    8→	"github.com/samber/lo/internal/xrand"
-    9→)
 channel_test.go
 concurrency.go
     1→package lo
@@ -67,16 +174,6 @@ exp/
             1→# SIMD experiment (Go 1.26+)
             3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
             5→See [benchmarks](./BENCHMARK.md).
-            7→## CPU compatibility (avoiding SIGILL)
-            …
-            9→If you see **SIGILL: illegal instruction** when running tests, the CPU or VM does not support the SIMD instructions used by that code.
-            11→### Check support on Linux
-            …
-            21→**Rough mapping:**
-            29→### What the tests do
-            …
-            37→### Run only AVX tests
-            …
         cpu_amd64.go
         cpu_amd64_test.go
         go.mod
@@ -101,54 +198,7 @@ exp/
             1→package simd
         simd_test.go
         unsafe.go
-            3→package simd
-            5→import "unsafe"
 find.go
-    1→package lo
-    3→import (
-    4→	"time"
-    6→	"github.com/samber/lo/internal/constraints"
-    7→	"github.com/samber/lo/internal/xrand"
-    8→)
-    10→// IndexOf returns the index at which the first occurrence of a value is found in a slice or -1
-    11→// if the value cannot be found.
-    12→// Play: https://go.dev/play/p/Eo7W0lvKTky
-    13→func IndexOf[T comparable](collection []T, element T) int {
-    14→	for i := range collection {
-    15→		if collection[i] == element {
-    16→			return i
-    17→		}
-    18→	}
-    20→	return -1
-    23→// LastIndexOf returns the index at which the last occurrence of a value is found in a slice or -1
-    24→// if the value cannot be found.
-    25→// Play: https://go.dev/play/p/Eo7W0lvKTky
-    26→func LastIndexOf[T comparable](collection []T, element T) int {
-    …
-    38→// HasPrefix returns true if the collection has the prefix.
-    39→// Play: https://go.dev/play/p/SrljzVDpMQM
-    40→func HasPrefix[T comparable](collection, prefix []T) bool {
-    …
-    54→// HasSuffix returns true if the collection has the suffix.
-    55→// Play: https://go.dev/play/p/bJeLetQNAON
-    56→func HasSuffix[T comparable](collection, suffix []T) bool {
-    …
-    70→// Find searches for an element in a slice based on a predicate. Returns element and true if element was found.
-    71→// Play: https://go.dev/play/p/Eo7W0lvKTky
-    72→func Find[T any](collection []T, predicate func(item T) bool) (T, bool) {
-    …
-    88→func FindErr[T any](collection []T, predicate func(item T) (bool, error)) (T, error) {
-    …
-    104→// FindIndexOf searches for an element in a slice based on a predicate and returns the index and true.
-    105→// Returns -1 and false if the element is not found.
-    106→// Play: https://go.dev/play/p/XWSEM4Ic_t0
-    107→func FindIndexOf[T any](collection []T, predicate func(item T) bool) (T, int, bool) {
-    …
-    118→// FindLastIndexOf searches for the last element in a slice based on a predicate and returns the index and true.
-    119→// Returns -1 and false if the element is not found.
-    120→// Play: https://go.dev/play/p/2VhPMiQvX-D
-    121→func FindLastIndexOf[T any](collection []T, predicate func(item T) bool) (T, int, bool) {
-    …
 find_test.go
 func.go
     1→package lo
@@ -175,21 +225,6 @@ internal/
             4→This package is for Go 1.18 retrocompatiblity purpose.
         constraints.go
             7→package constraints
-            12→type Signed interface {
-            13→	~int | ~int8 | ~int16 | ~int32 | ~int64
-            14→}
-            19→type Unsigned interface {
-            20→	~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr
-            21→}
-            26→type Integer interface {
-            27→	Signed | Unsigned
-            28→}
-            33→type Float interface {
-            34→	~float32 | ~float64
-            35→}
-            40→type Complex interface {
-            41→	~complex64 | ~complex128
-            42→}
         ordered_go118.go
             3→package constraints
             9→type Ordered interface {
@@ -212,25 +247,11 @@ internal/
             14→func (*noCopy) Unlock() {}
         real.go
         time.go
-            2→package xtime
-            4→import "time"
 intersect.go
     1→package lo
 intersect_test.go
 it/
     channel.go
-        11→// SeqToChannel returns a read-only channel of collection elements.
-        12→// Play: https://go.dev/play/p/id3jqJPffT6
-        13→func SeqToChannel[T any](bufferSize int, collection iter.Seq[T]) <-chan T {
-        …
-        27→// SeqToChannel2 returns a read-only channel of collection elements.
-        28→// Play: https://go.dev/play/p/rpJdVnXUaG-
-        29→func SeqToChannel2[K, V any](bufferSize int, collection iter.Seq2[K, V]) <-chan lo.Tuple2[K, V] {
-        …
-        43→// ChannelToSeq returns a sequence built from channels items. Blocks until channel closes.
-        44→// Play: https://go.dev/play/p/IXqSs2Ooqpm
-        45→func ChannelToSeq[T any](ch <-chan T) iter.Seq[T] {
-        …
     channel_test.go
     find.go
     find_example_test.go
@@ -240,11 +261,6 @@ it/
     intersect_test.go
     lo_test.go
     map.go
-        3→package it
-        5→import (
-        6→	"iter"
-        7→	"maps"
-        8→)
     map_example_test.go
     map_test.go
     math.go
@@ -279,8 +295,6 @@ math.go
 math_test.go
 mutable/
     slice.go
-        1→package mutable
-        3→import "github.com/samber/lo/internal/xrand"
     slice_example_test.go
     slice_test.go
 parallel/
@@ -289,21 +303,9 @@ parallel/
         3→import "sync"
     slice_test.go
 retry.go
-    1→package lo
-    3→import (
-    4→	"sync"
-    5→	"time"
-    7→	"github.com/samber/lo/internal/xtime"
-    8→)
 retry_example_test.go
 retry_test.go
 slice.go
-    1→package lo
-    3→import (
-    4→	"sort"
-    6→	"github.com/samber/lo/internal/constraints"
-    7→	"github.com/samber/lo/mutable"
-    8→)
 slice_test.go
 string.go
 string_test.go

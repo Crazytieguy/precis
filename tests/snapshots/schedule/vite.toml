@@ -135,7 +135,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 4
-key = 'Markdown(Section { file: "README.md", section_index: 3 })'
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
 cost_tokens = 9
 cum_tokens = 302
@@ -161,7 +161,7 @@ kind = "full"
 
 [[batches]]
 position = 5
-key = 'Markdown(Section { file: "README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
 cost_tokens = 16
 cum_tokens = 318
@@ -201,7 +201,7 @@ entries = ["create-vite", "plugin-legacy", "vite"]
 
 [[batches]]
 position = 7
-key = 'Markdown(Section { file: "README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 177
 cum_tokens = 508
@@ -378,7 +378,7 @@ entries = ["docs-check.sh", "mergeChangelog.ts", "publishCI.ts", "release.ts", "
 
 [[batches]]
 position = 15
-key = 'Markdown(Section { file: "README.md", section_index: 4 })'
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 72
 cum_tokens = 800
@@ -2290,7 +2290,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'Markdown(Section { file: "packages/vite/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "packages/vite/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/vite/README.md section #0"
 cost_tokens = 177
 cum_tokens = 3607
@@ -2800,7 +2800,7 @@ kind = "full"
 
 [[batches]]
 position = 114
-key = 'Markdown(Section { file: "packages/create-vite/template-vue/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-vue/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-vue/README.md section #0"
 cost_tokens = 37
 cum_tokens = 4401
@@ -3466,7 +3466,7 @@ kind = "full"
 
 [[batches]]
 position = 141
-key = 'Markdown(Section { file: "packages/create-vite/template-vue-ts/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-vue-ts/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-vue-ts/README.md section #0"
 cost_tokens = 40
 cum_tokens = 5261
@@ -3592,7 +3592,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 144
-key = 'Markdown(Section { file: "packages/create-vite/template-solid/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-solid/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-solid/README.md section #0"
 cost_tokens = 0
 cum_tokens = 5353
@@ -3700,7 +3700,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 146
-key = 'Markdown(Section { file: "packages/create-vite/template-solid-ts/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-solid-ts/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-solid-ts/README.md section #0"
 cost_tokens = 0
 cum_tokens = 5437
@@ -3848,7 +3848,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 152
-key = 'Markdown(Section { file: "packages/create-vite/template-react/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-react/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-react/README.md section #0"
 cost_tokens = 96
 cum_tokens = 5686
@@ -3874,7 +3874,7 @@ kind = "full"
 
 [[batches]]
 position = 153
-key = 'Markdown(Section { file: "packages/create-vite/template-react-ts/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-react-ts/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-react-ts/README.md section #0"
 cost_tokens = 96
 cum_tokens = 5782
@@ -3900,7 +3900,7 @@ kind = "full"
 
 [[batches]]
 position = 154
-key = 'Markdown(Section { file: "packages/create-vite/template-svelte/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-svelte/README.md", section_index: 1, reference_shaped: false })'
 descriptor = "packages/create-vite/template-svelte/README.md section #1"
 cost_tokens = 38
 cum_tokens = 5820
@@ -3926,7 +3926,7 @@ kind = "full"
 
 [[batches]]
 position = 155
-key = 'Markdown(Section { file: "packages/create-vite/template-svelte-ts/README.md", section_index: 1 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-svelte-ts/README.md", section_index: 1, reference_shaped: false })'
 descriptor = "packages/create-vite/template-svelte-ts/README.md section #1"
 cost_tokens = 38
 cum_tokens = 5858
@@ -3952,7 +3952,7 @@ kind = "full"
 
 [[batches]]
 position = 156
-key = 'Markdown(Section { file: "packages/create-vite/template-solid/README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-solid/README.md", section_index: 2, reference_shaped: false })'
 descriptor = "packages/create-vite/template-solid/README.md section #2"
 cost_tokens = 27
 cum_tokens = 5885
@@ -3978,7 +3978,7 @@ kind = "full"
 
 [[batches]]
 position = 157
-key = 'Markdown(Section { file: "packages/create-vite/template-solid-ts/README.md", section_index: 2 })'
+key = 'Markdown(Section { file: "packages/create-vite/template-solid-ts/README.md", section_index: 2, reference_shaped: false })'
 descriptor = "packages/create-vite/template-solid-ts/README.md section #2"
 cost_tokens = 27
 cum_tokens = 5912
@@ -4644,7 +4644,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 186
-key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 12 })'
+key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 12, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #12"
 cost_tokens = 11
 cum_tokens = 7097
@@ -4662,7 +4662,7 @@ kind = "full"
 
 [[batches]]
 position = 187
-key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 15 })'
+key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 15, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #15"
 cost_tokens = 11
 cum_tokens = 7108
@@ -4680,7 +4680,7 @@ kind = "full"
 
 [[batches]]
 position = 188
-key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 4 })'
+key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 4, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #4"
 cost_tokens = 14
 cum_tokens = 7122
@@ -4698,7 +4698,7 @@ kind = "full"
 
 [[batches]]
 position = 189
-key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 6 })'
+key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 6, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #6"
 cost_tokens = 14
 cum_tokens = 7136
@@ -4716,7 +4716,7 @@ kind = "full"
 
 [[batches]]
 position = 190
-key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 10 })'
+key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 10, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #10"
 cost_tokens = 14
 cum_tokens = 7150
@@ -4734,7 +4734,7 @@ kind = "full"
 
 [[batches]]
 position = 191
-key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 0 })'
+key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #0"
 cost_tokens = 185
 cum_tokens = 7335

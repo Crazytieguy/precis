@@ -90,16 +90,6 @@ readme.md
     21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
     23→## Highlights
     …
-    25→- Expressive API
-    26→- Highly performant
-    27→- No dependencies
-    28→- Ability to nest styles
-    29→- [256/Truecolor color support](#256-and-truecolor-color-support)
-    30→- Auto-detects color support
-    31→- Doesn't extend `String.prototype`
-    32→- Clean and focused
-    33→- Actively maintained
-    34→- [Used by ~115,000 packages](https://www.npmjs.com/browse/depended/chalk) as of July 4, 2024
     36→## Install
     …
     38→```sh
@@ -119,8 +109,6 @@ readme.md
     124→Specifies the level of color support.
     143→### supportsColor
     …
-    145→Detect whether the terminal [supports color](https://github.com/chalk/supports-color). Used internally and handled for you, but exposed for convenience.
-    149→Explicit 256/Truecolor mode can be enabled using the `--color=256` and `--color=16m` flags, respectively.
     151→### chalkStderr and supportsColorStderr
     …
     155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
@@ -137,10 +125,24 @@ readme.md
     180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
     181→- `inverse` - Invert background and foreground colors.
     182→- `hidden` - Print the text but make it invisible.
-    183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
-    184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
     186→### Colors
     …
+    188→- `black`
+    189→- `red`
+    190→- `green`
+    191→- `yellow`
+    192→- `blue`
+    193→- `magenta`
+    194→- `cyan`
+    195→- `white`
+    196→- `blackBright` (alias: `gray`, `grey`)
+    197→- `redBright`
+    198→- `greenBright`
+    199→- `yellowBright`
+    200→- `blueBright`
+    201→- `magentaBright`
+    202→- `cyanBright`
+    203→- `whiteBright`
     205→### Background colors
     …
     224→## 256 and Truecolor color support
