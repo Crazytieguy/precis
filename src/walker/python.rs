@@ -286,19 +286,33 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             }
             let decl_predecessor = BatchKey::Python(decl_key);
 
-            if let Some(content) =
-                single_file_lines_content(file, &source, collect_doc_for(decl.inner_node, &source))
-            {
+            let (doc_lede, doc_rest) =
+                split_doc_lede(collect_doc_for(decl.inner_node, &source), &src_lines);
+            if let Some(content) = single_file_lines_content(file, &source, doc_lede) {
+                let doc_key = PythonKey::DeclDoc {
+                    file: file.clone(),
+                    start_line: decl.start_line,
+                };
                 out.push(Batch {
-                    key: PythonKey::DeclDoc {
-                        file: file.clone(),
-                        start_line: decl.start_line,
-                    }
-                    .into(),
+                    key: doc_key.clone().into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
                     value: decl_doc_value(file, decl, ctx),
                 });
+                if let Some(rest_lines) = doc_rest
+                    && let Some(content) = single_file_lines_content(file, &source, rest_lines)
+                {
+                    out.push(Batch {
+                        key: PythonKey::DeclDocRest {
+                            file: file.clone(),
+                            start_line: decl.start_line,
+                        }
+                        .into(),
+                        predecessor: Some(BatchKey::Python(doc_key)),
+                        content,
+                        value: decl_doc_value(file, decl, ctx) * DOC_REST_VALUE_FACTOR,
+                    });
+                }
             }
 
             match decl.kind {
@@ -870,6 +884,44 @@ fn collect_doc_for(inner: Node, source: &str) -> FileLines {
     let mut lines = Vec::new();
     extend_span(&mut lines, doc_stmt, source);
     FileLines::new(dedup_sorted(lines))
+}
+
+/// Minimum remainder size (lines) for splitting a docstring into lede
+/// and rest batches. High on purpose: splitting a doc the scheduler
+/// can buy whole converts a complete NS delivery into
+/// lede-now/rest-never (quadratically damped partial credit; measured
+/// -0.03 on tomli and pluggy at a threshold of 4). Only the docs too
+/// fat to ever clear a frontier whole should split.
+const DOC_LEDE_SPLIT_MIN_REST_LINES: usize = 20;
+
+/// Value factor for the post-lede remainder of a split docstring —
+/// parameter docs and examples rank below the summary paragraph.
+const DOC_REST_VALUE_FACTOR: f64 = 0.6;
+
+/// Split a docstring span at its first paragraph break. NS rows quote
+/// a long class docstring as lede + detail rows; an all-or-nothing
+/// 700-token DeclDoc batch is unbuyable at any frontier. `rest` is
+/// `None` when the docstring is one paragraph or the remainder is
+/// trivial.
+fn split_doc_lede(doc: FileLines, src_lines: &[&str]) -> (FileLines, Option<FileLines>) {
+    let blank = |row: &usize| {
+        src_lines
+            .get(row - 1)
+            .is_some_and(|line| line.trim().is_empty())
+    };
+    let Some(split_position) = doc.full.iter().position(blank) else {
+        return (doc, None);
+    };
+    let rest_rows: Vec<usize> = doc.full[split_position..]
+        .iter()
+        .copied()
+        .skip_while(blank)
+        .collect();
+    if rest_rows.len() < DOC_LEDE_SPLIT_MIN_REST_LINES {
+        return (doc, None);
+    }
+    let lede_rows = doc.full[..split_position].to_vec();
+    (FileLines::new(lede_rows), Some(FileLines::new(rest_rows)))
 }
 
 /// The first named child of `body` that's a docstring statement, or

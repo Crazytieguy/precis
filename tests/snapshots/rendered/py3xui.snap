@@ -94,42 +94,27 @@ py3xui/
             5→from py3xui.api.api_server import ServerApi
         api.py
             13→class Api:
-            …
-            67→    def __init__(
-            …
-            93→    @property
-            94→    def session(self) -> str | None:
-            100→        return self._session
-            102→    @session.setter
-            103→    def session(self, value: str) -> None:
-            115→    @property
-            116→    def cookie_name(self) -> str | None:
-            122→        return self._cookie_name
-            124→    @cookie_name.setter
-            125→    def cookie_name(self, value: str | None) -> None:
-            139→    @classmethod
-            …
-            189→    def login(self, two_factor_code: str | int | None = None) -> None:
-            …
+            14→    """This class provides a high-level interface to interact with the XUI API.
+            15→    Access to the client, inbound, and database APIs is provided through this class.
         api_base.py
             15→class ApiFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
             28→class BaseApi:
-            …
+            29→    """Base class for the XUI API. Contains common methods for making requests.
         api_client.py
             13→class ClientApi(BaseApi):
-            …
+            14→    """This class provides methods to interact with the clients in the XUI API.
         api_database.py
             7→class DatabaseApi(BaseApi):
-            …
+            8→    """This class provides methods to interact with the database in the XUI API.
             32→    def export(self) -> None:
             …
         api_inbound.py
             9→class InboundApi(BaseApi):
-            …
+            10→    """This class provides methods to interact with the inbounds in the XUI API.
         api_server.py
             7→class ServerApi(BaseApi):
-            …
+            8→    """This class provides methods to interact with the server in the XUI API.
     async_api/
         README.md
             1→<a id="async_api.async_api_inbound"></a>
@@ -144,21 +129,22 @@ py3xui/
             5→from py3xui.async_api.async_api_server import AsyncServerApi
         async_api.py
             18→class AsyncApi:
-            …
+            19→    """This class provides a high-level interface to interact with the XUI API.
+            20→    Access to the client, inbound, and database APIs is provided through this class.
         async_api_base.py
             16→class AsyncBaseApi:
-            …
+            17→    """Base class for the XUI API. Contains async common methods for making requests.
         async_api_client.py
             12→class AsyncClientApi(AsyncBaseApi):
-            …
+            13→    """This class provides async methods to interact with the clients in the XUI API.
         async_api_database.py
             7→class AsyncDatabaseApi(AsyncBaseApi):
-            …
+            8→    """This class provides methods to interact with the database in the XUI API.
             32→    async def export(self) -> None:
             …
         async_api_inbound.py
             11→class AsyncInboundApi(AsyncBaseApi):
-            …
+            12→    """This class provides methods to interact with the inbounds in the XUI API.
         async_api_server.py
             8→class AsyncServerApi(AsyncBaseApi):
             …
@@ -179,24 +165,6 @@ py3xui/
         client.py
             7→class ClientFields:
             8→    """Stores the fields returned by the XUI API for parsing."""
-            10→    EMAIL = "email"
-            11→    ENABLE = "enable"
-            12→    PASSWORD = "password"
-            14→    ID = "id"
-            15→    INBOUND_ID = "inboundId"
-            17→    UP = "up"
-            18→    DOWN = "down"
-            20→    EXPIRY_TIME = "expiryTime"
-            22→    TOTAL = "total"
-            23→    RESET = "reset"
-            25→    FLOW = "flow"
-            26→    METHOD = "method"
-            27→    LIMIT_IP = "limitIp"
-            28→    SUB_ID = "subId"
-            29→    COMMENT = "comment"
-            30→    TG_ID = "tgId"
-            31→    TOTAL_GB = "totalGB"
-            33→    UUID = "uuid"
             36→class Client(BaseModel):
             …
     inbound/

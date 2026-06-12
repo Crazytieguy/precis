@@ -107,11 +107,7 @@ src/
             251→    memo: TypeCheckMemo,
             252→) -> None:
             305→def check_list(
-            306→    value: Any,
-            307→    origin_type: Any,
-            308→    args: tuple[Any, ...],
-            309→    memo: TypeCheckMemo,
-            310→) -> None:
+            …
             324→def check_sequence(
             …
             343→def check_set(
@@ -149,6 +145,8 @@ src/
             …
             62→@dataclass
             63→class TypeCheckConfiguration:
+            64→    """
+            65→     You can change Typeguard's behavior with these settings.
             98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
             99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
             100→    collection_check_strategy: CollectionCheckStrategy = (
@@ -183,6 +181,8 @@ src/
             155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
             156→    debug_instrumentation: bool | Unset = unset,
             157→) -> Any:
+            158→    """
+            159→    Instrument the target function to perform run-time type checking.
         _exceptions.py
             1→from collections import deque
             2→from typing import Deque
@@ -217,7 +217,8 @@ src/
             3→from typing import Any
             5→from typeguard._config import TypeCheckConfiguration, global_config
             8→class TypeCheckMemo:
-            …
+            9→    """
+            10→    Contains information necessary for type checkers to do their work.
             35→    __slots__ = "globals", "locals", "self_type", "config"
             37→    def __init__(
             38→        self,

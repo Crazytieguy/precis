@@ -322,13 +322,16 @@ Score(3000)=0.640 I=0.863 C=0.475 ns_rows≤3K=20/52 (reached=11 partial=1 missi
 | walker |  | 9578 | 0 | python decl at src/click/core.py:1524 |  |  | 0.372 |
 | walker |  | 9578 | 0 | python decl at src/click/core.py:1531 |  |  | 0.372 |
 | walker |  | 9578 | 0 | python decl at src/click/core.py:1981 |  |  | 0.372 |
-| walker |  | 9614 | 36 | python decl at src/click/core.py:100 |  |  | 0.372 |
-| walker |  | 9629 | 15 | python decl doc at src/click/core.py:100 |  |  | 0.372 |
-| walker |  | 9665 | 36 | python decl at src/click/core.py:119 |  |  | 0.372 |
-| walker |  | 9683 | 18 | python decl body at src/click/core.py:96 body 97 |  |  | 0.372 |
+| walker |  | 9597 | 19 | python decl doc at src/click/core.py:1531 |  |  | 0.372 |
+| walker |  | 9633 | 36 | python decl at src/click/core.py:100 |  |  | 0.372 |
+| walker |  | 9648 | 15 | python decl doc at src/click/core.py:100 |  |  | 0.372 |
+| walker |  | 9684 | 36 | python decl at src/click/core.py:119 |  |  | 0.372 |
+| walker |  | 9702 | 18 | python decl body at src/click/core.py:96 body 97 |  |  | 0.372 |
 | ns | 9715 |  | 207 | examples/naval/naval.py: canonical nested-group example | 6.2 |  | 0.365 |
-| walker |  | 9740 | 57 | python class body at src/click/core.py:185 |  |  | 0.365 |
-| walker |  | 9766 | 26 | python decl at src/click/core.py:57 |  |  | 0.365 |
-| walker |  | 9797 | 31 | python decl at src/click/core.py:76 |  |  | 0.365 |
-| ns | 9915 |  | 200 | docs/index.rst: General Reference toctree | 6.3 |  | 0.358 |
-| walker |  | 9933 | 136 | python class body at src/click/core.py:146 |  |  | 0.358 |
+| walker |  | 9733 | 31 | python decl doc at src/click/core.py:146 |  |  | 0.365 |
+| walker |  | 9790 | 57 | python class body at src/click/core.py:185 |  |  | 0.365 |
+| walker |  | 9816 | 26 | python decl at src/click/core.py:57 |  |  | 0.365 |
+| walker |  | 9864 | 48 | python decl doc at src/click/core.py:903 |  |  | 0.368 |
+| ns | 9915 |  | 200 | docs/index.rst: General Reference toctree | 6.3 |  | 0.361 |
+| walker |  | 9916 | 52 | python decl doc at src/click/core.py:185 |  |  | 0.363 |
+| walker |  | 9947 | 31 | python decl at src/click/core.py:76 |  |  | 0.363 |

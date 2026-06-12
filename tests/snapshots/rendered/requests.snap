@@ -317,7 +317,7 @@ src/
             16→_VT = TypeVar("_VT")
             17→_D = TypeVar("_D")
             20→class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]):
-            …
+            21→    """A case-insensitive ``dict``-like object.
             96→class LookupDict(dict[str, _VT]):
             97→    """Dictionary lookup object."""
             99→    name: Any

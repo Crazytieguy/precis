@@ -53,348 +53,349 @@ Score(3000)=0.599 I=0.818 C=0.439 ns_rows≤3K=17/40 (reached=9 partial=2 missin
 | walker |  | 1168 | 10 | python decl names surface in htmy/renderer/context.py |  |  | 0.637 |
 | walker |  | 1168 | 0 | python decl at htmy/renderer/context.py:6 |  |  | 0.637 |
 | walker |  | 1178 | 10 | python method sigs in htmy/renderer/context.py |  |  | 0.637 |
+| walker |  | 1201 | 23 | python decl doc at htmy/snippet.py:158 |  |  | 0.637 |
 | ns | 1216 |  | 101 | htmy/ package directory listing | 1.12 |  | 0.686 |
-| walker |  | 1406 | 228 | python imports #8 in htmy/__init__.py |  |  | 0.788 |
-| walker |  | 1422 | 16 | python method at htmy/renderer/context.py:11 |  |  | 0.788 |
-| walker |  | 1440 | 18 | python class body at htmy/renderer/baseline.py:18 |  |  | 0.788 |
-| walker |  | 1507 | 67 | [package] in pyproject.toml |  |  | 0.806 |
-| ns | 1519 |  | 303 | docs/ + tests/ + examples/ directory listings | 1.13 |  | 0.618 |
-| walker |  | 1559 | 52 | python method sigs in htmy/error_boundary.py |  |  | 0.618 |
-| walker |  | 1559 | 0 | python method at htmy/error_boundary.py:45 |  |  | 0.618 |
-| walker |  | 1559 | 0 | python method at htmy/error_boundary.py:56 |  |  | 0.618 |
+| walker |  | 1429 | 228 | python imports #8 in htmy/__init__.py |  |  | 0.788 |
+| walker |  | 1445 | 16 | python method at htmy/renderer/context.py:11 |  |  | 0.788 |
+| walker |  | 1463 | 18 | python class body at htmy/renderer/baseline.py:18 |  |  | 0.788 |
+| ns | 1519 |  | 303 | docs/ + tests/ + examples/ directory listings | 1.13 |  | 0.604 |
+| walker |  | 1530 | 67 | [package] in pyproject.toml |  |  | 0.618 |
+| walker |  | 1582 | 52 | python method sigs in htmy/error_boundary.py |  |  | 0.618 |
+| walker |  | 1582 | 0 | python method at htmy/error_boundary.py:45 |  |  | 0.618 |
+| walker |  | 1582 | 0 | python method at htmy/error_boundary.py:56 |  |  | 0.618 |
 | ns | 1694 |  | 175 | Component protocol heart (SyncComponent / AsyncComponent) | 2.1 |  | 0.584 |
-| walker |  | 1773 | 214 | headings outline in README.md |  |  | 0.585 |
-| walker |  | 1784 | 11 | README.md section #14 |  |  | 0.585 |
-| walker |  | 1798 | 14 | README.md section #4 |  |  | 0.586 |
-| walker |  | 1812 | 14 | README.md section #7 |  |  | 0.587 |
-| walker |  | 1826 | 14 | README.md section #8 |  |  | 0.589 |
-| walker |  | 1843 | 17 | README.md section #13 |  |  | 0.592 |
-| walker |  | 1862 | 19 | README.md section #3 |  |  | 0.596 |
-| ns | 1871 |  | 177 | Component / ComponentType / ComponentSequence type aliases | 2.2 |  | 0.572 |
-| walker |  | 1883 | 21 | README.md section #9 |  |  | 0.576 |
-| walker |  | 1904 | 21 | README.md section #12 |  |  | 0.583 |
-| walker |  | 1934 | 30 | README.md section #51 |  |  | 0.583 |
-| walker |  | 1956 | 22 | README.md section #5 |  |  | 0.588 |
-| walker |  | 1979 | 23 | README.md section #1 |  |  | 0.596 |
-| walker |  | 2002 | 23 | README.md section #2 |  |  | 0.605 |
-| walker |  | 2044 | 42 | listing of 'docs/api' |  |  | 0.617 |
-| walker |  | 2071 | 27 | headings outline in docs/api/md.md |  |  | 0.617 |
-| walker |  | 2095 | 24 | README.md section #11 |  |  | 0.627 |
-| walker |  | 2117 | 22 | listing of 'examples' |  |  | 0.635 |
-| walker |  | 2130 | 13 | listing of 'examples/internationalization' |  |  | 0.642 |
-| walker |  | 2144 | 14 | listing of 'examples/markdown_customization' |  |  | 0.650 |
-| walker |  | 2158 | 14 | listing of 'examples/markdown_essentials' |  |  | 0.659 |
-| walker |  | 2176 | 18 | docs/api/md.md section #0 |  |  | 0.659 |
+| walker |  | 1796 | 214 | headings outline in README.md |  |  | 0.585 |
+| walker |  | 1807 | 11 | README.md section #14 |  |  | 0.585 |
+| walker |  | 1821 | 14 | README.md section #4 |  |  | 0.586 |
+| walker |  | 1835 | 14 | README.md section #7 |  |  | 0.587 |
+| walker |  | 1849 | 14 | README.md section #8 |  |  | 0.589 |
+| walker |  | 1866 | 17 | README.md section #13 |  |  | 0.592 |
+| ns | 1871 |  | 177 | Component / ComponentType / ComponentSequence type aliases | 2.2 |  | 0.568 |
+| walker |  | 1885 | 19 | README.md section #3 |  |  | 0.572 |
+| walker |  | 1906 | 21 | README.md section #9 |  |  | 0.576 |
+| walker |  | 1927 | 21 | README.md section #12 |  |  | 0.583 |
+| walker |  | 1957 | 30 | README.md section #51 |  |  | 0.583 |
+| walker |  | 1979 | 22 | README.md section #5 |  |  | 0.588 |
+| walker |  | 2002 | 23 | README.md section #1 |  |  | 0.596 |
+| walker |  | 2025 | 23 | README.md section #2 |  |  | 0.605 |
+| walker |  | 2067 | 42 | listing of 'docs/api' |  |  | 0.617 |
+| walker |  | 2094 | 27 | headings outline in docs/api/md.md |  |  | 0.617 |
+| walker |  | 2118 | 24 | README.md section #11 |  |  | 0.627 |
+| walker |  | 2140 | 22 | listing of 'examples' |  |  | 0.635 |
+| walker |  | 2153 | 13 | listing of 'examples/internationalization' |  |  | 0.642 |
+| walker |  | 2167 | 14 | listing of 'examples/markdown_customization' |  |  | 0.650 |
+| walker |  | 2181 | 14 | listing of 'examples/markdown_essentials' |  |  | 0.659 |
 | ns | 2190 |  | 319 | Context / Properties / PropertyValue type aliases | 2.3 |  | 0.603 |
-| walker |  | 2203 | 27 | README.md section #6 |  |  | 0.617 |
-| walker |  | 2219 | 16 | README.md section #41 |  |  | 0.617 |
-| walker |  | 2247 | 28 | python decl body at htmy/io.py:11 body 13 |  |  | 0.617 |
-| walker |  | 2290 | 43 | README.md section #46 |  |  | 0.617 |
-| walker |  | 2314 | 24 | python decl names surface in htmy/md/core.py |  |  | 0.617 |
-| walker |  | 2314 | 0 | python decl at htmy/md/core.py:20 |  |  | 0.617 |
-| walker |  | 2314 | 0 | python decl at htmy/md/core.py:81 |  |  | 0.617 |
-| walker |  | 2346 | 32 | python class body at htmy/md/core.py:81 |  |  | 0.617 |
-| walker |  | 2358 | 12 | listing of 'docs/api/renderer' |  |  | 0.626 |
-| walker |  | 2413 | 55 | python decl doc at htmy/error_boundary.py:15 |  |  | 0.627 |
+| walker |  | 2199 | 18 | docs/api/md.md section #0 |  |  | 0.603 |
+| walker |  | 2226 | 27 | README.md section #6 |  |  | 0.617 |
+| walker |  | 2242 | 16 | README.md section #41 |  |  | 0.617 |
+| walker |  | 2270 | 28 | python decl body at htmy/io.py:11 body 13 |  |  | 0.617 |
+| walker |  | 2313 | 43 | README.md section #46 |  |  | 0.617 |
+| walker |  | 2337 | 24 | python decl names surface in htmy/md/core.py |  |  | 0.617 |
+| walker |  | 2337 | 0 | python decl at htmy/md/core.py:20 |  |  | 0.617 |
+| walker |  | 2337 | 0 | python decl at htmy/md/core.py:81 |  |  | 0.617 |
+| walker |  | 2369 | 32 | python class body at htmy/md/core.py:81 |  |  | 0.617 |
+| walker |  | 2381 | 12 | listing of 'docs/api/renderer' |  |  | 0.626 |
 | ns | 2429 |  | 239 | Context provider protocols | 2.4 |  | 0.589 |
-| walker |  | 2482 | 69 | README.md section #16 |  |  | 0.589 |
-| walker |  | 2546 | 64 | python decl names surface in htmy/tag.py |  |  | 0.589 |
-| walker |  | 2546 | 0 | python decl at htmy/tag.py:12 |  |  | 0.589 |
-| walker |  | 2546 | 0 | python decl at htmy/tag.py:24 |  |  | 0.589 |
-| walker |  | 2546 | 0 | python decl at htmy/tag.py:56 |  |  | 0.589 |
-| walker |  | 2546 | 0 | python decl at htmy/tag.py:73 |  |  | 0.589 |
-| walker |  | 2559 | 13 | python class body at htmy/tag.py:56 |  |  | 0.589 |
-| walker |  | 2573 | 14 | python class body at htmy/tag.py:73 |  |  | 0.589 |
-| walker |  | 2586 | 13 | python class body at htmy/tag.py:12 |  |  | 0.589 |
-| walker |  | 2641 | 55 | python decl at htmy/tag.py:84 |  |  | 0.590 |
-| walker |  | 2663 | 22 | python decl body at htmy/tag.py:84 body 100 |  |  | 0.590 |
-| walker |  | 2683 | 20 | python class body at htmy/tag.py:24 |  |  | 0.590 |
-| walker |  | 2729 | 46 | python decl doc at htmy/tag.py:56 |  |  | 0.590 |
-| walker |  | 2761 | 32 | python decl doc at htmy/renderer/context.py:6 |  |  | 0.590 |
-| walker |  | 2794 | 33 | README.md section #10 |  |  | 0.599 |
-| walker |  | 2896 | 102 | python decl names surface in htmy/core.py |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:19 |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:38 |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:64 |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:146 |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:157 |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:163 |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:175 |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:196 |  |  | 0.599 |
-| walker |  | 2896 | 0 | python decl at htmy/core.py:201 |  |  | 0.599 |
-| walker |  | 2902 | 6 | python class body at htmy/core.py:146 |  |  | 0.599 |
-| walker |  | 2908 | 6 | python class body at htmy/core.py:157 |  |  | 0.599 |
-| walker |  | 2914 | 6 | python class body at htmy/core.py:163 |  |  | 0.599 |
-| walker |  | 2928 | 14 | python class body at htmy/core.py:19 |  |  | 0.599 |
-| walker |  | 2942 | 14 | python class body at htmy/core.py:38 |  |  | 0.599 |
-| walker |  | 2960 | 18 | python class body at htmy/core.py:175 |  |  | 0.599 |
-| walker |  | 2974 | 14 | python decl doc at htmy/core.py:19 |  |  | 0.599 |
-| walker |  | 2989 | 15 | python decl doc at htmy/core.py:157 |  |  | 0.599 |
-| walker |  | 3006 | 17 | python decl doc at htmy/core.py:146 |  |  | 0.600 |
-| walker |  | 3029 | 23 | python class body at htmy/core.py:201 |  |  | 0.600 |
-| ns | 3034 |  | 605 | RendererType + StreamingRendererType protocols | 2.5 |  | 0.531 |
-| walker |  | 3052 | 23 | python decl doc at htmy/core.py:38 |  |  | 0.532 |
-| walker |  | 3085 | 33 | python class body at htmy/core.py:64 |  |  | 0.532 |
-| walker |  | 3104 | 19 | python decl body at htmy/core.py:196 body 198 |  |  | 0.532 |
-| walker |  | 3133 | 29 | python decl doc at htmy/core.py:196 |  |  | 0.532 |
+| walker |  | 2436 | 55 | python decl doc at htmy/error_boundary.py:15 |  |  | 0.589 |
+| walker |  | 2505 | 69 | README.md section #16 |  |  | 0.589 |
+| walker |  | 2569 | 64 | python decl names surface in htmy/tag.py |  |  | 0.589 |
+| walker |  | 2569 | 0 | python decl at htmy/tag.py:12 |  |  | 0.589 |
+| walker |  | 2569 | 0 | python decl at htmy/tag.py:24 |  |  | 0.589 |
+| walker |  | 2569 | 0 | python decl at htmy/tag.py:56 |  |  | 0.589 |
+| walker |  | 2569 | 0 | python decl at htmy/tag.py:73 |  |  | 0.589 |
+| walker |  | 2582 | 13 | python class body at htmy/tag.py:56 |  |  | 0.589 |
+| walker |  | 2596 | 14 | python class body at htmy/tag.py:73 |  |  | 0.589 |
+| walker |  | 2609 | 13 | python class body at htmy/tag.py:12 |  |  | 0.589 |
+| walker |  | 2664 | 55 | python decl at htmy/tag.py:84 |  |  | 0.590 |
+| walker |  | 2686 | 22 | python decl body at htmy/tag.py:84 body 100 |  |  | 0.590 |
+| walker |  | 2706 | 20 | python class body at htmy/tag.py:24 |  |  | 0.590 |
+| walker |  | 2752 | 46 | python decl doc at htmy/tag.py:56 |  |  | 0.590 |
+| walker |  | 2784 | 32 | python decl doc at htmy/renderer/context.py:6 |  |  | 0.590 |
+| walker |  | 2817 | 33 | README.md section #10 |  |  | 0.599 |
+| walker |  | 2919 | 102 | python decl names surface in htmy/core.py |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:19 |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:38 |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:64 |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:146 |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:157 |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:163 |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:175 |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:196 |  |  | 0.599 |
+| walker |  | 2919 | 0 | python decl at htmy/core.py:201 |  |  | 0.599 |
+| walker |  | 2925 | 6 | python class body at htmy/core.py:146 |  |  | 0.599 |
+| walker |  | 2931 | 6 | python class body at htmy/core.py:157 |  |  | 0.599 |
+| walker |  | 2937 | 6 | python class body at htmy/core.py:163 |  |  | 0.599 |
+| walker |  | 2951 | 14 | python class body at htmy/core.py:19 |  |  | 0.599 |
+| walker |  | 2965 | 14 | python class body at htmy/core.py:38 |  |  | 0.599 |
+| walker |  | 2983 | 18 | python class body at htmy/core.py:175 |  |  | 0.599 |
+| walker |  | 2997 | 14 | python decl doc at htmy/core.py:19 |  |  | 0.599 |
+| walker |  | 3012 | 15 | python decl doc at htmy/core.py:157 |  |  | 0.599 |
+| walker |  | 3029 | 17 | python decl doc at htmy/core.py:146 |  |  | 0.600 |
+| ns | 3034 |  | 605 | RendererType + StreamingRendererType protocols | 2.5 |  | 0.532 |
+| walker |  | 3052 | 23 | python class body at htmy/core.py:201 |  |  | 0.532 |
+| walker |  | 3070 | 18 | python decl doc at htmy/core.py:64 |  |  | 0.532 |
+| walker |  | 3093 | 23 | python decl doc at htmy/core.py:38 |  |  | 0.532 |
+| walker |  | 3126 | 33 | python class body at htmy/core.py:64 |  |  | 0.532 |
+| walker |  | 3145 | 19 | python decl body at htmy/core.py:196 body 198 |  |  | 0.532 |
 | ns | 3169 |  | 135 | Default renderer wiring (renderer/__init__.py) | 2.6 |  | 0.532 |
-| walker |  | 3182 | 49 | README.md section #49 |  |  | 0.532 |
-| walker |  | 3235 | 53 | python method at htmy/error_boundary.py:25 |  |  | 0.532 |
-| walker |  | 3298 | 63 | python decl doc at htmy/core.py:175 |  |  | 0.533 |
+| walker |  | 3174 | 29 | python decl doc at htmy/core.py:196 |  |  | 0.532 |
+| walker |  | 3223 | 49 | README.md section #49 |  |  | 0.532 |
+| walker |  | 3276 | 53 | python method at htmy/error_boundary.py:25 |  |  | 0.532 |
 | ns | 3325 |  | 156 | Renderer.__init__ + render signatures | 2.7 |  | 0.520 |
-| walker |  | 3355 | 57 | listing of 'tests' |  |  | 0.553 |
-| walker |  | 3376 | 21 | README.md section #26 |  |  | 0.553 |
-| walker |  | 3397 | 21 | README.md section #39 |  |  | 0.553 |
-| walker |  | 3483 | 86 | python class body at htmy/etree.py:23 |  |  | 0.553 |
+| walker |  | 3339 | 63 | python decl doc at htmy/core.py:175 |  |  | 0.520 |
+| walker |  | 3396 | 57 | listing of 'tests' |  |  | 0.553 |
+| walker |  | 3417 | 21 | README.md section #26 |  |  | 0.553 |
+| walker |  | 3438 | 21 | README.md section #39 |  |  | 0.553 |
+| walker |  | 3524 | 86 | python class body at htmy/etree.py:23 |  |  | 0.553 |
 | ns | 3558 |  | 233 | BaselineRenderer (streaming) signatures | 2.8 |  | 0.538 |
-| walker |  | 3619 | 136 | python method sigs in htmy/snippet.py |  |  | 0.538 |
-| walker |  | 3619 | 0 | python method at htmy/snippet.py:110 |  |  | 0.538 |
-| walker |  | 3619 | 0 | python method at htmy/snippet.py:126 |  |  | 0.538 |
-| walker |  | 3619 | 0 | python method at htmy/snippet.py:241 |  |  | 0.538 |
-| walker |  | 3619 | 0 | python method at htmy/snippet.py:256 |  |  | 0.538 |
-| walker |  | 3619 | 0 | python method at htmy/snippet.py:265 |  |  | 0.538 |
-| walker |  | 3628 | 9 | python method doc at htmy/snippet.py:241 |  |  | 0.538 |
-| walker |  | 3641 | 13 | python method body at htmy/snippet.py:110 body 124 |  |  | 0.538 |
-| walker |  | 3655 | 14 | python method doc at htmy/snippet.py:256 |  |  | 0.538 |
-| walker |  | 3683 | 28 | docs/api/core.md section #0 |  |  | 0.538 |
-| walker |  | 3711 | 28 | docs/api/html.md section #0 |  |  | 0.538 |
-| walker |  | 3739 | 28 | docs/api/utils.md section #0 |  |  | 0.538 |
+| walker |  | 3660 | 136 | python method sigs in htmy/snippet.py |  |  | 0.538 |
+| walker |  | 3660 | 0 | python method at htmy/snippet.py:110 |  |  | 0.538 |
+| walker |  | 3660 | 0 | python method at htmy/snippet.py:126 |  |  | 0.538 |
+| walker |  | 3660 | 0 | python method at htmy/snippet.py:241 |  |  | 0.538 |
+| walker |  | 3660 | 0 | python method at htmy/snippet.py:256 |  |  | 0.538 |
+| walker |  | 3660 | 0 | python method at htmy/snippet.py:265 |  |  | 0.538 |
+| walker |  | 3669 | 9 | python method doc at htmy/snippet.py:241 |  |  | 0.538 |
+| walker |  | 3682 | 13 | python method body at htmy/snippet.py:110 body 124 |  |  | 0.538 |
+| walker |  | 3696 | 14 | python method doc at htmy/snippet.py:256 |  |  | 0.538 |
+| walker |  | 3724 | 28 | docs/api/core.md section #0 |  |  | 0.538 |
+| walker |  | 3752 | 28 | docs/api/html.md section #0 |  |  | 0.538 |
+| walker |  | 3780 | 28 | docs/api/utils.md section #0 |  |  | 0.538 |
 | ns | 4044 |  | 486 | Tag / TagWithProps / wildcard_tag signatures | 2.9 |  | 0.516 |
-| walker |  | 4146 | 407 | python class body at htmy/snippet.py:27 |  |  | 0.517 |
-| walker |  | 4175 | 29 | docs/api/etree.md section #0 |  |  | 0.517 |
-| walker |  | 4204 | 29 | docs/api/function_component.md section #0 |  |  | 0.517 |
-| walker |  | 4233 | 29 | docs/api/snippet.md section #0 |  |  | 0.517 |
-| walker |  | 4262 | 29 | docs/api/typing.md section #0 |  |  | 0.517 |
-| walker |  | 4269 | 7 | docs/function-components.md section #14 |  |  | 0.517 |
+| walker |  | 4187 | 407 | python class body at htmy/snippet.py:27 |  |  | 0.517 |
+| walker |  | 4216 | 29 | docs/api/etree.md section #0 |  |  | 0.517 |
+| walker |  | 4245 | 29 | docs/api/function_component.md section #0 |  |  | 0.517 |
+| walker |  | 4274 | 29 | docs/api/snippet.md section #0 |  |  | 0.517 |
+| walker |  | 4303 | 29 | docs/api/typing.md section #0 |  |  | 0.517 |
+| walker |  | 4310 | 7 | docs/function-components.md section #14 |  |  | 0.517 |
 | ns | 4419 |  | 375 | Fragment / WithContext signatures | 2.10 |  | 0.494 |
-| walker |  | 4585 | 316 | python method sigs in htmy/core.py |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:24 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:33 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:45 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:56 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:104 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:108 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:115 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:186 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:241 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:246 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:259 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:268 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:281 |  |  | 0.501 |
-| walker |  | 4585 | 0 | python method at htmy/core.py:286 |  |  | 0.501 |
-| walker |  | 4599 | 14 | python method at htmy/core.py:151 |  |  | 0.501 |
-| ns | 4603 |  | 184 | ContextAware base class — public methods | 2.11 |  | 0.493 |
-| walker |  | 4608 | 9 | python method doc at htmy/core.py:33 |  |  | 0.495 |
-| walker |  | 4631 | 23 | python method at htmy/core.py:127 |  |  | 0.496 |
-| walker |  | 4642 | 11 | python method doc at htmy/core.py:56 |  |  | 0.499 |
-| walker |  | 4656 | 14 | python method doc at htmy/core.py:241 |  |  | 0.499 |
-| walker |  | 4666 | 10 | python method body at htmy/core.py:33 body 35 |  |  | 0.500 |
-| walker |  | 4676 | 10 | python method body at htmy/core.py:56 body 58 |  |  | 0.502 |
-| walker |  | 4687 | 11 | python method body at htmy/core.py:24 body 31 |  |  | 0.504 |
-| walker |  | 4698 | 11 | python method body at htmy/core.py:151 body 154 |  |  | 0.504 |
-| walker |  | 4710 | 12 | python method body at htmy/core.py:259 body 266 |  |  | 0.504 |
-| walker |  | 4732 | 22 | python method doc at htmy/core.py:151 |  |  | 0.504 |
-| walker |  | 4742 | 10 | python method doc at htmy/core.py:281 |  |  | 0.504 |
-| walker |  | 4758 | 16 | python method body at htmy/core.py:108 body 113 |  |  | 0.506 |
-| walker |  | 4771 | 13 | python method doc at htmy/core.py:286 |  |  | 0.506 |
-| walker |  | 4827 | 56 | python method at htmy/core.py:222 |  |  | 0.507 |
-| walker |  | 4862 | 35 | python method doc at htmy/core.py:186 |  |  | 0.507 |
-| walker |  | 4915 | 53 | python class body at htmy/md/core.py:20 |  |  | 0.507 |
-| walker |  | 4945 | 30 | docs/api/i18n.md section #0 |  |  | 0.507 |
-| walker |  | 4981 | 36 | python method doc at htmy/core.py:24 |  |  | 0.517 |
-| ns | 5046 |  | 443 | @component decorator — props+context (function/method) | 2.12 |  | 0.495 |
-| walker |  | 5196 | 215 | headings outline in docs/index.md |  |  | 0.495 |
-| walker |  | 5245 | 49 | docs/index.md section #0 |  |  | 0.495 |
-| walker |  | 5283 | 38 | python method doc at htmy/core.py:108 |  |  | 0.502 |
-| walker |  | 5293 | 10 | python method body at htmy/snippet.py:265 body 270 |  |  | 0.502 |
-| walker |  | 5357 | 64 | python method at htmy/snippet.py:83 |  |  | 0.503 |
-| ns | 5399 |  | 353 | @component decorator — context-only (function/method) | 2.13 |  | 0.487 |
-| walker |  | 5423 | 66 | python method at htmy/snippet.py:218 |  |  | 0.488 |
-| walker |  | 5532 | 109 | python decl names surface in htmy/i18n.py |  |  | 0.488 |
-| walker |  | 5532 | 0 | python decl at htmy/i18n.py:15 |  |  | 0.488 |
-| walker |  | 5532 | 0 | python decl at htmy/i18n.py:18 |  |  | 0.488 |
-| walker |  | 5532 | 0 | python decl at htmy/i18n.py:21 |  |  | 0.488 |
-| walker |  | 5532 | 0 | python decl at htmy/i18n.py:24 |  |  | 0.488 |
-| walker |  | 5532 | 0 | python decl at htmy/i18n.py:147 |  |  | 0.488 |
-| walker |  | 5532 | 0 | python class body at htmy/i18n.py:15 |  |  | 0.488 |
-| walker |  | 5532 | 0 | python class body at htmy/i18n.py:18 |  |  | 0.488 |
-| walker |  | 5532 | 0 | python class body at htmy/i18n.py:21 |  |  | 0.488 |
-| walker |  | 5547 | 15 | python decl at htmy/i18n.py:115 |  |  | 0.488 |
-| walker |  | 5569 | 22 | python decl doc at htmy/i18n.py:24 |  |  | 0.488 |
-| walker |  | 5635 | 66 | python class body at htmy/i18n.py:24 |  |  | 0.488 |
-| ns | 5669 |  | 270 | Snippet / Slots class signatures | 2.14 |  | 0.504 |
-| walker |  | 5728 | 93 | python method sigs in htmy/i18n.py |  |  | 0.505 |
-| walker |  | 5728 | 0 | python method at htmy/i18n.py:34 |  |  | 0.505 |
-| walker |  | 5728 | 0 | python method at htmy/i18n.py:45 |  |  | 0.505 |
-| walker |  | 5728 | 0 | python method at htmy/i18n.py:48 |  |  | 0.505 |
-| walker |  | 5728 | 0 | python method at htmy/i18n.py:51 |  |  | 0.505 |
-| walker |  | 5749 | 21 | python method body at htmy/i18n.py:45 body 46 |  |  | 0.505 |
-| walker |  | 5811 | 62 | README.md section #48 |  |  | 0.505 |
-| walker |  | 5837 | 26 | README.md section #38 |  |  | 0.505 |
-| ns | 5899 |  | 230 | MD / MarkdownParser class signatures | 2.15 |  | 0.495 |
-| walker |  | 6012 | 175 | python method sigs in htmy/tag.py |  |  | 0.504 |
-| walker |  | 6012 | 0 | python method at htmy/tag.py:15 |  |  | 0.504 |
-| walker |  | 6012 | 0 | python method at htmy/tag.py:19 |  |  | 0.504 |
-| walker |  | 6012 | 0 | python method at htmy/tag.py:39 |  |  | 0.504 |
-| walker |  | 6012 | 0 | python method at htmy/tag.py:66 |  |  | 0.504 |
-| walker |  | 6012 | 0 | python method at htmy/tag.py:69 |  |  | 0.504 |
-| walker |  | 6012 | 0 | python method at htmy/tag.py:76 |  |  | 0.504 |
-| walker |  | 6012 | 0 | python method at htmy/tag.py:80 |  |  | 0.504 |
-| walker |  | 6020 | 8 | python method body at htmy/tag.py:66 body 67 |  |  | 0.505 |
-| walker |  | 6034 | 14 | python method body at htmy/tag.py:69 body 70 |  |  | 0.507 |
-| walker |  | 6052 | 18 | python method body at htmy/tag.py:15 body 16 |  |  | 0.507 |
-| walker |  | 6070 | 18 | python method body at htmy/tag.py:80 body 81 |  |  | 0.510 |
-| walker |  | 6123 | 53 | python method at htmy/tag.py:27 |  |  | 0.510 |
-| ns | 6141 |  | 242 | I18n class signature | 2.16 |  | 0.513 |
-| walker |  | 6143 | 20 | python method body at htmy/tag.py:76 body 77 |  |  | 0.517 |
-| walker |  | 6185 | 42 | python method doc at htmy/core.py:115 |  |  | 0.518 |
-| walker |  | 6227 | 42 | python method doc at htmy/core.py:259 |  |  | 0.518 |
-| walker |  | 6255 | 28 | python method at htmy/snippet.py:272 |  |  | 0.518 |
-| walker |  | 6270 | 15 | python method doc at htmy/snippet.py:272 |  |  | 0.518 |
-| ns | 6275 |  | 134 | ErrorBoundary class signature | 2.17 |  | 0.526 |
-| walker |  | 6407 | 137 | python method sigs in htmy/etree.py |  |  | 0.526 |
-| walker |  | 6407 | 0 | python method at htmy/etree.py:46 |  |  | 0.526 |
-| walker |  | 6407 | 0 | python method at htmy/etree.py:55 |  |  | 0.526 |
-| walker |  | 6407 | 0 | python method at htmy/etree.py:63 |  |  | 0.526 |
-| walker |  | 6407 | 0 | python method at htmy/etree.py:83 |  |  | 0.526 |
-| walker |  | 6407 | 0 | python method at htmy/etree.py:91 |  |  | 0.526 |
-| walker |  | 6407 | 0 | python method at htmy/etree.py:103 |  |  | 0.526 |
-| walker |  | 6422 | 15 | python method doc at htmy/etree.py:63 |  |  | 0.526 |
-| walker |  | 6433 | 11 | python method body at htmy/etree.py:46 body 53 |  |  | 0.526 |
-| walker |  | 6452 | 19 | python method doc at htmy/etree.py:55 |  |  | 0.526 |
-| walker |  | 6465 | 13 | python method doc at htmy/etree.py:103 |  |  | 0.526 |
-| walker |  | 6503 | 38 | python method doc at htmy/etree.py:46 |  |  | 0.526 |
-| walker |  | 6538 | 35 | python imports in htmy/typing.py |  |  | 0.527 |
-| ns | 6542 |  | 267 | ETreeConverter class signature | 2.18 |  | 0.520 |
-| walker |  | 6630 | 92 | python decl doc at htmy/core.py:163 |  |  | 0.520 |
-| ns | 6703 |  | 161 | Formatter class signature | 2.19 |  | 0.527 |
-| walker |  | 6779 | 149 | python decl names surface in htmy/html.py |  |  | 0.528 |
-| walker |  | 6779 | 0 | python decl at htmy/html.py:13 |  |  | 0.528 |
-| walker |  | 6779 | 0 | python decl at htmy/html.py:63 |  |  | 0.528 |
-| walker |  | 6779 | 0 | python decl at htmy/html.py:79 |  |  | 0.528 |
-| walker |  | 6779 | 0 | python decl at htmy/html.py:831 |  |  | 0.528 |
-| walker |  | 6787 | 8 | python decl doc at htmy/html.py:13 |  |  | 0.528 |
-| walker |  | 6797 | 10 | python decl doc at htmy/html.py:63 |  |  | 0.528 |
-| walker |  | 6807 | 10 | python decl doc at htmy/html.py:79 |  |  | 0.528 |
-| walker |  | 6831 | 24 | python class body at htmy/html.py:13 |  |  | 0.528 |
-| walker |  | 6891 | 60 | python method sigs in htmy/html.py |  |  | 0.528 |
-| walker |  | 6904 | 13 | python method at htmy/html.py:82 |  |  | 0.528 |
-| walker |  | 6917 | 13 | python method at htmy/html.py:90 |  |  | 0.528 |
-| walker |  | 6930 | 13 | python method at htmy/html.py:94 |  |  | 0.528 |
-| walker |  | 6944 | 14 | python method at htmy/html.py:66 |  |  | 0.529 |
-| walker |  | 6963 | 19 | python method at htmy/html.py:86 |  |  | 0.529 |
-| walker |  | 6988 | 25 | python method at htmy/html.py:98 |  |  | 0.529 |
-| walker |  | 7000 | 12 | python method body at htmy/html.py:86 body 88 |  |  | 0.529 |
-| walker |  | 7015 | 15 | python method body at htmy/html.py:82 body 84 |  |  | 0.529 |
-| walker |  | 7030 | 15 | python method body at htmy/html.py:90 body 92 |  |  | 0.529 |
-| walker |  | 7045 | 15 | python method body at htmy/html.py:94 body 96 |  |  | 0.529 |
-| walker |  | 7060 | 15 | python method body at htmy/html.py:98 body 100 |  |  | 0.530 |
-| ns | 7214 |  | 511 | SafeStr / Text / XBool / SkipProperty + xml_format_string | 2.20 |  | 0.542 |
-| walker |  | 7257 | 197 | python class body at htmy/html.py:831 |  |  | 0.543 |
-| walker |  | 7277 | 20 | python method body at htmy/html.py:66 body 68 |  |  | 0.543 |
-| walker |  | 7313 | 36 | python imports in htmy/io.py |  |  | 0.543 |
-| ns | 7383 |  | 169 | Utility helpers — public function signatures | 2.21 |  | 0.538 |
-| walker |  | 7467 | 154 | python decl names surface in htmy/typing.py |  |  | 0.543 |
-| walker |  | 7467 | 0 | python decl at htmy/typing.py:37 |  |  | 0.543 |
-| walker |  | 7467 | 0 | python decl at htmy/typing.py:45 |  |  | 0.543 |
-| walker |  | 7467 | 0 | python decl at htmy/typing.py:73 |  |  | 0.543 |
-| walker |  | 7467 | 0 | python decl at htmy/typing.py:81 |  |  | 0.543 |
-| walker |  | 7467 | 0 | python decl at htmy/typing.py:103 |  |  | 0.543 |
-| walker |  | 7478 | 11 | python decl doc at htmy/typing.py:73 |  |  | 0.544 |
-| walker |  | 7489 | 11 | python decl doc at htmy/typing.py:81 |  |  | 0.545 |
-| walker |  | 7503 | 14 | python decl doc at htmy/typing.py:37 |  |  | 0.545 |
-| walker |  | 7517 | 14 | python decl doc at htmy/typing.py:45 |  |  | 0.546 |
-| walker |  | 7545 | 28 | python decl doc at htmy/typing.py:103 |  |  | 0.546 |
-| walker |  | 7642 | 97 | python method sigs in htmy/typing.py |  |  | 0.551 |
-| walker |  | 7642 | 0 | python method at htmy/typing.py:40 |  |  | 0.551 |
-| walker |  | 7642 | 0 | python method at htmy/typing.py:48 |  |  | 0.551 |
-| walker |  | 7642 | 0 | python method at htmy/typing.py:76 |  |  | 0.551 |
-| walker |  | 7642 | 0 | python method at htmy/typing.py:84 |  |  | 0.551 |
-| walker |  | 7642 | 0 | python method at htmy/typing.py:108 |  |  | 0.551 |
-| walker |  | 7648 | 6 | python method body at htmy/typing.py:40 body 42 |  |  | 0.552 |
-| walker |  | 7654 | 6 | python method body at htmy/typing.py:48 body 50 |  |  | 0.553 |
-| walker |  | 7660 | 6 | python method body at htmy/typing.py:76 body 78 |  |  | 0.554 |
-| walker |  | 7666 | 6 | python method body at htmy/typing.py:84 body 86 |  |  | 0.554 |
-| walker |  | 7672 | 6 | python method body at htmy/typing.py:108 body 118 |  |  | 0.554 |
-| walker |  | 7681 | 9 | python method doc at htmy/typing.py:40 |  |  | 0.556 |
-| walker |  | 7690 | 9 | python method doc at htmy/typing.py:48 |  |  | 0.558 |
-| walker |  | 7701 | 11 | python method doc at htmy/typing.py:76 |  |  | 0.559 |
-| walker |  | 7712 | 11 | python method doc at htmy/typing.py:84 |  |  | 0.561 |
-| walker |  | 7738 | 26 | python method body at htmy/i18n.py:48 body 49 |  |  | 0.564 |
-| walker |  | 7750 | 12 | python method body at htmy/snippet.py:272 body 276 |  |  | 0.564 |
-| walker |  | 7781 | 31 | python method at htmy/i18n.py:79 |  |  | 0.564 |
-| walker |  | 7799 | 18 | docs/api/md.md section #1 |  |  | 0.564 |
-| walker |  | 7826 | 27 | python method body at htmy/core.py:104 body 105 |  |  | 0.564 |
-| ns | 7838 |  | 455 | html.py — top of file (DOCTYPE + first tags + Link) | 3.1 |  | 0.577 |
-| walker |  | 7963 | 137 | python decl names surface in htmy/utils.py |  |  | 0.582 |
-| walker |  | 7963 | 0 | python decl at htmy/utils.py:42 |  |  | 0.582 |
-| walker |  | 7963 | 0 | python decl at htmy/utils.py:49 |  |  | 0.582 |
-| walker |  | 7963 | 0 | python decl at htmy/utils.py:55 |  |  | 0.582 |
-| walker |  | 7963 | 0 | python decl at htmy/utils.py:62 |  |  | 0.582 |
-| walker |  | 7963 | 0 | python decl at htmy/utils.py:67 |  |  | 0.582 |
-| walker |  | 7963 | 0 | python decl at htmy/utils.py:73 |  |  | 0.582 |
-| walker |  | 7978 | 15 | python decl doc at htmy/utils.py:67 |  |  | 0.582 |
-| walker |  | 7994 | 16 | python decl doc at htmy/utils.py:55 |  |  | 0.582 |
-| walker |  | 8010 | 16 | python decl doc at htmy/utils.py:62 |  |  | 0.582 |
-| walker |  | 8024 | 14 | python decl body at htmy/utils.py:62 body 64 |  |  | 0.582 |
-| walker |  | 8043 | 19 | python decl doc at htmy/utils.py:73 |  |  | 0.582 |
-| walker |  | 8059 | 16 | python decl body at htmy/utils.py:42 body 46 |  |  | 0.582 |
-| walker |  | 8103 | 44 | python decl at htmy/utils.py:12 |  |  | 0.588 |
-| walker |  | 8130 | 27 | python decl doc at htmy/utils.py:49 |  |  | 0.588 |
-| ns | 8131 |  | 293 | html.py — block + form tag inventory (locations) | 3.2 |  | 0.570 |
-| walker |  | 8161 | 31 | python decl doc at htmy/utils.py:42 |  |  | 0.570 |
-| walker |  | 8240 | 79 | python decl doc at htmy/utils.py:12 |  |  | 0.570 |
-| walker |  | 8270 | 30 | docs/index.md section #50 |  |  | 0.570 |
-| walker |  | 8358 | 88 | README.md section #43 |  |  | 0.570 |
-| walker |  | 8452 | 94 | python decl doc at htmy/i18n.py:115 |  |  | 0.570 |
-| walker |  | 8480 | 28 | listing of 'tests/renderer' |  |  | 0.577 |
-| walker |  | 8543 | 63 | python decl doc at htmy/md/core.py:20 |  |  | 0.577 |
-| walker |  | 8598 | 55 | python method doc at htmy/core.py:246 |  |  | 0.577 |
-| ns | 8784 |  | 653 | html.py — inline + table + heading tag inventory (locations) | 3.3 |  | 0.554 |
-| walker |  | 8806 | 208 | python decl names surface in htmy/function_component.py |  |  | 0.554 |
-| walker |  | 8806 | 0 | python decl at htmy/function_component.py:31 |  |  | 0.554 |
-| walker |  | 8806 | 0 | python decl at htmy/function_component.py:46 |  |  | 0.554 |
-| walker |  | 8806 | 0 | python decl at htmy/function_component.py:71 |  |  | 0.554 |
-| walker |  | 8825 | 19 | python decl doc at htmy/function_component.py:71 |  |  | 0.554 |
-| walker |  | 8883 | 58 | python class body at htmy/function_component.py:71 |  |  | 0.554 |
-| walker |  | 9083 | 200 | python method sigs in htmy/function_component.py |  |  | 0.556 |
-| walker |  | 9083 | 0 | python method at htmy/function_component.py:37 |  |  | 0.556 |
-| walker |  | 9083 | 0 | python method at htmy/function_component.py:52 |  |  | 0.556 |
-| walker |  | 9083 | 0 | python method at htmy/function_component.py:80 |  |  | 0.556 |
-| walker |  | 9083 | 0 | python method at htmy/function_component.py:83 |  |  | 0.556 |
-| walker |  | 9083 | 0 | python method at htmy/function_component.py:141 |  |  | 0.556 |
-| walker |  | 9083 | 0 | python method at htmy/function_component.py:144 |  |  | 0.556 |
-| walker |  | 9083 | 0 | python method body at htmy/function_component.py:37 body 37 |  |  | 0.556 |
-| walker |  | 9083 | 0 | python method body at htmy/function_component.py:52 body 52 |  |  | 0.556 |
-| walker |  | 9106 | 23 | python method at htmy/function_component.py:184 |  |  | 0.557 |
-| walker |  | 9129 | 23 | python method at htmy/function_component.py:189 |  |  | 0.558 |
-| walker |  | 9154 | 25 | python method at htmy/function_component.py:305 |  |  | 0.559 |
-| walker |  | 9179 | 25 | python method at htmy/function_component.py:310 |  |  | 0.561 |
-| walker |  | 9205 | 26 | python method at htmy/function_component.py:234 |  |  | 0.562 |
-| walker |  | 9231 | 26 | python method at htmy/function_component.py:239 |  |  | 0.563 |
-| walker |  | 9247 | 16 | python method body at htmy/function_component.py:305 body 308 |  |  | 0.564 |
-| walker |  | 9263 | 16 | python method body at htmy/function_component.py:310 body 313 |  |  | 0.566 |
-| walker |  | 9280 | 17 | python method body at htmy/function_component.py:184 body 187 |  |  | 0.567 |
-| walker |  | 9297 | 17 | python method body at htmy/function_component.py:189 body 192 |  |  | 0.568 |
-| ns | 9299 |  | 515 | Snippet docstring — the 4-step pipeline + warning | 4.1 |  | 0.558 |
-| walker |  | 9348 | 51 | python method at htmy/function_component.py:86 |  |  | 0.561 |
-| walker |  | 9399 | 51 | python method at htmy/function_component.py:147 |  |  | 0.561 |
-| walker |  | 9408 | 9 | python method body at htmy/function_component.py:147 body 180 |  |  | 0.561 |
-| walker |  | 9459 | 51 | python method at htmy/function_component.py:194 |  |  | 0.566 |
-| walker |  | 9512 | 53 | python method at htmy/function_component.py:315 |  |  | 0.572 |
-| walker |  | 9531 | 19 | python method body at htmy/function_component.py:234 body 237 |  |  | 0.573 |
-| walker |  | 9550 | 19 | python method body at htmy/function_component.py:239 body 242 |  |  | 0.574 |
-| walker |  | 9615 | 65 | python method at htmy/function_component.py:244 |  |  | 0.579 |
-| ns | 9652 |  | 353 | README — default attribute-formatting rules | 4.2 |  | 0.576 |
-| walker |  | 9654 | 39 | python decl doc at htmy/function_component.py:31 |  |  | 0.576 |
-| walker |  | 9693 | 39 | python decl doc at htmy/function_component.py:46 |  |  | 0.576 |
-| walker |  | 9719 | 26 | python method body at htmy/function_component.py:141 body 142 |  |  | 0.576 |
-| walker |  | 9745 | 26 | python method body at htmy/function_component.py:144 body 145 |  |  | 0.576 |
-| walker |  | 9773 | 28 | python method body at htmy/function_component.py:80 body 81 |  |  | 0.578 |
-| walker |  | 9801 | 28 | python method body at htmy/function_component.py:83 body 84 |  |  | 0.581 |
-| ns | 9808 |  | 156 | tests/conftest.py — renderer fixtures | 4.3 |  | 0.575 |
-| walker |  | 9830 | 29 | docs/api/renderer/default.md section #0 |  |  | 0.575 |
-| walker |  | 9876 | 46 | python imports in htmy/tag.py |  |  | 0.575 |
-| walker |  | 9906 | 30 | docs/api/renderer/baseline.md section #0 |  |  | 0.575 |
-| walker |  | 9936 | 30 | docs/api/renderer/typing.md section #0 |  |  | 0.575 |
-| walker |  | 9994 | 58 | python method doc at htmy/core.py:45 |  |  | 0.583 |
+| ns | 4603 |  | 184 | ContextAware base class — public methods | 2.11 |  | 0.485 |
+| walker |  | 4626 | 316 | python method sigs in htmy/core.py |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:24 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:33 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:45 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:56 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:104 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:108 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:115 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:186 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:241 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:246 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:259 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:268 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:281 |  |  | 0.495 |
+| walker |  | 4626 | 0 | python method at htmy/core.py:286 |  |  | 0.495 |
+| walker |  | 4640 | 14 | python method at htmy/core.py:151 |  |  | 0.495 |
+| walker |  | 4649 | 9 | python method doc at htmy/core.py:33 |  |  | 0.497 |
+| walker |  | 4672 | 23 | python method at htmy/core.py:127 |  |  | 0.499 |
+| walker |  | 4683 | 11 | python method doc at htmy/core.py:56 |  |  | 0.501 |
+| walker |  | 4697 | 14 | python method doc at htmy/core.py:241 |  |  | 0.501 |
+| walker |  | 4707 | 10 | python method body at htmy/core.py:33 body 35 |  |  | 0.503 |
+| walker |  | 4717 | 10 | python method body at htmy/core.py:56 body 58 |  |  | 0.505 |
+| walker |  | 4728 | 11 | python method body at htmy/core.py:24 body 31 |  |  | 0.507 |
+| walker |  | 4739 | 11 | python method body at htmy/core.py:151 body 154 |  |  | 0.507 |
+| walker |  | 4751 | 12 | python method body at htmy/core.py:259 body 266 |  |  | 0.507 |
+| walker |  | 4773 | 22 | python method doc at htmy/core.py:151 |  |  | 0.507 |
+| walker |  | 4783 | 10 | python method doc at htmy/core.py:281 |  |  | 0.507 |
+| walker |  | 4799 | 16 | python method body at htmy/core.py:108 body 113 |  |  | 0.509 |
+| walker |  | 4812 | 13 | python method doc at htmy/core.py:286 |  |  | 0.509 |
+| walker |  | 4868 | 56 | python method at htmy/core.py:222 |  |  | 0.510 |
+| walker |  | 4903 | 35 | python method doc at htmy/core.py:186 |  |  | 0.510 |
+| walker |  | 4956 | 53 | python class body at htmy/md/core.py:20 |  |  | 0.510 |
+| walker |  | 4986 | 30 | docs/api/i18n.md section #0 |  |  | 0.510 |
+| walker |  | 5022 | 36 | python method doc at htmy/core.py:24 |  |  | 0.520 |
+| ns | 5046 |  | 443 | @component decorator — props+context (function/method) | 2.12 |  | 0.498 |
+| walker |  | 5237 | 215 | headings outline in docs/index.md |  |  | 0.498 |
+| walker |  | 5286 | 49 | docs/index.md section #0 |  |  | 0.498 |
+| walker |  | 5324 | 38 | python method doc at htmy/core.py:108 |  |  | 0.506 |
+| walker |  | 5334 | 10 | python method body at htmy/snippet.py:265 body 270 |  |  | 0.506 |
+| walker |  | 5398 | 64 | python method at htmy/snippet.py:83 |  |  | 0.507 |
+| ns | 5399 |  | 353 | @component decorator — context-only (function/method) | 2.13 |  | 0.491 |
+| walker |  | 5464 | 66 | python method at htmy/snippet.py:218 |  |  | 0.492 |
+| walker |  | 5573 | 109 | python decl names surface in htmy/i18n.py |  |  | 0.492 |
+| walker |  | 5573 | 0 | python decl at htmy/i18n.py:15 |  |  | 0.492 |
+| walker |  | 5573 | 0 | python decl at htmy/i18n.py:18 |  |  | 0.492 |
+| walker |  | 5573 | 0 | python decl at htmy/i18n.py:21 |  |  | 0.492 |
+| walker |  | 5573 | 0 | python decl at htmy/i18n.py:24 |  |  | 0.492 |
+| walker |  | 5573 | 0 | python decl at htmy/i18n.py:147 |  |  | 0.492 |
+| walker |  | 5573 | 0 | python class body at htmy/i18n.py:15 |  |  | 0.492 |
+| walker |  | 5573 | 0 | python class body at htmy/i18n.py:18 |  |  | 0.492 |
+| walker |  | 5573 | 0 | python class body at htmy/i18n.py:21 |  |  | 0.492 |
+| walker |  | 5588 | 15 | python decl at htmy/i18n.py:115 |  |  | 0.492 |
+| walker |  | 5610 | 22 | python decl doc at htmy/i18n.py:24 |  |  | 0.492 |
+| ns | 5669 |  | 270 | Snippet / Slots class signatures | 2.14 |  | 0.508 |
+| walker |  | 5676 | 66 | python class body at htmy/i18n.py:24 |  |  | 0.508 |
+| walker |  | 5769 | 93 | python method sigs in htmy/i18n.py |  |  | 0.509 |
+| walker |  | 5769 | 0 | python method at htmy/i18n.py:34 |  |  | 0.509 |
+| walker |  | 5769 | 0 | python method at htmy/i18n.py:45 |  |  | 0.509 |
+| walker |  | 5769 | 0 | python method at htmy/i18n.py:48 |  |  | 0.509 |
+| walker |  | 5769 | 0 | python method at htmy/i18n.py:51 |  |  | 0.509 |
+| walker |  | 5790 | 21 | python method body at htmy/i18n.py:45 body 46 |  |  | 0.509 |
+| walker |  | 5852 | 62 | README.md section #48 |  |  | 0.509 |
+| walker |  | 5878 | 26 | README.md section #38 |  |  | 0.509 |
+| ns | 5899 |  | 230 | MD / MarkdownParser class signatures | 2.15 |  | 0.499 |
+| walker |  | 6053 | 175 | python method sigs in htmy/tag.py |  |  | 0.508 |
+| walker |  | 6053 | 0 | python method at htmy/tag.py:15 |  |  | 0.508 |
+| walker |  | 6053 | 0 | python method at htmy/tag.py:19 |  |  | 0.508 |
+| walker |  | 6053 | 0 | python method at htmy/tag.py:39 |  |  | 0.508 |
+| walker |  | 6053 | 0 | python method at htmy/tag.py:66 |  |  | 0.508 |
+| walker |  | 6053 | 0 | python method at htmy/tag.py:69 |  |  | 0.508 |
+| walker |  | 6053 | 0 | python method at htmy/tag.py:76 |  |  | 0.508 |
+| walker |  | 6053 | 0 | python method at htmy/tag.py:80 |  |  | 0.508 |
+| walker |  | 6061 | 8 | python method body at htmy/tag.py:66 body 67 |  |  | 0.509 |
+| walker |  | 6075 | 14 | python method body at htmy/tag.py:69 body 70 |  |  | 0.511 |
+| walker |  | 6093 | 18 | python method body at htmy/tag.py:15 body 16 |  |  | 0.511 |
+| walker |  | 6111 | 18 | python method body at htmy/tag.py:80 body 81 |  |  | 0.514 |
+| ns | 6141 |  | 242 | I18n class signature | 2.16 |  | 0.517 |
+| walker |  | 6164 | 53 | python method at htmy/tag.py:27 |  |  | 0.517 |
+| walker |  | 6184 | 20 | python method body at htmy/tag.py:76 body 77 |  |  | 0.520 |
+| walker |  | 6226 | 42 | python method doc at htmy/core.py:115 |  |  | 0.522 |
+| walker |  | 6268 | 42 | python method doc at htmy/core.py:259 |  |  | 0.522 |
+| ns | 6275 |  | 134 | ErrorBoundary class signature | 2.17 |  | 0.530 |
+| walker |  | 6296 | 28 | python method at htmy/snippet.py:272 |  |  | 0.530 |
+| walker |  | 6311 | 15 | python method doc at htmy/snippet.py:272 |  |  | 0.530 |
+| walker |  | 6448 | 137 | python method sigs in htmy/etree.py |  |  | 0.530 |
+| walker |  | 6448 | 0 | python method at htmy/etree.py:46 |  |  | 0.530 |
+| walker |  | 6448 | 0 | python method at htmy/etree.py:55 |  |  | 0.530 |
+| walker |  | 6448 | 0 | python method at htmy/etree.py:63 |  |  | 0.530 |
+| walker |  | 6448 | 0 | python method at htmy/etree.py:83 |  |  | 0.530 |
+| walker |  | 6448 | 0 | python method at htmy/etree.py:91 |  |  | 0.530 |
+| walker |  | 6448 | 0 | python method at htmy/etree.py:103 |  |  | 0.530 |
+| walker |  | 6463 | 15 | python method doc at htmy/etree.py:63 |  |  | 0.530 |
+| walker |  | 6474 | 11 | python method body at htmy/etree.py:46 body 53 |  |  | 0.530 |
+| walker |  | 6493 | 19 | python method doc at htmy/etree.py:55 |  |  | 0.530 |
+| walker |  | 6506 | 13 | python method doc at htmy/etree.py:103 |  |  | 0.530 |
+| ns | 6542 |  | 267 | ETreeConverter class signature | 2.18 |  | 0.522 |
+| walker |  | 6544 | 38 | python method doc at htmy/etree.py:46 |  |  | 0.523 |
+| walker |  | 6579 | 35 | python imports in htmy/typing.py |  |  | 0.523 |
+| walker |  | 6671 | 92 | python decl doc at htmy/core.py:163 |  |  | 0.524 |
+| ns | 6703 |  | 161 | Formatter class signature | 2.19 |  | 0.531 |
+| walker |  | 6820 | 149 | python decl names surface in htmy/html.py |  |  | 0.531 |
+| walker |  | 6820 | 0 | python decl at htmy/html.py:13 |  |  | 0.531 |
+| walker |  | 6820 | 0 | python decl at htmy/html.py:63 |  |  | 0.531 |
+| walker |  | 6820 | 0 | python decl at htmy/html.py:79 |  |  | 0.531 |
+| walker |  | 6820 | 0 | python decl at htmy/html.py:831 |  |  | 0.531 |
+| walker |  | 6828 | 8 | python decl doc at htmy/html.py:13 |  |  | 0.531 |
+| walker |  | 6838 | 10 | python decl doc at htmy/html.py:63 |  |  | 0.531 |
+| walker |  | 6848 | 10 | python decl doc at htmy/html.py:79 |  |  | 0.531 |
+| walker |  | 6872 | 24 | python class body at htmy/html.py:13 |  |  | 0.531 |
+| walker |  | 6932 | 60 | python method sigs in htmy/html.py |  |  | 0.532 |
+| walker |  | 6945 | 13 | python method at htmy/html.py:82 |  |  | 0.532 |
+| walker |  | 6958 | 13 | python method at htmy/html.py:90 |  |  | 0.532 |
+| walker |  | 6971 | 13 | python method at htmy/html.py:94 |  |  | 0.532 |
+| walker |  | 6985 | 14 | python method at htmy/html.py:66 |  |  | 0.532 |
+| walker |  | 7004 | 19 | python method at htmy/html.py:86 |  |  | 0.532 |
+| walker |  | 7029 | 25 | python method at htmy/html.py:98 |  |  | 0.532 |
+| walker |  | 7041 | 12 | python method body at htmy/html.py:86 body 88 |  |  | 0.532 |
+| walker |  | 7056 | 15 | python method body at htmy/html.py:82 body 84 |  |  | 0.533 |
+| walker |  | 7071 | 15 | python method body at htmy/html.py:90 body 92 |  |  | 0.533 |
+| walker |  | 7086 | 15 | python method body at htmy/html.py:94 body 96 |  |  | 0.533 |
+| walker |  | 7101 | 15 | python method body at htmy/html.py:98 body 100 |  |  | 0.533 |
+| ns | 7214 |  | 511 | SafeStr / Text / XBool / SkipProperty + xml_format_string | 2.20 |  | 0.545 |
+| walker |  | 7298 | 197 | python class body at htmy/html.py:831 |  |  | 0.546 |
+| walker |  | 7318 | 20 | python method body at htmy/html.py:66 body 68 |  |  | 0.546 |
+| walker |  | 7354 | 36 | python imports in htmy/io.py |  |  | 0.546 |
+| ns | 7383 |  | 169 | Utility helpers — public function signatures | 2.21 |  | 0.541 |
+| walker |  | 7508 | 154 | python decl names surface in htmy/typing.py |  |  | 0.547 |
+| walker |  | 7508 | 0 | python decl at htmy/typing.py:37 |  |  | 0.547 |
+| walker |  | 7508 | 0 | python decl at htmy/typing.py:45 |  |  | 0.547 |
+| walker |  | 7508 | 0 | python decl at htmy/typing.py:73 |  |  | 0.547 |
+| walker |  | 7508 | 0 | python decl at htmy/typing.py:81 |  |  | 0.547 |
+| walker |  | 7508 | 0 | python decl at htmy/typing.py:103 |  |  | 0.547 |
+| walker |  | 7519 | 11 | python decl doc at htmy/typing.py:73 |  |  | 0.547 |
+| walker |  | 7530 | 11 | python decl doc at htmy/typing.py:81 |  |  | 0.548 |
+| walker |  | 7544 | 14 | python decl doc at htmy/typing.py:37 |  |  | 0.548 |
+| walker |  | 7558 | 14 | python decl doc at htmy/typing.py:45 |  |  | 0.549 |
+| walker |  | 7586 | 28 | python decl doc at htmy/typing.py:103 |  |  | 0.549 |
+| walker |  | 7683 | 97 | python method sigs in htmy/typing.py |  |  | 0.554 |
+| walker |  | 7683 | 0 | python method at htmy/typing.py:40 |  |  | 0.554 |
+| walker |  | 7683 | 0 | python method at htmy/typing.py:48 |  |  | 0.554 |
+| walker |  | 7683 | 0 | python method at htmy/typing.py:76 |  |  | 0.554 |
+| walker |  | 7683 | 0 | python method at htmy/typing.py:84 |  |  | 0.554 |
+| walker |  | 7683 | 0 | python method at htmy/typing.py:108 |  |  | 0.554 |
+| walker |  | 7689 | 6 | python method body at htmy/typing.py:40 body 42 |  |  | 0.555 |
+| walker |  | 7695 | 6 | python method body at htmy/typing.py:48 body 50 |  |  | 0.556 |
+| walker |  | 7701 | 6 | python method body at htmy/typing.py:76 body 78 |  |  | 0.557 |
+| walker |  | 7707 | 6 | python method body at htmy/typing.py:84 body 86 |  |  | 0.557 |
+| walker |  | 7713 | 6 | python method body at htmy/typing.py:108 body 118 |  |  | 0.557 |
+| walker |  | 7722 | 9 | python method doc at htmy/typing.py:40 |  |  | 0.559 |
+| walker |  | 7731 | 9 | python method doc at htmy/typing.py:48 |  |  | 0.561 |
+| walker |  | 7742 | 11 | python method doc at htmy/typing.py:76 |  |  | 0.563 |
+| walker |  | 7753 | 11 | python method doc at htmy/typing.py:84 |  |  | 0.564 |
+| walker |  | 7779 | 26 | python method body at htmy/i18n.py:48 body 49 |  |  | 0.567 |
+| walker |  | 7791 | 12 | python method body at htmy/snippet.py:272 body 276 |  |  | 0.567 |
+| walker |  | 7822 | 31 | python method at htmy/i18n.py:79 |  |  | 0.567 |
+| ns | 7838 |  | 455 | html.py — top of file (DOCTYPE + first tags + Link) | 3.1 |  | 0.580 |
+| walker |  | 7840 | 18 | docs/api/md.md section #1 |  |  | 0.580 |
+| walker |  | 7867 | 27 | python method body at htmy/core.py:104 body 105 |  |  | 0.580 |
+| walker |  | 8004 | 137 | python decl names surface in htmy/utils.py |  |  | 0.585 |
+| walker |  | 8004 | 0 | python decl at htmy/utils.py:42 |  |  | 0.585 |
+| walker |  | 8004 | 0 | python decl at htmy/utils.py:49 |  |  | 0.585 |
+| walker |  | 8004 | 0 | python decl at htmy/utils.py:55 |  |  | 0.585 |
+| walker |  | 8004 | 0 | python decl at htmy/utils.py:62 |  |  | 0.585 |
+| walker |  | 8004 | 0 | python decl at htmy/utils.py:67 |  |  | 0.585 |
+| walker |  | 8004 | 0 | python decl at htmy/utils.py:73 |  |  | 0.585 |
+| walker |  | 8019 | 15 | python decl doc at htmy/utils.py:67 |  |  | 0.585 |
+| walker |  | 8035 | 16 | python decl doc at htmy/utils.py:55 |  |  | 0.585 |
+| walker |  | 8051 | 16 | python decl doc at htmy/utils.py:62 |  |  | 0.585 |
+| walker |  | 8065 | 14 | python decl body at htmy/utils.py:62 body 64 |  |  | 0.585 |
+| walker |  | 8084 | 19 | python decl doc at htmy/utils.py:73 |  |  | 0.585 |
+| walker |  | 8100 | 16 | python decl body at htmy/utils.py:42 body 46 |  |  | 0.585 |
+| ns | 8131 |  | 293 | html.py — block + form tag inventory (locations) | 3.2 |  | 0.567 |
+| walker |  | 8144 | 44 | python decl at htmy/utils.py:12 |  |  | 0.572 |
+| walker |  | 8171 | 27 | python decl doc at htmy/utils.py:49 |  |  | 0.572 |
+| walker |  | 8202 | 31 | python decl doc at htmy/utils.py:42 |  |  | 0.572 |
+| walker |  | 8281 | 79 | python decl doc at htmy/utils.py:12 |  |  | 0.572 |
+| walker |  | 8311 | 30 | docs/index.md section #50 |  |  | 0.572 |
+| walker |  | 8399 | 88 | README.md section #43 |  |  | 0.572 |
+| walker |  | 8493 | 94 | python decl doc at htmy/i18n.py:115 |  |  | 0.572 |
+| walker |  | 8521 | 28 | listing of 'tests/renderer' |  |  | 0.579 |
+| walker |  | 8584 | 63 | python decl doc at htmy/md/core.py:20 |  |  | 0.580 |
+| walker |  | 8639 | 55 | python method doc at htmy/core.py:246 |  |  | 0.580 |
+| ns | 8784 |  | 653 | html.py — inline + table + heading tag inventory (locations) | 3.3 |  | 0.556 |
+| walker |  | 8847 | 208 | python decl names surface in htmy/function_component.py |  |  | 0.556 |
+| walker |  | 8847 | 0 | python decl at htmy/function_component.py:31 |  |  | 0.556 |
+| walker |  | 8847 | 0 | python decl at htmy/function_component.py:46 |  |  | 0.556 |
+| walker |  | 8847 | 0 | python decl at htmy/function_component.py:71 |  |  | 0.556 |
+| walker |  | 8866 | 19 | python decl doc at htmy/function_component.py:71 |  |  | 0.557 |
+| walker |  | 8924 | 58 | python class body at htmy/function_component.py:71 |  |  | 0.557 |
+| walker |  | 9124 | 200 | python method sigs in htmy/function_component.py |  |  | 0.559 |
+| walker |  | 9124 | 0 | python method at htmy/function_component.py:37 |  |  | 0.559 |
+| walker |  | 9124 | 0 | python method at htmy/function_component.py:52 |  |  | 0.559 |
+| walker |  | 9124 | 0 | python method at htmy/function_component.py:80 |  |  | 0.559 |
+| walker |  | 9124 | 0 | python method at htmy/function_component.py:83 |  |  | 0.559 |
+| walker |  | 9124 | 0 | python method at htmy/function_component.py:141 |  |  | 0.559 |
+| walker |  | 9124 | 0 | python method at htmy/function_component.py:144 |  |  | 0.559 |
+| walker |  | 9124 | 0 | python method body at htmy/function_component.py:37 body 37 |  |  | 0.559 |
+| walker |  | 9124 | 0 | python method body at htmy/function_component.py:52 body 52 |  |  | 0.559 |
+| walker |  | 9147 | 23 | python method at htmy/function_component.py:184 |  |  | 0.560 |
+| walker |  | 9170 | 23 | python method at htmy/function_component.py:189 |  |  | 0.561 |
+| walker |  | 9195 | 25 | python method at htmy/function_component.py:305 |  |  | 0.562 |
+| walker |  | 9220 | 25 | python method at htmy/function_component.py:310 |  |  | 0.564 |
+| walker |  | 9246 | 26 | python method at htmy/function_component.py:234 |  |  | 0.565 |
+| walker |  | 9272 | 26 | python method at htmy/function_component.py:239 |  |  | 0.566 |
+| walker |  | 9288 | 16 | python method body at htmy/function_component.py:305 body 308 |  |  | 0.567 |
+| ns | 9299 |  | 515 | Snippet docstring — the 4-step pipeline + warning | 4.1 |  | 0.556 |
+| walker |  | 9304 | 16 | python method body at htmy/function_component.py:310 body 313 |  |  | 0.557 |
+| walker |  | 9321 | 17 | python method body at htmy/function_component.py:184 body 187 |  |  | 0.559 |
+| walker |  | 9338 | 17 | python method body at htmy/function_component.py:189 body 192 |  |  | 0.560 |
+| walker |  | 9389 | 51 | python method at htmy/function_component.py:86 |  |  | 0.563 |
+| walker |  | 9440 | 51 | python method at htmy/function_component.py:147 |  |  | 0.563 |
+| walker |  | 9449 | 9 | python method body at htmy/function_component.py:147 body 180 |  |  | 0.563 |
+| walker |  | 9500 | 51 | python method at htmy/function_component.py:194 |  |  | 0.569 |
+| walker |  | 9553 | 53 | python method at htmy/function_component.py:315 |  |  | 0.574 |
+| walker |  | 9572 | 19 | python method body at htmy/function_component.py:234 body 237 |  |  | 0.576 |
+| walker |  | 9591 | 19 | python method body at htmy/function_component.py:239 body 242 |  |  | 0.577 |
+| ns | 9652 |  | 353 | README — default attribute-formatting rules | 4.2 |  | 0.573 |
+| walker |  | 9656 | 65 | python method at htmy/function_component.py:244 |  |  | 0.578 |
+| walker |  | 9695 | 39 | python decl doc at htmy/function_component.py:31 |  |  | 0.578 |
+| walker |  | 9734 | 39 | python decl doc at htmy/function_component.py:46 |  |  | 0.578 |
+| walker |  | 9760 | 26 | python method body at htmy/function_component.py:141 body 142 |  |  | 0.578 |
+| walker |  | 9786 | 26 | python method body at htmy/function_component.py:144 body 145 |  |  | 0.578 |
+| ns | 9808 |  | 156 | tests/conftest.py — renderer fixtures | 4.3 |  | 0.572 |
+| walker |  | 9814 | 28 | python method body at htmy/function_component.py:80 body 81 |  |  | 0.574 |
+| walker |  | 9842 | 28 | python method body at htmy/function_component.py:83 body 84 |  |  | 0.577 |
+| walker |  | 9871 | 29 | docs/api/renderer/default.md section #0 |  |  | 0.577 |
+| walker |  | 9917 | 46 | python imports in htmy/tag.py |  |  | 0.577 |
+| walker |  | 9947 | 30 | docs/api/renderer/baseline.md section #0 |  |  | 0.577 |
+| walker |  | 9977 | 30 | docs/api/renderer/typing.md section #0 |  |  | 0.577 |
