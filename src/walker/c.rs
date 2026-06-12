@@ -53,7 +53,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, CKey};
 use crate::content::BatchContent;
-use crate::value::{mix_signals, names_surface_chunk_factor};
+use crate::value::{mix_signals, names_surface_chunk_factor, roster_mass_factor};
 
 /// Chunk size for C decl-name surfaces with no structural signal.
 /// Larger than Python/TS's 12 because C headers regularly expose 50+
@@ -100,6 +100,9 @@ pub(in crate::walker) struct CState {
     /// content is a parallel reimplementation of one interface; the NS
     /// anchors on the shared root API, not N copies of it.
     port_dirs: OnceCell<HashSet<PathBuf>>,
+    /// Per-basename `#include "X"` in-degree across the tree, computed
+    /// once. Prices include-graph hubs above leaf headers.
+    include_in_degree: OnceCell<IncludeInDegreeIndex>,
 }
 
 impl CState {
@@ -148,6 +151,166 @@ impl CState {
             .get_or_init(|| collect_port_dirs(root))
             .contains(dir)
     }
+
+    /// Include-graph in-degree index (computed once per run).
+    fn include_in_degree(&self, root: &Path) -> &IncludeInDegreeIndex {
+        self.include_in_degree
+            .get_or_init(|| collect_include_in_degree(root))
+    }
+}
+
+/// Per-basename include-graph in-degree across the tree. Only targets
+/// that exist as exactly one header in the tree are counted — a
+/// basename with several copies (vendored per-board trees) or none
+/// (uncloned submodule SDK headers) carries no attributable centrality.
+#[derive(Default)]
+struct IncludeInDegreeIndex {
+    /// In-degree counting only includes *from header files* — the
+    /// type/interface dependency graph. Cleanly ranks the OOP-backbone
+    /// hubs (htop `Object.h`/`Process.h`) while leaving utility headers
+    /// (`XUtils.h`, `Macros.h`) that only `.c` files pull in unboosted.
+    header_to_header: HashMap<String, usize>,
+    /// In-degree counting includes from every `.c`/`.h` file. Used for
+    /// the leaf test — a header no other file includes is a leaf even
+    /// when the header-to-header graph is silent about it.
+    total: HashMap<String, usize>,
+    max_header_to_header: usize,
+    /// Headers seen tree-wide — the leaf damp only fires in projects
+    /// with enough headers that breadth-pricing them all alike floods
+    /// the budget.
+    header_count: usize,
+}
+
+/// Hub boost activates only when the project's include graph has a real
+/// spine (htop 29, tinyusb 32; flat single-header projects are ≤ 4).
+const INCLUDE_HUB_MIN_MAX_IN_DEGREE: usize = 8;
+/// Max boost at the top of the include graph.
+const INCLUDE_HUB_BOOST: f64 = 0.6;
+/// Damp for headers nothing else includes, in header-rich projects.
+const INCLUDE_LEAF_FACTOR: f64 = 0.75;
+/// Minimum tree-wide header count for the leaf damp.
+const INCLUDE_LEAF_MIN_PROJECT_HEADERS: usize = 20;
+
+/// Walk the tree counting `#include "X"` per basename. Same coarse
+/// one-pass pattern (and cap) as [`count_small_headers`].
+fn collect_include_in_degree(root: &Path) -> IncludeInDegreeIndex {
+    const SCAN_CAP: usize = 4096;
+    let mut c_files: Vec<PathBuf> = Vec::new();
+    let mut header_copies: HashMap<String, usize> = HashMap::new();
+    let mut stack = vec![root.to_path_buf()];
+    let mut scanned = 0usize;
+    while let Some(dir) = stack.pop() {
+        let Ok(read_dir) = std::fs::read_dir(&dir) else {
+            continue;
+        };
+        for entry in read_dir.flatten() {
+            scanned += 1;
+            if scanned > SCAN_CAP {
+                stack.clear();
+                break;
+            }
+            let path = entry.path();
+            let Ok(file_type) = entry.file_type() else {
+                continue;
+            };
+            if file_type.is_dir() {
+                if !super::fs::should_skip_dir(&entry.file_name().to_string_lossy()) {
+                    stack.push(path);
+                }
+            } else if file_type.is_file()
+                && let Some(name) = path.file_name().and_then(|n| n.to_str())
+                && is_c_source_file_name(name)
+            {
+                if is_header_file(&path) {
+                    *header_copies.entry(name.to_string()).or_insert(0) += 1;
+                }
+                c_files.push(path);
+            }
+        }
+    }
+    let mut index = IncludeInDegreeIndex {
+        header_count: header_copies.values().sum(),
+        ..Default::default()
+    };
+    for file in &c_files {
+        let Ok(text) = std::fs::read_to_string(file) else {
+            continue;
+        };
+        let from_header = is_header_file(file);
+        for line in text.lines() {
+            let Some(target) = quoted_include_basename(line) else {
+                continue;
+            };
+            if header_copies.get(target) != Some(&1) {
+                continue;
+            }
+            *index.total.entry(target.to_string()).or_insert(0) += 1;
+            if from_header {
+                *index
+                    .header_to_header
+                    .entry(target.to_string())
+                    .or_insert(0) += 1;
+            }
+        }
+    }
+    index.max_header_to_header = index.header_to_header.values().copied().max().unwrap_or(0);
+    index
+}
+
+/// Basename of a `#include "X"` target, or `None` for non-include lines
+/// and angle-bracket (system) includes.
+fn quoted_include_basename(line: &str) -> Option<&str> {
+    let rest = line.trim_start().strip_prefix('#')?.trim_start();
+    let rest = rest.strip_prefix("include")?.trim_start();
+    let rest = rest.strip_prefix('"')?;
+    let path = &rest[..rest.find('"')?];
+    Some(path.rsplit('/').next().unwrap_or(path))
+}
+
+/// Include-graph centrality factor for a header's decl-tier batches.
+/// Hubs of the header-to-header graph get a bounded log boost (up to
+/// `1 + INCLUDE_HUB_BOOST`); headers nothing includes get a mild damp
+/// in header-rich projects. `.c` files and projects without an include
+/// spine are neutral by construction.
+fn include_centrality_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if !is_header_file(file) {
+        return 1.0;
+    }
+    let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
+        return 1.0;
+    };
+    let index = ctx.c_state().include_in_degree(ctx.root());
+    let mut factor = 1.0;
+    if index.max_header_to_header >= INCLUDE_HUB_MIN_MAX_IN_DEGREE
+        && let Some(&in_degree) = index.header_to_header.get(name)
+    {
+        factor *= 1.0
+            + INCLUDE_HUB_BOOST * ((1 + in_degree) as f64).ln()
+                / ((1 + index.max_header_to_header) as f64).ln();
+    }
+    if index.header_count >= INCLUDE_LEAF_MIN_PROJECT_HEADERS
+        && index.total.get(name).copied().unwrap_or(0) <= 1
+    {
+        factor *= INCLUDE_LEAF_FACTOR;
+    }
+    factor
+}
+
+/// True iff `file` is a top-tier hub of the header-to-header include
+/// graph: the spine is active and the header's in-degree is in the top
+/// half of the range. In htop this selects exactly the OOP backbone
+/// (Object / Hashtable / Machine / Meter / Process / Panel, h2h 24-29)
+/// while the wide per-meter tier (h2h 8-9) stays out.
+fn is_top_include_hub(file: &Path, ctx: &WalkCtx) -> bool {
+    if !is_header_file(file) {
+        return false;
+    }
+    let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
+        return false;
+    };
+    let index = ctx.c_state().include_in_degree(ctx.root());
+    index.max_header_to_header >= INCLUDE_HUB_MIN_MAX_IN_DEGREE
+        && index.header_to_header.get(name).copied().unwrap_or(0) * 2 >= index.max_header_to_header
 }
 
 /// Minimum sibling subdirs and shared file names for a directory group to
@@ -349,6 +512,9 @@ use super::{
 };
 
 /// Fixed-size source-order chunks of `C_DECL_NAMES_CHUNK_SIZE` decls.
+/// A trailing remainder below half a chunk merges into the previous
+/// chunk — a tiny tail chunk is so cheap that its ratio jumps the
+/// queue, dragging its gated per-decl train with it.
 fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
     if decl_count == 0 {
         return Vec::new();
@@ -360,6 +526,13 @@ fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
         let end = (i + chunk_size).min(decl_count);
         ranges.push(i..end);
         i = end;
+    }
+    if let [.., prev, last] = ranges.as_slice()
+        && last.len() < chunk_size / 2
+    {
+        let merged = prev.start..last.end;
+        ranges.pop();
+        *ranges.last_mut().expect("two ranges matched") = merged;
     }
     ranges
 }
@@ -408,18 +581,29 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
 
+        // NS authors rank include blocks tier 4+; the walker's tiny
+        // includes batches otherwise flood the early budget on header-
+        // rich trees (tinyusb's ~40 class-header includes inside 3K).
+        // Gate them behind the file's first names-surface chunk — the
+        // include map is reference detail once the file's surface is
+        // on the table. Files with no decl surface keep an ungated
+        // batch: there the includes ARE the file's content.
         let includes_lines = collect_includes(&tree, &source);
-        if let Some(content) = single_file_lines_content(file, &source, includes_lines) {
-            out.push(Batch {
-                key: CKey::Includes { file: file.clone() }.into(),
-                predecessor: None,
-                content,
-                value: includes_value(file, ctx),
-            });
-        }
+        let includes_content = single_file_lines_content(file, &source, includes_lines);
+        let push_includes = |out: &mut Vec<Batch<BatchKey>>, predecessor: Option<BatchKey>| {
+            if let Some(content) = includes_content.clone() {
+                out.push(Batch {
+                    key: CKey::Includes { file: file.clone() }.into(),
+                    predecessor,
+                    content,
+                    value: includes_value(file, ctx),
+                });
+            }
+        };
 
         let decls = find_decls(&tree, &source, file);
         if decls.is_empty() {
+            push_includes(&mut out, None);
             continue;
         }
         // Last 0-based row claimed by the file's HeaderBanner (the
@@ -467,18 +651,30 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
             v
         };
+        let mut names_chunk0_emitted = false;
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
             else {
                 continue;
             };
+            names_chunk0_emitted |= chunk_index == 0;
             out.push(Batch {
                 key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
+                value: decl_names_value(
+                    file,
+                    ctx,
+                    chunk_index,
+                    names_chunk_count,
+                    chunk_ranges[chunk_index].len(),
+                ),
             });
         }
+        push_includes(
+            &mut out,
+            names_chunk0_emitted.then(|| names_predecessors[0].clone()),
+        );
         for (decl_index, (node, info)) in decls.iter().enumerate() {
             let names_chunk_index = decl_to_chunk[decl_index];
             let names_predecessor = names_predecessors[names_chunk_index].clone();
@@ -613,12 +809,15 @@ struct AggregateMemberGroup {
 }
 
 /// All public top-level decls in source order. Descends through one
-/// wrapping `#ifndef X / #define X / #endif` header guard and through
-/// `extern "C" { … }` linkage specs.
+/// wrapping `#ifndef X / #define X / #endif` header guard, through
+/// `extern "C" { … }` linkage specs, and — in headers — through
+/// declaration-only feature gates (conditionally-compiled API). `.c`
+/// gates stay opaque: there, conditional compilation is implementation
+/// detail (sqlite-vec's `#ifndef _WIN32` portability-shim typedefs).
 fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, DeclInfo)> {
     let in_header = is_header_file(file);
     let mut out = Vec::new();
-    walk_top_level(tree.root_node(), source, &mut |node| {
+    walk_top_level(tree.root_node(), source, in_header, &mut |node| {
         if let Some(info) = classify_decl(node, source, in_header) {
             out.push((node, info));
         }
@@ -630,39 +829,142 @@ fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, D
 
 /// Visit each "effective top-level" item — descends through the file's
 /// header guard and through `extern "C" { … }` linkage specs.
-fn walk_top_level<'a, F: FnMut(Node<'a>)>(root: Node<'a>, source: &str, visit: &mut F) {
+/// `feature_gates` additionally descends declaration-only `#if` /
+/// `#ifdef` blocks.
+fn walk_top_level<'a, F: FnMut(Node<'a>)>(
+    root: Node<'a>,
+    source: &str,
+    feature_gates: bool,
+    visit: &mut F,
+) {
     let header_guard_body = header_guard_body_node(root, source);
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
         if Some(child) == header_guard_body {
-            descend_envelopes(child, source, visit);
+            descend_envelopes(child, source, feature_gates, visit);
         } else {
-            visit_with_envelope_descent(child, source, visit);
+            visit_with_envelope_descent(child, source, feature_gates, visit);
         }
     }
 }
 
 /// Visit each child of `node` with envelope-descent — used for header
 /// guard / `extern "C"` linkage_specification bodies.
-fn descend_envelopes<'a, F: FnMut(Node<'a>)>(node: Node<'a>, source: &str, visit: &mut F) {
+fn descend_envelopes<'a, F: FnMut(Node<'a>)>(
+    node: Node<'a>,
+    source: &str,
+    feature_gates: bool,
+    visit: &mut F,
+) {
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
-        visit_with_envelope_descent(child, source, visit);
+        visit_with_envelope_descent(child, source, feature_gates, visit);
     }
 }
 
 /// Visit `node`, descending if it's an `extern "C" { … }` envelope
-/// (raw or `#ifdef __cplusplus`-wrapped).
+/// (raw or `#ifdef __cplusplus`-wrapped) or — when `feature_gates` —
+/// a declaration-bearing feature gate (`#if`/`#ifdef` whose branches
+/// hold only declarations and directives).
 fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
+    node: Node<'a>,
+    source: &str,
+    feature_gates: bool,
+    visit: &mut F,
+) {
+    if let Some(decl_list) = extern_c_declaration_list(node, source) {
+        descend_envelopes(decl_list, source, feature_gates, visit);
+        return;
+    }
+    if feature_gates
+        && matches!(node.kind(), "preproc_if" | "preproc_ifdef")
+        && !is_disabled_preproc_if(node, source)
+        && feature_gate_decl_class(node) == GateClass::DeclOnly
+    {
+        descend_feature_gate_branches(node, source, visit);
+        return;
+    }
+    visit(node);
+}
+
+/// Visit every branch of a decl-bearing feature gate: direct children
+/// plus the bodies of `#else` / `#elif` alternates. Children go back
+/// through [`visit_with_envelope_descent`], so nested gates descend (or
+/// stay opaque) on their own merits.
+fn descend_feature_gate_branches<'a, F: FnMut(Node<'a>)>(
     node: Node<'a>,
     source: &str,
     visit: &mut F,
 ) {
-    if let Some(decl_list) = extern_c_declaration_list(node, source) {
-        descend_envelopes(decl_list, source, visit);
-        return;
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        match child.kind() {
+            "preproc_else" | "preproc_elif" | "preproc_elifdef" => {
+                descend_feature_gate_branches(child, source, visit);
+            }
+            _ => visit_with_envelope_descent(child, source, true, visit),
+        }
     }
-    visit(node);
+}
+
+/// True for `#if 0`-style disabled blocks — commented-out code, not a
+/// feature gate.
+fn is_disabled_preproc_if(node: Node, source: &str) -> bool {
+    node.child_by_field_name("condition")
+        .is_some_and(|cond| source[cond.start_byte()..cond.end_byte()].trim() == "0")
+}
+
+/// How a `preproc_if*` subtree relates to the declaration surface.
+#[derive(PartialEq, Eq, Clone, Copy)]
+enum GateClass {
+    /// At least one declaration-shaped child and nothing code-shaped in
+    /// any branch — conditionally-compiled top-level API (krep's
+    /// per-ISA prototypes, tinyusb's gated application API, bareiron's
+    /// `#ifdef SYNC_WORLD_TO_DISK` block).
+    DeclOnly,
+    /// Only directives / comments — the include-map collector's
+    /// territory; nothing for the decl surface.
+    DirectiveOnly,
+    /// Wraps real code (function bodies, statements) somewhere — the
+    /// amalgamation idiom stays opaque.
+    Code,
+}
+
+/// Classify a `preproc_if*` / `preproc_else*` subtree for feature-gate
+/// descent. Branch alternates and nested gates classify recursively; a
+/// code-bearing nested gate keeps the whole envelope opaque.
+fn feature_gate_decl_class(node: Node) -> GateClass {
+    let mut decl_found = false;
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        match child.kind() {
+            "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
+            | "enum_specifier" => decl_found = true,
+            "preproc_include" | "preproc_def" | "preproc_function_def" | "comment" => {}
+            "preproc_if" | "preproc_ifdef" | "preproc_else" | "preproc_elif"
+            | "preproc_elifdef" => match feature_gate_decl_class(child) {
+                GateClass::Code => return GateClass::Code,
+                GateClass::DeclOnly => decl_found = true,
+                GateClass::DirectiveOnly => {}
+            },
+            // Condition/name tokens on the `#if` / `#ifdef` itself.
+            "identifier"
+            | "binary_expression"
+            | "parenthesized_expression"
+            | "unary_expression"
+            | "call_expression"
+            | "preproc_defined"
+            | "number_literal"
+            | "char_literal"
+            | "string_literal" => {}
+            _ => return GateClass::Code,
+        }
+    }
+    if decl_found {
+        GateClass::DeclOnly
+    } else {
+        GateClass::DirectiveOnly
+    }
 }
 
 /// If `node` is an `extern "C" { … }` envelope (raw or
@@ -892,14 +1194,50 @@ fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMem
 }
 
 /// Blank-line-separated field groups for a struct/union body.
+/// Standalone full-line comment rows are elided — NS struct renders
+/// skip them, and comment-per-field styles (htop `Process.h`) otherwise
+/// cost ~3x the field lines alone. Same-line trailing comments share a
+/// row with their field and stay. Groups left empty (pure comment
+/// dividers) are dropped.
 fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
+    let comment_rows = comment_only_rows(body);
     collect_blank_line_groups(body, source)
         .into_iter()
-        .map(|(group_start_line, rows)| AggregateMemberGroup {
-            group_start_line,
-            rows,
+        .filter_map(|(_, rows)| {
+            let rows: Vec<usize> = rows
+                .into_iter()
+                .filter(|row| !comment_rows.contains(&(row - 1)))
+                .collect();
+            let group_start_line = *rows.first()?;
+            Some(AggregateMemberGroup {
+                group_start_line,
+                rows,
+            })
         })
         .collect()
+}
+
+/// 0-based rows inside `body` whose only content is comment text: rows
+/// touched by a `comment` node and by no non-comment token.
+fn comment_only_rows(body: Node) -> HashSet<usize> {
+    let mut comment_rows = HashSet::new();
+    let mut code_rows = HashSet::new();
+    fn walk(node: Node, comment_rows: &mut HashSet<usize>, code_rows: &mut HashSet<usize>) {
+        if node.kind() == "comment" {
+            comment_rows.extend(node.start_position().row..=node.end_position().row);
+            return;
+        }
+        if node.child_count() == 0 {
+            code_rows.extend(node.start_position().row..=node.end_position().row);
+            return;
+        }
+        let mut cursor = node.walk();
+        for child in node.children(&mut cursor) {
+            walk(child, comment_rows, code_rows);
+        }
+    }
+    walk(body, &mut comment_rows, &mut code_rows);
+    &comment_rows - &code_rows
 }
 
 /// Fixed-size enumerator chunks. Continuation rows of multi-line
@@ -1020,7 +1358,7 @@ fn is_c_source_file_name(name: &str) -> bool {
     lower.ends_with(".c") || lower.ends_with(".h")
 }
 
-fn is_header_file(path: &Path) -> bool {
+pub(crate) fn is_header_file(path: &Path) -> bool {
     let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
         return false;
     };
@@ -1133,6 +1471,15 @@ fn secondary_root_pair_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if stem.eq_ignore_ascii_case(repo) {
         return 1.0;
     }
+    // A non-eponymous root header in the top tier of the
+    // header-to-header include graph is the project's spine (htop
+    // `Object.h` / `Process.h` / `Meter.h`), not a vendored sidecar —
+    // first-class regardless of the eponymous pair. Inert in projects
+    // without an include spine (krep, sds, chibicc), where the damp
+    // keeps its vendored-pair reading.
+    if is_top_include_hub(file, ctx) {
+        return 1.0;
+    }
     // Only damp when a stem-matching primary file actually exists at
     // the root — otherwise this is a single-pair flat project (sds
     // structure) where every depth-1 file is part of the project's
@@ -1166,10 +1513,30 @@ fn includes_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.55, 0.3, c_depth_factor(file, ctx))
 }
 
-fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
+fn decl_names_value(
+    file: &Path,
+    ctx: &WalkCtx,
+    chunk_index: usize,
+    chunk_count: usize,
+    chunk_decl_count: usize,
+) -> f64 {
     let cat = (0.80 * header_cat_factor(file)).min(1.0);
     let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
+    // Roster mass only for top include hubs: their catalog chunks lose
+    // the breadth race to tiny-roster siblings (htop's per-meter
+    // headers) that the size-invariant value otherwise prefers.
+    // Anywhere else the boost just reorders an already-scheduled chunk
+    // ahead of NS tier-1 orientation content (krep, chibicc, neco) or
+    // promotes big-roster type catalogs the NS ignores (tinyusb
+    // pd_types.h), dragging the gated per-decl train along.
+    let mass = if is_top_include_hub(file, ctx) {
+        roster_mass_factor(chunk_decl_count)
+    } else {
+        1.0
+    };
     base * names_surface_chunk_factor(chunk_index, chunk_count)
+        * mass
+        * include_centrality_factor(file, ctx)
 }
 
 /// Value for a whole small header delivered in one batch. Catastrophic
@@ -1241,7 +1608,7 @@ fn decl_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.70 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.85 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.65, c_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.65, c_depth_factor(file, ctx)) * include_centrality_factor(file, ctx)
 }
 
 fn decl_doc_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
@@ -1255,7 +1622,7 @@ fn decl_body_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.30 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.80 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.7, c_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.7, c_depth_factor(file, ctx)) * include_centrality_factor(file, ctx)
 }
 
 /// Value for one slice of a chunked struct/union/enum body. Calibrated
@@ -1267,7 +1634,7 @@ fn aggregate_member_group_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f
     let k = kind.kind_weight();
     let cat = (0.45 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.75 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.45, c_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.45, c_depth_factor(file, ctx)) * include_centrality_factor(file, ctx)
 }
 
 // --- parser -------------------------------------------------------------
@@ -1314,16 +1681,21 @@ fn header_banner_end_row(tree: &Tree) -> Option<usize> {
 /// idiom) stay opaque and contribute nothing.
 fn collect_includes(tree: &Tree, source: &str) -> FileLines {
     let mut lines = Vec::new();
-    walk_top_level(tree.root_node(), source, &mut |node| match node.kind() {
-        "preproc_include" => extend_span(&mut lines, node, source),
-        "preproc_if" | "preproc_ifdef" => {
-            let class = classify_conditional(node);
-            if class.directive_only && class.include_count > 0 {
-                extend_span(&mut lines, node, source);
+    walk_top_level(
+        tree.root_node(),
+        source,
+        false,
+        &mut |node| match node.kind() {
+            "preproc_include" => extend_span(&mut lines, node, source),
+            "preproc_if" | "preproc_ifdef" => {
+                let class = classify_conditional(node);
+                if class.directive_only && class.include_count > 0 {
+                    extend_span(&mut lines, node, source);
+                }
             }
-        }
-        _ => {}
-    });
+            _ => {}
+        },
+    );
     FileLines::new(dedup_sorted(lines))
 }
 

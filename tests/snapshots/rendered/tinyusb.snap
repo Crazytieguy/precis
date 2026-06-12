@@ -33,10 +33,6 @@ examples/
 hw/
     bsp/
     mcu/
-        bridgetek/
-        dialog/
-        nordic/
-        sony/
 lib/
     SEGGER_RTT/
         Config/
@@ -50,7 +46,6 @@ lib/
         RTT/
             SEGGER_RTT.c
             SEGGER_RTT.h
-                56→#include "../Config/SEGGER_RTT_Conf.h"
             SEGGER_RTT_ASM_ARMv7M.S
             SEGGER_RTT_printf.c
     embedded-cli/
@@ -77,8 +72,6 @@ lib/
             …
         ndis.h
         rndis_protocol.h
-            47→#include <stdint.h>
-            290→#include "ndis.h"
         rndis_reports.c
     rt-thread/
         SConscript
@@ -97,69 +90,59 @@ src/
                 36→#include "common/tusb_common.h"
             audio_device.c
             audio_device.h
-                32→#include "audio.h"
         bth/
         cdc/
             cdc.h
-                35→#include "common/tusb_common.h"
             cdc_device.c
             cdc_device.h
-                30→#include "cdc.h"
             cdc_host.c
             cdc_host.h
-                30→#include "cdc.h"
             cdc_rndis.h
-                36→#include "cdc.h"
-                47→typedef enum
-                …
-                72→typedef enum
-                …
-                93→typedef struct {
-                …
-                104→typedef struct {
-                …
-                122→typedef struct {
-                …
-                137→typedef struct {
-                …
-                152→typedef struct {
-                …
-                160→typedef struct {
-                …
-                180→typedef struct {
-                …
-                188→typedef struct {
-                …
-                197→typedef struct {
-                …
-                224→typedef struct {
-                …
-                236→typedef enum
-                …
-                277→typedef enum
-                …
             serial/
                 ch34x.h
                 cp210x.h
                 ftdi_sio.h
-                    28→#include <stdint.h>
                 pl2303.h
-                    30→#include <stdbool.h>
-                    31→#include <stdint.h>
         dfu/
             dfu.h
                 30→#include "common/tusb_common.h"
+                40→// DFU Protocol
+                41→typedef enum
+                42→{
+                43→  DFU_PROTOCOL_RT  = 0x01,
+                44→  DFU_PROTOCOL_DFU = 0x02,
+                45→} dfu_protocol_type_t;
+                47→// DFU Descriptor Type
+                48→typedef enum
+                49→{
+                50→  DFU_DESC_FUNCTIONAL = 0x21,
+                51→} dfu_descriptor_type_t;
+                54→typedef enum {
+                …
+                65→typedef enum {
+                …
+                80→typedef enum {
+                …
+                99→#define DFU_ATTR_CAN_DOWNLOAD              (1u << 0)
+                100→#define DFU_ATTR_CAN_UPLOAD                (1u << 1)
+                101→#define DFU_ATTR_MANIFESTATION_TOLERANT    (1u << 2)
+                102→#define DFU_ATTR_WILL_DETACH               (1u << 3)
+                …
+                104→// DFU Status Request Payload
+                105→typedef struct TU_ATTR_PACKED
+                106→{
+                107→  uint8_t bStatus;
+                108→  uint8_t bwPollTimeout[3];
+                109→  uint8_t bState;
+                110→  uint8_t iString;
+                111→} dfu_status_response_t;
             dfu_device.c
             dfu_device.h
-                30→#include "dfu.h"
             dfu_rt_device.c
             dfu_rt_device.h
                 30→#include "dfu.h"
                 40→void tud_dfu_runtime_reboot_to_dfu_cb(void);
                 …
-                42→//--------------------------------------------------------------------+
-                43→// Internal Class Driver API
-                44→//--------------------------------------------------------------------+
                 45→void     dfu_rtd_init(void);
                 46→bool     dfu_rtd_deinit(void);
                 47→void     dfu_rtd_reset(uint8_t rhport);
@@ -168,31 +151,73 @@ src/
                 …
         hid/
             hid.h
-                34→#include "common/tusb_common.h"
             hid_device.c
             hid_device.h
-                30→#include "hid.h"
             hid_host.c
             hid_host.h
-                30→#include "hid.h"
         midi/
             README_midi_host.md
             midi.h
                 30→#include "common/tusb_common.h"
+                36→//--------------------------------------------------------------------+
+                37→// Constants
+                38→//--------------------------------------------------------------------+
+                39→enum {
+                40→  MIDI_VERSION_1_0 = 0x0100,
+                41→  MIDI_VERSION_2_0 = 0x0200,
+                42→};
+                44→typedef enum {
+                45→  MIDI_CS_INTERFACE_HEADER    = 0x01,
+                46→  MIDI_CS_INTERFACE_IN_JACK   = 0x02,
+                47→  MIDI_CS_INTERFACE_OUT_JACK  = 0x03,
+                48→  MIDI_CS_INTERFACE_ELEMENT   = 0x04,
+                49→} midi_cs_interface_subtype_t;
+                51→typedef enum {
+                52→  MIDI_CS_ENDPOINT_GENERAL = 0x01,
+                53→  MIDI_CS_ENDPOINT_GENERAL_2_0 = 0x02,
+                54→} midi_cs_endpoint_subtype_t;
+                56→typedef enum {
+                57→  MIDI_JACK_EMBEDDED = 0x01,
+                58→  MIDI_JACK_EXTERNAL = 0x02
+                59→} midi_jack_type_t;
+                61→typedef enum {
+                …
+                81→enum {
+                104→enum {
+                105→  MIDI_MAX_DATA_VAL = 0x7F,
+                106→};
+                113→typedef struct TU_ATTR_PACKED {
+                …
+                123→typedef struct TU_ATTR_PACKED {
+                …
+                134→#define midi_desc_out_jack_n_t(input_num) \
+                …
+                149→typedef midi_desc_out_jack_n_t(1)  midi_desc_out_jack_1in_t; // 1 input
+                150→typedef midi_desc_out_jack_1in_t midi_desc_out_jack_t; // backward compatible
+                154→#define midi_desc_element_n_t(input_num) \
+                …
+                174→#define midi_desc_cs_endpoint_n_t(jack_num) \
+                …
+                183→typedef midi_desc_cs_endpoint_n_t() midi_desc_cs_endpoint_t; // empty/flexible jack list
+                …
+                188→//--------------------------------------------------------------------+
+                189→// For Internal Driver Use
+                190→//--------------------------------------------------------------------+
+                191→typedef struct {
+                192→  uint8_t buffer[4];
+                193→  uint8_t index;
+                194→  uint8_t total;
+                195→} midi_driver_stream_t;
             midi_device.c
             midi_device.h
-                147→bool     midid_xfer_cb(uint8_t rhport, uint8_t edpt_addr, xfer_result_t result, uint32_t xferred_bytes);
-                …
             midi_host.c
             midi_host.h
         msc/
             msc.h
-                30→#include "common/tusb_common.h"
             msc_device.c
             msc_device.h
             msc_host.c
             msc_host.h
-                30→#include "msc.h"
         mtp/
             mtp.h
                 30→#include "common/tusb_common.h"
@@ -201,7 +226,6 @@ src/
         net/
             ecm_rndis_device.c
             ncm.h
-                31→#include "common/tusb_common.h"
             ncm_device.c
             net_device.h
         printer/
@@ -213,18 +237,14 @@ src/
                 …
             printer_device.c
             printer_device.h
-                34→#include "printer.h"
         usbtmc/
         vendor/
             vendor_device.c
             vendor_device.h
-                34→#include "common/tusb_common.h"
             vendor_host.c
             vendor_host.h
-                30→#include "common/tusb_common.h"
         video/
             video.h
-                30→#include "common/tusb_common.h"
             video_device.c
             video_device.h
     common/
@@ -232,29 +252,11 @@ src/
         dcd.h
         usbd.c
         usbd.h
-            30→#include "common/tusb_common.h"
         usbd_pvt.h
-            131→void usbd_defer_func(osal_task_func_t func, void *param, bool in_isr);
-            …
     host/
         hcd.h
-            184→// Helper to send device attach event
-            185→TU_ATTR_ALWAYS_INLINE static inline
-            186→void hcd_event_device_attach(uint8_t rhport, bool in_isr) {
-            …
-            196→// Helper to send device removal event
-            197→TU_ATTR_ALWAYS_INLINE static inline
-            198→void hcd_event_device_remove(uint8_t rhport, bool in_isr) {
-            …
-            208→// Helper to send USB transfer event
-            209→TU_ATTR_ALWAYS_INLINE static inline
-            210→void hcd_event_xfer_complete(uint8_t dev_addr, uint8_t ep_addr, uint32_t xferred_bytes, xfer_result_t result, bool in_isr) {
-            …
         hub.c
         hub.h
-            30→#include "common/tusb_common.h"
-            221→void     hub_close(uint8_t dev_addr);
-            …
         usbh.c
         usbh.h
         usbh_pvt.h
@@ -267,60 +269,6 @@ src/
         ehci/
             ehci.c
             ehci.h
-                50→// TODO merge OHCI with EHCI
-                51→enum {
-                52→	EHCI_MAX_ITD  = 4,
-                53→  EHCI_MAX_SITD = 16
-                54→};
-                56→//--------------------------------------------------------------------+
-                57→// EHCI Data Structure
-                58→//--------------------------------------------------------------------+
-                59→enum {
-                60→  EHCI_QTYPE_ITD = 0 ,
-                61→  EHCI_QTYPE_QHD     ,
-                62→  EHCI_QTYPE_SITD    ,
-                63→  EHCI_QTYPE_FSTN
-                64→};
-                66→/// EHCI PID
-                67→enum {
-                68→  EHCI_PID_OUT = 0 ,
-                69→  EHCI_PID_IN      ,
-                70→  EHCI_PID_SETUP
-                71→};
-                73→/// Link pointer
-                74→typedef union {
-                75→  uint32_t address;
-                76→  struct {
-                77→    uint32_t terminate : 1;
-                78→    uint32_t type      : 2;
-                79→  };
-                80→} ehci_link_t;
-                86→typedef struct {
-                87→  // Word 0 Next QTD Pointer
-                88→  ehci_link_t next;
-                121→} ehci_qtd_t;
-                258→enum {
-                280→enum {
-                …
-                286→enum {
-                …
-                294→enum {
-                …
-                311→typedef volatile struct {
-                312→  union {
-                313→    uint32_t command; // 0x00
-                332→  union {
-                333→    uint32_t status; // 0x04
-                356→  union{
-                357→    uint32_t inten; // 0x08
-                412→} ehci_registers_t;
-                414→//--------------------------------------------------------------------+
-                415→// Capability Registers
-                416→//--------------------------------------------------------------------+
-                417→typedef volatile struct {
-                …
-                452→  uint32_t hcsp_portroute; // 0x0C HCSP Port Route Register
-                453→} ehci_cap_registers_t;
             ehci_api.h
                 38→// Initialize EHCI driver
                 39→bool ehci_init(uint8_t rhport, uint32_t capability_reg, uint32_t operatial_reg);
@@ -333,11 +281,6 @@ src/
                 dcd_musb.c
                 hcd_musb.c
                 musb_max32.h
-                    47→#define MUSB_CFG_SHARED_FIFO   1 // shared FIFO for TX and RX endpoints
-                    48→#define MUSB_CFG_DYNAMIC_FIFO  0 // dynamic EP FIFO sizing
-                    …
-                    50→const uintptr_t MUSB_BASES[] = { MXC_BASE_USBHS };
-                    …
                 musb_ti.h
                     48→#define MUSB_CFG_SHARED_FIFO       0
                     49→#define MUSB_CFG_DYNAMIC_FIFO      1
@@ -346,7 +289,6 @@ src/
                     52→const uintptr_t MUSB_BASES[] = { USB0_BASE };
                     …
                 musb_type.h
-                    64→#include "stdint.h"
         microchip/
             pic/
             pic32mz/
@@ -365,24 +307,12 @@ src/
             lpc_ip3511/
             lpc_ip3516/
         ohci/
-            ohci.c
-            ohci.h
-            ohci_nxp.h
         raspberrypi/
         renesas/
-            rusb2/
-                dcd_rusb2.c
-                hcd_rusb2.c
-                rusb2_common.c
-                rusb2_common.h
-                rusb2_ra.h
-                rusb2_rx.h
-                rusb2_type.h
         sony/
         st/
         sunxi/
         synopsys/
-            dwc2/
         template/
         ti/
         valentyusb/
@@ -398,6 +328,58 @@ src/
     tusb_option.h
     typec/
         pd_types.h
+            39→TU_ATTR_PACKED_BEGIN
+            40→TU_ATTR_BIT_FIELD_ORDER_BEGIN
+            42→//--------------------------------------------------------------------+
+            43→// TYPE-C
+            44→//--------------------------------------------------------------------+
+            46→typedef enum {
+            47→  TUSB_TYPEC_PORT_SRC,
+            48→  TUSB_TYPEC_PORT_SNK,
+            49→  TUSB_TYPEC_PORT_DRP
+            50→} tusb_typec_port_type_t;
+            52→enum {
+            …
+            80→enum {
+            …
+            99→enum {
+            100→  PD_REV_10	= 0x0,
+            101→  PD_REV_20	= 0x1,
+            102→  PD_REV_30	= 0x2,
+            103→};
+            105→enum {
+            106→  PD_DATA_ROLE_UFP	= 0x0,
+            107→  PD_DATA_ROLE_DFP	= 0x1,
+            108→};
+            110→enum {
+            111→  PD_POWER_ROLE_SINK	= 0x0,
+            112→  PD_POWER_ROLE_SOURCE	= 0x1,
+            113→};
+            115→typedef struct TU_ATTR_PACKED {
+            …
+            126→typedef struct TU_ATTR_PACKED {
+            …
+            139→// All table references are from USBPD Specification rev3.1 version 1.8
+            140→enum {
+            141→  PD_PDO_TYPE_FIXED = 0, // Vmin = Vmax
+            142→  PD_PDO_TYPE_BATTERY,
+            143→  PD_PDO_TYPE_VARIABLE, // non-battery
+            144→  PD_PDO_TYPE_APDO, // Augmented Power Data Object
+            145→};
+            148→typedef struct TU_ATTR_PACKED {
+            …
+            165→typedef struct TU_ATTR_PACKED {
+            …
+            174→typedef struct TU_ATTR_PACKED {
+            …
+            183→typedef struct TU_ATTR_PACKED {
+            …
+            200→typedef struct TU_ATTR_PACKED {
+            …
+            214→typedef struct TU_ATTR_PACKED {
+            …
+            229→TU_ATTR_PACKED_END  // End of all packed definitions
+            230→TU_ATTR_BIT_FIELD_ORDER_END
         tcd.h
         usbc.c
         usbc.h

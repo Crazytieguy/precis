@@ -1,6 +1,6 @@
 fixture = "krep"
 budget = 10000
-cumulative_tokens = 9752
+cumulative_tokens = 9904
 batch_count = 193
 
 [[batches]]
@@ -1919,10 +1919,80 @@ kind = "full"
 
 [[batches]]
 position = 70
+key = 'Markdown(Section { file: "README.md", section_index: 19 })'
+descriptor = "README.md section #19"
+cost_tokens = 37
+cum_tokens = 3476
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 71
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'C(HeaderBanner { file: "krep.c" })'
+descriptor = "c header banner in krep.c"
+cost_tokens = 74
+cum_tokens = 3550
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "krep.c"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "krep.c"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Markdown(Section { file: "README.md", section_index: 33 })'
+descriptor = "README.md section #33"
+cost_tokens = 40
+cum_tokens = 3590
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
 key = 'C(DeclNames { file: "krep.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in krep.h"
-cost_tokens = 583
-cum_tokens = 4022
+cost_tokens = 735
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -1979,6 +2049,38 @@ kind = "full"
 path = "krep.h"
 start = 207
 end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "krep.h"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "krep.h"
+start = 219
+end = 219
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "krep.h"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "krep.h"
+start = 227
+end = 227
 
 [batches.content.spans.render]
 kind = "full"
@@ -2081,6 +2183,38 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "krep.h"
+start = 216
+end = 216
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "krep.h"
+start = 220
+end = 220
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "krep.h"
+start = 224
+end = 224
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "krep.h"
+start = 228
+end = 228
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "krep.h"
 start = 235
 end = 235
 
@@ -2120,11 +2254,11 @@ end = 313
 kind = "ellipsis"
 
 [[batches]]
-position = 71
+position = 74
 key = 'C(Decl { file: "krep.h", start_line: 161 })'
 descriptor = "c decl at krep.h:161"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2138,11 +2272,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 72
+position = 75
 key = 'C(Decl { file: "krep.h", start_line: 170 })'
 descriptor = "c decl at krep.h:170"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2156,11 +2290,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 73
+position = 76
 key = 'C(Decl { file: "krep.h", start_line: 180 })'
 descriptor = "c decl at krep.h:180"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2174,11 +2308,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 74
+position = 77
 key = 'C(Decl { file: "krep.h", start_line: 183 })'
 descriptor = "c decl at krep.h:183"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2192,11 +2326,11 @@ end = 183
 kind = "full"
 
 [[batches]]
-position = 75
+position = 78
 key = 'C(Decl { file: "krep.h", start_line: 200 })'
 descriptor = "c decl at krep.h:200"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2210,11 +2344,11 @@ end = 200
 kind = "full"
 
 [[batches]]
-position = 76
+position = 79
 key = 'C(Decl { file: "krep.h", start_line: 203 })'
 descriptor = "c decl at krep.h:203"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2228,11 +2362,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 77
+position = 80
 key = 'C(Decl { file: "krep.h", start_line: 231 })'
 descriptor = "c decl at krep.h:231"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2246,11 +2380,11 @@ end = 231
 kind = "full"
 
 [[batches]]
-position = 78
+position = 81
 key = 'C(Decl { file: "krep.h", start_line: 278 })'
 descriptor = "c decl at krep.h:278"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2264,11 +2398,11 @@ end = 278
 kind = "full"
 
 [[batches]]
-position = 79
+position = 82
 key = 'C(Decl { file: "krep.h", start_line: 288 })'
 descriptor = "c decl at krep.h:288"
 cost_tokens = 0
-cum_tokens = 4022
+cum_tokens = 4325
 
 [batches.content]
 kind = "lines"
@@ -2282,11 +2416,11 @@ end = 288
 kind = "full"
 
 [[batches]]
-position = 80
+position = 83
 key = 'C(Decl { file: "krep.h", start_line: 298 })'
 descriptor = "c decl at krep.h:298"
 cost_tokens = 5
-cum_tokens = 4027
+cum_tokens = 4330
 
 [batches.content]
 kind = "lines"
@@ -2308,11 +2442,11 @@ end = 300
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 84
 key = 'C(Decl { file: "krep.h", start_line: 312 })'
 descriptor = "c decl at krep.h:312"
 cost_tokens = 5
-cum_tokens = 4032
+cum_tokens = 4335
 
 [batches.content]
 kind = "lines"
@@ -2334,11 +2468,11 @@ end = 314
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 85
 key = 'C(DeclDoc { file: "krep.h", start_line: 203 })'
 descriptor = "c decl doc at krep.h:203"
 cost_tokens = 9
-cum_tokens = 4041
+cum_tokens = 4344
 
 [batches.content]
 kind = "lines"
@@ -2352,11 +2486,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 83
+position = 86
 key = 'C(DeclDoc { file: "krep.h", start_line: 231 })'
 descriptor = "c decl doc at krep.h:231"
 cost_tokens = 10
-cum_tokens = 4051
+cum_tokens = 4354
 
 [batches.content]
 kind = "lines"
@@ -2370,11 +2504,11 @@ end = 230
 kind = "full"
 
 [[batches]]
-position = 84
+position = 87
 key = 'C(DeclDoc { file: "krep.h", start_line: 183 })'
 descriptor = "c decl doc at krep.h:183"
 cost_tokens = 12
-cum_tokens = 4063
+cum_tokens = 4366
 
 [batches.content]
 kind = "lines"
@@ -2388,11 +2522,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 85
+position = 88
 key = 'C(DeclBody { file: "krep.h", start_line: 298 })'
 descriptor = "c decl body at krep.h:298"
 cost_tokens = 17
-cum_tokens = 4080
+cum_tokens = 4383
 
 [batches.content]
 kind = "lines"
@@ -2406,11 +2540,11 @@ end = 300
 kind = "full"
 
 [[batches]]
-position = 86
+position = 89
 key = 'C(DeclDoc { file: "krep.h", start_line: 298 })'
 descriptor = "c decl doc at krep.h:298"
 cost_tokens = 68
-cum_tokens = 4148
+cum_tokens = 4451
 
 [batches.content]
 kind = "lines"
@@ -2424,11 +2558,11 @@ end = 297
 kind = "full"
 
 [[batches]]
-position = 87
+position = 90
 key = 'C(DeclDoc { file: "krep.h", start_line: 170 })'
 descriptor = "c decl doc at krep.h:170"
 cost_tokens = 92
-cum_tokens = 4240
+cum_tokens = 4543
 
 [batches.content]
 kind = "lines"
@@ -2442,11 +2576,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 88
+position = 91
 key = 'C(DeclDoc { file: "krep.h", start_line: 278 })'
 descriptor = "c decl doc at krep.h:278"
 cost_tokens = 97
-cum_tokens = 4337
+cum_tokens = 4640
 
 [batches.content]
 kind = "lines"
@@ -2460,11 +2594,11 @@ end = 277
 kind = "full"
 
 [[batches]]
-position = 89
+position = 92
 key = 'C(DeclDoc { file: "krep.h", start_line: 312 })'
 descriptor = "c decl doc at krep.h:312"
 cost_tokens = 107
-cum_tokens = 4444
+cum_tokens = 4747
 
 [batches.content]
 kind = "lines"
@@ -2478,11 +2612,11 @@ end = 311
 kind = "full"
 
 [[batches]]
-position = 90
+position = 93
 key = 'C(DeclDoc { file: "krep.h", start_line: 180 })'
 descriptor = "c decl doc at krep.h:180"
 cost_tokens = 98
-cum_tokens = 4542
+cum_tokens = 4845
 
 [batches.content]
 kind = "lines"
@@ -2496,11 +2630,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 91
+position = 94
 key = 'C(DeclBody { file: "krep.h", start_line: 312 })'
 descriptor = "c decl body at krep.h:312"
 cost_tokens = 61
-cum_tokens = 4603
+cum_tokens = 4906
 
 [batches.content]
 kind = "lines"
@@ -2514,11 +2648,11 @@ end = 318
 kind = "full"
 
 [[batches]]
-position = 92
+position = 95
 key = 'C(DeclDoc { file: "krep.h", start_line: 288 })'
 descriptor = "c decl doc at krep.h:288"
 cost_tokens = 104
-cum_tokens = 4707
+cum_tokens = 5010
 
 [batches.content]
 kind = "lines"
@@ -2532,11 +2666,11 @@ end = 287
 kind = "full"
 
 [[batches]]
-position = 93
+position = 96
 key = 'C(DeclDoc { file: "krep.h", start_line: 161 })'
 descriptor = "c decl doc at krep.h:161"
 cost_tokens = 116
-cum_tokens = 4823
+cum_tokens = 5126
 
 [batches.content]
 kind = "lines"
@@ -2550,11 +2684,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 94
+position = 97
 key = 'C(DeclDoc { file: "krep.h", start_line: 200 })'
 descriptor = "c decl doc at krep.h:200"
 cost_tokens = 171
-cum_tokens = 4994
+cum_tokens = 5297
 
 [batches.content]
 kind = "lines"
@@ -2568,81 +2702,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 95
-key = 'Markdown(Section { file: "README.md", section_index: 19 })'
-descriptor = "README.md section #19"
-cost_tokens = 37
-cum_tokens = 5031
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 71
-end = 73
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
-key = 'C(HeaderBanner { file: "krep.c" })'
-descriptor = "c header banner in krep.c"
-cost_tokens = 74
-cum_tokens = 5105
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "krep.c"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "krep.c"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 97
-key = 'Markdown(Section { file: "README.md", section_index: 33 })'
-descriptor = "README.md section #33"
-cost_tokens = 40
-cum_tokens = 5145
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 146
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 98
 key = 'Markdown(Section { file: "README.md", section_index: 47 })'
 descriptor = "README.md section #47"
 cost_tokens = 32
-cum_tokens = 5177
+cum_tokens = 5329
 
 [batches.content]
 kind = "lines"
@@ -2668,7 +2732,7 @@ position = 99
 key = 'Markdown(Section { file: "README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 47
-cum_tokens = 5224
+cum_tokens = 5376
 
 [batches.content]
 kind = "lines"
@@ -2702,7 +2766,7 @@ position = 100
 key = 'Markdown(Section { file: "README.md", section_index: 20 })'
 descriptor = "README.md section #20"
 cost_tokens = 49
-cum_tokens = 5273
+cum_tokens = 5425
 
 [batches.content]
 kind = "lines"
@@ -2736,7 +2800,7 @@ position = 101
 key = 'C(WholeFile { file: "aho_corasick.h" })'
 descriptor = "c whole header in aho_corasick.h"
 cost_tokens = 442
-cum_tokens = 5715
+cum_tokens = 5867
 
 [batches.content]
 kind = "lines"
@@ -2842,7 +2906,7 @@ position = 102
 key = 'C(DeclNames { file: "krep.c", chunk_index: 0 })'
 descriptor = "c decl names surface in krep.c"
 cost_tokens = 511
-cum_tokens = 6226
+cum_tokens = 6378
 
 [batches.content]
 kind = "lines"
@@ -3028,7 +3092,7 @@ position = 103
 key = 'C(Decl { file: "krep.c", start_line: 77 })'
 descriptor = "c decl at krep.c:77"
 cost_tokens = 0
-cum_tokens = 6226
+cum_tokens = 6378
 
 [batches.content]
 kind = "lines"
@@ -3046,7 +3110,7 @@ position = 104
 key = 'C(Decl { file: "krep.c", start_line: 93 })'
 descriptor = "c decl at krep.c:93"
 cost_tokens = 0
-cum_tokens = 6226
+cum_tokens = 6378
 
 [batches.content]
 kind = "lines"
@@ -3064,7 +3128,7 @@ position = 105
 key = 'C(Decl { file: "krep.c", start_line: 125 })'
 descriptor = "c decl at krep.c:125"
 cost_tokens = 0
-cum_tokens = 6226
+cum_tokens = 6378
 
 [batches.content]
 kind = "lines"
@@ -3082,7 +3146,7 @@ position = 106
 key = 'C(Decl { file: "krep.c", start_line: 139 })'
 descriptor = "c decl at krep.c:139"
 cost_tokens = 5
-cum_tokens = 6231
+cum_tokens = 6383
 
 [batches.content]
 kind = "lines"
@@ -3108,7 +3172,7 @@ position = 107
 key = 'C(Decl { file: "krep.c", start_line: 175 })'
 descriptor = "c decl at krep.c:175"
 cost_tokens = 5
-cum_tokens = 6236
+cum_tokens = 6388
 
 [batches.content]
 kind = "lines"
@@ -3134,7 +3198,7 @@ position = 108
 key = 'C(Decl { file: "krep.c", start_line: 244 })'
 descriptor = "c decl at krep.c:244"
 cost_tokens = 5
-cum_tokens = 6241
+cum_tokens = 6393
 
 [batches.content]
 kind = "lines"
@@ -3160,7 +3224,7 @@ position = 109
 key = 'C(Decl { file: "krep.c", start_line: 256 })'
 descriptor = "c decl at krep.c:256"
 cost_tokens = 5
-cum_tokens = 6246
+cum_tokens = 6398
 
 [batches.content]
 kind = "lines"
@@ -3186,7 +3250,7 @@ position = 110
 key = 'C(Decl { file: "krep.c", start_line: 363 })'
 descriptor = "c decl at krep.c:363"
 cost_tokens = 5
-cum_tokens = 6251
+cum_tokens = 6403
 
 [batches.content]
 kind = "lines"
@@ -3212,7 +3276,7 @@ position = 111
 key = 'C(Decl { file: "krep.c", start_line: 401 })'
 descriptor = "c decl at krep.c:401"
 cost_tokens = 5
-cum_tokens = 6256
+cum_tokens = 6408
 
 [batches.content]
 kind = "lines"
@@ -3238,7 +3302,7 @@ position = 112
 key = 'C(Decl { file: "krep.c", start_line: 461 })'
 descriptor = "c decl at krep.c:461"
 cost_tokens = 5
-cum_tokens = 6261
+cum_tokens = 6413
 
 [batches.content]
 kind = "lines"
@@ -3264,7 +3328,7 @@ position = 113
 key = 'C(DeclDoc { file: "krep.c", start_line: 77 })'
 descriptor = "c decl doc at krep.c:77"
 cost_tokens = 7
-cum_tokens = 6268
+cum_tokens = 6420
 
 [batches.content]
 kind = "lines"
@@ -3282,7 +3346,7 @@ position = 114
 key = 'C(DeclDoc { file: "krep.c", start_line: 139 })'
 descriptor = "c decl doc at krep.c:139"
 cost_tokens = 10
-cum_tokens = 6278
+cum_tokens = 6430
 
 [batches.content]
 kind = "lines"
@@ -3300,7 +3364,7 @@ position = 115
 key = 'C(DeclDoc { file: "krep.c", start_line: 93 })'
 descriptor = "c decl doc at krep.c:93"
 cost_tokens = 11
-cum_tokens = 6289
+cum_tokens = 6441
 
 [batches.content]
 kind = "lines"
@@ -3318,7 +3382,7 @@ position = 116
 key = 'C(DeclDoc { file: "krep.c", start_line: 244 })'
 descriptor = "c decl doc at krep.c:244"
 cost_tokens = 13
-cum_tokens = 6302
+cum_tokens = 6454
 
 [batches.content]
 kind = "lines"
@@ -3336,7 +3400,7 @@ position = 117
 key = 'C(DeclDoc { file: "krep.c", start_line: 401 })'
 descriptor = "c decl doc at krep.c:401"
 cost_tokens = 16
-cum_tokens = 6318
+cum_tokens = 6470
 
 [batches.content]
 kind = "lines"
@@ -3354,7 +3418,7 @@ position = 118
 key = 'C(DeclDoc { file: "krep.c", start_line: 175 })'
 descriptor = "c decl doc at krep.c:175"
 cost_tokens = 18
-cum_tokens = 6336
+cum_tokens = 6488
 
 [batches.content]
 kind = "lines"
@@ -3372,7 +3436,7 @@ position = 119
 key = 'C(DeclDoc { file: "krep.c", start_line: 125 })'
 descriptor = "c decl doc at krep.c:125"
 cost_tokens = 14
-cum_tokens = 6350
+cum_tokens = 6502
 
 [batches.content]
 kind = "lines"
@@ -3390,7 +3454,7 @@ position = 120
 key = 'C(DeclDoc { file: "krep.c", start_line: 363 })'
 descriptor = "c decl doc at krep.c:363"
 cost_tokens = 40
-cum_tokens = 6390
+cum_tokens = 6542
 
 [batches.content]
 kind = "lines"
@@ -3408,7 +3472,7 @@ position = 121
 key = 'C(DeclDoc { file: "krep.c", start_line: 256 })'
 descriptor = "c decl doc at krep.c:256"
 cost_tokens = 49
-cum_tokens = 6439
+cum_tokens = 6591
 
 [batches.content]
 kind = "lines"
@@ -3426,7 +3490,7 @@ position = 122
 key = 'C(DeclBody { file: "krep.c", start_line: 244 })'
 descriptor = "c decl body at krep.c:244"
 cost_tokens = 43
-cum_tokens = 6482
+cum_tokens = 6634
 
 [batches.content]
 kind = "lines"
@@ -3444,7 +3508,7 @@ position = 123
 key = 'Markdown(Section { file: "README.md", section_index: 22 })'
 descriptor = "README.md section #22"
 cost_tokens = 239
-cum_tokens = 6721
+cum_tokens = 6873
 
 [batches.content]
 kind = "lines"
@@ -3558,7 +3622,7 @@ position = 124
 key = 'C(DeclNames { file: "krep.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in krep.c"
 cost_tokens = 418
-cum_tokens = 7139
+cum_tokens = 7291
 
 [batches.content]
 kind = "lines"
@@ -3904,7 +3968,7 @@ position = 125
 key = 'C(Decl { file: "krep.c", start_line: 1125 })'
 descriptor = "c decl at krep.c:1125"
 cost_tokens = 6
-cum_tokens = 7145
+cum_tokens = 7297
 
 [batches.content]
 kind = "lines"
@@ -3930,7 +3994,7 @@ position = 126
 key = 'C(Decl { file: "krep.c", start_line: 1137 })'
 descriptor = "c decl at krep.c:1137"
 cost_tokens = 6
-cum_tokens = 7151
+cum_tokens = 7303
 
 [batches.content]
 kind = "lines"
@@ -3956,7 +4020,7 @@ position = 127
 key = 'C(Decl { file: "krep.c", start_line: 1198 })'
 descriptor = "c decl at krep.c:1198"
 cost_tokens = 6
-cum_tokens = 7157
+cum_tokens = 7309
 
 [batches.content]
 kind = "lines"
@@ -3982,7 +4046,7 @@ position = 128
 key = 'C(Decl { file: "krep.c", start_line: 1213 })'
 descriptor = "c decl at krep.c:1213"
 cost_tokens = 6
-cum_tokens = 7163
+cum_tokens = 7315
 
 [batches.content]
 kind = "lines"
@@ -4008,7 +4072,7 @@ position = 129
 key = 'C(Decl { file: "krep.c", start_line: 1771 })'
 descriptor = "c decl at krep.c:1771"
 cost_tokens = 6
-cum_tokens = 7169
+cum_tokens = 7321
 
 [batches.content]
 kind = "lines"
@@ -4034,7 +4098,7 @@ position = 130
 key = 'C(Decl { file: "krep.c", start_line: 1919 })'
 descriptor = "c decl at krep.c:1919"
 cost_tokens = 6
-cum_tokens = 7175
+cum_tokens = 7327
 
 [batches.content]
 kind = "lines"
@@ -4060,7 +4124,7 @@ position = 131
 key = 'C(Decl { file: "krep.c", start_line: 1964 })'
 descriptor = "c decl at krep.c:1964"
 cost_tokens = 6
-cum_tokens = 7181
+cum_tokens = 7333
 
 [batches.content]
 kind = "lines"
@@ -4086,7 +4150,7 @@ position = 132
 key = 'C(Decl { file: "krep.c", start_line: 1999 })'
 descriptor = "c decl at krep.c:1999"
 cost_tokens = 6
-cum_tokens = 7187
+cum_tokens = 7339
 
 [batches.content]
 kind = "lines"
@@ -4112,7 +4176,7 @@ position = 133
 key = 'C(Decl { file: "krep.c", start_line: 2274 })'
 descriptor = "c decl at krep.c:2274"
 cost_tokens = 6
-cum_tokens = 7193
+cum_tokens = 7345
 
 [batches.content]
 kind = "lines"
@@ -4138,7 +4202,7 @@ position = 134
 key = 'C(Decl { file: "krep.c", start_line: 3442 })'
 descriptor = "c decl at krep.c:3442"
 cost_tokens = 6
-cum_tokens = 7199
+cum_tokens = 7351
 
 [batches.content]
 kind = "lines"
@@ -4164,7 +4228,7 @@ position = 135
 key = 'C(Decl { file: "krep.c", start_line: 4104 })'
 descriptor = "c decl at krep.c:4104"
 cost_tokens = 6
-cum_tokens = 7205
+cum_tokens = 7357
 
 [batches.content]
 kind = "lines"
@@ -4190,7 +4254,7 @@ position = 136
 key = 'C(Decl { file: "krep.c", start_line: 4209 })'
 descriptor = "c decl at krep.c:4209"
 cost_tokens = 6
-cum_tokens = 7211
+cum_tokens = 7363
 
 [batches.content]
 kind = "lines"
@@ -4216,7 +4280,7 @@ position = 137
 key = 'C(Decl { file: "krep.c", start_line: 4313 })'
 descriptor = "c decl at krep.c:4313"
 cost_tokens = 6
-cum_tokens = 7217
+cum_tokens = 7369
 
 [batches.content]
 kind = "lines"
@@ -4242,7 +4306,7 @@ position = 138
 key = 'C(Decl { file: "krep.c", start_line: 4332 })'
 descriptor = "c decl at krep.c:4332"
 cost_tokens = 6
-cum_tokens = 7223
+cum_tokens = 7375
 
 [batches.content]
 kind = "lines"
@@ -4268,7 +4332,7 @@ position = 139
 key = 'C(DeclDoc { file: "krep.c", start_line: 1137 })'
 descriptor = "c decl doc at krep.c:1137"
 cost_tokens = 10
-cum_tokens = 7233
+cum_tokens = 7385
 
 [batches.content]
 kind = "lines"
@@ -4286,7 +4350,7 @@ position = 140
 key = 'C(DeclDoc { file: "krep.c", start_line: 1125 })'
 descriptor = "c decl doc at krep.c:1125"
 cost_tokens = 11
-cum_tokens = 7244
+cum_tokens = 7396
 
 [batches.content]
 kind = "lines"
@@ -4304,7 +4368,7 @@ position = 141
 key = 'C(DeclDoc { file: "krep.c", start_line: 4332 })'
 descriptor = "c decl doc at krep.c:4332"
 cost_tokens = 11
-cum_tokens = 7255
+cum_tokens = 7407
 
 [batches.content]
 kind = "lines"
@@ -4322,7 +4386,7 @@ position = 142
 key = 'C(DeclDoc { file: "krep.c", start_line: 4313 })'
 descriptor = "c decl doc at krep.c:4313"
 cost_tokens = 13
-cum_tokens = 7268
+cum_tokens = 7420
 
 [batches.content]
 kind = "lines"
@@ -4340,7 +4404,7 @@ position = 143
 key = 'C(DeclDoc { file: "krep.c", start_line: 4209 })'
 descriptor = "c decl doc at krep.c:4209"
 cost_tokens = 14
-cum_tokens = 7282
+cum_tokens = 7434
 
 [batches.content]
 kind = "lines"
@@ -4358,7 +4422,7 @@ position = 144
 key = 'C(DeclDoc { file: "krep.c", start_line: 1213 })'
 descriptor = "c decl doc at krep.c:1213"
 cost_tokens = 15
-cum_tokens = 7297
+cum_tokens = 7449
 
 [batches.content]
 kind = "lines"
@@ -4376,7 +4440,7 @@ position = 145
 key = 'C(DeclDoc { file: "krep.c", start_line: 1999 })'
 descriptor = "c decl doc at krep.c:1999"
 cost_tokens = 16
-cum_tokens = 7313
+cum_tokens = 7465
 
 [batches.content]
 kind = "lines"
@@ -4394,7 +4458,7 @@ position = 146
 key = 'C(DeclDoc { file: "krep.c", start_line: 1198 })'
 descriptor = "c decl doc at krep.c:1198"
 cost_tokens = 17
-cum_tokens = 7330
+cum_tokens = 7482
 
 [batches.content]
 kind = "lines"
@@ -4412,7 +4476,7 @@ position = 147
 key = 'C(DeclDoc { file: "krep.c", start_line: 1964 })'
 descriptor = "c decl doc at krep.c:1964"
 cost_tokens = 17
-cum_tokens = 7347
+cum_tokens = 7499
 
 [batches.content]
 kind = "lines"
@@ -4430,7 +4494,7 @@ position = 148
 key = 'C(DeclDoc { file: "krep.c", start_line: 4104 })'
 descriptor = "c decl doc at krep.c:4104"
 cost_tokens = 18
-cum_tokens = 7365
+cum_tokens = 7517
 
 [batches.content]
 kind = "lines"
@@ -4448,7 +4512,7 @@ position = 149
 key = 'C(DeclDoc { file: "krep.c", start_line: 1919 })'
 descriptor = "c decl doc at krep.c:1919"
 cost_tokens = 19
-cum_tokens = 7384
+cum_tokens = 7536
 
 [batches.content]
 kind = "lines"
@@ -4466,7 +4530,7 @@ position = 150
 key = 'C(Decl { file: "krep.c", start_line: 3146 })'
 descriptor = "c decl at krep.c:3146"
 cost_tokens = 45
-cum_tokens = 7429
+cum_tokens = 7581
 
 [batches.content]
 kind = "lines"
@@ -4484,7 +4548,7 @@ position = 151
 key = 'C(DeclDoc { file: "krep.c", start_line: 3146 })'
 descriptor = "c decl doc at krep.c:3146"
 cost_tokens = 15
-cum_tokens = 7444
+cum_tokens = 7596
 
 [batches.content]
 kind = "lines"
@@ -4502,7 +4566,7 @@ position = 152
 key = 'C(DeclBody { file: "krep.c", start_line: 3442 })'
 descriptor = "c decl body at krep.c:3442"
 cost_tokens = 19
-cum_tokens = 7463
+cum_tokens = 7615
 
 [batches.content]
 kind = "lines"
@@ -4520,7 +4584,7 @@ position = 153
 key = 'C(Decl { file: "krep.c", start_line: 1389 })'
 descriptor = "c decl at krep.c:1389"
 cost_tokens = 41
-cum_tokens = 7504
+cum_tokens = 7656
 
 [batches.content]
 kind = "lines"
@@ -4546,7 +4610,7 @@ position = 154
 key = 'C(Decl { file: "krep.c", start_line: 3891 })'
 descriptor = "c decl at krep.c:3891"
 cost_tokens = 41
-cum_tokens = 7545
+cum_tokens = 7697
 
 [batches.content]
 kind = "lines"
@@ -4572,7 +4636,7 @@ position = 155
 key = 'C(DeclDoc { file: "krep.c", start_line: 3891 })'
 descriptor = "c decl doc at krep.c:3891"
 cost_tokens = 13
-cum_tokens = 7558
+cum_tokens = 7710
 
 [batches.content]
 kind = "lines"
@@ -4590,7 +4654,7 @@ position = 156
 key = 'C(Decl { file: "krep.c", start_line: 4371 })'
 descriptor = "c decl at krep.c:4371"
 cost_tokens = 41
-cum_tokens = 7599
+cum_tokens = 7751
 
 [batches.content]
 kind = "lines"
@@ -4616,7 +4680,7 @@ position = 157
 key = 'C(DeclDoc { file: "krep.c", start_line: 4371 })'
 descriptor = "c decl doc at krep.c:4371"
 cost_tokens = 21
-cum_tokens = 7620
+cum_tokens = 7772
 
 [batches.content]
 kind = "lines"
@@ -4634,7 +4698,7 @@ position = 158
 key = 'C(DeclDoc { file: "krep.c", start_line: 3442 })'
 descriptor = "c decl doc at krep.c:3442"
 cost_tokens = 35
-cum_tokens = 7655
+cum_tokens = 7807
 
 [batches.content]
 kind = "lines"
@@ -4652,7 +4716,7 @@ position = 159
 key = 'C(Decl { file: "krep.c", start_line: 1628 })'
 descriptor = "c decl at krep.c:1628"
 cost_tokens = 50
-cum_tokens = 7705
+cum_tokens = 7857
 
 [batches.content]
 kind = "lines"
@@ -4678,7 +4742,7 @@ position = 160
 key = 'C(Decl { file: "krep.c", start_line: 3154 })'
 descriptor = "c decl at krep.c:3154"
 cost_tokens = 67
-cum_tokens = 7772
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -4696,7 +4760,7 @@ position = 161
 key = 'C(DeclDoc { file: "krep.c", start_line: 3154 })'
 descriptor = "c decl doc at krep.c:3154"
 cost_tokens = 22
-cum_tokens = 7794
+cum_tokens = 7946
 
 [batches.content]
 kind = "lines"
@@ -4714,7 +4778,7 @@ position = 162
 key = 'C(DeclDoc { file: "krep.c", start_line: 1628 })'
 descriptor = "c decl doc at krep.c:1628"
 cost_tokens = 56
-cum_tokens = 7850
+cum_tokens = 8002
 
 [batches.content]
 kind = "lines"
@@ -4732,7 +4796,7 @@ position = 163
 key = 'C(Decl { file: "krep.c", start_line: 1259 })'
 descriptor = "c decl at krep.c:1259"
 cost_tokens = 71
-cum_tokens = 7921
+cum_tokens = 8073
 
 [batches.content]
 kind = "lines"
@@ -4758,7 +4822,7 @@ position = 164
 key = 'C(DeclDoc { file: "krep.c", start_line: 1259 })'
 descriptor = "c decl doc at krep.c:1259"
 cost_tokens = 36
-cum_tokens = 7957
+cum_tokens = 8109
 
 [batches.content]
 kind = "lines"
@@ -4776,7 +4840,7 @@ position = 165
 key = 'C(DeclBody { file: "krep.c", start_line: 1198 })'
 descriptor = "c decl body at krep.c:1198"
 cost_tokens = 87
-cum_tokens = 8044
+cum_tokens = 8196
 
 [batches.content]
 kind = "lines"
@@ -4794,7 +4858,7 @@ position = 166
 key = 'C(DeclBody { file: "krep.c", start_line: 1125 })'
 descriptor = "c decl body at krep.c:1125"
 cost_tokens = 100
-cum_tokens = 8144
+cum_tokens = 8296
 
 [batches.content]
 kind = "lines"
@@ -4812,7 +4876,7 @@ position = 167
 key = 'Markdown(Section { file: "README.md", section_index: 46 })'
 descriptor = "README.md section #46"
 cost_tokens = 61
-cum_tokens = 8205
+cum_tokens = 8357
 
 [batches.content]
 kind = "lines"
@@ -4846,7 +4910,7 @@ position = 168
 key = 'Markdown(Section { file: "README.md", section_index: 41 })'
 descriptor = "README.md section #41"
 cost_tokens = 259
-cum_tokens = 8464
+cum_tokens = 8616
 
 [batches.content]
 kind = "lines"
@@ -4920,7 +4984,7 @@ position = 169
 key = 'C(DeclNames { file: "aho_corasick.c", chunk_index: 0 })'
 descriptor = "c decl names surface in aho_corasick.c"
 cost_tokens = 173
-cum_tokens = 8637
+cum_tokens = 8789
 
 [batches.content]
 kind = "lines"
@@ -5050,7 +5114,7 @@ position = 170
 key = 'C(Decl { file: "aho_corasick.c", start_line: 293 })'
 descriptor = "c decl at aho_corasick.c:293"
 cost_tokens = 0
-cum_tokens = 8637
+cum_tokens = 8789
 
 [batches.content]
 kind = "lines"
@@ -5068,7 +5132,7 @@ position = 171
 key = 'C(Decl { file: "aho_corasick.c", start_line: 296 })'
 descriptor = "c decl at aho_corasick.c:296"
 cost_tokens = 0
-cum_tokens = 8637
+cum_tokens = 8789
 
 [batches.content]
 kind = "lines"
@@ -5086,7 +5150,7 @@ position = 172
 key = 'C(Decl { file: "aho_corasick.c", start_line: 111 })'
 descriptor = "c decl at aho_corasick.c:111"
 cost_tokens = 5
-cum_tokens = 8642
+cum_tokens = 8794
 
 [batches.content]
 kind = "lines"
@@ -5112,7 +5176,7 @@ position = 173
 key = 'C(Decl { file: "aho_corasick.c", start_line: 274 })'
 descriptor = "c decl at aho_corasick.c:274"
 cost_tokens = 5
-cum_tokens = 8647
+cum_tokens = 8799
 
 [batches.content]
 kind = "lines"
@@ -5138,7 +5202,7 @@ position = 174
 key = 'C(Decl { file: "aho_corasick.c", start_line: 287 })'
 descriptor = "c decl at aho_corasick.c:287"
 cost_tokens = 5
-cum_tokens = 8652
+cum_tokens = 8804
 
 [batches.content]
 kind = "lines"
@@ -5164,7 +5228,7 @@ position = 175
 key = 'C(DeclDoc { file: "aho_corasick.c", start_line: 111 })'
 descriptor = "c decl doc at aho_corasick.c:111"
 cost_tokens = 14
-cum_tokens = 8666
+cum_tokens = 8818
 
 [batches.content]
 kind = "lines"
@@ -5182,7 +5246,7 @@ position = 176
 key = 'C(DeclDoc { file: "aho_corasick.c", start_line: 274 })'
 descriptor = "c decl doc at aho_corasick.c:274"
 cost_tokens = 14
-cum_tokens = 8680
+cum_tokens = 8832
 
 [batches.content]
 kind = "lines"
@@ -5200,7 +5264,7 @@ position = 177
 key = 'C(DeclDoc { file: "aho_corasick.c", start_line: 296 })'
 descriptor = "c decl doc at aho_corasick.c:296"
 cost_tokens = 16
-cum_tokens = 8696
+cum_tokens = 8848
 
 [batches.content]
 kind = "lines"
@@ -5218,7 +5282,7 @@ position = 178
 key = 'C(DeclDoc { file: "aho_corasick.c", start_line: 287 })'
 descriptor = "c decl doc at aho_corasick.c:287"
 cost_tokens = 22
-cum_tokens = 8718
+cum_tokens = 8870
 
 [batches.content]
 kind = "lines"
@@ -5236,7 +5300,7 @@ position = 179
 key = 'C(DeclDoc { file: "aho_corasick.c", start_line: 293 })'
 descriptor = "c decl doc at aho_corasick.c:293"
 cost_tokens = 21
-cum_tokens = 8739
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -5254,7 +5318,7 @@ position = 180
 key = 'C(Decl { file: "aho_corasick.c", start_line: 299 })'
 descriptor = "c decl at aho_corasick.c:299"
 cost_tokens = 37
-cum_tokens = 8776
+cum_tokens = 8928
 
 [batches.content]
 kind = "lines"
@@ -5280,7 +5344,7 @@ position = 181
 key = 'C(DeclDoc { file: "aho_corasick.c", start_line: 299 })'
 descriptor = "c decl doc at aho_corasick.c:299"
 cost_tokens = 15
-cum_tokens = 8791
+cum_tokens = 8943
 
 [batches.content]
 kind = "lines"
@@ -5298,7 +5362,7 @@ position = 182
 key = 'C(Decl { file: "aho_corasick.c", start_line: 26 })'
 descriptor = "c decl at aho_corasick.c:26"
 cost_tokens = 61
-cum_tokens = 8852
+cum_tokens = 9004
 
 [batches.content]
 kind = "lines"
@@ -5316,7 +5380,7 @@ position = 183
 key = 'C(DeclBody { file: "aho_corasick.c", start_line: 287 })'
 descriptor = "c decl body at aho_corasick.c:287"
 cost_tokens = 26
-cum_tokens = 8878
+cum_tokens = 9030
 
 [batches.content]
 kind = "lines"
@@ -5334,7 +5398,7 @@ position = 184
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 13
-cum_tokens = 8891
+cum_tokens = 9043
 
 [batches.content]
 kind = "fs"
@@ -5348,7 +5412,7 @@ position = 185
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 8899
+cum_tokens = 9051
 
 [batches.content]
 kind = "fs"
@@ -5362,7 +5426,7 @@ position = 186
 key = 'C(HeaderBanner { file: "test/test_krep.h" })'
 descriptor = "c header banner in test/test_krep.h"
 cost_tokens = 24
-cum_tokens = 8923
+cum_tokens = 9075
 
 [batches.content]
 kind = "lines"
@@ -5380,7 +5444,7 @@ position = 187
 key = 'C(DeclBody { file: "krep.c", start_line: 4313 })'
 descriptor = "c decl body at krep.c:4313"
 cost_tokens = 138
-cum_tokens = 9061
+cum_tokens = 9213
 
 [batches.content]
 kind = "lines"
@@ -5422,7 +5486,7 @@ position = 188
 key = 'Markdown(Section { file: "README.md", section_index: 48 })'
 descriptor = "README.md section #48"
 cost_tokens = 81
-cum_tokens = 9142
+cum_tokens = 9294
 
 [batches.content]
 kind = "lines"
@@ -5456,7 +5520,7 @@ position = 189
 key = 'Markdown(Section { file: "README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 107
-cum_tokens = 9249
+cum_tokens = 9401
 
 [batches.content]
 kind = "lines"
@@ -5506,7 +5570,7 @@ position = 190
 key = 'Markdown(Section { file: "README.md", section_index: 45 })'
 descriptor = "README.md section #45"
 cost_tokens = 84
-cum_tokens = 9333
+cum_tokens = 9485
 
 [batches.content]
 kind = "lines"
@@ -5540,7 +5604,7 @@ position = 191
 key = 'C(DeclBody { file: "krep.c", start_line: 401 })'
 descriptor = "c decl body at krep.c:401"
 cost_tokens = 156
-cum_tokens = 9489
+cum_tokens = 9641
 
 [batches.content]
 kind = "lines"
@@ -5574,7 +5638,7 @@ position = 192
 key = 'C(Decl { file: "aho_corasick.c", start_line: 17 })'
 descriptor = "c decl at aho_corasick.c:17"
 cost_tokens = 111
-cum_tokens = 9600
+cum_tokens = 9752
 
 [batches.content]
 kind = "lines"
@@ -5592,7 +5656,7 @@ position = 193
 key = 'Markdown(Section { file: "README.md", section_index: 43 })'
 descriptor = "README.md section #43"
 cost_tokens = 152
-cum_tokens = 9752
+cum_tokens = 9904
 
 [batches.content]
 kind = "lines"

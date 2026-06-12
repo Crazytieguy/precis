@@ -116,14 +116,6 @@ src/
     compile.c
     compile.h
     exec_stack.h
-        40→struct determine_alignment {
-        …
-        44→enum {ALIGNMENT = offsetof(struct determine_alignment, u)};
-        …
-        50→typedef int stack_ptr;
-        …
-        52→struct stack {
-        …
     execute.c
     inject_errors.c
     jq.h
@@ -310,12 +302,6 @@ src/
     parser.y
     util.c
     util.h
-        16→jv expand_path(jv);
-        17→jv get_home(void);
-        18→jv jq_realpath(jv);
-        …
-        44→const void *_jq_memmem(const void *haystack, size_t haystacklen,
-        45→                       const void *needle, size_t needlelen);
 tests/
 vendor/
     decNumber/

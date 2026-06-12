@@ -40,6 +40,12 @@ include/
     globals.h
         4→#include <stdint.h>
         5→#include <unistd.h>
+        8→  #define WIFI_SSID "your-ssid"
+        9→  #define WIFI_PASS "your-password"
+        10→  void task_yield ();
+        …
+        12→  #define task_yield();
+        …
         15→#define true 1
         16→#define false 0
         …
@@ -104,49 +110,27 @@ include/
         …
         93→#define DISK_SYNC_INTERVAL 15000000
         …
-        100→// Time in microseconds to spend waiting for data transmission before
-        101→// timing out. Default is 15s, which leaves 5s to prevent starving other
-        102→// clients from Keep Alive packets.
-        103→#define NETWORK_TIMEOUT_TIME 15000000
-        …
-        105→// Size of the receive buffer for incoming string data
-        106→#define MAX_RECV_BUF_LEN 256
-        …
-        165→#define STATE_NONE 0
-        166→#define STATE_STATUS 1
     packets.h
-        4→// Serverbound packets
-        5→int cs_handshake (int client_fd);
-        6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
-        7→int cs_clientInformation (int client_fd);
-        8→int cs_pluginMessage (int client_fd);
-        9→int cs_playerAction (int client_fd);
-        10→int cs_useItemOn (int client_fd);
-        11→int cs_useItem (int client_fd);
-        12→int cs_setPlayerPositionAndRotation (int client_fd, double *x, double *y, double *z, float *yaw, float *pitch, uint8_t *on_ground);
-        13→int cs_setPlayerPosition (int client_fd, double *x, double *y, double *z, uint8_t *on_ground);
-        14→int cs_setPlayerRotation (int client_fd, float *yaw, float *pitch, uint8_t *on_ground);
-        15→int cs_setPlayerMovementFlags (int client_fd, uint8_t *on_ground);
-        16→int cs_setHeldItem (int client_fd);
-        17→int cs_swingArm (int client_fd);
-        18→int cs_clickContainer (int client_fd);
-        19→int cs_closeContainer (int client_fd);
-        20→int cs_clientStatus (int client_fd);
-        21→int cs_chat (int client_fd);
-        22→int cs_interact (int client_fd);
-        23→int cs_playerInput (int client_fd);
-        24→int cs_playerCommand (int client_fd);
-        25→int cs_playerLoaded (int client_fd);
-        …
-        27→// Clientbound packets
-        28→int sc_statusResponse (int client_fd);
-        29→int sc_loginSuccess (int client_fd, uint8_t *uuid, char *name);
-        30→int sc_knownPacks (int client_fd);
     procedures.h
-        4→#include <unistd.h>
-        6→#include "globals.h"
     serialize.h
+        1→#ifndef SERIALIZE_H
+        2→#define SERIALIZE_H
         4→#include "globals.h"
+        6→#ifdef SYNC_WORLD_TO_DISK
+        7→  int initSerializer ();
+        8→  void writeBlockChangesToDisk (int from, int to);
+        9→  void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot);
+        10→  void writePlayerDataToDisk ();
+        11→  void writeDataToDiskOnInterval ();
+        12→#else
+        13→  // Define no-op placeholders for when disk syncing isn't enabled
+        14→  #define writeBlockChangesToDisk(a, b)
+        15→  #define writeChestChangesToDisk(a, b)
+        16→  #define writePlayerDataToDisk()
+        17→  #define writeDataToDiskOnInterval()
+        18→  #define initSerializer() 0
+        19→#endif
+        21→#endif
     structures.h
         1→#ifndef H_STRUCTURES
         2→#define H_STRUCTURES
@@ -158,7 +142,7 @@ include/
         8→static inline int mod_abs (int a, int b) {
         9→  return ((a % b) + b) % b;
         11→static inline int div_floor (int a, int b) {
-        …
+        12→  return a % b < 0 ? (a - b) / b : a / b;
         15→extern uint64_t total_bytes_received;
         16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
         17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
@@ -186,6 +170,10 @@ include/
         …
         40→uint32_t fast_rand ();
         41→uint64_t splitmix64 (uint64_t state);
+        …
+        45→  #define get_program_time esp_timer_get_time
+        …
+        47→  int64_t get_program_time ();
         …
     varnum.h
         1→#ifndef H_VARNUM

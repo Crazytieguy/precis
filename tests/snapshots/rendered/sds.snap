@@ -89,14 +89,6 @@ README.md
     912→===
     …
 sds.c
-    33→#include <stdio.h>
-    34→#include <stdlib.h>
-    35→#include <string.h>
-    36→#include <ctype.h>
-    37→#include <assert.h>
-    38→#include <limits.h>
-    39→#include "sds.h"
-    40→#include "sdsalloc.h"
 sds.h
     1→/* SDSLib 2.0 -- A C dynamic strings library
     2→ *
@@ -218,6 +210,10 @@ sds.h
     …
     230→sds sdscatvprintf(sds s, const char *fmt, va_list ap);
     …
+    232→sds sdscatprintf(sds s, const char *fmt, ...)
+    233→    __attribute__((format(printf, 2, 3)));
+    235→sds sdscatprintf(sds s, const char *fmt, ...);
+    …
     238→sds sdscatfmt(sds s, char const *fmt, ...);
     239→sds sdstrim(sds s, const char *cset);
     240→void sdsrange(sds s, ssize_t start, ssize_t end);
@@ -249,6 +245,8 @@ sds.h
     266→void *sds_malloc(size_t size);
     267→void *sds_realloc(void *ptr, size_t size);
     268→void sds_free(void *ptr);
+    …
+    271→int sdsTest(int argc, char *argv[]);
     …
 sdsalloc.h
     40→#define s_malloc malloc
