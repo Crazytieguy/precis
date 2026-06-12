@@ -88,6 +88,46 @@ src/
             41→        return global_config
             43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
         _checkers.py
+            153→def check_callable(
+            154→    value: Any,
+            155→    origin_type: Any,
+            156→    args: tuple[Any, ...],
+            157→    memo: TypeCheckMemo,
+            158→) -> None:
+            212→def check_mapping(
+            213→    value: Any,
+            214→    origin_type: Any,
+            215→    args: tuple[Any, ...],
+            216→    memo: TypeCheckMemo,
+            217→) -> None:
+            247→def check_typed_dict(
+            248→    value: Any,
+            249→    origin_type: Any,
+            250→    args: tuple[Any, ...],
+            251→    memo: TypeCheckMemo,
+            252→) -> None:
+            305→def check_list(
+            306→    value: Any,
+            307→    origin_type: Any,
+            308→    args: tuple[Any, ...],
+            309→    memo: TypeCheckMemo,
+            310→) -> None:
+            324→def check_sequence(
+            …
+            343→def check_set(
+            …
+            365→def check_tuple(
+            …
+            423→def check_union(
+            …
+            447→def check_uniontype(
+            …
+            474→def check_class(
+            …
+            536→def check_newtype(
+            …
+            545→def check_instance(
+            …
         _config.py
             11→T = TypeVar("T")
             14→class ForwardRefPolicy(Enum):
@@ -117,6 +157,32 @@ src/
             103→    debug_instrumentation: bool = False
             106→global_config = TypeCheckConfiguration()
         _decorators.py
+            19→T_CallableOrType = TypeVar("T_CallableOrType", bound=Callable[..., Any])
+            32→def make_cell(value: object) -> _Cell:
+            33→    return (lambda: value).__closure__[0]  # type: ignore[index]
+            36→def find_target_function(
+            37→    new_code: CodeType, target_path: Sequence[str], firstlineno: int
+            38→) -> CodeType | None:
+            56→def instrument(f: T_CallableOrType) -> FunctionType | str:
+            …
+            136→@overload
+            137→def typechecked(
+            138→    *,
+            139→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+            140→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+            141→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+            142→    debug_instrumentation: bool | Unset = unset,
+            143→) -> Callable[[T_CallableOrType], T_CallableOrType]: ...
+            146→@overload
+            147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
+            150→def typechecked(
+            151→    target: T_CallableOrType | None = None,
+            152→    *,
+            153→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+            154→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+            155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+            156→    debug_instrumentation: bool | Unset = unset,
+            157→) -> Any:
         _exceptions.py
             1→from collections import deque
             2→from typing import Deque
@@ -179,62 +245,7 @@ src/
             31→    func: Callable[P, T] | None = None,
             32→) -> Callable[P, T] | ContextManager[None]:
         _transformer.py
-            488→class TypeguardTransformer(NodeTransformer):
-            489→    def __init__(
-            490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
-            491→    ) -> None:
-            498→    def generic_visit(self, node: AST) -> AST:
-            …
-            516→    @contextmanager
-            …
-            570→    def _get_import(self, module: str, name: str) -> Name:
-            …
-            574→    @overload
-            …
-            577→    @overload
-            …
-            580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
-            …
-            596→    def visit_Name(self, node: Name) -> Name:
-            597→        self._memo.local_names.add(node.id)
-            598→        return node
-            600→    def visit_Module(self, node: Module) -> Module:
-            …
-            608→    def visit_Import(self, node: Import) -> Import:
-            …
-            615→    def visit_ImportFrom(self, node: ImportFrom) -> ImportFrom:
-            …
-            624→    def visit_ClassDef(self, node: ClassDef) -> ClassDef | None:
-            …
-            650→    def visit_FunctionDef(
-            651→        self, node: FunctionDef | AsyncFunctionDef
-            652→    ) -> FunctionDef | AsyncFunctionDef | None:
-            913→    def visit_AsyncFunctionDef(
-            914→        self, node: AsyncFunctionDef
-            915→    ) -> FunctionDef | AsyncFunctionDef | None:
-            916→        return self.visit_FunctionDef(node)
-            918→    def visit_Return(self, node: Return) -> Return:
-            919→        """This injects type checks into "return" statements."""
-            945→    def visit_Yield(self, node: Yield) -> Yield | Call:
-            946→        """
-            947→        This injects type checks into "yield" expressions, checking both the yielded
-            948→        value and the value sent back to the generator, when appropriate.
-            950→        """
-            994→    def visit_AnnAssign(self, node: AnnAssign) -> Any:
-            995→        """
-            996→        This injects a type check into a local variable annotation-assignment within a
-            997→        function body.
-            999→        """
-            1036→    def visit_Assign(self, node: Assign) -> Any:
-            …
-            1138→    def visit_NamedExpr(self, node: NamedExpr) -> Any:
-            1139→        """This injects a type check into an assignment expression (a := foo())."""
-            1181→    def visit_AugAssign(self, node: AugAssign) -> Any:
-            1182→        """
-            1183→        This injects a type check into an augmented assignment expression (a += 1).
-            1185→        """
-            1224→    def visit_If(self, node: If) -> Any:
-            …
+            100→aug_assign_functions = {
         _utils.py
         py.typed
 tests/

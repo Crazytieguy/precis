@@ -232,6 +232,7 @@ src/
         certs.py
         compat.py
         cookies.py
+            560→_CookieJarT = TypeVar("_CookieJarT", bound=CookieJar)
         exceptions.py
             161→class RequestsDependencyWarning(RequestsWarning):
             162→    """An imported dependency doesn't match the expected version range."""

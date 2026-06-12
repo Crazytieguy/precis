@@ -173,7 +173,9 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             continue;
         }
 
-        let names_chunk_count = names_surface_chunk_count(decls.len());
+        let roster = names_roster(&decls, &source);
+        let chunk_of_decl = decl_chunk_indices(&decls, &roster, &source);
+        let names_chunk_count = names_surface_chunk_count(roster.len());
         let names_predecessors: Vec<_> = (0..names_chunk_count)
             .map(|chunk_index| {
                 BatchKey::Python(PythonKey::DeclNames {
@@ -182,16 +184,19 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 })
             })
             .collect();
-        let names_lines_by_chunk: Vec<_> = decls
+        let names_lines_by_chunk: Vec<_> = roster
             .chunks(NAMES_SURFACE_CHUNK_SIZE)
-            .map(collect_decl_names_from)
+            .map(|chunk| {
+                let chunk_decls: Vec<_> = chunk.iter().map(|&i| decls[i]).collect();
+                collect_decl_names_from(&chunk_decls)
+            })
             .collect();
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
             else {
                 continue;
             };
-            let chunk_entry_count = decls
+            let chunk_entry_count = roster
                 .len()
                 .min((chunk_index + 1) * NAMES_SURFACE_CHUNK_SIZE)
                 - chunk_index * NAMES_SURFACE_CHUNK_SIZE;
@@ -207,7 +212,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         let mut method_sigs_predecessors = vec![None; names_chunk_count];
         let mut methods_by_chunk = vec![Vec::new(); names_chunk_count];
         for (class_index, methods) in collect_methods_by_class(&decls, &source) {
-            methods_by_chunk[names_surface_chunk_index(class_index)].push((class_index, methods));
+            methods_by_chunk[chunk_of_decl[class_index]].push((class_index, methods));
         }
         for (chunk_index, methods_by_class) in methods_by_chunk.into_iter().enumerate() {
             if methods_by_class.is_empty() {
@@ -242,7 +247,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         }
 
         for (decl_index, decl) in decls.iter().enumerate() {
-            let chunk_index = names_surface_chunk_index(decl_index);
+            let chunk_index = chunk_of_decl[decl_index];
             let names_predecessor = names_predecessors[chunk_index].clone();
             let decl_key = PythonKey::Decl {
                 file: file.clone(),
@@ -726,6 +731,73 @@ fn import_source_key(node: Node, source: &str) -> String {
 /// Surface listing of every top-level decl's first line. Class/def
 /// entries emit Full + Ellipsis (body-elision marker); consts emit
 /// Full only to avoid overlapping the next statement.
+/// Indices of `decls` in names-surface order: classes and functions
+/// first (file order), module consts trailing — a const/TypeVar wall
+/// at the top of the file must not occupy chunk 0 and push the real
+/// API into falloff-damped tail chunks. `@overload` stubs whose
+/// implementation is in the file are excluded: their names row would
+/// render the bare `@overload` decorator line, so the stack is
+/// represented by the implementation def's row.
+fn names_roster(decls: &[DeclInfo], source: &str) -> Vec<usize> {
+    let mut roster: Vec<usize> = (0..decls.len())
+        .filter(|&i| {
+            matches!(decls[i].kind, DeclKind::Class | DeclKind::Function)
+                && !collapsed_overload_stub(&decls[i], decls, source)
+        })
+        .collect();
+    roster.extend((0..decls.len()).filter(|&i| decls[i].kind == DeclKind::Const));
+    roster
+}
+
+/// Names-surface chunk index of every decl. Roster members map by
+/// roster position; collapsed overload stubs ride their
+/// implementation's chunk so their per-decl batches stay gated on the
+/// chunk that names the stack.
+fn decl_chunk_indices(decls: &[DeclInfo], roster: &[usize], source: &str) -> Vec<usize> {
+    let mut chunk_of = vec![usize::MAX; decls.len()];
+    for (position, &decl_index) in roster.iter().enumerate() {
+        chunk_of[decl_index] = names_surface_chunk_index(position);
+    }
+    for decl_index in 0..decls.len() {
+        if chunk_of[decl_index] != usize::MAX {
+            continue;
+        }
+        let chunk = overload_implementation(&decls[decl_index], decls, source)
+            .map(|impl_index| chunk_of[impl_index])
+            .unwrap_or(0);
+        chunk_of[decl_index] = chunk;
+    }
+    chunk_of
+}
+
+fn collapsed_overload_stub(decl: &DeclInfo, decls: &[DeclInfo], source: &str) -> bool {
+    is_overload_stub(decl, source) && overload_implementation(decl, decls, source).is_some()
+}
+
+/// Index of the non-stub function sharing the stub's name, if any.
+fn overload_implementation(stub: &DeclInfo, decls: &[DeclInfo], source: &str) -> Option<usize> {
+    let stub_name = name_of(stub.inner_node, source)?;
+    decls.iter().position(|d| {
+        d.kind == DeclKind::Function
+            && !is_overload_stub(d, source)
+            && name_of(d.inner_node, source) == Some(stub_name)
+    })
+}
+
+/// `@overload` / `@typing.overload` / `@t.overload`-decorated def.
+fn is_overload_stub(decl: &DeclInfo, source: &str) -> bool {
+    if decl.kind != DeclKind::Function || decl.unit_node.kind() != "decorated_definition" {
+        return false;
+    }
+    let mut cursor = decl.unit_node.walk();
+    decl.unit_node.children(&mut cursor).any(|child| {
+        child.kind() == "decorator" && {
+            let text = source[child.start_byte()..child.end_byte()].trim();
+            text == "@overload" || text.ends_with(".overload")
+        }
+    })
+}
+
 fn collect_decl_names_from(decls: &[DeclInfo]) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
