@@ -50,6 +50,7 @@ Score(3000)=0.470 I=0.727 C=0.304 ns_rows≤3K=14/42 (reached=6 partial=1 missin
 | walker |  | 1464 | 18 | imports #3 in packages/vite/src/node/index.ts |  |  | 0.679 |
 | ns | 1582 |  | 356 | Plugin interface — every hook field name | 2.3 | 2.2 | 0.608 |
 | walker |  | 1646 | 182 | export names surface in packages/vite/src/node/plugin.ts |  |  | 0.609 |
+| walker |  | 1646 | 0 | export at packages/vite/src/node/plugin.ts:101 |  |  | 0.609 |
 | walker |  | 1659 | 13 | export at packages/vite/src/node/plugin.ts:69 |  |  | 0.609 |
 | walker |  | 1680 | 21 | export at packages/vite/src/node/plugin.ts:80 |  |  | 0.609 |
 | walker |  | 1699 | 19 | export at packages/vite/src/node/plugin.ts:375 |  |  | 0.611 |

@@ -209,6 +209,16 @@ pub enum TsKey {
         /// First line of the class member surface.
         member_start_line: usize,
     },
+    /// Chunked member-name catalog of one big exported declaration
+    /// (interface / object-type alias / class above the per-member
+    /// split range). Predecessor: the matching `Export` header for
+    /// chunk 0; later chunks chain after their predecessor chunk.
+    ExportMemberNames {
+        file: PathBuf,
+        /// Parent export line.
+        start_line: usize,
+        chunk_index: usize,
+    },
     /// Body slice of an export with a `statement_block` body (outer
     /// braces stripped). Predecessor: matching `Export`.
     ExportBody {
@@ -655,6 +665,14 @@ impl InnerKey for TsKey {
                 member_start_line,
             } => format!(
                 "export member at {}:{start_line} member {member_start_line}",
+                display_path(file, root)
+            ),
+            TsKey::ExportMemberNames {
+                file,
+                start_line,
+                chunk_index,
+            } => format!(
+                "export member names at {}:{start_line} chunk {chunk_index}",
                 display_path(file, root)
             ),
             TsKey::ExportBody {
