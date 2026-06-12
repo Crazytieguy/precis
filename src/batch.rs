@@ -173,7 +173,14 @@ pub enum MarkdownKey {
     HeadingsOutline { file: PathBuf },
     /// One scheduling unit of a markdown body, indexed by post-split
     /// position. May be whole H2 / per-bullet / Intro+per-H3 child.
-    Section { file: PathBuf, section_index: usize },
+    /// `reference_shaped` marks README ranges dominated by list / table
+    /// / fence rows — they keep the default concavity instead of the
+    /// steeper prose exponent.
+    Section {
+        file: PathBuf,
+        section_index: usize,
+        reference_shaped: bool,
+    },
 }
 
 /// TypeScript / TSX batches. "Public" = top-level with `export` (or
@@ -578,6 +585,7 @@ impl InnerKey for MarkdownKey {
             MarkdownKey::Section {
                 file,
                 section_index,
+                ..
             } => format!("{} section #{section_index}", display_path(file, root)),
         }
     }
@@ -585,9 +593,15 @@ impl InnerKey for MarkdownKey {
     /// `Section` at index ≥1 steepens to `0.45` to demote prose body
     /// against structural anchors of the same value; index 0 keeps the
     /// default since READMEs often lead with their canonical claim.
+    /// Reference-shaped ranges (list / table / fence dominant) are
+    /// catalogs, not prose — they keep the default exponent.
     fn concavity_exponent(&self) -> f64 {
         match self {
-            MarkdownKey::Section { section_index, .. } if *section_index >= 1 => 0.45,
+            MarkdownKey::Section {
+                section_index,
+                reference_shaped,
+                ..
+            } if *section_index >= 1 && !reference_shaped => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }

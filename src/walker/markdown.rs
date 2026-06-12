@@ -114,6 +114,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: MarkdownKey::Section {
                         file: file.clone(),
                         section_index: idx,
+                        reference_shaped: false,
                     }
                     .into(),
                     predecessor: headline_emitted.clone(),
@@ -161,7 +162,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
         let (headline, outline_rows, outline_emits) = derive_outline_gates(&file, &tree, &source);
-        let ranges = logical_sections(&file, &tree, &source, outline_emits);
+        let root_readme = is_readme(&file) && dir == ctx.root();
+        let ranges = logical_sections(&file, &tree, &source, outline_emits, root_readme);
         if ranges.is_empty() {
             continue;
         }
@@ -207,6 +209,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: MarkdownKey::Section {
                         file: file.clone(),
                         section_index: idx,
+                        reference_shaped: range.reference_shaped,
                     }
                     .into(),
                     predecessor: section_predecessor.clone(),
@@ -382,7 +385,14 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
         heading_slab_value(file, range.parent_index, ctx)
     };
     let sub_scale = if is_readme(file) {
-        README_SUB_SECTION_SIGNAL_SCALE
+        // A root-README reference-vocabulary H3 (`### Colors`,
+        // `### Modifiers`) is a top-rank catalog row in its own right,
+        // not H3 fan-out noise — it skips the sub-section scale.
+        if range.is_reference_usage_section && ctx.depth_from_root(file) <= 1 {
+            1.0
+        } else {
+            README_SUB_SECTION_SIGNAL_SCALE
+        }
     } else {
         SUB_SECTION_SIGNAL_SCALE
     };
@@ -1506,6 +1516,12 @@ struct SectionRange {
     /// body bytes. README-only; earns the modest
     /// [`REFERENCE_USAGE_SECTION_FACTOR`].
     is_reference_usage_section: bool,
+    /// This range's body is structurally reference-shaped — dominated
+    /// by list items / table rows / code-fence lines (see
+    /// [`range_is_reference_shaped`]). README-only. Carried into the
+    /// `Section` key so the scheduler prices the range at the default
+    /// concavity instead of the steeper prose exponent.
+    reference_shaped: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1520,6 +1536,76 @@ enum SectionKind {
     BodyBlock,
 }
 
+/// Minimum fraction of a range's non-blank out-of-fence rows that must
+/// be catalog rows (list / table) for [`range_is_reference_shaped`].
+const REFERENCE_SHAPED_MIN_FRACTION: f64 = 0.6;
+
+/// Minimum count of catalog rows — keeps two-line stubs from earning
+/// the flatter concavity.
+const REFERENCE_SHAPED_MIN_CATALOG_ROWS: usize = 3;
+
+/// Source-byte bounds for a reference-shaped range. Below the floor the
+/// flattened concavity just pulls micro-sections into the orientation
+/// window (mkcert's 20-50-token stubs); above the cap the range is a
+/// mega-catalog (sqlite-vec's 900-token install-matrix table) whose
+/// early purchase evicts NS-ranked content wholesale.
+const REFERENCE_SHAPED_MIN_BYTES: usize = 400;
+const REFERENCE_SHAPED_MAX_BYTES: usize = 1600;
+
+/// True iff the row range is dominated by catalog rows — list items and
+/// table rows, measured outside code fences (fence delimiters and
+/// interiors are neutral: excluded from both sides of the fraction) —
+/// and its total source bytes sit inside the reference-shaped bounds.
+/// Catalog sections (option tables, color/modifier lists, helper
+/// indexes) are roster-like: their per-row information density doesn't
+/// fall off the way prose does, so they shouldn't pay the steeper prose
+/// concavity. Fence dominance deliberately does NOT qualify — compact
+/// demo snippets on code-first repos are exactly what the prose
+/// exponent exists to demote.
+fn range_is_reference_shaped(src_lines: &[&str], start: usize, end: usize) -> bool {
+    let mut in_fence = false;
+    let mut prose_or_catalog = 0usize;
+    let mut catalog = 0usize;
+    let mut bytes = 0usize;
+    for row in start..=end {
+        let Some(line) = src_lines.get(row - 1) else {
+            break;
+        };
+        bytes += line.len() + 1;
+        let t = line.trim_start();
+        if t.is_empty() {
+            continue;
+        }
+        if t.starts_with("```") || t.starts_with("~~~") {
+            in_fence = !in_fence;
+            continue;
+        }
+        if in_fence {
+            continue;
+        }
+        prose_or_catalog += 1;
+        if is_catalog_line(line) {
+            catalog += 1;
+        }
+    }
+    (REFERENCE_SHAPED_MIN_BYTES..=REFERENCE_SHAPED_MAX_BYTES).contains(&bytes)
+        && catalog >= REFERENCE_SHAPED_MIN_CATALOG_ROWS
+        && prose_or_catalog > 0
+        && catalog as f64 / prose_or_catalog as f64 >= REFERENCE_SHAPED_MIN_FRACTION
+}
+
+/// A list item, numbered item, or table row — the catalog subset of
+/// [`is_reference_structure_line`] (fences excluded).
+fn is_catalog_line(line: &str) -> bool {
+    let t = line.trim_start();
+    t.starts_with("- ")
+        || t.starts_with("* ")
+        || t.starts_with("+ ")
+        || t.starts_with('|')
+        || t.split_once(". ")
+            .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
+}
+
 /// Section ranges for batching. H2s that satisfy a split rule expand
 /// to an optional `Intro` plus per-child sub-ranges (bullet split,
 /// H3 split, or body-block split). Other top-level entries emit one
@@ -1529,6 +1615,7 @@ fn logical_sections(
     tree: &Tree,
     source: &str,
     outline_will_emit: bool,
+    root_readme: bool,
 ) -> Vec<SectionRange> {
     let entries = top_level_entries(tree.root_node(), source);
     let split_eligible_file = !is_changelog_class(file);
@@ -1548,6 +1635,7 @@ fn logical_sections(
                     synthetic_intro_present,
                     parent_is_canonical_usage_h2: false,
                     is_reference_usage_section: false,
+                    reference_shaped: false,
                 });
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -1600,7 +1688,20 @@ fn logical_sections(
                             synthetic_intro_present,
                             source,
                         );
-                    if !did_body_split {
+                    let did_fence_split = !did_body_split
+                        && root_readme
+                        && usage_h2
+                        && bytes >= H2_SPLIT_BYTES
+                        && push_canonical_usage_fence_split(
+                            &mut out,
+                            *node,
+                            *start,
+                            *end,
+                            parent_idx,
+                            synthetic_intro_present,
+                            source,
+                        );
+                    if !did_body_split && !did_fence_split {
                         out.push(SectionRange {
                             start: *start,
                             end: *end,
@@ -1609,13 +1710,88 @@ fn logical_sections(
                             synthetic_intro_present,
                             parent_is_canonical_usage_h2: usage_h2,
                             is_reference_usage_section: reference_h2,
+                            reference_shaped: false,
                         });
                     }
                 }
             }
         }
     }
+    // Root-README-only: mark catalog-dominant ranges so the scheduler
+    // prices them at the default concavity (the steeper `Section` prose
+    // exponent exists to demote prose, not catalogs). Gated on the
+    // reference-usage title vocabulary: structure alone misfires —
+    // sponsor tables, TOCs, "Supported root stores" / "Security"
+    // bullet lists are list-dominant but NS-tier-2, and flattening
+    // them displaced NS-ranked code surfaces (mkcert/peepdb/d2ts).
+    // Nested READMEs stay at prose pricing — flattening them re-fed
+    // the per-driver README flood the NS treats as catalog-listing
+    // material.
+    if root_readme {
+        let src_lines: Vec<&str> = source.lines().collect();
+        for range in &mut out {
+            range.reference_shaped = range.is_reference_usage_section
+                && range_is_reference_shaped(&src_lines, range.start, range.end);
+        }
+    }
     out
+}
+
+/// Split a large canonical-usage H2 (no H3 children, no list-only
+/// body) at the end of its first code fence: the heading + prelude +
+/// first fence is the canonical snippet — buyable separately from the
+/// demo blob that follows. The snippet keeps the canonical-usage boost
+/// as a `Whole`; the remainder is a `BodyBlock` (demo-blob tier).
+/// Returns false (no ranges pushed) when there's no direct fence or
+/// the remainder lacks substantive content.
+fn push_canonical_usage_fence_split(
+    out: &mut Vec<SectionRange>,
+    h2_section: Node<'_>,
+    start: usize,
+    end: usize,
+    parent_idx: usize,
+    synthetic_intro_present: bool,
+    source: &str,
+) -> bool {
+    let mut cur = h2_section.walk();
+    let Some(first_fence) = h2_section
+        .children(&mut cur)
+        .find(|c| is_code_block(c.kind()))
+    else {
+        return false;
+    };
+    let (_, fence_end) = node_row_range(first_fence, source);
+    if fence_end >= end {
+        return false;
+    }
+    let src_lines: Vec<&str> = source.lines().collect();
+    let rest_start = fence_end + 1;
+    let rest_has_content =
+        (rest_start..=end).any(|r| src_lines.get(r - 1).is_some_and(|l| !l.trim().is_empty()));
+    if !rest_has_content {
+        return false;
+    }
+    out.push(SectionRange {
+        start,
+        end: fence_end,
+        kind: SectionKind::Whole,
+        parent_index: parent_idx,
+        synthetic_intro_present,
+        parent_is_canonical_usage_h2: true,
+        is_reference_usage_section: false,
+        reference_shaped: false,
+    });
+    out.push(SectionRange {
+        start: rest_start,
+        end,
+        kind: SectionKind::BodyBlock,
+        parent_index: parent_idx,
+        synthetic_intro_present,
+        parent_is_canonical_usage_h2: false,
+        is_reference_usage_section: false,
+        reference_shaped: false,
+    });
+    true
 }
 
 /// Append an `Intro` range covering the H2 heading + prelude before
@@ -1654,6 +1830,7 @@ fn push_intro<'a>(
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: reference_h2,
+        reference_shaped: false,
     });
 }
 
@@ -1689,6 +1866,7 @@ fn push_h3_child_or_body_blocks(
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: reference_h3,
+        reference_shaped: false,
     });
 }
 
@@ -1709,6 +1887,7 @@ fn push_body_block_ranges(
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: false,
+        reference_shaped: false,
     }));
     true
 }
@@ -2074,14 +2253,7 @@ fn reference_usage_row_range_ok(section: Node, start: usize, end: usize, source:
 /// docs — is an intro, not a reference, and is correctly skipped.
 fn is_reference_structure_line(line: &str) -> bool {
     let t = line.trim_start();
-    t.starts_with("- ")
-        || t.starts_with("* ")
-        || t.starts_with("+ ")
-        || t.starts_with('|')
-        || t.starts_with("```")
-        || t.starts_with("~~~")
-        || t.split_once(". ")
-            .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
+    is_catalog_line(line) || t.starts_with("```") || t.starts_with("~~~")
 }
 
 /// True iff the section node's body (heading excluded) contains
@@ -2734,7 +2906,7 @@ mod tests {
         let tree = parse(source);
         let file = PathBuf::from(file);
         let (_, _, outline_emits) = derive_outline_gates(&file, &tree, source);
-        logical_sections(&file, &tree, source, outline_emits)
+        logical_sections(&file, &tree, source, outline_emits, is_readme(&file))
     }
 
     /// Build a `## Heading\n\n### Sub\n<filler>` shape sized to clear
