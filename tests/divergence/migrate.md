@@ -1,4 +1,4 @@
-Score(3000)=0.570 I=0.657 C=0.495 ns_rows≤3K=14/33 (reached=5 partial=0 missing=9)
+Score(3000)=0.570 I=0.658 C=0.495 ns_rows≤3K=14/33 (reached=5 partial=0 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,214 +26,214 @@ Score(3000)=0.570 I=0.657 C=0.495 ns_rows≤3K=14/33 (reached=5 partial=0 missin
 | walker |  | 548 | 137 | headings outline in README.md |  |  | 0.548 |
 | ns | 559 |  | 89 | source/ subpackage listing | 1.6 |  | 0.478 |
 | walker |  | 563 | 15 | README.md section #5 |  |  | 0.478 |
-| walker |  | 570 | 7 | go package + imports in cli/version.go |  |  | 0.478 |
-| walker |  | 585 | 15 | listing of 'cmd/migrate' |  |  | 0.478 |
-| walker |  | 593 | 8 | README headline in cmd/migrate/README.md |  |  | 0.478 |
-| walker |  | 603 | 10 | go decl names surface in cmd/migrate/main.go |  |  | 0.478 |
-| walker |  | 603 | 0 | go decl at cmd/migrate/main.go:5 |  |  | 0.478 |
-| walker |  | 613 | 10 | go decl names surface in cmd/migrate/version.go |  |  | 0.478 |
-| walker |  | 613 | 0 | go decl at cmd/migrate/version.go:4 |  |  | 0.478 |
+| walker |  | 571 | 8 | go decl body at cli/main.go:6 |  |  | 0.478 |
+| walker |  | 578 | 7 | go package + imports in cli/version.go |  |  | 0.478 |
+| walker |  | 593 | 15 | listing of 'cmd/migrate' |  |  | 0.478 |
+| walker |  | 601 | 8 | README headline in cmd/migrate/README.md |  |  | 0.478 |
+| walker |  | 611 | 10 | go decl names surface in cmd/migrate/main.go |  |  | 0.478 |
+| walker |  | 611 | 0 | go decl at cmd/migrate/main.go:5 |  |  | 0.478 |
+| walker |  | 621 | 10 | go decl names surface in cmd/migrate/version.go |  |  | 0.478 |
+| walker |  | 621 | 0 | go decl at cmd/migrate/version.go:4 |  |  | 0.478 |
 | ns | 667 |  | 108 | Migration filename format | 1.7 |  | 0.457 |
-| walker |  | 671 | 58 | go decl at log.go:5 |  |  | 0.457 |
-| walker |  | 696 | 25 | go decl doc at log.go:5 |  |  | 0.457 |
-| walker |  | 776 | 80 | go decl names surface in util.go |  |  | 0.457 |
-| walker |  | 776 | 0 | go decl at util.go:21 |  |  | 0.457 |
-| walker |  | 776 | 0 | go decl at util.go:32 |  |  | 0.457 |
-| walker |  | 776 | 0 | go decl at util.go:45 |  |  | 0.457 |
-| walker |  | 776 | 0 | go decl at util.go:53 |  |  | 0.457 |
-| walker |  | 788 | 12 | go decl at util.go:13 |  |  | 0.457 |
-| walker |  | 806 | 18 | go decl doc at util.go:53 |  |  | 0.457 |
-| walker |  | 825 | 19 | go decl doc at util.go:32 |  |  | 0.457 |
+| walker |  | 679 | 58 | go decl at log.go:5 |  |  | 0.457 |
+| walker |  | 704 | 25 | go decl doc at log.go:5 |  |  | 0.457 |
+| walker |  | 717 | 13 | go decl doc at cli/main.go:6 |  |  | 0.457 |
+| walker |  | 797 | 80 | go decl names surface in util.go |  |  | 0.457 |
+| walker |  | 797 | 0 | go decl at util.go:21 |  |  | 0.457 |
+| walker |  | 797 | 0 | go decl at util.go:32 |  |  | 0.457 |
+| walker |  | 797 | 0 | go decl at util.go:45 |  |  | 0.457 |
+| walker |  | 797 | 0 | go decl at util.go:53 |  |  | 0.457 |
+| walker |  | 809 | 12 | go decl at util.go:13 |  |  | 0.457 |
+| walker |  | 827 | 18 | go decl doc at util.go:53 |  |  | 0.457 |
 | ns | 830 |  | 163 | Library usage example (Go snippet) | 1.8 |  | 0.426 |
-| walker |  | 947 | 122 | README.md section #0 |  |  | 0.426 |
+| walker |  | 846 | 19 | go decl doc at util.go:32 |  |  | 0.426 |
+| walker |  | 854 | 8 | go decl body at cmd/migrate/main.go:5 |  |  | 0.426 |
 | ns | 969 |  | 139 | Basic CLI invocation example | 1.9 |  | 0.404 |
-| walker |  | 1131 | 184 | go decl names surface in migrate.go |  |  | 0.406 |
-| walker |  | 1131 | 0 | go decl at migrate.go:24 |  |  | 0.406 |
-| walker |  | 1131 | 0 | go decl at migrate.go:27 |  |  | 0.406 |
-| walker |  | 1131 | 0 | go decl at migrate.go:44 |  |  | 0.406 |
-| walker |  | 1131 | 0 | go decl at migrate.go:52 |  |  | 0.406 |
-| walker |  | 1141 | 10 | go decl at migrate.go:48 |  |  | 0.406 |
-| walker |  | 1152 | 11 | go decl at migrate.go:39 |  |  | 0.406 |
-| walker |  | 1161 | 9 | go decl at migrate.go:29 |  |  | 0.406 |
-| walker |  | 1172 | 11 | go decl doc at migrate.go:44 |  |  | 0.406 |
-| walker |  | 1186 | 14 | go decl body at migrate.go:44 |  |  | 0.406 |
-| walker |  | 1219 | 33 | go decl doc at migrate.go:39 |  |  | 0.407 |
-| walker |  | 1240 | 21 | go decl doc at migrate.go:27 |  |  | 0.408 |
-| ns | 1243 |  | 274 | Migrate struct fields | 2.1 |  | 0.369 |
-| walker |  | 1260 | 20 | go decl body at migrate.go:52 |  |  | 0.370 |
-| walker |  | 1356 | 96 | go decl names surface in migration.go |  |  | 0.370 |
-| walker |  | 1356 | 0 | go decl at migration.go:13 |  |  | 0.370 |
-| walker |  | 1356 | 0 | go decl at migration.go:107 |  |  | 0.370 |
-| walker |  | 1356 | 0 | go decl at migration.go:112 |  |  | 0.370 |
-| walker |  | 1356 | 0 | go decl at migration.go:122 |  |  | 0.370 |
-| walker |  | 1371 | 15 | go decl at migration.go:77 |  |  | 0.370 |
-| walker |  | 1387 | 16 | go decl doc at migration.go:107 |  |  | 0.370 |
-| walker |  | 1403 | 16 | go decl doc at migration.go:112 |  |  | 0.370 |
-| walker |  | 1431 | 28 | go decl doc at migration.go:122 |  |  | 0.370 |
-| walker |  | 1454 | 23 | go decl body at migration.go:107 |  |  | 0.370 |
-| walker |  | 1461 | 7 | go package + imports in cmd/migrate/version.go |  |  | 0.370 |
-| walker |  | 1512 | 51 | go decl names surface in dktesting/dktesting.go |  |  | 0.370 |
-| walker |  | 1512 | 0 | go decl at dktesting/dktesting.go:20 |  |  | 0.370 |
-| walker |  | 1528 | 16 | go decl at dktesting/dktesting.go:44 |  |  | 0.370 |
-| walker |  | 1551 | 23 | go decl at dktesting/dktesting.go:14 |  |  | 0.370 |
-| walker |  | 1564 | 13 | go decl doc at dktesting/dktesting.go:14 |  |  | 0.370 |
-| walker |  | 1577 | 13 | go decl doc at dktesting/dktesting.go:44 |  |  | 0.370 |
+| walker |  | 976 | 122 | README.md section #0 |  |  | 0.404 |
+| walker |  | 1160 | 184 | go decl names surface in migrate.go |  |  | 0.406 |
+| walker |  | 1160 | 0 | go decl at migrate.go:24 |  |  | 0.406 |
+| walker |  | 1160 | 0 | go decl at migrate.go:27 |  |  | 0.406 |
+| walker |  | 1160 | 0 | go decl at migrate.go:44 |  |  | 0.406 |
+| walker |  | 1160 | 0 | go decl at migrate.go:52 |  |  | 0.406 |
+| walker |  | 1170 | 10 | go decl at migrate.go:48 |  |  | 0.406 |
+| walker |  | 1181 | 11 | go decl at migrate.go:39 |  |  | 0.406 |
+| walker |  | 1190 | 9 | go decl at migrate.go:29 |  |  | 0.407 |
+| walker |  | 1201 | 11 | go decl doc at migrate.go:44 |  |  | 0.407 |
+| walker |  | 1215 | 14 | go decl body at migrate.go:44 |  |  | 0.407 |
+| ns | 1243 |  | 274 | Migrate struct fields | 2.1 |  | 0.367 |
+| walker |  | 1248 | 33 | go decl doc at migrate.go:39 |  |  | 0.368 |
+| walker |  | 1269 | 21 | go decl doc at migrate.go:27 |  |  | 0.369 |
+| walker |  | 1289 | 20 | go decl body at migrate.go:52 |  |  | 0.370 |
+| walker |  | 1385 | 96 | go decl names surface in migration.go |  |  | 0.370 |
+| walker |  | 1385 | 0 | go decl at migration.go:13 |  |  | 0.370 |
+| walker |  | 1385 | 0 | go decl at migration.go:107 |  |  | 0.370 |
+| walker |  | 1385 | 0 | go decl at migration.go:112 |  |  | 0.370 |
+| walker |  | 1385 | 0 | go decl at migration.go:122 |  |  | 0.370 |
+| walker |  | 1400 | 15 | go decl at migration.go:77 |  |  | 0.370 |
+| walker |  | 1416 | 16 | go decl doc at migration.go:107 |  |  | 0.370 |
+| walker |  | 1432 | 16 | go decl doc at migration.go:112 |  |  | 0.370 |
+| walker |  | 1460 | 28 | go decl doc at migration.go:122 |  |  | 0.370 |
+| walker |  | 1483 | 23 | go decl body at migration.go:107 |  |  | 0.370 |
+| walker |  | 1490 | 7 | go package + imports in cmd/migrate/version.go |  |  | 0.370 |
+| walker |  | 1541 | 51 | go decl names surface in dktesting/dktesting.go |  |  | 0.370 |
+| walker |  | 1541 | 0 | go decl at dktesting/dktesting.go:20 |  |  | 0.370 |
+| walker |  | 1557 | 16 | go decl at dktesting/dktesting.go:44 |  |  | 0.370 |
+| walker |  | 1580 | 23 | go decl at dktesting/dktesting.go:14 |  |  | 0.370 |
+| walker |  | 1593 | 13 | go decl doc at dktesting/dktesting.go:14 |  |  | 0.370 |
+| walker |  | 1606 | 13 | go decl doc at dktesting/dktesting.go:44 |  |  | 0.370 |
 | ns | 1626 |  | 383 | Sentinel errors + Default* knobs | 2.2 |  | 0.390 |
-| walker |  | 1666 | 89 | listing of 'source' |  |  | 0.474 |
-| walker |  | 1686 | 20 | listing of 'source/bitbucket' |  |  | 0.474 |
-| walker |  | 1707 | 21 | listing of 'source/github' |  |  | 0.474 |
-| walker |  | 1729 | 22 | listing of 'source/github_ee' |  |  | 0.474 |
-| walker |  | 1737 | 8 | README headline in source/github_ee/README.md |  |  | 0.474 |
-| walker |  | 1760 | 23 | listing of 'source/gitlab' |  |  | 0.474 |
-| walker |  | 1784 | 24 | listing of 'source/go_bindata' |  |  | 0.474 |
-| walker |  | 1793 | 9 | README headline in source/go_bindata/README.md |  |  | 0.474 |
-| walker |  | 1821 | 28 | listing of 'source/httpfs' |  |  | 0.474 |
-| walker |  | 1829 | 8 | README headline in source/httpfs/README.md |  |  | 0.474 |
-| walker |  | 1857 | 28 | listing of 'source/iofs' |  |  | 0.474 |
-| walker |  | 1888 | 31 | README headline in source/iofs/README.md |  |  | 0.474 |
-| walker |  | 1901 | 13 | listing of 'source/file' |  |  | 0.456 |
-| ns | 1901 |  | 275 | Locations of public fns in migrate.go | 2.3 |  | 0.456 |
-| walker |  | 1929 | 28 | README headline in source/file/README.md |  |  | 0.456 |
-| walker |  | 1942 | 13 | listing of 'source/google_cloud_storage' |  |  | 0.456 |
-| walker |  | 1951 | 9 | README headline in source/google_cloud_storage/README.md |  |  | 0.456 |
-| walker |  | 1985 | 34 | README headline in source/bitbucket/README.md |  |  | 0.456 |
-| walker |  | 2000 | 15 | listing of 'source/aws_s3' |  |  | 0.456 |
-| walker |  | 2022 | 22 | README headline in source/aws_s3/README.md |  |  | 0.456 |
-| walker |  | 2037 | 15 | listing of 'source/pkger' |  |  | 0.456 |
-| walker |  | 2056 | 19 | headings outline in source/google_cloud_storage/README.md |  |  | 0.456 |
-| walker |  | 2085 | 29 | go decl names surface in source/errors.go |  |  | 0.456 |
-| walker |  | 2085 | 0 | go decl at source/errors.go:13 |  |  | 0.456 |
-| walker |  | 2103 | 18 | go decl at source/errors.go:7 |  |  | 0.456 |
-| walker |  | 2121 | 18 | listing of 'source/godoc_vfs' |  |  | 0.456 |
-| walker |  | 2131 | 10 | go decl doc at source/errors.go:13 |  |  | 0.456 |
+| walker |  | 1695 | 89 | listing of 'source' |  |  | 0.474 |
+| walker |  | 1715 | 20 | listing of 'source/bitbucket' |  |  | 0.474 |
+| walker |  | 1736 | 21 | listing of 'source/github' |  |  | 0.474 |
+| walker |  | 1758 | 22 | listing of 'source/github_ee' |  |  | 0.474 |
+| walker |  | 1766 | 8 | README headline in source/github_ee/README.md |  |  | 0.474 |
+| walker |  | 1789 | 23 | listing of 'source/gitlab' |  |  | 0.474 |
+| walker |  | 1813 | 24 | listing of 'source/go_bindata' |  |  | 0.474 |
+| walker |  | 1822 | 9 | README headline in source/go_bindata/README.md |  |  | 0.474 |
+| walker |  | 1850 | 28 | listing of 'source/httpfs' |  |  | 0.474 |
+| walker |  | 1858 | 8 | README headline in source/httpfs/README.md |  |  | 0.474 |
+| walker |  | 1886 | 28 | listing of 'source/iofs' |  |  | 0.474 |
+| ns | 1901 |  | 275 | Locations of public fns in migrate.go | 2.3 |  | 0.457 |
+| walker |  | 1917 | 31 | README headline in source/iofs/README.md |  |  | 0.457 |
+| walker |  | 1930 | 13 | listing of 'source/file' |  |  | 0.457 |
+| walker |  | 1958 | 28 | README headline in source/file/README.md |  |  | 0.457 |
+| walker |  | 1971 | 13 | listing of 'source/google_cloud_storage' |  |  | 0.457 |
+| walker |  | 1980 | 9 | README headline in source/google_cloud_storage/README.md |  |  | 0.457 |
+| walker |  | 2014 | 34 | README headline in source/bitbucket/README.md |  |  | 0.457 |
+| walker |  | 2029 | 15 | listing of 'source/aws_s3' |  |  | 0.457 |
+| walker |  | 2051 | 22 | README headline in source/aws_s3/README.md |  |  | 0.457 |
+| walker |  | 2066 | 15 | listing of 'source/pkger' |  |  | 0.457 |
+| walker |  | 2085 | 19 | headings outline in source/google_cloud_storage/README.md |  |  | 0.457 |
+| walker |  | 2114 | 29 | go decl names surface in source/errors.go |  |  | 0.457 |
+| walker |  | 2114 | 0 | go decl at source/errors.go:13 |  |  | 0.457 |
+| walker |  | 2132 | 18 | go decl at source/errors.go:7 |  |  | 0.457 |
+| walker |  | 2150 | 18 | listing of 'source/godoc_vfs' |  |  | 0.457 |
+| walker |  | 2160 | 10 | go decl doc at source/errors.go:13 |  |  | 0.457 |
 | ns | 2179 |  | 278 | Locations of private fns in migrate.go | 2.4 |  | 0.439 |
-| walker |  | 2181 | 50 | README headline in source/github/README.md |  |  | 0.439 |
-| walker |  | 2207 | 26 | go package doc lede in source/iofs/doc.go |  |  | 0.439 |
-| walker |  | 2220 | 13 | go decl body at source/errors.go:13 |  |  | 0.439 |
-| walker |  | 2233 | 13 | source/google_cloud_storage/README.md section #2 |  |  | 0.439 |
-| walker |  | 2241 | 8 | go package + imports in source/iofs/doc.go |  |  | 0.439 |
-| walker |  | 2265 | 24 | go decl doc at source/errors.go:7 |  |  | 0.439 |
-| walker |  | 2280 | 15 | go decl doc at cli/version.go:4 |  |  | 0.439 |
-| walker |  | 2331 | 51 | go decl doc at util.go:13 |  |  | 0.439 |
-| walker |  | 2346 | 15 | go package + imports in source/errors.go |  |  | 0.439 |
-| walker |  | 2359 | 13 | listing of 'testing' |  |  | 0.439 |
+| walker |  | 2210 | 50 | README headline in source/github/README.md |  |  | 0.439 |
+| walker |  | 2236 | 26 | go package doc lede in source/iofs/doc.go |  |  | 0.439 |
+| walker |  | 2249 | 13 | go decl body at source/errors.go:13 |  |  | 0.439 |
+| walker |  | 2262 | 13 | source/google_cloud_storage/README.md section #2 |  |  | 0.439 |
+| walker |  | 2270 | 8 | go package + imports in source/iofs/doc.go |  |  | 0.439 |
+| walker |  | 2294 | 24 | go decl doc at source/errors.go:7 |  |  | 0.439 |
+| walker |  | 2309 | 15 | go decl doc at cli/version.go:4 |  |  | 0.440 |
+| walker |  | 2360 | 51 | go decl doc at util.go:13 |  |  | 0.440 |
+| walker |  | 2375 | 15 | go package + imports in source/errors.go |  |  | 0.440 |
 | ns | 2383 |  | 204 | Migrate.Up body | 2.5 | 2.3 | 0.417 |
-| walker |  | 2399 | 40 | headings outline in source/go_bindata/README.md |  |  | 0.417 |
-| walker |  | 2407 | 8 | go decl body at cli/main.go:6 |  |  | 0.417 |
-| walker |  | 2444 | 37 | go decl doc at migration.go:13 |  |  | 0.417 |
-| walker |  | 2541 | 97 | go decl doc at migrate.go:24 |  |  | 0.453 |
-| walker |  | 2564 | 23 | go decl doc at dktesting/dktesting.go:20 |  |  | 0.453 |
-| walker |  | 2612 | 48 | GETTING_STARTED.md section #0 |  |  | 0.453 |
-| walker |  | 2719 | 107 | go package + imports in migrate.go |  |  | 0.465 |
-| walker |  | 2775 | 56 | go decl doc at util.go:21 |  |  | 0.465 |
-| walker |  | 2897 | 122 | listing of 'database' |  |  | 0.570 |
-| walker |  | 2922 | 25 | go decl names surface in database/error.go |  |  | 0.570 |
-| walker |  | 2922 | 0 | go decl at database/error.go:22 |  |  | 0.570 |
-| walker |  | 2938 | 16 | listing of 'database/mongodb' |  |  | 0.570 |
-| walker |  | 2954 | 16 | listing of 'database/mysql' |  |  | 0.570 |
-| walker |  | 2970 | 16 | listing of 'database/sqlite' |  |  | 0.570 |
-| walker |  | 2988 | 18 | listing of 'database/cassandra' |  |  | 0.570 |
-| walker |  | 3006 | 18 | listing of 'database/clickhouse' |  |  | 0.570 |
+| walker |  | 2388 | 13 | listing of 'testing' |  |  | 0.417 |
+| walker |  | 2428 | 40 | headings outline in source/go_bindata/README.md |  |  | 0.417 |
+| walker |  | 2465 | 37 | go decl doc at migration.go:13 |  |  | 0.417 |
+| walker |  | 2562 | 97 | go decl doc at migrate.go:24 |  |  | 0.453 |
+| walker |  | 2585 | 23 | go decl doc at dktesting/dktesting.go:20 |  |  | 0.453 |
+| walker |  | 2633 | 48 | GETTING_STARTED.md section #0 |  |  | 0.453 |
+| walker |  | 2740 | 107 | go package + imports in migrate.go |  |  | 0.465 |
+| walker |  | 2796 | 56 | go decl doc at util.go:21 |  |  | 0.465 |
+| walker |  | 2918 | 122 | listing of 'database' |  |  | 0.570 |
+| walker |  | 2943 | 25 | go decl names surface in database/error.go |  |  | 0.570 |
+| walker |  | 2943 | 0 | go decl at database/error.go:22 |  |  | 0.570 |
+| walker |  | 2959 | 16 | listing of 'database/mongodb' |  |  | 0.570 |
+| walker |  | 2975 | 16 | listing of 'database/mysql' |  |  | 0.570 |
+| walker |  | 2991 | 16 | listing of 'database/sqlite' |  |  | 0.570 |
+| walker |  | 3009 | 18 | listing of 'database/cassandra' |  |  | 0.570 |
 | ns | 3020 |  | 637 | Migrate.runMigrations: the channel pump | 2.6 | 2.4 | 0.505 |
-| walker |  | 3044 | 38 | README headline in database/clickhouse/README.md |  |  | 0.505 |
-| walker |  | 3062 | 18 | listing of 'database/firebird' |  |  | 0.505 |
-| walker |  | 3107 | 45 | README headline in database/firebird/README.md |  |  | 0.505 |
-| walker |  | 3125 | 18 | listing of 'database/ql' |  |  | 0.505 |
-| walker |  | 3143 | 18 | listing of 'database/redshift' |  |  | 0.505 |
-| walker |  | 3161 | 18 | listing of 'database/spanner' |  |  | 0.505 |
-| walker |  | 3171 | 10 | README headline in database/spanner/README.md |  |  | 0.505 |
-| walker |  | 3189 | 18 | listing of 'database/sqlcipher' |  |  | 0.505 |
-| walker |  | 3207 | 18 | listing of 'database/sqlite3' |  |  | 0.505 |
-| walker |  | 3225 | 18 | listing of 'database/sqlserver' |  |  | 0.505 |
-| walker |  | 3281 | 56 | README headline in database/sqlcipher/README.md |  |  | 0.505 |
-| walker |  | 3338 | 57 | README headline in database/sqlserver/README.md |  |  | 0.505 |
-| walker |  | 3358 | 20 | listing of 'database/rqlite' |  |  | 0.505 |
-| walker |  | 3380 | 22 | listing of 'database/pgx' |  |  | 0.505 |
-| walker |  | 3402 | 22 | listing of 'database/postgres' |  |  | 0.505 |
+| walker |  | 3027 | 18 | listing of 'database/clickhouse' |  |  | 0.505 |
+| walker |  | 3065 | 38 | README headline in database/clickhouse/README.md |  |  | 0.505 |
+| walker |  | 3083 | 18 | listing of 'database/firebird' |  |  | 0.505 |
+| walker |  | 3128 | 45 | README headline in database/firebird/README.md |  |  | 0.505 |
+| walker |  | 3146 | 18 | listing of 'database/ql' |  |  | 0.505 |
+| walker |  | 3164 | 18 | listing of 'database/redshift' |  |  | 0.505 |
+| walker |  | 3182 | 18 | listing of 'database/spanner' |  |  | 0.505 |
+| walker |  | 3192 | 10 | README headline in database/spanner/README.md |  |  | 0.505 |
+| walker |  | 3210 | 18 | listing of 'database/sqlcipher' |  |  | 0.505 |
+| walker |  | 3228 | 18 | listing of 'database/sqlite3' |  |  | 0.505 |
+| walker |  | 3246 | 18 | listing of 'database/sqlserver' |  |  | 0.505 |
+| walker |  | 3302 | 56 | README headline in database/sqlcipher/README.md |  |  | 0.505 |
+| walker |  | 3359 | 57 | README headline in database/sqlserver/README.md |  |  | 0.505 |
+| walker |  | 3379 | 20 | listing of 'database/rqlite' |  |  | 0.505 |
+| walker |  | 3401 | 22 | listing of 'database/pgx' |  |  | 0.505 |
+| walker |  | 3423 | 22 | listing of 'database/postgres' |  |  | 0.505 |
 | ns | 3470 |  | 450 | Migrate.lock implementation | 2.7 | 2.4 | 0.462 |
-| walker |  | 3475 | 73 | README headline in database/pgx/README.md |  |  | 0.462 |
-| walker |  | 3500 | 25 | headings outline in database/pgx/README.md |  |  | 0.462 |
-| walker |  | 3524 | 24 | listing of 'database/yugabytedb' |  |  | 0.462 |
-| walker |  | 3550 | 26 | listing of 'database/cockroachdb' |  |  | 0.462 |
-| walker |  | 3597 | 47 | README headline in database/cockroachdb/README.md |  |  | 0.462 |
-| walker |  | 3623 | 26 | listing of 'database/neo4j' |  |  | 0.462 |
-| walker |  | 3704 | 81 | README headline in database/sqlite/README.md |  |  | 0.462 |
-| walker |  | 3788 | 84 | README headline in database/sqlite3/README.md |  |  | 0.462 |
-| walker |  | 3827 | 39 | headings outline in database/sqlserver/README.md |  |  | 0.462 |
-| walker |  | 3867 | 40 | headings outline in database/spanner/README.md |  |  | 0.462 |
-| walker |  | 3957 | 90 | README headline in database/mongodb/README.md |  |  | 0.462 |
+| walker |  | 3496 | 73 | README headline in database/pgx/README.md |  |  | 0.462 |
+| walker |  | 3521 | 25 | headings outline in database/pgx/README.md |  |  | 0.462 |
+| walker |  | 3545 | 24 | listing of 'database/yugabytedb' |  |  | 0.462 |
+| walker |  | 3571 | 26 | listing of 'database/cockroachdb' |  |  | 0.462 |
+| walker |  | 3618 | 47 | README headline in database/cockroachdb/README.md |  |  | 0.462 |
+| walker |  | 3644 | 26 | listing of 'database/neo4j' |  |  | 0.462 |
+| walker |  | 3725 | 81 | README headline in database/sqlite/README.md |  |  | 0.462 |
+| walker |  | 3809 | 84 | README headline in database/sqlite3/README.md |  |  | 0.462 |
+| walker |  | 3848 | 39 | headings outline in database/sqlserver/README.md |  |  | 0.462 |
+| walker |  | 3888 | 40 | headings outline in database/spanner/README.md |  |  | 0.462 |
+| walker |  | 3978 | 90 | README headline in database/mongodb/README.md |  |  | 0.462 |
 | ns | 3979 |  | 509 | database.Driver interface declaration | 3.1 |  | 0.436 |
-| walker |  | 4047 | 90 | README headline in database/rqlite/README.md |  |  | 0.436 |
-| walker |  | 4093 | 46 | headings outline in database/neo4j/TUTORIAL.md |  |  | 0.436 |
-| walker |  | 4135 | 42 | go package + imports in util.go |  |  | 0.436 |
-| walker |  | 4216 | 81 | go decl names surface in source/driver.go |  |  | 0.436 |
-| walker |  | 4216 | 0 | go decl at source/driver.go:76 |  |  | 0.436 |
-| walker |  | 4216 | 0 | go decl at source/driver.go:97 |  |  | 0.436 |
-| walker |  | 4216 | 0 | go decl at source/driver.go:110 |  |  | 0.436 |
-| walker |  | 4227 | 11 | go decl doc at source/driver.go:97 |  |  | 0.436 |
-| walker |  | 4238 | 11 | go decl doc at source/driver.go:110 |  |  | 0.436 |
-| walker |  | 4250 | 12 | go decl doc at source/driver.go:76 |  |  | 0.436 |
-| walker |  | 4254 | 4 | listing of 'database/crate' |  |  | 0.436 |
-| walker |  | 4258 | 4 | listing of 'database/shell' |  |  | 0.436 |
-| walker |  | 4496 | 238 | go decl at migrate.go:56 |  |  | 0.480 |
-| walker |  | 4509 | 13 | go decl doc at cli/main.go:6 |  |  | 0.480 |
+| walker |  | 4068 | 90 | README headline in database/rqlite/README.md |  |  | 0.436 |
+| walker |  | 4114 | 46 | headings outline in database/neo4j/TUTORIAL.md |  |  | 0.436 |
+| walker |  | 4156 | 42 | go package + imports in util.go |  |  | 0.436 |
+| walker |  | 4237 | 81 | go decl names surface in source/driver.go |  |  | 0.436 |
+| walker |  | 4237 | 0 | go decl at source/driver.go:76 |  |  | 0.436 |
+| walker |  | 4237 | 0 | go decl at source/driver.go:97 |  |  | 0.436 |
+| walker |  | 4237 | 0 | go decl at source/driver.go:110 |  |  | 0.436 |
+| walker |  | 4248 | 11 | go decl doc at source/driver.go:97 |  |  | 0.436 |
+| walker |  | 4259 | 11 | go decl doc at source/driver.go:110 |  |  | 0.436 |
+| walker |  | 4271 | 12 | go decl doc at source/driver.go:76 |  |  | 0.436 |
+| walker |  | 4275 | 4 | listing of 'database/crate' |  |  | 0.436 |
+| walker |  | 4279 | 4 | listing of 'database/shell' |  |  | 0.436 |
+| walker |  | 4517 | 238 | go decl at migrate.go:56 |  |  | 0.480 |
 | ns | 4550 |  | 571 | source.Driver interface declaration | 3.2 |  | 0.454 |
-| walker |  | 4595 | 86 | go decl names surface in database/util.go |  |  | 0.454 |
-| walker |  | 4595 | 0 | go decl at database/util.go:13 |  |  | 0.454 |
-| walker |  | 4595 | 0 | go decl at database/util.go:23 |  |  | 0.454 |
-| walker |  | 4615 | 20 | go decl doc at database/util.go:23 |  |  | 0.454 |
-| walker |  | 4643 | 28 | go decl doc at database/util.go:13 |  |  | 0.454 |
-| walker |  | 4840 | 197 | go decl names surface #1 in migrate.go |  |  | 0.463 |
-| walker |  | 4840 | 0 | go decl at migrate.go:85 |  |  | 0.463 |
-| walker |  | 4840 | 0 | go decl at migrate.go:119 |  |  | 0.463 |
-| walker |  | 4840 | 0 | go decl at migrate.go:145 |  |  | 0.463 |
-| walker |  | 4840 | 0 | go decl at migrate.go:171 |  |  | 0.463 |
-| walker |  | 4840 | 0 | go decl at migrate.go:183 |  |  | 0.463 |
-| walker |  | 4840 | 0 | go decl at migrate.go:193 |  |  | 0.463 |
-| walker |  | 4840 | 0 | go decl at migrate.go:212 |  |  | 0.463 |
-| walker |  | 4840 | 0 | go decl at migrate.go:234 |  |  | 0.463 |
-| walker |  | 4853 | 13 | go decl doc at migrate.go:193 |  |  | 0.463 |
-| walker |  | 4888 | 35 | go decl doc at migrate.go:85 |  |  | 0.463 |
-| walker |  | 4920 | 32 | go decl doc at migrate.go:212 |  |  | 0.463 |
+| walker |  | 4603 | 86 | go decl names surface in database/util.go |  |  | 0.454 |
+| walker |  | 4603 | 0 | go decl at database/util.go:13 |  |  | 0.454 |
+| walker |  | 4603 | 0 | go decl at database/util.go:23 |  |  | 0.454 |
+| walker |  | 4623 | 20 | go decl doc at database/util.go:23 |  |  | 0.454 |
+| walker |  | 4651 | 28 | go decl doc at database/util.go:13 |  |  | 0.454 |
+| walker |  | 4848 | 197 | go decl names surface #1 in migrate.go |  |  | 0.463 |
+| walker |  | 4848 | 0 | go decl at migrate.go:85 |  |  | 0.463 |
+| walker |  | 4848 | 0 | go decl at migrate.go:119 |  |  | 0.463 |
+| walker |  | 4848 | 0 | go decl at migrate.go:145 |  |  | 0.463 |
+| walker |  | 4848 | 0 | go decl at migrate.go:171 |  |  | 0.463 |
+| walker |  | 4848 | 0 | go decl at migrate.go:183 |  |  | 0.463 |
+| walker |  | 4848 | 0 | go decl at migrate.go:193 |  |  | 0.463 |
+| walker |  | 4848 | 0 | go decl at migrate.go:212 |  |  | 0.463 |
+| walker |  | 4848 | 0 | go decl at migrate.go:234 |  |  | 0.463 |
+| walker |  | 4861 | 13 | go decl doc at migrate.go:193 |  |  | 0.463 |
+| walker |  | 4896 | 35 | go decl doc at migrate.go:85 |  |  | 0.463 |
+| walker |  | 4928 | 32 | go decl doc at migrate.go:212 |  |  | 0.463 |
 | ns | 4954 |  | 404 | Database driver registered scheme names | 3.3 |  | 0.447 |
-| walker |  | 4957 | 37 | go decl doc at migrate.go:234 |  |  | 0.447 |
-| walker |  | 5031 | 74 | go decl doc at migrate.go:171 |  |  | 0.447 |
+| walker |  | 4965 | 37 | go decl doc at migrate.go:234 |  |  | 0.447 |
+| walker |  | 5039 | 74 | go decl doc at migrate.go:171 |  |  | 0.447 |
 | ns | 5106 |  | 152 | Source driver registered scheme names | 3.4 |  | 0.441 |
-| walker |  | 5109 | 78 | go decl doc at migrate.go:145 |  |  | 0.441 |
-| walker |  | 5188 | 79 | go decl doc at migrate.go:119 |  |  | 0.441 |
-| walker |  | 5250 | 62 | go decl body at migrate.go:171 |  |  | 0.441 |
-| walker |  | 5388 | 138 | README headline in database/neo4j/README.md |  |  | 0.441 |
-| walker |  | 5415 | 27 | database/rqlite/README.md section #1 |  |  | 0.441 |
-| walker |  | 5440 | 25 | go package + imports in database/error.go |  |  | 0.441 |
-| walker |  | 5538 | 98 | go decl names surface in source/parse.go |  |  | 0.441 |
-| walker |  | 5538 | 0 | go decl at source/parse.go:22 |  |  | 0.441 |
-| walker |  | 5538 | 0 | go decl at source/parse.go:25 |  |  | 0.441 |
-| walker |  | 5547 | 9 | go decl at source/parse.go:9 |  |  | 0.441 |
-| walker |  | 5556 | 9 | go decl at source/parse.go:13 |  |  | 0.441 |
-| walker |  | 5569 | 13 | go decl doc at source/parse.go:25 |  |  | 0.441 |
+| walker |  | 5117 | 78 | go decl doc at migrate.go:145 |  |  | 0.441 |
+| walker |  | 5196 | 79 | go decl doc at migrate.go:119 |  |  | 0.441 |
+| walker |  | 5258 | 62 | go decl body at migrate.go:171 |  |  | 0.441 |
+| walker |  | 5396 | 138 | README headline in database/neo4j/README.md |  |  | 0.441 |
+| walker |  | 5423 | 27 | database/rqlite/README.md section #1 |  |  | 0.441 |
+| walker |  | 5448 | 25 | go package + imports in database/error.go |  |  | 0.441 |
+| walker |  | 5546 | 98 | go decl names surface in source/parse.go |  |  | 0.441 |
+| walker |  | 5546 | 0 | go decl at source/parse.go:22 |  |  | 0.441 |
+| walker |  | 5546 | 0 | go decl at source/parse.go:25 |  |  | 0.441 |
+| walker |  | 5555 | 9 | go decl at source/parse.go:9 |  |  | 0.441 |
+| walker |  | 5564 | 9 | go decl at source/parse.go:13 |  |  | 0.441 |
+| walker |  | 5577 | 13 | go decl doc at source/parse.go:25 |  |  | 0.441 |
 | ns | 5591 |  | 485 | database registry impl + NilVersion + ErrLocked | 3.5 | 3.1 | 0.416 |
-| walker |  | 5624 | 55 | go package + imports in migration.go |  |  | 0.416 |
-| walker |  | 5650 | 26 | go package + imports in source/migration.go |  |  | 0.416 |
-| walker |  | 5706 | 56 | go decl names surface in source/httpfs/driver.go |  |  | 0.416 |
-| walker |  | 5706 | 0 | go decl at source/httpfs/driver.go:19 |  |  | 0.416 |
-| walker |  | 5706 | 0 | go decl at source/httpfs/driver.go:29 |  |  | 0.416 |
-| walker |  | 5717 | 11 | go decl at source/httpfs/driver.go:13 |  |  | 0.416 |
-| walker |  | 5732 | 15 | go decl doc at cmd/migrate/version.go:4 |  |  | 0.416 |
-| walker |  | 5759 | 27 | go package + imports in cli/main.go |  |  | 0.417 |
-| walker |  | 5807 | 48 | README.md section #6 |  |  | 0.417 |
-| walker |  | 5810 | 3 | listing of 'source/iofs/testdata' |  |  | 0.417 |
-| walker |  | 5871 | 61 | go decl names surface in source/file/file.go |  |  | 0.417 |
-| walker |  | 5871 | 0 | go decl at source/file/file.go:12 |  |  | 0.417 |
-| walker |  | 5871 | 0 | go decl at source/file/file.go:22 |  |  | 0.417 |
-| walker |  | 5871 | 0 | go decl at source/file/file.go:37 |  |  | 0.417 |
-| walker |  | 5899 | 28 | go decl at source/file/file.go:16 |  |  | 0.417 |
-| walker |  | 5943 | 44 | README.md section #8 |  |  | 0.417 |
+| walker |  | 5632 | 55 | go package + imports in migration.go |  |  | 0.416 |
+| walker |  | 5658 | 26 | go package + imports in source/migration.go |  |  | 0.416 |
+| walker |  | 5714 | 56 | go decl names surface in source/httpfs/driver.go |  |  | 0.416 |
+| walker |  | 5714 | 0 | go decl at source/httpfs/driver.go:19 |  |  | 0.416 |
+| walker |  | 5714 | 0 | go decl at source/httpfs/driver.go:29 |  |  | 0.416 |
+| walker |  | 5725 | 11 | go decl at source/httpfs/driver.go:13 |  |  | 0.416 |
+| walker |  | 5740 | 15 | go decl doc at cmd/migrate/version.go:4 |  |  | 0.417 |
+| walker |  | 5767 | 27 | go package + imports in cli/main.go |  |  | 0.417 |
+| walker |  | 5815 | 48 | README.md section #6 |  |  | 0.417 |
+| walker |  | 5818 | 3 | listing of 'source/iofs/testdata' |  |  | 0.417 |
+| walker |  | 5879 | 61 | go decl names surface in source/file/file.go |  |  | 0.417 |
+| walker |  | 5879 | 0 | go decl at source/file/file.go:12 |  |  | 0.417 |
+| walker |  | 5879 | 0 | go decl at source/file/file.go:22 |  |  | 0.417 |
+| walker |  | 5879 | 0 | go decl at source/file/file.go:37 |  |  | 0.417 |
+| walker |  | 5907 | 28 | go decl at source/file/file.go:16 |  |  | 0.417 |
+| walker |  | 5951 | 44 | README.md section #8 |  |  | 0.417 |
 | ns | 5988 |  | 397 | source.Migration + Direction + Migrations index shell | 4.1 |  | 0.399 |
-| walker |  | 6113 | 170 | README headline in source/gitlab/README.md |  |  | 0.399 |
-| walker |  | 6189 | 76 | headings outline in database/cockroachdb/TUTORIAL.md |  |  | 0.399 |
-| walker |  | 6189 | 0 | database/cockroachdb/TUTORIAL.md section #0 |  |  | 0.399 |
-| walker |  | 6200 | 11 | listing of 'source/httpfs/testdata' |  |  | 0.399 |
-| walker |  | 6208 | 8 | go decl body at cmd/migrate/main.go:5 |  |  | 0.399 |
+| walker |  | 6121 | 170 | README headline in source/gitlab/README.md |  |  | 0.399 |
+| walker |  | 6197 | 76 | headings outline in database/cockroachdb/TUTORIAL.md |  |  | 0.399 |
+| walker |  | 6197 | 0 | database/cockroachdb/TUTORIAL.md section #0 |  |  | 0.399 |
+| walker |  | 6208 | 11 | listing of 'source/httpfs/testdata' |  |  | 0.399 |
 | walker |  | 6274 | 66 | go decl names surface #4 in migrate.go |  |  | 0.401 |
 | walker |  | 6274 | 0 | go decl at migrate.go:961 |  |  | 0.401 |
 | walker |  | 6274 | 0 | go decl at migrate.go:968 |  |  | 0.401 |

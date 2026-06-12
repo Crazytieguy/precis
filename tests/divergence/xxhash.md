@@ -118,26 +118,26 @@ Score(3000)=0.700 I=0.880 C=0.557 ns_rows≤3K=20/40 (reached=10 partial=6 missi
 | walker |  | 3096 | 55 | go package + imports in dynamic/plugin.go |  |  | 0.703 |
 | walker |  | 3151 | 55 | go package + imports in xxhsum/xxhsum.go |  |  | 0.706 |
 | walker |  | 3173 | 22 | go decl doc at xxhash_other.go:7 |  |  | 0.706 |
-| walker |  | 3255 | 82 | go decl body at xxhash_unsafe.go:45 |  |  | 0.707 |
-| walker |  | 3309 | 54 | go decl body at dynamic/plugin.go:19 |  |  | 0.707 |
-| walker |  | 3312 | 3 | listing of '.github' |  |  | 0.712 |
-| walker |  | 3316 | 4 | listing of '.github/workflows' |  |  | 0.717 |
+| walker |  | 3222 | 49 | go decl body at xxhsum/xxhsum.go:34 |  |  | 0.706 |
+| walker |  | 3304 | 82 | go decl body at xxhash_unsafe.go:45 |  |  | 0.707 |
+| walker |  | 3358 | 54 | go decl body at dynamic/plugin.go:19 |  |  | 0.707 |
+| walker |  | 3361 | 3 | listing of '.github' |  |  | 0.712 |
+| walker |  | 3365 | 4 | listing of '.github/workflows' |  |  | 0.717 |
 | ns | 3473 |  | 389 | Write — streaming entry body | 4.5 | 2.4 | 0.666 |
-| walker |  | 3518 | 202 | go decl body at xxhash.go:190 |  |  | 0.669 |
-| walker |  | 3662 | 144 | README.md section #3 |  |  | 0.669 |
+| walker |  | 3567 | 202 | go decl body at xxhash.go:190 |  |  | 0.669 |
+| walker |  | 3711 | 144 | README.md section #3 |  |  | 0.669 |
+| walker |  | 3784 | 73 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.669 |
 | ns | 3949 |  | 476 | Digest.Sum64 — finalize body | 4.6 | 2.4 | 0.623 |
-| walker |  | 4014 | 352 | go decl body at xxhash.go:75 |  |  | 0.685 |
-| ns | 4062 |  | 113 | Digest.Sum — append big-endian bytes | 4.7 | 2.4 | 0.693 |
-| walker |  | 4063 | 49 | go decl body at xxhsum/xxhsum.go:34 |  |  | 0.693 |
+| ns | 4062 |  | 113 | Digest.Sum — append big-endian bytes | 4.7 | 2.4 | 0.634 |
+| walker |  | 4136 | 352 | go decl body at xxhash.go:75 |  |  | 0.693 |
 | ns | 4212 |  | 150 | MarshalBinary body — wire format | 4.8 | 2.7 | 0.699 |
-| walker |  | 4356 | 293 | README.md section #2 |  |  | 0.701 |
-| ns | 4421 |  | 209 | UnmarshalBinary body — validation + parse | 4.9 | 2.7 | 0.709 |
-| walker |  | 4800 | 444 | go decl body at xxhash.go:129 |  |  | 0.767 |
-| walker |  | 4873 | 73 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.767 |
-| ns | 5119 |  | 698 | Pure-Go Sum64 body (xxhash_other.go) | 4.10 | 2.5 | 0.711 |
-| walker |  | 5147 | 274 | go decl body at dynamic/plugin.go:26 |  |  | 0.711 |
-| ns | 5355 |  | 236 | Pure-Go writeBlocks body | 4.11 | 2.5 | 0.699 |
-| walker |  | 5378 | 231 | go decl body at xxhsum/xxhsum.go:11 |  |  | 0.743 |
+| ns | 4421 |  | 209 | UnmarshalBinary body — validation + parse | 4.9 | 2.7 | 0.707 |
+| walker |  | 4429 | 293 | README.md section #2 |  |  | 0.709 |
+| walker |  | 4873 | 444 | go decl body at xxhash.go:129 |  |  | 0.767 |
+| walker |  | 5104 | 231 | go decl body at xxhsum/xxhsum.go:11 |  |  | 0.815 |
+| ns | 5119 |  | 698 | Pure-Go Sum64 body (xxhash_other.go) | 4.10 | 2.5 | 0.755 |
+| ns | 5355 |  | 236 | Pure-Go writeBlocks body | 4.11 | 2.5 | 0.743 |
+| walker |  | 5378 | 274 | go decl body at dynamic/plugin.go:26 |  |  | 0.743 |
 | walker |  | 5386 | 8 | plaintext config dynamic/.gitignore |  |  | 0.743 |
 | walker |  | 5401 | 15 | go test names surface in xxhashbench/xxhashbench_test.go |  |  | 0.743 |
 | walker |  | 5433 | 32 | go test names surface in xxhash_unsafe_test.go |  |  | 0.745 |
