@@ -296,6 +296,23 @@ fn include_centrality_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     factor
 }
 
+/// True iff `file` is a top-tier hub of the header-to-header include
+/// graph: the spine is active and the header's in-degree is in the top
+/// half of the range. In htop this selects exactly the OOP backbone
+/// (Object / Hashtable / Machine / Meter / Process / Panel, h2h 24-29)
+/// while the wide per-meter tier (h2h 8-9) stays out.
+fn is_top_include_hub(file: &Path, ctx: &WalkCtx) -> bool {
+    if !is_header_file(file) {
+        return false;
+    }
+    let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
+        return false;
+    };
+    let index = ctx.c_state().include_in_degree(ctx.root());
+    index.max_header_to_header >= INCLUDE_HUB_MIN_MAX_IN_DEGREE
+        && index.header_to_header.get(name).copied().unwrap_or(0) * 2 >= index.max_header_to_header
+}
+
 /// Minimum sibling subdirs and shared file names for a directory group to
 /// count as mirrored platform ports.
 const MIN_PORT_SIBLINGS: usize = 3;
@@ -1277,6 +1294,15 @@ fn secondary_root_pair_factor(file: &Path, ctx: &WalkCtx) -> f64 {
         return 1.0;
     };
     if stem.eq_ignore_ascii_case(repo) {
+        return 1.0;
+    }
+    // A non-eponymous root header in the top tier of the
+    // header-to-header include graph is the project's spine (htop
+    // `Object.h` / `Process.h` / `Meter.h`), not a vendored sidecar —
+    // first-class regardless of the eponymous pair. Inert in projects
+    // without an include spine (krep, sds, chibicc), where the damp
+    // keeps its vendored-pair reading.
+    if is_top_include_hub(file, ctx) {
         return 1.0;
     }
     // Only damp when a stem-matching primary file actually exists at
