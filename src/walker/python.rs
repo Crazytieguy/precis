@@ -209,41 +209,60 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             });
         }
 
-        let mut method_sigs_predecessors = vec![None; names_chunk_count];
-        let mut methods_by_chunk = vec![Vec::new(); names_chunk_count];
-        for (class_index, methods) in collect_methods_by_class(&decls, &source) {
-            methods_by_chunk[chunk_of_decl[class_index]].push((class_index, methods));
-        }
-        for (chunk_index, methods_by_class) in methods_by_chunk.into_iter().enumerate() {
-            if methods_by_class.is_empty() {
-                continue;
-            }
-            let method_count: usize = methods_by_class.iter().map(|(_, ms)| ms.len()).sum();
-            let Some(content) = single_file_lines_content(
-                file,
-                &source,
-                collect_method_sigs_from(&methods_by_class),
-            ) else {
+        // MethodSigs chunks by method count, mirroring DeclNames: a
+        // 30-method class's catalog must not ride one 500-token batch
+        // whose `value/cost^k` rank sinks below every leaf file's.
+        // Mid-size catalogs stay whole — chunking them trades a fine
+        // batch for a falloff-damped pair and only delays the skeleton
+        // (measured: nano-vllm's 13-17-method engine classes regress
+        // chunked; pluggy's ~30-method PluginManager regresses whole).
+        let flat_methods: Vec<(usize, DeclInfo)> = collect_methods_by_class(&decls, &source)
+            .into_iter()
+            .flat_map(|(class_index, methods)| methods.into_iter().map(move |m| (class_index, m)))
+            .collect();
+        let sigs_chunk_size = if flat_methods.len() > 2 * NAMES_SURFACE_CHUNK_SIZE {
+            NAMES_SURFACE_CHUNK_SIZE
+        } else {
+            flat_methods.len().max(1)
+        };
+        let sigs_chunk_count = flat_methods.len().div_ceil(sigs_chunk_size);
+        let mut sigs_chunk_of_method = HashMap::new();
+        for (chunk_index, chunk) in flat_methods.chunks(sigs_chunk_size).enumerate() {
+            let full: Vec<_> = chunk.iter().map(|(_, m)| m.start_line).collect();
+            let ellipses: Vec<_> = chunk.iter().map(|(_, m)| m.start_line + 1).collect();
+            let lines = FileLines::new(full).with_ellipses(ellipses);
+            let Some(content) = single_file_lines_content(file, &source, lines) else {
                 continue;
             };
             let key = PythonKey::MethodSigs {
                 file: file.clone(),
                 chunk_index,
             };
-            out.push(Batch {
-                key: key.clone().into(),
-                // Predecessor: same decl-name chunk. The MethodSigs
-                // `Full+Ellipsis` pair can share the class header's
-                // following ellipsis row, so chunking both surfaces keeps
-                // overlap ancestry local.
-                predecessor: Some(BatchKey::Python(PythonKey::DeclNames {
+            for (_, method) in chunk {
+                sigs_chunk_of_method.insert(method.start_line, BatchKey::Python(key.clone()));
+            }
+            // Chunk 0 gates on the decl-name chunk of its first class
+            // (the MethodSigs `Full+Ellipsis` pair can share the class
+            // header's following ellipsis row, so gating on the names
+            // surface keeps overlap ancestry local). Later chunks chain
+            // on their predecessor chunk — ungated tails are cheaper
+            // than heads and would deliver the catalog bottom-first.
+            let predecessor = if chunk_index == 0 {
+                names_predecessors[chunk_of_decl[chunk[0].0]].clone()
+            } else {
+                BatchKey::Python(PythonKey::MethodSigs {
                     file: file.clone(),
-                    chunk_index,
-                })),
+                    chunk_index: chunk_index - 1,
+                })
+            };
+            out.push(Batch {
+                key: key.into(),
+                predecessor: Some(predecessor),
                 content,
-                value: method_sigs_value(file, ctx) * python_roster_mass_factor(file, method_count),
+                value: method_sigs_value(file, ctx)
+                    * names_surface_chunk_factor(chunk_index, sigs_chunk_count)
+                    * python_roster_mass_factor(file, chunk.len()),
             });
-            method_sigs_predecessors[chunk_index] = Some(BatchKey::Python(key));
         }
 
         for (decl_index, decl) in decls.iter().enumerate() {
@@ -332,10 +351,8 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         &source,
                         &src_lines,
                         decl,
-                        method_sigs_predecessors
-                            .get(chunk_index)
-                            .and_then(Option::as_ref)
-                            .unwrap_or(&decl_predecessor),
+                        &sigs_chunk_of_method,
+                        &decl_predecessor,
                     ));
                 }
                 DeclKind::Const => {}
@@ -351,7 +368,8 @@ fn emit_methods(
     source: &str,
     src_lines: &[&str],
     class_decl: &DeclInfo,
-    class_predecessor: &BatchKey,
+    sigs_chunk_of_method: &HashMap<usize, BatchKey>,
+    decl_predecessor: &BatchKey,
 ) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for method in collect_methods_in_class(class_decl, source) {
@@ -362,7 +380,12 @@ fn emit_methods(
         if let Some(content) = single_file_lines_content(file, source, collect_decl(&method)) {
             out.push(Batch {
                 key: method_key.clone().into(),
-                predecessor: Some(class_predecessor.clone()),
+                predecessor: Some(
+                    sigs_chunk_of_method
+                        .get(&method.start_line)
+                        .unwrap_or(decl_predecessor)
+                        .clone(),
+                ),
                 content,
                 value: method_value(file, &method, ctx),
             });
@@ -805,19 +828,6 @@ fn collect_decl_names_from(decls: &[DeclInfo]) -> FileLines {
         full.push(decl.start_line);
         if matches!(decl.kind, DeclKind::Class | DeclKind::Function) {
             ellipses.push(decl.start_line + 1);
-        }
-    }
-    FileLines::new(full).with_ellipses(ellipses)
-}
-
-/// One full + ellipsis pair per method across every class in the file.
-fn collect_method_sigs_from(methods_by_class: &[(usize, Vec<DeclInfo>)]) -> FileLines {
-    let mut full = Vec::new();
-    let mut ellipses = Vec::new();
-    for (_, methods) in methods_by_class {
-        for m in methods {
-            full.push(m.start_line);
-            ellipses.push(m.start_line + 1);
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
@@ -1496,8 +1506,11 @@ class A:
         let (source, tree) = parse(src);
         let decls = find_top_level_decls(&tree, &source);
         let by_class = collect_methods_by_class(&decls, &source);
-        let sigs = collect_method_sigs_from(&by_class);
-        assert_eq!(sigs.full, vec![2, 3, 4]);
+        let starts: Vec<_> = by_class
+            .iter()
+            .flat_map(|(_, methods)| methods.iter().map(|m| m.start_line))
+            .collect();
+        assert_eq!(starts, vec![2, 3, 4]);
     }
 
     #[test]
