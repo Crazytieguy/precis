@@ -179,20 +179,7 @@ sds.h
     85→#define SDS_TYPE_5_LEN(f) ((f)>>SDS_TYPE_BITS)
     …
     87→static inline size_t sdslen(const sds s) {
-    88→    unsigned char flags = s[-1];
-    89→    switch(flags&SDS_TYPE_MASK) {
-    90→        case SDS_TYPE_5:
-    91→            return SDS_TYPE_5_LEN(flags);
-    92→        case SDS_TYPE_8:
-    93→            return SDS_HDR(8,s)->len;
-    94→        case SDS_TYPE_16:
-    95→            return SDS_HDR(16,s)->len;
-    96→        case SDS_TYPE_32:
-    97→            return SDS_HDR(32,s)->len;
-    98→        case SDS_TYPE_64:
-    99→            return SDS_HDR(64,s)->len;
-    100→    }
-    101→    return 0;
+    …
     104→static inline size_t sdsavail(const sds s) {
     …
     130→static inline void sdssetlen(sds s, size_t newlen) {
@@ -217,6 +204,10 @@ sds.h
     228→sds sdscpy(sds s, const char *t);
     …
     230→sds sdscatvprintf(sds s, const char *fmt, va_list ap);
+    …
+    232→sds sdscatprintf(sds s, const char *fmt, ...)
+    233→    __attribute__((format(printf, 2, 3)));
+    235→sds sdscatprintf(sds s, const char *fmt, ...);
     …
     238→sds sdscatfmt(sds s, char const *fmt, ...);
     239→sds sdstrim(sds s, const char *cset);
@@ -249,6 +240,8 @@ sds.h
     266→void *sds_malloc(size_t size);
     267→void *sds_realloc(void *ptr, size_t size);
     268→void sds_free(void *ptr);
+    …
+    271→int sdsTest(int argc, char *argv[]);
     …
 sdsalloc.h
     40→#define s_malloc malloc

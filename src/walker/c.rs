@@ -512,6 +512,9 @@ use super::{
 };
 
 /// Fixed-size source-order chunks of `C_DECL_NAMES_CHUNK_SIZE` decls.
+/// A trailing remainder below half a chunk merges into the previous
+/// chunk — a tiny tail chunk is so cheap that its ratio jumps the
+/// queue, dragging its gated per-decl train with it.
 fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
     if decl_count == 0 {
         return Vec::new();
@@ -523,6 +526,13 @@ fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
         let end = (i + chunk_size).min(decl_count);
         ranges.push(i..end);
         i = end;
+    }
+    if let [.., prev, last] = ranges.as_slice()
+        && last.len() < chunk_size / 2
+    {
+        let merged = prev.start..last.end;
+        ranges.pop();
+        *ranges.last_mut().expect("two ranges matched") = merged;
     }
     ranges
 }
@@ -782,12 +792,15 @@ struct AggregateMemberGroup {
 }
 
 /// All public top-level decls in source order. Descends through one
-/// wrapping `#ifndef X / #define X / #endif` header guard and through
-/// `extern "C" { … }` linkage specs.
+/// wrapping `#ifndef X / #define X / #endif` header guard, through
+/// `extern "C" { … }` linkage specs, and — in headers — through
+/// declaration-only feature gates (conditionally-compiled API). `.c`
+/// gates stay opaque: there, conditional compilation is implementation
+/// detail (sqlite-vec's `#ifndef _WIN32` portability-shim typedefs).
 fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, DeclInfo)> {
     let in_header = is_header_file(file);
     let mut out = Vec::new();
-    walk_top_level(tree.root_node(), source, &mut |node| {
+    walk_top_level(tree.root_node(), source, in_header, &mut |node| {
         if let Some(info) = classify_decl(node, source, in_header) {
             out.push((node, info));
         }
@@ -799,39 +812,142 @@ fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, D
 
 /// Visit each "effective top-level" item — descends through the file's
 /// header guard and through `extern "C" { … }` linkage specs.
-fn walk_top_level<'a, F: FnMut(Node<'a>)>(root: Node<'a>, source: &str, visit: &mut F) {
+/// `feature_gates` additionally descends declaration-only `#if` /
+/// `#ifdef` blocks.
+fn walk_top_level<'a, F: FnMut(Node<'a>)>(
+    root: Node<'a>,
+    source: &str,
+    feature_gates: bool,
+    visit: &mut F,
+) {
     let header_guard_body = header_guard_body_node(root, source);
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
         if Some(child) == header_guard_body {
-            descend_envelopes(child, source, visit);
+            descend_envelopes(child, source, feature_gates, visit);
         } else {
-            visit_with_envelope_descent(child, source, visit);
+            visit_with_envelope_descent(child, source, feature_gates, visit);
         }
     }
 }
 
 /// Visit each child of `node` with envelope-descent — used for header
 /// guard / `extern "C"` linkage_specification bodies.
-fn descend_envelopes<'a, F: FnMut(Node<'a>)>(node: Node<'a>, source: &str, visit: &mut F) {
+fn descend_envelopes<'a, F: FnMut(Node<'a>)>(
+    node: Node<'a>,
+    source: &str,
+    feature_gates: bool,
+    visit: &mut F,
+) {
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
-        visit_with_envelope_descent(child, source, visit);
+        visit_with_envelope_descent(child, source, feature_gates, visit);
     }
 }
 
 /// Visit `node`, descending if it's an `extern "C" { … }` envelope
-/// (raw or `#ifdef __cplusplus`-wrapped).
+/// (raw or `#ifdef __cplusplus`-wrapped) or — when `feature_gates` —
+/// a declaration-bearing feature gate (`#if`/`#ifdef` whose branches
+/// hold only declarations and directives).
 fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
+    node: Node<'a>,
+    source: &str,
+    feature_gates: bool,
+    visit: &mut F,
+) {
+    if let Some(decl_list) = extern_c_declaration_list(node, source) {
+        descend_envelopes(decl_list, source, feature_gates, visit);
+        return;
+    }
+    if feature_gates
+        && matches!(node.kind(), "preproc_if" | "preproc_ifdef")
+        && !is_disabled_preproc_if(node, source)
+        && feature_gate_decl_class(node) == GateClass::DeclOnly
+    {
+        descend_feature_gate_branches(node, source, visit);
+        return;
+    }
+    visit(node);
+}
+
+/// Visit every branch of a decl-bearing feature gate: direct children
+/// plus the bodies of `#else` / `#elif` alternates. Children go back
+/// through [`visit_with_envelope_descent`], so nested gates descend (or
+/// stay opaque) on their own merits.
+fn descend_feature_gate_branches<'a, F: FnMut(Node<'a>)>(
     node: Node<'a>,
     source: &str,
     visit: &mut F,
 ) {
-    if let Some(decl_list) = extern_c_declaration_list(node, source) {
-        descend_envelopes(decl_list, source, visit);
-        return;
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        match child.kind() {
+            "preproc_else" | "preproc_elif" | "preproc_elifdef" => {
+                descend_feature_gate_branches(child, source, visit);
+            }
+            _ => visit_with_envelope_descent(child, source, true, visit),
+        }
     }
-    visit(node);
+}
+
+/// True for `#if 0`-style disabled blocks — commented-out code, not a
+/// feature gate.
+fn is_disabled_preproc_if(node: Node, source: &str) -> bool {
+    node.child_by_field_name("condition")
+        .is_some_and(|cond| source[cond.start_byte()..cond.end_byte()].trim() == "0")
+}
+
+/// How a `preproc_if*` subtree relates to the declaration surface.
+#[derive(PartialEq, Eq, Clone, Copy)]
+enum GateClass {
+    /// At least one declaration-shaped child and nothing code-shaped in
+    /// any branch — conditionally-compiled top-level API (krep's
+    /// per-ISA prototypes, tinyusb's gated application API, bareiron's
+    /// `#ifdef SYNC_WORLD_TO_DISK` block).
+    DeclOnly,
+    /// Only directives / comments — the include-map collector's
+    /// territory; nothing for the decl surface.
+    DirectiveOnly,
+    /// Wraps real code (function bodies, statements) somewhere — the
+    /// amalgamation idiom stays opaque.
+    Code,
+}
+
+/// Classify a `preproc_if*` / `preproc_else*` subtree for feature-gate
+/// descent. Branch alternates and nested gates classify recursively; a
+/// code-bearing nested gate keeps the whole envelope opaque.
+fn feature_gate_decl_class(node: Node) -> GateClass {
+    let mut decl_found = false;
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        match child.kind() {
+            "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
+            | "enum_specifier" => decl_found = true,
+            "preproc_include" | "preproc_def" | "preproc_function_def" | "comment" => {}
+            "preproc_if" | "preproc_ifdef" | "preproc_else" | "preproc_elif"
+            | "preproc_elifdef" => match feature_gate_decl_class(child) {
+                GateClass::Code => return GateClass::Code,
+                GateClass::DeclOnly => decl_found = true,
+                GateClass::DirectiveOnly => {}
+            },
+            // Condition/name tokens on the `#if` / `#ifdef` itself.
+            "identifier"
+            | "binary_expression"
+            | "parenthesized_expression"
+            | "unary_expression"
+            | "call_expression"
+            | "preproc_defined"
+            | "number_literal"
+            | "char_literal"
+            | "string_literal" => {}
+            _ => return GateClass::Code,
+        }
+    }
+    if decl_found {
+        GateClass::DeclOnly
+    } else {
+        GateClass::DirectiveOnly
+    }
 }
 
 /// If `node` is an `extern "C" { … }` envelope (raw or
@@ -1512,16 +1628,21 @@ fn header_banner_end_row(tree: &Tree) -> Option<usize> {
 /// idiom) stay opaque and contribute nothing.
 fn collect_includes(tree: &Tree, source: &str) -> FileLines {
     let mut lines = Vec::new();
-    walk_top_level(tree.root_node(), source, &mut |node| match node.kind() {
-        "preproc_include" => extend_span(&mut lines, node, source),
-        "preproc_if" | "preproc_ifdef" => {
-            let class = classify_conditional(node);
-            if class.directive_only && class.include_count > 0 {
-                extend_span(&mut lines, node, source);
+    walk_top_level(
+        tree.root_node(),
+        source,
+        false,
+        &mut |node| match node.kind() {
+            "preproc_include" => extend_span(&mut lines, node, source),
+            "preproc_if" | "preproc_ifdef" => {
+                let class = classify_conditional(node);
+                if class.directive_only && class.include_count > 0 {
+                    extend_span(&mut lines, node, source);
+                }
             }
-        }
-        _ => {}
-    });
+            _ => {}
+        },
+    );
     FileLines::new(dedup_sorted(lines))
 }
 

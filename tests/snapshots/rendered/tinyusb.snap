@@ -99,8 +99,6 @@ src/
             cdc_device.c
             cdc_device.h
                 30→#include "cdc.h"
-                305→bool     cdcd_xfer_cb         (uint8_t rhport, uint8_t ep_addr, xfer_result_t result, uint32_t xferred_bytes);
-                …
             cdc_host.c
             cdc_host.h
                 30→#include "cdc.h"
@@ -172,10 +170,40 @@ src/
             README_midi_host.md
             midi.h
                 30→#include "common/tusb_common.h"
+                39→enum {
+                40→  MIDI_VERSION_1_0 = 0x0100,
+                41→  MIDI_VERSION_2_0 = 0x0200,
+                42→};
+                44→typedef enum {
+                …
+                51→typedef enum {
+                …
+                56→typedef enum {
+                …
+                61→typedef enum {
+                …
+                81→enum {
+                104→enum {
+                105→  MIDI_MAX_DATA_VAL = 0x7F,
+                106→};
+                113→typedef struct TU_ATTR_PACKED {
+                …
+                123→typedef struct TU_ATTR_PACKED {
+                …
+                134→#define midi_desc_out_jack_n_t(input_num) \
+                …
+                149→typedef midi_desc_out_jack_n_t(1)  midi_desc_out_jack_1in_t; // 1 input
+                150→typedef midi_desc_out_jack_1in_t midi_desc_out_jack_t; // backward compatible
+                154→#define midi_desc_element_n_t(input_num) \
+                …
+                174→#define midi_desc_cs_endpoint_n_t(jack_num) \
+                …
+                183→typedef midi_desc_cs_endpoint_n_t() midi_desc_cs_endpoint_t; // empty/flexible jack list
+                …
+                191→typedef struct {
+                …
             midi_device.c
             midi_device.h
-                147→bool     midid_xfer_cb(uint8_t rhport, uint8_t edpt_addr, xfer_result_t result, uint32_t xferred_bytes);
-                …
             midi_host.c
             midi_host.h
         msc/
@@ -223,27 +251,11 @@ src/
         usbd.h
             30→#include "common/tusb_common.h"
         usbd_pvt.h
-            131→void usbd_defer_func(osal_task_func_t func, void *param, bool in_isr);
-            …
     host/
         hcd.h
-            184→// Helper to send device attach event
-            185→TU_ATTR_ALWAYS_INLINE static inline
-            186→void hcd_event_device_attach(uint8_t rhport, bool in_isr) {
-            …
-            196→// Helper to send device removal event
-            197→TU_ATTR_ALWAYS_INLINE static inline
-            198→void hcd_event_device_remove(uint8_t rhport, bool in_isr) {
-            …
-            208→// Helper to send USB transfer event
-            209→TU_ATTR_ALWAYS_INLINE static inline
-            210→void hcd_event_xfer_complete(uint8_t dev_addr, uint8_t ep_addr, uint32_t xferred_bytes, xfer_result_t result, bool in_isr) {
-            …
         hub.c
         hub.h
             30→#include "common/tusb_common.h"
-            221→void     hub_close(uint8_t dev_addr);
-            …
         usbh.c
         usbh.h
         usbh_pvt.h
@@ -254,8 +266,29 @@ src/
         chipidea/
         dialog/
         ehci/
+            ehci.c
+            ehci.h
+            ehci_api.h
+                38→// Initialize EHCI driver
+                39→bool ehci_init(uint8_t rhport, uint32_t capability_reg, uint32_t operatial_reg);
+                …
+                41→// De-initialize EHCI driver
+                42→bool ehci_deinit(uint8_t rhport);
+                …
         mentor/
             musb/
+                dcd_musb.c
+                hcd_musb.c
+                musb_max32.h
+                musb_ti.h
+                    48→#define MUSB_CFG_SHARED_FIFO       0
+                    49→#define MUSB_CFG_DYNAMIC_FIFO      1
+                    50→#define MUSB_CFG_DYNAMIC_FIFO_SIZE 4096
+                    …
+                    52→const uintptr_t MUSB_BASES[] = { USB0_BASE };
+                    …
+                musb_type.h
+                    64→#include "stdint.h"
         microchip/
             pic/
             pic32mz/
@@ -284,6 +317,11 @@ src/
         ti/
         valentyusb/
         wch/
+            ch32_usbfs_reg.h
+            ch32_usbhs_reg.h
+            dcd_ch32_usbfs.c
+            dcd_ch32_usbhs.c
+            hcd_ch32_usbfs.c
     tinyusb.mk
     tusb.c
     tusb.h
@@ -345,26 +383,6 @@ src/
         tcd.h
         usbc.c
         usbc.h
-            49→// Init typec stack on a port
-            50→bool tuc_init(uint8_t rhport, uint32_t port_type);
-            …
-            52→// Check if typec port is initialized
-            53→bool tuc_inited(uint8_t rhport);
-            …
-            58→void tuc_task_ext(uint32_t timeout_ms, bool in_isr);
-            …
-            60→// Task function should be called in main/rtos loop
-            61→TU_ATTR_ALWAYS_INLINE static inline
-            62→void tuc_task (void) {
-            63→  tuc_task_ext(UINT32_MAX, false);
-            70→// Interrupt handler, name alias to TCD
-            71→#define tuc_int_handler tcd_int_handler
-            …
-            77→bool tuc_pd_data_received_cb(uint8_t rhport, pd_header_t const* header, uint8_t const* dobj, uint8_t const* p_end);
-            78→bool tuc_pd_control_received_cb(uint8_t rhport, pd_header_t const* header);
-            …
-            84→bool tuc_msg_request(uint8_t rhport, void const* rdo);
-            …
 test/
 tools/
 version.yml

@@ -71,6 +71,8 @@ Hashtable.h
     …
     18→typedef struct Hashtable_ Hashtable;
     …
+    22→size_t Hashtable_count(const Hashtable* this);
+    …
     26→Hashtable* Hashtable_new(size_t size, bool owner);
     …
     28→void Hashtable_delete(Hashtable* this);
@@ -272,8 +274,6 @@ Process.h
     144→   char* procCwd;
     146→   /* Offset in procExe of the process basename */
     147→   size_t procExeBasenameOffset;
-    152→   /* Tells if the process uses replaced shared libraries since start */
-    153→   bool usesDeletedLib;
     155→   /* CPU number last executed on */
     156→   int processor;
     158→   /* CPU usage during last cycle (in percent) */
