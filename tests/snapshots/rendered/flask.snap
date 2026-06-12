@@ -134,35 +134,7 @@ examples/
         requirements.txt
         src/
     javascript/
-        .gitignore
-        LICENSE.txt
-        README.rst
-        js_example/
-            __init__.py
-            templates/
-            views.py
-        pyproject.toml
-        tests/
     tutorial/
-        .gitignore
-        LICENSE.txt
-        README.rst
-        flaskr/
-            __init__.py
-            auth.py
-            blog.py
-            db.py
-            schema.sql
-            static/
-            templates/
-        pyproject.toml
-        tests/
-            conftest.py
-            data.sql
-            test_auth.py
-            test_blog.py
-            test_db.py
-            test_factory.py
 pyproject.toml
     1→[project]
     2→name = "Flask"
@@ -256,22 +228,25 @@ src/
                 6→from ..globals import current_app
                 7→from .provider import _default
                 13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
-                …
+                14→    """Serialize data as JSON.
                 47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
-                …
+                48→    """Serialize data as JSON and write to a file.
                 70→    if current_app:
                 71→        current_app.json.dump(obj, fp, **kwargs)
                 72→    else:
                 73→        kwargs.setdefault("default", _default)
                 74→        _json.dump(obj, fp, **kwargs)
                 77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
-                …
+                78→    """Deserialize data as JSON.
                 105→    return _json.loads(s, **kwargs)
                 108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
-                …
+                109→    """Deserialize data as JSON read from a file.
                 135→    return _json.load(fp, **kwargs)
                 138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
-                …
+                139→    """Serialize the given arguments as JSON, and return a
+                140→    :class:`~flask.Response` object with the ``application/json``
+                141→    mimetype. A dict or list returned from a view will be converted to a
+                142→    JSON response automatically without needing to call this.
             provider.py
             tag.py
         logging.py
@@ -285,9 +260,6 @@ src/
                 6→Flask globals.
             app.py
             blueprints.py
-                119→class Blueprint(Scaffold):
-                …
-                172→    _got_registered_once = False
             scaffold.py
         sessions.py
         signals.py
@@ -297,59 +269,40 @@ src/
         testing.py
         typing.py
         views.py
-            9→F = t.TypeVar("F", bound=t.Callable[..., t.Any])
-            11→http_method_funcs = frozenset(
-            12→    ["get", "post", "head", "options", "delete", "put", "trace", "patch"]
-            13→)
-            16→class View:
-            …
-            78→    def dispatch_request(self) -> ft.ResponseReturnValue:
-            …
-            83→        raise NotImplementedError()
-            85→    @classmethod
-            86→    def as_view(
-            87→        cls, name: str, *class_args: t.Any, **class_kwargs: t.Any
-            88→    ) -> ft.RouteCallable:
-            138→class MethodView(View):
-            …
-            165→    def __init_subclass__(cls, **kwargs: t.Any) -> None:
-            …
-            182→    def dispatch_request(self, **kwargs: t.Any) -> ft.ResponseReturnValue:
-            …
         wrappers.py
             18→class Request(RequestBase):
+            …
+            59→    @property
+            60→    def max_content_length(self) -> int | None:
+            88→    @max_content_length.setter
+            89→    def max_content_length(self, value: int | None) -> None:
+            90→        self._max_content_length = value
+            92→    @property
+            93→    def max_form_memory_size(self) -> int | None:
+            115→    @max_form_memory_size.setter
+            116→    def max_form_memory_size(self, value: int | None) -> None:
+            117→        self._max_form_memory_size = value
+            119→    @property  # type: ignore[override]
+            120→    def max_form_parts(self) -> int | None:
+            142→    @max_form_parts.setter
+            143→    def max_form_parts(self, value: int | None) -> None:
+            144→        self._max_form_parts = value
+            146→    @property
+            147→    def endpoint(self) -> str | None:
+            161→    @property
+            162→    def blueprint(self) -> str | None:
+            180→    @property
+            181→    def blueprints(self) -> list[str]:
+            197→    def _load_form_data(self) -> None:
+            …
+            212→    def on_json_loading_failed(self, e: ValueError | None) -> t.Any:
             …
             222→class Response(ResponseBase):
             …
             240→    default_mimetype: str | None = "text/html"
             242→    json_module = json
             244→    autocorrect_location_header = False
+            246→    @property
+            247→    def max_cookie_size(self) -> int:  # type: ignore
 tests/
-    conftest.py
-    static/
-    templates/
-    test_appctx.py
-    test_apps/
-    test_async.py
-    test_basic.py
-    test_blueprints.py
-    test_cli.py
-    test_config.py
-    test_converters.py
-    test_helpers.py
-    test_instance_config.py
-    test_json.py
-    test_json_tag.py
-    test_logging.py
-    test_regression.py
-    test_reqctx.py
-    test_request.py
-    test_session_interface.py
-    test_signals.py
-    test_subclassing.py
-    test_templating.py
-    test_testing.py
-    test_user_error_handler.py
-    test_views.py
-    type_check/
 uv.lock

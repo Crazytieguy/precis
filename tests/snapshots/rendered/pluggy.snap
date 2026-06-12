@@ -3,7 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .claude/
-    settings.json
 .coveragerc
 .github/
 .gitignore
@@ -74,9 +73,6 @@ docs/
     changelog.rst
     conf.py
     examples/
-        eggsample/
-        eggsample-spam/
-        toy-example.py
     index.rst
     requirements.txt
 downstream/
@@ -133,31 +129,98 @@ src/
             36→        return version("pluggy")
             38→    raise AttributeError(f"module {__name__} has no attribute {name!r}")
         _callers.py
-            24→Teardown: TypeAlias = Generator[None, object, object]
-            27→def run_old_style_hookwrapper(
-            28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
-            29→) -> Teardown:
-            30→    """
-            31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
-            32→    """
-            60→def _raise_wrapfail(
-            61→    wrap_controller: Generator[None, object, object],
-            62→    msg: str,
-            63→) -> NoReturn:
-            70→def _warn_teardown_exception(
-            71→    hook_name: str, hook_impl: HookImpl, e: BaseException
-            72→) -> None:
-            82→def _multicall(
-            83→    hook_name: str,
-            84→    hook_impls: Sequence[HookImpl],
-            85→    caller_kwargs: Mapping[str, object],
-            86→    firstresult: bool,
-            87→) -> object | list[object]:
-            88→    """Execute a call into multiple python functions/methods and return the
-            89→    result(s).
-            91→    ``caller_kwargs`` comes from HookCaller.__call__().
-            92→    """
         _hooks.py
+            28→_T = TypeVar("_T")
+            40→class HookspecOpts(TypedDict):
+            41→    """Options for a hook specification."""
+            43→    #: Whether the hook is :ref:`first result only <firstresult>`.
+            44→    firstresult: bool
+            45→    #: Whether the hook is :ref:`historic <historic>`.
+            46→    historic: bool
+            47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
+            48→    warn_on_impl: Warning | None
+            49→    #: Whether the hook warns when :ref:`certain arguments are requested
+            50→    #: <warn_on_impl>`.
+            51→    #:
+            52→    #: .. versionadded:: 1.5
+            53→    warn_on_impl_args: Mapping[str, Warning] | None
+            56→class HookimplOpts(TypedDict):
+            57→    """Options for a hook implementation."""
+            59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
+            60→    wrapper: bool
+            61→    #: Whether the hook implementation is an :ref:`old-style wrapper
+            62→    #: <old_style_hookwrappers>`.
+            63→    hookwrapper: bool
+            64→    #: Whether validation against a hook specification is :ref:`optional
+            65→    #: <optionalhook>`.
+            66→    optionalhook: bool
+            67→    #: Whether to try to order this hook implementation :ref:`first
+            68→    #: <callorder>`.
+            69→    tryfirst: bool
+            70→    #: Whether to try to order this hook implementation :ref:`last
+            71→    #: <callorder>`.
+            72→    trylast: bool
+            73→    #: The name of the hook specification to match, see :ref:`specname`.
+            74→    specname: str | None
+            77→@final
+            78→class HookspecMarker:
+            86→    __slots__ = ("project_name",)
+            164→@final
+            165→class HookimplMarker:
+            173→    __slots__ = ("project_name",)
+            281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
+            …
+            293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
+            …
+            358→@final
+            359→class HookRelay:
+            360→    """Hook holder object for performing 1:N hook calls where N is the number
+            361→    of registered plugins."""
+            363→    __slots__ = ("__dict__",)
+            368→    if TYPE_CHECKING:
+            370→        def __getattr__(self, name: str) -> HookCaller: ...
+            382→class HookCaller:
+            383→    """A caller of all registered implementations of a hook specification."""
+            385→    __slots__ = (
+            386→        "name",
+            387→        "spec",
+            388→        "_hookexec",
+            389→        "_hookimpls",
+            390→        "_call_history",
+            391→    )
+            419→    # TODO: Document, or make private.
+            423→    # TODO: Document, or make private.
+            593→class _SubsetHookCaller(HookCaller):
+            594→    """A proxy to another HookCaller which manages calls to all registered
+            595→    plugins except the ones from remove_plugins."""
+            638→@final
+            639→class HookImpl:
+            640→    """A hook implementation in a :class:`HookCaller`."""
+            642→    __slots__ = (
+            643→        "function",
+            644→        "argnames",
+            645→        "kwargnames",
+            646→        "plugin",
+            647→        "opts",
+            648→        "plugin_name",
+            649→        "wrapper",
+            650→        "hookwrapper",
+            651→        "optionalhook",
+            652→        "tryfirst",
+            653→        "trylast",
+            654→    )
+            696→@final
+            697→class HookSpec:
+            698→    __slots__ = (
+            699→        "namespace",
+            700→        "function",
+            701→        "name",
+            702→        "argnames",
+            703→        "kwargnames",
+            704→        "opts",
+            705→        "warn_on_impl",
+            706→        "warn_on_impl_args",
+            707→    )
         _manager.py
             36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
             37→_AfterTrace: TypeAlias = Callable[
@@ -173,17 +236,7 @@ src/
             65→class DistFacade:
             66→    """Emulate a pkg_resources Distribution"""
             83→class PluginManager:
-            84→    """Core class which manages registration of plugin objects and 1:N hook
-            85→    calling.
-            87→    You can register new hooks by calling :meth:`add_hookspecs(module_or_class)
-            88→    <PluginManager.add_hookspecs>`.
-            90→    You can register plugin objects (which contain hook implementations) by
-            91→    calling :meth:`register(plugin) <PluginManager.register>`.
-            93→    For debugging purposes you can call :meth:`PluginManager.enable_tracing`
-            94→    which will subsequently send debug information to the trace helper.
-            96→    :param project_name:
-            97→        The short project name. Prefer snake case. Make sure it's unique!
-            98→    """
+            …
             525→def _formatdef(func: Callable[..., object]) -> str:
             526→    return f"{func.__name__}{inspect.signature(func)}"
         _result.py
@@ -215,47 +268,11 @@ src/
             67→    def force_result(self, result: ResultType) -> None:
             …
             80→    def force_exception(self, exception: BaseException) -> None:
-            81→        """Force the result to fail with ``exception``.
-            83→        This overrides any previous result or exception.
-            85→        .. versionadded:: 1.1.0
-            86→        """
+            …
             91→    def get_result(self) -> ResultType:
-            92→        """Get the result(s) for this hook call.
-            94→        If the hook was marked as a ``firstresult`` only a single value
-            95→        will be returned, otherwise a list of results.
-            96→        """
+            …
             107→_Result = Result
         _tracing.py
-            1→"""
-            2→Tracing utils
-            3→"""
-            5→from __future__ import annotations
-            7→from collections.abc import Callable
-            8→from collections.abc import Sequence
-            9→from typing import Any
-            12→_Writer = Callable[[str], object]
-            13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
-            16→class TagTracer:
-            17→    def __init__(self) -> None:
-            …
-            22→    def get(self, name: str) -> TagTracerSub:
-            23→        return TagTracerSub(self, (name,))
-            25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
-            …
-            42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
-            …
-            48→    def setwriter(self, writer: _Writer | None) -> None:
-            49→        self._writer = writer
-            51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
-            …
-            59→class TagTracerSub:
-            60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
-            61→        self.root = root
-            62→        self.tags = tags
-            64→    def __call__(self, *args: object) -> None:
-            65→        self.root._processmessage(self.tags, args)
-            67→    def get(self, name: str) -> TagTracerSub:
-            68→        return self.__class__(self.root, self.tags + (name,))
         _warnings.py
             1→from typing import final
             4→class PluggyWarning(UserWarning):
@@ -266,16 +283,5 @@ src/
             27→    __module__ = "pluggy"
         py.typed
 testing/
-    benchmark.py
-    conftest.py
-    test_details.py
-    test_helpers.py
-    test_hookcaller.py
-    test_invocations.py
-    test_multicall.py
-    test_pluginmanager.py
-    test_result.py
-    test_tracer.py
-    test_warnings.py
 tox.ini
 uv.lock

@@ -88,6 +88,42 @@ src/
             41→        return global_config
             43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
         _checkers.py
+            153→def check_callable(
+            154→    value: Any,
+            155→    origin_type: Any,
+            156→    args: tuple[Any, ...],
+            157→    memo: TypeCheckMemo,
+            158→) -> None:
+            212→def check_mapping(
+            213→    value: Any,
+            214→    origin_type: Any,
+            215→    args: tuple[Any, ...],
+            216→    memo: TypeCheckMemo,
+            217→) -> None:
+            247→def check_typed_dict(
+            248→    value: Any,
+            249→    origin_type: Any,
+            250→    args: tuple[Any, ...],
+            251→    memo: TypeCheckMemo,
+            252→) -> None:
+            305→def check_list(
+            …
+            324→def check_sequence(
+            …
+            343→def check_set(
+            …
+            365→def check_tuple(
+            …
+            423→def check_union(
+            …
+            447→def check_uniontype(
+            …
+            474→def check_class(
+            …
+            536→def check_newtype(
+            …
+            545→def check_instance(
+            …
         _config.py
             11→T = TypeVar("T")
             14→class ForwardRefPolicy(Enum):
@@ -109,6 +145,8 @@ src/
             …
             62→@dataclass
             63→class TypeCheckConfiguration:
+            64→    """
+            65→     You can change Typeguard's behavior with these settings.
             98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
             99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
             100→    collection_check_strategy: CollectionCheckStrategy = (
@@ -143,6 +181,8 @@ src/
             155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
             156→    debug_instrumentation: bool | Unset = unset,
             157→) -> Any:
+            158→    """
+            159→    Instrument the target function to perform run-time type checking.
         _exceptions.py
             1→from collections import deque
             2→from typing import Deque
@@ -172,33 +212,13 @@ src/
             …
         _functions.py
         _importhook.py
-            40→P = ParamSpec("P")
-            41→T = TypeVar("T")
-            45→def _call_with_frames_removed(
-            46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
-            47→) -> T:
-            48→    return f(*args, **kwargs)
-            51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
-            52→    return cache_from_source(path, debug_override, optimization=OPTIMIZATION)
-            55→class TypeguardLoader(SourceFileLoader):
-            …
-            109→class TypeguardFinder(MetaPathFinder):
-            …
-            156→class ImportHookManager:
-            157→    """
-            158→    A handle that can be used to uninstall the Typeguard import hook.
-            159→    """
-            183→def install_import_hook(
-            184→    packages: Iterable[str] | None = None,
-            185→    *,
-            186→    cls: type[TypeguardFinder] = TypeguardFinder,
-            187→) -> ImportHookManager:
         _memo.py
             1→from __future__ import annotations
             3→from typing import Any
             5→from typeguard._config import TypeCheckConfiguration, global_config
             8→class TypeCheckMemo:
-            …
+            9→    """
+            10→    Contains information necessary for type checkers to do their work.
             35→    __slots__ = "globals", "locals", "self_type", "config"
             37→    def __init__(
             38→        self,
@@ -226,8 +246,7 @@ src/
             31→    func: Callable[P, T] | None = None,
             32→) -> Callable[P, T] | ContextManager[None]:
         _transformer.py
-            488→class TypeguardTransformer(NodeTransformer):
-            …
+            100→aug_assign_functions = {
         _utils.py
         py.typed
 tests/

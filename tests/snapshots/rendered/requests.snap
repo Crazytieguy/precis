@@ -10,9 +10,6 @@ expression: rendered
     CONTRIBUTING.md
     FUNDING.yml
     ISSUE_TEMPLATE/
-        Bug_report.md
-        Custom.md
-        Feature_request.md
     ISSUE_TEMPLATE.md
     SECURITY.md
     dependabot.yml
@@ -62,20 +59,6 @@ README.md
     38→Requests officially supports Python 3.10+.
     40→## Supported Features & Best–Practices
     …
-    42→Requests is ready for the demands of building robust and reliable HTTP–speaking applications, for the needs of today.
-    44→- Keep-Alive & Connection Pooling
-    45→- International Domains and URLs
-    46→- Sessions with Cookie Persistence
-    47→- Browser-style TLS/SSL Verification
-    48→- Basic & Digest Authentication
-    49→- Familiar `dict`–like Cookies
-    50→- Automatic Content Decompression and Decoding
-    51→- Multi-part File Uploads
-    52→- SOCKS Proxy Support
-    53→- Connection Timeouts
-    54→- Streaming Downloads
-    55→- Automatic honoring of `.netrc`
-    56→- Chunked HTTP Requests
     58→## Cloning the repository
     …
 docs/
@@ -249,6 +232,7 @@ src/
         certs.py
         compat.py
         cookies.py
+            560→_CookieJarT = TypeVar("_CookieJarT", bound=CookieJar)
         exceptions.py
             161→class RequestsDependencyWarning(RequestsWarning):
             162→    """An imported dependency doesn't match the expected version range."""
@@ -280,10 +264,6 @@ src/
             76→def merge_setting(
             77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
             78→) -> Any:
-            79→    """Determines appropriate setting for a given request, taking into account
-            80→    the explicit setting on that request, and the setting in the session. If a
-            81→    setting is a dictionary, they will be merged together using `dict_class`
-            82→    """
             108→def merge_hooks(
             109→    request_hooks: _t.HooksType,
             110→    session_hooks: _t.HooksType,
@@ -299,6 +279,32 @@ src/
             130→    cookies: RequestsCookieJar
             395→class Session(SessionRedirectMixin):
             …
+            414→    headers: CaseInsensitiveDict[str]
+            415→    auth: _t.AuthType
+            416→    proxies: dict[str, str]
+            417→    hooks: dict[str, list[_t.HookType]]
+            418→    params: MutableMapping[str, Any]
+            419→    stream: bool
+            420→    verify: _t.VerifyType
+            421→    cert: _t.CertType
+            422→    max_redirects: int
+            423→    trust_env: bool
+            424→    cookies: RequestsCookieJar
+            425→    adapters: MutableMapping[str, BaseAdapter]
+            427→    __attrs__: list[str] = [
+            428→        "headers",
+            429→        "cookies",
+            430→        "auth",
+            431→        "proxies",
+            432→        "hooks",
+            433→        "params",
+            434→        "verify",
+            435→        "cert",
+            436→        "adapters",
+            437→        "stream",
+            438→        "trust_env",
+            439→        "max_redirects",
+            440→    ]
             908→def session() -> Session:
             …
             920→    return Session()
@@ -311,9 +317,7 @@ src/
             16→_VT = TypeVar("_VT")
             17→_D = TypeVar("_D")
             20→class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]):
-            …
-            47→    _store: OrderedDict[str, tuple[str, _VT]]
-            88→    # Copy is required
+            21→    """A case-insensitive ``dict``-like object.
             96→class LookupDict(dict[str, _VT]):
             97→    """Dictionary lookup object."""
             99→    name: Any

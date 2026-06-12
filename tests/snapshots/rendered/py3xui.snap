@@ -34,9 +34,7 @@ README.md
     43→## Quick Start
     …
     48→### Installation
-    49→```bash
-    50→pip install py3xui
-    51→```
+    …
     53→### Create a new instance of the API
     …
     89→### Using TLS and custom certificates
@@ -96,32 +94,27 @@ py3xui/
             5→from py3xui.api.api_server import ServerApi
         api.py
             13→class Api:
-            …
+            14→    """This class provides a high-level interface to interact with the XUI API.
+            15→    Access to the client, inbound, and database APIs is provided through this class.
         api_base.py
             15→class ApiFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
             28→class BaseApi:
-            …
+            29→    """Base class for the XUI API. Contains common methods for making requests.
         api_client.py
             13→class ClientApi(BaseApi):
-            …
+            14→    """This class provides methods to interact with the clients in the XUI API.
         api_database.py
             7→class DatabaseApi(BaseApi):
-            …
+            8→    """This class provides methods to interact with the database in the XUI API.
             32→    def export(self) -> None:
             …
         api_inbound.py
             9→class InboundApi(BaseApi):
-            …
+            10→    """This class provides methods to interact with the inbounds in the XUI API.
         api_server.py
             7→class ServerApi(BaseApi):
-            …
-            35→    def get_db(self, save_path: str) -> None:
-            …
-            67→    def get_status(self) -> Server:
-            …
-            97→    def generate_reality_keys(self) -> RealityKeyPair:
-            …
+            8→    """This class provides methods to interact with the server in the XUI API.
     async_api/
         README.md
             1→<a id="async_api.async_api_inbound"></a>
@@ -136,31 +129,26 @@ py3xui/
             5→from py3xui.async_api.async_api_server import AsyncServerApi
         async_api.py
             18→class AsyncApi:
-            …
+            19→    """This class provides a high-level interface to interact with the XUI API.
+            20→    Access to the client, inbound, and database APIs is provided through this class.
         async_api_base.py
             16→class AsyncBaseApi:
-            …
+            17→    """Base class for the XUI API. Contains async common methods for making requests.
         async_api_client.py
             12→class AsyncClientApi(AsyncBaseApi):
-            …
+            13→    """This class provides async methods to interact with the clients in the XUI API.
         async_api_database.py
             7→class AsyncDatabaseApi(AsyncBaseApi):
-            …
+            8→    """This class provides methods to interact with the database in the XUI API.
             32→    async def export(self) -> None:
             …
         async_api_inbound.py
             11→class AsyncInboundApi(AsyncBaseApi):
-            …
+            12→    """This class provides methods to interact with the inbounds in the XUI API.
         async_api_server.py
             8→class AsyncServerApi(AsyncBaseApi):
             …
             43→    # pylint: disable=R0801
-            44→    async def get_db(self, save_path: str) -> None:
-            …
-            76→    async def get_status(self) -> Server:
-            …
-            105→    async def generate_reality_keys(self) -> RealityKeyPair:
-            …
     client/
         README.md
             1→<a id="client.client"></a>
@@ -195,68 +183,34 @@ py3xui/
             9→class JsonStringModel(BaseModel):
             10→    """Base class for models that have a JSON string as a field."""
             12→    @model_validator(mode="before")
-            13→    def model_validate(
-            14→        cls,
-            15→        values,
-            16→    ):  # pylint: disable=no-self-argument, arguments-differ
+            …
         inbound.py
             15→class InboundFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
             38→class Inbound(BaseModel):
             …
             88→    @field_validator("stream_settings")
-            …
+            89→    def validate_stream_settings(  # pylint: disable=no-self-argument
+            90→        cls, value: StreamSettings | str
+            91→    ) -> StreamSettings | str:
             114→    def to_json(self) -> dict[str, Any]:
             …
         settings.py
             9→class SettingsFields:
             10→    """Stores the fields returned by the XUI API for parsing."""
-            12→    CLIENTS = "clients"
-            13→    DECRYPTION = "decryption"
-            14→    FALLBACKS = "fallbacks"
             17→class Settings(JsonStringModel):
             …
             26→    clients: list[Client] = []
             27→    decryption: str = ""
             28→    fallbacks: list = []
         sniffing.py
-            9→class SniffingFields:
-            10→    """Stores the fields returned by the XUI API for parsing."""
-            12→    ENABLED = "enabled"
-            14→    DEST_OVERRIDE = "destOverride"
-            16→    METADATA_ONLY = "metadataOnly"
-            17→    ROUTE_ONLY = "routeOnly"
-            20→class Sniffing(JsonStringModel):
-            …
         stream_settings.py
-            9→class StreamSettingsFields:
-            10→    """Stores the fields returned by the XUI API for parsing."""
-            25→class StreamSettings(JsonStringModel):
-            …
     server/
         README.md
             1→<a id="server.server"></a>
             3→# server.server
             5→This module contains the Server class which represents server information in XUI API.
             7→<a id="server.server.ServerFields"></a>
-            9→## ServerFields Objects
-            …
-            19→## MemoryInfo Objects
-            …
-            34→## XRayInfo Objects
-            …
-            56→## NetworkIO Objects
-            …
-            71→## NetworkTraffic Objects
-            …
-            86→## PublicIP Objects
-            …
-            101→## AppStats Objects
-            …
-            117→## RealityKeyPair Objects
-            …
-            132→## Server Objects
-            …
         __init__.py
             1→# pylint: disable=missing-module-docstring
             2→from py3xui.server.server import RealityKeyPair, Server

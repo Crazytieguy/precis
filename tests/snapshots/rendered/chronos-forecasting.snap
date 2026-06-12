@@ -22,7 +22,7 @@ README.md
     12→[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
     14→</div>
     17→## 🚀 News
-    18→- **30 Dec 2025**: ☁️ Deploy Chronos-2 to AWS with Amazon SageMaker: new guide covers real-time inference (GPU/CPU), serverless endpoints with automatic scaling, and batch transform for large-scale forecasting. See the [deployment tutorial](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb).
+    …
     20→- **12 Dec 2024**: 📊 We released [`fev`](https://github.com/autogluon/fev), a lightweight package for benchmarking time series forecasting models based on the [Hugging Face `datasets`](https://huggingface.co/docs/datasets/en/index) library.
     22→- **13 Mar 2024**: 🚀 Chronos [paper](https://arxiv.org/abs/2403.07815) and inference code released.
     24→## ✨ Introduction
@@ -114,7 +114,12 @@ src/
             45→    forecast_type: ForecastType
             46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
             48→    def __init__(self, inner_model: "PreTrainedModel"):
-            …
+            49→        """
+            50→        Parameters
+            51→        ----------
+            52→        inner_model : PreTrainedModel
+            53→            A hugging-face transformers PreTrainedModel, e.g., T5ForConditionalGeneration
+            54→        """
             58→    @property
             59→    def model_context_length(self) -> int:
             60→        raise NotImplementedError()
@@ -158,6 +163,10 @@ src/
             341→        force_s3_download=False,
             342→        **kwargs,
             343→    ):
+            344→        """
+            345→        Load the model, either from a local path, S3 prefix, or from the HuggingFace Hub.
+            346→        Supports the same arguments as ``AutoConfig`` and ``AutoModel`` from ``transformers``.
+            347→        """
         boto_utils.py
         chronos.py
         chronos2/
@@ -172,24 +181,14 @@ src/
                 11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
             config.py
                 12→class Chronos2CoreConfig(PretrainedConfig):
-                …
-                46→    model_type = "t5"
-                47→    attribute_map = {
-                48→        "hidden_size": "d_model",
-                49→        "num_attention_heads": "num_heads",
-                50→        "num_hidden_layers": "num_layers",
-                51→        "head_dim": "d_kv",
-                52→    }
+                13→    """
+                14→    HF transformers-style pretrained model config for Chronos-2.0, based on T5Config.
                 54→    def __init__(
                 …
                 102→@dataclass
                 103→class Chronos2ForecastingConfig:
                 114→    @classmethod
                 115→    def editable_fields(cls) -> list[str]:
-                116→        """
-                117→        Fields that maybe modified during the fine-tuning stage.
-                118→        """
-                119→        return ["context_length", "max_output_patches"]
             dataset.py
             layers.py
             model.py
@@ -199,21 +198,6 @@ src/
                 40→    forecast_type: ForecastType = ForecastType.QUANTILES
                 41→    default_context_length: int = 2048
             trainer.py
-                17→def seed_worker(worker_id: int):
-                …
-                30→class EvaluateAndSaveFinalStepCallback(TrainerCallback):
-                31→    """Callback to evaluate and save the model at last training step."""
-                33→    def on_step_end(self, args, state, control, **kwargs):
-                …
-                40→class Chronos2Trainer(Trainer):
-                41→    """
-                42→    A custom trainer based on transformers Trainer. We need to override the dataloader getters because we handle
-                43→    batching ourselves in a custom dataset which directly returns batches instead of individual elements.
-                44→    """
-                46→    def get_train_dataloader(self) -> DataLoader:
-                …
-                77→    def get_eval_dataloader(self, eval_dataset: str | Dataset | None = None) -> DataLoader:
-                …
         chronos_bolt.py
         df_utils.py
         utils.py

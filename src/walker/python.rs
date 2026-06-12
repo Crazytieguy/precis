@@ -41,6 +41,8 @@
 //!
 //! Parse trees are cached in [`WalkCtx`].
 
+use std::cell::RefCell;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -48,8 +50,9 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
 use crate::value::{
-    NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
-    names_surface_chunk_index, reexport_import_chunk_factor,
+    NAMES_SURFACE_CHUNK_SIZE, depth_factor, mix_signals, names_surface_chunk_count,
+    names_surface_chunk_factor, names_surface_chunk_index, reexport_import_chunk_factor,
+    roster_mass_factor_with_baseline,
 };
 
 use super::import_chunks::{
@@ -64,6 +67,32 @@ use super::{
 
 const VISIBILITY_PUBLIC: f64 = 1.0;
 const VISIBILITY_UNDERSCORE: f64 = 0.6;
+
+/// Neutral roster size for Python decl/method/field surfaces. Small and
+/// mid-size surfaces already rank acceptably; catalog-sized surfaces
+/// (a 12-decl names chunk, a 30-method sigs batch) otherwise lose
+/// `value/cost^k` rank to trinket files because their value is flat
+/// while cost grows with entry count. Calibrated: a baseline of 2
+/// lifts nearly every multi-decl file and floods orientation content
+/// (README sections, re-export walls) out of the early budget.
+const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
+
+/// `__init__.py` rosters are excluded: the entrypoint depth pin already
+/// privileges them, and boosting on top floods nested-package
+/// `__init__` surfaces ahead of the re-export walls NS authors rank.
+fn python_roster_mass_factor(file: &Path, entries: usize) -> f64 {
+    if is_python_entrypoint(file) {
+        return 1.0;
+    }
+    roster_mass_factor_with_baseline(entries, PYTHON_ROSTER_MASS_BASELINE)
+}
+
+/// Per-run Python walker state: spine-module sets cached per package
+/// root (computed once from the root `__init__.py`'s re-exports).
+#[derive(Default)]
+pub(in crate::walker) struct PythonState {
+    spine_modules: RefCell<HashMap<PathBuf, Arc<HashSet<PathBuf>>>>,
+}
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let py_files = files_with_extension(dir, "py");
@@ -144,7 +173,9 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             continue;
         }
 
-        let names_chunk_count = names_surface_chunk_count(decls.len());
+        let roster = names_roster(&decls, &source);
+        let chunk_of_decl = decl_chunk_indices(&decls, &roster, &source);
+        let names_chunk_count = names_surface_chunk_count(roster.len());
         let names_predecessors: Vec<_> = (0..names_chunk_count)
             .map(|chunk_index| {
                 BatchKey::Python(PythonKey::DeclNames {
@@ -153,61 +184,89 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 })
             })
             .collect();
-        let names_lines_by_chunk: Vec<_> = decls
+        let names_lines_by_chunk: Vec<_> = roster
             .chunks(NAMES_SURFACE_CHUNK_SIZE)
-            .map(collect_decl_names_from)
+            .map(|chunk| {
+                let chunk_decls: Vec<_> = chunk.iter().map(|&i| decls[i]).collect();
+                collect_decl_names_from(&chunk_decls)
+            })
             .collect();
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
             else {
                 continue;
             };
+            let chunk_entry_count = roster
+                .len()
+                .min((chunk_index + 1) * NAMES_SURFACE_CHUNK_SIZE)
+                - chunk_index * NAMES_SURFACE_CHUNK_SIZE;
             out.push(Batch {
                 key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
+                value: decl_names_value(file, ctx, chunk_index, names_chunk_count)
+                    * python_roster_mass_factor(file, chunk_entry_count),
             });
         }
 
-        let mut method_sigs_predecessors = vec![None; names_chunk_count];
-        let mut methods_by_chunk = vec![Vec::new(); names_chunk_count];
-        for (class_index, methods) in collect_methods_by_class(&decls, &source) {
-            methods_by_chunk[names_surface_chunk_index(class_index)].push((class_index, methods));
-        }
-        for (chunk_index, methods_by_class) in methods_by_chunk.into_iter().enumerate() {
-            if methods_by_class.is_empty() {
-                continue;
-            }
-            let Some(content) = single_file_lines_content(
-                file,
-                &source,
-                collect_method_sigs_from(&methods_by_class),
-            ) else {
+        // MethodSigs chunks by method count, mirroring DeclNames: a
+        // 30-method class's catalog must not ride one 500-token batch
+        // whose `value/cost^k` rank sinks below every leaf file's.
+        // Mid-size catalogs stay whole — chunking them trades a fine
+        // batch for a falloff-damped pair and only delays the skeleton
+        // (measured: nano-vllm's 13-17-method engine classes regress
+        // chunked; pluggy's ~30-method PluginManager regresses whole).
+        let flat_methods: Vec<(usize, DeclInfo)> = collect_methods_by_class(&decls, &source)
+            .into_iter()
+            .flat_map(|(class_index, methods)| methods.into_iter().map(move |m| (class_index, m)))
+            .collect();
+        let sigs_chunk_size = if flat_methods.len() > 2 * NAMES_SURFACE_CHUNK_SIZE {
+            NAMES_SURFACE_CHUNK_SIZE
+        } else {
+            flat_methods.len().max(1)
+        };
+        let sigs_chunk_count = flat_methods.len().div_ceil(sigs_chunk_size);
+        let mut sigs_chunk_of_method = HashMap::new();
+        for (chunk_index, chunk) in flat_methods.chunks(sigs_chunk_size).enumerate() {
+            let full: Vec<_> = chunk.iter().map(|(_, m)| m.start_line).collect();
+            let ellipses: Vec<_> = chunk.iter().map(|(_, m)| m.start_line + 1).collect();
+            let lines = FileLines::new(full).with_ellipses(ellipses);
+            let Some(content) = single_file_lines_content(file, &source, lines) else {
                 continue;
             };
             let key = PythonKey::MethodSigs {
                 file: file.clone(),
                 chunk_index,
             };
-            out.push(Batch {
-                key: key.clone().into(),
-                // Predecessor: same decl-name chunk. The MethodSigs
-                // `Full+Ellipsis` pair can share the class header's
-                // following ellipsis row, so chunking both surfaces keeps
-                // overlap ancestry local.
-                predecessor: Some(BatchKey::Python(PythonKey::DeclNames {
+            for (_, method) in chunk {
+                sigs_chunk_of_method.insert(method.start_line, BatchKey::Python(key.clone()));
+            }
+            // Chunk 0 gates on the decl-name chunk of its first class
+            // (the MethodSigs `Full+Ellipsis` pair can share the class
+            // header's following ellipsis row, so gating on the names
+            // surface keeps overlap ancestry local). Later chunks chain
+            // on their predecessor chunk — ungated tails are cheaper
+            // than heads and would deliver the catalog bottom-first.
+            let predecessor = if chunk_index == 0 {
+                names_predecessors[chunk_of_decl[chunk[0].0]].clone()
+            } else {
+                BatchKey::Python(PythonKey::MethodSigs {
                     file: file.clone(),
-                    chunk_index,
-                })),
+                    chunk_index: chunk_index - 1,
+                })
+            };
+            out.push(Batch {
+                key: key.into(),
+                predecessor: Some(predecessor),
                 content,
-                value: method_sigs_value(file, ctx),
+                value: method_sigs_value(file, ctx)
+                    * names_surface_chunk_factor(chunk_index, sigs_chunk_count)
+                    * python_roster_mass_factor(file, chunk.len()),
             });
-            method_sigs_predecessors[chunk_index] = Some(BatchKey::Python(key));
         }
 
         for (decl_index, decl) in decls.iter().enumerate() {
-            let chunk_index = names_surface_chunk_index(decl_index);
+            let chunk_index = chunk_of_decl[decl_index];
             let names_predecessor = names_predecessors[chunk_index].clone();
             let decl_key = PythonKey::Decl {
                 file: file.clone(),
@@ -227,19 +286,33 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             }
             let decl_predecessor = BatchKey::Python(decl_key);
 
-            if let Some(content) =
-                single_file_lines_content(file, &source, collect_doc_for(decl.inner_node, &source))
-            {
+            let (doc_lede, doc_rest) =
+                split_doc_lede(collect_doc_for(decl.inner_node, &source), &src_lines);
+            if let Some(content) = single_file_lines_content(file, &source, doc_lede) {
+                let doc_key = PythonKey::DeclDoc {
+                    file: file.clone(),
+                    start_line: decl.start_line,
+                };
                 out.push(Batch {
-                    key: PythonKey::DeclDoc {
-                        file: file.clone(),
-                        start_line: decl.start_line,
-                    }
-                    .into(),
+                    key: doc_key.clone().into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
                     value: decl_doc_value(file, decl, ctx),
                 });
+                if let Some(rest_lines) = doc_rest
+                    && let Some(content) = single_file_lines_content(file, &source, rest_lines)
+                {
+                    out.push(Batch {
+                        key: PythonKey::DeclDocRest {
+                            file: file.clone(),
+                            start_line: decl.start_line,
+                        }
+                        .into(),
+                        predecessor: Some(BatchKey::Python(doc_key)),
+                        content,
+                        value: decl_doc_value(file, decl, ctx) * DOC_REST_VALUE_FACTOR,
+                    });
+                }
             }
 
             match decl.kind {
@@ -269,11 +342,11 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     }
                 }
                 DeclKind::Class => {
-                    if let Some(content) = single_file_lines_content(
-                        file,
-                        &source,
-                        collect_class_body(decl.inner_node, &src_lines),
-                    ) {
+                    let class_body_lines = collect_class_body(decl.inner_node, &src_lines);
+                    let field_row_count = class_body_lines.full.len();
+                    if let Some(content) =
+                        single_file_lines_content(file, &source, class_body_lines)
+                    {
                         out.push(Batch {
                             key: PythonKey::ClassBody {
                                 file: file.clone(),
@@ -282,7 +355,8 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                             .into(),
                             predecessor: Some(decl_predecessor.clone()),
                             content,
-                            value: class_body_value(file, decl, ctx),
+                            value: class_body_value(file, decl, ctx)
+                                * python_roster_mass_factor(file, field_row_count),
                         });
                     }
                     out.extend(emit_methods(
@@ -291,10 +365,8 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         &source,
                         &src_lines,
                         decl,
-                        method_sigs_predecessors
-                            .get(chunk_index)
-                            .and_then(Option::as_ref)
-                            .unwrap_or(&decl_predecessor),
+                        &sigs_chunk_of_method,
+                        &decl_predecessor,
                     ));
                 }
                 DeclKind::Const => {}
@@ -310,7 +382,8 @@ fn emit_methods(
     source: &str,
     src_lines: &[&str],
     class_decl: &DeclInfo,
-    class_predecessor: &BatchKey,
+    sigs_chunk_of_method: &HashMap<usize, BatchKey>,
+    decl_predecessor: &BatchKey,
 ) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for method in collect_methods_in_class(class_decl, source) {
@@ -321,7 +394,12 @@ fn emit_methods(
         if let Some(content) = single_file_lines_content(file, source, collect_decl(&method)) {
             out.push(Batch {
                 key: method_key.clone().into(),
-                predecessor: Some(class_predecessor.clone()),
+                predecessor: Some(
+                    sigs_chunk_of_method
+                        .get(&method.start_line)
+                        .unwrap_or(decl_predecessor)
+                        .clone(),
+                ),
                 content,
                 value: method_value(file, &method, ctx),
             });
@@ -690,6 +768,73 @@ fn import_source_key(node: Node, source: &str) -> String {
 /// Surface listing of every top-level decl's first line. Class/def
 /// entries emit Full + Ellipsis (body-elision marker); consts emit
 /// Full only to avoid overlapping the next statement.
+/// Indices of `decls` in names-surface order: classes and functions
+/// first (file order), module consts trailing — a const/TypeVar wall
+/// at the top of the file must not occupy chunk 0 and push the real
+/// API into falloff-damped tail chunks. `@overload` stubs whose
+/// implementation is in the file are excluded: their names row would
+/// render the bare `@overload` decorator line, so the stack is
+/// represented by the implementation def's row.
+fn names_roster(decls: &[DeclInfo], source: &str) -> Vec<usize> {
+    let mut roster: Vec<usize> = (0..decls.len())
+        .filter(|&i| {
+            matches!(decls[i].kind, DeclKind::Class | DeclKind::Function)
+                && !collapsed_overload_stub(&decls[i], decls, source)
+        })
+        .collect();
+    roster.extend((0..decls.len()).filter(|&i| decls[i].kind == DeclKind::Const));
+    roster
+}
+
+/// Names-surface chunk index of every decl. Roster members map by
+/// roster position; collapsed overload stubs ride their
+/// implementation's chunk so their per-decl batches stay gated on the
+/// chunk that names the stack.
+fn decl_chunk_indices(decls: &[DeclInfo], roster: &[usize], source: &str) -> Vec<usize> {
+    let mut chunk_of = vec![usize::MAX; decls.len()];
+    for (position, &decl_index) in roster.iter().enumerate() {
+        chunk_of[decl_index] = names_surface_chunk_index(position);
+    }
+    for decl_index in 0..decls.len() {
+        if chunk_of[decl_index] != usize::MAX {
+            continue;
+        }
+        let chunk = overload_implementation(&decls[decl_index], decls, source)
+            .map(|impl_index| chunk_of[impl_index])
+            .unwrap_or(0);
+        chunk_of[decl_index] = chunk;
+    }
+    chunk_of
+}
+
+fn collapsed_overload_stub(decl: &DeclInfo, decls: &[DeclInfo], source: &str) -> bool {
+    is_overload_stub(decl, source) && overload_implementation(decl, decls, source).is_some()
+}
+
+/// Index of the non-stub function sharing the stub's name, if any.
+fn overload_implementation(stub: &DeclInfo, decls: &[DeclInfo], source: &str) -> Option<usize> {
+    let stub_name = name_of(stub.inner_node, source)?;
+    decls.iter().position(|d| {
+        d.kind == DeclKind::Function
+            && !is_overload_stub(d, source)
+            && name_of(d.inner_node, source) == Some(stub_name)
+    })
+}
+
+/// `@overload` / `@typing.overload` / `@t.overload`-decorated def.
+fn is_overload_stub(decl: &DeclInfo, source: &str) -> bool {
+    if decl.kind != DeclKind::Function || decl.unit_node.kind() != "decorated_definition" {
+        return false;
+    }
+    let mut cursor = decl.unit_node.walk();
+    decl.unit_node.children(&mut cursor).any(|child| {
+        child.kind() == "decorator" && {
+            let text = source[child.start_byte()..child.end_byte()].trim();
+            text == "@overload" || text.ends_with(".overload")
+        }
+    })
+}
+
 fn collect_decl_names_from(decls: &[DeclInfo]) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
@@ -697,19 +842,6 @@ fn collect_decl_names_from(decls: &[DeclInfo]) -> FileLines {
         full.push(decl.start_line);
         if matches!(decl.kind, DeclKind::Class | DeclKind::Function) {
             ellipses.push(decl.start_line + 1);
-        }
-    }
-    FileLines::new(full).with_ellipses(ellipses)
-}
-
-/// One full + ellipsis pair per method across every class in the file.
-fn collect_method_sigs_from(methods_by_class: &[(usize, Vec<DeclInfo>)]) -> FileLines {
-    let mut full = Vec::new();
-    let mut ellipses = Vec::new();
-    for (_, methods) in methods_by_class {
-        for m in methods {
-            full.push(m.start_line);
-            ellipses.push(m.start_line + 1);
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
@@ -752,6 +884,44 @@ fn collect_doc_for(inner: Node, source: &str) -> FileLines {
     let mut lines = Vec::new();
     extend_span(&mut lines, doc_stmt, source);
     FileLines::new(dedup_sorted(lines))
+}
+
+/// Minimum remainder size (lines) for splitting a docstring into lede
+/// and rest batches. High on purpose: splitting a doc the scheduler
+/// can buy whole converts a complete NS delivery into
+/// lede-now/rest-never (quadratically damped partial credit; measured
+/// -0.03 on tomli and pluggy at a threshold of 4). Only the docs too
+/// fat to ever clear a frontier whole should split.
+const DOC_LEDE_SPLIT_MIN_REST_LINES: usize = 20;
+
+/// Value factor for the post-lede remainder of a split docstring —
+/// parameter docs and examples rank below the summary paragraph.
+const DOC_REST_VALUE_FACTOR: f64 = 0.6;
+
+/// Split a docstring span at its first paragraph break. NS rows quote
+/// a long class docstring as lede + detail rows; an all-or-nothing
+/// 700-token DeclDoc batch is unbuyable at any frontier. `rest` is
+/// `None` when the docstring is one paragraph or the remainder is
+/// trivial.
+fn split_doc_lede(doc: FileLines, src_lines: &[&str]) -> (FileLines, Option<FileLines>) {
+    let blank = |row: &usize| {
+        src_lines
+            .get(row - 1)
+            .is_some_and(|line| line.trim().is_empty())
+    };
+    let Some(split_position) = doc.full.iter().position(blank) else {
+        return (doc, None);
+    };
+    let rest_rows: Vec<usize> = doc.full[split_position..]
+        .iter()
+        .copied()
+        .skip_while(blank)
+        .collect();
+    if rest_rows.len() < DOC_LEDE_SPLIT_MIN_REST_LINES {
+        return (doc, None);
+    }
+    let lede_rows = doc.full[..split_position].to_vec();
+    (FileLines::new(lede_rows), Some(FileLines::new(rest_rows)))
 }
 
 /// The first named child of `body` that's a docstring statement, or
@@ -918,10 +1088,172 @@ fn collect_test_methods_in_class(class_node: Node, source: &str, out: &mut Vec<u
     }
 }
 
+// --- spine modules -------------------------------------------------------
+
+/// Depth that spine modules rank at — between the package-root anchors
+/// (entrypoint pin, depth ≤ 1) and ordinary implementation modules.
+const SPINE_MODULE_DEPTH_PIN: usize = 2;
+
+/// A re-export wall naming more modules than this carries no curation
+/// signal — the `__init__.py` is just assembling the whole package, so
+/// pinning its sources lifts most files at once and displaces
+/// orientation rows. Measured on the training corpus: curated walls
+/// (pluggy 4, chronos 5 spine modules) win from the pin; assembly
+/// walls (requests/click 8, typeguard 9, flask 10) regress. No package
+/// sits at 6-7, so the boundary inside that span is unmeasured.
+const SPINE_MODULES_MAX: usize = 6;
+
+/// True when the package root `__init__.py` imports names from `file` —
+/// the module is a re-export source implementing the package's public
+/// API. NS authors rank these spine modules right after orientation;
+/// the depth/cat priors otherwise demote them (a src-layout module is
+/// always depth ≥ 3).
+fn is_package_spine_module(file: &Path, ctx: &WalkCtx) -> bool {
+    if is_python_entrypoint(file) {
+        return false;
+    }
+    let Some(package_root) = python_package_root(file, ctx) else {
+        return false;
+    };
+    package_spine_modules(ctx, &package_root).contains(file)
+}
+
+/// Topmost ancestor package dir of `file` (contiguous `__init__.py`
+/// chain, clipped to the walk root). `None` when the containing dir is
+/// not a package.
+fn python_package_root(file: &Path, ctx: &WalkCtx) -> Option<PathBuf> {
+    let mut dir = file.parent()?;
+    if !dir.join("__init__.py").is_file() {
+        return None;
+    }
+    while let Some(parent) = dir.parent() {
+        if !parent.starts_with(ctx.root()) || !parent.join("__init__.py").is_file() {
+            break;
+        }
+        dir = parent;
+    }
+    Some(dir.to_path_buf())
+}
+
+fn package_spine_modules(ctx: &WalkCtx, package_root: &Path) -> Arc<HashSet<PathBuf>> {
+    if let Some(cached) = ctx.python_state().spine_modules.borrow().get(package_root) {
+        return Arc::clone(cached);
+    }
+    let computed = Arc::new(collect_spine_modules_uncached(ctx, package_root));
+    ctx.python_state()
+        .spine_modules
+        .borrow_mut()
+        .insert(package_root.to_path_buf(), Arc::clone(&computed));
+    computed
+}
+
+fn collect_spine_modules_uncached(ctx: &WalkCtx, package_root: &Path) -> HashSet<PathBuf> {
+    let mut out = HashSet::new();
+    let init = package_root.join("__init__.py");
+    let Some((source, tree)) = parse_python(ctx, &init) else {
+        return out;
+    };
+    let package_name = package_root
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or_default();
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "import_from_statement" {
+            continue;
+        }
+        let Some(module_node) = child.child_by_field_name("module_name") else {
+            continue;
+        };
+        let text = source[module_node.start_byte()..module_node.end_byte()].trim();
+        let module_path = match text.strip_prefix('.') {
+            // `from .mod import …` / `from .pkg.mod import …`. Deeper
+            // relative levels (`..`) cannot resolve at the package root.
+            Some(rest) if !rest.starts_with('.') => rest,
+            Some(_) => continue,
+            // Absolute self-import (`from pkg.mod import …`).
+            None => match text
+                .strip_prefix(package_name)
+                .filter(|_| !package_name.is_empty())
+            {
+                Some("") => "",
+                Some(rest) => match rest.strip_prefix('.') {
+                    Some(suffix) => suffix,
+                    None => continue,
+                },
+                None => continue,
+            },
+        };
+        if module_path.is_empty() {
+            // `from . import a, b` — each imported name is a module.
+            for name in import_from_statement_names(child, &source) {
+                if let Some(path) = resolve_package_module(package_root, &name) {
+                    out.insert(path);
+                }
+            }
+        } else if let Some(path) = resolve_package_module(package_root, module_path) {
+            out.insert(path);
+        }
+    }
+    if out.len() > SPINE_MODULES_MAX {
+        out.clear();
+    }
+    out
+}
+
+/// Imported names of a `from … import a, b as c` statement (alias
+/// sources, first dotted component).
+fn import_from_statement_names(node: Node, source: &str) -> Vec<String> {
+    let mut cursor = node.walk();
+    let mut out = Vec::new();
+    for name_node in node.children_by_field_name("name", &mut cursor) {
+        let target = if name_node.kind() == "aliased_import" {
+            name_node.child_by_field_name("name")
+        } else {
+            Some(name_node)
+        };
+        let Some(target) = target else { continue };
+        let text = source[target.start_byte()..target.end_byte()].trim();
+        let first = text.split('.').next().unwrap_or(text);
+        if !first.is_empty() {
+            out.push(first.to_string());
+        }
+    }
+    out
+}
+
+/// Resolve a dotted module path relative to the package root to a real
+/// file: `pkg/a/b.py`, falling back to `pkg/a/b/__init__.py`.
+fn resolve_package_module(package_root: &Path, dotted: &str) -> Option<PathBuf> {
+    let mut path = package_root.to_path_buf();
+    for part in dotted.split('.') {
+        if part.is_empty() {
+            return None;
+        }
+        path.push(part);
+    }
+    let module_file = path.with_extension("py");
+    if module_file.is_file() {
+        return Some(module_file);
+    }
+    let init = path.join("__init__.py");
+    init.is_file().then_some(init)
+}
+
 // --- value functions ----------------------------------------------------
 
 fn python_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(file, ctx, is_python_entrypoint(file))
+    if is_python_entrypoint(file) {
+        return file_depth_factor(file, ctx, true);
+    }
+    let depth = ctx.depth_from_root(file);
+    let pinned_depth = if is_package_spine_module(file, ctx) {
+        depth.min(SPINE_MODULE_DEPTH_PIN)
+    } else {
+        depth
+    };
+    depth_factor(pinned_depth) * ctx.non_essential_factor(file)
 }
 
 fn is_python_entrypoint(file: &Path) -> bool {
@@ -990,7 +1322,7 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
     // not crowd README / public-export batches in the early budget.
     let cat = if is_init_py(file) {
         0.65
-    } else if ctx.depth_from_root(file) >= 3 {
+    } else if ctx.depth_from_root(file) >= 3 && !is_package_spine_module(file, ctx) {
         0.4
     } else {
         0.5
@@ -1226,8 +1558,11 @@ class A:
         let (source, tree) = parse(src);
         let decls = find_top_level_decls(&tree, &source);
         let by_class = collect_methods_by_class(&decls, &source);
-        let sigs = collect_method_sigs_from(&by_class);
-        assert_eq!(sigs.full, vec![2, 3, 4]);
+        let starts: Vec<_> = by_class
+            .iter()
+            .flat_map(|(_, methods)| methods.iter().map(|m| m.start_line))
+            .collect();
+        assert_eq!(starts, vec![2, 3, 4]);
     }
 
     #[test]

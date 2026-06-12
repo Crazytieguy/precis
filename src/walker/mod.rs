@@ -97,6 +97,7 @@ pub struct WalkCtx {
     json_state: json::JsonState,
     typescript_state: typescript::TypescriptState,
     c_state: c::CState,
+    python_state: python::PythonState,
     /// Files hyperlinked from the root README — exempts them from the
     /// `examples/`-style non-essential demotion.
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
@@ -117,6 +118,7 @@ impl WalkCtx {
             json_state: json::JsonState::default(),
             typescript_state: typescript::TypescriptState::new(),
             c_state: c::CState::default(),
+            python_state: python::PythonState::default(),
             readme_cited_paths: OnceCell::new(),
         }
     }
@@ -219,6 +221,10 @@ impl WalkCtx {
 
     pub(in crate::walker) fn c_state(&self) -> &c::CState {
         &self.c_state
+    }
+
+    pub(in crate::walker) fn python_state(&self) -> &python::PythonState {
+        &self.python_state
     }
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.

@@ -393,8 +393,12 @@ pub enum PythonKey {
     /// One top-level item — header + up to 2 docstring-summary rows
     /// for class/def, or assignment line(s) for const.
     Decl { file: PathBuf, start_line: usize },
-    /// Top-level def/class docstring. Predecessor: matching `Decl`.
+    /// Top-level def/class docstring — the lede paragraph when the
+    /// docstring is split. Predecessor: matching `Decl`.
     DeclDoc { file: PathBuf, start_line: usize },
+    /// Remainder of a split docstring (parameter docs, examples).
+    /// Predecessor: matching `DeclDoc`.
+    DeclDocRest { file: PathBuf, start_line: usize },
     /// Body slice of a top-level def (docstring excluded). Predecessor:
     /// matching `Decl`.
     DeclBody {
@@ -865,6 +869,9 @@ impl InnerKey for PythonKey {
             }
             PythonKey::DeclDoc { file, start_line } => {
                 describe_at("python decl doc", file, *start_line, root)
+            }
+            PythonKey::DeclDocRest { file, start_line } => {
+                describe_at("python decl doc rest", file, *start_line, root)
             }
             PythonKey::DeclBody {
                 file,
