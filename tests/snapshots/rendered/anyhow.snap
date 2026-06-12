@@ -165,6 +165,7 @@ src/
         298→///
         299→/// <br>
         300→///
+        389→#[repr(transparent)]
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
@@ -172,6 +173,7 @@ src/
         395→///
         396→/// This type is the iterator returned by [`Error::chain`].
         397→///
+        414→#[derive(Clone)]
         415→pub struct Chain<'a> {
         416→    state: crate::chain::ChainState<'a>,
         417→}
@@ -196,6 +198,7 @@ src/
         626→        C: Display + Send + Sync + 'static,
         627→        F: FnOnce() -> C;
         628→}
+        648→#[allow(non_snake_case)]
         650→pub fn Ok<T>(value: T) -> Result<T> {
         651→    Result::Ok(value)
         656→pub mod __private {

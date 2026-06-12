@@ -56,6 +56,7 @@ src/
             …
             195→pub struct Keys {
             …
+            350→#[derive(Debug, Clone, Copy)]
             351→pub struct KeyAction {
             352→    pub key: Key,
             353→    pub action: Option<Action>,
@@ -63,12 +64,14 @@ src/
         mod.rs
             17→pub struct Config {
             …
+            52→#[derive(Debug, Clone, Serialize, Deserialize)]
             53→pub struct Tree {
             54→    #[serde(default = "Config::disable")]
             55→    pub disable_selected_highlight: bool,
             57→    #[serde(default = "String::new")]
             58→    pub selected_symbol: String,
             59→}
+            61→#[derive(Debug, Clone, Serialize, Deserialize)]
             62→pub struct Editor {
             63→    #[serde(default = "Editor::default_program")]
             64→    pub program: String,
@@ -77,28 +80,33 @@ src/
             69→    #[serde(default = "Editor::default_dir")]
             70→    pub dir: String,
             71→}
+            73→#[derive(Debug, Clone, Serialize, Deserialize)]
             74→pub struct Layout {
             75→    #[serde(default = "Layout::default_direction")]
             76→    pub direction: LayoutDirection,
             78→    #[serde(default = "Layout::default_tree_size")]
             79→    pub tree_size: u16,
             80→}
+            82→#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
             83→pub enum LayoutDirection {
             84→    #[serde(rename = "vertical")]
             85→    Vertical,
             86→    #[serde(rename = "horizontal")]
             87→    Horizontal,
             88→}
+            90→#[derive(Debug, Clone, Serialize, Deserialize)]
             91→pub struct Header {
             92→    #[serde(default = "Config::disable")]
             93→    pub disable: bool,
             95→    #[serde(default = "Header::default_format")]
             96→    pub format: String,
             97→}
+            99→#[derive(Debug, Clone, Serialize, Deserialize)]
             100→pub struct Footer {
             101→    #[serde(default = "Config::disable")]
             102→    pub disable: bool,
             103→}
+            105→#[derive(Debug, Clone, Serialize, Deserialize)]
             106→pub struct Filter {
             107→    #[serde(default = "Config::disable")]
             108→    pub disable: bool,
@@ -107,6 +115,7 @@ src/
             113→    #[serde(default = "Filter::default_exclude_mode")]
             114→    pub exclude_mode: bool,
             115→}
+            117→#[derive(Debug, Clone, Serialize, Deserialize)]
             118→pub struct Data {
             119→    #[serde(default = "Config::disable")]
             120→    pub disable_highlight: bool,
@@ -200,6 +209,7 @@ src/
         json.rs
         jsonl.rs
         mod.rs
+            17→#[derive(Debug, Clone, Copy, ValueEnum, EnumIter)]
             18→pub enum ContentType {
             19→    Json,
             20→    Yaml,
@@ -239,10 +249,12 @@ src/
         30→    pub description: Cow<'static, str>,
         32→    pub tokens: Vec<SyntaxToken>,
         33→}
+        35→#[derive(Debug, Clone, Copy)]
         36→pub struct HighlightKeyword<'a> {
         37→    pub text: &'a str,
         38→    pub ignore_case: bool,
         39→}
+        41→#[derive(Debug, Clone, Copy)]
         42→pub enum FieldType {
         43→    Null,
         44→    Num,
@@ -253,6 +265,7 @@ src/
         49→}
     ui/
         app.rs
+            47→#[derive(Debug, Clone, Copy)]
             48→pub enum ScrollDirection {
             49→    Up,
             50→    Down,

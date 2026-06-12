@@ -136,6 +136,7 @@ impl/
             40→    pub ty: &'a Type,
             41→    pub contains_generic: bool,
             42→}
+            44→#[derive(Copy, Clone)]
             45→pub enum ContainerKind {
             46→    Struct,
             47→    TupleStruct,
@@ -198,6 +199,7 @@ impl/
             35→use proc_macro2::{Ident, Span};
             36→use quote::{ToTokens, TokenStreamExt as _};
             37→use syn::{parse_macro_input, DeriveInput};
+            39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
             40→pub fn derive_error(input: TokenStream) -> TokenStream {
             41→    let input = parse_macro_input!(input as DeriveInput);
             42→    expand::derive(&input).into()
@@ -210,11 +212,9 @@ impl/
             3→use proc_macro2::Span;
             4→use syn::Type;
         scan_expr.rs
-            1→use self::{Action::*, Input::*};
-            2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
-            3→use syn::parse::{ParseStream, Result};
-            4→use syn::{AngleBracketedGenericArguments, BinOp, Expr, ExprPath, Lifetime, Lit, Token, Type};
         unraw.rs
+            10→#[derive(Clone)]
+            11→#[repr(transparent)]
             12→pub struct IdentUnraw(Ident);
             …
             14→impl IdentUnraw {
@@ -224,6 +224,7 @@ impl/
             …
             32→    pub fn set_span(&mut self, span: Span) {
             …
+            81→#[derive(Clone)]
             82→pub enum MemberUnraw {
             83→    Named(IdentUnraw),
             84→    Unnamed(Index),

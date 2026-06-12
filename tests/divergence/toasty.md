@@ -84,182 +84,182 @@ Score(3000)=0.545 I=0.771 C=0.385 ns_rows≤3K=16/51 (reached=5 partial=3 missin
 | walker |  | 2866 | 71 | listing of 'crates/toasty-sql/src/stmt' |  |  | 0.543 |
 | walker |  | 2969 | 103 | listing of 'crates/toasty/src/engine/simplify' |  |  | 0.545 |
 | walker |  | 2990 | 21 | pub-item names surface in crates/toasty/src/apply_update.rs |  |  | 0.545 |
-| walker |  | 2990 | 0 | pub item at crates/toasty/src/apply_update.rs:19 |  |  | 0.545 |
-| walker |  | 3015 | 25 | pub item at crates/toasty/src/schema.rs:5 |  |  | 0.545 |
-| walker |  | 3026 | 11 | pub item body at crates/toasty/src/schema.rs:5 body 6 |  |  | 0.545 |
+| walker |  | 3002 | 12 | pub item at crates/toasty/src/apply_update.rs:19 |  |  | 0.545 |
+| walker |  | 3027 | 25 | pub item at crates/toasty/src/schema.rs:5 |  |  | 0.545 |
+| walker |  | 3038 | 11 | pub item body at crates/toasty/src/schema.rs:5 body 6 |  |  | 0.545 |
 | ns | 3049 |  | 223 | examples/user-has-one-profile — Option<T> relation | 2.6 |  | 0.562 |
-| walker |  | 3254 | 228 | mod/use plumbing in crates/toasty/src/lib.rs |  |  | 0.609 |
-| walker |  | 3284 | 30 | pub-item names surface in crates/toasty/src/cursor.rs |  |  | 0.609 |
-| walker |  | 3309 | 25 | pub item at crates/toasty/src/db/connect.rs:14 |  |  | 0.609 |
+| walker |  | 3266 | 228 | mod/use plumbing in crates/toasty/src/lib.rs |  |  | 0.609 |
+| walker |  | 3296 | 30 | pub-item names surface in crates/toasty/src/cursor.rs |  |  | 0.609 |
 | ns | 3314 |  | 265 | examples/composite-key — partition + local key model | 2.7 |  | 0.618 |
-| walker |  | 3327 | 18 | [dependencies] in crates/toasty-sql/Cargo.toml |  |  | 0.618 |
-| walker |  | 3354 | 27 | pub item at crates/toasty/src/relation/has_many.rs:8 |  |  | 0.618 |
-| walker |  | 3381 | 27 | pub item at crates/toasty/src/relation/has_one.rs:8 |  |  | 0.618 |
-| walker |  | 3419 | 38 | pub item at crates/toasty/src/stmt/to_statement.rs:3 |  |  | 0.618 |
-| walker |  | 3461 | 42 | pub item at crates/toasty/src/stmt.rs:51 |  |  | 0.618 |
-| walker |  | 3489 | 28 | pub item at crates/toasty/src/relation/belongs_to.rs:8 |  |  | 0.618 |
-| walker |  | 3532 | 43 | pub item at crates/toasty/src/cursor.rs:6 |  |  | 0.618 |
-| walker |  | 3572 | 40 | pub item at crates/toasty/src/stmt/into_insert.rs:4 |  |  | 0.618 |
-| walker |  | 3612 | 40 | pub item at crates/toasty/src/stmt/into_select.rs:4 |  |  | 0.618 |
-| walker |  | 3636 | 24 | pub-item names surface in crates/toasty/src/stmt/primitive.rs |  |  | 0.618 |
-| walker |  | 3652 | 16 | pub item at crates/toasty/src/stmt/primitive.rs:78 |  |  | 0.618 |
+| walker |  | 3321 | 25 | pub item at crates/toasty/src/db/connect.rs:14 |  |  | 0.618 |
+| walker |  | 3339 | 18 | [dependencies] in crates/toasty-sql/Cargo.toml |  |  | 0.618 |
+| walker |  | 3377 | 38 | pub item at crates/toasty/src/stmt/to_statement.rs:3 |  |  | 0.618 |
+| walker |  | 3419 | 42 | pub item at crates/toasty/src/stmt.rs:51 |  |  | 0.618 |
+| walker |  | 3462 | 43 | pub item at crates/toasty/src/cursor.rs:6 |  |  | 0.618 |
+| walker |  | 3502 | 40 | pub item at crates/toasty/src/stmt/into_insert.rs:4 |  |  | 0.618 |
+| walker |  | 3542 | 40 | pub item at crates/toasty/src/stmt/into_select.rs:4 |  |  | 0.618 |
+| walker |  | 3566 | 24 | pub-item names surface in crates/toasty/src/stmt/primitive.rs |  |  | 0.618 |
+| walker |  | 3582 | 16 | pub item at crates/toasty/src/stmt/primitive.rs:78 |  |  | 0.618 |
+| walker |  | 3591 | 9 | mod/use plumbing in crates/toasty/src/stmt/to_statement.rs |  |  | 0.618 |
+| walker |  | 3604 | 13 | listing of 'crates/toasty-codegen' |  |  | 0.618 |
+| walker |  | 3622 | 18 | listing of 'crates/toasty-codegen/src' |  |  | 0.618 |
+| walker |  | 3648 | 26 | mod/use plumbing in crates/toasty-codegen/src/lib.rs |  |  | 0.618 |
 | ns | 3656 |  | 342 | Relation trait + has_many/belongs_to/has_one re-exports | 2.8 |  | 0.577 |
-| walker |  | 3661 | 9 | mod/use plumbing in crates/toasty/src/stmt/to_statement.rs |  |  | 0.577 |
-| walker |  | 3674 | 13 | listing of 'crates/toasty-codegen' |  |  | 0.577 |
-| walker |  | 3692 | 18 | listing of 'crates/toasty-codegen/src' |  |  | 0.577 |
-| walker |  | 3718 | 26 | mod/use plumbing in crates/toasty-codegen/src/lib.rs |  |  | 0.577 |
-| walker |  | 3754 | 36 | listing of 'crates/toasty-codegen/src/expand' |  |  | 0.578 |
-| walker |  | 3815 | 61 | listing of 'crates/toasty-codegen/src/schema' |  |  | 0.579 |
-| walker |  | 3861 | 46 | pub-item names surface in crates/toasty-codegen/src/lib.rs |  |  | 0.579 |
-| walker |  | 3861 | 0 | pub item at crates/toasty-codegen/src/lib.rs:6 |  |  | 0.579 |
-| walker |  | 3861 | 0 | pub item at crates/toasty-codegen/src/lib.rs:13 |  |  | 0.579 |
-| walker |  | 3911 | 50 | pub item body at crates/toasty-codegen/src/lib.rs:6 body 7 |  |  | 0.579 |
-| walker |  | 3961 | 50 | pub item body at crates/toasty-codegen/src/lib.rs:13 body 14 |  |  | 0.579 |
-| walker |  | 3974 | 13 | listing of 'crates/toasty-driver-sqlite' |  |  | 0.579 |
-| walker |  | 4022 | 48 | pub item at crates/toasty/src/stmt/into_expr.rs:6 |  |  | 0.579 |
+| walker |  | 3684 | 36 | listing of 'crates/toasty-codegen/src/expand' |  |  | 0.578 |
+| walker |  | 3745 | 61 | listing of 'crates/toasty-codegen/src/schema' |  |  | 0.579 |
+| walker |  | 3791 | 46 | pub-item names surface in crates/toasty-codegen/src/lib.rs |  |  | 0.579 |
+| walker |  | 3791 | 0 | pub item at crates/toasty-codegen/src/lib.rs:6 |  |  | 0.579 |
+| walker |  | 3791 | 0 | pub item at crates/toasty-codegen/src/lib.rs:13 |  |  | 0.579 |
+| walker |  | 3841 | 50 | pub item body at crates/toasty-codegen/src/lib.rs:6 body 7 |  |  | 0.579 |
+| walker |  | 3891 | 50 | pub item body at crates/toasty-codegen/src/lib.rs:13 body 14 |  |  | 0.579 |
+| walker |  | 3904 | 13 | listing of 'crates/toasty-driver-sqlite' |  |  | 0.579 |
+| walker |  | 3952 | 48 | pub item at crates/toasty/src/stmt/into_expr.rs:6 |  |  | 0.579 |
+| walker |  | 3987 | 35 | pub item at crates/toasty/src/relation/has_many.rs:8 |  |  | 0.579 |
+| walker |  | 4022 | 35 | pub item at crates/toasty/src/relation/has_one.rs:8 |  |  | 0.579 |
 | walker |  | 4036 | 14 | crates/toasty-driver-sqlite/CONTEXT.md section #0 |  |  | 0.579 |
-| walker |  | 4116 | 80 | pub item at crates/toasty/src/apply_update.rs:9 |  |  | 0.579 |
-| walker |  | 4136 | 20 | docs/ARCHITECTURE.md section #6 |  |  | 0.580 |
-| walker |  | 4168 | 32 | pub-item names surface in crates/toasty/src/db/pool.rs |  |  | 0.580 |
-| walker |  | 4187 | 19 | pub item at crates/toasty/src/db/pool.rs:119 |  |  | 0.580 |
+| walker |  | 4072 | 36 | pub item at crates/toasty/src/relation/belongs_to.rs:8 |  |  | 0.579 |
+| walker |  | 4152 | 80 | pub item at crates/toasty/src/apply_update.rs:9 |  |  | 0.579 |
+| walker |  | 4172 | 20 | docs/ARCHITECTURE.md section #6 |  |  | 0.580 |
+| walker |  | 4204 | 32 | pub-item names surface in crates/toasty/src/db/pool.rs |  |  | 0.580 |
 | ns | 4210 |  | 554 | Model + Embed + Register traits | 2.9 |  | 0.542 |
-| walker |  | 4213 | 26 | pub item at crates/toasty/src/db/pool.rs:18 |  |  | 0.542 |
-| walker |  | 4243 | 30 | pub item at crates/toasty/src/db/pool.rs:41 |  |  | 0.542 |
-| walker |  | 4253 | 10 | entry item body at examples/hello-toasty/src/main.rs:34 body 62 |  |  | 0.542 |
-| walker |  | 4263 | 10 | entry item body at examples/hello-toasty/src/main.rs:34 body 67 |  |  | 0.542 |
-| walker |  | 4281 | 18 | mod/use plumbing in crates/toasty/src/batch.rs |  |  | 0.542 |
-| walker |  | 4323 | 42 | pub item at crates/toasty/src/stmt/update.rs:6 |  |  | 0.542 |
-| walker |  | 4375 | 52 | pub-item names surface in crates/toasty/src/model.rs |  |  | 0.542 |
-| walker |  | 4375 | 0 | pub item at crates/toasty/src/model.rs:12 |  |  | 0.542 |
-| walker |  | 4405 | 30 | pub item at crates/toasty/src/model.rs:65 |  |  | 0.543 |
-| walker |  | 4484 | 79 | pub item at crates/toasty/src/model.rs:26 |  |  | 0.547 |
-| walker |  | 4568 | 84 | [features] in crates/toasty-core/Cargo.toml |  |  | 0.547 |
-| walker |  | 4576 | 8 | listing of 'examples/hello-toasty' |  |  | 0.547 |
-| walker |  | 4580 | 4 | listing of 'examples/hello-toasty/src' |  |  | 0.547 |
+| walker |  | 4223 | 19 | pub item at crates/toasty/src/db/pool.rs:119 |  |  | 0.542 |
+| walker |  | 4259 | 36 | pub item at crates/toasty/src/db/pool.rs:18 |  |  | 0.542 |
+| walker |  | 4297 | 38 | pub item at crates/toasty/src/db/pool.rs:41 |  |  | 0.542 |
+| walker |  | 4307 | 10 | entry item body at examples/hello-toasty/src/main.rs:34 body 62 |  |  | 0.542 |
+| walker |  | 4317 | 10 | entry item body at examples/hello-toasty/src/main.rs:34 body 67 |  |  | 0.542 |
+| walker |  | 4335 | 18 | mod/use plumbing in crates/toasty/src/batch.rs |  |  | 0.542 |
+| walker |  | 4377 | 42 | pub item at crates/toasty/src/stmt/update.rs:6 |  |  | 0.542 |
+| walker |  | 4429 | 52 | pub-item names surface in crates/toasty/src/model.rs |  |  | 0.542 |
+| walker |  | 4429 | 0 | pub item at crates/toasty/src/model.rs:12 |  |  | 0.542 |
+| walker |  | 4459 | 30 | pub item at crates/toasty/src/model.rs:65 |  |  | 0.543 |
+| walker |  | 4538 | 79 | pub item at crates/toasty/src/model.rs:26 |  |  | 0.547 |
 | ns | 4594 |  | 384 | hello-toasty main — builder/connect/create/find | 2.10 | 2.4 | 0.523 |
-| walker |  | 4625 | 45 | pub item at crates/toasty/src/stmt/association.rs:6 |  |  | 0.523 |
-| walker |  | 4670 | 45 | pub item at crates/toasty/src/stmt/delete.rs:6 |  |  | 0.523 |
+| walker |  | 4622 | 84 | [features] in crates/toasty-core/Cargo.toml |  |  | 0.523 |
+| walker |  | 4630 | 8 | listing of 'examples/hello-toasty' |  |  | 0.523 |
+| walker |  | 4634 | 4 | listing of 'examples/hello-toasty/src' |  |  | 0.523 |
+| walker |  | 4679 | 45 | pub item at crates/toasty/src/stmt/association.rs:6 |  |  | 0.523 |
 | ns | 4710 |  | 116 | Engine module declarations (engine.rs) | 3.1 |  | 0.513 |
-| walker |  | 4715 | 45 | pub item at crates/toasty/src/stmt/insert.rs:6 |  |  | 0.513 |
-| walker |  | 4760 | 45 | pub item at crates/toasty/src/stmt/path.rs:6 |  |  | 0.513 |
-| walker |  | 4771 | 11 | entry item body at examples/hello-toasty/src/main.rs:34 body 46 |  |  | 0.514 |
+| walker |  | 4724 | 45 | pub item at crates/toasty/src/stmt/delete.rs:6 |  |  | 0.513 |
+| walker |  | 4769 | 45 | pub item at crates/toasty/src/stmt/insert.rs:6 |  |  | 0.513 |
 | ns | 4775 |  | 65 | engine/ directory listing | 3.2 |  | 0.528 |
-| walker |  | 4798 | 27 | pub-item names surface in crates/toasty/src/engine/exec/exec_statement.rs |  |  | 0.528 |
-| walker |  | 4819 | 21 | mod/use plumbing in crates/toasty/src/schema.rs |  |  | 0.528 |
-| walker |  | 4841 | 22 | mod/use plumbing in crates/toasty/src/apply_update.rs |  |  | 0.528 |
-| walker |  | 4854 | 13 | entry item body at examples/hello-toasty/src/main.rs:34 body 45 |  |  | 0.541 |
-| ns | 4854 |  | 79 | engine/mir/ — MIR node kinds (filenames) | 3.3 |  | 0.541 |
-| walker |  | 4909 | 55 | pub item at crates/toasty/src/stmt/select.rs:6 |  |  | 0.541 |
-| walker |  | 4920 | 11 | mod/use plumbing in crates/toasty/src/engine/eval/as_expr.rs |  |  | 0.541 |
+| walker |  | 4814 | 45 | pub item at crates/toasty/src/stmt/path.rs:6 |  |  | 0.528 |
+| walker |  | 4825 | 11 | entry item body at examples/hello-toasty/src/main.rs:34 body 46 |  |  | 0.528 |
+| walker |  | 4852 | 27 | pub-item names surface in crates/toasty/src/engine/exec/exec_statement.rs |  |  | 0.528 |
+| ns | 4854 |  | 79 | engine/mir/ — MIR node kinds (filenames) | 3.3 |  | 0.540 |
+| walker |  | 4873 | 21 | mod/use plumbing in crates/toasty/src/schema.rs |  |  | 0.540 |
+| walker |  | 4895 | 22 | mod/use plumbing in crates/toasty/src/apply_update.rs |  |  | 0.540 |
+| walker |  | 4908 | 13 | entry item body at examples/hello-toasty/src/main.rs:34 body 45 |  |  | 0.541 |
 | ns | 4932 |  | 78 | engine/exec/ — Action kinds (filenames) | 3.4 |  | 0.551 |
-| walker |  | 4966 | 46 | pub-item names surface in crates/toasty/src/engine/simplify.rs |  |  | 0.551 |
-| walker |  | 4966 | 0 | pub item at crates/toasty/src/engine/simplify.rs:55 |  |  | 0.551 |
-| walker |  | 4980 | 14 | entry item body at examples/hello-toasty/src/main.rs:34 body 65 |  |  | 0.552 |
+| walker |  | 4963 | 55 | pub item at crates/toasty/src/stmt/select.rs:6 |  |  | 0.551 |
+| walker |  | 4974 | 11 | mod/use plumbing in crates/toasty/src/engine/eval/as_expr.rs |  |  | 0.551 |
+| walker |  | 5020 | 46 | pub-item names surface in crates/toasty/src/engine/simplify.rs |  |  | 0.551 |
+| walker |  | 5020 | 0 | pub item at crates/toasty/src/engine/simplify.rs:55 |  |  | 0.551 |
+| walker |  | 5034 | 14 | entry item body at examples/hello-toasty/src/main.rs:34 body 65 |  |  | 0.552 |
 | ns | 5035 |  | 103 | engine/simplify/ — per-Expr-kind rewrite rules | 3.5 |  | 0.563 |
+| walker |  | 5055 | 21 | pub item at crates/toasty-sql/src/stmt/name.rs:4 |  |  | 0.563 |
 | ns | 5079 |  | 44 | engine/lower + engine/plan + engine/index + engine/eval | 3.6 |  | 0.569 |
-| walker |  | 5272 | 292 | entry item at examples/user-has-one-profile/src/main.rs:27 |  |  | 0.569 |
-| walker |  | 5289 | 17 | mod/use plumbing in crates/toasty/src/batch/create.rs |  |  | 0.569 |
-| walker |  | 5361 | 72 | README.md section #3 |  |  | 0.569 |
-| walker |  | 5372 | 11 | pub-item doc lede at crates/toasty/src/db/pool.rs:18 |  |  | 0.569 |
-| walker |  | 5423 | 51 | pub-item names surface in crates/toasty/src/engine/hir.rs |  |  | 0.569 |
-| walker |  | 5441 | 18 | mod/use plumbing in crates/toasty/src/stmt/into_insert.rs |  |  | 0.569 |
-| walker |  | 5459 | 18 | mod/use plumbing in crates/toasty/src/stmt/into_select.rs |  |  | 0.569 |
+| walker |  | 5347 | 292 | entry item at examples/user-has-one-profile/src/main.rs:27 |  |  | 0.569 |
+| walker |  | 5364 | 17 | mod/use plumbing in crates/toasty/src/batch/create.rs |  |  | 0.569 |
+| walker |  | 5436 | 72 | README.md section #3 |  |  | 0.569 |
+| walker |  | 5447 | 11 | pub-item doc lede at crates/toasty/src/db/pool.rs:18 |  |  | 0.569 |
+| walker |  | 5498 | 51 | pub-item names surface in crates/toasty/src/engine/hir.rs |  |  | 0.569 |
+| walker |  | 5516 | 18 | mod/use plumbing in crates/toasty/src/stmt/into_insert.rs |  |  | 0.569 |
+| walker |  | 5534 | 18 | mod/use plumbing in crates/toasty/src/stmt/into_select.rs |  |  | 0.569 |
 | ns | 5660 |  | 581 | Engine struct + exec method | 3.7 | 3.1 | 0.543 |
 | ns | 5802 |  | 142 | toasty-core lib.rs re-exports | 4.1 |  | 0.545 |
-| walker |  | 5868 | 409 | listing of 'crates/toasty-core/src/stmt' |  |  | 0.545 |
-| walker |  | 5879 | 11 | pub item at crates/toasty-core/src/stmt/func_last_insert_id.rs:20 |  |  | 0.545 |
-| walker |  | 5906 | 27 | pub item at crates/toasty-core/src/stmt/direction.rs:3 |  |  | 0.545 |
 | ns | 5930 |  | 128 | Statement enum (Delete/Insert/Query/Update) | 4.2 |  | 0.538 |
-| walker |  | 5970 | 64 | pub item at crates/toasty/src/batch/create.rs:3 |  |  | 0.538 |
-| walker |  | 5988 | 18 | pub-item doc lede at crates/toasty/src/apply_update.rs:19 |  |  | 0.538 |
-| walker |  | 6035 | 47 | [dependencies] in crates/toasty-codegen/Cargo.toml |  |  | 0.538 |
+| walker |  | 5943 | 409 | listing of 'crates/toasty-core/src/stmt' |  |  | 0.538 |
+| walker |  | 6007 | 64 | pub item at crates/toasty/src/batch/create.rs:3 |  |  | 0.538 |
+| walker |  | 6025 | 18 | pub-item doc lede at crates/toasty/src/apply_update.rs:19 |  |  | 0.538 |
 | ns | 6039 |  | 109 | Schema struct (app + db + mapping) | 4.3 |  | 0.532 |
-| walker |  | 6059 | 24 | pub item at crates/toasty-core/src/schema/name.rs:4 |  |  | 0.532 |
-| walker |  | 6083 | 24 | pub item at crates/toasty-core/src/stmt/cte.rs:4 |  |  | 0.532 |
-| walker |  | 6108 | 25 | pub item at crates/toasty-core/src/stmt/condition.rs:4 |  |  | 0.532 |
+| walker |  | 6072 | 47 | [dependencies] in crates/toasty-codegen/Cargo.toml |  |  | 0.532 |
+| walker |  | 6096 | 24 | pub item at crates/toasty-sql/src/stmt/ident.rs:4 |  |  | 0.532 |
+| walker |  | 6113 | 17 | entry item body at examples/hello-toasty/src/main.rs:34 body 48 |  |  | 0.532 |
 | ns | 6115 |  | 76 | schema/app/ directory listing | 4.4 |  | 0.542 |
-| walker |  | 6133 | 25 | pub item at crates/toasty-core/src/stmt/filter.rs:4 |  |  | 0.542 |
-| walker |  | 6158 | 25 | pub item at crates/toasty-core/src/stmt/value_record.rs:6 |  |  | 0.542 |
-| ns | 6166 |  | 51 | schema/db/ + mapping/ + verify/ + builder/ | 4.5 |  | 0.548 |
-| walker |  | 6183 | 25 | pub item at crates/toasty-core/src/stmt/values.rs:5 |  |  | 0.548 |
-| walker |  | 6200 | 17 | entry item body at examples/hello-toasty/src/main.rs:34 body 48 |  |  | 0.548 |
-| walker |  | 6217 | 17 | entry item body at examples/hello-toasty/src/main.rs:34 body 55 |  |  | 0.549 |
-| walker |  | 6256 | 39 | pub item at crates/toasty-sql/src/migration.rs:12 |  |  | 0.549 |
-| walker |  | 6264 | 8 | listing of 'crates/std-util' |  |  | 0.549 |
-| walker |  | 6288 | 24 | listing of 'crates/std-util/src' |  |  | 0.549 |
-| walker |  | 6339 | 51 | mod/use plumbing in crates/std-util/src/lib.rs |  |  | 0.549 |
-| walker |  | 6399 | 60 | macro_export names across crates/std-util/src |  |  | 0.549 |
-| walker |  | 6434 | 35 | [dependencies] in crates/std-util/Cargo.toml |  |  | 0.549 |
-| walker |  | 6442 | 8 | listing of 'crates/toasty-cli' |  |  | 0.549 |
-| walker |  | 6461 | 19 | listing of 'crates/toasty-cli/src' |  |  | 0.549 |
-| walker |  | 6494 | 33 | pub item at crates/toasty-cli/src/lib.rs:13 |  |  | 0.549 |
+| walker |  | 6130 | 17 | entry item body at examples/hello-toasty/src/main.rs:34 body 55 |  |  | 0.543 |
+| ns | 6166 |  | 51 | schema/db/ + mapping/ + verify/ + builder/ | 4.5 |  | 0.549 |
+| walker |  | 6169 | 39 | pub item at crates/toasty-sql/src/migration.rs:12 |  |  | 0.549 |
+| walker |  | 6177 | 8 | listing of 'crates/std-util' |  |  | 0.549 |
+| walker |  | 6201 | 24 | listing of 'crates/std-util/src' |  |  | 0.549 |
+| walker |  | 6252 | 51 | mod/use plumbing in crates/std-util/src/lib.rs |  |  | 0.549 |
+| walker |  | 6312 | 60 | macro_export names across crates/std-util/src |  |  | 0.549 |
+| walker |  | 6347 | 35 | [dependencies] in crates/std-util/Cargo.toml |  |  | 0.549 |
+| walker |  | 6355 | 8 | listing of 'crates/toasty-cli' |  |  | 0.549 |
+| walker |  | 6374 | 19 | listing of 'crates/toasty-cli/src' |  |  | 0.549 |
+| walker |  | 6407 | 33 | pub item at crates/toasty-cli/src/lib.rs:13 |  |  | 0.549 |
+| walker |  | 6441 | 34 | listing of 'crates/toasty-cli/src/migration' |  |  | 0.549 |
+| walker |  | 6506 | 65 | mod/use plumbing in crates/toasty-cli/src/lib.rs |  |  | 0.549 |
 | ns | 6509 |  | 343 | app::Model + ModelKind (Root vs Embedded) | 4.6 |  | 0.534 |
-| walker |  | 6528 | 34 | listing of 'crates/toasty-cli/src/migration' |  |  | 0.534 |
+| walker |  | 6522 | 16 | pub-item doc lede at crates/toasty-cli/src/lib.rs:13 |  |  | 0.534 |
 | ns | 6583 |  | 74 | FieldTy enum | 4.7 |  | 0.531 |
-| walker |  | 6593 | 65 | mod/use plumbing in crates/toasty-cli/src/lib.rs |  |  | 0.531 |
-| walker |  | 6609 | 16 | pub-item doc lede at crates/toasty-cli/src/lib.rs:13 |  |  | 0.531 |
-| walker |  | 6786 | 177 | impl method sigs in crates/toasty-cli/src/lib.rs |  |  | 0.531 |
-| walker |  | 6803 | 17 | pub item at crates/toasty-cli/src/theme.rs:5 |  |  | 0.531 |
+| walker |  | 6699 | 177 | impl method sigs in crates/toasty-cli/src/lib.rs |  |  | 0.531 |
+| walker |  | 6716 | 17 | pub item at crates/toasty-cli/src/theme.rs:5 |  |  | 0.531 |
+| walker |  | 6724 | 8 | listing of 'crates/toasty-driver-dynamodb' |  |  | 0.531 |
+| walker |  | 6743 | 19 | listing of 'crates/toasty-driver-dynamodb/src' |  |  | 0.531 |
+| walker |  | 6764 | 21 | pub-item names surface in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.531 |
+| walker |  | 6784 | 20 | pub item at crates/toasty-driver-dynamodb/src/lib.rs:30 |  |  | 0.531 |
 | ns | 6815 |  | 232 | toasty/src/stmt.rs — typed builder modules + Statement<M> | 4.8 |  | 0.519 |
-| walker |  | 6837 | 34 | pub item at crates/toasty-cli/src/config.rs:9 |  |  | 0.519 |
-| ns | 6867 |  | 52 | Driver crate directories — sqlite/postgres/mysql/dynamodb | 5.1 |  | 0.514 |
-| walker |  | 6873 | 36 | pub item at crates/toasty-cli/src/migration.rs:25 |  |  | 0.514 |
-| walker |  | 6881 | 8 | listing of 'crates/toasty-driver-dynamodb' |  |  | 0.514 |
-| walker |  | 6900 | 19 | listing of 'crates/toasty-driver-dynamodb/src' |  |  | 0.515 |
-| walker |  | 6921 | 21 | pub-item names surface in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.515 |
-| walker |  | 6933 | 12 | pub item at crates/toasty-driver-dynamodb/src/lib.rs:30 |  |  | 0.515 |
-| walker |  | 6958 | 25 | pub item at crates/toasty-driver-dynamodb/src/lib.rs:96 |  |  | 0.515 |
-| walker |  | 6997 | 39 | listing of 'crates/toasty-driver-dynamodb/src/op' |  |  | 0.515 |
+| walker |  | 6817 | 33 | pub item at crates/toasty-driver-dynamodb/src/lib.rs:96 |  |  | 0.519 |
+| walker |  | 6856 | 39 | listing of 'crates/toasty-driver-dynamodb/src/op' |  |  | 0.519 |
+| ns | 6867 |  | 52 | Driver crate directories — sqlite/postgres/mysql/dynamodb | 5.1 |  | 0.515 |
 | ns | 7128 |  | 261 | Driver Operation enum (8 variants) | 5.2 |  | 0.506 |
-| walker |  | 7286 | 289 | mod/use plumbing in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.506 |
+| walker |  | 7145 | 289 | mod/use plumbing in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.506 |
+| walker |  | 7163 | 18 | pub item at crates/toasty-driver-dynamodb/src/value.rs:5 |  |  | 0.506 |
 | ns | 7484 |  | 356 | Driver trait (toasty-core) | 5.3 |  | 0.496 |
+| walker |  | 7676 | 513 | impl method sigs in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.496 |
+| walker |  | 7726 | 50 | pub item at crates/toasty-driver-dynamodb/src/type.rs:4 |  |  | 0.496 |
+| walker |  | 7734 | 8 | listing of 'crates/toasty-driver-integration-suite' |  |  | 0.496 |
 | ns | 7771 |  | 287 | Capability struct head — feature flags drivers advertise | 5.4 |  | 0.488 |
-| walker |  | 7799 | 513 | impl method sigs in crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.488 |
-| walker |  | 7849 | 50 | pub item at crates/toasty-driver-dynamodb/src/type.rs:4 |  |  | 0.488 |
-| walker |  | 7857 | 8 | listing of 'crates/toasty-driver-integration-suite' |  |  | 0.488 |
-| walker |  | 7906 | 49 | listing of 'crates/toasty-driver-integration-suite/src' |  |  | 0.488 |
-| walker |  | 7920 | 14 | macro_export names across crates/toasty-driver-integration-suite/src |  |  | 0.488 |
-| ns | 8081 |  | 310 | Integration suite — shared driver test modules | 5.5 |  | 0.479 |
-| walker |  | 8093 | 173 | mod/use plumbing in crates/toasty-driver-integration-suite/src/lib.rs |  |  | 0.479 |
+| walker |  | 7783 | 49 | listing of 'crates/toasty-driver-integration-suite/src' |  |  | 0.488 |
+| walker |  | 7797 | 14 | macro_export names across crates/toasty-driver-integration-suite/src |  |  | 0.488 |
+| walker |  | 7970 | 173 | mod/use plumbing in crates/toasty-driver-integration-suite/src/lib.rs |  |  | 0.488 |
+| ns | 8081 |  | 310 | Integration suite — shared driver test modules | 5.5 |  | 0.478 |
 | ns | 8148 |  | 67 | toasty-sql lib.rs | 6.1 |  | 0.481 |
+| walker |  | 8164 | 194 | listing of 'crates/toasty-driver-integration-suite/src/tests' |  |  | 0.481 |
+| walker |  | 8190 | 26 | pub item at crates/toasty-driver-integration-suite/src/suite.rs:5 |  |  | 0.481 |
+| walker |  | 8220 | 30 | pub item at crates/toasty-driver-integration-suite/src/exec_log.rs:9 |  |  | 0.481 |
+| walker |  | 8241 | 21 | pub item at crates/toasty-driver-integration-suite/src/tests/has_many_n_1.rs:6 |  |  | 0.481 |
+| walker |  | 8263 | 22 | pub item at crates/toasty-driver-integration-suite/src/tests/belongs_to_configured.rs:4 |  |  | 0.481 |
 | ns | 8273 |  | 125 | toasty-sql serializer/ + stmt/ dir listings | 6.2 |  | 0.494 |
-| walker |  | 8287 | 194 | listing of 'crates/toasty-driver-integration-suite/src/tests' |  |  | 0.494 |
-| walker |  | 8313 | 26 | pub item at crates/toasty-driver-integration-suite/src/suite.rs:5 |  |  | 0.494 |
-| walker |  | 8343 | 30 | pub item at crates/toasty-driver-integration-suite/src/exec_log.rs:9 |  |  | 0.494 |
-| walker |  | 8379 | 36 | pub item at crates/toasty-driver-integration-suite/src/isolate.rs:9 |  |  | 0.494 |
-| walker |  | 8400 | 21 | pub item at crates/toasty-driver-integration-suite/src/tests/has_many_n_1.rs:6 |  |  | 0.494 |
-| walker |  | 8422 | 22 | pub item at crates/toasty-driver-integration-suite/src/tests/belongs_to_configured.rs:4 |  |  | 0.494 |
-| walker |  | 8444 | 22 | pub item at crates/toasty-driver-integration-suite/src/tests/one_model_crud_basic_driver_ops.rs:10 |  |  | 0.494 |
-| walker |  | 8452 | 8 | listing of 'crates/toasty-driver-mysql' |  |  | 0.494 |
-| walker |  | 8520 | 68 | [features] in crates/toasty-driver-mysql/Cargo.toml |  |  | 0.494 |
-| walker |  | 8528 | 8 | listing of 'crates/toasty-driver-postgresql' |  |  | 0.494 |
-| walker |  | 8545 | 17 | listing of 'crates/toasty-driver-postgresql/src' |  |  | 0.497 |
-| walker |  | 8566 | 21 | pub-item names surface in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.497 |
-| walker |  | 8587 | 21 | pub item at crates/toasty-driver-postgresql/src/lib.rs:24 |  |  | 0.497 |
-| walker |  | 8610 | 23 | pub item at crates/toasty-driver-postgresql/src/lib.rs:178 |  |  | 0.497 |
+| walker |  | 8285 | 22 | pub item at crates/toasty-driver-integration-suite/src/tests/one_model_crud_basic_driver_ops.rs:10 |  |  | 0.494 |
+| walker |  | 8293 | 8 | listing of 'crates/toasty-driver-mysql' |  |  | 0.494 |
+| walker |  | 8361 | 68 | [features] in crates/toasty-driver-mysql/Cargo.toml |  |  | 0.494 |
+| walker |  | 8369 | 8 | listing of 'crates/toasty-driver-postgresql' |  |  | 0.494 |
+| walker |  | 8386 | 17 | listing of 'crates/toasty-driver-postgresql/src' |  |  | 0.497 |
+| walker |  | 8407 | 21 | pub-item names surface in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.497 |
+| walker |  | 8436 | 29 | pub item at crates/toasty-driver-postgresql/src/lib.rs:24 |  |  | 0.497 |
+| walker |  | 8467 | 31 | pub item at crates/toasty-driver-postgresql/src/lib.rs:178 |  |  | 0.497 |
 | ns | 8641 |  | 368 | Flavor enum + per-flavor Serializer constructors | 6.3 |  | 0.485 |
+| walker |  | 8676 | 209 | mod/use plumbing in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.485 |
+| walker |  | 8697 | 21 | pub item at crates/toasty-driver-postgresql/src/value.rs:8 |  |  | 0.485 |
+| walker |  | 8777 | 80 | [features] in crates/toasty-driver-postgresql/Cargo.toml |  |  | 0.485 |
 | ns | 8809 |  | 168 | toasty-sql Statement enum (SQL-specific variants) | 6.4 |  | 0.480 |
-| walker |  | 8819 | 209 | mod/use plumbing in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.480 |
-| walker |  | 8899 | 80 | [features] in crates/toasty-driver-postgresql/Cargo.toml |  |  | 0.480 |
-| walker |  | 8929 | 30 | pub item at crates/toasty-driver-postgresql/src/statement_cache.rs:9 |  |  | 0.480 |
 | ns | 9016 |  | 207 | toasty-codegen entrypoints | 7.1 |  | 0.482 |
 | ns | 9113 |  | 97 | codegen schema/ + expand/ dir listings | 7.2 |  | 0.492 |
+| walker |  | 9260 | 483 | impl method sigs in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.492 |
 | ns | 9302 |  | 189 | tests/ crate layout | 8.1 |  | 0.483 |
-| walker |  | 9412 | 483 | impl method sigs in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.483 |
-| walker |  | 9459 | 47 | pub item at crates/toasty-driver-postgresql/src/type.rs:4 |  |  | 0.483 |
-| walker |  | 9528 | 69 | README.md section #5 |  |  | 0.483 |
-| walker |  | 9542 | 14 | mod/use plumbing in crates/toasty/src/engine/exec/output.rs |  |  | 0.483 |
-| walker |  | 9555 | 13 | pub-item doc lede at crates/toasty/src/db/pool.rs:41 |  |  | 0.483 |
-| walker |  | 9581 | 26 | pub item at crates/toasty-core/src/stmt/table_derived.rs:4 |  |  | 0.483 |
-| walker |  | 9607 | 26 | pub item at crates/toasty-core/src/stmt/with.rs:4 |  |  | 0.483 |
-| walker |  | 9630 | 23 | pub item at crates/toasty-driver-integration-suite/src/tests/one_model_composite_key.rs:4 |  |  | 0.483 |
-| ns | 9652 |  | 350 | toasty-cli Command + migration subcommand enums | 8.2 |  | 0.474 |
-| walker |  | 9653 | 23 | pub item at crates/toasty-driver-integration-suite/src/tests/sync_send.rs:8 |  |  | 0.474 |
-| walker |  | 9686 | 33 | pub item at crates/toasty-sql/src/stmt/table_name.rs:5 |  |  | 0.477 |
-| ns | 9686 |  | 34 | toasty-cli migration subdir listing | 8.3 |  | 0.477 |
-| walker |  | 9709 | 23 | pub item at crates/toasty-core/src/schema/app/constraint.rs:7 |  |  | 0.477 |
-| walker |  | 9866 | 157 | pub item at crates/toasty/src/model.rs:41 |  |  | 0.485 |
-| walker |  | 9893 | 27 | pub item at crates/toasty-cli/src/migration/snapshot.rs:9 |  |  | 0.485 |
-| walker |  | 9917 | 24 | pub item at crates/toasty-driver-integration-suite/src/tests/has_many_crud_multi_relations.rs:7 |  |  | 0.485 |
-| ns | 9932 |  | 246 | Roadmap README — H2/H3 feature-gap outline | 8.4 |  | 0.479 |
-| walker |  | 9941 | 24 | pub item at crates/toasty-driver-integration-suite/src/tests/reset_db.rs:4 |  |  | 0.479 |
+| walker |  | 9307 | 47 | pub item at crates/toasty-driver-postgresql/src/type.rs:4 |  |  | 0.483 |
+| walker |  | 9376 | 69 | README.md section #5 |  |  | 0.483 |
+| walker |  | 9390 | 14 | mod/use plumbing in crates/toasty/src/engine/exec/output.rs |  |  | 0.483 |
+| walker |  | 9403 | 13 | pub-item doc lede at crates/toasty/src/db/pool.rs:41 |  |  | 0.483 |
+| walker |  | 9429 | 26 | pub item at crates/toasty-core/src/stmt/func_last_insert_id.rs:20 |  |  | 0.483 |
+| walker |  | 9452 | 23 | pub item at crates/toasty-driver-integration-suite/src/tests/one_model_composite_key.rs:4 |  |  | 0.483 |
+| walker |  | 9475 | 23 | pub item at crates/toasty-driver-integration-suite/src/tests/sync_send.rs:8 |  |  | 0.483 |
+| walker |  | 9515 | 40 | pub item at crates/toasty-driver-postgresql/src/statement_cache.rs:9 |  |  | 0.483 |
+| ns | 9652 |  | 350 | toasty-cli Command + migration subcommand enums | 8.2 |  | 0.473 |
+| walker |  | 9672 | 157 | pub item at crates/toasty/src/model.rs:41 |  |  | 0.481 |
+| ns | 9686 |  | 34 | toasty-cli migration subdir listing | 8.3 |  | 0.484 |
+| walker |  | 9696 | 24 | pub item at crates/toasty-driver-integration-suite/src/tests/has_many_crud_multi_relations.rs:7 |  |  | 0.484 |
+| walker |  | 9720 | 24 | pub item at crates/toasty-driver-integration-suite/src/tests/reset_db.rs:4 |  |  | 0.484 |
+| walker |  | 9735 | 15 | mod/use plumbing in crates/toasty/src/engine/exec/var.rs |  |  | 0.484 |
+| walker |  | 9747 | 12 | mod/use plumbing in crates/toasty-driver-integration-suite/src/setup.rs |  |  | 0.484 |
+| walker |  | 9772 | 25 | pub item at crates/toasty-driver-integration-suite/src/tests/belongs_to_one_way.rs:4 |  |  | 0.484 |
+| walker |  | 9797 | 25 | pub item at crates/toasty-driver-integration-suite/src/tests/belongs_to_self_referential.rs:5 |  |  | 0.484 |
+| walker |  | 9841 | 44 | pub-item names surface in crates/toasty/src/engine/exec/var.rs |  |  | 0.484 |
+| walker |  | 9850 | 9 | listing of 'docs/guide' |  |  | 0.488 |
+| walker |  | 9894 | 44 | pub item at crates/toasty-driver-integration-suite/src/isolate.rs:9 |  |  | 0.488 |
+| walker |  | 9923 | 29 | pub item at crates/toasty-core/src/stmt/source_table_id.rs:2 |  |  | 0.488 |
+| walker |  | 9931 | 8 | listing of 'crates/toasty-driver-mysql/src' |  |  | 0.491 |
+| ns | 9932 |  | 246 | Roadmap README — H2/H3 feature-gap outline | 8.4 |  | 0.485 |
+| walker |  | 9952 | 21 | pub-item names surface in crates/toasty-driver-mysql/src/lib.rs |  |  | 0.485 |
+| walker |  | 9972 | 20 | pub item at crates/toasty-driver-mysql/src/lib.rs:133 |  |  | 0.485 |

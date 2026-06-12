@@ -1412,26 +1412,44 @@ fn collect_private_entry_item(child: Node, source: &str, whole: bool) -> FileLin
     collect_item_lines(child, source, whole)
 }
 
+/// Attribute paths that define the item's API shape — the ones NS rows
+/// anchor on (`#[derive(toasty::Model)]`, `#[repr(transparent)]`,
+/// `#[proc_macro_derive(Error, …)]`, mdbook's
+/// `#[allow(exhaustive_structs)]`). Implementation / conditional-
+/// compilation attributes (`#[inline]`, `#[cfg(…)]`, `#[doc(hidden)]`)
+/// stay out: including them re-prices names-surface-covered items
+/// from 0 and floods attr-heavy facade files (measured: log −0.013
+/// when all attributes were included).
+fn is_api_shape_attribute(node: Node, source: &str) -> bool {
+    let text = source[node.start_byte()..node.end_byte()].trim_start_matches(['#', '[']);
+    ["derive", "repr", "proc_macro", "non_exhaustive", "allow"]
+        .iter()
+        .any(|p| text.starts_with(p))
+}
+
 fn collect_item_lines(child: Node, source: &str, whole: bool) -> FileLines {
-    if whole {
-        let mut full = Vec::new();
-        // Include preceding outer `#[…]` attributes so the rendered span
-        // matches NS rows that anchor on lines starting at the attribute
-        // (e.g. toasty NS 2.1 wants `#[derive(toasty::Model)]` + `struct
-        // User { … }` together as the User-model anchor).
-        let mut cur = child.prev_sibling();
-        while let Some(prev) = cur {
-            if prev.kind() == "attribute_item" {
-                extend_span(&mut full, prev, source);
-                cur = prev.prev_sibling();
-            } else {
-                break;
+    // Include preceding outer API-shape `#[…]` attributes in BOTH
+    // render paths — NS rows anchor on lines starting at the attribute.
+    // `whole` keeps every attribute (whole-item renders are example /
+    // model anchors where the full decl block is the point).
+    let mut attr_lines = Vec::new();
+    let mut cur = child.prev_sibling();
+    while let Some(prev) = cur {
+        if prev.kind() == "attribute_item" {
+            if whole || is_api_shape_attribute(prev, source) {
+                extend_span(&mut attr_lines, prev, source);
             }
+            cur = prev.prev_sibling();
+        } else {
+            break;
         }
+    }
+    if whole {
+        let mut full = attr_lines;
         extend_span(&mut full, child, source);
         return FileLines::new(dedup_sorted(full));
     }
-    let mut full = Vec::new();
+    let mut full = attr_lines;
     let mut ellipses = Vec::new();
     match child.kind() {
         "function_item" | "function_signature_item" => {
