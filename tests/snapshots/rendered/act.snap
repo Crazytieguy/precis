@@ -67,6 +67,10 @@ cmd/
         …
     notices.go
     platforms.go
+        1→package cmd
+        3→import (
+        4→	"strings"
+        5→)
         7→func (i *Input) newPlatforms() map[string]string {
         …
     root.go
@@ -175,6 +179,11 @@ pkg/
             42→func LoadDockerAuthConfigs(ctx context.Context) map[string]registry.AuthConfig {
             …
         docker_build.go
+            22→// NewDockerBuildExecutor function to create a run executor for the container
+            23→func NewDockerBuildExecutor(input NewDockerBuildExecutorInput) common.Executor {
+            …
+            78→func createBuildContext(ctx context.Context, contextDir string, relDockerfile string) (io.ReadCloser, error) {
+            …
         docker_cli.go
         docker_cli_test.go
         docker_images.go
@@ -212,7 +221,7 @@ pkg/
             12→func getSysProcAttr(_ string, tty bool) *syscall.SysProcAttr {
             …
             24→func openPty() (*os.File, *os.File, error) {
-            …
+            25→	return pty.Open()
         util_openbsd_mips64.go
             9→func getSysProcAttr(cmdLine string, tty bool) *syscall.SysProcAttr {
             …
@@ -299,6 +308,12 @@ pkg/
         step_docker.go
         step_docker_test.go
         step_factory.go
+            9→type stepFactory interface {
+            …
+            13→type stepFactoryImpl struct{}
+            …
+            15→func (sf *stepFactoryImpl) newStep(stepModel *model.Step, rc *RunContext) (step, error) {
+            …
         step_factory_test.go
         step_run.go
         step_run_test.go
@@ -310,14 +325,6 @@ pkg/
             act-composite-env-test/
             action-cache-v2-fetch-failure-is-job-error/
             actions/
-                action1/
-                composite-fail-with-output/
-                docker-local/
-                docker-local-noargs/
-                docker-url/
-                node12/
-                node16/
-                node20/
             actions-environment-and-context-tests/
             basic/
             checkout/
@@ -402,33 +409,11 @@ pkg/
             uses-and-run-in-one-step/
             uses-composite/
             uses-composite-check-for-input-collision/
-                action-with-pre-and-post/
-                    action.yml
-                    main.js
-                    post.js
-                    pre.js
-                composite_action/
-                push.yml
             uses-composite-check-for-input-in-if-uses/
             uses-composite-check-for-input-shadowing/
-                action-with-pre-and-post/
-                    action.yml
-                    main.js
-                    post.js
-                    pre.js
-                composite_action/
-                push.yml
             uses-composite-with-error/
             uses-composite-with-inputs/
             uses-composite-with-pre-and-post-steps/
-                action-with-pre-and-post/
-                    action.yml
-                    main.js
-                    post.js
-                    pre.js
-                composite_action/
-                last-action/
-                push.yml
             uses-docker-url/
             uses-github-empty/
             uses-github-full-sha/

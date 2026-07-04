@@ -29,12 +29,15 @@ README.md
     10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
     12→## Try it out
     …
+    14→Try out the editor and see various examples [in our interactive playground](https://microsoft.github.io/monaco-editor/playground.html).
+    16→The playground is the best way to learn about how to use the editor, which features is supports, to try out different versions and to create minimal reproducible examples for bug reports.
     18→## Installing
     …
     31→## Localization
     …
     40→## Concepts
     …
+    42→Monaco editor is best known for being the text editor that powers VS Code. However, it's a bit more nuanced. Some basic understanding about the underlying concepts is needed to use Monaco editor effectively.
     44→### Models
     …
     48→### URIs
@@ -49,6 +52,7 @@ README.md
     …
     76→## Issues
     …
+    78→Create [issues](https://github.com/microsoft/monaco-editor/issues) in this repository for anything related to the Monaco Editor. Please search for existing issues to avoid duplicates.
     80→## FAQ
     …
     112→## Contributing / Local Development
@@ -66,6 +70,18 @@ docs/
     debugging-core.gif
     debugging-languages.gif
     integrate-esm.md
+        1→## Integrating the ESM version of the Monaco Editor
+        …
+        9→### Using webpack
+        …
+        17→### Option 1: Using the Monaco Editor WebPack Plugin
+        …
+        62→### Option 2: Using plain webpack
+        …
+        135→### Using parcel
+        …
+        189→### Using Vite
+        …
     launch config.png
     out-folders.dio.svg
 editor.code-workspace
@@ -76,6 +92,7 @@ monaco-lsp-client/
         3→Provides a Language Server Protocol (LSP) client for the Monaco Editor.
         5→This package is in alpha stage and might contain many bugs.
     generator/
+        index.ts
     package-lock.json
     package.json
         2→	"name": "@vscode/monaco-lsp-client",
@@ -97,7 +114,13 @@ package.json
     3→	"version": "0.55.1",
     5→	"private": true,
     6→	"description": "A browser based code editor",
+    7→	"homepage": "https://github.com/microsoft/monaco-editor",
+    8→	"author": "Microsoft Corporation",
     9→	"license": "MIT",
+    49→	"repository": {
+    50→		"type": "git",
+    51→		"url": "https://github.com/microsoft/monaco-editor"
+    52→	},
 samples/
 scripts/
     ci/
@@ -112,6 +135,7 @@ src/
             json/
             typescript/
     editor.ts
+        1→export * from 'monaco-editor-core/esm/vs/editor/editor.api';
     features/
         anchorSelect/
         bracketMatching/
@@ -179,6 +203,11 @@ src/
         wordOperations/
         wordPartOperations/
     index.ts
+        1→import * as lsp from '@vscode/monaco-lsp-client';
+        2→import { css, html, json, typescript } from './languages/register.all';
+        3→import './features/register.all';
+        6→import 'monaco-editor-core';
+        8→export * from './editor';
         9→export { css, html, json, typescript, lsp };
     internal/
         common/
@@ -186,338 +215,88 @@ src/
         definitions/
             _.contribution.ts
             abap/
-                abap.test.ts
-                abap.ts
-                register.ts
             apex/
-                apex.test.ts
-                apex.ts
-                register.ts
             azcli/
-                azcli.test.ts
-                azcli.ts
-                register.ts
             bat/
-                bat.test.ts
-                bat.ts
-                register.ts
             bicep/
-                bicep.test.ts
-                bicep.ts
-                register.ts
             cameligo/
-                cameligo.test.ts
-                cameligo.ts
-                register.ts
             clojure/
-                clojure.test.ts
-                clojure.ts
-                register.ts
             coffee/
-                coffee.test.ts
-                coffee.ts
-                register.ts
             cpp/
-                cpp.test.ts
-                cpp.ts
-                register.ts
             csharp/
-                csharp.test.ts
-                csharp.ts
-                register.ts
             csp/
-                csp.test.ts
-                csp.ts
-                register.ts
             css/
-                css.test.ts
-                css.ts
-                register.ts
             cypher/
-                cypher.test.ts
-                cypher.ts
-                register.ts
             dart/
-                dart.test.ts
-                dart.ts
-                register.ts
             dockerfile/
-                dockerfile.test.ts
-                dockerfile.ts
-                register.ts
             ecl/
-                ecl.test.ts
-                ecl.ts
-                register.ts
             elixir/
-                elixir.test.ts
-                elixir.ts
-                register.ts
             flow9/
-                flow9.test.ts
-                flow9.ts
-                register.ts
             freemarker2/
-                freemarker2-angle-bracket.test.ts
-                freemarker2-angle-dollar.test.ts
-                freemarker2-auto-bracket.test.ts
-                freemarker2-auto-dollar.test.ts
-                freemarker2-bracket-bracket.test.ts
-                freemarker2-bracket-dollar.test.ts
-                freemarker2.ts
-                register.ts
             fsharp/
-                fsharp.test.ts
-                fsharp.ts
-                register.ts
             go/
-                go.test.ts
-                go.ts
-                register.ts
             graphql/
-                graphql.test.ts
-                graphql.ts
-                register.ts
             handlebars/
-                handlebars.test.ts
-                handlebars.ts
-                register.ts
             hcl/
-                hcl.test.ts
-                hcl.ts
-                register.ts
             html/
-                html.test.ts
-                html.ts
-                register.ts
             ini/
             java/
-                java.test.ts
-                java.ts
-                register.ts
             javascript/
-                javascript.test.ts
-                javascript.ts
-                register.ts
             julia/
-                julia.test.ts
-                julia.ts
-                register.ts
             kotlin/
-                kotlin.test.ts
-                kotlin.ts
-                register.ts
             less/
-                less.test.ts
-                less.ts
-                register.ts
             lexon/
-                lexon.test.ts
-                lexon.ts
-                register.ts
             liquid/
-                liquid.test.ts
-                liquid.ts
-                register.ts
             lua/
-                lua.test.ts
-                lua.ts
-                register.ts
             m3/
-                m3.test.ts
-                m3.ts
-                register.ts
             markdown/
-                markdown.test.ts
-                markdown.ts
-                register.ts
             mdx/
-                mdx.test.ts
-                mdx.ts
-                register.ts
             mips/
-                mips.test.ts
-                mips.ts
-                register.ts
             msdax/
-                msdax.test.ts
-                msdax.ts
-                register.ts
             mysql/
-                keywords.js
-                keywords.mysql.txt
-                mysql.test.ts
-                mysql.ts
-                register.ts
             objective-c/
-                objective-c.test.ts
-                objective-c.ts
-                register.ts
             pascal/
-                pascal.test.ts
-                pascal.ts
-                register.ts
             pascaligo/
-                pascaligo.test.ts
-                pascaligo.ts
-                register.ts
             perl/
-                perl.test.ts
-                perl.ts
-                register.ts
             pgsql/
-                keywords.js
-                keywords.postgresql.txt
-                pgsql.test.ts
-                pgsql.ts
-                register.ts
             php/
-                php.test.ts
-                php.ts
-                register.ts
             pla/
-                pla.test.ts
-                pla.ts
-                register.ts
             postiats/
-                postiats.test.ts
-                postiats.ts
-                register.ts
             powerquery/
-                powerquery.test.ts
-                powerquery.ts
-                register.ts
             powershell/
-                powershell.test.ts
-                powershell.ts
-                register.ts
             protobuf/
-                protobuf.test.ts
-                protobuf.ts
-                register.ts
             pug/
-                pug.test.ts
-                pug.ts
-                register.ts
             python/
-                python.test.ts
-                python.ts
-                register.ts
             qsharp/
-                qsharp.test.ts
-                qsharp.ts
-                register.ts
             r/
-                r.test.ts
-                r.ts
-                register.ts
             razor/
-                razor.test.ts
-                razor.ts
-                register.ts
             redis/
-                redis.test.ts
-                redis.ts
-                register.ts
             redshift/
-                redshift.test.ts
-                redshift.ts
-                register.ts
             register.all.ts
             restructuredtext/
-                register.ts
-                restructuredtext.test.ts
-                restructuredtext.ts
             ruby/
-                register.ts
-                ruby.test.ts
-                ruby.ts
             rust/
-                register.ts
-                rust.test.ts
-                rust.ts
             sb/
-                register.ts
-                sb.test.ts
-                sb.ts
             scala/
-                register.ts
-                scala.test.ts
-                scala.ts
             scheme/
-                register.ts
-                scheme.test.ts
-                scheme.ts
             scss/
-                register.ts
-                scss.test.ts
-                scss.ts
             shell/
-                register.ts
-                shell.test.ts
-                shell.ts
             solidity/
-                register.ts
-                solidity.test.ts
-                solidity.ts
             sophia/
-                register.ts
-                sophia.test.ts
-                sophia.ts
             sparql/
-                register.ts
-                sparql.test.ts
-                sparql.ts
             sql/
-                keywords.js
-                register.ts
-                sql.test.ts
-                sql.ts
             st/
-                register.ts
-                st.test.ts
-                st.ts
             swift/
-                register.ts
-                swift.test.ts
-                swift.ts
             systemverilog/
-                register.ts
-                systemverilog.test.ts
-                systemverilog.ts
             tcl/
-                register.ts
-                tcl.test.ts
-                tcl.ts
             test/
             twig/
-                register.ts
-                twig.test.ts
-                twig.ts
             typescript/
-                register.ts
-                typescript.test.ts
-                typescript.ts
             typespec/
-                register.ts
-                typespec.test.ts
-                typespec.ts
             vb/
-                register.ts
-                vb.test.ts
-                vb.ts
             wgsl/
-                register.ts
-                wgsl.test.ts
-                wgsl.ts
             xml/
-                register.ts
-                xml.test.ts
-                xml.ts
             yaml/
-                register.ts
-                yaml.test.ts
-                yaml.ts
         features/
             common/
             css/
@@ -525,6 +304,30 @@ src/
                 cssMode.ts
                 cssWorker.ts
                 register.ts
+                    9→export interface CSSFormatConfiguration {
+                    …
+                    24→export interface Options {
+                    …
+                    57→export interface ModeConfiguration {
+                    …
+                    124→export interface LanguageServiceDefaults {
+                    …
+                    140→export type DiagnosticsOptions = Options;
+                    …
+                    240→export const cssDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
+                    …
+                    245→export const scssDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
+                    …
+                    250→export const lessDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
+                    …
+                    276→export interface CSSDataConfiguration {
+                    …
+                    291→export interface CSSDataV1 {
+                    …
+                    299→export type EntryStatus = 'standard' | 'experimental' | 'nonstandard' | 'obsolete';
+                    …
+                    301→export interface IReference {
+                    …
                 workerManager.ts
             html/
                 html.worker.ts
@@ -537,6 +340,48 @@ src/
                 jsonMode.ts
                 jsonWorker.ts
                 register.ts
+                    10→export interface BaseASTNode {
+                    …
+                    18→export interface ObjectASTNode extends BaseASTNode {
+                    19→	readonly type: 'object';
+                    20→	readonly properties: PropertyASTNode[];
+                    21→	readonly children: ASTNode[];
+                    22→}
+                    23→export interface PropertyASTNode extends BaseASTNode {
+                    …
+                    30→export interface ArrayASTNode extends BaseASTNode {
+                    31→	readonly type: 'array';
+                    32→	readonly items: ASTNode[];
+                    33→	readonly children: ASTNode[];
+                    34→}
+                    35→export interface StringASTNode extends BaseASTNode {
+                    36→	readonly type: 'string';
+                    37→	readonly value: string;
+                    38→}
+                    39→export interface NumberASTNode extends BaseASTNode {
+                    40→	readonly type: 'number';
+                    41→	readonly value: number;
+                    42→	readonly isInteger: boolean;
+                    43→}
+                    44→export interface BooleanASTNode extends BaseASTNode {
+                    45→	readonly type: 'boolean';
+                    46→	readonly value: boolean;
+                    47→}
+                    48→export interface NullASTNode extends BaseASTNode {
+                    49→	readonly type: 'null';
+                    50→	readonly value: null;
+                    51→}
+                    53→export type ASTNode =
+                    …
+                    62→export type JSONDocument = {
+                    63→	root: ASTNode | undefined;
+                    64→	getNodeFromOffset(offset: number, includeRightBound?: boolean): ASTNode | undefined;
+                    65→};
+                    67→export type JSONSchemaRef = JSONSchema | boolean;
+                    …
+                    69→export interface JSONSchemaMap {
+                    70→	[name: string]: JSONSchemaRef;
+                    71→}
                 tokenization.ts
                 workerManager.ts
             register.all.ts
@@ -584,6 +429,18 @@ webpack-plugin/
         23→	"license": "MIT",
     src/
         index.ts
+            159→class MonacoEditorWebpackPlugin implements webpack.WebpackPluginInstance {
+            160→	private readonly options: IInternalMonacoEditorWebpackPluginOpts;
+            162→	constructor(options: MonacoEditorWebpackPlugin.IMonacoEditorWebpackPluginOpts = {}) {
+            …
+            177→	apply(compiler: webpack.Compiler): void {
+            178→		const { languages, features, filename, monacoEditorPath, publicPath, globalAPI } = this.options;
+            179→		const compilationPublicPath = getCompilationPublicPath(compiler);
+            180→		const modules = [EDITOR_MODULE].concat(languages).concat(features);
+            181→		const workers: ILabeledWorkerDefinition[] = [];
+            201→		const plugins = createPlugins(compiler, workers, filename, monacoEditorPath);
+            202→		addCompilerRules(compiler, rules);
+            203→		addCompilerPlugins(compiler, plugins);
         loader-utils.d.ts
         loaders/
         plugins/

@@ -135,6 +135,15 @@ docs/
     extending-click.md
         1→# Extending Click
         …
+        3→```{currentmodule} click
+        4→```
+        6→In addition to common functionality that is implemented in the library itself, there are countless patterns that can be
+        7→implemented by extending Click. This page should give some insight into what can be accomplished.
+        9→```{contents}
+        10→:depth: 2
+        11→:local: true
+        12→```
+        14→(custom-groups)=
         16→## Custom Groups
         …
         73→## Command Aliases
@@ -178,15 +187,6 @@ examples/
     colors/
     completion/
     complex/
-        README
-        complex/
-            __init__.py
-            cli.py
-            commands/
-                __init__.py
-                cmd_init.py
-                cmd_status.py
-        pyproject.toml
     imagepipe/
     inout/
     naval/
