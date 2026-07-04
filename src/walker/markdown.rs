@@ -1983,7 +1983,16 @@ fn link_index_chunks(
             chunk_entries = 0;
         }
     }
-    chunks.push((chunk_start, end, chunk_entries.max(1)));
+    if chunk_entries > 0 {
+        chunks.push((chunk_start, end, chunk_entries));
+    } else if let Some(last) = chunks.last_mut() {
+        // A prose-only tail is not a roster; fold it into the previous
+        // chunk without inflating that chunk's entry count. (`chunks`
+        // can't be empty here: the entry gate above guarantees ≥20
+        // entries, and `chunk_entries` only resets when a chunk is
+        // pushed.)
+        last.1 = end;
+    }
     Some(chunks)
 }
 
@@ -3408,6 +3417,28 @@ mod tests {
         assert_eq!(rosters[1].roster_entries, 20);
         assert!(rosters[1].chained_to_previous);
         assert!(rosters.iter().all(|r| r.reference_shaped));
+    }
+
+    #[test]
+    fn markdown_link_index_trailing_prose_folds_into_last_roster() {
+        let mut src =
+            String::from("# lo\n\nTagline.\n\n## Spec\n\nSupported helpers for slices:\n\n");
+        for i in 0..30 {
+            src.push_str(&format!("- [Helper{i}](#helper{i})\n"));
+        }
+        src.push_str("\nDeprecated aliases are listed in the wiki.\n");
+        for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
+            src.push_str(&format!("\n### Helper{i}\n\nDoes thing {i}.\n"));
+        }
+        src.push_str("\n## License\n\nMIT.\n");
+        let ranges = sections("README.md", &src);
+        let rosters: Vec<&SectionRange> = ranges.iter().filter(|r| r.roster_entries > 0).collect();
+        assert_eq!(
+            rosters.len(),
+            1,
+            "prose-only tail must not become its own roster chunk; got {ranges:?}",
+        );
+        assert_eq!(rosters[0].roster_entries, 30);
     }
 
     // --- bullet-splitting tests (logical_sections) ---
