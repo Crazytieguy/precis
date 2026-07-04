@@ -19,12 +19,8 @@ auth_test.go
 benchmarks_test.go
 binding/
     binding.go
-        7→package binding
-        9→import "net/http"
     binding_msgpack_test.go
     binding_nomsgpack.go
-        7→package binding
-        9→import "net/http"
     binding_test.go
     bson.go
     default_validator.go
@@ -43,19 +39,9 @@ binding/
     multipart_form_mapping_test.go
     plain.go
     protobuf.go
-        15→type protobufBinding struct{}
-        …
-        17→func (protobufBinding) Name() string {
-        18→	return "protobuf"
-        21→func (b protobufBinding) Bind(req *http.Request, obj any) error {
-        …
-        29→func (protobufBinding) BindBody(body []byte, obj any) error {
-        …
     query.go
-        5→package binding
-        7→import "net/http"
         9→type queryBinding struct{}
-        …
+        10→
         11→func (queryBinding) Name() string {
         12→	return "query"
         15→func (queryBinding) Bind(req *http.Request, obj any) error {
@@ -65,7 +51,7 @@ binding/
     uri.go
         5→package binding
         7→type uriBinding struct{}
-        …
+        8→
         9→func (uriBinding) Name() string {
         10→	return "uri"
         13→func (uriBinding) BindUri(m map[string][]string, obj any) error {
@@ -93,11 +79,6 @@ context_test.go
 debug.go
 debug_test.go
 deprecated.go
-    5→package gin
-    7→import (
-    8→	"log"
-    10→	"github.com/gin-gonic/gin/binding"
-    11→)
     17→func (c *Context) BindWith(obj any, b binding.Binding) error {
     …
 deprecated_test.go
@@ -113,6 +94,7 @@ errors_test.go
 examples/
 fs.go
     5→package gin
+    6→
     7→import (
     8→	"net/http"
     9→	"os"
@@ -146,7 +128,7 @@ gin.go
     34→	default405Body = []byte("405 method not allowed")
     35→)
     37→var defaultPlatform string
-    …
+    38→
     39→var defaultTrustedCIDRs = []*net.IPNet{
     …
     50→// HandlerFunc defines the handler used by gin middleware as return value.
@@ -180,15 +162,23 @@ gin.go
     …
     87→	PlatformFlyIO = "Fly-Client-IP"
     …
+    90→// Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
+    91→// Create an instance of Engine, by using New() or Default()
     92→type Engine struct {
     93→	RouterGroup
+    165→	// MaxMultipartMemory value of 'maxMemory' param that is given to http.Request's ParseMultipartForm
+    166→	// method call.
+    167→	MaxMultipartMemory int64
     169→	// UseH2C enable h2c support.
     170→	UseH2C bool
+    172→	// ContextWithFallback enable fallback Context.Deadline(), Context.Done(), Context.Err() and Context.Value() when Context.Request.Context() is not nil.
+    173→	ContextWithFallback bool
     189→}
     191→var _ IRouter = (*Engine)(nil)
     …
     202→func New(opts ...OptionFunc) *Engine {
     …
+    235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
     236→func Default(opts ...OptionFunc) *Engine {
     …
     243→func (engine *Engine) Handler() http.Handler {
@@ -198,13 +188,17 @@ gin.go
 ginS/
     README.md
         1→# Gin Default Server
+        2→
         3→This is API experiment for Gin.
+        4→
         5→```go
         6→package main
+        7→
         8→import (
         9→	"github.com/gin-gonic/gin"
         10→	"github.com/gin-gonic/gin/ginS"
         11→)
+        12→
         13→func main() {
         14→	ginS.GET("/", func(c *gin.Context) { c.String(200, "Hello World") })
         15→	ginS.Run()
@@ -217,6 +211,7 @@ gin_test.go
 githubapi_test.go
 go.mod
     1→module github.com/gin-gonic/gin
+    2→
     3→go 1.25.0
 go.sum
 internal/
@@ -269,8 +264,6 @@ render/
     json.go
     msgpack.go
     pdf.go
-        5→package render
-        7→import "net/http"
         9→// PDF contains the given PDF binary data.
         10→type PDF struct {
         11→	Data []byte
@@ -325,8 +318,6 @@ render/
         28→// WriteContentType (Redirect) don't write any ContentType.
         29→func (r Redirect) WriteContentType(http.ResponseWriter) {}
     render.go
-        5→package render
-        7→import "net/http"
     render_msgpack_test.go
     render_test.go
     text.go

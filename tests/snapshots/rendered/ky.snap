@@ -25,19 +25,6 @@ package.json
     11→		"url": "https://sindresorhus.com"
     12→	},
     13→	"type": "module",
-    14→	"exports": {
-    15→		"types": "./distribution/index.d.ts",
-    16→		"default": "./distribution/index.js"
-    17→	},
-    18→	"main": "./distribution/index.js",
-    19→	"types": "./distribution/index.d.ts",
-    20→	"sideEffects": false,
-    21→	"engines": {
-    22→		"node": ">=18"
-    23→	},
-    31→	"files": [
-    32→		"distribution"
-    33→	],
     34→	"keywords": [
     35→		"fetch",
     36→		"request",
@@ -63,6 +50,7 @@ package.json
 readme.md
     11→> Ky is a tiny and elegant HTTP client based on the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
     20→## Benefits over plain `fetch`
+    21→
     22→- Simpler API
     23→- Method shortcuts (`ky.post()`)
     24→- Treats non-2xx status codes as errors (after redirects)
@@ -74,18 +62,20 @@ readme.md
     30→- Hooks
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
     33→## Install
-    …
+    34→
     35→```sh
     36→npm install ky
     37→```
+    38→
     39→###### CDN
+    40→
     41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
     42→- [unpkg](https://unpkg.com/ky)
     43→- [esm.sh](https://esm.sh/ky)
     45→## Usage
     …
     85→## API
-    …
+    86→
     87→### ky(input, options?)
     …
     122→### ky.get(input, options?)
@@ -105,6 +95,7 @@ readme.md
     811→### ky.create(defaultOptions)
     …
     829→#### defaultOptions
+    830→
     831→Type: `object`
     833→### ky.stop
     …
@@ -117,7 +108,7 @@ readme.md
     1046→### TimeoutError
     …
     1050→## Tips
-    …
+    1051→
     1052→### Sending form data
     …
     1109→### Setting a custom `Content-Type`
@@ -136,17 +127,17 @@ readme.md
     1292→## FAQ
     …
     1339→## Browser support
-    …
+    1340→
     1341→The latest version of Chrome, Firefox, and Safari.
     1343→## Node.js support
-    …
+    1344→
     1345→Node.js 18 and later.
     1347→## Related
-    …
+    1348→
     1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
     1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
     1352→## Maintainers
-    …
+    1353→
     1354→- [Sindre Sorhus](https://github.com/sindresorhus)
     1355→- [Seth Holladay](https://github.com/sholladay)
     1356→- [Szymon Marczak](https://github.com/szmarczak)
@@ -173,16 +164,19 @@ source/
             10→	customDelay: number | undefined;
             11→	code: string | undefined;
             12→	customRequest: Request | undefined;
+            13→
             14→	constructor(options?: ForceRetryOptions) {
             15→		// Runtime protection: wrap non-Error causes in NonError
             16→		// TypeScript type is Error for guidance, but JS users can pass anything
             17→		const cause = options?.cause
             18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
             19→			: undefined;
+            20→
             21→		super(
             22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
             23→			cause ? {cause} : undefined,
             24→		);
+            25→
             26→		this.customDelay = options?.delay;
             27→		this.code = options?.code;
             28→		this.customRequest = options?.request;
@@ -191,12 +185,15 @@ source/
             6→	public response: KyResponse<T>;
             7→	public request: KyRequest;
             8→	public options: NormalizedOptions;
+            9→
             10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
             11→		const code = (response.status || response.status === 0) ? response.status : '';
             12→		const title = response.statusText ?? '';
             13→		const status = `${code} ${title}`.trim();
             14→		const reason = status ? `status code ${status}` : 'an unknown error';
+            15→
             16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
+            17→
             18→		this.name = 'HTTPError';
             19→		this.response = response;
             20→		this.request = request;
@@ -205,12 +202,14 @@ source/
             6→export class NonError extends Error {
             7→	override name = 'NonError';
             8→	readonly value: unknown;
+            9→
             10→	constructor(value: unknown) {
             …
         TimeoutError.ts
             1→import type {KyRequest} from '../types/request.js';
             3→export class TimeoutError extends Error {
             4→	public request: KyRequest;
+            5→
             6→	constructor(request: Request) {
             7→		super(`Request timed out: ${request.method} ${request.url}`);
             8→		this.name = 'TimeoutError';

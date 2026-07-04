@@ -49,6 +49,7 @@ LICENSE
 README.md
     1→# mdBook
     7→mdBook is a utility to create modern online books from Markdown files.
+    8→
     9→Check out the **[User Guide]** for a list of features and installation and usage information.
     10→The User Guide also serves as a demonstration to showcase what a book looks like.
     12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
@@ -59,7 +60,9 @@ crates/
             9→[dependencies]
         README.md
             1→# mdbook-compare
+            2→
             3→This is a simple utility to compare the output of two different versions of mdbook.
+            4→
             5→To use this:
         src/
     mdbook-core/
@@ -67,6 +70,7 @@ crates/
         README.md
             1→# mdbook-core
             7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+            9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
         src/
             book/
                 tests.rs
@@ -74,6 +78,10 @@ crates/
             config.rs
             lib.rs
                 1→//! The base support library for mdbook, intended for internal use only.
+                3→/// The current version of `mdbook`.
+                4→///
+                5→/// This is provided as a way for custom preprocessors and renderers to do
+                6→/// compatibility checks.
                 7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
                 9→pub mod book;
                 10→pub mod config;
@@ -85,14 +93,6 @@ crates/
                 html.rs
                 mod.rs
                     1→//! Various helpers and utilities.
-                    3→use anyhow::Error;
-                    4→use std::fmt::Write;
-                    5→use tracing::error;
-                    7→pub mod fs;
-                    8→mod html;
-                    9→mod toml_ext;
-                    11→pub(crate) use self::toml_ext::TomlExt;
-                    13→pub use self::html::{escape_html, escape_html_attribute};
                     17→macro_rules! static_regex {
                     18→    ($name:ident, $regex:literal) => {
                     19→        static $name: std::sync::LazyLock<regex::Regex> =
@@ -106,12 +106,19 @@ crates/
                     28→/// Prints a "backtrace" of some `Error`.
                     29→pub fn log_backtrace(e: &Error) {
                     30→    let mut message = format!("{e}");
+                    31→
                     32→    for cause in e.chain().skip(1) {
                     33→        write!(message, "\n\tCaused by: {cause}").unwrap();
                     34→    }
+                    35→
                     36→    error!("{message}");
                 toml_ext.rs
     mdbook-driver/
+        Cargo.toml
+            31→[features]
+            32→search = ["mdbook-html/search"]
+        README.md
+        src/
     mdbook-html/
         Cargo.toml
             36→[features]
@@ -154,6 +161,7 @@ crates/
                     2→mod helpers;
                     4→mod search;
                     5→mod static_files;
+                    6→
                     7→pub use self::hbs_renderer::HtmlHandlebars;
                 search.rs
                 static_files.rs
@@ -163,6 +171,7 @@ crates/
                 4→mod html_handlebars;
                 5→pub mod theme;
                 6→pub(crate) mod utils;
+                7→
                 8→pub use html_handlebars::HtmlHandlebars;
             theme/
                 fonts.rs
@@ -224,11 +233,6 @@ guide/
         format/
         guide/
             README.md
-                1→# User guide
-                3→This user guide provides an introduction to basic concepts of using mdBook.
-                5→- [Installation](installation.md)
-                6→- [Reading Books](reading.md)
-                7→- [Creating a Book](creating.md)
             creating.md
             installation.md
             reading.md
@@ -301,6 +305,7 @@ src/
         10→use std::ffi::OsStr;
         11→use std::path::PathBuf;
         12→use tracing::{error, info};
+        13→
         14→mod cmd;
         18→fn main() {
         19→    init_logger();
@@ -308,6 +313,7 @@ src/
         23→    // Check which subcommand the user ran...
         50→    if let Err(e) = res {
         51→        utils::log_backtrace(&e);
+        52→
         53→        std::process::exit(101);
         54→    }
 tests/

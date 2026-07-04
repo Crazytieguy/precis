@@ -18,15 +18,17 @@ README.md
     1→semver(1) -- The semantic versioner for npm
     2→===========================================
     4→## Install
-    …
+    5→
     6→```bash
     7→npm install semver
     8→````
     10→## Usage
-    …
+    11→
     12→As a node module:
+    13→
     14→```js
     15→const semver = require('semver')
+    16→
     17→semver.valid('1.2.3') // '1.2.3'
     18→semver.valid('a.b.c') // null
     19→semver.clean('  =v1.2.3   ') // '1.2.3'
@@ -38,9 +40,10 @@ README.md
     25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
     26→```
     139→## Versions
-    …
+    140→
     141→A "version" is described by the `v2.0.0` specification found at
     142→<https://semver.org/>.
+    143→
     144→A leading `"="` or `"v"` character is stripped off and ignored.
     145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
     146→specification but should not be used anymore.
@@ -76,7 +79,7 @@ README.md
     478→### Sorting
     …
     485→### Comparators
-    …
+    486→
     487→* `intersects(comparator)`: Return true if the comparators intersect
     489→### Ranges
     …
@@ -108,7 +111,7 @@ README.md
     563→version is not valid a null will be returned. This does not work for
     564→ranges.
     576→## Constants
-    …
+    577→
     578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
     580→### `RELEASE_TYPES`
     …

@@ -6,15 +6,16 @@ expression: rendered
 .gitignore
 ARCHITECTURE.md
     1→# `sqlite-vec` Architecture
-    …
+    2→
     3→Internal documentation for how `sqlite-vec` works under-the-hood. Not meant for
     4→users of the `sqlite-vec` project, consult
     5→[the official `sqlite-vec` documentation](https://alexgarcia.xyz/sqlite-vec) for
     6→how-to-guides. Rather, this is for people interested in how `sqlite-vec` works
     7→and some guidelines to any future contributors.
+    8→
     9→Very much a WIP.
     11→## `vec0`
-    …
+    12→
     13→### Shadow Tables
     …
     49→### idxStr
@@ -27,13 +28,17 @@ README.md
     5→An extremely small, "fast enough" vector search SQLite extension that runs
     6→anywhere! A successor to [`sqlite-vss`](https://github.com/asg017/sqlite-vss)
     8→<!-- deno-fmt-ignore-start -->
+    9→
     10→> [!IMPORTANT]
     11→> _`sqlite-vec` is a pre-v1, so expect breaking changes!_
+    12→
     13→<!-- deno-fmt-ignore-end -->
+    14→
     15→- Store and query float, int8, and binary vectors in `vec0` virtual tables
     16→- Written in pure C, no dependencies, runs anywhere SQLite runs
     17→  (Linux/MacOS/Windows, in the browser with WASM, Raspberry Pis, etc.)
     18→- Store non-vector data in metadata, auxiliary, or partition key columns
+    19→
     20→<p align="center">
     21→  <a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">
     22→  <picture>
@@ -43,6 +48,7 @@ README.md
     26→  </picture>
     27→  </a>
     28→</p>
+    29→
     30→<p align="center">
     31→<i>
     32→<code>sqlite-vec</code> is a
@@ -59,39 +65,10 @@ README.md
     …
     61→## Sample usage
     …
-    63→```sql
-    64→.load ./vec0
-    66→create virtual table vec_examples using vec0(
-    67→  sample_embedding float[8]
-    68→);
-    70→-- vectors can be provided as JSON or in a compact binary format
-    71→insert into vec_examples(rowid, sample_embedding)
-    72→  values
-    73→    (1, '[-0.200, 0.250, 0.341, -0.211, 0.645, 0.935, -0.316, -0.924]'),
-    74→    (2, '[0.443, -0.501, 0.355, -0.771, 0.707, -0.708, -0.185, 0.362]'),
-    75→    (3, '[0.716, -0.927, 0.134, 0.052, -0.669, 0.793, -0.634, -0.162]'),
-    76→    (4, '[-0.710, 0.330, 0.656, 0.041, -0.990, 0.726, 0.385, -0.958]');
-    79→-- KNN style query
-    80→select
-    81→  rowid,
-    82→  distance
-    83→from vec_examples
-    84→where sample_embedding match '[0.890, 0.544, 0.825, 0.961, 0.358, 0.0196, 0.521, 0.175]'
-    85→order by distance
-    86→limit 2;
-    87→/*
-    88→┌───────┬──────────────────┐
-    89→│ rowid │     distance     │
-    90→├───────┼──────────────────┤
-    91→│ 2     │ 2.38687372207642 │
-    92→│ 1     │ 2.38978505134583 │
-    93→└───────┴──────────────────┘
-    94→*/
-    95→```
     97→## Sponsors
     …
     152→## See Also
-    …
+    153→
     154→- [**`sqlite-ecosystem`**](https://github.com/asg017/sqlite-ecosystem), Maybe
     155→  more 3rd party SQLite extensions I've developed
     156→- [**`sqlite-rembed`**](https://github.com/asg017/sqlite-rembed), Generate text
@@ -102,6 +79,7 @@ README.md
 SECURITY.md
 TODO
     1→- [ ] add `xyz_info` shadow table with version etc.
+    2→
     3→- later
     4→  - [ ] partition: UPDATE support
     5→  - [ ] skip invalid validity entries in knn filter?
@@ -206,6 +184,17 @@ site/
     public/
     sqlite.tmlanguage.json
     using/
+        android-ios.md
+        c.md
+        datasette.md
+        go.md
+        js.md
+        python.md
+        rqlite.md
+        ruby.md
+        rust.md
+        sqlite-utils.md
+        wasm.md
     versioning.md
 sqlite-dist.toml
     1→[package]
@@ -217,6 +206,54 @@ sqlite-dist.toml
     7→authors = ["Alex Garcia"]
     8→git_tag_format = "v$VERSION"
 sqlite-vec.c
+    76→typedef int8_t i8;
+    77→typedef uint8_t u8;
+    78→typedef int16_t i16;
+    79→typedef int32_t i32;
+    80→typedef sqlite3_int64 i64;
+    81→typedef uint32_t u32;
+    82→typedef uint64_t u64;
+    83→typedef float f32;
+    84→typedef size_t usize;
+    …
+    112→#define countof(x) (sizeof(x) / sizeof((x)[0]))
+    113→#define min(a, b) (((a) <= (b)) ? (a) : (b))
+    114→
+    115→enum VectorElementType {
+    116→  // clang-format off
+    117→  SQLITE_VEC_ELEMENT_TYPE_FLOAT32 = 223 + 0,
+    118→  SQLITE_VEC_ELEMENT_TYPE_BIT     = 223 + 1,
+    119→  SQLITE_VEC_ELEMENT_TYPE_INT8    = 223 + 2,
+    120→  // clang-format on
+    121→};
+    583→#define vecJsonIsspace(x) (vecJsonIsSpaceX[(unsigned char)x])
+    584→
+    585→typedef void (*vector_cleanup)(void *p);
+    586→
+    587→void vector_cleanup_noop(void *_) { UNUSED_PARAMETER(_); }
+    588→
+    589→#define JSON_SUBTYPE 74
+    590→
+    591→void vtab_set_error(sqlite3_vtab *pVTab, const char *zFormat, ...) {
+    …
+    598→struct Array {
+    599→  size_t element_size;
+    600→  size_t length;
+    601→  size_t capacity;
+    602→  void *z;
+    603→};
+    614→int array_init(struct Array *array, size_t element_size, size_t init_capacity) {
+    …
+    629→int array_append(struct Array *array, const void *element) {
+    …
+    646→void array_cleanup(struct Array *array) {
+    …
+    656→char *vector_subtype_name(int subtype) {
+    …
+    667→char *type_name(int type) {
+    …
+    683→typedef void (*fvec_cleanup)(f32 *vector);
+    …
 sqlite-vec.h.tmpl
 test.sql
 tests/

@@ -10,7 +10,9 @@ README.md
     14→Neco is a C library that provides concurrency using coroutines.
     15→It's small & fast, and intended to make concurrent I/O & network programming 
     16→easy.
+    17→
     18→## Features
+    19→
     20→- [Coroutines](docs/API.md#basic-operations): starting, sleeping, suspending, resuming, yielding, and joining.
     21→- [Synchronization](docs/API.md#channels): channels, generators, mutexes, condition variables, and waitgroups.
     22→- Support for [deadlines and cancelation](docs/API.md#deadlines-and-cancelation).
@@ -23,21 +25,24 @@ README.md
     29→- Cross-platform. Linux, Mac, FreeBSD. _(Also WebAssembly and Windows with [some limitations](#platform-notes))_.
     30→- Single file amalgamation. No dependencies.
     31→- [Test suite](tests/README.md) with 100% coverage using sanitizers and [Valgrind](https://valgrind.org).
+    32→
     33→For a deeper dive, check out the [API reference](docs/API.md).
     35→It may also be worthwhile to see the [Bluebox](https://github.com/tidwall/bluebox) project for a
     36→more complete example of using Neco, including benchmarks.
     38→## Goals
-    …
+    39→
     40→- Give C programs fast single-threaded concurrency.
     41→- To use a concurrency model that resembles the simplicity of pthreads or Go.
     42→- Provide an API for concurrent networking and I/O.
     43→- Make it easy to interop with existing Posix functions.
+    44→
     45→It's a non-goal for Neco to provide a scalable multithreaded runtime, where the
     46→coroutine scheduler is shared among multiple cpu cores. Or to use other 
     47→concurrency models like async/await.
     49→## Using
-    …
+    50→
     51→Just drop the "neco.c" and "neco.h" files into your project. Most modern C compilers should work.
+    52→
     53→```sh
     54→cc -c neco.c
     55→```
@@ -66,7 +71,7 @@ README.md
     473→## Platform notes
     …
     498→## The scheduler
-    …
+    499→
     500→Neco uses [sco](https://github.com/tidwall/sco), which is a fair and
     501→deterministic scheduler. This means that no coroutine takes priority over
     502→another and that all concurrent operations will reproduce in an expected order.
@@ -76,7 +81,7 @@ README.md
     …
     513→There can be no more than one scheduler per thread.
     579→## License
-    …
+    580→
     581→Source code is available under the MIT [License](LICENSE).
 deps/
     .gitignore
@@ -92,12 +97,6 @@ deps/
 docs/
     .gitignore
     API.md
-        3→# Neco C API
-        5→C API for the Neco coroutine library.
-        7→This document provides a detailed description of the functions and types in the
-        8→[neco.h](../neco.h) and [neco.c](../neco.c) source files for the Neco library.
-        10→For a more general overview please see the project 
-        11→[README](https://github.com/tidwall/neco). 
         18→- [Channels](#channels)
         19→- [Generators](#generators)
         30→- [Time](#time)
@@ -105,9 +104,11 @@ docs/
     README.md
         1→# Neco Documentation
         3→## [API.md](API.md)
+        4→
         5→The Neco library API reference. This document includes information about each
         6→type and function and is generated from the [neco.h](../neco.h) and [neco.c](../neco.c)
         7→source files using a [doxygen](https://www.doxygen.nl) syntax.
+        8→
         9→To manually generate the document, run the `docs/tools/build-api.sh`.
     TECHNICAL.md
     assets/
@@ -118,7 +119,7 @@ docs/
             12→## Table of contents
             …
             34→## Programming notes
-            …
+            35→
             36→### neco_main
             …
             57→### Neco errors
@@ -184,7 +185,7 @@ neco.h
     59→/// variables.
     60→/// @{
     61→typedef struct neco_chan neco_chan;
-    …
+    62→
     63→int neco_chan_make(neco_chan **chan, size_t data_size, size_t capacity);
     64→int neco_chan_retain(neco_chan *chan);
     65→int neco_chan_release(neco_chan *chan);
@@ -207,7 +208,7 @@ neco.h
     88→/// sequence of values to be iterated over.
     89→/// @{
     90→typedef struct neco_gen neco_gen;
-    …
+    91→
     92→int neco_gen_start(neco_gen **gen, size_t data_size, void(*coroutine)(int argc, void *argv[]), int argc, ...);
     93→int neco_gen_startv(neco_gen **gen, size_t data_size, void(*coroutine)(int argc, void *argv[]), int argc, void *argv[]);
     94→int neco_gen_retain(neco_gen *gen);
@@ -224,9 +225,9 @@ neco.h
     111→/// due to race conditions.
     112→/// @{
     113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
-    …
+    114→
     115→#define NECO_MUTEX_INITIALIZER { 0 }
-    …
+    116→
     117→int neco_mutex_init(neco_mutex *mutex);
     118→int neco_mutex_lock(neco_mutex *mutex);
     119→int neco_mutex_lock_dl(neco_mutex *mutex, int64_t deadline);

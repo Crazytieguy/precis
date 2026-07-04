@@ -20,6 +20,7 @@ clipboard.go
 color.go
 commands.go
     1→package tea
+    2→
     3→import (
     4→	"time"
     5→)
@@ -53,6 +54,7 @@ cursor.go
     27→	return requestCursorPosMsg{}
 environ.go
     1→package tea
+    2→
     3→import uv "github.com/charmbracelet/ultraviolet"
     19→type EnvMsg uv.Environ
     …
@@ -96,6 +98,7 @@ logging.go
 logging_test.go
 mod.go
     1→package tea
+    2→
     3→import uv "github.com/charmbracelet/ultraviolet"
 mouse.go
 nil_renderer.go
@@ -120,6 +123,7 @@ paste.go
     20→type PasteEndMsg struct{}
 profile.go
     1→package tea
+    2→
     3→import "github.com/charmbracelet/colorprofile"
     13→type ColorProfileMsg struct {
     14→	colorprofile.Profile
@@ -152,6 +156,7 @@ renderer.go
     …
 screen.go
     1→package tea
+    2→
     3→import "github.com/charmbracelet/x/ansi"
     9→type WindowSizeMsg struct {
     10→	Width  int
@@ -164,6 +169,7 @@ screen.go
     62→type ModeReportMsg struct {
     63→	// Mode is the mode number.
     64→	Mode ansi.Mode
+    65→
     66→	// Value is the mode value.
     67→	Value ansi.ModeSetting
     68→}
@@ -199,9 +205,11 @@ tea.go
     54→	// Init is the first function that will be called. It returns an optional
     55→	// initial command. To not perform an initial command return nil.
     56→	Init() Cmd
+    57→
     58→	// Update is called when a message is received. Use it to inspect messages
     59→	// and, in response, update the model and/or send a command.
     60→	Update(Msg) (Model, Cmd)
+    61→
     62→	// View renders the program's UI, which can be a string or a [Layer]. The
     63→	// view is rendered after every Update.
     64→	View() View
@@ -277,11 +285,16 @@ tutorials/
     commands/
     go.mod
         1→module tutorial
+        2→
         3→go 1.24.2
+        4→
         5→toolchain go1.24.10
+        6→
         7→require charm.land/bubbletea/v2 v2.0.0-00010101000000-000000000000
+        8→
         9→require (
         27→)
+        28→
         29→replace charm.land/bubbletea/v2 => ../
     go.sum
 xterm.go

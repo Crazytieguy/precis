@@ -26,6 +26,7 @@ Cargo.toml
     21→# besides bringing in an unused dependency, as `std::backtrace` is always
     22→# preferred.
     23→backtrace = { version = "0.3.51", optional = true }
+    24→
     25→[dev-dependencies]
     26→futures = { version = "0.3", default-features = false }
     27→rustversion = "1.0.6"
@@ -40,10 +41,12 @@ README.md
     9→This library provides [`anyhow::Error`][Error], a trait object based error type
     10→for easy idiomatic error handling in Rust applications.
     12→[Error]: https://docs.rs/anyhow/1.0/anyhow/struct.Error.html
+    13→
     14→```toml
     15→[dependencies]
     16→anyhow = "1.0"
     17→```
+    18→
     19→<br>
     21→## Details
     …
@@ -145,6 +148,7 @@ src/
         261→mod nightly;
         262→mod ptr;
         263→mod wrapper;
+        264→
         265→use crate::error::ErrorImpl;
         266→use crate::ptr::Own;
         267→use core::fmt::Display;
@@ -191,6 +195,7 @@ src/
         618→    fn context<C>(self, context: C) -> Result<T, Error>
         619→    where
         620→        C: Display + Send + Sync + 'static;
+        621→
         622→    /// Wrap the error value with additional context that is evaluated lazily
         623→    /// only once an error does occur.
         624→    fn with_context<C, F>(self, f: F) -> Result<T, Error>

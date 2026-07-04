@@ -7,6 +7,7 @@ LICENSE
 Makefile
 README.md
     1→# chibicc: A Small C Compiler
+    2→
     3→(The old master has moved to
     4→[historical/old](https://github.com/rui314/chibicc/tree/historical/old)
     5→branch. This is a new one uploaded in September 2020.)
@@ -19,7 +20,7 @@ README.md
     128→## Design principles
     …
     180→## About the Author
-    …
+    181→
     182→I'm Rui Ueyama. I'm the creator of [8cc](https://github.com/rui314/8cc),
     183→which is a hobby C compiler, and also the original creator of the current
     184→version of [LLVM lld](https://lld.llvm.org) linker, which is a
@@ -60,6 +61,7 @@ chibicc.h
     63→  char *name;
     64→  int file_no;
     65→  char *contents;
+    66→
     67→  // For #line directive
     68→  char *display_name;
     69→  int line_delta;
@@ -75,6 +77,7 @@ chibicc.h
     80→  int len;          // Token length
     81→  Type *ty;         // Used if TK_NUM or TK_STR
     82→  char *str;        // String literal contents including terminating '\0'
+    83→
     84→  File *file;       // Source location
     85→  char *filename;   // Filename
     86→  int line_no;      // Line number
@@ -97,7 +100,7 @@ chibicc.h
     104→Token *tokenize_string_literal(Token *tok, Type *basety);
     105→Token *tokenize(File *file);
     106→Token *tokenize_file(char *filename);
-    …
+    107→
     108→#define unreachable() \
     109→  error("internal error at %s:%d", __FILE__, __LINE__)
     115→char *search_include_paths(char *filename);
@@ -249,6 +252,7 @@ chibicc.h
     367→  int idx;
     368→  int align;
     369→  int offset;
+    370→
     371→  // Bitfield
     372→  bool is_bitfield;
     373→  int bit_offset;

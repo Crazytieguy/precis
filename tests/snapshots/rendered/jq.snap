@@ -15,15 +15,16 @@ Makefile.am
 NEWS.md
 README.md
     1→# jq
+    2→
     3→`jq` is a lightweight and flexible command-line JSON processor akin to `sed`,`awk`,`grep`, and friends for JSON data. It's written in portable C and has zero runtime dependencies, allowing you to easily slice, filter, map, and transform structured data.
     5→## Documentation
-    …
+    6→
     7→- **Official Documentation**: [jqlang.org](https://jqlang.org)
     8→- **Try jq Online**: [play.jqlang.org](https://play.jqlang.org)
     10→## Installation
-    …
+    11→
     12→### Prebuilt Binaries
-    …
+    13→
     14→Download the latest releases from the [GitHub release page](https://github.com/jqlang/jq/releases).
     16→### Docker Image
     …
@@ -31,12 +32,12 @@ README.md
     34→### Building from source
     …
     67→## Community & Support
-    …
+    68→
     69→- Questions & Help: [Stack Overflow (jq tag)](https://stackoverflow.com/questions/tagged/jq)
     70→- Chat & Community: [Join us on Discord](https://discord.gg/yg6yjNmgAC)
     71→- Wiki & Advanced Topics: [Explore the Wiki](https://github.com/jqlang/jq/wiki)
     73→## License
-    …
+    74→
     75→`jq` is released under the [MIT License](COPYING). `jq`'s documentation is
     76→licensed under the [Creative Commons CC BY 3.0](COPYING).
     77→`jq` uses parts of the open source C library "decNumber", which is distributed
@@ -60,6 +61,7 @@ docs/
     README.md
         1→Documentation
         2→=============
+        3→
         4→The jq website, manpages and some of the tests are generated from this
         5→directory. The manual is a YAML file in `content/manual`.
     build_manpage.py
@@ -97,6 +99,9 @@ docs/
         index.html.j2
         manual.html.j2
         shared/
+            _footer.html.j2
+            _head.html.j2
+            _navbar.html.j2
     validate_manual_schema.py
 jq.1.prebuilt
 jq.spec
@@ -128,7 +133,7 @@ src/
         15→};
         17→typedef struct jq_state jq_state;
         18→typedef void (*jq_msg_cb)(void *, jv);
-        …
+        19→
         20→jq_state *jq_init(void);
         21→void jq_set_error_cb(jq_state *, jq_msg_cb, void *);
         22→void jq_get_error_cb(jq_state *, jq_msg_cb *, void **);
@@ -141,12 +146,12 @@ src/
         29→void jq_start(jq_state *, jv value, int);
         30→jv jq_next(jq_state *);
         31→void jq_teardown(jq_state **);
-        …
+        32→
         33→void jq_halt(jq_state *, jv, jv);
         34→int jq_halted(jq_state *);
         35→jv jq_get_exit_code(jq_state *);
         36→jv jq_get_error_message(jq_state *);
-        …
+        37→
         38→typedef jv (*jq_input_cb)(jq_state *, void *);
         39→void jq_set_input_cb(jq_state *, jq_input_cb, void *);
         40→void jq_get_input_cb(jq_state *, jq_input_cb *, void **);
@@ -193,23 +198,23 @@ src/
         …
         54→jv jv_copy(jv);
         55→void jv_free(jv);
-        …
+        56→
         57→int jv_get_refcnt(jv);
-        …
+        58→
         59→int jv_equal(jv, jv);
         60→int jv_identical(jv, jv);
         61→int jv_contains(jv, jv);
-        …
+        62→
         63→jv jv_invalid(void);
         64→jv jv_invalid_with_msg(jv);
         65→jv jv_invalid_get_msg(jv);
         66→int jv_invalid_has_msg(jv);
-        …
+        67→
         68→jv jv_null(void);
         69→jv jv_true(void);
         70→jv jv_false(void);
         71→jv jv_bool(int);
-        …
+        72→
         73→jv jv_number(double);
         74→jv jv_number_with_literal(const char*);
         75→double jv_number_value(jv);
@@ -251,8 +256,10 @@ src/
     jv_private.h
         1→#ifndef JV_PRIVATE
         2→#define JV_PRIVATE
+        3→
         4→int jvp_number_cmp(jv, jv);
         5→int jvp_number_is_nan(jv);
+        6→
         7→#endif //JV_PRIVATE
     jv_thread.h
     jv_unicode.c
@@ -281,8 +288,10 @@ src/
     linker.h
         1→#ifndef LINKER_H
         2→#define LINKER_H
+        3→
         4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
         5→jv load_module_meta(jq_state *jq, jv modname);
+        6→
         7→#endif
     locfile.c
     locfile.h

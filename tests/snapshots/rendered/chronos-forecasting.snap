@@ -20,6 +20,7 @@ README.md
     10→[![aws](https://img.shields.io/static/v1?label=SageMaker&message=Deploy&color=FF9900&logo=amazon-web-services)](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb)
     11→[![faq](https://img.shields.io/badge/FAQ-Questions%3F-blue)](https://github.com/amazon-science/chronos-forecasting/issues?q=is%3Aissue+label%3AFAQ)
     12→[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
+    13→
     14→</div>
     17→## 🚀 News
     …
@@ -39,10 +40,10 @@ README.md
     130→## 📝 Citation
     …
     153→## 🛡️ Security
-    …
+    154→
     155→See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
     157→## 📃 License
-    …
+    158→
     159→This project is licensed under the Apache-2.0 License.
 ci/
     evaluate/
@@ -76,6 +77,7 @@ src/
         __init__.py
             1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
             2→# SPDX-License-Identifier: Apache-2.0
+            3→
             4→from .__about__ import __version__
             5→from .base import BaseChronosPipeline, ForecastType
             6→from .chronos import (
@@ -87,6 +89,7 @@ src/
             12→)
             13→from .chronos2 import Chronos2ForecastingConfig, Chronos2Model, Chronos2Pipeline
             14→from .chronos_bolt import ChronosBoltConfig, ChronosBoltPipeline
+            15→
             16→__all__ = [
             17→    "__version__",
             18→    "BaseChronosPipeline",
@@ -173,11 +176,14 @@ src/
             __init__.py
                 1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
                 2→# SPDX-License-Identifier: Apache-2.0
+                3→
                 4→# Authors: Abdul Fatir Ansari <ansarnd@amazon.com>
+                5→
                 6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
                 7→from .model import Chronos2Model
                 8→from .pipeline import Chronos2Pipeline
                 9→from .dataset import Chronos2Dataset
+                10→
                 11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
             config.py
                 12→class Chronos2CoreConfig(PretrainedConfig):
@@ -194,6 +200,8 @@ src/
             model.py
             pipeline.py
                 36→logger = logging.getLogger(__name__)
+                37→
+                38→
                 39→class Chronos2Pipeline(BaseChronosPipeline):
                 40→    forecast_type: ForecastType = ForecastType.QUANTILES
                 41→    default_context_length: int = 2048

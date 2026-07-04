@@ -156,6 +156,7 @@ tests/
 xlstm/
     __init__.py
         1→__version__ = "2.0.5"
+        2→
         3→from .blocks.mlstm.block import mLSTMBlock, mLSTMBlockConfig
         4→from .blocks.mlstm.layer import mLSTMLayer, mLSTMLayerConfig
         5→from .blocks.slstm.block import sLSTMBlock, sLSTMBlockConfig
@@ -185,8 +186,10 @@ xlstm/
                     __init__.py
                         1→# Copyright (c) NXAI GmbH and its affiliates 2023
                         2→# Korbininan Pöppel
+                        3→
                         4→from typing import Callable
                         5→import torch
+                        6→
                         7→from .slstm import slstm_forward_pointwise as slstm_forward_pointwise_slstm
                         8→from .lstm import slstm_forward_pointwise as slstm_forward_pointwise_lstm
                         11→slstm_pointwise_function_registry: dict[str, Callable] = {
@@ -196,7 +199,16 @@ xlstm/
                         17→def slstm_forward(
                         …
                         77→def slstm_forward_step(
-                        …
+                        78→    x: torch.Tensor,  # [B, G*I]
+                        79→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
+                        80→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
+                        81→    b: torch.Tensor,  # [T*H]
+                        82→    pointwise_forward: Callable[
+                        83→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
+                        84→        tuple[torch.Tensor, torch.Tensor],
+                        85→    ],
+                        86→    constants: dict[str, float] = {},
+                        87→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
                     lstm.py
                     slstm.py
         xlstm_block.py
@@ -228,6 +240,7 @@ xlstm/
         13→    proj_factor: float = None  # will be overridden by subclasses
         14→    round_proj_up_dim_up: bool = True
         15→    round_proj_up_to_multiple_of: int = 64
+        16→
         17→    # internal
         18→    _proj_up_dim: int = None  # will be computed from embedding_dim and proj_factor
         32→class WeightDecayOptimGroupMixin(nn.Module, ABC):

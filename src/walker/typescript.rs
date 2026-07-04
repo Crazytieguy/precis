@@ -3298,8 +3298,10 @@ export default class C {
                 &[3],
             ),
             // Blank source lines inside the body shouldn't be counted —
-            // build_file_spans filters them out, so the emit-rows helper must too.
-            // Lines 2 and 4 are blank; only 3 and 5 are emitted.
+            // collected rows stay non-blank (`build_file_spans` re-bridges
+            // interior blanks at span build), so the emit-rows helper
+            // filters them too. Lines 2 and 4 are blank; only 3 and 5 are
+            // collected.
             (
                 "\
 export function foo() {

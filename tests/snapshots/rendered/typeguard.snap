@@ -13,25 +13,34 @@ README.rst
     16→annotations, and any arbitrary objects. It can be used together with static type
     17→checkers as an additional layer of type safety, to catch type violations that could only
     18→be detected at run time.
+    19→
     20→Two principal ways to do type checking are provided:
+    21→
     22→#. The ``check_type`` function:
+    23→
     24→   * like ``isinstance()``, but supports arbitrary type annotations (within limits)
     25→   * can be used as a ``cast()`` replacement, but with actual checking of the value
     26→#. Code instrumentation:
+    27→
     28→   * entire modules, or individual functions (via ``@typechecked``) are recompiled, with
     29→     type checking code injected into them
     30→   * automatically checks function arguments, return values and assignments to annotated
     31→     local variables
     32→   * for generator functions (regular and async), checks yield and send values
     33→   * requires the original source code of the instrumented module(s) to be accessible
+    34→
     35→Two options are provided for code instrumentation:
+    36→
     37→#. the ``@typechecked`` function:
+    38→
     39→   * can be applied to functions individually
     40→#. the import hook (``typeguard.install_import_hook()``):
+    41→
     42→   * automatically instruments targeted modules on import
     43→   * no manual code changes required in the target modules
     44→   * requires the import hook to be installed before the targeted modules are imported
     45→   * may clash with other import hooks
+    46→
     47→See the documentation_ for further information.
 docs/
     api.rst
@@ -58,6 +67,7 @@ src/
         __init__.py
             1→import os
             2→from typing import Any
+            3→
             4→from ._checkers import TypeCheckerCallable as TypeCheckerCallable
             5→from ._checkers import TypeCheckLookupCallback as TypeCheckLookupCallback
             6→from ._checkers import check_type_internal as check_type_internal
@@ -82,10 +92,14 @@ src/
             25→from ._suppression import suppress_type_checks as suppress_type_checks
             26→from ._utils import Unset as Unset
             34→config: TypeCheckConfiguration
+            35→
+            36→
             37→def __getattr__(name: str) -> Any:
             38→    if name == "config":
             39→        from ._config import global_config
+            40→
             41→        return global_config
+            42→
             43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
         _checkers.py
             153→def check_callable(
@@ -107,7 +121,11 @@ src/
             251→    memo: TypeCheckMemo,
             252→) -> None:
             305→def check_list(
-            …
+            306→    value: Any,
+            307→    origin_type: Any,
+            308→    args: tuple[Any, ...],
+            309→    memo: TypeCheckMemo,
+            310→) -> None:
             324→def check_sequence(
             …
             343→def check_set(
@@ -126,14 +144,10 @@ src/
             …
         _config.py
             11→T = TypeVar("T")
+            12→
+            13→
             14→class ForwardRefPolicy(Enum):
-            15→    """
-            16→    Defines how unresolved forward references are handled.
-            18→    Members:
-            20→    * ``ERROR``: propagate the :exc:`NameError` when the forward reference lookup fails
-            21→    * ``WARN``: emit a :class:`~.TypeHintWarning` if the forward reference lookup fails
-            22→    * ``IGNORE``: silently skip checks for unresolveable forward references
-            23→    """
+            …
             25→    ERROR = auto()
             26→    WARN = auto()
             27→    IGNORE = auto()
@@ -213,9 +227,6 @@ src/
         _functions.py
         _importhook.py
         _memo.py
-            1→from __future__ import annotations
-            3→from typing import Any
-            5→from typeguard._config import TypeCheckConfiguration, global_config
             8→class TypeCheckMemo:
             9→    """
             10→    Contains information necessary for type checkers to do their work.
@@ -236,6 +247,7 @@ src/
         _suppression.py
             15→P = ParamSpec("P")
             16→T = TypeVar("T")
+            17→
             18→type_checks_suppressed = 0
             19→type_checks_suppress_lock = Lock()
             22→@overload

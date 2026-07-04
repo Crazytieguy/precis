@@ -8,6 +8,7 @@ Justfile
 README.md
     12→<b>microbootstrap</b> assists you in creating applications with all the necessary instruments already set up.
     55→## Table of Contents
+    56→
     57→- [Installation](#installation)
     58→- [Quickstart](#quickstart)
     59→- [Settings](#settings)
@@ -56,8 +57,9 @@ README.md
     563→### Health checks
     …
     586→## Configuration
-    …
+    587→
     588→While settings provide a convenient mechanism, it's not always feasible to store everything within them.
+    589→
     590→There may be cases where you need to configure a tool directly. Here's how it can be done.
     592→### Instruments configuration
     …
@@ -126,6 +128,8 @@ microbootstrap/
             18→    __dataclass_fields__: typing.ClassVar[dict[str, typing.Any]]
             21→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
             22→DataclassT = typing.TypeVar("DataclassT", bound=DataclassInstance)
+            23→
+            24→
             25→class ApplicationBootstrapper(abc.ABC, typing.Generic[SettingsT, ApplicationT, DataclassT]):
             26→    application_type: type[ApplicationT]
             27→    application_config: DataclassT
@@ -215,6 +219,8 @@ microbootstrap/
         base.py
             15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
             16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
+            17→
+            18→
             19→class BaseInstrumentConfig(pydantic.BaseModel):
             20→    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
             23→@dataclasses.dataclass

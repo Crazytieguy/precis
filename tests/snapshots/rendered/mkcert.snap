@@ -7,13 +7,16 @@ AUTHORS
 LICENSE
 README.md
     1→# mkcert
+    2→
     3→mkcert is a simple tool for making locally-trusted development certificates. It requires no configuration.
     5→```
     6→$ mkcert -install
     7→Created a new local CA 💥
     8→The local CA is now installed in the system trust store! ⚡️
     9→The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
+    10→
     11→$ mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
+    12→
     13→Created a new certificate valid for the following names 📜
     14→ - "example.com"
     15→ - "*.example.com"
@@ -21,13 +24,17 @@ README.md
     17→ - "localhost"
     18→ - "127.0.0.1"
     19→ - "::1"
+    20→
     21→The certificate is at "./example.com+5.pem" and the key at "./example.com+5-key.pem" ✅
     22→```
+    23→
     24→<p align="center"><img width="498" alt="Chrome and Firefox screenshot" src="https://user-images.githubusercontent.com/1225294/51066373-96d4aa80-15be-11e9-91e2-f4e44a3a4458.png"></p>
+    25→
     26→Using certificates from real certificate authorities (CAs) for development can be dangerous or impossible (for hosts like `example.test`, `localhost` or `127.0.0.1`), but self-signed certificates cause trust errors. Managing your own CA is the best solution, but usually involves arcane commands, specialized knowledge and manual steps.
+    27→
     28→mkcert automatically creates and installs a local CA in the system root store, and generates locally-trusted certificates. mkcert does not automatically configure servers to use the certificates, though, that's up to you.
     30→## Installation
-    …
+    31→
     32→> **Warning**: the `rootCA-key.pem` file that mkcert automatically generates gives complete power to intercept secure requests from your machine. Do not share it.
     34→### macOS
     …
@@ -35,21 +42,12 @@ README.md
     …
     92→### Windows
     …
-    94→On Windows, use [Chocolatey](https://chocolatey.org)
-    96→```
-    97→choco install mkcert
-    98→```
-    100→or use Scoop
-    102→```
-    103→scoop bucket add extras
-    104→scoop install mkcert
-    105→```
     107→or build from source (requires Go 1.10+), or use [the pre-built binaries](https://github.com/FiloSottile/mkcert/releases).
     109→If you're running into permission problems try running `mkcert` as an Administrator.
     111→## Supported root stores
     …
     127→## Advanced topics
-    …
+    128→
     129→### Advanced options
     …
     150→> **Note:** You _must_ place these options before the domain names list.
@@ -65,7 +63,7 @@ README.md
     …
 cert.go
     35→var userAndHostname string
-    …
+    36→
     37→func init() {
     …
     50→func (m *mkcert) makeCert(hosts []string) {
@@ -92,18 +90,22 @@ cert.go
     367→	return "mkcert development CA " + m.caCert.SerialNumber.String()
 go.mod
     1→module filippo.io/mkcert
+    2→
     3→go 1.18
+    4→
     5→require (
     6→	golang.org/x/net v0.0.0-20220421235706-1d1ef9303861
     7→	howett.net/plist v1.0.0
     8→	software.sslmate.com/src/go-pkcs12 v0.2.0
     9→)
+    10→
     11→require (
     14→)
 go.sum
 main.go
     5→// Command mkcert is a simple zero-config tool to make development certificates.
     6→package main
+    7→
     8→import (
     9→	"crypto"
     10→	"crypto/x509"
@@ -122,20 +124,26 @@ main.go
     23→	"runtime/debug"
     24→	"strings"
     25→	"sync"
+    26→
     27→	"golang.org/x/net/idna"
     28→)
     30→const shortUsage = `Usage of mkcert:
-    …
+    31→
     32→	$ mkcert -install
     33→	Install the local CA in the system trust store.
+    34→
     35→	$ mkcert example.org
     36→	Generate "example.org.pem" and "example.org-key.pem".
+    37→
     38→	$ mkcert example.com myapp.dev localhost 127.0.0.1 ::1
     39→	Generate "example.com+4.pem" and "example.com+4-key.pem".
+    40→
     41→	$ mkcert "*.example.it"
     42→	Generate "_wildcard.example.it.pem" and "_wildcard.example.it-key.pem".
+    43→
     44→	$ mkcert -uninstall
     45→	Uninstall the local CA (but do not delete it).
+    46→
     47→`
     49→const advancedUsage = `Advanced options:
     …
@@ -143,20 +151,22 @@ main.go
     83→// which is "(devel)" when building from within the module. See
     84→// golang.org/issue/29814 and golang.org/issue/29228.
     85→var Version string
-    …
+    86→
     87→func main() {
     …
     152→const rootName = "rootCA.pem"
     153→const rootKeyName = "rootCA-key.pem"
-    …
+    154→
     155→type mkcert struct {
     156→	installMode, uninstallMode bool
     157→	pkcs12, ecdsa, client      bool
     158→	keyFile, certFile, p12File string
     159→	csrPath                    string
+    160→
     161→	CAROOT string
     162→	caCert *x509.Certificate
     163→	caKey  crypto.PrivateKey
+    164→
     165→	// The system cert pool is only loaded once. After installing the root, checks
     166→	// will keep failing until the next execution. TODO: maybe execve?
     167→	// https://github.com/golang/go/issues/24540 (thanks, myself)
@@ -174,6 +184,7 @@ main.go
     337→	if m.ignoreCheckFailure {
     338→		return true
     339→	}
+    340→
     341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
     342→	return err == nil
     345→func storeEnabled(name string) bool {
@@ -202,7 +213,7 @@ main.go
     376→	_, err := exec.LookPath(name)
     377→	return err == nil
     380→var sudoWarningOnce sync.Once
-    …
+    381→
     382→func commandWithSudo(cmd ...string) *exec.Cmd {
     …
 truststore_darwin.go
@@ -210,7 +221,7 @@ truststore_java.go
     21→var (
     22→	hasJava    bool
     23→	hasKeytool bool
-    …
+    24→
     25→	javaHome    string
     26→	cacertsPath string
     27→	keytoolPath string
@@ -231,6 +242,7 @@ truststore_java.go
 truststore_linux.go
 truststore_nss.go
     5→package main
+    6→
     7→import (
     8→	"bytes"
     9→	"log"

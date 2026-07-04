@@ -10,16 +10,20 @@ Makefile
 README.md
     2→# lo - Iterate over slices, maps, channels...
     13→✨ **`samber/lo` is a Lodash-style Go library based on Go 1.18+ Generics.**
+    14→
     15→A utility library based on Go 1.18+ generics that makes it easier to work with slices, maps, strings, channels, and functions. It provides dozens of handy methods to simplify common coding tasks and improve code readability. It may look like [Lodash](https://github.com/lodash/lodash) in some aspects.
     53→## 🚀 Install
     …
     68→## 💡 Usage
     …
     100→## 🤠 Spec
-    …
+    101→
     102→GoDoc: [godoc.org/github.com/samber/lo](https://godoc.org/github.com/samber/lo)
+    103→
     104→Documentation: [lo.samber.dev](https://lo.samber.dev/docs/about)
+    105→
     106→Supported helpers for slices:
+    107→
     108→- [Filter](#filter)
     109→- [Map](#map)
     110→- [UniqMap](#uniqmap)
@@ -83,6 +87,7 @@ README.md
     168→- [TrimRight](#TrimRight)
     169→- [TrimSuffix](#TrimSuffix)
     171→Supported helpers for maps:
+    172→
     173→- [Keys](#keys)
     174→- [UniqKeys](#uniqkeys)
     175→- [HasKey](#haskey)
@@ -108,6 +113,7 @@ README.md
     195→- [FilterKeys](#FilterKeys)
     196→- [FilterValues](#FilterValues)
     198→Supported math helpers:
+    199→
     200→- [Range / RangeFrom / RangeWithSteps](#range--rangefrom--rangewithsteps)
     201→- [Clamp](#clamp)
     202→- [Sum](#sum)
@@ -124,7 +130,7 @@ README.md
     5073→## 🤝 Contributing
     …
     5093→## 👤 Contributors
-    …
+    5094→
     5095→![Contributors](https://contrib.rocks/image?repo=samber/lo)
     5097→## 💫 Show your support
     …
@@ -134,12 +140,6 @@ benchmark/
 channel.go
 channel_test.go
 concurrency.go
-    1→package lo
-    3→import (
-    4→	"context"
-    5→	"sync"
-    6→	"time"
-    7→)
 concurrency_test.go
 condition.go
     1→package lo
@@ -152,18 +152,12 @@ constraints.go
     6→}
 docs/
 errors.go
-    1→package lo
-    3→import (
-    4→	"errors"
-    5→	"fmt"
-    6→	"reflect"
-    7→)
 errors_test.go
 exp/
     simd/
         BENCHMARK.md
             1→# Benchmark
-            …
+            2→
             3→## Summary
             …
             23→## Run
@@ -172,15 +166,21 @@ exp/
             …
         README.md
             1→# SIMD experiment (Go 1.26+)
+            2→
             3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
+            4→
             5→See [benchmarks](./BENCHMARK.md).
         cpu_amd64.go
         cpu_amd64_test.go
         go.mod
             1→module github.com/samber/lo/exp/simd
+            2→
             3→go 1.26.0
+            4→
             5→require github.com/samber/lo v0.0.0
+            6→
             7→require golang.org/x/text v0.22.0 // indirect
+            8→
             9→replace github.com/samber/lo => ../../
         go.sum
         intersect_avx512.go
@@ -205,16 +205,20 @@ func.go
 func_test.go
 go.mod
     1→module github.com/samber/lo
+    2→
     3→go 1.18
+    4→
     5→//
     6→// Dev dependencies are excluded from releases. Please check CI.
     7→//
+    8→
     9→require (
     10→	github.com/stretchr/testify v1.11.1
     11→	github.com/thoas/go-funk v0.9.3
     12→	go.uber.org/goleak v1.2.1
     13→	golang.org/x/text v0.22.0
     14→)
+    15→
     16→require (
     23→)
 go.sum
@@ -222,6 +226,7 @@ internal/
     constraints/
         README.md
             2→# Constraints
+            3→
             4→This package is for Go 1.18 retrocompatiblity purpose.
         constraints.go
             7→package constraints
@@ -236,7 +241,9 @@ internal/
     xtime/
         README.md
             2→# xtime
+            3→
             4→Lightweight mock for time package.
+            5→
             6→A dedicated package such as [jonboulle/clockwork](https://github.com/jonboulle/clockwork/) would be better, but I would rather limit dependencies for this package. `clockwork` does not support Go 1.18 anymore.
         fake.go
         noCopy.go
@@ -271,6 +278,7 @@ it/
     seq_test.go
     string.go
         3→package it
+        4→
         5→import "iter"
         13→func ChunkString[T ~string](str T, size int) iter.Seq[T] {
         …
@@ -287,11 +295,6 @@ map.go
     1→package lo
 map_test.go
 math.go
-    1→package lo
-    3→import (
-    4→	"math"
-    6→	"github.com/samber/lo/internal/constraints"
-    7→)
 math_test.go
 mutable/
     slice.go
@@ -300,6 +303,7 @@ mutable/
 parallel/
     slice.go
         1→package parallel
+        2→
         3→import "sync"
     slice_test.go
 retry.go
@@ -311,6 +315,7 @@ string.go
 string_test.go
 time.go
     1→package lo
+    2→
     3→import (
     4→	"time"
     5→)
@@ -320,6 +325,7 @@ tuples.go
 tuples_test.go
 type_manipulation.go
     1→package lo
+    2→
     3→import "reflect"
 type_manipulation_test.go
 types.go

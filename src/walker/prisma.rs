@@ -214,8 +214,8 @@ fn push_decl_batches(
 /// Split line for a wide model: the midpoint row of the block, kept
 /// strictly interior. No field-line awareness — the split can land on a
 /// blank/comment/continuation row, which is harmless because
-/// `build_file_spans` drops blank rows and the head/tail spans stay
-/// contiguous. Returns `None` only when the block has no strictly
+/// `build_file_spans` trims blank rows at span edges, so each half
+/// still starts and ends on content. Returns `None` only when the block has no strictly
 /// interior row (< 3 rows), which the `MODEL_SPLIT_MIN_ROWS` gate at the
 /// sole call site makes unreachable in production.
 fn model_split_line(decl: &Decl) -> Option<usize> {

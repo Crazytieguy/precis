@@ -7,6 +7,7 @@ expression: rendered
 CHANGELOG.md
 Cargo.toml
     1→[package]
+    2→
     3→name = "log"
     4→version = "0.4.29" # remember to update html_root_url
     5→authors = ["The Rust Project Developers"]
@@ -27,6 +28,7 @@ LICENSE-MIT
 README.md
     1→log
     2→===
+    3→
     4→A Rust library providing a lightweight logging *facade*.
     11→* [`log` documentation](https://docs.rs/log)
     13→A logging facade provides a single logging API that abstracts over the actual
@@ -36,7 +38,7 @@ README.md
     19→## Minimum supported `rustc`
     …
     25→## Usage
-    …
+    26→
     27→### In libraries
     …
     58→### In executables
@@ -214,6 +216,7 @@ src/
         1260→    /// It's up to an implementation of the `Log` trait to call `enabled` in its own
         1261→    /// `log` method implementation to guarantee that filtering is applied.
         1262→    fn enabled(&self, metadata: &Metadata) -> bool;
+        1263→
         1264→    /// Logs the `Record`.
         1265→    ///
         1266→    /// # For implementors
@@ -222,6 +225,7 @@ src/
         1269→    /// Implementations of `log` should perform all necessary filtering
         1270→    /// internally.
         1271→    fn log(&self, record: &Record);
+        1272→
         1273→    /// Flushes any buffered records.
         1274→    ///
         1275→    /// # For implementors

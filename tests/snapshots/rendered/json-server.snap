@@ -16,19 +16,21 @@ LICENSE
 README.md
     1→# JSON-Server
     3→[![Node.js CI](https://github.com/typicode/json-server/actions/workflows/node.js.yml/badge.svg)](https://github.com/typicode/json-server/actions/workflows/node.js.yml)
+    4→
     5→> [!IMPORTANT]
     6→> Viewing beta v1 documentation – usable but expect breaking changes. For stable version, see [here](https://github.com/typicode/json-server/tree/v0.17.4)
+    7→
     8→> [!NOTE]
     9→> Using React ⚛️ and tired of CSS-in-JS? See [MistCSS](https://github.com/typicode/mistcss) 👀
     11→## Install
-    …
+    12→
     13→```shell
     14→npm install json-server
     15→```
     17→## Usage
     …
     91→## Sponsors ✨
-    …
+    92→
     93→### Gold
     …
     104→### Silver
@@ -37,8 +39,9 @@ README.md
     …
     116→[Become a sponsor and have your company logo here](https://github.com/users/typicode/sponsorship)
     118→## Query Capabilities
-    …
+    119→
     120→JSON Server supports advanced querying out of the box:
+    121→
     122→```http
     123→GET /posts?views:gt=100                  # Filter by condition
     124→GET /posts?_sort=-views                  # Sort by field (descending)
@@ -46,12 +49,14 @@ README.md
     126→GET /posts?_embed=comments               # Include relations
     127→GET /posts?_where={"or":[...]}           # Complex queries
     128→```
+    129→
     130→See detailed documentation below for each feature.
     132→## Routes
-    …
+    133→
     134→### Array Resources
-    …
+    135→
     136→For array resources like `posts` and `comments`:
+    137→
     138→```http
     139→GET    /posts
     140→GET    /posts/:id
@@ -60,21 +65,23 @@ README.md
     143→PATCH  /posts/:id
     144→DELETE /posts/:id
     145→```
+    146→
     147→### Object Resources
-    …
+    148→
     149→For singular object resources like `profile`:
+    150→
     151→```http
     152→GET   /profile
     153→PUT   /profile
     154→PATCH /profile
     155→```
     157→## Query params
-    …
+    158→
     159→### Conditions
     …
     161→Use `field:operator=value`.
     186→### Sort
-    …
+    187→
     188→```http
     189→GET /posts?_sort=title
     190→GET /posts?_sort=-views
@@ -89,38 +96,39 @@ README.md
     217→- `_per_page` defaults to `10` if not specified
     218→- Invalid `_page` or `_per_page` values are automatically normalized to valid ranges
     220→### Embed
-    …
+    221→
     222→```http
     223→GET /posts?_embed=comments
     224→GET /comments?_embed=post
     225→```
     227→### Complex filter with `_where`
     …
-    229→`_where` accepts a JSON object and overrides normal query params when valid.
-    231→```http
-    232→GET /posts?_where={"or":[{"views":{"gt":100}},{"author":{"name":{"lt":"m"}}}]}
-    233→```
     235→## Delete dependents
-    …
+    236→
     237→```http
     238→DELETE /posts/1?_dependent=comments
     239→```
     241→## Static Files
-    …
+    242→
     243→JSON Server automatically serves files from the `./public` directory.
+    244→
     245→To serve additional static directories:
+    246→
     247→```bash
     248→json-server db.json -s ./static
     249→json-server db.json -s ./static -s ./node_modules
     250→```
+    251→
     252→Static files are served with standard MIME types and can include HTML, CSS, JavaScript, images, and other assets.
     254→## Migration Notes (v0 → v1)
-    …
+    255→
     256→If you are upgrading from json-server v0.x, note these behavioral changes:
+    257→
     258→- **ID handling:** `id` is always a string and will be auto-generated if not provided
     259→- **Pagination:** Use `_per_page` with `_page` instead of the deprecated `_limit` parameter
     260→- **Relationships:** Use `_embed` instead of `_expand` for including related resources
     261→- **Request delays:** Use browser DevTools (Network tab > throttling) instead of the removed `--delay` CLI option
+    262→
     263→> **New to json-server?** These notes are for users migrating from v0. If this is your first time using json-server, you can ignore this section.
 fixtures/
     db.json
@@ -238,11 +246,13 @@ src/
         58→export function parseWhere(query: string): JsonObject {
         59→  const out: JsonObject = {}
         60→  const params = new URLSearchParams(query)
+        61→
         62→  for (const [rawKey, rawValue] of params.entries()) {
         63→    const { path, op } = splitKey(rawKey)
         64→    if (op === null) continue
         65→    setPathOp(out, path, op, rawValue)
         66→  }
+        67→
         68→  return out
     random-id.ts
         1→import { randomBytes } from 'node:crypto'
@@ -251,9 +261,9 @@ src/
     service.test.ts
     service.ts
         9→export type Item = Record<string, unknown>
-        …
+        10→
         11→export type Data = Record<string, Item[] | Item>
-        …
+        12→
         13→export function isItem(obj: unknown): obj is Item {
         14→  return typeof obj === 'object' && obj !== null && !Array.isArray(obj)
         17→export type PaginatedItems = PaginationResult<Item>
@@ -274,7 +284,7 @@ src/
         11→  'endsWith',
         12→] as const
         14→export type WhereOperator = (typeof WHERE_OPERATORS)[number]
-        …
+        15→
         16→export function isWhereOperator(value: string): value is WhereOperator {
         17→  return (WHERE_OPERATORS as readonly string[]).includes(value)
 tsconfig.json

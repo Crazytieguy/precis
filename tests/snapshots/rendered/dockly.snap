@@ -31,7 +31,7 @@ README.md
     56→### `--containerFilters`
     …
     63→# Docker Support
-    …
+    64→
     65→## Run from docker
     …
     74→## Build
@@ -66,18 +66,22 @@ index.js
     78→    } catch (err) {
     79→      return reject(err)
     80→    }
+    81→
     82→    return resolve(screen)
     83→  })
     86→function exitError (err) {
     87→  cli.showUsage()
+    88→
     89→  if (err && err.message) {
     90→    console.log('\x1b[31m')
     91→    console.trace(err)
+    92→
     93→    if (err.message === 'Unable to determine the domain name') {
     94→      console.log('-> check your connection options to the docker daemon and confirm containers exist')
     95→    }
     96→    console.log('\x1b[0m')
     97→  }
+    98→
     99→  process.exit(-1)
 lib/
     modes.js
@@ -113,6 +117,7 @@ src/
         35→      if (err) {
         36→        return cb(err, {})
         37→      }
+        38→
         39→      return cb(null, data)
         40→    })
         43→  listImages (cb) {
@@ -120,6 +125,7 @@ src/
         45→      if (err) {
         46→        return cb(err, {})
         47→      }
+        48→
         49→      if (images) {
         50→        return cb(null, images)
         51→      }
@@ -129,6 +135,7 @@ src/
         57→      if (err) {
         58→        return cb(err, {})
         59→      }
+        60→
         61→      return cb(data)
         62→    })
         65→  listContainers (cb) {
@@ -139,6 +146,7 @@ src/
         70→      if (err) {
         71→        return cb(err, {})
         72→      }
+        73→
         74→      return cb(null, containers)
         75→    })
         78→  listServices (cb) {
@@ -146,6 +154,7 @@ src/
         80→      if (err) {
         81→        return cb(err, {})
         82→      }
+        83→
         84→      return cb(null, containers)
         85→    })
         88→  stopAllContainers (cb) {
@@ -153,6 +162,7 @@ src/
         90→      if (err) {
         91→        return cb(err, {})
         92→      }
+        93→
         94→      containers.forEach((containerInfo) => {
         95→        this.stopContainer(containerInfo.Id, cb)
         96→      })
@@ -162,6 +172,7 @@ src/
         102→      if (err) {
         103→        return cb(err, {})
         104→      }
+        105→
         106→      containers.forEach((containerInfo) => {
         107→        this.removeContainer(containerInfo.Id, cb)
         108→      })
@@ -171,6 +182,7 @@ src/
         114→      if (err) {
         115→        return cb(err, {})
         116→      }
+        117→
         118→      images.forEach((imageInfo) => {
         119→        this.removeImage(imageInfo.Id, cb)
         120→      })
@@ -206,6 +218,7 @@ src/
         195→    if (!containerId) {
         196→      return cb(null)
         197→    }
+        198→
         199→    const container = this.dockerCon.getContainer(containerId)
         200→    container.stats({ stream: false }, function (err, stream) {
         201→      if (err) {
@@ -241,16 +254,7 @@ src/
     screen.js
         18→class screen {
         19→  constructor (utils = new Map()) {
-        20→    this.mode = MODES.container
-        21→    this.screen = undefined
-        22→    this.grid = undefined
-        23→    this.title = 'Dockly'
-        25→    this.utils = utils
-        27→    // toggle widgets focus
-        28→    this.toggleWidgetFocus = true
-        30→    this.widgetsRepository = new Map()
-        31→    this.hooks = new Map()
-        32→    this.widgets = new Map()
+        …
         35→  initScreen () {
         …
         48→  init () {

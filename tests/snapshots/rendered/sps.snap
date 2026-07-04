@@ -22,7 +22,9 @@ README.md
     25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
     27→- **Formulae:** command‑line tools, libraries, and languages
     28→- **Casks:** desktop applications and related artifacts on macOS
+    29→
     30→> _ARM only for now, might add x86 support eventually_
+    31→
     32→---
     34→## ⚙️ Project Structure
     …
@@ -66,6 +68,7 @@ sps/
             35→pub struct CliArgs {
             36→    #[arg(short, long, action = ArgAction::Count, global = true)]
             37→    pub verbose: u8,
+            38→
             39→    #[command(subcommand)]
             40→    pub command: Command,
             41→}
@@ -146,6 +149,7 @@ sps/
             171→            cli_args.command,
             172→            Command::Install(_) | Command::Reinstall(_) | Command::Upgrade(_)
             173→        );
+            174→
             175→        if is_pipeline_command {
             176→            // Only show error details in verbose mode
             177→            if cli_args.verbose > 0 {
@@ -166,9 +170,6 @@ sps/
             planner.rs
             runner.rs
         pipeline.rs
-            1→pub mod downloader;
-            2→pub mod planner;
-            3→pub mod runner;
 sps-common/
     Cargo.toml
     src/
@@ -209,6 +210,7 @@ sps-common/
             formula.rs
             mod.rs
                 3→use std::sync::Arc;
+                4→
                 5→pub mod artifact;
                 6→pub mod cask;
                 7→pub mod formula;
@@ -234,20 +236,18 @@ sps-core/
             mod.rs
                 1→pub mod installed;
                 2→pub mod update;
+                3→
                 4→pub use installed::{InstalledPackageInfo, PackageType};
                 5→pub use update::UpdateInfo;
             update.rs
         install/
             bottle/
             cask/
-                artifacts/
-                dmg.rs
-                helpers.rs
-                mod.rs
             devtools.rs
             extract.rs
             mod.rs
                 5→use std::path::PathBuf;
+                6→
                 7→use sps_common::config::Config;
                 8→use sps_common::model::formula::Formula;
                 11→pub mod bottle;
@@ -328,6 +328,7 @@ sps-net/
             25→        Config,
             26→    }, // Need Config, Result, SpsError, Cache
             27→};
+            28→
             29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
         oci.rs
         validation.rs

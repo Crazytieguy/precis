@@ -66,27 +66,27 @@ Hashtable.c
 Hashtable.h
     2→#define HEADER_Hashtable
     14→typedef unsigned int ht_key_t;
-    …
+    15→
     16→typedef void(*Hashtable_PairFunction)(ht_key_t key, void* value, void* userdata);
-    …
+    17→
     18→typedef struct Hashtable_ Hashtable;
     …
     22→size_t Hashtable_count(const Hashtable* this);
     …
     26→Hashtable* Hashtable_new(size_t size, bool owner);
-    …
+    27→
     28→void Hashtable_delete(Hashtable* this);
-    …
+    29→
     30→void Hashtable_clear(Hashtable* this);
-    …
+    31→
     32→void Hashtable_setSize(Hashtable* this, size_t size);
-    …
+    33→
     34→void Hashtable_put(Hashtable* this, ht_key_t key, void* value);
-    …
+    35→
     36→void* Hashtable_remove(Hashtable* this, ht_key_t key);
-    …
+    37→
     38→void* Hashtable_get(Hashtable* this, ht_key_t key);
-    …
+    39→
     40→void Hashtable_foreach(Hashtable* this, Hashtable_PairFunction f, void* userData);
     …
 Header.c
@@ -113,7 +113,7 @@ Machine.h
     2→#define HEADER_Machine
     35→typedef unsigned long long int memory_t;
     36→#define MEMORY_MAX ULLONG_MAX
-    …
+    37→
     38→typedef struct Machine_ {
     39→   struct Settings_* settings;
     46→   int64_t iterationsRemaining;
@@ -127,10 +127,6 @@ Machine.h
     57→   memory_t cachedSwap;
     59→   unsigned int activeCPUs;
     60→   unsigned int existingCPUs;
-    62→   UsersTable* usersTable;
-    63→   uid_t htopUserId;
-    64→   uid_t maxUserId;  /* recently observed */
-    65→   uid_t userId;  /* selected row user ID */
     67→   pid_t maxProcessId; /* largest PID seen at runtime */
     69→   size_t tableCount;
     70→   Table **tables;
@@ -138,25 +134,25 @@ Machine.h
     72→   Table *processTable;
     73→} Machine;
     76→Machine* Machine_new(UsersTable* usersTable, uid_t userId);
-    …
+    77→
     78→void Machine_init(Machine* this, UsersTable* usersTable, uid_t userId);
-    …
+    79→
     80→void Machine_delete(Machine* this);
-    …
+    81→
     82→void Machine_done(Machine* this);
-    …
+    83→
     84→bool Machine_isCPUonline(const Machine* this, unsigned int id);
-    …
+    85→
     86→int Machine_getCPUPhysicalCoreID(const Machine* this, unsigned int id);
-    …
+    87→
     88→int Machine_getCPUThreadIndex(const Machine* this, unsigned int id);
-    …
+    89→
     90→void Machine_populateTablesFromSettings(Machine* this, Settings* settings, Table* processTable);
-    …
+    91→
     92→void Machine_setTablesPanel(Machine* this, Panel* panel);
-    …
+    93→
     94→void Machine_scan(Machine* this);
-    …
+    95→
     96→void Machine_scanTables(Machine* this);
     …
 Macros.h
@@ -180,23 +176,23 @@ Object.h
     2→#define HEADER_Object
     18→struct Object_;
     19→typedef struct Object_ Object;
-    …
+    20→
     21→typedef void(*Object_Display)(const Object*, RichString*);
     22→typedef int(*Object_Compare)(const void*, const void*);
     23→typedef void(*Object_Delete)(Object*);
-    …
+    24→
     25→#define Object_getClass(obj_)         ((const Object*)(obj_))->klass
     26→#define Object_setClass(obj_, class_) (((Object*)(obj_))->klass = (const ObjectClass*) (class_))
-    …
+    27→
     28→#define Object_delete(obj_)           (assert(Object_getClass(obj_)->delete), Object_getClass(obj_)->delete((Object*)(obj_)))
     29→#define Object_displayFn(obj_)        Object_getClass(obj_)->display
     30→#define Object_display(obj_, str_)    (assert(Object_getClass(obj_)->display), Object_getClass(obj_)->display((const Object*)(obj_), str_))
     31→#define Object_compare(obj_, other_)  (assert(Object_getClass(obj_)->compare), Object_getClass(obj_)->compare((const void*)(obj_), other_))
-    …
+    32→
     33→#define Class(class_)                 ((const ObjectClass*)(&(class_ ## _class)))
-    …
+    34→
     35→#define AllocThis(class_) (class_*)   xMalloc(sizeof(class_)); Object_setClass(this, Class(class_))
-    …
+    36→
     37→typedef struct ObjectClass_ {
     38→   const void* const extends;
     39→   const Object_Display display;
@@ -211,7 +207,7 @@ Object.h
     50→   void* v;
     51→} Arg;
     53→extern const ObjectClass Object_class;
-    …
+    54→
     55→bool Object_isA(const Object* o, const ObjectClass* klass);
     …
 OpenFilesScreen.c
@@ -226,11 +222,11 @@ Process.h
     22→#define PROCESS_FLAG_IO              0x00000001
     23→#define PROCESS_FLAG_CWD             0x00000002
     24→#define PROCESS_FLAG_SCHEDPOL        0x00000004
-    …
+    25→
     26→#define DEFAULT_HIGHLIGHT_SECS 5
     …
     29→#define PROCESS_NICE_UNKNOWN (-INT_MAX)
-    …
+    30→
     31→typedef enum Tristate_ {
     32→   TRI_INITIAL = 0,
     33→   TRI_OFF = -1,
@@ -248,11 +244,7 @@ Process.h
     67→   int flags;     /* Special flags used for selective highlighting, zero for always */
     68→} ProcessCmdlineHighlight;
     74→typedef struct ProcessMergedCommand_ {
-    75→   uint64_t lastUpdate;                        /* Marker based on settings->lastUpdate to track when the rendering needs refreshing */
-    76→   char* str;                                  /* merged Command string */
-    77→   size_t highlightCount;                      /* how many portions of cmdline to highlight */
-    78→   ProcessCmdlineHighlight highlights[8];      /* which portions of cmdline to highlight */
-    79→} ProcessMergedCommand;
+    …
     81→typedef struct Process_ {
     83→   Row super;
     86→   int pgrp;
@@ -296,7 +288,6 @@ Process.h
     229→#define LAST_PROCESSFIELD LAST_RESERVED_FIELD
     230→typedef int32_t ProcessField;  /* see ReservedField list in RowField.h */
     …
-    232→// Implemented in platform-specific code:
     233→void Process_writeField(const Process* this, RichString* str, ProcessField field);
     234→int Process_compare(const void* v1, const void* v2);
     235→int Process_compareByParent(const Row* r1, const Row* r2);
@@ -304,7 +295,7 @@ Process.h
     237→extern const ProcessFieldData Process_fields[LAST_PROCESSFIELD];
     238→#define Process_pidDigits Row_pidDigits
     239→#define Process_uidDigits Row_uidDigits
-    …
+    240→
     241→typedef Process* (*Process_New)(const struct Machine_*);
 ProcessLocksScreen.c
 ProcessLocksScreen.h
@@ -317,6 +308,7 @@ README
 README.md
     1→# [![htop logo](htop-logo.png)](https://htop.dev)
     13→## Introduction
+    14→
     15→`htop` is a cross-platform interactive process viewer.
 RichString.c
 RichString.h

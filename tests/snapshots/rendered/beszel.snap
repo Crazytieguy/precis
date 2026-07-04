@@ -22,14 +22,6 @@ agent/
     battery/
         battery.go
             2→package battery
-            4→const (
-            5→	stateUnknown uint8 = iota
-            6→	stateEmpty
-            7→	stateFull
-            8→	stateCharging
-            9→	stateDischarging
-            10→	stateIdle
-            11→)
         battery_darwin.go
         battery_linux.go
         battery_linux_test.go
@@ -83,6 +75,7 @@ agent/
     gpu_nvml_linux.go
     gpu_nvml_unsupported.go
         3→package agent
+        4→
         5→import "fmt"
         7→type nvmlCollector struct {
         8→	gm *GPUManager
@@ -120,6 +113,7 @@ agent/
     smart.go
     smart_nonwindows.go
         3→package agent
+        4→
         5→import "errors"
         7→func ensureEmbeddedSmartctl() (string, error) {
         8→	return "", errors.ErrUnsupported
@@ -146,6 +140,7 @@ beszel.go
     1→// Package beszel provides core application constants and version information
     2→// which are used throughout the application.
     3→package beszel
+    4→
     5→import "github.com/blang/semver"
     7→const (
     8→	// Version is the current version of the application.
@@ -160,7 +155,9 @@ beszel.go
     18→var MinVersionAgentResponse = semver.MustParse("0.13.0")
 go.mod
     1→module github.com/henrygd/beszel
+    2→
     3→go 1.26.1
+    4→
     5→require (
     6→	github.com/blang/semver v3.5.1+incompatible
     7→	github.com/coreos/go-systemd/v22 v22.7.0
@@ -183,6 +180,7 @@ go.mod
     24→	gopkg.in/yaml.v3 v3.0.1
     25→	howett.net/plist v1.0.1
     26→)
+    27→
     28→require (
     68→)
 go.sum
@@ -245,12 +243,15 @@ internal/
         users.go
 readme.md
     1→# Beszel
+    2→
     3→Beszel is a lightweight server monitoring platform that includes Docker statistics, historical data, and alert functions.
     5→It has a friendly web interface, simple configuration, and is ready to use out of the box. It supports automatic backup, multi-user, OAuth authentication, and API access.
+    6→
     7→[![agent Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel-agent/latest?logo=docker&label=agent%20image%20size)](https://hub.docker.com/r/henrygd/beszel-agent)
     8→[![hub Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel/latest?logo=docker&label=hub%20image%20size)](https://hub.docker.com/r/henrygd/beszel)
     9→[![MIT license](https://img.shields.io/github/license/henrygd/beszel?color=%239944ee)](https://github.com/henrygd/beszel/blob/main/LICENSE)
     10→[![Crowdin](https://badges.crowdin.net/beszel/localized.svg)](https://crowdin.com/project/beszel)
+    11→
     12→![Screenshot of Beszel dashboard and system page, side by side. The dashboard shows metrics from multiple connected systems, while the system page shows detailed metrics for a single system.](https://henrygd-assets.b-cdn.net/beszel/screenshot-new.png)
     14→## Features
     …
@@ -264,10 +265,10 @@ readme.md
     25→## Architecture
     …
     32→## Getting started
-    …
+    33→
     34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
     36→## Screenshots
-    …
+    37→
     38→![Dashboard](https://beszel.dev/image/dashboard.png)
     39→![System page](https://beszel.dev/image/system-full.png)
     40→![Notification Settings](https://beszel.dev/image/settings-notifications.png)
@@ -280,7 +281,7 @@ readme.md
     56→## Help and discussion
     …
     68→## License
-    …
+    69→
     70→Beszel is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 supplemental/
     CHANGELOG.md
@@ -308,7 +309,7 @@ supplemental/
             44→### Agent
             …
             74→## Manual install
-            …
+            75→
             76→### Hub
             …
             104→### Agent

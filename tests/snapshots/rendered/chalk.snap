@@ -11,7 +11,7 @@ benchmark.js
     2→import chalk from './index.js';
 code-of-conduct.md
     1→# Contributor Covenant Code of Conduct
-    …
+    2→
     3→## Our Pledge
     …
     12→## Our Standards
@@ -86,20 +86,22 @@ package.json
 readme.md
     10→> Terminal string styling done right
     18→## Info
+    19→
     20→- [Why not switch to a smaller coloring package?](https://github.com/chalk/chalk?tab=readme-ov-file#why-not-switch-to-a-smaller-coloring-package)
     21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
     23→## Highlights
     …
     36→## Install
-    …
+    37→
     38→```sh
     39→npm install chalk
     40→```
+    41→
     42→**IMPORTANT:** Chalk 5 is ESM. If you want to use Chalk with TypeScript or a build tool, you will probably want to use Chalk 4 for now. [Read more.](https://github.com/chalk/chalk/releases/tag/v5.0.0)
     44→## Usage
     …
     112→## API
-    …
+    113→
     114→### chalk.`<style>[.<style>...](string, [string...])`
     …
     116→Example: `chalk.red.bold.underline('Hello', 'world');`
@@ -114,7 +116,7 @@ readme.md
     155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
     …
     171→## Styles
-    …
+    172→
     173→### Modifiers
     …
     175→- `reset` - Reset the current style.
@@ -125,8 +127,9 @@ readme.md
     180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
     181→- `inverse` - Invert background and foreground colors.
     182→- `hidden` - Print the text but make it invisible.
+    183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
     186→### Colors
-    …
+    187→
     188→- `black`
     189→- `red`
     190→- `green`
@@ -148,13 +151,13 @@ readme.md
     224→## 256 and Truecolor color support
     …
     246→## Browser support
-    …
+    247→
     248→Since Chrome 69, ANSI escape codes are natively supported in the developer console.
     250→## Windows
-    …
+    251→
     252→If you're on Windows, do yourself a favor and use [Windows Terminal](https://github.com/microsoft/terminal) instead of `cmd.exe`.
     254→## FAQ
-    …
+    255→
     256→### Why not switch to a smaller coloring package?
     …
     268→*\- [Sindre](https://github.com/sindresorhus)*
@@ -163,7 +166,7 @@ readme.md
     274→## Related
     …
     294→## Maintainers
-    …
+    295→
     296→- [Sindre Sorhus](https://github.com/sindresorhus)
     297→- [Josh Junon](https://github.com/qix-)
 source/
@@ -190,6 +193,7 @@ source/
         25→	if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
         26→		throw new Error('The `level` option should be an integer from 0 to 3');
         27→	}
+        28→
         29→	// Detect level if not set manually
         30→	const colorLevel = stdoutColor ? stdoutColor.level : 0;
         31→	object.level = options.level === undefined ? colorLevel : options.level;
@@ -200,7 +204,9 @@ source/
         41→const chalkFactory = options => {
         42→	const chalk = (...strings) => strings.join(' ');
         43→	applyOptions(chalk, options);
+        44→
         45→	Object.setPrototypeOf(chalk, createChalk.prototype);
+        46→
         47→	return chalk;
         50→function createChalk(options) {
         51→	return chalkFactory(options);
@@ -247,15 +253,18 @@ source/
                 35→		if (env.FORCE_COLOR === 'true') {
                 36→			return 1;
                 37→		}
+                38→
                 39→		if (env.FORCE_COLOR === 'false') {
                 40→			return 0;
                 41→		}
+                42→
                 43→		return env.FORCE_COLOR.length === 0 ? 1 : Math.min(Number.parseInt(env.FORCE_COLOR, 10), 3);
                 44→	}
                 47→function translateLevel(level) {
                 48→	if (level === 0) {
                 49→		return false;
                 50→	}
+                51→
                 52→	return {
                 53→		level,
                 54→		hasBasic: true,
@@ -269,6 +278,7 @@ source/
                 178→		streamIsTTY: stream && stream.isTTY,
                 179→		...options,
                 180→	});
+                181→
                 182→	return translateLevel(level);
                 185→const supportsColor = {
                 186→	stdout: createSupportsColor({isTTY: tty.isatty(1)}),

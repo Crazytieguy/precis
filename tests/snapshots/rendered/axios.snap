@@ -29,10 +29,10 @@ CLAUDE.md
 CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
     1→# Collaborator Guide
-    …
+    2→
     3→As a collaborator you share in the administrative responsibility for axios. This guide covers what we expect from you and how we keep the project healthy. For the technical bar (architecture, lifecycle, security-sensitive code, conventions), see [AGENTS.md](./AGENTS.md) — it is the canonical contributor guide.
     5→## Code of Conduct
-    …
+    6→
     7→You are expected to have read the [Code of Conduct](./CODE_OF_CONDUCT.md) and to help enforce it. This community should be friendly and welcoming.
     9→## Triage Issues
     …
@@ -47,21 +47,21 @@ COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
 CONTRIBUTORS.md
     1→# Contributors
-    …
+    2→
     3→Thank you to all the wonderful people who have contributed to axios!
     5→## Core Team
     …
     11→## Notable Contributors
-    …
+    12→
     13→<!-- Add contributors here in alphabetical order by GitHub username -->
     15→## How to Contribute
     …
 ECOSYSTEM.md
     1→# Ecosystem
-    …
+    2→
     3→This is a list of axios related libraries and resources. If you have a suggestion on what to add, please don't hesitate to submit a PR.
     5→## Libraries
-    …
+    6→
     7→### General
     …
     23→### API clients
@@ -143,6 +143,7 @@ lib/
     adapters/
         README.md
             1→# axios // adapters
+            2→
             3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
         adapters.js
             120→export default {
@@ -173,6 +174,7 @@ lib/
             72→export default InterceptorManager;
         README.md
             1→# axios // core
+            2→
             3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
             5→- Dispatching requests
             6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
@@ -199,16 +201,19 @@ lib/
             31→      }
             32→    }
             33→  }
+            34→
             35→  return (encoder || JSON.stringify)(rawValue);
             177→export default defaults;
         transitional.js
     env/
         README.md
             1→# axios // env
+            2→
             3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
         classes/
             FormData.js
         data.js
+            1→export const VERSION = "1.16.1";
     helpers/
         AxiosTransformStream.js
             156→export default AxiosTransformStream;
@@ -218,6 +223,7 @@ lib/
             77→export default HttpStatusCode;
         README.md
             1→# axios // helpers
+            2→
             3→The modules found in `helpers/` should be generic modules that are _not_ specific to the domain logic of axios. These modules could theoretically be published to npm on their own and consumed by other modules or apps. Some examples of generic modules are things like:
             5→- Browser polyfills
             6→- Managing cookies
@@ -329,6 +335,7 @@ lib/
                 20→  for (let i = 0; i < size; i++) {
                 21→    str += alphabet[randomValues[i] % length];
                 22→  }
+                23→
                 24→  return str;
                 27→export default {
                 28→  isNode: true,

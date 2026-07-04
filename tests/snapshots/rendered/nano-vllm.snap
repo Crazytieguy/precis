@@ -6,19 +6,20 @@ expression: rendered
 LICENSE
 README.md
     9→# Nano-vLLM
+    10→
     11→A lightweight vLLM implementation built from scratch.
     13→## Key Features
-    …
+    14→
     15→* 🚀 **Fast offline inference** - Comparable inference speeds to vLLM
     16→* 📖 **Readable codebase** - Clean implementation in ~ 1,200 lines of Python code
     17→* ⚡ **Optimization Suite** - Prefix caching, Tensor Parallelism, Torch compilation, CUDA graph, etc.
     19→## Installation
-    …
+    20→
     21→```bash
     22→pip install git+https://github.com/GeeeekExplorer/nano-vllm.git
     23→```
     25→## Model Download
-    …
+    26→
     27→To download the model weights manually, use the following command:
     28→```bash
     29→huggingface-cli download --resume-download Qwen/Qwen3-0.6B \
@@ -30,7 +31,7 @@ README.md
     46→## Benchmark
     …
     64→## Star History
-    …
+    65→
     66→[![Star History Chart](https://api.star-history.com/svg?repos=GeeeekExplorer/nano-vllm&type=Date)](https://www.star-history.com/#GeeeekExplorer/nano-vllm&Date)
 assets/
     logo.png
@@ -74,31 +75,7 @@ nanovllm/
         block_manager.py
             8→class Block:
             …
-            10→    def __init__(self, block_id):
-            …
-            16→    def update(self, hash: int, token_ids: list[int]):
-            …
-            20→    def reset(self):
-            …
             26→class BlockManager:
-            …
-            28→    def __init__(self, num_blocks: int, block_size: int):
-            …
-            35→    @classmethod
-            …
-            43→    def _allocate_block(self, block_id: int) -> Block:
-            …
-            51→    def _deallocate_block(self, block_id: int) -> Block:
-            …
-            56→    def can_allocate(self, seq: Sequence) -> bool:
-            …
-            59→    def allocate(self, seq: Sequence):
-            …
-            84→    def deallocate(self, seq: Sequence):
-            …
-            93→    def can_append(self, seq: Sequence) -> bool:
-            …
-            96→    def may_append(self, seq: Sequence):
             …
         llm_engine.py
             15→class LLMEngine:

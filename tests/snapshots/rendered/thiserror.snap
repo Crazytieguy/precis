@@ -19,6 +19,7 @@ Cargo.toml
     12→rust-version = "1.71"
     14→[features]
     15→default = ["std"]
+    16→
     17→# Std feature enables support for formatting std::path::{Path, PathBuf}
     18→# conveniently in an error message.
     19→#
@@ -33,6 +34,7 @@ Cargo.toml
     28→std = []
     30→[dependencies]
     31→thiserror-impl = { version = "=2.0.18", path = "impl" }
+    32→
     33→[dev-dependencies]
     34→anyhow = "1.0.73"
     35→ref-cast = "1.0.18"
@@ -48,15 +50,18 @@ README.md
     9→This library provides a convenient derive macro for the standard library's
     10→[`std::error::Error`] trait.
     12→[`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
+    13→
     14→```toml
     15→[dependencies]
     16→thiserror = "2"
     17→```
+    18→
     19→<br>
     21→## Example
-    …
+    22→
     23→```rust
     24→use thiserror::Error;
+    25→
     26→#[derive(Error, Debug)]
     27→pub enum DataStoreError {
     28→    #[error("data store disconnected")]
@@ -72,6 +77,7 @@ README.md
     38→    Unknown,
     39→}
     40→```
+    41→
     42→<br>
     44→## Details
     …
@@ -83,6 +89,7 @@ README.md
     52→  structs.
     204→- See also the [`anyhow`] library for a convenient single error type to use in
     205→  application code.
+    206→
     207→  [`anyhow`]: https://github.com/dtolnay/anyhow
     211→## Comparison to anyhow
     …
@@ -130,12 +137,7 @@ impl/
             33→    pub fields: Vec<Field<'a>>,
             34→}
             36→pub struct Field<'a> {
-            37→    pub original: &'a syn::Field,
-            38→    pub attrs: Attrs<'a>,
-            39→    pub member: MemberUnraw,
-            40→    pub ty: &'a Type,
-            41→    pub contains_generic: bool,
-            42→}
+            …
             44→#[derive(Copy, Clone)]
             45→pub enum ContainerKind {
             46→    Struct,
@@ -195,6 +197,7 @@ impl/
             30→mod scan_expr;
             31→mod unraw;
             32→mod valid;
+            33→
             34→use proc_macro::TokenStream;
             35→use proc_macro2::{Ident, Span};
             36→use quote::{ToTokens, TokenStreamExt as _};
@@ -266,7 +269,9 @@ src/
         282→mod display;
         284→mod provide;
         285→mod var;
+        286→
         287→pub use thiserror_impl::*;
+        288→
         289→mod private;
     private.rs
     provide.rs

@@ -9,6 +9,7 @@ Makefile
 README.md
     1→Simple Dynamic Strings
     2→===
+    3→
     4→**Notes about version 2**: this is an updated version of SDS in an attempt
     5→to finally unify Redis, Disque, Hiredis, and the stand alone SDS versions.
     6→This version is **NOT* binary compatible** with SDS verison 1, but the API
@@ -169,22 +170,9 @@ sds.h
     83→#define SDS_HDR_VAR(T,s) struct sdshdr##T *sh = (void*)((s)-(sizeof(struct sdshdr##T)));
     84→#define SDS_HDR(T,s) ((struct sdshdr##T *)((s)-(sizeof(struct sdshdr##T))))
     85→#define SDS_TYPE_5_LEN(f) ((f)>>SDS_TYPE_BITS)
-    …
+    86→
     87→static inline size_t sdslen(const sds s) {
-    88→    unsigned char flags = s[-1];
-    89→    switch(flags&SDS_TYPE_MASK) {
-    90→        case SDS_TYPE_5:
-    91→            return SDS_TYPE_5_LEN(flags);
-    92→        case SDS_TYPE_8:
-    93→            return SDS_HDR(8,s)->len;
-    94→        case SDS_TYPE_16:
-    95→            return SDS_HDR(16,s)->len;
-    96→        case SDS_TYPE_32:
-    97→            return SDS_HDR(32,s)->len;
-    98→        case SDS_TYPE_64:
-    99→            return SDS_HDR(64,s)->len;
-    100→    }
-    101→    return 0;
+    …
     104→static inline size_t sdsavail(const sds s) {
     …
     130→static inline void sdssetlen(sds s, size_t newlen) {
@@ -207,7 +195,7 @@ sds.h
     226→sds sdscatsds(sds s, const sds t);
     227→sds sdscpylen(sds s, const char *t, size_t len);
     228→sds sdscpy(sds s, const char *t);
-    …
+    229→
     230→sds sdscatvprintf(sds s, const char *fmt, va_list ap);
     …
     232→sds sdscatprintf(sds s, const char *fmt, ...)

@@ -20,6 +20,7 @@ CHANGES.rst
 LICENSE.txt
 README.md
     3→# Flask
+    4→
     5→Flask is a lightweight [WSGI] web application framework. It is designed
     6→to make getting started quick and easy, with the ability to scale up to
     7→complex applications. It began as a simple wrapper around [Werkzeug]
@@ -29,35 +30,41 @@ README.md
     12→project layout. It is up to the developer to choose the tools and
     13→libraries they want to use. There are many extensions provided by the
     14→community that make adding new functionality easy.
+    15→
     16→[WSGI]: https://wsgi.readthedocs.io/
     17→[Werkzeug]: https://werkzeug.palletsprojects.com/
     18→[Jinja]: https://jinja.palletsprojects.com/
     20→## A Simple Example
-    …
+    21→
     22→```python
     23→# save this as app.py
     24→from flask import Flask
+    25→
     26→app = Flask(__name__)
+    27→
     28→@app.route("/")
     29→def hello():
     30→    return "Hello, World!"
     31→```
+    32→
     33→```
     34→$ flask run
     35→  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
     36→```
     38→## Donate
-    …
+    39→
     40→The Pallets organization develops and supports Flask and the libraries
     41→it uses. In order to grow the community of contributors and users, and
     42→allow the maintainers to devote more time to the projects, [please
     43→donate today].
+    44→
     45→[please donate today]: https://palletsprojects.com/donate
     47→## Contributing
-    …
+    48→
     49→See our [detailed contributing documentation][contrib] for many ways to
     50→contribute, including reporting issues, requesting features, asking or answering
     51→questions, and making PRs.
+    52→
     53→[contrib]: https://palletsprojects.com/contributing/
 docs/
     Makefile
@@ -134,6 +141,15 @@ examples/
         requirements.txt
         src/
     javascript/
+        .gitignore
+        LICENSE.txt
+        README.rst
+        js_example/
+            __init__.py
+            templates/
+            views.py
+        pyproject.toml
+        tests/
     tutorial/
 pyproject.toml
     1→[project]
@@ -211,11 +227,6 @@ src/
             106→    ) -> t.IO[t.AnyStr]:
         cli.py
         config.py
-            17→T = t.TypeVar("T")
-            20→class ConfigAttribute(t.Generic[T]):
-            21→    """Makes an attribute forward to the config"""
-            50→class Config(dict):  # type: ignore[type-arg]
-            …
         ctx.py
         debughelpers.py
         globals.py
@@ -223,8 +234,10 @@ src/
         json/
             __init__.py
                 1→from __future__ import annotations
+                2→
                 3→import json as _json
                 4→import typing as t
+                5→
                 6→from ..globals import current_app
                 7→from .provider import _default
                 13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
@@ -254,6 +267,7 @@ src/
         sansio/
             README.md
                 1→# Sansio
+                2→
                 3→This folder contains code that can be used by alternative Flask
                 4→implementations, for example Quart. The code therefore cannot do any
                 5→IO, nor be part of a likely IO path. Finally this code cannot use the
@@ -263,8 +277,6 @@ src/
             scaffold.py
         sessions.py
         signals.py
-            1→from __future__ import annotations
-            3→from blinker import Namespace
         templating.py
         testing.py
         typing.py
@@ -300,7 +312,9 @@ src/
             222→class Response(ResponseBase):
             …
             240→    default_mimetype: str | None = "text/html"
+            241→
             242→    json_module = json
+            243→
             244→    autocorrect_location_header = False
             246→    @property
             247→    def max_cookie_size(self) -> int:  # type: ignore

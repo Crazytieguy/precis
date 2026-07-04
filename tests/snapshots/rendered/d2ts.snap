@@ -9,9 +9,12 @@ expression: rendered
 LICENSE
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
+    27→
     28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/TimelyDataflow/differential-dataflow) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
     30→You can use D2TS to build data pipelines that can be executed incrementally, meaning you can process data as it comes in, and only recompute the parts that have changed. This could be as simple as remapping data, or as complex as performing a full join combining two datasources where one is a computed aggregate.
+    31→
     32→D2TS can be used in conjunction with [ElectricSQL](https://electric-sql.com) to build data pipelines on top of [ShapeStreams](https://electric-sql.com/docs/api/clients/typescript#shapestream) that can be executed incrementally.
+    33→
     34→A D2TS pipeline is also fully type safe, inferring the types at each step of the pipeline, and supports auto-complete in your IDE.
     36→## Table of Contents
     …
@@ -20,7 +23,7 @@ README.md
     53→- **Incremental Processing**: Efficiently process changes to input data without recomputing everything
     71→- **Type Safety**: Full TypeScript type safety and inference through the pipeline API
     73→## Quick Start
-    …
+    74→
     75→### Installation
     …
     81→### Basic Usage
@@ -30,7 +33,7 @@ README.md
     185→## Examples
     …
     196→## API
-    …
+    197→
     198→### D2 graph construction
     …
     214→### Input Streams
@@ -66,6 +69,7 @@ packages/
         CHANGELOG.md
         README.md
             1→# D2Mini is a minimal IVM implementation based on Differential Dataflow
+            2→
             3→D2Mini is a minimal implementation of the D2TS dataflow graph library but simplified and without the complexities of multi-dimensional versioning.
             5→The API is almost identical to D2TS, but without the need to specify a version when sending data, or to send a frontier to mark the end of a version.
         eslint.config.mjs
@@ -105,11 +109,11 @@ packages/
     d2ql/
         README.md
             1→# D2QL
+            2→
             3→**This is an experimental package**
+            4→
             5→D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2TS pipeline. It provides a declarative way to express data transformations using familiar SQL-like syntax.
             7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
-            140→## Planned Features
-            142→Future versions may support additional SQL features and optimizations.
         eslint.config.mjs
         package.json
         src/
@@ -119,6 +123,7 @@ packages/
         CHANGELOG.md
         README.md
             26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
+            27→
             28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/MaterializeInc/differential) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
         eslint.config.mjs
         package.json
@@ -234,14 +239,6 @@ packages/
                 topK.ts
                 topKWithFractionalIndex.ts
             order.ts
-                10→export function v(version: number | number[]): Version {
-                …
-                29→export class Version {
-                …
-                138→export class Antichain {
-                …
-                277→export class Frontier extends Antichain {
-                …
             sqlite/
                 context.ts
                     65→export function withSQLite(db: SQLiteDb) {
@@ -258,13 +255,13 @@ packages/
                     …
             types.ts
                 5→export type KeyValue<K, V> = [K, V]
-                …
+                6→
                 7→export const MessageType = {
                 8→  DATA: 1,
                 9→  FRONTIER: 2,
                 10→} as const
                 12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
-                …
+                13→
                 14→export type Message<T> =
                 15→  | {
                 16→      type: typeof MessageType.DATA
@@ -279,7 +276,7 @@ packages/
                 26→  collection: MultiSet<T>
                 27→}
                 29→export type FrontierMessage = Version | Antichain
-                …
+                30→
                 31→export interface IOperator<_T> {
                 32→  run(): void
                 33→  hasPendingWork(): boolean

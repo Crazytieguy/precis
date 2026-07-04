@@ -8,7 +8,7 @@ expression: rendered
 .mailmap
 CONDUCT.md
     1→## Cobra User Contract
-    …
+    2→
     3→### Versioning
     …
     6→### Backward Compatibility
@@ -31,6 +31,7 @@ MAINTAINERS
 Makefile
 README.md
     7→Cobra is a library for creating powerful modern CLI applications.
+    8→
     9→<a href="https://cobra.dev">Visit Cobra.dev for extensive documentation</a> 
     29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
     30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
@@ -49,22 +50,12 @@ README.md
     116→# Usage
     …
     131→# License
-    …
+    132→
     133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
-    15→package cobra
-    17→import (
-    18→	"fmt"
-    19→	"os"
-    20→)
 active_help_test.go
 args.go
-    15→package cobra
-    17→import (
-    18→	"fmt"
-    19→	"strings"
-    20→)
 args_test.go
 assets/
     CobraMain.png
@@ -91,7 +82,7 @@ command.go
     33→const (
     34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
     35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
-    …
+    36→
     37→	helpFlagName    = "help"
     38→	helpCommandName = "help"
     39→)
@@ -254,7 +245,9 @@ flag_groups.go
 flag_groups_test.go
 go.mod
     1→module github.com/spf13/cobra
+    2→
     3→go 1.15
+    4→
     5→require (
     6→	github.com/cpuguy83/go-md2man/v2 v2.0.6
     7→	github.com/inconshreveable/mousetrap v1.1.0
@@ -265,10 +258,6 @@ go.sum
 powershell_completions.go
 powershell_completions_test.go
 shell_completions.go
-    15→package cobra
-    17→import (
-    18→	"github.com/spf13/pflag"
-    19→)
 site/
     content/
         active_help.md

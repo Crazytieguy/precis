@@ -191,10 +191,12 @@ src/
         806→    const composedRef = useComposedRefs(ref, overlayRef);
         807→    const hasSnapPoints = snapPoints && snapPoints.length > 0;
         808→    const onMouseUp = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => onRelease(event), [onRelease]);
+        809→
         810→    // Overlay is the component that is locking scroll, removing it will unlock the scroll without having to dig into Radix's Dialog library
         811→    if (!modal) {
         812→      return null;
         813→    }
+        814→
         815→    return (
         816→      <DialogPrimitive.Overlay
         817→        onMouseUp={onMouseUp}
@@ -207,7 +209,7 @@ src/
         824→      />
         825→    );
         831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
-        …
+        832→
         833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
         834→  { onPointerDownOutside, style, onOpenAutoFocus, ...rest },
         835→  ref,

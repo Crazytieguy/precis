@@ -8,13 +8,16 @@ expression: rendered
 LICENSE
 README.md
     1→<h1 align="center">TS-Pattern</h1>
+    2→
     3→<p align="center">
     4→The exhaustive Pattern Matching library for <a href="https://github.com/microsoft/TypeScript">TypeScript</a>
     5→with smart type inference.
     6→</p>
     40→## About
+    41→
     42→Write **better** and **safer conditions**. Pattern matching lets you express complex conditions in a single, compact expression. Your code becomes **shorter** and **more readable**. Exhaustiveness checking ensures you haven’t forgotten **any possible case**.
     44→![ts-pattern](https://user-images.githubusercontent.com/9265418/231688650-7cd957a9-8edc-4db8-a5fe-61e1c2179d91.gif)
+    45→
     46→<p align="center"><i>Animation by <a target="_blank" href="https://twitter.com/nicoespeon/status/1644342570389061634?s=20">@nicoespeon</a></i></p>
     51→- **Typesafe**, with helpful [type inference](#type-inference).
     52→- **Exhaustiveness checking** support, enforcing that you are matching every possible case with [`.exhaustive()`](#exhaustive).
@@ -36,11 +39,6 @@ examples/
         package.json
         public/
         src/
-            App.tsx
-            constants.ts
-            index.tsx
-            searchGif.ts
-            styles.css
         tsconfig.json
     one-file-demo/
 jest.config.cjs
@@ -137,6 +135,7 @@ src/
         13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
     index.ts
         1→import * as Pattern from './patterns';
+        2→
         3→export { match } from './match';
         4→export { isMatching } from './is-matching';
         5→export { Pattern, Pattern as P };
@@ -164,6 +163,7 @@ src/
         62→    const [pattern, value] = args;
         63→    return matchPattern(pattern, value, () => {});
         64→  }
+        65→
         66→  throw new Error(
         67→    `isMatching wasn't given the right number of arguments: expected 1 or 2, received ${args.length}.`
         68→  );
@@ -183,6 +183,7 @@ src/
         46→ */
         47→class MatchExpression<input, output> {
         48→  constructor(private input: input, private state: MatchState<output>) {}
+        49→
         50→  with(...args: any[]): MatchExpression<input, output> {
         51→    if (this.state.matched) return this;
         53→    const handler: (selection: unknown, value: input) => output =
@@ -222,7 +223,9 @@ src/
         96→    handler: (selection: input, value: input) => output
         97→  ): MatchExpression<input, output> {
         98→    if (this.state.matched) return this;
+        99→
         100→    const matched = Boolean(predicate(this.input));
+        101→
         102→    return new MatchExpression<input, output>(
         103→      this.input,
         104→      matched

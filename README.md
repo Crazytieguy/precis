@@ -15,21 +15,18 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 LICENSE
 README.md
     9→# Mitt
+    10→
     11→> Tiny 200b functional event emitter / pubsub.
+    12→
     13→-   **Microscopic:** weighs less than 200 bytes gzipped
     14→-   **Useful:** a wildcard `"*"` event type listens to all events
     15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
     16→-   **Functional:** methods don't rely on `this`
     17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+    18→
     19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
     21→## Table of Contents
     …
-    23→-   [Install](#install)
-    24→-   [Usage](#usage)
-    25→-   [Examples & Demos](#examples--demos)
-    26→-   [API](#api)
-    27→-   [Contribute](#contribute)
-    28→-   [License](#license)
     30→## Install
     …
     56→## Usage
@@ -52,7 +49,7 @@ README.md
     167→### emit
     …
     179→## Contribute
-    …
+    180→
     181→First off, thanks for taking the time to contribute!
     182→Now, take a moment to be sure your contributions make sense to everyone else.
     184→### Reporting Issues
@@ -60,7 +57,7 @@ README.md
     189→### Submitting pull requests
     …
     203→## License
-    …
+    204→
     205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 package.json
     2→  "name": "mitt",

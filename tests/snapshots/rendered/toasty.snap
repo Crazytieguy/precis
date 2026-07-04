@@ -15,29 +15,36 @@ Cargo.toml
     7→    "crates/toasty-core",
     8→    "crates/toasty-macros",
     9→    "crates/toasty-sql",
+    10→
     11→    # Driver implementations
     12→    "crates/toasty-driver-dynamodb",
     13→    "crates/toasty-driver-mysql",
     14→    "crates/toasty-driver-postgresql",
     15→    "crates/toasty-driver-sqlite",
+    16→
     17→    # Driver integration test suite
     18→    "crates/toasty-driver-integration-suite",
     19→    "crates/toasty-driver-integration-suite-macros",
+    20→
     21→    # General utilities.
     22→    "crates/std-util",
+    23→
     24→    # Examples
     25→    "examples/composite-key",
     26→    "examples/hello-toasty",
     27→    "examples/todo-with-cli",
     28→    "examples/user-has-one-profile",
+    29→
     30→    # Tests
     31→    "tests",
+    32→
     33→    # Benchmarks
     34→    "benches",
     35→]
 LICENSE
 README.md
     1→# Toasty
+    2→
     3→**Current status: Incubating - Toasty is not ready for production usage. The API
     4→is still evolving and documentation is lacking.**
     6→Toasty is an ORM for the Rust programming language that prioritizes ease-of-use.
@@ -65,10 +72,6 @@ crates/
         Cargo.toml
         src/
             apply_update.rs
-                9→pub trait ApplyUpdate {
-                …
-                19→pub struct Query;
-                …
             batch/
                 create.rs
             batch.rs
@@ -136,25 +139,6 @@ crates/
                     statement.rs
                 plan.rs
                 simplify/
-                    association.rs
-                    expr_and.rs
-                    expr_any.rs
-                    expr_binary_op.rs
-                    expr_cast.rs
-                    expr_concat_str.rs
-                    expr_exists.rs
-                    expr_in_list.rs
-                    expr_is_null.rs
-                    expr_list.rs
-                    expr_map.rs
-                    expr_not.rs
-                    expr_or.rs
-                    expr_project.rs
-                    expr_record.rs
-                    lift_in_subquery.rs
-                    lift_pk_select.rs
-                    rewrite_root_path_expr.rs
-                    stmt_query.rs
                 simplify.rs
                 ty.rs
                 verify.rs
@@ -225,12 +209,16 @@ crates/
             error.rs
             lib.rs
                 2→mod macros;
+                3→
                 4→pub mod driver;
                 5→pub use driver::Connection;
+                6→
                 7→mod error;
                 8→pub use error::Error;
+                9→
                 10→pub mod schema;
                 11→pub use schema::Schema;
+                12→
                 13→pub mod stmt;
                 15→/// A Result type alias that uses Toasty's [`Error`] type.
                 16→pub type Result<T, E = Error> = core::result::Result<T, E>;
@@ -299,8 +287,10 @@ crates/
             lib.rs
                 1→pub mod migration;
                 2→pub use migration::*;
+                3→
                 4→pub mod serializer;
                 5→pub use serializer::{Params, Serializer, TypedValue};
+                6→
                 7→pub mod stmt;
                 8→pub use stmt::Statement;
             migration.rs
@@ -320,32 +310,17 @@ crates/
                 value.rs
             serializer.rs
             stmt/
-                add_column.rs
-                alter_column.rs
-                alter_table.rs
-                column_def.rs
-                copy_table.rs
-                create_index.rs
-                create_table.rs
-                drop_column.rs
-                drop_index.rs
-                drop_table.rs
-                ident.rs
-                name.rs
-                pragma.rs
-                table_name.rs
-                ty.rs
             stmt.rs
         tests/
 docs/
     ARCHITECTURE.md
         1→# Toasty Architecture Overview
-        …
+        2→
         3→## Project Structure
-        …
+        4→
         5→Toasty is an ORM for Rust that supports SQL and NoSQL databases. The codebase is a Cargo workspace with separate crates for each layer.
         7→## Crates
-        …
+        8→
         9→### 1. toasty
         10→User-facing crate with query engine and runtime.
         26→### 2. toasty-core
@@ -357,13 +332,13 @@ docs/
         63→### 5. toasty-sql
         64→Converts statement AST to SQL strings. Used by SQL-based drivers.
         74→## Further Reading
-        …
+        75→
         76→- [Query Engine Architecture](architecture/query-engine.md) - Query compilation and execution pipeline
         77→- [Type System](architecture/type-system.md) - Type system design and conversions
     CHANGE_GUIDE.md
     CONTEXT.md
         1→# Documentation Context
-        …
+        2→
         3→Load this file when editing anything in the `docs/` directory.
         5→## Writing Style
         …
@@ -377,6 +352,7 @@ docs/
     roadmap/
         README.md
             1→# Toasty ORM - Development Roadmap
+            2→
             3→This roadmap outlines potential enhancements and missing features for the Toasty ORM.
         composite-keys.md
             1→# Composite Key Support

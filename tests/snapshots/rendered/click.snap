@@ -20,6 +20,7 @@ CHANGES.rst
 LICENSE.txt
 README.md
     3→# Click
+    4→
     5→Click is a Python package for creating beautiful command line interfaces
     6→in a composable way with as little code as necessary. It's the "Command
     7→Line Interface Creation Kit". It's highly configurable but comes with
@@ -27,43 +28,28 @@ README.md
     10→It aims to make the process of writing command line tools quick and fun
     11→while also preventing any frustration caused by the inability to
     12→implement an intended CLI API.
+    13→
     14→Click in three points:
+    15→
     16→-   Arbitrary nesting of commands
     17→-   Automatic help page generation
     18→-   Supports lazy loading of subcommands at runtime
     21→## A Simple Example
     …
-    23→```python
-    24→import click
-    26→@click.command()
-    27→@click.option("--count", default=1, help="Number of greetings.")
-    28→@click.option("--name", prompt="Your name", help="The person to greet.")
-    29→def hello(count, name):
-    30→    """Simple program that greets NAME for a total of COUNT times."""
-    31→    for _ in range(count):
-    32→        click.echo(f"Hello, {name}!")
-    34→if __name__ == '__main__':
-    35→    hello()
-    36→```
-    38→```
-    39→$ python hello.py --count=3
-    40→Your name: Click
-    41→Hello, Click!
-    42→Hello, Click!
-    43→Hello, Click!
-    44→```
     47→## Donate
-    …
+    48→
     49→The Pallets organization develops and supports Click and other popular
     50→packages. In order to grow the community of contributors and users, and
     51→allow the maintainers to devote more time to the projects, [please
     52→donate today][].
+    53→
     54→[please donate today]: https://palletsprojects.com/donate
     56→## Contributing
-    …
+    57→
     58→See our [detailed contributing documentation][contrib] for many ways to
     59→contribute, including reporting issues, requesting features, asking or answering
     60→questions, and making PRs.
+    61→
     62→[contrib]: https://palletsprojects.com/contributing/
 docs/
     _static/
@@ -76,28 +62,32 @@ docs/
     changes.rst
     click-concepts.md
         1→# Click Concepts
-        …
+        2→
         3→This section covers concepts about Click's design.
+        4→
         5→```{contents}
         6→---
         7→depth: 1
         8→local: true
         9→---
         10→```
+        11→
         12→(callback-evaluation-order)=
         14→## Callback Evaluation Order
         …
     command-line-reference.md
         1→# General Command Line Topics
-        …
+        2→
         3→```{currentmodule} click
         4→```
+        5→
         6→```{contents}
         7→---
         8→depth: 1
         9→local: true
         10→---
         11→```
+        12→
         13→(exit-codes)=
         14→## Exit Codes
         …
@@ -113,10 +103,11 @@ docs/
     contributing.md
     design-opinions.md
         1→# CLI Design Opinions
-        …
+        2→
         3→```{currentmodule} click
         4→```
         5→A penny for your thoughts...
+        6→
         7→```{contents}
         8→:depth: 1
         9→:local: true
@@ -144,6 +135,7 @@ docs/
     index.rst
     license.md
         1→# BSD-3-Clause License
+        2→
         3→```{literalinclude} ../LICENSE.txt
         4→---
         5→language: text
@@ -157,6 +149,7 @@ docs/
     quickstart.md
     setuptools.md
         5→# Setuptools Integration
+        6→
         7→Moved to {doc}`entry-points`.
     shell-completion.md
     standalone-apps.md
@@ -172,6 +165,19 @@ docs/
     virtualenv.md
     why.md
     wincmd.md
+        1→# Windows Console Notes
+        2→
+        3→```{versionadded} 6.0
+        4→```
+        5→
+        6→Click emulates output streams on Windows to support unicode to the Windows console through separate APIs and we perform
+        7→different decoding of parameters.
+        8→
+        9→Here is a brief overview of how this works and what it means to you.
+        11→## Unicode Arguments
+        …
+        24→## Unicode Output and Input
+        …
 examples/
     README
     aliases/
@@ -293,6 +299,7 @@ src/
             …
         _utils.py
             1→from __future__ import annotations
+            2→
             3→import enum
             4→import typing as t
         _winconsole.py
@@ -304,20 +311,19 @@ src/
             334→class Exit(RuntimeError):
             335→    """An exception that indicates that the application should exit with some
             336→    status code.
+            337→
             338→    :param code: the status code to exit with.
             339→    """
             341→    __slots__ = ("exit_code",)
         formatting.py
         globals.py
-            1→from __future__ import annotations
-            3→import typing as t
-            4→from threading import local
         parser.py
         py.typed
         shell_completion.py
         termui.py
         testing.py
         types.py
+            1292→UUID = UUIDParameterType()
         utils.py
 tests/
     conftest.py

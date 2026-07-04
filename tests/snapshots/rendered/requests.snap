@@ -34,6 +34,7 @@ NOTICE
 README.md
     1→# Requests
     9→**Requests** is a simple, yet elegant, HTTP library.
+    10→
     11→```python
     12→>>> import requests
     13→>>> r = requests.get('https://httpbin.org/basic-auth/user/pass', auth=('user', 'pass'))
@@ -49,13 +50,16 @@ README.md
     23→{'authenticated': True, ...}
     24→```
     26→Requests allows you to send HTTP/1.1 requests extremely easily. There’s no need to manually add query strings to your URLs, or to form-encode your `PUT` & `POST` data — but nowadays, just use the `json` method!
+    27→
     28→Requests is one of the most downloaded Python packages today, pulling in around `300M downloads / week` — according to GitHub, Requests is currently [depended upon](https://github.com/psf/requests/network/dependents?package_id=UGFja2FnZS01NzA4OTExNg%3D%3D) by `4,000,000+` repositories.
     30→## Installing Requests and Supported Versions
-    …
+    31→
     32→Requests is available on PyPI:
+    33→
     34→```console
     35→$ python -m pip install requests
     36→```
+    37→
     38→Requests officially supports Python 3.10+.
     40→## Supported Features & Best–Practices
     …
@@ -125,18 +129,23 @@ src/
             2→#  /__)  _  _     _   _ _/   _
             3→# / (   (- (/ (/ (- _)  /  _)
             4→#          /
+            5→
             6→"""
             7→Requests HTTP Library
             8→~~~~~~~~~~~~~~~~~~~~~
+            9→
             10→Requests is an HTTP library, written in Python, for human beings.
             11→Basic GET usage:
+            12→
             13→   >>> import requests
             14→   >>> r = requests.get('https://www.python.org')
             15→   >>> r.status_code
             16→   200
             17→   >>> b'Python is a programming language' in r.content
             18→   True
+            19→
             20→... or POST:
+            21→
             22→   >>> payload = dict(key1='value1', key2='value2')
             23→   >>> r = requests.post('https://httpbin.org/post', data=payload)
             24→   >>> print(r.text)
@@ -148,14 +157,20 @@ src/
             30→     },
             31→     ...
             32→   }
+            33→
             34→The other HTTP methods are supported - see `requests.api`. Full documentation
             35→is at <https://requests.readthedocs.io>.
+            36→
             37→:copyright: (c) 2017 by Kenneth Reitz.
             38→:license: Apache 2.0, see LICENSE for more details.
             39→"""
+            40→
             41→from __future__ import annotations
+            42→
             43→import warnings
+            44→
             45→import urllib3
+            46→
             47→from .exceptions import RequestsDependencyWarning
             60→def check_compatibility(
             61→    urllib3_version: str,
@@ -167,6 +182,7 @@ src/
             150→from urllib3.exceptions import DependencyWarning
             155→import logging
             156→from logging import NullHandler
+            157→
             158→from . import packages, utils
             159→from .__version__ import (
             160→    __author__,
@@ -196,6 +212,7 @@ src/
             184→from .models import PreparedRequest, Request, Response
             185→from .sessions import Session, session
             186→from .status_codes import codes
+            187→
             188→__all__ = (
             189→    "ConnectionError",
             190→    "ConnectTimeout",
@@ -234,8 +251,6 @@ src/
         cookies.py
             560→_CookieJarT = TypeVar("_CookieJarT", bound=CookieJar)
         exceptions.py
-            161→class RequestsDependencyWarning(RequestsWarning):
-            162→    """An imported dependency doesn't match the expected version range."""
         help.py
             37→def _implementation():
             …
@@ -246,6 +261,8 @@ src/
             130→    print(json.dumps(info(), sort_keys=True, indent=2))
         hooks.py
             22→HOOKS: list[str] = ["response"]
+            23→
+            24→
             25→def default_hooks() -> dict[str, list[_t.HookType]]:
             26→    return {event: [] for event in HOOKS}
             32→def dispatch_hook(
@@ -258,6 +275,7 @@ src/
         models.py
         packages.py
             1→import sys
+            2→
             3→from .compat import chardet
         py.typed
         sessions.py
@@ -270,6 +288,7 @@ src/
             111→    dict_class: type = OrderedDict,
             112→) -> _t.HooksType:
             113→    """Properly merges both requests and session hooks.
+            114→
             115→    This is necessary because when request_hooks == {'response': []}, the
             116→    merge breaks Session hooks entirely.
             117→    """
@@ -291,6 +310,7 @@ src/
             423→    trust_env: bool
             424→    cookies: RequestsCookieJar
             425→    adapters: MutableMapping[str, BaseAdapter]
+            426→
             427→    __attrs__: list[str] = [
             428→        "headers",
             429→        "cookies",
@@ -311,16 +331,11 @@ src/
         status_codes.py
             23→_codes = {
             106→codes: LookupDict[int] = LookupDict(name="status_codes")
+            107→
+            108→
             109→def _init():
             …
         structures.py
-            16→_VT = TypeVar("_VT")
-            17→_D = TypeVar("_D")
-            20→class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]):
-            21→    """A case-insensitive ``dict``-like object.
-            96→class LookupDict(dict[str, _VT]):
-            97→    """Dictionary lookup object."""
-            99→    name: Any
         utils.py
 tests/
     __init__.py
