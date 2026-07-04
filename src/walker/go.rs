@@ -548,8 +548,19 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
     {
         let body_start = struct_body.start_position().row;
         let body_end = struct_body.end_position().row;
-        if body_end.saturating_sub(body_start) + 1 >= STRUCT_FIELD_GROUP_MIN_LINES {
-            let groups = collect_blank_line_groups(struct_body, source);
+        let body_lines = body_end.saturating_sub(body_start) + 1;
+        // Below the main threshold, only near-monolithic bodies (a
+        // 40+-line struct with ≤2 blank-line groups, i.e. no internal
+        // structure for the group split to key on) chunk — they ride
+        // as one unschedulable batch otherwise (act's `Input`).
+        // Well-blank-separated mid-size structs stay whole: chunking
+        // them mints a flood of tiny high-ratio groups (measured:
+        // migrate −0.153 via `migration.go`'s 12 tiny groups).
+        let blank_groups = collect_blank_line_groups(struct_body, source);
+        let chunkable = body_lines >= STRUCT_FIELD_GROUP_MIN_LINES
+            || (body_lines >= STRUCT_FIELD_GROUP_MONOLITH_MIN_LINES && blank_groups.len() <= 2);
+        if chunkable {
+            let groups = split_oversized_groups(blank_groups);
             if !groups.is_empty() {
                 // Trim decl_lines to the type header row + the
                 // struct's closing-brace row. Body rows in between
@@ -583,6 +594,47 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
 
 /// Minimum struct-body span (lines) for field-group chunking.
 const STRUCT_FIELD_GROUP_MIN_LINES: usize = 60;
+
+/// Lower chunking threshold for near-monolithic struct bodies (≤2
+/// blank-line groups) — see the gate comment in `grouped_type_info`.
+const STRUCT_FIELD_GROUP_MONOLITH_MIN_LINES: usize = 40;
+
+/// Blank-line groups longer than this split into
+/// [`STRUCT_FIELD_GROUP_SPLIT_ROWS`]-row runs. Without it a struct
+/// body with no interior blank lines (act's `cmd/input.go` `Input`)
+/// rides as one monolithic group whose cost keeps the whole batch —
+/// and with it the NS-anchored field roster — unschedulable.
+const STRUCT_FIELD_GROUP_MAX_ROWS: usize = 16;
+const STRUCT_FIELD_GROUP_SPLIT_ROWS: usize = 12;
+
+/// Split any group longer than [`STRUCT_FIELD_GROUP_MAX_ROWS`] into
+/// fixed-size runs; a short trailing run merges into the previous one
+/// (same rationale as the C walker's names-chunk remainder merge).
+fn split_oversized_groups(groups: Vec<(usize, Vec<usize>)>) -> Vec<(usize, Vec<usize>)> {
+    let mut out = Vec::with_capacity(groups.len());
+    for (start, rows) in groups {
+        if rows.len() <= STRUCT_FIELD_GROUP_MAX_ROWS {
+            out.push((start, rows));
+            continue;
+        }
+        let mut chunks: Vec<Vec<usize>> = rows
+            .chunks(STRUCT_FIELD_GROUP_SPLIT_ROWS)
+            .map(<[usize]>::to_vec)
+            .collect();
+        if let Some(last) = chunks.last()
+            && last.len() < STRUCT_FIELD_GROUP_SPLIT_ROWS / 2
+            && chunks.len() >= 2
+        {
+            let tail = chunks.pop().expect("len checked");
+            chunks.last_mut().expect("len checked").extend(tail);
+        }
+        for chunk in chunks {
+            let chunk_start = *chunk.first().expect("chunks are non-empty");
+            out.push((chunk_start, chunk));
+        }
+    }
+    out
+}
 
 /// `struct_type` node from a struct-typed `type_spec`.
 fn find_struct_body(spec: Node) -> Option<Node> {
