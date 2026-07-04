@@ -432,3 +432,36 @@ spans = [{{ path = "../Cargo.toml", start = 1, end = 1, render = {{ kind = "full
         report.batches[0].violations
     );
 }
+
+/// A `Truncated` span whose pattern leaves only punctuation behind on
+/// every line — the `…` implies elided substance that isn't there.
+/// Expected: `TruncationElidesOnlyPunctuation`.
+#[test]
+fn ns_simulate_detects_truncation_eliding_only_punctuation() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    // src/lib.rs:827 is `///        println!("{}:{} -- {}",` — matching
+    // through `println` drops `!("{}:{} -- {}",`: long enough to save
+    // tokens, but with no word character in the elided tail.
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "punctuation-only elision"
+justification = "truncation drops nothing meaningful"
+[batches.content]
+kind = "lines"
+spans = [{{ path = "src/lib.rs", start = 827, end = 827, render = {{ kind = "truncated", pattern = "^.*println" }} }}]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert!(
+        report.batches[0]
+            .violations
+            .iter()
+            .any(|v| matches!(v, Violation::TruncationElidesOnlyPunctuation { .. })),
+        "expected TruncationElidesOnlyPunctuation, got {:?}",
+        report.batches[0].violations
+    );
+}

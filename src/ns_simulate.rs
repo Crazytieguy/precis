@@ -71,6 +71,15 @@ pub enum Violation {
         full_tokens: usize,
         truncated_tokens: usize,
     },
+    /// Truncated render never elides a word character anywhere in the
+    /// span — every line's elided tail is punctuation/whitespace only,
+    /// so the `…` implies substance that isn't there. Use `Render::Full`.
+    TruncationElidesOnlyPunctuation {
+        path: PathBuf,
+        start: usize,
+        end: usize,
+        pattern: String,
+    },
     /// Multi-line `Render::Ellipsis` span — Ellipsis is single-line-only.
     EllipsisMultiLine {
         path: PathBuf,
@@ -400,6 +409,7 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
                     }];
                 };
                 let mut vs = Vec::new();
+                let mut elides_a_word_somewhere = false;
                 for ln in span.start..=span.end {
                     let line = src_lines[ln - 1];
                     let m = re.find(line);
@@ -411,6 +421,9 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
                         });
                         continue;
                     };
+                    if line[m.end()..].contains(|c: char| c.is_alphanumeric()) {
+                        elides_a_word_somewhere = true;
+                    }
                     let full_tokens = crate::tokenizer::count(line);
                     let truncated_tokens = crate::tokenizer::count(&format!("{}…", m.as_str()));
                     if truncated_tokens >= full_tokens {
@@ -422,6 +435,14 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
                             truncated_tokens,
                         });
                     }
+                }
+                if !elides_a_word_somewhere && vs.is_empty() {
+                    vs.push(Violation::TruncationElidesOnlyPunctuation {
+                        path: span.path.clone(),
+                        start: span.start,
+                        end: span.end,
+                        pattern: pattern.clone(),
+                    });
                 }
                 vs
             });

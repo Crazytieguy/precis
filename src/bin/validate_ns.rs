@@ -173,6 +173,15 @@ fn format_violation(v: &Violation) -> String {
             "Truncated render saves no tokens at {}:{line} with pattern `{pattern}` (full line: {full_tokens} tokens, truncated `<match>…`: {truncated_tokens} tokens). Use `Full` here, or pick a pattern that drops the meaningful tail.",
             path.display()
         ),
+        Violation::TruncationElidesOnlyPunctuation {
+            path,
+            start,
+            end,
+            pattern,
+        } => format!(
+            "Truncated render at {}:{start}..={end} with pattern `{pattern}` never elides a word character — every line's dropped tail is punctuation/whitespace, so the `…` implies substance that isn't there. Use `Full`.",
+            path.display()
+        ),
         Violation::EllipsisMultiLine { path, start, end } => format!(
             "multi-line Ellipsis span at {}:{start}..={end} renders one `…` per line — redundant + visually indistinguishable from a single marker. Use one Ellipsis span per line, or `Full`/`Truncated` if the lines should render verbatim.",
             path.display()
