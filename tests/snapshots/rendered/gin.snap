@@ -104,6 +104,20 @@ deprecated_test.go
 doc.go
     1→/*
     2→Package gin implements a HTTP web framework called gin.
+    4→See https://gin-gonic.com/ for more information about gin.
+    6→Example:
+    8→	package main
+    10→	import "github.com/gin-gonic/gin"
+    12→	func main() {
+    13→		r := gin.Default()
+    14→		r.GET("/ping", func(c *gin.Context) {
+    15→			c.JSON(200, gin.H{
+    16→				"message": "pong",
+    17→			})
+    18→		})
+    19→		r.Run() // listen and serve on 0.0.0.0:8080
+    20→	}
+    21→*/
     22→package gin // import "github.com/gin-gonic/gin"
 docs/
     doc.md
@@ -164,35 +178,6 @@ gin.go
     62→		return c[length-1]
     63→	}
     64→	return nil
-    67→// RouteInfo represents a request route's specification which contains method and path and its handler.
-    68→type RouteInfo struct {
-    69→	Method      string
-    70→	Path        string
-    71→	Handler     string
-    72→	HandlerFunc HandlerFunc
-    73→}
-    75→// RoutesInfo defines a RouteInfo slice.
-    76→type RoutesInfo []RouteInfo
-    …
-    82→	PlatformGoogleAppEngine = "X-Appengine-Remote-Addr"
-    …
-    85→	PlatformCloudflare = "CF-Connecting-IP"
-    …
-    87→	PlatformFlyIO = "Fly-Client-IP"
-    …
-    92→type Engine struct {
-    93→	RouterGroup
-    169→	// UseH2C enable h2c support.
-    170→	UseH2C bool
-    189→}
-    191→var _ IRouter = (*Engine)(nil)
-    …
-    202→func New(opts ...OptionFunc) *Engine {
-    …
-    236→func Default(opts ...OptionFunc) *Engine {
-    …
-    243→func (engine *Engine) Handler() http.Handler {
-    …
     820→func redirectRequest(c *Context) {
     …
 ginS/
