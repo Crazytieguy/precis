@@ -71,9 +71,6 @@ Readme.md
     …
     173→## Current project team members
     …
-    175→For information about the governance of the express.js project, see [GOVERNANCE.md](https://github.com/expressjs/discussions/blob/HEAD/docs/GOVERNANCE.md).
-    177→The original author of Express is [TJ Holowaychuk](https://github.com/tj)
-    179→[List of all contributors](https://github.com/expressjs/express/graphs/contributors)
     181→### TC (Technical Committee)
     …
     184→* [jonchurch](https://github.com/jonchurch) - **Jon Church**
@@ -87,10 +84,8 @@ Readme.md
     193→<summary>TC emeriti members</summary>
     205→### Triagers
     …
-    208→* [bjohansebas](https://github.com/bjohansebas) - **Sebastian Beltran**
     209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
     210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
-    213→* [Phillip9587](https://github.com/Phillip9587) - **Phillip Barta**
     216→* [krzysdz](https://github.com/krzysdz)
     219→<details>
     220→<summary>Triagers emeriti members</summary>
@@ -217,6 +212,19 @@ lib/
     express.js
         9→'use strict';
         15→var bodyParser = require('body-parser')
+        23→/**
+        24→ * Expose `createApplication()`.
+        25→ */
+        27→exports = module.exports = createApplication;
+        …
+        29→/**
+        30→ * Create an express application.
+        31→ *
+        32→ * @return {Function}
+        33→ * @api public
+        34→ */
+        36→function createApplication() {
+        …
         58→/**
         59→ * Expose the prototypes.
         60→ */

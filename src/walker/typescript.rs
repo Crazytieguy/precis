@@ -1483,12 +1483,32 @@ fn commonjs_assignment_sides<'a>(node: Node<'a>, source: &str) -> Option<(Node<'
     if node.kind() != "expression_statement" {
         return None;
     }
-    let expr = node.named_child(0)?;
-    if expr.kind() != "assignment_expression" {
-        return None;
+    let mut expr = node.named_child(0)?;
+    // Chained export assignments (`exports = module.exports = X`,
+    // `module.exports = exports = X`) export X through whichever link
+    // is the module.exports target: descend past bare-`exports` alias
+    // links on the left, and unwrap assignment links on the right down
+    // to the exported value.
+    loop {
+        if expr.kind() != "assignment_expression" {
+            return None;
+        }
+        let (left, right) = assignment_sides(expr)?;
+        if commonjs_export_target(left, source).is_some() {
+            let mut value = right;
+            while value.kind() == "assignment_expression" {
+                let Some((_, inner)) = assignment_sides(value) else {
+                    break;
+                };
+                value = inner;
+            }
+            return Some((left, value));
+        }
+        if !identifier_eq(left, source, "exports") {
+            return None;
+        }
+        expr = right;
     }
-    let (left, right) = assignment_sides(expr)?;
-    commonjs_export_target(left, source).map(|_| (left, right))
 }
 
 fn assignment_sides<'a>(assignment: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
