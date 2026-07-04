@@ -146,18 +146,7 @@ chibicc.h
     173→};
     175→// AST node
     176→typedef enum {
-    177→  ND_NULL_EXPR, // Do nothing
-    178→  ND_ADD,       // +
-    179→  ND_SUB,       // -
-    180→  ND_MUL,       // *
-    181→  ND_DIV,       // /
-    182→  ND_NEG,       // unary -
-    183→  ND_MOD,       // %
-    184→  ND_BITAND,    // &
-    185→  ND_BITOR,     // |
-    186→  ND_BITXOR,    // ^
-    187→  ND_SHL,       // <<
-    188→  ND_SHR,       // >>
+    …
     225→} NodeKind;
     227→// AST node type
     228→struct Node {
@@ -271,11 +260,59 @@ main.c
 parse.c
 preprocess.c
 strings.c
-    3→void strarray_push(StringArray *arr, char *s) {
-    …
-    20→char *format(char *fmt, ...) {
-    …
 test/
+    alignof.c
+    alloca.c
+    arith.c
+    asm.c
+    atomic.c
+    attribute.c
+    bitfield.c
+    builtin.c
+    cast.c
+    common
+    commonsym.c
+    compat.c
+    complit.c
+    const.c
+    constexpr.c
+    control.c
+    decl.c
+    driver.sh
+    enum.c
+    extern.c
+    float.c
+    function.c
+    generic.c
+    include1.h
+    include2.h
+        1→int include2 = 7;
+    include3.h
+        1→#define foo 3
+    include4.h
+        1→#define foo 4
+    initializer.c
+    line.c
+    literal.c
+    macro.c
+    offsetof.c
+    pointer.c
+    pragma-once.c
+    sizeof.c
+    stdhdr.c
+    string.c
+    struct.c
+    test.h
+    thirdparty/
+    tls.c
+    typedef.c
+    typeof.c
+    unicode.c
+    union.c
+    usualconv.c
+    varargs.c
+    variable.c
+    vla.c
 tokenize.c
 type.c
 unicode.c

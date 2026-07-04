@@ -19,28 +19,28 @@ Score(3000)=0.694 I=0.851 C=0.567 ns_rows≤3K=12/27 (reached=6 partial=3 missin
 | walker |  | 608 | 19 | listing of 'impl' |  |  | 0.607 |
 | ns | 735 |  | 235 | Cargo.toml — std/no_std feature + workspace | 2.4 |  | 0.614 |
 | walker |  | 875 | 267 | crate-doc lede in src/lib.rs |  |  | 0.614 |
-| walker |  | 922 | 47 | listing of 'impl/src' |  |  | 0.763 |
-| ns | 961 |  | 226 | Macro entry point — derive_error in impl/src/lib.rs | 2.5 |  | 0.663 |
-| walker |  | 962 | 40 | pub item at impl/src/lib.rs:40 |  |  | 0.666 |
-| walker |  | 997 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.666 |
-| walker |  | 1026 | 29 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.674 |
-| walker |  | 1154 | 128 | mod/use plumbing in impl/src/lib.rs |  |  | 0.767 |
-| walker |  | 1203 | 49 | [dependencies] in impl/Cargo.toml |  |  | 0.767 |
-| walker |  | 1310 | 107 | [dependencies] in Cargo.toml |  |  | 0.792 |
-| ns | 1319 |  | 358 | Crate-doc bullets — Display + format-shorthand summary | 2.6 |  | 0.714 |
-| walker |  | 1493 | 183 | README.md section #1 |  |  | 0.819 |
-| walker |  | 1521 | 28 | README.md section #3 |  |  | 0.819 |
-| walker |  | 1547 | 26 | pub-item names surface in src/provide.rs |  |  | 0.819 |
-| walker |  | 1573 | 26 | pub-item names surface in impl/src/unraw.rs |  |  | 0.819 |
-| walker |  | 1590 | 17 | pub item at impl/src/unraw.rs:12 |  |  | 0.819 |
-| ns | 1606 |  | 287 | Crate-doc bullets — From + source headlines | 2.7 |  | 0.762 |
-| walker |  | 1621 | 31 | pub item at impl/src/unraw.rs:82 |  |  | 0.762 |
-| walker |  | 1648 | 27 | pub-item names surface in src/display.rs |  |  | 0.762 |
-| walker |  | 1675 | 27 | pub-item names surface in impl/src/generics.rs |  |  | 0.762 |
-| walker |  | 1691 | 16 | pub item at impl/src/generics.rs:8 |  |  | 0.762 |
-| walker |  | 1730 | 39 | pub item at impl/src/generics.rs:48 |  |  | 0.762 |
-| walker |  | 1758 | 28 | pub-item names surface in src/aserror.rs |  |  | 0.762 |
-| walker |  | 1830 | 72 | listing of 'tests' |  |  | 0.763 |
+| walker |  | 947 | 72 | listing of 'tests' |  |  | 0.615 |
+| ns | 961 |  | 226 | Macro entry point — derive_error in impl/src/lib.rs | 2.5 |  | 0.534 |
+| walker |  | 994 | 47 | listing of 'impl/src' |  |  | 0.664 |
+| walker |  | 1034 | 40 | pub item at impl/src/lib.rs:40 |  |  | 0.667 |
+| walker |  | 1069 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.667 |
+| walker |  | 1098 | 29 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.675 |
+| walker |  | 1226 | 128 | mod/use plumbing in impl/src/lib.rs |  |  | 0.769 |
+| walker |  | 1275 | 49 | [dependencies] in impl/Cargo.toml |  |  | 0.769 |
+| ns | 1319 |  | 358 | Crate-doc bullets — Display + format-shorthand summary | 2.6 |  | 0.692 |
+| walker |  | 1382 | 107 | [dependencies] in Cargo.toml |  |  | 0.715 |
+| walker |  | 1565 | 183 | README.md section #1 |  |  | 0.821 |
+| walker |  | 1593 | 28 | README.md section #3 |  |  | 0.821 |
+| ns | 1606 |  | 287 | Crate-doc bullets — From + source headlines | 2.7 |  | 0.763 |
+| walker |  | 1619 | 26 | pub-item names surface in src/provide.rs |  |  | 0.763 |
+| walker |  | 1645 | 26 | pub-item names surface in impl/src/unraw.rs |  |  | 0.763 |
+| walker |  | 1662 | 17 | pub item at impl/src/unraw.rs:12 |  |  | 0.763 |
+| walker |  | 1693 | 31 | pub item at impl/src/unraw.rs:82 |  |  | 0.763 |
+| walker |  | 1720 | 27 | pub-item names surface in src/display.rs |  |  | 0.763 |
+| walker |  | 1747 | 27 | pub-item names surface in impl/src/generics.rs |  |  | 0.763 |
+| walker |  | 1763 | 16 | pub item at impl/src/generics.rs:8 |  |  | 0.763 |
+| walker |  | 1802 | 39 | pub item at impl/src/generics.rs:48 |  |  | 0.763 |
+| walker |  | 1830 | 28 | pub-item names surface in src/aserror.rs |  |  | 0.763 |
 | walker |  | 1872 | 42 | pub-item names surface in impl/src/expand.rs |  |  | 0.763 |
 | walker |  | 1872 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.763 |
 | walker |  | 1872 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.763 |

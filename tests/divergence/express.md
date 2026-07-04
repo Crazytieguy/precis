@@ -16,77 +16,77 @@ Score(3000)=0.567 I=0.777 C=0.415 ns_rows≤3K=16/40 (reached=5 partial=3 missin
 | walker |  | 529 | 384 | README headline in Readme.md |  |  | 0.798 |
 | ns | 590 |  | 211 | lib/express.js — public exports | 1.7 |  | 0.649 |
 | walker |  | 659 | 130 | headings outline in Readme.md |  |  | 0.649 |
-| walker |  | 743 | 84 | Readme.md section #2 |  |  | 0.649 |
 | ns | 781 |  | 191 | Application prototype — method names | 2.1 |  | 0.562 |
-| walker |  | 849 | 106 | export names surface in lib/express.js |  |  | 0.606 |
-| walker |  | 849 | 0 | export at lib/express.js:62 |  |  | 0.606 |
-| walker |  | 849 | 0 | export at lib/express.js:70 |  |  | 0.606 |
-| walker |  | 849 | 0 | export at lib/express.js:77 |  |  | 0.606 |
-| walker |  | 958 | 109 | export names surface in lib/request.js |  |  | 0.607 |
-| walker |  | 958 | 0 | export at lib/request.js:37 |  |  | 0.607 |
-| walker |  | 958 | 0 | export at lib/request.js:127 |  |  | 0.607 |
-| walker |  | 958 | 0 | export at lib/request.js:140 |  |  | 0.607 |
-| walker |  | 958 | 0 | export at lib/request.js:171 |  |  | 0.607 |
-| walker |  | 958 | 0 | export at lib/request.js:185 |  |  | 0.607 |
-| walker |  | 958 | 0 | export at lib/request.js:214 |  |  | 0.607 |
-| walker |  | 958 | 0 | export at lib/request.js:269 |  |  | 0.607 |
-| walker |  | 970 | 12 | export at lib/request.js:63 |  |  | 0.608 |
-| walker |  | 992 | 22 | export body at lib/request.js:171 body 172 |  |  | 0.608 |
-| ns | 1014 |  | 233 | Response prototype — method names | 2.2 |  | 0.529 |
-| walker |  | 1015 | 23 | export body at lib/request.js:127 body 128 |  |  | 0.529 |
-| walker |  | 1039 | 24 | export body at lib/request.js:140 body 141 |  |  | 0.530 |
-| walker |  | 1058 | 19 | export doc at lib/express.js:70 |  |  | 0.530 |
-| walker |  | 1077 | 19 | export doc at lib/express.js:77 |  |  | 0.530 |
-| walker |  | 1097 | 20 | export doc at lib/express.js:62 |  |  | 0.530 |
-| walker |  | 1117 | 20 | imports in lib/request.js |  |  | 0.530 |
-| walker |  | 1138 | 21 | imports in lib/application.js |  |  | 0.530 |
-| walker |  | 1159 | 21 | imports in lib/express.js |  |  | 0.539 |
-| walker |  | 1185 | 26 | export doc at lib/request.js:37 |  |  | 0.539 |
-| walker |  | 1206 | 21 | Readme.md section #19 |  |  | 0.539 |
-| walker |  | 1227 | 21 | Readme.md section #30 |  |  | 0.539 |
-| ns | 1243 |  | 229 | Request prototype — method + getter names | 2.3 |  | 0.507 |
-| walker |  | 1328 | 101 | listing of 'examples' |  |  | 0.517 |
-| walker |  | 1348 | 20 | listing of 'examples/mvc' |  |  | 0.517 |
-| walker |  | 1362 | 14 | listing of 'examples/mvc/controllers' |  |  | 0.517 |
-| walker |  | 1384 | 22 | listing of 'examples/route-separation' |  |  | 0.517 |
-| ns | 1390 |  | 147 | lib/utils.js — all exports | 2.4 |  | 0.490 |
-| walker |  | 1406 | 22 | Readme.md section #12 |  |  | 0.490 |
-| walker |  | 1428 | 22 | Readme.md section #32 |  |  | 0.490 |
-| ns | 1447 |  | 57 | lib/view.js — View class shape | 2.5 |  | 0.478 |
-| walker |  | 1463 | 35 | imports in lib/response.js |  |  | 0.478 |
-| walker |  | 1537 | 74 | Readme.md section #7 |  |  | 0.478 |
-| ns | 1548 |  | 101 | examples/ directory listing | 2.6 |  | 0.552 |
-| walker |  | 1561 | 24 | Readme.md section #23 |  |  | 0.552 |
-| walker |  | 1722 | 161 | export body at lib/request.js:63 body 65 |  |  | 0.552 |
-| walker |  | 1958 | 236 | export names surface in lib/application.js |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:59 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:90 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:152 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:190 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:256 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:294 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:322 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:351 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:399 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:420 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:439 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:451 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:463 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:494 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:522 |  |  | 0.619 |
-| walker |  | 1958 | 0 | export at lib/application.js:598 |  |  | 0.619 |
-| walker |  | 1985 | 27 | export doc at lib/application.js:90 |  |  | 0.619 |
-| walker |  | 2010 | 25 | Readme.md section #18 |  |  | 0.619 |
-| walker |  | 2035 | 25 | Readme.md section #24 |  |  | 0.619 |
-| walker |  | 2061 | 26 | Readme.md section #14 |  |  | 0.619 |
-| ns | 2067 |  | 519 | examples/README.md — example catalog | 2.7 |  | 0.565 |
-| walker |  | 2087 | 26 | Readme.md section #16 |  |  | 0.565 |
-| walker |  | 2114 | 27 | Readme.md section #13 |  |  | 0.565 |
-| walker |  | 2141 | 27 | Readme.md section #15 |  |  | 0.565 |
-| walker |  | 2168 | 27 | Readme.md section #17 |  |  | 0.565 |
-| ns | 2289 |  | 222 | createApplication factory body | 3.1 | 1.7 | 0.533 |
-| ns | 2512 |  | 223 | app.init — lazy router setup | 3.2 | 2.1 | 0.500 |
-| walker |  | 2544 | 376 | listing of 'test' |  |  | 0.505 |
+| ns | 1014 |  | 233 | Response prototype — method names | 2.2 |  | 0.489 |
+| walker |  | 1035 | 376 | listing of 'test' |  |  | 0.493 |
+| walker |  | 1119 | 84 | Readme.md section #2 |  |  | 0.493 |
+| walker |  | 1225 | 106 | export names surface in lib/express.js |  |  | 0.532 |
+| walker |  | 1225 | 0 | export at lib/express.js:62 |  |  | 0.532 |
+| walker |  | 1225 | 0 | export at lib/express.js:70 |  |  | 0.532 |
+| walker |  | 1225 | 0 | export at lib/express.js:77 |  |  | 0.532 |
+| ns | 1243 |  | 229 | Request prototype — method + getter names | 2.3 |  | 0.480 |
+| walker |  | 1334 | 109 | export names surface in lib/request.js |  |  | 0.497 |
+| walker |  | 1334 | 0 | export at lib/request.js:37 |  |  | 0.497 |
+| walker |  | 1334 | 0 | export at lib/request.js:127 |  |  | 0.497 |
+| walker |  | 1334 | 0 | export at lib/request.js:140 |  |  | 0.497 |
+| walker |  | 1334 | 0 | export at lib/request.js:171 |  |  | 0.497 |
+| walker |  | 1334 | 0 | export at lib/request.js:185 |  |  | 0.497 |
+| walker |  | 1334 | 0 | export at lib/request.js:214 |  |  | 0.497 |
+| walker |  | 1334 | 0 | export at lib/request.js:269 |  |  | 0.497 |
+| walker |  | 1346 | 12 | export at lib/request.js:63 |  |  | 0.503 |
+| walker |  | 1368 | 22 | export body at lib/request.js:171 body 172 |  |  | 0.503 |
+| ns | 1390 |  | 147 | lib/utils.js — all exports | 2.4 |  | 0.477 |
+| walker |  | 1391 | 23 | export body at lib/request.js:127 body 128 |  |  | 0.477 |
+| walker |  | 1415 | 24 | export body at lib/request.js:140 body 141 |  |  | 0.477 |
+| walker |  | 1434 | 19 | export doc at lib/express.js:70 |  |  | 0.477 |
+| ns | 1447 |  | 57 | lib/view.js — View class shape | 2.5 |  | 0.465 |
+| walker |  | 1453 | 19 | export doc at lib/express.js:77 |  |  | 0.465 |
+| walker |  | 1473 | 20 | export doc at lib/express.js:62 |  |  | 0.465 |
+| walker |  | 1493 | 20 | imports in lib/request.js |  |  | 0.465 |
+| walker |  | 1514 | 21 | imports in lib/application.js |  |  | 0.465 |
+| walker |  | 1535 | 21 | imports in lib/express.js |  |  | 0.473 |
+| ns | 1548 |  | 101 | examples/ directory listing | 2.6 |  | 0.429 |
+| walker |  | 1561 | 26 | export doc at lib/request.js:37 |  |  | 0.429 |
+| walker |  | 1582 | 21 | Readme.md section #19 |  |  | 0.429 |
+| walker |  | 1603 | 21 | Readme.md section #30 |  |  | 0.429 |
+| walker |  | 1704 | 101 | listing of 'examples' |  |  | 0.556 |
+| walker |  | 1724 | 20 | listing of 'examples/mvc' |  |  | 0.557 |
+| walker |  | 1738 | 14 | listing of 'examples/mvc/controllers' |  |  | 0.557 |
+| walker |  | 1760 | 22 | listing of 'examples/route-separation' |  |  | 0.557 |
+| walker |  | 1782 | 22 | Readme.md section #12 |  |  | 0.557 |
+| walker |  | 1804 | 22 | Readme.md section #32 |  |  | 0.557 |
+| walker |  | 1839 | 35 | imports in lib/response.js |  |  | 0.557 |
+| walker |  | 1913 | 74 | Readme.md section #7 |  |  | 0.557 |
+| walker |  | 1937 | 24 | Readme.md section #23 |  |  | 0.557 |
+| ns | 2067 |  | 519 | examples/README.md — example catalog | 2.7 |  | 0.508 |
+| walker |  | 2098 | 161 | export body at lib/request.js:63 body 65 |  |  | 0.508 |
+| ns | 2289 |  | 222 | createApplication factory body | 3.1 | 1.7 | 0.479 |
+| walker |  | 2334 | 236 | export names surface in lib/application.js |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:59 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:90 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:152 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:190 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:256 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:294 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:322 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:351 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:399 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:420 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:439 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:451 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:463 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:494 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:522 |  |  | 0.537 |
+| walker |  | 2334 | 0 | export at lib/application.js:598 |  |  | 0.537 |
+| walker |  | 2361 | 27 | export doc at lib/application.js:90 |  |  | 0.537 |
+| walker |  | 2386 | 25 | Readme.md section #18 |  |  | 0.537 |
+| walker |  | 2411 | 25 | Readme.md section #24 |  |  | 0.537 |
+| walker |  | 2437 | 26 | Readme.md section #14 |  |  | 0.537 |
+| walker |  | 2463 | 26 | Readme.md section #16 |  |  | 0.537 |
+| walker |  | 2490 | 27 | Readme.md section #13 |  |  | 0.537 |
+| ns | 2512 |  | 223 | app.init — lazy router setup | 3.2 | 2.1 | 0.505 |
+| walker |  | 2517 | 27 | Readme.md section #15 |  |  | 0.505 |
+| walker |  | 2544 | 27 | Readme.md section #17 |  |  | 0.505 |
 | walker |  | 2601 | 57 | export doc at lib/application.js:451 |  |  | 0.505 |
 | walker |  | 2658 | 57 | export doc at lib/application.js:463 |  |  | 0.505 |
 | walker |  | 2853 | 195 | export body at lib/application.js:59 body 60 |  |  | 0.567 |

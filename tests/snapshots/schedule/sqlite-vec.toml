@@ -261,10 +261,24 @@ kind = "full"
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 144
+cum_tokens = 498
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = [".gitignore", ".python-version", "Cargo.lock", "Cargo.toml", "__snapshots__", "afbd", "build.rs", "conftest.py", "correctness", "fuzz", "fuzz.py", "leak-fixtures", "minimum", "pyproject.toml", "skip.test-correctness.py", "sqlite-vec-internal.h", "test-auxiliary.py", "test-general.py", "test-knn-distance-constraints.py", "test-loadable.py", "test-metadata.py", "test-partition-keys.py", "test-unit.c", "test-wasm.mjs", "unittest.rs", "utils.py", "uv.lock"]
+
+[[batches]]
+position = 10
 key = 'Fs(DirListing { dir: "bindings/rust" })'
 descriptor = "listing of 'bindings/rust'"
 cost_tokens = 27
-cum_tokens = 381
+cum_tokens = 525
 
 [batches.content]
 kind = "fs"
@@ -274,11 +288,153 @@ parent = "bindings/rust"
 entries = [".gitignore", "Cargo.lock", "Cargo.toml.tmpl", "Makefile", "build.rs", "src"]
 
 [[batches]]
-position = 10
+position = 11
+key = 'Fs(DirListing { dir: "benchmarks" })'
+descriptor = "listing of 'benchmarks'"
+cost_tokens = 19
+cum_tokens = 544
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "benchmarks"
+entries = ["README.md", "exhaustive-memory", "micro", "profiling", "self-params"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "bindings/rust/src" })'
+descriptor = "listing of 'bindings/rust/src'"
+cost_tokens = 4
+cum_tokens = 548
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bindings/rust/src"
+entries = ["lib.rs"]
+
+[[batches]]
+position = 13
+key = 'Rust(ModUse { file: "bindings/rust/src/lib.rs" })'
+descriptor = "mod/use plumbing in bindings/rust/src/lib.rs"
+cost_tokens = 9
+cum_tokens = 557
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/rust/src/lib.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bindings/rust/src/lib.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "bindings/go" })'
+descriptor = "listing of 'bindings/go'"
+cost_tokens = 5
+cum_tokens = 562
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bindings/go"
+entries = ["ncruces"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "bindings/python" })'
+descriptor = "listing of 'bindings/python'"
+cost_tokens = 5
+cum_tokens = 567
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bindings/python"
+entries = ["extra_init.py"]
+
+[[batches]]
+position = 16
+key = 'Python(DeclNames { file: "tmp-static.py", chunk_index: 0 })'
+descriptor = "python decl names surface in tmp-static.py"
+cost_tokens = 130
+cum_tokens = 697
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tmp-static.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tmp-static.py"
+start = 11
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tmp-static.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tmp-static.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Python(Decl { file: "tmp-static.py", start_line: 25 })'
+descriptor = "python decl at tmp-static.py:25"
+cost_tokens = 0
+cum_tokens = 697
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tmp-static.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 0, reference_shaped: false })'
 descriptor = "ARCHITECTURE.md section #0"
 cost_tokens = 113
-cum_tokens = 494
+cum_tokens = 810
 
 [batches.content]
 kind = "lines"
@@ -308,11 +464,161 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 11
+position = 19
+key = 'Python(DeclNames { file: "bindings/python/extra_init.py", chunk_index: 0 })'
+descriptor = "python decl names surface in bindings/python/extra_init.py"
+cost_tokens = 37
+cum_tokens = 847
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 6 })'
+descriptor = "python decl at bindings/python/extra_init.py:6"
+cost_tokens = 0
+cum_tokens = 847
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 11 })'
+descriptor = "python decl at bindings/python/extra_init.py:11"
+cost_tokens = 0
+cum_tokens = 847
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
+descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
+cost_tokens = 17
+cum_tokens = 864
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
+descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
+cost_tokens = 17
+cum_tokens = 881
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 6 })'
+descriptor = "python decl doc at bindings/python/extra_init.py:6"
+cost_tokens = 22
+cum_tokens = 903
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 11 })'
+descriptor = "python decl doc at bindings/python/extra_init.py:11"
+cost_tokens = 22
+cum_tokens = 925
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 571
-cum_tokens = 1065
+cum_tokens = 1496
 
 [batches.content]
 kind = "lines"
@@ -366,303 +672,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "benchmarks" })'
-descriptor = "listing of 'benchmarks'"
-cost_tokens = 19
-cum_tokens = 1084
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "benchmarks"
-entries = ["README.md", "exhaustive-memory", "micro", "profiling", "self-params"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "bindings/rust/src" })'
-descriptor = "listing of 'bindings/rust/src'"
-cost_tokens = 4
-cum_tokens = 1088
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bindings/rust/src"
-entries = ["lib.rs"]
-
-[[batches]]
-position = 14
-key = 'Rust(ModUse { file: "bindings/rust/src/lib.rs" })'
-descriptor = "mod/use plumbing in bindings/rust/src/lib.rs"
-cost_tokens = 9
-cum_tokens = 1097
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/rust/src/lib.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bindings/rust/src/lib.rs"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "bindings/go" })'
-descriptor = "listing of 'bindings/go'"
-cost_tokens = 5
-cum_tokens = 1102
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bindings/go"
-entries = ["ncruces"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "bindings/python" })'
-descriptor = "listing of 'bindings/python'"
-cost_tokens = 5
-cum_tokens = 1107
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bindings/python"
-entries = ["extra_init.py"]
-
-[[batches]]
-position = 17
-key = 'Python(DeclNames { file: "tmp-static.py", chunk_index: 0 })'
-descriptor = "python decl names surface in tmp-static.py"
-cost_tokens = 130
-cum_tokens = 1237
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tmp-static.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "tmp-static.py"
-start = 11
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "tmp-static.py"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "tmp-static.py"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 18
-key = 'Python(Decl { file: "tmp-static.py", start_line: 25 })'
-descriptor = "python decl at tmp-static.py:25"
-cost_tokens = 0
-cum_tokens = 1237
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tmp-static.py"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Python(DeclNames { file: "bindings/python/extra_init.py", chunk_index: 0 })'
-descriptor = "python decl names surface in bindings/python/extra_init.py"
-cost_tokens = 37
-cum_tokens = 1274
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 20
-key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 6 })'
-descriptor = "python decl at bindings/python/extra_init.py:6"
-cost_tokens = 0
-cum_tokens = 1274
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 11 })'
-descriptor = "python decl at bindings/python/extra_init.py:11"
-cost_tokens = 0
-cum_tokens = 1274
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
-descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
-cost_tokens = 17
-cum_tokens = 1291
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
-descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
-cost_tokens = 17
-cum_tokens = 1308
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 6 })'
-descriptor = "python decl doc at bindings/python/extra_init.py:6"
-cost_tokens = 22
-cum_tokens = 1330
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 11 })'
-descriptor = "python decl doc at bindings/python/extra_init.py:11"
-cost_tokens = 22
-cum_tokens = 1352
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
+position = 27
 key = 'Fs(DirListing { dir: "benchmarks/micro" })'
 descriptor = "listing of 'benchmarks/micro'"
 cost_tokens = 24
-cum_tokens = 1376
+cum_tokens = 1520
 
 [batches.content]
 kind = "fs"
@@ -672,11 +686,11 @@ parent = "benchmarks/micro"
 entries = [".gitignore", "Cargo.lock", "Cargo.toml", "benches", "build.rs", "src"]
 
 [[batches]]
-position = 27
+position = 28
 key = 'Python(Decl { file: "tmp-static.py", start_line: 13 })'
 descriptor = "python decl at tmp-static.py:13"
 cost_tokens = 152
-cum_tokens = 1528
+cum_tokens = 1672
 
 [batches.content]
 kind = "lines"
@@ -690,11 +704,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Fs(DirListing { dir: "site" })'
 descriptor = "listing of 'site'"
 cost_tokens = 72
-cum_tokens = 1600
+cum_tokens = 1744
 
 [batches.content]
 kind = "fs"
@@ -704,11 +718,25 @@ parent = "site"
 entries = [".gitignore", ".vitepress", "api-reference.md", "build-ref.mjs", "compiling.md", "features", "getting-started", "guides", "index.md", "package-lock.json", "package.json", "project.data.ts", "public", "sqlite.tmlanguage.json", "using", "versioning.md"]
 
 [[batches]]
-position = 29
+position = 30
+key = 'Fs(DirListing { dir: "tests/fuzz" })'
+descriptor = "listing of 'tests/fuzz'"
+cost_tokens = 48
+cum_tokens = 1792
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fuzz"
+entries = [".gitignore", "Makefile", "README.md", "corpus", "exec.c", "exec.dict", "json.c", "numpy.c", "numpy.dict", "vec0-create.c", "vec0-create.dict"]
+
+[[batches]]
+position = 31
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 80
-cum_tokens = 1680
+cum_tokens = 1872
 
 [batches.content]
 kind = "fs"
@@ -718,11 +746,11 @@ parent = "examples"
 entries = ["nbc-headlines", "python-recipes", "simple-bun", "simple-c", "simple-deno", "simple-go-cgo", "simple-go-ncruces", "simple-node", "simple-node2", "simple-python", "simple-ruby", "simple-rust", "simple-sqlite", "simple-wasm", "sqlite3-cli", "wasm"]
 
 [[batches]]
-position = 30
+position = 32
 key = 'Plaintext(Whole { file: "TODO" })'
 descriptor = "plaintext config TODO"
 cost_tokens = 244
-cum_tokens = 1924
+cum_tokens = 2116
 
 [batches.content]
 kind = "lines"
@@ -742,34 +770,6 @@ end = 17
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 144
-cum_tokens = 2068
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = [".gitignore", ".python-version", "Cargo.lock", "Cargo.toml", "__snapshots__", "afbd", "build.rs", "conftest.py", "correctness", "fuzz", "fuzz.py", "leak-fixtures", "minimum", "pyproject.toml", "skip.test-correctness.py", "sqlite-vec-internal.h", "test-auxiliary.py", "test-general.py", "test-knn-distance-constraints.py", "test-loadable.py", "test-metadata.py", "test-partition-keys.py", "test-unit.c", "test-wasm.mjs", "unittest.rs", "utils.py", "uv.lock"]
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "tests/fuzz" })'
-descriptor = "listing of 'tests/fuzz'"
-cost_tokens = 48
-cum_tokens = 2116
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fuzz"
-entries = [".gitignore", "Makefile", "README.md", "corpus", "exec.c", "exec.dict", "json.c", "numpy.c", "numpy.dict", "vec0-create.c", "vec0-create.dict"]
 
 [[batches]]
 position = 33

@@ -35,17 +35,17 @@ Score(3000)=0.689 I=0.868 C=0.547 ns_rows≤3K=18/44 (reached=11 partial=1 missi
 | ns | 1302 |  | 172 | Macro export locations | 2.9 |  | 0.545 |
 | walker |  | 1323 | 274 | crate-doc lede in src/lib.rs |  |  | 0.577 |
 | walker |  | 1388 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.577 |
-| walker |  | 1525 | 137 | impl method sigs in src/context.rs |  |  | 0.577 |
-| ns | 1542 |  | 240 | Cargo features + dev-deps | 2.10 | 1.4 | 0.540 |
-| walker |  | 1661 | 136 | macro_export body at src/macros.rs:58 |  |  | 0.540 |
-| ns | 1757 |  | 215 | Display reprs: `{}` and `{:#}` | 2.11 | 2.5 | 0.508 |
-| walker |  | 1835 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.557 |
-| ns | 1979 |  | 222 | anyhow! macro body | 2.12 | 2.9 | 0.520 |
-| walker |  | 2042 | 207 | [dependencies] in Cargo.toml |  |  | 0.579 |
-| walker |  | 2065 | 23 | pub-item names surface in src/ensure.rs |  |  | 0.579 |
-| walker |  | 2285 | 220 | macro_export body at src/macros.rs:204 |  |  | 0.643 |
-| walker |  | 2323 | 38 | impl method sigs in src/chain.rs |  |  | 0.643 |
-| walker |  | 2413 | 90 | listing of 'tests' |  |  | 0.731 |
+| walker |  | 1478 | 90 | listing of 'tests' |  |  | 0.693 |
+| ns | 1542 |  | 240 | Cargo features + dev-deps | 2.10 | 1.4 | 0.648 |
+| walker |  | 1615 | 137 | impl method sigs in src/context.rs |  |  | 0.648 |
+| walker |  | 1751 | 136 | macro_export body at src/macros.rs:58 |  |  | 0.648 |
+| ns | 1757 |  | 215 | Display reprs: `{}` and `{:#}` | 2.11 | 2.5 | 0.610 |
+| walker |  | 1925 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.657 |
+| ns | 1979 |  | 222 | anyhow! macro body | 2.12 | 2.9 | 0.612 |
+| walker |  | 2132 | 207 | [dependencies] in Cargo.toml |  |  | 0.669 |
+| walker |  | 2155 | 23 | pub-item names surface in src/ensure.rs |  |  | 0.669 |
+| walker |  | 2375 | 220 | macro_export body at src/macros.rs:204 |  |  | 0.731 |
+| walker |  | 2413 | 38 | impl method sigs in src/chain.rs |  |  | 0.731 |
 | walker |  | 2444 | 31 | pub-item names surface in src/chain.rs |  |  | 0.731 |
 | walker |  | 2459 | 15 | pub item at src/chain.rs:11 |  |  | 0.731 |
 | ns | 2558 |  | 579 | Context impls for Result and Option | 2.13 | 2.7 | 0.643 |
