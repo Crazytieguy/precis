@@ -155,12 +155,10 @@ pub(crate) fn non_essential_factor_inner(
     // appendix (bubbletea's `UPGRADE_GUIDE_V2.md`, linked at README
     // line 29, was NS-ranked inside 3K while the walker zeroed the
     // whole file).
-    if is_peripheral_doc(target) || is_localized_readme(target) {
-        if is_upgrade_guide_doc(target) && readme_promotes_doc(target, root) {
-            // fall through to the remaining classifiers
-        } else {
-            return 0.2;
-        }
+    if (is_peripheral_doc(target) || is_localized_readme(target))
+        && !is_readme_promoted_upgrade_guide(target, root)
+    {
+        return 0.2;
     }
     if !skip_dir_classifier {
         let mut prefix = root.to_path_buf();
