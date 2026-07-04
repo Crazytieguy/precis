@@ -84,6 +84,20 @@ shows the line number for every source line it includes. When you
 write a "locations" batch what you're ranking is the *presence* of
 the names/headings — the line numbers come for free.
 
+Two disciplines that past NS audits found violated in frozen NSes
+(a "complete" root listing missing a real file; a source roster that
+never listed the repo's colocated `*_test.go` files anywhere):
+
+- **Class-closure audit.** For every listing/roster batch, re-check
+  the actual directory or symbol set against your entries before
+  moving on — a hedge batch with a silent omission is worse than no
+  hedge, because it certifies the wrong class.
+- **Hedge in rendered content, not in justification prose.** A
+  justification saying "the remaining toggles continue to line 117"
+  never reaches the consuming agent. If elided content needs
+  signaling, spend an ellipsis span (or head+ellipsis+tail shape) —
+  rendered output is the only channel the agent sees.
+
 ## Ranking discipline: budget, growth, and threshold
 
 Per-batch token cost drives ranking. A higher-value-per-token batch
@@ -196,3 +210,14 @@ boundaries are a judgment call per fixture.
   bodies wastes budget. Their filenames can still appear in fs
   listings (the agent knows the file exists and can read it on
   demand), but no batch should pull line ranges from their bodies.
+  Go further: **rank the complement**. Read the injected docs and
+  spend the budget on what they *don't* cover — if they already
+  explain the architecture and build story, the NS should buy file
+  breadth, exact shapes with line coordinates, and semantic tables
+  instead of re-buying that prose from README/manpages.
+
+Also weigh **operational coverage** as a first-class candidate class,
+not an afterthought: build/test entry points, CI workflow existence,
+a concrete config-file sample (often cheaper evidence of the config
+format than the parser that reads it), and CLI flag surfaces. "How do
+I build/test/configure/run this" is a large share of real sessions.
