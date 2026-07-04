@@ -936,10 +936,16 @@ impl InnerKey for PythonKey {
 impl InnerKey for CKey {
     /// Per-decl batches steepen to `0.45` — typedef / prototype lines
     /// are short and headers emit dozens; the default 0.35 lets the
-    /// stack dominate larger anchor batches.
+    /// stack dominate larger anchor batches. `DeclDoc` joins them: a
+    /// one-line doc comment above a decl is the same short-and-numerous
+    /// shape, and at 0.35 the doc-scrap stack out-ranks the big coherent
+    /// name catalogs / struct batches the NS wants first (krep, bareiron).
     fn concavity_exponent(&self) -> f64 {
         match self {
-            CKey::Decl { .. } | CKey::DeclBody { .. } | CKey::AggregateMemberGroup { .. } => 0.45,
+            CKey::Decl { .. }
+            | CKey::DeclBody { .. }
+            | CKey::AggregateMemberGroup { .. }
+            | CKey::DeclDoc { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }

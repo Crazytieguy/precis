@@ -195,7 +195,7 @@ src/
                 134→#define midi_desc_out_jack_n_t(input_num) \
                 …
                 149→typedef midi_desc_out_jack_n_t(1)  midi_desc_out_jack_1in_t; // 1 input
-                …
+                150→typedef midi_desc_out_jack_1in_t midi_desc_out_jack_t; // backward compatible
                 154→#define midi_desc_element_n_t(input_num) \
                 …
                 174→#define midi_desc_cs_endpoint_n_t(jack_num) \
@@ -265,7 +265,6 @@ src/
                 38→// Initialize EHCI driver
                 39→bool ehci_init(uint8_t rhport, uint32_t capability_reg, uint32_t operatial_reg);
                 …
-                41→// De-initialize EHCI driver
                 42→bool ehci_deinit(uint8_t rhport);
                 …
         mentor/
@@ -351,7 +350,6 @@ src/
             …
             126→typedef struct TU_ATTR_PACKED {
             …
-            139→// All table references are from USBPD Specification rev3.1 version 1.8
             140→enum {
             141→  PD_PDO_TYPE_FIXED = 0, // Vmin = Vmax
             142→  PD_PDO_TYPE_BATTERY,
