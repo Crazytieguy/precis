@@ -496,6 +496,85 @@ pub(super) fn declared_types_target(root: &Path) -> Option<PathBuf> {
     })
 }
 
+/// String targets of `<pkg_dir>/package.json`'s entry fields — `main`,
+/// `module`, and the string leaves under `exports` / `exports["."]`
+/// (conditional-export objects are descended; subpath keys other than
+/// `"."` are not).
+pub(super) fn package_entry_targets(pkg_dir: &Path) -> Vec<String> {
+    let manifest = pkg_dir.join(PACKAGE_JSON_FILENAME);
+    let Ok(text) = std::fs::read_to_string(&manifest) else {
+        return Vec::new();
+    };
+    let mut parser = tree_sitter::Parser::new();
+    if parser
+        .set_language(&tree_sitter_json::LANGUAGE.into())
+        .is_err()
+    {
+        return Vec::new();
+    }
+    let Some(tree) = parser.parse(text.as_bytes(), None) else {
+        return Vec::new();
+    };
+    let Some(object) = first_child_of_kind(tree.root_node(), "object") else {
+        return Vec::new();
+    };
+    let mut out = Vec::new();
+    for field in ["main", "module"] {
+        if let Some(value) = object_field_value(object, field, &text)
+            && value.kind() == "string"
+        {
+            out.push(unquote_string(value, &text));
+        }
+    }
+    if let Some(exports) = object_field_value(object, "exports", &text) {
+        let dot = if exports.kind() == "object" {
+            // `"."` is the root subpath; a conditions-only object (no
+            // `"./…"` keys) is itself the root entry. Subpath-only maps
+            // contribute nothing — their targets aren't the main entry.
+            object_field_value(exports, ".", &text)
+                .or_else(|| (!object_has_subpath_key(exports, &text)).then_some(exports))
+        } else {
+            Some(exports)
+        };
+        if let Some(dot) = dot {
+            collect_string_leaves(dot, &text, 3, &mut out);
+        }
+    }
+    out
+}
+
+/// True when a JSON object has any key starting with `.` (an exports
+/// subpath key, as opposed to a condition name).
+fn object_has_subpath_key(object: Node, source: &str) -> bool {
+    let mut cur = object.walk();
+    object.children(&mut cur).any(|child| {
+        child.kind() == "pair"
+            && first_child_of_kind(child, "string")
+                .is_some_and(|key| unquote_string(key, source).starts_with('.'))
+    })
+}
+
+/// Push every string leaf of a JSON value, descending objects up to
+/// `depth` levels (conditional-export nesting is shallow).
+fn collect_string_leaves(value: Node, source: &str, depth: usize, out: &mut Vec<String>) {
+    if value.kind() == "string" {
+        out.push(unquote_string(value, source));
+        return;
+    }
+    if depth == 0 || value.kind() != "object" {
+        return;
+    }
+    let mut cur = value.walk();
+    for child in value.children(&mut cur) {
+        if child.kind() != "pair" {
+            continue;
+        }
+        if let Some(inner) = child.child_by_field_name("value") {
+            collect_string_leaves(inner, source, depth - 1, out);
+        }
+    }
+}
+
 /// Raw entries from the `workspaces` field on `<root>/package.json`.
 /// Supports both array and object (`{"packages": […]}`) forms.
 fn npm_workspaces_entries(root: &Path) -> Vec<String> {

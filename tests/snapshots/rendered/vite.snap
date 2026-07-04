@@ -56,22 +56,6 @@ packages/
         src/
             __tests__/
             index.ts
-                128→export const modulePreloadLinkRE: RegExp =
-                129→  /<link(?![\w-])[^>]*?\srel=(['"])modulepreload\1[^>]*>/g
-                794→export async function detectPolyfills(
-                795→  code: string,
-                796→  targets: any,
-                797→  assumptions: Record<string, boolean>,
-                798→  list: Set<string>,
-                799→): Promise<void> {
-                …
-                1057→export const cspHashes: string[] = [
-                …
-                1064→export type { Options }
-                …
-                1066→export default viteLegacyPlugin
-                …
-                1078→export { viteLegacyPluginCjs as 'module.exports' }
             shims.d.ts
             snippets.ts
             types.ts
@@ -236,7 +220,19 @@ packages/
                     26→/** @deprecated - use `parseAsync` instead */
                     27→export const parseAstAsync: typeof _parseAstAsync = _parseAstAsync
                     …
+                    29→export {
+                    30→  defineConfig,
+                    31→  loadConfigFromFile,
+                    32→  resolveConfig,
+                    33→  sortUserPlugins,
+                    34→} from './config'
                     35→export { perEnvironmentPlugin } from './plugin'
+                    36→export { perEnvironmentState } from './environment'
+                    37→export { createServer } from './server'
+                    38→export { preview } from './preview'
+                    39→export { build, createBuilder } from './build'
+                    41→export { optimizeDeps } from './optimizer'
+                    42→export { createIdResolver } from './idResolver'
                     87→export const esbuildVersion = '0.25.0'
                 internalIndex.ts
                 logger.ts

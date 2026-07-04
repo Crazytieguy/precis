@@ -15,25 +15,25 @@ Score(3000)=0.642 I=0.826 C=0.499 ns_rows≤3K=21/39 (reached=10 partial=3 missi
 | walker |  | 416 | 54 | headings outline in Readme.md |  |  | 0.839 |
 | ns | 431 |  | 37 | src/ tree (flat layout) | 2.1 |  | 0.850 |
 | walker |  | 432 | 16 | Readme.md section #10 |  |  | 0.850 |
-| walker |  | 453 | 21 | listing of 'docs' |  |  | 0.853 |
-| walker |  | 575 | 122 | README headline in docs/readme.md |  |  | 0.853 |
-| ns | 583 |  | 152 | package.json — module shape & engines | 2.2 |  | 0.714 |
-| walker |  | 600 | 25 | export names surface in src/error.ts |  |  | 0.714 |
-| walker |  | 655 | 55 | listing of 'examples' |  |  | 0.720 |
-| ns | 694 |  | 111 | docs/ subtree listings | 2.3 |  | 0.608 |
-| walker |  | 734 | 79 | export at src/error.ts:5 |  |  | 0.610 |
-| ns | 802 |  | 108 | examples/ + test/ + test/api/ tree | 2.4 |  | 0.560 |
-| walker |  | 825 | 91 | export at src/error.ts:25 |  |  | 0.563 |
-| walker |  | 848 | 23 | export names surface #1 in src/struct.ts |  |  | 0.563 |
-| walker |  | 848 | 0 | export at src/struct.ts:266 |  |  | 0.563 |
-| ns | 851 |  | 49 | Readme section headings (locations only) | 2.5 |  | 0.588 |
-| walker |  | 877 | 29 | listing of 'docs/images' |  |  | 0.588 |
-| walker |  | 908 | 31 | listing of 'docs/reference' |  |  | 0.634 |
-| walker |  | 947 | 39 | headings outline in docs/reference/typescript.md |  |  | 0.634 |
-| walker |  | 987 | 40 | headings outline in docs/reference/errors.md |  |  | 0.634 |
-| walker |  | 1015 | 28 | export doc at src/error.ts:5 |  |  | 0.634 |
-| walker |  | 1060 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.634 |
-| walker |  | 1139 | 79 | imports in src/index.ts |  |  | 0.689 |
+| walker |  | 511 | 79 | imports in src/index.ts |  |  | 0.956 |
+| walker |  | 532 | 21 | listing of 'docs' |  |  | 0.960 |
+| walker |  | 557 | 25 | export names surface in src/error.ts |  |  | 0.960 |
+| ns | 583 |  | 152 | package.json — module shape & engines | 2.2 |  | 0.803 |
+| walker |  | 612 | 55 | listing of 'examples' |  |  | 0.809 |
+| walker |  | 691 | 79 | export at src/error.ts:5 |  |  | 0.811 |
+| ns | 694 |  | 111 | docs/ subtree listings | 2.3 |  | 0.682 |
+| walker |  | 782 | 91 | export at src/error.ts:25 |  |  | 0.686 |
+| ns | 802 |  | 108 | examples/ + test/ + test/api/ tree | 2.4 |  | 0.623 |
+| ns | 851 |  | 49 | Readme section headings (locations only) | 2.5 |  | 0.644 |
+| walker |  | 904 | 122 | README headline in docs/readme.md |  |  | 0.644 |
+| walker |  | 927 | 23 | export names surface #1 in src/struct.ts |  |  | 0.644 |
+| walker |  | 927 | 0 | export at src/struct.ts:266 |  |  | 0.644 |
+| walker |  | 956 | 29 | listing of 'docs/images' |  |  | 0.644 |
+| walker |  | 987 | 31 | listing of 'docs/reference' |  |  | 0.689 |
+| walker |  | 1026 | 39 | headings outline in docs/reference/typescript.md |  |  | 0.689 |
+| walker |  | 1066 | 40 | headings outline in docs/reference/errors.md |  |  | 0.689 |
+| walker |  | 1094 | 28 | export doc at src/error.ts:5 |  |  | 0.689 |
+| walker |  | 1139 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.689 |
 | ns | 1168 |  | 317 | docs/summary.md (the GitBook TOC) | 2.6 |  | 0.608 |
 | walker |  | 1195 | 56 | export names surface in src/structs/coercions.ts |  |  | 0.609 |
 | walker |  | 1195 | 0 | export at src/structs/coercions.ts:79 |  |  | 0.609 |

@@ -17,8 +17,6 @@ README.md
     …
     51→## Key Features
     …
-    53→- **Incremental Processing**: Efficiently process changes to input data without recomputing everything
-    71→- **Type Safety**: Full TypeScript type safety and inference through the pipeline API
     73→## Quick Start
     …
     75→### Installation
@@ -108,8 +106,6 @@ packages/
             3→**This is an experimental package**
             5→D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2TS pipeline. It provides a declarative way to express data transformations using familiar SQL-like syntax.
             7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
-            140→## Planned Features
-            142→Future versions may support additional SQL features and optimizations.
         eslint.config.mjs
         package.json
         src/
@@ -220,8 +216,30 @@ packages/
                 distinct.ts
                 filter.ts
                 filterBy.ts
+                    14→export function filterBy<
+                    …
                 groupBy.ts
                 index.ts
+                    1→export * from './pipe.js'
+                    2→export * from './map.js'
+                    3→export * from './filter.js'
+                    4→export * from './negate.js'
+                    5→export * from './concat.js'
+                    6→export * from './debug.js'
+                    7→export * from './output.js'
+                    8→export * from './consolidate.js'
+                    9→export * from './buffer.js'
+                    10→export * from './join.js'
+                    11→export * from './reduce.js'
+                    12→export * from './count.js'
+                    13→export * from './distinct.js'
+                    14→export * from './iterate.js'
+                    15→export * from './keying.js'
+                    16→export * from './topK.js'
+                    17→export * from './topKWithFractionalIndex.js'
+                    18→export * from './orderBy.js'
+                    19→export * from './filterBy.js'
+                    20→export { groupBy, groupByOperators } from './groupBy.js'
                 iterate.ts
                 join.ts
                 keying.ts
@@ -232,16 +250,12 @@ packages/
                 pipe.ts
                 reduce.ts
                 topK.ts
+                    22→export function topK<
+                    …
+                    60→export function topKWithIndex<
+                    …
                 topKWithFractionalIndex.ts
             order.ts
-                10→export function v(version: number | number[]): Version {
-                …
-                29→export class Version {
-                …
-                138→export class Antichain {
-                …
-                277→export class Frontier extends Antichain {
-                …
             sqlite/
                 context.ts
                     65→export function withSQLite(db: SQLiteDb) {
@@ -266,14 +280,7 @@ packages/
                 12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
                 …
                 14→export type Message<T> =
-                15→  | {
-                16→      type: typeof MessageType.DATA
-                17→      data: DataMessage<T>
-                18→    }
-                19→  | {
-                20→      type: typeof MessageType.FRONTIER
-                21→      data: FrontierMessage
-                22→    }
+                …
                 24→export type DataMessage<T> = {
                 25→  version: Version
                 26→  collection: MultiSet<T>
@@ -291,13 +298,7 @@ packages/
                 40→  probeFrontierLessThan(frontier: Antichain): boolean
                 41→}
                 43→export interface IDifferenceStreamWriter<T> {
-                44→  sendData(
-                45→    version: Version | number | number[],
-                46→    collection: MultiSet<T> | MultiSetArray<T>,
-                47→  ): void
-                48→  sendFrontier(frontier: Antichain | Version | number | number[]): void
-                49→  newReader(): IDifferenceStreamReader<T>
-                50→}
+                …
                 52→export interface ID2 {
                 …
                 64→export interface IStreamBuilder<T> {

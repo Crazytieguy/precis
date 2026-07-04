@@ -1,7 +1,7 @@
 fixture = "vite"
 budget = 10000
-cumulative_tokens = 9978
-batch_count = 220
+cumulative_tokens = 9751
+batch_count = 224
 
 [[batches]]
 position = 1
@@ -478,10 +478,28 @@ entries = ["__tests__", "__tests_dts__", "assetSource.ts", "baseEnvironment.ts",
 
 [[batches]]
 position = 21
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 3 })'
+descriptor = "imports #3 in packages/vite/src/node/index.ts"
+cost_tokens = 18
+cum_tokens = 1131
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
 key = 'Typescript(ExportNames { file: "packages/vite/src/node/index.ts", chunk_index: 0, export_count: 4, type_only_export_count: 1 })'
 descriptor = "export names surface in packages/vite/src/node/index.ts"
 cost_tokens = 74
-cum_tokens = 1187
+cum_tokens = 1205
 
 [batches.content]
 kind = "lines"
@@ -535,11 +553,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Typescript(Export { file: "packages/vite/src/node/index.ts", start_line: 25 })'
 descriptor = "export at packages/vite/src/node/index.ts:25"
 cost_tokens = 0
-cum_tokens = 1187
+cum_tokens = 1205
 
 [batches.content]
 kind = "lines"
@@ -553,11 +571,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Typescript(Export { file: "packages/vite/src/node/index.ts", start_line: 27 })'
 descriptor = "export at packages/vite/src/node/index.ts:27"
 cost_tokens = 0
-cum_tokens = 1187
+cum_tokens = 1205
 
 [batches.content]
 kind = "lines"
@@ -571,11 +589,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Typescript(ExportDoc { file: "packages/vite/src/node/index.ts", start_line: 27 })'
 descriptor = "export doc at packages/vite/src/node/index.ts:27"
 cost_tokens = 13
-cum_tokens = 1200
+cum_tokens = 1218
 
 [batches.content]
 kind = "lines"
@@ -589,11 +607,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Typescript(ExportDoc { file: "packages/vite/src/node/index.ts", start_line: 25 })'
 descriptor = "export doc at packages/vite/src/node/index.ts:25"
 cost_tokens = 14
-cum_tokens = 1214
+cum_tokens = 1232
 
 [batches.content]
 kind = "lines"
@@ -607,11 +625,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 0 })'
 descriptor = "imports in packages/vite/src/node/index.ts"
 cost_tokens = 17
-cum_tokens = 1231
+cum_tokens = 1249
 
 [batches.content]
 kind = "lines"
@@ -625,11 +643,83 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 6 })'
+descriptor = "imports #6 in packages/vite/src/node/index.ts"
+cost_tokens = 14
+cum_tokens = 1263
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 7 })'
+descriptor = "imports #7 in packages/vite/src/node/index.ts"
+cost_tokens = 14
+cum_tokens = 1277
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 8 })'
+descriptor = "imports #8 in packages/vite/src/node/index.ts"
+cost_tokens = 13
+cum_tokens = 1290
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 9 })'
+descriptor = "imports #9 in packages/vite/src/node/index.ts"
+cost_tokens = 12
+cum_tokens = 1302
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
 key = 'Typescript(ImportChunk { file: "packages/vite/src/module-runner/index.ts", chunk_index: 2 })'
 descriptor = "imports #2 in packages/vite/src/module-runner/index.ts"
 cost_tokens = 15
-cum_tokens = 1246
+cum_tokens = 1317
 
 [batches.content]
 kind = "lines"
@@ -643,11 +733,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 28
+position = 33
 key = 'Fs(DirListing { dir: "packages/vite/misc" })'
 descriptor = "listing of 'packages/vite/misc'"
 cost_tokens = 18
-cum_tokens = 1264
+cum_tokens = 1335
 
 [batches.content]
 kind = "fs"
@@ -657,11 +747,11 @@ parent = "packages/vite/misc"
 entries = ["false.d.ts", "false.js", "true.d.ts", "true.js"]
 
 [[batches]]
-position = 29
+position = 34
 key = 'Typescript(ImportChunk { file: "packages/vite/src/module-runner/index.ts", chunk_index: 0 })'
 descriptor = "imports in packages/vite/src/module-runner/index.ts"
 cost_tokens = 46
-cum_tokens = 1310
+cum_tokens = 1381
 
 [batches.content]
 kind = "lines"
@@ -675,11 +765,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 30
+position = 35
 key = 'Typescript(ExportNames { file: "packages/vite/src/module-runner/runner.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/vite/src/module-runner/runner.ts"
 cost_tokens = 11
-cum_tokens = 1321
+cum_tokens = 1392
 
 [batches.content]
 kind = "lines"
@@ -701,11 +791,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 36
 key = 'Typescript(ExportNames { file: "packages/vite/src/module-runner/esmEvaluator.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/vite/src/module-runner/esmEvaluator.ts"
 cost_tokens = 15
-cum_tokens = 1336
+cum_tokens = 1407
 
 [batches.content]
 kind = "lines"
@@ -727,11 +817,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 37
 key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 2 })'
 descriptor = "imports #2 in packages/vite/src/node/index.ts"
 cost_tokens = 20
-cum_tokens = 1356
+cum_tokens = 1427
 
 [batches.content]
 kind = "lines"
@@ -745,11 +835,47 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 33
+position = 38
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 10 })'
+descriptor = "imports #10 in packages/vite/src/node/index.ts"
+cost_tokens = 15
+cum_tokens = 1442
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 11 })'
+descriptor = "imports #11 in packages/vite/src/node/index.ts"
+cost_tokens = 13
+cum_tokens = 1455
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
 key = 'Typescript(ExportNames { file: "packages/vite/src/node/environment.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
 descriptor = "export names surface in packages/vite/src/node/environment.ts"
 cost_tokens = 23
-cum_tokens = 1379
+cum_tokens = 1478
 
 [batches.content]
 kind = "lines"
@@ -787,11 +913,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 41
 key = 'Typescript(Export { file: "packages/vite/src/node/environment.ts", start_line: 20 })'
 descriptor = "export at packages/vite/src/node/environment.ts:20"
 cost_tokens = 29
-cum_tokens = 1408
+cum_tokens = 1507
 
 [batches.content]
 kind = "lines"
@@ -813,11 +939,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 42
 key = 'Typescript(Export { file: "packages/vite/src/node/environment.ts", start_line: 7 })'
 descriptor = "export at packages/vite/src/node/environment.ts:7"
 cost_tokens = 38
-cum_tokens = 1446
+cum_tokens = 1545
 
 [batches.content]
 kind = "lines"
@@ -831,29 +957,29 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 36
-key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 3 })'
-descriptor = "imports #3 in packages/vite/src/node/index.ts"
-cost_tokens = 18
-cum_tokens = 1464
+position = 43
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 5 })'
+descriptor = "imports #5 in packages/vite/src/node/index.ts"
+cost_tokens = 50
+cum_tokens = 1595
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "packages/vite/src/node/index.ts"
-start = 9
-end = 9
+start = 29
+end = 34
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 37
+position = 44
 key = 'Typescript(ExportNames { file: "packages/vite/src/node/plugin.ts", chunk_index: 0, export_count: 11, type_only_export_count: 9 })'
 descriptor = "export names surface in packages/vite/src/node/plugin.ts"
 cost_tokens = 182
-cum_tokens = 1646
+cum_tokens = 1777
 
 [batches.content]
 kind = "lines"
@@ -1035,11 +1161,11 @@ end = 418
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 45
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 101 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:101"
 cost_tokens = 0
-cum_tokens = 1646
+cum_tokens = 1777
 
 [batches.content]
 kind = "lines"
@@ -1061,11 +1187,11 @@ end = 102
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 46
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 69 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:69"
 cost_tokens = 13
-cum_tokens = 1659
+cum_tokens = 1790
 
 [batches.content]
 kind = "lines"
@@ -1079,11 +1205,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 40
+position = 47
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 80 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:80"
 cost_tokens = 21
-cum_tokens = 1680
+cum_tokens = 1811
 
 [batches.content]
 kind = "lines"
@@ -1097,11 +1223,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 41
+position = 48
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 375 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:375"
 cost_tokens = 19
-cum_tokens = 1699
+cum_tokens = 1830
 
 [batches.content]
 kind = "lines"
@@ -1115,11 +1241,11 @@ end = 377
 kind = "full"
 
 [[batches]]
-position = 42
+position = 49
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 390 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:390"
 cost_tokens = 20
-cum_tokens = 1719
+cum_tokens = 1850
 
 [batches.content]
 kind = "lines"
@@ -1141,11 +1267,11 @@ end = 393
 kind = "ellipsis"
 
 [[batches]]
-position = 43
+position = 50
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 62 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:62"
 cost_tokens = 36
-cum_tokens = 1755
+cum_tokens = 1886
 
 [batches.content]
 kind = "lines"
@@ -1159,11 +1285,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 44
+position = 51
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 73 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:73"
 cost_tokens = 48
-cum_tokens = 1803
+cum_tokens = 1934
 
 [batches.content]
 kind = "lines"
@@ -1177,11 +1303,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 45
+position = 52
 key = 'Typescript(ExportNames { file: "packages/vite/src/module-runner/createImportMeta.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/vite/src/module-runner/createImportMeta.ts"
 cost_tokens = 26
-cum_tokens = 1829
+cum_tokens = 1960
 
 [batches.content]
 kind = "lines"
@@ -1219,11 +1345,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 46
+position = 53
 key = 'Typescript(Export { file: "packages/vite/src/module-runner/createImportMeta.ts", start_line: 14 })'
 descriptor = "export at packages/vite/src/module-runner/createImportMeta.ts:14"
 cost_tokens = 20
-cum_tokens = 1849
+cum_tokens = 1980
 
 [batches.content]
 kind = "lines"
@@ -1245,11 +1371,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 54
 key = 'Typescript(Export { file: "packages/vite/src/module-runner/createImportMeta.ts", start_line: 41 })'
 descriptor = "export at packages/vite/src/module-runner/createImportMeta.ts:41"
 cost_tokens = 20
-cum_tokens = 1869
+cum_tokens = 2000
 
 [batches.content]
 kind = "lines"
@@ -1271,11 +1397,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 55
 key = 'Fs(DirListing { dir: "packages/vite/src/client" })'
 descriptor = "listing of 'packages/vite/src/client'"
 cost_tokens = 17
-cum_tokens = 1886
+cum_tokens = 2017
 
 [batches.content]
 kind = "fs"
@@ -1285,11 +1411,11 @@ parent = "packages/vite/src/client"
 entries = ["client.ts", "env.ts", "overlay.ts", "tsconfig.json"]
 
 [[batches]]
-position = 49
+position = 56
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 383 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:383"
 cost_tokens = 48
-cum_tokens = 1934
+cum_tokens = 2065
 
 [batches.content]
 kind = "lines"
@@ -1303,11 +1429,11 @@ end = 388
 kind = "full"
 
 [[batches]]
-position = 50
+position = 57
 key = 'Markdown(ReadmeHeadline { file: "packages/vite/README.md" })'
 descriptor = "README headline in packages/vite/README.md"
 cost_tokens = 166
-cum_tokens = 2100
+cum_tokens = 2231
 
 [batches.content]
 kind = "lines"
@@ -1345,11 +1471,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 51
+position = 58
 key = 'Typescript(ExportNames { file: "packages/vite/rolldown.config.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/vite/rolldown.config.ts"
 cost_tokens = 11
-cum_tokens = 2111
+cum_tokens = 2242
 
 [batches.content]
 kind = "lines"
@@ -1371,11 +1497,11 @@ end = 162
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 59
 key = 'Typescript(ExportNames { file: "packages/vite/rolldown.dts.config.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/vite/rolldown.dts.config.ts"
 cost_tokens = 11
-cum_tokens = 2122
+cum_tokens = 2253
 
 [batches.content]
 kind = "lines"
@@ -1397,11 +1523,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 60
 key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 1 })'
 descriptor = "imports #1 in packages/vite/src/node/index.ts"
 cost_tokens = 46
-cum_tokens = 2168
+cum_tokens = 2299
 
 [batches.content]
 kind = "lines"
@@ -1415,11 +1541,29 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 54
+position = 61
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 12 })'
+descriptor = "imports #12 in packages/vite/src/node/index.ts"
+cost_tokens = 15
+cum_tokens = 2314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
 key = 'Typescript(ExportNames { file: "packages/vite/rollupLicensePlugin.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/vite/rollupLicensePlugin.ts"
 cost_tokens = 12
-cum_tokens = 2180
+cum_tokens = 2326
 
 [batches.content]
 kind = "lines"
@@ -1441,11 +1585,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 63
 key = 'Typescript(Export { file: "packages/vite/src/node/plugin.ts", start_line: 417 })'
 descriptor = "export at packages/vite/src/node/plugin.ts:417"
 cost_tokens = 52
-cum_tokens = 2232
+cum_tokens = 2378
 
 [batches.content]
 kind = "lines"
@@ -1467,11 +1611,11 @@ end = 423
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 64
 key = 'Typescript(ExportBody { file: "packages/vite/src/node/plugin.ts", start_line: 417, body_start_line: 423 })'
 descriptor = "export body at packages/vite/src/node/plugin.ts:417 body 423"
 cost_tokens = 27
-cum_tokens = 2259
+cum_tokens = 2405
 
 [batches.content]
 kind = "lines"
@@ -1485,11 +1629,11 @@ end = 426
 kind = "full"
 
 [[batches]]
-position = 57
+position = 65
 key = 'Typescript(ExportNames { file: "packages/vite/src/node/env.ts", chunk_index: 0, export_count: 3, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/vite/src/node/env.ts"
 cost_tokens = 37
-cum_tokens = 2296
+cum_tokens = 2442
 
 [batches.content]
 kind = "lines"
@@ -1543,11 +1687,11 @@ end = 99
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 66
 key = 'Typescript(Export { file: "packages/vite/src/node/env.ts", start_line: 98 })'
 descriptor = "export at packages/vite/src/node/env.ts:98"
 cost_tokens = 24
-cum_tokens = 2320
+cum_tokens = 2466
 
 [batches.content]
 kind = "lines"
@@ -1569,11 +1713,11 @@ end = 101
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 67
 key = 'Typescript(Export { file: "packages/vite/src/node/env.ts", start_line: 12 })'
 descriptor = "export at packages/vite/src/node/env.ts:12"
 cost_tokens = 29
-cum_tokens = 2349
+cum_tokens = 2495
 
 [batches.content]
 kind = "lines"
@@ -1595,11 +1739,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 68
 key = 'Typescript(Export { file: "packages/vite/src/node/env.ts", start_line: 28 })'
 descriptor = "export at packages/vite/src/node/env.ts:28"
 cost_tokens = 49
-cum_tokens = 2398
+cum_tokens = 2544
 
 [batches.content]
 kind = "lines"
@@ -1621,11 +1765,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 69
 key = 'Typescript(ImportChunk { file: "packages/vite/src/module-runner/index.ts", chunk_index: 4 })'
 descriptor = "imports #4 in packages/vite/src/module-runner/index.ts"
 cost_tokens = 20
-cum_tokens = 2418
+cum_tokens = 2564
 
 [batches.content]
 kind = "lines"
@@ -1639,11 +1783,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 62
+position = 70
 key = 'Typescript(ExportNames { file: "packages/vite/src/node/idResolver.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
 descriptor = "export names surface in packages/vite/src/node/idResolver.ts"
 cost_tokens = 39
-cum_tokens = 2457
+cum_tokens = 2603
 
 [batches.content]
 kind = "lines"
@@ -1697,11 +1841,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 63
+position = 71
 key = 'Typescript(Export { file: "packages/vite/src/node/idResolver.ts", start_line: 23 })'
 descriptor = "export at packages/vite/src/node/idResolver.ts:23"
 cost_tokens = 33
-cum_tokens = 2490
+cum_tokens = 2636
 
 [batches.content]
 kind = "lines"
@@ -1723,11 +1867,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 64
+position = 72
 key = 'Typescript(Export { file: "packages/vite/src/node/idResolver.ts", start_line: 42 })'
 descriptor = "export at packages/vite/src/node/idResolver.ts:42"
 cost_tokens = 33
-cum_tokens = 2523
+cum_tokens = 2669
 
 [batches.content]
 kind = "lines"
@@ -1749,11 +1893,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 65
+position = 73
 key = 'Typescript(Export { file: "packages/vite/src/node/idResolver.ts", start_line: 11 })'
 descriptor = "export at packages/vite/src/node/idResolver.ts:11"
 cost_tokens = 47
-cum_tokens = 2570
+cum_tokens = 2716
 
 [batches.content]
 kind = "lines"
@@ -1767,11 +1911,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 66
+position = 74
 key = 'Typescript(Export { file: "packages/vite/rolldown.config.ts", start_line: 161 })'
 descriptor = "export at packages/vite/rolldown.config.ts:161"
 cost_tokens = 36
-cum_tokens = 2606
+cum_tokens = 2752
 
 [batches.content]
 kind = "lines"
@@ -1785,11 +1929,11 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 67
+position = 75
 key = 'Typescript(ExportNames { file: "packages/vite/src/module-runner/evaluatedModules.ts", chunk_index: 0, export_count: 3, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/vite/src/module-runner/evaluatedModules.ts"
 cost_tokens = 42
-cum_tokens = 2648
+cum_tokens = 2794
 
 [batches.content]
 kind = "lines"
@@ -1843,11 +1987,11 @@ end = 148
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 76
 key = 'Typescript(Export { file: "packages/vite/src/module-runner/evaluatedModules.ts", start_line: 147 })'
 descriptor = "export at packages/vite/src/module-runner/evaluatedModules.ts:147"
 cost_tokens = 0
-cum_tokens = 2648
+cum_tokens = 2794
 
 [batches.content]
 kind = "lines"
@@ -1869,11 +2013,11 @@ end = 148
 kind = "ellipsis"
 
 [[batches]]
-position = 69
+position = 77
 key = 'Fs(DirListing { dir: "packages/vite/types" })'
 descriptor = "listing of 'packages/vite/types'"
 cost_tokens = 44
-cum_tokens = 2692
+cum_tokens = 2838
 
 [batches.content]
 kind = "fs"
@@ -1883,11 +2027,11 @@ parent = "packages/vite/types"
 entries = ["customEvent.d.ts", "hmrPayload.d.ts", "hot.d.ts", "import-meta.d.ts", "importGlob.d.ts", "importMeta.d.ts", "internal", "metadata.d.ts"]
 
 [[batches]]
-position = 70
+position = 78
 key = 'Typescript(Export { file: "packages/vite/src/module-runner/esmEvaluator.ts", start_line: 15 })'
 descriptor = "export at packages/vite/src/module-runner/esmEvaluator.ts:15"
 cost_tokens = 84
-cum_tokens = 2776
+cum_tokens = 2922
 
 [batches.content]
 kind = "lines"
@@ -1933,29 +2077,29 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 71
-key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 6 })'
-descriptor = "imports #6 in packages/vite/src/node/index.ts"
-cost_tokens = 14
-cum_tokens = 2790
+position = 79
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 4 })'
+descriptor = "imports #4 in packages/vite/src/node/index.ts"
+cost_tokens = 113
+cum_tokens = 3035
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "packages/vite/src/node/index.ts"
-start = 35
-end = 35
+start = 10
+end = 22
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 72
+position = 80
 key = 'Typescript(ExportNames { file: "packages/plugin-legacy/src/index.ts", chunk_index: 0, export_count: 6, type_only_export_count: 1 })'
 descriptor = "export names surface in packages/plugin-legacy/src/index.ts"
 cost_tokens = 90
-cum_tokens = 2880
+cum_tokens = 3125
 
 [batches.content]
 kind = "lines"
@@ -2049,11 +2193,11 @@ end = 1067
 kind = "ellipsis"
 
 [[batches]]
-position = 73
+position = 81
 key = 'Typescript(Export { file: "packages/plugin-legacy/src/index.ts", start_line: 128 })'
 descriptor = "export at packages/plugin-legacy/src/index.ts:128"
 cost_tokens = 32
-cum_tokens = 2912
+cum_tokens = 3157
 
 [batches.content]
 kind = "lines"
@@ -2067,11 +2211,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 74
+position = 82
 key = 'Typescript(Export { file: "packages/plugin-legacy/src/index.ts", start_line: 794 })'
 descriptor = "export at packages/plugin-legacy/src/index.ts:794"
 cost_tokens = 49
-cum_tokens = 2961
+cum_tokens = 3206
 
 [batches.content]
 kind = "lines"
@@ -2093,11 +2237,11 @@ end = 800
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 83
 key = 'Typescript(Export { file: "packages/plugin-legacy/src/index.ts", start_line: 1057 })'
 descriptor = "export at packages/plugin-legacy/src/index.ts:1057"
 cost_tokens = 66
-cum_tokens = 3027
+cum_tokens = 3272
 
 [batches.content]
 kind = "lines"
@@ -2111,11 +2255,11 @@ end = 1062
 kind = "full"
 
 [[batches]]
-position = 76
+position = 84
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 41
-cum_tokens = 3068
+cum_tokens = 3313
 
 [batches.content]
 kind = "fs"
@@ -2125,11 +2269,11 @@ parent = ".github"
 entries = ["ISSUE_TEMPLATE", "PULL_REQUEST_TEMPLATE.md", "SECURITY.md", "commit-convention.md", "copilot-instructions.md", "renovate.json5", "workflows", "zizmor.yml"]
 
 [[batches]]
-position = 77
+position = 85
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 79
-cum_tokens = 3147
+cum_tokens = 3392
 
 [batches.content]
 kind = "fs"
@@ -2139,11 +2283,47 @@ parent = ".github/workflows"
 entries = ["ci.yml", "copilot-setup-steps.yml", "ecosystem-ci-trigger.yml", "issue-close-require.yml", "issue-labeled.yml", "issue-template-check.yml", "lock-closed-issues.yml", "preview-release.yml", "publish.yml", "pull-request-template-check.yml", "release-tag.yml", "semantic-pull-request.yml", "zizmor.yml"]
 
 [[batches]]
-position = 78
+position = 86
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 14 })'
+descriptor = "imports #14 in packages/vite/src/node/index.ts"
+cost_tokens = 17
+cum_tokens = 3409
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 13 })'
+descriptor = "imports #13 in packages/vite/src/node/index.ts"
+cost_tokens = 20
+cum_tokens = 3429
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 64
-cum_tokens = 3211
+cum_tokens = 3493
 
 [batches.content]
 kind = "fs"
@@ -2153,11 +2333,11 @@ parent = "docs"
 entries = [".vitepress", "_data", "acknowledgements.md", "blog", "blog.md", "changes", "config", "guide", "images", "index.md", "live.md", "package.json", "plugins", "public", "releases.md", "team.md", "tsconfig.json"]
 
 [[batches]]
-position = 79
+position = 89
 key = 'Fs(DirListing { dir: "docs/.vitepress" })'
 descriptor = "listing of 'docs/.vitepress'"
 cost_tokens = 19
-cum_tokens = 3230
+cum_tokens = 3512
 
 [batches.content]
 kind = "fs"
@@ -2167,11 +2347,11 @@ parent = "docs/.vitepress"
 entries = ["buildEnd.config.ts", "config.ts", "inlined-scripts", "theme"]
 
 [[batches]]
-position = 80
+position = 90
 key = 'Fs(DirListing { dir: "docs/.vitepress/theme" })'
 descriptor = "listing of 'docs/.vitepress/theme'"
 cost_tokens = 21
-cum_tokens = 3251
+cum_tokens = 3533
 
 [batches.content]
 kind = "fs"
@@ -2181,11 +2361,11 @@ parent = "docs/.vitepress/theme"
 entries = ["components", "composables", "index.ts", "landing", "live", "styles.css"]
 
 [[batches]]
-position = 81
+position = 91
 key = 'Fs(DirListing { dir: "packages/vite/src/node/__tests_dts__" })'
 descriptor = "listing of 'packages/vite/src/node/__tests_dts__'"
 cost_tokens = 22
-cum_tokens = 3273
+cum_tokens = 3555
 
 [batches.content]
 kind = "fs"
@@ -2195,11 +2375,11 @@ parent = "packages/vite/src/node/__tests_dts__"
 entries = ["config.ts", "plugin.ts", "tsconfig.json", "typeOptions.ts", "utils.ts"]
 
 [[batches]]
-position = 82
+position = 92
 key = 'Typescript(ImportChunk { file: "packages/vite/src/module-runner/index.ts", chunk_index: 3 })'
 descriptor = "imports #3 in packages/vite/src/module-runner/index.ts"
 cost_tokens = 37
-cum_tokens = 3310
+cum_tokens = 3592
 
 [batches.content]
 kind = "lines"
@@ -2213,11 +2393,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 83
+position = 93
 key = 'Typescript(Export { file: "packages/vite/rollupLicensePlugin.ts", start_line: 7 })'
 descriptor = "export at packages/vite/rollupLicensePlugin.ts:7"
 cost_tokens = 48
-cum_tokens = 3358
+cum_tokens = 3640
 
 [batches.content]
 kind = "lines"
@@ -2239,11 +2419,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 94
 key = 'Typescript(ImportChunk { file: "packages/vite/src/module-runner/index.ts", chunk_index: 5 })'
 descriptor = "imports #5 in packages/vite/src/module-runner/index.ts"
 cost_tokens = 21
-cum_tokens = 3379
+cum_tokens = 3661
 
 [batches.content]
 kind = "lines"
@@ -2257,11 +2437,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 85
+position = 95
 key = 'Fs(DirListing { dir: "packages/vite/types/internal" })'
 descriptor = "listing of 'packages/vite/types/internal'"
 cost_tokens = 37
-cum_tokens = 3416
+cum_tokens = 3698
 
 [batches.content]
 kind = "fs"
@@ -2271,29 +2451,29 @@ parent = "packages/vite/types/internal"
 entries = ["cssPreprocessorOptions.d.ts", "esbuildOptions.d.ts", "lightningcssOptions.d.ts", "rollupTypeCompat.d.ts", "terserOptions.d.ts"]
 
 [[batches]]
-position = 86
-key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 7 })'
-descriptor = "imports #7 in packages/vite/src/node/index.ts"
-cost_tokens = 14
-cum_tokens = 3430
+position = 96
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 15 })'
+descriptor = "imports #15 in packages/vite/src/node/index.ts"
+cost_tokens = 18
+cum_tokens = 3716
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "packages/vite/src/node/index.ts"
-start = 36
-end = 36
+start = 46
+end = 46
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 87
+position = 97
 key = 'Markdown(Section { file: "packages/vite/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/vite/README.md section #0"
 cost_tokens = 177
-cum_tokens = 3607
+cum_tokens = 3893
 
 [batches.content]
 kind = "lines"
@@ -2331,11 +2511,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 88
+position = 98
 key = 'Typescript(ExportDoc { file: "packages/vite/src/node/plugin.ts", start_line: 417 })'
 descriptor = "export doc at packages/vite/src/node/plugin.ts:417"
 cost_tokens = 18
-cum_tokens = 3625
+cum_tokens = 3911
 
 [batches.content]
 kind = "lines"
@@ -2349,11 +2529,11 @@ end = 416
 kind = "full"
 
 [[batches]]
-position = 89
+position = 99
 key = 'Fs(DirListing { dir: "packages/create-vite" })'
 descriptor = "listing of 'packages/create-vite'"
 cost_tokens = 123
-cum_tokens = 3748
+cum_tokens = 4034
 
 [batches.content]
 kind = "fs"
@@ -2363,11 +2543,11 @@ parent = "packages/create-vite"
 entries = ["CHANGELOG.md", "LICENSE", "README.md", "__tests__", "index.js", "package.json", "src", "template-lit", "template-lit-ts", "template-preact", "template-preact-ts", "template-qwik", "template-qwik-ts", "template-react", "template-react-ts", "template-solid", "template-solid-ts", "template-svelte", "template-svelte-ts", "template-vanilla", "template-vanilla-ts", "template-vue", "template-vue-ts", "tsconfig.json", "tsdown.config.ts"]
 
 [[batches]]
-position = 90
+position = 100
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/README.md" })'
 descriptor = "README headline in packages/create-vite/README.md"
 cost_tokens = 44
-cum_tokens = 3792
+cum_tokens = 4078
 
 [batches.content]
 kind = "lines"
@@ -2381,11 +2561,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 91
+position = 101
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/README.md" })'
 descriptor = "headings outline in packages/create-vite/README.md"
 cost_tokens = 26
-cum_tokens = 3818
+cum_tokens = 4104
 
 [batches.content]
 kind = "lines"
@@ -2423,11 +2603,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 102
 key = 'Fs(DirListing { dir: "packages/create-vite/template-lit" })'
 descriptor = "listing of 'packages/create-vite/template-lit'"
 cost_tokens = 19
-cum_tokens = 3837
+cum_tokens = 4123
 
 [batches.content]
 kind = "fs"
@@ -2437,11 +2617,11 @@ parent = "packages/create-vite/template-lit"
 entries = ["_gitignore", "index.html", "package.json", "public", "src"]
 
 [[batches]]
-position = 93
+position = 103
 key = 'Fs(DirListing { dir: "packages/create-vite/template-vanilla" })'
 descriptor = "listing of 'packages/create-vite/template-vanilla'"
 cost_tokens = 19
-cum_tokens = 3856
+cum_tokens = 4142
 
 [batches.content]
 kind = "fs"
@@ -2451,11 +2631,11 @@ parent = "packages/create-vite/template-vanilla"
 entries = ["_gitignore", "index.html", "package.json", "public", "src"]
 
 [[batches]]
-position = 94
+position = 104
 key = 'Fs(DirListing { dir: "packages/create-vite/template-vanilla/src" })'
 descriptor = "listing of 'packages/create-vite/template-vanilla/src'"
 cost_tokens = 15
-cum_tokens = 3871
+cum_tokens = 4157
 
 [batches.content]
 kind = "fs"
@@ -2465,11 +2645,11 @@ parent = "packages/create-vite/template-vanilla/src"
 entries = ["assets", "counter.js", "main.js", "style.css"]
 
 [[batches]]
-position = 95
+position = 105
 key = 'Fs(DirListing { dir: "packages/create-vite/template-lit-ts" })'
 descriptor = "listing of 'packages/create-vite/template-lit-ts'"
 cost_tokens = 24
-cum_tokens = 3895
+cum_tokens = 4181
 
 [batches.content]
 kind = "fs"
@@ -2479,11 +2659,11 @@ parent = "packages/create-vite/template-lit-ts"
 entries = ["_gitignore", "index.html", "package.json", "public", "src", "tsconfig.json"]
 
 [[batches]]
-position = 96
+position = 106
 key = 'Fs(DirListing { dir: "packages/create-vite/template-preact" })'
 descriptor = "listing of 'packages/create-vite/template-preact'"
 cost_tokens = 24
-cum_tokens = 3919
+cum_tokens = 4205
 
 [batches.content]
 kind = "fs"
@@ -2493,11 +2673,11 @@ parent = "packages/create-vite/template-preact"
 entries = ["_gitignore", "index.html", "package.json", "public", "src", "vite.config.js"]
 
 [[batches]]
-position = 97
+position = 107
 key = 'Fs(DirListing { dir: "packages/create-vite/template-preact/src" })'
 descriptor = "listing of 'packages/create-vite/template-preact/src'"
 cost_tokens = 19
-cum_tokens = 3938
+cum_tokens = 4224
 
 [batches.content]
 kind = "fs"
@@ -2507,11 +2687,11 @@ parent = "packages/create-vite/template-preact/src"
 entries = ["app.css", "app.jsx", "assets", "index.css", "main.jsx"]
 
 [[batches]]
-position = 98
+position = 108
 key = 'Fs(DirListing { dir: "packages/create-vite/template-vanilla-ts" })'
 descriptor = "listing of 'packages/create-vite/template-vanilla-ts'"
 cost_tokens = 24
-cum_tokens = 3962
+cum_tokens = 4248
 
 [batches.content]
 kind = "fs"
@@ -2521,11 +2701,11 @@ parent = "packages/create-vite/template-vanilla-ts"
 entries = ["_gitignore", "index.html", "package.json", "public", "src", "tsconfig.json"]
 
 [[batches]]
-position = 99
+position = 109
 key = 'Fs(DirListing { dir: "packages/create-vite/template-vanilla-ts/src" })'
 descriptor = "listing of 'packages/create-vite/template-vanilla-ts/src'"
 cost_tokens = 15
-cum_tokens = 3977
+cum_tokens = 4263
 
 [batches.content]
 kind = "fs"
@@ -2535,11 +2715,11 @@ parent = "packages/create-vite/template-vanilla-ts/src"
 entries = ["assets", "counter.ts", "main.ts", "style.css"]
 
 [[batches]]
-position = 100
+position = 110
 key = 'Fs(DirListing { dir: "packages/create-vite/src" })'
 descriptor = "listing of 'packages/create-vite/src'"
 cost_tokens = 4
-cum_tokens = 3981
+cum_tokens = 4267
 
 [batches.content]
 kind = "fs"
@@ -2549,11 +2729,11 @@ parent = "packages/create-vite/src"
 entries = ["index.ts"]
 
 [[batches]]
-position = 101
+position = 111
 key = 'Fs(DirListing { dir: "packages/create-vite/template-qwik" })'
 descriptor = "listing of 'packages/create-vite/template-qwik'"
 cost_tokens = 28
-cum_tokens = 4009
+cum_tokens = 4295
 
 [batches.content]
 kind = "fs"
@@ -2563,11 +2743,11 @@ parent = "packages/create-vite/template-qwik"
 entries = ["README.md", "_gitignore", "index.html", "package.json", "public", "src", "vite.config.js"]
 
 [[batches]]
-position = 102
+position = 112
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-qwik/README.md" })'
 descriptor = "README headline in packages/create-vite/template-qwik/README.md"
 cost_tokens = 11
-cum_tokens = 4020
+cum_tokens = 4306
 
 [batches.content]
 kind = "lines"
@@ -2581,11 +2761,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 103
+position = 113
 key = 'Fs(DirListing { dir: "packages/create-vite/template-qwik/src" })'
 descriptor = "listing of 'packages/create-vite/template-qwik/src'"
 cost_tokens = 19
-cum_tokens = 4039
+cum_tokens = 4325
 
 [batches.content]
 kind = "fs"
@@ -2595,11 +2775,11 @@ parent = "packages/create-vite/template-qwik/src"
 entries = ["app.css", "app.jsx", "assets", "index.css", "main.jsx"]
 
 [[batches]]
-position = 104
+position = 114
 key = 'Fs(DirListing { dir: "packages/create-vite/template-solid" })'
 descriptor = "listing of 'packages/create-vite/template-solid'"
 cost_tokens = 28
-cum_tokens = 4067
+cum_tokens = 4353
 
 [batches.content]
 kind = "fs"
@@ -2609,11 +2789,11 @@ parent = "packages/create-vite/template-solid"
 entries = ["README.md", "_gitignore", "index.html", "package.json", "public", "src", "vite.config.js"]
 
 [[batches]]
-position = 105
+position = 115
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-solid/README.md" })'
 descriptor = "README headline in packages/create-vite/template-solid/README.md"
 cost_tokens = 36
-cum_tokens = 4103
+cum_tokens = 4389
 
 [batches.content]
 kind = "lines"
@@ -2635,11 +2815,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 106
+position = 116
 key = 'Fs(DirListing { dir: "packages/create-vite/template-solid/src" })'
 descriptor = "listing of 'packages/create-vite/template-solid/src'"
 cost_tokens = 19
-cum_tokens = 4122
+cum_tokens = 4408
 
 [batches.content]
 kind = "fs"
@@ -2649,11 +2829,11 @@ parent = "packages/create-vite/template-solid/src"
 entries = ["App.css", "App.jsx", "assets", "index.css", "index.jsx"]
 
 [[batches]]
-position = 107
+position = 117
 key = 'Fs(DirListing { dir: "packages/create-vite/template-react" })'
 descriptor = "listing of 'packages/create-vite/template-react'"
 cost_tokens = 33
-cum_tokens = 4155
+cum_tokens = 4441
 
 [batches.content]
 kind = "fs"
@@ -2663,11 +2843,11 @@ parent = "packages/create-vite/template-react"
 entries = ["README.md", "_gitignore", "eslint.config.js", "index.html", "package.json", "public", "src", "vite.config.js"]
 
 [[batches]]
-position = 108
+position = 118
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-react/README.md" })'
 descriptor = "README headline in packages/create-vite/template-react/README.md"
 cost_tokens = 36
-cum_tokens = 4191
+cum_tokens = 4477
 
 [batches.content]
 kind = "lines"
@@ -2689,11 +2869,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 109
+position = 119
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/template-react/README.md" })'
 descriptor = "headings outline in packages/create-vite/template-react/README.md"
 cost_tokens = 24
-cum_tokens = 4215
+cum_tokens = 4501
 
 [batches.content]
 kind = "lines"
@@ -2731,11 +2911,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 120
 key = 'Fs(DirListing { dir: "packages/create-vite/template-react/src" })'
 descriptor = "listing of 'packages/create-vite/template-react/src'"
 cost_tokens = 19
-cum_tokens = 4234
+cum_tokens = 4520
 
 [batches.content]
 kind = "fs"
@@ -2745,11 +2925,11 @@ parent = "packages/create-vite/template-react/src"
 entries = ["App.css", "App.jsx", "assets", "index.css", "main.jsx"]
 
 [[batches]]
-position = 111
+position = 121
 key = 'Fs(DirListing { dir: "packages/create-vite/template-vue" })'
 descriptor = "listing of 'packages/create-vite/template-vue'"
 cost_tokens = 33
-cum_tokens = 4267
+cum_tokens = 4553
 
 [batches.content]
 kind = "fs"
@@ -2759,11 +2939,11 @@ parent = "packages/create-vite/template-vue"
 entries = [".vscode", "README.md", "_gitignore", "index.html", "package.json", "public", "src", "vite.config.js"]
 
 [[batches]]
-position = 112
+position = 122
 key = 'Fs(DirListing { dir: "packages/create-vite/template-vue/src" })'
 descriptor = "listing of 'packages/create-vite/template-vue/src'"
 cost_tokens = 18
-cum_tokens = 4285
+cum_tokens = 4571
 
 [batches.content]
 kind = "fs"
@@ -2773,11 +2953,11 @@ parent = "packages/create-vite/template-vue/src"
 entries = ["App.vue", "assets", "components", "main.js", "style.css"]
 
 [[batches]]
-position = 113
+position = 123
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-vue/README.md" })'
 descriptor = "README headline in packages/create-vite/template-vue/README.md"
 cost_tokens = 79
-cum_tokens = 4364
+cum_tokens = 4650
 
 [batches.content]
 kind = "lines"
@@ -2799,11 +2979,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 114
+position = 124
 key = 'Markdown(Section { file: "packages/create-vite/template-vue/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-vue/README.md section #0"
 cost_tokens = 37
-cum_tokens = 4401
+cum_tokens = 4687
 
 [batches.content]
 kind = "lines"
@@ -2817,11 +2997,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 115
+position = 125
 key = 'Fs(DirListing { dir: "packages/create-vite/template-lit/src" })'
 descriptor = "listing of 'packages/create-vite/template-lit/src'"
 cost_tokens = 12
-cum_tokens = 4413
+cum_tokens = 4699
 
 [batches.content]
 kind = "fs"
@@ -2831,11 +3011,11 @@ parent = "packages/create-vite/template-lit/src"
 entries = ["assets", "index.css", "my-element.js"]
 
 [[batches]]
-position = 116
+position = 126
 key = 'Fs(DirListing { dir: "packages/create-vite/template-lit-ts/src" })'
 descriptor = "listing of 'packages/create-vite/template-lit-ts/src'"
 cost_tokens = 12
-cum_tokens = 4425
+cum_tokens = 4711
 
 [batches.content]
 kind = "fs"
@@ -2845,11 +3025,11 @@ parent = "packages/create-vite/template-lit-ts/src"
 entries = ["assets", "index.css", "my-element.ts"]
 
 [[batches]]
-position = 117
+position = 127
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/template-qwik/README.md" })'
 descriptor = "headings outline in packages/create-vite/template-qwik/README.md"
 cost_tokens = 56
-cum_tokens = 4481
+cum_tokens = 4767
 
 [batches.content]
 kind = "lines"
@@ -2935,11 +3115,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 128
 key = 'Fs(DirListing { dir: "packages/create-vite/template-preact-ts" })'
 descriptor = "listing of 'packages/create-vite/template-preact-ts'"
 cost_tokens = 41
-cum_tokens = 4522
+cum_tokens = 4808
 
 [batches.content]
 kind = "fs"
@@ -2949,11 +3129,11 @@ parent = "packages/create-vite/template-preact-ts"
 entries = ["_gitignore", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
 
 [[batches]]
-position = 119
+position = 129
 key = 'Fs(DirListing { dir: "packages/create-vite/template-preact-ts/src" })'
 descriptor = "listing of 'packages/create-vite/template-preact-ts/src'"
 cost_tokens = 21
-cum_tokens = 4543
+cum_tokens = 4829
 
 [batches.content]
 kind = "fs"
@@ -2963,11 +3143,11 @@ parent = "packages/create-vite/template-preact-ts/src"
 entries = ["app.css", "app.tsx", "assets", "index.css", "main.tsx"]
 
 [[batches]]
-position = 120
+position = 130
 key = 'Fs(DirListing { dir: "packages/create-vite/template-svelte" })'
 descriptor = "listing of 'packages/create-vite/template-svelte'"
 cost_tokens = 44
-cum_tokens = 4587
+cum_tokens = 4873
 
 [batches.content]
 kind = "fs"
@@ -2977,11 +3157,11 @@ parent = "packages/create-vite/template-svelte"
 entries = [".vscode", "README.md", "_gitignore", "index.html", "jsconfig.json", "package.json", "public", "src", "svelte.config.js", "vite.config.js"]
 
 [[batches]]
-position = 121
+position = 131
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-svelte/README.md" })'
 descriptor = "README headline in packages/create-vite/template-svelte/README.md"
 cost_tokens = 30
-cum_tokens = 4617
+cum_tokens = 4903
 
 [batches.content]
 kind = "lines"
@@ -3003,11 +3183,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 122
+position = 132
 key = 'Fs(DirListing { dir: "packages/create-vite/template-svelte/src" })'
 descriptor = "listing of 'packages/create-vite/template-svelte/src'"
 cost_tokens = 19
-cum_tokens = 4636
+cum_tokens = 4922
 
 [batches.content]
 kind = "fs"
@@ -3017,11 +3197,11 @@ parent = "packages/create-vite/template-svelte/src"
 entries = ["App.svelte", "app.css", "assets", "lib", "main.js"]
 
 [[batches]]
-position = 123
+position = 133
 key = 'Typescript(ExportNames { file: "packages/create-vite/template-svelte/src/main.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/create-vite/template-svelte/src/main.js"
 cost_tokens = 8
-cum_tokens = 4644
+cum_tokens = 4930
 
 [batches.content]
 kind = "lines"
@@ -3035,11 +3215,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 124
+position = 134
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/template-svelte/README.md" })'
 descriptor = "headings outline in packages/create-vite/template-svelte/README.md"
 cost_tokens = 35
-cum_tokens = 4679
+cum_tokens = 4965
 
 [batches.content]
 kind = "lines"
@@ -3093,11 +3273,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 135
 key = 'Fs(DirListing { dir: "packages/create-vite/template-qwik-ts" })'
 descriptor = "listing of 'packages/create-vite/template-qwik-ts'"
 cost_tokens = 45
-cum_tokens = 4724
+cum_tokens = 5010
 
 [batches.content]
 kind = "fs"
@@ -3107,11 +3287,11 @@ parent = "packages/create-vite/template-qwik-ts"
 entries = ["README.md", "_gitignore", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
 
 [[batches]]
-position = 126
+position = 136
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-qwik-ts/README.md" })'
 descriptor = "README headline in packages/create-vite/template-qwik-ts/README.md"
 cost_tokens = 11
-cum_tokens = 4735
+cum_tokens = 5021
 
 [batches.content]
 kind = "lines"
@@ -3125,11 +3305,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 127
+position = 137
 key = 'Fs(DirListing { dir: "packages/create-vite/template-qwik-ts/src" })'
 descriptor = "listing of 'packages/create-vite/template-qwik-ts/src'"
 cost_tokens = 21
-cum_tokens = 4756
+cum_tokens = 5042
 
 [batches.content]
 kind = "fs"
@@ -3139,11 +3319,11 @@ parent = "packages/create-vite/template-qwik-ts/src"
 entries = ["app.css", "app.tsx", "assets", "index.css", "main.tsx"]
 
 [[batches]]
-position = 128
+position = 138
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/template-qwik-ts/README.md" })'
 descriptor = "headings outline in packages/create-vite/template-qwik-ts/README.md"
 cost_tokens = 56
-cum_tokens = 4812
+cum_tokens = 5098
 
 [batches.content]
 kind = "lines"
@@ -3229,11 +3409,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 139
 key = 'Fs(DirListing { dir: "packages/create-vite/template-solid-ts" })'
 descriptor = "listing of 'packages/create-vite/template-solid-ts'"
 cost_tokens = 45
-cum_tokens = 4857
+cum_tokens = 5143
 
 [batches.content]
 kind = "fs"
@@ -3243,11 +3423,11 @@ parent = "packages/create-vite/template-solid-ts"
 entries = ["README.md", "_gitignore", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
 
 [[batches]]
-position = 130
+position = 140
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-solid-ts/README.md" })'
 descriptor = "README headline in packages/create-vite/template-solid-ts/README.md"
 cost_tokens = 36
-cum_tokens = 4893
+cum_tokens = 5179
 
 [batches.content]
 kind = "lines"
@@ -3269,11 +3449,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 131
+position = 141
 key = 'Fs(DirListing { dir: "packages/create-vite/template-solid-ts/src" })'
 descriptor = "listing of 'packages/create-vite/template-solid-ts/src'"
 cost_tokens = 21
-cum_tokens = 4914
+cum_tokens = 5200
 
 [batches.content]
 kind = "fs"
@@ -3283,11 +3463,11 @@ parent = "packages/create-vite/template-solid-ts/src"
 entries = ["App.css", "App.tsx", "assets", "index.css", "index.tsx"]
 
 [[batches]]
-position = 132
+position = 142
 key = 'Typescript(ModuleItem { file: "packages/create-vite/template-solid-ts/src/index.tsx", start_line: 6 })'
 descriptor = "module item at packages/create-vite/template-solid-ts/src/index.tsx:6"
 cost_tokens = 15
-cum_tokens = 4929
+cum_tokens = 5215
 
 [batches.content]
 kind = "lines"
@@ -3301,11 +3481,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 133
+position = 143
 key = 'Fs(DirListing { dir: "packages/create-vite/__tests__" })'
 descriptor = "listing of 'packages/create-vite/__tests__'"
 cost_tokens = 5
-cum_tokens = 4934
+cum_tokens = 5220
 
 [batches.content]
 kind = "fs"
@@ -3315,11 +3495,11 @@ parent = "packages/create-vite/__tests__"
 entries = ["cli.spec.ts"]
 
 [[batches]]
-position = 134
+position = 144
 key = 'Fs(DirListing { dir: "packages/create-vite/template-react-ts" })'
 descriptor = "listing of 'packages/create-vite/template-react-ts'"
 cost_tokens = 50
-cum_tokens = 4984
+cum_tokens = 5270
 
 [batches.content]
 kind = "fs"
@@ -3329,11 +3509,11 @@ parent = "packages/create-vite/template-react-ts"
 entries = ["README.md", "_gitignore", "eslint.config.js", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
 
 [[batches]]
-position = 135
+position = 145
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-react-ts/README.md" })'
 descriptor = "README headline in packages/create-vite/template-react-ts/README.md"
 cost_tokens = 39
-cum_tokens = 5023
+cum_tokens = 5309
 
 [batches.content]
 kind = "lines"
@@ -3355,11 +3535,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 136
+position = 146
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/template-react-ts/README.md" })'
 descriptor = "headings outline in packages/create-vite/template-react-ts/README.md"
 cost_tokens = 24
-cum_tokens = 5047
+cum_tokens = 5333
 
 [batches.content]
 kind = "lines"
@@ -3397,11 +3577,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 137
+position = 147
 key = 'Fs(DirListing { dir: "packages/create-vite/template-react-ts/src" })'
 descriptor = "listing of 'packages/create-vite/template-react-ts/src'"
 cost_tokens = 21
-cum_tokens = 5068
+cum_tokens = 5354
 
 [batches.content]
 kind = "fs"
@@ -3411,11 +3591,11 @@ parent = "packages/create-vite/template-react-ts/src"
 entries = ["App.css", "App.tsx", "assets", "index.css", "main.tsx"]
 
 [[batches]]
-position = 138
+position = 148
 key = 'Fs(DirListing { dir: "packages/create-vite/template-vue-ts" })'
 descriptor = "listing of 'packages/create-vite/template-vue-ts'"
 cost_tokens = 50
-cum_tokens = 5118
+cum_tokens = 5404
 
 [batches.content]
 kind = "fs"
@@ -3425,11 +3605,11 @@ parent = "packages/create-vite/template-vue-ts"
 entries = [".vscode", "README.md", "_gitignore", "index.html", "package.json", "public", "src", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
 
 [[batches]]
-position = 139
+position = 149
 key = 'Fs(DirListing { dir: "packages/create-vite/template-vue-ts/src" })'
 descriptor = "listing of 'packages/create-vite/template-vue-ts/src'"
 cost_tokens = 18
-cum_tokens = 5136
+cum_tokens = 5422
 
 [batches.content]
 kind = "fs"
@@ -3439,11 +3619,11 @@ parent = "packages/create-vite/template-vue-ts/src"
 entries = ["App.vue", "assets", "components", "main.ts", "style.css"]
 
 [[batches]]
-position = 140
+position = 150
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-vue-ts/README.md" })'
 descriptor = "README headline in packages/create-vite/template-vue-ts/README.md"
 cost_tokens = 85
-cum_tokens = 5221
+cum_tokens = 5507
 
 [batches.content]
 kind = "lines"
@@ -3465,11 +3645,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 141
+position = 151
 key = 'Markdown(Section { file: "packages/create-vite/template-vue-ts/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-vue-ts/README.md section #0"
 cost_tokens = 40
-cum_tokens = 5261
+cum_tokens = 5547
 
 [batches.content]
 kind = "lines"
@@ -3483,11 +3663,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 142
+position = 152
 key = 'Typescript(ExportNames { file: "packages/create-vite/template-react-ts/src/App.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/create-vite/template-react-ts/src/App.tsx"
 cost_tokens = 8
-cum_tokens = 5269
+cum_tokens = 5555
 
 [batches.content]
 kind = "lines"
@@ -3501,11 +3681,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 143
+position = 153
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/template-solid/README.md" })'
 descriptor = "headings outline in packages/create-vite/template-solid/README.md"
 cost_tokens = 84
-cum_tokens = 5353
+cum_tokens = 5639
 
 [batches.content]
 kind = "lines"
@@ -3591,11 +3771,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 154
 key = 'Markdown(Section { file: "packages/create-vite/template-solid/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-solid/README.md section #0"
 cost_tokens = 0
-cum_tokens = 5353
+cum_tokens = 5639
 
 [batches.content]
 kind = "lines"
@@ -3609,11 +3789,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 145
+position = 155
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/template-solid-ts/README.md" })'
 descriptor = "headings outline in packages/create-vite/template-solid-ts/README.md"
 cost_tokens = 84
-cum_tokens = 5437
+cum_tokens = 5723
 
 [batches.content]
 kind = "lines"
@@ -3699,11 +3879,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 146
+position = 156
 key = 'Markdown(Section { file: "packages/create-vite/template-solid-ts/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-solid-ts/README.md section #0"
 cost_tokens = 0
-cum_tokens = 5437
+cum_tokens = 5723
 
 [batches.content]
 kind = "lines"
@@ -3717,11 +3897,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 147
+position = 157
 key = 'Fs(DirListing { dir: "packages/create-vite/template-svelte-ts" })'
 descriptor = "listing of 'packages/create-vite/template-svelte-ts'"
 cost_tokens = 56
-cum_tokens = 5493
+cum_tokens = 5779
 
 [batches.content]
 kind = "fs"
@@ -3731,11 +3911,11 @@ parent = "packages/create-vite/template-svelte-ts"
 entries = [".vscode", "README.md", "_gitignore", "index.html", "package.json", "public", "src", "svelte.config.js", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json", "vite.config.ts"]
 
 [[batches]]
-position = 148
+position = 158
 key = 'Markdown(ReadmeHeadline { file: "packages/create-vite/template-svelte-ts/README.md" })'
 descriptor = "README headline in packages/create-vite/template-svelte-ts/README.md"
 cost_tokens = 35
-cum_tokens = 5528
+cum_tokens = 5814
 
 [batches.content]
 kind = "lines"
@@ -3757,11 +3937,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 149
+position = 159
 key = 'Fs(DirListing { dir: "packages/create-vite/template-svelte-ts/src" })'
 descriptor = "listing of 'packages/create-vite/template-svelte-ts/src'"
 cost_tokens = 19
-cum_tokens = 5547
+cum_tokens = 5833
 
 [batches.content]
 kind = "fs"
@@ -3771,11 +3951,11 @@ parent = "packages/create-vite/template-svelte-ts/src"
 entries = ["App.svelte", "app.css", "assets", "lib", "main.ts"]
 
 [[batches]]
-position = 150
+position = 160
 key = 'Typescript(ExportNames { file: "packages/create-vite/template-svelte-ts/src/main.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/create-vite/template-svelte-ts/src/main.ts"
 cost_tokens = 8
-cum_tokens = 5555
+cum_tokens = 5841
 
 [batches.content]
 kind = "lines"
@@ -3789,11 +3969,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 151
+position = 161
 key = 'Markdown(HeadingsOutline { file: "packages/create-vite/template-svelte-ts/README.md" })'
 descriptor = "headings outline in packages/create-vite/template-svelte-ts/README.md"
 cost_tokens = 35
-cum_tokens = 5590
+cum_tokens = 5876
 
 [batches.content]
 kind = "lines"
@@ -3847,11 +4027,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 162
 key = 'Markdown(Section { file: "packages/create-vite/template-react/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-react/README.md section #0"
 cost_tokens = 96
-cum_tokens = 5686
+cum_tokens = 5972
 
 [batches.content]
 kind = "lines"
@@ -3873,11 +4053,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 153
+position = 163
 key = 'Markdown(Section { file: "packages/create-vite/template-react-ts/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/create-vite/template-react-ts/README.md section #0"
 cost_tokens = 96
-cum_tokens = 5782
+cum_tokens = 6068
 
 [batches.content]
 kind = "lines"
@@ -3899,11 +4079,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 154
+position = 164
 key = 'Markdown(Section { file: "packages/create-vite/template-svelte/README.md", section_index: 1, reference_shaped: false })'
 descriptor = "packages/create-vite/template-svelte/README.md section #1"
 cost_tokens = 38
-cum_tokens = 5820
+cum_tokens = 6106
 
 [batches.content]
 kind = "lines"
@@ -3925,11 +4105,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 155
+position = 165
 key = 'Markdown(Section { file: "packages/create-vite/template-svelte-ts/README.md", section_index: 1, reference_shaped: false })'
 descriptor = "packages/create-vite/template-svelte-ts/README.md section #1"
 cost_tokens = 38
-cum_tokens = 5858
+cum_tokens = 6144
 
 [batches.content]
 kind = "lines"
@@ -3951,11 +4131,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 156
+position = 166
 key = 'Markdown(Section { file: "packages/create-vite/template-solid/README.md", section_index: 2, reference_shaped: false })'
 descriptor = "packages/create-vite/template-solid/README.md section #2"
 cost_tokens = 27
-cum_tokens = 5885
+cum_tokens = 6171
 
 [batches.content]
 kind = "lines"
@@ -3977,11 +4157,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 157
+position = 167
 key = 'Markdown(Section { file: "packages/create-vite/template-solid-ts/README.md", section_index: 2, reference_shaped: false })'
 descriptor = "packages/create-vite/template-solid-ts/README.md section #2"
 cost_tokens = 27
-cum_tokens = 5912
+cum_tokens = 6198
 
 [batches.content]
 kind = "lines"
@@ -4003,11 +4183,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 158
+position = 168
 key = 'Typescript(ModuleItem { file: "packages/create-vite/template-svelte/src/main.js", start_line: 5 })'
 descriptor = "module item at packages/create-vite/template-svelte/src/main.js:5"
 cost_tokens = 31
-cum_tokens = 5943
+cum_tokens = 6229
 
 [batches.content]
 kind = "lines"
@@ -4021,11 +4201,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 159
+position = 169
 key = 'Typescript(Imports { file: "packages/create-vite/template-vue-ts/src/main.ts" })'
 descriptor = "imports in packages/create-vite/template-vue-ts/src/main.ts"
 cost_tokens = 33
-cum_tokens = 5976
+cum_tokens = 6262
 
 [batches.content]
 kind = "lines"
@@ -4039,11 +4219,29 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 160
+position = 170
+key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 16 })'
+descriptor = "imports #16 in packages/vite/src/node/index.ts"
+cost_tokens = 18
+cum_tokens = 6280
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/vite/src/node/index.ts"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
 key = 'Typescript(Imports { file: "packages/create-vite/template-svelte-ts/src/main.ts" })'
 descriptor = "imports in packages/create-vite/template-svelte-ts/src/main.ts"
 cost_tokens = 34
-cum_tokens = 6010
+cum_tokens = 6314
 
 [batches.content]
 kind = "lines"
@@ -4057,11 +4255,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 161
+position = 172
 key = 'Fs(DirListing { dir: "playground" })'
 descriptor = "listing of 'playground'"
 cost_tokens = 406
-cum_tokens = 6416
+cum_tokens = 6720
 
 [batches.content]
 kind = "fs"
@@ -4071,11 +4269,11 @@ parent = "playground"
 entries = ["alias", "assets", "assets-sanitize", "backend-integration", "base-conflict", "build-old", "cli", "cli-module", "client-reload", "csp", "css", "css-codesplit", "css-codesplit-cjs", "css-dynamic-import", "css-lightningcss", "css-lightningcss-proxy", "css-lightningcss-root", "css-no-codesplit", "css-sourcemap", "data-uri", "define", "devtools", "dynamic-import", "dynamic-import-inline", "env", "env-nested", "environment-react-ssr", "extensions", "external", "forward-console", "fs-serve", "glob-import", "hmr", "hmr-full-bundle-mode", "hmr-root", "hmr-ssr", "html", "import-assertion", "js-sourcemap", "json", "legacy", "lib", "minify", "module-graph", "multiple-entrypoints", "nested-deps", "object-hooks", "optimize-deps", "optimize-deps-no-discovery", "optimize-missing-deps", "package.json", "preload", "preserve-symlinks", "proxy-bypass", "proxy-hmr", "resolve", "resolve-linked", "resolve-tsconfig-paths", "shims.d.ts", "ssr", "ssr-alias", "ssr-conditions", "ssr-deps", "ssr-html", "ssr-noexternal", "ssr-pug", "ssr-resolve", "ssr-wasm", "ssr-webworker", "tailwind", "tailwind-sourcemap", "tailwind-v3", "test-utils.ts", "transform-plugin", "tsconfig-json", "tsconfig-json-load-error", "tsconfig.json", "vitestGlobalSetup.ts", "vitestSetup.ts", "wasm", "worker"]
 
 [[batches]]
-position = 162
+position = 173
 key = 'Fs(DirListing { dir: "playground/devtools" })'
 descriptor = "listing of 'playground/devtools'"
 cost_tokens = 16
-cum_tokens = 6432
+cum_tokens = 6736
 
 [batches.content]
 kind = "fs"
@@ -4085,11 +4283,11 @@ parent = "playground/devtools"
 entries = ["index.html", "package.json", "src", "vite.config.ts"]
 
 [[batches]]
-position = 163
+position = 174
 key = 'Fs(DirListing { dir: "playground/css-lightningcss-proxy" })'
 descriptor = "listing of 'playground/css-lightningcss-proxy'"
 cost_tokens = 17
-cum_tokens = 6449
+cum_tokens = 6753
 
 [batches.content]
 kind = "fs"
@@ -4099,11 +4297,11 @@ parent = "playground/css-lightningcss-proxy"
 entries = ["__tests__", "index.html", "package.json", "server.js"]
 
 [[batches]]
-position = 164
+position = 175
 key = 'Fs(DirListing { dir: "playground/css-lightningcss-root" })'
 descriptor = "listing of 'playground/css-lightningcss-root'"
 cost_tokens = 17
-cum_tokens = 6466
+cum_tokens = 6770
 
 [batches.content]
 kind = "fs"
@@ -4113,11 +4311,11 @@ parent = "playground/css-lightningcss-root"
 entries = ["__tests__", "package.json", "root", "vite.config.js"]
 
 [[batches]]
-position = 165
+position = 176
 key = 'Fs(DirListing { dir: "playground/hmr-root" })'
 descriptor = "listing of 'playground/hmr-root'"
 cost_tokens = 17
-cum_tokens = 6483
+cum_tokens = 6787
 
 [batches.content]
 kind = "fs"
@@ -4127,11 +4325,11 @@ parent = "playground/hmr-root"
 entries = ["__tests__", "foo.js", "root", "vite.config.ts"]
 
 [[batches]]
-position = 166
+position = 177
 key = 'Fs(DirListing { dir: "playground/client-reload" })'
 descriptor = "listing of 'playground/client-reload'"
 cost_tokens = 18
-cum_tokens = 6501
+cum_tokens = 6805
 
 [batches.content]
 kind = "fs"
@@ -4141,11 +4339,11 @@ parent = "playground/client-reload"
 entries = ["__tests__", "index.html", "package.json", "vite.config.ts"]
 
 [[batches]]
-position = 167
+position = 178
 key = 'Fs(DirListing { dir: "playground/preserve-symlinks" })'
 descriptor = "listing of 'playground/preserve-symlinks'"
 cost_tokens = 20
-cum_tokens = 6521
+cum_tokens = 6825
 
 [batches.content]
 kind = "fs"
@@ -4155,11 +4353,11 @@ parent = "playground/preserve-symlinks"
 entries = ["__tests__", "index.html", "module-a", "package.json", "src"]
 
 [[batches]]
-position = 168
+position = 179
 key = 'Fs(DirListing { dir: "playground/base-conflict" })'
 descriptor = "listing of 'playground/base-conflict'"
 cost_tokens = 21
-cum_tokens = 6542
+cum_tokens = 6846
 
 [batches.content]
 kind = "fs"
@@ -4169,11 +4367,11 @@ parent = "playground/base-conflict"
 entries = ["__tests__", "index.html", "package.json", "src", "vite.config.ts"]
 
 [[batches]]
-position = 169
+position = 180
 key = 'Fs(DirListing { dir: "playground/dynamic-import-inline" })'
 descriptor = "listing of 'playground/dynamic-import-inline'"
 cost_tokens = 21
-cum_tokens = 6563
+cum_tokens = 6867
 
 [batches.content]
 kind = "fs"
@@ -4183,11 +4381,11 @@ parent = "playground/dynamic-import-inline"
 entries = ["__tests__", "index.html", "package.json", "src", "vite.config.js"]
 
 [[batches]]
-position = 170
+position = 181
 key = 'Fs(DirListing { dir: "playground/ssr-alias" })'
 descriptor = "listing of 'playground/ssr-alias'"
 cost_tokens = 21
-cum_tokens = 6584
+cum_tokens = 6888
 
 [batches.content]
 kind = "fs"
@@ -4197,11 +4395,11 @@ parent = "playground/ssr-alias"
 entries = ["__tests__", "alias-original", "package.json", "src", "vite.config.js"]
 
 [[batches]]
-position = 171
+position = 182
 key = 'Fs(DirListing { dir: "playground/ssr-pug" })'
 descriptor = "listing of 'playground/ssr-pug'"
 cost_tokens = 21
-cum_tokens = 6605
+cum_tokens = 6909
 
 [batches.content]
 kind = "fs"
@@ -4211,11 +4409,11 @@ parent = "playground/ssr-pug"
 entries = ["__tests__", "index.pug", "package.json", "server.js", "src"]
 
 [[batches]]
-position = 172
+position = 183
 key = 'Fs(DirListing { dir: "playground/ssr-wasm" })'
 descriptor = "listing of 'playground/ssr-wasm'"
 cost_tokens = 21
-cum_tokens = 6626
+cum_tokens = 6930
 
 [batches.content]
 kind = "fs"
@@ -4225,11 +4423,11 @@ parent = "playground/ssr-wasm"
 entries = ["__tests__", "package.json", "server.js", "src", "vite.config.ts"]
 
 [[batches]]
-position = 173
+position = 184
 key = 'Fs(DirListing { dir: "playground/build-old" })'
 descriptor = "listing of 'playground/build-old'"
 cost_tokens = 22
-cum_tokens = 6648
+cum_tokens = 6952
 
 [batches.content]
 kind = "fs"
@@ -4239,11 +4437,11 @@ parent = "playground/build-old"
 entries = ["__tests__", "dynamic.js", "index.html", "package.json", "vite.config.js"]
 
 [[batches]]
-position = 174
+position = 185
 key = 'Fs(DirListing { dir: "playground/cli" })'
 descriptor = "listing of 'playground/cli'"
 cost_tokens = 22
-cum_tokens = 6670
+cum_tokens = 6974
 
 [batches.content]
 kind = "fs"
@@ -4253,11 +4451,11 @@ parent = "playground/cli"
 entries = ["__tests__", "index.html", "index.js", "package.json", "vite.config.js"]
 
 [[batches]]
-position = 175
+position = 186
 key = 'Fs(DirListing { dir: "playground/cli-module" })'
 descriptor = "listing of 'playground/cli-module'"
 cost_tokens = 22
-cum_tokens = 6692
+cum_tokens = 6996
 
 [batches.content]
 kind = "fs"
@@ -4267,11 +4465,11 @@ parent = "playground/cli-module"
 entries = ["__tests__", "index.html", "index.js", "package.json", "vite.config.js"]
 
 [[batches]]
-position = 176
+position = 187
 key = 'Fs(DirListing { dir: "playground/object-hooks" })'
 descriptor = "listing of 'playground/object-hooks'"
 cost_tokens = 22
-cum_tokens = 6714
+cum_tokens = 7018
 
 [batches.content]
 kind = "fs"
@@ -4281,11 +4479,11 @@ parent = "playground/object-hooks"
 entries = ["__tests__", "index.html", "main.ts", "package.json", "vite.config.ts"]
 
 [[batches]]
-position = 177
+position = 188
 key = 'Fs(DirListing { dir: "playground/proxy-hmr" })'
 descriptor = "listing of 'playground/proxy-hmr'"
 cost_tokens = 22
-cum_tokens = 6736
+cum_tokens = 7040
 
 [batches.content]
 kind = "fs"
@@ -4295,11 +4493,11 @@ parent = "playground/proxy-hmr"
 entries = ["__tests__", "index.html", "other-app", "package.json", "vite.config.js"]
 
 [[batches]]
-position = 178
+position = 189
 key = 'Fs(DirListing { dir: "playground/backend-integration" })'
 descriptor = "listing of 'playground/backend-integration'"
 cost_tokens = 24
-cum_tokens = 6760
+cum_tokens = 7064
 
 [batches.content]
 kind = "fs"
@@ -4309,11 +4507,11 @@ parent = "playground/backend-integration"
 entries = ["__tests__", "dir", "frontend", "package.json", "references.css", "vite.config.js"]
 
 [[batches]]
-position = 179
+position = 190
 key = 'Fs(DirListing { dir: "playground/forward-console" })'
 descriptor = "listing of 'playground/forward-console'"
 cost_tokens = 24
-cum_tokens = 6784
+cum_tokens = 7088
 
 [batches.content]
 kind = "fs"
@@ -4323,11 +4521,11 @@ parent = "playground/forward-console"
 entries = ["__test__", "fixtures", "index.html", "package.json", "src", "vite.config.ts"]
 
 [[batches]]
-position = 180
+position = 191
 key = 'Fs(DirListing { dir: "playground/optimize-deps-no-discovery" })'
 descriptor = "listing of 'playground/optimize-deps-no-discovery'"
 cost_tokens = 24
-cum_tokens = 6808
+cum_tokens = 7112
 
 [batches.content]
 kind = "fs"
@@ -4337,11 +4535,11 @@ parent = "playground/optimize-deps-no-discovery"
 entries = ["__tests__", "dep-no-discovery", "index.html", "package.json", "vite.config.js"]
 
 [[batches]]
-position = 181
+position = 192
 key = 'Fs(DirListing { dir: "playground/ssr-wasm/src" })'
 descriptor = "listing of 'playground/ssr-wasm/src'"
 cost_tokens = 24
-cum_tokens = 6832
+cum_tokens = 7136
 
 [batches.content]
 kind = "fs"
@@ -4351,11 +4549,11 @@ parent = "playground/ssr-wasm/src"
 entries = ["app.js", "heavy.wasm", "light.wasm", "static-heavy.js", "static-light.js"]
 
 [[batches]]
-position = 182
+position = 193
 key = 'Fs(DirListing { dir: "playground/ssr" })'
 descriptor = "listing of 'playground/ssr'"
 cost_tokens = 25
-cum_tokens = 6857
+cum_tokens = 7161
 
 [batches.content]
 kind = "fs"
@@ -4365,11 +4563,11 @@ parent = "playground/ssr"
 entries = ["__tests__", "index.html", "package.json", "server.js", "src", "vite.config.ts"]
 
 [[batches]]
-position = 183
+position = 194
 key = 'Fs(DirListing { dir: "playground/tsconfig-json-load-error" })'
 descriptor = "listing of 'playground/tsconfig-json-load-error'"
 cost_tokens = 25
-cum_tokens = 6882
+cum_tokens = 7186
 
 [batches.content]
 kind = "fs"
@@ -4379,11 +4577,11 @@ parent = "playground/tsconfig-json-load-error"
 entries = ["__tests__", "has-error", "index.html", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
-position = 184
+position = 195
 key = 'Fs(DirListing { dir: "playground/environment-react-ssr" })'
 descriptor = "listing of 'playground/environment-react-ssr'"
 cost_tokens = 26
-cum_tokens = 6908
+cum_tokens = 7212
 
 [batches.content]
 kind = "fs"
@@ -4393,11 +4591,11 @@ parent = "playground/environment-react-ssr"
 entries = ["__tests__", "index.html", "package.json", "src", "tsconfig.json", "vite.config.ts"]
 
 [[batches]]
-position = 185
+position = 196
 key = 'Markdown(HeadingsOutline { file: "packages/plugin-legacy/README.md" })'
 descriptor = "headings outline in packages/plugin-legacy/README.md"
 cost_tokens = 178
-cum_tokens = 7086
+cum_tokens = 7390
 
 [batches.content]
 kind = "lines"
@@ -4643,11 +4841,11 @@ end = 198
 kind = "ellipsis"
 
 [[batches]]
-position = 186
+position = 197
 key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 12, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #12"
 cost_tokens = 11
-cum_tokens = 7097
+cum_tokens = 7401
 
 [batches.content]
 kind = "lines"
@@ -4661,11 +4859,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 187
+position = 198
 key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 15, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #15"
 cost_tokens = 11
-cum_tokens = 7108
+cum_tokens = 7412
 
 [batches.content]
 kind = "lines"
@@ -4679,11 +4877,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 188
+position = 199
 key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 4, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #4"
 cost_tokens = 14
-cum_tokens = 7122
+cum_tokens = 7426
 
 [batches.content]
 kind = "lines"
@@ -4697,11 +4895,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 189
+position = 200
 key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 6, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #6"
 cost_tokens = 14
-cum_tokens = 7136
+cum_tokens = 7440
 
 [batches.content]
 kind = "lines"
@@ -4715,11 +4913,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 190
+position = 201
 key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 10, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #10"
 cost_tokens = 14
-cum_tokens = 7150
+cum_tokens = 7454
 
 [batches.content]
 kind = "lines"
@@ -4733,11 +4931,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 191
+position = 202
 key = 'Markdown(Section { file: "packages/plugin-legacy/README.md", section_index: 0, reference_shaped: false })'
 descriptor = "packages/plugin-legacy/README.md section #0"
 cost_tokens = 185
-cum_tokens = 7335
+cum_tokens = 7639
 
 [batches.content]
 kind = "lines"
@@ -4783,29 +4981,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 192
-key = 'Typescript(ImportChunk { file: "packages/vite/src/node/index.ts", chunk_index: 8 })'
-descriptor = "imports #8 in packages/vite/src/node/index.ts"
-cost_tokens = 13
-cum_tokens = 7348
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/index.ts"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 193
+position = 203
 key = 'Fs(DirListing { dir: "packages/vite/src/node/optimizer" })'
 descriptor = "listing of 'packages/vite/src/node/optimizer'"
 cost_tokens = 29
-cum_tokens = 7377
+cum_tokens = 7668
 
 [batches.content]
 kind = "fs"
@@ -4815,11 +4995,11 @@ parent = "packages/vite/src/node/optimizer"
 entries = ["index.ts", "optimizer.ts", "pluginConverter.ts", "resolve.ts", "rolldownDepPlugin.ts", "scan.ts"]
 
 [[batches]]
-position = 194
+position = 204
 key = 'Typescript(ExportNames { file: "packages/vite/src/node/optimizer/index.ts", chunk_index: 0, export_count: 28, type_only_export_count: 7 })'
 descriptor = "export names surface in packages/vite/src/node/optimizer/index.ts"
 cost_tokens = 157
-cum_tokens = 7534
+cum_tokens = 7825
 
 [batches.content]
 kind = "lines"
@@ -5017,11 +5197,11 @@ end = 367
 kind = "ellipsis"
 
 [[batches]]
-position = 195
+position = 205
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 195 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:195"
 cost_tokens = 19
-cum_tokens = 7553
+cum_tokens = 7844
 
 [batches.content]
 kind = "lines"
@@ -5043,11 +5223,11 @@ end = 198
 kind = "ellipsis"
 
 [[batches]]
-position = 196
+position = 206
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 324 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:324"
 cost_tokens = 21
-cum_tokens = 7574
+cum_tokens = 7865
 
 [batches.content]
 kind = "lines"
@@ -5069,11 +5249,11 @@ end = 327
 kind = "ellipsis"
 
 [[batches]]
-position = 197
+position = 207
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 349 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:349"
 cost_tokens = 27
-cum_tokens = 7601
+cum_tokens = 7892
 
 [batches.content]
 kind = "lines"
@@ -5095,11 +5275,11 @@ end = 353
 kind = "ellipsis"
 
 [[batches]]
-position = 198
+position = 208
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 283 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:283"
 cost_tokens = 49
-cum_tokens = 7650
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -5121,11 +5301,11 @@ end = 288
 kind = "ellipsis"
 
 [[batches]]
-position = 199
+position = 209
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 366 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:366"
 cost_tokens = 53
-cum_tokens = 7703
+cum_tokens = 7994
 
 [batches.content]
 kind = "lines"
@@ -5147,11 +5327,11 @@ end = 371
 kind = "ellipsis"
 
 [[batches]]
-position = 200
+position = 210
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 49 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:49"
 cost_tokens = 74
-cum_tokens = 7777
+cum_tokens = 8068
 
 [batches.content]
 kind = "lines"
@@ -5165,11 +5345,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 201
+position = 211
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 205 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:205"
 cost_tokens = 103
-cum_tokens = 7880
+cum_tokens = 8171
 
 [batches.content]
 kind = "lines"
@@ -5183,11 +5363,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 202
+position = 212
 key = 'Typescript(ExportBody { file: "packages/vite/src/node/optimizer/index.ts", start_line: 195, body_start_line: 198 })'
 descriptor = "export body at packages/vite/src/node/optimizer/index.ts:195 body 198"
 cost_tokens = 55
-cum_tokens = 7935
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -5201,11 +5381,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 203
+position = 213
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 57 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:57"
 cost_tokens = 156
-cum_tokens = 8091
+cum_tokens = 8382
 
 [batches.content]
 kind = "lines"
@@ -5251,11 +5431,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 204
+position = 214
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 216 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:216"
 cost_tokens = 198
-cum_tokens = 8289
+cum_tokens = 8580
 
 [batches.content]
 kind = "lines"
@@ -5269,11 +5449,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 205
+position = 215
 key = 'Typescript(ExportBody { file: "packages/vite/src/node/optimizer/index.ts", start_line: 349, body_start_line: 353 })'
 descriptor = "export body at packages/vite/src/node/optimizer/index.ts:349 body 353"
 cost_tokens = 109
-cum_tokens = 8398
+cum_tokens = 8689
 
 [batches.content]
 kind = "lines"
@@ -5287,11 +5467,11 @@ end = 363
 kind = "full"
 
 [[batches]]
-position = 206
+position = 216
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 176 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:176"
 cost_tokens = 233
-cum_tokens = 8631
+cum_tokens = 8922
 
 [batches.content]
 kind = "lines"
@@ -5305,11 +5485,11 @@ end = 193
 kind = "full"
 
 [[batches]]
-position = 207
+position = 217
 key = 'Typescript(ExportBody { file: "packages/vite/src/node/optimizer/index.ts", start_line: 324, body_start_line: 327 })'
 descriptor = "export body at packages/vite/src/node/optimizer/index.ts:324 body 327"
 cost_tokens = 158
-cum_tokens = 8789
+cum_tokens = 9080
 
 [batches.content]
 kind = "lines"
@@ -5371,11 +5551,11 @@ end = 346
 kind = "full"
 
 [[batches]]
-position = 208
+position = 218
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 236 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:236"
 cost_tokens = 409
-cum_tokens = 9198
+cum_tokens = 9489
 
 [batches.content]
 kind = "lines"
@@ -5389,11 +5569,11 @@ end = 274
 kind = "full"
 
 [[batches]]
-position = 209
+position = 219
 key = 'Typescript(ExportDoc { file: "packages/vite/src/node/optimizer/index.ts", start_line: 283 })'
 descriptor = "export doc at packages/vite/src/node/optimizer/index.ts:283"
 cost_tokens = 64
-cum_tokens = 9262
+cum_tokens = 9553
 
 [batches.content]
 kind = "lines"
@@ -5407,11 +5587,11 @@ end = 281
 kind = "full"
 
 [[batches]]
-position = 210
+position = 220
 key = 'Typescript(ExportNames { file: "packages/vite/src/node/optimizer/index.ts", chunk_index: 2, export_count: 28, type_only_export_count: 7 })'
 descriptor = "export names surface #2 in packages/vite/src/node/optimizer/index.ts"
 cost_tokens = 62
-cum_tokens = 9324
+cum_tokens = 9615
 
 [batches.content]
 kind = "lines"
@@ -5481,11 +5661,11 @@ end = 1412
 kind = "ellipsis"
 
 [[batches]]
-position = 211
+position = 221
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 1411 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:1411"
 cost_tokens = 22
-cum_tokens = 9346
+cum_tokens = 9637
 
 [batches.content]
 kind = "lines"
@@ -5507,11 +5687,11 @@ end = 1414
 kind = "ellipsis"
 
 [[batches]]
-position = 212
+position = 222
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 1365 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:1365"
 cost_tokens = 35
-cum_tokens = 9381
+cum_tokens = 9672
 
 [batches.content]
 kind = "lines"
@@ -5533,11 +5713,11 @@ end = 1369
 kind = "ellipsis"
 
 [[batches]]
-position = 213
+position = 223
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 1374 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:1374"
 cost_tokens = 35
-cum_tokens = 9416
+cum_tokens = 9707
 
 [batches.content]
 kind = "lines"
@@ -5559,11 +5739,11 @@ end = 1378
 kind = "ellipsis"
 
 [[batches]]
-position = 214
+position = 224
 key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 1393 })'
 descriptor = "export at packages/vite/src/node/optimizer/index.ts:1393"
 cost_tokens = 44
-cum_tokens = 9460
+cum_tokens = 9751
 
 [batches.content]
 kind = "lines"
@@ -5580,410 +5760,6 @@ kind = "full"
 path = "packages/vite/src/node/optimizer/index.ts"
 start = 1398
 end = 1398
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 215
-key = 'Typescript(ExportBody { file: "packages/vite/src/node/optimizer/index.ts", start_line: 283, body_start_line: 288 })'
-descriptor = "export body at packages/vite/src/node/optimizer/index.ts:283 body 288"
-cost_tokens = 291
-cum_tokens = 9751
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 288
-end = 288
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 290
-end = 294
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 296
-end = 297
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 299
-end = 306
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 308
-end = 308
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 310
-end = 310
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 312
-end = 313
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 315
-end = 315
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 317
-end = 317
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 319
-end = 319
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 321
-end = 321
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 216
-key = 'Typescript(ExportNames { file: "packages/vite/src/node/optimizer/index.ts", chunk_index: 1, export_count: 28, type_only_export_count: 7 })'
-descriptor = "export names surface #1 in packages/vite/src/node/optimizer/index.ts"
-cost_tokens = 183
-cum_tokens = 9934
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 382
-end = 382
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 451
-end = 451
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 479
-end = 479
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 503
-end = 503
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 511
-end = 511
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 876
-end = 876
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 924
-end = 924
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 934
-end = 934
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 947
-end = 947
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 974
-end = 974
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 981
-end = 981
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 1101
-end = 1101
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 383
-end = 383
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 452
-end = 452
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 480
-end = 480
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 504
-end = 504
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 512
-end = 512
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 877
-end = 877
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 925
-end = 925
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 935
-end = 935
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 948
-end = 948
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 975
-end = 975
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 982
-end = 982
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 1102
-end = 1102
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 217
-key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 503 })'
-descriptor = "export at packages/vite/src/node/optimizer/index.ts:503"
-cost_tokens = 0
-cum_tokens = 9934
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 503
-end = 503
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 504
-end = 504
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 218
-key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 947 })'
-descriptor = "export at packages/vite/src/node/optimizer/index.ts:947"
-cost_tokens = 0
-cum_tokens = 9934
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 947
-end = 947
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 948
-end = 948
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 219
-key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 974 })'
-descriptor = "export at packages/vite/src/node/optimizer/index.ts:974"
-cost_tokens = 22
-cum_tokens = 9956
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 974
-end = 976
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 977
-end = 977
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 220
-key = 'Typescript(Export { file: "packages/vite/src/node/optimizer/index.ts", start_line: 981 })'
-descriptor = "export at packages/vite/src/node/optimizer/index.ts:981"
-cost_tokens = 22
-cum_tokens = 9978
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 981
-end = 983
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/vite/src/node/optimizer/index.ts"
-start = 984
-end = 984
 
 [batches.content.spans.render]
 kind = "ellipsis"
