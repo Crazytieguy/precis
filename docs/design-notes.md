@@ -217,6 +217,21 @@ inventory-only gate kept monaco +0.213 with one −0.006).
   signal that distinguishes "wide-but-shallow sweep" (htop's `darwin/`)
   from "one primary + helpers" (vaul's `src/`); sibling count alone
   can't.
+- **Go spine centrality — four proxies measured and failed (2026-07-04)**,
+  targeting the mcphost/bubbletea/gin unscheduled cluster: (a)
+  `roster_mass_factor` on `GoKey::DeclNames` — grouped const/var specs
+  inflate name counts, trinket rosters outbid the spine (cobra −0.102 /
+  gin −0.022); (b) `gated_descendant_value_weight` on DeclNames with
+  decl-count + exported-share gates — big exported-but-NS-peripheral
+  files saturate the bonus (mcphost −0.18 / bubbletea −0.14 / cobra
+  −0.16); (c) same-package cross-file type-reference counting — fails
+  on 3 of 5 NS spine files (gin routergroup.go = 1 ref, mcphost
+  config.go = 1, migrate.go = 0); (d) struct-field-group ordinal decay
+  — the demote-siblings failure again (cobra −0.111); its
+  promotion-shaped variant is a zero-sum in-budget swap (cobra gain =
+  bubbletea loss). No walk-time signal measured so far separates spine
+  from trinket in flat Go packages; the cluster needs a different
+  mechanism class (or NS-side reality check at the next re-freeze).
 - **Early-budget ratio wall**: in the first ~3K tokens, cheap
   orientation batches win the `value/cost^0.35` race 3–8× over deep
   names surfaces (~120–291 vs ~36). Boosting deep source to compete
