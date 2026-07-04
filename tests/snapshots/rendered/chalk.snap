@@ -11,7 +11,6 @@ benchmark.js
     2→import chalk from './index.js';
 code-of-conduct.md
     1→# Contributor Covenant Code of Conduct
-    …
     3→## Our Pledge
     …
     12→## Our Standards
@@ -91,7 +90,6 @@ readme.md
     23→## Highlights
     …
     36→## Install
-    …
     38→```sh
     39→npm install chalk
     40→```
@@ -99,13 +97,10 @@ readme.md
     44→## Usage
     …
     112→## API
-    …
     114→### chalk.`<style>[.<style>...](string, [string...])`
-    …
     116→Example: `chalk.red.bold.underline('Hello', 'world');`
     120→Multiple arguments will be separated by space.
     122→### chalk.level
-    …
     124→Specifies the level of color support.
     143→### supportsColor
     …
@@ -114,9 +109,7 @@ readme.md
     155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
     …
     171→## Styles
-    …
     173→### Modifiers
-    …
     175→- `reset` - Reset the current style.
     176→- `bold` - Make the text bold.
     177→- `dim` - Make the text have lower opacity.
@@ -126,7 +119,6 @@ readme.md
     181→- `inverse` - Invert background and foreground colors.
     182→- `hidden` - Print the text but make it invisible.
     186→### Colors
-    …
     188→- `black`
     189→- `red`
     190→- `green`
@@ -148,13 +140,10 @@ readme.md
     224→## 256 and Truecolor color support
     …
     246→## Browser support
-    …
     248→Since Chrome 69, ANSI escape codes are natively supported in the developer console.
     250→## Windows
-    …
     252→If you're on Windows, do yourself a favor and use [Windows Terminal](https://github.com/microsoft/terminal) instead of `cmd.exe`.
     254→## FAQ
-    …
     256→### Why not switch to a smaller coloring package?
     …
     268→*\- [Sindre](https://github.com/sindresorhus)*
@@ -163,7 +152,6 @@ readme.md
     274→## Related
     …
     294→## Maintainers
-    …
     296→- [Sindre Sorhus](https://github.com/sindresorhus)
     297→- [Josh Junon](https://github.com/qix-)
 source/

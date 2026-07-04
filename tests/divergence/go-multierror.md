@@ -107,32 +107,32 @@ Score(3000)=0.746 I=0.949 C=0.585 ns_rows≤3K=19/39 (reached=15 partial=0 missi
 | walker |  | 3587 | 14 | listing of '.github' |  |  | 0.722 |
 | walker |  | 3599 | 12 | listing of '.github/workflows' |  |  | 0.722 |
 | ns | 3611 |  | 536 | README migration to errors.Join — basic + Group sections | 4.6 |  | 0.651 |
-| walker |  | 3643 | 44 | headings outline in CHANGELOG.md |  |  | 0.651 |
-| walker |  | 3643 | 0 | CHANGELOG.md section #0 |  |  | 0.651 |
+| walker |  | 3635 | 36 | headings outline in CHANGELOG.md |  |  | 0.651 |
+| walker |  | 3635 | 0 | CHANGELOG.md section #0 |  |  | 0.651 |
 | ns | 3936 |  | 325 | Append body | 5.1 | 3.1 | 0.671 |
 | ns | 4319 |  | 383 | Error.Unwrap body + chain methods | 5.2 | 3.2 | 0.680 |
 | ns | 4466 |  | 147 | Group.Go and Group.Wait bodies | 5.3 | 3.3 | 0.684 |
-| walker |  | 4541 | 898 | README.md section #1 |  |  | 0.794 |
-| walker |  | 4573 | 32 | headings outline in .github/pull_request_template.md |  |  | 0.794 |
+| walker |  | 4533 | 898 | README.md section #1 |  |  | 0.794 |
+| walker |  | 4565 | 32 | headings outline in .github/pull_request_template.md |  |  | 0.794 |
 | ns | 4669 |  | 203 | Flatten body (Flatten + flatten recursion) | 5.4 | 3.4 | 0.795 |
 | ns | 4872 |  | 203 | Prefix body | 5.5 | 3.4 | 0.795 |
 | ns | 5019 |  | 147 | ListFormatFunc body | 5.6 | 3.5 | 0.794 |
 | ns | 5197 |  | 178 | Error.Error / ErrorOrNil / WrappedErrors / GoString bodies | 5.7 | 3.6 | 0.792 |
 | ns | 5271 |  | 74 | sort.Interface bodies | 5.8 | 3.7 | 0.790 |
 | ns | 5514 |  | 243 | Test function name inventory across all _test.go files | 6.1 |  | 0.769 |
-| walker |  | 5552 | 979 | README.md section #3 |  |  | 0.880 |
-| walker |  | 5567 | 15 | go test names surface in group_test.go |  |  | 0.880 |
-| walker |  | 5588 | 21 | .github/pull_request_template.md section #0 |  |  | 0.880 |
-| walker |  | 5620 | 32 | go test names surface in flatten_test.go |  |  | 0.880 |
+| walker |  | 5544 | 979 | README.md section #3 |  |  | 0.880 |
+| walker |  | 5559 | 15 | go test names surface in group_test.go |  |  | 0.880 |
+| walker |  | 5580 | 21 | .github/pull_request_template.md section #0 |  |  | 0.880 |
+| walker |  | 5612 | 32 | go test names surface in flatten_test.go |  |  | 0.880 |
 | ns | 5622 |  | 108 | Format expected-output strings from tests | 6.2 |  | 0.866 |
-| walker |  | 5652 | 32 | go test names surface in sort_test.go |  |  | 0.867 |
-| walker |  | 5688 | 36 | go test names surface in format_test.go |  |  | 0.868 |
-| walker |  | 5708 | 20 | .github/pull_request_template.md section #2 |  |  | 0.868 |
-| walker |  | 5760 | 52 | go test names surface in prefix_test.go |  |  | 0.870 |
-| walker |  | 5794 | 34 | .github/pull_request_template.md section #1 |  |  | 0.870 |
-| walker |  | 5904 | 110 | go test names surface in append_test.go |  |  | 0.878 |
+| walker |  | 5644 | 32 | go test names surface in sort_test.go |  |  | 0.867 |
+| walker |  | 5680 | 36 | go test names surface in format_test.go |  |  | 0.868 |
+| walker |  | 5700 | 20 | .github/pull_request_template.md section #2 |  |  | 0.868 |
+| walker |  | 5752 | 52 | go test names surface in prefix_test.go |  |  | 0.870 |
+| walker |  | 5786 | 34 | .github/pull_request_template.md section #1 |  |  | 0.870 |
+| walker |  | 5896 | 110 | go test names surface in append_test.go |  |  | 0.878 |
 | ns | 5988 |  | 366 | TestErrorUnwrap — chain semantics in action | 6.3 | 6.1 | 0.847 |
-| walker |  | 6038 | 134 | go test names surface in multierror_test.go |  |  | 0.862 |
+| walker |  | 6030 | 134 | go test names surface in multierror_test.go |  |  | 0.862 |
 | ns | 6733 |  | 745 | TestAppend bodies — Append edge cases | 6.4 | 6.1 | 0.805 |
 | ns | 7458 |  | 725 | TestFlatten + TestGroup bodies | 6.5 | 6.1 | 0.759 |
 | ns | 8394 |  | 936 | TestErrorIs + TestErrorAs bodies | 6.6 | 6.1 | 0.708 |

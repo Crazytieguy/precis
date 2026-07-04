@@ -54,7 +54,6 @@ README.md
     17→```
     19→<br>
     21→## Example
-    …
     23→```rust
     24→use thiserror::Error;
     26→#[derive(Error, Debug)]
@@ -74,7 +73,6 @@ README.md
     40→```
     42→<br>
     44→## Details
-    …
     46→- Thiserror deliberately does not appear in your public API. You get the same
     47→  thing as if you had written an implementation of `std::error::Error` by hand,
     48→  and switching from handwritten impls to thiserror or vice versa is not a
@@ -216,7 +214,6 @@ impl/
             10→#[derive(Clone)]
             11→#[repr(transparent)]
             12→pub struct IdentUnraw(Ident);
-            …
             14→impl IdentUnraw {
             15→    pub fn new(ident: Ident) -> Self {
             …

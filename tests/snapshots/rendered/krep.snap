@@ -14,11 +14,9 @@ README.md
     10→>
     11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
     13→## The Story Behind the Name
-    …
     15→The name "krep" has an interesting origin. It is inspired by the Icelandic word "kreppan," which means "to grasp quickly" or "to catch firmly." I came across this word while researching efficient techniques for pattern recognition.
     17→Just as skilled fishers identify patterns in the water to locate fish quickly, I designed "krep" to find patterns in text with maximum efficiency. The name is also short and easy to remember—perfect for a command-line utility that users might type hundreds of times per day.
     19→## Key Features
-    …
     21→- **Multiple search algorithms**: Boyer-Moore-Horspool, KMP, Aho-Corasick for optimal performance across different pattern types
     22→- **Algorithm selection**: Automatic smart selection with optional `--algo` override for fine-tuning
     23→- **SIMD acceleration**: Uses SSE4.2, AVX2, or NEON instructions when available for blazing-fast searches
@@ -34,12 +32,10 @@ README.md
     33→- **Specialized algorithms**: Optimized handling for single-character and short patterns
     34→- **Match Limiting**: Stop searching a file after a specific number of matching lines are found.
     36→## What's New in v2.2.0
-    …
     38→- Refined terminal-first UI with a cleaner, more legible color theme
     39→- Better visual hierarchy in `-o` mode (filename, line index, match highlight)
     40→- Improved `--help` layout with grouped sections and clearer scanning
     42→## Installation
-    …
     44→### Using Homebrew (macOS)
     …
     52→### Building from Source
@@ -49,7 +45,6 @@ README.md
     75→### Build Options
     …
     84→## Usage
-    …
     86→```bash
     87→krep [OPTIONS] PATTERN [FILE | DIRECTORY]
     88→krep [OPTIONS] -e PATTERN [FILE | DIRECTORY]
@@ -62,7 +57,6 @@ README.md
     96→## Usage Examples
     …
     134→## Command Line Options
-    …
     136→- `-i, --ignore-case` Case-insensitive search
     137→- `-c, --count` Count matching lines only
     138→- `-o, --only-matching` Print only the matched parts of lines
@@ -83,7 +77,6 @@ README.md
     171→### krep v2.1.0 vs ripgrep (warm cache, 7 runs average baseline)
     …
     180→## How Krep Works
-    …
     182→Krep achieves its high performance through several key techniques:
     184→### 1. Smart Algorithm Selection
     …
@@ -96,13 +89,10 @@ README.md
     222→### 5. Skipping Non-Relevant Content
     …
     231→## Contributing
-    …
     233→Contributions are welcome! Please feel free to submit a Pull Request.
     235→## Author
-    …
     237→- **Davide Santangelo** - [GitHub](https://github.com/davidesantangelo)
     239→## License
-    …
     241→This project is licensed under the BSD-2 License - see the LICENSE file for details.
     243→Copyright © 2025 Davide Santangelo
 aho_corasick.c
@@ -123,7 +113,6 @@ krep.h
     16→#include <ctype.h>     // For isalnum function
     18→// --- Global Variables (declared extern) ---
     19→extern unsigned char lower_table[256];
-    …
     21→// Forward declaration for Aho-Corasick trie structure
     22→struct ac_trie;
     23→typedef struct ac_trie ac_trie_t;
@@ -136,13 +125,11 @@ krep.h
     37→#define KREP_COLOR_LINE_NUMBER "\033[1;38;5;111m" // Soft mint
     38→#define KREP_COLOR_MATCH "\033[1;38;5;222m"     // Warm amber
     39→#define KREP_COLOR_TEXT "\033[38;5;252m"        // Soft white
-    …
     41→/* --- Help UI Colors --- */
     42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
     43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
     44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
     45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
-    …
     47→/* --- Match tracking structure --- */
     48→// Define match_position_t BEFORE match_result_t
     49→typedef struct

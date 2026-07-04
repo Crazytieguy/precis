@@ -12,7 +12,6 @@ README.md
     7→>
     8→> We recommend migrating to the Agents SDK for all production use cases.
     10→## Install
-    …
     12→Requires Python 3.10+
     14→```shell
     15→pip install git+ssh://git@github.com/openai/swarm.git
@@ -22,7 +21,6 @@ README.md
     21→pip install git+https://github.com/openai/swarm.git
     22→```
     24→## Usage
-    …
     26→```python
     27→from swarm import Swarm, Agent
     29→client = Swarm()
@@ -49,7 +47,6 @@ README.md
     57→What can I assist?
     58→```
     60→## Table of Contents
-    …
     62→- [Overview](#overview)
     63→- [Examples](#examples)
     64→- [Documentation](#documentation)
@@ -86,10 +83,8 @@ README.md
     321→## Streaming
     …
     336→# Evaluations
-    …
     338→Evaluations are crucial to any project, and we encourage developers to bring their own eval suites to test the performance of their swarms. For reference, we have some examples for how to eval swarm in the `airline`, `weather_agent` and `triage_agent` quickstart examples. See the READMEs for more details.
     340→# Utils
-    …
     342→Use the `run_demo_loop` to test out your swarm! This will run a REPL on your command line. Supports streaming.
     344→```python
     345→from swarm.repl import run_demo_loop

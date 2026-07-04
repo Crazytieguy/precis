@@ -28,13 +28,10 @@ README.md
     45→## Packages
     …
     53→## Contribution
-    …
     55→See [Contributing Guide](CONTRIBUTING.md).
     57→## License
-    …
     59→[MIT](LICENSE).
     61→## Sponsors
-    …
     63→<p align="center">
     64→  <a target="_blank" href="https://github.com/sponsors/vite">
     65→    <img alt="sponsors" src="https://sponsors.vite.dev/sponsors.svg">
@@ -68,7 +65,6 @@ packages/
                 1057→export const cspHashes: string[] = [
                 …
                 1064→export type { Options }
-                …
                 1066→export default viteLegacyPlugin
                 …
                 1078→export { viteLegacyPluginCjs as 'module.exports' }
@@ -236,7 +232,6 @@ packages/
                     26→/** @deprecated - use `parseAsync` instead */
                     27→export const parseAstAsync: typeof _parseAstAsync = _parseAstAsync
                     …
-                    35→export { perEnvironmentPlugin } from './plugin'
                     87→export const esbuildVersion = '0.25.0'
                 internalIndex.ts
                 logger.ts
@@ -266,12 +261,10 @@ packages/
                     101→export interface Plugin<A = any> extends RolldownPlugin<A> {
                     …
                     373→export type HookHandler<T> = T extends ObjectHook<infer H> ? H : T
-                    …
                     375→export type PluginWithRequiredHook<K extends keyof Plugin> = Plugin & {
                     376→  [P in K]: NonNullable<Plugin[P]>
                     377→}
                     381→export type FalsyPlugin = false | null | undefined
-                    …
                     383→export type PluginOption = Thenable<
                     384→  | Plugin
                     385→  | { name: string } // for rollup plugin compatibility

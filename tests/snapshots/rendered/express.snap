@@ -43,7 +43,6 @@ Readme.md
     48→## Installation
     …
     69→## Features
-    …
     71→  * Robust routing
     72→  * Focus on high performance
     73→  * Super-high test coverage
@@ -60,7 +59,6 @@ Readme.md
     127→## Examples
     …
     147→## Contributing
-    …
     149→The Express.js project welcomes all constructive contributions. Contributions take many forms,
     150→from code for bug fixes and enhancements, to additions and fixes to documentation, additional
     151→tests, triaging incoming pull requests and issues, and more!
@@ -70,7 +68,6 @@ Readme.md
     159→### Running Tests
     …
     173→## Current project team members
-    …
     175→For information about the governance of the express.js project, see [GOVERNANCE.md](https://github.com/expressjs/discussions/blob/HEAD/docs/GOVERNANCE.md).
     177→The original author of Express is [TJ Holowaychuk](https://github.com/tj)
     179→[List of all contributors](https://github.com/expressjs/express/graphs/contributors)
@@ -223,13 +220,11 @@ lib/
         62→exports.application = proto;
         63→exports.request = req;
         64→exports.response = res;
-        …
         66→/**
         67→ * Expose constructors.
         68→ */
         70→exports.Route = Router.Route;
         71→exports.Router = Router;
-        …
         73→/**
         74→ * Expose middleware
         75→ */

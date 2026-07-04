@@ -37,16 +37,13 @@ README.md
     32→## Intro<a name="intro"></a>
     …
     50→## Installation<a name="installation"></a>
-    …
     52→```bash
     53→pip install tomli
     54→```
     56→## Usage<a name="usage"></a>
-    …
     58→### Parse a TOML string<a name="parse-a-toml-string"></a>
     …
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
-    …
     81→```python
     82→import tomli
     84→with open("path_to_file/conf.toml", "rb") as f:
@@ -66,25 +63,20 @@ README.md
     123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
     …
     152→## FAQ<a name="faq"></a>
-    …
     154→### Why this parser?<a name="why-this-parser"></a>
-    …
     156→- it's lil'
     157→- pure Python with zero dependencies
     161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
     165→- thoroughly tested: 100% branch coverage
     167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
-    …
     169→No.
     175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
     177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
-    …
     179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
     181→The core library does not include write capability, as most TOML use cases are read-only, and Tomli intends to be minimal.
     183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
     …
     201→## Performance<a name="performance"></a>
-    …
     203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
     205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
     207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
@@ -218,7 +210,6 @@ tests/
     test_misc.py
 tomllib.md
     1→# `tomllib` – Tomli in the standard library
-    …
     3→Tomli was added to the Python standard library in Python 3.11.
     5→Relevant links:
     7→- Python Issue Tracker: https://bugs.python.org/issue40059
@@ -227,7 +218,6 @@ tomllib.md
     10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
     11→- CPython pull request: https://github.com/python/cpython/pull/31498
     13→## Converting Tomli to tomllib
-    …
     15→### Sync status
     …
     20→### Steps to convert

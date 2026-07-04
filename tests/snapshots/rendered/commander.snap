@@ -74,11 +74,9 @@ index.js
     4→const { Help } = require('./lib/help.js');
     5→const { Option } = require('./lib/option.js');
     7→exports.program = new Command();
-    …
     9→exports.createCommand = (name) => new Command(name);
     10→exports.createOption = (flags, description) => new Option(flags, description);
     11→exports.createArgument = (name, description) => new Argument(name, description);
-    …
     13→/**
     14→ * Expose classes
     15→ */
@@ -86,7 +84,6 @@ index.js
     18→exports.Option = Option;
     19→exports.Argument = Argument;
     20→exports.Help = Help;
-    …
     22→exports.CommanderError = CommanderError;
     23→exports.InvalidArgumentError = InvalidArgumentError;
     24→exports.InvalidOptionArgumentError = InvalidArgumentError; // Deprecated

@@ -258,7 +258,6 @@ main.go
     9→	"github.com/mark3labs/mcphost/cmd"
     10→)
     12→var version = "dev"
-    …
     14→func main() {
     15→	for _, arg := range os.Args[1:] {
     16→		if arg == "--version" || arg == "-v" {
@@ -275,7 +274,6 @@ sdk/
         1→# MCPHost SDK
         3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
         5→## Installation
-        …
         7→```bash
         8→go get github.com/mark3labs/mcphost
         9→```
@@ -286,13 +284,11 @@ sdk/
         52→### Options
         …
         67→## Advanced Usage
-        …
         69→### With Tool Callbacks
         …
         93→### Session Management
         …
         115→## API Reference
-        …
         117→### Types
         …
         124→### Methods
@@ -300,7 +296,6 @@ sdk/
         136→## Environment Variables
         …
         146→## License
-        …
         148→Same as MCPHost CLI
     examples/
     mcphost.go
@@ -309,11 +304,9 @@ sdk/
         8→// Message is an alias for session.Message providing SDK users with access
         9→// to message structures for conversation history and tool interactions.
         10→type Message = session.Message
-        …
         12→// ToolCall is an alias for session.ToolCall representing a tool invocation
         13→// with its name, arguments, and result within a conversation.
         14→type ToolCall = session.ToolCall
-        …
         16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
         17→// format used by the agent for LLM interactions.
         18→func ConvertToSchemaMessage(msg *Message) *schema.Message {

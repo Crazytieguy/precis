@@ -111,28 +111,28 @@ Score(3000)=0.679 I=0.749 C=0.617 ns_rows≤3K=14/40 (reached=9 partial=1 missin
 | walker |  | 7233 | 730 | README.md section #20 |  |  | 0.574 |
 | ns | 7475 |  | 472 | internal/re.js — section comments and exports header | 5.2 | 5.1 | 0.551 |
 | walker |  | 7488 | 255 | README.md section #15 |  |  | 0.570 |
-| ns | 7628 |  | 153 | SemVer.compare — body (entry into compareMain \|\| comparePre) | 5.3 | 4.1 | 0.561 |
-| walker |  | 7764 | 276 | README.md section #11 |  |  | 0.564 |
-| walker |  | 7872 | 108 | headings outline in CONTRIBUTING.md |  |  | 0.564 |
-| walker |  | 7872 | 0 | CONTRIBUTING.md section #0 |  |  | 0.564 |
+| walker |  | 7590 | 102 | headings outline in CONTRIBUTING.md |  |  | 0.570 |
+| walker |  | 7590 | 0 | CONTRIBUTING.md section #0 |  |  | 0.570 |
+| ns | 7628 |  | 153 | SemVer.compare — body (entry into compareMain \|\| comparePre) | 5.3 | 4.1 | 0.562 |
+| walker |  | 7866 | 276 | README.md section #11 |  |  | 0.564 |
 | ns | 7934 |  | 306 | internal/identifiers.js — full file | 5.4 |  | 0.549 |
 | ns | 8148 |  | 214 | bin/semver.js — CLI flag case lines (truncated) | 5.5 |  | 0.541 |
 | ns | 8372 |  | 224 | functions/ — module.exports lines (locations of every public function) | 6.1 |  | 0.529 |
 | ns | 8490 |  | 118 | ranges/ — module.exports lines (locations of every range function) | 6.2 |  | 0.524 |
-| walker |  | 8629 | 757 | README.md section #58 |  |  | 0.524 |
+| walker |  | 8623 | 757 | README.md section #58 |  |  | 0.524 |
 | ns | 8897 |  | 407 | functions/cmp.js — operator switch body | 6.3 |  | 0.505 |
-| walker |  | 8927 | 298 | README.md section #12 |  |  | 0.508 |
-| walker |  | 9222 | 295 | README.md section #49 |  |  | 0.528 |
+| walker |  | 8921 | 298 | README.md section #12 |  |  | 0.508 |
+| walker |  | 9216 | 295 | README.md section #49 |  |  | 0.528 |
 | ns | 9449 |  | 552 | functions/diff.js — release-type comparison body | 6.4 |  | 0.508 |
-| walker |  | 9538 | 316 | README.md section #16 |  |  | 0.525 |
-| walker |  | 9541 | 3 | listing of 'tap-snapshots/test' |  |  | 0.525 |
+| walker |  | 9532 | 316 | README.md section #16 |  |  | 0.525 |
+| walker |  | 9535 | 3 | listing of 'tap-snapshots/test' |  |  | 0.525 |
 | ns | 9601 |  | 152 | internal/parse-options.js — full file | 7.1 |  | 0.518 |
 | ns | 9711 |  | 110 | internal/debug.js — full file | 7.2 |  | 0.514 |
 | ns | 9778 |  | 67 | internal/lrucache.js — class signature + max constant | 7.3 |  | 0.511 |
-| walker |  | 9849 | 308 | README.md section #19 |  |  | 0.511 |
+| walker |  | 9843 | 308 | README.md section #19 |  |  | 0.511 |
+| walker |  | 9847 | 4 | listing of '.github/matchers' |  |  | 0.511 |
+| walker |  | 9851 | 4 | listing of 'test/integration' |  |  | 0.511 |
 | ns | 9852 |  | 74 | ranges/min-version.js — function signature + 0.0.0 fast path | 7.4 |  | 0.509 |
-| walker |  | 9853 | 4 | listing of '.github/matchers' |  |  | 0.509 |
-| walker |  | 9857 | 4 | listing of 'test/integration' |  |  | 0.509 |
-| walker |  | 9881 | 24 | json config .release-please-manifest.json |  |  | 0.509 |
+| walker |  | 9875 | 24 | json config .release-please-manifest.json |  |  | 0.509 |
 | ns | 9924 |  | 72 | LICENSE first line + CONTRIBUTING.md headings | 7.5 |  | 0.511 |
 | ns | 9977 |  | 53 | bin/semver.js — entry skeleton (shebang, version load, main call) | 7.6 |  | 0.510 |

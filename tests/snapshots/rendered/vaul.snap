@@ -207,7 +207,6 @@ src/
         824→      />
         825→    );
         831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
-        …
         833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
         834→  { onPointerDownOutside, style, onOpenAutoFocus, ...rest },
         835→  ref,

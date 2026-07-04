@@ -11,7 +11,6 @@ README.md
     7→A simple OOP library for Lua. It has inheritance, metamethods (operators), class variables and weak mixin support.
     9→Quick Look
     10→==========
-    …
     12→```lua
     13→local class = require 'middleclass'
     15→local Fruit = class('Fruit') -- 'Fruit' is the class' name
@@ -31,20 +30,17 @@ README.md
     36→```
     38→Documentation
     39→=============
-    …
     41→See the [github wiki page](https://github.com/kikito/middleclass/wiki) for examples & documentation.
     43→You can read the `CHANGELOG.md` file to see what has changed on each version of this library.
     45→If you need help updating to a new middleclass version, read `UPDATING.md`.
     47→Installation
     48→============
-    …
     50→Just copy the middleclass.lua file wherever you want it (for example on a lib/ folder). Then write this in any Lua file where you want to use it:
     52→```lua
     53→local class = require 'middleclass'
     54→```
     56→Specs
     57→=====
-    …
     59→This project uses [busted](http://olivinelabs.com/busted/) for its specs. If you want to run the specs, you will have to install it first. Then just execute the following:
     61→```bash
     62→cd /folder/where/the/spec/folder/is
@@ -52,14 +48,12 @@ README.md
     64→```
     66→Performance tests
     67→=================
-    …
     69→Middleclass also comes with a small performance test suite. Just run the following command:
     71→```bash
     72→lua performance/run.lua
     73→```
     75→License
     76→=======
-    …
     78→Middleclass is distributed under the MIT license.
 UPDATING.md
     1→Updating from 3.x to 4.x
@@ -111,7 +105,6 @@ middleclass.lua
     75→  _propagateInstanceMethod(aClass, name, f)
     78→local function _tostring(self) return "class " .. self.name end
     79→local function _call(self, ...) return self:new(...) end
-    …
     81→local function _createClass(name, super)
     …
     109→local function _includeMixin(aClass, mixin)
@@ -125,9 +118,7 @@ middleclass.lua
     120→  if type(mixin.included)=="function" then mixin:included(aClass) end
     121→  return aClass
     125→  __tostring   = function(self) return "instance of " .. tostring(self.class) end,
-    …
     127→  initialize   = function(self, ...) end,
-    …
     129→  isInstanceOf = function(self, aClass)
     130→    return type(aClass) == 'table'
     131→       and type(self) == 'table'
@@ -158,7 +149,6 @@ middleclass.lua
     165→      self:subclassed(subclass)
     167→      return subclass
     170→    subclassed = function(self, other) end,
-    …
     172→    isSubclassOf = function(self, other)
     173→      return type(other)      == 'table' and
     174→             type(self.super) == 'table' and

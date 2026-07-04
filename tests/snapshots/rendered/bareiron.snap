@@ -48,62 +48,45 @@ include/
         …
         15→#define true 1
         16→#define false 0
-        …
         18→// TCP port, Minecraft's default is 25565
         19→#define PORT 25565
-        …
         21→// How many players to keep in memory, NOT the amount of concurrent players
         22→// Even when offline, players who have logged on before take up a slot
         23→#define MAX_PLAYERS 16
-        …
         25→// How many mobs to allocate memory for
         26→#define MAX_MOBS (MAX_PLAYERS)
-        …
         28→// Manhattan distance at which mobs despawn
         29→#define MOB_DESPAWN_DISTANCE 256
-        …
         31→// Server game mode: 0 - survival; 1 - creative; 2 - adventure; 3 - spectator
         32→#define GAMEMODE 0
-        …
         34→// Max render distance, determines how many chunks to send
         35→#define VIEW_DISTANCE 2
-        …
         37→// Time between server ticks in microseconds (default = 1s)
         38→#define TIME_BETWEEN_TICKS 1000000
-        …
         40→// Calculated from TIME_BETWEEN_TICKS
         41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
-        …
         43→// Initial world generation seed, will be hashed on startup
         44→// Used in generating terrain and biomes
         45→#define INITIAL_WORLD_SEED 0xA103DE6C
-        …
         47→// Initial general RNG seed, will be hashed on startup
         48→// Used in random game events like item drops and mob behavior
         49→#define INITIAL_RNG_SEED 0xE2B9419
-        …
         51→// Size of each bilinearly interpolated area ("minichunk")
         52→// For best performance, CHUNK_SIZE should be a power of 2
         53→#define CHUNK_SIZE 8
-        …
         55→// Terrain low point - should start a bit below sea level for rivers/lakes
         56→#define TERRAIN_BASE_HEIGHT 60
-        …
         58→// Cave generation Y level
         59→#define CAVE_BASE_DEPTH 24
-        …
         61→// Size of every major biome in multiples of CHUNK_SIZE
         62→// For best performance, should also be a power of 2
         63→#define BIOME_SIZE (CHUNK_SIZE * 8)
-        …
         65→// Calculated from BIOME_SIZE
         66→#define BIOME_RADIUS (BIOME_SIZE / 2)
-        …
         68→// How many visited chunk coordinates to "remember"
         69→// The server will not re-send chunks that the player has recently been in
         70→// Must be at least 1, otherwise chunks will be sent on each position update
         71→#define VISITED_HISTORY 4
-        …
         73→// How many player-made block changes to allow
         74→// Determines the fixed amount of memory allocated to blocks
         75→#define MAX_BLOCK_CHANGES 20000
@@ -147,14 +130,12 @@ include/
         16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
         17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
         18→void discard_all (int client_fd, size_t remaining, uint8_t require_first);
-        …
         20→ssize_t writeByte (int client_fd, uint8_t byte);
         21→ssize_t writeUint16 (int client_fd, uint16_t num);
         22→ssize_t writeUint32 (int client_fd, uint32_t num);
         23→ssize_t writeUint64 (int client_fd, uint64_t num);
         24→ssize_t writeFloat (int client_fd, float num);
         25→ssize_t writeDouble (int client_fd, double num);
-        …
         27→uint8_t readByte (int client_fd);
         28→uint16_t readUint16 (int client_fd);
         29→int16_t readInt16 (int client_fd);
@@ -163,11 +144,9 @@ include/
         32→int64_t readInt64 (int client_fd);
         33→float readFloat (int client_fd);
         34→double readDouble (int client_fd);
-        …
         36→ssize_t readLengthPrefixedData (int client_fd);
         37→void readString (int client_fd);
         38→void readStringN (int client_fd, uint32_t max_length);
-        …
         40→uint32_t fast_rand ();
         41→uint64_t splitmix64 (uint64_t state);
         …
@@ -236,7 +215,6 @@ src/
         …
     tools.c
         42→uint64_t total_bytes_received = 0;
-        …
         44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
         …
     varnum.c

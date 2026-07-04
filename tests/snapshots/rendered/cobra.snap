@@ -8,7 +8,6 @@ expression: rendered
 .mailmap
 CONDUCT.md
     1→## Cobra User Contract
-    …
     3→### Versioning
     …
     6→### Backward Compatibility
@@ -49,7 +48,6 @@ README.md
     116→# Usage
     …
     131→# License
-    …
     133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
@@ -91,13 +89,11 @@ command.go
     33→const (
     34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
     35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
-    …
     37→	helpFlagName    = "help"
     38→	helpCommandName = "help"
     39→)
     41→// FParseErrWhitelist configures Flag parse errors to be ignored
     42→type FParseErrWhitelist flag.ParseErrorsAllowlist
-    …
     44→// Group Structure to manage groups for commands
     45→type Group struct {
     46→	ID    string

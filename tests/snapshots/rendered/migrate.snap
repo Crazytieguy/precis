@@ -53,7 +53,6 @@ README.md
     105→## Use in your Go project
     …
     152→## Getting started
-    …
     154→Go to [getting started](GETTING_STARTED.md)
     156→## Tutorials
     …
@@ -163,7 +162,6 @@ log.go
     3→// Logger is an interface so you can pass in your own
     4→// logging implementation.
     5→type Logger interface {
-    …
     7→	// Printf is like fmt.Printf
     8→	Printf(format string, v ...interface{})
     10→	// Verbose should return true when verbose logging output is wanted
@@ -191,10 +189,8 @@ migrate.go
     22→// Please note that this setting has a major impact on the memory usage,
     23→// since each pre-read migration is buffered in memory. See DefaultBufferSize.
     24→var DefaultPrefetchMigrations = uint(10)
-    …
     26→// DefaultLockTimeout sets the max time a database driver has to acquire a lock.
     27→var DefaultLockTimeout = 15 * time.Second
-    …
     29→var (
     30→	ErrNoChange       = errors.New("no change")
     31→	ErrNilVersion     = errors.New("no migration")
@@ -297,7 +293,6 @@ source/
         README.md
             1→# go_bindata
             3→## Usage
-            …
             7→### Read bindata with NewWithSourceInstance
             …
             34→### Read bindata with URL (todo)
@@ -316,7 +311,6 @@ source/
             4→## Import
             …
             12→## Connection String
-            …
             14→`gcs://<bucket>/<prefix>`
         storage.go
         storage_test.go

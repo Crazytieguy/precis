@@ -30,14 +30,12 @@ cursor.go
     1→package tea
     3→// Position represents a position in the terminal.
     4→type Position struct{ X, Y int }
-    …
     6→// CursorPositionMsg is a message that represents the terminal cursor position.
     7→type CursorPositionMsg struct {
     8→	X, Y int
     9→}
     11→// CursorShape represents a terminal cursor shape.
     12→type CursorShape int
-    …
     14→// Cursor shapes.
     15→const (
     16→	CursorBlock CursorShape = iota
@@ -46,7 +44,6 @@ cursor.go
     19→)
     21→// requestCursorPosMsg is a message that requests the cursor position.
     22→type requestCursorPosMsg struct{}
-    …
     24→// RequestCursorPosition is a command that requests the cursor position.
     25→// The cursor position will be sent as a [CursorPositionMsg] message.
     26→func RequestCursorPosition() Msg {
@@ -68,7 +65,6 @@ focus.go
     3→// FocusMsg represents a terminal focus message.
     4→// This occurs when the terminal gains focus.
     5→type FocusMsg struct{}
-    …
     7→// BlurMsg represents a terminal blur message.
     8→// This occurs when the terminal loses focus.
     9→type BlurMsg struct{}
@@ -114,7 +110,6 @@ paste.go
     14→// PasteStartMsg is an message that is emitted when the terminal starts the
     15→// bracketed-paste text.
     16→type PasteStartMsg struct{}
-    …
     18→// PasteEndMsg is an message that is emitted when the terminal ends the
     19→// bracketed-paste text.
     20→type PasteEndMsg struct{}
@@ -182,18 +177,14 @@ tea.go
     9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
     38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
     39→var ErrProgramPanic = errors.New("program experienced a panic")
-    …
     41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
     42→var ErrProgramKilled = errors.New("program was killed")
-    …
     44→// ErrInterrupted is returned by [Program.Run] when the program get a SIGINT
     45→// signal, or when it receives a [InterruptMsg].
     46→var ErrInterrupted = errors.New("program was interrupted")
-    …
     48→// Msg contain data from the result of a IO operation. Msgs trigger the update
     49→// function and, henceforth, the UI.
     50→type Msg = uv.Event
-    …
     52→// Model contains the program's state as well as its core functions.
     53→type Model interface {
     54→	// Init is the first function that will be called. It returns an optional

@@ -19,7 +19,6 @@ README.md
     128→## Design principles
     …
     180→## About the Author
-    …
     182→I'm Rui Ueyama. I'm the creator of [8cc](https://github.com/rui314/8cc),
     183→which is a hobby C compiler, and also the original creator of the current
     184→version of [LLVM lld](https://lld.llvm.org) linker, which is a
@@ -97,7 +96,6 @@ chibicc.h
     104→Token *tokenize_string_literal(Token *tok, Type *basety);
     105→Token *tokenize(File *file);
     106→Token *tokenize_file(char *filename);
-    …
     108→#define unreachable() \
     109→  error("internal error at %s:%d", __FILE__, __LINE__)
     115→char *search_include_paths(char *filename);

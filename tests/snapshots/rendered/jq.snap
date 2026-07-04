@@ -17,26 +17,20 @@ README.md
     1→# jq
     3→`jq` is a lightweight and flexible command-line JSON processor akin to `sed`,`awk`,`grep`, and friends for JSON data. It's written in portable C and has zero runtime dependencies, allowing you to easily slice, filter, map, and transform structured data.
     5→## Documentation
-    …
     7→- **Official Documentation**: [jqlang.org](https://jqlang.org)
     8→- **Try jq Online**: [play.jqlang.org](https://play.jqlang.org)
     10→## Installation
-    …
     12→### Prebuilt Binaries
-    …
     14→Download the latest releases from the [GitHub release page](https://github.com/jqlang/jq/releases).
     16→### Docker Image
-    …
     18→Pull the [jq image](https://github.com/jqlang/jq/pkgs/container/jq) to start quickly with Docker.
     34→### Building from source
     …
     67→## Community & Support
-    …
     69→- Questions & Help: [Stack Overflow (jq tag)](https://stackoverflow.com/questions/tagged/jq)
     70→- Chat & Community: [Join us on Discord](https://discord.gg/yg6yjNmgAC)
     71→- Wiki & Advanced Topics: [Explore the Wiki](https://github.com/jqlang/jq/wiki)
     73→## License
-    …
     75→`jq` is released under the [MIT License](COPYING). `jq`'s documentation is
     76→licensed under the [Creative Commons CC BY 3.0](COPYING).
     77→`jq` uses parts of the open source C library "decNumber", which is distributed
@@ -128,7 +122,6 @@ src/
         15→};
         17→typedef struct jq_state jq_state;
         18→typedef void (*jq_msg_cb)(void *, jv);
-        …
         20→jq_state *jq_init(void);
         21→void jq_set_error_cb(jq_state *, jq_msg_cb, void *);
         22→void jq_get_error_cb(jq_state *, jq_msg_cb *, void **);
@@ -141,12 +134,10 @@ src/
         29→void jq_start(jq_state *, jv value, int);
         30→jv jq_next(jq_state *);
         31→void jq_teardown(jq_state **);
-        …
         33→void jq_halt(jq_state *, jv, jv);
         34→int jq_halted(jq_state *);
         35→jv jq_get_exit_code(jq_state *);
         36→jv jq_get_error_message(jq_state *);
-        …
         38→typedef jv (*jq_input_cb)(jq_state *, void *);
         39→void jq_set_input_cb(jq_state *, jq_input_cb, void *);
         40→void jq_get_input_cb(jq_state *, jq_input_cb *, void **);
@@ -175,7 +166,6 @@ src/
         27→  JV_KIND_OBJECT
         28→} jv_kind;
         30→struct jv_refcnt;
-        …
         32→/* All of the fields of this struct are private.
         33→   Really. Do not play with them. */
         34→typedef struct {
@@ -193,23 +183,18 @@ src/
         …
         54→jv jv_copy(jv);
         55→void jv_free(jv);
-        …
         57→int jv_get_refcnt(jv);
-        …
         59→int jv_equal(jv, jv);
         60→int jv_identical(jv, jv);
         61→int jv_contains(jv, jv);
-        …
         63→jv jv_invalid(void);
         64→jv jv_invalid_with_msg(jv);
         65→jv jv_invalid_get_msg(jv);
         66→int jv_invalid_has_msg(jv);
-        …
         68→jv jv_null(void);
         69→jv jv_true(void);
         70→jv jv_false(void);
         71→jv jv_bool(int);
-        …
         73→jv jv_number(double);
         74→jv jv_number_with_literal(const char*);
         75→double jv_number_value(jv);

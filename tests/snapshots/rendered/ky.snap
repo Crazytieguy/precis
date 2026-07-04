@@ -74,7 +74,6 @@ readme.md
     30→- Hooks
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
     33→## Install
-    …
     35→```sh
     36→npm install ky
     37→```
@@ -85,7 +84,6 @@ readme.md
     45→## Usage
     …
     85→## API
-    …
     87→### ky(input, options?)
     …
     122→### ky.get(input, options?)
@@ -94,11 +92,9 @@ readme.md
     125→### ky.patch(input, options?)
     126→### ky.head(input, options?)
     127→### ky.delete(input, options?)
-    …
     129→Sets `options.method` to the method name and makes a request.
     131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
     745→### ky.extend(defaultOptions)
-    …
     747→Create a new `ky` instance with some defaults overridden with your own.
     749→In contrast to `ky.create()`, `ky.extend()` inherits defaults from its parent.
     751→You can pass headers as a `Headers` instance or a plain object.
@@ -107,17 +103,14 @@ readme.md
     829→#### defaultOptions
     831→Type: `object`
     833→### ky.stop
-    …
     835→A `Symbol` that can be returned by a `beforeRetry` hook to stop the retry. This will also short circuit the remaining `beforeRetry` hooks.
     864→### ky.retry(options?)
-    …
     866→Force a retry from an `afterResponse` hook.
     1000→### HTTPError
     …
     1046→### TimeoutError
     …
     1050→## Tips
-    …
     1052→### Sending form data
     …
     1109→### Setting a custom `Content-Type`
@@ -136,17 +129,13 @@ readme.md
     1292→## FAQ
     …
     1339→## Browser support
-    …
     1341→The latest version of Chrome, Firefox, and Safari.
     1343→## Node.js support
-    …
     1345→Node.js 18 and later.
     1347→## Related
-    …
     1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
     1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
     1352→## Maintainers
-    …
     1354→- [Sindre Sorhus](https://github.com/sindresorhus)
     1355→- [Seth Holladay](https://github.com/sholladay)
     1356→- [Szymon Marczak](https://github.com/szmarczak)

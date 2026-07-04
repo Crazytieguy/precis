@@ -1,6 +1,6 @@
 fixture = "semver"
 budget = 10000
-cumulative_tokens = 9881
+cumulative_tokens = 9875
 batch_count = 94
 
 [[batches]]
@@ -2001,92 +2001,10 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
-descriptor = "README.md section #11"
-cost_tokens = 276
-cum_tokens = 7764
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 219
-end = 219
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 221
-end = 222
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 224
-end = 227
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 229
-end = 229
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 231
-end = 234
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 236
-end = 236
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 238
-end = 241
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 243
-end = 243
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 245
-end = 248
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
 key = 'Markdown(HeadingsOutline { file: "CONTRIBUTING.md" })'
 descriptor = "headings outline in CONTRIBUTING.md"
-cost_tokens = 108
-cum_tokens = 7872
+cost_tokens = 102
+cum_tokens = 7590
 
 [batches.content]
 kind = "lines"
@@ -2252,11 +2170,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Markdown(Section { file: "CONTRIBUTING.md", section_index: 0, reference_shaped: false })'
 descriptor = "CONTRIBUTING.md section #0"
 cost_tokens = 0
-cum_tokens = 7872
+cum_tokens = 7590
 
 [batches.content]
 kind = "lines"
@@ -2270,11 +2188,93 @@ end = 3
 kind = "full"
 
 [[batches]]
+position = 85
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
+descriptor = "README.md section #11"
+cost_tokens = 276
+cum_tokens = 7866
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 219
+end = 219
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 221
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 224
+end = 227
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 229
+end = 229
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 231
+end = 234
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 236
+end = 236
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 238
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 243
+end = 243
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 245
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 86
 key = 'Markdown(Section { file: "README.md", section_index: 58, reference_shaped: false })'
 descriptor = "README.md section #58"
 cost_tokens = 757
-cum_tokens = 8629
+cum_tokens = 8623
 
 [batches.content]
 kind = "lines"
@@ -2324,7 +2324,7 @@ position = 87
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
 cost_tokens = 298
-cum_tokens = 8927
+cum_tokens = 8921
 
 [batches.content]
 kind = "lines"
@@ -2390,7 +2390,7 @@ position = 88
 key = 'Markdown(Section { file: "README.md", section_index: 49, reference_shaped: false })'
 descriptor = "README.md section #49"
 cost_tokens = 295
-cum_tokens = 9222
+cum_tokens = 9216
 
 [batches.content]
 kind = "lines"
@@ -2408,7 +2408,7 @@ position = 89
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false })'
 descriptor = "README.md section #16"
 cost_tokens = 316
-cum_tokens = 9538
+cum_tokens = 9532
 
 [batches.content]
 kind = "lines"
@@ -2458,7 +2458,7 @@ position = 90
 key = 'Fs(DirListing { dir: "tap-snapshots/test" })'
 descriptor = "listing of 'tap-snapshots/test'"
 cost_tokens = 3
-cum_tokens = 9541
+cum_tokens = 9535
 
 [batches.content]
 kind = "fs"
@@ -2472,7 +2472,7 @@ position = 91
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false })'
 descriptor = "README.md section #19"
 cost_tokens = 308
-cum_tokens = 9849
+cum_tokens = 9843
 
 [batches.content]
 kind = "lines"
@@ -2506,7 +2506,7 @@ position = 92
 key = 'Fs(DirListing { dir: ".github/matchers" })'
 descriptor = "listing of '.github/matchers'"
 cost_tokens = 4
-cum_tokens = 9853
+cum_tokens = 9847
 
 [batches.content]
 kind = "fs"
@@ -2520,7 +2520,7 @@ position = 93
 key = 'Fs(DirListing { dir: "test/integration" })'
 descriptor = "listing of 'test/integration'"
 cost_tokens = 4
-cum_tokens = 9857
+cum_tokens = 9851
 
 [batches.content]
 kind = "fs"
@@ -2534,7 +2534,7 @@ position = 94
 key = 'Json(Whole { file: ".release-please-manifest.json" })'
 descriptor = "json config .release-please-manifest.json"
 cost_tokens = 24
-cum_tokens = 9881
+cum_tokens = 9875
 
 [batches.content]
 kind = "lines"

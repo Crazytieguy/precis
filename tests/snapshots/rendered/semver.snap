@@ -18,12 +18,10 @@ README.md
     1→semver(1) -- The semantic versioner for npm
     2→===========================================
     4→## Install
-    …
     6→```bash
     7→npm install semver
     8→````
     10→## Usage
-    …
     12→As a node module:
     14→```js
     15→const semver = require('semver')
@@ -38,7 +36,6 @@ README.md
     25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
     26→```
     139→## Versions
-    …
     141→A "version" is described by the `v2.0.0` specification found at
     142→<https://semver.org/>.
     144→A leading `"="` or `"v"` character is stripped off and ignored.
@@ -49,7 +46,6 @@ README.md
     184→### Prerelease Tags
     …
     279→### Advanced Range Syntax
-    …
     281→Advanced range syntax desugars to primitive comparators in
     282→deterministic ways.
     284→Advanced ranges may be combined in the same way as primitive
@@ -59,7 +55,6 @@ README.md
     408→## Functions
     …
     453→### Comparison
-    …
     455→* `gt(v1, v2)`: `v1 > v2`
     456→* `gte(v1, v2)`: `v1 >= v2`
     457→* `lt(v1, v2)`: `v1 < v2`
@@ -76,10 +71,8 @@ README.md
     478→### Sorting
     …
     485→### Comparators
-    …
     487→* `intersects(comparator)`: Return true if the comparators intersect
     489→### Ranges
-    …
     491→* `validRange(range)`: Return the valid range or null if it's not valid.
     492→* `satisfies(version, range)`: Return true if the version satisfies the
     493→  range.
@@ -99,16 +92,13 @@ README.md
     528→If you want to know if a version satisfies or does not satisfy a
     529→range, use the `satisfies(version, range)` function.
     531→### Coercion
-    …
     533→* `coerce(version, options)`: Coerces a string to semver if possible
     558→### Clean
-    …
     560→* `clean(version)`: Clean a string to be a valid semver if possible
     562→This will return a cleaned and trimmed semver version. If the provided
     563→version is not valid a null will be returned. This does not work for
     564→ranges.
     576→## Constants
-    …
     578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
     580→### `RELEASE_TYPES`
     …

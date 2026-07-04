@@ -178,7 +178,6 @@ src/
         416→    state: crate::chain::ChainState<'a>,
         417→}
         468→pub type Result<T, E = Error> = core::result::Result<T, E>;
-        …
         470→/// Provides the `context` method for `Result`.
         471→///
         472→/// This trait is sealed and cannot be implemented for types outside of

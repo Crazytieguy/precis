@@ -35,57 +35,57 @@ Score(3000)=0.712 I=0.869 C=0.584 ns_rows≤3K=26/41 (reached=12 partial=8 missi
 | ns | 946 |  | 70 | Default method: new (signature + body) | 4.2 | 2.4 | 0.613 |
 | walker |  | 993 | 80 | listing of 'rockspecs' |  |  | 0.672 |
 | ns | 1044 |  | 98 | Default method: isInstanceOf body | 4.3 | 2.4 | 0.640 |
-| walker |  | 1080 | 87 | lua decl names surface #1 in middleclass.lua |  |  | 0.659 |
-| walker |  | 1080 | 0 | lua decl at middleclass.lua:144 |  |  | 0.659 |
-| walker |  | 1080 | 0 | lua decl at middleclass.lua:151 |  |  | 0.659 |
-| walker |  | 1080 | 0 | lua decl at middleclass.lua:172 |  |  | 0.659 |
-| walker |  | 1080 | 0 | lua decl at middleclass.lua:178 |  |  | 0.659 |
-| walker |  | 1080 | 0 | lua decl at middleclass.lua:186 |  |  | 0.659 |
+| walker |  | 1078 | 85 | lua decl names surface #1 in middleclass.lua |  |  | 0.659 |
+| walker |  | 1078 | 0 | lua decl at middleclass.lua:144 |  |  | 0.659 |
+| walker |  | 1078 | 0 | lua decl at middleclass.lua:151 |  |  | 0.659 |
+| walker |  | 1078 | 0 | lua decl at middleclass.lua:172 |  |  | 0.659 |
+| walker |  | 1078 | 0 | lua decl at middleclass.lua:178 |  |  | 0.659 |
+| walker |  | 1078 | 0 | lua decl at middleclass.lua:186 |  |  | 0.659 |
 | ns | 1106 |  | 62 | Default method: isSubclassOf body | 4.4 | 2.4 | 0.642 |
 | ns | 1209 |  | 103 | Default method: include body + initialize/__tostring/subclassed | 4.5 | 2.4 | 0.617 |
-| walker |  | 1287 | 207 | lua decl names surface in middleclass.lua |  |  | 0.732 |
-| walker |  | 1287 | 0 | lua decl at middleclass.lua:31 |  |  | 0.732 |
-| walker |  | 1287 | 0 | lua decl at middleclass.lua:57 |  |  | 0.732 |
-| walker |  | 1287 | 0 | lua decl at middleclass.lua:68 |  |  | 0.732 |
-| walker |  | 1287 | 0 | lua decl at middleclass.lua:81 |  |  | 0.732 |
-| walker |  | 1287 | 0 | lua decl at middleclass.lua:109 |  |  | 0.732 |
-| walker |  | 1287 | 0 | lua decl at middleclass.lua:129 |  |  | 0.732 |
-| walker |  | 1287 | 0 | lua decl at middleclass.lua:139 |  |  | 0.732 |
-| walker |  | 1335 | 48 | lua decl body at middleclass.lua:139 |  |  | 0.749 |
-| walker |  | 1383 | 48 | lua decl body at middleclass.lua:172 |  |  | 0.771 |
-| walker |  | 1433 | 50 | lua decl body at middleclass.lua:186 |  |  | 0.783 |
+| walker |  | 1279 | 201 | lua decl names surface in middleclass.lua |  |  | 0.732 |
+| walker |  | 1279 | 0 | lua decl at middleclass.lua:31 |  |  | 0.732 |
+| walker |  | 1279 | 0 | lua decl at middleclass.lua:57 |  |  | 0.732 |
+| walker |  | 1279 | 0 | lua decl at middleclass.lua:68 |  |  | 0.732 |
+| walker |  | 1279 | 0 | lua decl at middleclass.lua:81 |  |  | 0.732 |
+| walker |  | 1279 | 0 | lua decl at middleclass.lua:109 |  |  | 0.732 |
+| walker |  | 1279 | 0 | lua decl at middleclass.lua:129 |  |  | 0.732 |
+| walker |  | 1279 | 0 | lua decl at middleclass.lua:139 |  |  | 0.732 |
+| walker |  | 1327 | 48 | lua decl body at middleclass.lua:139 |  |  | 0.749 |
+| walker |  | 1375 | 48 | lua decl body at middleclass.lua:172 |  |  | 0.771 |
+| walker |  | 1425 | 50 | lua decl body at middleclass.lua:186 |  |  | 0.783 |
 | ns | 1444 |  | 235 | Default method: subclass body | 4.6 | 2.4 | 0.719 |
-| walker |  | 1490 | 57 | lua decl body at middleclass.lua:144 |  |  | 0.744 |
-| walker |  | 1552 | 62 | lua decl body at middleclass.lua:178 |  |  | 0.769 |
-| walker |  | 1620 | 68 | lua decl body at middleclass.lua:68 |  |  | 0.771 |
-| walker |  | 1703 | 83 | lua decl body at middleclass.lua:129 |  |  | 0.805 |
+| walker |  | 1482 | 57 | lua decl body at middleclass.lua:144 |  |  | 0.744 |
+| walker |  | 1544 | 62 | lua decl body at middleclass.lua:178 |  |  | 0.769 |
+| walker |  | 1612 | 68 | lua decl body at middleclass.lua:68 |  |  | 0.771 |
+| walker |  | 1695 | 83 | lua decl body at middleclass.lua:129 |  |  | 0.805 |
 | ns | 1744 |  | 300 | _createClass body | 5.1 | 2.3 | 0.722 |
-| walker |  | 1809 | 106 | lua decl body at middleclass.lua:57 |  |  | 0.726 |
+| walker |  | 1801 | 106 | lua decl body at middleclass.lua:57 |  |  | 0.726 |
 | ns | 1913 |  | 169 | _includeMixin body | 5.2 | 2.3 | 0.692 |
-| walker |  | 1950 | 141 | lua decl body at middleclass.lua:109 |  |  | 0.731 |
+| walker |  | 1942 | 141 | lua decl body at middleclass.lua:109 |  |  | 0.731 |
 | ns | 2135 |  | 222 | _propagateInstanceMethod + _declareInstanceMethod | 5.3 | 2.3 | 0.730 |
-| walker |  | 2151 | 201 | lua decl body at middleclass.lua:151 |  |  | 0.776 |
-| walker |  | 2365 | 214 | lua decl body at middleclass.lua:31 |  |  | 0.784 |
+| walker |  | 2143 | 201 | lua decl body at middleclass.lua:151 |  |  | 0.776 |
+| walker |  | 2357 | 214 | lua decl body at middleclass.lua:31 |  |  | 0.784 |
 | ns | 2371 |  | 236 | _createIndexWrapper body | 5.4 | 2.3 | 0.789 |
 | ns | 2389 |  | 18 | _tostring + _call helpers | 5.5 | 2.3 | 0.790 |
 | ns | 2493 |  | 104 | Top-level describe titles across all spec files | 6.1 | 2.1 | 0.774 |
 | ns | 2664 |  | 171 | Supported metamethod list (it() lines, Lua 5.1 baseline) | 6.2 |  | 0.749 |
 | ns | 2798 |  | 134 | Lua 5.2 + 5.3 specific metamethod test titles | 6.3 |  | 0.732 |
 | ns | 2968 |  | 170 | Metamethod compatibility detection (lua 5.2/5.3 dispatch) | 6.4 |  | 0.712 |
-| walker |  | 3117 | 752 | UPDATING.md section #0 |  |  | 0.713 |
-| walker |  | 3386 | 269 | lua decl body at middleclass.lua:81 |  |  | 0.772 |
+| walker |  | 3109 | 752 | UPDATING.md section #0 |  |  | 0.713 |
+| walker |  | 3378 | 269 | lua decl body at middleclass.lua:81 |  |  | 0.772 |
+| walker |  | 3509 | 131 | headings outline in CHANGELOG.md |  |  | 0.772 |
+| walker |  | 3509 | 0 | CHANGELOG.md section #0 |  |  | 0.772 |
 | ns | 3513 |  | 545 | Custom metamethod setup example (Vector class) | 6.5 |  | 0.733 |
-| walker |  | 3519 | 133 | headings outline in CHANGELOG.md |  |  | 0.733 |
-| walker |  | 3519 | 0 | CHANGELOG.md section #0 |  |  | 0.733 |
-| walker |  | 3549 | 30 | CHANGELOG.md section #4 |  |  | 0.733 |
-| walker |  | 3598 | 49 | CHANGELOG.md section #2 |  |  | 0.733 |
-| walker |  | 3628 | 30 | CHANGELOG.md section #6 |  |  | 0.734 |
-| walker |  | 3665 | 37 | CHANGELOG.md section #5 |  |  | 0.734 |
-| walker |  | 3757 | 92 | CHANGELOG.md section #1 |  |  | 0.734 |
-| walker |  | 3848 | 91 | CHANGELOG.md section #3 |  |  | 0.735 |
-| walker |  | 3930 | 82 | CHANGELOG.md section #8 |  |  | 0.735 |
-| ns | 4096 |  | 583 | Mixin spec — included hook + static + override semantics | 6.6 |  | 0.673 |
-| walker |  | 4101 | 171 | CHANGELOG.md section #7 |  |  | 0.675 |
+| walker |  | 3539 | 30 | CHANGELOG.md section #4 |  |  | 0.733 |
+| walker |  | 3588 | 49 | CHANGELOG.md section #2 |  |  | 0.733 |
+| walker |  | 3618 | 30 | CHANGELOG.md section #6 |  |  | 0.734 |
+| walker |  | 3655 | 37 | CHANGELOG.md section #5 |  |  | 0.734 |
+| walker |  | 3747 | 92 | CHANGELOG.md section #1 |  |  | 0.734 |
+| walker |  | 3838 | 91 | CHANGELOG.md section #3 |  |  | 0.735 |
+| walker |  | 3920 | 82 | CHANGELOG.md section #8 |  |  | 0.735 |
+| walker |  | 4091 | 171 | CHANGELOG.md section #7 |  |  | 0.737 |
+| ns | 4096 |  | 583 | Mixin spec — included hook + static + override semantics | 6.6 |  | 0.675 |
 | ns | 4424 |  | 328 | Metamethod inheritance update semantics | 6.7 |  | 0.650 |
 | ns | 4776 |  | 352 | Custom __index/__newindex with fallback tables | 6.8 |  | 0.619 |
 | ns | 5398 |  | 622 | Custom __index/__newindex with function dispatchers | 6.9 |  | 0.577 |

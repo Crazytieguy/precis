@@ -143,7 +143,6 @@ src/
                 100→#define DFU_ATTR_CAN_UPLOAD                (1u << 1)
                 101→#define DFU_ATTR_MANIFESTATION_TOLERANT    (1u << 2)
                 102→#define DFU_ATTR_WILL_DETACH               (1u << 3)
-                …
                 104→// DFU Status Request Payload
                 105→typedef struct TU_ATTR_PACKED
                 106→{
@@ -264,7 +263,6 @@ src/
             ehci_api.h
                 38→// Initialize EHCI driver
                 39→bool ehci_init(uint8_t rhport, uint32_t capability_reg, uint32_t operatial_reg);
-                …
                 41→// De-initialize EHCI driver
                 42→bool ehci_deinit(uint8_t rhport);
                 …
@@ -277,7 +275,6 @@ src/
                     48→#define MUSB_CFG_SHARED_FIFO       0
                     49→#define MUSB_CFG_DYNAMIC_FIFO      1
                     50→#define MUSB_CFG_DYNAMIC_FIFO_SIZE 4096
-                    …
                     52→const uintptr_t MUSB_BASES[] = { USB0_BASE };
                     …
                 musb_type.h

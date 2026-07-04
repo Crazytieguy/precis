@@ -11,7 +11,7 @@
 //! materialization going through a separate code path.
 
 use std::cell::RefCell;
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::sync::Arc;
@@ -269,6 +269,17 @@ impl RenderedTree {
                 Some(TreeNode::File { content }) => Some(content),
                 _ => None,
             };
+            // Anchor sets before / after this batch, so Ellipsis rows
+            // that render_file will suppress cost nothing (and Ellipsis
+            // rows that were already suppressed deduct nothing).
+            let anchors_before = existing.map(content_anchor_lines).unwrap_or_default();
+            let mut anchors_after = anchors_before.clone();
+            anchors_after.extend(
+                entries
+                    .iter()
+                    .filter(|(_, r)| !matches!(r, Render::Ellipsis))
+                    .map(|(n, _)| *n),
+            );
             for (line_num, render) in entries {
                 debug_assert!(
                     src_lines.is_empty() || line_num >= 1 && line_num <= src_lines.len(),
@@ -278,16 +289,29 @@ impl RenderedTree {
                     path.display(),
                 );
                 let source_line = src_lines.get(line_num - 1).copied().unwrap_or("");
-                let new_row = format_line_row(line_num, render, source_line, indent_depth);
-                let new_tokens = tokens(&new_row);
-                let new_bytes = new_row.len();
+                let (new_tokens, new_bytes) = if matches!(render, Render::Ellipsis)
+                    && ellipsis_suppressed(line_num, &anchors_after, &src_lines)
+                {
+                    (0, 0)
+                } else {
+                    let new_row = format_line_row(line_num, render, source_line, indent_depth);
+                    (tokens(&new_row), new_row.len())
+                };
                 let cost = if let Some(existing) = existing
                     && let Some(old) = existing.get(&line_num)
                 {
-                    let old_row = format_line_row(line_num, &old.render, source_line, indent_depth);
+                    let (old_tokens, old_bytes) = if matches!(old.render, Render::Ellipsis)
+                        && ellipsis_suppressed(line_num, &anchors_before, &src_lines)
+                    {
+                        (0, 0)
+                    } else {
+                        let old_row =
+                            format_line_row(line_num, &old.render, source_line, indent_depth);
+                        (tokens(&old_row), old_row.len())
+                    };
                     Cost {
-                        tokens: new_tokens.saturating_sub(tokens(&old_row)),
-                        bytes: new_bytes.saturating_sub(old_row.len()),
+                        tokens: new_tokens.saturating_sub(old_tokens),
+                        bytes: new_bytes.saturating_sub(old_bytes),
                     }
                 } else {
                     Cost {
@@ -402,7 +426,13 @@ impl RenderedTree {
             .as_deref()
             .map(|s| s.lines().collect())
             .unwrap_or_default();
+        let anchors = content_anchor_lines(content);
         for (number, record) in content {
+            if matches!(record.render, Render::Ellipsis)
+                && ellipsis_suppressed(*number, &anchors, &src_lines)
+            {
+                continue;
+            }
             let source_line = src_lines.get(*number - 1).copied().unwrap_or("");
             out.push_str(&format_line_row(
                 *number,
@@ -422,6 +452,31 @@ impl std::ops::Add for Cost {
             bytes: self.bytes + other.bytes,
         }
     }
+}
+
+/// Line numbers whose records render source content (Full/Truncated) —
+/// the anchor lines that bound elision gaps. Ellipsis records sit
+/// *inside* gaps and don't anchor them.
+fn content_anchor_lines(content: &BTreeMap<usize, LineRecord>) -> BTreeSet<usize> {
+    content
+        .iter()
+        .filter(|(_, r)| !matches!(r.render, Render::Ellipsis))
+        .map(|(n, _)| *n)
+        .collect()
+}
+
+/// Whether a bare `…` at `line` should be dropped: true when every
+/// source line in the elided gap around it (bounded by the nearest
+/// content-rendering lines, or the file edges) is blank — the
+/// line-number jump already conveys the gap, and a marker there would
+/// claim elided content where there is none.
+fn ellipsis_suppressed(line: usize, anchors: &BTreeSet<usize>, src_lines: &[&str]) -> bool {
+    let gap_start = anchors.range(..line).next_back().map_or(1, |p| p + 1);
+    let gap_end = anchors
+        .range(line + 1..)
+        .next()
+        .map_or(src_lines.len(), |n| n - 1);
+    (gap_start..=gap_end).all(|l| src_lines.get(l - 1).is_none_or(|t| t.trim().is_empty()))
 }
 
 fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize) -> String {
@@ -507,6 +562,47 @@ mod tests {
                 render,
             }],
         }
+    }
+
+    #[test]
+    fn render_blank_gap_ellipsis_suppressed_nonblank_gap_kept() {
+        let cache = SourceCache::new();
+        let path = PathBuf::from(format!("{STUB_DIR}/f.c"));
+        // Line 2 is blank; lines 4-5 are a non-blank elided gap.
+        cache.insert(
+            path.clone(),
+            Arc::from("fn a();\n\nfn b();\nhidden1\nhidden2\nfn c();\n"),
+        );
+        let mut tree = RenderedTree::new(stub_dir(), cache);
+        tree.apply(&listing(&["f.c"]), BatchId::new(0), |_| true);
+        // Anchors first so each ellipsis's gap is bounded at cost time.
+        for (line, render) in [
+            (1, Render::Full),
+            (3, Render::Full),
+            (6, Render::Full),
+            (2, Render::Ellipsis),
+            (4, Render::Ellipsis),
+        ] {
+            let content = one_span(path.clone(), line, render.clone());
+            let cost = tree.marginal_cost(&content);
+            if line == 2 {
+                assert_eq!(cost.tokens, 0, "blank-gap ellipsis must cost nothing");
+                assert_eq!(cost.bytes, 0);
+            } else {
+                assert!(cost.tokens > 0, "line {line} should cost");
+            }
+            tree.apply(&content, BatchId::new(line), |_| true);
+        }
+        let out = tree.render();
+        // Blank-only gap (line 2): no marker. Non-blank gap (lines 4-5,
+        // with the Ellipsis record at 4): marker kept.
+        assert_eq!(out.matches('…').count(), 1, "output:\n{out}");
+        let ellipsis_row = out.lines().find(|l| l.trim() == "…");
+        assert!(ellipsis_row.is_some(), "output:\n{out}");
+        let idx_b = out.find("3→fn b();").unwrap();
+        let idx_marker = out.find('…').unwrap();
+        let idx_c = out.find("6→fn c();").unwrap();
+        assert!(idx_b < idx_marker && idx_marker < idx_c, "output:\n{out}");
     }
 
     #[test]

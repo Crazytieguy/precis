@@ -60,7 +60,6 @@ src/
         mod.rs
             31→/// Threshold for warning about fast execution time
             32→pub const MIN_EXECUTION_TIME: Second = 5e-3;
-            …
             34→pub struct Benchmark<'a> {
             35→    number: usize,
             36→    command: &'a Command<'a>,
@@ -307,7 +306,6 @@ src/
             3→pub type Scalar = f64;
             …
             6→pub type Second = Scalar;
-            …
             8→/// Supported time units
             9→#[derive(Debug, Clone, Copy, PartialEq, Eq)]
             10→pub enum Unit {

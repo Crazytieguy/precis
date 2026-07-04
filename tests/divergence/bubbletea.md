@@ -352,37 +352,37 @@ Score(3000)=0.509 I=0.665 C=0.389 ns_rows≤3K=14/41 (reached=5 partial=0 missin
 | ns | 9052 |  | 182 | renderer interface method roster | 4.5 |  | 0.406 |
 | ns | 9164 |  | 112 | Platform-conditional file map | 4.6 |  | 0.404 |
 | ns | 9232 |  | 68 | examples/simple/main.go skeleton | 4.7 |  | 0.403 |
-| walker |  | 9282 | 243 | headings outline in README.md |  |  | 0.403 |
-| walker |  | 9296 | 14 | README.md section #3 |  |  | 0.403 |
+| walker |  | 9280 | 241 | headings outline in README.md |  |  | 0.403 |
+| walker |  | 9294 | 14 | README.md section #3 |  |  | 0.403 |
 | ns | 9300 |  | 68 | tutorials/basics/main.go skeleton | 4.8 |  | 0.401 |
-| walker |  | 9330 | 34 | README.md section #44 |  |  | 0.401 |
+| walker |  | 9328 | 34 | README.md section #44 |  |  | 0.401 |
 | ns | 9443 |  | 143 | ErrProgramPanic / ErrProgramKilled / ErrInterrupted | 4.9 |  | 0.408 |
 | ns | 9515 |  | 72 | ProgressBarState enum | 4.10 |  | 0.414 |
-| walker |  | 9568 | 238 | README.md section #0 |  |  | 0.414 |
+| walker |  | 9566 | 238 | README.md section #0 |  |  | 0.414 |
 | ns | 9625 |  | 110 | OpenTTY helper (tty.go) | 4.11 |  | 0.413 |
 | ns | 9705 |  | 80 | LogToFile signatures (logging.go) | 4.12 |  | 0.417 |
-| walker |  | 9772 | 204 | go decl names surface in options.go |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:17 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:22 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:30 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:40 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:58 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:66 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:76 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:84 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:98 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:133 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:142 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:153 |  |  | 0.431 |
-| walker |  | 9772 | 0 | go decl at options.go:163 |  |  | 0.431 |
-| walker |  | 9796 | 24 | go decl doc at options.go:84 |  |  | 0.431 |
+| walker |  | 9770 | 204 | go decl names surface in options.go |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:17 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:22 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:30 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:40 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:58 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:66 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:76 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:84 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:98 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:133 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:142 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:153 |  |  | 0.431 |
+| walker |  | 9770 | 0 | go decl at options.go:163 |  |  | 0.431 |
+| walker |  | 9794 | 24 | go decl doc at options.go:84 |  |  | 0.431 |
 | ns | 9797 |  | 92 | README — Logging Stuff snippet | 4.13 |  | 0.428 |
-| walker |  | 9830 | 34 | go decl doc at options.go:30 |  |  | 0.428 |
-| walker |  | 9855 | 25 | go decl body at options.go:30 |  |  | 0.428 |
-| walker |  | 9880 | 25 | go decl body at options.go:58 |  |  | 0.428 |
-| walker |  | 9905 | 25 | go decl body at options.go:133 |  |  | 0.428 |
+| walker |  | 9828 | 34 | go decl doc at options.go:30 |  |  | 0.428 |
+| walker |  | 9853 | 25 | go decl body at options.go:30 |  |  | 0.428 |
+| walker |  | 9878 | 25 | go decl body at options.go:58 |  |  | 0.428 |
+| walker |  | 9903 | 25 | go decl body at options.go:133 |  |  | 0.428 |
 | ns | 9924 |  | 127 | Bubbles + Lip Gloss companion libs (README) | 4.14 |  | 0.427 |
-| walker |  | 9942 | 37 | go decl doc at options.go:66 |  |  | 0.427 |
-| walker |  | 9968 | 26 | go decl body at options.go:22 |  |  | 0.427 |
+| walker |  | 9940 | 37 | go decl doc at options.go:66 |  |  | 0.427 |
+| walker |  | 9966 | 26 | go decl body at options.go:22 |  |  | 0.427 |
 | ns | 9987 |  | 63 | Cursor struct godoc + NewCursor (tea.go) | 4.15 |  | 0.430 |
-| walker |  | 9994 | 26 | go decl body at options.go:98 |  |  | 0.430 |
+| walker |  | 9992 | 26 | go decl body at options.go:98 |  |  | 0.430 |

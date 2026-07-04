@@ -1,6 +1,6 @@
 fixture = "click"
 budget = 10000
-cumulative_tokens = 9947
+cumulative_tokens = 9941
 batch_count = 281
 
 [[batches]]
@@ -1395,168 +1395,10 @@ kind = "full"
 
 [[batches]]
 position = 56
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
-descriptor = "README.md section #1"
-cost_tokens = 202
-cum_tokens = 2876
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 23
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 26
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 34
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 38
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Markdown(HeadingsOutline { file: "docs/extending-click.md" })'
-descriptor = "headings outline in docs/extending-click.md"
-cost_tokens = 32
-cum_tokens = 2908
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 58
-key = 'Markdown(Section { file: "docs/extending-click.md", section_index: 0, reference_shaped: false })'
-descriptor = "docs/extending-click.md section #0"
-cost_tokens = 106
-cum_tokens = 3014
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 9
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/extending-click.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
 key = 'Markdown(HeadingsOutline { file: "docs/faqs.md" })'
 descriptor = "headings outline in docs/faqs.md"
-cost_tokens = 33
-cum_tokens = 3047
+cost_tokens = 31
+cum_tokens = 2705
 
 [batches.content]
 kind = "lines"
@@ -1610,11 +1452,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 57
 key = 'Markdown(Section { file: "docs/faqs.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/faqs.md section #0"
 cost_tokens = 33
-cum_tokens = 3080
+cum_tokens = 2738
 
 [batches.content]
 kind = "lines"
@@ -1636,17 +1478,67 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 61
-key = 'Markdown(HeadingsOutline { file: "docs/wincmd.md" })'
-descriptor = "headings outline in docs/wincmd.md"
-cost_tokens = 33
-cum_tokens = 3113
+position = 58
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
+descriptor = "README.md section #1"
+cost_tokens = 202
+cum_tokens = 2940
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
+path = "README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 23
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 26
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 34
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 38
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Markdown(HeadingsOutline { file: "docs/extending-click.md" })'
+descriptor = "headings outline in docs/extending-click.md"
+cost_tokens = 32
+cum_tokens = 2972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/extending-click.md"
 start = 1
 end = 1
 
@@ -1654,23 +1546,23 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
-start = 11
-end = 11
+path = "docs/extending-click.md"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
-start = 24
-end = 24
+path = "docs/extending-click.md"
+start = 73
+end = 73
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
+path = "docs/extending-click.md"
 start = 2
 end = 2
 
@@ -1678,33 +1570,33 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
-start = 12
-end = 12
+path = "docs/extending-click.md"
+start = 17
+end = 17
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
-start = 25
-end = 25
+path = "docs/extending-click.md"
+start = 74
+end = 74
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 62
-key = 'Markdown(Section { file: "docs/wincmd.md", section_index: 0, reference_shaped: false })'
-descriptor = "docs/wincmd.md section #0"
-cost_tokens = 74
-cum_tokens = 3187
+position = 60
+key = 'Markdown(Section { file: "docs/extending-click.md", section_index: 0, reference_shaped: false })'
+descriptor = "docs/extending-click.md section #0"
+cost_tokens = 106
+cum_tokens = 3078
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
+path = "docs/extending-click.md"
 start = 1
 end = 1
 
@@ -1712,7 +1604,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
+path = "docs/extending-click.md"
 start = 3
 end = 4
 
@@ -1720,7 +1612,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
+path = "docs/extending-click.md"
 start = 6
 end = 7
 
@@ -1728,37 +1620,27 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "docs/wincmd.md"
+path = "docs/extending-click.md"
 start = 9
-end = 9
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 63
-key = 'Python(DeclNames { file: "src/click/types.py", chunk_index: 3 })'
-descriptor = "python decl names surface #3 in src/click/types.py"
-cost_tokens = 11
-cum_tokens = 3198
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
-path = "src/click/types.py"
-start = 1292
-end = 1292
+path = "docs/extending-click.md"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 64
+position = 61
 key = 'Markdown(HeadingsOutline { file: "docs/virtualenv.md" })'
 descriptor = "headings outline in docs/virtualenv.md"
-cost_tokens = 35
-cum_tokens = 3233
+cost_tokens = 33
+cum_tokens = 3111
 
 [batches.content]
 kind = "lines"
@@ -1812,11 +1694,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 65
+position = 62
 key = 'Markdown(Section { file: "docs/virtualenv.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/virtualenv.md section #0"
 cost_tokens = 0
-cum_tokens = 3233
+cum_tokens = 3111
 
 [batches.content]
 kind = "lines"
@@ -1830,11 +1712,129 @@ end = 3
 kind = "full"
 
 [[batches]]
+position = 63
+key = 'Markdown(HeadingsOutline { file: "docs/wincmd.md" })'
+descriptor = "headings outline in docs/wincmd.md"
+cost_tokens = 33
+cum_tokens = 3144
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 64
+key = 'Markdown(Section { file: "docs/wincmd.md", section_index: 0, reference_shaped: false })'
+descriptor = "docs/wincmd.md section #0"
+cost_tokens = 74
+cum_tokens = 3218
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/wincmd.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Python(DeclNames { file: "src/click/types.py", chunk_index: 3 })'
+descriptor = "python decl names surface #3 in src/click/types.py"
+cost_tokens = 11
+cum_tokens = 3229
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 1292
+end = 1292
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 66
 key = 'Markdown(HeadingsOutline { file: "docs/parameters.md" })'
 descriptor = "headings outline in docs/parameters.md"
 cost_tokens = 37
-cum_tokens = 3270
+cum_tokens = 3266
 
 [batches.content]
 kind = "lines"
@@ -1908,7 +1908,7 @@ position = 67
 key = 'Markdown(Section { file: "docs/parameters.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/parameters.md section #0"
 cost_tokens = 39
-cum_tokens = 3309
+cum_tokens = 3305
 
 [batches.content]
 kind = "lines"
@@ -1942,7 +1942,7 @@ position = 68
 key = 'Python(DeclNames { file: "src/click/testing.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/click/testing.py"
 cost_tokens = 95
-cum_tokens = 3404
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -2080,7 +2080,7 @@ position = 69
 key = 'Python(Decl { file: "src/click/testing.py", start_line: 26 })'
 descriptor = "python decl at src/click/testing.py:26"
 cost_tokens = 0
-cum_tokens = 3404
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -2098,7 +2098,7 @@ position = 70
 key = 'Python(Decl { file: "src/click/testing.py", start_line: 70 })'
 descriptor = "python decl at src/click/testing.py:70"
 cost_tokens = 0
-cum_tokens = 3404
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -2116,7 +2116,7 @@ position = 71
 key = 'Python(Decl { file: "src/click/testing.py", start_line: 89 })'
 descriptor = "python decl at src/click/testing.py:89"
 cost_tokens = 0
-cum_tokens = 3404
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -2134,7 +2134,7 @@ position = 72
 key = 'Python(Decl { file: "src/click/testing.py", start_line: 103 })'
 descriptor = "python decl at src/click/testing.py:103"
 cost_tokens = 0
-cum_tokens = 3404
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -2152,7 +2152,7 @@ position = 73
 key = 'Python(Decl { file: "src/click/testing.py", start_line: 183 })'
 descriptor = "python decl at src/click/testing.py:183"
 cost_tokens = 0
-cum_tokens = 3404
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -2170,7 +2170,7 @@ position = 74
 key = 'Python(Decl { file: "src/click/testing.py", start_line: 261 })'
 descriptor = "python decl at src/click/testing.py:261"
 cost_tokens = 0
-cum_tokens = 3404
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -2188,7 +2188,7 @@ position = 75
 key = 'Python(Decl { file: "src/click/testing.py", start_line: 163 })'
 descriptor = "python decl at src/click/testing.py:163"
 cost_tokens = 43
-cum_tokens = 3447
+cum_tokens = 3443
 
 [batches.content]
 kind = "lines"
@@ -2206,7 +2206,7 @@ position = 76
 key = 'Python(Decl { file: "src/click/testing.py", start_line: 60 })'
 descriptor = "python decl at src/click/testing.py:60"
 cost_tokens = 22
-cum_tokens = 3469
+cum_tokens = 3465
 
 [batches.content]
 kind = "lines"
@@ -2224,7 +2224,7 @@ position = 77
 key = 'Python(DeclDoc { file: "src/click/testing.py", start_line: 70 })'
 descriptor = "python decl doc at src/click/testing.py:70"
 cost_tokens = 40
-cum_tokens = 3509
+cum_tokens = 3505
 
 [batches.content]
 kind = "lines"
@@ -2250,7 +2250,7 @@ position = 78
 key = 'Python(DeclDoc { file: "src/click/testing.py", start_line: 89 })'
 descriptor = "python decl doc at src/click/testing.py:89"
 cost_tokens = 51
-cum_tokens = 3560
+cum_tokens = 3556
 
 [batches.content]
 kind = "lines"
@@ -2284,7 +2284,7 @@ position = 79
 key = 'Markdown(HeadingsOutline { file: "docs/option-decorators.md" })'
 descriptor = "headings outline in docs/option-decorators.md"
 cost_tokens = 42
-cum_tokens = 3602
+cum_tokens = 3598
 
 [batches.content]
 kind = "lines"
@@ -2358,7 +2358,7 @@ position = 80
 key = 'Markdown(Section { file: "docs/option-decorators.md", section_index: 3, reference_shaped: false })'
 descriptor = "docs/option-decorators.md section #3"
 cost_tokens = 28
-cum_tokens = 3630
+cum_tokens = 3626
 
 [batches.content]
 kind = "lines"
@@ -2384,7 +2384,7 @@ position = 81
 key = 'Markdown(Section { file: "docs/option-decorators.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/option-decorators.md section #0"
 cost_tokens = 77
-cum_tokens = 3707
+cum_tokens = 3703
 
 [batches.content]
 kind = "lines"
@@ -2426,7 +2426,7 @@ position = 82
 key = 'Markdown(HeadingsOutline { file: "docs/handling-files.md" })'
 descriptor = "headings outline in docs/handling-files.md"
 cost_tokens = 43
-cum_tokens = 3750
+cum_tokens = 3746
 
 [batches.content]
 kind = "lines"
@@ -2500,7 +2500,7 @@ position = 83
 key = 'Markdown(Section { file: "docs/handling-files.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/handling-files.md section #0"
 cost_tokens = 64
-cum_tokens = 3814
+cum_tokens = 3810
 
 [batches.content]
 kind = "lines"
@@ -2542,7 +2542,7 @@ position = 84
 key = 'Python(DeclNames { file: "src/click/globals.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/click/globals.py"
 cost_tokens = 83
-cum_tokens = 3897
+cum_tokens = 3893
 
 [batches.content]
 kind = "lines"
@@ -2624,7 +2624,7 @@ position = 85
 key = 'Python(Decl { file: "src/click/globals.py", start_line: 20 })'
 descriptor = "python decl at src/click/globals.py:20"
 cost_tokens = 0
-cum_tokens = 3897
+cum_tokens = 3893
 
 [batches.content]
 kind = "lines"
@@ -2642,7 +2642,7 @@ position = 86
 key = 'Python(Decl { file: "src/click/globals.py", start_line: 44 })'
 descriptor = "python decl at src/click/globals.py:44"
 cost_tokens = 0
-cum_tokens = 3897
+cum_tokens = 3893
 
 [batches.content]
 kind = "lines"
@@ -2660,7 +2660,7 @@ position = 87
 key = 'Python(Decl { file: "src/click/globals.py", start_line: 49 })'
 descriptor = "python decl at src/click/globals.py:49"
 cost_tokens = 0
-cum_tokens = 3897
+cum_tokens = 3893
 
 [batches.content]
 kind = "lines"
@@ -2678,7 +2678,7 @@ position = 88
 key = 'Python(Decl { file: "src/click/globals.py", start_line: 54 })'
 descriptor = "python decl at src/click/globals.py:54"
 cost_tokens = 0
-cum_tokens = 3897
+cum_tokens = 3893
 
 [batches.content]
 kind = "lines"
@@ -2696,7 +2696,7 @@ position = 89
 key = 'Python(Decl { file: "src/click/globals.py", start_line: 12 })'
 descriptor = "python decl at src/click/globals.py:12"
 cost_tokens = 9
-cum_tokens = 3906
+cum_tokens = 3902
 
 [batches.content]
 kind = "lines"
@@ -2714,7 +2714,7 @@ position = 90
 key = 'Python(Decl { file: "src/click/globals.py", start_line: 16 })'
 descriptor = "python decl at src/click/globals.py:16"
 cost_tokens = 9
-cum_tokens = 3915
+cum_tokens = 3911
 
 [batches.content]
 kind = "lines"
@@ -2732,7 +2732,7 @@ position = 91
 key = 'Python(DeclBody { file: "src/click/globals.py", start_line: 49, body_start_line: 51 })'
 descriptor = "python decl body at src/click/globals.py:49 body 51"
 cost_tokens = 10
-cum_tokens = 3925
+cum_tokens = 3921
 
 [batches.content]
 kind = "lines"
@@ -2750,7 +2750,7 @@ position = 92
 key = 'Python(DeclDoc { file: "src/click/globals.py", start_line: 49 })'
 descriptor = "python decl doc at src/click/globals.py:49"
 cost_tokens = 13
-cum_tokens = 3938
+cum_tokens = 3934
 
 [batches.content]
 kind = "lines"
@@ -2768,7 +2768,7 @@ position = 93
 key = 'Python(DeclDoc { file: "src/click/globals.py", start_line: 44 })'
 descriptor = "python decl doc at src/click/globals.py:44"
 cost_tokens = 14
-cum_tokens = 3952
+cum_tokens = 3948
 
 [batches.content]
 kind = "lines"
@@ -2786,7 +2786,7 @@ position = 94
 key = 'Python(DeclBody { file: "src/click/globals.py", start_line: 44, body_start_line: 46 })'
 descriptor = "python decl body at src/click/globals.py:44 body 46"
 cost_tokens = 19
-cum_tokens = 3971
+cum_tokens = 3967
 
 [batches.content]
 kind = "lines"
@@ -2804,7 +2804,7 @@ position = 95
 key = 'Python(DeclBody { file: "src/click/globals.py", start_line: 16, body_start_line: 17 })'
 descriptor = "python decl body at src/click/globals.py:16 body 17"
 cost_tokens = 20
-cum_tokens = 3991
+cum_tokens = 3987
 
 [batches.content]
 kind = "lines"
@@ -2822,7 +2822,7 @@ position = 96
 key = 'Python(DeclBody { file: "src/click/globals.py", start_line: 12, body_start_line: 13 })'
 descriptor = "python decl body at src/click/globals.py:12 body 13"
 cost_tokens = 24
-cum_tokens = 4015
+cum_tokens = 4011
 
 [batches.content]
 kind = "lines"
@@ -2840,7 +2840,7 @@ position = 97
 key = 'Python(DeclDoc { file: "src/click/globals.py", start_line: 54 })'
 descriptor = "python decl doc at src/click/globals.py:54"
 cost_tokens = 53
-cum_tokens = 4068
+cum_tokens = 4064
 
 [batches.content]
 kind = "lines"
@@ -2858,7 +2858,7 @@ position = 98
 key = 'Python(DeclBody { file: "src/click/globals.py", start_line: 20, body_start_line: 41 })'
 descriptor = "python decl body at src/click/globals.py:20 body 41"
 cost_tokens = 8
-cum_tokens = 4076
+cum_tokens = 4072
 
 [batches.content]
 kind = "lines"
@@ -2876,7 +2876,7 @@ position = 99
 key = 'Python(MethodSigs { file: "src/click/testing.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/click/testing.py"
 cost_tokens = 241
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3078,7 +3078,7 @@ position = 100
 key = 'Python(Method { file: "src/click/testing.py", start_line: 27 })'
 descriptor = "python method at src/click/testing.py:27"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3096,7 +3096,7 @@ position = 101
 key = 'Python(Method { file: "src/click/testing.py", start_line: 32 })'
 descriptor = "python method at src/click/testing.py:32"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3114,7 +3114,7 @@ position = 102
 key = 'Python(Method { file: "src/click/testing.py", start_line: 35 })'
 descriptor = "python method at src/click/testing.py:35"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3132,7 +3132,7 @@ position = 103
 key = 'Python(Method { file: "src/click/testing.py", start_line: 41 })'
 descriptor = "python method at src/click/testing.py:41"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3150,7 +3150,7 @@ position = 104
 key = 'Python(Method { file: "src/click/testing.py", start_line: 44 })'
 descriptor = "python method at src/click/testing.py:44"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3168,7 +3168,7 @@ position = 105
 key = 'Python(Method { file: "src/click/testing.py", start_line: 47 })'
 descriptor = "python method at src/click/testing.py:47"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3186,7 +3186,7 @@ position = 106
 key = 'Python(Method { file: "src/click/testing.py", start_line: 50 })'
 descriptor = "python method at src/click/testing.py:50"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3204,7 +3204,7 @@ position = 107
 key = 'Python(Method { file: "src/click/testing.py", start_line: 53 })'
 descriptor = "python method at src/click/testing.py:53"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3222,7 +3222,7 @@ position = 108
 key = 'Python(Method { file: "src/click/testing.py", start_line: 56 })'
 descriptor = "python method at src/click/testing.py:56"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3240,7 +3240,7 @@ position = 109
 key = 'Python(Method { file: "src/click/testing.py", start_line: 76 })'
 descriptor = "python method at src/click/testing.py:76"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3258,7 +3258,7 @@ position = 110
 key = 'Python(Method { file: "src/click/testing.py", start_line: 80 })'
 descriptor = "python method at src/click/testing.py:80"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3276,7 +3276,7 @@ position = 111
 key = 'Python(Method { file: "src/click/testing.py", start_line: 84 })'
 descriptor = "python method at src/click/testing.py:84"
 cost_tokens = 0
-cum_tokens = 4317
+cum_tokens = 4313
 
 [batches.content]
 kind = "lines"
@@ -3294,7 +3294,7 @@ position = 112
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 56, body_start_line: 57 })'
 descriptor = "python method body at src/click/testing.py:56 body 57"
 cost_tokens = 9
-cum_tokens = 4326
+cum_tokens = 4322
 
 [batches.content]
 kind = "lines"
@@ -3312,7 +3312,7 @@ position = 113
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 32, body_start_line: 33 })'
 descriptor = "python method body at src/click/testing.py:32 body 33"
 cost_tokens = 11
-cum_tokens = 4337
+cum_tokens = 4333
 
 [batches.content]
 kind = "lines"
@@ -3330,7 +3330,7 @@ position = 114
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 41, body_start_line: 42 })'
 descriptor = "python method body at src/click/testing.py:41 body 42"
 cost_tokens = 13
-cum_tokens = 4350
+cum_tokens = 4346
 
 [batches.content]
 kind = "lines"
@@ -3348,7 +3348,7 @@ position = 115
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 47, body_start_line: 48 })'
 descriptor = "python method body at src/click/testing.py:47 body 48"
 cost_tokens = 13
-cum_tokens = 4363
+cum_tokens = 4359
 
 [batches.content]
 kind = "lines"
@@ -3366,7 +3366,7 @@ position = 116
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 53, body_start_line: 54 })'
 descriptor = "python method body at src/click/testing.py:53 body 54"
 cost_tokens = 17
-cum_tokens = 4380
+cum_tokens = 4376
 
 [batches.content]
 kind = "lines"
@@ -3384,7 +3384,7 @@ position = 117
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 80, body_start_line: 81 })'
 descriptor = "python method body at src/click/testing.py:80 body 81"
 cost_tokens = 17
-cum_tokens = 4397
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -3402,7 +3402,7 @@ position = 118
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 50, body_start_line: 51 })'
 descriptor = "python method body at src/click/testing.py:50 body 51"
 cost_tokens = 18
-cum_tokens = 4415
+cum_tokens = 4411
 
 [batches.content]
 kind = "lines"
@@ -3420,7 +3420,7 @@ position = 119
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 76, body_start_line: 77 })'
 descriptor = "python method body at src/click/testing.py:76 body 77"
 cost_tokens = 19
-cum_tokens = 4434
+cum_tokens = 4430
 
 [batches.content]
 kind = "lines"
@@ -3438,7 +3438,7 @@ position = 120
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 44, body_start_line: 45 })'
 descriptor = "python method body at src/click/testing.py:44 body 45"
 cost_tokens = 20
-cum_tokens = 4454
+cum_tokens = 4450
 
 [batches.content]
 kind = "lines"
@@ -3456,7 +3456,7 @@ position = 121
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 84, body_start_line: 85 })'
 descriptor = "python method body at src/click/testing.py:84 body 85"
 cost_tokens = 20
-cum_tokens = 4474
+cum_tokens = 4470
 
 [batches.content]
 kind = "lines"
@@ -3474,7 +3474,7 @@ position = 122
 key = 'Python(Imports { file: "src/click/_textwrap.py" })'
 descriptor = "python imports in src/click/_textwrap.py"
 cost_tokens = 42
-cum_tokens = 4516
+cum_tokens = 4512
 
 [batches.content]
 kind = "lines"
@@ -3500,7 +3500,7 @@ position = 123
 key = 'Python(DeclNames { file: "src/click/parser.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/click/parser.py"
 cost_tokens = 127
-cum_tokens = 4643
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3646,7 +3646,7 @@ position = 124
 key = 'Python(Decl { file: "src/click/parser.py", start_line: 111 })'
 descriptor = "python decl at src/click/parser.py:111"
 cost_tokens = 0
-cum_tokens = 4643
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3664,7 +3664,7 @@ position = 125
 key = 'Python(Decl { file: "src/click/parser.py", start_line: 120 })'
 descriptor = "python decl at src/click/parser.py:120"
 cost_tokens = 0
-cum_tokens = 4643
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3682,7 +3682,7 @@ position = 126
 key = 'Python(Decl { file: "src/click/parser.py", start_line: 127 })'
 descriptor = "python decl at src/click/parser.py:127"
 cost_tokens = 0
-cum_tokens = 4643
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3700,7 +3700,7 @@ position = 127
 key = 'Python(Decl { file: "src/click/parser.py", start_line: 185 })'
 descriptor = "python decl at src/click/parser.py:185"
 cost_tokens = 0
-cum_tokens = 4643
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3718,7 +3718,7 @@ position = 128
 key = 'Python(Decl { file: "src/click/parser.py", start_line: 216 })'
 descriptor = "python decl at src/click/parser.py:216"
 cost_tokens = 0
-cum_tokens = 4643
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3736,7 +3736,7 @@ position = 129
 key = 'Python(Decl { file: "src/click/parser.py", start_line: 224 })'
 descriptor = "python decl at src/click/parser.py:224"
 cost_tokens = 0
-cum_tokens = 4643
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3754,7 +3754,7 @@ position = 130
 key = 'Python(Decl { file: "src/click/parser.py", start_line: 503 })'
 descriptor = "python decl at src/click/parser.py:503"
 cost_tokens = 0
-cum_tokens = 4643
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -3772,7 +3772,7 @@ position = 131
 key = 'Python(MethodSigs { file: "src/click/parser.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/click/parser.py"
 cost_tokens = 310
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4038,7 +4038,7 @@ position = 132
 key = 'Python(Method { file: "src/click/parser.py", start_line: 169 })'
 descriptor = "python method at src/click/parser.py:169"
 cost_tokens = 0
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4056,7 +4056,7 @@ position = 133
 key = 'Python(Method { file: "src/click/parser.py", start_line: 186 })'
 descriptor = "python method at src/click/parser.py:186"
 cost_tokens = 0
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4074,7 +4074,7 @@ position = 134
 key = 'Python(Method { file: "src/click/parser.py", start_line: 217 })'
 descriptor = "python method at src/click/parser.py:217"
 cost_tokens = 0
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4092,7 +4092,7 @@ position = 135
 key = 'Python(Method { file: "src/click/parser.py", start_line: 290 })'
 descriptor = "python method at src/click/parser.py:290"
 cost_tokens = 0
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4110,7 +4110,7 @@ position = 136
 key = 'Python(Method { file: "src/click/parser.py", start_line: 316 })'
 descriptor = "python method at src/click/parser.py:316"
 cost_tokens = 0
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4128,7 +4128,7 @@ position = 137
 key = 'Python(Method { file: "src/click/parser.py", start_line: 327 })'
 descriptor = "python method at src/click/parser.py:327"
 cost_tokens = 0
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4146,7 +4146,7 @@ position = 138
 key = 'Python(Method { file: "src/click/parser.py", start_line: 390 })'
 descriptor = "python method at src/click/parser.py:390"
 cost_tokens = 0
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4164,7 +4164,7 @@ position = 139
 key = 'Python(Method { file: "src/click/parser.py", start_line: 470 })'
 descriptor = "python method at src/click/parser.py:470"
 cost_tokens = 0
-cum_tokens = 4953
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -4182,7 +4182,7 @@ position = 140
 key = 'Python(Method { file: "src/click/parser.py", start_line: 165 })'
 descriptor = "python method at src/click/parser.py:165"
 cost_tokens = 11
-cum_tokens = 4964
+cum_tokens = 4960
 
 [batches.content]
 kind = "lines"
@@ -4200,7 +4200,7 @@ position = 141
 key = 'Python(Method { file: "src/click/parser.py", start_line: 298 })'
 descriptor = "python method at src/click/parser.py:298"
 cost_tokens = 33
-cum_tokens = 4997
+cum_tokens = 4993
 
 [batches.content]
 kind = "lines"
@@ -4218,7 +4218,7 @@ position = 142
 key = 'Python(Method { file: "src/click/parser.py", start_line: 241 })'
 descriptor = "python method at src/click/parser.py:241"
 cost_tokens = 36
-cum_tokens = 5033
+cum_tokens = 5029
 
 [batches.content]
 kind = "lines"
@@ -4236,7 +4236,7 @@ position = 143
 key = 'Python(MethodBody { file: "src/click/parser.py", start_line: 165, body_start_line: 167 })'
 descriptor = "python method body at src/click/parser.py:165 body 167"
 cost_tokens = 15
-cum_tokens = 5048
+cum_tokens = 5044
 
 [batches.content]
 kind = "lines"
@@ -4254,7 +4254,7 @@ position = 144
 key = 'Python(Method { file: "src/click/parser.py", start_line: 191 })'
 descriptor = "python method at src/click/parser.py:191"
 cost_tokens = 48
-cum_tokens = 5096
+cum_tokens = 5092
 
 [batches.content]
 kind = "lines"
@@ -4272,7 +4272,7 @@ position = 145
 key = 'Python(MethodBody { file: "src/click/parser.py", start_line: 290, body_start_line: 296 })'
 descriptor = "python method body at src/click/parser.py:290 body 296"
 cost_tokens = 21
-cum_tokens = 5117
+cum_tokens = 5113
 
 [batches.content]
 kind = "lines"
@@ -4290,7 +4290,7 @@ position = 146
 key = 'Python(Decl { file: "src/click/parser.py", start_line: 51 })'
 descriptor = "python decl at src/click/parser.py:51"
 cost_tokens = 47
-cum_tokens = 5164
+cum_tokens = 5160
 
 [batches.content]
 kind = "lines"
@@ -4308,7 +4308,7 @@ position = 147
 key = 'Python(Method { file: "src/click/parser.py", start_line: 363 })'
 descriptor = "python method at src/click/parser.py:363"
 cost_tokens = 31
-cum_tokens = 5195
+cum_tokens = 5191
 
 [batches.content]
 kind = "lines"
@@ -4326,7 +4326,7 @@ position = 148
 key = 'Python(Method { file: "src/click/parser.py", start_line: 128 })'
 descriptor = "python method at src/click/parser.py:128"
 cost_tokens = 83
-cum_tokens = 5278
+cum_tokens = 5274
 
 [batches.content]
 kind = "lines"
@@ -4344,7 +4344,7 @@ position = 149
 key = 'Python(DeclNames { file: "src/click/_termui_impl.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/click/_termui_impl.py"
 cost_tokens = 156
-cum_tokens = 5434
+cum_tokens = 5430
 
 [batches.content]
 kind = "lines"
@@ -4522,7 +4522,7 @@ position = 150
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 43 })'
 descriptor = "python decl at src/click/_termui_impl.py:43"
 cost_tokens = 0
-cum_tokens = 5434
+cum_tokens = 5430
 
 [batches.content]
 kind = "lines"
@@ -4540,7 +4540,7 @@ position = 151
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 375 })'
 descriptor = "python decl at src/click/_termui_impl.py:375"
 cost_tokens = 0
-cum_tokens = 5434
+cum_tokens = 5430
 
 [batches.content]
 kind = "lines"
@@ -4558,7 +4558,7 @@ position = 152
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 608 })'
 descriptor = "python decl at src/click/_termui_impl.py:608"
 cost_tokens = 0
-cum_tokens = 5434
+cum_tokens = 5430
 
 [batches.content]
 kind = "lines"
@@ -4576,7 +4576,7 @@ position = 153
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 724 })'
 descriptor = "python decl at src/click/_termui_impl.py:724"
 cost_tokens = 0
-cum_tokens = 5434
+cum_tokens = 5430
 
 [batches.content]
 kind = "lines"
@@ -4594,7 +4594,7 @@ position = 154
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 794 })'
 descriptor = "python decl at src/click/_termui_impl.py:794"
 cost_tokens = 0
-cum_tokens = 5434
+cum_tokens = 5430
 
 [batches.content]
 kind = "lines"
@@ -4612,7 +4612,7 @@ position = 155
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 417 })'
 descriptor = "python decl at src/click/_termui_impl.py:417"
 cost_tokens = 27
-cum_tokens = 5461
+cum_tokens = 5457
 
 [batches.content]
 kind = "lines"
@@ -4630,7 +4630,7 @@ position = 156
 key = 'Python(ClassBody { file: "src/click/_termui_impl.py", start_line: 608 })'
 descriptor = "python class body at src/click/_termui_impl.py:608"
 cost_tokens = 43
-cum_tokens = 5504
+cum_tokens = 5500
 
 [batches.content]
 kind = "lines"
@@ -4648,7 +4648,7 @@ position = 157
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 386 })'
 descriptor = "python decl at src/click/_termui_impl.py:386"
 cost_tokens = 34
-cum_tokens = 5538
+cum_tokens = 5534
 
 [batches.content]
 kind = "lines"
@@ -4666,7 +4666,7 @@ position = 158
 key = 'Python(DeclDoc { file: "src/click/_termui_impl.py", start_line: 386 })'
 descriptor = "python decl doc at src/click/_termui_impl.py:386"
 cost_tokens = 17
-cum_tokens = 5555
+cum_tokens = 5551
 
 [batches.content]
 kind = "lines"
@@ -4684,7 +4684,7 @@ position = 159
 key = 'Python(MethodSigs { file: "src/click/_termui_impl.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/click/_termui_impl.py"
 cost_tokens = 163
-cum_tokens = 5718
+cum_tokens = 5714
 
 [batches.content]
 kind = "lines"
@@ -4886,7 +4886,7 @@ position = 160
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 115 })'
 descriptor = "python method at src/click/_termui_impl.py:115"
 cost_tokens = 0
-cum_tokens = 5718
+cum_tokens = 5714
 
 [batches.content]
 kind = "lines"
@@ -4904,7 +4904,7 @@ position = 161
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 128 })'
 descriptor = "python method at src/click/_termui_impl.py:128"
 cost_tokens = 0
-cum_tokens = 5718
+cum_tokens = 5714
 
 [batches.content]
 kind = "lines"
@@ -4922,7 +4922,7 @@ position = 162
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 142 })'
 descriptor = "python method at src/click/_termui_impl.py:142"
 cost_tokens = 0
-cum_tokens = 5718
+cum_tokens = 5714
 
 [batches.content]
 kind = "lines"
@@ -4940,7 +4940,7 @@ position = 163
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 166 })'
 descriptor = "python method at src/click/_termui_impl.py:166"
 cost_tokens = 0
-cum_tokens = 5718
+cum_tokens = 5714
 
 [batches.content]
 kind = "lines"
@@ -4958,7 +4958,7 @@ position = 164
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 187 })'
 descriptor = "python method at src/click/_termui_impl.py:187"
 cost_tokens = 0
-cum_tokens = 5718
+cum_tokens = 5714
 
 [batches.content]
 kind = "lines"
@@ -4976,7 +4976,7 @@ position = 165
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 193 })'
 descriptor = "python method at src/click/_termui_impl.py:193"
 cost_tokens = 0
-cum_tokens = 5718
+cum_tokens = 5714
 
 [batches.content]
 kind = "lines"
@@ -4994,7 +4994,7 @@ position = 166
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 148 })'
 descriptor = "python method at src/click/_termui_impl.py:148"
 cost_tokens = 10
-cum_tokens = 5728
+cum_tokens = 5724
 
 [batches.content]
 kind = "lines"
@@ -5012,7 +5012,7 @@ position = 167
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 160 })'
 descriptor = "python method at src/click/_termui_impl.py:160"
 cost_tokens = 10
-cum_tokens = 5738
+cum_tokens = 5734
 
 [batches.content]
 kind = "lines"
@@ -5030,7 +5030,7 @@ position = 168
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 154 })'
 descriptor = "python method at src/click/_termui_impl.py:154"
 cost_tokens = 12
-cum_tokens = 5750
+cum_tokens = 5746
 
 [batches.content]
 kind = "lines"
@@ -5048,7 +5048,7 @@ position = 169
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 120 })'
 descriptor = "python method at src/click/_termui_impl.py:120"
 cost_tokens = 56
-cum_tokens = 5806
+cum_tokens = 5802
 
 [batches.content]
 kind = "lines"
@@ -5066,7 +5066,7 @@ position = 170
 key = 'Python(MethodBody { file: "src/click/_termui_impl.py", start_line: 120, body_start_line: 126 })'
 descriptor = "python method body at src/click/_termui_impl.py:120 body 126"
 cost_tokens = 9
-cum_tokens = 5815
+cum_tokens = 5811
 
 [batches.content]
 kind = "lines"
@@ -5084,7 +5084,7 @@ position = 171
 key = 'Python(MethodBody { file: "src/click/_termui_impl.py", start_line: 193, body_start_line: 194 })'
 descriptor = "python method body at src/click/_termui_impl.py:193 body 194"
 cost_tokens = 21
-cum_tokens = 5836
+cum_tokens = 5832
 
 [batches.content]
 kind = "lines"
@@ -5102,7 +5102,7 @@ position = 172
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 597 })'
 descriptor = "python decl at src/click/_termui_impl.py:597"
 cost_tokens = 44
-cum_tokens = 5880
+cum_tokens = 5876
 
 [batches.content]
 kind = "lines"
@@ -5120,7 +5120,7 @@ position = 173
 key = 'Python(DeclDoc { file: "src/click/_termui_impl.py", start_line: 597 })'
 descriptor = "python decl doc at src/click/_termui_impl.py:597"
 cost_tokens = 19
-cum_tokens = 5899
+cum_tokens = 5895
 
 [batches.content]
 kind = "lines"
@@ -5138,7 +5138,7 @@ position = 174
 key = 'Python(DeclDoc { file: "src/click/_termui_impl.py", start_line: 417 })'
 descriptor = "python decl doc at src/click/_termui_impl.py:417"
 cost_tokens = 82
-cum_tokens = 5981
+cum_tokens = 5977
 
 [batches.content]
 kind = "lines"
@@ -5156,7 +5156,7 @@ position = 175
 key = 'Python(MethodBody { file: "src/click/_termui_impl.py", start_line: 115, body_start_line: 116 })'
 descriptor = "python method body at src/click/_termui_impl.py:115 body 116"
 cost_tokens = 26
-cum_tokens = 6007
+cum_tokens = 6003
 
 [batches.content]
 kind = "lines"
@@ -5174,7 +5174,7 @@ position = 176
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 442 })'
 descriptor = "python decl at src/click/_termui_impl.py:442"
 cost_tokens = 48
-cum_tokens = 6055
+cum_tokens = 6051
 
 [batches.content]
 kind = "lines"
@@ -5192,7 +5192,7 @@ position = 177
 key = 'Python(Decl { file: "src/click/_termui_impl.py", start_line: 546 })'
 descriptor = "python decl at src/click/_termui_impl.py:546"
 cost_tokens = 49
-cum_tokens = 6104
+cum_tokens = 6100
 
 [batches.content]
 kind = "lines"
@@ -5210,7 +5210,7 @@ position = 178
 key = 'Python(MethodDoc { file: "src/click/parser.py", start_line: 290 })'
 descriptor = "python method doc at src/click/parser.py:290"
 cost_tokens = 55
-cum_tokens = 6159
+cum_tokens = 6155
 
 [batches.content]
 kind = "lines"
@@ -5236,7 +5236,7 @@ position = 179
 key = 'Python(MethodBody { file: "src/click/parser.py", start_line: 186, body_start_line: 187 })'
 descriptor = "python method body at src/click/parser.py:186 body 187"
 cost_tokens = 29
-cum_tokens = 6188
+cum_tokens = 6184
 
 [batches.content]
 kind = "lines"
@@ -5254,7 +5254,7 @@ position = 180
 key = 'Python(Method { file: "src/click/parser.py", start_line: 265 })'
 descriptor = "python method at src/click/parser.py:265"
 cost_tokens = 86
-cum_tokens = 6274
+cum_tokens = 6270
 
 [batches.content]
 kind = "lines"
@@ -5272,7 +5272,7 @@ position = 181
 key = 'Python(DeclNames { file: "src/click/formatting.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/click/formatting.py"
 cost_tokens = 93
-cum_tokens = 6367
+cum_tokens = 6363
 
 [batches.content]
 kind = "lines"
@@ -5370,7 +5370,7 @@ position = 182
 key = 'Python(Decl { file: "src/click/formatting.py", start_line: 14 })'
 descriptor = "python decl at src/click/formatting.py:14"
 cost_tokens = 0
-cum_tokens = 6367
+cum_tokens = 6363
 
 [batches.content]
 kind = "lines"
@@ -5388,7 +5388,7 @@ position = 183
 key = 'Python(Decl { file: "src/click/formatting.py", start_line: 104 })'
 descriptor = "python decl at src/click/formatting.py:104"
 cost_tokens = 0
-cum_tokens = 6367
+cum_tokens = 6363
 
 [batches.content]
 kind = "lines"
@@ -5406,7 +5406,7 @@ position = 184
 key = 'Python(Decl { file: "src/click/formatting.py", start_line: 283 })'
 descriptor = "python decl at src/click/formatting.py:283"
 cost_tokens = 0
-cum_tokens = 6367
+cum_tokens = 6363
 
 [batches.content]
 kind = "lines"
@@ -5424,7 +5424,7 @@ position = 185
 key = 'Python(Decl { file: "src/click/formatting.py", start_line: 24 })'
 descriptor = "python decl at src/click/formatting.py:24"
 cost_tokens = 35
-cum_tokens = 6402
+cum_tokens = 6398
 
 [batches.content]
 kind = "lines"
@@ -5442,7 +5442,7 @@ position = 186
 key = 'Python(Decl { file: "src/click/formatting.py", start_line: 31 })'
 descriptor = "python decl at src/click/formatting.py:31"
 cost_tokens = 63
-cum_tokens = 6465
+cum_tokens = 6461
 
 [batches.content]
 kind = "lines"
@@ -5460,7 +5460,7 @@ position = 187
 key = 'Python(DeclBody { file: "src/click/formatting.py", start_line: 24, body_start_line: 27 })'
 descriptor = "python decl body at src/click/formatting.py:24 body 27"
 cost_tokens = 29
-cum_tokens = 6494
+cum_tokens = 6490
 
 [batches.content]
 kind = "lines"
@@ -5478,7 +5478,7 @@ position = 188
 key = 'Python(MethodSigs { file: "src/click/formatting.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/click/formatting.py"
 cost_tokens = 192
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5680,7 +5680,7 @@ position = 189
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 135 })'
 descriptor = "python method at src/click/formatting.py:135"
 cost_tokens = 0
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5698,7 +5698,7 @@ position = 190
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 139 })'
 descriptor = "python method at src/click/formatting.py:139"
 cost_tokens = 0
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5716,7 +5716,7 @@ position = 191
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 143 })'
 descriptor = "python method at src/click/formatting.py:143"
 cost_tokens = 0
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5734,7 +5734,7 @@ position = 192
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 147 })'
 descriptor = "python method at src/click/formatting.py:147"
 cost_tokens = 0
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5752,7 +5752,7 @@ position = 193
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 185 })'
 descriptor = "python method at src/click/formatting.py:185"
 cost_tokens = 0
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5770,7 +5770,7 @@ position = 194
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 189 })'
 descriptor = "python method at src/click/formatting.py:189"
 cost_tokens = 0
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5788,7 +5788,7 @@ position = 195
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 194 })'
 descriptor = "python method at src/click/formatting.py:194"
 cost_tokens = 0
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5806,7 +5806,7 @@ position = 196
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 278 })'
 descriptor = "python method at src/click/formatting.py:278"
 cost_tokens = 0
-cum_tokens = 6686
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5824,7 +5824,7 @@ position = 197
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 269 })'
 descriptor = "python method at src/click/formatting.py:269"
 cost_tokens = 14
-cum_tokens = 6700
+cum_tokens = 6696
 
 [batches.content]
 kind = "lines"
@@ -5842,7 +5842,7 @@ position = 198
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 254 })'
 descriptor = "python method at src/click/formatting.py:254"
 cost_tokens = 18
-cum_tokens = 6718
+cum_tokens = 6714
 
 [batches.content]
 kind = "lines"
@@ -5860,7 +5860,7 @@ position = 199
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 139 })'
 descriptor = "python method doc at src/click/formatting.py:139"
 cost_tokens = 9
-cum_tokens = 6727
+cum_tokens = 6723
 
 [batches.content]
 kind = "lines"
@@ -5878,7 +5878,7 @@ position = 200
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 143 })'
 descriptor = "python method doc at src/click/formatting.py:143"
 cost_tokens = 9
-cum_tokens = 6736
+cum_tokens = 6732
 
 [batches.content]
 kind = "lines"
@@ -5896,7 +5896,7 @@ position = 201
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 278 })'
 descriptor = "python method doc at src/click/formatting.py:278"
 cost_tokens = 9
-cum_tokens = 6745
+cum_tokens = 6741
 
 [batches.content]
 kind = "lines"
@@ -5914,7 +5914,7 @@ position = 202
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 185 })'
 descriptor = "python method doc at src/click/formatting.py:185"
 cost_tokens = 11
-cum_tokens = 6756
+cum_tokens = 6752
 
 [batches.content]
 kind = "lines"
@@ -5932,7 +5932,7 @@ position = 203
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 189 })'
 descriptor = "python method doc at src/click/formatting.py:189"
 cost_tokens = 11
-cum_tokens = 6767
+cum_tokens = 6763
 
 [batches.content]
 kind = "lines"
@@ -5950,7 +5950,7 @@ position = 204
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 135 })'
 descriptor = "python method doc at src/click/formatting.py:135"
 cost_tokens = 13
-cum_tokens = 6780
+cum_tokens = 6776
 
 [batches.content]
 kind = "lines"
@@ -5968,7 +5968,7 @@ position = 205
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 269 })'
 descriptor = "python method doc at src/click/formatting.py:269"
 cost_tokens = 14
-cum_tokens = 6794
+cum_tokens = 6790
 
 [batches.content]
 kind = "lines"
@@ -5986,7 +5986,7 @@ position = 206
 key = 'Python(MethodBody { file: "src/click/formatting.py", start_line: 135, body_start_line: 137 })'
 descriptor = "python method body at src/click/formatting.py:135 body 137"
 cost_tokens = 10
-cum_tokens = 6804
+cum_tokens = 6800
 
 [batches.content]
 kind = "lines"
@@ -6004,7 +6004,7 @@ position = 207
 key = 'Python(MethodBody { file: "src/click/formatting.py", start_line: 278, body_start_line: 280 })'
 descriptor = "python method body at src/click/formatting.py:278 body 280"
 cost_tokens = 11
-cum_tokens = 6815
+cum_tokens = 6811
 
 [batches.content]
 kind = "lines"
@@ -6022,7 +6022,7 @@ position = 208
 key = 'Python(MethodBody { file: "src/click/formatting.py", start_line: 139, body_start_line: 141 })'
 descriptor = "python method body at src/click/formatting.py:139 body 141"
 cost_tokens = 14
-cum_tokens = 6829
+cum_tokens = 6825
 
 [batches.content]
 kind = "lines"
@@ -6040,7 +6040,7 @@ position = 209
 key = 'Python(MethodBody { file: "src/click/formatting.py", start_line: 143, body_start_line: 145 })'
 descriptor = "python method body at src/click/formatting.py:143 body 145"
 cost_tokens = 14
-cum_tokens = 6843
+cum_tokens = 6839
 
 [batches.content]
 kind = "lines"
@@ -6058,7 +6058,7 @@ position = 210
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 116 })'
 descriptor = "python method at src/click/formatting.py:116"
 cost_tokens = 54
-cum_tokens = 6897
+cum_tokens = 6893
 
 [batches.content]
 kind = "lines"
@@ -6076,7 +6076,7 @@ position = 211
 key = 'Python(MethodBody { file: "src/click/formatting.py", start_line: 189, body_start_line: 191 })'
 descriptor = "python method body at src/click/formatting.py:189 body 191"
 cost_tokens = 19
-cum_tokens = 6916
+cum_tokens = 6912
 
 [batches.content]
 kind = "lines"
@@ -6094,7 +6094,7 @@ position = 212
 key = 'Python(Method { file: "src/click/formatting.py", start_line: 210 })'
 descriptor = "python method at src/click/formatting.py:210"
 cost_tokens = 56
-cum_tokens = 6972
+cum_tokens = 6968
 
 [batches.content]
 kind = "lines"
@@ -6112,7 +6112,7 @@ position = 213
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 194 })'
 descriptor = "python method doc at src/click/formatting.py:194"
 cost_tokens = 34
-cum_tokens = 7006
+cum_tokens = 7002
 
 [batches.content]
 kind = "lines"
@@ -6130,7 +6130,7 @@ position = 214
 key = 'Python(MethodBody { file: "src/click/formatting.py", start_line: 185, body_start_line: 187 })'
 descriptor = "python method body at src/click/formatting.py:185 body 187"
 cost_tokens = 22
-cum_tokens = 7028
+cum_tokens = 7024
 
 [batches.content]
 kind = "lines"
@@ -6148,7 +6148,7 @@ position = 215
 key = 'Python(DeclDoc { file: "src/click/formatting.py", start_line: 283 })'
 descriptor = "python decl doc at src/click/formatting.py:283"
 cost_tokens = 81
-cum_tokens = 7109
+cum_tokens = 7105
 
 [batches.content]
 kind = "lines"
@@ -6166,7 +6166,7 @@ position = 216
 key = 'Python(MethodDoc { file: "src/click/formatting.py", start_line: 254 })'
 descriptor = "python method doc at src/click/formatting.py:254"
 cost_tokens = 51
-cum_tokens = 7160
+cum_tokens = 7156
 
 [batches.content]
 kind = "lines"
@@ -6192,7 +6192,7 @@ position = 217
 key = 'Python(MethodSigs { file: "src/click/testing.py", chunk_index: 1 })'
 descriptor = "python method sigs #1 in src/click/testing.py"
 cost_tokens = 144
-cum_tokens = 7304
+cum_tokens = 7300
 
 [batches.content]
 kind = "lines"
@@ -6394,7 +6394,7 @@ position = 218
 key = 'Python(Method { file: "src/click/testing.py", start_line: 97 })'
 descriptor = "python method at src/click/testing.py:97"
 cost_tokens = 0
-cum_tokens = 7304
+cum_tokens = 7300
 
 [batches.content]
 kind = "lines"
@@ -6412,7 +6412,7 @@ position = 219
 key = 'Python(Method { file: "src/click/testing.py", start_line: 131 })'
 descriptor = "python method at src/click/testing.py:131"
 cost_tokens = 0
-cum_tokens = 7304
+cum_tokens = 7300
 
 [batches.content]
 kind = "lines"
@@ -6430,7 +6430,7 @@ position = 220
 key = 'Python(Method { file: "src/click/testing.py", start_line: 139 })'
 descriptor = "python method at src/click/testing.py:139"
 cost_tokens = 0
-cum_tokens = 7304
+cum_tokens = 7300
 
 [batches.content]
 kind = "lines"
@@ -6448,7 +6448,7 @@ position = 221
 key = 'Python(Method { file: "src/click/testing.py", start_line: 256 })'
 descriptor = "python method at src/click/testing.py:256"
 cost_tokens = 0
-cum_tokens = 7304
+cum_tokens = 7300
 
 [batches.content]
 kind = "lines"
@@ -6466,7 +6466,7 @@ position = 222
 key = 'Python(Method { file: "src/click/testing.py", start_line: 154 })'
 descriptor = "python method at src/click/testing.py:154"
 cost_tokens = 10
-cum_tokens = 7314
+cum_tokens = 7310
 
 [batches.content]
 kind = "lines"
@@ -6484,7 +6484,7 @@ position = 223
 key = 'Python(Method { file: "src/click/testing.py", start_line: 158 })'
 descriptor = "python method at src/click/testing.py:158"
 cost_tokens = 10
-cum_tokens = 7324
+cum_tokens = 7320
 
 [batches.content]
 kind = "lines"
@@ -6502,7 +6502,7 @@ position = 224
 key = 'Python(Method { file: "src/click/testing.py", start_line: 226 })'
 descriptor = "python method at src/click/testing.py:226"
 cost_tokens = 10
-cum_tokens = 7334
+cum_tokens = 7330
 
 [batches.content]
 kind = "lines"
@@ -6520,7 +6520,7 @@ position = 225
 key = 'Python(Method { file: "src/click/testing.py", start_line: 238 })'
 descriptor = "python method at src/click/testing.py:238"
 cost_tokens = 10
-cum_tokens = 7344
+cum_tokens = 7340
 
 [batches.content]
 kind = "lines"
@@ -6538,7 +6538,7 @@ position = 226
 key = 'Python(Method { file: "src/click/testing.py", start_line: 245 })'
 descriptor = "python method at src/click/testing.py:245"
 cost_tokens = 10
-cum_tokens = 7354
+cum_tokens = 7350
 
 [batches.content]
 kind = "lines"
@@ -6556,7 +6556,7 @@ position = 227
 key = 'Python(MethodDoc { file: "src/click/testing.py", start_line: 238 })'
 descriptor = "python method doc at src/click/testing.py:238"
 cost_tokens = 13
-cum_tokens = 7367
+cum_tokens = 7363
 
 [batches.content]
 kind = "lines"
@@ -6574,7 +6574,7 @@ position = 228
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 154, body_start_line: 156 })'
 descriptor = "python method body at src/click/testing.py:154 body 156"
 cost_tokens = 10
-cum_tokens = 7377
+cum_tokens = 7373
 
 [batches.content]
 kind = "lines"
@@ -6592,7 +6592,7 @@ position = 229
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 158, body_start_line: 160 })'
 descriptor = "python method body at src/click/testing.py:158 body 160"
 cost_tokens = 10
-cum_tokens = 7387
+cum_tokens = 7383
 
 [batches.content]
 kind = "lines"
@@ -6610,7 +6610,7 @@ position = 230
 key = 'Python(Method { file: "src/click/testing.py", start_line: 117 })'
 descriptor = "python method at src/click/testing.py:117"
 cost_tokens = 73
-cum_tokens = 7460
+cum_tokens = 7456
 
 [batches.content]
 kind = "lines"
@@ -6628,7 +6628,7 @@ position = 231
 key = 'Python(Method { file: "src/click/testing.py", start_line: 283 })'
 descriptor = "python method at src/click/testing.py:283"
 cost_tokens = 75
-cum_tokens = 7535
+cum_tokens = 7531
 
 [batches.content]
 kind = "lines"
@@ -6646,7 +6646,7 @@ position = 232
 key = 'Python(MethodDoc { file: "src/click/testing.py", start_line: 245 })'
 descriptor = "python method doc at src/click/testing.py:245"
 cost_tokens = 52
-cum_tokens = 7587
+cum_tokens = 7583
 
 [batches.content]
 kind = "lines"
@@ -6669,10 +6669,126 @@ kind = "full"
 
 [[batches]]
 position = 233
+key = 'Markdown(HeadingsOutline { file: "docs/support-multiple-versions.md" })'
+descriptor = "headings outline in docs/support-multiple-versions.md"
+cost_tokens = 50
+cum_tokens = 7633
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 234
+key = 'Markdown(Section { file: "docs/support-multiple-versions.md", section_index: 0, reference_shaped: false })'
+descriptor = "docs/support-multiple-versions.md section #0"
+cost_tokens = 117
+cum_tokens = 7750
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/support-multiple-versions.md"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
 key = 'Python(Method { file: "src/click/_termui_impl.py", start_line: 134 })'
 descriptor = "python method at src/click/_termui_impl.py:134"
 cost_tokens = 89
-cum_tokens = 7676
+cum_tokens = 7839
 
 [batches.content]
 kind = "lines"
@@ -6686,11 +6802,11 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 234
+position = 236
 key = 'Python(MethodBody { file: "src/click/_termui_impl.py", start_line: 134, body_start_line: 140 })'
 descriptor = "python method body at src/click/_termui_impl.py:134 body 140"
 cost_tokens = 10
-cum_tokens = 7686
+cum_tokens = 7849
 
 [batches.content]
 kind = "lines"
@@ -6704,11 +6820,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 235
+position = 237
 key = 'Fs(DirListing { dir: "tests/typing" })'
 descriptor = "listing of 'tests/typing'"
 cost_tokens = 56
-cum_tokens = 7742
+cum_tokens = 7905
 
 [batches.content]
 kind = "fs"
@@ -6718,11 +6834,11 @@ parent = "tests/typing"
 entries = ["typing_aliased_group.py", "typing_confirmation_option.py", "typing_group_kw_options.py", "typing_help_option.py", "typing_options.py", "typing_password_option.py", "typing_progressbar.py", "typing_simple_example.py", "typing_version_option.py"]
 
 [[batches]]
-position = 236
+position = 238
 key = 'Markdown(HeadingsOutline { file: "docs/arguments.md" })'
 descriptor = "headings outline in docs/arguments.md"
 cost_tokens = 51
-cum_tokens = 7793
+cum_tokens = 7956
 
 [batches.content]
 kind = "lines"
@@ -6808,11 +6924,11 @@ end = 141
 kind = "ellipsis"
 
 [[batches]]
-position = 237
+position = 239
 key = 'Markdown(Section { file: "docs/arguments.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/arguments.md section #0"
 cost_tokens = 134
-cum_tokens = 7927
+cum_tokens = 8090
 
 [batches.content]
 kind = "lines"
@@ -6866,11 +6982,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 238
+position = 240
 key = 'Python(DeclDoc { file: "src/click/formatting.py", start_line: 104 })'
 descriptor = "python decl doc at src/click/formatting.py:104"
 cost_tokens = 125
-cum_tokens = 8052
+cum_tokens = 8215
 
 [batches.content]
 kind = "lines"
@@ -6900,11 +7016,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 239
+position = 241
 key = 'Python(MethodBody { file: "src/click/testing.py", start_line: 27, body_start_line: 28 })'
 descriptor = "python method body at src/click/testing.py:27 body 28"
 cost_tokens = 31
-cum_tokens = 8083
+cum_tokens = 8246
 
 [batches.content]
 kind = "lines"
@@ -6918,127 +7034,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 240
-key = 'Markdown(HeadingsOutline { file: "docs/support-multiple-versions.md" })'
-descriptor = "headings outline in docs/support-multiple-versions.md"
-cost_tokens = 52
-cum_tokens = 8135
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 241
-key = 'Markdown(Section { file: "docs/support-multiple-versions.md", section_index: 0, reference_shaped: false })'
-descriptor = "docs/support-multiple-versions.md section #0"
-cost_tokens = 117
-cum_tokens = 8252
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/support-multiple-versions.md"
-start = 9
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 242
 key = 'Python(MethodDoc { file: "src/click/testing.py", start_line: 131 })'
 descriptor = "python method doc at src/click/testing.py:131"
 cost_tokens = 63
-cum_tokens = 8315
+cum_tokens = 8309
 
 [batches.content]
 kind = "lines"
@@ -7064,7 +7064,7 @@ position = 243
 key = 'Python(MethodBody { file: "src/click/_termui_impl.py", start_line: 166, body_start_line: 185 })'
 descriptor = "python method body at src/click/_termui_impl.py:166 body 185"
 cost_tokens = 7
-cum_tokens = 8322
+cum_tokens = 8316
 
 [batches.content]
 kind = "lines"
@@ -7082,7 +7082,7 @@ position = 244
 key = 'Python(DeclNames { file: "src/click/_utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/click/_utils.py"
 cost_tokens = 105
-cum_tokens = 8427
+cum_tokens = 8421
 
 [batches.content]
 kind = "lines"
@@ -7140,7 +7140,7 @@ position = 245
 key = 'Python(Decl { file: "src/click/_utils.py", start_line: 7 })'
 descriptor = "python decl at src/click/_utils.py:7"
 cost_tokens = 0
-cum_tokens = 8427
+cum_tokens = 8421
 
 [batches.content]
 kind = "lines"
@@ -7158,7 +7158,7 @@ position = 246
 key = 'Python(MethodSigs { file: "src/click/_utils.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/click/_utils.py"
 cost_tokens = 16
-cum_tokens = 8443
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -7184,7 +7184,7 @@ position = 247
 key = 'Python(Method { file: "src/click/_utils.py", start_line: 18 })'
 descriptor = "python method at src/click/_utils.py:18"
 cost_tokens = 0
-cum_tokens = 8443
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -7202,7 +7202,7 @@ position = 248
 key = 'Python(ClassBody { file: "src/click/_utils.py", start_line: 7 })'
 descriptor = "python class body at src/click/_utils.py:7"
 cost_tokens = 22
-cum_tokens = 8465
+cum_tokens = 8459
 
 [batches.content]
 kind = "lines"
@@ -7220,7 +7220,7 @@ position = 249
 key = 'Python(MethodBody { file: "src/click/_utils.py", start_line: 18, body_start_line: 19 })'
 descriptor = "python method body at src/click/_utils.py:18 body 19"
 cost_tokens = 16
-cum_tokens = 8481
+cum_tokens = 8475
 
 [batches.content]
 kind = "lines"
@@ -7238,7 +7238,7 @@ position = 250
 key = 'Python(DeclDoc { file: "src/click/_utils.py", start_line: 7 })'
 descriptor = "python decl doc at src/click/_utils.py:7"
 cost_tokens = 55
-cum_tokens = 8536
+cum_tokens = 8530
 
 [batches.content]
 kind = "lines"
@@ -7272,7 +7272,7 @@ position = 251
 key = 'Markdown(HeadingsOutline { file: "docs/shell-completion.md" })'
 descriptor = "headings outline in docs/shell-completion.md"
 cost_tokens = 58
-cum_tokens = 8594
+cum_tokens = 8588
 
 [batches.content]
 kind = "lines"
@@ -7362,7 +7362,7 @@ position = 252
 key = 'Markdown(Section { file: "docs/shell-completion.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/shell-completion.md section #0"
 cost_tokens = 193
-cum_tokens = 8787
+cum_tokens = 8781
 
 [batches.content]
 kind = "lines"
@@ -7412,7 +7412,7 @@ position = 253
 key = 'Markdown(Section { file: "docs/contrib.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/contrib.md section #0"
 cost_tokens = 197
-cum_tokens = 8984
+cum_tokens = 8978
 
 [batches.content]
 kind = "lines"
@@ -7454,7 +7454,7 @@ position = 254
 key = 'Markdown(HeadingsOutline { file: "docs/why.md" })'
 descriptor = "headings outline in docs/why.md"
 cost_tokens = 61
-cum_tokens = 9045
+cum_tokens = 9039
 
 [batches.content]
 kind = "lines"
@@ -7544,7 +7544,7 @@ position = 255
 key = 'Python(DeclNames { file: "src/click/utils.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in src/click/utils.py"
 cost_tokens = 47
-cum_tokens = 9092
+cum_tokens = 9086
 
 [batches.content]
 kind = "lines"
@@ -7610,7 +7610,7 @@ position = 256
 key = 'Python(Decl { file: "src/click/utils.py", start_line: 502 })'
 descriptor = "python decl at src/click/utils.py:502"
 cost_tokens = 0
-cum_tokens = 9092
+cum_tokens = 9086
 
 [batches.content]
 kind = "lines"
@@ -7628,7 +7628,7 @@ position = 257
 key = 'Python(Decl { file: "src/click/utils.py", start_line: 527 })'
 descriptor = "python decl at src/click/utils.py:527"
 cost_tokens = 29
-cum_tokens = 9121
+cum_tokens = 9115
 
 [batches.content]
 kind = "lines"
@@ -7646,7 +7646,7 @@ position = 258
 key = 'Python(DeclDoc { file: "src/click/utils.py", start_line: 502 })'
 descriptor = "python decl doc at src/click/utils.py:502"
 cost_tokens = 129
-cum_tokens = 9250
+cum_tokens = 9244
 
 [batches.content]
 kind = "lines"
@@ -7664,7 +7664,7 @@ position = 259
 key = 'Python(Decl { file: "src/click/utils.py", start_line: 582 })'
 descriptor = "python decl at src/click/utils.py:582"
 cost_tokens = 60
-cum_tokens = 9310
+cum_tokens = 9304
 
 [batches.content]
 kind = "lines"
@@ -7682,7 +7682,7 @@ position = 260
 key = 'Markdown(HeadingsOutline { file: "docs/standalone-apps.md" })'
 descriptor = "headings outline in docs/standalone-apps.md"
 cost_tokens = 62
-cum_tokens = 9372
+cum_tokens = 9366
 
 [batches.content]
 kind = "lines"
@@ -7788,7 +7788,7 @@ position = 261
 key = 'Markdown(Section { file: "docs/standalone-apps.md", section_index: 1, reference_shaped: false })'
 descriptor = "docs/standalone-apps.md section #1"
 cost_tokens = 34
-cum_tokens = 9406
+cum_tokens = 9400
 
 [batches.content]
 kind = "lines"
@@ -7822,7 +7822,7 @@ position = 262
 key = 'Python(DeclNames { file: "src/click/core.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/click/core.py"
 cost_tokens = 172
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8024,7 +8024,7 @@ position = 263
 key = 'Python(Decl { file: "src/click/core.py", start_line: 96 })'
 descriptor = "python decl at src/click/core.py:96"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8042,7 +8042,7 @@ position = 264
 key = 'Python(Decl { file: "src/click/core.py", start_line: 146 })'
 descriptor = "python decl at src/click/core.py:146"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8060,7 +8060,7 @@ position = 265
 key = 'Python(Decl { file: "src/click/core.py", start_line: 185 })'
 descriptor = "python decl at src/click/core.py:185"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8078,7 +8078,7 @@ position = 266
 key = 'Python(Decl { file: "src/click/core.py", start_line: 903 })'
 descriptor = "python decl at src/click/core.py:903"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8096,7 +8096,7 @@ position = 267
 key = 'Python(Decl { file: "src/click/core.py", start_line: 1516 })'
 descriptor = "python decl at src/click/core.py:1516"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8114,7 +8114,7 @@ position = 268
 key = 'Python(Decl { file: "src/click/core.py", start_line: 1524 })'
 descriptor = "python decl at src/click/core.py:1524"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8132,7 +8132,7 @@ position = 269
 key = 'Python(Decl { file: "src/click/core.py", start_line: 1531 })'
 descriptor = "python decl at src/click/core.py:1531"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8150,7 +8150,7 @@ position = 270
 key = 'Python(Decl { file: "src/click/core.py", start_line: 1981 })'
 descriptor = "python decl at src/click/core.py:1981"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9572
 
 [batches.content]
 kind = "lines"
@@ -8168,7 +8168,7 @@ position = 271
 key = 'Python(DeclDoc { file: "src/click/core.py", start_line: 1531 })'
 descriptor = "python decl doc at src/click/core.py:1531"
 cost_tokens = 19
-cum_tokens = 9597
+cum_tokens = 9591
 
 [batches.content]
 kind = "lines"
@@ -8186,7 +8186,7 @@ position = 272
 key = 'Python(Decl { file: "src/click/core.py", start_line: 100 })'
 descriptor = "python decl at src/click/core.py:100"
 cost_tokens = 36
-cum_tokens = 9633
+cum_tokens = 9627
 
 [batches.content]
 kind = "lines"
@@ -8204,7 +8204,7 @@ position = 273
 key = 'Python(DeclDoc { file: "src/click/core.py", start_line: 100 })'
 descriptor = "python decl doc at src/click/core.py:100"
 cost_tokens = 15
-cum_tokens = 9648
+cum_tokens = 9642
 
 [batches.content]
 kind = "lines"
@@ -8222,7 +8222,7 @@ position = 274
 key = 'Python(Decl { file: "src/click/core.py", start_line: 119 })'
 descriptor = "python decl at src/click/core.py:119"
 cost_tokens = 36
-cum_tokens = 9684
+cum_tokens = 9678
 
 [batches.content]
 kind = "lines"
@@ -8240,7 +8240,7 @@ position = 275
 key = 'Python(DeclBody { file: "src/click/core.py", start_line: 96, body_start_line: 97 })'
 descriptor = "python decl body at src/click/core.py:96 body 97"
 cost_tokens = 18
-cum_tokens = 9702
+cum_tokens = 9696
 
 [batches.content]
 kind = "lines"
@@ -8258,7 +8258,7 @@ position = 276
 key = 'Python(DeclDoc { file: "src/click/core.py", start_line: 146 })'
 descriptor = "python decl doc at src/click/core.py:146"
 cost_tokens = 31
-cum_tokens = 9733
+cum_tokens = 9727
 
 [batches.content]
 kind = "lines"
@@ -8276,7 +8276,7 @@ position = 277
 key = 'Python(ClassBody { file: "src/click/core.py", start_line: 185 })'
 descriptor = "python class body at src/click/core.py:185"
 cost_tokens = 57
-cum_tokens = 9790
+cum_tokens = 9784
 
 [batches.content]
 kind = "lines"
@@ -8294,7 +8294,7 @@ position = 278
 key = 'Python(Decl { file: "src/click/core.py", start_line: 57 })'
 descriptor = "python decl at src/click/core.py:57"
 cost_tokens = 26
-cum_tokens = 9816
+cum_tokens = 9810
 
 [batches.content]
 kind = "lines"
@@ -8312,7 +8312,7 @@ position = 279
 key = 'Python(DeclDoc { file: "src/click/core.py", start_line: 903 })'
 descriptor = "python decl doc at src/click/core.py:903"
 cost_tokens = 48
-cum_tokens = 9864
+cum_tokens = 9858
 
 [batches.content]
 kind = "lines"
@@ -8330,7 +8330,7 @@ position = 280
 key = 'Python(DeclDoc { file: "src/click/core.py", start_line: 185 })'
 descriptor = "python decl doc at src/click/core.py:185"
 cost_tokens = 52
-cum_tokens = 9916
+cum_tokens = 9910
 
 [batches.content]
 kind = "lines"
@@ -8348,7 +8348,7 @@ position = 281
 key = 'Python(Decl { file: "src/click/core.py", start_line: 76 })'
 descriptor = "python decl at src/click/core.py:76"
 cost_tokens = 31
-cum_tokens = 9947
+cum_tokens = 9941
 
 [batches.content]
 kind = "lines"

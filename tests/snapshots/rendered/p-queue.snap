@@ -89,13 +89,11 @@ readme.md
     35→</div>
     37→---
     39→## Install
-    …
     41→```sh
     42→npm install p-queue
     43→```
     45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
     47→## Usage
-    …
     49→Here we run only one promise at a time. For example, set `concurrency` to 4 to run four promises at the same time.
     51→```js
     52→import PQueue from 'p-queue';
@@ -111,12 +109,9 @@ readme.md
     65→})();
     66→```
     68→## API
-    …
     70→### PQueue(options?)
-    …
     72→Returns a new `queue` instance, which is an [`EventEmitter3`](https://github.com/primus/eventemitter3) subclass.
     162→### queue
-    …
     164→`PQueue` instance.
     236→#### .addAll(fns, options?)
     238→Same as `.add()`, but accepts an array of sync or async functions and returns a promise that resolves when all functions are resolved.
@@ -145,7 +140,6 @@ readme.md
     847→## FAQ
     …
     1066→## Maintainers
-    …
     1068→- [Sindre Sorhus](https://github.com/sindresorhus)
     1069→- [Richie Bendall](https://github.com/Richienb)
     1071→## Related
@@ -252,7 +246,6 @@ source/
         …
     queue.ts
         1→export type RunFunction = () => Promise<unknown>;
-        …
         3→export type Queue<Element, Options> = {
         …
 test/

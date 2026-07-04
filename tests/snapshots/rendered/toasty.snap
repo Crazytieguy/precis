@@ -67,6 +67,7 @@ crates/
             apply_update.rs
                 9→pub trait ApplyUpdate {
                 …
+                18→#[derive(Debug, Clone, Copy)]
                 19→pub struct Query;
                 …
             batch/
@@ -340,12 +341,9 @@ crates/
 docs/
     ARCHITECTURE.md
         1→# Toasty Architecture Overview
-        …
         3→## Project Structure
-        …
         5→Toasty is an ORM for Rust that supports SQL and NoSQL databases. The codebase is a Cargo workspace with separate crates for each layer.
         7→## Crates
-        …
         9→### 1. toasty
         10→User-facing crate with query engine and runtime.
         26→### 2. toasty-core
@@ -357,13 +355,11 @@ docs/
         63→### 5. toasty-sql
         64→Converts statement AST to SQL strings. Used by SQL-based drivers.
         74→## Further Reading
-        …
         76→- [Query Engine Architecture](architecture/query-engine.md) - Query compilation and execution pipeline
         77→- [Type System](architecture/type-system.md) - Type system design and conversions
     CHANGE_GUIDE.md
     CONTEXT.md
         1→# Documentation Context
-        …
         3→Load this file when editing anything in the `docs/` directory.
         5→## Writing Style
         …

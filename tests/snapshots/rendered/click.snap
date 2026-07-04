@@ -32,7 +32,6 @@ README.md
     17→-   Automatic help page generation
     18→-   Supports lazy loading of subcommands at runtime
     21→## A Simple Example
-    …
     23→```python
     24→import click
     26→@click.command()
@@ -53,14 +52,12 @@ README.md
     43→Hello, Click!
     44→```
     47→## Donate
-    …
     49→The Pallets organization develops and supports Click and other popular
     50→packages. In order to grow the community of contributors and users, and
     51→allow the maintainers to devote more time to the projects, [please
     52→donate today][].
     54→[please donate today]: https://palletsprojects.com/donate
     56→## Contributing
-    …
     58→See our [detailed contributing documentation][contrib] for many ways to
     59→contribute, including reporting issues, requesting features, asking or answering
     60→questions, and making PRs.
@@ -76,7 +73,6 @@ docs/
     changes.rst
     click-concepts.md
         1→# Click Concepts
-        …
         3→This section covers concepts about Click's design.
         5→```{contents}
         6→---
@@ -89,7 +85,6 @@ docs/
         …
     command-line-reference.md
         1→# General Command Line Topics
-        …
         3→```{currentmodule} click
         4→```
         6→```{contents}
@@ -113,7 +108,6 @@ docs/
     contributing.md
     design-opinions.md
         1→# CLI Design Opinions
-        …
         3→```{currentmodule} click
         4→```
         5→A penny for your thoughts...
@@ -140,6 +134,14 @@ docs/
         73→## Command Aliases
         …
     faqs.md
+        1→# Frequently Asked Questions
+        3→```{contents}
+        4→:depth: 2
+        5→:local: true
+        6→```
+        8→## General
+        10→### Shell Variable Expansion On Windows
+        …
     handling-files.md
     index.rst
     license.md

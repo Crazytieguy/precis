@@ -27,7 +27,6 @@ README.md
     29→opts into using the Go code even on those architectures.
     31→[xxHash]: https://xxhash.com/
     33→## Compatibility
-    …
     35→This package is in a module and the latest code is in version 2 of the module.
     36→You need a version of Go with at least "minimal module compatibility" to use
     37→github.com/cespare/xxhash/v2:
@@ -78,7 +77,6 @@ xxhash.go
     21→// The consts are used when possible in Go code to avoid MOVs but we need a
     22→// contiguous array for the assembly code.
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
-    …
     25→// Digest implements hash.Hash64.
     26→//
     27→// Note that a zero-valued Digest is not ready to receive writes.
@@ -115,10 +113,8 @@ xxhash.go
     65→	d.n = 0
     68→// Size always returns 8 bytes.
     69→func (d *Digest) Size() int { return 8 }
-    …
     71→// BlockSize always returns 32 bytes.
     72→func (d *Digest) BlockSize() int { return 32 }
-    …
     74→// Write adds more data to d. It always returns len(b), nil.
     75→func (d *Digest) Write(b []byte) (n int, err error) {
     …
@@ -158,7 +154,6 @@ xxhash.go
     216→	return b[8:], x
     219→func u64(b []byte) uint64 { return binary.LittleEndian.Uint64(b) }
     220→func u32(b []byte) uint32 { return binary.LittleEndian.Uint32(b) }
-    …
     222→func round(acc, input uint64) uint64 {
     223→	acc += input * prime2
     224→	acc = rol31(acc)
@@ -185,7 +180,6 @@ xxhash_asm.go
     10→//
     11→//go:noescape
     12→func Sum64(b []byte) uint64
-    …
     14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
 xxhash_other.go

@@ -155,7 +155,6 @@ beszel.go
     12→)
     14→// MinVersionCbor is the minimum supported version for CBOR compatibility.
     15→var MinVersionCbor = semver.MustParse("0.12.0")
-    …
     17→// MinVersionAgentResponse is the minimum supported version for AgentResponse compatibility.
     18→var MinVersionAgentResponse = semver.MustParse("0.13.0")
 go.mod
@@ -253,7 +252,6 @@ readme.md
     10→[![Crowdin](https://badges.crowdin.net/beszel/localized.svg)](https://crowdin.com/project/beszel)
     12→![Screenshot of Beszel dashboard and system page, side by side. The dashboard shows metrics from multiple connected systems, while the system page shows detailed metrics for a single system.](https://henrygd-assets.b-cdn.net/beszel/screenshot-new.png)
     14→## Features
-    …
     16→- **Lightweight**: Smaller and less resource-intensive than leading solutions.
     17→- **Simple**: Easy setup with little manual configuration required.
     18→- **Docker stats**: Tracks CPU, memory, and network usage history for each container.
@@ -264,10 +262,8 @@ readme.md
     25→## Architecture
     …
     32→## Getting started
-    …
     34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
     36→## Screenshots
-    …
     38→![Dashboard](https://beszel.dev/image/dashboard.png)
     39→![System page](https://beszel.dev/image/system-full.png)
     40→![Notification Settings](https://beszel.dev/image/settings-notifications.png)
@@ -280,7 +276,6 @@ readme.md
     56→## Help and discussion
     …
     68→## License
-    …
     70→Beszel is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 supplemental/
     CHANGELOG.md
@@ -308,7 +303,6 @@ supplemental/
             44→### Agent
             …
             74→## Manual install
-            …
             76→### Hub
             …
             104→### Agent
