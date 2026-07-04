@@ -88,6 +88,7 @@ pub struct TypescriptState {
     in_surface_lookup: RefCell<HashMap<PathBuf, bool>>,
     nearest_subpackage_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
     declared_api_contract: OnceCell<Option<PathBuf>>,
+    pinned_entrypoint_lookup: RefCell<HashMap<PathBuf, bool>>,
 }
 
 /// Reachability results over the TS/JS import graph, canonicalized.
@@ -1675,12 +1676,46 @@ fn is_js_file(path: &Path) -> bool {
     })
 }
 
-fn entrypoint_boost(path: &Path) -> f64 {
-    if is_entrypoint_file(path) { 1.4 } else { 1.0 }
+fn entrypoint_boost(path: &Path, ctx: &WalkCtx) -> f64 {
+    if is_pinned_entrypoint(path, ctx) {
+        1.4
+    } else {
+        1.0
+    }
 }
 
 fn ts_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(path, ctx, is_entrypoint_file(path))
+    file_depth_factor(path, ctx, is_pinned_entrypoint(path, ctx))
+}
+
+/// Entrypoint-named files get the depth pin + 1.4 boost only when they
+/// plausibly speak for their package: within two components of the
+/// package root (`index.ts`, `src/index.ts`) or on the export spine
+/// (re-exported by another surface file / the declared entry's source
+/// twin). A deep `index.ts` that is merely an exports-map subpath
+/// (d2ts `electric/`, vite `module-runner/`) otherwise prices as the
+/// package root and its NS-mid-rank content floods the early budget
+/// ahead of the package's core modules. Memoized — this sits on every
+/// per-batch value path.
+fn is_pinned_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
+    if !is_entrypoint_file(path) {
+        return false;
+    }
+    let state = ctx.typescript_state();
+    if let Some(&hit) = state.pinned_entrypoint_lookup.borrow().get(path) {
+        return hit;
+    }
+    let package_dir_depth = state
+        .nearest_subpackage_dir(path, ctx.root())
+        .map(|dir| ctx.depth_from_root(&dir))
+        .unwrap_or(0);
+    let relative_depth = ctx.depth_from_root(path).saturating_sub(package_dir_depth);
+    let hit = relative_depth <= 2 || is_api_spine_entrypoint(path, ctx);
+    state
+        .pinned_entrypoint_lookup
+        .borrow_mut()
+        .insert(path.to_path_buf(), hit);
+    hit
 }
 
 const JS_CONFIG_VALUE_FACTOR: f64 = 0.001;
@@ -1765,12 +1800,12 @@ fn ends_with_ignore_ascii_case(value: &str, suffix: &str) -> bool {
 }
 
 fn module_doc_lede_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
-    let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    let cat = (0.8 * entrypoint_boost(file, ctx)).min(1.0);
     mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
-    let cat = (0.3 * entrypoint_boost(file)).min(1.0);
+    let cat = (0.3 * entrypoint_boost(file, ctx)).min(1.0);
     mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx)) * js_factor
 }
 
@@ -1819,7 +1854,7 @@ fn secondary_ts_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 /// plumbing imports. Priced on the names-surface axes instead of the
 /// imports axes; the per-chunk falloff stays with the caller.
 fn reexport_wall_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
-    let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    let cat = (0.8 * entrypoint_boost(file, ctx)).min(1.0);
     mix_signals(cat, 0.6, 0.35, ts_depth_factor(file, ctx)) * js_factor
 }
 
@@ -1897,7 +1932,7 @@ fn export_names_value(
     js_factor: f64,
     has_split_js_class_export: bool,
 ) -> f64 {
-    let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    let cat = (0.8 * entrypoint_boost(file, ctx)).min(1.0);
     let class_split_factor = if has_split_js_class_export { 1.12 } else { 1.0 };
     mix_signals(cat, 0.6, 0.35, ts_depth_factor(file, ctx))
         * names_surface_chunk_factor(chunk_index, chunk_count)
@@ -1907,21 +1942,21 @@ fn export_names_value(
 
 fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.70 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.70 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.85 * k).min(1.0);
     mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.20 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.20 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.6 * k).min(1.0);
     mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.62 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.62 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.95 * k).min(1.0);
     mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
@@ -1957,14 +1992,14 @@ fn module_item_class_boost(kind: ItemKind) -> f64 {
 
 fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight() * module_item_class_boost(kind);
-    let cat = (0.38 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.38 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.7 * k).min(1.0);
     mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight() * module_item_class_boost(kind);
-    let cat = (0.30 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.30 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.82 * k).min(1.0);
     mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
@@ -1974,7 +2009,7 @@ fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor:
 // `Export.follow_up` (0.85) — body is the prime "don't go grep" signal.
 fn export_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.45 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.45 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.9 * k).min(1.0);
     mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
 }

@@ -17,6 +17,9 @@ README.md
     …
     51→## Key Features
     …
+    53→- **Incremental Processing**: Efficiently process changes to input data without recomputing everything
+    70→- **SQLite Integration**: Optional SQLite backend for persisting operator state allowing for larger datasets and resumable pipelines
+    71→- **Type Safety**: Full TypeScript type safety and inference through the pipeline API
     73→## Quick Start
     …
     75→### Installation
@@ -25,6 +28,7 @@ README.md
     …
     141→### Using with ElectricSQL
     …
+    183→There is a complete example in the [./examples/electric](./examples/electric) directory.
     185→## Examples
     …
     196→## API
@@ -106,6 +110,8 @@ packages/
             3→**This is an experimental package**
             5→D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2TS pipeline. It provides a declarative way to express data transformations using familiar SQL-like syntax.
             7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
+            140→## Planned Features
+            142→Future versions may support additional SQL features and optimizations.
         eslint.config.mjs
         package.json
         src/
@@ -122,81 +128,6 @@ packages/
             d2.ts
             electric/
                 index.ts
-                    40→export interface ElectricStreamToD2InputOptions<T extends Row<unknown> = Row> {
-                    41→  /** D2 Graph to send messages to */
-                    42→  graph: D2
-                    43→  /** The Electric ShapeStream to consume */
-                    44→  stream: ShapeStreamInterface<T>
-                    45→  /** The D2 input stream to send messages to */
-                    46→  input: RootStreamBuilder<[key: string, T]>
-                    47→  /** Optional function to convert LSN to version number/Version */
-                    48→  lsnToVersion?: (lsn: number) => number | Version
-                    49→  /** Optional function to convert LSN to frontier number/Antichain */
-                    50→  lsnToFrontier?: (lsn: number) => number | Antichain
-                    51→  /** Initial LSN */
-                    52→  initialLsn?: number
-                    53→  /** When to run the graph */
-                    54→  runOn?: 'up-to-date' | 'lsn-advance' | false
-                    55→  /** Whether to log debug messages */
-                    56→  debug?: boolean | typeof console.log
-                    57→}
-                    103→export function electricStreamToD2Input<T extends Row<unknown> = Row>({
-                    104→  graph,
-                    105→  stream,
-                    106→  input,
-                    107→  lsnToVersion = (lsn: number) => lsn,
-                    108→  lsnToFrontier = (lsn: number) => lsn,
-                    109→  initialLsn = 0,
-                    110→  runOn = 'up-to-date',
-                    111→  debug = false,
-                    112→}: ElectricStreamToD2InputOptions<T>): RootStreamBuilder<[key: string, T]> {
-                    …
-                    216→/**
-                    217→ * Operator that outputs the messages from the stream in ElectricSQL format
-                    218→ *
-                    219→ * TODO: Have two modes `replica=default` and `replica=full` to match the two modes
-                    220→ * of core Electric.
-                    221→ */
-                    222→export class OutputElectricMessagesOperator<K, V> extends UnaryOperator<
-                    223→  [K, V]
-                    224→> {
-                    227→  constructor(
-                    228→    id: number,
-                    229→    inputA: DifferenceStreamReader<[K, V]>,
-                    230→    output: DifferenceStreamWriter<[K, V]>,
-                    231→    fn: (data: ChangeMessage<Row<V>>[]) => void,
-                    232→    initialFrontier: Antichain,
-                    233→  ) {
-                    …
-                    238→  transformMessages(messages: Message<[K, V]>[]): ChangeMessage<Row<V>>[] {
-                    …
-                    296→  run(): void {
-                    …
-                    324→/**
-                    325→ * Outputs the messages from the stream in ElectricSQL format
-                    326→ * @param fn - The function to call with a batch of messages
-                    327→ */
-                    328→export function outputElectricMessages<
-                    329→  K extends T extends KeyValue<infer K extends string, infer _V> ? K : never,
-                    330→  V extends T extends KeyValue<K, infer V> ? V : never,
-                    331→  T,
-                    332→>(fn: (data: ChangeMessage<Row<V>>[]) => void) {
-                    333→  return (stream: IStreamBuilder<T>): IStreamBuilder<KeyValue<K, V>> => {
-                    334→    const output = new StreamBuilder<KeyValue<K, V>>(
-                    335→      stream.graph,
-                    336→      new DifferenceStreamWriter<KeyValue<K, V>>(),
-                    337→    )
-                    338→    const operator = new OutputElectricMessagesOperator<K, V>(
-                    339→      stream.graph.getNextOperatorId(),
-                    340→      stream.connectReader() as DifferenceStreamReader<KeyValue<K, V>>,
-                    341→      output.writer,
-                    342→      fn,
-                    343→      stream.graph.frontier(),
-                    344→    )
-                    345→    stream.graph.addOperator(operator)
-                    346→    stream.graph.addStream(output.connectReader())
-                    347→    return output
-                    348→  }
             graph.ts
             index.ts
                 1→export * from './d2.js'
@@ -206,14 +137,67 @@ packages/
                 5→export * from './operators/index.js'
                 6→export * from './types.js'
             multiset.ts
+                3→export type MultiSetArray<T> = [T, number][]
+                4→export type KeyedData<T> = [key: string, value: T]
+                …
+                9→export class MultiSet<T> {
+                …
             operators/
                 base.ts
                 buffer.ts
+                    17→export class BufferOperator<T> extends UnaryOperator<T> {
+                    …
+                    20→  run(): void {
+                    …
+                    62→export function buffer<T>(): PipedOperator<T, T> {
+                    …
                 concat.ts
+                    11→export class ConcatOperator<T, T2> extends BinaryOperator<T | T2> {
+                    12→  run(): void {
+                    …
+                    54→export function concat<T, T2>(
+                    55→  other: IStreamBuilder<T2>,
+                    56→): PipedOperator<T, T | T2> {
+                    …
                 consolidate.ts
                 count.ts
+                    10→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
+                    11→  constructor(
+                    12→    id: number,
+                    13→    inputA: DifferenceStreamReader<[K, V]>,
+                    14→    output: DifferenceStreamWriter<[K, number]>,
+                    15→    initialFrontier: Antichain,
+                    16→  ) {
+                    …
+                    32→export function count<
+                    33→  K extends T extends KeyValue<infer K, infer _V> ? K : never,
+                    34→  V extends T extends KeyValue<K, infer V> ? V : never,
+                    35→  T,
+                    36→>() {
+                    …
                 debug.ts
+                    18→export class DebugOperator<T> extends UnaryOperator<T> {
+                    …
+                    74→export function debug<T>(
+                    75→  name: string,
+                    76→  indent: boolean = false,
+                    77→): PipedOperator<T, T> {
+                    …
                 distinct.ts
+                    10→export class DistinctOperator<K, V> extends ReduceOperator<K, V, V> {
+                    11→  constructor(
+                    12→    id: number,
+                    13→    inputA: DifferenceStreamReader<[K, V]>,
+                    14→    output: DifferenceStreamWriter<[K, V]>,
+                    15→    initialFrontier: Antichain,
+                    16→  ) {
+                    …
+                    37→export function distinct<
+                    38→  K extends T extends KeyValue<infer K, infer _V> ? K : never,
+                    39→  V extends T extends KeyValue<K, infer V> ? V : never,
+                    40→  T,
+                    41→>() {
+                    …
                 filter.ts
                 filterBy.ts
                     14→export function filterBy<
@@ -256,20 +240,21 @@ packages/
                     …
                 topKWithFractionalIndex.ts
             order.ts
+                10→export function v(version: number | number[]): Version {
+                …
+                29→export class Version {
+                …
+                138→export class Antichain {
+                …
+                277→export class Frontier extends Antichain {
+                278→  constructor(...elements: Version[]) {
+                279→    super(elements)
             sqlite/
                 context.ts
-                    65→export function withSQLite(db: SQLiteDb) {
-                    …
-                    93→export { SQLiteContext }
                 database.ts
                 index.ts
-                    1→export * from './version-index.js'
-                    2→export * from './operators/index.js'
-                    3→export * from './database.js'
                 operators/
                 version-index.ts
-                    60→export class SQLIndex<K, V> {
-                    …
             types.ts
                 5→export type KeyValue<K, V> = [K, V]
                 …
@@ -280,7 +265,14 @@ packages/
                 12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
                 …
                 14→export type Message<T> =
-                …
+                15→  | {
+                16→      type: typeof MessageType.DATA
+                17→      data: DataMessage<T>
+                18→    }
+                19→  | {
+                20→      type: typeof MessageType.FRONTIER
+                21→      data: FrontierMessage
+                22→    }
                 24→export type DataMessage<T> = {
                 25→  version: Version
                 26→  collection: MultiSet<T>
@@ -298,9 +290,24 @@ packages/
                 40→  probeFrontierLessThan(frontier: Antichain): boolean
                 41→}
                 43→export interface IDifferenceStreamWriter<T> {
-                …
+                44→  sendData(
+                45→    version: Version | number | number[],
+                46→    collection: MultiSet<T> | MultiSetArray<T>,
+                47→  ): void
+                48→  sendFrontier(frontier: Antichain | Version | number | number[]): void
+                49→  newReader(): IDifferenceStreamReader<T>
+                50→}
                 52→export interface ID2 {
-                …
+                53→  getNextOperatorId(): number
+                54→  newInput<T>(): IStreamBuilder<T>
+                55→  addOperator(operator: IOperator<any>): void
+                56→  addStream(stream: DifferenceStreamReader<any>): void
+                57→  frontier(): Antichain
+                58→  pushFrontier(newFrontier: Antichain): void
+                59→  popFrontier(): void
+                60→  finalize(): void
+                61→  step(): void
+                62→}
                 64→export interface IStreamBuilder<T> {
                 …
                 117→export type PipedOperator<I, O> = (

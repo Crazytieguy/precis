@@ -56,6 +56,26 @@ packages/
         src/
             __tests__/
             index.ts
+                128→export const modulePreloadLinkRE: RegExp =
+                129→  /<link(?![\w-])[^>]*?\srel=(['"])modulepreload\1[^>]*>/g
+                794→export async function detectPolyfills(
+                795→  code: string,
+                796→  targets: any,
+                797→  assumptions: Record<string, boolean>,
+                798→  list: Set<string>,
+                799→): Promise<void> {
+                …
+                1057→export const cspHashes: string[] = [
+                1058→  safari10NoModuleFix,
+                1059→  systemJSInlineCode,
+                1060→  detectModernBrowserCode,
+                1061→  dynamicFallbackInlineCode,
+                1062→].map((i) => crypto.hash('sha256', i, 'base64'))
+                1064→export type { Options }
+                …
+                1066→export default viteLegacyPlugin
+                …
+                1078→export { viteLegacyPluginCjs as 'module.exports' }
             shims.d.ts
             snippets.ts
             types.ts
@@ -106,47 +126,13 @@ packages/
                 __tests_dts__/
                 constants.ts
                 createImportMeta.ts
-                    14→export function createDefaultImportMeta(
-                    15→  modulePath: string,
-                    16→): ModuleRunnerImportMeta {
-                    …
-                    41→export function createNodeImportMeta(
-                    42→  modulePath: string,
-                    43→): ModuleRunnerImportMeta {
-                    …
                 esmEvaluator.ts
-                    15→export class ESModulesEvaluator implements ModuleEvaluator {
-                    16→  public readonly startOffset: number =
-                    17→    getAsyncFunctionDeclarationPaddingLineCount()
-                    19→  async runInlinedModule(
-                    20→    context: ModuleRunnerContext,
-                    21→    code: string,
-                    22→  ): Promise<any> {
-                    …
-                    47→  runExternalModule(filepath: string): Promise<any> {
-                    …
                 evaluatedModules.ts
-                    11→export class EvaluatedModuleNode {
-                    …
-                    29→export class EvaluatedModules {
-                    …
-                    147→export function normalizeModuleId(file: string): string {
-                    …
                 hmrHandler.ts
                 hmrLogger.ts
                 importMetaResolver.ts
                 index.ts
-                    3→export {
-                    4→  EvaluatedModules,
-                    5→  normalizeModuleId,
-                    6→  type EvaluatedModuleNode,
-                    7→} from './evaluatedModules'
-                    8→export { ModuleRunner } from './runner'
-                    9→export { ESModulesEvaluator } from './esmEvaluator'
-                    15→export { createWebSocketModuleRunnerTransport } from '../shared/moduleRunnerTransport'
                 runner.ts
-                    38→export class ModuleRunner {
-                    …
                 sourcemap/
                 tsconfig.json
                 types.ts
@@ -215,6 +201,19 @@ packages/
                     6→import type * as Rollup from '#types/internal/rollupTypeCompat'
                     8→export type { Rollup, Rolldown }
                     9→export { esmExternalRequirePlugin } from 'rolldown/plugins'
+                    10→export {
+                    11→  parse,
+                    12→  parseSync,
+                    13→  type ParserOptions,
+                    14→  type ParseResult,
+                    15→  minify,
+                    16→  minifySync,
+                    17→  type MinifyOptions,
+                    18→  type MinifyResult,
+                    19→  Visitor,
+                    20→  type VisitorObject,
+                    21→  type ESTree,
+                    22→} from 'rolldown/utils'
                     24→/** @deprecated - use `parse` instead */
                     25→export const parseAst: typeof _parseAst = _parseAst
                     26→/** @deprecated - use `parseAsync` instead */

@@ -27,6 +27,21 @@ CONTRIBUTORS.md
     15→## How to Contribute
     …
 ECOSYSTEM.md
+    1→# Ecosystem
+    …
+    3→This is a list of axios related libraries and resources. If you have a suggestion on what to add, please don't hesitate to submit a PR.
+    5→## Libraries
+    …
+    7→### General
+    …
+    23→### API clients
+    …
+    29→### Logging and debugging
+    …
+    35→### React and redux
+    …
+    43→### Unit testing
+    …
 LICENSE
 MIGRATION_GUIDE.md
 README.md
@@ -59,9 +74,12 @@ index.d.ts
     145→export interface AxiosResponseTransformer {
     …
     154→export interface AxiosAdapter {
-    …
+    155→  (config: InternalAxiosRequestConfig): AxiosPromise;
+    156→}
     158→export interface AxiosBasicCredentials {
-    …
+    159→  username: string;
+    160→  password: string;
+    161→}
     163→export interface AxiosProxyConfig {
     …
     170→export enum HttpStatusCode {
@@ -136,6 +154,22 @@ index.d.ts
     411→  cancelToken?: CancelToken | undefined;
     412→  decompress?: boolean;
     413→  transitional?: TransitionalOptions;
+    414→  signal?: GenericAbortSignal;
+    415→  insecureHTTPParser?: boolean;
+    416→  env?: {
+    …
+    425→  formSerializer?: FormSerializerOptions;
+    426→  family?: AddressFamily;
+    427→  lookup?:
+    …
+    443→  withXSRFToken?: boolean | ((config: InternalAxiosRequestConfig) => boolean | undefined);
+    444→  parseReviver?: (this: any, key: string, value: any, context?: { source?: string }) => any;
+    445→  fetchOptions?: Omit<RequestInit, 'body' | 'headers' | 'method' | 'signal'> | Record<string, any>;
+    446→  httpVersion?: 1 | 2;
+    447→  http2Options?: Record<string, any> & {
+    …
+    450→  formDataHeaderPolicy?: 'legacy' | 'content-only';
+    451→  redact?: string[];
     455→export type RawAxiosRequestConfig<D = any> = AxiosRequestConfig<D>;
     …
     457→export interface InternalAxiosRequestConfig<D = any> extends AxiosRequestConfig<D> {
@@ -243,9 +277,6 @@ lib/
         transformData.js
     defaults/
         index.js
-            11→const own = (obj, key) => (obj != null && utils.hasOwnProp(obj, key) ? obj[key] : undefined);
-            23→function stringifySafely(rawValue, parser, encoder) {
-            …
             177→export default defaults;
         transitional.js
     env/
@@ -302,18 +333,9 @@ lib/
                 URLSearchParams.js
             index.js
                 5→export default {
-                6→  isBrowser: true,
-                7→  classes: {
-                8→    URLSearchParams,
-                9→    FormData,
-                10→    Blob,
-                11→  },
-                12→  protocols: ['http', 'https', 'file', 'blob', 'url', 'data'],
-                13→};
+                …
         common/
         index.js
-            1→import platform from './node/index.js';
-            2→import * as utils from './common/utils.js';
             4→export default {
             5→  ...utils,
             6→  ...platform,
@@ -321,26 +343,8 @@ lib/
         node/
             classes/
             index.js
-                5→const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
-                7→const DIGIT = '0123456789';
-                9→const ALPHABET = {
-                10→  DIGIT,
-                11→  ALPHA,
-                12→  ALPHA_DIGIT: ALPHA + ALPHA.toUpperCase() + DIGIT,
-                13→};
-                15→const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
-                …
                 27→export default {
-                28→  isNode: true,
-                29→  classes: {
-                30→    URLSearchParams,
-                31→    FormData,
-                32→    Blob: (typeof Blob !== 'undefined' && Blob) || null,
-                33→  },
-                34→  ALPHABET,
-                35→  generateString,
-                36→  protocols: ['http', 'https', 'file', 'data'],
-                37→};
+                …
     utils.js
         872→export default {
         …

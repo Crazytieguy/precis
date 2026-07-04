@@ -90,6 +90,16 @@ readme.md
     21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
     23→## Highlights
     …
+    25→- Expressive API
+    26→- Highly performant
+    27→- No dependencies
+    28→- Ability to nest styles
+    29→- [256/Truecolor color support](#256-and-truecolor-color-support)
+    30→- Auto-detects color support
+    31→- Doesn't extend `String.prototype`
+    32→- Clean and focused
+    33→- Actively maintained
+    34→- [Used by ~115,000 packages](https://www.npmjs.com/browse/depended/chalk) as of July 4, 2024
     36→## Install
     …
     38→```sh
@@ -109,10 +119,13 @@ readme.md
     124→Specifies the level of color support.
     143→### supportsColor
     …
+    145→Detect whether the terminal [supports color](https://github.com/chalk/supports-color). Used internally and handled for you, but exposed for convenience.
+    149→Explicit 256/Truecolor mode can be enabled using the `--color=256` and `--color=16m` flags, respectively.
     151→### chalkStderr and supportsColorStderr
     …
     155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
     …
+    157→All supported style strings are exposed as an array of strings for convenience. `colorNames` is the combination of `foregroundColorNames` and `backgroundColorNames`.
     171→## Styles
     …
     173→### Modifiers
@@ -125,6 +138,8 @@ readme.md
     180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
     181→- `inverse` - Invert background and foreground colors.
     182→- `hidden` - Print the text but make it invisible.
+    183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
+    184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
     186→### Colors
     …
     188→- `black`
@@ -145,6 +160,22 @@ readme.md
     203→- `whiteBright`
     205→### Background colors
     …
+    207→- `bgBlack`
+    208→- `bgRed`
+    209→- `bgGreen`
+    210→- `bgYellow`
+    211→- `bgBlue`
+    212→- `bgMagenta`
+    213→- `bgCyan`
+    214→- `bgWhite`
+    215→- `bgBlackBright` (alias: `bgGray`, `bgGrey`)
+    216→- `bgRedBright`
+    217→- `bgGreenBright`
+    218→- `bgYellowBright`
+    219→- `bgBlueBright`
+    220→- `bgMagentaBright`
+    221→- `bgCyanBright`
+    222→- `bgWhiteBright`
     224→## 256 and Truecolor color support
     …
     246→## Browser support
@@ -224,44 +255,27 @@ source/
         225→export default chalk;
     index.test-d.ts
     utilities.js
+        2→export function stringReplaceAll(string, substring, replacer) {
+        …
+        21→export function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
+        …
     vendor/
         ansi-styles/
+            index.d.ts
+            index.js
         supports-color/
             browser.d.ts
             browser.js
-                34→export default supportsColor;
             index.d.ts
             index.js
-                1→import process from 'node:process';
-                2→import os from 'node:os';
-                3→import tty from 'node:tty';
                 7→function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : process.argv) {
-                8→	const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
-                9→	const position = argv.indexOf(prefix + flag);
-                10→	const terminatorPosition = argv.indexOf('--');
-                11→	return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
+                …
                 14→const {env} = process;
                 16→let flagForceColor;
                 33→function envForceColor() {
-                34→	if ('FORCE_COLOR' in env) {
-                35→		if (env.FORCE_COLOR === 'true') {
-                36→			return 1;
-                37→		}
-                39→		if (env.FORCE_COLOR === 'false') {
-                40→			return 0;
-                41→		}
-                43→		return env.FORCE_COLOR.length === 0 ? 1 : Math.min(Number.parseInt(env.FORCE_COLOR, 10), 3);
-                44→	}
+                …
                 47→function translateLevel(level) {
-                48→	if (level === 0) {
-                49→		return false;
-                50→	}
-                52→	return {
-                53→		level,
-                54→		hasBasic: true,
-                55→		has256: level >= 2,
-                56→		has16m: level >= 3,
-                57→	};
+                …
                 60→function _supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
                 …
                 176→export function createSupportsColor(stream, options = {}) {
@@ -270,10 +284,6 @@ source/
                 179→		...options,
                 180→	});
                 182→	return translateLevel(level);
-                185→const supportsColor = {
-                186→	stdout: createSupportsColor({isTTY: tty.isatty(1)}),
-                187→	stderr: createSupportsColor({isTTY: tty.isatty(2)}),
-                188→};
                 190→export default supportsColor;
 test/
     _fixture.js

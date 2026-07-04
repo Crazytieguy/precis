@@ -24,15 +24,15 @@ Score(3000)=0.648 I=0.765 C=0.548 ns_rows≤3K=19/45 (reached=7 partial=6 missin
 | ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.561 |
 | walker |  | 599 | 56 | listing of 'src/types' |  |  | 0.717 |
 | ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.715 |
-| walker |  | 609 | 10 | imports in src/types/index.ts |  |  | 0.715 |
-| walker |  | 619 | 10 | listing of 'examples' |  |  | 0.715 |
-| walker |  | 675 | 56 | export names surface in src/is-matching.ts |  |  | 0.717 |
-| walker |  | 700 | 25 | export at src/is-matching.ts:32 |  |  | 0.720 |
+| walker |  | 609 | 10 | listing of 'examples' |  |  | 0.715 |
+| walker |  | 665 | 56 | export names surface in src/is-matching.ts |  |  | 0.717 |
+| walker |  | 690 | 25 | export at src/is-matching.ts:32 |  |  | 0.720 |
 | ns | 706 |  | 103 | isMatching() — both overload signatures | 2.2 |  | 0.698 |
-| walker |  | 733 | 33 | export at src/is-matching.ts:53 |  |  | 0.698 |
-| walker |  | 772 | 39 | export at src/is-matching.ts:48 |  |  | 0.688 |
+| walker |  | 723 | 33 | export at src/is-matching.ts:53 |  |  | 0.698 |
+| walker |  | 762 | 39 | export at src/is-matching.ts:48 |  |  | 0.733 |
 | ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.688 |
-| walker |  | 845 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.691 |
+| walker |  | 835 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.691 |
+| walker |  | 845 | 10 | imports in src/types/index.ts |  |  | 0.691 |
 | walker |  | 865 | 20 | README.md section #2 |  |  | 0.693 |
 | walker |  | 907 | 42 | export doc at src/errors.ts:5 |  |  | 0.695 |
 | walker |  | 933 | 26 | listing of 'benchmarks' |  |  | 0.695 |
