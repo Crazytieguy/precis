@@ -371,7 +371,7 @@ kind = "full"
 
 [[batches]]
 position = 12
-key = 'C(DeclNames { file: "src/main.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/main.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/main.c"
 cost_tokens = 25
 cum_tokens = 836
@@ -521,7 +521,7 @@ entries = ["build.yml"]
 
 [[batches]]
 position = 17
-key = 'C(DeclNames { file: "src/tools.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/tools.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/tools.c"
 cost_tokens = 47
 cum_tokens = 1203
@@ -607,7 +607,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 20
-key = 'C(DeclNames { file: "src/structures.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/structures.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/structures.c"
 cost_tokens = 53
 cum_tokens = 1256
@@ -701,7 +701,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 23
-key = 'C(DeclNames { file: "src/varnum.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/varnum.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/varnum.c"
 cost_tokens = 56
 cum_tokens = 1312
@@ -837,7 +837,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 27
-key = 'C(DeclNames { file: "include/tools.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/tools.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in include/tools.h"
 cost_tokens = 464
 cum_tokens = 1776
@@ -1123,7 +1123,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'C(DeclNames { file: "include/globals.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/globals.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in include/globals.h"
 cost_tokens = 378
 cum_tokens = 2226
@@ -2117,7 +2117,7 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'C(DeclNames { file: "src/crafting.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/crafting.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/crafting.c"
 cost_tokens = 65
 cum_tokens = 2736
@@ -2227,7 +2227,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 74
-key = 'C(DeclNames { file: "include/packets.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/packets.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in include/packets.h"
 cost_tokens = 412
 cum_tokens = 3148
@@ -2333,7 +2333,7 @@ kind = "full"
 
 [[batches]]
 position = 79
-key = 'C(DeclNames { file: "include/procedures.h", chunk_index: 0 })'
+key = 'C(DeclNames { file: "include/procedures.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in include/procedures.h"
 cost_tokens = 446
 cum_tokens = 3612
@@ -2553,7 +2553,7 @@ kind = "full"
 
 [[batches]]
 position = 85
-key = 'C(DeclNames { file: "include/procedures.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "include/procedures.h", chunk_index: 1, hub: false })'
 descriptor = "c decl names surface #1 in include/procedures.h"
 cost_tokens = 342
 cum_tokens = 4244
@@ -2675,7 +2675,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 86
-key = 'C(DeclNames { file: "include/globals.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "include/globals.h", chunk_index: 1, hub: false })'
 descriptor = "c decl names surface #1 in include/globals.h"
 cost_tokens = 348
 cum_tokens = 4592
@@ -3155,7 +3155,7 @@ kind = "full"
 
 [[batches]]
 position = 98
-key = 'C(DeclNames { file: "src/globals.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/globals.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/globals.c"
 cost_tokens = 208
 cum_tokens = 5241
@@ -3317,7 +3317,7 @@ entries = ["bug_report.md", "feature_request.md", "optimization-idea.md"]
 
 [[batches]]
 position = 101
-key = 'C(DeclNames { file: "include/packets.h", chunk_index: 1 })'
+key = 'C(DeclNames { file: "include/packets.h", chunk_index: 1, hub: false })'
 descriptor = "c decl names surface #1 in include/packets.h"
 cost_tokens = 754
 cum_tokens = 6056
@@ -3483,7 +3483,7 @@ kind = "full"
 
 [[batches]]
 position = 108
-key = 'C(DeclNames { file: "src/worldgen.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/worldgen.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/worldgen.c"
 cost_tokens = 407
 cum_tokens = 7473
@@ -4223,7 +4223,7 @@ kind = "full"
 
 [[batches]]
 position = 130
-key = 'C(DeclNames { file: "src/procedures.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/procedures.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/procedures.c"
 cost_tokens = 510
 cum_tokens = 8800
@@ -5495,7 +5495,7 @@ kind = "full"
 
 [[batches]]
 position = 170
-key = 'C(DeclNames { file: "src/packets.c", chunk_index: 0 })'
+key = 'C(DeclNames { file: "src/packets.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/packets.c"
 cost_tokens = 548
 cum_tokens = 9925
