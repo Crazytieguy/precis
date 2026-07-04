@@ -365,6 +365,10 @@ pub enum CKey {
 pub enum GoKey {
     /// `// Package foo …` doc comment above `package`.
     PackageDocLede { file: PathBuf },
+    /// Remainder of a `/* */` package godoc past the lede paragraph —
+    /// conventionally the package's canonical usage example.
+    /// Predecessor: matching `PackageDocLede`.
+    PackageDocBody { file: PathBuf },
     /// Package clause + import block at the top of a `.go` file.
     PackageImports { file: PathBuf },
     /// Names-surface chunk for top-level decls (visibility-blind).
@@ -832,6 +836,7 @@ impl InnerKey for GoKey {
     fn describe(&self, root: &Path) -> String {
         match self {
             GoKey::PackageDocLede { file } => describe_in("go package doc lede", file, root),
+            GoKey::PackageDocBody { file } => describe_in("go package doc body", file, root),
             GoKey::PackageImports { file } => describe_in("go package + imports", file, root),
             GoKey::DeclNames { file, chunk_index } => {
                 describe_chunked_surface("go decl names surface", file, *chunk_index, root)
