@@ -1,7 +1,7 @@
 fixture = "tinyusb"
 budget = 10000
-cumulative_tokens = 9970
-batch_count = 222
+cumulative_tokens = 9995
+batch_count = 249
 
 [[batches]]
 position = 1
@@ -441,586 +441,10 @@ entries = ["audio", "bth", "cdc", "dfu", "hid", "midi", "msc", "mtp", "net", "pr
 
 [[batches]]
 position = 21
-key = 'Fs(DirListing { dir: "src/class/vendor" })'
-descriptor = "listing of 'src/class/vendor'"
-cost_tokens = 20
-cum_tokens = 1128
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/vendor"
-entries = ["vendor_device.c", "vendor_device.h", "vendor_host.c", "vendor_host.h"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "src/class/hid" })'
-descriptor = "listing of 'src/class/hid'"
-cost_tokens = 24
-cum_tokens = 1152
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/hid"
-entries = ["hid.h", "hid_device.c", "hid_device.h", "hid_host.c", "hid_host.h"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "src/class/net" })'
-descriptor = "listing of 'src/class/net'"
-cost_tokens = 25
-cum_tokens = 1177
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/net"
-entries = ["ecm_rndis_device.c", "ncm.h", "ncm_device.c", "net_device.h"]
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "src/class/msc" })'
-descriptor = "listing of 'src/class/msc'"
-cost_tokens = 29
-cum_tokens = 1206
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/msc"
-entries = ["msc.h", "msc_device.c", "msc_device.h", "msc_host.c", "msc_host.h"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "src/class/dfu" })'
-descriptor = "listing of 'src/class/dfu'"
-cost_tokens = 31
-cum_tokens = 1237
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/dfu"
-entries = ["dfu.h", "dfu_device.c", "dfu_device.h", "dfu_rt_device.c", "dfu_rt_device.h"]
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "src/class/midi" })'
-descriptor = "listing of 'src/class/midi'"
-cost_tokens = 31
-cum_tokens = 1268
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/midi"
-entries = ["README_midi_host.md", "midi.h", "midi_device.c", "midi_device.h", "midi_host.c", "midi_host.h"]
-
-[[batches]]
-position = 27
-key = 'C(DeclNames { file: "src/class/dfu/dfu.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/class/dfu/dfu.h"
-cost_tokens = 144
-cum_tokens = 1412
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 99
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 105
-end = 105
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 28
-key = 'C(Decl { file: "src/class/dfu/dfu.h", start_line: 48 })'
-descriptor = "c decl at src/class/dfu/dfu.h:48"
-cost_tokens = 30
-cum_tokens = 1442
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 48
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'C(DeclDoc { file: "src/class/dfu/dfu.h", start_line: 48 })'
-descriptor = "c decl doc at src/class/dfu/dfu.h:48"
-cost_tokens = 10
-cum_tokens = 1452
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'C(Decl { file: "src/class/dfu/dfu.h", start_line: 41 })'
-descriptor = "c decl at src/class/dfu/dfu.h:41"
-cost_tokens = 46
-cum_tokens = 1498
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 41
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'C(DeclDoc { file: "src/class/dfu/dfu.h", start_line: 41 })'
-descriptor = "c decl doc at src/class/dfu/dfu.h:41"
-cost_tokens = 9
-cum_tokens = 1507
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
-key = 'C(Decl { file: "src/class/dfu/dfu.h", start_line: 105 })'
-descriptor = "c decl at src/class/dfu/dfu.h:105"
-cost_tokens = 61
-cum_tokens = 1568
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 105
-end = 111
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'C(DeclDoc { file: "src/class/dfu/dfu.h", start_line: 105 })'
-descriptor = "c decl doc at src/class/dfu/dfu.h:105"
-cost_tokens = 11
-cum_tokens = 1579
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 104
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'C(Includes { file: "src/class/dfu/dfu.h" })'
-descriptor = "c includes in src/class/dfu/dfu.h"
-cost_tokens = 13
-cum_tokens = 1592
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
-key = 'C(DeclNames { file: "src/class/dfu/dfu_rt_device.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/class/dfu/dfu_rt_device.h"
-cost_tokens = 134
-cum_tokens = 1726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_rt_device.h"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_rt_device.h"
-start = 45
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_rt_device.h"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_rt_device.h"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 36
-key = 'C(Decl { file: "src/class/dfu/dfu_rt_device.h", start_line: 40 })'
-descriptor = "c decl at src/class/dfu/dfu_rt_device.h:40"
-cost_tokens = 0
-cum_tokens = 1726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_rt_device.h"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'C(Decl { file: "src/class/dfu/dfu_rt_device.h", start_line: 45 })'
-descriptor = "c decl at src/class/dfu/dfu_rt_device.h:45"
-cost_tokens = 0
-cum_tokens = 1726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_rt_device.h"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'C(Includes { file: "src/class/dfu/dfu_rt_device.h" })'
-descriptor = "c includes in src/class/dfu/dfu_rt_device.h"
-cost_tokens = 11
-cum_tokens = 1737
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_rt_device.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'Fs(DirListing { dir: "src/class/audio" })'
-descriptor = "listing of 'src/class/audio'"
-cost_tokens = 14
-cum_tokens = 1751
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/audio"
-entries = ["audio.h", "audio_device.c", "audio_device.h"]
-
-[[batches]]
-position = 40
-key = 'C(Includes { file: "src/class/audio/audio.h" })'
-descriptor = "c includes in src/class/audio/audio.h"
-cost_tokens = 13
-cum_tokens = 1764
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/audio/audio.h"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Fs(DirListing { dir: "src/class/printer" })'
-descriptor = "listing of 'src/class/printer'"
-cost_tokens = 14
-cum_tokens = 1778
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/printer"
-entries = ["printer.h", "printer_device.c", "printer_device.h"]
-
-[[batches]]
-position = 42
-key = 'C(DeclNames { file: "src/class/printer/printer.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/class/printer/printer.h"
-cost_tokens = 22
-cum_tokens = 1800
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/printer/printer.h"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/printer/printer.h"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/printer/printer.h"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/printer/printer.h"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 43
-key = 'C(Includes { file: "src/class/printer/printer.h" })'
-descriptor = "c includes in src/class/printer/printer.h"
-cost_tokens = 13
-cum_tokens = 1813
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/printer/printer.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 44
-key = 'Fs(DirListing { dir: "src/class/video" })'
-descriptor = "listing of 'src/class/video'"
-cost_tokens = 14
-cum_tokens = 1827
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/video"
-entries = ["video.h", "video_device.c", "video_device.h"]
-
-[[batches]]
-position = 45
-key = 'Fs(DirListing { dir: "src/class/cdc" })'
-descriptor = "listing of 'src/class/cdc'"
-cost_tokens = 40
-cum_tokens = 1867
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/cdc"
-entries = ["cdc.h", "cdc_device.c", "cdc_device.h", "cdc_host.c", "cdc_host.h", "cdc_rndis.h", "serial"]
-
-[[batches]]
-position = 46
-key = 'Fs(DirListing { dir: "src/class/cdc/serial" })'
-descriptor = "listing of 'src/class/cdc/serial'"
-cost_tokens = 26
-cum_tokens = 1893
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/cdc/serial"
-entries = ["ch34x.h", "cp210x.h", "ftdi_sio.h", "pl2303.h"]
-
-[[batches]]
-position = 47
 key = 'C(DeclNames { file: "src/typec/pd_types.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/typec/pd_types.h"
 cost_tokens = 192
-cum_tokens = 2085
+cum_tokens = 1300
 
 [batches.content]
 kind = "lines"
@@ -1298,11 +722,11 @@ end = 230
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 22
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 229 })'
 descriptor = "c decl at src/typec/pd_types.h:229"
 cost_tokens = 9
-cum_tokens = 2094
+cum_tokens = 1309
 
 [batches.content]
 kind = "lines"
@@ -1316,11 +740,11 @@ end = 230
 kind = "full"
 
 [[batches]]
-position = 49
+position = 23
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 110 })'
 descriptor = "c decl at src/typec/pd_types.h:110"
 cost_tokens = 36
-cum_tokens = 2130
+cum_tokens = 1345
 
 [batches.content]
 kind = "lines"
@@ -1334,11 +758,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 50
+position = 24
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 105 })'
 descriptor = "c decl at src/typec/pd_types.h:105"
 cost_tokens = 37
-cum_tokens = 2167
+cum_tokens = 1382
 
 [batches.content]
 kind = "lines"
@@ -1352,11 +776,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 51
+position = 25
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 46 })'
 descriptor = "c decl at src/typec/pd_types.h:46"
 cost_tokens = 49
-cum_tokens = 2216
+cum_tokens = 1431
 
 [batches.content]
 kind = "lines"
@@ -1370,11 +794,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 52
+position = 26
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 99 })'
 descriptor = "c decl at src/typec/pd_types.h:99"
 cost_tokens = 51
-cum_tokens = 2267
+cum_tokens = 1482
 
 [batches.content]
 kind = "lines"
@@ -1388,11 +812,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 53
+position = 27
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 39 })'
 descriptor = "c decl at src/typec/pd_types.h:39"
 cost_tokens = 31
-cum_tokens = 2298
+cum_tokens = 1513
 
 [batches.content]
 kind = "lines"
@@ -1414,11 +838,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 54
+position = 28
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 140 })'
 descriptor = "c decl at src/typec/pd_types.h:140"
 cost_tokens = 72
-cum_tokens = 2370
+cum_tokens = 1585
 
 [batches.content]
 kind = "lines"
@@ -1432,11 +856,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 55
+position = 29
 key = 'C(DeclDoc { file: "src/typec/pd_types.h", start_line: 140 })'
 descriptor = "c decl doc at src/typec/pd_types.h:140"
 cost_tokens = 23
-cum_tokens = 2393
+cum_tokens = 1608
 
 [batches.content]
 kind = "lines"
@@ -1450,11 +874,11 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 56
+position = 30
 key = 'Fs(DirListing { dir: "src/portable" })'
 descriptor = "listing of 'src/portable'"
 cost_tokens = 85
-cum_tokens = 2478
+cum_tokens = 1693
 
 [batches.content]
 kind = "fs"
@@ -1464,733 +888,11 @@ parent = "src/portable"
 entries = ["analog", "bridgetek", "chipidea", "dialog", "ehci", "mentor", "microchip", "mindmotion", "nordic", "nuvoton", "nxp", "ohci", "raspberrypi", "renesas", "sony", "st", "sunxi", "synopsys", "template", "ti", "valentyusb", "wch"]
 
 [[batches]]
-position = 57
-key = 'Fs(DirListing { dir: "src/portable/microchip" })'
-descriptor = "listing of 'src/portable/microchip'"
-cost_tokens = 22
-cum_tokens = 2500
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/microchip"
-entries = ["pic", "pic32mz", "samd", "samg", "samx7x"]
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "src/portable/nxp" })'
-descriptor = "listing of 'src/portable/nxp'"
-cost_tokens = 25
-cum_tokens = 2525
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/nxp"
-entries = ["khci", "lpc17_40", "lpc_ip3511", "lpc_ip3516"]
-
-[[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "src/portable/nuvoton" })'
-descriptor = "listing of 'src/portable/nuvoton'"
-cost_tokens = 12
-cum_tokens = 2537
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/nuvoton"
-entries = ["nuc120", "nuc121", "nuc505"]
-
-[[batches]]
-position = 60
-key = 'Fs(DirListing { dir: "src/portable/mentor" })'
-descriptor = "listing of 'src/portable/mentor'"
-cost_tokens = 4
-cum_tokens = 2541
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/mentor"
-entries = ["musb"]
-
-[[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "src/portable/mentor/musb" })'
-descriptor = "listing of 'src/portable/mentor/musb'"
-cost_tokens = 34
-cum_tokens = 2575
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/mentor/musb"
-entries = ["dcd_musb.c", "hcd_musb.c", "musb_max32.h", "musb_ti.h", "musb_type.h"]
-
-[[batches]]
-position = 62
-key = 'C(DeclNames { file: "src/portable/mentor/musb/musb_ti.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/portable/mentor/musb/musb_ti.h"
-cost_tokens = 68
-cum_tokens = 2643
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_ti.h"
-start = 48
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_ti.h"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_ti.h"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_ti.h"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 63
-key = 'Fs(DirListing { dir: "src/portable/wch" })'
-descriptor = "listing of 'src/portable/wch'"
-cost_tokens = 43
-cum_tokens = 2686
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/wch"
-entries = ["ch32_usbfs_reg.h", "ch32_usbhs_reg.h", "dcd_ch32_usbfs.c", "dcd_ch32_usbhs.c", "hcd_ch32_usbfs.c"]
-
-[[batches]]
-position = 64
-key = 'Fs(DirListing { dir: "src/portable/ehci" })'
-descriptor = "listing of 'src/portable/ehci'"
-cost_tokens = 16
-cum_tokens = 2702
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/ehci"
-entries = ["ehci.c", "ehci.h", "ehci_api.h"]
-
-[[batches]]
-position = 65
-key = 'C(DeclNames { file: "src/portable/ehci/ehci_api.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/portable/ehci/ehci_api.h"
-cost_tokens = 46
-cum_tokens = 2748
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci_api.h"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci_api.h"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci_api.h"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci_api.h"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 66
-key = 'C(Decl { file: "src/portable/ehci/ehci_api.h", start_line: 39 })'
-descriptor = "c decl at src/portable/ehci/ehci_api.h:39"
-cost_tokens = 0
-cum_tokens = 2748
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci_api.h"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
-key = 'C(Decl { file: "src/portable/ehci/ehci_api.h", start_line: 42 })'
-descriptor = "c decl at src/portable/ehci/ehci_api.h:42"
-cost_tokens = 0
-cum_tokens = 2748
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci_api.h"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
-key = 'C(DeclDoc { file: "src/portable/ehci/ehci_api.h", start_line: 39 })'
-descriptor = "c decl doc at src/portable/ehci/ehci_api.h:39"
-cost_tokens = 10
-cum_tokens = 2758
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci_api.h"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 69
-key = 'C(DeclDoc { file: "src/portable/ehci/ehci_api.h", start_line: 42 })'
-descriptor = "c decl doc at src/portable/ehci/ehci_api.h:42"
-cost_tokens = 12
-cum_tokens = 2770
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci_api.h"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
-key = 'C(DeclNames { file: "src/class/midi/midi.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/class/midi/midi.h"
-cost_tokens = 208
-cum_tokens = 2978
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 104
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 113
-end = 113
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 123
-end = 123
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 134
-end = 134
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 174
-end = 174
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 183
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 105
-end = 105
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 124
-end = 124
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 175
-end = 175
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 184
-end = 184
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 192
-end = 192
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 71
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 104 })'
-descriptor = "c decl at src/class/midi/midi.h:104"
-cost_tokens = 19
-cum_tokens = 2997
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 104
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 149 })'
-descriptor = "c decl at src/class/midi/midi.h:149"
-cost_tokens = 23
-cum_tokens = 3020
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 149
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 39 })'
-descriptor = "c decl at src/class/midi/midi.h:39"
-cost_tokens = 39
-cum_tokens = 3059
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 39
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 191 })'
-descriptor = "c decl at src/class/midi/midi.h:191"
-cost_tokens = 40
-cum_tokens = 3099
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 191
-end = 195
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 56 })'
-descriptor = "c decl at src/class/midi/midi.h:56"
-cost_tokens = 41
-cum_tokens = 3140
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 56
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 76
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 51 })'
-descriptor = "c decl at src/class/midi/midi.h:51"
-cost_tokens = 44
-cum_tokens = 3184
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 51
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
-key = 'C(Includes { file: "src/class/midi/midi.h" })'
-descriptor = "c includes in src/class/midi/midi.h"
-cost_tokens = 13
-cum_tokens = 3197
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 78
-key = 'C(DeclDoc { file: "src/class/midi/midi.h", start_line: 39 })'
-descriptor = "c decl doc at src/class/midi/midi.h:39"
-cost_tokens = 21
-cum_tokens = 3218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 36
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 79
-key = 'C(DeclDoc { file: "src/class/midi/midi.h", start_line: 191 })'
-descriptor = "c decl doc at src/class/midi/midi.h:191"
-cost_tokens = 24
-cum_tokens = 3242
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 188
-end = 190
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 44 })'
-descriptor = "c decl at src/class/midi/midi.h:44"
-cost_tokens = 78
-cum_tokens = 3320
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 44
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 81
-key = 'Fs(DirListing { dir: "src/class/mtp" })'
-descriptor = "listing of 'src/class/mtp'"
-cost_tokens = 17
-cum_tokens = 3337
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/mtp"
-entries = ["mtp.h", "mtp_device.c", "mtp_device.h"]
-
-[[batches]]
-position = 82
-key = 'C(Includes { file: "src/class/mtp/mtp.h" })'
-descriptor = "c includes in src/class/mtp/mtp.h"
-cost_tokens = 13
-cum_tokens = 3350
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/mtp/mtp.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
-key = 'Fs(DirListing { dir: "src/portable/ohci" })'
-descriptor = "listing of 'src/portable/ohci'"
-cost_tokens = 17
-cum_tokens = 3367
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/ohci"
-entries = ["ohci.c", "ohci.h", "ohci_nxp.h"]
-
-[[batches]]
-position = 84
+position = 31
 key = 'C(DeclDoc { file: "src/typec/pd_types.h", start_line: 39 })'
 descriptor = "c decl doc at src/typec/pd_types.h:39"
 cost_tokens = 17
-cum_tokens = 3384
+cum_tokens = 1710
 
 [batches.content]
 kind = "lines"
@@ -2204,57 +906,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 85
-key = 'Fs(DirListing { dir: "src/portable/renesas" })'
-descriptor = "listing of 'src/portable/renesas'"
-cost_tokens = 5
-cum_tokens = 3389
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/renesas"
-entries = ["rusb2"]
-
-[[batches]]
-position = 86
-key = 'Fs(DirListing { dir: "src/portable/synopsys" })'
-descriptor = "listing of 'src/portable/synopsys'"
-cost_tokens = 5
-cum_tokens = 3394
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/synopsys"
-entries = ["dwc2"]
-
-[[batches]]
-position = 87
-key = 'C(DeclDoc { file: "src/class/dfu/dfu_rt_device.h", start_line: 45 })'
-descriptor = "c decl doc at src/class/dfu/dfu_rt_device.h:45"
-cost_tokens = 24
-cum_tokens = 3418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_rt_device.h"
-start = 42
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 88
+position = 32
 key = 'C(DeclNames { file: "src/typec/usbc.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/typec/usbc.h"
 cost_tokens = 191
-cum_tokens = 3609
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -2388,11 +1044,11 @@ end = 85
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 33
 key = 'C(Decl { file: "src/typec/usbc.h", start_line: 50 })'
 descriptor = "c decl at src/typec/usbc.h:50"
 cost_tokens = 0
-cum_tokens = 3609
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -2406,11 +1062,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 90
+position = 34
 key = 'C(Decl { file: "src/typec/usbc.h", start_line: 53 })'
 descriptor = "c decl at src/typec/usbc.h:53"
 cost_tokens = 0
-cum_tokens = 3609
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -2424,11 +1080,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 91
+position = 35
 key = 'C(Decl { file: "src/typec/usbc.h", start_line: 58 })'
 descriptor = "c decl at src/typec/usbc.h:58"
 cost_tokens = 0
-cum_tokens = 3609
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -2442,11 +1098,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 92
+position = 36
 key = 'C(Decl { file: "src/typec/usbc.h", start_line: 71 })'
 descriptor = "c decl at src/typec/usbc.h:71"
 cost_tokens = 0
-cum_tokens = 3609
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -2460,11 +1116,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 93
+position = 37
 key = 'C(Decl { file: "src/typec/usbc.h", start_line: 61 })'
 descriptor = "c decl at src/typec/usbc.h:61"
 cost_tokens = 11
-cum_tokens = 3620
+cum_tokens = 1912
 
 [batches.content]
 kind = "lines"
@@ -2486,11 +1142,11 @@ end = 63
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 38
 key = 'C(DeclBody { file: "src/typec/usbc.h", start_line: 61 })'
 descriptor = "c decl body at src/typec/usbc.h:61"
 cost_tokens = 12
-cum_tokens = 3632
+cum_tokens = 1924
 
 [batches.content]
 kind = "lines"
@@ -2504,11 +1160,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 95
+position = 39
 key = 'C(DeclDoc { file: "src/typec/usbc.h", start_line: 50 })'
 descriptor = "c decl doc at src/typec/usbc.h:50"
 cost_tokens = 13
-cum_tokens = 3645
+cum_tokens = 1937
 
 [batches.content]
 kind = "lines"
@@ -2522,11 +1178,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 96
+position = 40
 key = 'C(DeclDoc { file: "src/typec/usbc.h", start_line: 53 })'
 descriptor = "c decl doc at src/typec/usbc.h:53"
 cost_tokens = 13
-cum_tokens = 3658
+cum_tokens = 1950
 
 [batches.content]
 kind = "lines"
@@ -2540,11 +1196,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 97
+position = 41
 key = 'C(DeclDoc { file: "src/typec/usbc.h", start_line: 61 })'
 descriptor = "c decl doc at src/typec/usbc.h:61"
 cost_tokens = 17
-cum_tokens = 3675
+cum_tokens = 1967
 
 [batches.content]
 kind = "lines"
@@ -2558,11 +1214,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 98
+position = 42
 key = 'C(DeclDoc { file: "src/typec/usbc.h", start_line: 71 })'
 descriptor = "c decl doc at src/typec/usbc.h:71"
 cost_tokens = 14
-cum_tokens = 3689
+cum_tokens = 1981
 
 [batches.content]
 kind = "lines"
@@ -2576,11 +1232,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 99
+position = 43
 key = 'Fs(DirListing { dir: "hw/mcu" })'
 descriptor = "listing of 'hw/mcu'"
 cost_tokens = 15
-cum_tokens = 3704
+cum_tokens = 1996
 
 [batches.content]
 kind = "fs"
@@ -2590,625 +1246,11 @@ parent = "hw/mcu"
 entries = ["bridgetek", "dialog", "nordic", "sony"]
 
 [[batches]]
-position = 100
-key = 'Fs(DirListing { dir: "src/portable/renesas/rusb2" })'
-descriptor = "listing of 'src/portable/renesas/rusb2'"
-cost_tokens = 51
-cum_tokens = 3755
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/portable/renesas/rusb2"
-entries = ["dcd_rusb2.c", "hcd_rusb2.c", "rusb2_common.c", "rusb2_common.h", "rusb2_ra.h", "rusb2_rx.h", "rusb2_type.h"]
-
-[[batches]]
-position = 101
-key = 'C(DeclNames { file: "src/portable/renesas/rusb2/rusb2_common.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/portable/renesas/rusb2/rusb2_common.h"
-cost_tokens = 8
-cum_tokens = 3763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_common.h"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_common.h"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'C(Decl { file: "src/portable/renesas/rusb2/rusb2_common.h", start_line: 56 })'
-descriptor = "c decl at src/portable/renesas/rusb2/rusb2_common.h:56"
-cost_tokens = 33
-cum_tokens = 3796
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_common.h"
-start = 56
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'C(DeclNames { file: "src/portable/renesas/rusb2/rusb2_ra.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/portable/renesas/rusb2/rusb2_ra.h"
-cost_tokens = 156
-cum_tokens = 3952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 77
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 97
-end = 97
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 85
-end = 85
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 104
-key = 'C(Decl { file: "src/portable/renesas/rusb2/rusb2_ra.h", start_line: 84 })'
-descriptor = "c decl at src/portable/renesas/rusb2/rusb2_ra.h:84"
-cost_tokens = 0
-cum_tokens = 3952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 85
-end = 85
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 105
-key = 'C(Decl { file: "src/portable/renesas/rusb2/rusb2_ra.h", start_line: 93 })'
-descriptor = "c decl at src/portable/renesas/rusb2/rusb2_ra.h:93"
-cost_tokens = 0
-cum_tokens = 3952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 106
-key = 'C(Decl { file: "src/portable/renesas/rusb2/rusb2_ra.h", start_line: 97 })'
-descriptor = "c decl at src/portable/renesas/rusb2/rusb2_ra.h:97"
-cost_tokens = 0
-cum_tokens = 3952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 97
-end = 97
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 107
-key = 'C(Decl { file: "src/portable/renesas/rusb2/rusb2_ra.h", start_line: 102 })'
-descriptor = "c decl at src/portable/renesas/rusb2/rusb2_ra.h:102"
-cost_tokens = 0
-cum_tokens = 3952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'C(Decl { file: "src/portable/renesas/rusb2/rusb2_ra.h", start_line: 59 })'
-descriptor = "c decl at src/portable/renesas/rusb2/rusb2_ra.h:59"
-cost_tokens = 31
-cum_tokens = 3983
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 59
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'C(DeclDoc { file: "src/portable/renesas/rusb2/rusb2_ra.h", start_line: 102 })'
-descriptor = "c decl doc at src/portable/renesas/rusb2/rusb2_ra.h:102"
-cost_tokens = 10
-cum_tokens = 3993
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 101
-end = 101
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'C(Includes { file: "src/portable/renesas/rusb2/rusb2_ra.h" })'
-descriptor = "c includes in src/portable/renesas/rusb2/rusb2_ra.h"
-cost_tokens = 12
-cum_tokens = 4005
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'C(DeclBody { file: "src/portable/renesas/rusb2/rusb2_ra.h", start_line: 93 })'
-descriptor = "c decl body at src/portable/renesas/rusb2/rusb2_ra.h:93"
-cost_tokens = 18
-cum_tokens = 4023
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'C(DeclBody { file: "src/portable/renesas/rusb2/rusb2_ra.h", start_line: 97 })'
-descriptor = "c decl body at src/portable/renesas/rusb2/rusb2_ra.h:97"
-cost_tokens = 19
-cum_tokens = 4042
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_ra.h"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'C(DeclNames { file: "src/class/vendor/vendor_host.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/class/vendor/vendor_host.h"
-cost_tokens = 196
-cum_tokens = 4238
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 52
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 58
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 114
-key = 'C(Decl { file: "src/class/vendor/vendor_host.h", start_line: 58 })'
-descriptor = "c decl at src/class/vendor/vendor_host.h:58"
-cost_tokens = 0
-cum_tokens = 4238
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'C(Decl { file: "src/class/vendor/vendor_host.h", start_line: 44 })'
-descriptor = "c decl at src/class/vendor/vendor_host.h:44"
-cost_tokens = 5
-cum_tokens = 4243
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 44
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 116
-key = 'C(Decl { file: "src/class/vendor/vendor_host.h", start_line: 36 })'
-descriptor = "c decl at src/class/vendor/vendor_host.h:36"
-cost_tokens = 30
-cum_tokens = 4273
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 36
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'C(Includes { file: "src/class/vendor/vendor_host.h" })'
-descriptor = "c includes in src/class/vendor/vendor_host.h"
-cost_tokens = 13
-cum_tokens = 4286
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
-key = 'C(DeclDoc { file: "src/class/vendor/vendor_host.h", start_line: 44 })'
-descriptor = "c decl doc at src/class/vendor/vendor_host.h:44"
-cost_tokens = 26
-cum_tokens = 4312
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 41
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'C(DeclDoc { file: "src/class/vendor/vendor_host.h", start_line: 58 })'
-descriptor = "c decl doc at src/class/vendor/vendor_host.h:58"
-cost_tokens = 24
-cum_tokens = 4336
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/vendor/vendor_host.h"
-start = 55
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
-key = 'C(Includes { file: "src/class/mtp/mtp_device.h" })'
-descriptor = "c includes in src/class/mtp/mtp_device.h"
-cost_tokens = 23
-cum_tokens = 4359
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/mtp/mtp_device.h"
-start = 30
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
-key = 'Fs(DirListing { dir: "src/class/usbtmc" })'
-descriptor = "listing of 'src/class/usbtmc'"
-cost_tokens = 20
-cum_tokens = 4379
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/class/usbtmc"
-entries = ["usbtmc.h", "usbtmc_device.c", "usbtmc_device.h"]
-
-[[batches]]
-position = 122
-key = 'C(DeclNames { file: "src/portable/mentor/musb/musb_max32.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/portable/mentor/musb/musb_max32.h"
-cost_tokens = 67
-cum_tokens = 4446
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_max32.h"
-start = 47
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_max32.h"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_max32.h"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_max32.h"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 123
+position = 44
 key = 'Fs(DirListing { dir: "src/common" })'
 descriptor = "listing of 'src/common'"
 cost_tokens = 56
-cum_tokens = 4502
+cum_tokens = 2052
 
 [batches.content]
 kind = "fs"
@@ -3218,11 +1260,11 @@ parent = "src/common"
 entries = ["tusb_common.h", "tusb_compiler.h", "tusb_debug.h", "tusb_fifo.c", "tusb_fifo.h", "tusb_mcu.h", "tusb_private.h", "tusb_types.h", "tusb_verify.h"]
 
 [[batches]]
-position = 124
+position = 45
 key = 'C(DeclNames { file: "src/common/tusb_debug.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/common/tusb_debug.h"
 cost_tokens = 57
-cum_tokens = 4559
+cum_tokens = 2109
 
 [batches.content]
 kind = "lines"
@@ -3244,37 +1286,11 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 125
-key = 'C(Includes { file: "src/portable/mentor/musb/musb_max32.h" })'
-descriptor = "c includes in src/portable/mentor/musb/musb_max32.h"
-cost_tokens = 24
-cum_tokens = 4583
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_max32.h"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/mentor/musb/musb_max32.h"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 126
+position = 46
 key = 'C(Includes { file: "src/typec/usbc.h" })'
 descriptor = "c includes in src/typec/usbc.h"
 cost_tokens = 24
-cum_tokens = 4607
+cum_tokens = 2133
 
 [batches.content]
 kind = "lines"
@@ -3288,755 +1304,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 127
-key = 'C(DeclNames { file: "src/class/msc/msc.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/class/msc/msc.h"
-cost_tokens = 262
-cum_tokens = 4869
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 96
-end = 96
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 168
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 179
-end = 179
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 192
-end = 192
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 238
-end = 238
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 264
-end = 264
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 283
-end = 283
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 296
-end = 296
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 306
-end = 306
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 333
-end = 333
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 343
-end = 343
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 363
-end = 363
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 376
-end = 376
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 384
-end = 384
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 97
-end = 97
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 144
-end = 144
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 169
-end = 169
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 193
-end = 193
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 239
-end = 239
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 265
-end = 265
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 297
-end = 297
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 307
-end = 307
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 334
-end = 334
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 344
-end = 344
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 364
-end = 364
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 377
-end = 377
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 385
-end = 385
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 128
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 192 })'
-descriptor = "c decl at src/class/msc/msc.h:192"
-cost_tokens = 15
-cum_tokens = 4884
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 192
-end = 193
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 233
-end = 233
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'C(AggregateMemberGroup { file: "src/class/msc/msc.h", start_line: 192, group_start_line: 200 })'
-descriptor = "c aggregate member group at src/class/msc/msc.h:192 group 200"
-cost_tokens = 10
-cum_tokens = 4894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 200
-end = 200
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'C(AggregateMemberGroup { file: "src/class/msc/msc.h", start_line: 192, group_start_line: 207 })'
-descriptor = "c aggregate member group at src/class/msc/msc.h:192 group 207"
-cost_tokens = 11
-cum_tokens = 4905
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 207
-end = 207
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 131
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 192 })'
-descriptor = "c decl doc at src/class/msc/msc.h:192"
-cost_tokens = 11
-cum_tokens = 4916
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 132
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 376 })'
-descriptor = "c decl at src/class/msc/msc.h:376"
-cost_tokens = 51
-cum_tokens = 4967
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 376
-end = 379
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 133
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 376 })'
-descriptor = "c decl doc at src/class/msc/msc.h:376"
-cost_tokens = 14
-cum_tokens = 4981
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 375
-end = 375
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 333 })'
-descriptor = "c decl at src/class/msc/msc.h:333"
-cost_tokens = 59
-cum_tokens = 5040
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 333
-end = 339
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 135
-key = 'C(AggregateMemberGroup { file: "src/class/msc/msc.h", start_line: 192, group_start_line: 197 })'
-descriptor = "c aggregate member group at src/class/msc/msc.h:192 group 197"
-cost_tokens = 29
-cum_tokens = 5069
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 197
-end = 198
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 136
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 50 })'
-descriptor = "c decl at src/class/msc/msc.h:50"
-cost_tokens = 63
-cum_tokens = 5132
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 50
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'C(Includes { file: "src/class/msc/msc.h" })'
-descriptor = "c includes in src/class/msc/msc.h"
-cost_tokens = 13
-cum_tokens = 5145
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
-key = 'C(AggregateMemberGroup { file: "src/class/msc/msc.h", start_line: 192, group_start_line: 194 })'
-descriptor = "c aggregate member group at src/class/msc/msc.h:192 group 194"
-cost_tokens = 33
-cum_tokens = 5178
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 194
-end = 195
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 139
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 283 })'
-descriptor = "c decl at src/class/msc/msc.h:283"
-cost_tokens = 77
-cum_tokens = 5255
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 283
-end = 286
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 288
-end = 289
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 291
-end = 292
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 140
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 283 })'
-descriptor = "c decl doc at src/class/msc/msc.h:283"
-cost_tokens = 15
-cum_tokens = 5270
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 282
-end = 282
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 141
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 74 })'
-descriptor = "c decl at src/class/msc/msc.h:74"
-cost_tokens = 78
-cum_tokens = 5348
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 74
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 142
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 168 })'
-descriptor = "c decl at src/class/msc/msc.h:168"
-cost_tokens = 81
-cum_tokens = 5429
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 168
-end = 174
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 143
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 168 })'
-descriptor = "c decl doc at src/class/msc/msc.h:168"
-cost_tokens = 12
-cum_tokens = 5441
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 167
-end = 167
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 144
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 296 })'
-descriptor = "c decl at src/class/msc/msc.h:296"
-cost_tokens = 83
-cum_tokens = 5524
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 296
-end = 302
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 145
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 57 })'
-descriptor = "c decl at src/class/msc/msc.h:57"
-cost_tokens = 91
-cum_tokens = 5615
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 57
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 146
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 333 })'
-descriptor = "c decl doc at src/class/msc/msc.h:333"
-cost_tokens = 37
-cum_tokens = 5652
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 329
-end = 332
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 147
+position = 47
 key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 126 })'
 descriptor = "c decl at src/typec/pd_types.h:126"
 cost_tokens = 105
-cum_tokens = 5757
+cum_tokens = 2238
 
 [batches.content]
 kind = "lines"
@@ -4050,11 +1322,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 148
+position = 48
 key = 'C(DeclNames { file: "src/tusb.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/tusb.h"
 cost_tokens = 232
-cum_tokens = 5989
+cum_tokens = 2470
 
 [batches.content]
 kind = "lines"
@@ -4156,11 +1428,11 @@ end = 178
 kind = "ellipsis"
 
 [[batches]]
-position = 149
+position = 49
 key = 'C(Decl { file: "src/tusb.h", start_line: 147 })'
 descriptor = "c decl at src/tusb.h:147"
 cost_tokens = 0
-cum_tokens = 5989
+cum_tokens = 2470
 
 [batches.content]
 kind = "lines"
@@ -4174,11 +1446,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 150
+position = 50
 key = 'C(Decl { file: "src/tusb.h", start_line: 164 })'
 descriptor = "c decl at src/tusb.h:164"
 cost_tokens = 0
-cum_tokens = 5989
+cum_tokens = 2470
 
 [batches.content]
 kind = "lines"
@@ -4192,11 +1464,11 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 151
+position = 51
 key = 'C(Decl { file: "src/tusb.h", start_line: 167 })'
 descriptor = "c decl at src/tusb.h:167"
 cost_tokens = 0
-cum_tokens = 5989
+cum_tokens = 2470
 
 [batches.content]
 kind = "lines"
@@ -4210,11 +1482,11 @@ end = 167
 kind = "full"
 
 [[batches]]
-position = 152
+position = 52
 key = 'C(Decl { file: "src/tusb.h", start_line: 170 })'
 descriptor = "c decl at src/tusb.h:170"
 cost_tokens = 0
-cum_tokens = 5989
+cum_tokens = 2470
 
 [batches.content]
 kind = "lines"
@@ -4228,11 +1500,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 153
+position = 53
 key = 'C(DeclDoc { file: "src/tusb.h", start_line: 164 })'
 descriptor = "c decl doc at src/tusb.h:164"
 cost_tokens = 11
-cum_tokens = 6000
+cum_tokens = 2481
 
 [batches.content]
 kind = "lines"
@@ -4246,11 +1518,11 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 154
+position = 54
 key = 'C(DeclDoc { file: "src/tusb.h", start_line: 170 })'
 descriptor = "c decl doc at src/tusb.h:170"
 cost_tokens = 15
-cum_tokens = 6015
+cum_tokens = 2496
 
 [batches.content]
 kind = "lines"
@@ -4264,11 +1536,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 155
+position = 55
 key = 'C(DeclDoc { file: "src/tusb.h", start_line: 147 })'
 descriptor = "c decl doc at src/tusb.h:147"
 cost_tokens = 16
-cum_tokens = 6031
+cum_tokens = 2512
 
 [batches.content]
 kind = "lines"
@@ -4282,11 +1554,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 156
+position = 56
 key = 'C(DeclDoc { file: "src/tusb.h", start_line: 167 })'
 descriptor = "c decl doc at src/tusb.h:167"
 cost_tokens = 26
-cum_tokens = 6057
+cum_tokens = 2538
 
 [batches.content]
 kind = "lines"
@@ -4300,11 +1572,11 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 157
+position = 57
 key = 'C(DeclNames { file: "src/common/tusb_common.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/common/tusb_common.h"
 cost_tokens = 958
-cum_tokens = 7015
+cum_tokens = 3496
 
 [batches.content]
 kind = "lines"
@@ -4406,11 +1678,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 158
+position = 58
 key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 37 })'
 descriptor = "c decl at src/common/tusb_common.h:37"
 cost_tokens = 0
-cum_tokens = 7015
+cum_tokens = 3496
 
 [batches.content]
 kind = "lines"
@@ -4424,11 +1696,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 159
+position = 59
 key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 37 })'
 descriptor = "c decl doc at src/common/tusb_common.h:37"
 cost_tokens = 23
-cum_tokens = 7038
+cum_tokens = 3519
 
 [batches.content]
 kind = "lines"
@@ -4442,65 +1714,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 160
-key = 'C(Includes { file: "src/portable/renesas/rusb2/rusb2_common.h" })'
-descriptor = "c includes in src/portable/renesas/rusb2/rusb2_common.h"
-cost_tokens = 26
-cum_tokens = 7064
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/renesas/rusb2/rusb2_common.h"
-start = 28
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 161
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 113 })'
-descriptor = "c decl at src/class/midi/midi.h:113"
-cost_tokens = 109
-cum_tokens = 7173
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 113
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 162
-key = 'C(DeclDoc { file: "src/class/midi/midi.h", start_line: 113 })'
-descriptor = "c decl doc at src/class/midi/midi.h:113"
-cost_tokens = 10
-cum_tokens = 7183
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 163
+position = 60
 key = 'C(Decl { file: "lib/networking/dhserver.h", start_line: 49 })'
 descriptor = "c decl at lib/networking/dhserver.h:49"
 cost_tokens = 75
-cum_tokens = 7258
+cum_tokens = 3594
 
 [batches.content]
 kind = "lines"
@@ -4514,11 +1732,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 164
+position = 61
 key = 'Fs(DirListing { dir: "src/osal" })'
 descriptor = "listing of 'src/osal'"
 cost_tokens = 64
-cum_tokens = 7322
+cum_tokens = 3658
 
 [batches.content]
 kind = "fs"
@@ -4528,11 +1746,11 @@ parent = "src/osal"
 entries = ["osal.h", "osal_freertos.h", "osal_mynewt.h", "osal_none.h", "osal_pico.h", "osal_rtthread.h", "osal_rtx4.h", "osal_threadx.h", "osal_zephyr.h"]
 
 [[batches]]
-position = 165
+position = 62
 key = 'C(DeclNames { file: "src/osal/osal.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/osal/osal.h"
 cost_tokens = 102
-cum_tokens = 7424
+cum_tokens = 3760
 
 [batches.content]
 kind = "lines"
@@ -4570,11 +1788,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 166
+position = 63
 key = 'C(Decl { file: "src/osal/osal.h", start_line: 39 })'
 descriptor = "c decl at src/osal/osal.h:39"
 cost_tokens = 0
-cum_tokens = 7424
+cum_tokens = 3760
 
 [batches.content]
 kind = "lines"
@@ -4588,11 +1806,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 167
+position = 64
 key = 'C(DeclDoc { file: "src/osal/osal.h", start_line: 39 })'
 descriptor = "c decl doc at src/osal/osal.h:39"
 cost_tokens = 7
-cum_tokens = 7431
+cum_tokens = 3767
 
 [batches.content]
 kind = "lines"
@@ -4606,11 +1824,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 168
+position = 65
 key = 'C(Includes { file: "src/osal/osal.h" })'
 descriptor = "c includes in src/osal/osal.h"
 cost_tokens = 13
-cum_tokens = 7444
+cum_tokens = 3780
 
 [batches.content]
 kind = "lines"
@@ -4624,101 +1842,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 169
-key = 'C(Decl { file: "src/class/dfu/dfu.h", start_line: 54 })'
-descriptor = "c decl at src/class/dfu/dfu.h:54"
-cost_tokens = 113
-cum_tokens = 7557
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 54
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 170
-key = 'C(DeclDoc { file: "src/class/dfu/dfu.h", start_line: 54 })'
-descriptor = "c decl doc at src/class/dfu/dfu.h:54"
-cost_tokens = 9
-cum_tokens = 7566
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu.h"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 171
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 57 })'
-descriptor = "c decl doc at src/class/msc/msc.h:57"
-cost_tokens = 42
-cum_tokens = 7608
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 55
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 363 })'
-descriptor = "c decl at src/class/msc/msc.h:363"
-cost_tokens = 122
-cum_tokens = 7730
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 363
-end = 371
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 173
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 363 })'
-descriptor = "c decl doc at src/class/msc/msc.h:363"
-cost_tokens = 16
-cum_tokens = 7746
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 362
-end = 362
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 174
+position = 66
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 10
-cum_tokens = 7756
+cum_tokens = 3790
 
 [batches.content]
 kind = "fs"
@@ -4728,89 +1856,25 @@ parent = "test"
 entries = ["fuzz", "hil", "unit-test"]
 
 [[batches]]
-position = 175
-key = 'C(Decl { file: "src/class/msc/msc.h", start_line: 65 })'
-descriptor = "c decl at src/class/msc/msc.h:65"
-cost_tokens = 123
-cum_tokens = 7879
+position = 67
+key = 'C(DeclNames { file: "src/typec/tcd.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/typec/tcd.h"
+cost_tokens = 216
+cum_tokens = 4006
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 65
-end = 69
+path = "src/typec/tcd.h"
+start = 44
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 176
-key = 'C(DeclDoc { file: "src/class/msc/msc.h", start_line: 65 })'
-descriptor = "c decl doc at src/class/msc/msc.h:65"
-cost_tokens = 13
-cum_tokens = 7892
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
-path = "src/class/msc/msc.h"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 177
-key = 'C(Decl { file: "src/class/midi/midi.h", start_line: 174 })'
-descriptor = "c decl at src/class/midi/midi.h:174"
-cost_tokens = 94
-cum_tokens = 7986
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 174
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 178
-key = 'C(DeclDoc { file: "src/class/midi/midi.h", start_line: 174 })'
-descriptor = "c decl doc at src/class/midi/midi.h:174"
-cost_tokens = 15
-cum_tokens = 8001
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/midi/midi.h"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 179
-key = 'C(DeclNames { file: "src/class/dfu/dfu_device.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/class/dfu/dfu_device.h"
-cost_tokens = 279
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
+path = "src/typec/tcd.h"
 start = 51
 end = 51
 
@@ -4818,63 +1882,87 @@ end = 51
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 62
-end = 62
+path = "src/typec/tcd.h"
+start = 73
+end = 73
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 67
-end = 67
+path = "src/typec/tcd.h"
+start = 76
+end = 76
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 72
-end = 72
+path = "src/typec/tcd.h"
+start = 79
+end = 79
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 77
-end = 77
+path = "src/typec/tcd.h"
+start = 82
+end = 82
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
+path = "src/typec/tcd.h"
 start = 88
-end = 92
+end = 89
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
+path = "src/typec/tcd.h"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
 start = 52
 end = 52
 
@@ -4882,235 +1970,125 @@ end = 52
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 63
-end = 63
+path = "src/typec/tcd.h"
+start = 74
+end = 74
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 180
-key = 'C(Decl { file: "src/class/dfu/dfu_device.h", start_line: 51 })'
-descriptor = "c decl at src/class/dfu/dfu_device.h:51"
-cost_tokens = 0
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 181
-key = 'C(Decl { file: "src/class/dfu/dfu_device.h", start_line: 62 })'
-descriptor = "c decl at src/class/dfu/dfu_device.h:62"
-cost_tokens = 0
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'C(Decl { file: "src/class/dfu/dfu_device.h", start_line: 67 })'
-descriptor = "c decl at src/class/dfu/dfu_device.h:67"
-cost_tokens = 0
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'C(Decl { file: "src/class/dfu/dfu_device.h", start_line: 72 })'
-descriptor = "c decl at src/class/dfu/dfu_device.h:72"
-cost_tokens = 0
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 184
-key = 'C(Decl { file: "src/class/dfu/dfu_device.h", start_line: 77 })'
-descriptor = "c decl at src/class/dfu/dfu_device.h:77"
-cost_tokens = 0
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
+path = "src/typec/tcd.h"
 start = 77
 end = 77
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
-key = 'C(Decl { file: "src/class/dfu/dfu_device.h", start_line: 80 })'
-descriptor = "c decl at src/class/dfu/dfu_device.h:80"
-cost_tokens = 0
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
+kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
+path = "src/typec/tcd.h"
 start = 80
 end = 80
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
-key = 'C(Decl { file: "src/class/dfu/dfu_device.h", start_line: 83 })'
-descriptor = "c decl at src/class/dfu/dfu_device.h:83"
-cost_tokens = 0
-cum_tokens = 8280
-
-[batches.content]
-kind = "lines"
+kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
+path = "src/typec/tcd.h"
 start = 83
 end = 83
 
 [batches.content.spans.render]
-kind = "full"
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
-position = 187
-key = 'C(Decl { file: "src/class/dfu/dfu_device.h", start_line: 88 })'
-descriptor = "c decl at src/class/dfu/dfu_device.h:88"
+position = 68
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 73 })'
+descriptor = "c decl at src/typec/tcd.h:73"
 cost_tokens = 0
-cum_tokens = 8280
+cum_tokens = 4006
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 88
-end = 88
+path = "src/typec/tcd.h"
+start = 73
+end = 73
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 188
-key = 'C(Includes { file: "src/class/dfu/dfu_device.h" })'
-descriptor = "c includes in src/class/dfu/dfu_device.h"
-cost_tokens = 11
-cum_tokens = 8291
+position = 69
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 76 })'
+descriptor = "c decl at src/typec/tcd.h:76"
+cost_tokens = 0
+cum_tokens = 4006
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 30
-end = 30
+path = "src/typec/tcd.h"
+start = 76
+end = 76
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 189
-key = 'C(DeclDoc { file: "src/class/dfu/dfu_device.h", start_line: 80 })'
-descriptor = "c decl doc at src/class/dfu/dfu_device.h:80"
-cost_tokens = 18
-cum_tokens = 8309
+position = 70
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 79 })'
+descriptor = "c decl at src/typec/tcd.h:79"
+cost_tokens = 0
+cum_tokens = 4006
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
+path = "src/typec/tcd.h"
 start = 79
 end = 79
 
@@ -5118,17 +2096,17 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 190
-key = 'C(DeclDoc { file: "src/class/dfu/dfu_device.h", start_line: 83 })'
-descriptor = "c decl doc at src/class/dfu/dfu_device.h:83"
-cost_tokens = 18
-cum_tokens = 8327
+position = 71
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 82 })'
+descriptor = "c decl at src/typec/tcd.h:82"
+cost_tokens = 0
+cum_tokens = 4006
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
+path = "src/typec/tcd.h"
 start = 82
 end = 82
 
@@ -5136,91 +2114,359 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 191
-key = 'C(DeclDoc { file: "src/class/dfu/dfu_device.h", start_line: 88 })'
-descriptor = "c decl doc at src/class/dfu/dfu_device.h:88"
-cost_tokens = 24
-cum_tokens = 8351
+position = 72
+key = 'C(DeclDoc { file: "src/typec/tcd.h", start_line: 73 })'
+descriptor = "c decl doc at src/typec/tcd.h:73"
+cost_tokens = 8
+cum_tokens = 4014
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/dfu/dfu_device.h"
-start = 85
-end = 87
+path = "src/typec/tcd.h"
+start = 72
+end = 72
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 192
-key = 'C(DeclNames { file: "src/class/usbtmc/usbtmc.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/class/usbtmc/usbtmc.h"
-cost_tokens = 281
-cum_tokens = 8632
+position = 73
+key = 'C(DeclDoc { file: "src/typec/tcd.h", start_line: 76 })'
+descriptor = "c decl doc at src/typec/tcd.h:76"
+cost_tokens = 8
+cum_tokens = 4022
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 45
-end = 46
+path = "src/typec/tcd.h"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'C(DeclDoc { file: "src/typec/tcd.h", start_line: 79 })'
+descriptor = "c decl doc at src/typec/tcd.h:79"
+cost_tokens = 8
+cum_tokens = 4030
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'C(DeclDoc { file: "src/typec/tcd.h", start_line: 82 })'
+descriptor = "c decl doc at src/typec/tcd.h:82"
+cost_tokens = 8
+cum_tokens = 4038
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 98 })'
+descriptor = "c decl at src/typec/tcd.h:98"
+cost_tokens = 34
+cum_tokens = 4072
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 98
+end = 99
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 48
-end = 48
+path = "src/typec/tcd.h"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 77
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 111 })'
+descriptor = "c decl at src/typec/tcd.h:111"
+cost_tokens = 34
+cum_tokens = 4106
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 111
+end = 112
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 57
-end = 57
+path = "src/typec/tcd.h"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 78
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 125 })'
+descriptor = "c decl at src/typec/tcd.h:125"
+cost_tokens = 34
+cum_tokens = 4140
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 125
+end = 126
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 65
-end = 65
+path = "src/typec/tcd.h"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 79
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 44 })'
+descriptor = "c decl at src/typec/tcd.h:44"
+cost_tokens = 49
+cum_tokens = 4189
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 44
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'C(Includes { file: "src/typec/pd_types.h" })'
+descriptor = "c includes in src/typec/pd_types.h"
+cost_tokens = 34
+cum_tokens = 4223
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/pd_types.h"
+start = 34
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 53
+cum_tokens = 4276
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["_static", "assets", "conf.py", "faq.rst", "getting_started.rst", "index.rst", "info", "integration.rst", "porting.rst", "reference", "requirements.txt", "troubleshooting.rst"]
+
+[[batches]]
+position = 82
+key = 'Fs(DirListing { dir: "docs/info" })'
+descriptor = "listing of 'docs/info'"
+cost_tokens = 24
+cum_tokens = 4300
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/info"
+entries = ["changelog.rst", "code_of_conduct.rst", "contributors.rst", "index.rst"]
+
+[[batches]]
+position = 83
+key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 174 })'
+descriptor = "c decl at src/typec/pd_types.h:174"
+cost_tokens = 139
+cum_tokens = 4439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/pd_types.h"
+start = 174
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'C(DeclDoc { file: "src/typec/pd_types.h", start_line: 174 })'
+descriptor = "c decl doc at src/typec/pd_types.h:174"
+cost_tokens = 18
+cum_tokens = 4457
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/pd_types.h"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 165 })'
+descriptor = "c decl at src/typec/pd_types.h:165"
+cost_tokens = 142
+cum_tokens = 4599
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/pd_types.h"
+start = 165
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'C(DeclDoc { file: "src/typec/pd_types.h", start_line: 165 })'
+descriptor = "c decl doc at src/typec/pd_types.h:165"
+cost_tokens = 18
+cum_tokens = 4617
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/pd_types.h"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'C(DeclNames { file: "src/common/tusb_common.h", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in src/common/tusb_common.h"
+cost_tokens = 742
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 68
+end = 68
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 73
-end = 73
+path = "src/common/tusb_common.h"
+start = 94
+end = 94
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 86
-end = 86
+path = "src/common/tusb_common.h"
+start = 97
+end = 97
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 102
-end = 102
+path = "src/common/tusb_common.h"
+start = 100
+end = 100
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
+path = "src/common/tusb_common.h"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 106
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 114
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
 start = 118
 end = 118
 
@@ -5228,15 +2474,1005 @@ end = 118
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 128
+path = "src/common/tusb_common.h"
+start = 137
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 188
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 193
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 196
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 192
+end = 192
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 88
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 68 })'
+descriptor = "c decl at src/common/tusb_common.h:68"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 94 })'
+descriptor = "c decl at src/common/tusb_common.h:94"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 97 })'
+descriptor = "c decl at src/common/tusb_common.h:97"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 100 })'
+descriptor = "c decl at src/common/tusb_common.h:100"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 103 })'
+descriptor = "c decl at src/common/tusb_common.h:103"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 106 })'
+descriptor = "c decl at src/common/tusb_common.h:106"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 114 })'
+descriptor = "c decl at src/common/tusb_common.h:114"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 137 })'
+descriptor = "c decl at src/common/tusb_common.h:137"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 137
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 96
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 158 })'
+descriptor = "c decl at src/common/tusb_common.h:158"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 97
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 166 })'
+descriptor = "c decl at src/common/tusb_common.h:166"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 98
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 176 })'
+descriptor = "c decl at src/common/tusb_common.h:176"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 99
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 180 })'
+descriptor = "c decl at src/common/tusb_common.h:180"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 100
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 184 })'
+descriptor = "c decl at src/common/tusb_common.h:184"
+cost_tokens = 0
+cum_tokens = 5359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 101
+key = 'C(Decl { file: "src/common/tusb_common.h", start_line: 118 })'
+descriptor = "c decl at src/common/tusb_common.h:118"
+cost_tokens = 2
+cum_tokens = 5361
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
+key = 'C(DeclBody { file: "src/common/tusb_common.h", start_line: 180 })'
+descriptor = "c decl body at src/common/tusb_common.h:180"
+cost_tokens = 18
+cum_tokens = 5379
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'C(DeclBody { file: "src/common/tusb_common.h", start_line: 184 })'
+descriptor = "c decl body at src/common/tusb_common.h:184"
+cost_tokens = 23
+cum_tokens = 5402
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 100 })'
+descriptor = "c decl doc at src/common/tusb_common.h:100"
+cost_tokens = 9
+cum_tokens = 5411
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 103 })'
+descriptor = "c decl doc at src/common/tusb_common.h:103"
+cost_tokens = 9
+cum_tokens = 5420
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 176 })'
+descriptor = "c decl doc at src/common/tusb_common.h:176"
+cost_tokens = 10
+cum_tokens = 5430
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 114 })'
+descriptor = "c decl doc at src/common/tusb_common.h:114"
+cost_tokens = 10
+cum_tokens = 5440
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 106 })'
+descriptor = "c decl doc at src/common/tusb_common.h:106"
+cost_tokens = 13
+cum_tokens = 5453
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 118 })'
+descriptor = "c decl doc at src/common/tusb_common.h:118"
+cost_tokens = 17
+cum_tokens = 5470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 137 })'
+descriptor = "c decl doc at src/common/tusb_common.h:137"
+cost_tokens = 17
+cum_tokens = 5487
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'C(DeclBody { file: "src/common/tusb_common.h", start_line: 176 })'
+descriptor = "c decl body at src/common/tusb_common.h:176"
+cost_tokens = 43
+cum_tokens = 5530
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 94 })'
+descriptor = "c decl doc at src/common/tusb_common.h:94"
+cost_tokens = 19
+cum_tokens = 5549
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 97 })'
+descriptor = "c decl doc at src/common/tusb_common.h:97"
+cost_tokens = 31
+cum_tokens = 5580
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'C(DeclBody { file: "src/common/tusb_common.h", start_line: 158 })'
+descriptor = "c decl body at src/common/tusb_common.h:158"
+cost_tokens = 74
+cum_tokens = 5654
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 159
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'C(DeclBody { file: "src/common/tusb_common.h", start_line: 166 })'
+descriptor = "c decl body at src/common/tusb_common.h:166"
+cost_tokens = 75
+cum_tokens = 5729
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 167
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'C(DeclDoc { file: "src/common/tusb_common.h", start_line: 68 })'
+descriptor = "c decl doc at src/common/tusb_common.h:68"
+cost_tokens = 40
+cum_tokens = 5769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'C(DeclNames { file: "src/common/tusb_verify.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/common/tusb_verify.h"
+cost_tokens = 181
+cum_tokens = 5950
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 111
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 127
 end = 128
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
+path = "src/common/tusb_verify.h"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 118
+key = 'C(Decl { file: "src/common/tusb_verify.h", start_line: 122 })'
+descriptor = "c decl at src/common/tusb_verify.h:122"
+cost_tokens = 45
+cum_tokens = 5995
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 122
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'C(Decl { file: "src/common/tusb_verify.h", start_line: 104 })'
+descriptor = "c decl at src/common/tusb_verify.h:104"
+cost_tokens = 49
+cum_tokens = 6044
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 104
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'C(Includes { file: "src/common/tusb_verify.h" })'
+descriptor = "c includes in src/common/tusb_verify.h"
+cost_tokens = 45
+cum_tokens = 6089
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_verify.h"
+start = 29
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'C(Decl { file: "src/typec/pd_types.h", start_line: 115 })'
+descriptor = "c decl at src/typec/pd_types.h:115"
+cost_tokens = 170
+cum_tokens = 6259
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/pd_types.h"
+start = 115
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'C(DeclNames { file: "src/common/tusb_fifo.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/common/tusb_fifo.h"
+cost_tokens = 600
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
 start = 154
 end = 154
 
@@ -5244,175 +3480,127 @@ end = 154
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 162
-end = 162
+path = "src/common/tusb_fifo.h"
+start = 166
+end = 168
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 167
-end = 167
+path = "src/common/tusb_fifo.h"
+start = 183
+end = 183
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 186
-end = 186
+path = "src/common/tusb_fifo.h"
+start = 187
+end = 188
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 203
+path = "src/common/tusb_fifo.h"
+start = 193
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 202
 end = 203
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 219
-end = 219
+path = "src/common/tusb_fifo.h"
+start = 209
+end = 211
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 240
-end = 240
+path = "src/common/tusb_fifo.h"
+start = 217
+end = 217
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 252
-end = 252
+path = "src/common/tusb_fifo.h"
+start = 222
+end = 223
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 261
-end = 261
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 274
-end = 274
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 314
-end = 314
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 323
-end = 323
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 331
-end = 331
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 47
-end = 47
+path = "src/common/tusb_fifo.h"
+start = 43
+end = 43
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 49
-end = 49
+path = "src/common/tusb_fifo.h"
+start = 45
+end = 45
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 58
-end = 58
+path = "src/common/tusb_fifo.h"
+start = 120
+end = 120
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 66
-end = 66
+path = "src/common/tusb_fifo.h"
+start = 135
+end = 135
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 74
-end = 74
+path = "src/common/tusb_fifo.h"
+start = 143
+end = 143
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 87
-end = 87
+path = "src/common/tusb_fifo.h"
+start = 148
+end = 148
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 129
-end = 129
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
+path = "src/common/tusb_fifo.h"
 start = 155
 end = 155
 
@@ -5420,23 +3608,47 @@ end = 155
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 163
-end = 163
+path = "src/common/tusb_fifo.h"
+start = 169
+end = 169
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 168
-end = 168
+path = "src/common/tusb_fifo.h"
+start = 184
+end = 184
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
+path = "src/common/tusb_fifo.h"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 201
+end = 201
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
 start = 204
 end = 204
 
@@ -5444,645 +3656,1611 @@ end = 204
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 220
-end = 220
+path = "src/common/tusb_fifo.h"
+start = 212
+end = 212
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 241
-end = 241
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 253
-end = 253
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 262
-end = 262
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 275
-end = 275
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 315
-end = 315
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 324
-end = 324
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 332
-end = 332
+path = "src/common/tusb_fifo.h"
+start = 218
+end = 218
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 193
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 274 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:274"
+position = 123
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 42 })'
+descriptor = "c decl at src/common/tusb_fifo.h:42"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 166 })'
+descriptor = "c decl at src/common/tusb_fifo.h:166"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 183 })'
+descriptor = "c decl at src/common/tusb_fifo.h:183"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 187 })'
+descriptor = "c decl at src/common/tusb_fifo.h:187"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 193 })'
+descriptor = "c decl at src/common/tusb_fifo.h:193"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 209 })'
+descriptor = "c decl at src/common/tusb_fifo.h:209"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 211 })'
+descriptor = "c decl at src/common/tusb_fifo.h:211"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 130
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 217 })'
+descriptor = "c decl at src/common/tusb_fifo.h:217"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 217
+end = 217
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 222 })'
+descriptor = "c decl at src/common/tusb_fifo.h:222"
+cost_tokens = 0
+cum_tokens = 6859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 200 })'
+descriptor = "c decl at src/common/tusb_fifo.h:200"
+cost_tokens = 13
+cum_tokens = 6872
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 200
+end = 201
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 142 })'
+descriptor = "c decl at src/common/tusb_fifo.h:142"
+cost_tokens = 30
+cum_tokens = 6902
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 142
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 134 })'
+descriptor = "c decl at src/common/tusb_fifo.h:134"
+cost_tokens = 54
+cum_tokens = 6956
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 134
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'C(DeclBody { file: "src/common/tusb_fifo.h", start_line: 211 })'
+descriptor = "c decl body at src/common/tusb_fifo.h:211"
 cost_tokens = 18
-cum_tokens = 8650
+cum_tokens = 6974
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 274
-end = 275
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 310
-end = 310
+path = "src/common/tusb_fifo.h"
+start = 212
+end = 212
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 194
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 65 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:65"
-cost_tokens = 40
-cum_tokens = 8690
+position = 136
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 154 })'
+descriptor = "c decl at src/common/tusb_fifo.h:154"
+cost_tokens = 43
+cum_tokens = 7017
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 65
-end = 69
+path = "src/common/tusb_fifo.h"
+start = 154
+end = 156
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 195
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 252 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:252"
-cost_tokens = 42
-cum_tokens = 8732
+position = 137
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 142 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:142"
+cost_tokens = 13
+cum_tokens = 7030
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 252
-end = 256
+path = "src/common/tusb_fifo.h"
+start = 141
+end = 141
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 196
-key = 'C(DeclDoc { file: "src/class/usbtmc/usbtmc.h", start_line: 252 })'
-descriptor = "c decl doc at src/class/usbtmc/usbtmc.h:252"
-cost_tokens = 15
-cum_tokens = 8747
+position = 138
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 147 })'
+descriptor = "c decl at src/common/tusb_fifo.h:147"
+cost_tokens = 57
+cum_tokens = 7087
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 251
-end = 251
+path = "src/common/tusb_fifo.h"
+start = 147
+end = 152
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 197
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 162 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:162"
-cost_tokens = 49
-cum_tokens = 8796
+position = 139
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 166 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:166"
+cost_tokens = 22
+cum_tokens = 7109
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 162
+path = "src/common/tusb_fifo.h"
+start = 163
 end = 165
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 198
-key = 'C(DeclDoc { file: "src/class/usbtmc/usbtmc.h", start_line: 162 })'
-descriptor = "c decl doc at src/class/usbtmc/usbtmc.h:162"
-cost_tokens = 10
-cum_tokens = 8806
+position = 140
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 183 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:183"
+cost_tokens = 22
+cum_tokens = 7131
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 161
-end = 161
+path = "src/common/tusb_fifo.h"
+start = 180
+end = 182
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 199
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 323 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:323"
-cost_tokens = 53
-cum_tokens = 8859
+position = 141
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 222 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:222"
+cost_tokens = 22
+cum_tokens = 7153
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 323
-end = 327
+path = "src/common/tusb_fifo.h"
+start = 219
+end = 221
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 200
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 314 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:314"
-cost_tokens = 54
-cum_tokens = 8913
+position = 142
+key = 'C(Decl { file: "src/common/tusb_fifo.h", start_line: 119 })'
+descriptor = "c decl at src/common/tusb_fifo.h:119"
+cost_tokens = 143
+cum_tokens = 7296
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 314
-end = 319
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 201
-key = 'C(Includes { file: "src/class/usbtmc/usbtmc.h" })'
-descriptor = "c includes in src/class/usbtmc/usbtmc.h"
-cost_tokens = 13
-cum_tokens = 8926
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 202
-key = 'C(AggregateMemberGroup { file: "src/class/usbtmc/usbtmc.h", start_line: 274, group_start_line: 292 })'
-descriptor = "c aggregate member group at src/class/usbtmc/usbtmc.h:274 group 292"
-cost_tokens = 27
-cum_tokens = 8953
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 292
-end = 293
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 203
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 118 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:118"
-cost_tokens = 66
-cum_tokens = 9019
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 118
+path = "src/common/tusb_fifo.h"
+start = 119
 end = 123
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 125
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 128
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
 [[batches]]
-position = 204
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 128 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:128"
-cost_tokens = 66
-cum_tokens = 9085
+position = 143
+key = 'C(Includes { file: "src/common/tusb_fifo.h" })'
+descriptor = "c includes in src/common/tusb_fifo.h"
+cost_tokens = 25
+cum_tokens = 7321
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
+path = "src/common/tusb_fifo.h"
+start = 35
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 217 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:217"
+cost_tokens = 32
+cum_tokens = 7353
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 215
+end = 216
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 209 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:209"
+cost_tokens = 34
+cum_tokens = 7387
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 205
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 187 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:187"
+cost_tokens = 42
+cum_tokens = 7429
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 185
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 200 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:200"
+cost_tokens = 48
+cum_tokens = 7477
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 196
+end = 199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'C(DeclDoc { file: "src/common/tusb_fifo.h", start_line: 42 })'
+descriptor = "c decl doc at src/common/tusb_fifo.h:42"
+cost_tokens = 45
+cum_tokens = 7522
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_fifo.h"
+start = 38
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'C(Decl { file: "src/typec/tcd.h", start_line: 51 })'
+descriptor = "c decl at src/typec/tcd.h:51"
+cost_tokens = 121
+cum_tokens = 7643
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 51
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 55
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 60
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'C(Includes { file: "src/typec/tcd.h" })'
+descriptor = "c includes in src/typec/tcd.h"
+cost_tokens = 49
+cum_tokens = 7692
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typec/tcd.h"
+start = 33
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'C(DeclBody { file: "src/common/tusb_common.h", start_line: 118 })'
+descriptor = "c decl body at src/common/tusb_common.h:118"
+cost_tokens = 115
+cum_tokens = 7807
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 119
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 124
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
 start = 128
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/common/tusb_common.h"
+start = 132
 end = 133
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 205
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 240 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:240"
-cost_tokens = 71
-cum_tokens = 9156
+position = 152
+key = 'Markdown(Section { file: "README.rst", section_index: 1, reference_shaped: false })'
+descriptor = "README.rst section #1"
+cost_tokens = 11
+cum_tokens = 7818
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 240
-end = 247
+path = "README.rst"
+start = 20
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.rst"
+start = 31
+end = 33
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 206
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 331 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:331"
-cost_tokens = 83
-cum_tokens = 9239
+position = 153
+key = 'C(DeclDoc { file: "src/common/tusb_verify.h", start_line: 104 })'
+descriptor = "c decl doc at src/common/tusb_verify.h:104"
+cost_tokens = 59
+cum_tokens = 7877
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 331
-end = 339
+path = "src/common/tusb_verify.h"
+start = 99
+end = 103
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 207
-key = 'C(AggregateMemberGroup { file: "src/class/usbtmc/usbtmc.h", start_line: 274, group_start_line: 287 })'
-descriptor = "c aggregate member group at src/class/usbtmc/usbtmc.h:274 group 287"
-cost_tokens = 45
-cum_tokens = 9284
+position = 154
+key = 'Fs(DirListing { dir: "docs/reference" })'
+descriptor = "listing of 'docs/reference'"
+cost_tokens = 37
+cum_tokens = 7914
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 287
-end = 290
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "docs/reference"
+entries = ["architecture.rst", "boards.rst", "concurrency.rst", "dependencies.rst", "glossary.rst", "index.rst", "usb_concepts.rst"]
 
 [[batches]]
-position = 208
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 57 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:57"
-cost_tokens = 102
-cum_tokens = 9386
+position = 155
+key = 'Fs(DirListing { dir: "docs/assets" })'
+descriptor = "listing of 'docs/assets'"
+cost_tokens = 14
+cum_tokens = 7928
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 57
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "docs/assets"
+entries = ["adafruit_logo.svg", "logo.svg", "stack.svg"]
 
 [[batches]]
-position = 209
-key = 'C(DeclDoc { file: "src/class/usbtmc/usbtmc.h", start_line: 57 })'
-descriptor = "c decl doc at src/class/usbtmc/usbtmc.h:57"
-cost_tokens = 23
-cum_tokens = 9409
+position = 156
+key = 'Fs(DirListing { dir: "docs/_static" })'
+descriptor = "listing of 'docs/_static'"
+cost_tokens = 4
+cum_tokens = 7932
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/_static"
+entries = ["custom.css"]
+
+[[batches]]
+position = 157
+key = 'C(DeclNames { file: "src/host/hcd.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/host/hcd.h"
+cost_tokens = 604
+cum_tokens = 8536
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
+path = "src/host/hcd.h"
 start = 56
 end = 56
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 210
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 48 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:48"
-cost_tokens = 105
-cum_tokens = 9514
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 48
-end = 54
+path = "src/host/hcd.h"
+start = 65
+end = 65
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 211
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 154 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:154"
-cost_tokens = 107
-cum_tokens = 9621
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 98
+end = 98
 
-[batches.content]
-kind = "lines"
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 154
+path = "src/host/hcd.h"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 160
 end = 160
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 212
-key = 'C(Decl { file: "src/class/usbtmc/usbtmc.h", start_line: 73 })'
-descriptor = "c decl at src/class/usbtmc/usbtmc.h:73"
-cost_tokens = 108
-cum_tokens = 9729
-
-[batches.content]
-kind = "lines"
+kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 73
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 213
-key = 'C(DeclDoc { file: "src/class/usbtmc/usbtmc.h", start_line: 73 })'
-descriptor = "c decl doc at src/class/usbtmc/usbtmc.h:73"
-cost_tokens = 26
-cum_tokens = 9755
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/class/usbtmc/usbtmc.h"
-start = 71
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 214
-key = 'C(DeclNames { file: "src/portable/ehci/ehci.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/portable/ehci/ehci.h"
-cost_tokens = 90
-cum_tokens = 9845
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 258
-end = 258
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 280
-end = 280
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 286
-end = 286
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 294
-end = 294
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 311
-end = 311
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 417
-end = 417
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 52
-end = 52
+path = "src/host/hcd.h"
+start = 163
+end = 163
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 60
-end = 60
+path = "src/host/hcd.h"
+start = 166
+end = 166
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 68
-end = 68
+path = "src/host/hcd.h"
+start = 170
+end = 170
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 75
-end = 75
+path = "src/host/hcd.h"
+start = 173
+end = 173
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 281
-end = 281
+path = "src/host/hcd.h"
+start = 176
+end = 176
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 287
-end = 287
+path = "src/host/hcd.h"
+start = 183
+end = 183
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 295
-end = 295
+path = "src/host/hcd.h"
+start = 186
+end = 186
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 312
-end = 312
+path = "src/host/hcd.h"
+start = 198
+end = 198
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 418
-end = 418
+path = "src/host/hcd.h"
+start = 210
+end = 210
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 215
-key = 'C(Decl { file: "src/portable/ehci/ehci.h", start_line: 86 })'
-descriptor = "c decl at src/portable/ehci/ehci.h:86"
-cost_tokens = 11
-cum_tokens = 9856
+position = 158
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 98 })'
+descriptor = "c decl at src/host/hcd.h:98"
+cost_tokens = 0
+cum_tokens = 8536
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 86
-end = 86
+path = "src/host/hcd.h"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 102 })'
+descriptor = "c decl at src/host/hcd.h:102"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 106 })'
+descriptor = "c decl at src/host/hcd.h:106"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 113 })'
+descriptor = "c decl at src/host/hcd.h:113"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 116 })'
+descriptor = "c decl at src/host/hcd.h:116"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 119 })'
+descriptor = "c decl at src/host/hcd.h:119"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 122 })'
+descriptor = "c decl at src/host/hcd.h:122"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 125 })'
+descriptor = "c decl at src/host/hcd.h:125"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 128 })'
+descriptor = "c decl at src/host/hcd.h:128"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 131 })'
+descriptor = "c decl at src/host/hcd.h:131"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 138 })'
+descriptor = "c decl at src/host/hcd.h:138"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 142 })'
+descriptor = "c decl at src/host/hcd.h:142"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 145 })'
+descriptor = "c decl at src/host/hcd.h:145"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 148 })'
+descriptor = "c decl at src/host/hcd.h:148"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 151 })'
+descriptor = "c decl at src/host/hcd.h:151"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 159 })'
+descriptor = "c decl at src/host/hcd.h:159"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 162 })'
+descriptor = "c decl at src/host/hcd.h:162"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 165 })'
+descriptor = "c decl at src/host/hcd.h:165"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 169 })'
+descriptor = "c decl at src/host/hcd.h:169"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 172 })'
+descriptor = "c decl at src/host/hcd.h:172"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 175 })'
+descriptor = "c decl at src/host/hcd.h:175"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 182 })'
+descriptor = "c decl at src/host/hcd.h:182"
+cost_tokens = 0
+cum_tokens = 8536
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 185 })'
+descriptor = "c decl at src/host/hcd.h:185"
+cost_tokens = 22
+cum_tokens = 8558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 185
+end = 186
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
+path = "src/host/hcd.h"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 181
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 197 })'
+descriptor = "c decl at src/host/hcd.h:197"
+cost_tokens = 22
+cum_tokens = 8580
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 197
+end = 198
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 199
+end = 199
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 182
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 122 })'
+descriptor = "c decl doc at src/host/hcd.h:122"
+cost_tokens = 8
+cum_tokens = 8588
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
 start = 121
 end = 121
 
@@ -6090,105 +5268,1137 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 216
-key = 'C(Decl { file: "src/portable/ehci/ehci.h", start_line: 311 })'
-descriptor = "c decl at src/portable/ehci/ehci.h:311"
-cost_tokens = 11
-cum_tokens = 9867
+position = 183
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 125 })'
+descriptor = "c decl doc at src/host/hcd.h:125"
+cost_tokens = 9
+cum_tokens = 8597
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 311
-end = 311
+path = "src/host/hcd.h"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 128 })'
+descriptor = "c decl doc at src/host/hcd.h:128"
+cost_tokens = 9
+cum_tokens = 8606
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 162 })'
+descriptor = "c decl doc at src/host/hcd.h:162"
+cost_tokens = 9
+cum_tokens = 8615
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 119 })'
+descriptor = "c decl doc at src/host/hcd.h:119"
+cost_tokens = 10
+cum_tokens = 8625
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 148 })'
+descriptor = "c decl doc at src/host/hcd.h:148"
+cost_tokens = 10
+cum_tokens = 8635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 185 })'
+descriptor = "c decl doc at src/host/hcd.h:185"
+cost_tokens = 12
+cum_tokens = 8647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 197 })'
+descriptor = "c decl doc at src/host/hcd.h:197"
+cost_tokens = 12
+cum_tokens = 8659
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 196
+end = 196
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 116 })'
+descriptor = "c decl doc at src/host/hcd.h:116"
+cost_tokens = 11
+cum_tokens = 8670
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 209 })'
+descriptor = "c decl at src/host/hcd.h:209"
+cost_tokens = 42
+cum_tokens = 8712
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 209
+end = 210
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 412
-end = 412
+path = "src/host/hcd.h"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 192
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 209 })'
+descriptor = "c decl doc at src/host/hcd.h:209"
+cost_tokens = 12
+cum_tokens = 8724
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 208
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 131 })'
+descriptor = "c decl doc at src/host/hcd.h:131"
+cost_tokens = 12
+cum_tokens = 8736
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 182 })'
+descriptor = "c decl doc at src/host/hcd.h:182"
+cost_tokens = 13
+cum_tokens = 8749
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 113 })'
+descriptor = "c decl doc at src/host/hcd.h:113"
+cost_tokens = 16
+cum_tokens = 8765
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 138 })'
+descriptor = "c decl doc at src/host/hcd.h:138"
+cost_tokens = 16
+cum_tokens = 8781
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 137
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 151 })'
+descriptor = "c decl doc at src/host/hcd.h:151"
+cost_tokens = 16
+cum_tokens = 8797
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 198
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 145 })'
+descriptor = "c decl doc at src/host/hcd.h:145"
+cost_tokens = 17
+cum_tokens = 8814
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 199
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 175 })'
+descriptor = "c decl doc at src/host/hcd.h:175"
+cost_tokens = 17
+cum_tokens = 8831
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 174
+end = 174
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 200
+key = 'C(Decl { file: "src/host/hcd.h", start_line: 56 })'
+descriptor = "c decl at src/host/hcd.h:56"
+cost_tokens = 71
+cum_tokens = 8902
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 56
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 61
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 201
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 56 })'
+descriptor = "c decl doc at src/host/hcd.h:56"
+cost_tokens = 25
+cum_tokens = 8927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 53
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 202
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 165 })'
+descriptor = "c decl doc at src/host/hcd.h:165"
+cost_tokens = 22
+cum_tokens = 8949
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 159 })'
+descriptor = "c decl doc at src/host/hcd.h:159"
+cost_tokens = 25
+cum_tokens = 8974
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 157
+end = 158
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 106 })'
+descriptor = "c decl doc at src/host/hcd.h:106"
+cost_tokens = 30
+cum_tokens = 9004
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 104
+end = 105
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 205
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 172 })'
+descriptor = "c decl doc at src/host/hcd.h:172"
+cost_tokens = 30
+cum_tokens = 9034
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 98 })'
+descriptor = "c decl doc at src/host/hcd.h:98"
+cost_tokens = 35
+cum_tokens = 9069
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 96
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 207
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 102 })'
+descriptor = "c decl doc at src/host/hcd.h:102"
+cost_tokens = 36
+cum_tokens = 9105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 100
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
+key = 'C(Includes { file: "src/host/hcd.h" })'
+descriptor = "c includes in src/host/hcd.h"
+cost_tokens = 38
+cum_tokens = 9143
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 30
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 209
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 169 })'
+descriptor = "c decl doc at src/host/hcd.h:169"
+cost_tokens = 46
+cum_tokens = 9189
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 167
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'C(DeclDoc { file: "src/host/hcd.h", start_line: 142 })'
+descriptor = "c decl doc at src/host/hcd.h:142"
+cost_tokens = 51
+cum_tokens = 9240
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/host/hcd.h"
+start = 140
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'C(DeclNames { file: "src/device/usbd.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/device/usbd.h"
+cost_tokens = 390
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 140
+end = 140
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 212
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 63 })'
+descriptor = "c decl at src/device/usbd.h:63"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 213
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 67 })'
+descriptor = "c decl at src/device/usbd.h:67"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 214
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 73 })'
+descriptor = "c decl at src/device/usbd.h:73"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 215
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 83 })'
+descriptor = "c decl at src/device/usbd.h:83"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 216
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 86 })'
+descriptor = "c decl at src/device/usbd.h:86"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 86
+end = 86
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 217
-key = 'C(Decl { file: "src/portable/ehci/ehci.h", start_line: 417 })'
-descriptor = "c decl at src/portable/ehci/ehci.h:417"
-cost_tokens = 12
-cum_tokens = 9879
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 91 })'
+descriptor = "c decl at src/device/usbd.h:91"
+cost_tokens = 0
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 417
-end = 417
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 453
-end = 453
+path = "src/device/usbd.h"
+start = 91
+end = 91
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 218
-key = 'C(AggregateMemberGroup { file: "src/portable/ehci/ehci.h", start_line: 86, group_start_line: 88 })'
-descriptor = "c aggregate member group at src/portable/ehci/ehci.h:86 group 88"
-cost_tokens = 11
-cum_tokens = 9890
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 100 })'
+descriptor = "c decl at src/device/usbd.h:100"
+cost_tokens = 0
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 88
-end = 88
+path = "src/device/usbd.h"
+start = 100
+end = 100
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 219
-key = 'C(DeclDoc { file: "src/portable/ehci/ehci.h", start_line: 417 })'
-descriptor = "c decl doc at src/portable/ehci/ehci.h:417"
-cost_tokens = 22
-cum_tokens = 9912
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 107 })'
+descriptor = "c decl at src/device/usbd.h:107"
+cost_tokens = 0
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 414
-end = 416
+path = "src/device/usbd.h"
+start = 107
+end = 107
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 220
-key = 'C(AggregateMemberGroup { file: "src/portable/ehci/ehci.h", start_line: 86, group_start_line: 120 })'
-descriptor = "c aggregate member group at src/portable/ehci/ehci.h:86 group 120"
-cost_tokens = 12
-cum_tokens = 9924
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 110 })'
+descriptor = "c decl at src/device/usbd.h:110"
+cost_tokens = 0
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
+path = "src/device/usbd.h"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 221
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 114 })'
+descriptor = "c decl at src/device/usbd.h:114"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 222
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 117 })'
+descriptor = "c decl at src/device/usbd.h:117"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 223
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 120 })'
+descriptor = "c decl at src/device/usbd.h:120"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
 start = 120
 end = 120
 
@@ -6196,37 +6406,485 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 221
-key = 'C(Decl { file: "src/portable/ehci/ehci.h", start_line: 51 })'
-descriptor = "c decl at src/portable/ehci/ehci.h:51"
-cost_tokens = 33
-cum_tokens = 9957
+position = 224
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 131 })'
+descriptor = "c decl at src/device/usbd.h:131"
+cost_tokens = 0
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 51
-end = 54
+path = "src/device/usbd.h"
+start = 131
+end = 131
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 222
-key = 'C(DeclDoc { file: "src/portable/ehci/ehci.h", start_line: 51 })'
-descriptor = "c decl doc at src/portable/ehci/ehci.h:51"
-cost_tokens = 13
-cum_tokens = 9970
+position = 225
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 135 })'
+descriptor = "c decl at src/device/usbd.h:135"
+cost_tokens = 0
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/portable/ehci/ehci.h"
-start = 50
-end = 50
+path = "src/device/usbd.h"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 139 })'
+descriptor = "c decl at src/device/usbd.h:139"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 142 })'
+descriptor = "c decl at src/device/usbd.h:142"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 228
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 147 })'
+descriptor = "c decl at src/device/usbd.h:147"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 229
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 150 })'
+descriptor = "c decl at src/device/usbd.h:150"
+cost_tokens = 0
+cum_tokens = 9630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 230
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 123 })'
+descriptor = "c decl at src/device/usbd.h:123"
+cost_tokens = 10
+cum_tokens = 9640
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 123
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 231
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 94 })'
+descriptor = "c decl at src/device/usbd.h:94"
+cost_tokens = 11
+cum_tokens = 9651
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 94
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 232
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 51 })'
+descriptor = "c decl at src/device/usbd.h:51"
+cost_tokens = 25
+cum_tokens = 9676
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 51
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 233
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 37 })'
+descriptor = "c decl at src/device/usbd.h:37"
+cost_tokens = 33
+cum_tokens = 9709
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 37
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 234
+key = 'C(DeclBody { file: "src/device/usbd.h", start_line: 94 })'
+descriptor = "c decl body at src/device/usbd.h:94"
+cost_tokens = 12
+cum_tokens = 9721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 37 })'
+descriptor = "c decl doc at src/device/usbd.h:37"
+cost_tokens = 12
+cum_tokens = 9733
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 110 })'
+descriptor = "c decl doc at src/device/usbd.h:110"
+cost_tokens = 10
+cum_tokens = 9743
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 120 })'
+descriptor = "c decl doc at src/device/usbd.h:120"
+cost_tokens = 11
+cum_tokens = 9754
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 123 })'
+descriptor = "c decl doc at src/device/usbd.h:123"
+cost_tokens = 13
+cum_tokens = 9767
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 239
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 86 })'
+descriptor = "c decl doc at src/device/usbd.h:86"
+cost_tokens = 13
+cum_tokens = 9780
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 117 })'
+descriptor = "c decl doc at src/device/usbd.h:117"
+cost_tokens = 13
+cum_tokens = 9793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 150 })'
+descriptor = "c decl doc at src/device/usbd.h:150"
+cost_tokens = 13
+cum_tokens = 9806
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
+key = 'C(Includes { file: "src/device/usbd.h" })'
+descriptor = "c includes in src/device/usbd.h"
+cost_tokens = 13
+cum_tokens = 9819
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 142 })'
+descriptor = "c decl doc at src/device/usbd.h:142"
+cost_tokens = 15
+cum_tokens = 9834
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 244
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 94 })'
+descriptor = "c decl doc at src/device/usbd.h:94"
+cost_tokens = 17
+cum_tokens = 9851
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 245
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 107 })'
+descriptor = "c decl doc at src/device/usbd.h:107"
+cost_tokens = 14
+cum_tokens = 9865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 100 })'
+descriptor = "c decl doc at src/device/usbd.h:100"
+cost_tokens = 17
+cum_tokens = 9882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 247
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 131 })'
+descriptor = "c decl doc at src/device/usbd.h:131"
+cost_tokens = 18
+cum_tokens = 9900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 248
+key = 'C(Decl { file: "src/device/usbd.h", start_line: 42 })'
+descriptor = "c decl at src/device/usbd.h:42"
+cost_tokens = 69
+cum_tokens = 9969
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 42
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
+key = 'C(DeclDoc { file: "src/device/usbd.h", start_line: 135 })'
+descriptor = "c decl doc at src/device/usbd.h:135"
+cost_tokens = 26
+cum_tokens = 9995
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/device/usbd.h"
+start = 133
+end = 134
 
 [batches.content.spans.render]
 kind = "full"

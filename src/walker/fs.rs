@@ -204,7 +204,60 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    mix_signals(cat, fu, ztu, depth) * small_listing_factor * fanout
+    // Catalog-child suppression: when the parent is a high-fanout
+    // source-inventory catalog, its own listing already names every child,
+    // so each child's (near-identical) listing is redundant reference
+    // detail. Without this, monaco's `src/languages/definitions/` catalog
+    // (82 language dirs) spends ~1.2K of the 3K budget on 82 two-file
+    // child listings, displacing the sibling-catalog listings the NS
+    // ranks next (features/, deprecated/, build/). Strong deferral rather
+    // than omission so the children stay reachable at large budgets.
+    let catalog_child_factor = if parent_is_high_fanout_catalog(dir, ctx) {
+        CATALOG_CHILD_LISTING_SUPPRESSION
+    } else {
+        1.0
+    };
+    mix_signals(cat, fu, ztu, depth) * small_listing_factor * fanout * catalog_child_factor
+}
+
+/// Min child-directory count for a parent to count as a "catalog" whose
+/// per-child listings are redundant with its own listing.
+const CATALOG_PARENT_MIN_CHILD_DIRS: usize = 10;
+/// Deferral multiplier applied to a redundant catalog child's listing —
+/// low enough to push it past the primary budget, non-zero so it stays
+/// reachable at large budgets.
+const CATALOG_CHILD_LISTING_SUPPRESSION: f64 = 0.05;
+
+/// True when `dir`'s parent is a high-fanout source-inventory catalog:
+/// a directory of many uniform child dirs (monaco's `definitions/`,
+/// tinyusb's `portable/`) whose own listing enumerates every child.
+/// Named `src`/`lib`/`pkg` roots and package module dirs (with an
+/// `index.*`/`__init__.py`/`mod.rs` entrypoint) are deliberately NOT
+/// catalogs — their children are first-class modules, not catalog leaves.
+fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
+    let Some(parent) = dir.parent() else {
+        return false;
+    };
+    let parent_source_dir = is_source_dir(parent) || is_go_pkg_wrapper(parent);
+    if parent_source_dir || is_module_source_dir(parent) {
+        return false;
+    }
+    let under_source_ancestor = has_root_adjacent_source_ancestor(parent, ctx);
+    if ctx.non_essential_factor(parent) >= 1.0 && !under_source_ancestor {
+        return false;
+    }
+    if !is_source_inventory_dir(parent, ctx) {
+        return false;
+    }
+    child_dir_count(parent) >= CATALOG_PARENT_MIN_CHILD_DIRS
+}
+
+/// Count of immediate subdirectories of `dir`.
+fn child_dir_count(dir: &Path) -> usize {
+    list_dir(dir)
+        .values()
+        .filter(|kind| matches!(kind, EntryKind::Directory))
+        .count()
 }
 
 /// Damp deeply-nested tiny directory listings — they're redundant

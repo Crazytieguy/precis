@@ -1,7 +1,7 @@
 fixture = "superstruct"
 budget = 10000
-cumulative_tokens = 9939
-batch_count = 168
+cumulative_tokens = 9922
+batch_count = 147
 
 [[batches]]
 position = 1
@@ -4091,262 +4091,10 @@ entries = ["any", "array", "assign", "bigint", "boolean", "coerce", "date", "def
 
 [[batches]]
 position = 120
-key = 'Fs(DirListing { dir: "test/validation/max" })'
-descriptor = "listing of 'test/validation/max'"
-cost_tokens = 18
-cum_tokens = 7981
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/max"
-entries = ["invalid-exclusive.ts", "invalid.ts", "valid-inclusive.ts", "valid.ts"]
-
-[[batches]]
-position = 121
-key = 'Fs(DirListing { dir: "test/validation/min" })'
-descriptor = "listing of 'test/validation/min'"
-cost_tokens = 18
-cum_tokens = 7999
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/min"
-entries = ["invalid-exclusive.ts", "invalid.ts", "valid-inclusive.ts", "valid.ts"]
-
-[[batches]]
-position = 122
-key = 'Fs(DirListing { dir: "test/validation/assign" })'
-descriptor = "listing of 'test/validation/assign'"
-cost_tokens = 20
-cum_tokens = 8019
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/assign"
-entries = ["invalid-object.ts", "invalid-type.ts", "valid-object.ts", "valid-type.ts"]
-
-[[batches]]
-position = 123
-key = 'Fs(DirListing { dir: "test/validation/intersection" })'
-descriptor = "listing of 'test/validation/intersection'"
-cost_tokens = 20
-cum_tokens = 8039
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/intersection"
-entries = ["invalid-refinement.ts", "invalid.ts", "valid-refinement.ts", "valid.ts"]
-
-[[batches]]
-position = 124
-key = 'Fs(DirListing { dir: "test/validation/refine" })'
-descriptor = "listing of 'test/validation/refine'"
-cost_tokens = 23
-cum_tokens = 8062
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/refine"
-entries = ["invalid-multiple-refinements.ts", "invalid-shorthand.ts", "invalid.ts", "valid.ts"]
-
-[[batches]]
-position = 125
-key = 'Fs(DirListing { dir: "test/validation/dynamic" })'
-descriptor = "listing of 'test/validation/dynamic'"
-cost_tokens = 24
-cum_tokens = 8086
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/dynamic"
-entries = ["invalid-reference.ts", "invalid.ts", "valid-reference.ts", "valid.ts", "with-refiners.ts"]
-
-[[batches]]
-position = 126
-key = 'Fs(DirListing { dir: "test/validation/record" })'
-descriptor = "listing of 'test/validation/record'"
-cost_tokens = 24
-cum_tokens = 8110
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/record"
-entries = ["invalid-array.ts", "invalid-property.ts", "invalid.ts", "valid-frozen.ts", "valid.ts"]
-
-[[batches]]
-position = 127
-key = 'Fs(DirListing { dir: "test/validation/map" })'
-descriptor = "listing of 'test/validation/map'"
-cost_tokens = 25
-cum_tokens = 8135
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/map"
-entries = ["invalid-opaque.ts", "invalid-property.ts", "invalid.ts", "valid-opaque.ts", "valid.ts"]
-
-[[batches]]
-position = 128
-key = 'Fs(DirListing { dir: "test/validation/set" })'
-descriptor = "listing of 'test/validation/set'"
-cost_tokens = 25
-cum_tokens = 8160
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/set"
-entries = ["invalid-element.ts", "invalid-opaque.ts", "invalid.ts", "valid-opaque.ts", "valid.ts"]
-
-[[batches]]
-position = 129
-key = 'Fs(DirListing { dir: "test/validation/union" })'
-descriptor = "listing of 'test/validation/union'"
-cost_tokens = 25
-cum_tokens = 8185
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/union"
-entries = ["coercion-object.ts", "coercion-type.ts", "coercion.ts", "invalid.ts", "valid.ts"]
-
-[[batches]]
-position = 130
-key = 'Fs(DirListing { dir: "test/validation/defaulted" })'
-descriptor = "listing of 'test/validation/defaulted'"
-cost_tokens = 26
-cum_tokens = 8211
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/defaulted"
-entries = ["function.ts", "mixin.ts", "nested-double.ts", "nested.ts", "strict.ts", "value.ts"]
-
-[[batches]]
-position = 131
-key = 'Fs(DirListing { dir: "test/validation/nullable" })'
-descriptor = "listing of 'test/validation/nullable'"
-cost_tokens = 28
-cum_tokens = 8239
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/nullable"
-entries = ["invalid.ts", "valid-defined-nested.ts", "valid-defined.ts", "valid-null-nested.ts", "valid-null.ts"]
-
-[[batches]]
-position = 132
-key = 'Fs(DirListing { dir: "test/validation/deprecated" })'
-descriptor = "listing of 'test/validation/deprecated'"
-cost_tokens = 29
-cum_tokens = 8268
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/deprecated"
-entries = ["invalid-null.ts", "invalid-property.ts", "invalid.ts", "valid-property.ts", "valid-undefined.ts", "valid.ts"]
-
-[[batches]]
-position = 133
-key = 'Fs(DirListing { dir: "test/validation/optional" })'
-descriptor = "listing of 'test/validation/optional'"
-cost_tokens = 30
-cum_tokens = 8298
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/optional"
-entries = ["invalid.ts", "valid-defined-nested.ts", "valid-defined.ts", "valid-undefined-nested.ts", "valid-undefined.ts"]
-
-[[batches]]
-position = 134
-key = 'Fs(DirListing { dir: "test/validation/tuple" })'
-descriptor = "listing of 'test/validation/tuple'"
-cost_tokens = 33
-cum_tokens = 8331
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/tuple"
-entries = ["invalid-element-missing.ts", "invalid-element-unknown.ts", "invalid-element.ts", "invalid.ts", "valid-frozen.ts", "valid.ts"]
-
-[[batches]]
-position = 135
-key = 'Fs(DirListing { dir: "test/validation/type" })'
-descriptor = "listing of 'test/validation/type'"
-cost_tokens = 36
-cum_tokens = 8367
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/type"
-entries = ["invalid-array.ts", "invalid-property-nested.ts", "invalid-property.ts", "invalid.ts", "valid-frozen.ts", "valid-instance.ts", "valid.ts"]
-
-[[batches]]
-position = 136
-key = 'Fs(DirListing { dir: "test/validation/bigint" })'
-descriptor = "listing of 'test/validation/bigint'"
-cost_tokens = 13
-cum_tokens = 8380
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/bigint"
-entries = ["invalid-number.ts", "invalid.ts", "valid.ts"]
-
-[[batches]]
-position = 137
-key = 'Fs(DirListing { dir: "test/validation/date" })'
-descriptor = "listing of 'test/validation/date'"
-cost_tokens = 13
-cum_tokens = 8393
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/date"
-entries = ["invalid-date.ts", "invalid.ts", "valid.ts"]
-
-[[batches]]
-position = 138
 key = 'Markdown(Section { file: "docs/reference/coercions.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/reference/coercions.md section #0"
 cost_tokens = 60
-cum_tokens = 8453
+cum_tokens = 8023
 
 [batches.content]
 kind = "lines"
@@ -4368,67 +4116,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 139
-key = 'Fs(DirListing { dir: "test/validation/array" })'
-descriptor = "listing of 'test/validation/array'"
-cost_tokens = 37
-cum_tokens = 8490
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/array"
-entries = ["invalid-element-property.ts", "invalid-element.ts", "invalid-opaque.ts", "invalid.ts", "valid-frozen.ts", "valid-opaque.ts", "valid.ts"]
-
-[[batches]]
-position = 140
-key = 'Fs(DirListing { dir: "test/validation/coerce" })'
-descriptor = "listing of 'test/validation/coerce'"
-cost_tokens = 14
-cum_tokens = 8504
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/coerce"
-entries = ["changed.ts", "condition-not-met.ts", "unchanged.ts"]
-
-[[batches]]
-position = 141
-key = 'Fs(DirListing { dir: "test/validation/integer" })'
-descriptor = "listing of 'test/validation/integer'"
-cost_tokens = 14
-cum_tokens = 8518
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/integer"
-entries = ["invalid-decimal.ts", "invalid.ts", "valid.ts"]
-
-[[batches]]
-position = 142
-key = 'Fs(DirListing { dir: "test/validation/lazy" })'
-descriptor = "listing of 'test/validation/lazy'"
-cost_tokens = 14
-cum_tokens = 8532
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/lazy"
-entries = ["invalid.ts", "valid.ts", "with-refiners.ts"]
-
-[[batches]]
-position = 143
+position = 121
 key = 'Markdown(Section { file: "Readme.md", section_index: 3, reference_shaped: false })'
 descriptor = "Readme.md section #3"
 cost_tokens = 50
-cum_tokens = 8582
+cum_tokens = 8073
 
 [batches.content]
 kind = "lines"
@@ -4442,25 +4134,11 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 144
-key = 'Fs(DirListing { dir: "test/validation/empty" })'
-descriptor = "listing of 'test/validation/empty'"
-cost_tokens = 40
-cum_tokens = 8622
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/empty"
-entries = ["invalid-array.ts", "invalid-map.ts", "invalid-set.ts", "invalid-string.ts", "valid-array.ts", "valid-map.ts", "valid-set.ts", "valid-string.ts"]
-
-[[batches]]
-position = 145
+position = 122
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 185
-cum_tokens = 8807
+cum_tokens = 8258
 
 [batches.content]
 kind = "lines"
@@ -4474,25 +4152,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 146
-key = 'Fs(DirListing { dir: "test/validation/partial" })'
-descriptor = "listing of 'test/validation/partial'"
-cost_tokens = 41
-cum_tokens = 8848
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/partial"
-entries = ["composed.ts", "invalid-property-unknown.ts", "invalid-property.ts", "invalid.ts", "valid-empty.ts", "valid-full.ts", "valid-partial.ts", "valid-type.ts"]
-
-[[batches]]
-position = 147
+position = 123
 key = 'Fs(DirListing { dir: ".vscode" })'
 descriptor = "listing of '.vscode'"
 cost_tokens = 4
-cum_tokens = 8852
+cum_tokens = 8262
 
 [batches.content]
 kind = "fs"
@@ -4502,53 +4166,11 @@ parent = ".vscode"
 entries = ["settings.json"]
 
 [[batches]]
-position = 148
-key = 'Fs(DirListing { dir: "test/validation/any" })'
-descriptor = "listing of 'test/validation/any'"
-cost_tokens = 16
-cum_tokens = 8868
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/any"
-entries = ["valid-number.ts", "valid-string.ts", "valid-undefined.ts"]
-
-[[batches]]
-position = 149
-key = 'Fs(DirListing { dir: "test/validation/enums" })'
-descriptor = "listing of 'test/validation/enums'"
-cost_tokens = 16
-cum_tokens = 8884
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/enums"
-entries = ["invalid-numbers.ts", "invalid-strings.ts", "valid.ts"]
-
-[[batches]]
-position = 150
-key = 'Fs(DirListing { dir: "test/validation/unknown" })'
-descriptor = "listing of 'test/validation/unknown'"
-cost_tokens = 16
-cum_tokens = 8900
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/unknown"
-entries = ["valid-number.ts", "valid-string.ts", "valid-undefined.ts"]
-
-[[batches]]
-position = 151
+position = 124
 key = 'Markdown(Section { file: "Readme.md", section_index: 2, reference_shaped: false })'
 descriptor = "Readme.md section #2"
 cost_tokens = 55
-cum_tokens = 8955
+cum_tokens = 8317
 
 [batches.content]
 kind = "lines"
@@ -4562,39 +4184,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 152
-key = 'Fs(DirListing { dir: "test/validation/omit" })'
-descriptor = "listing of 'test/validation/omit'"
-cost_tokens = 45
-cum_tokens = 9000
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/omit"
-entries = ["invalid-element-nested.ts", "invalid-property-nested.ts", "invalid-property-unknown.ts", "invalid-property.ts", "invalid.ts", "valid-nested.ts", "valid-type.ts", "valid.ts"]
-
-[[batches]]
-position = 153
-key = 'Fs(DirListing { dir: "test/validation/pick" })'
-descriptor = "listing of 'test/validation/pick'"
-cost_tokens = 45
-cum_tokens = 9045
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation/pick"
-entries = ["invalid-element-nested.ts", "invalid-property-nested.ts", "invalid-property-unknown.ts", "invalid-property.ts", "invalid.ts", "valid-nested.ts", "valid-type.ts", "valid.ts"]
-
-[[batches]]
-position = 154
+position = 125
 key = 'Typescript(ExportDoc { file: "src/structs/coercions.ts", start_line: 79 })'
 descriptor = "export doc at src/structs/coercions.ts:79"
 cost_tokens = 77
-cum_tokens = 9122
+cum_tokens = 8394
 
 [batches.content]
 kind = "lines"
@@ -4608,11 +4202,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 155
+position = 126
 key = 'Typescript(ExportDoc { file: "src/structs/coercions.ts", start_line: 38 })'
 descriptor = "export doc at src/structs/coercions.ts:38"
 cost_tokens = 82
-cum_tokens = 9204
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -4626,11 +4220,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 156
+position = 127
 key = 'Fs(DirListing { dir: "test/typings" })'
 descriptor = "listing of 'test/typings'"
 cost_tokens = 183
-cum_tokens = 9387
+cum_tokens = 8659
 
 [batches.content]
 kind = "fs"
@@ -4640,11 +4234,11 @@ parent = "test/typings"
 entries = ["any.ts", "array.ts", "assign.ts", "bigint.ts", "boolean.ts", "coerce.ts", "date.ts", "defaulted.ts", "deprecated.ts", "describe.ts", "dynamic.ts", "empty.ts", "enums.ts", "func.ts", "infer.ts", "instance.ts", "integer.ts", "intersection.ts", "lazy.ts", "literal.ts", "map.ts", "max.ts", "min.ts", "never.ts", "nonempty.ts", "nullable.ts", "number.ts", "object.ts", "omit.ts", "optional.ts", "partial.ts", "pattern.ts", "pick.ts", "record.ts", "refine.ts", "regexp.ts", "set.ts", "size.ts", "string.ts", "struct.ts", "trimmed.ts", "tuple.ts", "type.ts", "union.ts", "unknown.ts"]
 
 [[batches]]
-position = 157
+position = 128
 key = 'Typescript(ExportNames { file: "src/structs/utilities.ts", chunk_index: 0, export_count: 13, type_only_export_count: 0 })'
 descriptor = "export names surface in src/structs/utilities.ts"
 cost_tokens = 193
-cum_tokens = 9580
+cum_tokens = 8852
 
 [batches.content]
 kind = "lines"
@@ -4842,11 +4436,11 @@ end = 222
 kind = "ellipsis"
 
 [[batches]]
-position = 158
+position = 129
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 60 })'
 descriptor = "export at src/structs/utilities.ts:60"
 cost_tokens = 0
-cum_tokens = 9580
+cum_tokens = 8852
 
 [batches.content]
 kind = "lines"
@@ -4868,11 +4462,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 130
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 71 })'
 descriptor = "export at src/structs/utilities.ts:71"
 cost_tokens = 0
-cum_tokens = 9580
+cum_tokens = 8852
 
 [batches.content]
 kind = "lines"
@@ -4894,11 +4488,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 160
+position = 131
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 140 })'
 descriptor = "export at src/structs/utilities.ts:140"
 cost_tokens = 0
-cum_tokens = 9580
+cum_tokens = 8852
 
 [batches.content]
 kind = "lines"
@@ -4920,11 +4514,11 @@ end = 141
 kind = "ellipsis"
 
 [[batches]]
-position = 161
+position = 132
 key = 'Typescript(ExportBody { file: "src/structs/utilities.ts", start_line: 71, body_start_line: 72 })'
 descriptor = "export body at src/structs/utilities.ts:71 body 72"
 cost_tokens = 17
-cum_tokens = 9597
+cum_tokens = 8869
 
 [batches.content]
 kind = "lines"
@@ -4938,11 +4532,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 162
+position = 133
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 106 })'
 descriptor = "export at src/structs/utilities.ts:106"
 cost_tokens = 33
-cum_tokens = 9630
+cum_tokens = 8902
 
 [batches.content]
 kind = "lines"
@@ -4964,11 +4558,11 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 163
+position = 134
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 197 })'
 descriptor = "export at src/structs/utilities.ts:197"
 cost_tokens = 37
-cum_tokens = 9667
+cum_tokens = 8939
 
 [batches.content]
 kind = "lines"
@@ -4990,11 +4584,11 @@ end = 200
 kind = "ellipsis"
 
 [[batches]]
-position = 164
+position = 135
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 80 })'
 descriptor = "export at src/structs/utilities.ts:80"
 cost_tokens = 38
-cum_tokens = 9705
+cum_tokens = 8977
 
 [batches.content]
 kind = "lines"
@@ -5016,11 +4610,11 @@ end = 84
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 136
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 221 })'
 descriptor = "export at src/structs/utilities.ts:221"
 cost_tokens = 43
-cum_tokens = 9748
+cum_tokens = 9020
 
 [batches.content]
 kind = "lines"
@@ -5042,11 +4636,11 @@ end = 225
 kind = "ellipsis"
 
 [[batches]]
-position = 166
+position = 137
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 171 })'
 descriptor = "export at src/structs/utilities.ts:171"
 cost_tokens = 44
-cum_tokens = 9792
+cum_tokens = 9064
 
 [batches.content]
 kind = "lines"
@@ -5068,11 +4662,11 @@ end = 175
 kind = "ellipsis"
 
 [[batches]]
-position = 167
+position = 138
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 17 })'
 descriptor = "export at src/structs/utilities.ts:17"
 cost_tokens = 45
-cum_tokens = 9837
+cum_tokens = 9109
 
 [batches.content]
 kind = "lines"
@@ -5086,11 +4680,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 168
+position = 139
 key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 21 })'
 descriptor = "export at src/structs/utilities.ts:21"
 cost_tokens = 102
-cum_tokens = 9939
+cum_tokens = 9211
 
 [batches.content]
 kind = "lines"
@@ -5099,6 +4693,150 @@ kind = "lines"
 path = "src/structs/utilities.ts"
 start = 21
 end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Typescript(ExportBody { file: "src/structs/utilities.ts", start_line: 60, body_start_line: 61 })'
+descriptor = "export body at src/structs/utilities.ts:60 body 61"
+cost_tokens = 65
+cum_tokens = 9276
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 61
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 71 })'
+descriptor = "export doc at src/structs/utilities.ts:71"
+cost_tokens = 26
+cum_tokens = 9302
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 67
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 30 })'
+descriptor = "export at src/structs/utilities.ts:30"
+cost_tokens = 150
+cum_tokens = 9452
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 30
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Typescript(Export { file: "src/structs/utilities.ts", start_line: 44 })'
+descriptor = "export at src/structs/utilities.ts:44"
+cost_tokens = 182
+cum_tokens = 9634
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 44
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Typescript(ExportBody { file: "src/structs/utilities.ts", start_line: 80, body_start_line: 84 })'
+descriptor = "export body at src/structs/utilities.ts:80 body 84"
+cost_tokens = 119
+cum_tokens = 9753
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 84
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 80 })'
+descriptor = "export doc at src/structs/utilities.ts:80"
+cost_tokens = 55
+cum_tokens = 9808
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 75
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 171 })'
+descriptor = "export doc at src/structs/utilities.ts:171"
+cost_tokens = 57
+cum_tokens = 9865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 164
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Typescript(ExportDoc { file: "src/structs/utilities.ts", start_line: 221 })'
+descriptor = "export doc at src/structs/utilities.ts:221"
+cost_tokens = 57
+cum_tokens = 9922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 214
+end = 219
 
 [batches.content.spans.render]
 kind = "full"

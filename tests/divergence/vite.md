@@ -188,79 +188,67 @@ Score(3000)=0.470 I=0.727 C=0.304 ns_rows≤3K=14/42 (reached=6 partial=1 missin
 | ns | 6114 |  | 310 | EnvironmentModuleNode — class + key fields | 4.5 |  | 0.297 |
 | ns | 6319 |  | 205 | EnvironmentModuleGraph + ResolvedUrl | 4.6 | 4.5 | 0.293 |
 | walker |  | 6416 | 406 | listing of 'playground' |  |  | 0.296 |
-| walker |  | 6432 | 16 | listing of 'playground/devtools' |  |  | 0.296 |
-| walker |  | 6449 | 17 | listing of 'playground/css-lightningcss-proxy' |  |  | 0.296 |
-| walker |  | 6466 | 17 | listing of 'playground/css-lightningcss-root' |  |  | 0.296 |
-| walker |  | 6483 | 17 | listing of 'playground/hmr-root' |  |  | 0.296 |
-| walker |  | 6501 | 18 | listing of 'playground/client-reload' |  |  | 0.296 |
-| walker |  | 6521 | 20 | listing of 'playground/preserve-symlinks' |  |  | 0.296 |
-| walker |  | 6542 | 21 | listing of 'playground/base-conflict' |  |  | 0.296 |
 | ns | 6553 |  | 234 | TransformResult / TransformOptions / transformRequest sig | 4.7 |  | 0.290 |
-| walker |  | 6563 | 21 | listing of 'playground/dynamic-import-inline' |  |  | 0.290 |
-| walker |  | 6584 | 21 | listing of 'playground/ssr-alias' |  |  | 0.290 |
-| walker |  | 6605 | 21 | listing of 'playground/ssr-pug' |  |  | 0.290 |
-| walker |  | 6626 | 21 | listing of 'playground/ssr-wasm' |  |  | 0.290 |
-| walker |  | 6648 | 22 | listing of 'playground/build-old' |  |  | 0.290 |
-| walker |  | 6670 | 22 | listing of 'playground/cli' |  |  | 0.290 |
-| walker |  | 6692 | 22 | listing of 'playground/cli-module' |  |  | 0.290 |
-| walker |  | 6714 | 22 | listing of 'playground/object-hooks' |  |  | 0.290 |
-| walker |  | 6736 | 22 | listing of 'playground/proxy-hmr' |  |  | 0.290 |
+| walker |  | 6594 | 178 | headings outline in packages/plugin-legacy/README.md |  |  | 0.290 |
+| walker |  | 6605 | 11 | packages/plugin-legacy/README.md section #12 |  |  | 0.290 |
+| walker |  | 6616 | 11 | packages/plugin-legacy/README.md section #15 |  |  | 0.290 |
+| walker |  | 6630 | 14 | packages/plugin-legacy/README.md section #4 |  |  | 0.290 |
+| walker |  | 6644 | 14 | packages/plugin-legacy/README.md section #6 |  |  | 0.290 |
+| walker |  | 6658 | 14 | packages/plugin-legacy/README.md section #10 |  |  | 0.290 |
 | ns | 6747 |  | 194 | DevEnvironment class header | 4.8 |  | 0.285 |
-| walker |  | 6760 | 24 | listing of 'playground/backend-integration' |  |  | 0.285 |
-| walker |  | 6784 | 24 | listing of 'playground/forward-console' |  |  | 0.285 |
-| walker |  | 6808 | 24 | listing of 'playground/optimize-deps-no-discovery' |  |  | 0.285 |
-| walker |  | 6832 | 24 | listing of 'playground/ssr-wasm/src' |  |  | 0.285 |
-| walker |  | 6857 | 25 | listing of 'playground/ssr' |  |  | 0.285 |
-| walker |  | 6882 | 25 | listing of 'playground/tsconfig-json-load-error' |  |  | 0.285 |
-| walker |  | 6908 | 26 | listing of 'playground/environment-react-ssr' |  |  | 0.285 |
-| walker |  | 7086 | 178 | headings outline in packages/plugin-legacy/README.md |  |  | 0.285 |
-| walker |  | 7097 | 11 | packages/plugin-legacy/README.md section #12 |  |  | 0.285 |
-| walker |  | 7108 | 11 | packages/plugin-legacy/README.md section #15 |  |  | 0.285 |
-| walker |  | 7122 | 14 | packages/plugin-legacy/README.md section #4 |  |  | 0.285 |
-| walker |  | 7136 | 14 | packages/plugin-legacy/README.md section #6 |  |  | 0.285 |
-| walker |  | 7150 | 14 | packages/plugin-legacy/README.md section #10 |  |  | 0.285 |
-| ns | 7179 |  | 432 | module-runner/index.ts re-exports | 5.1 |  | 0.284 |
-| walker |  | 7335 | 185 | packages/plugin-legacy/README.md section #0 |  |  | 0.284 |
-| walker |  | 7348 | 13 | imports #8 in packages/vite/src/node/index.ts |  |  | 0.284 |
-| walker |  | 7377 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.285 |
+| walker |  | 6843 | 185 | packages/plugin-legacy/README.md section #0 |  |  | 0.285 |
+| walker |  | 6856 | 13 | imports #8 in packages/vite/src/node/index.ts |  |  | 0.285 |
+| walker |  | 6885 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.286 |
+| walker |  | 7042 | 157 | export names surface in packages/vite/src/node/optimizer/index.ts |  |  | 0.286 |
+| walker |  | 7061 | 19 | export at packages/vite/src/node/optimizer/index.ts:195 |  |  | 0.286 |
+| walker |  | 7082 | 21 | export at packages/vite/src/node/optimizer/index.ts:324 |  |  | 0.286 |
+| walker |  | 7109 | 27 | export at packages/vite/src/node/optimizer/index.ts:349 |  |  | 0.286 |
+| walker |  | 7158 | 49 | export at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.286 |
+| ns | 7179 |  | 432 | module-runner/index.ts re-exports | 5.1 |  | 0.285 |
+| walker |  | 7211 | 53 | export at packages/vite/src/node/optimizer/index.ts:366 |  |  | 0.285 |
+| walker |  | 7285 | 74 | export at packages/vite/src/node/optimizer/index.ts:49 |  |  | 0.285 |
+| walker |  | 7388 | 103 | export at packages/vite/src/node/optimizer/index.ts:205 |  |  | 0.285 |
+| walker |  | 7443 | 55 | export body at packages/vite/src/node/optimizer/index.ts:195 body 198 |  |  | 0.285 |
 | ns | 7465 |  | 286 | ModuleRunner class — header + public methods | 5.2 | 5.1 | 0.279 |
-| walker |  | 7534 | 157 | export names surface in packages/vite/src/node/optimizer/index.ts |  |  | 0.279 |
-| walker |  | 7553 | 19 | export at packages/vite/src/node/optimizer/index.ts:195 |  |  | 0.279 |
-| walker |  | 7574 | 21 | export at packages/vite/src/node/optimizer/index.ts:324 |  |  | 0.279 |
-| walker |  | 7601 | 27 | export at packages/vite/src/node/optimizer/index.ts:349 |  |  | 0.279 |
+| walker |  | 7599 | 156 | export at packages/vite/src/node/optimizer/index.ts:57 |  |  | 0.279 |
 | ns | 7608 |  | 143 | vite/src/shared/ + client/ + module-runner/ | 5.3 |  | 0.290 |
-| walker |  | 7650 | 49 | export at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.290 |
 | ns | 7686 |  | 78 | vite/src/node/ssr/ + optimizer/ listings | 5.4 |  | 0.290 |
-| walker |  | 7703 | 53 | export at packages/vite/src/node/optimizer/index.ts:366 |  |  | 0.290 |
-| walker |  | 7777 | 74 | export at packages/vite/src/node/optimizer/index.ts:49 |  |  | 0.290 |
-| walker |  | 7880 | 103 | export at packages/vite/src/node/optimizer/index.ts:205 |  |  | 0.290 |
-| walker |  | 7935 | 55 | export body at packages/vite/src/node/optimizer/index.ts:195 body 198 |  |  | 0.290 |
+| walker |  | 7797 | 198 | export at packages/vite/src/node/optimizer/index.ts:216 |  |  | 0.290 |
+| walker |  | 7906 | 109 | export body at packages/vite/src/node/optimizer/index.ts:349 body 353 |  |  | 0.290 |
 | ns | 8022 |  | 336 | Key default constants — ports + paths + regexes | 6.1 |  | 0.285 |
-| walker |  | 8091 | 156 | export at packages/vite/src/node/optimizer/index.ts:57 |  |  | 0.285 |
-| walker |  | 8289 | 198 | export at packages/vite/src/node/optimizer/index.ts:216 |  |  | 0.285 |
+| walker |  | 8139 | 233 | export at packages/vite/src/node/optimizer/index.ts:176 |  |  | 0.285 |
 | ns | 8295 |  | 273 | ROLLUP_HOOKS list | 6.2 |  | 0.279 |
-| walker |  | 8398 | 109 | export body at packages/vite/src/node/optimizer/index.ts:349 body 353 |  |  | 0.279 |
+| walker |  | 8297 | 158 | export body at packages/vite/src/node/optimizer/index.ts:324 body 327 |  |  | 0.279 |
 | ns | 8456 |  | 161 | utils.ts — top-asked function locations | 6.3 |  | 0.277 |
 | ns | 8609 |  | 153 | create-vite + plugin-legacy package layouts | 6.4 |  | 0.311 |
-| walker |  | 8631 | 233 | export at packages/vite/src/node/optimizer/index.ts:176 |  |  | 0.311 |
-| walker |  | 8789 | 158 | export body at packages/vite/src/node/optimizer/index.ts:324 body 327 |  |  | 0.311 |
+| walker |  | 8706 | 409 | export at packages/vite/src/node/optimizer/index.ts:236 |  |  | 0.311 |
+| walker |  | 8770 | 64 | export doc at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.311 |
 | ns | 8803 |  | 194 | create-vite — helpMessage + init() signature | 6.5 | 6.4 | 0.308 |
+| walker |  | 8832 | 62 | export names surface #2 in packages/vite/src/node/optimizer/index.ts |  |  | 0.308 |
+| walker |  | 8854 | 22 | export at packages/vite/src/node/optimizer/index.ts:1411 |  |  | 0.308 |
+| walker |  | 8889 | 35 | export at packages/vite/src/node/optimizer/index.ts:1365 |  |  | 0.308 |
 | ns | 8897 |  | 94 | plugin-legacy — exports + key helpers | 6.6 | 6.4 | 0.311 |
+| walker |  | 8924 | 35 | export at packages/vite/src/node/optimizer/index.ts:1374 |  |  | 0.311 |
+| walker |  | 8968 | 44 | export at packages/vite/src/node/optimizer/index.ts:1393 |  |  | 0.311 |
 | ns | 9081 |  | 184 | docs/guide/ + docs/config/ listings | 7.1 |  | 0.305 |
-| walker |  | 9198 | 409 | export at packages/vite/src/node/optimizer/index.ts:236 |  |  | 0.305 |
-| walker |  | 9262 | 64 | export doc at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.305 |
-| walker |  | 9324 | 62 | export names surface #2 in packages/vite/src/node/optimizer/index.ts |  |  | 0.305 |
+| walker |  | 9259 | 291 | export body at packages/vite/src/node/optimizer/index.ts:283 body 288 |  |  | 0.305 |
 | ns | 9336 |  | 255 | vite package.json — exports map + runtime deps | 7.2 |  | 0.301 |
-| walker |  | 9346 | 22 | export at packages/vite/src/node/optimizer/index.ts:1411 |  |  | 0.301 |
-| walker |  | 9381 | 35 | export at packages/vite/src/node/optimizer/index.ts:1365 |  |  | 0.301 |
-| walker |  | 9416 | 35 | export at packages/vite/src/node/optimizer/index.ts:1374 |  |  | 0.301 |
-| walker |  | 9460 | 44 | export at packages/vite/src/node/optimizer/index.ts:1393 |  |  | 0.301 |
+| walker |  | 9442 | 183 | export names surface #1 in packages/vite/src/node/optimizer/index.ts |  |  | 0.301 |
+| walker |  | 9442 | 0 | export at packages/vite/src/node/optimizer/index.ts:503 |  |  | 0.301 |
+| walker |  | 9442 | 0 | export at packages/vite/src/node/optimizer/index.ts:947 |  |  | 0.301 |
+| walker |  | 9464 | 22 | export at packages/vite/src/node/optimizer/index.ts:974 |  |  | 0.301 |
+| walker |  | 9486 | 22 | export at packages/vite/src/node/optimizer/index.ts:981 |  |  | 0.301 |
+| walker |  | 9511 | 25 | export at packages/vite/src/node/optimizer/index.ts:934 |  |  | 0.301 |
+| walker |  | 9538 | 27 | export at packages/vite/src/node/optimizer/index.ts:924 |  |  | 0.301 |
+| walker |  | 9568 | 30 | export at packages/vite/src/node/optimizer/index.ts:876 |  |  | 0.301 |
+| walker |  | 9599 | 31 | export at packages/vite/src/node/optimizer/index.ts:451 |  |  | 0.301 |
+| walker |  | 9632 | 33 | export at packages/vite/src/node/optimizer/index.ts:1101 |  |  | 0.301 |
+| walker |  | 9676 | 44 | export at packages/vite/src/node/optimizer/index.ts:479 |  |  | 0.301 |
+| walker |  | 9726 | 50 | export at packages/vite/src/node/optimizer/index.ts:382 |  |  | 0.301 |
 | ns | 9742 |  | 406 | playground/ E2E fixture directory listing | 7.3 |  | 0.362 |
-| walker |  | 9751 | 291 | export body at packages/vite/src/node/optimizer/index.ts:283 body 288 |  |  | 0.362 |
+| walker |  | 9788 | 62 | export at packages/vite/src/node/optimizer/index.ts:511 |  |  | 0.362 |
+| walker |  | 9833 | 45 | export doc at packages/vite/src/node/optimizer/index.ts:382 |  |  | 0.362 |
 | ns | 9871 |  | 129 | docs/guide/features.md — H2 headings | 7.4 |  | 0.360 |
-| walker |  | 9934 | 183 | export names surface #1 in packages/vite/src/node/optimizer/index.ts |  |  | 0.360 |
-| walker |  | 9934 | 0 | export at packages/vite/src/node/optimizer/index.ts:503 |  |  | 0.360 |
-| walker |  | 9934 | 0 | export at packages/vite/src/node/optimizer/index.ts:947 |  |  | 0.360 |
-| walker |  | 9956 | 22 | export at packages/vite/src/node/optimizer/index.ts:974 |  |  | 0.360 |
-| walker |  | 9978 | 22 | export at packages/vite/src/node/optimizer/index.ts:981 |  |  | 0.360 |
+| walker |  | 9882 | 49 | export doc at packages/vite/src/node/optimizer/index.ts:451 |  |  | 0.360 |
+| walker |  | 9943 | 61 | export doc at packages/vite/src/node/optimizer/index.ts:511 |  |  | 0.360 |
 | ns | 9999 |  | 128 | docs/guide/api-plugin.md — H2 headings | 7.5 |  | 0.357 |
