@@ -7,6 +7,7 @@ expression: rendered
 .package
 LICENSE
 README.md
+    …
     14→Neco is a C library that provides concurrency using coroutines.
     15→It's small & fast, and intended to make concurrent I/O & network programming 
     16→easy.
@@ -71,6 +72,7 @@ README.md
     …
     511→### Thread local runtime
     513→There can be no more than one scheduler per thread.
+    …
     579→## License
     581→Source code is available under the MIT [License](LICENSE).
 deps/
@@ -87,16 +89,6 @@ deps/
 docs/
     .gitignore
     API.md
-        3→# Neco C API
-        5→C API for the Neco coroutine library.
-        7→This document provides a detailed description of the functions and types in the
-        8→[neco.h](../neco.h) and [neco.c](../neco.c) source files for the Neco library.
-        10→For a more general overview please see the project 
-        11→[README](https://github.com/tidwall/neco). 
-        18→- [Channels](#channels)
-        19→- [Generators](#generators)
-        30→- [Time](#time)
-        31→- [Signals](#signals)
     README.md
         1→# Neco Documentation
         3→## [API.md](API.md)
@@ -143,6 +135,7 @@ neco.h
     5→// license that can be found in the LICENSE file.
     6→//
     7→// Neco -- Coroutine library for C
+    …
     12→#include <stdbool.h>
     13→#include <stdint.h>
     14→#include <sys/types.h>
@@ -152,6 +145,7 @@ neco.h
     18→#include <netdb.h>
     19→#include <sys/socket.h>
     20→#endif
+    …
     30→/// @defgroup BasicOperations Basic operations
     31→/// Neco provides standard operations for starting a coroutine, sleeping, 
     32→/// suspending, resuming, yielding to another coroutine, joining/waiting for
@@ -171,6 +165,7 @@ neco.h
     46→int64_t neco_getid(void);
     47→int64_t neco_lastid(void);
     48→int64_t neco_starterid(void);
+    …
     55→/// @defgroup Channels Channels
     56→/// Channels allow for sending and receiving values between coroutines.
     57→/// By default, sends and receives will block until the other side is ready.
@@ -195,6 +190,7 @@ neco.h
     77→int neco_chan_tryselect(int nchans, ...);
     78→int neco_chan_tryselectv(int nchans, neco_chan *chans[]);
     79→int neco_chan_case(neco_chan *chan, void *data);
+    …
     86→/// @defgroup Generators Generators
     87→/// A generator is a specialized iterator-bound coroutine that can produce a
     88→/// sequence of values to be iterated over.
@@ -209,6 +205,7 @@ neco.h
     98→int neco_gen_next(neco_gen *gen, void *data);
     99→int neco_gen_next_dl(neco_gen *gen, void *data, int64_t deadline);
     100→int neco_gen_close(neco_gen *gen);
+    …
     107→/// @defgroup Mutexes Mutexes
     108→/// A mutex is synchronization mechanism that blocks access to variables by
     109→/// multiple coroutines at once. This enforces exclusive access by a coroutine
@@ -221,8 +218,10 @@ neco.h
     118→int neco_mutex_lock(neco_mutex *mutex);
     119→int neco_mutex_lock_dl(neco_mutex *mutex, int64_t deadline);
     120→int neco_mutex_trylock(neco_mutex *mutex);
+    …
     424→#include <stdio.h>
     425→#include <stdlib.h>
+    …
 tests/
     README.md
     bench.c

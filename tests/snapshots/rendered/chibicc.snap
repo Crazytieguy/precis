@@ -10,6 +10,7 @@ README.md
     3→(The old master has moved to
     4→[historical/old](https://github.com/rui314/chibicc/tree/historical/old)
     5→branch. This is a new one uploaded in September 2020.)
+    …
     55→## Status
     …
     93→## Internals
@@ -28,6 +29,7 @@ README.md
     …
 chibicc.h
     1→#define _POSIX_C_SOURCE 200809L
+    …
     21→#define MAX(x, y) ((x) < (y) ? (y) : (x))
     22→#define MIN(x, y) ((x) < (y) ? (x) : (y))
     …
@@ -98,6 +100,7 @@ chibicc.h
     106→Token *tokenize_file(char *filename);
     108→#define unreachable() \
     109→  error("internal error at %s:%d", __FILE__, __LINE__)
+    …
     115→char *search_include_paths(char *filename);
     116→void init_macros(void);
     117→void define_macro(char *name, char *buf);
@@ -113,14 +116,18 @@ chibicc.h
     131→  Token *tok;    // representative token
     132→  bool is_local; // local or global/function
     133→  int align;     // alignment
+    …
     136→  int offset;
+    …
     139→  bool is_function;
     140→  bool is_definition;
     141→  bool is_static;
+    …
     144→  bool is_tentative;
     145→  bool is_tls;
     146→  char *init_data;
     147→  Relocation *rel;
+    …
     150→  bool is_inline;
     151→  Obj *params;
     152→  Node *body;
@@ -128,6 +135,7 @@ chibicc.h
     154→  Obj *va_area;
     155→  Obj *alloca_bottom;
     156→  int stack_size;
+    …
     159→  bool is_live;
     160→  bool is_root;
     161→  StringArray refs;
@@ -144,18 +152,7 @@ chibicc.h
     173→};
     175→// AST node
     176→typedef enum {
-    177→  ND_NULL_EXPR, // Do nothing
-    178→  ND_ADD,       // +
-    179→  ND_SUB,       // -
-    180→  ND_MUL,       // *
-    181→  ND_DIV,       // /
-    182→  ND_NEG,       // unary -
-    183→  ND_MOD,       // %
-    184→  ND_BITAND,    // &
-    185→  ND_BITOR,     // |
-    186→  ND_BITXOR,    // ^
-    187→  ND_SHL,       // <<
-    188→  ND_SHR,       // >>
+    …
     225→} NodeKind;
     227→// AST node type
     228→struct Node {
@@ -165,33 +162,46 @@ chibicc.h
     232→  Token *tok;    // Representative token
     234→  Node *lhs;     // Left-hand side
     235→  Node *rhs;     // Right-hand side
+    …
     238→  Node *cond;
     239→  Node *then;
     240→  Node *els;
     241→  Node *init;
     242→  Node *inc;
+    …
     245→  char *brk_label;
     246→  char *cont_label;
+    …
     249→  Node *body;
+    …
     252→  Member *member;
+    …
     255→  Type *func_ty;
     256→  Node *args;
     257→  bool pass_by_stack;
     258→  Obj *ret_buffer;
+    …
     261→  char *label;
     262→  char *unique_label;
     263→  Node *goto_next;
+    …
     266→  Node *case_next;
     267→  Node *default_case;
+    …
     270→  long begin;
     271→  long end;
+    …
     274→  char *asm_str;
+    …
     277→  Node *cas_addr;
     278→  Node *cas_old;
     279→  Node *cas_new;
+    …
     282→  Obj *atomic_addr;
     283→  Node *atomic_expr;
+    …
     286→  Obj *var;
+    …
     289→  int64_t val;
     290→  long double fval;
     291→};
@@ -224,15 +234,21 @@ chibicc.h
     324→  bool is_unsigned;   // unsigned or signed
     325→  bool is_atomic;     // true if _Atomic
     326→  Type *origin;       // for type compatibility check
+    …
     336→  Type *base;
+    …
     339→  Token *name;
     340→  Token *name_pos;
+    …
     343→  int array_len;
+    …
     346→  Node *vla_len; // # of elements
     347→  Obj *vla_size; // sizeof() value
+    …
     350→  Member *members;
     351→  bool is_flexible;
     352→  bool is_packed;
+    …
     355→  Type *return_ty;
     356→  Type *params;
     357→  bool is_variadic;
@@ -269,11 +285,57 @@ main.c
 parse.c
 preprocess.c
 strings.c
-    3→void strarray_push(StringArray *arr, char *s) {
-    …
-    20→char *format(char *fmt, ...) {
-    …
 test/
+    alignof.c
+    alloca.c
+    arith.c
+    asm.c
+    atomic.c
+    attribute.c
+    bitfield.c
+    builtin.c
+    cast.c
+    common
+    commonsym.c
+    compat.c
+    complit.c
+    const.c
+    constexpr.c
+    control.c
+    decl.c
+    driver.sh
+    enum.c
+    extern.c
+    float.c
+    function.c
+    generic.c
+    include1.h
+    include2.h
+    include3.h
+        1→#define foo 3
+    include4.h
+    initializer.c
+    line.c
+    literal.c
+    macro.c
+    offsetof.c
+    pointer.c
+    pragma-once.c
+    sizeof.c
+    stdhdr.c
+    string.c
+    struct.c
+    test.h
+    thirdparty/
+    tls.c
+    typedef.c
+    typeof.c
+    unicode.c
+    union.c
+    usualconv.c
+    varargs.c
+    variable.c
+    vla.c
 tokenize.c
 type.c
 unicode.c

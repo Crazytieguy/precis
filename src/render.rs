@@ -148,8 +148,9 @@ impl RenderedTree {
         tokens
     }
 
-    /// Per-atom cost visitor — `tokens` chooses exact vs approx
-    /// counting; everything else is identical.
+    /// Marginal-cost visitor (per FS entry / per touched file) —
+    /// `tokens` chooses exact vs approx counting; everything else is
+    /// identical.
     fn visit_atom_costs<F, T>(&self, content: &BatchContent, tokens: T, mut visit: F)
     where
         F: FnMut(Cost),
@@ -248,8 +249,9 @@ impl RenderedTree {
         T: Fn(&str) -> usize,
     {
         let resolved = explode_spans(spans);
-        // Group by path so source/indent lookups happen once per file,
-        // preserving lex order to keep 1:1 with `atoms_from_content`.
+        // Group by path — costs are accounted per file (row deltas +
+        // synthesized-marker delta), so source/indent lookups and the
+        // anchor sets are built once per file.
         let mut by_path: BTreeMap<&Path, Vec<(usize, &Render)>> = BTreeMap::new();
         for (path, line, render) in &resolved {
             by_path
@@ -269,10 +271,14 @@ impl RenderedTree {
                 Some(TreeNode::File { content }) => Some(content),
                 _ => None,
             };
-            // Anchor sets before / after this batch, so Ellipsis rows
-            // that render_file will suppress cost nothing (and Ellipsis
-            // rows that were already suppressed deduct nothing).
+            // Signed per-file accounting: row deltas for the batch's
+            // lines (Ellipsis records never render rows of their own)
+            // plus the change in synthesized `…` marker rows — the
+            // renderer invariant means marker count is a function of
+            // the anchor set, so the delta is exact given the current
+            // tree state.
             let anchors_before = existing.map(content_anchor_lines).unwrap_or_default();
+            let has_records_before = existing.is_some_and(|c| !c.is_empty());
             let mut anchors_after = anchors_before.clone();
             anchors_after.extend(
                 entries
@@ -280,6 +286,8 @@ impl RenderedTree {
                     .filter(|(_, r)| !matches!(r, Render::Ellipsis))
                     .map(|(n, _)| *n),
             );
+            let mut d_tokens: isize = 0;
+            let mut d_bytes: isize = 0;
             for (line_num, render) in entries {
                 debug_assert!(
                     src_lines.is_empty() || line_num >= 1 && line_num <= src_lines.len(),
@@ -289,38 +297,32 @@ impl RenderedTree {
                     path.display(),
                 );
                 let source_line = src_lines.get(line_num - 1).copied().unwrap_or("");
-                let (new_tokens, new_bytes) = if matches!(render, Render::Ellipsis)
-                    && ellipsis_suppressed(line_num, &anchors_after, &src_lines)
-                {
-                    (0, 0)
-                } else {
+                if !matches!(render, Render::Ellipsis) {
                     let new_row = format_line_row(line_num, render, source_line, indent_depth);
-                    (tokens(&new_row), new_row.len())
-                };
-                let cost = if let Some(existing) = existing
+                    d_tokens += tokens(&new_row) as isize;
+                    d_bytes += new_row.len() as isize;
+                }
+                if let Some(existing) = existing
                     && let Some(old) = existing.get(&line_num)
+                    && !matches!(old.render, Render::Ellipsis)
                 {
-                    let (old_tokens, old_bytes) = if matches!(old.render, Render::Ellipsis)
-                        && ellipsis_suppressed(line_num, &anchors_before, &src_lines)
-                    {
-                        (0, 0)
-                    } else {
-                        let old_row =
-                            format_line_row(line_num, &old.render, source_line, indent_depth);
-                        (tokens(&old_row), old_row.len())
-                    };
-                    Cost {
-                        tokens: new_tokens.saturating_sub(old_tokens),
-                        bytes: new_bytes.saturating_sub(old_bytes),
-                    }
-                } else {
-                    Cost {
-                        tokens: new_tokens,
-                        bytes: new_bytes,
-                    }
-                };
-                visit(cost);
+                    let old_row = format_line_row(line_num, &old.render, source_line, indent_depth);
+                    d_tokens -= tokens(&old_row) as isize;
+                    d_bytes -= old_row.len() as isize;
+                }
             }
+            let markers_before =
+                marker_count(&anchors_before, has_records_before, &src_lines) as isize;
+            let markers_after = marker_count(&anchors_after, true, &src_lines) as isize;
+            if markers_after != markers_before {
+                let marker_row = format_marker_row(indent_depth);
+                d_tokens += (markers_after - markers_before) * tokens(&marker_row) as isize;
+                d_bytes += (markers_after - markers_before) * marker_row.len() as isize;
+            }
+            visit(Cost {
+                tokens: d_tokens.max(0) as usize,
+                bytes: d_bytes.max(0) as usize,
+            });
         }
     }
 
@@ -426,20 +428,28 @@ impl RenderedTree {
             .as_deref()
             .map(|s| s.lines().collect())
             .unwrap_or_default();
+        // Elision marking is a renderer invariant: a `…` row appears
+        // iff the adjacent elided source is non-blank (leading,
+        // between anchors, trailing). Author-supplied Ellipsis records
+        // are gap occupants, not rows — synthesis subsumes them.
         let anchors = content_anchor_lines(content);
-        for (number, record) in content {
-            if matches!(record.render, Render::Ellipsis)
-                && ellipsis_suppressed(*number, &anchors, &src_lines)
-            {
-                continue;
+        let marker_row = format_marker_row(indent_depth);
+        let mut prev = 0usize;
+        for &number in &anchors {
+            if number > prev + 1 && gap_has_content(&src_lines, prev + 1, number - 1) {
+                out.push_str(&marker_row);
             }
-            let source_line = src_lines.get(*number - 1).copied().unwrap_or("");
+            let source_line = src_lines.get(number - 1).copied().unwrap_or("");
             out.push_str(&format_line_row(
-                *number,
-                &record.render,
+                number,
+                &content[&number].render,
                 source_line,
                 indent_depth,
             ));
+            prev = number;
+        }
+        if gap_has_content(&src_lines, prev + 1, src_lines.len()) {
+            out.push_str(&marker_row);
         }
     }
 }
@@ -465,18 +475,45 @@ fn content_anchor_lines(content: &BTreeMap<usize, LineRecord>) -> BTreeSet<usize
         .collect()
 }
 
-/// Whether a bare `…` at `line` should be dropped: true when every
-/// source line in the elided gap around it (bounded by the nearest
-/// content-rendering lines, or the file edges) is blank — the
-/// line-number jump already conveys the gap, and a marker there would
-/// claim elided content where there is none.
-fn ellipsis_suppressed(line: usize, anchors: &BTreeSet<usize>, src_lines: &[&str]) -> bool {
-    let gap_start = anchors.range(..line).next_back().map_or(1, |p| p + 1);
-    let gap_end = anchors
-        .range(line + 1..)
-        .next()
-        .map_or(src_lines.len(), |n| n - 1);
-    (gap_start..=gap_end).all(|l| src_lines.get(l - 1).is_none_or(|t| t.trim().is_empty()))
+/// Whether the inclusive 1-based line range holds at least one
+/// non-blank source line. Empty or out-of-range → false.
+fn gap_has_content(src_lines: &[&str], start: usize, end: usize) -> bool {
+    (start..=end).any(|l| src_lines.get(l - 1).is_some_and(|t| !t.trim().is_empty()))
+}
+
+/// Number of `…` marker rows [`RenderedTree::render_file`] synthesizes
+/// for a file: one per elided gap (leading / between anchors /
+/// trailing) that contains non-blank source. Elision marking is a
+/// renderer invariant — `…` appears iff adjacent elided source is
+/// non-blank — so this is derived from the anchor set alone;
+/// author-supplied Ellipsis records never emit rows of their own.
+/// `has_records` distinguishes a file with records but no anchors
+/// (whole body elided → at most one marker) from a listing-only file
+/// (no records → no markers).
+fn marker_count(anchors: &BTreeSet<usize>, has_records: bool, src_lines: &[&str]) -> usize {
+    if !has_records {
+        return 0;
+    }
+    let mut count = 0;
+    let mut prev = 0usize;
+    for &a in anchors {
+        if a > prev + 1 && gap_has_content(src_lines, prev + 1, a - 1) {
+            count += 1;
+        }
+        prev = a;
+    }
+    if gap_has_content(src_lines, prev + 1, src_lines.len()) {
+        count += 1;
+    }
+    count
+}
+
+/// One synthesized elision marker row.
+fn format_marker_row(indent_depth: usize) -> String {
+    let mut s = INDENT_UNIT.repeat(indent_depth);
+    s.push('…');
+    s.push('\n');
+    s
 }
 
 fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize) -> String {
@@ -500,6 +537,10 @@ fn format_line_row(
     let mut s = INDENT_UNIT.repeat(indent_depth);
     match render {
         Render::Ellipsis => {
+            // Unreachable from render/cost paths — Ellipsis records
+            // never render rows of their own; `render_file` synthesizes
+            // gap markers instead. Defensive marker shape in release.
+            debug_assert!(false, "format_line_row called with Render::Ellipsis");
             s.push('…');
         }
         Render::Full => {
@@ -564,45 +605,82 @@ mod tests {
         }
     }
 
-    #[test]
-    fn render_blank_gap_ellipsis_suppressed_nonblank_gap_kept() {
+    /// Source used by the gap-marker tests: line 2 blank, lines 4-5 a
+    /// non-blank elided gap, line 6 the last line.
+    fn gap_fixture() -> (SourceCache, PathBuf) {
         let cache = SourceCache::new();
         let path = PathBuf::from(format!("{STUB_DIR}/f.c"));
-        // Line 2 is blank; lines 4-5 are a non-blank elided gap.
         cache.insert(
             path.clone(),
             Arc::from("fn a();\n\nfn b();\nhidden1\nhidden2\nfn c();\n"),
         );
+        (cache, path)
+    }
+
+    #[test]
+    fn render_gap_marker_synthesized_iff_elided_source_nonblank() {
+        let (cache, path) = gap_fixture();
         let mut tree = RenderedTree::new(stub_dir(), cache);
         tree.apply(&listing(&["f.c"]), BatchId::new(0), |_| true);
-        // Anchors first so each ellipsis's gap is bounded at cost time.
-        for (line, render) in [
-            (1, Render::Full),
-            (3, Render::Full),
-            (6, Render::Full),
-            (2, Render::Ellipsis),
-            (4, Render::Ellipsis),
-        ] {
-            let content = one_span(path.clone(), line, render.clone());
-            let cost = tree.marginal_cost(&content);
-            if line == 2 {
-                assert_eq!(cost.tokens, 0, "blank-gap ellipsis must cost nothing");
-                assert_eq!(cost.bytes, 0);
-            } else {
-                assert!(cost.tokens > 0, "line {line} should cost");
-            }
+        // Full lines only — no author Ellipsis records at all.
+        for line in [1, 3, 6] {
+            let content = one_span(path.clone(), line, Render::Full);
+            assert!(tree.marginal_cost(&content).tokens > 0);
             tree.apply(&content, BatchId::new(line), |_| true);
         }
         let out = tree.render();
-        // Blank-only gap (line 2): no marker. Non-blank gap (lines 4-5,
-        // with the Ellipsis record at 4): marker kept.
+        // Blank-only gap (line 2): no marker. Non-blank gap (4-5):
+        // marker synthesized despite no Ellipsis record.
         assert_eq!(out.matches('…').count(), 1, "output:\n{out}");
-        let ellipsis_row = out.lines().find(|l| l.trim() == "…");
-        assert!(ellipsis_row.is_some(), "output:\n{out}");
         let idx_b = out.find("3→fn b();").unwrap();
         let idx_marker = out.find('…').unwrap();
         let idx_c = out.find("6→fn c();").unwrap();
         assert!(idx_b < idx_marker && idx_marker < idx_c, "output:\n{out}");
+    }
+
+    #[test]
+    fn render_gap_marker_ellipsis_records_cost_nothing_and_never_duplicate() {
+        let (cache, path) = gap_fixture();
+        let mut tree = RenderedTree::new(stub_dir(), cache);
+        tree.apply(&listing(&["f.c"]), BatchId::new(0), |_| true);
+        for line in [1, 3, 6] {
+            tree.apply(
+                &one_span(path.clone(), line, Render::Full),
+                BatchId::new(line),
+                |_| true,
+            );
+        }
+        let before = tree.render();
+        // Author Ellipsis records inside blank (2) and non-blank (4)
+        // gaps: zero marginal cost, output byte-identical.
+        for line in [2, 4] {
+            let content = one_span(path.clone(), line, Render::Ellipsis);
+            let cost = tree.marginal_cost(&content);
+            assert_eq!(cost.tokens, 0, "ellipsis at {line} must cost nothing");
+            assert_eq!(cost.bytes, 0);
+            tree.apply(&content, BatchId::new(10 + line), |_| true);
+        }
+        assert_eq!(tree.render(), before);
+    }
+
+    #[test]
+    fn render_gap_marker_leading_and_trailing() {
+        let (cache, path) = gap_fixture();
+        let mut tree = RenderedTree::new(stub_dir(), cache);
+        tree.apply(&listing(&["f.c"]), BatchId::new(0), |_| true);
+        // Only line 3 rendered: elided source on both sides is
+        // non-blank (line 1; lines 4-6) → leading + trailing markers.
+        tree.apply(
+            &one_span(path.clone(), 3, Render::Full),
+            BatchId::new(1),
+            |_| true,
+        );
+        let out = tree.render();
+        assert_eq!(out.matches('…').count(), 2, "output:\n{out}");
+        let idx_row = out.find("3→fn b();").unwrap();
+        let first = out.find('…').unwrap();
+        let last = out.rfind('…').unwrap();
+        assert!(first < idx_row && idx_row < last, "output:\n{out}");
     }
 
     #[test]

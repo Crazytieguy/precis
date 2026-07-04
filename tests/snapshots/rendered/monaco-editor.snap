@@ -25,6 +25,7 @@ MAINTAINING.md
     …
 README.md
     1→# Monaco Editor
+    …
     8→The Monaco Editor is the fully featured code editor from [VS Code](https://github.com/microsoft/vscode). Check out the [VS Code docs](https://code.visualstudio.com/docs/editor/editingevolved) to see some of the supported features.
     10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
     12→## Try it out
@@ -56,7 +57,7 @@ README.md
     117→## Code of Conduct
     …
     121→## License
-    123→Licensed under the [MIT](https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt) License.
+    …
 SECURITY.md
 ThirdPartyNotices.txt
 build/
@@ -77,26 +78,33 @@ monaco-lsp-client/
     generator/
     package-lock.json
     package.json
+        …
         2→	"name": "@vscode/monaco-lsp-client",
         3→	"description": "description",
         4→	"authors": "vscode",
         5→	"version": "0.1.0",
         6→	"main": "out/index.js",
         7→	"types": "out/index.d.ts",
+        …
     rolldown.config.mjs
     src/
         adapters/
         index.ts
+            …
             5→export { MonacoLspClient, WebSocketTransport, createTransportToWorker, createTransportToIFrame };
         types.ts
         utils.ts
 package-lock.json
 package.json
+    …
     2→	"name": "monaco-editor",
     3→	"version": "0.55.1",
+    …
     5→	"private": true,
     6→	"description": "A browser based code editor",
+    …
     9→	"license": "MIT",
+    …
 samples/
 scripts/
     ci/
@@ -178,9 +186,9 @@ src/
         wordOperations/
         wordPartOperations/
     index.ts
+        …
         9→export { css, html, json, typescript, lsp };
     internal/
-        common/
     languages/
         definitions/
             _.contribution.ts
@@ -539,6 +547,7 @@ src/
                 tokenization.ts
                 workerManager.ts
             register.all.ts
+                …
                 6→export { css, html, json, typescript };
             typescript/
                 languageFeatures.ts
@@ -576,10 +585,13 @@ webpack-plugin/
         …
     package-lock.json
     package.json
+        …
         2→	"name": "monaco-editor-webpack-plugin",
         3→	"version": "7.1.1",
         4→	"description": "A webpack plugin for the Monaco Editor",
+        …
         23→	"license": "MIT",
+        …
     src/
         index.ts
         loader-utils.d.ts

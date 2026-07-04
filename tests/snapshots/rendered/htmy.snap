@@ -7,6 +7,7 @@ expression: rendered
 .gitignore
 LICENSE
 README.md
+    …
     6→**Source code**: [https://github.com/volfpeter/htmy](https://github.com/volfpeter/htmy)
     8→**Documentation and examples**: [https://volfpeter.github.io/htmy](https://volfpeter.github.io/htmy/)
     10→# `htmy`
@@ -65,7 +66,8 @@ README.md
     353→## Dependencies
     …
     361→## Development
-    …
+    363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
+    365→The documentation is built with `zensical` and `mkdocstrings`.
     367→## Contributing
     …
     377→## License - MIT
@@ -174,33 +176,10 @@ htmy/
         44→from .utils import join_components as join_components
         46→join_classes = join
         48→HTMY = Renderer
+        …
     core.py
-        19→class Fragment:
-        20→    """Fragment utility component that simply wraps some children components."""
-        22→    __slots__ = ("_children",)
-        38→class WithContext(Fragment):
-        …
-        43→    __slots__ = ("_context",)
-        64→class ContextAware:
-        …
-        146→class SkipProperty(Exception):
-        …
-        149→    ...
-        157→class Text(str):
-        …
-        160→    ...
-        163→class SafeStr(Text):
-        …
-        172→    ...
-        175→class XBool(enum.Enum):
-        …
-        183→    true = True
-        184→    false = False
-        196→def xml_format_string(value: str) -> str:
-        …
-        201→class Formatter(ContextAware):
-        …
     error_boundary.py
+        …
         15→class ErrorBoundary:
         16→    """
         17→    Error boundary component for graceful error handling.
@@ -215,12 +194,14 @@ htmy/
         56→    def _fallback_component(self, error: Exception) -> ComponentType:
         …
     etree.py
+        …
         23→class ETreeConverter:
         …
     function_component.py
     html.py
     i18n.py
     io.py
+        …
         11→async def load_text_file(path: str | Path) -> str:
         12→    """Loads the text content from the given path."""
         13→    async with await open_file(path, "r") as f:
@@ -234,6 +215,7 @@ htmy/
             5→from .typing import MarkdownRenderFunction as MarkdownRenderFunction
             6→from .typing import ParsedMarkdown as ParsedMarkdown
         core.py
+            …
             20→class MarkdownParser(ContextAware):
             …
             81→class MD(Snippet):
@@ -242,6 +224,7 @@ htmy/
             99→        "_converter",
             100→        "_renderer",
             101→    )
+            …
         typing.py
     py.typed
     renderer/
@@ -251,33 +234,46 @@ htmy/
             3→from .typing import is_renderer as is_renderer
             4→from .typing import is_streaming_renderer as is_streaming_renderer
             6→Renderer = _DefaultRenderer
+            …
             9→StreamingRenderer = _BaselineRenderer
+            …
             12→BaselineRenderer = _BaselineRenderer
+            …
         baseline.py
+            …
             18→class Renderer:
             …
             28→    __slots__ = ("_default_context", "_string_formatter")
+            …
         context.py
+            …
             6→class RendererContext:
             7→    """
             8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
             9→    """
             11→    @classmethod
             12→    def from_context(cls, context: Context) -> RendererType:
+            …
         default.py
         typing.py
     snippet.py
+        …
         27→class Slots:
         …
         158→class Snippet:
         159→    """
         160→    Component that renders text, which may be asynchronously loaded from a file.
+        …
         216→    __slots__ = ("_path_or_text", "_text_processor", "_text_resolver")
+        …
     tag.py
+        …
         12→class _TagWithPropsImpl:
         13→    __slots__ = ("name", "props")
+        …
         24→class _TagImpl:
         25→    __slots__ = ("child_separator", "children", "name", "props")
+        …
         53→_default_formatter = Formatter()
         56→class TagWithProps:
         57→    """
@@ -286,14 +282,17 @@ htmy/
         61→        **props: Tag properties.
         62→    """
         64→    __slots__ = ("name",)
+        …
         73→class Tag:
         74→    __slots__ = ("child_separator", "name")
+        …
         84→def wildcard_tag(
         85→    *children: ComponentType,
         86→    htmy_name: str,
         87→    htmy_child_separator: ComponentType = None,
         88→    **props: PropertyValue,
         89→) -> ComponentType:
+        …
         100→    return _TagImpl(htmy_name, props, children, htmy_child_separator)
     typing.py
     utils.py
@@ -301,7 +300,9 @@ mkdocs.yaml
 pyproject.toml
     1→[project]
     2→name = "htmy"
+    …
     4→description = "Async, pure-Python server-side rendering engine."
+    …
     6→license = "MIT"
     7→readme = "README.md"
     8→requires-python = ">=3.10"
@@ -310,4 +311,5 @@ pyproject.toml
     11→    "async-lru>=2.0.5,<3",
     12→    "markdown>=3.8,<4",
     13→]
+    …
 tests/

@@ -15,10 +15,12 @@ Cargo.toml
     6→    "sps-core",
     7→    "sps-net",
     8→]
+    …
 LICENSE.md
 NOTICE.md
 README.md
     1→# sps
+    …
     25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
     27→- **Formulae:** command‑line tools, libraries, and languages
     28→- **Casks:** desktop applications and related artifacts on macOS
@@ -54,34 +56,31 @@ sps/
             reinstall.rs
             search.rs
             status.rs
+                …
                 399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
                 …
             uninstall.rs
             update.rs
+                …
                 10→#[derive(clap::Args, Debug)]
                 11→pub struct Update;
+                …
             upgrade.rs
         cli.rs
+            …
             32→#[derive(Parser, Debug)]
+            …
             35→pub struct CliArgs {
             36→    #[arg(short, long, action = ArgAction::Count, global = true)]
             37→    pub verbose: u8,
             39→    #[command(subcommand)]
             40→    pub command: Command,
             41→}
-            43→#[derive(Subcommand, Debug)]
+            …
             44→pub enum Command {
-            45→    Init(InitArgs),
-            46→    Search(Search),
-            47→    List(List),
-            48→    Info(Info),
-            49→    Update(Update),
-            50→    Install(InstallArgs),
-            51→    Uninstall(Uninstall),
-            52→    Reinstall(ReinstallArgs),
-            53→    Upgrade(UpgradeArgs),
-            54→}
+            …
         main.rs
+            …
             57→async fn main() -> spResult<()> {
             58→    let cli_args = CliArgs::parse();
             60→    if let Command::Init(ref init_args_ref) = cli_args.command {
@@ -111,6 +110,7 @@ sps/
             87→        .with_env_var("SPS_LOG")
             88→        .from_env_lossy();
             90→    let log_dir = config.logs_dir();
+            …
             135→    let cache = Arc::new(Cache::new(&config).map_err(|e| {
             136→        SpsError::Cache(format!(
             137→            "Could not initialize cache (ensure 'sps init' was successful): {e}"
@@ -161,14 +161,12 @@ sps/
             187→    }
             189→    debug!("Command completed successfully."); // Use `debug!` macro
             190→    Ok(())
+            …
         pipeline/
             downloader.rs
             planner.rs
             runner.rs
         pipeline.rs
-            1→pub mod downloader;
-            2→pub mod planner;
-            3→pub mod runner;
 sps-common/
     Cargo.toml
     src/
@@ -180,6 +178,7 @@ sps-common/
                 1→pub mod definition; // Renamed from 'dependency'
                 2→pub mod requirement;
                 3→pub mod resolver;
+                …
                 6→pub use definition::{Dependency, DependencyExt, DependencyTag}; // Updated source module
                 7→pub use requirement::Requirement;
                 8→pub use resolver::{
@@ -191,6 +190,7 @@ sps-common/
         formulary.rs
         keg.rs
         lib.rs
+            …
             2→pub mod cache;
             3→pub mod config;
             4→pub mod dependency;
@@ -199,21 +199,25 @@ sps-common/
             7→pub mod keg;
             8→pub mod model;
             9→pub mod pipeline;
+            …
             13→pub use cache::Cache;
             14→pub use config::Config;
             15→pub use error::{Result, SpsError};
             16→pub use model::{Cask, Formula, InstalledArtifact}; // etc.
+            …
         model/
             artifact.rs
             cask.rs
             formula.rs
             mod.rs
+                …
                 3→use std::sync::Arc;
                 5→pub mod artifact;
                 6→pub mod cask;
                 7→pub mod formula;
                 8→pub mod tap;
                 9→pub mod version;
+                …
                 12→pub use artifact::InstalledArtifact;
                 13→pub use cask::Cask;
                 14→pub use formula::Formula;
@@ -240,32 +244,36 @@ sps-core/
         install/
             bottle/
             cask/
-                artifacts/
-                dmg.rs
-                helpers.rs
-                mod.rs
             devtools.rs
             extract.rs
             mod.rs
+                …
                 5→use std::path::PathBuf;
                 7→use sps_common::config::Config;
                 8→use sps_common::model::formula::Formula;
+                …
                 11→pub mod bottle;
                 12→pub mod cask;
                 13→pub mod devtools;
                 14→pub mod extract;
+                …
                 17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
                 18→    // Use new Config method
                 19→    config.formula_opt_path(formula.name())
+                …
         lib.rs
+            …
             4→pub mod build;
             5→pub mod check;
             6→pub mod install;
             7→pub mod pipeline;
             8→pub mod uninstall;
             9→pub mod upgrade; // New
+            …
             11→pub mod utils; // New
+            …
             19→pub use uninstall::UninstallOptions; // New
+            …
         pipeline/
             engine.rs
             mod.rs
@@ -277,9 +285,11 @@ sps-core/
             common.rs
             formula.rs
             mod.rs
+                …
                 3→pub mod cask;
                 4→pub mod common;
                 5→pub mod formula;
+                …
                 8→pub use cask::{uninstall_cask_artifacts, zap_cask_artifacts};
                 9→pub use common::UninstallOptions;
                 10→pub use formula::uninstall_formula_artifacts;
@@ -287,9 +297,11 @@ sps-core/
             bottle.rs
             cask.rs
             mod.rs
+                …
                 3→pub mod bottle;
                 4→pub mod cask;
                 5→pub mod source;
+                …
                 8→pub use self::bottle::upgrade_bottle_formula;
                 9→pub use self::cask::upgrade_cask_package;
                 10→pub use self::source::upgrade_source_formula;
@@ -297,7 +309,9 @@ sps-core/
         utils/
             applescript.rs
             mod.rs
+                …
                 2→pub mod applescript;
+                …
                 4→pub mod xattr;
             xattr.rs
 sps-net/
@@ -306,10 +320,12 @@ sps-net/
         api.rs
         http.rs
         lib.rs
+            …
             2→pub mod api;
             3→pub mod http;
             4→pub mod oci;
             5→pub mod validation;
+            …
             10→pub use api::{
             11→    fetch_all_casks, fetch_all_formulas, fetch_cask, fetch_formula, get_cask, /* ... */
             12→    get_formula,

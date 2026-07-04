@@ -97,6 +97,7 @@ pyproject.toml
     2→name = "posting"
     3→version = "2.10.0"
     4→description = "The modern API client that lives in your terminal."
+    …
     8→dependencies = [
     9→    "click>=8.1.7,<9.0.0",
     10→    "xdg-base-dirs>=6.0.1,<7.0.0",
@@ -116,15 +117,19 @@ pyproject.toml
     24→]
     25→readme = "README.md"
     26→requires-python = ">= 3.11"
+    …
     49→[project.scripts]
     50→posting = "posting.__main__:cli"
+    …
 src/
     posting/
         __init__.py
             1→# This import should be the first thing to run, to ensure that
             2→# the START_TIME is set as early as possible.
             3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
+            …
             7→import sys
+            …
             10→from .collection import (
             11→    Auth,
             12→    Cookie,
@@ -150,6 +155,7 @@ src/
             34→    "Posting",
             35→]
         __main__.py
+            …
             21→def create_config_file() -> None:
             22→    f = config_file()
             23→    if f.exists():
@@ -178,11 +184,13 @@ src/
             62→    multiple=True,
             63→)
             64→def default(collection: str | None = None, env: tuple[str, ...] = ()) -> None:
+            …
             76→@cli.command()
             77→@click.argument(
             78→    "thing_to_locate",
             79→)
             80→def locate(thing_to_locate: str) -> None:
+            …
             96→@cli.command(name="import")
             97→@click.argument("spec_path", type=click.Path(exists=True))
             98→@click.option(
@@ -197,20 +205,24 @@ src/
             107→)
             108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
             109→    """Import an OpenAPI specification into a Posting collection."""
+            …
             177→@cli.command(name="sponsors")
             178→def sponsors() -> None:
             179→    """Show the list of sponsors."""
+            …
             194→def make_posting(
             195→    collection: Path,
             196→    env: tuple[str, ...] = (),
             197→    using_default_collection: bool = False,
             198→) -> Posting:
             199→    """Return a Posting instance with the given collection and environment."""
+            …
         _start_time.py
             1→import time
             4→START_TIME = time.perf_counter_ns()
         app.py
         auth.py
+            …
             6→class HttpxBearerTokenAuth(httpx.Auth):
             7→    def __init__(self, token: str):
             8→        self.token = token
@@ -227,21 +239,28 @@ src/
             4→@dataclass
             5→class HelpData:
             6→    """Data relating to the widget to be displayed in the HelpScreen"""
+            8→    title: str = field(default="")
+            9→    """Title of the widget"""
+            10→    description: str = field(default="")
+            11→    """Markdown description to be displayed in the HelpScreen"""
         help_screen.py
         highlight_url.py
         highlighters.py
         importing/
             curl.py
+                …
                 22→class CurlImport:
                 …
             open_api.py
             postman.py
         jump_overlay.py
+            …
             16→class JumpOverlay(ModalScreen[str | Widget | None]):
             …
         jumper.py
         locations.py
         messages.py
+            …
             6→@dataclass
             7→class HttpResponseReceived(Message):
             8→    response: Response
@@ -255,17 +274,24 @@ src/
             8→    experimental: bool
             9→    url: str
             12→REQUEST_HEADERS: list[RequestHeader] = [
+            …
         save_request.py
         scripts.py
         suggesters.py
+            …
             2→HEADER_SUGGESTION_LISTS = {
+            …
         themes.py
         tuple_to_multidict.py
         types.py
+            1→from typing import Literal, Optional, Tuple, Union
             3→PostingLayout = Literal["horizontal", "vertical"]
+            …
             6→CertTypes = Union[
+            …
         urls.py
         user_host.py
+            …
             9→def get_user_host_string() -> Text:
             …
         variables.py
@@ -275,16 +301,21 @@ src/
         widgets/
             __init__.py
             center_middle.py
+                1→from textual.widget import Widget
                 4→class CenterMiddle(Widget, inherit_bindings=False):
                 5→    """A container which aligns children on both axes."""
+                …
             collection/
             confirmation.py
+                …
                 12→class ConfirmationModal(ModalScreen[bool]):
                 …
             datatable.py
+                …
                 27→class PostingDataTable(DataTable[str | Text]):
                 …
             input.py
+                …
                 9→class PostingInput(Input):
                 …
             key_value.py
@@ -301,17 +332,11 @@ src/
                 request_body.py
                 request_editor.py
                 request_metadata.py
-                    11→class RequestMetadata(VerticalScroll):
-                    12→    request: Reactive[RequestModel | None] = reactive(None, init=False)
                 request_options.py
-                    12→class RequestOptions(VerticalScroll):
-                    …
                 request_scripts.py
                 url_bar.py
             response/
                 cookies_table.py
-                    9→class CookiesSection(Vertical):
-                    …
                 response_area.py
                 response_body.py
                 response_headers.py
@@ -320,6 +345,7 @@ src/
             rich_log.py
             select.py
             tabbed_content.py
+                …
                 5→class PostingTabbedContent(TabbedContent):
                 …
                 13→    def action_next_tab(self) -> None:
@@ -329,16 +355,16 @@ src/
             text_area.py
             tree.py
             variable_autocomplete.py
+                …
                 18→class VariableAutoComplete(AutoComplete):
                 …
             variable_input.py
+                …
                 12→class VariableInput(PostingInput):
                 …
         xresources.py
-            8→XRDB_MAPPING = {
-            20→def load_xresources_themes() -> dict[str, TextualTheme]:
-            21→    """Runs xrdb -query and returns a dictionary of theme_name -> ColorSystem objects."""
         yaml.py
+            …
             10→def str_presenter(dumper: Dumper, data: str) -> yaml.ScalarNode:
             …
 tests/

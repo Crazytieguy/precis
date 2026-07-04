@@ -19,6 +19,7 @@ expression: rendered
 CHANGES.rst
 LICENSE.txt
 README.md
+    …
     3→# Click
     5→Click is a Python package for creating beautiful command line interfaces
     6→in a composable way with as little code as necessary. It's the "Command
@@ -101,6 +102,7 @@ docs/
     complex.md
     conf.py
     contrib.md
+        …
         3→# click-contrib
         …
         19→## Third-party projects
@@ -158,6 +160,7 @@ docs/
     prompts.md
     quickstart.md
     setuptools.md
+        …
         5→# Setuptools Integration
         7→Moved to {doc}`entry-points`.
     shell-completion.md
@@ -202,10 +205,12 @@ pyproject.toml
     4→description = "Composable command line interface toolkit"
     5→readme = "README.md"
     6→license = "BSD-3-Clause"
+    …
     16→requires-python = ">=3.10"
     17→dependencies = [
     18→    "colorama; platform_system == 'Windows'",
     19→]
+    …
 src/
     click/
         __init__.py
@@ -286,21 +291,25 @@ src/
         _compat.py
         _termui_impl.py
         _textwrap.py
+            …
             8→class TextWrapper(textwrap.TextWrapper):
             9→    def _handle_long_word(
             …
             27→    @contextmanager
             28→    def extra_indent(self, indent: str) -> cabc.Iterator[None]:
+            …
             40→    def indent_only(self, text: str) -> str:
             …
         _utils.py
             1→from __future__ import annotations
             3→import enum
             4→import typing as t
+            …
         _winconsole.py
         core.py
         decorators.py
         exceptions.py
+            …
             330→class Abort(RuntimeError):
             331→    """An internal signalling exception that signals Click to abort."""
             334→class Exit(RuntimeError):
@@ -309,11 +318,9 @@ src/
             338→    :param code: the status code to exit with.
             339→    """
             341→    __slots__ = ("exit_code",)
+            …
         formatting.py
         globals.py
-            1→from __future__ import annotations
-            3→import typing as t
-            4→from threading import local
         parser.py
         py.typed
         shell_completion.py

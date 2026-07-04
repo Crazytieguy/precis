@@ -10,19 +10,23 @@ expression: rendered
 LICENSE
 README.md
     1→# Bubble Tea
+    …
     10→The fun, functional and stateful way to build terminal apps. A Go framework
     11→based on [The Elm Architecture][elm]. Bubble Tea is well-suited for simple and
     12→complex terminal applications, either inline, full-window, or a mix of both.
+    …
 Taskfile.yaml
 UPGRADE_GUIDE_V2.md
 clipboard.go
     1→package tea
+    …
 color.go
 commands.go
     1→package tea
     3→import (
     4→	"time"
     5→)
+    …
 commands_test.go
 cursed_renderer.go
 cursed_renderer_test.go
@@ -48,15 +52,19 @@ cursor.go
     25→// The cursor position will be sent as a [CursorPositionMsg] message.
     26→func RequestCursorPosition() Msg {
     27→	return requestCursorPosMsg{}
+    …
 environ.go
     1→package tea
     3→import uv "github.com/charmbracelet/ultraviolet"
+    …
     19→type EnvMsg uv.Environ
     …
     24→func (msg EnvMsg) Getenv(key string) (v string) {
     25→	return uv.Environ(msg).Getenv(key)
+    …
     32→func (msg EnvMsg) LookupEnv(key string) (s string, v bool) {
     33→	return uv.Environ(msg).LookupEnv(key)
+    …
 examples/
 exec.go
 exec_test.go
@@ -70,16 +78,21 @@ focus.go
     9→type BlurMsg struct{}
 go.mod
     1→module charm.land/bubbletea/v2
+    …
     5→go 1.25.0
+    …
 go.sum
 input.go
+    …
     8→func (p *Program) translateInputEvent(e uv.Event) Msg {
     …
 key.go
 keyboard.go
 logging.go
+    …
     23→func LogToFile(path string, prefix string) (*os.File, error) {
     24→	return LogToFileWith(path, prefix, log.Default())
+    …
     27→// LogOptionsSetter is an interface implemented by stdlib's log and charm's log
     28→// libraries.
     29→type LogOptionsSetter interface {
@@ -93,6 +106,7 @@ logging_test.go
 mod.go
     1→package tea
     3→import uv "github.com/charmbracelet/ultraviolet"
+    …
 mouse.go
 nil_renderer.go
 options.go
@@ -107,6 +121,7 @@ paste.go
     9→// String returns the pasted content as a string.
     10→func (p PasteMsg) String() string {
     11→	return p.Content
+    …
     14→// PasteStartMsg is an message that is emitted when the terminal starts the
     15→// bracketed-paste text.
     16→type PasteStartMsg struct{}
@@ -116,6 +131,7 @@ paste.go
 profile.go
     1→package tea
     3→import "github.com/charmbracelet/colorprofile"
+    …
     13→type ColorProfileMsg struct {
     14→	colorprofile.Profile
     15→}
@@ -126,11 +142,14 @@ raw.go
     5→type RawMsg struct {
     6→	Msg any
     7→}
+    …
     33→func Raw(r any) Cmd {
     34→	return func() Msg {
     35→		return RawMsg{r}
     36→	}
+    …
 renderer.go
+    …
     13→	defaultFPS = 60
     14→	maxFPS     = 120
     …
@@ -139,6 +158,7 @@ renderer.go
     59→type printLineMessage struct {
     60→	messageBody string
     61→}
+    …
     70→func Println(args ...any) Cmd {
     …
     86→func Printf(template string, args ...any) Cmd {
@@ -148,12 +168,15 @@ renderer.go
 screen.go
     1→package tea
     3→import "github.com/charmbracelet/x/ansi"
+    …
     9→type WindowSizeMsg struct {
     10→	Width  int
     11→	Height int
     12→}
+    …
     20→func ClearScreen() Msg {
     21→	return clearScreenMsg{}
+    …
     26→type clearScreenMsg struct{}
     …
     62→type ModeReportMsg struct {
@@ -175,6 +198,7 @@ tea.go
     7→// A tutorial is available at https://github.com/charmbracelet/bubbletea/tree/master/tutorials
     8→//
     9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
+    …
     38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
     39→var ErrProgramPanic = errors.New("program experienced a panic")
     41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
@@ -210,6 +234,7 @@ tea.go
     77→	var view View
     78→	view.SetContent(s)
     79→	return view
+    …
     82→// View represents a terminal view that can be composed of multiple layers.
     83→// It can also contain a cursor that will be rendered on top of the layers.
     84→type View struct {
@@ -230,29 +255,35 @@ tea.go
     145→	// ProgressBar when not nil, shows a progress bar in the terminal's
     146→	// progress bar section. Support depends on the terminal.
     147→	ProgressBar *ProgressBar
+    …
     172→	// DisableBracketedPasteMode disables bracketed paste mode for this view.
     173→	DisableBracketedPasteMode bool
     175→	// MouseMode sets the mouse mode for this view. It can be one of
     176→	// [MouseModeNone], [MouseModeCellMotion], or [MouseModeAllMotion].
     177→	MouseMode MouseMode
+    …
     190→}
+    …
     241→type KeyboardEnhancements struct {
     …
 tea_test.go
 termcap.go
     1→package tea
+    …
     5→type requestCapabilityMsg string
     …
     30→func RequestCapability(s string) Cmd {
     31→	return func() Msg {
     32→		return requestCapabilityMsg(s)
     33→	}
+    …
     41→type CapabilityMsg struct {
     42→	Content string
     43→}
     45→// String returns the capability content as a string.
     46→func (c CapabilityMsg) String() string {
     47→	return c.Content
+    …
 termios_bsd.go
 termios_other.go
 termios_unix.go
@@ -272,6 +303,7 @@ tutorials/
         5→toolchain go1.24.10
         7→require charm.land/bubbletea/v2 v2.0.0-00010101000000-000000000000
         9→require (
+        …
         27→)
         29→replace charm.land/bubbletea/v2 => ../
     go.sum
@@ -284,7 +316,9 @@ xterm.go
     8→// String returns the terminal name as a string.
     9→func (t TerminalVersionMsg) String() string {
     10→	return t.Name
+    …
     15→type terminalVersion struct{}
     …
     20→func RequestTerminalVersion() Msg {
     21→	return terminalVersion{}
+    …

@@ -14,6 +14,7 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 .gitignore
 LICENSE
 README.md
+    …
     9→# Mitt
     11→> Tiny 200b functional event emitter / pubsub.
     13→-   **Microscopic:** weighs less than 200 bytes gzipped
@@ -42,9 +43,10 @@ README.md
     138→### mitt
     …
     144→### all
-    …
+    146→A Map of event names to registered handler functions.
     148→### on
     150→Register an event handler for the given type.
+    …
     157→### off
     …
     167→### emit
@@ -59,10 +61,13 @@ README.md
     203→## License
     205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 package.json
+    …
     2→  "name": "mitt",
     3→  "version": "3.0.1",
     4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
+    …
     41→  "license": "MIT",
+    …
 src/
     index.ts
         1→export type EventType = string | symbol;
@@ -72,10 +77,12 @@ src/
         7→	type: keyof T,
         8→	event: T[keyof T]
         9→) => void;
+        …
         12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
         13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
         14→	WildcardHandler<T>
         15→>;
+        …
         18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
         19→	keyof Events | '*',
         20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>

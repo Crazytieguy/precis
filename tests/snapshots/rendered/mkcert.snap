@@ -50,6 +50,7 @@ README.md
     129→### Advanced options
     …
     150→> **Note:** You _must_ place these options before the domain names list.
+    …
     158→### S/MIME
     …
     166→### Mobile devices
@@ -61,6 +62,7 @@ README.md
     188→### Installing the CA on other systems
     …
 cert.go
+    …
     35→var userAndHostname string
     37→func init() {
     …
@@ -77,6 +79,7 @@ cert.go
     204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
     205→	fatalIfErr(err, "failed to generate serial number")
     206→	return serialNumber
+    …
     209→func (m *mkcert) makeCertFromCSR() {
     …
     281→// loadCA will load or create the CA at CAROOT.
@@ -86,6 +89,7 @@ cert.go
     …
     366→func (m *mkcert) caUniqueName() string {
     367→	return "mkcert development CA " + m.caCert.SerialNumber.String()
+    …
 go.mod
     1→module filippo.io/mkcert
     3→go 1.18
@@ -95,9 +99,11 @@ go.mod
     8→	software.sslmate.com/src/go-pkcs12 v0.2.0
     9→)
     11→require (
+    …
     14→)
 go.sum
 main.go
+    …
     5→// Command mkcert is a simple zero-config tool to make development certificates.
     6→package main
     8→import (
@@ -169,6 +175,7 @@ main.go
     339→	}
     341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
     342→	return err == nil
+    …
     345→func storeEnabled(name string) bool {
     346→	stores := os.Getenv("TRUST_STORES")
     347→	if stores == "" {
@@ -180,25 +187,31 @@ main.go
     353→		}
     354→	}
     355→	return false
+    …
     358→func fatalIfErr(err error, msg string) {
     359→	if err != nil {
     360→		log.Fatalf("ERROR: %s: %s", msg, err)
     361→	}
+    …
     364→func fatalIfCmdErr(err error, cmd string, out []byte) {
     365→	if err != nil {
     366→		log.Fatalf("ERROR: failed to execute \"%s\": %s\n\n%s\n", cmd, err, out)
     367→	}
+    …
     370→func pathExists(path string) bool {
     371→	_, err := os.Stat(path)
     372→	return err == nil
+    …
     375→func binaryExists(name string) bool {
     376→	_, err := exec.LookPath(name)
     377→	return err == nil
+    …
     380→var sudoWarningOnce sync.Once
     382→func commandWithSudo(cmd ...string) *exec.Cmd {
     …
 truststore_darwin.go
 truststore_java.go
+    …
     21→var (
     22→	hasJava    bool
     23→	hasKeytool bool
@@ -221,6 +234,7 @@ truststore_java.go
     …
 truststore_linux.go
 truststore_nss.go
+    …
     5→package main
     7→import (
     8→	"bytes"
@@ -231,6 +245,7 @@ truststore_nss.go
     13→	"runtime"
     14→	"strings"
     15→)
+    …
     18→	hasNSS       bool
     19→	hasCertutil  bool
     20→	certutilPath string

@@ -65,6 +65,7 @@ README.md
     157→## Query params
     159→### Conditions
     161→Use `field:operator=value`.
+    …
     186→### Sort
     188→```http
     189→GET /posts?_sort=title
@@ -75,6 +76,7 @@ README.md
     196→```http
     197→GET /posts?_page=1&_per_page=25
     198→```
+    …
     216→**Notes:**
     217→- `_per_page` defaults to `10` if not specified
     218→- Invalid `_page` or `_per_page` values are automatically normalized to valid ranges
@@ -111,6 +113,7 @@ fixtures/
     db.json
     db.json5
 package.json
+    …
     2→  "name": "json-server",
     3→  "version": "1.0.0-beta.15",
     4→  "description": "",
@@ -155,9 +158,11 @@ package.json
     43→    "fmt:check": "oxfmt --check",
     44→    "prepare": "husky"
     45→  },
+    …
     72→  "engines": {
     73→    "node": ">=22.12.0"
     74→  }
+    …
 pnpm-lock.yaml
 public/
     test.html
@@ -176,6 +181,7 @@ src/
     adapters/
         normalized-adapter.test.ts
         normalized-adapter.ts
+            …
             6→export const DEFAULT_SCHEMA_PATH = './node_modules/json-server/schema.json'
             7→export type RawData = Record<string, Item[] | Item | string | undefined> & {
             8→  $schema?: string
@@ -190,19 +196,23 @@ src/
             …
         observer.ts
             1→import type { Adapter } from 'lowdb'
+            …
             4→export class Observer<T> {
             …
     app.test.ts
     app.ts
+        …
         18→export type AppOptions = {
         19→  logger?: boolean
         20→  static?: string[]
         21→}
+        …
         94→export function createApp(db: Low<Data>, options: AppOptions = {}) {
         …
     bin.ts
     matches-where.test.ts
     matches-where.ts
+        …
         24→export function matchesWhere(obj: JsonObject, where: JsonObject): boolean {
         …
     paginate.test.ts
@@ -220,6 +230,7 @@ src/
         …
     parse-where.test.ts
     parse-where.ts
+        …
         58→export function parseWhere(query: string): JsonObject {
         59→  const out: JsonObject = {}
         60→  const params = new URLSearchParams(query)
@@ -229,16 +240,20 @@ src/
         65→    setPathOp(out, path, op, rawValue)
         66→  }
         68→  return out
+        …
     random-id.ts
         1→import { randomBytes } from 'node:crypto'
         3→export function randomId(): string {
         4→  return randomBytes(8).toString('base64url')
+        …
     service.test.ts
     service.ts
+        …
         9→export type Item = Record<string, unknown>
         11→export type Data = Record<string, Item[] | Item>
         13→export function isItem(obj: unknown): obj is Item {
         14→  return typeof obj === 'object' && obj !== null && !Array.isArray(obj)
+        …
         17→export type PaginatedItems = PaginationResult<Item>
         …
         81→export class Service {
@@ -259,6 +274,7 @@ src/
         14→export type WhereOperator = (typeof WHERE_OPERATORS)[number]
         16→export function isWhereOperator(value: string): value is WhereOperator {
         17→  return (WHERE_OPERATORS as readonly string[]).includes(value)
+        …
 tsconfig.json
     1→{
     2→  "exclude": ["src/**/*.test.ts"],

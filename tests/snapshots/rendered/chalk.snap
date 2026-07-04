@@ -8,7 +8,6 @@ expression: rendered
 .gitignore
 .npmrc
 benchmark.js
-    2→import chalk from './index.js';
 code-of-conduct.md
     1→# Contributor Covenant Code of Conduct
     3→## Our Pledge
@@ -31,6 +30,7 @@ media/
     logo.svg
     screenshot.png
 package.json
+    …
     2→	"name": "chalk",
     3→	"version": "5.6.2",
     4→	"description": "Terminal string styling done right",
@@ -82,8 +82,11 @@ package.json
     50→		"command-line",
     51→		"text"
     52→	],
+    …
 readme.md
+    …
     10→> Terminal string styling done right
+    …
     18→## Info
     20→- [Why not switch to a smaller coloring package?](https://github.com/chalk/chalk?tab=readme-ov-file#why-not-switch-to-a-smaller-coloring-package)
     21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
@@ -99,9 +102,11 @@ readme.md
     112→## API
     114→### chalk.`<style>[.<style>...](string, [string...])`
     116→Example: `chalk.red.bold.underline('Hello', 'world');`
+    …
     120→Multiple arguments will be separated by space.
     122→### chalk.level
     124→Specifies the level of color support.
+    …
     143→### supportsColor
     …
     151→### chalkStderr and supportsColorStderr
@@ -118,6 +123,7 @@ readme.md
     180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
     181→- `inverse` - Invert background and foreground colors.
     182→- `hidden` - Print the text but make it invisible.
+    …
     186→### Colors
     188→- `black`
     189→- `red`
@@ -167,6 +173,7 @@ source/
         10→const GENERATOR = Symbol('GENERATOR');
         11→const STYLER = Symbol('STYLER');
         12→const IS_EMPTY = Symbol('IS_EMPTY');
+        …
         15→const levelMapping = [
         16→	'ansi',
         17→	'ansi',
@@ -181,21 +188,27 @@ source/
         29→	// Detect level if not set manually
         30→	const colorLevel = stdoutColor ? stdoutColor.level : 0;
         31→	object.level = options.level === undefined ? colorLevel : options.level;
+        …
         34→export class Chalk {
         35→	constructor(options) {
         36→		// eslint-disable-next-line no-constructor-return
         37→		return chalkFactory(options);
+        …
         41→const chalkFactory = options => {
         42→	const chalk = (...strings) => strings.join(' ');
         43→	applyOptions(chalk, options);
         45→	Object.setPrototypeOf(chalk, createChalk.prototype);
         47→	return chalk;
+        …
         50→function createChalk(options) {
         51→	return chalkFactory(options);
+        …
         74→const getModelAnsi = (model, level, type, ...arguments_) => {
         …
         94→const usedModels = ['rgb', 'hex', 'ansi256'];
+        …
         119→const proto = Object.defineProperties(() => {}, {
+        …
         132→const createStyler = (open, close, parent) => {
         …
         152→const createBuilder = (self, _styler, _isEmpty) => {
@@ -217,19 +230,23 @@ source/
         supports-color/
             browser.d.ts
             browser.js
+                …
                 34→export default supportsColor;
             index.d.ts
             index.js
                 1→import process from 'node:process';
                 2→import os from 'node:os';
                 3→import tty from 'node:tty';
+                …
                 7→function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : process.argv) {
                 8→	const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
                 9→	const position = argv.indexOf(prefix + flag);
                 10→	const terminatorPosition = argv.indexOf('--');
                 11→	return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
+                …
                 14→const {env} = process;
                 16→let flagForceColor;
+                …
                 33→function envForceColor() {
                 34→	if ('FORCE_COLOR' in env) {
                 35→		if (env.FORCE_COLOR === 'true') {
@@ -240,6 +257,7 @@ source/
                 41→		}
                 43→		return env.FORCE_COLOR.length === 0 ? 1 : Math.min(Number.parseInt(env.FORCE_COLOR, 10), 3);
                 44→	}
+                …
                 47→function translateLevel(level) {
                 48→	if (level === 0) {
                 49→		return false;
@@ -250,6 +268,7 @@ source/
                 55→		has256: level >= 2,
                 56→		has16m: level >= 3,
                 57→	};
+                …
                 60→function _supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
                 …
                 176→export function createSupportsColor(stream, options = {}) {
@@ -258,6 +277,7 @@ source/
                 179→		...options,
                 180→	});
                 182→	return translateLevel(level);
+                …
                 185→const supportsColor = {
                 186→	stdout: createSupportsColor({isTTY: tty.isatty(1)}),
                 187→	stderr: createSupportsColor({isTTY: tty.isatty(2)}),

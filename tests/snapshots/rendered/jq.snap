@@ -24,6 +24,7 @@ README.md
     14→Download the latest releases from the [GitHub release page](https://github.com/jqlang/jq/releases).
     16→### Docker Image
     18→Pull the [jq image](https://github.com/jqlang/jq/pkgs/container/jq) to start quickly with Docker.
+    …
     34→### Building from source
     …
     67→## Community & Support
@@ -56,6 +57,7 @@ docs/
         2→=============
         4→The jq website, manpages and some of the tests are generated from this
         5→directory. The manual is a YAML file in `content/manual`.
+        …
     build_manpage.py
     build_mantests.py
     build_website.py
@@ -113,8 +115,10 @@ src/
     execute.c
     inject_errors.c
     jq.h
+        …
         4→#include <stdio.h>
         5→#include "jv.h"
+        …
         11→enum {
         12→  JQ_DEBUG_TRACE = 1,
         13→  JQ_DEBUG_TRACE_DETAIL = 2,
@@ -143,18 +147,23 @@ src/
         40→void jq_get_input_cb(jq_state *, jq_input_cb *, void **);
         41→void jq_set_debug_cb(jq_state *, jq_msg_cb, void *);
         42→void jq_get_debug_cb(jq_state *, jq_msg_cb *, void **);
+        …
     jq_parser.h
     jq_test.c
+        …
         21→int jq_testsuite(jv libdirs, int verbose, int argc, char* argv[]) {
         …
         78→struct err_data {
         79→  char buf[4096];
         80→};
+        …
     jv.c
     jv.h
+        …
         4→#include <stdarg.h>
         5→#include <stdint.h>
         6→#include <stdio.h>
+        …
         19→typedef enum {
         20→  JV_KIND_INVALID,
         21→  JV_KIND_NULL,
@@ -178,6 +187,7 @@ src/
         41→    double number;
         42→  } u;
         43→} jv;
+        …
         50→jv_kind jv_get_kind(jv);
         51→const char* jv_kind_name(jv_kind);
         …
@@ -200,12 +210,14 @@ src/
         75→double jv_number_value(jv);
         76→int jv_is_integer(jv);
         77→jv jv_number_abs(jv);
+        …
     jv_alloc.c
     jv_alloc.h
     jv_aux.c
     jv_dtoa.c
     jv_dtoa.h
     jv_dtoa_tsd.c
+        …
         22→void jv_tsd_dtoa_ctx_fini(void) {
         …
         31→void jv_tsd_dtoa_ctx_init(void) {
@@ -218,10 +230,12 @@ src/
         3→struct dtoa_context *tsd_dtoa_context_get(void);
         4→#endif
     jv_file.c
+        …
         12→jv jv_load_file(const char* filename, int raw) {
         …
     jv_parse.c
     jv_print.c
+        …
         24→#define ESC "\033"
         25→#define COL(c) (ESC "[" c "m")
         26→#define COLRESET (ESC "[0m")
@@ -250,6 +264,7 @@ src/
     lexer.l
     libm.h
     linker.c
+        …
         23→struct lib_entry {
         24→  char *name;
         25→  block def;
@@ -259,6 +274,7 @@ src/
         29→  struct lib_entry *entries;
         30→  uint64_t ct;
         31→};
+        …
         409→jv load_module_meta(jq_state *jq, jv mod_relpath) {
         …
         435→int load_program(jq_state *jq, struct locfile* src, block *out_block) {
@@ -272,6 +288,7 @@ src/
     locfile.c
     locfile.h
     main.c
+        …
         43→int jq_testsuite(jv lib_dirs, int verbose, int argc, char* argv[]);
         …
         145→enum {

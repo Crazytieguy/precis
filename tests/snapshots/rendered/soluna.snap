@@ -10,7 +10,9 @@ expression: rendered
 LICENSE
 Makefile
 README.md
+    …
     3→Sokol + Lua = Soluna
+    …
     7→# Soluna
     9→[中文](./README.zh-CN.md)
     11→[Live Examples](https://cloudwu.github.io/soluna/)
@@ -49,9 +51,11 @@ clibs/
         make.lua
     soluna/
         compile_lua.lua
+            …
             4→local function compile_lua_code(script, src, name)
             …
         compile_shader.lua
+            …
             5→local function shdc_plat()
             …
             27→local function compile_shader(src, name, lang)
@@ -99,6 +103,7 @@ docs/
         35→function app.set_ime_rect(rect) end
         37→return app
     args.lua
+        …
         18→function batch:add(sprite, x, y) end
         …
         41→function batch:layer(scale, rotation, x, y) end
@@ -282,17 +287,20 @@ docs/
         19→function zip.open(filename, mode) end
         21→return zip
 make.lua
+    …
     4→local function detect_emcc()
     …
 script/
     build_web.lua
     datalist2c.lua
+        …
         14→local function tohex(c)
         …
     hashversion.lua
         1→local function get_rev()
         …
     lua2c.lua
+        …
         13→local function tohex(c)
         …
 src/

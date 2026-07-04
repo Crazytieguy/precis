@@ -29,9 +29,11 @@ IMAGES.md
 LICENSE
 Makefile
 README.md
+    …
     3→# Overview…
     5→> "Think globally, `act` locally"
     7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
+    …
     16→# How Does It Work?
     …
     24→# Act User Guide
@@ -48,6 +50,7 @@ VERSION
 act-cli.nuspec
 cmd/
     dir.go
+        …
         10→var (
         11→	UserHomeDir  string
         12→	CacheHomeDir string
@@ -56,24 +59,32 @@ cmd/
         …
     execute_test.go
     graph.go
+        …
         10→func drawGraph(plan *model.Plan) error {
         …
     input.go
     list.go
+        …
         11→func printList(plan *model.Plan) error {
         …
     notices.go
     platforms.go
+        1→package cmd
+        3→import (
+        4→	"strings"
+        5→)
         7→func (i *Input) newPlatforms() map[string]string {
         …
     root.go
     root_test.go
     secrets.go
+        …
         12→type secrets map[string]string
         14→func newSecrets(secretList []string) secrets {
         …
         40→func (s secrets) AsMap() map[string]string {
         41→	return s
+        …
     testdata/
         env.actrc
         secrets.yml
@@ -83,6 +94,7 @@ codecov.yml
 go.mod
     1→module github.com/nektos/act
     3→go 1.25.0
+    …
 go.sum
 install.sh
 main.go
@@ -99,20 +111,19 @@ main.go
     15→	defer cancel()
     17→	// run the command
     18→	cmd.Execute(ctx, version)
+    …
 main_test.go
 pkg/
     artifactcache/
         doc.go
+            …
             7→package artifactcache
         handler.go
         handler_test.go
         model.go
             1→package artifactcache
             3→type Request struct {
-            4→	Key     string `json:"key" `
-            5→	Version string `json:"version"`
-            6→	Size    int64  `json:"cacheSize"`
-            7→}
+            …
             9→func (c *Request) ToCache() *Cache {
             …
             26→type Cache struct {
@@ -137,6 +148,7 @@ pkg/
             …
         cartesian_test.go
         context.go
+            …
             10→func createGracefulJobCancellationContext() (context.Context, func(), chan os.Signal) {
             …
             42→func CreateGracefulJobCancellationContext() (context.Context, func()) {
@@ -147,6 +159,7 @@ pkg/
         executor.go
         executor_test.go
         file.go
+            …
             9→// CopyFile copy file
             10→func CopyFile(source string, dest string) (err error) {
             …
@@ -159,12 +172,14 @@ pkg/
         line_writer_test.go
         logger.go
         outbound_ip.go
+            …
             13→func GetOutboundIP() net.IP {
             …
     container/
         DOCKER_LICENSE
         container_types.go
         docker_auth.go
+            …
             15→func LoadDockerAuthConfig(ctx context.Context, image string) (registry.AuthConfig, error) {
             …
             42→func LoadDockerAuthConfigs(ctx context.Context) map[string]registry.AuthConfig {
@@ -176,6 +191,7 @@ pkg/
         docker_images_test.go
         docker_logger.go
         docker_network.go
+            …
             12→func NewDockerNetworkCreateExecutor(name string) common.Executor {
             …
             45→func NewDockerNetworkRemoveExecutor(name string) common.Executor {
@@ -188,11 +204,14 @@ pkg/
         docker_socket_test.go
         docker_stub.go
         docker_volume.go
+            …
             12→func NewDockerVolumeRemoveExecutor(volumeName string, force bool) common.Executor {
             …
             36→func removeExecutor(volume string, force bool) common.Executor {
             …
         executions_environment.go
+            1→package container
+            3→import "context"
             5→type ExecutionsEnvironment interface {
             …
         host_environment.go
@@ -200,15 +219,18 @@ pkg/
         linux_container_environment_extensions.go
         linux_container_environment_extensions_test.go
         parse_env_file.go
+            …
             14→func parseEnvFile(e Container, srcPath string, env *map[string]string) common.Executor {
             …
         testdata/
         util.go
+            …
             12→func getSysProcAttr(_ string, tty bool) *syscall.SysProcAttr {
             …
             24→func openPty() (*os.File, *os.File, error) {
             …
         util_openbsd_mips64.go
+            …
             9→func getSysProcAttr(cmdLine string, tty bool) *syscall.SysProcAttr {
             …
             15→func openPty() (*os.File, *os.File, error) {
@@ -234,6 +256,7 @@ pkg/
             6→}
             8→func (e *Error) Error() string {
             9→	return e.Err.Error()
+            …
         lp_js.go
         lp_plan9.go
         lp_unix.go
@@ -241,6 +264,7 @@ pkg/
     model/
         action.go
         anchors.go
+            …
             9→func resolveAliasesExt(node *yaml.Node, path map[*yaml.Node]bool, skipCheck bool) error {
             …
             36→func resolveAliases(node *yaml.Node) error {

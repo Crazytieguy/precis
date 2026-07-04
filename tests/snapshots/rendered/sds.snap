@@ -13,6 +13,7 @@ README.md
     5→to finally unify Redis, Disque, Hiredis, and the stand alone SDS versions.
     6→This version is **NOT* binary compatible** with SDS verison 1, but the API
     7→is 99% compatible so switching to the new lib should be trivial.
+    …
     18→How SDS strings work
     19→===
     …
@@ -121,6 +122,7 @@ sds.h
     29→ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     30→ * POSSIBILITY OF SUCH DAMAGE.
     31→ */
+    …
     36→#define SDS_MAX_PREALLOC (1024*1024)
     37→extern const char *SDS_NOINIT;
     39→#include <sys/types.h>
@@ -182,6 +184,7 @@ sds.h
     99→            return SDS_HDR(64,s)->len;
     100→    }
     101→    return 0;
+    …
     104→static inline size_t sdsavail(const sds s) {
     …
     130→static inline void sdssetlen(sds s, size_t newlen) {
@@ -208,6 +211,7 @@ sds.h
     …
     232→sds sdscatprintf(sds s, const char *fmt, ...)
     233→    __attribute__((format(printf, 2, 3)));
+    …
     235→sds sdscatprintf(sds s, const char *fmt, ...);
     …
     238→sds sdscatfmt(sds s, char const *fmt, ...);
@@ -243,10 +247,12 @@ sds.h
     271→int sdsTest(int argc, char *argv[]);
     …
 sdsalloc.h
+    …
     40→#define s_malloc malloc
     41→#define s_realloc realloc
     42→#define s_free free
 testhelp.h
+    …
     42→int __failed_tests = 0;
     43→int __test_num = 0;
     44→#define test_cond(descr,_c) do { \

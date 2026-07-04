@@ -19,6 +19,7 @@ README.md
     4→	<br>
     5→ Immersive terminal interface for managing docker containers, services and images
     6→</p>
+    …
     27→# Install
     28→Install the API module as a dependency in your project so you can easily use it to query Operations Orchestration REST API
     30→```javascript
@@ -53,7 +54,9 @@ hooks/
     services.hook.js
     shell.hook.js
 index.js
+    …
     17→const cliOptions = cli.cliParse()
+    …
     47→function initDockerConnection () {
     …
     72→function initScreens (utils) {
@@ -67,6 +70,7 @@ index.js
     80→    }
     82→    return resolve(screen)
     83→  })
+    …
     86→function exitError (err) {
     87→  cli.showUsage()
     89→  if (err && err.message) {
@@ -78,6 +82,7 @@ index.js
     96→    console.log('\x1b[0m')
     97→  }
     99→  process.exit(-1)
+    …
 lib/
     modes.js
         1→'use strict'
@@ -92,18 +97,22 @@ lib/
         3→}
 package-lock.json
 package.json
+    …
     2→  "name": "dockly",
     3→  "version": "0.0.0-development",
     4→  "description": "Immersive terminal interface for managing docker containers and services",
+    …
     63→  "license": "MIT",
+    …
 src/
     assetsLoader.js
     baseWidget.js
-        4→module.exports = (extendsClass = class {}) => {
-        …
     cli.js
+        …
         97→module.exports = new Cli()
     dockerUtil.js
+        1→'use strict'
+        3→const DockerLib = require('dockerode')
         5→class Util {
         6→  constructor (config) {
         …
@@ -114,6 +123,7 @@ src/
         37→      }
         39→      return cb(null, data)
         40→    })
+        …
         43→  listImages (cb) {
         44→    this.dockerCon.listImages(function (err, images) {
         45→      if (err) {
@@ -123,6 +133,7 @@ src/
         50→        return cb(null, images)
         51→      }
         52→    })
+        …
         55→  systemDf (cb) {
         56→    this.dockerCon.df((err, data) => {
         57→      if (err) {
@@ -130,6 +141,7 @@ src/
         59→      }
         61→      return cb(data)
         62→    })
+        …
         65→  listContainers (cb) {
         66→    this.dockerCon.listContainers({
         67→      'all': true,
@@ -140,6 +152,7 @@ src/
         72→      }
         74→      return cb(null, containers)
         75→    })
+        …
         78→  listServices (cb) {
         79→    this.dockerCon.listServices({ 'all': true }, function (err, containers) {
         80→      if (err) {
@@ -147,6 +160,7 @@ src/
         82→      }
         84→      return cb(null, containers)
         85→    })
+        …
         88→  stopAllContainers (cb) {
         89→    this.listContainers((err, containers) => {
         90→      if (err) {
@@ -156,6 +170,7 @@ src/
         95→        this.stopContainer(containerInfo.Id, cb)
         96→      })
         97→    })
+        …
         100→  removeAllContainers (cb) {
         101→    this.listContainers((err, containers) => {
         102→      if (err) {
@@ -165,6 +180,7 @@ src/
         107→        this.removeContainer(containerInfo.Id, cb)
         108→      })
         109→    })
+        …
         112→  removeAllImages (cb) {
         113→    this.listImages((err, images) => {
         114→      if (err) {
@@ -174,33 +190,42 @@ src/
         119→        this.removeImage(imageInfo.Id, cb)
         120→      })
         121→    })
+        …
         124→  getInfo (cb) {
         125→    const host = {}
+        …
         155→  getContainer (containerId, cb) {
         156→    const container = this.dockerCon.getContainer(containerId)
         157→    return container.inspect(cb)
+        …
         160→  getService (serviceId, cb) {
         161→    const service = this.dockerCon.getService(serviceId)
         162→    return service.inspect(cb)
+        …
         165→  getImage (imageId, cb) {
         166→    const image = this.dockerCon.getImage(imageId)
         167→    image.inspect(cb)
+        …
         170→  restartContainer (containerId, cb) {
         171→    const container = this.dockerCon.getContainer(containerId)
         172→    container.restart(cb)
+        …
         175→  stopContainer (containerId, cb) {
         176→    const container = this.dockerCon.getContainer(containerId)
         177→    container.stop(cb)
+        …
         180→  removeContainer (containerId, cb) {
         181→    const container = this.dockerCon.getContainer(containerId)
         182→    container.remove({
         183→      force: true
         184→    }, cb)
+        …
         187→  removeImage (imageId, cb) {
         188→    const image = this.dockerCon.getImage(imageId)
         189→    image.remove({
         190→      force: true
         191→    }, cb)
+        …
         194→  getContainerStats (containerId, cb) {
         195→    if (!containerId) {
         196→      return cb(null)
@@ -212,6 +237,7 @@ src/
         203→      }
         204→      return cb(stream)
         205→    })
+        …
         208→  getContainerLogs (containerId, cb) {
         209→    const container = this.dockerCon.getContainer(containerId)
         210→    return container.logs({
@@ -222,6 +248,7 @@ src/
         215→      tail: 50,
         216→      timestamps: true
         217→    }, cb)
+        …
         220→  getServiceLogs (serviceId, cb) {
         221→    const service = this.dockerCon.getService(serviceId)
         222→    return service.logs({
@@ -232,24 +259,17 @@ src/
         227→      tail: 50,
         228→      timestamps: true
         229→    }, cb)
+        …
         233→module.exports = Util
     enum.js
         1→module.exports = {
         …
     grid.config.js
     screen.js
+        …
         18→class screen {
         19→  constructor (utils = new Map()) {
-        20→    this.mode = MODES.container
-        21→    this.screen = undefined
-        22→    this.grid = undefined
-        23→    this.title = 'Dockly'
-        25→    this.utils = utils
-        27→    // toggle widgets focus
-        28→    this.toggleWidgetFocus = true
-        30→    this.widgetsRepository = new Map()
-        31→    this.hooks = new Map()
-        32→    this.widgets = new Map()
+        …
         35→  initScreen () {
         …
         48→  init () {
@@ -260,34 +280,42 @@ src/
         74→      this.hooks.set(hookName, hook)
         75→      this.widgetsRepository.set(hookName, hook)
         76→    }
+        …
         79→  clearHooks () {
         80→    for (let [hookName] of this.assets.get('hooks').entries()) {
         81→      this.hooks.delete(hookName)
         82→      this.widgetsRepository.delete(hookName)
         83→    }
+        …
         86→  initWidgets () {
         87→    const layout = GRID_LAYOUT[this.mode]
+        …
         107→  clearWidgets () {
         108→    for (let [widgetName] of this.assets.get('widgets').entries()) {
         109→      this.widgets.delete(widgetName)
         110→      this.widgetsRepository.delete(widgetName)
         111→    }
+        …
         114→  setWidgetsRepo () {
         115→    for (let widgetObject of this.widgetsRepository.values()) {
         116→      widgetObject.setWidgetsRepo(this.widgetsRepository)
         117→    }
+        …
         120→  setWidgetsUtils () {
         121→    for (let widgetObject of this.widgetsRepository.values()) {
         122→      widgetObject.setUtilsRepo(this.utils)
         123→    }
+        …
         126→  setWidgetsInit () {
         127→    for (let widgetObject of this.widgetsRepository.values()) {
         128→      widgetObject.init()
         129→    }
+        …
         132→  renderWidgets () {
         133→    for (let widgetObject of this.widgets.values()) {
         134→      widgetObject.renderWidget()
         135→    }
+        …
         138→  toggleMode () {
         …
         152→  registerEvents () {
@@ -296,6 +324,7 @@ src/
         …
         192→  teardown () {
         193→    this.screen.destroy()
+        …
         197→module.exports = screen
     themes/
     widgetsTemplates/

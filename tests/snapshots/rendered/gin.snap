@@ -14,26 +14,16 @@ LICENSE
 Makefile
 README.md
     1→# Gin Web Framework
+    …
 auth.go
 auth_test.go
 benchmarks_test.go
 binding/
     binding.go
-        7→package binding
-        9→import "net/http"
     binding_msgpack_test.go
     binding_nomsgpack.go
-        7→package binding
-        9→import "net/http"
     binding_test.go
     bson.go
-        14→type bsonBinding struct{}
-        16→func (bsonBinding) Name() string {
-        17→	return "bson"
-        20→func (b bsonBinding) Bind(req *http.Request, obj any) error {
-        …
-        28→func (bsonBinding) BindBody(body []byte, obj any) error {
-        …
     default_validator.go
     default_validator_benchmark_test.go
     default_validator_test.go
@@ -50,28 +40,34 @@ binding/
     multipart_form_mapping_test.go
     plain.go
     protobuf.go
+        …
         15→type protobufBinding struct{}
         17→func (protobufBinding) Name() string {
         18→	return "protobuf"
+        …
         21→func (b protobufBinding) Bind(req *http.Request, obj any) error {
         …
         29→func (protobufBinding) BindBody(body []byte, obj any) error {
         …
     query.go
+        …
         5→package binding
         7→import "net/http"
         9→type queryBinding struct{}
         11→func (queryBinding) Name() string {
         12→	return "query"
+        …
         15→func (queryBinding) Bind(req *http.Request, obj any) error {
         …
     toml.go
     toml_test.go
     uri.go
+        …
         5→package binding
         7→type uriBinding struct{}
         9→func (uriBinding) Name() string {
         10→	return "uri"
+        …
         13→func (uriBinding) BindUri(m map[string][]string, obj any) error {
         …
     validate_test.go
@@ -89,33 +85,34 @@ codec/
 codecov.yml
 context.go
 context_appengine.go
+    …
     7→package gin
     9→func init() {
     10→	defaultPlatform = PlatformGoogleAppEngine
+    …
 context_file_test.go
 context_test.go
 debug.go
 debug_test.go
 deprecated.go
-    5→package gin
-    7→import (
-    8→	"log"
-    10→	"github.com/gin-gonic/gin/binding"
-    11→)
+    …
     17→func (c *Context) BindWith(obj any, b binding.Binding) error {
     …
 deprecated_test.go
 doc.go
     1→/*
     2→Package gin implements a HTTP web framework called gin.
+    …
     22→package gin // import "github.com/gin-gonic/gin"
 docs/
     doc.md
         1→# Gin Quick Start
+        …
 errors.go
 errors_test.go
 examples/
 fs.go
+    …
     5→package gin
     7→import (
     8→	"net/http"
@@ -139,6 +136,7 @@ fs.go
     …
 fs_test.go
 gin.go
+    …
     25→const (
     26→	defaultMultipartMemory = 32 << 20 // 32 MB
     27→	escapedColon           = "\\:"
@@ -164,8 +162,14 @@ gin.go
     62→		return c[length-1]
     63→	}
     64→	return nil
-    68→type RouteInfo struct {
     …
+    67→// RouteInfo represents a request route's specification which contains method and path and its handler.
+    68→type RouteInfo struct {
+    69→	Method      string
+    70→	Path        string
+    71→	Handler     string
+    72→	HandlerFunc HandlerFunc
+    73→}
     75→// RoutesInfo defines a RouteInfo slice.
     76→type RoutesInfo []RouteInfo
     …
@@ -175,14 +179,47 @@ gin.go
     …
     87→	PlatformFlyIO = "Fly-Client-IP"
     …
+    90→// Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
+    91→// Create an instance of Engine, by using New() or Default()
     92→type Engine struct {
     93→	RouterGroup
+    95→	// routeTreesUpdated ensures that the initialization or update of the route trees
+    96→	// (used for routing HTTP requests) happens only once, even if called multiple times concurrently.
+    97→	routeTreesUpdated sync.Once
+    …
+    142→	// UseEscapedPath if enable, the url.EscapedPath() will be used to find parameters
+    143→	// It overrides UseRawPath
+    144→	UseEscapedPath bool
+    146→	// UnescapePathValues if true, the path value will be unescaped.
+    147→	// If UseRawPath and UseEscapedPath are false (by default), the UnescapePathValues effectively is true,
+    148→	// as url.Path gonna be used, which is already unescaped.
+    149→	UnescapePathValues bool
+    151→	// RemoveExtraSlash a parameter can be parsed from the URL even with extra slashes.
+    152→	// See the PR #1817 and issue #1644
+    153→	RemoveExtraSlash bool
+    …
+    161→	// TrustedPlatform if set to a constant of value gin.Platform*, trusts the headers set by
+    162→	// that platform, for example to determine the client IP
+    163→	TrustedPlatform string
+    165→	// MaxMultipartMemory value of 'maxMemory' param that is given to http.Request's ParseMultipartForm
+    166→	// method call.
+    167→	MaxMultipartMemory int64
+    169→	// UseH2C enable h2c support.
+    170→	UseH2C bool
+    172→	// ContextWithFallback enable fallback Context.Deadline(), Context.Done(), Context.Err() and Context.Value() when Context.Request.Context() is not nil.
+    173→	ContextWithFallback bool
+    …
     189→}
     191→var _ IRouter = (*Engine)(nil)
     …
     202→func New(opts ...OptionFunc) *Engine {
     …
+    235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
     236→func Default(opts ...OptionFunc) *Engine {
+    237→	debugPrintWARNINGDefault()
+    238→	engine := New()
+    239→	engine.Use(Logger(), Recovery())
+    240→	return engine.With(opts...)
     …
     243→func (engine *Engine) Handler() http.Handler {
     …
@@ -211,6 +248,7 @@ githubapi_test.go
 go.mod
     1→module github.com/gin-gonic/gin
     3→go 1.25.0
+    …
 go.sum
 internal/
     bytesconv/
@@ -221,6 +259,7 @@ middleware_test.go
 mode.go
 mode_test.go
 path.go
+    …
     6→package gin
     8→const stackBufSize = 128
     …
@@ -235,18 +274,21 @@ recovery.go
 recovery_test.go
 render/
     bson.go
+        …
         13→// BSON contains the given interface object.
         14→type BSON struct {
         15→	Data any
         16→}
         18→var bsonContentType = []string{"application/bson"}
-        …
+        20→// Render (BSON) marshals the given interface object and writes data with custom ContentType.
         21→func (r BSON) Render(w http.ResponseWriter) error {
         …
         31→// WriteContentType (BSONBuf) writes BSONBuf ContentType.
         32→func (r BSON) WriteContentType(w http.ResponseWriter) {
         33→	writeContentType(w, bsonContentType)
+        …
     data.go
+        …
         12→// Data contains ContentType and bytes data.
         13→type Data struct {
         14→	ContentType string
@@ -258,10 +300,12 @@ render/
         28→// WriteContentType (Data) writes custom ContentType.
         29→func (r Data) WriteContentType(w http.ResponseWriter) {
         30→	writeContentType(w, []string{r.ContentType})
+        …
     html.go
     json.go
     msgpack.go
     pdf.go
+        …
         5→package render
         7→import "net/http"
         9→// PDF contains the given PDF binary data.
@@ -275,36 +319,12 @@ render/
         23→// WriteContentType (PDF) writes PDF ContentType for response.
         24→func (r PDF) WriteContentType(w http.ResponseWriter) {
         25→	writeContentType(w, pdfContentType)
+        …
     protobuf.go
-        13→// ProtoBuf contains the given interface object.
-        14→type ProtoBuf struct {
-        15→	Data any
-        16→}
-        18→var protobufContentType = []string{"application/x-protobuf"}
-        …
-        21→func (r ProtoBuf) Render(w http.ResponseWriter) error {
-        …
-        33→// WriteContentType (ProtoBuf) writes ProtoBuf ContentType.
-        34→func (r ProtoBuf) WriteContentType(w http.ResponseWriter) {
-        35→	writeContentType(w, protobufContentType)
     reader.go
-        13→// Reader contains the IO reader and its length, and custom ContentType and other headers.
-        14→type Reader struct {
-        15→	ContentType   string
-        16→	ContentLength int64
-        17→	Reader        io.Reader
-        18→	Headers       map[string]string
-        19→}
-        21→// Render (Reader) writes data with custom ContentType and headers.
-        22→func (r Reader) Render(w http.ResponseWriter) (err error) {
-        …
-        35→// WriteContentType (Reader) writes custom ContentType.
-        36→func (r Reader) WriteContentType(w http.ResponseWriter) {
-        37→	writeContentType(w, []string{r.ContentType})
-        41→func (r Reader) writeHeaders(w http.ResponseWriter) {
-        …
     reader_test.go
     redirect.go
+        …
         12→// Redirect contains the http request reference and redirects status code and location.
         13→type Redirect struct {
         14→	Code     int
@@ -317,24 +337,11 @@ render/
         28→// WriteContentType (Redirect) don't write any ContentType.
         29→func (r Redirect) WriteContentType(http.ResponseWriter) {}
     render.go
-        5→package render
-        7→import "net/http"
     render_msgpack_test.go
     render_test.go
     text.go
     toml.go
     xml.go
-        12→// XML contains the given interface object.
-        13→type XML struct {
-        14→	Data any
-        15→}
-        17→var xmlContentType = []string{"application/xml; charset=utf-8"}
-        19→// Render (XML) encodes the given interface object and writes data with custom ContentType.
-        20→func (r XML) Render(w http.ResponseWriter) error {
-        …
-        25→// WriteContentType (XML) writes XML ContentType for response.
-        26→func (r XML) WriteContentType(w http.ResponseWriter) {
-        27→	writeContentType(w, xmlContentType)
     yaml.go
 response_writer.go
 response_writer_test.go
@@ -352,6 +359,7 @@ tree_test.go
 utils.go
 utils_test.go
 version.go
+    …
     5→package gin
     7→// Version is the current gin framework's version.
     8→const Version = "v1.12.0"

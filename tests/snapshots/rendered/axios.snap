@@ -89,11 +89,13 @@ docs/
 eslint.config.js
 examples/
 gulpfile.js
+    …
     79→export { env, clear, version, packageJSON };
 index.d.cts
 index.d.ts
 index.js
     1→import axios from './lib/axios.js';
+    …
     6→const {
     7→  Axios,
     8→  AxiosError,
@@ -138,32 +140,40 @@ lib/
         README.md
             1→# axios // adapters
             3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
+            …
         adapters.js
+            …
             120→export default {
             …
         fetch.js
         http.js
         xhr.js
+            …
             15→export default isXHRAdapterSupported &&
             …
     axios.js
+        …
         89→export default axios;
     cancel/
         CancelToken.js
+            …
             135→export default CancelToken;
         CanceledError.js
+            …
             22→export default CanceledError;
         isCancel.js
-            3→export default function isCancel(value) {
-            4→  return !!(value && value.__CANCEL__);
     core/
         Axios.js
+            …
             281→export default Axios;
         AxiosError.js
+            …
             176→export default AxiosError;
         AxiosHeaders.js
+            …
             348→export default AxiosHeaders;
         InterceptorManager.js
+            …
             72→export default InterceptorManager;
         README.md
             1→# axios // core
@@ -174,14 +184,21 @@ lib/
             8→- Handling config
         buildFullPath.js
         dispatchRequest.js
-            34→export default function dispatchRequest(config) {
-            …
         mergeConfig.js
         settle.js
         transformData.js
     defaults/
         index.js
+            1→'use strict';
+            3→import utils from '../utils.js';
+            4→import AxiosError from '../core/AxiosError.js';
+            5→import transitionalDefaults from './transitional.js';
+            6→import toFormData from '../helpers/toFormData.js';
+            7→import toURLEncodedForm from '../helpers/toURLEncodedForm.js';
+            8→import platform from '../platform/index.js';
+            9→import formDataToJSON from '../helpers/formDataToJSON.js';
             11→const own = (obj, key) => (obj != null && utils.hasOwnProp(obj, key) ? obj[key] : undefined);
+            …
             23→function stringifySafely(rawValue, parser, encoder) {
             24→  if (utils.isString(rawValue)) {
             25→    try {
@@ -194,8 +211,12 @@ lib/
             32→    }
             33→  }
             35→  return (encoder || JSON.stringify)(rawValue);
+            …
             177→export default defaults;
         transitional.js
+            …
+            3→export default {
+            …
     env/
         README.md
             1→# axios // env
@@ -203,12 +224,16 @@ lib/
         classes/
             FormData.js
         data.js
+            1→export const VERSION = "1.16.1";
     helpers/
         AxiosTransformStream.js
+            …
             156→export default AxiosTransformStream;
         AxiosURLSearchParams.js
+            …
             61→export default AxiosURLSearchParams;
         HttpStatusCode.js
+            …
             77→export default HttpStatusCode;
         README.md
             1→# axios // helpers
@@ -217,57 +242,56 @@ lib/
             6→- Managing cookies
             7→- Parsing HTTP headers
         ZlibHeaderTransformStream.js
+            …
             29→export default ZlibHeaderTransformStream;
         bind.js
         buildURL.js
         callbackify.js
+            …
             18→export default callbackify;
         combineURLs.js
         composeSignals.js
+            …
             57→export default composeSignals;
         cookies.js
-            4→export default platform.hasStandardBrowserEnv
-            …
         deprecatedMethod.js
         estimateDataURLDecodedBytes.js
         formDataToJSON.js
+            …
             97→export default formDataToJSON;
         formDataToStream.js
+            …
             119→export default formDataToStream;
         fromDataURI.js
         isAbsoluteURL.js
         isAxiosError.js
         isURLSameOrigin.js
-            3→export default platform.hasStandardBrowserEnv
-            …
         null.js
+            …
             2→export default null;
         parseHeaders.js
-            41→export default (rawHeaders) => {
-            …
         parseProtocol.js
-            3→export default function parseProtocol(url) {
-            …
         progressEventReducer.js
         readBlob.js
+            …
             15→export default readBlob;
         resolveConfig.js
-            38→export default (config) => {
-            …
         sanitizeHeaderValue.js
         shouldBypassProxy.js
         speedometer.js
+            …
             55→export default speedometer;
         spread.js
-            24→export default function spread(callback) {
-            …
         throttle.js
+            …
             44→export default throttle;
         toFormData.js
+            …
             249→export default toFormData;
         toURLEncodedForm.js
         trackStream.js
         validator.js
+            …
             109→export default {
             110→  assertOptions,
             111→  validators,
@@ -293,8 +317,6 @@ lib/
                 13→};
         common/
             utils.js
-                46→export {
-                …
         index.js
             1→import platform from './node/index.js';
             2→import * as utils from './common/utils.js';
@@ -324,6 +346,7 @@ lib/
                 21→    str += alphabet[randomValues[i] % length];
                 22→  }
                 24→  return str;
+                …
                 27→export default {
                 28→  isNode: true,
                 29→  classes: {
@@ -336,15 +359,20 @@ lib/
                 36→  protocols: ['http', 'https', 'file', 'data'],
                 37→};
     utils.js
+        …
         872→export default {
         …
 package-lock.json
 package.json
+    …
     2→  "name": "axios",
     3→  "version": "1.16.1",
     4→  "description": "Promise based HTTP client for the browser and node.js",
+    …
     7→  "type": "module",
+    …
     95→  "license": "MIT",
+    …
 rollup.config.js
 sandbox/
     client.html

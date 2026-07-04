@@ -1,6 +1,6 @@
 fixture = "svgo"
 budget = 10000
-cumulative_tokens = 8055
+cumulative_tokens = 8093
 batch_count = 136
 
 [[batches]]
@@ -21,8 +21,8 @@ entries = [".gitattributes", ".github", ".gitignore", ".prettierignore", ".prett
 position = 2
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
-cost_tokens = 39
-cum_tokens = 125
+cost_tokens = 43
+cum_tokens = 129
 
 [batches.content]
 kind = "lines"
@@ -49,7 +49,7 @@ position = 3
 key = 'Fs(DirListing { dir: "test-d" })'
 descriptor = "listing of 'test-d'"
 cost_tokens = 3
-cum_tokens = 128
+cum_tokens = 132
 
 [batches.content]
 kind = "fs"
@@ -62,8 +62,8 @@ entries = ["lib"]
 position = 4
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
-cost_tokens = 74
-cum_tokens = 202
+cost_tokens = 78
+cum_tokens = 210
 
 [batches.content]
 kind = "lines"
@@ -81,7 +81,7 @@ position = 5
 key = 'Fs(DirListing { dir: "bin" })'
 descriptor = "listing of 'bin'"
 cost_tokens = 5
-cum_tokens = 207
+cum_tokens = 215
 
 [batches.content]
 kind = "fs"
@@ -94,8 +94,8 @@ entries = ["svgo.js"]
 position = 6
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
-cost_tokens = 108
-cum_tokens = 315
+cost_tokens = 106
+cum_tokens = 321
 
 [batches.content]
 kind = "lines"
@@ -280,8 +280,8 @@ kind = "ellipsis"
 position = 7
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
 descriptor = "README.md section #10"
-cost_tokens = 13
-cum_tokens = 328
+cost_tokens = 11
+cum_tokens = 332
 
 [batches.content]
 kind = "lines"
@@ -306,8 +306,8 @@ kind = "full"
 position = 8
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
-cost_tokens = 52
-cum_tokens = 380
+cost_tokens = 50
+cum_tokens = 382
 
 [batches.content]
 kind = "lines"
@@ -333,7 +333,7 @@ position = 9
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
 cost_tokens = 11
-cum_tokens = 391
+cum_tokens = 393
 
 [batches.content]
 kind = "lines"
@@ -351,7 +351,7 @@ position = 10
 key = 'Fs(DirListing { dir: "logo" })'
 descriptor = "listing of 'logo'"
 cost_tokens = 25
-cum_tokens = 416
+cum_tokens = 418
 
 [batches.content]
 kind = "fs"
@@ -365,7 +365,7 @@ position = 11
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 43
-cum_tokens = 459
+cum_tokens = 461
 
 [batches.content]
 kind = "fs"
@@ -378,7 +378,7 @@ entries = ["01-index.mdx", "02-usage", "03-preset-default.mdx", "04-plugins", "0
 position = 12
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false })'
 descriptor = "README.md section #14"
-cost_tokens = 49
+cost_tokens = 47
 cum_tokens = 508
 
 [batches.content]
@@ -498,10 +498,24 @@ entries = ["svgo-node.test-d.ts"]
 
 [[batches]]
 position = 19
+key = 'Fs(DirListing { dir: "docs/02-usage" })'
+descriptor = "listing of 'docs/02-usage'"
+cost_tokens = 19
+cum_tokens = 685
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/02-usage"
+entries = ["01-node.mdx", "02-browser.mdx", "index.mdx"]
+
+[[batches]]
+position = 20
 key = 'Typescript(ExportNames { file: "lib/builtin.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/builtin.js"
-cost_tokens = 14
-cum_tokens = 680
+cost_tokens = 16
+cum_tokens = 701
 
 [batches.content]
 kind = "lines"
@@ -523,29 +537,11 @@ end = 63
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Typescript(ExportNames { file: "lib/version.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/version.js"
-cost_tokens = 15
-cum_tokens = 695
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/version.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Typescript(Export { file: "lib/version.js", start_line: 7 })'
-descriptor = "export at lib/version.js:7"
-cost_tokens = 0
-cum_tokens = 695
+cost_tokens = 17
+cum_tokens = 718
 
 [batches.content]
 kind = "lines"
@@ -560,50 +556,42 @@ kind = "full"
 
 [[batches]]
 position = 22
-key = 'Fs(DirListing { dir: "docs/02-usage" })'
-descriptor = "listing of 'docs/02-usage'"
-cost_tokens = 19
-cum_tokens = 714
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/02-usage"
-entries = ["01-node.mdx", "02-browser.mdx", "index.mdx"]
-
-[[batches]]
-position = 23
-key = 'Typescript(ExportNames { file: "lib/stringifier.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/stringifier.js"
-cost_tokens = 20
-cum_tokens = 734
+key = 'Typescript(Export { file: "lib/version.js", start_line: 7 })'
+descriptor = "export at lib/version.js:7"
+cost_tokens = 0
+cum_tokens = 718
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "lib/stringifier.js"
-start = 66
-end = 66
+path = "lib/version.js"
+start = 7
+end = 7
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "lib/stringifier.js"
-start = 67
-end = 67
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 34
+cum_tokens = 752
 
-[batches.content.spans.render]
-kind = "ellipsis"
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["browser.js", "cli", "coa", "fixtures", "plugins", "regression", "svg2js", "svgo", "svgo.cjs"]
 
 [[batches]]
 position = 24
-key = 'Typescript(Export { file: "lib/stringifier.js", start_line: 66 })'
-descriptor = "export at lib/stringifier.js:66"
-cost_tokens = 0
-cum_tokens = 734
+key = 'Typescript(ExportNames { file: "lib/stringifier.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/stringifier.js"
+cost_tokens = 22
+cum_tokens = 774
 
 [batches.content]
 kind = "lines"
@@ -626,24 +614,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 25
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 34
-cum_tokens = 768
+key = 'Typescript(Export { file: "lib/stringifier.js", start_line: 66 })'
+descriptor = "export at lib/stringifier.js:66"
+cost_tokens = 0
+cum_tokens = 774
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "test"
-entries = ["browser.js", "cli", "coa", "fixtures", "plugins", "regression", "svg2js", "svgo", "svgo.cjs"]
+[[batches.content.spans]]
+path = "lib/stringifier.js"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/stringifier.js"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 26
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 19
-cum_tokens = 787
+cum_tokens = 793
 
 [batches.content]
 kind = "fs"
@@ -654,10 +654,24 @@ entries = ["bug_report.md", "config.yml", "feature_request.md", "plugin_request.
 
 [[batches]]
 position = 27
+key = 'Fs(DirListing { dir: "docs/06-migrations" })'
+descriptor = "listing of 'docs/06-migrations'"
+cost_tokens = 34
+cum_tokens = 827
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/06-migrations"
+entries = ["01-migration-from-v3-to-v4.mdx", "02-migration-from-v2-to-v3.mdx", "_category_.json"]
+
+[[batches]]
+position = 28
 key = 'Typescript(ExportNames { file: "lib/svgo.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo.js"
-cost_tokens = 25
-cum_tokens = 812
+cost_tokens = 27
+cum_tokens = 854
 
 [batches.content]
 kind = "lines"
@@ -695,11 +709,11 @@ end = 137
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Typescript(Export { file: "lib/svgo.js", start_line: 81 })'
 descriptor = "export at lib/svgo.js:81"
 cost_tokens = 0
-cum_tokens = 812
+cum_tokens = 854
 
 [batches.content]
 kind = "lines"
@@ -721,25 +735,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "docs/06-migrations" })'
-descriptor = "listing of 'docs/06-migrations'"
-cost_tokens = 34
-cum_tokens = 846
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/06-migrations"
-entries = ["01-migration-from-v3-to-v4.mdx", "02-migration-from-v2-to-v3.mdx", "_category_.json"]
-
-[[batches]]
 position = 30
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
-cost_tokens = 111
-cum_tokens = 957
+cost_tokens = 109
+cum_tokens = 963
 
 [batches.content]
 kind = "lines"
@@ -786,62 +786,10 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'Typescript(ExportNames { file: "lib/svgo/css-select-adapter.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/svgo/css-select-adapter.js"
-cost_tokens = 16
-cum_tokens = 973
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/svgo/css-select-adapter.js"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/svgo/css-select-adapter.js"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 32
-key = 'Typescript(Export { file: "lib/svgo/css-select-adapter.js", start_line: 78 })'
-descriptor = "export at lib/svgo/css-select-adapter.js:78"
-cost_tokens = 0
-cum_tokens = 973
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/svgo/css-select-adapter.js"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/svgo/css-select-adapter.js"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 33
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 30
-cum_tokens = 1003
+cum_tokens = 993
 
 [batches.content]
 kind = "lines"
@@ -855,11 +803,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 34
+position = 32
 key = 'Typescript(ExportNames { file: "lib/path.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/path.js"
-cost_tokens = 30
-cum_tokens = 1033
+cost_tokens = 32
+cum_tokens = 1025
 
 [batches.content]
 kind = "lines"
@@ -897,11 +845,11 @@ end = 303
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 33
 key = 'Typescript(Export { file: "lib/path.js", start_line: 141 })'
 descriptor = "export at lib/path.js:141"
 cost_tokens = 0
-cum_tokens = 1033
+cum_tokens = 1025
 
 [batches.content]
 kind = "lines"
@@ -923,11 +871,63 @@ end = 142
 kind = "ellipsis"
 
 [[batches]]
+position = 34
+key = 'Typescript(ExportNames { file: "lib/svgo/css-select-adapter.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/svgo/css-select-adapter.js"
+cost_tokens = 18
+cum_tokens = 1043
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/css-select-adapter.js"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/css-select-adapter.js"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 35
+key = 'Typescript(Export { file: "lib/svgo/css-select-adapter.js", start_line: 78 })'
+descriptor = "export at lib/svgo/css-select-adapter.js:78"
+cost_tokens = 0
+cum_tokens = 1043
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/css-select-adapter.js"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/css-select-adapter.js"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 36
 key = 'Typescript(ExportNames { file: "lib/parser.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/parser.js"
-cost_tokens = 33
-cum_tokens = 1066
+cost_tokens = 35
+cum_tokens = 1078
 
 [batches.content]
 kind = "lines"
@@ -969,7 +969,7 @@ position = 37
 key = 'Typescript(Export { file: "lib/parser.js", start_line: 80 })'
 descriptor = "export at lib/parser.js:80"
 cost_tokens = 0
-cum_tokens = 1066
+cum_tokens = 1078
 
 [batches.content]
 kind = "lines"
@@ -995,7 +995,7 @@ position = 38
 key = 'Typescript(Export { file: "lib/parser.js", start_line: 4 })'
 descriptor = "export at lib/parser.js:4"
 cost_tokens = 30
-cum_tokens = 1096
+cum_tokens = 1108
 
 [batches.content]
 kind = "lines"
@@ -1045,7 +1045,7 @@ position = 39
 key = 'Fs(DirListing { dir: "lib/util" })'
 descriptor = "listing of 'lib/util'"
 cost_tokens = 13
-cum_tokens = 1109
+cum_tokens = 1121
 
 [batches.content]
 kind = "fs"
@@ -1058,8 +1058,8 @@ entries = ["map-nodes-to-parents.js", "visit.js"]
 position = 40
 key = 'Typescript(ExportNames { file: "lib/util/map-nodes-to-parents.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/util/map-nodes-to-parents.js"
-cost_tokens = 15
-cum_tokens = 1124
+cost_tokens = 17
+cum_tokens = 1138
 
 [batches.content]
 kind = "lines"
@@ -1085,7 +1085,7 @@ position = 41
 key = 'Typescript(Export { file: "lib/util/map-nodes-to-parents.js", start_line: 9 })'
 descriptor = "export at lib/util/map-nodes-to-parents.js:9"
 cost_tokens = 0
-cum_tokens = 1124
+cum_tokens = 1138
 
 [batches.content]
 kind = "lines"
@@ -1111,7 +1111,7 @@ position = 42
 key = 'Typescript(Export { file: "lib/path.js", start_line: 302 })'
 descriptor = "export at lib/path.js:302"
 cost_tokens = 32
-cum_tokens = 1156
+cum_tokens = 1170
 
 [batches.content]
 kind = "lines"
@@ -1134,104 +1134,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 43
-key = 'Typescript(ExportNames { file: "lib/svgo-node.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/svgo-node.js"
-cost_tokens = 40
-cum_tokens = 1196
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/svgo-node.js"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/svgo-node.js"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/svgo-node.js"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/svgo-node.js"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 44
-key = 'Typescript(Export { file: "lib/svgo-node.js", start_line: 44 })'
-descriptor = "export at lib/svgo-node.js:44"
-cost_tokens = 0
-cum_tokens = 1196
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/svgo-node.js"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/svgo-node.js"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 45
-key = 'Typescript(Export { file: "lib/svgo-node.js", start_line: 83 })'
-descriptor = "export at lib/svgo-node.js:83"
-cost_tokens = 0
-cum_tokens = 1196
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/svgo-node.js"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/svgo-node.js"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 46
 key = 'Json(Whole { file: "docs/06-migrations/_category_.json" })'
 descriptor = "json config docs/06-migrations/_category_.json"
 cost_tokens = 22
-cum_tokens = 1218
+cum_tokens = 1192
 
 [batches.content]
 kind = "lines"
@@ -1245,29 +1151,105 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 47
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
-descriptor = "README.md section #7"
-cost_tokens = 40
-cum_tokens = 1258
+position = 44
+key = 'Typescript(ExportNames { file: "lib/svgo-node.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/svgo-node.js"
+cost_tokens = 42
+cum_tokens = 1234
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 106
-end = 106
+path = "lib/svgo-node.js"
+start = 44
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 48
+position = 45
+key = 'Typescript(Export { file: "lib/svgo-node.js", start_line: 44 })'
+descriptor = "export at lib/svgo-node.js:44"
+cost_tokens = 0
+cum_tokens = 1234
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 46
+key = 'Typescript(Export { file: "lib/svgo-node.js", start_line: 83 })'
+descriptor = "export at lib/svgo-node.js:83"
+cost_tokens = 0
+cum_tokens = 1234
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 47
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
-cost_tokens = 137
-cum_tokens = 1395
+cost_tokens = 135
+cum_tokens = 1369
 
 [batches.content]
 kind = "lines"
@@ -1329,11 +1311,29 @@ end = 46
 kind = "full"
 
 [[batches]]
+position = 48
+key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
+descriptor = "README.md section #7"
+cost_tokens = 40
+cum_tokens = 1409
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 49
 key = 'Fs(DirListing { dir: "test/regression" })'
 descriptor = "listing of 'test/regression'"
 cost_tokens = 35
-cum_tokens = 1430
+cum_tokens = 1444
 
 [batches.content]
 kind = "fs"
@@ -1346,8 +1346,8 @@ entries = ["compare.js", "delta.js", "extract.js", "file-lists.js", "lib.js", "l
 position = 50
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
 descriptor = "README.md section #13"
-cost_tokens = 115
-cum_tokens = 1545
+cost_tokens = 113
+cum_tokens = 1557
 
 [batches.content]
 kind = "lines"
@@ -1373,7 +1373,7 @@ position = 51
 key = 'Fs(DirListing { dir: "plugins" })'
 descriptor = "listing of 'plugins'"
 cost_tokens = 356
-cum_tokens = 1901
+cum_tokens = 1913
 
 [batches.content]
 kind = "fs"
@@ -1387,7 +1387,7 @@ position = 52
 key = 'Typescript(Export { file: "lib/svgo.js", start_line: 136 })'
 descriptor = "export at lib/svgo.js:136"
 cost_tokens = 53
-cum_tokens = 1954
+cum_tokens = 1966
 
 [batches.content]
 kind = "lines"
@@ -1405,7 +1405,7 @@ position = 53
 key = 'Fs(DirListing { dir: "test/fixtures" })'
 descriptor = "listing of 'test/fixtures'"
 cost_tokens = 4
-cum_tokens = 1958
+cum_tokens = 1970
 
 [batches.content]
 kind = "fs"
@@ -1418,8 +1418,8 @@ entries = ["config-loader"]
 position = 54
 key = 'Typescript(ExportNames { file: "lib/svgo/coa.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo/coa.js"
-cost_tokens = 29
-cum_tokens = 1987
+cost_tokens = 31
+cum_tokens = 2001
 
 [batches.content]
 kind = "lines"
@@ -1461,7 +1461,7 @@ position = 55
 key = 'Typescript(Export { file: "lib/svgo/coa.js", start_line: 19 })'
 descriptor = "export at lib/svgo/coa.js:19"
 cost_tokens = 0
-cum_tokens = 1987
+cum_tokens = 2001
 
 [batches.content]
 kind = "lines"
@@ -1487,7 +1487,7 @@ position = 56
 key = 'Typescript(Export { file: "lib/svgo/coa.js", start_line: 30 })'
 descriptor = "export at lib/svgo/coa.js:30"
 cost_tokens = 0
-cum_tokens = 1987
+cum_tokens = 2001
 
 [batches.content]
 kind = "lines"
@@ -1512,8 +1512,8 @@ kind = "ellipsis"
 position = 57
 key = 'Typescript(ExportNames { file: "lib/svgo/plugins.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo/plugins.js"
-cost_tokens = 30
-cum_tokens = 2017
+cost_tokens = 32
+cum_tokens = 2033
 
 [batches.content]
 kind = "lines"
@@ -1555,7 +1555,7 @@ position = 58
 key = 'Typescript(Export { file: "lib/svgo/plugins.js", start_line: 40 })'
 descriptor = "export at lib/svgo/plugins.js:40"
 cost_tokens = 0
-cum_tokens = 2017
+cum_tokens = 2033
 
 [batches.content]
 kind = "lines"
@@ -1581,7 +1581,7 @@ position = 59
 key = 'Typescript(ExportNames { file: "lib/util/visit.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/util/visit.js"
 cost_tokens = 33
-cum_tokens = 2050
+cum_tokens = 2066
 
 [batches.content]
 kind = "lines"
@@ -1623,7 +1623,7 @@ position = 60
 key = 'Typescript(Export { file: "lib/util/visit.js", start_line: 8 })'
 descriptor = "export at lib/util/visit.js:8"
 cost_tokens = 0
-cum_tokens = 2050
+cum_tokens = 2066
 
 [batches.content]
 kind = "lines"
@@ -1649,7 +1649,7 @@ position = 61
 key = 'Fs(DirListing { dir: "test/fixtures/config-loader" })'
 descriptor = "listing of 'test/fixtures/config-loader'"
 cost_tokens = 49
-cum_tokens = 2099
+cum_tokens = 2115
 
 [batches.content]
 kind = "fs"
@@ -1663,7 +1663,7 @@ position = 62
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 223
-cum_tokens = 2322
+cum_tokens = 2338
 
 [batches.content]
 kind = "lines"
@@ -1681,7 +1681,7 @@ position = 63
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 5
-cum_tokens = 2327
+cum_tokens = 2343
 
 [batches.content]
 kind = "fs"
@@ -1694,8 +1694,8 @@ entries = ["sync-version.js"]
 position = 64
 key = 'Typescript(ExportNames { file: "lib/style.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/style.js"
-cost_tokens = 67
-cum_tokens = 2394
+cost_tokens = 69
+cum_tokens = 2412
 
 [batches.content]
 kind = "lines"
@@ -1769,7 +1769,7 @@ position = 65
 key = 'Typescript(Export { file: "lib/style.js", start_line: 195 })'
 descriptor = "export at lib/style.js:195"
 cost_tokens = 0
-cum_tokens = 2394
+cum_tokens = 2412
 
 [batches.content]
 kind = "lines"
@@ -1795,7 +1795,7 @@ position = 66
 key = 'Typescript(Export { file: "lib/style.js", start_line: 211 })'
 descriptor = "export at lib/style.js:211"
 cost_tokens = 0
-cum_tokens = 2394
+cum_tokens = 2412
 
 [batches.content]
 kind = "lines"
@@ -1821,7 +1821,7 @@ position = 67
 key = 'Typescript(Export { file: "lib/style.js", start_line: 253 })'
 descriptor = "export at lib/style.js:253"
 cost_tokens = 0
-cum_tokens = 2394
+cum_tokens = 2412
 
 [batches.content]
 kind = "lines"
@@ -1847,7 +1847,7 @@ position = 68
 key = 'Typescript(Export { file: "lib/style.js", start_line: 286 })'
 descriptor = "export at lib/style.js:286"
 cost_tokens = 40
-cum_tokens = 2434
+cum_tokens = 2452
 
 [batches.content]
 kind = "lines"
@@ -1873,7 +1873,7 @@ position = 69
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 504
-cum_tokens = 2938
+cum_tokens = 2956
 
 [batches.content]
 kind = "lines"
@@ -1891,7 +1891,7 @@ position = 70
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 227
-cum_tokens = 3165
+cum_tokens = 3183
 
 [batches.content]
 kind = "lines"
@@ -1909,7 +1909,7 @@ position = 71
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 47
-cum_tokens = 3212
+cum_tokens = 3230
 
 [batches.content]
 kind = "lines"
@@ -1935,7 +1935,7 @@ position = 72
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 381
-cum_tokens = 3593
+cum_tokens = 3611
 
 [batches.content]
 kind = "lines"
@@ -1952,8 +1952,8 @@ kind = "full"
 position = 73
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
-cost_tokens = 332
-cum_tokens = 3925
+cost_tokens = 330
+cum_tokens = 3941
 
 [batches.content]
 kind = "lines"
@@ -2011,7 +2011,7 @@ position = 74
 key = 'Fs(DirListing { dir: ".yarn" })'
 descriptor = "listing of '.yarn'"
 cost_tokens = 6
-cum_tokens = 3931
+cum_tokens = 3947
 
 [batches.content]
 kind = "fs"
@@ -2024,8 +2024,8 @@ entries = ["patches", "plugins"]
 position = 75
 key = 'Typescript(ExportNames { file: "lib/xast.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/xast.js"
-cost_tokens = 81
-cum_tokens = 4012
+cost_tokens = 83
+cum_tokens = 4030
 
 [batches.content]
 kind = "lines"
@@ -2099,7 +2099,7 @@ position = 76
 key = 'Typescript(Export { file: "lib/xast.js", start_line: 22 })'
 descriptor = "export at lib/xast.js:22"
 cost_tokens = 0
-cum_tokens = 4012
+cum_tokens = 4030
 
 [batches.content]
 kind = "lines"
@@ -2125,7 +2125,7 @@ position = 77
 key = 'Typescript(Export { file: "lib/xast.js", start_line: 32 })'
 descriptor = "export at lib/xast.js:32"
 cost_tokens = 0
-cum_tokens = 4012
+cum_tokens = 4030
 
 [batches.content]
 kind = "lines"
@@ -2151,7 +2151,7 @@ position = 78
 key = 'Typescript(Export { file: "lib/xast.js", start_line: 42 })'
 descriptor = "export at lib/xast.js:42"
 cost_tokens = 0
-cum_tokens = 4012
+cum_tokens = 4030
 
 [batches.content]
 kind = "lines"
@@ -2177,7 +2177,7 @@ position = 79
 key = 'Typescript(Export { file: "lib/xast.js", start_line: 50 })'
 descriptor = "export at lib/xast.js:50"
 cost_tokens = 0
-cum_tokens = 4012
+cum_tokens = 4030
 
 [batches.content]
 kind = "lines"
@@ -2202,8 +2202,8 @@ kind = "ellipsis"
 position = 80
 key = 'Typescript(ExportBody { file: "lib/xast.js", start_line: 42, body_start_line: 43 })'
 descriptor = "export body at lib/xast.js:42 body 43"
-cost_tokens = 17
-cum_tokens = 4029
+cost_tokens = 19
+cum_tokens = 4049
 
 [batches.content]
 kind = "lines"
@@ -2220,8 +2220,8 @@ kind = "full"
 position = 81
 key = 'Typescript(ExportBody { file: "lib/xast.js", start_line: 22, body_start_line: 23 })'
 descriptor = "export body at lib/xast.js:22 body 23"
-cost_tokens = 18
-cum_tokens = 4047
+cost_tokens = 20
+cum_tokens = 4069
 
 [batches.content]
 kind = "lines"
@@ -2238,8 +2238,8 @@ kind = "full"
 position = 82
 key = 'Typescript(ExportBody { file: "lib/xast.js", start_line: 32, body_start_line: 33 })'
 descriptor = "export body at lib/xast.js:32 body 33"
-cost_tokens = 18
-cum_tokens = 4065
+cost_tokens = 20
+cum_tokens = 4089
 
 [batches.content]
 kind = "lines"
@@ -2256,8 +2256,8 @@ kind = "full"
 position = 83
 key = 'Typescript(ExportBody { file: "lib/xast.js", start_line: 50, body_start_line: 51 })'
 descriptor = "export body at lib/xast.js:50 body 51"
-cost_tokens = 33
-cum_tokens = 4098
+cost_tokens = 35
+cum_tokens = 4124
 
 [batches.content]
 kind = "lines"
@@ -2275,7 +2275,7 @@ position = 84
 key = 'Json(Whole { file: "tsconfig.build.json" })'
 descriptor = "json config tsconfig.build.json"
 cost_tokens = 108
-cum_tokens = 4206
+cum_tokens = 4232
 
 [batches.content]
 kind = "lines"
@@ -2293,7 +2293,7 @@ position = 85
 key = 'Typescript(Export { file: "lib/svgo/plugins.js", start_line: 14 })'
 descriptor = "export at lib/svgo/plugins.js:14"
 cost_tokens = 43
-cum_tokens = 4249
+cum_tokens = 4275
 
 [batches.content]
 kind = "lines"
@@ -2319,7 +2319,7 @@ position = 86
 key = 'Typescript(Imports { file: "lib/stringifier.js" })'
 descriptor = "imports in lib/stringifier.js"
 cost_tokens = 16
-cum_tokens = 4265
+cum_tokens = 4291
 
 [batches.content]
 kind = "lines"
@@ -2337,7 +2337,7 @@ position = 87
 key = 'Fs(DirListing { dir: "docs/04-plugins" })'
 descriptor = "listing of 'docs/04-plugins'"
 cost_tokens = 388
-cum_tokens = 4653
+cum_tokens = 4679
 
 [batches.content]
 kind = "fs"
@@ -2348,28 +2348,10 @@ entries = ["addAttributesToSVGElement.mdx", "addClassesToSVGElement.mdx", "clean
 
 [[batches]]
 position = 88
-key = 'Typescript(Imports { file: "lib/path.js" })'
-descriptor = "imports in lib/path.js"
-cost_tokens = 20
-cum_tokens = 4673
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/path.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
 key = 'Typescript(ExportBody { file: "lib/svgo/coa.js", start_line: 19, body_start_line: 20 })'
 descriptor = "export body at lib/svgo/coa.js:19 body 20"
-cost_tokens = 48
-cum_tokens = 4721
+cost_tokens = 50
+cum_tokens = 4729
 
 [batches.content]
 kind = "lines"
@@ -2383,11 +2365,29 @@ end = 24
 kind = "full"
 
 [[batches]]
+position = 89
+key = 'Typescript(Imports { file: "lib/path.js" })'
+descriptor = "imports in lib/path.js"
+cost_tokens = 22
+cum_tokens = 4751
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/path.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 90
 key = 'Typescript(Imports { file: "lib/util/map-nodes-to-parents.js" })'
 descriptor = "imports in lib/util/map-nodes-to-parents.js"
 cost_tokens = 13
-cum_tokens = 4734
+cum_tokens = 4764
 
 [batches.content]
 kind = "lines"
@@ -2402,28 +2402,10 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'Typescript(ExportDoc { file: "lib/svgo/coa.js", start_line: 30 })'
-descriptor = "export doc at lib/svgo/coa.js:30"
-cost_tokens = 27
-cum_tokens = 4761
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/svgo/coa.js"
-start = 27
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
 key = 'Typescript(Imports { file: "lib/parser.js" })'
 descriptor = "imports in lib/parser.js"
-cost_tokens = 27
-cum_tokens = 4788
+cost_tokens = 25
+cum_tokens = 4789
 
 [batches.content]
 kind = "lines"
@@ -2437,11 +2419,29 @@ end = 2
 kind = "full"
 
 [[batches]]
+position = 92
+key = 'Typescript(ExportDoc { file: "lib/svgo/coa.js", start_line: 30 })'
+descriptor = "export doc at lib/svgo/coa.js:30"
+cost_tokens = 27
+cum_tokens = 4816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/coa.js"
+start = 27
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 93
 key = 'Typescript(Imports { file: "lib/svgo/plugins.js" })'
 descriptor = "imports in lib/svgo/plugins.js"
 cost_tokens = 15
-cum_tokens = 4803
+cum_tokens = 4831
 
 [batches.content]
 kind = "lines"
@@ -2458,8 +2458,8 @@ kind = "full"
 position = 94
 key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 195, body_start_line: 196 })'
 descriptor = "export body at lib/style.js:195 body 196"
-cost_tokens = 93
-cum_tokens = 4896
+cost_tokens = 95
+cum_tokens = 4926
 
 [batches.content]
 kind = "lines"
@@ -2482,28 +2482,10 @@ kind = "full"
 
 [[batches]]
 position = 95
-key = 'Typescript(Imports { file: "lib/svgo/tools.js" })'
-descriptor = "imports in lib/svgo/tools.js"
-cost_tokens = 19
-cum_tokens = 4915
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/svgo/tools.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
 descriptor = "README.md section #11"
-cost_tokens = 105
-cum_tokens = 5020
+cost_tokens = 103
+cum_tokens = 5029
 
 [batches.content]
 kind = "lines"
@@ -2549,11 +2531,11 @@ end = 151
 kind = "full"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 302 })'
 descriptor = "export doc at lib/path.js:302"
 cost_tokens = 36
-cum_tokens = 5056
+cum_tokens = 5065
 
 [batches.content]
 kind = "lines"
@@ -2567,29 +2549,11 @@ end = 301
 kind = "full"
 
 [[batches]]
-position = 98
-key = 'Typescript(Imports { file: "lib/xast.js" })'
-descriptor = "imports in lib/xast.js"
-cost_tokens = 38
-cum_tokens = 5094
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/xast.js"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
+position = 97
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
-cost_tokens = 112
-cum_tokens = 5206
+cost_tokens = 110
+cum_tokens = 5175
 
 [batches.content]
 kind = "lines"
@@ -2643,11 +2607,47 @@ end = 167
 kind = "full"
 
 [[batches]]
+position = 98
+key = 'Typescript(Imports { file: "lib/xast.js" })'
+descriptor = "imports in lib/xast.js"
+cost_tokens = 38
+cum_tokens = 5213
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/xast.js"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Typescript(Imports { file: "lib/svgo/tools.js" })'
+descriptor = "imports in lib/svgo/tools.js"
+cost_tokens = 21
+cum_tokens = 5234
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 100
 key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 141 })'
 descriptor = "export doc at lib/path.js:141"
 cost_tokens = 40
-cum_tokens = 5246
+cum_tokens = 5274
 
 [batches.content]
 kind = "lines"
@@ -2665,7 +2665,7 @@ position = 101
 key = 'Typescript(Imports { file: "lib/svgo/css-select-adapter.js" })'
 descriptor = "imports in lib/svgo/css-select-adapter.js"
 cost_tokens = 22
-cum_tokens = 5268
+cum_tokens = 5296
 
 [batches.content]
 kind = "lines"
@@ -2682,8 +2682,8 @@ kind = "full"
 position = 102
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
-cost_tokens = 649
-cum_tokens = 5917
+cost_tokens = 651
+cum_tokens = 5947
 
 [batches.content]
 kind = "lines"
@@ -2700,8 +2700,8 @@ kind = "full"
 position = 103
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
-cost_tokens = 162
-cum_tokens = 6079
+cost_tokens = 160
+cum_tokens = 6107
 
 [batches.content]
 kind = "lines"
@@ -2740,10 +2740,44 @@ kind = "full"
 
 [[batches]]
 position = 104
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
+descriptor = "README.md section #6"
+cost_tokens = 162
+cum_tokens = 6269
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 85
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 95
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
 key = 'Typescript(ExportNames { file: "lib/types.ts", chunk_index: 0, export_count: 37, type_only_export_count: 37 })'
 descriptor = "export names surface in lib/types.ts"
-cost_tokens = 186
-cum_tokens = 6265
+cost_tokens = 188
+cum_tokens = 6457
 
 [batches.content]
 kind = "lines"
@@ -2941,11 +2975,11 @@ end = 176
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 30 })'
 descriptor = "export at lib/types.ts:30"
 cost_tokens = 0
-cum_tokens = 6265
+cum_tokens = 6457
 
 [batches.content]
 kind = "lines"
@@ -2967,11 +3001,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 108 })'
 descriptor = "export at lib/types.ts:108"
 cost_tokens = 9
-cum_tokens = 6274
+cum_tokens = 6466
 
 [batches.content]
 kind = "lines"
@@ -2985,29 +3019,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 107
-key = 'Typescript(Export { file: "lib/types.ts", start_line: 175 })'
-descriptor = "export at lib/types.ts:175"
-cost_tokens = 22
-cum_tokens = 6296
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/types.ts"
-start = 175
-end = 178
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 108
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 67 })'
 descriptor = "export at lib/types.ts:67"
 cost_tokens = 24
-cum_tokens = 6320
+cum_tokens = 6490
 
 [batches.content]
 kind = "lines"
@@ -3022,34 +3038,18 @@ kind = "full"
 
 [[batches]]
 position = 109
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
-descriptor = "README.md section #6"
-cost_tokens = 164
-cum_tokens = 6484
+key = 'Typescript(Export { file: "lib/types.ts", start_line: 175 })'
+descriptor = "export at lib/types.ts:175"
+cost_tokens = 24
+cum_tokens = 6514
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 85
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 95
-end = 104
+path = "lib/types.ts"
+start = 175
+end = 178
 
 [batches.content.spans.render]
 kind = "full"
@@ -3059,7 +3059,7 @@ position = 110
 key = 'Typescript(ExportDoc { file: "lib/style.js", start_line: 211 })'
 descriptor = "export doc at lib/style.js:211"
 cost_tokens = 45
-cum_tokens = 6529
+cum_tokens = 6559
 
 [batches.content]
 kind = "lines"
@@ -3076,8 +3076,8 @@ kind = "full"
 position = 111
 key = 'Typescript(ExportBody { file: "lib/svgo-node.js", start_line: 83, body_start_line: 84 })'
 descriptor = "export body at lib/svgo-node.js:83 body 84"
-cost_tokens = 150
-cum_tokens = 6679
+cost_tokens = 152
+cum_tokens = 6711
 
 [batches.content]
 kind = "lines"
@@ -3094,8 +3094,8 @@ kind = "full"
 position = 112
 key = 'Typescript(ExportDoc { file: "lib/version.js", start_line: 7 })'
 descriptor = "export doc at lib/version.js:7"
-cost_tokens = 49
-cum_tokens = 6728
+cost_tokens = 47
+cum_tokens = 6758
 
 [batches.content]
 kind = "lines"
@@ -3113,7 +3113,7 @@ position = 113
 key = 'Typescript(ExportDoc { file: "lib/xast.js", start_line: 50 })'
 descriptor = "export doc at lib/xast.js:50"
 cost_tokens = 49
-cum_tokens = 6777
+cum_tokens = 6807
 
 [batches.content]
 kind = "lines"
@@ -3131,7 +3131,7 @@ position = 114
 key = 'Typescript(ExportNames { file: "lib/svgo/tools.js", chunk_index: 0, export_count: 9, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/svgo/tools.js"
 cost_tokens = 163
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3285,7 +3285,7 @@ position = 115
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 21 })'
 descriptor = "export at lib/svgo/tools.js:21"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3311,7 +3311,7 @@ position = 116
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 43 })'
 descriptor = "export at lib/svgo/tools.js:43"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3337,7 +3337,7 @@ position = 117
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 78 })'
 descriptor = "export at lib/svgo/tools.js:78"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3363,7 +3363,7 @@ position = 118
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 134 })'
 descriptor = "export at lib/svgo/tools.js:134"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3389,7 +3389,7 @@ position = 119
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 163 })'
 descriptor = "export at lib/svgo/tools.js:163"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3415,7 +3415,7 @@ position = 120
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 194 })'
 descriptor = "export at lib/svgo/tools.js:194"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3441,7 +3441,7 @@ position = 121
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 206 })'
 descriptor = "export at lib/svgo/tools.js:206"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3467,7 +3467,7 @@ position = 122
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 215 })'
 descriptor = "export at lib/svgo/tools.js:215"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3493,7 +3493,7 @@ position = 123
 key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 250 })'
 descriptor = "export at lib/svgo/tools.js:250"
 cost_tokens = 0
-cum_tokens = 6940
+cum_tokens = 6970
 
 [batches.content]
 kind = "lines"
@@ -3519,7 +3519,7 @@ position = 124
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 111 })'
 descriptor = "export at lib/types.ts:111"
 cost_tokens = 31
-cum_tokens = 6971
+cum_tokens = 7001
 
 [batches.content]
 kind = "lines"
@@ -3537,7 +3537,7 @@ position = 125
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 169 })'
 descriptor = "export at lib/types.ts:169"
 cost_tokens = 31
-cum_tokens = 7002
+cum_tokens = 7032
 
 [batches.content]
 kind = "lines"
@@ -3555,7 +3555,7 @@ position = 126
 key = 'Typescript(Imports { file: "lib/svgo-node.js" })'
 descriptor = "imports in lib/svgo-node.js"
 cost_tokens = 57
-cum_tokens = 7059
+cum_tokens = 7089
 
 [batches.content]
 kind = "lines"
@@ -3570,10 +3570,28 @@ kind = "full"
 
 [[batches]]
 position = 127
+key = 'Typescript(ExportDoc { file: "lib/style.js", start_line: 253 })'
+descriptor = "export doc at lib/style.js:253"
+cost_tokens = 63
+cum_tokens = 7152
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/style.js"
+start = 248
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
 key = 'Typescript(ExportBody { file: "lib/svgo/tools.js", start_line: 134, body_start_line: 135 })'
 descriptor = "export body at lib/svgo/tools.js:134 body 135"
-cost_tokens = 112
-cum_tokens = 7171
+cost_tokens = 114
+cum_tokens = 7266
 
 [batches.content]
 kind = "lines"
@@ -3611,29 +3629,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 128
-key = 'Typescript(ExportDoc { file: "lib/style.js", start_line: 253 })'
-descriptor = "export doc at lib/style.js:253"
-cost_tokens = 63
-cum_tokens = 7234
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/style.js"
-start = 248
-end = 252
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 129
 key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 253, body_start_line: 254 })'
 descriptor = "export body at lib/style.js:253 body 254"
-cost_tokens = 209
-cum_tokens = 7443
+cost_tokens = 211
+cum_tokens = 7477
 
 [batches.content]
 kind = "lines"
@@ -3651,7 +3651,7 @@ position = 130
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 155 })'
 descriptor = "export at lib/types.ts:155"
 cost_tokens = 38
-cum_tokens = 7481
+cum_tokens = 7515
 
 [batches.content]
 kind = "lines"
@@ -3668,8 +3668,8 @@ kind = "full"
 position = 131
 key = 'Typescript(ExportBody { file: "lib/svgo/plugins.js", start_line: 14, body_start_line: 21 })'
 descriptor = "export body at lib/svgo/plugins.js:14 body 21"
-cost_tokens = 120
-cum_tokens = 7601
+cost_tokens = 122
+cum_tokens = 7637
 
 [batches.content]
 kind = "lines"
@@ -3695,7 +3695,7 @@ position = 132
 key = 'Typescript(ExportDoc { file: "lib/svgo.js", start_line: 81 })'
 descriptor = "export doc at lib/svgo.js:81"
 cost_tokens = 70
-cum_tokens = 7671
+cum_tokens = 7707
 
 [batches.content]
 kind = "lines"
@@ -3712,8 +3712,8 @@ kind = "full"
 position = 133
 key = 'Typescript(ExportBody { file: "lib/util/map-nodes-to-parents.js", start_line: 9, body_start_line: 10 })'
 descriptor = "export body at lib/util/map-nodes-to-parents.js:9 body 10"
-cost_tokens = 162
-cum_tokens = 7833
+cost_tokens = 164
+cum_tokens = 7871
 
 [batches.content]
 kind = "lines"
@@ -3747,7 +3747,7 @@ position = 134
 key = 'Typescript(ExportDoc { file: "lib/svgo-node.js", start_line: 83 })'
 descriptor = "export doc at lib/svgo-node.js:83"
 cost_tokens = 72
-cum_tokens = 7905
+cum_tokens = 7943
 
 [batches.content]
 kind = "lines"
@@ -3765,7 +3765,7 @@ position = 135
 key = 'Typescript(ExportDoc { file: "lib/parser.js", start_line: 80 })'
 descriptor = "export doc at lib/parser.js:80"
 cost_tokens = 74
-cum_tokens = 7979
+cum_tokens = 8017
 
 [batches.content]
 kind = "lines"
@@ -3783,7 +3783,7 @@ position = 136
 key = 'Typescript(ExportDoc { file: "lib/stringifier.js", start_line: 66 })'
 descriptor = "export doc at lib/stringifier.js:66"
 cost_tokens = 76
-cum_tokens = 8055
+cum_tokens = 8093
 
 [batches.content]
 kind = "lines"

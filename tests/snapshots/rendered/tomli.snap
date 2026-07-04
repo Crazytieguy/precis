@@ -14,9 +14,11 @@ LICENSE
 LICENSE-HEADER
 MANIFEST.in
 README.md
+    …
     5→# Tomli
     7→> A lil' TOML parser
     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
+    …
     13→- [Intro](#intro)
     14→- [Installation](#installation)
     15→- [Usage](#usage)
@@ -56,8 +58,6 @@ README.md
     …
     106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
     …
-    117→Note that `decimal.Decimal` can be replaced with another callable that converts a TOML float from string to a Python type.
-    118→The `decimal.Decimal` is, however, a practical choice for use cases where float inaccuracies can not be tolerated.
     120→Illegal types are `dict` and `list`, and their subtypes.
     121→A `ValueError` will be raised if `parse_float` produces illegal types.
     123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
@@ -66,10 +66,15 @@ README.md
     154→### Why this parser?<a name="why-this-parser"></a>
     156→- it's lil'
     157→- pure Python with zero dependencies
+    …
     161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
+    162→- 100% spec compliant: passes all tests in
+    163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
+    164→  test suite
     165→- thoroughly tested: 100% branch coverage
     167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
     169→No.
+    …
     175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
     177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
     179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
@@ -87,17 +92,22 @@ benchmark/
 fuzzer/
 profiler/
 pyproject.toml
+    …
     5→[project]
     6→name = "tomli"
     7→version = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
     8→description = "A lil' TOML parser"
+    …
     12→license = "MIT"
+    …
     14→requires-python = ">=3.8"
     15→readme = "README.md"
+    …
 scripts/
 setup.py
     1→import os
     3→from setuptools import setup  # type: ignore[import-untyped]
+    …
 src/
     tomli/
         __init__.py
@@ -108,6 +118,7 @@ src/
             6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
             8→from ._parser import TOMLDecodeError, load, loads
         _parser.py
+            …
             71→class DEPRECATED_DEFAULT:
             72→    """Sentinel to be used as default arg during deprecation
             73→    period of TOMLDecodeError's free-form arguments."""
@@ -127,10 +138,13 @@ src/
             91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
             92→        *args: Any,
             93→    ):
+            …
             137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
             138→    """Parse TOML from a binary file object."""
+            …
             149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
             150→    """Parse TOML from a string."""
+            …
             220→class Flags:
             221→    """Flags that map to parsed keys/namespaces."""
             223→    # Marks an immutable namespace (inline array or inline table).
@@ -163,6 +177,7 @@ src/
             286→        *,
             287→        access_lists: bool = True,
             288→    ) -> dict[str, Any]:
+            …
             300→    def append_nest_to_list(self, key: Key) -> None:
             …
             312→class Output:
@@ -184,6 +199,7 @@ src/
             332→    error_on: frozenset[str],
             333→    error_on_eof: bool,
             334→) -> Pos:
+            …
             349→def skip_comment(src: str, pos: Pos) -> Pos:
             …
             361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
@@ -197,6 +213,7 @@ src/
             …
         _re.py
         _types.py
+            …
             8→ParseFloat = Callable[[str], Any]
             9→Key = Tuple[str, ...]
             10→Pos = int

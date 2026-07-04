@@ -24,9 +24,11 @@ README.rst
     1→TinyUSB
     2→=======
     4→|Build Status| |CircleCI Status| |Documentation Status| |Static Analysis| |Fuzzing Status| |Membrowse| |License|
+    …
     31→TinyUSB is an open-source cross-platform USB Host/Device stack for embedded systems. It’s designed for memory safety
     32→(no dynamic allocation) and thread safety (all interrupts deferred to non-ISR task functions). The stack emphasizes portability,
     33→small footprint, and real-time performance across 50+ MCU families.
+    …
     102→Host Stack
     103→----------
     105→- Communication Device Class: CDC-ACM
@@ -36,13 +38,7 @@ README.rst
     109→- Musical Instrument Digital Interface (MIDI)
     110→- Hub with multiple-level support
     112→Similar to the Device Stack, if you have a special requirement, ``usbh_app_driver_get_cb()`` can be used to write your own class driver without modifying the stack.
-    121→OS Abstraction layer
-    122→--------------------
-    124→TinyUSB is completely thread-safe by pushing all Interrupt Service Request (ISR) events into a central queue, then processing them later in the non-ISR context task function. It also uses semaphore/mutex to access shared resources such as Communication Device Class (CDC) FIFO. Therefore the stack needs to use some of the OS's basic APIs. Following OSes are already supported out of the box.
-    126→- **No OS**
-    127→- **FreeRTOS**
-    128→- `RT-Thread <https://github.com/RT-Thread/rt-thread>`_: `repo <https://github.com/RT-Thread-packages/tinyusb>`_
-    129→- **Mynewt** Due to the newt package build system, Mynewt examples are better to be on its `own repo <https://github.com/hathach/mynewt-tinyusb-example>`_
+    …
 SConscript
 docs/
 examples/
@@ -59,6 +55,7 @@ lib/
             4→SEGGER RTT Sources
             6→https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer
             7→https://wiki.segger.com/RTT
+            …
         RTT/
             SEGGER_RTT.c
             SEGGER_RTT.h
@@ -68,6 +65,7 @@ lib/
     networking/
         dhserver.c
         dhserver.h
+            …
             42→typedef struct dhcp_entry
             43→{
             44→	uint8_t    mac[6];
@@ -81,6 +79,7 @@ lib/
             …
         dnserver.c
         dnserver.h
+            …
             42→typedef bool (*dns_query_proc_t)(const char *name, ip4_addr_t *addr);
             …
             47→err_t dnserv_init(const ip_addr_t *bind, uint16_t port, dns_query_proc_t query_proc);
@@ -103,7 +102,9 @@ src/
     class/
         audio/
             audio.h
+                …
                 36→#include "common/tusb_common.h"
+                …
             audio_device.c
             audio_device.h
         bth/
@@ -121,7 +122,9 @@ src/
                 pl2303.h
         dfu/
             dfu.h
+                …
                 30→#include "common/tusb_common.h"
+                …
                 40→// DFU Protocol
                 41→typedef enum
                 42→{
@@ -133,6 +136,7 @@ src/
                 49→{
                 50→  DFU_DESC_FUNCTIONAL = 0x21,
                 51→} dfu_descriptor_type_t;
+                …
                 54→typedef enum {
                 …
                 65→typedef enum {
@@ -151,13 +155,18 @@ src/
                 109→  uint8_t bState;
                 110→  uint8_t iString;
                 111→} dfu_status_response_t;
+                …
             dfu_device.c
             dfu_device.h
             dfu_rt_device.c
             dfu_rt_device.h
-                30→#include "dfu.h"
-                40→void tud_dfu_runtime_reboot_to_dfu_cb(void);
                 …
+                30→#include "dfu.h"
+                …
+                40→void tud_dfu_runtime_reboot_to_dfu_cb(void);
+                42→//--------------------------------------------------------------------+
+                43→// Internal Class Driver API
+                44→//--------------------------------------------------------------------+
                 45→void     dfu_rtd_init(void);
                 46→bool     dfu_rtd_deinit(void);
                 47→void     dfu_rtd_reset(uint8_t rhport);
@@ -173,8 +182,11 @@ src/
         midi/
             README_midi_host.md
             midi.h
-                39→enum {
                 …
+                39→enum {
+                40→  MIDI_VERSION_1_0 = 0x0100,
+                41→  MIDI_VERSION_2_0 = 0x0200,
+                42→};
                 44→typedef enum {
                 …
                 51→typedef enum {
@@ -184,9 +196,11 @@ src/
                 61→typedef enum {
                 …
                 81→enum {
+                …
                 104→enum {
                 105→  MIDI_MAX_DATA_VAL = 0x7F,
                 106→};
+                …
                 113→typedef struct TU_ATTR_PACKED {
                 …
                 123→typedef struct TU_ATTR_PACKED {
@@ -194,6 +208,7 @@ src/
                 134→#define midi_desc_out_jack_n_t(input_num) \
                 …
                 149→typedef midi_desc_out_jack_n_t(1)  midi_desc_out_jack_1in_t; // 1 input
+                150→typedef midi_desc_out_jack_1in_t midi_desc_out_jack_t; // backward compatible
                 …
                 154→#define midi_desc_element_n_t(input_num) \
                 …
@@ -214,6 +229,12 @@ src/
             msc_host.c
             msc_host.h
         mtp/
+            mtp.h
+                …
+                30→#include "common/tusb_common.h"
+                …
+            mtp_device.c
+            mtp_device.h
         net/
             ecm_rndis_device.c
             ncm.h
@@ -221,7 +242,9 @@ src/
             net_device.h
         printer/
             printer.h
+                …
                 30→#include "common/tusb_common.h"
+                …
                 37→typedef enum {
                 …
                 45→typedef union TU_ATTR_PACKED {
@@ -261,6 +284,7 @@ src/
             ehci.c
             ehci.h
             ehci_api.h
+                …
                 38→// Initialize EHCI driver
                 39→bool ehci_init(uint8_t rhport, uint32_t capability_reg, uint32_t operatial_reg);
                 41→// De-initialize EHCI driver
@@ -272,6 +296,7 @@ src/
                 hcd_musb.c
                 musb_max32.h
                 musb_ti.h
+                    …
                     48→#define MUSB_CFG_SHARED_FIFO       0
                     49→#define MUSB_CFG_DYNAMIC_FIFO      1
                     50→#define MUSB_CFG_DYNAMIC_FIFO_SIZE 4096
@@ -296,6 +321,9 @@ src/
             lpc_ip3511/
             lpc_ip3516/
         ohci/
+            ohci.c
+            ohci.h
+            ohci_nxp.h
         raspberrypi/
         renesas/
         sony/
@@ -317,6 +345,7 @@ src/
     tusb_option.h
     typec/
         pd_types.h
+            …
             39→TU_ATTR_PACKED_BEGIN
             40→TU_ATTR_BIT_FIELD_ORDER_BEGIN
             42→//--------------------------------------------------------------------+
@@ -355,6 +384,7 @@ src/
             143→  PD_PDO_TYPE_VARIABLE, // non-battery
             144→  PD_PDO_TYPE_APDO, // Augmented Power Data Object
             145→};
+            …
             148→typedef struct TU_ATTR_PACKED {
             …
             165→typedef struct TU_ATTR_PACKED {
@@ -369,6 +399,7 @@ src/
             …
             229→TU_ATTR_PACKED_END  // End of all packed definitions
             230→TU_ATTR_BIT_FIELD_ORDER_END
+            …
         tcd.h
         usbc.c
         usbc.h

@@ -1,7 +1,7 @@
 fixture = "monaco-editor"
 budget = 10000
-cumulative_tokens = 9955
-batch_count = 273
+cumulative_tokens = 9900
+batch_count = 271
 
 [[batches]]
 position = 1
@@ -21,8 +21,8 @@ entries = [".azure-pipelines", ".devcontainer", ".gitattributes", ".github", ".g
 position = 2
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
-cost_tokens = 62
-cum_tokens = 178
+cost_tokens = 70
+cum_tokens = 186
 
 [batches.content]
 kind = "lines"
@@ -55,8 +55,8 @@ kind = "full"
 position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
-cost_tokens = 63
-cum_tokens = 241
+cost_tokens = 67
+cum_tokens = 253
 
 [batches.content]
 kind = "lines"
@@ -82,7 +82,7 @@ position = 4
 key = 'Markdown(HeadingsOutline { file: "MAINTAINING.md" })'
 descriptor = "headings outline in MAINTAINING.md"
 cost_tokens = 36
-cum_tokens = 277
+cum_tokens = 289
 
 [batches.content]
 kind = "lines"
@@ -140,7 +140,7 @@ position = 5
 key = 'Fs(DirListing { dir: "test-results" })'
 descriptor = "listing of 'test-results'"
 cost_tokens = 6
-cum_tokens = 283
+cum_tokens = 295
 
 [batches.content]
 kind = "fs"
@@ -154,7 +154,7 @@ position = 6
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 25
-cum_tokens = 308
+cum_tokens = 320
 
 [batches.content]
 kind = "fs"
@@ -167,8 +167,8 @@ entries = ["deprecated", "editor.ts", "features", "index.ts", "internal", "langu
 position = 7
 key = 'Typescript(ExportNames { file: "src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/index.ts"
-cost_tokens = 18
-cum_tokens = 326
+cost_tokens = 20
+cum_tokens = 340
 
 [batches.content]
 kind = "lines"
@@ -186,7 +186,7 @@ position = 8
 key = 'Fs(DirListing { dir: "src/deprecated" })'
 descriptor = "listing of 'src/deprecated'"
 cost_tokens = 11
-cum_tokens = 337
+cum_tokens = 351
 
 [batches.content]
 kind = "fs"
@@ -200,7 +200,7 @@ position = 9
 key = 'Fs(DirListing { dir: "src/deprecated/language" })'
 descriptor = "listing of 'src/deprecated/language'"
 cost_tokens = 13
-cum_tokens = 350
+cum_tokens = 364
 
 [batches.content]
 kind = "fs"
@@ -214,7 +214,7 @@ position = 10
 key = 'Fs(DirListing { dir: "src/languages" })'
 descriptor = "listing of 'src/languages'"
 cost_tokens = 11
-cum_tokens = 361
+cum_tokens = 375
 
 [batches.content]
 kind = "fs"
@@ -228,7 +228,7 @@ position = 11
 key = 'Fs(DirListing { dir: "src/languages/features" })'
 descriptor = "listing of 'src/languages/features'"
 cost_tokens = 21
-cum_tokens = 382
+cum_tokens = 396
 
 [batches.content]
 kind = "fs"
@@ -242,7 +242,7 @@ position = 12
 key = 'Fs(DirListing { dir: "src/languages/features/css" })'
 descriptor = "listing of 'src/languages/features/css'"
 cost_tokens = 24
-cum_tokens = 406
+cum_tokens = 420
 
 [batches.content]
 kind = "fs"
@@ -256,7 +256,7 @@ position = 13
 key = 'Fs(DirListing { dir: "src/languages/features/html" })'
 descriptor = "listing of 'src/languages/features/html'"
 cost_tokens = 24
-cum_tokens = 430
+cum_tokens = 444
 
 [batches.content]
 kind = "fs"
@@ -270,7 +270,7 @@ position = 14
 key = 'Fs(DirListing { dir: "src/languages/features/json" })'
 descriptor = "listing of 'src/languages/features/json'"
 cost_tokens = 29
-cum_tokens = 459
+cum_tokens = 473
 
 [batches.content]
 kind = "fs"
@@ -284,7 +284,7 @@ position = 15
 key = 'Fs(DirListing { dir: "src/languages/features/typescript" })'
 descriptor = "listing of 'src/languages/features/typescript'"
 cost_tokens = 32
-cum_tokens = 491
+cum_tokens = 505
 
 [batches.content]
 kind = "fs"
@@ -295,10 +295,1542 @@ entries = ["languageFeatures.ts", "lib", "register.ts", "ts.worker.ts", "tsMode.
 
 [[batches]]
 position = 16
+key = 'Fs(DirListing { dir: "monaco-lsp-client" })'
+descriptor = "listing of 'monaco-lsp-client'"
+cost_tokens = 27
+cum_tokens = 532
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "monaco-lsp-client"
+entries = ["README.md", "generator", "package-lock.json", "package.json", "rolldown.config.mjs", "src"]
+
+[[batches]]
+position = 17
+key = 'Json(Identity { file: "monaco-lsp-client/package.json" })'
+descriptor = "package identity in monaco-lsp-client/package.json"
+cost_tokens = 48
+cum_tokens = 580
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 2
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Markdown(ReadmeHeadline { file: "monaco-lsp-client/README.md" })'
+descriptor = "README headline in monaco-lsp-client/README.md"
+cost_tokens = 45
+cum_tokens = 625
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "monaco-lsp-client/src" })'
+descriptor = "listing of 'monaco-lsp-client/src'"
+cost_tokens = 15
+cum_tokens = 640
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "monaco-lsp-client/src"
+entries = ["adapters", "index.ts", "types.ts", "utils.ts"]
+
+[[batches]]
+position = 20
+key = 'Json(IdentityMeta { file: "monaco-lsp-client/package.json" })'
+descriptor = "package identity metadata in monaco-lsp-client/package.json"
+cost_tokens = 10
+cum_tokens = 650
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "src/languages/definitions" })'
+descriptor = "listing of 'src/languages/definitions'"
+cost_tokens = 304
+cum_tokens = 954
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions"
+entries = ["_.contribution.ts", "abap", "apex", "azcli", "bat", "bicep", "cameligo", "clojure", "coffee", "cpp", "csharp", "csp", "css", "cypher", "dart", "dockerfile", "ecl", "elixir", "flow9", "freemarker2", "fsharp", "go", "graphql", "handlebars", "hcl", "html", "ini", "java", "javascript", "julia", "kotlin", "less", "lexon", "liquid", "lua", "m3", "markdown", "mdx", "mips", "msdax", "mysql", "objective-c", "pascal", "pascaligo", "perl", "pgsql", "php", "pla", "postiats", "powerquery", "powershell", "protobuf", "pug", "python", "qsharp", "r", "razor", "redis", "redshift", "register.all.ts", "restructuredtext", "ruby", "rust", "sb", "scala", "scheme", "scss", "shell", "solidity", "sophia", "sparql", "sql", "st", "swift", "systemverilog", "tcl", "test", "twig", "typescript", "typespec", "vb", "wgsl", "xml", "yaml"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "src/languages/definitions/sql" })'
+descriptor = "listing of 'src/languages/definitions/sql'"
+cost_tokens = 17
+cum_tokens = 971
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/sql"
+entries = ["keywords.js", "register.ts", "sql.test.ts", "sql.ts"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "src/languages/definitions/mysql" })'
+descriptor = "listing of 'src/languages/definitions/mysql'"
+cost_tokens = 22
+cum_tokens = 993
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/mysql"
+entries = ["keywords.js", "keywords.mysql.txt", "mysql.test.ts", "mysql.ts", "register.ts"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "src/languages/definitions/pgsql" })'
+descriptor = "listing of 'src/languages/definitions/pgsql'"
+cost_tokens = 25
+cum_tokens = 1018
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/pgsql"
+entries = ["keywords.js", "keywords.postgresql.txt", "pgsql.test.ts", "pgsql.ts", "register.ts"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "src/languages/definitions/apex" })'
+descriptor = "listing of 'src/languages/definitions/apex'"
+cost_tokens = 13
+cum_tokens = 1031
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/apex"
+entries = ["apex.test.ts", "apex.ts", "register.ts"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "src/languages/definitions/bat" })'
+descriptor = "listing of 'src/languages/definitions/bat'"
+cost_tokens = 13
+cum_tokens = 1044
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/bat"
+entries = ["bat.test.ts", "bat.ts", "register.ts"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "src/languages/definitions/coffee" })'
+descriptor = "listing of 'src/languages/definitions/coffee'"
+cost_tokens = 13
+cum_tokens = 1057
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/coffee"
+entries = ["coffee.test.ts", "coffee.ts", "register.ts"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "src/languages/definitions/cpp" })'
+descriptor = "listing of 'src/languages/definitions/cpp'"
+cost_tokens = 13
+cum_tokens = 1070
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/cpp"
+entries = ["cpp.test.ts", "cpp.ts", "register.ts"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "src/languages/definitions/css" })'
+descriptor = "listing of 'src/languages/definitions/css'"
+cost_tokens = 13
+cum_tokens = 1083
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/css"
+entries = ["css.test.ts", "css.ts", "register.ts"]
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "src/languages/definitions/dart" })'
+descriptor = "listing of 'src/languages/definitions/dart'"
+cost_tokens = 13
+cum_tokens = 1096
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/dart"
+entries = ["dart.test.ts", "dart.ts", "register.ts"]
+
+[[batches]]
+position = 31
+key = 'Fs(DirListing { dir: "src/languages/definitions/go" })'
+descriptor = "listing of 'src/languages/definitions/go'"
+cost_tokens = 13
+cum_tokens = 1109
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/go"
+entries = ["go.test.ts", "go.ts", "register.ts"]
+
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "src/languages/definitions/graphql" })'
+descriptor = "listing of 'src/languages/definitions/graphql'"
+cost_tokens = 13
+cum_tokens = 1122
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/graphql"
+entries = ["graphql.test.ts", "graphql.ts", "register.ts"]
+
+[[batches]]
+position = 33
+key = 'Fs(DirListing { dir: "src/languages/definitions/handlebars" })'
+descriptor = "listing of 'src/languages/definitions/handlebars'"
+cost_tokens = 13
+cum_tokens = 1135
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/handlebars"
+entries = ["handlebars.test.ts", "handlebars.ts", "register.ts"]
+
+[[batches]]
+position = 34
+key = 'Fs(DirListing { dir: "src/languages/definitions/html" })'
+descriptor = "listing of 'src/languages/definitions/html'"
+cost_tokens = 13
+cum_tokens = 1148
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/html"
+entries = ["html.test.ts", "html.ts", "register.ts"]
+
+[[batches]]
+position = 35
+key = 'Fs(DirListing { dir: "src/languages/definitions/java" })'
+descriptor = "listing of 'src/languages/definitions/java'"
+cost_tokens = 13
+cum_tokens = 1161
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/java"
+entries = ["java.test.ts", "java.ts", "register.ts"]
+
+[[batches]]
+position = 36
+key = 'Fs(DirListing { dir: "src/languages/definitions/javascript" })'
+descriptor = "listing of 'src/languages/definitions/javascript'"
+cost_tokens = 13
+cum_tokens = 1174
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/javascript"
+entries = ["javascript.test.ts", "javascript.ts", "register.ts"]
+
+[[batches]]
+position = 37
+key = 'Fs(DirListing { dir: "src/languages/definitions/kotlin" })'
+descriptor = "listing of 'src/languages/definitions/kotlin'"
+cost_tokens = 13
+cum_tokens = 1187
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/kotlin"
+entries = ["kotlin.test.ts", "kotlin.ts", "register.ts"]
+
+[[batches]]
+position = 38
+key = 'Fs(DirListing { dir: "src/languages/definitions/less" })'
+descriptor = "listing of 'src/languages/definitions/less'"
+cost_tokens = 13
+cum_tokens = 1200
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/less"
+entries = ["less.test.ts", "less.ts", "register.ts"]
+
+[[batches]]
+position = 39
+key = 'Fs(DirListing { dir: "src/languages/definitions/liquid" })'
+descriptor = "listing of 'src/languages/definitions/liquid'"
+cost_tokens = 13
+cum_tokens = 1213
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/liquid"
+entries = ["liquid.test.ts", "liquid.ts", "register.ts"]
+
+[[batches]]
+position = 40
+key = 'Fs(DirListing { dir: "src/languages/definitions/lua" })'
+descriptor = "listing of 'src/languages/definitions/lua'"
+cost_tokens = 13
+cum_tokens = 1226
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/lua"
+entries = ["lua.test.ts", "lua.ts", "register.ts"]
+
+[[batches]]
+position = 41
+key = 'Fs(DirListing { dir: "src/languages/definitions/markdown" })'
+descriptor = "listing of 'src/languages/definitions/markdown'"
+cost_tokens = 13
+cum_tokens = 1239
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/markdown"
+entries = ["markdown.test.ts", "markdown.ts", "register.ts"]
+
+[[batches]]
+position = 42
+key = 'Fs(DirListing { dir: "src/languages/definitions/perl" })'
+descriptor = "listing of 'src/languages/definitions/perl'"
+cost_tokens = 13
+cum_tokens = 1252
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/perl"
+entries = ["perl.test.ts", "perl.ts", "register.ts"]
+
+[[batches]]
+position = 43
+key = 'Fs(DirListing { dir: "src/languages/definitions/php" })'
+descriptor = "listing of 'src/languages/definitions/php'"
+cost_tokens = 13
+cum_tokens = 1265
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/php"
+entries = ["php.test.ts", "php.ts", "register.ts"]
+
+[[batches]]
+position = 44
+key = 'Fs(DirListing { dir: "src/languages/definitions/pla" })'
+descriptor = "listing of 'src/languages/definitions/pla'"
+cost_tokens = 13
+cum_tokens = 1278
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/pla"
+entries = ["pla.test.ts", "pla.ts", "register.ts"]
+
+[[batches]]
+position = 45
+key = 'Fs(DirListing { dir: "src/languages/definitions/protobuf" })'
+descriptor = "listing of 'src/languages/definitions/protobuf'"
+cost_tokens = 13
+cum_tokens = 1291
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/protobuf"
+entries = ["protobuf.test.ts", "protobuf.ts", "register.ts"]
+
+[[batches]]
+position = 46
+key = 'Fs(DirListing { dir: "src/languages/definitions/pug" })'
+descriptor = "listing of 'src/languages/definitions/pug'"
+cost_tokens = 13
+cum_tokens = 1304
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/pug"
+entries = ["pug.test.ts", "pug.ts", "register.ts"]
+
+[[batches]]
+position = 47
+key = 'Fs(DirListing { dir: "src/languages/definitions/python" })'
+descriptor = "listing of 'src/languages/definitions/python'"
+cost_tokens = 13
+cum_tokens = 1317
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/python"
+entries = ["python.test.ts", "python.ts", "register.ts"]
+
+[[batches]]
+position = 48
+key = 'Fs(DirListing { dir: "src/languages/definitions/r" })'
+descriptor = "listing of 'src/languages/definitions/r'"
+cost_tokens = 13
+cum_tokens = 1330
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/r"
+entries = ["r.test.ts", "r.ts", "register.ts"]
+
+[[batches]]
+position = 49
+key = 'Fs(DirListing { dir: "src/languages/definitions/razor" })'
+descriptor = "listing of 'src/languages/definitions/razor'"
+cost_tokens = 13
+cum_tokens = 1343
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/razor"
+entries = ["razor.test.ts", "razor.ts", "register.ts"]
+
+[[batches]]
+position = 50
+key = 'Fs(DirListing { dir: "src/languages/definitions/redis" })'
+descriptor = "listing of 'src/languages/definitions/redis'"
+cost_tokens = 13
+cum_tokens = 1356
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/redis"
+entries = ["redis.test.ts", "redis.ts", "register.ts"]
+
+[[batches]]
+position = 51
+key = 'Fs(DirListing { dir: "src/languages/definitions/ruby" })'
+descriptor = "listing of 'src/languages/definitions/ruby'"
+cost_tokens = 13
+cum_tokens = 1369
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/ruby"
+entries = ["register.ts", "ruby.test.ts", "ruby.ts"]
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "src/languages/definitions/rust" })'
+descriptor = "listing of 'src/languages/definitions/rust'"
+cost_tokens = 13
+cum_tokens = 1382
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/rust"
+entries = ["register.ts", "rust.test.ts", "rust.ts"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "src/languages/definitions/sb" })'
+descriptor = "listing of 'src/languages/definitions/sb'"
+cost_tokens = 13
+cum_tokens = 1395
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/sb"
+entries = ["register.ts", "sb.test.ts", "sb.ts"]
+
+[[batches]]
+position = 54
+key = 'Fs(DirListing { dir: "src/languages/definitions/scala" })'
+descriptor = "listing of 'src/languages/definitions/scala'"
+cost_tokens = 13
+cum_tokens = 1408
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/scala"
+entries = ["register.ts", "scala.test.ts", "scala.ts"]
+
+[[batches]]
+position = 55
+key = 'Fs(DirListing { dir: "src/languages/definitions/scheme" })'
+descriptor = "listing of 'src/languages/definitions/scheme'"
+cost_tokens = 13
+cum_tokens = 1421
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/scheme"
+entries = ["register.ts", "scheme.test.ts", "scheme.ts"]
+
+[[batches]]
+position = 56
+key = 'Fs(DirListing { dir: "src/languages/definitions/shell" })'
+descriptor = "listing of 'src/languages/definitions/shell'"
+cost_tokens = 13
+cum_tokens = 1434
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/shell"
+entries = ["register.ts", "shell.test.ts", "shell.ts"]
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "src/languages/definitions/solidity" })'
+descriptor = "listing of 'src/languages/definitions/solidity'"
+cost_tokens = 13
+cum_tokens = 1447
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/solidity"
+entries = ["register.ts", "solidity.test.ts", "solidity.ts"]
+
+[[batches]]
+position = 58
+key = 'Fs(DirListing { dir: "src/languages/definitions/st" })'
+descriptor = "listing of 'src/languages/definitions/st'"
+cost_tokens = 13
+cum_tokens = 1460
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/st"
+entries = ["register.ts", "st.test.ts", "st.ts"]
+
+[[batches]]
+position = 59
+key = 'Fs(DirListing { dir: "src/languages/definitions/swift" })'
+descriptor = "listing of 'src/languages/definitions/swift'"
+cost_tokens = 13
+cum_tokens = 1473
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/swift"
+entries = ["register.ts", "swift.test.ts", "swift.ts"]
+
+[[batches]]
+position = 60
+key = 'Fs(DirListing { dir: "src/languages/definitions/twig" })'
+descriptor = "listing of 'src/languages/definitions/twig'"
+cost_tokens = 13
+cum_tokens = 1486
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/twig"
+entries = ["register.ts", "twig.test.ts", "twig.ts"]
+
+[[batches]]
+position = 61
+key = 'Fs(DirListing { dir: "src/languages/definitions/vb" })'
+descriptor = "listing of 'src/languages/definitions/vb'"
+cost_tokens = 13
+cum_tokens = 1499
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/vb"
+entries = ["register.ts", "vb.test.ts", "vb.ts"]
+
+[[batches]]
+position = 62
+key = 'Fs(DirListing { dir: "src/languages/definitions/xml" })'
+descriptor = "listing of 'src/languages/definitions/xml'"
+cost_tokens = 13
+cum_tokens = 1512
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/xml"
+entries = ["register.ts", "xml.test.ts", "xml.ts"]
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "src/languages/definitions/yaml" })'
+descriptor = "listing of 'src/languages/definitions/yaml'"
+cost_tokens = 13
+cum_tokens = 1525
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/yaml"
+entries = ["register.ts", "yaml.test.ts", "yaml.ts"]
+
+[[batches]]
+position = 64
+key = 'Fs(DirListing { dir: "src/languages/definitions/abap" })'
+descriptor = "listing of 'src/languages/definitions/abap'"
+cost_tokens = 15
+cum_tokens = 1540
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/abap"
+entries = ["abap.test.ts", "abap.ts", "register.ts"]
+
+[[batches]]
+position = 65
+key = 'Fs(DirListing { dir: "src/languages/definitions/azcli" })'
+descriptor = "listing of 'src/languages/definitions/azcli'"
+cost_tokens = 15
+cum_tokens = 1555
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/azcli"
+entries = ["azcli.test.ts", "azcli.ts", "register.ts"]
+
+[[batches]]
+position = 66
+key = 'Fs(DirListing { dir: "src/languages/definitions/cameligo" })'
+descriptor = "listing of 'src/languages/definitions/cameligo'"
+cost_tokens = 15
+cum_tokens = 1570
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/cameligo"
+entries = ["cameligo.test.ts", "cameligo.ts", "register.ts"]
+
+[[batches]]
+position = 67
+key = 'Fs(DirListing { dir: "src/languages/definitions/csharp" })'
+descriptor = "listing of 'src/languages/definitions/csharp'"
+cost_tokens = 15
+cum_tokens = 1585
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/csharp"
+entries = ["csharp.test.ts", "csharp.ts", "register.ts"]
+
+[[batches]]
+position = 68
+key = 'Fs(DirListing { dir: "src/languages/definitions/csp" })'
+descriptor = "listing of 'src/languages/definitions/csp'"
+cost_tokens = 15
+cum_tokens = 1600
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/csp"
+entries = ["csp.test.ts", "csp.ts", "register.ts"]
+
+[[batches]]
+position = 69
+key = 'Fs(DirListing { dir: "src/languages/definitions/cypher" })'
+descriptor = "listing of 'src/languages/definitions/cypher'"
+cost_tokens = 15
+cum_tokens = 1615
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/cypher"
+entries = ["cypher.test.ts", "cypher.ts", "register.ts"]
+
+[[batches]]
+position = 70
+key = 'Fs(DirListing { dir: "src/languages/definitions/dockerfile" })'
+descriptor = "listing of 'src/languages/definitions/dockerfile'"
+cost_tokens = 15
+cum_tokens = 1630
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/dockerfile"
+entries = ["dockerfile.test.ts", "dockerfile.ts", "register.ts"]
+
+[[batches]]
+position = 71
+key = 'Fs(DirListing { dir: "src/languages/definitions/ecl" })'
+descriptor = "listing of 'src/languages/definitions/ecl'"
+cost_tokens = 15
+cum_tokens = 1645
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/ecl"
+entries = ["ecl.test.ts", "ecl.ts", "register.ts"]
+
+[[batches]]
+position = 72
+key = 'Fs(DirListing { dir: "src/languages/definitions/elixir" })'
+descriptor = "listing of 'src/languages/definitions/elixir'"
+cost_tokens = 15
+cum_tokens = 1660
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/elixir"
+entries = ["elixir.test.ts", "elixir.ts", "register.ts"]
+
+[[batches]]
+position = 73
+key = 'Fs(DirListing { dir: "src/languages/definitions/flow9" })'
+descriptor = "listing of 'src/languages/definitions/flow9'"
+cost_tokens = 15
+cum_tokens = 1675
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/flow9"
+entries = ["flow9.test.ts", "flow9.ts", "register.ts"]
+
+[[batches]]
+position = 74
+key = 'Fs(DirListing { dir: "src/languages/definitions/fsharp" })'
+descriptor = "listing of 'src/languages/definitions/fsharp'"
+cost_tokens = 15
+cum_tokens = 1690
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/fsharp"
+entries = ["fsharp.test.ts", "fsharp.ts", "register.ts"]
+
+[[batches]]
+position = 75
+key = 'Fs(DirListing { dir: "src/languages/definitions/hcl" })'
+descriptor = "listing of 'src/languages/definitions/hcl'"
+cost_tokens = 15
+cum_tokens = 1705
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/hcl"
+entries = ["hcl.test.ts", "hcl.ts", "register.ts"]
+
+[[batches]]
+position = 76
+key = 'Fs(DirListing { dir: "src/languages/definitions/julia" })'
+descriptor = "listing of 'src/languages/definitions/julia'"
+cost_tokens = 15
+cum_tokens = 1720
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/julia"
+entries = ["julia.test.ts", "julia.ts", "register.ts"]
+
+[[batches]]
+position = 77
+key = 'Fs(DirListing { dir: "src/languages/definitions/lexon" })'
+descriptor = "listing of 'src/languages/definitions/lexon'"
+cost_tokens = 15
+cum_tokens = 1735
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/lexon"
+entries = ["lexon.test.ts", "lexon.ts", "register.ts"]
+
+[[batches]]
+position = 78
+key = 'Fs(DirListing { dir: "src/languages/definitions/m3" })'
+descriptor = "listing of 'src/languages/definitions/m3'"
+cost_tokens = 15
+cum_tokens = 1750
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/m3"
+entries = ["m3.test.ts", "m3.ts", "register.ts"]
+
+[[batches]]
+position = 79
+key = 'Fs(DirListing { dir: "src/languages/definitions/mdx" })'
+descriptor = "listing of 'src/languages/definitions/mdx'"
+cost_tokens = 15
+cum_tokens = 1765
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/mdx"
+entries = ["mdx.test.ts", "mdx.ts", "register.ts"]
+
+[[batches]]
+position = 80
+key = 'Fs(DirListing { dir: "src/languages/definitions/mips" })'
+descriptor = "listing of 'src/languages/definitions/mips'"
+cost_tokens = 15
+cum_tokens = 1780
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/mips"
+entries = ["mips.test.ts", "mips.ts", "register.ts"]
+
+[[batches]]
+position = 81
+key = 'Fs(DirListing { dir: "src/languages/definitions/objective-c" })'
+descriptor = "listing of 'src/languages/definitions/objective-c'"
+cost_tokens = 15
+cum_tokens = 1795
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/objective-c"
+entries = ["objective-c.test.ts", "objective-c.ts", "register.ts"]
+
+[[batches]]
+position = 82
+key = 'Fs(DirListing { dir: "src/languages/definitions/pascal" })'
+descriptor = "listing of 'src/languages/definitions/pascal'"
+cost_tokens = 15
+cum_tokens = 1810
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/pascal"
+entries = ["pascal.test.ts", "pascal.ts", "register.ts"]
+
+[[batches]]
+position = 83
+key = 'Fs(DirListing { dir: "src/languages/definitions/postiats" })'
+descriptor = "listing of 'src/languages/definitions/postiats'"
+cost_tokens = 15
+cum_tokens = 1825
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/postiats"
+entries = ["postiats.test.ts", "postiats.ts", "register.ts"]
+
+[[batches]]
+position = 84
+key = 'Fs(DirListing { dir: "src/languages/definitions/powerquery" })'
+descriptor = "listing of 'src/languages/definitions/powerquery'"
+cost_tokens = 15
+cum_tokens = 1840
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/powerquery"
+entries = ["powerquery.test.ts", "powerquery.ts", "register.ts"]
+
+[[batches]]
+position = 85
+key = 'Fs(DirListing { dir: "src/languages/definitions/powershell" })'
+descriptor = "listing of 'src/languages/definitions/powershell'"
+cost_tokens = 15
+cum_tokens = 1855
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/powershell"
+entries = ["powershell.test.ts", "powershell.ts", "register.ts"]
+
+[[batches]]
+position = 86
+key = 'Fs(DirListing { dir: "src/languages/definitions/qsharp" })'
+descriptor = "listing of 'src/languages/definitions/qsharp'"
+cost_tokens = 15
+cum_tokens = 1870
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/qsharp"
+entries = ["qsharp.test.ts", "qsharp.ts", "register.ts"]
+
+[[batches]]
+position = 87
+key = 'Fs(DirListing { dir: "src/languages/definitions/redshift" })'
+descriptor = "listing of 'src/languages/definitions/redshift'"
+cost_tokens = 15
+cum_tokens = 1885
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/redshift"
+entries = ["redshift.test.ts", "redshift.ts", "register.ts"]
+
+[[batches]]
+position = 88
+key = 'Fs(DirListing { dir: "src/languages/definitions/scss" })'
+descriptor = "listing of 'src/languages/definitions/scss'"
+cost_tokens = 15
+cum_tokens = 1900
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/scss"
+entries = ["register.ts", "scss.test.ts", "scss.ts"]
+
+[[batches]]
+position = 89
+key = 'Fs(DirListing { dir: "src/languages/definitions/sophia" })'
+descriptor = "listing of 'src/languages/definitions/sophia'"
+cost_tokens = 15
+cum_tokens = 1915
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/sophia"
+entries = ["register.ts", "sophia.test.ts", "sophia.ts"]
+
+[[batches]]
+position = 90
+key = 'Fs(DirListing { dir: "src/languages/definitions/sparql" })'
+descriptor = "listing of 'src/languages/definitions/sparql'"
+cost_tokens = 15
+cum_tokens = 1930
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/sparql"
+entries = ["register.ts", "sparql.test.ts", "sparql.ts"]
+
+[[batches]]
+position = 91
+key = 'Fs(DirListing { dir: "src/languages/definitions/tcl" })'
+descriptor = "listing of 'src/languages/definitions/tcl'"
+cost_tokens = 15
+cum_tokens = 1945
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/tcl"
+entries = ["register.ts", "tcl.test.ts", "tcl.ts"]
+
+[[batches]]
+position = 92
+key = 'Fs(DirListing { dir: "src/languages/definitions/typescript" })'
+descriptor = "listing of 'src/languages/definitions/typescript'"
+cost_tokens = 15
+cum_tokens = 1960
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/typescript"
+entries = ["register.ts", "typescript.test.ts", "typescript.ts"]
+
+[[batches]]
+position = 93
+key = 'Fs(DirListing { dir: "src/languages/definitions/typespec" })'
+descriptor = "listing of 'src/languages/definitions/typespec'"
+cost_tokens = 15
+cum_tokens = 1975
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/typespec"
+entries = ["register.ts", "typespec.test.ts", "typespec.ts"]
+
+[[batches]]
+position = 94
+key = 'Fs(DirListing { dir: "src/languages/definitions/wgsl" })'
+descriptor = "listing of 'src/languages/definitions/wgsl'"
+cost_tokens = 15
+cum_tokens = 1990
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/wgsl"
+entries = ["register.ts", "wgsl.test.ts", "wgsl.ts"]
+
+[[batches]]
+position = 95
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 6
+cum_tokens = 1996
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["ci", "lib"]
+
+[[batches]]
+position = 96
+key = 'Fs(DirListing { dir: "webpack-plugin" })'
+descriptor = "listing of 'webpack-plugin'"
+cost_tokens = 29
+cum_tokens = 2025
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin"
+entries = [".npmignore", "LICENSE", "README.md", "package-lock.json", "package.json", "src", "tsconfig.json"]
+
+[[batches]]
+position = 97
+key = 'Json(Identity { file: "webpack-plugin/package.json" })'
+descriptor = "package identity in webpack-plugin/package.json"
+cost_tokens = 62
+cum_tokens = 2087
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/package.json"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/package.json"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'Markdown(ReadmeHeadline { file: "webpack-plugin/README.md" })'
+descriptor = "README headline in webpack-plugin/README.md"
+cost_tokens = 51
+cum_tokens = 2138
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Fs(DirListing { dir: "webpack-plugin/src" })'
+descriptor = "listing of 'webpack-plugin/src'"
+cost_tokens = 20
+cum_tokens = 2158
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin/src"
+entries = ["index.ts", "loader-utils.d.ts", "loaders", "plugins", "types.ts"]
+
+[[batches]]
+position = 100
+key = 'Fs(DirListing { dir: "src/languages/definitions/bicep" })'
+descriptor = "listing of 'src/languages/definitions/bicep'"
+cost_tokens = 17
+cum_tokens = 2175
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/bicep"
+entries = ["bicep.test.ts", "bicep.ts", "register.ts"]
+
+[[batches]]
+position = 101
+key = 'Fs(DirListing { dir: "src/languages/definitions/clojure" })'
+descriptor = "listing of 'src/languages/definitions/clojure'"
+cost_tokens = 17
+cum_tokens = 2192
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/clojure"
+entries = ["clojure.test.ts", "clojure.ts", "register.ts"]
+
+[[batches]]
+position = 102
+key = 'Fs(DirListing { dir: "src/languages/definitions/msdax" })'
+descriptor = "listing of 'src/languages/definitions/msdax'"
+cost_tokens = 17
+cum_tokens = 2209
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/msdax"
+entries = ["msdax.test.ts", "msdax.ts", "register.ts"]
+
+[[batches]]
+position = 103
+key = 'Fs(DirListing { dir: "src/languages/definitions/pascaligo" })'
+descriptor = "listing of 'src/languages/definitions/pascaligo'"
+cost_tokens = 17
+cum_tokens = 2226
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/pascaligo"
+entries = ["pascaligo.test.ts", "pascaligo.ts", "register.ts"]
+
+[[batches]]
+position = 104
+key = 'Fs(DirListing { dir: "src/languages/definitions/restructuredtext" })'
+descriptor = "listing of 'src/languages/definitions/restructuredtext'"
+cost_tokens = 17
+cum_tokens = 2243
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/restructuredtext"
+entries = ["register.ts", "restructuredtext.test.ts", "restructuredtext.ts"]
+
+[[batches]]
+position = 105
+key = 'Fs(DirListing { dir: "src/languages/definitions/systemverilog" })'
+descriptor = "listing of 'src/languages/definitions/systemverilog'"
+cost_tokens = 17
+cum_tokens = 2260
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/systemverilog"
+entries = ["register.ts", "systemverilog.test.ts", "systemverilog.ts"]
+
+[[batches]]
+position = 106
+key = 'Fs(DirListing { dir: "src/features" })'
+descriptor = "listing of 'src/features'"
+cost_tokens = 272
+cum_tokens = 2532
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/features"
+entries = ["anchorSelect", "bracketMatching", "caretOperations", "clipboard", "codeAction", "codeEditor", "codelens", "codicon", "colorPicker", "comment", "contextmenu", "cursorUndo", "diffEditor", "diffEditorBreadcrumbs", "dnd", "documentSymbols", "dropOrPasteInto", "find", "floatingMenu", "folding", "fontZoom", "format", "gotoError", "gotoLine", "gotoSymbol", "gpu", "hover", "iPadShowKeyboard", "inPlaceReplace", "indentation", "inlayHints", "inlineCompletions", "inlineProgress", "insertFinalNewLine", "inspectTokens", "lineSelection", "linesOperations", "linkedEditing", "links", "longLinesHelper", "middleScroll", "multicursor", "parameterHints", "placeholderText", "quickCommand", "quickHelp", "quickOutline", "readOnlyMessage", "referenceSearch", "register.all.ts", "rename", "sectionHeaders", "semanticTokens", "smartSelect", "snippet", "stickyScroll", "suggest", "toggleHighContrast", "toggleTabFocusMode", "tokenization", "unicodeHighlighter", "unusualLineTerminators", "wordHighlighter", "wordOperations", "wordPartOperations"]
+
+[[batches]]
+position = 107
+key = 'Json(Entry { file: "monaco-lsp-client/package.json" })'
+descriptor = "package entrypoints in monaco-lsp-client/package.json"
+cost_tokens = 27
+cum_tokens = 2559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 38
+cum_tokens = 2597
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["code-structure.dio.svg", "debugging-core.gif", "debugging-languages.gif", "integrate-esm.md", "launch config.png", "out-folders.dio.svg"]
+
+[[batches]]
+position = 109
+key = 'Markdown(HeadingsOutline { file: "webpack-plugin/README.md" })'
+descriptor = "headings outline in webpack-plugin/README.md"
+cost_tokens = 45
+cum_tokens = 2642
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 110
+key = 'Typescript(ExportNames { file: "src/languages/features/register.all.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in src/languages/features/register.all.ts"
+cost_tokens = 17
+cum_tokens = 2659
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/register.all.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Markdown(Section { file: "webpack-plugin/README.md", section_index: 1, reference_shaped: false })'
+descriptor = "webpack-plugin/README.md section #1"
+cost_tokens = 23
+cum_tokens = 2682
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "webpack-plugin/README.md"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'Fs(DirListing { dir: "src/languages/definitions/freemarker2" })'
+descriptor = "listing of 'src/languages/definitions/freemarker2'"
+cost_tokens = 76
+cum_tokens = 2758
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions/freemarker2"
+entries = ["freemarker2-angle-bracket.test.ts", "freemarker2-angle-dollar.test.ts", "freemarker2-auto-bracket.test.ts", "freemarker2-auto-dollar.test.ts", "freemarker2-bracket-bracket.test.ts", "freemarker2-bracket-dollar.test.ts", "freemarker2.ts", "register.ts"]
+
+[[batches]]
+position = 113
+key = 'Typescript(ExportNames { file: "monaco-lsp-client/src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in monaco-lsp-client/src/index.ts"
+cost_tokens = 28
+cum_tokens = 2786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/src/index.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 146
-cum_tokens = 637
+cum_tokens = 2932
 
 [batches.content]
 kind = "lines"
@@ -544,11 +2076,11 @@ end = 122
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 115
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
-cost_tokens = 46
-cum_tokens = 683
+cost_tokens = 44
+cum_tokens = 2976
 
 [batches.content]
 kind = "lines"
@@ -562,1543 +2094,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "monaco-lsp-client" })'
-descriptor = "listing of 'monaco-lsp-client'"
-cost_tokens = 27
-cum_tokens = 710
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "monaco-lsp-client"
-entries = ["README.md", "generator", "package-lock.json", "package.json", "rolldown.config.mjs", "src"]
-
-[[batches]]
-position = 19
-key = 'Json(Identity { file: "monaco-lsp-client/package.json" })'
-descriptor = "package identity in monaco-lsp-client/package.json"
-cost_tokens = 42
-cum_tokens = 752
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 2
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Markdown(ReadmeHeadline { file: "monaco-lsp-client/README.md" })'
-descriptor = "README headline in monaco-lsp-client/README.md"
-cost_tokens = 45
-cum_tokens = 797
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: "monaco-lsp-client/src" })'
-descriptor = "listing of 'monaco-lsp-client/src'"
-cost_tokens = 15
-cum_tokens = 812
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "monaco-lsp-client/src"
-entries = ["adapters", "index.ts", "types.ts", "utils.ts"]
-
-[[batches]]
-position = 22
-key = 'Json(IdentityMeta { file: "monaco-lsp-client/package.json" })'
-descriptor = "package identity metadata in monaco-lsp-client/package.json"
-cost_tokens = 12
-cum_tokens = 824
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "src/languages/definitions" })'
-descriptor = "listing of 'src/languages/definitions'"
-cost_tokens = 304
-cum_tokens = 1128
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions"
-entries = ["_.contribution.ts", "abap", "apex", "azcli", "bat", "bicep", "cameligo", "clojure", "coffee", "cpp", "csharp", "csp", "css", "cypher", "dart", "dockerfile", "ecl", "elixir", "flow9", "freemarker2", "fsharp", "go", "graphql", "handlebars", "hcl", "html", "ini", "java", "javascript", "julia", "kotlin", "less", "lexon", "liquid", "lua", "m3", "markdown", "mdx", "mips", "msdax", "mysql", "objective-c", "pascal", "pascaligo", "perl", "pgsql", "php", "pla", "postiats", "powerquery", "powershell", "protobuf", "pug", "python", "qsharp", "r", "razor", "redis", "redshift", "register.all.ts", "restructuredtext", "ruby", "rust", "sb", "scala", "scheme", "scss", "shell", "solidity", "sophia", "sparql", "sql", "st", "swift", "systemverilog", "tcl", "test", "twig", "typescript", "typespec", "vb", "wgsl", "xml", "yaml"]
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "src/languages/definitions/sql" })'
-descriptor = "listing of 'src/languages/definitions/sql'"
-cost_tokens = 17
-cum_tokens = 1145
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/sql"
-entries = ["keywords.js", "register.ts", "sql.test.ts", "sql.ts"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "src/languages/definitions/mysql" })'
-descriptor = "listing of 'src/languages/definitions/mysql'"
-cost_tokens = 22
-cum_tokens = 1167
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/mysql"
-entries = ["keywords.js", "keywords.mysql.txt", "mysql.test.ts", "mysql.ts", "register.ts"]
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "src/languages/definitions/pgsql" })'
-descriptor = "listing of 'src/languages/definitions/pgsql'"
-cost_tokens = 25
-cum_tokens = 1192
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/pgsql"
-entries = ["keywords.js", "keywords.postgresql.txt", "pgsql.test.ts", "pgsql.ts", "register.ts"]
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "src/languages/definitions/apex" })'
-descriptor = "listing of 'src/languages/definitions/apex'"
-cost_tokens = 13
-cum_tokens = 1205
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/apex"
-entries = ["apex.test.ts", "apex.ts", "register.ts"]
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "src/languages/definitions/bat" })'
-descriptor = "listing of 'src/languages/definitions/bat'"
-cost_tokens = 13
-cum_tokens = 1218
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/bat"
-entries = ["bat.test.ts", "bat.ts", "register.ts"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "src/languages/definitions/coffee" })'
-descriptor = "listing of 'src/languages/definitions/coffee'"
-cost_tokens = 13
-cum_tokens = 1231
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/coffee"
-entries = ["coffee.test.ts", "coffee.ts", "register.ts"]
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "src/languages/definitions/cpp" })'
-descriptor = "listing of 'src/languages/definitions/cpp'"
-cost_tokens = 13
-cum_tokens = 1244
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/cpp"
-entries = ["cpp.test.ts", "cpp.ts", "register.ts"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "src/languages/definitions/css" })'
-descriptor = "listing of 'src/languages/definitions/css'"
-cost_tokens = 13
-cum_tokens = 1257
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/css"
-entries = ["css.test.ts", "css.ts", "register.ts"]
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "src/languages/definitions/dart" })'
-descriptor = "listing of 'src/languages/definitions/dart'"
-cost_tokens = 13
-cum_tokens = 1270
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/dart"
-entries = ["dart.test.ts", "dart.ts", "register.ts"]
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "src/languages/definitions/go" })'
-descriptor = "listing of 'src/languages/definitions/go'"
-cost_tokens = 13
-cum_tokens = 1283
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/go"
-entries = ["go.test.ts", "go.ts", "register.ts"]
-
-[[batches]]
-position = 34
-key = 'Fs(DirListing { dir: "src/languages/definitions/graphql" })'
-descriptor = "listing of 'src/languages/definitions/graphql'"
-cost_tokens = 13
-cum_tokens = 1296
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/graphql"
-entries = ["graphql.test.ts", "graphql.ts", "register.ts"]
-
-[[batches]]
-position = 35
-key = 'Fs(DirListing { dir: "src/languages/definitions/handlebars" })'
-descriptor = "listing of 'src/languages/definitions/handlebars'"
-cost_tokens = 13
-cum_tokens = 1309
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/handlebars"
-entries = ["handlebars.test.ts", "handlebars.ts", "register.ts"]
-
-[[batches]]
-position = 36
-key = 'Fs(DirListing { dir: "src/languages/definitions/html" })'
-descriptor = "listing of 'src/languages/definitions/html'"
-cost_tokens = 13
-cum_tokens = 1322
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/html"
-entries = ["html.test.ts", "html.ts", "register.ts"]
-
-[[batches]]
-position = 37
-key = 'Fs(DirListing { dir: "src/languages/definitions/java" })'
-descriptor = "listing of 'src/languages/definitions/java'"
-cost_tokens = 13
-cum_tokens = 1335
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/java"
-entries = ["java.test.ts", "java.ts", "register.ts"]
-
-[[batches]]
-position = 38
-key = 'Fs(DirListing { dir: "src/languages/definitions/javascript" })'
-descriptor = "listing of 'src/languages/definitions/javascript'"
-cost_tokens = 13
-cum_tokens = 1348
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/javascript"
-entries = ["javascript.test.ts", "javascript.ts", "register.ts"]
-
-[[batches]]
-position = 39
-key = 'Fs(DirListing { dir: "src/languages/definitions/kotlin" })'
-descriptor = "listing of 'src/languages/definitions/kotlin'"
-cost_tokens = 13
-cum_tokens = 1361
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/kotlin"
-entries = ["kotlin.test.ts", "kotlin.ts", "register.ts"]
-
-[[batches]]
-position = 40
-key = 'Fs(DirListing { dir: "src/languages/definitions/less" })'
-descriptor = "listing of 'src/languages/definitions/less'"
-cost_tokens = 13
-cum_tokens = 1374
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/less"
-entries = ["less.test.ts", "less.ts", "register.ts"]
-
-[[batches]]
-position = 41
-key = 'Fs(DirListing { dir: "src/languages/definitions/liquid" })'
-descriptor = "listing of 'src/languages/definitions/liquid'"
-cost_tokens = 13
-cum_tokens = 1387
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/liquid"
-entries = ["liquid.test.ts", "liquid.ts", "register.ts"]
-
-[[batches]]
-position = 42
-key = 'Fs(DirListing { dir: "src/languages/definitions/lua" })'
-descriptor = "listing of 'src/languages/definitions/lua'"
-cost_tokens = 13
-cum_tokens = 1400
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/lua"
-entries = ["lua.test.ts", "lua.ts", "register.ts"]
-
-[[batches]]
-position = 43
-key = 'Fs(DirListing { dir: "src/languages/definitions/markdown" })'
-descriptor = "listing of 'src/languages/definitions/markdown'"
-cost_tokens = 13
-cum_tokens = 1413
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/markdown"
-entries = ["markdown.test.ts", "markdown.ts", "register.ts"]
-
-[[batches]]
-position = 44
-key = 'Fs(DirListing { dir: "src/languages/definitions/perl" })'
-descriptor = "listing of 'src/languages/definitions/perl'"
-cost_tokens = 13
-cum_tokens = 1426
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/perl"
-entries = ["perl.test.ts", "perl.ts", "register.ts"]
-
-[[batches]]
-position = 45
-key = 'Fs(DirListing { dir: "src/languages/definitions/php" })'
-descriptor = "listing of 'src/languages/definitions/php'"
-cost_tokens = 13
-cum_tokens = 1439
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/php"
-entries = ["php.test.ts", "php.ts", "register.ts"]
-
-[[batches]]
-position = 46
-key = 'Fs(DirListing { dir: "src/languages/definitions/pla" })'
-descriptor = "listing of 'src/languages/definitions/pla'"
-cost_tokens = 13
-cum_tokens = 1452
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/pla"
-entries = ["pla.test.ts", "pla.ts", "register.ts"]
-
-[[batches]]
-position = 47
-key = 'Fs(DirListing { dir: "src/languages/definitions/protobuf" })'
-descriptor = "listing of 'src/languages/definitions/protobuf'"
-cost_tokens = 13
-cum_tokens = 1465
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/protobuf"
-entries = ["protobuf.test.ts", "protobuf.ts", "register.ts"]
-
-[[batches]]
-position = 48
-key = 'Fs(DirListing { dir: "src/languages/definitions/pug" })'
-descriptor = "listing of 'src/languages/definitions/pug'"
-cost_tokens = 13
-cum_tokens = 1478
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/pug"
-entries = ["pug.test.ts", "pug.ts", "register.ts"]
-
-[[batches]]
-position = 49
-key = 'Fs(DirListing { dir: "src/languages/definitions/python" })'
-descriptor = "listing of 'src/languages/definitions/python'"
-cost_tokens = 13
-cum_tokens = 1491
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/python"
-entries = ["python.test.ts", "python.ts", "register.ts"]
-
-[[batches]]
-position = 50
-key = 'Fs(DirListing { dir: "src/languages/definitions/r" })'
-descriptor = "listing of 'src/languages/definitions/r'"
-cost_tokens = 13
-cum_tokens = 1504
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/r"
-entries = ["r.test.ts", "r.ts", "register.ts"]
-
-[[batches]]
-position = 51
-key = 'Fs(DirListing { dir: "src/languages/definitions/razor" })'
-descriptor = "listing of 'src/languages/definitions/razor'"
-cost_tokens = 13
-cum_tokens = 1517
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/razor"
-entries = ["razor.test.ts", "razor.ts", "register.ts"]
-
-[[batches]]
-position = 52
-key = 'Fs(DirListing { dir: "src/languages/definitions/redis" })'
-descriptor = "listing of 'src/languages/definitions/redis'"
-cost_tokens = 13
-cum_tokens = 1530
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/redis"
-entries = ["redis.test.ts", "redis.ts", "register.ts"]
-
-[[batches]]
-position = 53
-key = 'Fs(DirListing { dir: "src/languages/definitions/ruby" })'
-descriptor = "listing of 'src/languages/definitions/ruby'"
-cost_tokens = 13
-cum_tokens = 1543
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/ruby"
-entries = ["register.ts", "ruby.test.ts", "ruby.ts"]
-
-[[batches]]
-position = 54
-key = 'Fs(DirListing { dir: "src/languages/definitions/rust" })'
-descriptor = "listing of 'src/languages/definitions/rust'"
-cost_tokens = 13
-cum_tokens = 1556
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/rust"
-entries = ["register.ts", "rust.test.ts", "rust.ts"]
-
-[[batches]]
-position = 55
-key = 'Fs(DirListing { dir: "src/languages/definitions/sb" })'
-descriptor = "listing of 'src/languages/definitions/sb'"
-cost_tokens = 13
-cum_tokens = 1569
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/sb"
-entries = ["register.ts", "sb.test.ts", "sb.ts"]
-
-[[batches]]
-position = 56
-key = 'Fs(DirListing { dir: "src/languages/definitions/scala" })'
-descriptor = "listing of 'src/languages/definitions/scala'"
-cost_tokens = 13
-cum_tokens = 1582
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/scala"
-entries = ["register.ts", "scala.test.ts", "scala.ts"]
-
-[[batches]]
-position = 57
-key = 'Fs(DirListing { dir: "src/languages/definitions/scheme" })'
-descriptor = "listing of 'src/languages/definitions/scheme'"
-cost_tokens = 13
-cum_tokens = 1595
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/scheme"
-entries = ["register.ts", "scheme.test.ts", "scheme.ts"]
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "src/languages/definitions/shell" })'
-descriptor = "listing of 'src/languages/definitions/shell'"
-cost_tokens = 13
-cum_tokens = 1608
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/shell"
-entries = ["register.ts", "shell.test.ts", "shell.ts"]
-
-[[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "src/languages/definitions/solidity" })'
-descriptor = "listing of 'src/languages/definitions/solidity'"
-cost_tokens = 13
-cum_tokens = 1621
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/solidity"
-entries = ["register.ts", "solidity.test.ts", "solidity.ts"]
-
-[[batches]]
-position = 60
-key = 'Fs(DirListing { dir: "src/languages/definitions/st" })'
-descriptor = "listing of 'src/languages/definitions/st'"
-cost_tokens = 13
-cum_tokens = 1634
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/st"
-entries = ["register.ts", "st.test.ts", "st.ts"]
-
-[[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "src/languages/definitions/swift" })'
-descriptor = "listing of 'src/languages/definitions/swift'"
-cost_tokens = 13
-cum_tokens = 1647
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/swift"
-entries = ["register.ts", "swift.test.ts", "swift.ts"]
-
-[[batches]]
-position = 62
-key = 'Fs(DirListing { dir: "src/languages/definitions/twig" })'
-descriptor = "listing of 'src/languages/definitions/twig'"
-cost_tokens = 13
-cum_tokens = 1660
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/twig"
-entries = ["register.ts", "twig.test.ts", "twig.ts"]
-
-[[batches]]
-position = 63
-key = 'Fs(DirListing { dir: "src/languages/definitions/vb" })'
-descriptor = "listing of 'src/languages/definitions/vb'"
-cost_tokens = 13
-cum_tokens = 1673
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/vb"
-entries = ["register.ts", "vb.test.ts", "vb.ts"]
-
-[[batches]]
-position = 64
-key = 'Fs(DirListing { dir: "src/languages/definitions/xml" })'
-descriptor = "listing of 'src/languages/definitions/xml'"
-cost_tokens = 13
-cum_tokens = 1686
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/xml"
-entries = ["register.ts", "xml.test.ts", "xml.ts"]
-
-[[batches]]
-position = 65
-key = 'Fs(DirListing { dir: "src/languages/definitions/yaml" })'
-descriptor = "listing of 'src/languages/definitions/yaml'"
-cost_tokens = 13
-cum_tokens = 1699
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/yaml"
-entries = ["register.ts", "yaml.test.ts", "yaml.ts"]
-
-[[batches]]
-position = 66
-key = 'Fs(DirListing { dir: "src/languages/definitions/abap" })'
-descriptor = "listing of 'src/languages/definitions/abap'"
-cost_tokens = 15
-cum_tokens = 1714
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/abap"
-entries = ["abap.test.ts", "abap.ts", "register.ts"]
-
-[[batches]]
-position = 67
-key = 'Fs(DirListing { dir: "src/languages/definitions/azcli" })'
-descriptor = "listing of 'src/languages/definitions/azcli'"
-cost_tokens = 15
-cum_tokens = 1729
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/azcli"
-entries = ["azcli.test.ts", "azcli.ts", "register.ts"]
-
-[[batches]]
-position = 68
-key = 'Fs(DirListing { dir: "src/languages/definitions/cameligo" })'
-descriptor = "listing of 'src/languages/definitions/cameligo'"
-cost_tokens = 15
-cum_tokens = 1744
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/cameligo"
-entries = ["cameligo.test.ts", "cameligo.ts", "register.ts"]
-
-[[batches]]
-position = 69
-key = 'Fs(DirListing { dir: "src/languages/definitions/csharp" })'
-descriptor = "listing of 'src/languages/definitions/csharp'"
-cost_tokens = 15
-cum_tokens = 1759
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/csharp"
-entries = ["csharp.test.ts", "csharp.ts", "register.ts"]
-
-[[batches]]
-position = 70
-key = 'Fs(DirListing { dir: "src/languages/definitions/csp" })'
-descriptor = "listing of 'src/languages/definitions/csp'"
-cost_tokens = 15
-cum_tokens = 1774
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/csp"
-entries = ["csp.test.ts", "csp.ts", "register.ts"]
-
-[[batches]]
-position = 71
-key = 'Fs(DirListing { dir: "src/languages/definitions/cypher" })'
-descriptor = "listing of 'src/languages/definitions/cypher'"
-cost_tokens = 15
-cum_tokens = 1789
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/cypher"
-entries = ["cypher.test.ts", "cypher.ts", "register.ts"]
-
-[[batches]]
-position = 72
-key = 'Fs(DirListing { dir: "src/languages/definitions/dockerfile" })'
-descriptor = "listing of 'src/languages/definitions/dockerfile'"
-cost_tokens = 15
-cum_tokens = 1804
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/dockerfile"
-entries = ["dockerfile.test.ts", "dockerfile.ts", "register.ts"]
-
-[[batches]]
-position = 73
-key = 'Fs(DirListing { dir: "src/languages/definitions/ecl" })'
-descriptor = "listing of 'src/languages/definitions/ecl'"
-cost_tokens = 15
-cum_tokens = 1819
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/ecl"
-entries = ["ecl.test.ts", "ecl.ts", "register.ts"]
-
-[[batches]]
-position = 74
-key = 'Fs(DirListing { dir: "src/languages/definitions/elixir" })'
-descriptor = "listing of 'src/languages/definitions/elixir'"
-cost_tokens = 15
-cum_tokens = 1834
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/elixir"
-entries = ["elixir.test.ts", "elixir.ts", "register.ts"]
-
-[[batches]]
-position = 75
-key = 'Fs(DirListing { dir: "src/languages/definitions/flow9" })'
-descriptor = "listing of 'src/languages/definitions/flow9'"
-cost_tokens = 15
-cum_tokens = 1849
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/flow9"
-entries = ["flow9.test.ts", "flow9.ts", "register.ts"]
-
-[[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "src/languages/definitions/fsharp" })'
-descriptor = "listing of 'src/languages/definitions/fsharp'"
-cost_tokens = 15
-cum_tokens = 1864
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/fsharp"
-entries = ["fsharp.test.ts", "fsharp.ts", "register.ts"]
-
-[[batches]]
-position = 77
-key = 'Fs(DirListing { dir: "src/languages/definitions/hcl" })'
-descriptor = "listing of 'src/languages/definitions/hcl'"
-cost_tokens = 15
-cum_tokens = 1879
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/hcl"
-entries = ["hcl.test.ts", "hcl.ts", "register.ts"]
-
-[[batches]]
-position = 78
-key = 'Fs(DirListing { dir: "src/languages/definitions/julia" })'
-descriptor = "listing of 'src/languages/definitions/julia'"
-cost_tokens = 15
-cum_tokens = 1894
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/julia"
-entries = ["julia.test.ts", "julia.ts", "register.ts"]
-
-[[batches]]
-position = 79
-key = 'Fs(DirListing { dir: "src/languages/definitions/lexon" })'
-descriptor = "listing of 'src/languages/definitions/lexon'"
-cost_tokens = 15
-cum_tokens = 1909
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/lexon"
-entries = ["lexon.test.ts", "lexon.ts", "register.ts"]
-
-[[batches]]
-position = 80
-key = 'Fs(DirListing { dir: "src/languages/definitions/m3" })'
-descriptor = "listing of 'src/languages/definitions/m3'"
-cost_tokens = 15
-cum_tokens = 1924
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/m3"
-entries = ["m3.test.ts", "m3.ts", "register.ts"]
-
-[[batches]]
-position = 81
-key = 'Fs(DirListing { dir: "src/languages/definitions/mdx" })'
-descriptor = "listing of 'src/languages/definitions/mdx'"
-cost_tokens = 15
-cum_tokens = 1939
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/mdx"
-entries = ["mdx.test.ts", "mdx.ts", "register.ts"]
-
-[[batches]]
-position = 82
-key = 'Fs(DirListing { dir: "src/languages/definitions/mips" })'
-descriptor = "listing of 'src/languages/definitions/mips'"
-cost_tokens = 15
-cum_tokens = 1954
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/mips"
-entries = ["mips.test.ts", "mips.ts", "register.ts"]
-
-[[batches]]
-position = 83
-key = 'Fs(DirListing { dir: "src/languages/definitions/objective-c" })'
-descriptor = "listing of 'src/languages/definitions/objective-c'"
-cost_tokens = 15
-cum_tokens = 1969
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/objective-c"
-entries = ["objective-c.test.ts", "objective-c.ts", "register.ts"]
-
-[[batches]]
-position = 84
-key = 'Fs(DirListing { dir: "src/languages/definitions/pascal" })'
-descriptor = "listing of 'src/languages/definitions/pascal'"
-cost_tokens = 15
-cum_tokens = 1984
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/pascal"
-entries = ["pascal.test.ts", "pascal.ts", "register.ts"]
-
-[[batches]]
-position = 85
-key = 'Fs(DirListing { dir: "src/languages/definitions/postiats" })'
-descriptor = "listing of 'src/languages/definitions/postiats'"
-cost_tokens = 15
-cum_tokens = 1999
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/postiats"
-entries = ["postiats.test.ts", "postiats.ts", "register.ts"]
-
-[[batches]]
-position = 86
-key = 'Fs(DirListing { dir: "src/languages/definitions/powerquery" })'
-descriptor = "listing of 'src/languages/definitions/powerquery'"
-cost_tokens = 15
-cum_tokens = 2014
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/powerquery"
-entries = ["powerquery.test.ts", "powerquery.ts", "register.ts"]
-
-[[batches]]
-position = 87
-key = 'Fs(DirListing { dir: "src/languages/definitions/powershell" })'
-descriptor = "listing of 'src/languages/definitions/powershell'"
-cost_tokens = 15
-cum_tokens = 2029
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/powershell"
-entries = ["powershell.test.ts", "powershell.ts", "register.ts"]
-
-[[batches]]
-position = 88
-key = 'Fs(DirListing { dir: "src/languages/definitions/qsharp" })'
-descriptor = "listing of 'src/languages/definitions/qsharp'"
-cost_tokens = 15
-cum_tokens = 2044
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/qsharp"
-entries = ["qsharp.test.ts", "qsharp.ts", "register.ts"]
-
-[[batches]]
-position = 89
-key = 'Fs(DirListing { dir: "src/languages/definitions/redshift" })'
-descriptor = "listing of 'src/languages/definitions/redshift'"
-cost_tokens = 15
-cum_tokens = 2059
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/redshift"
-entries = ["redshift.test.ts", "redshift.ts", "register.ts"]
-
-[[batches]]
-position = 90
-key = 'Fs(DirListing { dir: "src/languages/definitions/scss" })'
-descriptor = "listing of 'src/languages/definitions/scss'"
-cost_tokens = 15
-cum_tokens = 2074
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/scss"
-entries = ["register.ts", "scss.test.ts", "scss.ts"]
-
-[[batches]]
-position = 91
-key = 'Fs(DirListing { dir: "src/languages/definitions/sophia" })'
-descriptor = "listing of 'src/languages/definitions/sophia'"
-cost_tokens = 15
-cum_tokens = 2089
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/sophia"
-entries = ["register.ts", "sophia.test.ts", "sophia.ts"]
-
-[[batches]]
-position = 92
-key = 'Fs(DirListing { dir: "src/languages/definitions/sparql" })'
-descriptor = "listing of 'src/languages/definitions/sparql'"
-cost_tokens = 15
-cum_tokens = 2104
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/sparql"
-entries = ["register.ts", "sparql.test.ts", "sparql.ts"]
-
-[[batches]]
-position = 93
-key = 'Fs(DirListing { dir: "src/languages/definitions/tcl" })'
-descriptor = "listing of 'src/languages/definitions/tcl'"
-cost_tokens = 15
-cum_tokens = 2119
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/tcl"
-entries = ["register.ts", "tcl.test.ts", "tcl.ts"]
-
-[[batches]]
-position = 94
-key = 'Fs(DirListing { dir: "src/languages/definitions/typescript" })'
-descriptor = "listing of 'src/languages/definitions/typescript'"
-cost_tokens = 15
-cum_tokens = 2134
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/typescript"
-entries = ["register.ts", "typescript.test.ts", "typescript.ts"]
-
-[[batches]]
-position = 95
-key = 'Fs(DirListing { dir: "src/languages/definitions/typespec" })'
-descriptor = "listing of 'src/languages/definitions/typespec'"
-cost_tokens = 15
-cum_tokens = 2149
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/typespec"
-entries = ["register.ts", "typespec.test.ts", "typespec.ts"]
-
-[[batches]]
-position = 96
-key = 'Fs(DirListing { dir: "src/languages/definitions/wgsl" })'
-descriptor = "listing of 'src/languages/definitions/wgsl'"
-cost_tokens = 15
-cum_tokens = 2164
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/wgsl"
-entries = ["register.ts", "wgsl.test.ts", "wgsl.ts"]
-
-[[batches]]
-position = 97
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 6
-cum_tokens = 2170
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["ci", "lib"]
-
-[[batches]]
-position = 98
-key = 'Fs(DirListing { dir: "webpack-plugin" })'
-descriptor = "listing of 'webpack-plugin'"
-cost_tokens = 29
-cum_tokens = 2199
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "webpack-plugin"
-entries = [".npmignore", "LICENSE", "README.md", "package-lock.json", "package.json", "src", "tsconfig.json"]
-
-[[batches]]
-position = 99
-key = 'Json(Identity { file: "webpack-plugin/package.json" })'
-descriptor = "package identity in webpack-plugin/package.json"
-cost_tokens = 56
-cum_tokens = 2255
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/package.json"
-start = 2
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/package.json"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Markdown(ReadmeHeadline { file: "webpack-plugin/README.md" })'
-descriptor = "README headline in webpack-plugin/README.md"
-cost_tokens = 49
-cum_tokens = 2304
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Fs(DirListing { dir: "webpack-plugin/src" })'
-descriptor = "listing of 'webpack-plugin/src'"
-cost_tokens = 20
-cum_tokens = 2324
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "webpack-plugin/src"
-entries = ["index.ts", "loader-utils.d.ts", "loaders", "plugins", "types.ts"]
-
-[[batches]]
-position = 102
-key = 'Fs(DirListing { dir: "src/languages/definitions/bicep" })'
-descriptor = "listing of 'src/languages/definitions/bicep'"
-cost_tokens = 17
-cum_tokens = 2341
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/bicep"
-entries = ["bicep.test.ts", "bicep.ts", "register.ts"]
-
-[[batches]]
-position = 103
-key = 'Fs(DirListing { dir: "src/languages/definitions/clojure" })'
-descriptor = "listing of 'src/languages/definitions/clojure'"
-cost_tokens = 17
-cum_tokens = 2358
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/clojure"
-entries = ["clojure.test.ts", "clojure.ts", "register.ts"]
-
-[[batches]]
-position = 104
-key = 'Fs(DirListing { dir: "src/languages/definitions/msdax" })'
-descriptor = "listing of 'src/languages/definitions/msdax'"
-cost_tokens = 17
-cum_tokens = 2375
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/msdax"
-entries = ["msdax.test.ts", "msdax.ts", "register.ts"]
-
-[[batches]]
-position = 105
-key = 'Fs(DirListing { dir: "src/languages/definitions/pascaligo" })'
-descriptor = "listing of 'src/languages/definitions/pascaligo'"
-cost_tokens = 17
-cum_tokens = 2392
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/pascaligo"
-entries = ["pascaligo.test.ts", "pascaligo.ts", "register.ts"]
-
-[[batches]]
-position = 106
-key = 'Fs(DirListing { dir: "src/languages/definitions/restructuredtext" })'
-descriptor = "listing of 'src/languages/definitions/restructuredtext'"
-cost_tokens = 17
-cum_tokens = 2409
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/restructuredtext"
-entries = ["register.ts", "restructuredtext.test.ts", "restructuredtext.ts"]
-
-[[batches]]
-position = 107
-key = 'Fs(DirListing { dir: "src/languages/definitions/systemverilog" })'
-descriptor = "listing of 'src/languages/definitions/systemverilog'"
-cost_tokens = 17
-cum_tokens = 2426
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/systemverilog"
-entries = ["register.ts", "systemverilog.test.ts", "systemverilog.ts"]
-
-[[batches]]
-position = 108
-key = 'Fs(DirListing { dir: "src/features" })'
-descriptor = "listing of 'src/features'"
-cost_tokens = 272
-cum_tokens = 2698
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/features"
-entries = ["anchorSelect", "bracketMatching", "caretOperations", "clipboard", "codeAction", "codeEditor", "codelens", "codicon", "colorPicker", "comment", "contextmenu", "cursorUndo", "diffEditor", "diffEditorBreadcrumbs", "dnd", "documentSymbols", "dropOrPasteInto", "find", "floatingMenu", "folding", "fontZoom", "format", "gotoError", "gotoLine", "gotoSymbol", "gpu", "hover", "iPadShowKeyboard", "inPlaceReplace", "indentation", "inlayHints", "inlineCompletions", "inlineProgress", "insertFinalNewLine", "inspectTokens", "lineSelection", "linesOperations", "linkedEditing", "links", "longLinesHelper", "middleScroll", "multicursor", "parameterHints", "placeholderText", "quickCommand", "quickHelp", "quickOutline", "readOnlyMessage", "referenceSearch", "register.all.ts", "rename", "sectionHeaders", "semanticTokens", "smartSelect", "snippet", "stickyScroll", "suggest", "toggleHighContrast", "toggleTabFocusMode", "tokenization", "unicodeHighlighter", "unusualLineTerminators", "wordHighlighter", "wordOperations", "wordPartOperations"]
-
-[[batches]]
-position = 109
-key = 'Json(Entry { file: "monaco-lsp-client/package.json" })'
-descriptor = "package entrypoints in monaco-lsp-client/package.json"
-cost_tokens = 27
-cum_tokens = 2725
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Typescript(ExportNames { file: "src/languages/features/register.all.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in src/languages/features/register.all.ts"
-cost_tokens = 15
-cum_tokens = 2740
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/register.all.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 38
-cum_tokens = 2778
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["code-structure.dio.svg", "debugging-core.gif", "debugging-languages.gif", "integrate-esm.md", "launch config.png", "out-folders.dio.svg"]
-
-[[batches]]
-position = 112
-key = 'Markdown(HeadingsOutline { file: "webpack-plugin/README.md" })'
-descriptor = "headings outline in webpack-plugin/README.md"
-cost_tokens = 47
-cum_tokens = 2825
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 104
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 105
-end = 105
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 113
-key = 'Fs(DirListing { dir: "src/languages/definitions/freemarker2" })'
-descriptor = "listing of 'src/languages/definitions/freemarker2'"
-cost_tokens = 76
-cum_tokens = 2901
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions/freemarker2"
-entries = ["freemarker2-angle-bracket.test.ts", "freemarker2-angle-dollar.test.ts", "freemarker2-auto-bracket.test.ts", "freemarker2-auto-dollar.test.ts", "freemarker2-bracket-bracket.test.ts", "freemarker2-bracket-dollar.test.ts", "freemarker2.ts", "register.ts"]
-
-[[batches]]
-position = 114
-key = 'Markdown(Section { file: "webpack-plugin/README.md", section_index: 1, reference_shaped: false })'
-descriptor = "webpack-plugin/README.md section #1"
-cost_tokens = 25
-cum_tokens = 2926
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "webpack-plugin/README.md"
-start = 7
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Typescript(ExportNames { file: "monaco-lsp-client/src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in monaco-lsp-client/src/index.ts"
-cost_tokens = 26
-cum_tokens = 2952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/src/index.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 116
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 13
-cum_tokens = 2965
+cum_tokens = 2989
 
 [batches.content]
 kind = "fs"
@@ -2109,24 +2109,10 @@ entries = ["manual", "smoke", "test-setup.mjs"]
 
 [[batches]]
 position = 117
-key = 'Fs(DirListing { dir: "src/internal" })'
-descriptor = "listing of 'src/internal'"
-cost_tokens = 3
-cum_tokens = 2968
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/internal"
-entries = ["common"]
-
-[[batches]]
-position = 118
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false })'
 descriptor = "README.md section #21"
-cost_tokens = 27
-cum_tokens = 2995
+cost_tokens = 25
+cum_tokens = 3014
 
 [batches.content]
 kind = "lines"
@@ -2148,11 +2134,25 @@ end = 123
 kind = "full"
 
 [[batches]]
+position = 118
+key = 'Fs(DirListing { dir: "src/internal" })'
+descriptor = "listing of 'src/internal'"
+cost_tokens = 3
+cum_tokens = 3017
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/internal"
+entries = ["common"]
+
+[[batches]]
 position = 119
 key = 'Markdown(HeadingsOutline { file: "docs/integrate-esm.md" })'
 descriptor = "headings outline in docs/integrate-esm.md"
 cost_tokens = 83
-cum_tokens = 3078
+cum_tokens = 3100
 
 [batches.content]
 kind = "lines"
@@ -2255,10 +2255,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 120
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
+descriptor = "README.md section #4"
+cost_tokens = 41
+cum_tokens = 3141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
 key = 'Typescript(Imports { file: "src/editor.ts" })'
 descriptor = "imports in src/editor.ts"
 cost_tokens = 20
-cum_tokens = 3098
+cum_tokens = 3161
 
 [batches.content]
 kind = "lines"
@@ -2272,11 +2298,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Typescript(ExportNames { file: "src/languages/features/json/register.ts", chunk_index: 0, export_count: 21, type_only_export_count: 19 })'
 descriptor = "export names surface in src/languages/features/json/register.ts"
-cost_tokens = 174
-cum_tokens = 3272
+cost_tokens = 176
+cum_tokens = 3337
 
 [batches.content]
 kind = "lines"
@@ -2474,11 +2500,11 @@ end = 70
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 69 })'
 descriptor = "export at src/languages/features/json/register.ts:69"
-cost_tokens = 16
-cum_tokens = 3288
+cost_tokens = 18
+cum_tokens = 3355
 
 [batches.content]
 kind = "lines"
@@ -2492,11 +2518,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 35 })'
 descriptor = "export at src/languages/features/json/register.ts:35"
 cost_tokens = 24
-cum_tokens = 3312
+cum_tokens = 3379
 
 [batches.content]
 kind = "lines"
@@ -2510,11 +2536,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 44 })'
 descriptor = "export at src/languages/features/json/register.ts:44"
 cost_tokens = 24
-cum_tokens = 3336
+cum_tokens = 3403
 
 [batches.content]
 kind = "lines"
@@ -2528,11 +2554,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 48 })'
 descriptor = "export at src/languages/features/json/register.ts:48"
 cost_tokens = 24
-cum_tokens = 3360
+cum_tokens = 3427
 
 [batches.content]
 kind = "lines"
@@ -2546,11 +2572,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 39 })'
 descriptor = "export at src/languages/features/json/register.ts:39"
 cost_tokens = 35
-cum_tokens = 3395
+cum_tokens = 3462
 
 [batches.content]
 kind = "lines"
@@ -2564,11 +2590,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 30 })'
 descriptor = "export at src/languages/features/json/register.ts:30"
 cost_tokens = 36
-cum_tokens = 3431
+cum_tokens = 3498
 
 [batches.content]
 kind = "lines"
@@ -2582,11 +2608,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 18 })'
 descriptor = "export at src/languages/features/json/register.ts:18"
 cost_tokens = 37
-cum_tokens = 3468
+cum_tokens = 3535
 
 [batches.content]
 kind = "lines"
@@ -2600,11 +2626,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Typescript(Imports { file: "src/index.ts" })'
 descriptor = "imports in src/index.ts"
 cost_tokens = 72
-cum_tokens = 3540
+cum_tokens = 3607
 
 [batches.content]
 kind = "lines"
@@ -2634,11 +2660,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 78
-cum_tokens = 3618
+cum_tokens = 3685
 
 [batches.content]
 kind = "lines"
@@ -2660,37 +2686,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 131
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
-descriptor = "README.md section #4"
-cost_tokens = 43
-cum_tokens = 3661
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 132
 key = 'Fs(DirListing { dir: "monaco-lsp-client/generator" })'
 descriptor = "listing of 'monaco-lsp-client/generator'"
 cost_tokens = 4
-cum_tokens = 3665
+cum_tokens = 3689
 
 [batches.content]
 kind = "fs"
@@ -2701,18 +2701,26 @@ entries = ["index.ts"]
 
 [[batches]]
 position = 133
-key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 62 })'
-descriptor = "export at src/languages/features/json/register.ts:62"
-cost_tokens = 37
-cum_tokens = 3702
+key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false })'
+descriptor = "README.md section #17"
+cost_tokens = 38
+cum_tokens = 3727
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/languages/features/json/register.ts"
-start = 62
-end = 65
+path = "README.md"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 78
+end = 78
 
 [batches.content.spans.render]
 kind = "full"
@@ -2721,8 +2729,8 @@ kind = "full"
 position = 134
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
-cost_tokens = 72
-cum_tokens = 3774
+cost_tokens = 70
+cum_tokens = 3797
 
 [batches.content]
 kind = "lines"
@@ -2753,10 +2761,28 @@ kind = "full"
 
 [[batches]]
 position = 135
+key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 62 })'
+descriptor = "export at src/languages/features/json/register.ts:62"
+cost_tokens = 37
+cum_tokens = 3834
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/register.ts"
+start = 62
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
 key = 'Typescript(ModuleItem { file: "webpack-plugin/src/index.ts", start_line: 159 })'
 descriptor = "module item at webpack-plugin/src/index.ts:159"
-cost_tokens = 72
-cum_tokens = 3846
+cost_tokens = 74
+cum_tokens = 3908
 
 [batches.content]
 kind = "lines"
@@ -2802,11 +2828,11 @@ end = 178
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 202 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 202"
-cost_tokens = 13
-cum_tokens = 3859
+cost_tokens = 15
+cum_tokens = 3923
 
 [batches.content]
 kind = "lines"
@@ -2820,11 +2846,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 203 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 203"
 cost_tokens = 13
-cum_tokens = 3872
+cum_tokens = 3936
 
 [batches.content]
 kind = "lines"
@@ -2838,11 +2864,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 181 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 181"
-cost_tokens = 15
-cum_tokens = 3887
+cost_tokens = 17
+cum_tokens = 3953
 
 [batches.content]
 kind = "lines"
@@ -2856,11 +2882,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 179 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 179"
-cost_tokens = 17
-cum_tokens = 3904
+cost_tokens = 19
+cum_tokens = 3972
 
 [batches.content]
 kind = "lines"
@@ -2874,11 +2900,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 180 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 180"
-cost_tokens = 19
-cum_tokens = 3923
+cost_tokens = 17
+cum_tokens = 3989
 
 [batches.content]
 kind = "lines"
@@ -2892,11 +2918,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 201 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 201"
 cost_tokens = 22
-cum_tokens = 3945
+cum_tokens = 4011
 
 [batches.content]
 kind = "lines"
@@ -2910,11 +2936,11 @@ end = 201
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 178 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 178"
 cost_tokens = 26
-cum_tokens = 3971
+cum_tokens = 4037
 
 [batches.content]
 kind = "lines"
@@ -2928,37 +2954,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 143
-key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false })'
-descriptor = "README.md section #17"
-cost_tokens = 40
-cum_tokens = 4011
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 144
 key = 'Typescript(ExportNames { file: "src/languages/features/css/register.ts", chunk_index: 0, export_count: 19, type_only_export_count: 16 })'
 descriptor = "export names surface in src/languages/features/css/register.ts"
-cost_tokens = 183
-cum_tokens = 4194
+cost_tokens = 185
+cum_tokens = 4222
 
 [batches.content]
 kind = "lines"
@@ -3160,7 +3160,7 @@ position = 145
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 57 })'
 descriptor = "export at src/languages/features/css/register.ts:57"
 cost_tokens = 0
-cum_tokens = 4194
+cum_tokens = 4222
 
 [batches.content]
 kind = "lines"
@@ -3186,7 +3186,7 @@ position = 146
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 140 })'
 descriptor = "export at src/languages/features/css/register.ts:140"
 cost_tokens = 0
-cum_tokens = 4194
+cum_tokens = 4222
 
 [batches.content]
 kind = "lines"
@@ -3203,8 +3203,8 @@ kind = "full"
 position = 147
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 301 })'
 descriptor = "export at src/languages/features/css/register.ts:301"
-cost_tokens = 19
-cum_tokens = 4213
+cost_tokens = 21
+cum_tokens = 4243
 
 [batches.content]
 kind = "lines"
@@ -3222,7 +3222,7 @@ position = 148
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 240 })'
 descriptor = "export at src/languages/features/css/register.ts:240"
 cost_tokens = 26
-cum_tokens = 4239
+cum_tokens = 4269
 
 [batches.content]
 kind = "lines"
@@ -3240,7 +3240,7 @@ position = 149
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 245 })'
 descriptor = "export at src/languages/features/css/register.ts:245"
 cost_tokens = 26
-cum_tokens = 4265
+cum_tokens = 4295
 
 [batches.content]
 kind = "lines"
@@ -3257,8 +3257,8 @@ kind = "full"
 position = 150
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 250 })'
 descriptor = "export at src/languages/features/css/register.ts:250"
-cost_tokens = 26
-cum_tokens = 4291
+cost_tokens = 28
+cum_tokens = 4323
 
 [batches.content]
 kind = "lines"
@@ -3276,7 +3276,7 @@ position = 151
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 166
-cum_tokens = 4457
+cum_tokens = 4489
 
 [batches.content]
 kind = "lines"
@@ -3294,7 +3294,7 @@ position = 152
 key = 'Fs(DirListing { dir: "samples" })'
 descriptor = "listing of 'samples'"
 cost_tokens = 104
-cum_tokens = 4561
+cum_tokens = 4593
 
 [batches.content]
 kind = "fs"
@@ -3307,8 +3307,8 @@ entries = ["README.md", "browser-esm-esbuild", "browser-esm-parcel", "browser-es
 position = 153
 key = 'Markdown(ReadmeHeadline { file: "samples/README.md" })'
 descriptor = "README headline in samples/README.md"
-cost_tokens = 24
-cum_tokens = 4585
+cost_tokens = 26
+cum_tokens = 4619
 
 [batches.content]
 kind = "lines"
@@ -3333,8 +3333,8 @@ kind = "full"
 position = 154
 key = 'Json(Identity { file: "samples/package.json" })'
 descriptor = "package identity in samples/package.json"
-cost_tokens = 65
-cum_tokens = 4650
+cost_tokens = 71
+cum_tokens = 4690
 
 [batches.content]
 kind = "lines"
@@ -3360,7 +3360,7 @@ position = 155
 key = 'Json(IdentityMeta { file: "samples/package.json" })'
 descriptor = "package identity metadata in samples/package.json"
 cost_tokens = 12
-cum_tokens = 4662
+cum_tokens = 4702
 
 [batches.content]
 kind = "lines"
@@ -3378,7 +3378,7 @@ position = 156
 key = 'Json(Entry { file: "samples/package.json" })'
 descriptor = "package entrypoints in samples/package.json"
 cost_tokens = 12
-cum_tokens = 4674
+cum_tokens = 4714
 
 [batches.content]
 kind = "lines"
@@ -3395,8 +3395,8 @@ kind = "full"
 position = 157
 key = 'Json(Scripts { file: "samples/package.json" })'
 descriptor = "package scripts in samples/package.json"
-cost_tokens = 39
-cum_tokens = 4713
+cost_tokens = 37
+cum_tokens = 4751
 
 [batches.content]
 kind = "lines"
@@ -3413,8 +3413,8 @@ kind = "full"
 position = 158
 key = 'Markdown(HeadingsOutline { file: "samples/README.md" })'
 descriptor = "headings outline in samples/README.md"
-cost_tokens = 40
-cum_tokens = 4753
+cost_tokens = 38
+cum_tokens = 4789
 
 [batches.content]
 kind = "lines"
@@ -3487,8 +3487,8 @@ kind = "ellipsis"
 position = 159
 key = 'Markdown(Section { file: "samples/README.md", section_index: 4, reference_shaped: false })'
 descriptor = "samples/README.md section #4"
-cost_tokens = 6
-cum_tokens = 4759
+cost_tokens = 4
+cum_tokens = 4793
 
 [batches.content]
 kind = "lines"
@@ -3514,7 +3514,7 @@ position = 160
 key = 'Fs(DirListing { dir: "samples/browser-esm-parcel" })'
 descriptor = "listing of 'samples/browser-esm-parcel'"
 cost_tokens = 21
-cum_tokens = 4780
+cum_tokens = 4814
 
 [batches.content]
 kind = "fs"
@@ -3527,8 +3527,8 @@ entries = [".gitignore", "index.html", "package-lock.json", "package.json", "src
 position = 161
 key = 'Json(Identity { file: "samples/browser-esm-parcel/package.json" })'
 descriptor = "package identity in samples/browser-esm-parcel/package.json"
-cost_tokens = 11
-cum_tokens = 4791
+cost_tokens = 15
+cum_tokens = 4829
 
 [batches.content]
 kind = "lines"
@@ -3546,7 +3546,7 @@ position = 162
 key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript" })'
 descriptor = "listing of 'samples/browser-esm-webpack-typescript'"
 cost_tokens = 22
-cum_tokens = 4813
+cum_tokens = 4851
 
 [batches.content]
 kind = "fs"
@@ -3559,8 +3559,8 @@ entries = [".gitignore", "package.json", "src", "tsconfig.json", "webpack.config
 position = 163
 key = 'Json(Identity { file: "samples/browser-esm-webpack-typescript/package.json" })'
 descriptor = "package identity in samples/browser-esm-webpack-typescript/package.json"
-cost_tokens = 16
-cum_tokens = 4829
+cost_tokens = 20
+cum_tokens = 4871
 
 [batches.content]
 kind = "lines"
@@ -3578,7 +3578,7 @@ position = 164
 key = 'Fs(DirListing { dir: "samples/browser-esm-esbuild" })'
 descriptor = "listing of 'samples/browser-esm-esbuild'"
 cost_tokens = 24
-cum_tokens = 4853
+cum_tokens = 4895
 
 [batches.content]
 kind = "fs"
@@ -3591,8 +3591,8 @@ entries = [".gitignore", "build.js", "dist", "index.html", "index.js", "package.
 position = 165
 key = 'Json(Identity { file: "samples/browser-esm-esbuild/package.json" })'
 descriptor = "package identity in samples/browser-esm-esbuild/package.json"
-cost_tokens = 11
-cum_tokens = 4864
+cost_tokens = 15
+cum_tokens = 4910
 
 [batches.content]
 kind = "lines"
@@ -3610,7 +3610,7 @@ position = 166
 key = 'Fs(DirListing { dir: "samples/browser-esm-webpack" })'
 descriptor = "listing of 'samples/browser-esm-webpack'"
 cost_tokens = 25
-cum_tokens = 4889
+cum_tokens = 4935
 
 [batches.content]
 kind = "fs"
@@ -3623,8 +3623,8 @@ entries = [".gitignore", "dist", "index.html", "index.js", "package.json", "webp
 position = 167
 key = 'Json(Identity { file: "samples/browser-esm-webpack/package.json" })'
 descriptor = "package identity in samples/browser-esm-webpack/package.json"
-cost_tokens = 13
-cum_tokens = 4902
+cost_tokens = 17
+cum_tokens = 4952
 
 [batches.content]
 kind = "lines"
@@ -3642,7 +3642,7 @@ position = 168
 key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-monaco-plugin" })'
 descriptor = "listing of 'samples/browser-esm-webpack-monaco-plugin'"
 cost_tokens = 25
-cum_tokens = 4927
+cum_tokens = 4977
 
 [batches.content]
 kind = "fs"
@@ -3655,8 +3655,8 @@ entries = [".gitignore", "dist", "index.html", "index.js", "package.json", "webp
 position = 169
 key = 'Json(Identity { file: "samples/browser-esm-webpack-monaco-plugin/package.json" })'
 descriptor = "package identity in samples/browser-esm-webpack-monaco-plugin/package.json"
-cost_tokens = 16
-cum_tokens = 4943
+cost_tokens = 20
+cum_tokens = 4997
 
 [batches.content]
 kind = "lines"
@@ -3674,7 +3674,7 @@ position = 170
 key = 'Fs(DirListing { dir: "samples/electron-esm-webpack" })'
 descriptor = "listing of 'samples/electron-esm-webpack'"
 cost_tokens = 25
-cum_tokens = 4968
+cum_tokens = 5022
 
 [batches.content]
 kind = "fs"
@@ -3687,8 +3687,8 @@ entries = [".gitignore", "dist", "index.js", "main.js", "package.json", "webpack
 position = 171
 key = 'Json(Identity { file: "samples/electron-esm-webpack/package.json" })'
 descriptor = "package identity in samples/electron-esm-webpack/package.json"
-cost_tokens = 13
-cum_tokens = 4981
+cost_tokens = 17
+cum_tokens = 5039
 
 [batches.content]
 kind = "lines"
@@ -3706,7 +3706,7 @@ position = 172
 key = 'Json(Entry { file: "samples/electron-esm-webpack/package.json" })'
 descriptor = "package entrypoints in samples/electron-esm-webpack/package.json"
 cost_tokens = 11
-cum_tokens = 4992
+cum_tokens = 5050
 
 [batches.content]
 kind = "lines"
@@ -3724,7 +3724,7 @@ position = 173
 key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript-react" })'
 descriptor = "listing of 'samples/browser-esm-webpack-typescript-react'"
 cost_tokens = 27
-cum_tokens = 5019
+cum_tokens = 5077
 
 [batches.content]
 kind = "fs"
@@ -3737,8 +3737,8 @@ entries = [".gitignore", "package-lock.json", "package.json", "src", "tsconfig.j
 position = 174
 key = 'Json(Identity { file: "samples/browser-esm-webpack-typescript-react/package.json" })'
 descriptor = "package identity in samples/browser-esm-webpack-typescript-react/package.json"
-cost_tokens = 16
-cum_tokens = 5035
+cost_tokens = 20
+cum_tokens = 5097
 
 [batches.content]
 kind = "lines"
@@ -3756,7 +3756,7 @@ position = 175
 key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript-react/src" })'
 descriptor = "listing of 'samples/browser-esm-webpack-typescript-react/src'"
 cost_tokens = 16
-cum_tokens = 5051
+cum_tokens = 5113
 
 [batches.content]
 kind = "fs"
@@ -3770,7 +3770,7 @@ position = 176
 key = 'Fs(DirListing { dir: "samples/browser-esm-vite-react" })'
 descriptor = "listing of 'samples/browser-esm-vite-react'"
 cost_tokens = 31
-cum_tokens = 5082
+cum_tokens = 5144
 
 [batches.content]
 kind = "fs"
@@ -3783,8 +3783,8 @@ entries = [".gitignore", "index.html", "package-lock.json", "package.json", "src
 position = 177
 key = 'Json(Identity { file: "samples/browser-esm-vite-react/package.json" })'
 descriptor = "package identity in samples/browser-esm-vite-react/package.json"
-cost_tokens = 15
-cum_tokens = 5097
+cost_tokens = 19
+cum_tokens = 5163
 
 [batches.content]
 kind = "lines"
@@ -3802,7 +3802,7 @@ position = 178
 key = 'Fs(DirListing { dir: "samples/browser-esm-vite-react/src" })'
 descriptor = "listing of 'samples/browser-esm-vite-react/src'"
 cost_tokens = 19
-cum_tokens = 5116
+cum_tokens = 5182
 
 [batches.content]
 kind = "fs"
@@ -3816,7 +3816,7 @@ position = 179
 key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-small" })'
 descriptor = "listing of 'samples/browser-esm-webpack-small'"
 cost_tokens = 31
-cum_tokens = 5147
+cum_tokens = 5213
 
 [batches.content]
 kind = "fs"
@@ -3829,8 +3829,8 @@ entries = [".gitignore", "dist", "generate-imports.js", "index.html", "index.js"
 position = 180
 key = 'Json(Identity { file: "samples/browser-esm-webpack-small/package.json" })'
 descriptor = "package identity in samples/browser-esm-webpack-small/package.json"
-cost_tokens = 14
-cum_tokens = 5161
+cost_tokens = 18
+cum_tokens = 5231
 
 [batches.content]
 kind = "lines"
@@ -3848,7 +3848,7 @@ position = 181
 key = 'Json(Scripts { file: "samples/browser-esm-esbuild/package.json" })'
 descriptor = "package scripts in samples/browser-esm-esbuild/package.json"
 cost_tokens = 30
-cum_tokens = 5191
+cum_tokens = 5261
 
 [batches.content]
 kind = "lines"
@@ -3866,7 +3866,7 @@ position = 182
 key = 'Fs(DirListing { dir: "samples/browser-esm-vite" })'
 descriptor = "listing of 'samples/browser-esm-vite'"
 cost_tokens = 36
-cum_tokens = 5227
+cum_tokens = 5297
 
 [batches.content]
 kind = "fs"
@@ -3879,8 +3879,8 @@ entries = [".gitignore", "index.html", "main.ts", "package-lock.json", "package.
 position = 183
 key = 'Json(Identity { file: "samples/browser-esm-vite/package.json" })'
 descriptor = "package identity in samples/browser-esm-vite/package.json"
-cost_tokens = 14
-cum_tokens = 5241
+cost_tokens = 18
+cum_tokens = 5315
 
 [batches.content]
 kind = "lines"
@@ -3898,7 +3898,7 @@ position = 184
 key = 'Json(Scripts { file: "samples/browser-esm-parcel/package.json" })'
 descriptor = "package scripts in samples/browser-esm-parcel/package.json"
 cost_tokens = 31
-cum_tokens = 5272
+cum_tokens = 5346
 
 [batches.content]
 kind = "lines"
@@ -3916,7 +3916,7 @@ position = 185
 key = 'Fs(DirListing { dir: "samples/nwjs-amd" })'
 descriptor = "listing of 'samples/nwjs-amd'"
 cost_tokens = 4
-cum_tokens = 5276
+cum_tokens = 5350
 
 [batches.content]
 kind = "fs"
@@ -3930,7 +3930,7 @@ position = 186
 key = 'Fs(DirListing { dir: "samples/nwjs-amd-v2" })'
 descriptor = "listing of 'samples/nwjs-amd-v2'"
 cost_tokens = 4
-cum_tokens = 5280
+cum_tokens = 5354
 
 [batches.content]
 kind = "fs"
@@ -3944,7 +3944,7 @@ position = 187
 key = 'Json(Scripts { file: "samples/browser-esm-webpack/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack/package.json"
 cost_tokens = 38
-cum_tokens = 5318
+cum_tokens = 5392
 
 [batches.content]
 kind = "lines"
@@ -3962,7 +3962,7 @@ position = 188
 key = 'Json(Scripts { file: "samples/browser-esm-webpack-monaco-plugin/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack-monaco-plugin/package.json"
 cost_tokens = 38
-cum_tokens = 5356
+cum_tokens = 5430
 
 [batches.content]
 kind = "lines"
@@ -3980,7 +3980,7 @@ position = 189
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 6, reference_shaped: false })'
 descriptor = "docs/integrate-esm.md section #6"
 cost_tokens = 5
-cum_tokens = 5361
+cum_tokens = 5435
 
 [batches.content]
 kind = "lines"
@@ -3998,7 +3998,7 @@ position = 190
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 11, reference_shaped: false })'
 descriptor = "docs/integrate-esm.md section #11"
 cost_tokens = 5
-cum_tokens = 5366
+cum_tokens = 5440
 
 [batches.content]
 kind = "lines"
@@ -4016,7 +4016,7 @@ position = 191
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 19, reference_shaped: false })'
 descriptor = "docs/integrate-esm.md section #19"
 cost_tokens = 5
-cum_tokens = 5371
+cum_tokens = 5445
 
 [batches.content]
 kind = "lines"
@@ -4031,28 +4031,10 @@ kind = "full"
 
 [[batches]]
 position = 192
-key = 'Json(Scripts { file: "monaco-lsp-client/package.json" })'
-descriptor = "package scripts in monaco-lsp-client/package.json"
-cost_tokens = 80
-cum_tokens = 5451
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/package.json"
-start = 21
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 193
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 23 })'
 descriptor = "export at src/languages/features/json/register.ts:23"
 cost_tokens = 61
-cum_tokens = 5512
+cum_tokens = 5506
 
 [batches.content]
 kind = "lines"
@@ -4066,11 +4048,29 @@ end = 29
 kind = "full"
 
 [[batches]]
+position = 193
+key = 'Json(Scripts { file: "monaco-lsp-client/package.json" })'
+descriptor = "package scripts in monaco-lsp-client/package.json"
+cost_tokens = 82
+cum_tokens = 5588
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 21
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 194
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 291 })'
 descriptor = "export at src/languages/features/css/register.ts:291"
 cost_tokens = 66
-cum_tokens = 5578
+cum_tokens = 5654
 
 [batches.content]
 kind = "lines"
@@ -4088,7 +4088,7 @@ position = 195
 key = 'Json(Scripts { file: "samples/browser-esm-vite/package.json" })'
 descriptor = "package scripts in samples/browser-esm-vite/package.json"
 cost_tokens = 56
-cum_tokens = 5634
+cum_tokens = 5710
 
 [batches.content]
 kind = "lines"
@@ -4106,7 +4106,7 @@ position = 196
 key = 'Json(Scripts { file: "samples/browser-esm-webpack-small/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack-small/package.json"
 cost_tokens = 56
-cum_tokens = 5690
+cum_tokens = 5766
 
 [batches.content]
 kind = "lines"
@@ -4124,7 +4124,7 @@ position = 197
 key = 'Typescript(ExportDoc { file: "src/languages/features/css/register.ts", start_line: 140 })'
 descriptor = "export doc at src/languages/features/css/register.ts:140"
 cost_tokens = 11
-cum_tokens = 5701
+cum_tokens = 5777
 
 [batches.content]
 kind = "lines"
@@ -4142,7 +4142,7 @@ position = 198
 key = 'Fs(DirListing { dir: "monaco-lsp-client/src/adapters" })'
 descriptor = "listing of 'monaco-lsp-client/src/adapters'"
 cost_tokens = 37
-cum_tokens = 5738
+cum_tokens = 5814
 
 [batches.content]
 kind = "fs"
@@ -4153,64 +4153,10 @@ entries = ["ITextModelBridge.ts", "LspCapabilitiesRegistry.ts", "LspClient.ts", 
 
 [[batches]]
 position = 199
-key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 182 })'
-descriptor = "module item body at webpack-plugin/src/index.ts:159 body 182"
-cost_tokens = 87
-cum_tokens = 5825
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/src/index.ts"
-start = 182
-end = 190
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 200
-key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 191 })'
-descriptor = "module item body at webpack-plugin/src/index.ts:159 body 191"
-cost_tokens = 87
-cum_tokens = 5912
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/src/index.ts"
-start = 191
-end = 200
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 201
-key = 'Json(Scripts { file: "samples/electron-esm-webpack/package.json" })'
-descriptor = "package scripts in samples/electron-esm-webpack/package.json"
-cost_tokens = 59
-cum_tokens = 5971
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/electron-esm-webpack/package.json"
-start = 4
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 202
 key = 'Markdown(Section { file: "MAINTAINING.md", section_index: 0, reference_shaped: false })'
 descriptor = "MAINTAINING.md section #0"
-cost_tokens = 97
-cum_tokens = 6068
+cost_tokens = 95
+cum_tokens = 5909
 
 [batches.content]
 kind = "lines"
@@ -4248,25 +4194,47 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 203
-key = 'Fs(DirListing { dir: "webpack-plugin/src/loaders" })'
-descriptor = "listing of 'webpack-plugin/src/loaders'"
-cost_tokens = 4
-cum_tokens = 6072
+position = 200
+key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 182 })'
+descriptor = "module item body at webpack-plugin/src/index.ts:159 body 182"
+cost_tokens = 87
+cum_tokens = 5996
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "webpack-plugin/src/loaders"
-entries = ["include.ts"]
+[[batches.content.spans]]
+path = "webpack-plugin/src/index.ts"
+start = 182
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
-position = 204
+position = 201
+key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 191 })'
+descriptor = "module item body at webpack-plugin/src/index.ts:159 body 191"
+cost_tokens = 85
+cum_tokens = 6081
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/src/index.ts"
+start = 191
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 202
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false })'
 descriptor = "README.md section #19"
-cost_tokens = 56
-cum_tokens = 6128
+cost_tokens = 54
+cum_tokens = 6135
 
 [batches.content]
 kind = "lines"
@@ -4288,11 +4256,43 @@ end = 115
 kind = "full"
 
 [[batches]]
+position = 203
+key = 'Json(Scripts { file: "samples/electron-esm-webpack/package.json" })'
+descriptor = "package scripts in samples/electron-esm-webpack/package.json"
+cost_tokens = 59
+cum_tokens = 6194
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/electron-esm-webpack/package.json"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'Fs(DirListing { dir: "webpack-plugin/src/loaders" })'
+descriptor = "listing of 'webpack-plugin/src/loaders'"
+cost_tokens = 4
+cum_tokens = 6198
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin/src/loaders"
+entries = ["include.ts"]
+
+[[batches]]
 position = 205
 key = 'Json(Scripts { file: "samples/browser-esm-webpack-typescript/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack-typescript/package.json"
 cost_tokens = 63
-cum_tokens = 6191
+cum_tokens = 6261
 
 [batches.content]
 kind = "lines"
@@ -4310,7 +4310,7 @@ position = 206
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 53 })'
 descriptor = "export at src/languages/features/json/register.ts:53"
 cost_tokens = 68
-cum_tokens = 6259
+cum_tokens = 6329
 
 [batches.content]
 kind = "lines"
@@ -4328,7 +4328,7 @@ position = 207
 key = 'Typescript(Imports { file: "src/languages/register.all.ts" })'
 descriptor = "imports in src/languages/register.all.ts"
 cost_tokens = 24
-cum_tokens = 6283
+cum_tokens = 6353
 
 [batches.content]
 kind = "lines"
@@ -4346,7 +4346,7 @@ position = 208
 key = 'Json(Scripts { file: "samples/browser-esm-webpack-typescript-react/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack-typescript-react/package.json"
 cost_tokens = 68
-cum_tokens = 6351
+cum_tokens = 6421
 
 [batches.content]
 kind = "lines"
@@ -4364,7 +4364,7 @@ position = 209
 key = 'Fs(DirListing { dir: "samples/legacy" })'
 descriptor = "listing of 'samples/legacy'"
 cost_tokens = 82
-cum_tokens = 6433
+cum_tokens = 6503
 
 [batches.content]
 kind = "fs"
@@ -4378,7 +4378,7 @@ position = 210
 key = 'Fs(DirListing { dir: "samples/legacy/electron-amd" })'
 descriptor = "listing of 'samples/legacy/electron-amd'"
 cost_tokens = 17
-cum_tokens = 6450
+cum_tokens = 6520
 
 [batches.content]
 kind = "fs"
@@ -4391,8 +4391,8 @@ entries = ["electron-index.html", "index.html", "main.js", "package.json"]
 position = 211
 key = 'Json(Identity { file: "samples/legacy/electron-amd/package.json" })'
 descriptor = "package identity in samples/legacy/electron-amd/package.json"
-cost_tokens = 12
-cum_tokens = 6462
+cost_tokens = 16
+cum_tokens = 6536
 
 [batches.content]
 kind = "lines"
@@ -4409,8 +4409,8 @@ kind = "full"
 position = 212
 key = 'Json(Entry { file: "samples/legacy/electron-amd/package.json" })'
 descriptor = "package entrypoints in samples/legacy/electron-amd/package.json"
-cost_tokens = 11
-cum_tokens = 6473
+cost_tokens = 13
+cum_tokens = 6549
 
 [batches.content]
 kind = "lines"
@@ -4428,7 +4428,7 @@ position = 213
 key = 'Fs(DirListing { dir: "samples/legacy/electron-amd-nodeIntegration" })'
 descriptor = "listing of 'samples/legacy/electron-amd-nodeIntegration'"
 cost_tokens = 17
-cum_tokens = 6490
+cum_tokens = 6566
 
 [batches.content]
 kind = "fs"
@@ -4441,8 +4441,8 @@ entries = ["electron-index.html", "index.html", "main.js", "package.json"]
 position = 214
 key = 'Json(Identity { file: "samples/legacy/electron-amd-nodeIntegration/package.json" })'
 descriptor = "package identity in samples/legacy/electron-amd-nodeIntegration/package.json"
-cost_tokens = 15
-cum_tokens = 6505
+cost_tokens = 19
+cum_tokens = 6585
 
 [batches.content]
 kind = "lines"
@@ -4459,8 +4459,8 @@ kind = "full"
 position = 215
 key = 'Json(Entry { file: "samples/legacy/electron-amd-nodeIntegration/package.json" })'
 descriptor = "package entrypoints in samples/legacy/electron-amd-nodeIntegration/package.json"
-cost_tokens = 11
-cum_tokens = 6516
+cost_tokens = 13
+cum_tokens = 6598
 
 [batches.content]
 kind = "lines"
@@ -4478,7 +4478,7 @@ position = 216
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-diff-editor" })'
 descriptor = "listing of 'samples/legacy/browser-amd-diff-editor'"
 cost_tokens = 12
-cum_tokens = 6528
+cum_tokens = 6610
 
 [batches.content]
 kind = "fs"
@@ -4491,8 +4491,8 @@ entries = ["index.html", "modified.txt", "original.txt"]
 position = 217
 key = 'Json(Scripts { file: "samples/legacy/electron-amd/package.json" })'
 descriptor = "package scripts in samples/legacy/electron-amd/package.json"
-cost_tokens = 36
-cum_tokens = 6564
+cost_tokens = 34
+cum_tokens = 6644
 
 [batches.content]
 kind = "lines"
@@ -4509,8 +4509,8 @@ kind = "full"
 position = 218
 key = 'Json(Scripts { file: "samples/legacy/electron-amd-nodeIntegration/package.json" })'
 descriptor = "package scripts in samples/legacy/electron-amd-nodeIntegration/package.json"
-cost_tokens = 36
-cum_tokens = 6600
+cost_tokens = 34
+cum_tokens = 6678
 
 [batches.content]
 kind = "lines"
@@ -4528,7 +4528,7 @@ position = 219
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-editor" })'
 descriptor = "listing of 'samples/legacy/browser-amd-editor'"
 cost_tokens = 4
-cum_tokens = 6604
+cum_tokens = 6682
 
 [batches.content]
 kind = "fs"
@@ -4542,7 +4542,7 @@ position = 220
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-localized" })'
 descriptor = "listing of 'samples/legacy/browser-amd-localized'"
 cost_tokens = 4
-cum_tokens = 6608
+cum_tokens = 6686
 
 [batches.content]
 kind = "fs"
@@ -4556,7 +4556,7 @@ position = 221
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-monarch" })'
 descriptor = "listing of 'samples/legacy/browser-amd-monarch'"
 cost_tokens = 4
-cum_tokens = 6612
+cum_tokens = 6690
 
 [batches.content]
 kind = "fs"
@@ -4570,7 +4570,7 @@ position = 222
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-requirejs" })'
 descriptor = "listing of 'samples/legacy/browser-amd-requirejs'"
 cost_tokens = 4
-cum_tokens = 6616
+cum_tokens = 6694
 
 [batches.content]
 kind = "fs"
@@ -4584,7 +4584,7 @@ position = 223
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-shadow-dom" })'
 descriptor = "listing of 'samples/legacy/browser-amd-shadow-dom'"
 cost_tokens = 4
-cum_tokens = 6620
+cum_tokens = 6698
 
 [batches.content]
 kind = "fs"
@@ -4598,7 +4598,7 @@ position = 224
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-shared-model" })'
 descriptor = "listing of 'samples/legacy/browser-amd-shared-model'"
 cost_tokens = 4
-cum_tokens = 6624
+cum_tokens = 6702
 
 [batches.content]
 kind = "fs"
@@ -4612,7 +4612,7 @@ position = 225
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-trusted-types" })'
 descriptor = "listing of 'samples/legacy/browser-amd-trusted-types'"
 cost_tokens = 4
-cum_tokens = 6628
+cum_tokens = 6706
 
 [batches.content]
 kind = "fs"
@@ -4623,28 +4623,10 @@ entries = ["index.html"]
 
 [[batches]]
 position = 226
-key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 276 })'
-descriptor = "export at src/languages/features/css/register.ts:276"
-cost_tokens = 96
-cum_tokens = 6724
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/css/register.ts"
-start = 276
-end = 285
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 227
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 10 })'
 descriptor = "export at src/languages/features/json/register.ts:10"
 cost_tokens = 96
-cum_tokens = 6820
+cum_tokens = 6802
 
 [batches.content]
 kind = "lines"
@@ -4658,261 +4640,29 @@ end = 17
 kind = "full"
 
 [[batches]]
+position = 227
+key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 276 })'
+descriptor = "export at src/languages/features/css/register.ts:276"
+cost_tokens = 98
+cum_tokens = 6900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/register.ts"
+start = 276
+end = 285
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 228
-key = 'Typescript(ModuleItem { file: "monaco-lsp-client/generator/index.ts", start_line: 7 })'
-descriptor = "module item at monaco-lsp-client/generator/index.ts:7"
-cost_tokens = 147
-cum_tokens = 6967
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 4
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 229
-key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 42 })'
-descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 42"
-cost_tokens = 8
-cum_tokens = 6975
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 230
-key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 58 })'
-descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 58"
-cost_tokens = 10
-cum_tokens = 6985
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 231
-key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 65 })'
-descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 65"
-cost_tokens = 20
-cum_tokens = 7005
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 65
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 232
-key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 49 })'
-descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 49"
-cost_tokens = 31
-cum_tokens = 7036
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 49
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 233
-key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 16 })'
-descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 16"
-cost_tokens = 57
-cum_tokens = 7093
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 16
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 234
-key = 'Typescript(Imports { file: "samples/browser-esm-vite/main.ts" })'
-descriptor = "imports in samples/browser-esm-vite/main.ts"
-cost_tokens = 23
-cum_tokens = 7116
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-vite/main.ts"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 235
-key = 'Fs(DirListing { dir: "samples/browser-esm-parcel/src" })'
-descriptor = "listing of 'samples/browser-esm-parcel/src'"
-cost_tokens = 8
-cum_tokens = 7124
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-parcel/src"
-entries = ["index.html", "index.js"]
-
-[[batches]]
-position = 236
-key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript/src" })'
-descriptor = "listing of 'samples/browser-esm-webpack-typescript/src'"
-cost_tokens = 8
-cum_tokens = 7132
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-webpack-typescript/src"
-entries = ["index.css", "index.ts"]
-
-[[batches]]
-position = 237
 key = 'Typescript(ExportNames { file: "src/languages/features/json/register.ts", chunk_index: 1, export_count: 21, type_only_export_count: 19 })'
 descriptor = "export names surface #1 in src/languages/features/json/register.ts"
-cost_tokens = 136
-cum_tokens = 7268
+cost_tokens = 134
+cum_tokens = 7034
 
 [batches.content]
 kind = "lines"
@@ -5062,11 +4812,11 @@ end = 343
 kind = "ellipsis"
 
 [[batches]]
-position = 238
+position = 229
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 73 })'
 descriptor = "export at src/languages/features/json/register.ts:73"
 cost_tokens = 0
-cum_tokens = 7268
+cum_tokens = 7034
 
 [batches.content]
 kind = "lines"
@@ -5088,11 +4838,11 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 239
+position = 230
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 142 })'
 descriptor = "export at src/languages/features/json/register.ts:142"
-cost_tokens = 22
-cum_tokens = 7290
+cost_tokens = 24
+cum_tokens = 7058
 
 [batches.content]
 kind = "lines"
@@ -5106,11 +4856,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 240
+position = 231
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 342 })'
 descriptor = "export at src/languages/features/json/register.ts:342"
-cost_tokens = 14
-cum_tokens = 7304
+cost_tokens = 16
+cum_tokens = 7074
 
 [batches.content]
 kind = "lines"
@@ -5124,11 +4874,11 @@ end = 343
 kind = "full"
 
 [[batches]]
-position = 241
+position = 232
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 337 })'
 descriptor = "export at src/languages/features/json/register.ts:337"
 cost_tokens = 38
-cum_tokens = 7342
+cum_tokens = 7112
 
 [batches.content]
 kind = "lines"
@@ -5142,11 +4892,11 @@ end = 340
 kind = "full"
 
 [[batches]]
-position = 242
+position = 233
 key = 'Typescript(ExportMemberNames { file: "src/languages/features/json/register.ts", start_line: 73, chunk_index: 0 })'
 descriptor = "export member names at src/languages/features/json/register.ts:73 chunk 0"
-cost_tokens = 114
-cum_tokens = 7456
+cost_tokens = 116
+cum_tokens = 7228
 
 [batches.content]
 kind = "lines"
@@ -5176,11 +4926,11 @@ end = 81
 kind = "ellipsis"
 
 [[batches]]
-position = 243
+position = 234
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 331 })'
 descriptor = "export at src/languages/features/json/register.ts:331"
 cost_tokens = 28
-cum_tokens = 7484
+cum_tokens = 7256
 
 [batches.content]
 kind = "lines"
@@ -5194,11 +4944,11 @@ end = 335
 kind = "full"
 
 [[batches]]
-position = 244
+position = 235
 key = 'Typescript(ExportMemberNames { file: "src/languages/features/json/register.ts", start_line: 73, chunk_index: 1 })'
 descriptor = "export member names at src/languages/features/json/register.ts:73 chunk 1"
 cost_tokens = 120
-cum_tokens = 7604
+cum_tokens = 7376
 
 [batches.content]
 kind = "lines"
@@ -5228,11 +4978,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 245
+position = 236
 key = 'Typescript(Export { file: "src/languages/features/json/register.ts", start_line: 255 })'
 descriptor = "export at src/languages/features/json/register.ts:255"
-cost_tokens = 84
-cum_tokens = 7688
+cost_tokens = 86
+cum_tokens = 7462
 
 [batches.content]
 kind = "lines"
@@ -5246,11 +4996,261 @@ end = 262
 kind = "full"
 
 [[batches]]
+position = 237
+key = 'Typescript(ModuleItem { file: "monaco-lsp-client/generator/index.ts", start_line: 7 })'
+descriptor = "module item at monaco-lsp-client/generator/index.ts:7"
+cost_tokens = 151
+cum_tokens = 7613
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 4
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 238
+key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 42 })'
+descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 42"
+cost_tokens = 10
+cum_tokens = 7623
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 239
+key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 58 })'
+descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 58"
+cost_tokens = 12
+cum_tokens = 7635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 65 })'
+descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 65"
+cost_tokens = 22
+cum_tokens = 7657
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 65
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 49 })'
+descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 49"
+cost_tokens = 33
+cum_tokens = 7690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 49
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
+key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 16 })'
+descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 16"
+cost_tokens = 59
+cum_tokens = 7749
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 16
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'Typescript(Imports { file: "monaco-lsp-client/generator/index.ts" })'
+descriptor = "imports in monaco-lsp-client/generator/index.ts"
+cost_tokens = 22
+cum_tokens = 7771
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/generator/index.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 244
+key = 'Fs(DirListing { dir: "samples/browser-esm-parcel/src" })'
+descriptor = "listing of 'samples/browser-esm-parcel/src'"
+cost_tokens = 8
+cum_tokens = 7779
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-parcel/src"
+entries = ["index.html", "index.js"]
+
+[[batches]]
+position = 245
+key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript/src" })'
+descriptor = "listing of 'samples/browser-esm-webpack-typescript/src'"
+cost_tokens = 8
+cum_tokens = 7787
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-webpack-typescript/src"
+entries = ["index.css", "index.ts"]
+
+[[batches]]
 position = 246
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 27 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 27"
-cost_tokens = 113
-cum_tokens = 7801
+cost_tokens = 115
+cum_tokens = 7902
 
 [batches.content]
 kind = "lines"
@@ -5265,64 +5265,10 @@ kind = "full"
 
 [[batches]]
 position = 247
-key = 'Typescript(Imports { file: "monaco-lsp-client/generator/index.ts" })'
-descriptor = "imports in monaco-lsp-client/generator/index.ts"
-cost_tokens = 24
-cum_tokens = 7825
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 248
-key = 'Typescript(Imports { file: "samples/browser-esm-webpack-typescript/src/index.ts" })'
-descriptor = "imports in samples/browser-esm-webpack-typescript/src/index.ts"
-cost_tokens = 24
-cum_tokens = 7849
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-webpack-typescript/src/index.ts"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 249
-key = 'Json(Scripts { file: "package.json" })'
-descriptor = "package scripts in package.json"
-cost_tokens = 649
-cum_tokens = 8498
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 10
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 250
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
-cost_tokens = 96
-cum_tokens = 8594
+cost_tokens = 94
+cum_tokens = 7996
 
 [batches.content]
 kind = "lines"
@@ -5352,11 +5298,29 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 251
+position = 248
+key = 'Typescript(Imports { file: "samples/browser-esm-vite/main.ts" })'
+descriptor = "imports in samples/browser-esm-vite/main.ts"
+cost_tokens = 25
+cum_tokens = 8021
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-vite/main.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
 key = 'Typescript(ExportNames { file: "src/languages/features/css/register.ts", chunk_index: 1, export_count: 19, type_only_export_count: 16 })'
 descriptor = "export names surface #1 in src/languages/features/css/register.ts"
-cost_tokens = 93
-cum_tokens = 8687
+cost_tokens = 91
+cum_tokens = 8112
 
 [batches.content]
 kind = "lines"
@@ -5466,11 +5430,11 @@ end = 347
 kind = "ellipsis"
 
 [[batches]]
-position = 252
+position = 250
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 346 })'
 descriptor = "export at src/languages/features/css/register.ts:346"
 cost_tokens = 22
-cum_tokens = 8709
+cum_tokens = 8134
 
 [batches.content]
 kind = "lines"
@@ -5484,11 +5448,11 @@ end = 349
 kind = "full"
 
 [[batches]]
-position = 253
+position = 251
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 317 })'
 descriptor = "export at src/languages/features/css/register.ts:317"
 cost_tokens = 52
-cum_tokens = 8761
+cum_tokens = 8186
 
 [batches.content]
 kind = "lines"
@@ -5502,11 +5466,11 @@ end = 323
 kind = "full"
 
 [[batches]]
-position = 254
+position = 252
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 324 })'
 descriptor = "export at src/languages/features/css/register.ts:324"
 cost_tokens = 52
-cum_tokens = 8813
+cum_tokens = 8238
 
 [batches.content]
 kind = "lines"
@@ -5520,11 +5484,11 @@ end = 330
 kind = "full"
 
 [[batches]]
-position = 255
+position = 253
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 331 })'
 descriptor = "export at src/languages/features/css/register.ts:331"
 cost_tokens = 52
-cum_tokens = 8865
+cum_tokens = 8290
 
 [batches.content]
 kind = "lines"
@@ -5538,11 +5502,11 @@ end = 337
 kind = "full"
 
 [[batches]]
-position = 256
+position = 254
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 339 })'
 descriptor = "export at src/languages/features/css/register.ts:339"
 cost_tokens = 52
-cum_tokens = 8917
+cum_tokens = 8342
 
 [batches.content]
 kind = "lines"
@@ -5556,11 +5520,11 @@ end = 345
 kind = "full"
 
 [[batches]]
-position = 257
+position = 255
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 306 })'
 descriptor = "export at src/languages/features/css/register.ts:306"
 cost_tokens = 90
-cum_tokens = 9007
+cum_tokens = 8432
 
 [batches.content]
 kind = "lines"
@@ -5574,11 +5538,47 @@ end = 316
 kind = "full"
 
 [[batches]]
+position = 256
+key = 'Json(Scripts { file: "package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 647
+cum_tokens = 9079
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 10
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 257
+key = 'Typescript(Imports { file: "samples/browser-esm-webpack-typescript/src/index.ts" })'
+descriptor = "imports in samples/browser-esm-webpack-typescript/src/index.ts"
+cost_tokens = 26
+cum_tokens = 9105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-webpack-typescript/src/index.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 258
 key = 'Fs(DirListing { dir: "src/languages/features/typescript/lib" })'
 descriptor = "listing of 'src/languages/features/typescript/lib'"
 cost_tokens = 35
-cum_tokens = 9042
+cum_tokens = 9140
 
 [batches.content]
 kind = "fs"
@@ -5591,8 +5591,8 @@ entries = ["editor.worker.d.ts", "lib.index.ts", "lib.ts", "typescriptServices.d
 position = 259
 key = 'Markdown(Section { file: "MAINTAINING.md", section_index: 2, reference_shaped: false })'
 descriptor = "MAINTAINING.md section #2"
-cost_tokens = 48
-cum_tokens = 9090
+cost_tokens = 46
+cum_tokens = 9186
 
 [batches.content]
 kind = "lines"
@@ -5615,88 +5615,10 @@ kind = "full"
 
 [[batches]]
 position = 260
-key = 'Typescript(ExportNames { file: "monaco-lsp-client/src/adapters/LspClient.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in monaco-lsp-client/src/adapters/LspClient.ts"
-cost_tokens = 13
-cum_tokens = 9103
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/src/adapters/LspClient.ts"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/src/adapters/LspClient.ts"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 261
-key = 'Typescript(Export { file: "monaco-lsp-client/src/adapters/LspClient.ts", start_line: 30 })'
-descriptor = "export at monaco-lsp-client/src/adapters/LspClient.ts:30"
-cost_tokens = 15
-cum_tokens = 9118
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/src/adapters/LspClient.ts"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/src/adapters/LspClient.ts"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/src/adapters/LspClient.ts"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 262
-key = 'Json(Scripts { file: "samples/browser-esm-vite-react/package.json" })'
-descriptor = "package scripts in samples/browser-esm-vite-react/package.json"
-cost_tokens = 89
-cum_tokens = 9207
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-vite-react/package.json"
-start = 3
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 263
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false })'
 descriptor = "README.md section #20"
-cost_tokens = 73
-cum_tokens = 9280
+cost_tokens = 71
+cum_tokens = 9257
 
 [batches.content]
 kind = "lines"
@@ -5718,11 +5640,29 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 264
+position = 261
+key = 'Json(Scripts { file: "samples/browser-esm-vite-react/package.json" })'
+descriptor = "package scripts in samples/browser-esm-vite-react/package.json"
+cost_tokens = 89
+cum_tokens = 9346
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-vite-react/package.json"
+start = 3
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 262
 key = 'Typescript(Export { file: "src/languages/features/css/register.ts", start_line: 124 })'
 descriptor = "export at src/languages/features/css/register.ts:124"
 cost_tokens = 131
-cum_tokens = 9411
+cum_tokens = 9477
 
 [batches.content]
 kind = "lines"
@@ -5752,53 +5692,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 265
-key = 'Fs(DirListing { dir: "website" })'
-descriptor = "listing of 'website'"
-cost_tokens = 60
-cum_tokens = 9471
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website"
-entries = [".gitignore", ".prettierrc.json", "index", "package-lock.json", "package.json", "scripts", "src", "static", "tsconfig.json", "tslint.json", "typedoc", "vscode-web-editors.tgz", "webpack.config.ts"]
-
-[[batches]]
-position = 266
-key = 'Fs(DirListing { dir: "website/src" })'
-descriptor = "listing of 'website/src'"
-cost_tokens = 26
-cum_tokens = 9497
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/src"
-entries = ["monaco-loader.ts", "runner", "shared.ts", "tsconfig.json", "types.d.ts", "website"]
-
-[[batches]]
-position = 267
-key = 'Fs(DirListing { dir: "website/src/runner" })'
-descriptor = "listing of 'website/src/runner'"
-cost_tokens = 12
-cum_tokens = 9509
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/src/runner"
-entries = ["debug.ts", "index.ts", "style.scss"]
-
-[[batches]]
-position = 268
+position = 263
 key = 'Markdown(Section { file: "samples/README.md", section_index: 1, reference_shaped: false })'
 descriptor = "samples/README.md section #1"
-cost_tokens = 92
-cum_tokens = 9601
+cost_tokens = 90
+cum_tokens = 9567
 
 [batches.content]
 kind = "lines"
@@ -5828,11 +5726,53 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 269
+position = 264
+key = 'Fs(DirListing { dir: "website" })'
+descriptor = "listing of 'website'"
+cost_tokens = 60
+cum_tokens = 9627
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website"
+entries = [".gitignore", ".prettierrc.json", "index", "package-lock.json", "package.json", "scripts", "src", "static", "tsconfig.json", "tslint.json", "typedoc", "vscode-web-editors.tgz", "webpack.config.ts"]
+
+[[batches]]
+position = 265
+key = 'Fs(DirListing { dir: "website/src" })'
+descriptor = "listing of 'website/src'"
+cost_tokens = 26
+cum_tokens = 9653
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/src"
+entries = ["monaco-loader.ts", "runner", "shared.ts", "tsconfig.json", "types.d.ts", "website"]
+
+[[batches]]
+position = 266
+key = 'Fs(DirListing { dir: "website/src/runner" })'
+descriptor = "listing of 'website/src/runner'"
+cost_tokens = 12
+cum_tokens = 9665
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/src/runner"
+entries = ["debug.ts", "index.ts", "style.scss"]
+
+[[batches]]
+position = 267
 key = 'Fs(DirListing { dir: "website/src/website" })'
 descriptor = "listing of 'website/src/website'"
 cost_tokens = 46
-cum_tokens = 9647
+cum_tokens = 9711
 
 [batches.content]
 kind = "fs"
@@ -5842,29 +5782,61 @@ parent = "website/src/website"
 entries = ["bootstrap.scss", "code-oss.svg", "components", "data", "index.tsx", "monaco-loader-chunk.ts", "monacoEditorVersion.ts", "pages", "style.scss", "utils"]
 
 [[batches]]
-position = 270
-key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 163 })'
-descriptor = "module item body at webpack-plugin/src/index.ts:159 body 163"
-cost_tokens = 153
-cum_tokens = 9800
+position = 268
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
+descriptor = "README.md section #2"
+cost_tokens = 132
+cum_tokens = 9843
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "webpack-plugin/src/index.ts"
-start = 163
-end = 174
+path = "README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 20
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 29
+end = 29
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 271
+position = 269
 key = 'Fs(DirListing { dir: "website/src/website/pages" })'
 descriptor = "listing of 'website/src/website/pages'"
 cost_tokens = 27
-cum_tokens = 9827
+cum_tokens = 9870
 
 [batches.content]
 kind = "fs"
@@ -5874,33 +5846,61 @@ parent = "website/src/website/pages"
 entries = ["App.tsx", "DocsPage.tsx", "MonarchPage.tsx", "home", "playground", "routes.ts"]
 
 [[batches]]
-position = 272
-key = 'Fs(DirListing { dir: "src/deprecated/basic-languages" })'
-descriptor = "listing of 'src/deprecated/basic-languages'"
-cost_tokens = 7
-cum_tokens = 9834
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/deprecated/basic-languages"
-entries = ["monaco.contribution.ts"]
-
-[[batches]]
-position = 273
-key = 'Typescript(ExportMemberNames { file: "src/languages/features/json/register.ts", start_line: 73, chunk_index: 2 })'
-descriptor = "export member names at src/languages/features/json/register.ts:73 chunk 2"
-cost_tokens = 121
-cum_tokens = 9955
+position = 270
+key = 'Typescript(ExportNames { file: "monaco-lsp-client/src/adapters/LspClient.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in monaco-lsp-client/src/adapters/LspClient.ts"
+cost_tokens = 15
+cum_tokens = 9885
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/languages/features/json/register.ts"
-start = 104
-end = 115
+path = "monaco-lsp-client/src/adapters/LspClient.ts"
+start = 30
+end = 30
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/src/adapters/LspClient.ts"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 271
+key = 'Typescript(Export { file: "monaco-lsp-client/src/adapters/LspClient.ts", start_line: 30 })'
+descriptor = "export at monaco-lsp-client/src/adapters/LspClient.ts:30"
+cost_tokens = 15
+cum_tokens = 9900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/src/adapters/LspClient.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/src/adapters/LspClient.ts"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/src/adapters/LspClient.ts"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"

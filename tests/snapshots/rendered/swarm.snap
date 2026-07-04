@@ -6,6 +6,7 @@ expression: rendered
 .pre-commit-config.yaml
 LICENSE
 README.md
+    …
     3→# Swarm (experimental, educational)
     5→> [!IMPORTANT]
     6→> Swarm is now replaced by the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), which is a production-ready evolution of Swarm. The Agents SDK features key improvements and will be actively maintained by the OpenAI team.
@@ -224,6 +225,7 @@ swarm/
         2→from .types import Agent, Response
         4→__all__ = ["Swarm", "Agent", "Response"]
     core.py
+        …
         26→class Swarm:
         27→    def __init__(self, client=None):
         28→        if not client:
@@ -238,6 +240,7 @@ swarm/
         38→        stream: bool,
         39→        debug: bool,
         40→    ) -> ChatCompletionMessage:
+        …
         71→    def handle_function_result(self, result, debug) -> Result:
         …
         89→    def handle_tool_calls(
@@ -247,6 +250,7 @@ swarm/
         93→        context_variables: dict,
         94→        debug: bool,
         95→    ) -> Response:
+        …
         139→    def run_and_stream(
         140→        self,
         141→        agent: Agent,
@@ -257,6 +261,7 @@ swarm/
         146→        max_turns: int = float("inf"),
         147→        execute_tools: bool = True,
         148→    ):
+        …
         231→    def run(
         232→        self,
         233→        agent: Agent,
@@ -268,6 +273,7 @@ swarm/
         239→        max_turns: int = float("inf"),
         240→        execute_tools: bool = True,
         241→    ) -> Response:
+        …
     repl/
         __init__.py
             1→from .repl import run_demo_loop
@@ -281,6 +287,7 @@ swarm/
             60→def run_demo_loop(
             61→    starting_agent, context_variables=None, stream=False, debug=False
             62→) -> None:
+            …
     types.py
         1→from openai.types.chat import ChatCompletionMessage
         2→from openai.types.chat.chat_completion_message_tool_call import (
@@ -288,6 +295,7 @@ swarm/
         4→    Function,
         5→)
         6→from typing import List, Callable, Union, Optional
+        …
         9→from pydantic import BaseModel
         11→AgentFunction = Callable[[], Union[str, "Agent", dict]]
         14→class Agent(BaseModel):
@@ -335,6 +343,7 @@ swarm/
         40→    Returns:
         41→        A dictionary representing the function's signature in JSON format.
         42→    """
+        …
 tests/
     __init__.py
     mock_client.py

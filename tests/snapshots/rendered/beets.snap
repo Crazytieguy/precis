@@ -11,6 +11,7 @@ CODE_OF_CONDUCT.rst
 CONTRIBUTING.rst
 LICENSE
 README.rst
+    …
     13→beets
     14→=====
     16→Beets is the media library management system for obsessive music geeks.
@@ -45,6 +46,7 @@ README.rst
     51→  works with a staggering variety of interfaces.
     53→If beets doesn't do what you want yet, `writing your own plugin`_ is shockingly
     54→simple if you know a little Python.
+    …
 README_kr.rst
 SECURITY.md
 beets/
@@ -69,6 +71,7 @@ beets/
         23→__author__ = "Adrian Sampson <adrian@radbox.org>"
         26→def __getattr__(name: str):
         27→    """Handle deprecated imports."""
+        …
         35→class IncludeLazyConfig(confuse.LazyConfig):
         36→    """A version of Confuse's LazyConfig that also merges in data from
         37→    YAML files specified in an `include` setting.
@@ -95,6 +98,7 @@ beets/
             15→"""Facilities for automatically determining files' correct metadata."""
             17→from __future__ import annotations
             19→from importlib import import_module
+            …
             22→from beets.util.deprecation import deprecate_for_maintainers, deprecate_imports
             24→from .hooks import AlbumInfo, AlbumMatch, TrackInfo, TrackMatch
             25→from .match import Proposal, Recommendation, tag_album, tag_item
@@ -155,10 +159,14 @@ beets/
             29→]
         exceptions.py
         fields.py
+            …
             3→TYPE_BY_FIELD: dict[str, types.Type] = {
+            …
         library.py
+            …
             20→class Library(dbcore.Database):
             21→    """A database of music containing songs and albums."""
+            …
         migrations.py
         models.py
         queries.py
@@ -175,9 +183,12 @@ beets/
         __init__.py
         commands/
             __init__.py
+                …
                 36→def __getattr__(name: str):
                 37→    """Handle deprecated imports."""
+                …
                 50→default_commands = [
+                …
             completion.py
             completion_base.sh
             config.py
@@ -190,17 +201,21 @@ beets/
                     5→from beets import config, logging, plugins, ui
                     6→from beets.util import displayable_path, normpath, syspath
                     8→from .session import TerminalImportSession
+                    …
                     11→log = logging.getLogger("beets")
                     14→def paths_from_logfile(path):
                     15→    """Parse the logfile and yield skipped paths to pass to the `import`
                     16→    command.
                     17→    """
+                    …
                     34→def parse_logfiles(logfiles):
                     35→    """Parse all `logfiles` and yield paths from it."""
+                    …
                     49→def import_files(lib, paths: list[bytes], query):
                     50→    """Import the files in the given list of paths or matching the
                     51→    query.
                     52→    """
+                    …
                     81→def import_func(lib, opts, args: list[str]):
                     …
                     134→def _store_dict(option, opt_str, value, parser):
@@ -208,6 +223,7 @@ beets/
                     160→import_cmd = ui.Subcommand(
                     161→    "import", help="import new music", aliases=("imp", "im")
                     162→)
+                    …
                 display.py
                 session.py
             list.py
@@ -221,6 +237,7 @@ beets/
             write.py
     util/
         __init__.py
+            …
             15→"""Miscellaneous utility functions."""
             17→from __future__ import annotations
             19→import contextvars
@@ -235,6 +252,7 @@ beets/
             28→import sys
             29→import tempfile
             30→import traceback
+            …
         artresizer.py
         bluelet.py
         color.py
@@ -244,6 +262,7 @@ beets/
         extension.py
         functemplate.py
         hidden.py
+            …
             25→def is_hidden(path: bytes | Path) -> bool:
             …
         id_extractors.py
@@ -253,6 +272,7 @@ beets/
         pipeline.py
         units.py
             1→import re
+            …
 beetsplug/
 codecov.yml
 docs/
@@ -316,9 +336,12 @@ pyproject.toml
     2→name = "beets"
     3→version = "2.11.0"
     4→description = "music tagger and library organizer"
+    …
     7→license = "MIT"
     8→readme = "README.rst"
+    …
     184→[tool.poetry.scripts]
     185→beet = "beets.ui:main"
+    …
 setup.cfg
 test/

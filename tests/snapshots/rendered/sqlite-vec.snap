@@ -22,6 +22,7 @@ LICENSE-MIT
 Makefile
 README.md
     1→# `sqlite-vec`
+    …
     5→An extremely small, "fast enough" vector search SQLite extension that runs
     6→anywhere! A successor to [`sqlite-vss`](https://github.com/asg017/sqlite-vss)
     8→<!-- deno-fmt-ignore-start -->
@@ -56,7 +57,35 @@ README.md
     43→## Installing
     …
     61→## Sample usage
-    …
+    63→```sql
+    64→.load ./vec0
+    66→create virtual table vec_examples using vec0(
+    67→  sample_embedding float[8]
+    68→);
+    70→-- vectors can be provided as JSON or in a compact binary format
+    71→insert into vec_examples(rowid, sample_embedding)
+    72→  values
+    73→    (1, '[-0.200, 0.250, 0.341, -0.211, 0.645, 0.935, -0.316, -0.924]'),
+    74→    (2, '[0.443, -0.501, 0.355, -0.771, 0.707, -0.708, -0.185, 0.362]'),
+    75→    (3, '[0.716, -0.927, 0.134, 0.052, -0.669, 0.793, -0.634, -0.162]'),
+    76→    (4, '[-0.710, 0.330, 0.656, 0.041, -0.990, 0.726, 0.385, -0.958]');
+    79→-- KNN style query
+    80→select
+    81→  rowid,
+    82→  distance
+    83→from vec_examples
+    84→where sample_embedding match '[0.890, 0.544, 0.825, 0.961, 0.358, 0.0196, 0.521, 0.175]'
+    85→order by distance
+    86→limit 2;
+    87→/*
+    88→┌───────┬──────────────────┐
+    89→│ rowid │     distance     │
+    90→├───────┼──────────────────┤
+    91→│ 2     │ 2.38687372207642 │
+    92→│ 1     │ 2.38978505134583 │
+    93→└───────┴──────────────────┘
+    94→*/
+    95→```
     97→## Sponsors
     …
     152→## See Also
@@ -98,6 +127,7 @@ benchmarks/
         build.rs
         src/
             lib.rs
+                …
                 8→pub fn init_vec() {
                 …
     profiling/
@@ -120,6 +150,7 @@ bindings/
             11→def serialize_int8(vector: List[int]) -> bytes:
             12→    """Serializes a list of integers into the "raw bytes" format sqlite-vec expects"""
             13→    return pack("%sb" % len(vector), *vector)
+            …
     rust/
         .gitignore
         Cargo.lock
@@ -128,6 +159,7 @@ bindings/
         build.rs
         src/
             lib.rs
+                …
                 7→mod tests {
                 …
 examples/
@@ -184,59 +216,8 @@ sqlite-dist.toml
     6→description = "A vector search SQLite extension."
     7→authors = ["Alex Garcia"]
     8→git_tag_format = "v$VERSION"
+    …
 sqlite-vec.c
-    76→typedef int8_t i8;
-    77→typedef uint8_t u8;
-    78→typedef int16_t i16;
-    79→typedef int32_t i32;
-    80→typedef sqlite3_int64 i64;
-    81→typedef uint32_t u32;
-    82→typedef uint64_t u64;
-    83→typedef float f32;
-    84→typedef size_t usize;
-    …
-    112→#define countof(x) (sizeof(x) / sizeof((x)[0]))
-    113→#define min(a, b) (((a) <= (b)) ? (a) : (b))
-    115→enum VectorElementType {
-    116→  // clang-format off
-    117→  SQLITE_VEC_ELEMENT_TYPE_FLOAT32 = 223 + 0,
-    118→  SQLITE_VEC_ELEMENT_TYPE_BIT     = 223 + 1,
-    119→  SQLITE_VEC_ELEMENT_TYPE_INT8    = 223 + 2,
-    120→  // clang-format on
-    121→};
-    583→#define vecJsonIsspace(x) (vecJsonIsSpaceX[(unsigned char)x])
-    585→typedef void (*vector_cleanup)(void *p);
-    587→void vector_cleanup_noop(void *_) { UNUSED_PARAMETER(_); }
-    589→#define JSON_SUBTYPE 74
-    591→void vtab_set_error(sqlite3_vtab *pVTab, const char *zFormat, ...) {
-    …
-    598→struct Array {
-    599→  size_t element_size;
-    600→  size_t length;
-    601→  size_t capacity;
-    602→  void *z;
-    603→};
-    605→/**
-    606→ * @brief Initial an array with the given element size and capacity.
-    607→ *
-    608→ * @param array
-    609→ * @param element_size
-    610→ * @param init_capacity
-    611→ * @return SQLITE_OK on success, error code on failure. Only error is
-    612→ * SQLITE_NOMEM
-    613→ */
-    614→int array_init(struct Array *array, size_t element_size, size_t init_capacity) {
-    …
-    629→int array_append(struct Array *array, const void *element) {
-    …
-    646→void array_cleanup(struct Array *array) {
-    …
-    656→char *vector_subtype_name(int subtype) {
-    …
-    667→char *type_name(int type) {
-    …
-    683→typedef void (*fvec_cleanup)(f32 *vector);
-    …
 sqlite-vec.h.tmpl
 test.sql
 tests/
@@ -282,6 +263,7 @@ tmp-static.py
     1→import sqlite3
     2→import numpy as np
     4→db = sqlite3.connect(":memory:")
+    …
     11→x = np.array([[0.1, 0.2, 0.3, 0.4], [0.9, 0.8, 0.7, 0.6]], dtype=np.float32)
     12→y = np.array([[0.2, 0.3], [0.9, 0.8], [0.6, 0.5]], dtype=np.float32)
     13→z = np.array(

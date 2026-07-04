@@ -38,8 +38,10 @@ include/
         7→void getSmeltingOutput (PlayerData *player);
         9→#endif
     globals.h
+        …
         4→#include <stdint.h>
         5→#include <unistd.h>
+        …
         8→  #define WIFI_SSID "your-ssid"
         9→  #define WIFI_PASS "your-password"
         10→  void task_yield ();
@@ -120,12 +122,15 @@ include/
         4→void placeTreeStructure (short x, uint8_t y, short z);
         6→#endif
     tools.h
+        …
         4→#include <unistd.h>
         6→#include "globals.h"
         8→static inline int mod_abs (int a, int b) {
         9→  return ((a % b) + b) % b;
+        …
         11→static inline int div_floor (int a, int b) {
         12→  return a % b < 0 ? (a - b) / b : a / b;
+        …
         15→extern uint64_t total_bytes_received;
         16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
         17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
@@ -193,6 +198,7 @@ include/
 src/
     CMakeLists.txt
     crafting.c
+        …
         9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
         …
         349→#define registerSmeltingRecipe(a, b) \
@@ -201,23 +207,28 @@ src/
         …
     globals.c
     main.c
+        …
         68→void handlePacket (int client_fd, int length, int packet_id, int state) {
         …
     packets.c
     procedures.c
     serialize.c
         1→#include "globals.h"
+        …
     structures.c
+        …
         9→void setBlockIfReplaceable (short x, uint8_t y, short z, uint8_t block) {
         …
         15→// Places a tree centered on the input coordinates
         16→void placeTreeStructure (short x, uint8_t y, short z) {
         …
     tools.c
+        …
         42→uint64_t total_bytes_received = 0;
         44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
         …
     varnum.c
+        …
         14→int32_t readVarInt (int client_fd) {
         …
         34→int sizeVarInt (uint32_t value) {
