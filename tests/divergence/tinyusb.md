@@ -1,4 +1,4 @@
-Score(3000)=0.623 I=0.818 C=0.474 ns_rows≤3K=19/41 (reached=9 partial=0 missing=10)
+Score(3000)=0.579 I=0.779 C=0.430 ns_rows≤3K=19/41 (reached=8 partial=0 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -43,252 +43,218 @@ Score(3000)=0.623 I=0.818 C=0.474 ns_rows≤3K=19/41 (reached=9 partial=0 missin
 | walker |  | 1513 | 31 | c decl at src/typec/pd_types.h:39 |  |  | 0.647 |
 | walker |  | 1585 | 72 | c decl at src/typec/pd_types.h:140 |  |  | 0.647 |
 | ns | 1591 |  | 293 | README — Power Delivery + OS abstraction lists | 1.13 |  | 0.630 |
-| walker |  | 1608 | 23 | c decl doc at src/typec/pd_types.h:140 |  |  | 0.630 |
 | ns | 1643 |  | 52 | device/ and host/ subdirectory listings | 2.1 |  | 0.646 |
-| walker |  | 1693 | 85 | listing of 'src/portable' |  |  | 0.744 |
-| walker |  | 1710 | 17 | c decl doc at src/typec/pd_types.h:39 |  |  | 0.744 |
+| walker |  | 1670 | 85 | listing of 'src/portable' |  |  | 0.744 |
 | ns | 1824 |  | 181 | usbd.h — tud_ lifecycle / status / control API names | 2.2 |  | 0.697 |
-| walker |  | 1901 | 191 | c decl names surface in src/typec/usbc.h |  |  | 0.697 |
-| walker |  | 1901 | 0 | c decl at src/typec/usbc.h:50 |  |  | 0.697 |
-| walker |  | 1901 | 0 | c decl at src/typec/usbc.h:53 |  |  | 0.697 |
-| walker |  | 1901 | 0 | c decl at src/typec/usbc.h:58 |  |  | 0.697 |
-| walker |  | 1901 | 0 | c decl at src/typec/usbc.h:71 |  |  | 0.697 |
-| walker |  | 1912 | 11 | c decl at src/typec/usbc.h:61 |  |  | 0.697 |
-| walker |  | 1924 | 12 | c decl body at src/typec/usbc.h:61 |  |  | 0.697 |
-| walker |  | 1937 | 13 | c decl doc at src/typec/usbc.h:50 |  |  | 0.697 |
-| walker |  | 1950 | 13 | c decl doc at src/typec/usbc.h:53 |  |  | 0.697 |
-| walker |  | 1967 | 17 | c decl doc at src/typec/usbc.h:61 |  |  | 0.697 |
-| walker |  | 1981 | 14 | c decl doc at src/typec/usbc.h:71 |  |  | 0.697 |
-| ns | 1983 |  | 159 | usbd.h — tud_ descriptor + lifecycle callback names | 2.3 |  | 0.669 |
-| walker |  | 1996 | 15 | listing of 'hw/mcu' |  |  | 0.669 |
-| walker |  | 2052 | 56 | listing of 'src/common' |  |  | 0.670 |
-| walker |  | 2109 | 57 | c decl names surface in src/common/tusb_debug.h |  |  | 0.670 |
-| walker |  | 2133 | 24 | c includes in src/typec/usbc.h |  |  | 0.670 |
-| walker |  | 2238 | 105 | c decl at src/typec/pd_types.h:126 |  |  | 0.670 |
+| walker |  | 1861 | 191 | c decl names surface in src/typec/usbc.h |  |  | 0.697 |
+| walker |  | 1861 | 0 | c decl at src/typec/usbc.h:50 |  |  | 0.697 |
+| walker |  | 1861 | 0 | c decl at src/typec/usbc.h:53 |  |  | 0.697 |
+| walker |  | 1861 | 0 | c decl at src/typec/usbc.h:58 |  |  | 0.697 |
+| walker |  | 1861 | 0 | c decl at src/typec/usbc.h:71 |  |  | 0.697 |
+| walker |  | 1872 | 11 | c decl at src/typec/usbc.h:61 |  |  | 0.697 |
+| walker |  | 1884 | 12 | c decl body at src/typec/usbc.h:61 |  |  | 0.697 |
+| walker |  | 1899 | 15 | listing of 'hw/mcu' |  |  | 0.697 |
+| walker |  | 1955 | 56 | listing of 'src/common' |  |  | 0.698 |
+| ns | 1983 |  | 159 | usbd.h — tud_ descriptor + lifecycle callback names | 2.3 |  | 0.670 |
 | ns | 2240 |  | 257 | usbd.h — task & control-xfer signatures (with prose) | 2.4 | 2.2 | 0.634 |
 | ns | 2438 |  | 198 | usbh.h — tuh_ lifecycle / status API names | 2.5 |  | 0.605 |
-| walker |  | 2470 | 232 | c decl names surface in src/tusb.h |  |  | 0.621 |
-| walker |  | 2470 | 0 | c decl at src/tusb.h:147 |  |  | 0.621 |
-| walker |  | 2470 | 0 | c decl at src/tusb.h:164 |  |  | 0.621 |
-| walker |  | 2470 | 0 | c decl at src/tusb.h:167 |  |  | 0.621 |
-| walker |  | 2470 | 0 | c decl at src/tusb.h:170 |  |  | 0.621 |
-| walker |  | 2481 | 11 | c decl doc at src/tusb.h:164 |  |  | 0.626 |
-| walker |  | 2496 | 15 | c decl doc at src/tusb.h:170 |  |  | 0.631 |
-| walker |  | 2512 | 16 | c decl doc at src/tusb.h:147 |  |  | 0.639 |
-| walker |  | 2538 | 26 | c decl doc at src/tusb.h:167 |  |  | 0.651 |
-| ns | 2636 |  | 198 | usbh.h — tuh_ transfer + descriptor-get API names | 2.6 |  | 0.623 |
-| ns | 3343 |  | 707 | usbh.h — tuh_xfer_s struct + application callbacks | 2.7 | 2.5 | 0.559 |
-| ns | 3409 |  | 66 | CDC device — public file listing under src/class/cdc/ | 3.1 |  | 0.547 |
-| walker |  | 3496 | 958 | c decl names surface in src/common/tusb_common.h |  |  | 0.547 |
-| walker |  | 3496 | 0 | c decl at src/common/tusb_common.h:37 |  |  | 0.547 |
-| walker |  | 3519 | 23 | c decl doc at src/common/tusb_common.h:37 |  |  | 0.547 |
-| walker |  | 3594 | 75 | c decl at lib/networking/dhserver.h:49 |  |  | 0.547 |
-| walker |  | 3658 | 64 | listing of 'src/osal' |  |  | 0.549 |
-| ns | 3662 |  | 253 | cdc_device.h — tud_cdc_n_* multi-port API names | 3.2 |  | 0.529 |
-| walker |  | 3760 | 102 | c decl names surface in src/osal/osal.h |  |  | 0.529 |
-| walker |  | 3760 | 0 | c decl at src/osal/osal.h:39 |  |  | 0.529 |
-| walker |  | 3767 | 7 | c decl doc at src/osal/osal.h:39 |  |  | 0.529 |
-| walker |  | 3780 | 13 | c includes in src/osal/osal.h |  |  | 0.529 |
-| walker |  | 3790 | 10 | listing of 'test' |  |  | 0.529 |
-| ns | 3926 |  | 264 | cdc_host.h — tuh_cdc_* API names | 3.3 |  | 0.511 |
-| walker |  | 4006 | 216 | c decl names surface in src/typec/tcd.h |  |  | 0.511 |
-| walker |  | 4006 | 0 | c decl at src/typec/tcd.h:73 |  |  | 0.511 |
-| walker |  | 4006 | 0 | c decl at src/typec/tcd.h:76 |  |  | 0.511 |
-| walker |  | 4006 | 0 | c decl at src/typec/tcd.h:79 |  |  | 0.511 |
-| walker |  | 4006 | 0 | c decl at src/typec/tcd.h:82 |  |  | 0.511 |
-| walker |  | 4014 | 8 | c decl doc at src/typec/tcd.h:73 |  |  | 0.511 |
-| walker |  | 4022 | 8 | c decl doc at src/typec/tcd.h:76 |  |  | 0.511 |
-| walker |  | 4030 | 8 | c decl doc at src/typec/tcd.h:79 |  |  | 0.511 |
-| walker |  | 4038 | 8 | c decl doc at src/typec/tcd.h:82 |  |  | 0.511 |
-| walker |  | 4072 | 34 | c decl at src/typec/tcd.h:98 |  |  | 0.511 |
-| walker |  | 4106 | 34 | c decl at src/typec/tcd.h:111 |  |  | 0.511 |
-| ns | 4130 |  | 204 | hid_device.h — tud_hid_n_* + callback names | 3.4 |  | 0.498 |
-| walker |  | 4140 | 34 | c decl at src/typec/tcd.h:125 |  |  | 0.498 |
-| walker |  | 4189 | 49 | c decl at src/typec/tcd.h:44 |  |  | 0.498 |
-| walker |  | 4223 | 34 | c includes in src/typec/pd_types.h |  |  | 0.498 |
-| walker |  | 4276 | 53 | listing of 'docs' |  |  | 0.498 |
-| walker |  | 4300 | 24 | listing of 'docs/info' |  |  | 0.499 |
-| ns | 4429 |  | 299 | hid_host.h — tuh_hid_* + callback names | 3.5 |  | 0.481 |
-| walker |  | 4439 | 139 | c decl at src/typec/pd_types.h:174 |  |  | 0.481 |
-| walker |  | 4457 | 18 | c decl doc at src/typec/pd_types.h:174 |  |  | 0.481 |
-| walker |  | 4599 | 142 | c decl at src/typec/pd_types.h:165 |  |  | 0.481 |
-| walker |  | 4617 | 18 | c decl doc at src/typec/pd_types.h:165 |  |  | 0.481 |
-| ns | 4822 |  | 393 | msc_device.h + msc_host.h — MSC API names | 3.6 |  | 0.460 |
-| ns | 4956 |  | 134 | midi_device.h — tud_midi_* API names | 3.7 |  | 0.454 |
-| ns | 5207 |  | 251 | Class catalog — secondary class header file paths | 3.8 |  | 0.428 |
-| ns | 5321 |  | 114 | docs/ directory listing | 4.1 |  | 0.436 |
-| walker |  | 5359 | 742 | c decl names surface #1 in src/common/tusb_common.h |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:68 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:94 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:97 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:100 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:103 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:106 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:114 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:137 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:158 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:166 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:176 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:180 |  |  | 0.436 |
-| walker |  | 5359 | 0 | c decl at src/common/tusb_common.h:184 |  |  | 0.436 |
-| walker |  | 5361 | 2 | c decl at src/common/tusb_common.h:118 |  |  | 0.436 |
-| walker |  | 5379 | 18 | c decl body at src/common/tusb_common.h:180 |  |  | 0.436 |
-| walker |  | 5402 | 23 | c decl body at src/common/tusb_common.h:184 |  |  | 0.436 |
-| walker |  | 5411 | 9 | c decl doc at src/common/tusb_common.h:100 |  |  | 0.436 |
-| walker |  | 5420 | 9 | c decl doc at src/common/tusb_common.h:103 |  |  | 0.436 |
-| walker |  | 5430 | 10 | c decl doc at src/common/tusb_common.h:176 |  |  | 0.436 |
-| walker |  | 5440 | 10 | c decl doc at src/common/tusb_common.h:114 |  |  | 0.436 |
-| ns | 5441 |  | 120 | common/ + osal/ subdirectory listings | 4.2 |  | 0.456 |
-| walker |  | 5453 | 13 | c decl doc at src/common/tusb_common.h:106 |  |  | 0.456 |
-| walker |  | 5470 | 17 | c decl doc at src/common/tusb_common.h:118 |  |  | 0.456 |
-| walker |  | 5487 | 17 | c decl doc at src/common/tusb_common.h:137 |  |  | 0.456 |
-| walker |  | 5530 | 43 | c decl body at src/common/tusb_common.h:176 |  |  | 0.456 |
-| walker |  | 5549 | 19 | c decl doc at src/common/tusb_common.h:94 |  |  | 0.456 |
-| walker |  | 5580 | 31 | c decl doc at src/common/tusb_common.h:97 |  |  | 0.456 |
-| walker |  | 5654 | 74 | c decl body at src/common/tusb_common.h:158 |  |  | 0.456 |
-| walker |  | 5729 | 75 | c decl body at src/common/tusb_common.h:166 |  |  | 0.456 |
-| walker |  | 5769 | 40 | c decl doc at src/common/tusb_common.h:68 |  |  | 0.456 |
-| ns | 5816 |  | 375 | tusb_types.h — role/speed/xfer/dir enums | 4.3 |  | 0.441 |
-| walker |  | 5950 | 181 | c decl names surface in src/common/tusb_verify.h |  |  | 0.441 |
-| walker |  | 5995 | 45 | c decl at src/common/tusb_verify.h:122 |  |  | 0.441 |
-| walker |  | 6044 | 49 | c decl at src/common/tusb_verify.h:104 |  |  | 0.441 |
-| walker |  | 6089 | 45 | c includes in src/common/tusb_verify.h |  |  | 0.441 |
-| walker |  | 6259 | 170 | c decl at src/typec/pd_types.h:115 |  |  | 0.441 |
-| ns | 6624 |  | 808 | tusb_types.h — descriptor-type + class-code enums | 4.4 |  | 0.419 |
-| walker |  | 6859 | 600 | c decl names surface in src/common/tusb_fifo.h |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:42 |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:166 |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:183 |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:187 |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:193 |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:209 |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:211 |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:217 |  |  | 0.419 |
-| walker |  | 6859 | 0 | c decl at src/common/tusb_fifo.h:222 |  |  | 0.419 |
-| walker |  | 6872 | 13 | c decl at src/common/tusb_fifo.h:200 |  |  | 0.419 |
-| walker |  | 6902 | 30 | c decl at src/common/tusb_fifo.h:142 |  |  | 0.419 |
-| walker |  | 6956 | 54 | c decl at src/common/tusb_fifo.h:134 |  |  | 0.419 |
-| walker |  | 6974 | 18 | c decl body at src/common/tusb_fifo.h:211 |  |  | 0.419 |
-| walker |  | 7017 | 43 | c decl at src/common/tusb_fifo.h:154 |  |  | 0.419 |
-| walker |  | 7030 | 13 | c decl doc at src/common/tusb_fifo.h:142 |  |  | 0.419 |
-| ns | 7043 |  | 419 | integration.rst — minimal init C example | 4.5 |  | 0.404 |
-| walker |  | 7087 | 57 | c decl at src/common/tusb_fifo.h:147 |  |  | 0.404 |
-| walker |  | 7109 | 22 | c decl doc at src/common/tusb_fifo.h:166 |  |  | 0.404 |
-| walker |  | 7131 | 22 | c decl doc at src/common/tusb_fifo.h:183 |  |  | 0.404 |
-| walker |  | 7153 | 22 | c decl doc at src/common/tusb_fifo.h:222 |  |  | 0.404 |
-| walker |  | 7296 | 143 | c decl at src/common/tusb_fifo.h:119 |  |  | 0.404 |
-| walker |  | 7321 | 25 | c includes in src/common/tusb_fifo.h |  |  | 0.404 |
-| walker |  | 7353 | 32 | c decl doc at src/common/tusb_fifo.h:217 |  |  | 0.404 |
-| walker |  | 7387 | 34 | c decl doc at src/common/tusb_fifo.h:209 |  |  | 0.404 |
-| walker |  | 7429 | 42 | c decl doc at src/common/tusb_fifo.h:187 |  |  | 0.404 |
-| walker |  | 7477 | 48 | c decl doc at src/common/tusb_fifo.h:200 |  |  | 0.404 |
-| walker |  | 7522 | 45 | c decl doc at src/common/tusb_fifo.h:42 |  |  | 0.404 |
-| walker |  | 7643 | 121 | c decl at src/typec/tcd.h:51 |  |  | 0.404 |
-| walker |  | 7692 | 49 | c includes in src/typec/tcd.h |  |  | 0.404 |
-| walker |  | 7807 | 115 | c decl body at src/common/tusb_common.h:118 |  |  | 0.404 |
-| walker |  | 7818 | 11 | README.rst section #1 |  |  | 0.404 |
-| ns | 7868 |  | 825 | tusb_types.h — descriptor structs (device/config/interface/endpoint/control_request) | 4.6 |  | 0.382 |
-| walker |  | 7877 | 59 | c decl doc at src/common/tusb_verify.h:104 |  |  | 0.382 |
-| walker |  | 7914 | 37 | listing of 'docs/reference' |  |  | 0.398 |
-| walker |  | 7928 | 14 | listing of 'docs/assets' |  |  | 0.398 |
-| walker |  | 7932 | 4 | listing of 'docs/_static' |  |  | 0.398 |
-| ns | 8286 |  | 418 | dcd.h — dcd_eventid_t + dcd_event_t shape | 4.7 |  | 0.388 |
-| walker |  | 8536 | 604 | c decl names surface in src/host/hcd.h |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:98 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:102 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:106 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:113 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:116 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:119 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:122 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:125 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:128 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:131 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:138 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:142 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:145 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:148 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:151 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:159 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:162 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:165 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:169 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:172 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:175 |  |  | 0.388 |
-| walker |  | 8536 | 0 | c decl at src/host/hcd.h:182 |  |  | 0.388 |
-| ns | 8547 |  | 261 | dcd.h — DCD controller + endpoint function name surface | 4.8 |  | 0.381 |
-| walker |  | 8558 | 22 | c decl at src/host/hcd.h:185 |  |  | 0.381 |
-| walker |  | 8580 | 22 | c decl at src/host/hcd.h:197 |  |  | 0.381 |
-| walker |  | 8588 | 8 | c decl doc at src/host/hcd.h:122 |  |  | 0.381 |
-| walker |  | 8597 | 9 | c decl doc at src/host/hcd.h:125 |  |  | 0.381 |
-| walker |  | 8606 | 9 | c decl doc at src/host/hcd.h:128 |  |  | 0.381 |
-| walker |  | 8615 | 9 | c decl doc at src/host/hcd.h:162 |  |  | 0.381 |
-| walker |  | 8625 | 10 | c decl doc at src/host/hcd.h:119 |  |  | 0.381 |
-| walker |  | 8635 | 10 | c decl doc at src/host/hcd.h:148 |  |  | 0.381 |
-| walker |  | 8647 | 12 | c decl doc at src/host/hcd.h:185 |  |  | 0.381 |
-| walker |  | 8659 | 12 | c decl doc at src/host/hcd.h:197 |  |  | 0.381 |
-| walker |  | 8670 | 11 | c decl doc at src/host/hcd.h:116 |  |  | 0.381 |
-| walker |  | 8712 | 42 | c decl at src/host/hcd.h:209 |  |  | 0.381 |
-| walker |  | 8724 | 12 | c decl doc at src/host/hcd.h:209 |  |  | 0.381 |
-| walker |  | 8736 | 12 | c decl doc at src/host/hcd.h:131 |  |  | 0.381 |
-| walker |  | 8749 | 13 | c decl doc at src/host/hcd.h:182 |  |  | 0.381 |
-| walker |  | 8765 | 16 | c decl doc at src/host/hcd.h:113 |  |  | 0.381 |
-| walker |  | 8781 | 16 | c decl doc at src/host/hcd.h:138 |  |  | 0.381 |
-| walker |  | 8797 | 16 | c decl doc at src/host/hcd.h:151 |  |  | 0.381 |
-| walker |  | 8814 | 17 | c decl doc at src/host/hcd.h:145 |  |  | 0.381 |
-| walker |  | 8831 | 17 | c decl doc at src/host/hcd.h:175 |  |  | 0.381 |
-| walker |  | 8902 | 71 | c decl at src/host/hcd.h:56 |  |  | 0.381 |
-| walker |  | 8927 | 25 | c decl doc at src/host/hcd.h:56 |  |  | 0.381 |
-| walker |  | 8949 | 22 | c decl doc at src/host/hcd.h:165 |  |  | 0.381 |
-| walker |  | 8974 | 25 | c decl doc at src/host/hcd.h:159 |  |  | 0.381 |
-| walker |  | 9004 | 30 | c decl doc at src/host/hcd.h:106 |  |  | 0.381 |
-| ns | 9032 |  | 485 | hcd.h — hcd_eventid_t + hcd_event_t + controller/port/edpt API names | 4.9 |  | 0.383 |
-| walker |  | 9034 | 30 | c decl doc at src/host/hcd.h:172 |  |  | 0.383 |
-| walker |  | 9069 | 35 | c decl doc at src/host/hcd.h:98 |  |  | 0.383 |
-| walker |  | 9105 | 36 | c decl doc at src/host/hcd.h:102 |  |  | 0.383 |
-| walker |  | 9143 | 38 | c includes in src/host/hcd.h |  |  | 0.383 |
-| walker |  | 9189 | 46 | c decl doc at src/host/hcd.h:169 |  |  | 0.383 |
-| walker |  | 9240 | 51 | c decl doc at src/host/hcd.h:142 |  |  | 0.383 |
-| ns | 9381 |  | 349 | usbd_pvt.h — usbd_class_driver_t vtable | 4.10 |  | 0.379 |
-| walker |  | 9630 | 390 | c decl names surface in src/device/usbd.h |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:63 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:67 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:73 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:83 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:86 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:91 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:100 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:107 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:110 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:114 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:117 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:120 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:131 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:135 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:139 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:142 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:147 |  |  | 0.403 |
-| walker |  | 9630 | 0 | c decl at src/device/usbd.h:150 |  |  | 0.403 |
-| walker |  | 9640 | 10 | c decl at src/device/usbd.h:123 |  |  | 0.404 |
-| walker |  | 9651 | 11 | c decl at src/device/usbd.h:94 |  |  | 0.407 |
-| walker |  | 9676 | 25 | c decl at src/device/usbd.h:51 |  |  | 0.407 |
-| ns | 9694 |  | 313 | examples/{device,host,dual} subdirectory listings | 5.1 |  | 0.394 |
-| walker |  | 9709 | 33 | c decl at src/device/usbd.h:37 |  |  | 0.394 |
-| walker |  | 9721 | 12 | c decl body at src/device/usbd.h:94 |  |  | 0.395 |
-| walker |  | 9733 | 12 | c decl doc at src/device/usbd.h:37 |  |  | 0.395 |
-| walker |  | 9743 | 10 | c decl doc at src/device/usbd.h:110 |  |  | 0.395 |
-| walker |  | 9754 | 11 | c decl doc at src/device/usbd.h:120 |  |  | 0.395 |
-| walker |  | 9767 | 13 | c decl doc at src/device/usbd.h:123 |  |  | 0.395 |
-| walker |  | 9780 | 13 | c decl doc at src/device/usbd.h:86 |  |  | 0.395 |
-| walker |  | 9793 | 13 | c decl doc at src/device/usbd.h:117 |  |  | 0.395 |
-| walker |  | 9806 | 13 | c decl doc at src/device/usbd.h:150 |  |  | 0.396 |
-| walker |  | 9819 | 13 | c includes in src/device/usbd.h |  |  | 0.396 |
-| walker |  | 9834 | 15 | c decl doc at src/device/usbd.h:142 |  |  | 0.396 |
-| walker |  | 9851 | 17 | c decl doc at src/device/usbd.h:94 |  |  | 0.397 |
-| walker |  | 9865 | 14 | c decl doc at src/device/usbd.h:107 |  |  | 0.397 |
-| walker |  | 9882 | 17 | c decl doc at src/device/usbd.h:100 |  |  | 0.399 |
-| ns | 9897 |  | 203 | test/ + tools/ listings | 5.2 |  | 0.389 |
-| walker |  | 9900 | 18 | c decl doc at src/device/usbd.h:131 |  |  | 0.389 |
-| ns | 9948 |  | 51 | examples/device/cdc_msc/ — main + tusb_config + descriptors listing | 5.3 |  | 0.387 |
-| walker |  | 9969 | 69 | c decl at src/device/usbd.h:42 |  |  | 0.387 |
-| walker |  | 9995 | 26 | c decl doc at src/device/usbd.h:135 |  |  | 0.387 |
+| ns | 2636 |  | 198 | usbh.h — tuh_ transfer + descriptor-get API names | 2.6 |  | 0.579 |
+| walker |  | 2697 | 742 | c decl names surface #1 in src/common/tusb_common.h |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:68 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:94 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:97 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:100 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:103 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:106 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:114 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:137 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:158 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:166 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:176 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:180 |  |  | 0.579 |
+| walker |  | 2697 | 0 | c decl at src/common/tusb_common.h:184 |  |  | 0.579 |
+| walker |  | 2699 | 2 | c decl at src/common/tusb_common.h:118 |  |  | 0.579 |
+| walker |  | 2717 | 18 | c decl body at src/common/tusb_common.h:180 |  |  | 0.579 |
+| ns | 3343 |  | 707 | usbh.h — tuh_xfer_s struct + application callbacks | 2.7 | 2.5 | 0.519 |
+| ns | 3409 |  | 66 | CDC device — public file listing under src/class/cdc/ | 3.1 |  | 0.508 |
+| ns | 3662 |  | 253 | cdc_device.h — tud_cdc_n_* multi-port API names | 3.2 |  | 0.490 |
+| walker |  | 3910 | 1193 | c decl names surface #2 in src/common/tusb_common.h |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:200 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:205 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:210 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:215 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:230 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:237 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:250 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:370 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:376 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:381 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:386 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:390 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:395 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:398 |  |  | 0.490 |
+| walker |  | 3910 | 0 | c decl at src/common/tusb_common.h:401 |  |  | 0.490 |
+| walker |  | 3922 | 12 | c decl at src/common/tusb_common.h:333 |  |  | 0.490 |
+| ns | 3926 |  | 264 | cdc_host.h — tuh_cdc_* API names | 3.3 |  | 0.473 |
+| walker |  | 3941 | 19 | c decl at src/common/tusb_common.h:352 |  |  | 0.473 |
+| walker |  | 3957 | 16 | c decl body at src/common/tusb_common.h:215 |  |  | 0.473 |
+| walker |  | 3973 | 16 | c decl body at src/common/tusb_common.h:376 |  |  | 0.473 |
+| walker |  | 3989 | 16 | c decl body at src/common/tusb_common.h:381 |  |  | 0.473 |
+| walker |  | 4006 | 17 | c decl body at src/common/tusb_common.h:386 |  |  | 0.473 |
+| walker |  | 4026 | 20 | c decl body at src/common/tusb_common.h:390 |  |  | 0.473 |
+| walker |  | 4049 | 23 | c decl body at src/common/tusb_common.h:184 |  |  | 0.473 |
+| walker |  | 4073 | 24 | c decl body at src/common/tusb_common.h:250 |  |  | 0.473 |
+| walker |  | 4108 | 35 | c decl body at src/common/tusb_common.h:370 |  |  | 0.473 |
+| walker |  | 4117 | 9 | c decl doc at src/common/tusb_common.h:370 |  |  | 0.473 |
+| walker |  | 4126 | 9 | c decl doc at src/common/tusb_common.h:376 |  |  | 0.473 |
+| ns | 4130 |  | 204 | hid_device.h — tud_hid_n_* + callback names | 3.4 |  | 0.461 |
+| walker |  | 4135 | 9 | c decl doc at src/common/tusb_common.h:381 |  |  | 0.461 |
+| walker |  | 4144 | 9 | c decl doc at src/common/tusb_common.h:386 |  |  | 0.461 |
+| walker |  | 4201 | 57 | c decl names surface in src/common/tusb_debug.h |  |  | 0.461 |
+| walker |  | 4244 | 43 | c decl body at src/common/tusb_common.h:176 |  |  | 0.461 |
+| walker |  | 4253 | 9 | c decl doc at src/common/tusb_common.h:100 |  |  | 0.461 |
+| walker |  | 4262 | 9 | c decl doc at src/common/tusb_common.h:103 |  |  | 0.461 |
+| walker |  | 4272 | 10 | c decl doc at src/common/tusb_common.h:176 |  |  | 0.461 |
+| walker |  | 4282 | 10 | c decl doc at src/common/tusb_common.h:200 |  |  | 0.461 |
+| walker |  | 4292 | 10 | c decl doc at src/common/tusb_common.h:205 |  |  | 0.461 |
+| walker |  | 4302 | 10 | c decl doc at src/common/tusb_common.h:210 |  |  | 0.461 |
+| walker |  | 4312 | 10 | c decl doc at src/common/tusb_common.h:215 |  |  | 0.461 |
+| walker |  | 4322 | 10 | c decl doc at src/common/tusb_common.h:230 |  |  | 0.461 |
+| walker |  | 4332 | 10 | c decl doc at src/common/tusb_common.h:114 |  |  | 0.461 |
+| walker |  | 4383 | 51 | c decl body at src/common/tusb_common.h:237 |  |  | 0.461 |
+| walker |  | 4396 | 13 | c decl doc at src/common/tusb_common.h:106 |  |  | 0.461 |
+| walker |  | 4409 | 13 | c decl doc at src/typec/usbc.h:50 |  |  | 0.461 |
+| walker |  | 4422 | 13 | c decl doc at src/typec/usbc.h:53 |  |  | 0.461 |
+| ns | 4429 |  | 299 | hid_host.h — tuh_hid_* + callback names | 3.5 |  | 0.444 |
+| walker |  | 4446 | 24 | c includes in src/typec/usbc.h |  |  | 0.444 |
+| walker |  | 4551 | 105 | c decl at src/typec/pd_types.h:126 |  |  | 0.444 |
+| walker |  | 4783 | 232 | c decl names surface in src/tusb.h |  |  | 0.457 |
+| walker |  | 4783 | 0 | c decl at src/tusb.h:147 |  |  | 0.457 |
+| walker |  | 4783 | 0 | c decl at src/tusb.h:164 |  |  | 0.457 |
+| walker |  | 4783 | 0 | c decl at src/tusb.h:167 |  |  | 0.457 |
+| walker |  | 4783 | 0 | c decl at src/tusb.h:170 |  |  | 0.457 |
+| walker |  | 4794 | 11 | c decl doc at src/tusb.h:164 |  |  | 0.460 |
+| ns | 4822 |  | 393 | msc_device.h + msc_host.h — MSC API names | 3.6 |  | 0.440 |
+| ns | 4956 |  | 134 | midi_device.h — tud_midi_* API names | 3.7 |  | 0.434 |
+| ns | 5207 |  | 251 | Class catalog — secondary class header file paths | 3.8 |  | 0.410 |
+| ns | 5321 |  | 114 | docs/ directory listing | 4.1 |  | 0.399 |
+| ns | 5441 |  | 120 | common/ + osal/ subdirectory listings | 4.2 |  | 0.399 |
+| walker |  | 5752 | 958 | c decl names surface in src/common/tusb_common.h |  |  | 0.399 |
+| walker |  | 5752 | 0 | c decl at src/common/tusb_common.h:37 |  |  | 0.399 |
+| walker |  | 5766 | 14 | c decl doc at src/common/tusb_common.h:395 |  |  | 0.399 |
+| ns | 5816 |  | 375 | tusb_types.h — role/speed/xfer/dir enums | 4.3 |  | 0.385 |
+| walker |  | 5841 | 75 | c decl at lib/networking/dhserver.h:49 |  |  | 0.385 |
+| walker |  | 5905 | 64 | listing of 'src/osal' |  |  | 0.408 |
+| walker |  | 6007 | 102 | c decl names surface in src/osal/osal.h |  |  | 0.408 |
+| walker |  | 6007 | 0 | c decl at src/osal/osal.h:39 |  |  | 0.408 |
+| walker |  | 6014 | 7 | c decl doc at src/osal/osal.h:39 |  |  | 0.408 |
+| walker |  | 6027 | 13 | c includes in src/osal/osal.h |  |  | 0.408 |
+| walker |  | 6042 | 15 | c decl doc at src/tusb.h:170 |  |  | 0.411 |
+| walker |  | 6056 | 14 | c decl doc at src/typec/usbc.h:71 |  |  | 0.411 |
+| walker |  | 6130 | 74 | c decl body at src/common/tusb_common.h:158 |  |  | 0.411 |
+| walker |  | 6205 | 75 | c decl body at src/common/tusb_common.h:166 |  |  | 0.411 |
+| walker |  | 6215 | 10 | listing of 'test' |  |  | 0.411 |
+| walker |  | 6232 | 17 | c decl doc at src/common/tusb_common.h:118 |  |  | 0.411 |
+| walker |  | 6249 | 17 | c decl doc at src/common/tusb_common.h:137 |  |  | 0.411 |
+| walker |  | 6266 | 17 | c decl doc at src/typec/usbc.h:61 |  |  | 0.411 |
+| walker |  | 6282 | 16 | c decl doc at src/tusb.h:147 |  |  | 0.416 |
+| walker |  | 6498 | 216 | c decl names surface in src/typec/tcd.h |  |  | 0.416 |
+| walker |  | 6498 | 0 | c decl at src/typec/tcd.h:73 |  |  | 0.416 |
+| walker |  | 6498 | 0 | c decl at src/typec/tcd.h:76 |  |  | 0.416 |
+| walker |  | 6498 | 0 | c decl at src/typec/tcd.h:79 |  |  | 0.416 |
+| walker |  | 6498 | 0 | c decl at src/typec/tcd.h:82 |  |  | 0.416 |
+| walker |  | 6532 | 34 | c decl at src/typec/tcd.h:98 |  |  | 0.416 |
+| walker |  | 6566 | 34 | c decl at src/typec/tcd.h:111 |  |  | 0.416 |
+| walker |  | 6600 | 34 | c decl at src/typec/tcd.h:125 |  |  | 0.416 |
+| walker |  | 6608 | 8 | c decl doc at src/typec/tcd.h:73 |  |  | 0.416 |
+| walker |  | 6616 | 8 | c decl doc at src/typec/tcd.h:76 |  |  | 0.416 |
+| walker |  | 6624 | 8 | c decl doc at src/typec/tcd.h:79 |  |  | 0.395 |
+| ns | 6624 |  | 808 | tusb_types.h — descriptor-type + class-code enums | 4.4 |  | 0.395 |
+| walker |  | 6632 | 8 | c decl doc at src/typec/tcd.h:82 |  |  | 0.395 |
+| walker |  | 6681 | 49 | c decl at src/typec/tcd.h:44 |  |  | 0.395 |
+| walker |  | 6715 | 34 | c includes in src/typec/pd_types.h |  |  | 0.395 |
+| walker |  | 6768 | 53 | listing of 'docs' |  |  | 0.405 |
+| walker |  | 6792 | 24 | listing of 'docs/info' |  |  | 0.412 |
+| walker |  | 6931 | 139 | c decl at src/typec/pd_types.h:174 |  |  | 0.412 |
+| walker |  | 6949 | 18 | c decl doc at src/typec/pd_types.h:174 |  |  | 0.412 |
+| walker |  | 6967 | 18 | c decl doc at src/common/tusb_common.h:398 |  |  | 0.412 |
+| walker |  | 6985 | 18 | c decl doc at src/common/tusb_common.h:401 |  |  | 0.412 |
+| ns | 7043 |  | 419 | integration.rst — minimal init C example | 4.5 |  | 0.398 |
+| walker |  | 7127 | 142 | c decl at src/typec/pd_types.h:165 |  |  | 0.398 |
+| walker |  | 7145 | 18 | c decl doc at src/typec/pd_types.h:165 |  |  | 0.398 |
+| walker |  | 7168 | 23 | c decl doc at src/typec/pd_types.h:140 |  |  | 0.398 |
+| walker |  | 7187 | 19 | c decl doc at src/common/tusb_common.h:94 |  |  | 0.398 |
+| walker |  | 7208 | 21 | c decl doc at src/common/tusb_common.h:333 |  |  | 0.398 |
+| walker |  | 7230 | 22 | c decl doc at src/common/tusb_common.h:352 |  |  | 0.398 |
+| walker |  | 7247 | 17 | c decl doc at src/typec/pd_types.h:39 |  |  | 0.398 |
+| walker |  | 7428 | 181 | c decl names surface in src/common/tusb_verify.h |  |  | 0.398 |
+| walker |  | 7473 | 45 | c decl at src/common/tusb_verify.h:122 |  |  | 0.398 |
+| walker |  | 7522 | 49 | c decl at src/common/tusb_verify.h:104 |  |  | 0.398 |
+| walker |  | 7567 | 45 | c includes in src/common/tusb_verify.h |  |  | 0.398 |
+| walker |  | 7737 | 170 | c decl at src/typec/pd_types.h:115 |  |  | 0.398 |
+| ns | 7868 |  | 825 | tusb_types.h — descriptor structs (device/config/interface/endpoint/control_request) | 4.6 |  | 0.376 |
+| ns | 8286 |  | 418 | dcd.h — dcd_eventid_t + dcd_event_t shape | 4.7 |  | 0.366 |
+| walker |  | 8337 | 600 | c decl names surface in src/common/tusb_fifo.h |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:42 |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:166 |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:183 |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:187 |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:193 |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:209 |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:211 |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:217 |  |  | 0.366 |
+| walker |  | 8337 | 0 | c decl at src/common/tusb_fifo.h:222 |  |  | 0.366 |
+| walker |  | 8350 | 13 | c decl at src/common/tusb_fifo.h:200 |  |  | 0.366 |
+| walker |  | 8380 | 30 | c decl at src/common/tusb_fifo.h:142 |  |  | 0.366 |
+| walker |  | 8434 | 54 | c decl at src/common/tusb_fifo.h:134 |  |  | 0.366 |
+| walker |  | 8452 | 18 | c decl body at src/common/tusb_fifo.h:211 |  |  | 0.366 |
+| walker |  | 8495 | 43 | c decl at src/common/tusb_fifo.h:154 |  |  | 0.366 |
+| ns | 8547 |  | 261 | dcd.h — DCD controller + endpoint function name surface | 4.8 |  | 0.360 |
+| walker |  | 8552 | 57 | c decl at src/common/tusb_fifo.h:147 |  |  | 0.360 |
+| walker |  | 8565 | 13 | c decl doc at src/common/tusb_fifo.h:142 |  |  | 0.360 |
+| walker |  | 8708 | 143 | c decl at src/common/tusb_fifo.h:119 |  |  | 0.360 |
+| walker |  | 8733 | 25 | c includes in src/common/tusb_fifo.h |  |  | 0.360 |
+| walker |  | 8755 | 22 | c decl doc at src/common/tusb_fifo.h:166 |  |  | 0.360 |
+| walker |  | 8777 | 22 | c decl doc at src/common/tusb_fifo.h:183 |  |  | 0.360 |
+| walker |  | 8799 | 22 | c decl doc at src/common/tusb_fifo.h:222 |  |  | 0.360 |
+| walker |  | 8920 | 121 | c decl at src/typec/tcd.h:51 |  |  | 0.360 |
+| walker |  | 8969 | 49 | c includes in src/typec/tcd.h |  |  | 0.360 |
+| walker |  | 8992 | 23 | c decl doc at src/common/tusb_common.h:37 |  |  | 0.360 |
+| ns | 9032 |  | 485 | hcd.h — hcd_eventid_t + hcd_event_t + controller/port/edpt API names | 4.9 |  | 0.347 |
+| walker |  | 9107 | 115 | c decl body at src/common/tusb_common.h:118 |  |  | 0.347 |
+| walker |  | 9118 | 11 | README.rst section #1 |  |  | 0.347 |
+| walker |  | 9155 | 37 | listing of 'docs/reference' |  |  | 0.362 |
+| walker |  | 9169 | 14 | listing of 'docs/assets' |  |  | 0.362 |
+| walker |  | 9291 | 122 | c decl body at src/common/tusb_common.h:352 |  |  | 0.362 |
+| walker |  | 9295 | 4 | listing of 'docs/_static' |  |  | 0.362 |
+| ns | 9381 |  | 349 | usbd_pvt.h — usbd_class_driver_t vtable | 4.10 |  | 0.358 |
+| ns | 9694 |  | 313 | examples/{device,host,dual} subdirectory listings | 5.1 |  | 0.347 |
+| ns | 9897 |  | 203 | test/ + tools/ listings | 5.2 |  | 0.338 |
+| walker |  | 9899 | 604 | c decl names surface in src/host/hcd.h |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:98 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:102 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:106 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:113 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:116 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:119 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:122 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:125 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:128 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:131 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:138 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:142 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:145 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:148 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:151 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:159 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:162 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:165 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:169 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:172 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:175 |  |  | 0.346 |
+| walker |  | 9899 | 0 | c decl at src/host/hcd.h:182 |  |  | 0.346 |
+| walker |  | 9921 | 22 | c decl at src/host/hcd.h:185 |  |  | 0.346 |
+| walker |  | 9943 | 22 | c decl at src/host/hcd.h:197 |  |  | 0.346 |
+| ns | 9948 |  | 51 | examples/device/cdc_msc/ — main + tusb_config + descriptors listing | 5.3 |  | 0.343 |
+| walker |  | 9985 | 42 | c decl at src/host/hcd.h:209 |  |  | 0.343 |
+| walker |  | 9993 | 8 | c decl doc at src/host/hcd.h:122 |  |  | 0.343 |

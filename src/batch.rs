@@ -333,8 +333,15 @@ pub enum CKey {
     HeaderBanner { file: PathBuf },
     /// `#include` directives.
     Includes { file: PathBuf },
-    /// Names-surface chunk for top-level public decls.
-    DeclNames { file: PathBuf, chunk_index: usize },
+    /// Names-surface chunk for top-level public decls. `hub` marks a
+    /// top-tier include-graph hub header (htop `Object`/`Meter`/`Panel`),
+    /// the only tier that routes gated-descendant value — elsewhere the
+    /// routing pulls a header's decl train ahead of NS tier-1 orientation.
+    DeclNames {
+        file: PathBuf,
+        chunk_index: usize,
+        hub: bool,
+    },
     /// One top-level public declaration (sig with body marker for fn).
     Decl { file: PathBuf, start_line: usize },
     /// Body interior of a fn definition. Predecessor: matching `Decl`.
@@ -929,11 +936,32 @@ impl InnerKey for PythonKey {
 impl InnerKey for CKey {
     /// Per-decl batches steepen to `0.45` — typedef / prototype lines
     /// are short and headers emit dozens; the default 0.35 lets the
-    /// stack dominate larger anchor batches.
+    /// stack dominate larger anchor batches. `DeclDoc` joins them: a
+    /// one-line doc comment above a decl is the same short-and-numerous
+    /// shape, and at 0.35 the doc-scrap stack out-ranks the big coherent
+    /// name catalogs / struct batches the NS wants first (krep, bareiron).
     fn concavity_exponent(&self) -> f64 {
         match self {
-            CKey::Decl { .. } | CKey::DeclBody { .. } | CKey::AggregateMemberGroup { .. } => 0.45,
+            CKey::Decl { .. }
+            | CKey::DeclBody { .. }
+            | CKey::AggregateMemberGroup { .. }
+            | CKey::DeclDoc { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
+    /// A header's names surface gates every decl/struct/enum body in the
+    /// header. In OOP-backbone C (htop `Meter.h`/`Panel.h`/`Row.h`) and
+    /// single-header catalogs (chibicc), the NS wants those gated decls
+    /// early, but the flat names-surface value loses the ratio race to
+    /// tiny sibling headers and doc scraps, so the whole gated train lands
+    /// past 3K. Routing gated-descendant value lets a surface that fronts
+    /// NS-heavy decls borrow rank. Scoped to headers — `.c` name surfaces
+    /// gate function bodies, which are NS-tail.
+    fn gated_descendant_value_weight(&self) -> f64 {
+        match self {
+            CKey::DeclNames { hub: true, .. } => 0.6,
+            _ => 0.0,
         }
     }
 
@@ -942,9 +970,9 @@ impl InnerKey for CKey {
             CKey::WholeFile { file } => describe_in("c whole header", file, root),
             CKey::HeaderBanner { file } => describe_in("c header banner", file, root),
             CKey::Includes { file } => describe_in("c includes", file, root),
-            CKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("c decl names surface", file, *chunk_index, root)
-            }
+            CKey::DeclNames {
+                file, chunk_index, ..
+            } => describe_chunked_surface("c decl names surface", file, *chunk_index, root),
             CKey::Decl { file, start_line } => describe_at("c decl", file, *start_line, root),
             CKey::DeclBody { file, start_line } => {
                 describe_at("c decl body", file, *start_line, root)

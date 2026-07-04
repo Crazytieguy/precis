@@ -667,10 +667,24 @@ kind = "full"
 
 [[batches]]
 position = 20
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 90
+cum_tokens = 1478
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["common", "compiletest.rs", "crate", "drop", "test_autotrait.rs", "test_backtrace.rs", "test_boxed.rs", "test_chain.rs", "test_context.rs", "test_convert.rs", "test_downcast.rs", "test_ensure.rs", "test_ffi.rs", "test_fmt.rs", "test_macros.rs", "test_repr.rs", "test_source.rs", "ui"]
+
+[[batches]]
+position = 21
 key = 'Rust(MethodSigs { file: "src/context.rs" })'
 descriptor = "impl method sigs in src/context.rs"
 cost_tokens = 137
-cum_tokens = 1525
+cum_tokens = 1615
 
 [batches.content]
 kind = "lines"
@@ -748,11 +762,11 @@ end = 104
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Rust(MacroBody { file: "src/macros.rs", start_line: 58 })'
 descriptor = "macro_export body at src/macros.rs:58"
 cost_tokens = 136
-cum_tokens = 1661
+cum_tokens = 1751
 
 [batches.content]
 kind = "lines"
@@ -766,11 +780,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 390 })'
 descriptor = "pub-item doc lede at src/lib.rs:390"
 cost_tokens = 174
-cum_tokens = 1835
+cum_tokens = 1925
 
 [batches.content]
 kind = "lines"
@@ -784,11 +798,11 @@ end = 300
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Toml(Dependencies { file: "Cargo.toml" })'
 descriptor = "[dependencies] in Cargo.toml"
 cost_tokens = 207
-cum_tokens = 2042
+cum_tokens = 2132
 
 [batches.content]
 kind = "lines"
@@ -810,11 +824,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Rust(PubItemNames { file: "src/ensure.rs" })'
 descriptor = "pub-item names surface in src/ensure.rs"
 cost_tokens = 23
-cum_tokens = 2065
+cum_tokens = 2155
 
 [batches.content]
 kind = "lines"
@@ -852,11 +866,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Rust(MacroBody { file: "src/macros.rs", start_line: 204 })'
 descriptor = "macro_export body at src/macros.rs:204"
 cost_tokens = 220
-cum_tokens = 2285
+cum_tokens = 2375
 
 [batches.content]
 kind = "lines"
@@ -870,11 +884,11 @@ end = 223
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Rust(MethodSigs { file: "src/chain.rs" })'
 descriptor = "impl method sigs in src/chain.rs"
 cost_tokens = 38
-cum_tokens = 2323
+cum_tokens = 2413
 
 [batches.content]
 kind = "lines"
@@ -902,20 +916,6 @@ end = 29
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 90
-cum_tokens = 2413
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["common", "compiletest.rs", "crate", "drop", "test_autotrait.rs", "test_backtrace.rs", "test_boxed.rs", "test_chain.rs", "test_context.rs", "test_convert.rs", "test_downcast.rs", "test_ensure.rs", "test_ffi.rs", "test_fmt.rs", "test_macros.rs", "test_repr.rs", "test_source.rs", "ui"]
 
 [[batches]]
 position = 28

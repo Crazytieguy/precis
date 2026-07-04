@@ -120,14 +120,49 @@ src/
         video/
     common/
         tusb_common.h
+            68→#define TU_GENMASK(h, l)              ( (UINT32_MAX << (l)) & (UINT32_MAX >> (31 - (h))) )
+            …
+            94→extern uint32_t tusb_time_millis_api(void);
+            …
+            97→extern void tusb_time_delay_ms_api(uint32_t ms);
+            …
+            100→extern void tusb_app_dcache_flush(uintptr_t addr, uint32_t data_size);
+            …
+            103→extern void tusb_app_dcache_invalidate(uintptr_t addr, uint32_t data_size);
+            …
+            106→extern void* tusb_app_virt_to_phys(void *virt_addr);
+            107→extern void* tusb_app_phys_to_virt(void *phys_addr);
+            …
+            114→#define tu_memclr(buffer, size)  (void) memset((buffer), 0, (size))
+            115→#define tu_varclr(_var)          tu_memclr(_var, sizeof(*(_var)))
+            …
+            118→TU_ATTR_ALWAYS_INLINE static inline int tu_memset_s(void *dest, size_t destsz, int ch, size_t count) {
+            …
+            137→TU_ATTR_ALWAYS_INLINE static inline int tu_memcpy_s(void *dest, size_t destsz, const void *src, size_t count) {
+            …
+            158→TU_ATTR_ALWAYS_INLINE static inline bool tu_mem_is_zero(const void *buffer, size_t size) {
+            …
+            166→TU_ATTR_ALWAYS_INLINE static inline bool tu_mem_is_ff(const void *buffer, size_t size) {
+            …
+            176→TU_ATTR_ALWAYS_INLINE static inline uint32_t tu_u32(uint8_t b3, uint8_t b2, uint8_t b1, uint8_t b0) {
+            …
+            180→TU_ATTR_ALWAYS_INLINE static inline uint32_t tu_u32_from_u16(uint16_t high, uint16_t low) {
+            181→  return (((uint32_t)high) << 16) | low;
+            184→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u16(uint8_t high, uint8_t low) {
+            …
+            188→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte3(uint32_t ui32) { return TU_U32_BYTE3(ui32); }
+            189→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte2(uint32_t ui32) { return TU_U32_BYTE2(ui32); }
+            190→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte1(uint32_t ui32) { return TU_U32_BYTE1(ui32); }
+            191→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte0(uint32_t ui32) { return TU_U32_BYTE0(ui32); }
+            …
+            193→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u32_high16(uint32_t ui32) { return (uint16_t) (ui32 >> 16); }
+            194→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u32_low16 (uint32_t ui32) { return (uint16_t) (ui32 & 0x0000ffffu); }
+            …
+            196→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u16_high(uint16_t ui16) { return TU_U16_HIGH(ui16); }
+            197→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u16_low (uint16_t ui16) { return TU_U16_LOW(ui16); }
+            …
         tusb_compiler.h
         tusb_debug.h
-            144→#define TU_LOG0(...)
-            145→#define TU_LOG0_MEM(...)
-            146→#define TU_LOG0_BUF(...)
-            147→#define TU_LOG0_INT(...)
-            148→#define TU_LOG0_HEX(...)
-            …
         tusb_fifo.c
         tusb_fifo.h
         tusb_mcu.h
@@ -173,31 +208,9 @@ src/
     tinyusb.mk
     tusb.c
     tusb.h
-        146→// Internal helper for backward compatible with tusb_init(void)
-        147→bool tusb_rhport_init(uint8_t rhport, const tusb_rhport_init_t* rh_init);
-        …
-        159→#define _tusb_init_arg1(_rhport)             _tusb_init_arg0()
-        160→#define _tusb_init_arg2(_rhport, _rh_init)   tusb_rhport_init(_rhport, _rh_init)
-        161→#define tusb_init(...)                       TU_FUNC_OPTIONAL_ARG(_tusb_init, __VA_ARGS__)
-        …
-        163→// Check if stack is initialized
-        164→bool tusb_inited(void);
-        …
-        166→// Called to handle usb interrupt/event. tusb_init(rhport, role) must be called before
-        167→void tusb_int_handler(uint8_t rhport, bool in_isr);
-        …
-        169→// Deinit usb stack on roothub port
-        170→bool tusb_deinit(uint8_t rhport);
-        …
-        174→#define tusb_init(...)  (false)
-        175→#define tusb_int_handler(...)  do {}while(0)
-        176→#define tusb_inited()  (false)
-        177→#define tusb_deinit(...) (false)
-        …
     tusb_option.h
     typec/
         pd_types.h
-            38→// Start of all packed definitions for compiler without per-type packed
             39→TU_ATTR_PACKED_BEGIN
             40→TU_ATTR_BIT_FIELD_ORDER_BEGIN
             42→//--------------------------------------------------------------------+
@@ -228,13 +241,7 @@ src/
             115→typedef struct TU_ATTR_PACKED {
             …
             126→typedef struct TU_ATTR_PACKED {
-            127→  uint16_t data_size     : 9; // [0:8]
-            128→  uint16_t reserved      : 1; // [9]
-            129→  uint16_t request_chunk : 1; // [10]
-            130→  uint16_t chunk_number  : 4; // [11:14]
-            131→  uint16_t chunked       : 1; // [15]
-            132→} pd_header_extended_t;
-            139→// All table references are from USBPD Specification rev3.1 version 1.8
+            …
             140→enum {
             141→  PD_PDO_TYPE_FIXED = 0, // Vmin = Vmax
             142→  PD_PDO_TYPE_BATTERY,
@@ -258,23 +265,17 @@ src/
         tcd.h
         usbc.c
         usbc.h
-            30→#include "common/tusb_common.h"
-            31→#include "pd_types.h"
-            49→// Init typec stack on a port
             50→bool tuc_init(uint8_t rhport, uint32_t port_type);
             …
-            52→// Check if typec port is initialized
             53→bool tuc_inited(uint8_t rhport);
             …
             58→void tuc_task_ext(uint32_t timeout_ms, bool in_isr);
             …
-            60→// Task function should be called in main/rtos loop
             61→TU_ATTR_ALWAYS_INLINE static inline
             62→void tuc_task (void) {
             63→  tuc_task_ext(UINT32_MAX, false);
             67→extern void tcd_int_handler(uint8_t rhport);
             …
-            70→// Interrupt handler, name alias to TCD
             71→#define tuc_int_handler tcd_int_handler
             …
             77→bool tuc_pd_data_received_cb(uint8_t rhport, pd_header_t const* header, uint8_t const* dobj, uint8_t const* p_end);

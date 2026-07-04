@@ -619,11 +619,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // would lose the value/cost race against per-decl batches.
         let chunk_ranges = count_based_chunk_ranges(decls.len());
         let names_chunk_count = chunk_ranges.len();
+        let hub = is_top_include_hub(file, ctx);
         let names_predecessors: Vec<_> = (0..names_chunk_count)
             .map(|chunk_index| {
                 BatchKey::C(CKey::DeclNames {
                     file: file.clone(),
                     chunk_index,
+                    hub,
                 })
             })
             .collect();
