@@ -87,6 +87,7 @@ pub struct TypescriptState {
     public_surface: OnceCell<HashSet<PathBuf>>,
     in_surface_lookup: RefCell<HashMap<PathBuf, bool>>,
     nearest_subpackage_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
+    declared_api_contract: OnceCell<Option<PathBuf>>,
 }
 
 impl TypescriptState {
@@ -108,6 +109,25 @@ impl TypescriptState {
             .borrow_mut()
             .insert(file.to_path_buf(), hit);
         hit
+    }
+
+    /// The package's declared API contract — the root `package.json`'s
+    /// `types` / `typings` target, when it is a root-level declaration
+    /// file that exists in the repo. Canonicalized. Root-level only:
+    /// nested targets (`source/index.d.ts`, `typings/index.d.ts`,
+    /// generated `dist/…`) are type plumbing next to real source, and
+    /// promoting them measured as a regression (see design-notes
+    /// "Entrypoint-named `.d.ts` promotion").
+    pub(in crate::walker) fn declared_api_contract(&self, root: &Path) -> Option<&PathBuf> {
+        self.declared_api_contract
+            .get_or_init(|| {
+                let target = super::json::declared_types_target(root)?;
+                if !is_declaration_file(&target) || target.parent() != Some(root) {
+                    return None;
+                }
+                target.canonicalize().ok()
+            })
+            .as_ref()
     }
 
     /// Walk up from `file` to the nearest dir under `root` that contains
@@ -223,7 +243,23 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         };
         let src_lines: Vec<&str> = source.lines().collect();
         let exports = find_export_starts(file, &tree, &source, &src_lines);
+        // The declared API contract's roster shapes (names surface,
+        // member-chunked decls and their catalogs) are exempt from the
+        // machinery damp: a root-level `.d.ts` the manifest's `types`
+        // field names is the package's public API surface, and its big
+        // member catalogs are what NS authors anchor on. Small
+        // non-roster exports keep the damp — exempting them measured as
+        // a cost-ascending flood of type aliases that displaces
+        // NS-credited orientation without earning catalog credit.
+        let is_api_contract = is_declared_api_contract(file, ctx);
         let per_export_factor = type_machinery_factor(file, &exports);
+        let contract_roster_factor = |has_member_chunks: bool| {
+            if is_api_contract && has_member_chunks {
+                1.0
+            } else {
+                per_export_factor
+            }
+        };
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
         let mut body_segment_index = 0usize;
         if !exports.is_empty() {
@@ -281,7 +317,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         chunk_count,
                         js_factor,
                         has_split_js_class_export,
-                    ) * per_export_factor,
+                    ) * contract_roster_factor(true),
                 });
             }
             for (item_index, item) in exports.iter().enumerate() {
@@ -329,7 +365,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         key: export_key.clone().into(),
                         predecessor: Some(names_predecessor.clone()),
                         content,
-                        value: export_value(file, item.kind, ctx, js_factor) * per_export_factor,
+                        value: export_value(file, item.kind, ctx, js_factor)
+                            * contract_roster_factor(member_names_chunks.is_some()),
                     });
                 }
                 let export_predecessor = BatchKey::Typescript(export_key);
@@ -372,7 +409,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                                 chunk_index,
                                 chunk_count,
                                 member_count,
-                            ) * per_export_factor,
+                            ) * contract_roster_factor(true),
                         });
                         chunk_predecessor = BatchKey::Typescript(key);
                     }
@@ -936,6 +973,8 @@ pub(crate) fn is_declaration_file(path: &Path) -> bool {
 /// `TYPE_MACHINERY_FILE_FACTOR` when the file emits no runtime code —
 /// `.d.ts` or every top-level export is type-only. `ExportNames` is
 /// intentionally NOT damped so the names surface stays visible.
+/// Callers exempt the declared API contract (see
+/// [`is_declared_api_contract`]) before applying this factor.
 fn type_machinery_factor(file: &Path, exports: &[ExportInfo<'_>]) -> f64 {
     if is_declaration_file(file) || (!exports.is_empty() && exports.iter().all(|e| e.is_type_only))
     {
@@ -943,6 +982,15 @@ fn type_machinery_factor(file: &Path, exports: &[ExportInfo<'_>]) -> f64 {
     } else {
         1.0
     }
+}
+
+/// True iff `file` is the package's declared API contract (see
+/// [`TypescriptState::declared_api_contract`]).
+fn is_declared_api_contract(file: &Path, ctx: &WalkCtx) -> bool {
+    let Some(contract) = ctx.typescript_state().declared_api_contract(ctx.root()) else {
+        return false;
+    };
+    file.canonicalize().is_ok_and(|c| &c == contract)
 }
 
 const TYPE_MACHINERY_FILE_FACTOR: f64 = 0.35;
@@ -2807,7 +2855,14 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
 /// Project's public surface — every TS/JS file transitively reachable
 /// from an entrypoint via re-export chains. Canonicalized.
 fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
-    let entrypoints = find_all_entrypoints(ctx.root());
+    let mut entrypoints = find_all_entrypoints(ctx.root());
+    // The declared API contract is entrypoint-named-adjacent (`types`
+    // field) but its `.d.ts` extension escapes the stem match above.
+    entrypoints.extend(
+        ctx.typescript_state()
+            .declared_api_contract(ctx.root())
+            .cloned(),
+    );
     let mut surface: HashSet<PathBuf> = HashSet::new();
     let mut frontier: VecDeque<PathBuf> = VecDeque::new();
     let mut from_app_entrypoint: HashSet<PathBuf> = HashSet::new();

@@ -471,6 +471,31 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     out
 }
 
+/// The `types` / `typings` target declared by `<root>/package.json`,
+/// resolved against `root`. `None` when neither field is a string.
+pub(super) fn declared_types_target(root: &Path) -> Option<PathBuf> {
+    let manifest = root.join(PACKAGE_JSON_FILENAME);
+    let text = std::fs::read_to_string(&manifest).ok()?;
+    let mut parser = tree_sitter::Parser::new();
+    parser
+        .set_language(&tree_sitter_json::LANGUAGE.into())
+        .ok()?;
+    let tree = parser.parse(text.as_bytes(), None)?;
+    let object = first_child_of_kind(tree.root_node(), "object")?;
+    ["types", "typings"].iter().find_map(|field| {
+        let value = object_field_value(object, field, &text)?;
+        if value.kind() != "string" {
+            return None;
+        }
+        let rel = unquote_string(value, &text);
+        let rel = rel.strip_prefix("./").unwrap_or(&rel);
+        if rel.is_empty() {
+            return None;
+        }
+        Some(root.join(rel))
+    })
+}
+
 /// Raw entries from the `workspaces` field on `<root>/package.json`.
 /// Supports both array and object (`{"packages": […]}`) forms.
 fn npm_workspaces_entries(root: &Path) -> Vec<String> {
