@@ -1905,7 +1905,8 @@ fn is_api_spine_entrypoint(file: &Path, ctx: &WalkCtx) -> bool {
 
 /// Generated-output prefixes a manifest entry path may carry; stripped
 /// when mapping the entry back to its source twin.
-const GENERATED_ENTRY_DIR_PREFIXES: &[&str] = &["dist", "build", "out", "output", "lib", "esm"];
+const GENERATED_ENTRY_DIR_PREFIXES: &[&str] =
+    &["dist", "build", "out", "output", "lib", "esm", "cjs"];
 /// Source-tree prefixes tried when re-rooting a generated entry path.
 const SOURCE_ENTRY_DIR_PREFIXES: &[&str] = &["", "src", "source"];
 const ENTRY_SOURCE_EXTS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
@@ -1937,10 +1938,15 @@ fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
         }
         let stem = Path::new(rel).with_extension("");
         let mut variants = vec![stem.clone()];
-        for prefix in GENERATED_ENTRY_DIR_PREFIXES {
-            if let Ok(stripped) = stem.strip_prefix(prefix) {
-                variants.push(stripped.to_path_buf());
-            }
+        // Strip nested generated dirs level by level (`dist/esm/index`,
+        // `dist/cjs/index`) until no leading generated prefix remains.
+        let mut current = stem.clone();
+        while let Some(stripped) = GENERATED_ENTRY_DIR_PREFIXES
+            .iter()
+            .find_map(|prefix| current.strip_prefix(prefix).ok())
+        {
+            current = stripped.to_path_buf();
+            variants.push(current.clone());
         }
         for variant in &variants {
             for source_prefix in SOURCE_ENTRY_DIR_PREFIXES {
