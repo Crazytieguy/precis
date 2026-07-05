@@ -558,6 +558,11 @@ fn format_line_row(
     indent_depth: usize,
 ) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
+    // Right-align the line number so the code column doesn't shift at
+    // digit boundaries (matters for indentation-significant sources).
+    // Fixed width keeps each row's cost independent of the file's
+    // other rendered rows; ≥5-digit numbers just extend the row.
+    let gutter = format!("{number:>4}");
     match render {
         Render::Ellipsis => {
             // Unreachable from render/cost paths — Ellipsis records
@@ -567,12 +572,12 @@ fn format_line_row(
             s.push('…');
         }
         Render::Full => {
-            s.push_str(&number.to_string());
+            s.push_str(&gutter);
             s.push('→');
             s.push_str(source_line);
         }
         Render::Truncated { pattern } => {
-            s.push_str(&number.to_string());
+            s.push_str(&gutter);
             s.push('→');
             with_truncate_regex(pattern, |re| {
                 debug_assert!(

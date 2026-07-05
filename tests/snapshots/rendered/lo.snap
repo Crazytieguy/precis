@@ -8,123 +8,123 @@ expression: rendered
 LICENSE
 Makefile
 README.md
-    2→# lo - Iterate over slices, maps, channels...
+       2→# lo - Iterate over slices, maps, channels...
     …
-    13→✨ **`samber/lo` is a Lodash-style Go library based on Go 1.18+ Generics.**
-    14→
-    15→A utility library based on Go 1.18+ generics that makes it easier to work with slices, maps, strings, channels, and functions. It provides dozens of handy methods to simplify common coding tasks and improve code readability. It may look like [Lodash](https://github.com/lodash/lodash) in some aspects.
+      13→✨ **`samber/lo` is a Lodash-style Go library based on Go 1.18+ Generics.**
+      14→
+      15→A utility library based on Go 1.18+ generics that makes it easier to work with slices, maps, strings, channels, and functions. It provides dozens of handy methods to simplify common coding tasks and improve code readability. It may look like [Lodash](https://github.com/lodash/lodash) in some aspects.
     …
-    53→## 🚀 Install
+      53→## 🚀 Install
     …
-    68→## 💡 Usage
+      68→## 💡 Usage
     …
-    100→## 🤠 Spec
-    101→
-    102→GoDoc: [godoc.org/github.com/samber/lo](https://godoc.org/github.com/samber/lo)
-    103→
-    104→Documentation: [lo.samber.dev](https://lo.samber.dev/docs/about)
-    105→
-    106→Supported helpers for slices:
-    107→
-    108→- [Filter](#filter)
-    109→- [Map](#map)
-    110→- [UniqMap](#uniqmap)
-    111→- [FilterMap](#filtermap)
-    112→- [FlatMap](#flatmap)
-    113→- [Reduce](#reduce)
-    114→- [ReduceRight](#reduceright)
-    115→- [ForEach](#foreach)
-    116→- [ForEachWhile](#foreachwhile)
-    117→- [Times](#times)
-    118→- [Uniq](#uniq)
-    119→- [UniqBy](#uniqby)
-    120→- [GroupBy](#groupby)
-    121→- [GroupByMap](#groupbymap)
-    122→- [Chunk](#chunk)
-    123→- [Window](#window)
-    124→- [Sliding](#sliding)
-    125→- [PartitionBy](#partitionby)
-    126→- [Flatten](#flatten)
-    127→- [Concat](#concat)
-    128→- [Interleave](#interleave)
-    129→- [Shuffle](#shuffle)
-    130→- [Reverse](#reverse)
-    131→- [Fill](#fill)
-    132→- [Repeat](#repeat)
-    133→- [RepeatBy](#repeatby)
-    134→- [KeyBy](#keyby)
-    135→- [SliceToMap / Associate](#slicetomap-alias-associate)
-    136→- [FilterSliceToMap](#filterslicetomap)
-    137→- [Keyify](#keyify)
-    138→- [Take](#take)
-    139→- [TakeWhile](#takewhile)
-    140→- [TakeFilter](#takefilter)
-    141→- [Drop](#drop)
-    142→- [DropRight](#dropright)
-    143→- [DropWhile](#dropwhile)
-    144→- [DropRightWhile](#droprightwhile)
-    145→- [DropByIndex](#DropByIndex)
-    146→- [Reject](#reject)
-    147→- [RejectMap](#rejectmap)
-    148→- [FilterReject](#filterreject)
-    149→- [Count](#count)
-    150→- [CountBy](#countby)
-    151→- [CountValues](#countvalues)
-    152→- [CountValuesBy](#countvaluesby)
-    153→- [Subset](#subset)
-    154→- [Slice](#slice)
-    155→- [Replace](#replace)
-    156→- [ReplaceAll](#replaceall)
-    157→- [Clone](#clone)
-    158→- [Compact](#compact)
-    159→- [IsSorted](#issorted)
-    160→- [IsSortedBy](#issortedby)
-    161→- [Splice](#Splice)
-    162→- [Cut](#Cut)
-    163→- [CutPrefix](#CutPrefix)
-    164→- [CutSuffix](#CutSuffix)
-    165→- [Trim](#Trim)
-    166→- [TrimLeft](#TrimLeft)
-    167→- [TrimPrefix](#TrimPrefix)
-    168→- [TrimRight](#TrimRight)
-    169→- [TrimSuffix](#TrimSuffix)
-    171→Supported helpers for maps:
-    172→
-    173→- [Keys](#keys)
-    174→- [UniqKeys](#uniqkeys)
-    175→- [HasKey](#haskey)
-    176→- [ValueOr](#valueor)
-    177→- [Values](#values)
-    178→- [UniqValues](#uniqvalues)
-    179→- [PickBy](#pickby)
-    180→- [PickByKeys](#pickbykeys)
-    181→- [PickByValues](#pickbyvalues)
-    182→- [OmitBy](#omitby)
-    183→- [OmitByKeys](#omitbykeys)
-    184→- [OmitByValues](#omitbyvalues)
-    185→- [Entries / ToPairs](#entries-alias-topairs)
-    186→- [FromEntries / FromPairs](#fromentries-alias-frompairs)
-    187→- [Invert](#invert)
-    188→- [Assign (merge of maps)](#assign)
-    189→- [ChunkEntries](#chunkentries)
-    190→- [MapKeys](#mapkeys)
-    191→- [MapValues](#mapvalues)
-    192→- [MapEntries](#mapentries)
-    193→- [MapToSlice](#maptoslice)
-    194→- [FilterMapToSlice](#FilterMapToSlice)
-    195→- [FilterKeys](#FilterKeys)
-    196→- [FilterValues](#FilterValues)
-    198→Supported math helpers:
-    199→
-    200→- [Range / RangeFrom / RangeWithSteps](#range--rangefrom--rangewithsteps)
-    201→- [Clamp](#clamp)
-    202→- [Sum](#sum)
-    203→- [SumBy](#sumby)
-    204→- [Product](#product)
-    205→- [ProductBy](#productby)
-    206→- [Mean](#mean)
-    207→- [MeanBy](#meanby)
-    208→- [Mode](#mode)
+     100→## 🤠 Spec
+     101→
+     102→GoDoc: [godoc.org/github.com/samber/lo](https://godoc.org/github.com/samber/lo)
+     103→
+     104→Documentation: [lo.samber.dev](https://lo.samber.dev/docs/about)
+     105→
+     106→Supported helpers for slices:
+     107→
+     108→- [Filter](#filter)
+     109→- [Map](#map)
+     110→- [UniqMap](#uniqmap)
+     111→- [FilterMap](#filtermap)
+     112→- [FlatMap](#flatmap)
+     113→- [Reduce](#reduce)
+     114→- [ReduceRight](#reduceright)
+     115→- [ForEach](#foreach)
+     116→- [ForEachWhile](#foreachwhile)
+     117→- [Times](#times)
+     118→- [Uniq](#uniq)
+     119→- [UniqBy](#uniqby)
+     120→- [GroupBy](#groupby)
+     121→- [GroupByMap](#groupbymap)
+     122→- [Chunk](#chunk)
+     123→- [Window](#window)
+     124→- [Sliding](#sliding)
+     125→- [PartitionBy](#partitionby)
+     126→- [Flatten](#flatten)
+     127→- [Concat](#concat)
+     128→- [Interleave](#interleave)
+     129→- [Shuffle](#shuffle)
+     130→- [Reverse](#reverse)
+     131→- [Fill](#fill)
+     132→- [Repeat](#repeat)
+     133→- [RepeatBy](#repeatby)
+     134→- [KeyBy](#keyby)
+     135→- [SliceToMap / Associate](#slicetomap-alias-associate)
+     136→- [FilterSliceToMap](#filterslicetomap)
+     137→- [Keyify](#keyify)
+     138→- [Take](#take)
+     139→- [TakeWhile](#takewhile)
+     140→- [TakeFilter](#takefilter)
+     141→- [Drop](#drop)
+     142→- [DropRight](#dropright)
+     143→- [DropWhile](#dropwhile)
+     144→- [DropRightWhile](#droprightwhile)
+     145→- [DropByIndex](#DropByIndex)
+     146→- [Reject](#reject)
+     147→- [RejectMap](#rejectmap)
+     148→- [FilterReject](#filterreject)
+     149→- [Count](#count)
+     150→- [CountBy](#countby)
+     151→- [CountValues](#countvalues)
+     152→- [CountValuesBy](#countvaluesby)
+     153→- [Subset](#subset)
+     154→- [Slice](#slice)
+     155→- [Replace](#replace)
+     156→- [ReplaceAll](#replaceall)
+     157→- [Clone](#clone)
+     158→- [Compact](#compact)
+     159→- [IsSorted](#issorted)
+     160→- [IsSortedBy](#issortedby)
+     161→- [Splice](#Splice)
+     162→- [Cut](#Cut)
+     163→- [CutPrefix](#CutPrefix)
+     164→- [CutSuffix](#CutSuffix)
+     165→- [Trim](#Trim)
+     166→- [TrimLeft](#TrimLeft)
+     167→- [TrimPrefix](#TrimPrefix)
+     168→- [TrimRight](#TrimRight)
+     169→- [TrimSuffix](#TrimSuffix)
+     171→Supported helpers for maps:
+     172→
+     173→- [Keys](#keys)
+     174→- [UniqKeys](#uniqkeys)
+     175→- [HasKey](#haskey)
+     176→- [ValueOr](#valueor)
+     177→- [Values](#values)
+     178→- [UniqValues](#uniqvalues)
+     179→- [PickBy](#pickby)
+     180→- [PickByKeys](#pickbykeys)
+     181→- [PickByValues](#pickbyvalues)
+     182→- [OmitBy](#omitby)
+     183→- [OmitByKeys](#omitbykeys)
+     184→- [OmitByValues](#omitbyvalues)
+     185→- [Entries / ToPairs](#entries-alias-topairs)
+     186→- [FromEntries / FromPairs](#fromentries-alias-frompairs)
+     187→- [Invert](#invert)
+     188→- [Assign (merge of maps)](#assign)
+     189→- [ChunkEntries](#chunkentries)
+     190→- [MapKeys](#mapkeys)
+     191→- [MapValues](#mapvalues)
+     192→- [MapEntries](#mapentries)
+     193→- [MapToSlice](#maptoslice)
+     194→- [FilterMapToSlice](#FilterMapToSlice)
+     195→- [FilterKeys](#FilterKeys)
+     196→- [FilterValues](#FilterValues)
+     198→Supported math helpers:
+     199→
+     200→- [Range / RangeFrom / RangeWithSteps](#range--rangefrom--rangewithsteps)
+     201→- [Clamp](#clamp)
+     202→- [Sum](#sum)
+     203→- [SumBy](#sumby)
+     204→- [Product](#product)
+     205→- [ProductBy](#productby)
+     206→- [Mean](#mean)
+     207→- [MeanBy](#meanby)
+     208→- [Mode](#mode)
     …
     5036→## 🛩 Benchmark
     …
@@ -143,55 +143,55 @@ channel_test.go
 concurrency.go
 concurrency_test.go
 condition.go
-    1→package lo
+       1→package lo
     …
 condition_test.go
 constraints.go
-    1→package lo
-    3→// Clonable defines a constraint of types having Clone() T method.
-    4→type Clonable[T any] interface {
-    5→	Clone() T
-    6→}
+       1→package lo
+       3→// Clonable defines a constraint of types having Clone() T method.
+       4→type Clonable[T any] interface {
+       5→	Clone() T
+       6→}
 docs/
 errors.go
 errors_test.go
 exp/
     simd/
         BENCHMARK.md
-            1→# Benchmark
-            2→
-            3→## Summary
+               1→# Benchmark
+               2→
+               3→## Summary
             …
-            23→## Run
+              23→## Run
             …
-            36→## Result
+              36→## Result
             …
         README.md
-            1→# SIMD experiment (Go 1.26+)
-            2→
-            3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
-            4→
-            5→See [benchmarks](./BENCHMARK.md).
-            7→## CPU compatibility (avoiding SIGILL)
+               1→# SIMD experiment (Go 1.26+)
+               2→
+               3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
+               4→
+               5→See [benchmarks](./BENCHMARK.md).
+               7→## CPU compatibility (avoiding SIGILL)
             …
-            11→### Check support on Linux
+              11→### Check support on Linux
             …
-            29→### What the tests do
+              29→### What the tests do
             …
-            37→### Run only AVX tests
+              37→### Run only AVX tests
             …
         cpu_amd64.go
         cpu_amd64_test.go
         go.mod
-            1→module github.com/samber/lo/exp/simd
-            2→
-            3→go 1.26.0
-            4→
-            5→require github.com/samber/lo v0.0.0
-            6→
-            7→require golang.org/x/text v0.22.0 // indirect
-            8→
-            9→replace github.com/samber/lo => ../../
+               1→module github.com/samber/lo/exp/simd
+               2→
+               3→go 1.26.0
+               4→
+               5→require github.com/samber/lo v0.0.0
+               6→
+               7→require golang.org/x/text v0.22.0 // indirect
+               8→
+               9→replace github.com/samber/lo => ../../
         go.sum
         intersect_avx512.go
         intersect_avx512_test.go
@@ -205,76 +205,76 @@ exp/
         math_avx_test.go
         math_bench_test.go
         simd.go
-            1→package simd
+               1→package simd
             …
         simd_test.go
         unsafe.go
 find.go
 find_test.go
 func.go
-    1→package lo
+       1→package lo
     …
 func_test.go
 go.mod
-    1→module github.com/samber/lo
-    2→
-    3→go 1.18
-    4→
-    5→//
-    6→// Dev dependencies are excluded from releases. Please check CI.
-    7→//
-    8→
-    9→require (
-    10→	github.com/stretchr/testify v1.11.1
-    11→	github.com/thoas/go-funk v0.9.3
-    12→	go.uber.org/goleak v1.2.1
-    13→	golang.org/x/text v0.22.0
-    14→)
-    15→
-    16→require (
+       1→module github.com/samber/lo
+       2→
+       3→go 1.18
+       4→
+       5→//
+       6→// Dev dependencies are excluded from releases. Please check CI.
+       7→//
+       8→
+       9→require (
+      10→	github.com/stretchr/testify v1.11.1
+      11→	github.com/thoas/go-funk v0.9.3
+      12→	go.uber.org/goleak v1.2.1
+      13→	golang.org/x/text v0.22.0
+      14→)
+      15→
+      16→require (
     …
-    23→)
+      23→)
 go.sum
 internal/
     constraints/
         README.md
-            2→# Constraints
-            3→
-            4→This package is for Go 1.18 retrocompatiblity purpose.
+               2→# Constraints
+               3→
+               4→This package is for Go 1.18 retrocompatiblity purpose.
         constraints.go
             …
-            7→package constraints
+               7→package constraints
             …
         ordered_go118.go
             …
-            3→package constraints
+               3→package constraints
             …
-            9→type Ordered interface {
-            10→	Integer | Float | ~string
-            11→}
+               9→type Ordered interface {
+              10→	Integer | Float | ~string
+              11→}
         ordered_go121.go
             …
-            13→type Ordered = cmp.Ordered
+              13→type Ordered = cmp.Ordered
     xrand/
     xtime/
         README.md
-            2→# xtime
-            3→
-            4→Lightweight mock for time package.
-            5→
-            6→A dedicated package such as [jonboulle/clockwork](https://github.com/jonboulle/clockwork/) would be better, but I would rather limit dependencies for this package. `clockwork` does not support Go 1.18 anymore.
+               2→# xtime
+               3→
+               4→Lightweight mock for time package.
+               5→
+               6→A dedicated package such as [jonboulle/clockwork](https://github.com/jonboulle/clockwork/) would be better, but I would rather limit dependencies for this package. `clockwork` does not support Go 1.18 anymore.
         fake.go
         noCopy.go
-            1→package xtime
+               1→package xtime
             …
-            10→type noCopy struct{}
+              10→type noCopy struct{}
             …
-            13→func (*noCopy) Lock()   {}
-            14→func (*noCopy) Unlock() {}
+              13→func (*noCopy) Lock()   {}
+              14→func (*noCopy) Unlock() {}
         real.go
         time.go
 intersect.go
-    1→package lo
+       1→package lo
     …
 intersect_test.go
 it/
@@ -298,7 +298,7 @@ it/
     seq_test.go
     string.go
         …
-        13→func ChunkString[T ~string](str T, size int) iter.Seq[T] {
+          13→func ChunkString[T ~string](str T, size int) iter.Seq[T] {
         …
     string_example_test.go
     string_test.go
@@ -310,7 +310,7 @@ it/
 lo_example_test.go
 lo_test.go
 map.go
-    1→package lo
+       1→package lo
     …
 map_test.go
 math.go
@@ -330,23 +330,23 @@ slice_test.go
 string.go
 string_test.go
 time.go
-    1→package lo
-    2→
-    3→import (
-    4→	"time"
-    5→)
+       1→package lo
+       2→
+       3→import (
+       4→	"time"
+       5→)
     …
 time_test.go
 tuples.go
-    1→package lo
+       1→package lo
     …
 tuples_test.go
 type_manipulation.go
-    1→package lo
-    2→
-    3→import "reflect"
+       1→package lo
+       2→
+       3→import "reflect"
     …
 type_manipulation_test.go
 types.go
-    1→package lo
+       1→package lo
     …

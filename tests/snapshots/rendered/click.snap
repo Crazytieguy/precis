@@ -20,38 +20,38 @@ CHANGES.rst
 LICENSE.txt
 README.md
     …
-    3→# Click
-    4→
-    5→Click is a Python package for creating beautiful command line interfaces
-    6→in a composable way with as little code as necessary. It's the "Command
-    7→Line Interface Creation Kit". It's highly configurable but comes with
-    8→sensible defaults out of the box.
-    10→It aims to make the process of writing command line tools quick and fun
-    11→while also preventing any frustration caused by the inability to
-    12→implement an intended CLI API.
-    13→
-    14→Click in three points:
-    15→
-    16→-   Arbitrary nesting of commands
-    17→-   Automatic help page generation
-    18→-   Supports lazy loading of subcommands at runtime
-    21→## A Simple Example
+       3→# Click
+       4→
+       5→Click is a Python package for creating beautiful command line interfaces
+       6→in a composable way with as little code as necessary. It's the "Command
+       7→Line Interface Creation Kit". It's highly configurable but comes with
+       8→sensible defaults out of the box.
+      10→It aims to make the process of writing command line tools quick and fun
+      11→while also preventing any frustration caused by the inability to
+      12→implement an intended CLI API.
+      13→
+      14→Click in three points:
+      15→
+      16→-   Arbitrary nesting of commands
+      17→-   Automatic help page generation
+      18→-   Supports lazy loading of subcommands at runtime
+      21→## A Simple Example
     …
-    47→## Donate
-    48→
-    49→The Pallets organization develops and supports Click and other popular
-    50→packages. In order to grow the community of contributors and users, and
-    51→allow the maintainers to devote more time to the projects, [please
-    52→donate today][].
-    53→
-    54→[please donate today]: https://palletsprojects.com/donate
-    56→## Contributing
-    57→
-    58→See our [detailed contributing documentation][contrib] for many ways to
-    59→contribute, including reporting issues, requesting features, asking or answering
-    60→questions, and making PRs.
-    61→
-    62→[contrib]: https://palletsprojects.com/contributing/
+      47→## Donate
+      48→
+      49→The Pallets organization develops and supports Click and other popular
+      50→packages. In order to grow the community of contributors and users, and
+      51→allow the maintainers to devote more time to the projects, [please
+      52→donate today][].
+      53→
+      54→[please donate today]: https://palletsprojects.com/donate
+      56→## Contributing
+      57→
+      58→See our [detailed contributing documentation][contrib] for many ways to
+      59→contribute, including reporting issues, requesting features, asking or answering
+      60→questions, and making PRs.
+      61→
+      62→[contrib]: https://palletsprojects.com/contributing/
 docs/
     _static/
         click-icon.svg
@@ -62,35 +62,35 @@ docs/
     arguments.md
     changes.rst
     click-concepts.md
-        1→# Click Concepts
-        2→
-        3→This section covers concepts about Click's design.
-        4→
-        5→```{contents}
-        6→---
-        7→depth: 1
-        8→local: true
-        9→---
-        10→```
-        11→
-        12→(callback-evaluation-order)=
-        14→## Callback Evaluation Order
+           1→# Click Concepts
+           2→
+           3→This section covers concepts about Click's design.
+           4→
+           5→```{contents}
+           6→---
+           7→depth: 1
+           8→local: true
+           9→---
+          10→```
+          11→
+          12→(callback-evaluation-order)=
+          14→## Callback Evaluation Order
         …
     command-line-reference.md
-        1→# General Command Line Topics
-        2→
-        3→```{currentmodule} click
-        4→```
-        5→
-        6→```{contents}
-        7→---
-        8→depth: 1
-        9→local: true
-        10→---
-        11→```
-        12→
-        13→(exit-codes)=
-        14→## Exit Codes
+           1→# General Command Line Topics
+           2→
+           3→```{currentmodule} click
+           4→```
+           5→
+           6→```{contents}
+           7→---
+           8→depth: 1
+           9→local: true
+          10→---
+          11→```
+          12→
+          13→(exit-codes)=
+          14→## Exit Codes
         …
     commands-and-groups.md
     commands.md
@@ -98,51 +98,51 @@ docs/
     conf.py
     contrib.md
         …
-        3→# click-contrib
+           3→# click-contrib
         …
-        19→## Third-party projects
+          19→## Third-party projects
         …
     contributing.md
     design-opinions.md
-        1→# CLI Design Opinions
-        2→
-        3→```{currentmodule} click
-        4→```
-        5→A penny for your thoughts...
-        6→
-        7→```{contents}
-        8→:depth: 1
-        9→:local: true
-        10→```
-        12→## Options over arguments
+           1→# CLI Design Opinions
+           2→
+           3→```{currentmodule} click
+           4→```
+           5→A penny for your thoughts...
+           6→
+           7→```{contents}
+           8→:depth: 1
+           9→:local: true
+          10→```
+          12→## Options over arguments
         …
     documentation.md
     entry-points.md
-        1→# Packaging Entry Points
+           1→# Packaging Entry Points
         …
-        20→## Project Files
+          20→## Project Files
         …
-        71→## Installation
+          71→## Installation
         …
     exceptions.md
     extending-click.md
-        1→# Extending Click
+           1→# Extending Click
         …
-        16→## Custom Groups
+          16→## Custom Groups
         …
-        73→## Command Aliases
+          73→## Command Aliases
         …
     faqs.md
     handling-files.md
     index.rst
     license.md
-        1→# BSD-3-Clause License
-        2→
-        3→```{literalinclude} ../LICENSE.txt
-        4→---
-        5→language: text
-        6→---
-        7→```
+           1→# BSD-3-Clause License
+           2→
+           3→```{literalinclude} ../LICENSE.txt
+           4→---
+           5→language: text
+           6→---
+           7→```
     option-decorators.md
     options.md
     parameter-types.md
@@ -151,35 +151,35 @@ docs/
     quickstart.md
     setuptools.md
         …
-        5→# Setuptools Integration
-        6→
-        7→Moved to {doc}`entry-points`.
+           5→# Setuptools Integration
+           6→
+           7→Moved to {doc}`entry-points`.
     shell-completion.md
     standalone-apps.md
     support-multiple-versions.md
     testing.md
     unicode-support.md
-        1→# Unicode Support
+           1→# Unicode Support
         …
-        51→## Surrogate Handling
+          51→## Surrogate Handling
         …
     upgrade-guides.md
     utils.md
     virtualenv.md
     why.md
     wincmd.md
-        1→# Windows Console Notes
-        2→
-        3→```{versionadded} 6.0
-        4→```
-        5→
-        6→Click emulates output streams on Windows to support unicode to the Windows console through separate APIs and we perform
-        7→different decoding of parameters.
-        8→
-        9→Here is a brief overview of how this works and what it means to you.
-        11→## Unicode Arguments
+           1→# Windows Console Notes
+           2→
+           3→```{versionadded} 6.0
+           4→```
+           5→
+           6→Click emulates output streams on Windows to support unicode to the Windows console through separate APIs and we perform
+           7→different decoding of parameters.
+           8→
+           9→Here is a brief overview of how this works and what it means to you.
+          11→## Unicode Arguments
         …
-        24→## Unicode Output and Input
+          24→## Unicode Output and Input
         …
 examples/
     README
@@ -194,106 +194,106 @@ examples/
     termui/
     validation/
 pyproject.toml
-    1→[project]
-    2→name = "click"
-    3→version = "8.3.3"
-    4→description = "Composable command line interface toolkit"
-    5→readme = "README.md"
-    6→license = "BSD-3-Clause"
+       1→[project]
+       2→name = "click"
+       3→version = "8.3.3"
+       4→description = "Composable command line interface toolkit"
+       5→readme = "README.md"
+       6→license = "BSD-3-Clause"
     …
-    16→requires-python = ">=3.10"
-    17→dependencies = [
-    18→    "colorama; platform_system == 'Windows'",
-    19→]
+      16→requires-python = ">=3.10"
+      17→dependencies = [
+      18→    "colorama; platform_system == 'Windows'",
+      19→]
     …
 src/
     click/
         __init__.py
-            1→"""
-            2→Click is a simple Python module inspired by the stdlib optparse to make
-            3→writing command line scripts fun. Unlike other modules, it's based
-            4→around a simple API that does not come with too much magic and is
-            5→composable.
-            6→"""
-            8→from __future__ import annotations
-            10→from .core import Argument as Argument
-            11→from .core import Command as Command
-            12→from .core import CommandCollection as CommandCollection
-            13→from .core import Context as Context
-            14→from .core import Group as Group
-            15→from .core import Option as Option
-            16→from .core import Parameter as Parameter
-            17→from .core import ParameterSource as ParameterSource
-            18→from .decorators import argument as argument
-            19→from .decorators import command as command
-            20→from .decorators import confirmation_option as confirmation_option
-            21→from .decorators import group as group
-            22→from .decorators import help_option as help_option
-            23→from .decorators import make_pass_decorator as make_pass_decorator
-            24→from .decorators import option as option
-            25→from .decorators import pass_context as pass_context
-            26→from .decorators import pass_obj as pass_obj
-            27→from .decorators import password_option as password_option
-            28→from .decorators import version_option as version_option
-            29→from .exceptions import Abort as Abort
-            30→from .exceptions import BadArgumentUsage as BadArgumentUsage
-            31→from .exceptions import BadOptionUsage as BadOptionUsage
-            32→from .exceptions import BadParameter as BadParameter
-            33→from .exceptions import ClickException as ClickException
-            34→from .exceptions import FileError as FileError
-            35→from .exceptions import MissingParameter as MissingParameter
-            36→from .exceptions import NoSuchCommand as NoSuchCommand
-            37→from .exceptions import NoSuchOption as NoSuchOption
-            38→from .exceptions import UsageError as UsageError
-            39→from .formatting import HelpFormatter as HelpFormatter
-            40→from .formatting import wrap_text as wrap_text
-            41→from .globals import get_current_context as get_current_context
-            42→from .termui import clear as clear
-            43→from .termui import confirm as confirm
-            44→from .termui import echo_via_pager as echo_via_pager
-            45→from .termui import edit as edit
-            46→from .termui import get_pager_file as get_pager_file
-            47→from .termui import getchar as getchar
-            48→from .termui import launch as launch
-            49→from .termui import pause as pause
-            50→from .termui import progressbar as progressbar
-            51→from .termui import prompt as prompt
-            52→from .termui import secho as secho
-            53→from .termui import style as style
-            54→from .termui import unstyle as unstyle
-            55→from .types import BOOL as BOOL
-            56→from .types import Choice as Choice
-            57→from .types import DateTime as DateTime
-            58→from .types import File as File
-            59→from .types import FLOAT as FLOAT
-            60→from .types import FloatRange as FloatRange
-            61→from .types import INT as INT
-            62→from .types import IntRange as IntRange
-            63→from .types import ParamType as ParamType
-            64→from .types import Path as Path
-            65→from .types import STRING as STRING
-            66→from .types import Tuple as Tuple
-            67→from .types import UNPROCESSED as UNPROCESSED
-            68→from .types import UUID as UUID
-            69→from .utils import echo as echo
-            70→from .utils import format_filename as format_filename
-            71→from .utils import get_app_dir as get_app_dir
-            72→from .utils import get_binary_stream as get_binary_stream
-            73→from .utils import get_text_stream as get_text_stream
-            74→from .utils import open_file as open_file
-            77→def __getattr__(name: str) -> object:
+               1→"""
+               2→Click is a simple Python module inspired by the stdlib optparse to make
+               3→writing command line scripts fun. Unlike other modules, it's based
+               4→around a simple API that does not come with too much magic and is
+               5→composable.
+               6→"""
+               8→from __future__ import annotations
+              10→from .core import Argument as Argument
+              11→from .core import Command as Command
+              12→from .core import CommandCollection as CommandCollection
+              13→from .core import Context as Context
+              14→from .core import Group as Group
+              15→from .core import Option as Option
+              16→from .core import Parameter as Parameter
+              17→from .core import ParameterSource as ParameterSource
+              18→from .decorators import argument as argument
+              19→from .decorators import command as command
+              20→from .decorators import confirmation_option as confirmation_option
+              21→from .decorators import group as group
+              22→from .decorators import help_option as help_option
+              23→from .decorators import make_pass_decorator as make_pass_decorator
+              24→from .decorators import option as option
+              25→from .decorators import pass_context as pass_context
+              26→from .decorators import pass_obj as pass_obj
+              27→from .decorators import password_option as password_option
+              28→from .decorators import version_option as version_option
+              29→from .exceptions import Abort as Abort
+              30→from .exceptions import BadArgumentUsage as BadArgumentUsage
+              31→from .exceptions import BadOptionUsage as BadOptionUsage
+              32→from .exceptions import BadParameter as BadParameter
+              33→from .exceptions import ClickException as ClickException
+              34→from .exceptions import FileError as FileError
+              35→from .exceptions import MissingParameter as MissingParameter
+              36→from .exceptions import NoSuchCommand as NoSuchCommand
+              37→from .exceptions import NoSuchOption as NoSuchOption
+              38→from .exceptions import UsageError as UsageError
+              39→from .formatting import HelpFormatter as HelpFormatter
+              40→from .formatting import wrap_text as wrap_text
+              41→from .globals import get_current_context as get_current_context
+              42→from .termui import clear as clear
+              43→from .termui import confirm as confirm
+              44→from .termui import echo_via_pager as echo_via_pager
+              45→from .termui import edit as edit
+              46→from .termui import get_pager_file as get_pager_file
+              47→from .termui import getchar as getchar
+              48→from .termui import launch as launch
+              49→from .termui import pause as pause
+              50→from .termui import progressbar as progressbar
+              51→from .termui import prompt as prompt
+              52→from .termui import secho as secho
+              53→from .termui import style as style
+              54→from .termui import unstyle as unstyle
+              55→from .types import BOOL as BOOL
+              56→from .types import Choice as Choice
+              57→from .types import DateTime as DateTime
+              58→from .types import File as File
+              59→from .types import FLOAT as FLOAT
+              60→from .types import FloatRange as FloatRange
+              61→from .types import INT as INT
+              62→from .types import IntRange as IntRange
+              63→from .types import ParamType as ParamType
+              64→from .types import Path as Path
+              65→from .types import STRING as STRING
+              66→from .types import Tuple as Tuple
+              67→from .types import UNPROCESSED as UNPROCESSED
+              68→from .types import UUID as UUID
+              69→from .utils import echo as echo
+              70→from .utils import format_filename as format_filename
+              71→from .utils import get_app_dir as get_app_dir
+              72→from .utils import get_binary_stream as get_binary_stream
+              73→from .utils import get_text_stream as get_text_stream
+              74→from .utils import open_file as open_file
+              77→def __getattr__(name: str) -> object:
             …
         _compat.py
         _termui_impl.py
         _textwrap.py
             …
-            8→class TextWrapper(textwrap.TextWrapper):
-            9→    def _handle_long_word(
+               8→class TextWrapper(textwrap.TextWrapper):
+               9→    def _handle_long_word(
             …
-            27→    @contextmanager
-            28→    def extra_indent(self, indent: str) -> cabc.Iterator[None]:
+              27→    @contextmanager
+              28→    def extra_indent(self, indent: str) -> cabc.Iterator[None]:
             …
-            40→    def indent_only(self, text: str) -> str:
+              40→    def indent_only(self, text: str) -> str:
             …
         _utils.py
         _winconsole.py
@@ -301,15 +301,15 @@ src/
         decorators.py
         exceptions.py
             …
-            330→class Abort(RuntimeError):
-            331→    """An internal signalling exception that signals Click to abort."""
-            334→class Exit(RuntimeError):
-            335→    """An exception that indicates that the application should exit with some
-            336→    status code.
-            337→
-            338→    :param code: the status code to exit with.
-            339→    """
-            341→    __slots__ = ("exit_code",)
+             330→class Abort(RuntimeError):
+             331→    """An internal signalling exception that signals Click to abort."""
+             334→class Exit(RuntimeError):
+             335→    """An exception that indicates that the application should exit with some
+             336→    status code.
+             337→
+             338→    :param code: the status code to exit with.
+             339→    """
+             341→    __slots__ = ("exit_code",)
             …
         formatting.py
         globals.py

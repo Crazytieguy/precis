@@ -10,37 +10,37 @@ expression: rendered
 LICENSE
 Makefile
 README.md
-    1→# Tock
+       1→# Tock
     …
-    5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
-    6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
-    8→## Features
-    9→
-    10→<img src="assets/demo.png" width="820px" />
-    11→
-    12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
-    13→
-    14→Features include:
-    15→
-    16→- 📝 **Simple plaintext format** - Activities stored in human-readable files
-    17→- 📅 **Notes & Tags** - Attach detailed notes and tags to activities
-    18→- 🎨 **Interactive TUI** - Beautiful terminal calendar view using Bubble Tea
-    19→- ⚡ **Fast & Lightweight** - Single binary, no dependencies
-    20→- 🔄 **Compatible** - Reads/writes Bartib file format and TimeWarrior data files
-    21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
-    22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
-    23→
-    24→<hr clear="right"/>
+       5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
+       6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
+       8→## Features
+       9→
+      10→<img src="assets/demo.png" width="820px" />
+      11→
+      12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
+      13→
+      14→Features include:
+      15→
+      16→- 📝 **Simple plaintext format** - Activities stored in human-readable files
+      17→- 📅 **Notes & Tags** - Attach detailed notes and tags to activities
+      18→- 🎨 **Interactive TUI** - Beautiful terminal calendar view using Bubble Tea
+      19→- ⚡ **Fast & Lightweight** - Single binary, no dependencies
+      20→- 🔄 **Compatible** - Reads/writes Bartib file format and TimeWarrior data files
+      21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
+      22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
+      23→
+      24→<hr clear="right"/>
     …
-    602→## Update Check
-    603→
-    604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
-    605→
-    606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
+     602→## Update Check
+     603→
+     604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
+     605→
+     606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
     …
-    713→## License
-    714→
-    715→GPL-3.0-or-later
+     713→## License
+     714→
+     715→GPL-3.0-or-later
 assets/
     demo.gif
     demo.png
@@ -49,81 +49,81 @@ assets/
 cmd/
     tock/
         main.go
-            1→package main
-            2→
-            3→import (
-            4→	"github.com/kriuchkov/tock/internal/adapters/cli"
-            5→)
-            7→func main() {
-            8→	cli.Execute()
+               1→package main
+               2→
+               3→import (
+               4→	"github.com/kriuchkov/tock/internal/adapters/cli"
+               5→)
+               7→func main() {
+               8→	cli.Execute()
             …
 demo/
 docs/
     commands.md
-        1→# Commands Reference
+           1→# Commands Reference
         …
-        23→## Core Commands
-        24→
-        25→### `start`
-        27→Start a new activity.
+          23→## Core Commands
+          24→
+          25→### `start`
+          27→Start a new activity.
         …
-        55→---
-        57→### `stop` (alias: `s`)
-        59→Stop the current activity.
+          55→---
+          57→### `stop` (alias: `s`)
+          59→Stop the current activity.
         …
-        84→---
-        86→### `add`
-        88→Add a completed activity manually.
+          84→---
+          86→### `add`
+          88→Add a completed activity manually.
         …
-        116→---
-        118→### `remove` (alias: `rm`)
-        120→Remove an activity.
+         116→---
+         118→### `remove` (alias: `rm`)
+         120→Remove an activity.
         …
-        141→---
-        143→### `continue` (alias: `c`)
+         141→---
+         143→### `continue` (alias: `c`)
         …
-        186→---
-        188→## Viewing & Reporting
-        189→
-        190→### `calendar`
-        192→Open the comprehensive interactive dashboard.
+         186→---
+         188→## Viewing & Reporting
+         189→
+         190→### `calendar`
+         192→Open the comprehensive interactive dashboard.
         …
-        215→---
-        217→### `list` (alias: `ls`)
+         215→---
+         217→### `list` (alias: `ls`)
         …
-        238→---
-        240→### `current`
+         238→---
+         240→### `current`
         …
-        260→### `last` (alias: `lt`)
+         260→### `last` (alias: `lt`)
         …
-        283→### `report`
+         283→### `report`
         …
-        307→### `analyze`
+         307→### `analyze`
         …
-        330→### `ical`
+         330→### `ical`
         …
 go.mod
-    1→module github.com/kriuchkov/tock
-    2→
-    3→go 1.25.6
-    4→
-    5→require (
-    6→	github.com/charmbracelet/bubbles v1.0.0
-    7→	github.com/charmbracelet/bubbletea v1.3.10
-    8→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
-    9→	github.com/go-faster/errors v0.7.1
-    10→	github.com/muesli/termenv v0.16.0
-    11→	github.com/samber/lo v1.52.0
-    12→	github.com/spf13/cobra v1.10.2
-    13→	github.com/spf13/pflag v1.0.10
-    14→	github.com/spf13/viper v1.21.0
-    15→	github.com/stretchr/testify v1.11.1
-    16→	gopkg.in/yaml.v3 v3.0.1
-    17→)
-    18→
-    19→require (
+       1→module github.com/kriuchkov/tock
+       2→
+       3→go 1.25.6
+       4→
+       5→require (
+       6→	github.com/charmbracelet/bubbles v1.0.0
+       7→	github.com/charmbracelet/bubbletea v1.3.10
+       8→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
+       9→	github.com/go-faster/errors v0.7.1
+      10→	github.com/muesli/termenv v0.16.0
+      11→	github.com/samber/lo v1.52.0
+      12→	github.com/spf13/cobra v1.10.2
+      13→	github.com/spf13/pflag v1.0.10
+      14→	github.com/spf13/viper v1.21.0
+      15→	github.com/stretchr/testify v1.11.1
+      16→	gopkg.in/yaml.v3 v3.0.1
+      17→)
+      18→
+      19→require (
     …
-    52→)
+      52→)
 go.sum
 install.sh
 internal/
@@ -131,105 +131,105 @@ internal/
         cli/
             add.go
                 …
-                16→type addOptions struct {
+                  16→type addOptions struct {
                 …
-                26→func NewAddCmd() *cobra.Command {
+                  26→func NewAddCmd() *cobra.Command {
                 …
-                64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
+                  64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
                 …
-                124→func resolveStartTime(startStr string, theme Theme) (string, error) {
+                 124→func resolveStartTime(startStr string, theme Theme) (string, error) {
                 …
-                163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
+                 163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
                 …
             analyze.go
                 …
-                20→func NewAnalyzeCmd() *cobra.Command {
+                  20→func NewAnalyzeCmd() *cobra.Command {
                 …
-                70→type AnalysisStats struct {
+                  70→type AnalysisStats struct {
                 …
-                84→func analyzeData(activities []models.Activity) AnalysisStats {
+                  84→func analyzeData(activities []models.Activity) AnalysisStats {
                 …
-                206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
+                 206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
                 …
             calendar.go
             calendar_sidebar.go
             continue.go
                 …
-                15→const (
-                16→	defaultRecentActivitiesForContinuation = 10
-                17→)
-                19→//nolint:funlen // Include all logic in one function
-                20→func NewContinueCmd() *cobra.Command {
+                  15→const (
+                  16→	defaultRecentActivitiesForContinuation = 10
+                  17→)
+                  19→//nolint:funlen // Include all logic in one function
+                  20→func NewContinueCmd() *cobra.Command {
                 …
             current.go
                 …
-                19→type currentCmdActivity struct {
-                20→	models.Activity
-                21→}
-                23→func (a currentCmdActivity) Duration() time.Duration {
+                  19→type currentCmdActivity struct {
+                  20→	models.Activity
+                  21→}
+                  23→func (a currentCmdActivity) Duration() time.Duration {
                 …
-                27→func (a currentCmdActivity) DurationHMS() string {
+                  27→func (a currentCmdActivity) DurationHMS() string {
                 …
-                35→func NewCurrentCmd() *cobra.Command {
+                  35→func NewCurrentCmd() *cobra.Command {
                 …
             ical.go
             interactive.go
             last.go
                 …
-                16→type lastOptions struct {
-                17→	Limit      int
-                18→	JSONOutput bool
-                19→}
-                21→func NewLastCmd() *cobra.Command {
+                  16→type lastOptions struct {
+                  17→	Limit      int
+                  18→	JSONOutput bool
+                  19→}
+                  21→func NewLastCmd() *cobra.Command {
                 …
-                42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
+                  42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
                 …
             list_gui.go
             remove.go
                 …
-                22→func NewRemoveCmd() *cobra.Command {
+                  22→func NewRemoveCmd() *cobra.Command {
                 …
-                95→func parseRemoveIndex(s string) (time.Time, int, error) {
+                  95→func parseRemoveIndex(s string) (time.Time, int, error) {
                 …
-                116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
+                 116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
                 …
-                127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
+                 127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
                 …
             report.go
                 …
-                20→type reportOptions struct {
+                  20→type reportOptions struct {
                 …
-                31→func NewReportCmd() *cobra.Command {
+                  31→func NewReportCmd() *cobra.Command {
                 …
-                61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
+                  61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
                 …
             root.go
             start.go
                 …
-                16→//nolint:gocognit,funlen // Include all logic in one function
-                17→func NewStartCmd() *cobra.Command {
+                  16→//nolint:gocognit,funlen // Include all logic in one function
+                  17→func NewStartCmd() *cobra.Command {
                 …
             stop.go
                 …
-                14→func NewStopCmd() *cobra.Command {
+                  14→func NewStopCmd() *cobra.Command {
                 …
             theme.go
             update.go
                 …
-                17→type githubRelease struct {
+                  17→type githubRelease struct {
                 …
-                22→func checkUpdate() (githubRelease, error) {
+                  22→func checkUpdate() (githubRelease, error) {
                 …
-                45→func runUpdateCheck(cmd *cobra.Command) {
+                  45→func runUpdateCheck(cmd *cobra.Command) {
                 …
             version.go
                 …
-                10→var (
-                11→	version = "dev"
-                12→	commit  = "none"
-                13→	date    = "unknown"
-                14→)
-                16→func NewVersionCmd() *cobra.Command {
+                  10→var (
+                  11→	version = "dev"
+                  12→	commit  = "none"
+                  13→	date    = "unknown"
+                  14→)
+                  16→func NewVersionCmd() *cobra.Command {
                 …
             watch.go
         repositories/
@@ -247,89 +247,89 @@ internal/
         dto/
             activity_dto.go
                 …
-                9→type StartActivityRequest struct {
-                10→	Description string
-                11→	Project     string
-                12→	StartTime   time.Time
-                13→	Notes       string
-                14→	Tags        []string
-                15→}
-                17→type StopActivityRequest struct {
-                18→	EndTime time.Time
-                19→	Notes   string
-                20→	Tags    []string
-                21→}
-                23→type AddActivityRequest struct {
-                24→	Description string
-                25→	Project     string
-                26→	StartTime   time.Time
-                27→	EndTime     time.Time
-                28→	Notes       string
-                29→	Tags        []string
-                30→}
-                32→type ActivityFilter struct {
-                33→	FromDate    *time.Time
-                34→	ToDate      *time.Time
-                35→	Project     *string
-                36→	Description *string
-                37→	IsRunning   *bool
-                38→}
-                40→type Report struct {
-                41→	Activities    []models.Activity
-                42→	TotalDuration time.Duration
-                43→	ByProject     map[string]ProjectReport
-                44→}
-                46→type ProjectReport struct {
-                47→	ProjectName string
-                48→	Duration    time.Duration
-                49→	Activities  []models.Activity
-                50→}
+                   9→type StartActivityRequest struct {
+                  10→	Description string
+                  11→	Project     string
+                  12→	StartTime   time.Time
+                  13→	Notes       string
+                  14→	Tags        []string
+                  15→}
+                  17→type StopActivityRequest struct {
+                  18→	EndTime time.Time
+                  19→	Notes   string
+                  20→	Tags    []string
+                  21→}
+                  23→type AddActivityRequest struct {
+                  24→	Description string
+                  25→	Project     string
+                  26→	StartTime   time.Time
+                  27→	EndTime     time.Time
+                  28→	Notes       string
+                  29→	Tags        []string
+                  30→}
+                  32→type ActivityFilter struct {
+                  33→	FromDate    *time.Time
+                  34→	ToDate      *time.Time
+                  35→	Project     *string
+                  36→	Description *string
+                  37→	IsRunning   *bool
+                  38→}
+                  40→type Report struct {
+                  41→	Activities    []models.Activity
+                  42→	TotalDuration time.Duration
+                  43→	ByProject     map[string]ProjectReport
+                  44→}
+                  46→type ProjectReport struct {
+                  47→	ProjectName string
+                  48→	Duration    time.Duration
+                  49→	Activities  []models.Activity
+                  50→}
         errors/
             errors.go
-                1→package errors
-                2→
-                3→import "errors"
-                5→var (
-                6→	ErrActivityNotFound       = errors.New("activity not found")
-                7→	ErrNoActiveActivity       = errors.New("no active activity found")
-                8→	ErrActivityAlreadyStarted = errors.New("activity already started")
-                9→	ErrCancelled              = errors.New("operation cancelled")
-                10→)
+                   1→package errors
+                   2→
+                   3→import "errors"
+                   5→var (
+                   6→	ErrActivityNotFound       = errors.New("activity not found")
+                   7→	ErrNoActiveActivity       = errors.New("no active activity found")
+                   8→	ErrActivityAlreadyStarted = errors.New("activity already started")
+                   9→	ErrCancelled              = errors.New("operation cancelled")
+                  10→)
         models/
             activity.go
                 …
-                10→type Activity struct {
+                  10→type Activity struct {
                 …
-                19→func (a Activity) ID() string {
-                20→	return a.StartTime.Format("150405")
+                  19→func (a Activity) ID() string {
+                  20→	return a.StartTime.Format("150405")
                 …
-                23→func (a Activity) Duration() time.Duration {
+                  23→func (a Activity) Duration() time.Duration {
                 …
-                30→// DurationString returns the duration formatted as "HH:MM:SS".
-                31→func (a Activity) DurationString() string {
+                  30→// DurationString returns the duration formatted as "HH:MM:SS".
+                  31→func (a Activity) DurationString() string {
                 …
-                41→func (a Activity) MarshalJSON() ([]byte, error) {
+                  41→func (a Activity) MarshalJSON() ([]byte, error) {
                 …
         ports/
             mocks/
             ports.go
                 …
-                11→type ActivityResolver interface {
+                  11→type ActivityResolver interface {
                 …
-                22→type ActivityRepository interface {
-                23→	Save(ctx context.Context, activity models.Activity) error
-                24→	FindLast(ctx context.Context) (*models.Activity, error)
-                25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
-                26→	Remove(ctx context.Context, activity models.Activity) error
-                27→}
-                29→type NotesRepository interface {
-                30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
-                31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
-                32→}
+                  22→type ActivityRepository interface {
+                  23→	Save(ctx context.Context, activity models.Activity) error
+                  24→	FindLast(ctx context.Context) (*models.Activity, error)
+                  25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
+                  26→	Remove(ctx context.Context, activity models.Activity) error
+                  27→}
+                  29→type NotesRepository interface {
+                  30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
+                  31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
+                  32→}
     extra/
         extra.go
             …
-            11→func CalculateEndTime(tf *timeutil.Formatter, startTime time.Time, endStr, durationStr string) (time.Time, error) {
+              11→func CalculateEndTime(tf *timeutil.Formatter, startTime time.Time, endStr, durationStr string) (time.Time, error) {
             …
         extra_test.go
     services/
@@ -337,18 +337,18 @@ internal/
         ics/
             generator.go
                 …
-                11→// Generate returns a full iCalendar string for a single activity.
-                12→func Generate(act models.Activity, uidKey string) string {
-                13→	event := GenerateEvent(act, uidKey)
-                14→	return WrapCalendar(event)
+                  11→// Generate returns a full iCalendar string for a single activity.
+                  12→func Generate(act models.Activity, uidKey string) string {
+                  13→	event := GenerateEvent(act, uidKey)
+                  14→	return WrapCalendar(event)
                 …
-                17→// WrapCalendar wraps the given event(s) string in a VCALENDAR block.
-                18→func WrapCalendar(eventsBody string) string {
+                  17→// WrapCalendar wraps the given event(s) string in a VCALENDAR block.
+                  18→func WrapCalendar(eventsBody string) string {
                 …
-                28→// GenerateEvent returns the VEVENT block for a single activity.
-                29→func GenerateEvent(act models.Activity, uidKey string) string {
+                  28→// GenerateEvent returns the VEVENT block for a single activity.
+                  29→func GenerateEvent(act models.Activity, uidKey string) string {
                 …
-                71→func escapeProperty(s string) string {
+                  71→func escapeProperty(s string) string {
                 …
     timeutil/
         timeutil.go

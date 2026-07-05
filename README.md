@@ -15,83 +15,83 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 LICENSE
 README.md
     …
-    9→# Mitt
-    10→
-    11→> Tiny 200b functional event emitter / pubsub.
-    12→
-    13→-   **Microscopic:** weighs less than 200 bytes gzipped
-    14→-   **Useful:** a wildcard `"*"` event type listens to all events
-    15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
-    16→-   **Functional:** methods don't rely on `this`
-    17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
-    18→
-    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-    21→## Table of Contents
+       9→# Mitt
+      10→
+      11→> Tiny 200b functional event emitter / pubsub.
+      12→
+      13→-   **Microscopic:** weighs less than 200 bytes gzipped
+      14→-   **Useful:** a wildcard `"*"` event type listens to all events
+      15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+      16→-   **Functional:** methods don't rely on `this`
+      17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+      18→
+      19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+      21→## Table of Contents
     …
-    30→## Install
+      30→## Install
     …
-    56→## Usage
+      56→## Usage
     …
-    81→### Typescript
+      81→### Typescript
     …
-    113→## Examples & Demos
+     113→## Examples & Demos
     …
-    123→## API
+     123→## API
     …
-    138→### mitt
+     138→### mitt
     …
-    144→### all
+     144→### all
     …
-    148→### on
-    150→Register an event handler for the given type.
+     148→### on
+     150→Register an event handler for the given type.
     …
-    157→### off
+     157→### off
     …
-    167→### emit
+     167→### emit
     …
-    179→## Contribute
-    180→
-    181→First off, thanks for taking the time to contribute!
-    182→Now, take a moment to be sure your contributions make sense to everyone else.
-    184→### Reporting Issues
+     179→## Contribute
+     180→
+     181→First off, thanks for taking the time to contribute!
+     182→Now, take a moment to be sure your contributions make sense to everyone else.
+     184→### Reporting Issues
     …
-    189→### Submitting pull requests
+     189→### Submitting pull requests
     …
-    203→## License
-    204→
-    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+     203→## License
+     204→
+     205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 package.json
     …
-    2→  "name": "mitt",
-    3→  "version": "3.0.1",
-    4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
+       2→  "name": "mitt",
+       3→  "version": "3.0.1",
+       4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
     …
-    41→  "license": "MIT",
+      41→  "license": "MIT",
     …
 src/
     index.ts
-        1→export type EventType = string | symbol;
+           1→export type EventType = string | symbol;
         …
-        5→export type Handler<T = unknown> = (event: T) => void;
-        6→export type WildcardHandler<T = Record<string, unknown>> = (
-        7→	type: keyof T,
-        8→	event: T[keyof T]
-        9→) => void;
+           5→export type Handler<T = unknown> = (event: T) => void;
+           6→export type WildcardHandler<T = Record<string, unknown>> = (
+           7→	type: keyof T,
+           8→	event: T[keyof T]
+           9→) => void;
         …
-        12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
-        13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
-        14→	WildcardHandler<T>
-        15→>;
+          12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
+          13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
+          14→	WildcardHandler<T>
+          15→>;
         …
-        18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
-        19→	keyof Events | '*',
-        20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
-        21→>;
-        23→export interface Emitter<Events extends Record<EventType, unknown>> {
+          18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
+          19→	keyof Events | '*',
+          20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
+          21→>;
+          23→export interface Emitter<Events extends Record<EventType, unknown>> {
         …
-        46→export default function mitt<Events extends Record<EventType, unknown>>(
-        47→	all?: EventHandlerMap<Events>
-        48→): Emitter<Events> {
+          46→export default function mitt<Events extends Record<EventType, unknown>>(
+          47→	all?: EventHandlerMap<Events>
+          48→): Emitter<Events> {
         …
 test/
 tsconfig.json

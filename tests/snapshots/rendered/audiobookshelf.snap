@@ -74,14 +74,14 @@ client/
     package-lock.json
     package.json
         …
-        2→  "name": "audiobookshelf-client",
-        3→  "version": "2.34.0",
+           2→  "name": "audiobookshelf-client",
+           3→  "version": "2.34.0",
         …
-        5→  "description": "Self-hosted audiobook and podcast client",
-        6→  "main": "index.js",
+           5→  "description": "Self-hosted audiobook and podcast client",
+           6→  "main": "index.js",
         …
-        17→  "author": "advplyr",
-        18→  "license": "ISC",
+          17→  "author": "advplyr",
+          18→  "license": "ISC",
         …
     pages/
         account.vue
@@ -152,19 +152,19 @@ docker-compose.yml
 docker-template.xml
 docs/
     README.md
-        1→# OpenAPI specification
-        2→
-        3→This directory includes the OpenAPI spec for the ABS server. The spec is made up of a number of individual `yaml` files located here and in the subfolders, with `root.yaml` being the file that references all of the others. The files are organized to have the same hierarchy as the server source files. The full spec is bundled into one file in `openapi.json`.
-        5→The spec is linted and bundled using [`redocly-cli`](https://redocly.com/docs/cli/). This tool also generates HTML docs for the spec.
-        6→
-        7→The tools created by [`pb33f`](https://pb33f.io/), specifically `vacuum` and `wiretap`, are also useful for linting and verification. These tools check for some other things, such as validating requests to and responses from the server.
-        9→### Bundling the spec
+           1→# OpenAPI specification
+           2→
+           3→This directory includes the OpenAPI spec for the ABS server. The spec is made up of a number of individual `yaml` files located here and in the subfolders, with `root.yaml` being the file that references all of the others. The files are organized to have the same hierarchy as the server source files. The full spec is bundled into one file in `openapi.json`.
+           5→The spec is linted and bundled using [`redocly-cli`](https://redocly.com/docs/cli/). This tool also generates HTML docs for the spec.
+           6→
+           7→The tools created by [`pb33f`](https://pb33f.io/), specifically `vacuum` and `wiretap`, are also useful for linting and verification. These tools check for some other things, such as validating requests to and responses from the server.
+           9→### Bundling the spec
         …
-        15→### Linting the spec
+          15→### Linting the spec
         …
-        21→### Generating documentation
+          21→### Generating documentation
         …
-        25→### Putting it all together
+          25→### Putting it all together
         …
     controllers/
         AuthorController.yaml
@@ -202,145 +202,145 @@ images/
     banner.svg
 index.js
     …
-    13→const options = commandLineArgs(optionDefinitions)
+      13→const options = commandLineArgs(optionDefinitions)
     …
-    21→const isDev = process.env.NODE_ENV !== 'production'
+      21→const isDev = process.env.NODE_ENV !== 'production'
     …
-    38→const inputConfig = options.config ? Path.resolve(options.config) : null
-    39→const inputMetadata = options.metadata ? Path.resolve(options.metadata) : null
-    41→const PORT = options.port || process.env.PORT || 3333
-    42→const HOST = options.host || process.env.HOST
-    43→const CONFIG_PATH = inputConfig || process.env.CONFIG_PATH || Path.resolve('config')
-    44→const METADATA_PATH = inputMetadata || process.env.METADATA_PATH || Path.resolve('metadata')
-    45→const SOURCE = options.source || process.env.SOURCE || 'debian'
-    47→const ROUTER_BASE_PATH = process.env.ROUTER_BASE_PATH ?? '/audiobookshelf'
+      38→const inputConfig = options.config ? Path.resolve(options.config) : null
+      39→const inputMetadata = options.metadata ? Path.resolve(options.metadata) : null
+      41→const PORT = options.port || process.env.PORT || 3333
+      42→const HOST = options.host || process.env.HOST
+      43→const CONFIG_PATH = inputConfig || process.env.CONFIG_PATH || Path.resolve('config')
+      44→const METADATA_PATH = inputMetadata || process.env.METADATA_PATH || Path.resolve('metadata')
+      45→const SOURCE = options.source || process.env.SOURCE || 'debian'
+      47→const ROUTER_BASE_PATH = process.env.ROUTER_BASE_PATH ?? '/audiobookshelf'
     …
-    52→const Server = new server(SOURCE, PORT, HOST, CONFIG_PATH, METADATA_PATH, ROUTER_BASE_PATH)
+      52→const Server = new server(SOURCE, PORT, HOST, CONFIG_PATH, METADATA_PATH, ROUTER_BASE_PATH)
     …
 package-lock.json
 package.json
     …
-    2→  "name": "audiobookshelf",
-    3→  "version": "2.34.0",
+       2→  "name": "audiobookshelf",
+       3→  "version": "2.34.0",
     …
-    5→  "description": "Self-hosted audiobook and podcast server",
-    6→  "main": "index.js",
-    7→  "scripts": {
-    8→    "dev": "nodemon --watch server index.js -- --dev",
-    9→    "start": "node index.js",
-    10→    "start-dev": "node index.js --prod-with-dev-env",
-    11→    "client": "cd client && npm ci && npm run generate",
-    12→    "prod": "npm run client && npm ci && node index.js",
-    13→    "build-win": "npm run client && pkg -t node20-win-x64 -o ./dist/win/audiobookshelf -C GZip .",
-    14→    "build-win-no-compress": "npm run client && pkg -t node20-win-x64 -o ./dist/win/audiobookshelf .",
-    15→    "build-linux": "build/linuxpackager",
-    16→    "docker": "docker buildx build --platform linux/amd64,linux/arm64 --push .  -t advplyr/audiobookshelf",
-    17→    "docker-amd64-local": "docker buildx build --platform linux/amd64 --load .  -t advplyr/audiobookshelf-amd64-local",
-    18→    "docker-arm64-local": "docker buildx build --platform linux/arm64 --load .  -t advplyr/audiobookshelf-arm64-local",
-    19→    "deploy-linux": "node deploy/linux",
-    20→    "test": "mocha",
-    21→    "coverage": "nyc mocha"
-    22→  },
-    23→  "bin": "index.js",
+       5→  "description": "Self-hosted audiobook and podcast server",
+       6→  "main": "index.js",
+       7→  "scripts": {
+       8→    "dev": "nodemon --watch server index.js -- --dev",
+       9→    "start": "node index.js",
+      10→    "start-dev": "node index.js --prod-with-dev-env",
+      11→    "client": "cd client && npm ci && npm run generate",
+      12→    "prod": "npm run client && npm ci && node index.js",
+      13→    "build-win": "npm run client && pkg -t node20-win-x64 -o ./dist/win/audiobookshelf -C GZip .",
+      14→    "build-win-no-compress": "npm run client && pkg -t node20-win-x64 -o ./dist/win/audiobookshelf .",
+      15→    "build-linux": "build/linuxpackager",
+      16→    "docker": "docker buildx build --platform linux/amd64,linux/arm64 --push .  -t advplyr/audiobookshelf",
+      17→    "docker-amd64-local": "docker buildx build --platform linux/amd64 --load .  -t advplyr/audiobookshelf-amd64-local",
+      18→    "docker-arm64-local": "docker buildx build --platform linux/arm64 --load .  -t advplyr/audiobookshelf-arm64-local",
+      19→    "deploy-linux": "node deploy/linux",
+      20→    "test": "mocha",
+      21→    "coverage": "nyc mocha"
+      22→  },
+      23→  "bin": "index.js",
     …
-    38→  "author": "advplyr",
-    39→  "license": "GPL-3.0",
+      38→  "author": "advplyr",
+      39→  "license": "GPL-3.0",
     …
 prod.js
 readme.md
     …
-    5→  <p align="center">
-    6→    <br />
-    7→    <a href="https://audiobookshelf.org/docs">Documentation</a>
-    8→    ·
-    9→    <a href="https://audiobookshelf.org/guides">User Guides</a>
-    10→    ·
-    11→    <a href="https://audiobookshelf.org/support">Support</a>
-    12→  </p>
-    13→</div>
-    14→
-    15→# About
-    16→
-    17→Audiobookshelf is a self-hosted audiobook and podcast server.
-    19→### Features
+       5→  <p align="center">
+       6→    <br />
+       7→    <a href="https://audiobookshelf.org/docs">Documentation</a>
+       8→    ·
+       9→    <a href="https://audiobookshelf.org/guides">User Guides</a>
+      10→    ·
+      11→    <a href="https://audiobookshelf.org/support">Support</a>
+      12→  </p>
+      13→</div>
+      14→
+      15→# About
+      16→
+      17→Audiobookshelf is a self-hosted audiobook and podcast server.
+      19→### Features
     …
-    22→- Stream all audio formats on the fly
-    23→- Search and add podcasts to download episodes w/ auto-download
-    24→- Multi-user support w/ custom permissions
-    25→- Keeps progress per user and syncs across devices
-    26→- Auto-detects library updates, no need to re-scan
-    27→- Upload books and podcasts w/ bulk upload drag and drop folders
-    28→- Backup your metadata + automated daily backups
-    29→- Progressive Web App (PWA)
-    30→- Chromecast support on the web app and android app
-    31→- Fetch metadata and cover art from several sources
-    32→- Chapter editor and chapter lookup (using [Audnexus API](https://audnex.us/))
-    33→- Merge your audio files into a single m4b
-    34→- Embed metadata and cover image into your audio files
+      22→- Stream all audio formats on the fly
+      23→- Search and add podcasts to download episodes w/ auto-download
+      24→- Multi-user support w/ custom permissions
+      25→- Keeps progress per user and syncs across devices
+      26→- Auto-detects library updates, no need to re-scan
+      27→- Upload books and podcasts w/ bulk upload drag and drop folders
+      28→- Backup your metadata + automated daily backups
+      29→- Progressive Web App (PWA)
+      30→- Chromecast support on the web app and android app
+      31→- Fetch metadata and cover art from several sources
+      32→- Chapter editor and chapter lookup (using [Audnexus API](https://audnex.us/))
+      33→- Merge your audio files into a single m4b
+      34→- Embed metadata and cover image into your audio files
     …
-    38→- Open RSS feeds for podcasts and audiobooks
-    40→Is there a feature you are looking for? [Suggest it](https://github.com/advplyr/audiobookshelf/issues/new/choose)
-    42→Join us on [Discord](https://discord.gg/HQgCbd6E75)
-    44→### Demo
+      38→- Open RSS feeds for podcasts and audiobooks
+      40→Is there a feature you are looking for? [Suggest it](https://github.com/advplyr/audiobookshelf/issues/new/choose)
+      42→Join us on [Discord](https://discord.gg/HQgCbd6E75)
+      44→### Demo
     …
-    50→### Android App (beta)
+      50→### Android App (beta)
     …
-    54→### iOS App (beta)
+      54→### iOS App (beta)
     …
-    60→### Build your own tools & clients
+      60→### Build your own tools & clients
     …
-    70→# Organizing your audiobooks
-    71→
-    72→#### Directory structure and folder names are important to Audiobookshelf!
-    73→
-    74→See [documentation](https://audiobookshelf.org/docs#book-directory-structure) for supported directory structure, folder naming conventions, and audio file metadata usage.
-    75→
-    76→<br />
-    78→# Installation
-    79→
-    80→See [install docs](https://www.audiobookshelf.org/docs)
-    81→
-    82→<br />
-    84→# Reverse Proxy Set Up
+      70→# Organizing your audiobooks
+      71→
+      72→#### Directory structure and folder names are important to Audiobookshelf!
+      73→
+      74→See [documentation](https://audiobookshelf.org/docs#book-directory-structure) for supported directory structure, folder naming conventions, and audio file metadata usage.
+      75→
+      76→<br />
+      78→# Installation
+      79→
+      80→See [install docs](https://www.audiobookshelf.org/docs)
+      81→
+      82→<br />
+      84→# Reverse Proxy Set Up
     …
-    90→### NGINX Proxy Manager
+      90→### NGINX Proxy Manager
     …
-    96→### NGINX Reverse Proxy
+      96→### NGINX Reverse Proxy
     …
-    131→### Apache Reverse Proxy
+     131→### Apache Reverse Proxy
     …
-    196→### SWAG Reverse Proxy
+     196→### SWAG Reverse Proxy
     …
-    200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
+     200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
     …
-    243→6. **Advanced Settings Tab**
-    244→   - Leave as is.
-    246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)
+     243→6. **Advanced Settings Tab**
+     244→   - Leave as is.
+     246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)
     …
-    258→### Example Caddyfile - [Caddy Reverse Proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
+     258→### Example Caddyfile - [Caddy Reverse Proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
     …
-    267→### HAProxy
+     267→### HAProxy
     …
-    310→### pfSense and HAProxy
-    312→For pfSense the inputs are graphical, and `Health checking` is enabled.
+     310→### pfSense and HAProxy
+     312→For pfSense the inputs are graphical, and `Health checking` is enabled.
     …
-    350→# Run from source
-    351→
-    352→# Contributing
-    353→
-    354→This application is built using [NodeJs](https://nodejs.org/).
-    356→### Localization
+     350→# Run from source
+     351→
+     352→# Contributing
+     353→
+     354→This application is built using [NodeJs](https://nodejs.org/).
+     356→### Localization
     …
-    360→### Dev Container Setup
+     360→### Dev Container Setup
     …
-    418→You are now ready to start development!
-    420→### Manual Environment Setup
+     418→You are now ready to start development!
+     420→### Manual Environment Setup
     …
-    436→### Development Commands
+     436→### Development Commands
     …
-    450→# How to Support
-    451→
-    452→[See the incomplete "How to Support" page](https://www.audiobookshelf.org/support)
+     450→# How to Support
+     451→
+     452→[See the incomplete "How to Support" page](https://www.audiobookshelf.org/support)
 server/
     Auth.js
     Database.js

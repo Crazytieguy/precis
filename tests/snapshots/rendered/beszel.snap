@@ -16,25 +16,25 @@ agent/
     agent_cache_test.go
     agent_test_helpers.go
         …
-        3→package agent
-        5→// TESTING ONLY: GetConnectionManager is a helper function to get the connection manager for testing.
-        6→func (a *Agent) GetConnectionManager() *ConnectionManager {
-        7→	return a.connectionManager
+           3→package agent
+           5→// TESTING ONLY: GetConnectionManager is a helper function to get the connection manager for testing.
+           6→func (a *Agent) GetConnectionManager() *ConnectionManager {
+           7→	return a.connectionManager
         …
     battery/
         battery.go
             …
-            2→package battery
+               2→package battery
             …
         battery_darwin.go
         battery_linux.go
         battery_linux_test.go
         battery_stub.go
             …
-            7→func HasReadableBattery() bool {
-            8→	return false
+               7→func HasReadableBattery() bool {
+               8→	return false
             …
-            11→func GetBatteryStats() (uint8, uint8, error) {
+              11→func GetBatteryStats() (uint8, uint8, error) {
             …
         battery_windows.go
     client.go
@@ -55,12 +55,12 @@ agent/
     emmc_linux_test.go
     emmc_stub.go
         …
-        3→package agent
+           3→package agent
         …
-        7→func scanEmmcDevices() []*DeviceInfo {
-        8→	return nil
+           7→func scanEmmcDevices() []*DeviceInfo {
+           8→	return nil
         …
-        11→func (sm *SmartManager) collectEmmcHealth(deviceInfo *DeviceInfo) (bool, error) {
+          11→func (sm *SmartManager) collectEmmcHealth(deviceInfo *DeviceInfo) (bool, error) {
         …
     fingerprint.go
     fingerprint_test.go
@@ -69,31 +69,31 @@ agent/
     gpu_amd_linux_test.go
     gpu_amd_unsupported.go
         …
-        9→func (gm *GPUManager) hasAmdSysfs() bool {
-        10→	return false
+           9→func (gm *GPUManager) hasAmdSysfs() bool {
+          10→	return false
         …
-        13→func (gm *GPUManager) collectAmdStats() error {
+          13→func (gm *GPUManager) collectAmdStats() error {
         …
     gpu_darwin.go
     gpu_darwin_test.go
     gpu_darwin_unsupported.go
         …
-        3→package agent
+           3→package agent
         …
-        6→func (gm *GPUManager) startPowermetricsCollector() {}
+           6→func (gm *GPUManager) startPowermetricsCollector() {}
         …
-        9→func (gm *GPUManager) startMacmonCollector() {}
+           9→func (gm *GPUManager) startMacmonCollector() {}
     gpu_intel.go
     gpu_nvml.go
     gpu_nvml_linux.go
     gpu_nvml_unsupported.go
         …
-        7→type nvmlCollector struct {
-        8→	gm *GPUManager
-        9→}
-        11→func (c *nvmlCollector) init() error {
+           7→type nvmlCollector struct {
+           8→	gm *GPUManager
+           9→}
+          11→func (c *nvmlCollector) init() error {
         …
-        15→func (c *nvmlCollector) start() {}
+          15→func (c *nvmlCollector) start() {}
     gpu_nvml_windows.go
     gpu_nvtop.go
     gpu_test.go
@@ -105,22 +105,22 @@ agent/
     mdraid_linux_test.go
     mdraid_stub.go
         …
-        3→package agent
-        5→func scanMdraidDevices() []*DeviceInfo {
-        6→	return nil
+           3→package agent
+           5→func scanMdraidDevices() []*DeviceInfo {
+           6→	return nil
         …
-        9→func (sm *SmartManager) collectMdraidHealth(deviceInfo *DeviceInfo) (bool, error) {
+           9→func (sm *SmartManager) collectMdraidHealth(deviceInfo *DeviceInfo) (bool, error) {
         …
     network.go
     network_test.go
     response.go
         …
-        13→func newAgentResponse(data any, requestID *uint32) common.AgentResponse {
+          13→func newAgentResponse(data any, requestID *uint32) common.AgentResponse {
         …
     sensors.go
     sensors_default.go
         …
-        9→var getSensorTemps = sensors.TemperaturesWithContext
+           9→var getSensorTemps = sensors.TemperaturesWithContext
     sensors_test.go
     sensors_windows.go
     server.go
@@ -128,7 +128,7 @@ agent/
     smart.go
     smart_nonwindows.go
         …
-        7→func ensureEmbeddedSmartctl() (string, error) {
+           7→func ensureEmbeddedSmartctl() (string, error) {
         …
     smart_test.go
     smart_windows.go
@@ -150,52 +150,52 @@ agent/
     utils/
     zfs/
 beszel.go
-    1→// Package beszel provides core application constants and version information
-    2→// which are used throughout the application.
-    3→package beszel
-    4→
-    5→import "github.com/blang/semver"
-    7→const (
-    8→	// Version is the current version of the application.
-    9→	Version = "0.18.7"
-    10→	// AppName is the name of the application.
-    11→	AppName = "beszel"
-    12→)
-    14→// MinVersionCbor is the minimum supported version for CBOR compatibility.
-    15→var MinVersionCbor = semver.MustParse("0.12.0")
-    17→// MinVersionAgentResponse is the minimum supported version for AgentResponse compatibility.
-    18→var MinVersionAgentResponse = semver.MustParse("0.13.0")
+       1→// Package beszel provides core application constants and version information
+       2→// which are used throughout the application.
+       3→package beszel
+       4→
+       5→import "github.com/blang/semver"
+       7→const (
+       8→	// Version is the current version of the application.
+       9→	Version = "0.18.7"
+      10→	// AppName is the name of the application.
+      11→	AppName = "beszel"
+      12→)
+      14→// MinVersionCbor is the minimum supported version for CBOR compatibility.
+      15→var MinVersionCbor = semver.MustParse("0.12.0")
+      17→// MinVersionAgentResponse is the minimum supported version for AgentResponse compatibility.
+      18→var MinVersionAgentResponse = semver.MustParse("0.13.0")
 go.mod
-    1→module github.com/henrygd/beszel
-    2→
-    3→go 1.26.1
-    4→
-    5→require (
-    6→	github.com/blang/semver v3.5.1+incompatible
-    7→	github.com/coreos/go-systemd/v22 v22.7.0
-    8→	github.com/ebitengine/purego v0.10.0
-    9→	github.com/fxamacker/cbor/v2 v2.9.0
-    10→	github.com/gliderlabs/ssh v0.3.8
-    11→	github.com/google/uuid v1.6.0
-    12→	github.com/lxzan/gws v1.9.1
-    13→	github.com/nicholas-fedor/shoutrrr v0.14.3
-    14→	github.com/pocketbase/dbx v1.12.0
-    15→	github.com/pocketbase/pocketbase v0.36.8
-    16→	github.com/shirou/gopsutil/v4 v4.26.3
-    17→	github.com/spf13/cast v1.10.0
-    18→	github.com/spf13/cobra v1.10.2
-    19→	github.com/spf13/pflag v1.0.10
-    20→	github.com/stretchr/testify v1.11.1
-    21→	golang.org/x/crypto v0.49.0
-    22→	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
-    23→	golang.org/x/sys v0.42.0
-    24→	gopkg.in/yaml.v3 v3.0.1
-    25→	howett.net/plist v1.0.1
-    26→)
-    27→
-    28→require (
+       1→module github.com/henrygd/beszel
+       2→
+       3→go 1.26.1
+       4→
+       5→require (
+       6→	github.com/blang/semver v3.5.1+incompatible
+       7→	github.com/coreos/go-systemd/v22 v22.7.0
+       8→	github.com/ebitengine/purego v0.10.0
+       9→	github.com/fxamacker/cbor/v2 v2.9.0
+      10→	github.com/gliderlabs/ssh v0.3.8
+      11→	github.com/google/uuid v1.6.0
+      12→	github.com/lxzan/gws v1.9.1
+      13→	github.com/nicholas-fedor/shoutrrr v0.14.3
+      14→	github.com/pocketbase/dbx v1.12.0
+      15→	github.com/pocketbase/pocketbase v0.36.8
+      16→	github.com/shirou/gopsutil/v4 v4.26.3
+      17→	github.com/spf13/cast v1.10.0
+      18→	github.com/spf13/cobra v1.10.2
+      19→	github.com/spf13/pflag v1.0.10
+      20→	github.com/stretchr/testify v1.11.1
+      21→	golang.org/x/crypto v0.49.0
+      22→	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
+      23→	golang.org/x/sys v0.42.0
+      24→	gopkg.in/yaml.v3 v3.0.1
+      25→	howett.net/plist v1.0.1
+      26→)
+      27→
+      28→require (
     …
-    68→)
+      68→)
 go.sum
 i18n.yml
 internal/
@@ -220,18 +220,18 @@ internal/
         ghupdate_test.go
         release.go
             …
-            8→type releaseAsset struct {
+               8→type releaseAsset struct {
             …
-            15→type release struct {
+              15→type release struct {
             …
-            26→func (r *release) findAssetBySuffix(suffix string) (*releaseAsset, error) {
+              26→func (r *release) findAssetBySuffix(suffix string) (*releaseAsset, error) {
             …
         selinux.go
             …
-            9→// HandleSELinuxContext restores or applies the correct SELinux label to the binary.
-            10→func HandleSELinuxContext(path string) error {
+               9→// HandleSELinuxContext restores or applies the correct SELinux label to the binary.
+              10→func HandleSELinuxContext(path string) error {
             …
-            41→func trySemanageRestorecon(path string) bool {
+              41→func trySemanageRestorecon(path string) bool {
             …
         selinux_test.go
     hub/
@@ -244,66 +244,66 @@ internal/
         records_test.go
         records_test_helpers.go
             …
-            9→// DeleteOldSystemStats exposes deleteOldSystemStats for testing
-            10→func DeleteOldSystemStats(app core.App) error {
-            11→	return deleteOldSystemStats(app)
+               9→// DeleteOldSystemStats exposes deleteOldSystemStats for testing
+              10→func DeleteOldSystemStats(app core.App) error {
+              11→	return deleteOldSystemStats(app)
             …
-            14→// DeleteOldAlertsHistory exposes deleteOldAlertsHistory for testing
-            15→func DeleteOldAlertsHistory(app core.App, countToKeep, countBeforeDeletion int) error {
-            16→	return deleteOldAlertsHistory(app, countToKeep, countBeforeDeletion)
+              14→// DeleteOldAlertsHistory exposes deleteOldAlertsHistory for testing
+              15→func DeleteOldAlertsHistory(app core.App, countToKeep, countBeforeDeletion int) error {
+              16→	return deleteOldAlertsHistory(app, countToKeep, countBeforeDeletion)
             …
-            19→// TwoDecimals exposes twoDecimals for testing
-            20→func TwoDecimals(value float64) float64 {
-            21→	return twoDecimals(value)
+              19→// TwoDecimals exposes twoDecimals for testing
+              20→func TwoDecimals(value float64) float64 {
+              21→	return twoDecimals(value)
             …
     site/
     tests/
     users/
         users.go
 readme.md
-    1→# Beszel
-    2→
-    3→Beszel is a lightweight server monitoring platform that includes Docker statistics, historical data, and alert functions.
-    5→It has a friendly web interface, simple configuration, and is ready to use out of the box. It supports automatic backup, multi-user, OAuth authentication, and API access.
-    6→
-    7→[![agent Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel-agent/latest?logo=docker&label=agent%20image%20size)](https://hub.docker.com/r/henrygd/beszel-agent)
-    8→[![hub Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel/latest?logo=docker&label=hub%20image%20size)](https://hub.docker.com/r/henrygd/beszel)
-    9→[![MIT license](https://img.shields.io/github/license/henrygd/beszel?color=%239944ee)](https://github.com/henrygd/beszel/blob/main/LICENSE)
-    10→[![Crowdin](https://badges.crowdin.net/beszel/localized.svg)](https://crowdin.com/project/beszel)
-    11→
-    12→![Screenshot of Beszel dashboard and system page, side by side. The dashboard shows metrics from multiple connected systems, while the system page shows detailed metrics for a single system.](https://henrygd-assets.b-cdn.net/beszel/screenshot-new.png)
-    14→## Features
-    16→- **Lightweight**: Smaller and less resource-intensive than leading solutions.
-    17→- **Simple**: Easy setup with little manual configuration required.
-    18→- **Docker stats**: Tracks CPU, memory, and network usage history for each container.
-    19→- **Alerts**: Configurable alerts for CPU, memory, disk, bandwidth, temperature, load average, and status.
-    20→- **Multi-user**: Users manage their own systems. Admins can share systems across users.
-    21→- **OAuth / OIDC**: Supports many OAuth2 providers. Password auth can be disabled.
-    22→- **Automatic backups**: Save to and restore from disk or S3-compatible storage.
+       1→# Beszel
+       2→
+       3→Beszel is a lightweight server monitoring platform that includes Docker statistics, historical data, and alert functions.
+       5→It has a friendly web interface, simple configuration, and is ready to use out of the box. It supports automatic backup, multi-user, OAuth authentication, and API access.
+       6→
+       7→[![agent Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel-agent/latest?logo=docker&label=agent%20image%20size)](https://hub.docker.com/r/henrygd/beszel-agent)
+       8→[![hub Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel/latest?logo=docker&label=hub%20image%20size)](https://hub.docker.com/r/henrygd/beszel)
+       9→[![MIT license](https://img.shields.io/github/license/henrygd/beszel?color=%239944ee)](https://github.com/henrygd/beszel/blob/main/LICENSE)
+      10→[![Crowdin](https://badges.crowdin.net/beszel/localized.svg)](https://crowdin.com/project/beszel)
+      11→
+      12→![Screenshot of Beszel dashboard and system page, side by side. The dashboard shows metrics from multiple connected systems, while the system page shows detailed metrics for a single system.](https://henrygd-assets.b-cdn.net/beszel/screenshot-new.png)
+      14→## Features
+      16→- **Lightweight**: Smaller and less resource-intensive than leading solutions.
+      17→- **Simple**: Easy setup with little manual configuration required.
+      18→- **Docker stats**: Tracks CPU, memory, and network usage history for each container.
+      19→- **Alerts**: Configurable alerts for CPU, memory, disk, bandwidth, temperature, load average, and status.
+      20→- **Multi-user**: Users manage their own systems. Admins can share systems across users.
+      21→- **OAuth / OIDC**: Supports many OAuth2 providers. Password auth can be disabled.
+      22→- **Automatic backups**: Save to and restore from disk or S3-compatible storage.
     …
-    25→## Architecture
+      25→## Architecture
     …
-    32→## Getting started
-    33→
-    34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
-    36→## Screenshots
-    37→
-    38→![Dashboard](https://beszel.dev/image/dashboard.png)
-    39→![System page](https://beszel.dev/image/system-full.png)
-    40→![Notification Settings](https://beszel.dev/image/settings-notifications.png)
-    42→## Supported metrics
+      32→## Getting started
+      33→
+      34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
+      36→## Screenshots
+      37→
+      38→![Dashboard](https://beszel.dev/image/dashboard.png)
+      39→![System page](https://beszel.dev/image/system-full.png)
+      40→![Notification Settings](https://beszel.dev/image/settings-notifications.png)
+      42→## Supported metrics
     …
-    48→- **Network usage** - Host system and containers.
-    49→- **Load average** - Host system.
-    50→- **Temperature** - Host system sensors.
-    51→- **GPU usage / power draw** - Nvidia, AMD, and Intel.
-    52→- **Battery** - Host system battery charge.
+      48→- **Network usage** - Host system and containers.
+      49→- **Load average** - Host system.
+      50→- **Temperature** - Host system sensors.
+      51→- **GPU usage / power draw** - Nvidia, AMD, and Intel.
+      52→- **Battery** - Host system battery charge.
     …
-    56→## Help and discussion
+      56→## Help and discussion
     …
-    68→## License
-    69→
-    70→Beszel is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+      68→## License
+      69→
+      70→Beszel is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 supplemental/
     CHANGELOG.md
     debian/
@@ -321,19 +321,19 @@ supplemental/
         same-system/
     guides/
         systemd.md
-            1→# Installing as a Linux systemd service
+               1→# Installing as a Linux systemd service
             …
-            5→## Install script (recommended)
+               5→## Install script (recommended)
             …
-            16→### Hub
+              16→### Hub
             …
-            44→### Agent
+              44→### Agent
             …
-            74→## Manual install
-            75→
-            76→### Hub
+              74→## Manual install
+              75→
+              76→### Hub
             …
-            104→### Agent
+             104→### Agent
             …
     kubernetes/
         beszel-hub/

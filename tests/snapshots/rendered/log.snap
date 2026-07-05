@@ -6,46 +6,46 @@ expression: rendered
 .gitignore
 CHANGELOG.md
 Cargo.toml
-    1→[package]
-    2→
-    3→name = "log"
-    4→version = "0.4.29" # remember to update html_root_url
-    5→authors = ["The Rust Project Developers"]
-    6→license = "MIT OR Apache-2.0"
-    7→readme = "README.md"
-    8→repository = "https://github.com/rust-lang/log"
-    9→documentation = "https://docs.rs/log"
-    10→description = """
-    11→A lightweight logging facade for Rust
-    12→"""
-    13→categories = ["development-tools::debugging"]
-    14→keywords = ["logging"]
-    15→exclude = ["rfcs/**/*"]
-    16→rust-version = "1.68.0"
-    17→edition = "2021"
+       1→[package]
+       2→
+       3→name = "log"
+       4→version = "0.4.29" # remember to update html_root_url
+       5→authors = ["The Rust Project Developers"]
+       6→license = "MIT OR Apache-2.0"
+       7→readme = "README.md"
+       8→repository = "https://github.com/rust-lang/log"
+       9→documentation = "https://docs.rs/log"
+      10→description = """
+      11→A lightweight logging facade for Rust
+      12→"""
+      13→categories = ["development-tools::debugging"]
+      14→keywords = ["logging"]
+      15→exclude = ["rfcs/**/*"]
+      16→rust-version = "1.68.0"
+      17→edition = "2021"
     …
 LICENSE-APACHE
 LICENSE-MIT
 README.md
-    1→log
-    2→===
-    3→
-    4→A Rust library providing a lightweight logging *facade*.
+       1→log
+       2→===
+       3→
+       4→A Rust library providing a lightweight logging *facade*.
     …
-    11→* [`log` documentation](https://docs.rs/log)
-    13→A logging facade provides a single logging API that abstracts over the actual
-    14→logging implementation. Libraries can use the logging API provided by this
-    15→crate, and the consumer of those libraries can choose the logging
-    16→implementation that is most suitable for its use case.
-    19→## Minimum supported `rustc`
+      11→* [`log` documentation](https://docs.rs/log)
+      13→A logging facade provides a single logging API that abstracts over the actual
+      14→logging implementation. Libraries can use the logging API provided by this
+      15→crate, and the consumer of those libraries can choose the logging
+      16→implementation that is most suitable for its use case.
+      19→## Minimum supported `rustc`
     …
-    25→## Usage
-    26→
-    27→### In libraries
+      25→## Usage
+      26→
+      27→### In libraries
     …
-    58→### In executables
+      58→### In executables
     …
-    106→## Structured logging
+     106→## Structured logging
     …
 benches/
 rfcs/
@@ -54,58 +54,58 @@ src/
     kv/
         error.rs
             …
-            4→#[derive(Debug)]
-            5→pub struct Error {
-            6→    inner: Inner,
-            7→}
+               4→#[derive(Debug)]
+               5→pub struct Error {
+               6→    inner: Inner,
+               7→}
             …
         key.rs
             …
-            7→pub trait ToKey {
-            8→    /// Perform the conversion.
-            9→    fn to_key(&self) -> Key<'_>;
-            10→}
+               7→pub trait ToKey {
+               8→    /// Perform the conversion.
+               9→    fn to_key(&self) -> Key<'_>;
+              10→}
             …
-            36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-            37→pub struct Key<'k> {
-            38→    // NOTE: This may become `Cow<'k, str>`
-            39→    key: &'k str,
-            40→}
+              36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+              37→pub struct Key<'k> {
+              38→    // NOTE: This may become `Cow<'k, str>`
+              39→    key: &'k str,
+              40→}
             …
         mod.rs
-            1→//! Structured logging.
-            2→//!
-            3→//! Add the `kv` feature to your `Cargo.toml` to enable
-            4→//! this module:
-            5→//!
-            6→//! ```toml
-            7→//! [dependencies.log]
-            8→//! features = ["kv"]
-            9→//! ```
-            10→//!
+               1→//! Structured logging.
+               2→//!
+               3→//! Add the `kv` feature to your `Cargo.toml` to enable
+               4→//! this module:
+               5→//!
+               6→//! ```toml
+               7→//! [dependencies.log]
+               8→//! features = ["kv"]
+               9→//! ```
+              10→//!
             …
         source.rs
             …
-            51→pub trait Source {
+              51→pub trait Source {
             …
-            235→pub trait VisitSource<'kvs> {
-            236→    /// Visit a key-value pair.
-            237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-            238→}
+             235→pub trait VisitSource<'kvs> {
+             236→    /// Visit a key-value pair.
+             237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+             238→}
             …
         value.rs
             …
-            11→pub trait ToValue {
-            12→    /// Perform the conversion.
-            13→    fn to_value(&self) -> Value<'_>;
-            14→}
+              11→pub trait ToValue {
+              12→    /// Perform the conversion.
+              13→    fn to_value(&self) -> Value<'_>;
+              14→}
             …
-            118→#[derive(Clone)]
-            119→pub struct Value<'v> {
-            120→    inner: inner::Inner<'v>,
-            121→}
+             118→#[derive(Clone)]
+             119→pub struct Value<'v> {
+             120→    inner: inner::Inner<'v>,
+             121→}
             …
-            462→pub trait VisitValue<'v> {
+             462→pub trait VisitValue<'v> {
             …
             1129→macro_rules! as_debug {
             …
@@ -119,98 +119,98 @@ src/
             …
     lib.rs
         …
-        11→//! A lightweight logging facade.
-        12→//!
-        13→//! The `log` crate provides a single logging API that abstracts over the
-        14→//! actual logging implementation. Libraries can use the logging API provided
-        15→//! by this crate, and the consumer of those libraries can choose the logging
-        16→//! implementation that is most suitable for its use case.
-        17→//!
-        18→//! If no logging implementation is selected, the facade falls back to a "noop"
-        19→//! implementation that ignores all log messages. The overhead in this case
-        20→//! is very small - just an integer load, comparison and jump.
-        21→//!
-        22→//! A log request consists of a _target_, a _level_, and a _body_. A target is a
-        23→//! string which defaults to the module path of the location of the log request,
-        24→//! though that default may be overridden. Logger implementations typically use
-        25→//! the target to filter requests based on some user configuration.
-        26→//!
+          11→//! A lightweight logging facade.
+          12→//!
+          13→//! The `log` crate provides a single logging API that abstracts over the
+          14→//! actual logging implementation. Libraries can use the logging API provided
+          15→//! by this crate, and the consumer of those libraries can choose the logging
+          16→//! implementation that is most suitable for its use case.
+          17→//!
+          18→//! If no logging implementation is selected, the facade falls back to a "noop"
+          19→//! implementation that ignores all log messages. The overhead in this case
+          20→//! is very small - just an integer load, comparison and jump.
+          21→//!
+          22→//! A log request consists of a _target_, a _level_, and a _body_. A target is a
+          23→//! string which defaults to the module path of the location of the log request,
+          24→//! though that default may be overridden. Logger implementations typically use
+          25→//! the target to filter requests based on some user configuration.
+          26→//!
         …
-        399→use std::cfg;
+         399→use std::cfg;
         …
-        401→use std::error;
-        402→use std::str::FromStr;
-        403→use std::{cmp, fmt, mem};
+         401→use std::error;
+         402→use std::str::FromStr;
+         403→use std::{cmp, fmt, mem};
         …
-        406→mod macros;
-        407→mod serde;
+         406→mod macros;
+         407→mod serde;
         …
-        410→pub mod kv;
+         410→pub mod kv;
         …
-        413→use std::sync::atomic::{AtomicUsize, Ordering};
+         413→use std::sync::atomic::{AtomicUsize, Ordering};
         …
-        416→use std::cell::Cell;
+         416→use std::cell::Cell;
         …
-        418→use std::sync::atomic::Ordering;
+         418→use std::sync::atomic::Ordering;
         …
-        473→#[repr(usize)]
-        474→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
-        475→pub enum Level {
-        476→    /// The "error" level.
-        477→    ///
-        478→    /// Designates very serious errors.
-        479→    // This way these line up with the discriminants for LevelFilter below
-        480→    // This works because Rust treats field-less enums the same way as C does:
-        481→    // https://doc.rust-lang.org/reference/items/enumerations.html#custom-discriminant-values-for-field-less-enumerations
-        482→    Error = 1,
-        483→    /// The "warn" level.
-        484→    ///
-        485→    /// Designates hazardous situations.
-        486→    Warn,
-        487→    /// The "info" level.
-        488→    ///
-        489→    /// Designates useful information.
-        490→    Info,
-        491→    /// The "debug" level.
-        492→    ///
-        493→    /// Designates lower priority information.
-        494→    Debug,
-        495→    /// The "trace" level.
-        496→    ///
-        497→    /// Designates very low priority, often extremely verbose, information.
-        498→    Trace,
-        499→}
+         473→#[repr(usize)]
+         474→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
+         475→pub enum Level {
+         476→    /// The "error" level.
+         477→    ///
+         478→    /// Designates very serious errors.
+         479→    // This way these line up with the discriminants for LevelFilter below
+         480→    // This works because Rust treats field-less enums the same way as C does:
+         481→    // https://doc.rust-lang.org/reference/items/enumerations.html#custom-discriminant-values-for-field-less-enumerations
+         482→    Error = 1,
+         483→    /// The "warn" level.
+         484→    ///
+         485→    /// Designates hazardous situations.
+         486→    Warn,
+         487→    /// The "info" level.
+         488→    ///
+         489→    /// Designates useful information.
+         490→    Info,
+         491→    /// The "debug" level.
+         492→    ///
+         493→    /// Designates lower priority information.
+         494→    Debug,
+         495→    /// The "trace" level.
+         496→    ///
+         497→    /// Designates very low priority, often extremely verbose, information.
+         498→    Trace,
+         499→}
         …
-        634→#[repr(usize)]
-        635→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
-        636→pub enum LevelFilter {
-        637→    /// A level lower than all log levels.
-        638→    Off,
-        639→    /// Corresponds to the `Error` log level.
-        640→    Error,
-        641→    /// Corresponds to the `Warn` log level.
-        642→    Warn,
-        643→    /// Corresponds to the `Info` log level.
-        644→    Info,
-        645→    /// Corresponds to the `Debug` log level.
-        646→    Debug,
-        647→    /// Corresponds to the `Trace` log level.
-        648→    Trace,
-        649→}
+         634→#[repr(usize)]
+         635→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
+         636→pub enum LevelFilter {
+         637→    /// A level lower than all log levels.
+         638→    Off,
+         639→    /// Corresponds to the `Error` log level.
+         640→    Error,
+         641→    /// Corresponds to the `Warn` log level.
+         642→    Warn,
+         643→    /// Corresponds to the `Info` log level.
+         644→    Info,
+         645→    /// Corresponds to the `Debug` log level.
+         646→    Debug,
+         647→    /// Corresponds to the `Trace` log level.
+         648→    Trace,
+         649→}
         …
-        796→/// The "payload" of a log message.
-        797→///
+         796→/// The "payload" of a log message.
+         797→///
         …
-        841→#[derive(Clone, Debug)]
-        842→pub struct Record<'a> {
-        843→    metadata: Metadata<'a>,
-        844→    args: fmt::Arguments<'a>,
-        845→    module_path: Option<MaybeStaticStr<'a>>,
-        846→    file: Option<MaybeStaticStr<'a>>,
-        847→    line: Option<u32>,
-        848→    #[cfg(feature = "kv")]
-        849→    key_values: KeyValues<'a>,
-        850→}
+         841→#[derive(Clone, Debug)]
+         842→pub struct Record<'a> {
+         843→    metadata: Metadata<'a>,
+         844→    args: fmt::Arguments<'a>,
+         845→    module_path: Option<MaybeStaticStr<'a>>,
+         846→    file: Option<MaybeStaticStr<'a>>,
+         847→    line: Option<u32>,
+         848→    #[cfg(feature = "kv")]
+         849→    key_values: KeyValues<'a>,
+         850→}
         …
         1002→#[derive(Debug)]
         1003→pub struct RecordBuilder<'a> {

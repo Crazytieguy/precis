@@ -14,81 +14,81 @@ Changelog.md
 License.md
 Readme.md
     …
-    5→<p align="center">
-    6→  A simple and composable way  <br/>
-    7→  to validate data in JavaScript (and TypeScript).
-    8→</p>
-    9→<br/>
-    10→<br/>
+       5→<p align="center">
+       6→  A simple and composable way  <br/>
+       7→  to validate data in JavaScript (and TypeScript).
+       8→</p>
+       9→<br/>
+      10→<br/>
     …
-    36→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
+      36→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
     …
-    42→### Usage
-    43→
-    44→Superstruct allows you to define the shape of data you want to validate:
+      42→### Usage
+      43→
+      44→Superstruct allows you to define the shape of data you want to validate:
     …
-    145→### Why?
+     145→### Why?
     …
-    167→### Principles
+     167→### Principles
     …
-    181→### Demo
+     181→### Demo
     …
-    189→### Examples
+     189→### Examples
     …
-    205→### Documentation
+     205→### Documentation
     …
-    231→### License
-    232→
-    233→This package is [MIT-licensed](./License.md).
+     231→### License
+     232→
+     233→This package is [MIT-licensed](./License.md).
 docs/
     guides/
         01-getting-started.md
-            1→# Getting Started
-            2→
-            3→## Installing Superstruct
+               1→# Getting Started
+               2→
+               3→## Installing Superstruct
             …
-            41→## Defining Structs
+              41→## Defining Structs
             …
         02-validating-data.md
-            1→# Validating Data
+               1→# Validating Data
             …
-            5→## Primitive Values
+               5→## Primitive Values
             …
-            37→## Composed Values
+              37→## Composed Values
             …
-            114→## Optional Values
+             114→## Optional Values
             …
-            157→## Custom Values
+             157→## Custom Values
             …
         03-coercing-data.md
-            1→# Coercing Data
+               1→# Coercing Data
             …
-            7→## Default Values
+               7→## Default Values
             …
-            49→## Custom Coercions
+              49→## Custom Coercions
             …
         04-refining-validation.md
-            1→# Refining Validation
+               1→# Refining Validation
             …
-            7→## Built-in Refinements
+               7→## Built-in Refinements
             …
-            47→## Custom Refinements
+              47→## Custom Refinements
             …
         05-handling-errors.md
-            1→# Handling Errors
+               1→# Handling Errors
             …
-            53→## Customizing Errors
+              53→## Customizing Errors
             …
-            102→## Multiple Failures
+             102→## Multiple Failures
             …
         06-using-typescript.md
-            1→# Using TypeScript
+               1→# Using TypeScript
             …
-            7→## Narrowing Types
+               7→## Narrowing Types
             …
-            37→## Describing Types
+              37→## Describing Types
             …
-            55→## Inferring Types
+              55→## Inferring Types
             …
     images/
         banner.png
@@ -98,123 +98,123 @@ docs/
         logo.png
         logo.sketch
     readme.md
-        1→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [TypeScript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
+           1→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [TypeScript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
         …
-        7→### Usage
-        8→
-        9→Superstruct allows you to define the shape of data you want to validate:
+           7→### Usage
+           8→
+           9→Superstruct allows you to define the shape of data you want to validate:
         …
     reference/
         coercions.md
-            1→# Coercions
+               1→# Coercions
             …
-            5→### `defaulted`
+               5→### `defaulted`
             …
-            21→### `trimmed`
+              21→### `trimmed`
             …
-            29→### Custom Coercions
+              29→### Custom Coercions
             …
         core.md
-            1→# Core
-            2→
-            3→### `assert`
+               1→# Core
+               2→
+               3→### `assert`
             …
-            15→### `create`
+              15→### `create`
             …
-            27→### `is`
+              27→### `is`
             …
-            41→### `mask`
+              41→### `mask`
             …
-            56→### `validate`
+              56→### `validate`
             …
         errors.md
-            1→# Errors
+               1→# Errors
             …
-            5→### `StructError`
+               5→### `StructError`
             …
-            19→### Error Properties
+              19→### Error Properties
             …
-            32→### Multiple Errors
+              32→### Multiple Errors
             …
         refinements.md
-            1→# Refinements
+               1→# Refinements
             …
-            5→### `empty`
+               5→### `empty`
             …
-            21→### `max`
+              21→### `max`
             …
-            35→### `min`
+              35→### `min`
             …
-            49→### `nonempty`
+              49→### `nonempty`
             …
-            58→### `pattern`
+              58→### `pattern`
             …
-            70→### `size`
+              70→### `size`
             …
-            88→### Custom Refinements
+              88→### Custom Refinements
             …
         types.md
         typescript.md
-            1→# TypeScript
-            2→
-            3→Superstruct is designed with TypeScript in mind, so that you don't need to duplicate type definitions.
-            5→## Utilities
-            6→
-            7→### `Describe`
+               1→# TypeScript
+               2→
+               3→Superstruct is designed with TypeScript in mind, so that you don't need to duplicate type definitions.
+               5→## Utilities
+               6→
+               7→### `Describe`
             …
-            25→### `Infer`
+              25→### `Infer`
             …
         utilities.md
-            1→# Utilities
+               1→# Utilities
             …
-            5→### `assign`
+               5→### `assign`
             …
-            20→### `deprecated`
+              20→### `deprecated`
             …
-            38→### `dynamic`
+              38→### `dynamic`
             …
-            51→### `lazy`
+              51→### `lazy`
             …
-            64→### `omit`
+              64→### `omit`
             …
-            78→### `partial`
+              78→### `partial`
             …
-            97→### `pick`
+              97→### `pick`
             …
     resources/
         faq.md
         links.md
-            1→# Resources
-            2→
-            3→A few resources that are helpful for building with Superstruct.
-            5→## Libraries
+               1→# Resources
+               2→
+               3→A few resources that are helpful for building with Superstruct.
+               5→## Libraries
             …
     summary.md
-        1→- [Introduction](./readme.md)
-        2→
-        3→## Guides
-        4→
-        5→- [Getting Started](./guides/01-getting-started.md)
-        6→- [Validating Data](./guides/02-validating-data.md)
-        7→- [Coercing Data](./guides/03-coercing-data.md)
-        8→- [Refining Validation](./guides/04-refining-validation.md)
-        9→- [Handling Errors](./guides/05-handling-errors.md)
-        10→- [Using TypeScript](./guides/06-using-typescript.md)
-        11→
-        12→## API Reference
-        13→
-        14→- [Core](./reference/core.md)
-        15→- [Types](./reference/types.md)
-        16→- [Refinements](./reference/refinements.md)
-        17→- [Coercions](./reference/coercions.md)
-        18→- [Utilities](./reference/utilities.md)
-        19→- [Errors](./reference/errors.md)
-        20→- [TypeScript](./reference/typescript.md)
-        21→
-        22→## Resources
-        23→
-        24→- [FAQ](./resources/faq.md)
-        25→- [Links](./resources/links.md)
+           1→- [Introduction](./readme.md)
+           2→
+           3→## Guides
+           4→
+           5→- [Getting Started](./guides/01-getting-started.md)
+           6→- [Validating Data](./guides/02-validating-data.md)
+           7→- [Coercing Data](./guides/03-coercing-data.md)
+           8→- [Refining Validation](./guides/04-refining-validation.md)
+           9→- [Handling Errors](./guides/05-handling-errors.md)
+          10→- [Using TypeScript](./guides/06-using-typescript.md)
+          11→
+          12→## API Reference
+          13→
+          14→- [Core](./reference/core.md)
+          15→- [Types](./reference/types.md)
+          16→- [Refinements](./reference/refinements.md)
+          17→- [Coercions](./reference/coercions.md)
+          18→- [Utilities](./reference/utilities.md)
+          19→- [Errors](./reference/errors.md)
+          20→- [TypeScript](./reference/typescript.md)
+          21→
+          22→## Resources
+          23→
+          24→- [FAQ](./resources/faq.md)
+          25→- [Links](./resources/links.md)
 examples/
     README.md
     basic-validation.js
@@ -230,136 +230,136 @@ examples/
 jsr.json
 package.json
     …
-    2→  "name": "superstruct",
-    3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
-    4→  "version": "2.0.2",
-    5→  "license": "MIT",
+       2→  "name": "superstruct",
+       3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
+       4→  "version": "2.0.2",
+       5→  "license": "MIT",
     …
-    7→  "type": "module",
+       7→  "type": "module",
     …
 rollup.config.js
 src/
     error.ts
-        1→/**
-        2→ * A `StructFailure` represents a single specific failure in validation.
-        3→ */
-        5→export type Failure = {
-        6→  value: any
-        7→  key: any
-        8→  type: string
-        9→  refinement: string | undefined
-        10→  message: string
-        11→  explanation?: string
-        12→  branch: Array<any>
-        13→  path: Array<any>
-        14→}
+           1→/**
+           2→ * A `StructFailure` represents a single specific failure in validation.
+           3→ */
+           5→export type Failure = {
+           6→  value: any
+           7→  key: any
+           8→  type: string
+           9→  refinement: string | undefined
+          10→  message: string
+          11→  explanation?: string
+          12→  branch: Array<any>
+          13→  path: Array<any>
+          14→}
         …
-        25→export class StructError extends TypeError {
-        26→  value: any
-        27→  key!: any
-        28→  type!: string
-        29→  refinement!: string | undefined
-        30→  path!: Array<any>
-        31→  branch!: Array<any>
-        32→  failures: () => Array<Failure>;
+          25→export class StructError extends TypeError {
+          26→  value: any
+          27→  key!: any
+          28→  type!: string
+          29→  refinement!: string | undefined
+          30→  path!: Array<any>
+          31→  branch!: Array<any>
+          32→  failures: () => Array<Failure>;
         …
-        35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
-        36→    let cached: Array<Failure> | undefined
-        37→    const { message, explanation, ...rest } = failure
-        38→    const { path } = failure
-        39→    const msg =
-        40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-        41→    super(explanation ?? msg)
-        42→    if (explanation != null) this.cause = msg
-        43→    Object.assign(this, rest)
-        44→    this.name = this.constructor.name
-        45→    this.failures = () => {
-        46→      return (cached ??= [failure, ...failures()])
-        47→    }
+          35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+          36→    let cached: Array<Failure> | undefined
+          37→    const { message, explanation, ...rest } = failure
+          38→    const { path } = failure
+          39→    const msg =
+          40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
+          41→    super(explanation ?? msg)
+          42→    if (explanation != null) this.cause = msg
+          43→    Object.assign(this, rest)
+          44→    this.name = this.constructor.name
+          45→    this.failures = () => {
+          46→      return (cached ??= [failure, ...failures()])
+          47→    }
         …
     index.ts
-        1→export * from './error.js'
-        2→export * from './struct.js'
-        3→export * from './structs/coercions.js'
-        4→export * from './structs/refinements.js'
-        5→export * from './structs/types.js'
-        6→export * from './structs/utilities.js'
+           1→export * from './error.js'
+           2→export * from './struct.js'
+           3→export * from './structs/coercions.js'
+           4→export * from './structs/refinements.js'
+           5→export * from './structs/types.js'
+           6→export * from './structs/utilities.js'
     struct.ts
-        1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
-        2→import { StructError, Failure } from './error.js'
+           1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+           2→import { StructError, Failure } from './error.js'
         …
-        261→/**
-        262→ * A `Refiner` takes a value of a known type and validates it against a further
-        263→ * constraint.
-        264→ */
-        266→export type Refiner<T> = (value: T, context: Context) => Result
+         261→/**
+         262→ * A `Refiner` takes a value of a known type and validates it against a further
+         263→ * constraint.
+         264→ */
+         266→export type Refiner<T> = (value: T, context: Context) => Result
     structs/
         coercions.ts
             …
-            16→export function coerce<T, S, C>(
-            17→  struct: Struct<T, S>,
-            18→  condition: Struct<C, any>,
-            19→  coercer: Coercer<C>
-            20→): Struct<T, S> {
-            21→  return new Struct({
-            22→    ...struct,
-            23→    coercer: (value, ctx) => {
-            24→      return is(value, condition)
-            25→        ? struct.coercer(coercer(value, ctx), ctx)
-            26→        : struct.coercer(value, ctx)
-            27→    },
-            28→  })
+              16→export function coerce<T, S, C>(
+              17→  struct: Struct<T, S>,
+              18→  condition: Struct<C, any>,
+              19→  coercer: Coercer<C>
+              20→): Struct<T, S> {
+              21→  return new Struct({
+              22→    ...struct,
+              23→    coercer: (value, ctx) => {
+              24→      return is(value, condition)
+              25→        ? struct.coercer(coercer(value, ctx), ctx)
+              26→        : struct.coercer(value, ctx)
+              27→    },
+              28→  })
             …
-            38→export function defaulted<T, S>(
-            39→  struct: Struct<T, S>,
-            40→  fallback: any,
-            41→  options: {
-            42→    strict?: boolean
-            43→  } = {}
-            44→): Struct<T, S> {
+              38→export function defaulted<T, S>(
+              39→  struct: Struct<T, S>,
+              40→  fallback: any,
+              41→  options: {
+              42→    strict?: boolean
+              43→  } = {}
+              44→): Struct<T, S> {
             …
-            79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
-            80→  return coerce(struct, string(), (x) => x.trim())
+              79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
+              80→  return coerce(struct, string(), (x) => x.trim())
             …
         refinements.ts
             …
-            8→export function empty<
-            9→  T extends string | any[] | Map<any, any> | Set<any>,
-            10→  S extends any,
-            11→>(struct: Struct<T, S>): Struct<T, S> {
+               8→export function empty<
+               9→  T extends string | any[] | Map<any, any> | Set<any>,
+              10→  S extends any,
+              11→>(struct: Struct<T, S>): Struct<T, S> {
             …
-            33→export function max<T extends number | Date, S extends any>(
-            34→  struct: Struct<T, S>,
-            35→  threshold: T,
-            36→  options: {
-            37→    exclusive?: boolean
-            38→  } = {}
-            39→): Struct<T, S> {
+              33→export function max<T extends number | Date, S extends any>(
+              34→  struct: Struct<T, S>,
+              35→  threshold: T,
+              36→  options: {
+              37→    exclusive?: boolean
+              38→  } = {}
+              39→): Struct<T, S> {
             …
-            55→export function min<T extends number | Date, S extends any>(
+              55→export function min<T extends number | Date, S extends any>(
             …
-            77→export function nonempty<
-            78→  T extends string | any[] | Map<any, any> | Set<any>,
-            79→  S extends any,
-            80→>(struct: Struct<T, S>): Struct<T, S> {
+              77→export function nonempty<
+              78→  T extends string | any[] | Map<any, any> | Set<any>,
+              79→  S extends any,
+              80→>(struct: Struct<T, S>): Struct<T, S> {
             …
-            93→export function pattern<T extends string, S extends any>(
-            94→  struct: Struct<T, S>,
-            95→  regexp: RegExp
-            96→): Struct<T, S> {
+              93→export function pattern<T extends string, S extends any>(
+              94→  struct: Struct<T, S>,
+              95→  regexp: RegExp
+              96→): Struct<T, S> {
             …
-            109→export function size<
+             109→export function size<
             …
-            146→export function refine<T, S>(
-            147→  struct: Struct<T, S>,
-            148→  name: string,
-            149→  refiner: Refiner<T>
-            150→): Struct<T, S> {
+             146→export function refine<T, S>(
+             147→  struct: Struct<T, S>,
+             148→  name: string,
+             149→  refiner: Refiner<T>
+             150→): Struct<T, S> {
             …
         types.ts
         utilities.ts
             …
-            247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
+             247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
             …
     utils.ts
 test/

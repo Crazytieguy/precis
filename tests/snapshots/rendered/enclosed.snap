@@ -12,147 +12,147 @@ Dockerfile.rootless
 LICENSE
 README.md
     …
-    9→<h1 align="center">
-    10→  Enclosed - Send private and secure notes
-    11→</h1>
-    12→<p align="center">
-    13→  Minimalistic web application designed for sending end-to-end encrypted notes and files.
-    14→</p>
+       9→<h1 align="center">
+      10→  Enclosed - Send private and secure notes
+      11→</h1>
+      12→<p align="center">
+      13→  Minimalistic web application designed for sending end-to-end encrypted notes and files.
+      14→</p>
     …
-    26→## Introduction
-    27→
-    28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
-    30→All notes are end-to-end encrypted, ensuring that the server and storage have zero knowledge of the content. Users can set a password, define an expiration period (TTL), and choose to have the note self-destruct after being read.
-    31→
-    32→A live instance is available at [enclosed.cc](https://enclosed.cc).
-    33→
-    34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
-    36→## Features
-    38→- **End-to-End Encryption**: Your notes are encrypted on the client side, using AES-GCM with a 256-bit key derived using PBKDF2.
-    39→- **File Attachments**: Share files securely with your notes.
-    40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
-    41→- **Configurable Security Options**: Set a password, expiration time, and choose self-destruction after the note is read.
-    42→- **Minimalistic UI**: Simple and intuitive user interface for quick note sharing.
-    43→- **i18n Support**: Available in multiple languages.
-    44→- **Authentication**: Optional email/password authentication to create notes.
-    45→- **Dark Mode**: A dark theme for late-night note sharing.
-    46→- **Responsive Design**: Works on all devices, from desktops to mobile phones.
-    47→- **Open Source**: The source code is available under the Apache 2.0 License.
-    48→- **Self-Hostable**: Run your instance of Enclosed for private note sharing.
-    49→- **CLI**: A command-line interface for creating notes from the terminal.
+      26→## Introduction
+      27→
+      28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
+      30→All notes are end-to-end encrypted, ensuring that the server and storage have zero knowledge of the content. Users can set a password, define an expiration period (TTL), and choose to have the note self-destruct after being read.
+      31→
+      32→A live instance is available at [enclosed.cc](https://enclosed.cc).
+      33→
+      34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
+      36→## Features
+      38→- **End-to-End Encryption**: Your notes are encrypted on the client side, using AES-GCM with a 256-bit key derived using PBKDF2.
+      39→- **File Attachments**: Share files securely with your notes.
+      40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
+      41→- **Configurable Security Options**: Set a password, expiration time, and choose self-destruction after the note is read.
+      42→- **Minimalistic UI**: Simple and intuitive user interface for quick note sharing.
+      43→- **i18n Support**: Available in multiple languages.
+      44→- **Authentication**: Optional email/password authentication to create notes.
+      45→- **Dark Mode**: A dark theme for late-night note sharing.
+      46→- **Responsive Design**: Works on all devices, from desktops to mobile phones.
+      47→- **Open Source**: The source code is available under the Apache 2.0 License.
+      48→- **Self-Hostable**: Run your instance of Enclosed for private note sharing.
+      49→- **CLI**: A command-line interface for creating notes from the terminal.
     …
-    52→## Self host
-    53→
-    54→### Try it with Docker
+      52→## Self host
+      53→
+      54→### Try it with Docker
     …
-    62→### To go further
+      62→### To go further
     …
-    71→### Configuration
+      71→### Configuration
     …
-    75→## How It Works
+      75→## How It Works
     …
-    93→## CLI
-    94→
-    95→The Enclosed CLI allows you to create notes from the terminal. You can install it globally using npm, yarn, or pnpm.
-    97→### Installation
+      93→## CLI
+      94→
+      95→The Enclosed CLI allows you to create notes from the terminal. You can install it globally using npm, yarn, or pnpm.
+      97→### Installation
     …
-    110→### Create a note
+     110→### Create a note
     …
-    123→### View a note
+     123→### View a note
     …
-    133→### Configure the enclosed instance to use
+     133→### Configure the enclosed instance to use
     …
-    140→## Project Structure
+     140→## Project Structure
     …
-    150→## Contributing
+     150→## Contributing
     …
-    155→## License
-    156→
-    157→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
-    159→## Credits and Acknowledgements
+     155→## License
+     156→
+     157→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
+     159→## Credits and Acknowledgements
     …
-    168→### Stack
+     168→### Stack
     …
-    184→### Hosting
+     184→### Hosting
     …
-    188→### Inspiration
+     188→### Inspiration
     …
-    194→## Contact Information
-    195→
-    196→Please use the issue tracker on GitHub for any questions or feedback.
+     194→## Contact Information
+     195→
+     196→Please use the issue tracker on GitHub for any questions or feedback.
 docker-compose.yml
-    1→services:
-    2→  enclosed:
-    3→    image: corentinth/enclosed
-    4→    ports:
-    5→      - 8787:8787
-    6→    volumes:
-    7→      - enclosed-data:/app/.data
-    8→    restart: unless-stopped
-    9→
-    10→volumes:
-    11→  enclosed-data:
-    12→    driver: local
+       1→services:
+       2→  enclosed:
+       3→    image: corentinth/enclosed
+       4→    ports:
+       5→      - 8787:8787
+       6→    volumes:
+       7→      - enclosed-data:/app/.data
+       8→    restart: unless-stopped
+       9→
+      10→volumes:
+      11→  enclosed-data:
+      12→    driver: local
 package.json
     …
-    2→  "name": "@enclosed/root",
-    3→  "version": "1.16.0",
-    4→  "description": "Send private and secure note",
-    5→  "packageManager": "pnpm@9.15.0",
-    6→  "license": "Apache-2.0",
-    7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-    8→  "repository": {
-    9→    "type": "git",
-    10→    "url": "https://github.com/CorentinTh/enclosed"
-    11→  },
-    12→  "engines": {
-    13→    "node": ">=22.0.0"
-    14→  },
-    15→  "scripts": {
-    16→    "release": "bumpp --commit --tag --push --recursive",
-    17→    "docker:build": "docker build -t enclosed .",
-    18→    "docker:run": "docker run -d -p 8788:8787 enclosed"
-    19→  },
-    20→  "keywords": [
-    21→    "note",
-    22→    "secure",
-    23→    "private",
-    24→    "end-to-end",
-    25→    "encryption",
-    26→    "password",
-    27→    "manager",
-    28→    "expiration"
-    29→  ],
-    30→  "devDependencies": {
-    31→    "bumpp": "^9.5.2"
-    32→  }
+       2→  "name": "@enclosed/root",
+       3→  "version": "1.16.0",
+       4→  "description": "Send private and secure note",
+       5→  "packageManager": "pnpm@9.15.0",
+       6→  "license": "Apache-2.0",
+       7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+       8→  "repository": {
+       9→    "type": "git",
+      10→    "url": "https://github.com/CorentinTh/enclosed"
+      11→  },
+      12→  "engines": {
+      13→    "node": ">=22.0.0"
+      14→  },
+      15→  "scripts": {
+      16→    "release": "bumpp --commit --tag --push --recursive",
+      17→    "docker:build": "docker build -t enclosed .",
+      18→    "docker:run": "docker run -d -p 8788:8787 enclosed"
+      19→  },
+      20→  "keywords": [
+      21→    "note",
+      22→    "secure",
+      23→    "private",
+      24→    "end-to-end",
+      25→    "encryption",
+      26→    "password",
+      27→    "manager",
+      28→    "expiration"
+      29→  ],
+      30→  "devDependencies": {
+      31→    "bumpp": "^9.5.2"
+      32→  }
     …
 packages/
     app-client/
         .env.example
         .gitignore
         README.md
-            1→## Usage
-            2→
-            3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
-            5→This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
-            6→
-            7→```bash
-            8→$ npm install # or pnpm install or yarn install
-            9→```
-            10→
-            11→### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
-            12→
-            13→## Available Scripts
+               1→## Usage
+               2→
+               3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+               5→This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+               6→
+               7→```bash
+               8→$ npm install # or pnpm install or yarn install
+               9→```
+              10→
+              11→### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+              12→
+              13→## Available Scripts
             …
-            17→### `npm run dev` or `npm start`
+              17→### `npm run dev` or `npm start`
             …
-            24→### `npm run build`
+              24→### `npm run build`
             …
-            32→## Deployment
-            33→
-            34→You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
-            36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
+              32→## Deployment
+              33→
+              34→You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+              36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
         components.json
         e2e-tests/
         eslint.config.js
@@ -217,32 +217,32 @@ packages/
         wrangler.toml
     cli/
         README.md
-            1→# Enclosed CLI
-            2→
-            3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-            5→## Getting Started
+               1→# Enclosed CLI
+               2→
+               3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+               5→## Getting Started
             …
-            9→### Create a note
+               9→### Create a note
             …
-            22→### Configure the enclosed instance to use
+              22→### Configure the enclosed instance to use
             …
-            29→## Usage
-            30→
-            31→```bash
-            32→enclosed <command> [options]
-            33→```
-            35→### Create a note
+              29→## Usage
+              30→
+              31→```bash
+              32→enclosed <command> [options]
+              33→```
+              35→### Create a note
             …
-            58→### View a note
+              58→### View a note
             …
-            68→### Configure the enclosed instance to use
+              68→### Configure the enclosed instance to use
             …
-            75→## License
-            76→
-            77→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
-            79→## Credits and Acknowledgements
-            80→
-            81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
+              75→## License
+              76→
+              77→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
+              79→## Credits and Acknowledgements
+              80→
+              81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         bin/
             enclosed.mjs
         build.config.ts
@@ -262,17 +262,17 @@ packages/
         tsconfig.json
     crypto/
         README.md
-            1→# Enclosed crypto library
-            2→
-            3→This package contains the natives crypto primitives used by the [Enclosed lib and project](https://enclosed.cc). It is a standalone package built to provide compatibility between different environments by exposing the same API for node:crypto and web SubtleCrypto.
-            5→## Installation
+               1→# Enclosed crypto library
+               2→
+               3→This package contains the natives crypto primitives used by the [Enclosed lib and project](https://enclosed.cc). It is a standalone package built to provide compatibility between different environments by exposing the same API for node:crypto and web SubtleCrypto.
+               5→## Installation
             …
-            18→## License
-            19→
-            20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
-            22→## Credits and Acknowledgements
-            23→
-            24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
+              18→## License
+              19→
+              20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
+              22→## Credits and Acknowledgements
+              23→
+              24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
         eslint.config.js
         package.json
@@ -301,13 +301,13 @@ packages/
             how-it-works.md
             index.md
                 …
-                5→# Enclosed
+                   5→# Enclosed
                 …
-                11→## Key Features
+                  11→## Key Features
                 …
-                27→## Why Enclosed?
+                  27→## Why Enclosed?
                 …
-                33→## Get Started
+                  33→## Get Started
                 …
             integrations/
             public/
@@ -318,25 +318,25 @@ packages/
                 docker.md
                 other-platforms.md
                 troubleshooting.md
-                    1→# Troubleshooting
-                    2→
-                    3→## Why do I see a warning about insecure connection?
+                       1→# Troubleshooting
+                       2→
+                       3→## Why do I see a warning about insecure connection?
                     …
                 users-authentication-key-generator.md
     lib/
         README.md
-            1→### Enclosed lib
-            2→
-            3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-            5→## Installation
+               1→### Enclosed lib
+               2→
+               3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+               5→## Installation
             …
-            18→## Usage
+              18→## Usage
             …
-            33→## License
+              33→## License
             …
-            37→## Credits and Acknowledgements
-            38→
-            39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
+              37→## Credits and Acknowledgements
+              38→
+              39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
         eslint.config.js
         package.json
@@ -355,25 +355,25 @@ packages/
             files/
             index.ts
                 …
-                10→export {
-                11→  createNote,
-                12→  createNoteUrl,
-                13→  createNoteUrlHashFragment,
-                14→  decryptNote,
-                15→  encryptionAlgorithms,
-                16→  encryptNote,
-                17→  fetchNote,
-                18→  filesToNoteAssets,
-                19→  fileToNoteAsset,
-                20→  isApiClientErrorWithCode,
-                21→  isApiClientErrorWithStatusCode,
-                22→  noteAssetsToFiles,
-                23→  noteAssetToFile,
-                24→  parseNoteUrl,
-                25→  parseNoteUrlHashFragment,
-                26→  serializationFormats,
-                27→  storeNote,
-                28→};
+                  10→export {
+                  11→  createNote,
+                  12→  createNoteUrl,
+                  13→  createNoteUrlHashFragment,
+                  14→  decryptNote,
+                  15→  encryptionAlgorithms,
+                  16→  encryptNote,
+                  17→  fetchNote,
+                  18→  filesToNoteAssets,
+                  19→  fileToNoteAsset,
+                  20→  isApiClientErrorWithCode,
+                  21→  isApiClientErrorWithStatusCode,
+                  22→  noteAssetsToFiles,
+                  23→  noteAssetToFile,
+                  24→  parseNoteUrl,
+                  25→  parseNoteUrlHashFragment,
+                  26→  serializationFormats,
+                  27→  storeNote,
+                  28→};
             notes/
                 notes.models.test.ts
                 notes.models.ts

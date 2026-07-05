@@ -9,250 +9,250 @@ expression: rendered
 .gitignore
 LICENSE
 README.md
-    1→# bareiron
-    2→Minimalist Minecraft server for memory-restrictive embedded systems.
-    3→
-    4→The goal of this project is to enable hosting Minecraft servers on very weak devices, such as the ESP32. The project's priorities are, in order: **memory usage**, **performance**, and **features**. Because of this, compliance with vanilla Minecraft is not guaranteed, nor is it a goal of the project.
-    6→- Minecraft version: `1.21.8`
-    7→- Protocol version: `772`
-    8→
-    9→> [!WARNING]
-    10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
-    12→## Quick start
+       1→# bareiron
+       2→Minimalist Minecraft server for memory-restrictive embedded systems.
+       3→
+       4→The goal of this project is to enable hosting Minecraft servers on very weak devices, such as the ESP32. The project's priorities are, in order: **memory usage**, **performance**, and **features**. Because of this, compliance with vanilla Minecraft is not guaranteed, nor is it a goal of the project.
+       6→- Minecraft version: `1.21.8`
+       7→- Protocol version: `772`
+       8→
+       9→> [!WARNING]
+      10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
+      12→## Quick start
     …
-    17→## Compilation
+      17→## Compilation
     …
-    28→## Configuration
+      28→## Configuration
     …
-    39→## Non-volatile storage (optional)
+      39→## Non-volatile storage (optional)
     …
-    48→## Contribution
+      48→## Contribution
     …
 build.sh
 build_registries.js
 extract_registries.sh
 include/
     crafting.h
-        1→#ifndef CRAFTING_H
-        2→#define CRAFTING_H
-        3→
-        4→#include "globals.h"
-        5→
-        6→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item);
-        7→void getSmeltingOutput (PlayerData *player);
-        8→
-        9→#endif
+           1→#ifndef CRAFTING_H
+           2→#define CRAFTING_H
+           3→
+           4→#include "globals.h"
+           5→
+           6→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item);
+           7→void getSmeltingOutput (PlayerData *player);
+           8→
+           9→#endif
     globals.h
         …
-        4→#include <stdint.h>
-        5→#include <unistd.h>
+           4→#include <stdint.h>
+           5→#include <unistd.h>
         …
-        8→  #define WIFI_SSID "your-ssid"
-        9→  #define WIFI_PASS "your-password"
-        10→  void task_yield ();
+           8→  #define WIFI_SSID "your-ssid"
+           9→  #define WIFI_PASS "your-password"
+          10→  void task_yield ();
         …
-        12→  #define task_yield();
+          12→  #define task_yield();
         …
-        15→#define true 1
-        16→#define false 0
-        18→// TCP port, Minecraft's default is 25565
-        19→#define PORT 25565
+          15→#define true 1
+          16→#define false 0
+          18→// TCP port, Minecraft's default is 25565
+          19→#define PORT 25565
         …
-        23→#define MAX_PLAYERS 16
-        25→// How many mobs to allocate memory for
-        26→#define MAX_MOBS (MAX_PLAYERS)
-        28→// Manhattan distance at which mobs despawn
-        29→#define MOB_DESPAWN_DISTANCE 256
-        31→// Server game mode: 0 - survival; 1 - creative; 2 - adventure; 3 - spectator
-        32→#define GAMEMODE 0
-        34→// Max render distance, determines how many chunks to send
-        35→#define VIEW_DISTANCE 2
-        37→// Time between server ticks in microseconds (default = 1s)
-        38→#define TIME_BETWEEN_TICKS 1000000
-        40→// Calculated from TIME_BETWEEN_TICKS
-        41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
-        43→// Initial world generation seed, will be hashed on startup
-        44→// Used in generating terrain and biomes
-        45→#define INITIAL_WORLD_SEED 0xA103DE6C
-        47→// Initial general RNG seed, will be hashed on startup
-        48→// Used in random game events like item drops and mob behavior
-        49→#define INITIAL_RNG_SEED 0xE2B9419
+          23→#define MAX_PLAYERS 16
+          25→// How many mobs to allocate memory for
+          26→#define MAX_MOBS (MAX_PLAYERS)
+          28→// Manhattan distance at which mobs despawn
+          29→#define MOB_DESPAWN_DISTANCE 256
+          31→// Server game mode: 0 - survival; 1 - creative; 2 - adventure; 3 - spectator
+          32→#define GAMEMODE 0
+          34→// Max render distance, determines how many chunks to send
+          35→#define VIEW_DISTANCE 2
+          37→// Time between server ticks in microseconds (default = 1s)
+          38→#define TIME_BETWEEN_TICKS 1000000
+          40→// Calculated from TIME_BETWEEN_TICKS
+          41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
+          43→// Initial world generation seed, will be hashed on startup
+          44→// Used in generating terrain and biomes
+          45→#define INITIAL_WORLD_SEED 0xA103DE6C
+          47→// Initial general RNG seed, will be hashed on startup
+          48→// Used in random game events like item drops and mob behavior
+          49→#define INITIAL_RNG_SEED 0xE2B9419
         …
-        53→#define CHUNK_SIZE 8
-        55→// Terrain low point - should start a bit below sea level for rivers/lakes
-        56→#define TERRAIN_BASE_HEIGHT 60
-        58→// Cave generation Y level
-        59→#define CAVE_BASE_DEPTH 24
+          53→#define CHUNK_SIZE 8
+          55→// Terrain low point - should start a bit below sea level for rivers/lakes
+          56→#define TERRAIN_BASE_HEIGHT 60
+          58→// Cave generation Y level
+          59→#define CAVE_BASE_DEPTH 24
         …
-        63→#define BIOME_SIZE (CHUNK_SIZE * 8)
-        65→// Calculated from BIOME_SIZE
-        66→#define BIOME_RADIUS (BIOME_SIZE / 2)
+          63→#define BIOME_SIZE (CHUNK_SIZE * 8)
+          65→// Calculated from BIOME_SIZE
+          66→#define BIOME_RADIUS (BIOME_SIZE / 2)
         …
-        71→#define VISITED_HISTORY 4
-        73→// How many player-made block changes to allow
-        74→// Determines the fixed amount of memory allocated to blocks
-        75→#define MAX_BLOCK_CHANGES 20000
+          71→#define VISITED_HISTORY 4
+          73→// How many player-made block changes to allow
+          74→// Determines the fixed amount of memory allocated to blocks
+          75→#define MAX_BLOCK_CHANGES 20000
         …
-        93→#define DISK_SYNC_INTERVAL 15000000
+          93→#define DISK_SYNC_INTERVAL 15000000
         …
     packets.h
     procedures.h
     serialize.h
-        1→#ifndef SERIALIZE_H
-        2→#define SERIALIZE_H
-        3→
-        4→#include "globals.h"
-        5→
-        6→#ifdef SYNC_WORLD_TO_DISK
-        7→  int initSerializer ();
-        8→  void writeBlockChangesToDisk (int from, int to);
-        9→  void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot);
-        10→  void writePlayerDataToDisk ();
-        11→  void writeDataToDiskOnInterval ();
-        12→#else
-        13→  // Define no-op placeholders for when disk syncing isn't enabled
-        14→  #define writeBlockChangesToDisk(a, b)
-        15→  #define writeChestChangesToDisk(a, b)
-        16→  #define writePlayerDataToDisk()
-        17→  #define writeDataToDiskOnInterval()
-        18→  #define initSerializer() 0
-        19→#endif
-        20→
-        21→#endif
+           1→#ifndef SERIALIZE_H
+           2→#define SERIALIZE_H
+           3→
+           4→#include "globals.h"
+           5→
+           6→#ifdef SYNC_WORLD_TO_DISK
+           7→  int initSerializer ();
+           8→  void writeBlockChangesToDisk (int from, int to);
+           9→  void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot);
+          10→  void writePlayerDataToDisk ();
+          11→  void writeDataToDiskOnInterval ();
+          12→#else
+          13→  // Define no-op placeholders for when disk syncing isn't enabled
+          14→  #define writeBlockChangesToDisk(a, b)
+          15→  #define writeChestChangesToDisk(a, b)
+          16→  #define writePlayerDataToDisk()
+          17→  #define writeDataToDiskOnInterval()
+          18→  #define initSerializer() 0
+          19→#endif
+          20→
+          21→#endif
     structures.h
-        1→#ifndef H_STRUCTURES
-        2→#define H_STRUCTURES
-        3→
-        4→void placeTreeStructure (short x, uint8_t y, short z);
-        5→
-        6→#endif
+           1→#ifndef H_STRUCTURES
+           2→#define H_STRUCTURES
+           3→
+           4→void placeTreeStructure (short x, uint8_t y, short z);
+           5→
+           6→#endif
     tools.h
         …
-        4→#include <unistd.h>
-        5→
-        6→#include "globals.h"
-        8→static inline int mod_abs (int a, int b) {
-        9→  return ((a % b) + b) % b;
+           4→#include <unistd.h>
+           5→
+           6→#include "globals.h"
+           8→static inline int mod_abs (int a, int b) {
+           9→  return ((a % b) + b) % b;
         …
-        11→static inline int div_floor (int a, int b) {
-        12→  return a % b < 0 ? (a - b) / b : a / b;
+          11→static inline int div_floor (int a, int b) {
+          12→  return a % b < 0 ? (a - b) / b : a / b;
         …
-        15→extern uint64_t total_bytes_received;
-        16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
-        17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
-        18→void discard_all (int client_fd, size_t remaining, uint8_t require_first);
-        19→
-        20→ssize_t writeByte (int client_fd, uint8_t byte);
-        21→ssize_t writeUint16 (int client_fd, uint16_t num);
-        22→ssize_t writeUint32 (int client_fd, uint32_t num);
-        23→ssize_t writeUint64 (int client_fd, uint64_t num);
-        24→ssize_t writeFloat (int client_fd, float num);
-        25→ssize_t writeDouble (int client_fd, double num);
-        26→
-        27→uint8_t readByte (int client_fd);
-        28→uint16_t readUint16 (int client_fd);
-        29→int16_t readInt16 (int client_fd);
-        30→uint32_t readUint32 (int client_fd);
-        31→uint64_t readUint64 (int client_fd);
-        32→int64_t readInt64 (int client_fd);
-        33→float readFloat (int client_fd);
-        34→double readDouble (int client_fd);
-        35→
-        36→ssize_t readLengthPrefixedData (int client_fd);
-        37→void readString (int client_fd);
-        38→void readStringN (int client_fd, uint32_t max_length);
-        39→
-        40→uint32_t fast_rand ();
-        41→uint64_t splitmix64 (uint64_t state);
+          15→extern uint64_t total_bytes_received;
+          16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
+          17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
+          18→void discard_all (int client_fd, size_t remaining, uint8_t require_first);
+          19→
+          20→ssize_t writeByte (int client_fd, uint8_t byte);
+          21→ssize_t writeUint16 (int client_fd, uint16_t num);
+          22→ssize_t writeUint32 (int client_fd, uint32_t num);
+          23→ssize_t writeUint64 (int client_fd, uint64_t num);
+          24→ssize_t writeFloat (int client_fd, float num);
+          25→ssize_t writeDouble (int client_fd, double num);
+          26→
+          27→uint8_t readByte (int client_fd);
+          28→uint16_t readUint16 (int client_fd);
+          29→int16_t readInt16 (int client_fd);
+          30→uint32_t readUint32 (int client_fd);
+          31→uint64_t readUint64 (int client_fd);
+          32→int64_t readInt64 (int client_fd);
+          33→float readFloat (int client_fd);
+          34→double readDouble (int client_fd);
+          35→
+          36→ssize_t readLengthPrefixedData (int client_fd);
+          37→void readString (int client_fd);
+          38→void readStringN (int client_fd, uint32_t max_length);
+          39→
+          40→uint32_t fast_rand ();
+          41→uint64_t splitmix64 (uint64_t state);
         …
-        45→  #define get_program_time esp_timer_get_time
+          45→  #define get_program_time esp_timer_get_time
         …
-        47→  int64_t get_program_time ();
+          47→  int64_t get_program_time ();
         …
     varnum.h
-        1→#ifndef H_VARNUM
-        2→#define H_VARNUM
-        3→
-        4→#include <stdint.h>
-        5→
-        6→#define SEGMENT_BITS 0x7F
-        7→#define CONTINUE_BIT 0x80
-        8→#define VARNUM_ERROR 0xFFFFFFFF
-        9→
-        10→int32_t readVarInt (int client_fd);
-        11→int sizeVarInt (uint32_t value);
-        12→void writeVarInt (int client_fd, uint32_t value);
-        13→
-        14→#endif
+           1→#ifndef H_VARNUM
+           2→#define H_VARNUM
+           3→
+           4→#include <stdint.h>
+           5→
+           6→#define SEGMENT_BITS 0x7F
+           7→#define CONTINUE_BIT 0x80
+           8→#define VARNUM_ERROR 0xFFFFFFFF
+           9→
+          10→int32_t readVarInt (int client_fd);
+          11→int sizeVarInt (uint32_t value);
+          12→void writeVarInt (int client_fd, uint32_t value);
+          13→
+          14→#endif
     worldgen.h
-        1→#ifndef H_WORLDGEN
-        2→#define H_WORLDGEN
-        3→
-        4→#include <stdint.h>
-        5→
-        6→typedef struct {
-        7→  short x;
-        8→  short z;
-        9→  uint32_t hash;
-        10→  uint8_t biome;
-        11→} ChunkAnchor;
-        12→
-        13→typedef struct {
-        14→  short x;
-        15→  uint8_t y;
-        16→  short z;
-        17→  uint8_t variant;
-        18→} ChunkFeature;
-        19→
-        20→uint32_t getChunkHash (short x, short z);
-        21→uint8_t getChunkBiome (short x, short z);
-        22→uint8_t getHeightAtFromHash (int rx, int rz, int _x, int _z, uint32_t chunk_hash, uint8_t biome);
-        23→uint8_t getHeightAt (int x, int z);
-        24→uint8_t getTerrainAt (int x, int y, int z, ChunkAnchor anchor);
-        25→uint8_t getBlockAt (int x, int y, int z);
-        26→
-        27→extern uint8_t chunk_section[4096];
-        28→uint8_t buildChunkSection (int cx, int cy, int cz);
-        29→
-        30→#endif
+           1→#ifndef H_WORLDGEN
+           2→#define H_WORLDGEN
+           3→
+           4→#include <stdint.h>
+           5→
+           6→typedef struct {
+           7→  short x;
+           8→  short z;
+           9→  uint32_t hash;
+          10→  uint8_t biome;
+          11→} ChunkAnchor;
+          12→
+          13→typedef struct {
+          14→  short x;
+          15→  uint8_t y;
+          16→  short z;
+          17→  uint8_t variant;
+          18→} ChunkFeature;
+          19→
+          20→uint32_t getChunkHash (short x, short z);
+          21→uint8_t getChunkBiome (short x, short z);
+          22→uint8_t getHeightAtFromHash (int rx, int rz, int _x, int _z, uint32_t chunk_hash, uint8_t biome);
+          23→uint8_t getHeightAt (int x, int z);
+          24→uint8_t getTerrainAt (int x, int y, int z, ChunkAnchor anchor);
+          25→uint8_t getBlockAt (int x, int y, int z);
+          26→
+          27→extern uint8_t chunk_section[4096];
+          28→uint8_t buildChunkSection (int cx, int cy, int cz);
+          29→
+          30→#endif
 src/
     CMakeLists.txt
     crafting.c
         …
-        9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
+           9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
         …
-        349→#define registerSmeltingRecipe(a, b) \
+         349→#define registerSmeltingRecipe(a, b) \
         …
-        352→void getSmeltingOutput (PlayerData *player) {
+         352→void getSmeltingOutput (PlayerData *player) {
         …
     globals.c
     main.c
         …
-        68→void handlePacket (int client_fd, int length, int packet_id, int state) {
+          68→void handlePacket (int client_fd, int length, int packet_id, int state) {
         …
     packets.c
     procedures.c
     serialize.c
-        1→#include "globals.h"
+           1→#include "globals.h"
         …
     structures.c
         …
-        9→void setBlockIfReplaceable (short x, uint8_t y, short z, uint8_t block) {
+           9→void setBlockIfReplaceable (short x, uint8_t y, short z, uint8_t block) {
         …
-        16→void placeTreeStructure (short x, uint8_t y, short z) {
+          16→void placeTreeStructure (short x, uint8_t y, short z) {
         …
     tools.c
         …
-        42→uint64_t total_bytes_received = 0;
-        43→
-        44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
+          42→uint64_t total_bytes_received = 0;
+          43→
+          44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
         …
     varnum.c
         …
-        14→int32_t readVarInt (int client_fd) {
+          14→int32_t readVarInt (int client_fd) {
         …
-        34→int sizeVarInt (uint32_t value) {
+          34→int sizeVarInt (uint32_t value) {
         …
-        43→void writeVarInt (int client_fd, uint32_t value) {
+          43→void writeVarInt (int client_fd, uint32_t value) {
         …
     worldgen.c

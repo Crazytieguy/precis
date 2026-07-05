@@ -6,259 +6,259 @@ expression: rendered
 LICENSE
 Makefile
 README.md
-    1→# chibicc: A Small C Compiler
-    2→
-    3→(The old master has moved to
-    4→[historical/old](https://github.com/rui314/chibicc/tree/historical/old)
-    5→branch. This is a new one uploaded in September 2020.)
+       1→# chibicc: A Small C Compiler
+       2→
+       3→(The old master has moved to
+       4→[historical/old](https://github.com/rui314/chibicc/tree/historical/old)
+       5→branch. This is a new one uploaded in September 2020.)
     …
-    55→## Status
+      55→## Status
     …
-    93→## Internals
+      93→## Internals
     …
-    110→## Contributing
+     110→## Contributing
     …
-    128→## Design principles
+     128→## Design principles
     …
-    180→## About the Author
-    181→
-    182→I'm Rui Ueyama. I'm the creator of [8cc](https://github.com/rui314/8cc),
-    183→which is a hobby C compiler, and also the original creator of the current
-    184→version of [LLVM lld](https://lld.llvm.org) linker, which is a
-    185→production-quality linker used by various operating systems and large-scale
-    186→build systems.
-    188→## References
+     180→## About the Author
+     181→
+     182→I'm Rui Ueyama. I'm the creator of [8cc](https://github.com/rui314/8cc),
+     183→which is a hobby C compiler, and also the original creator of the current
+     184→version of [LLVM lld](https://lld.llvm.org) linker, which is a
+     185→production-quality linker used by various operating systems and large-scale
+     186→build systems.
+     188→## References
     …
 chibicc.h
-    1→#define _POSIX_C_SOURCE 200809L
+       1→#define _POSIX_C_SOURCE 200809L
     …
-    21→#define MAX(x, y) ((x) < (y) ? (y) : (x))
-    22→#define MIN(x, y) ((x) < (y) ? (x) : (y))
+      21→#define MAX(x, y) ((x) < (y) ? (y) : (x))
+      22→#define MIN(x, y) ((x) < (y) ? (x) : (y))
     …
-    28→typedef struct Type Type;
-    29→typedef struct Node Node;
-    30→typedef struct Member Member;
-    31→typedef struct Relocation Relocation;
-    32→typedef struct Hideset Hideset;
+      28→typedef struct Type Type;
+      29→typedef struct Node Node;
+      30→typedef struct Member Member;
+      31→typedef struct Relocation Relocation;
+      32→typedef struct Hideset Hideset;
     …
-    38→typedef struct {
-    39→  char **data;
-    40→  int capacity;
-    41→  int len;
-    42→} StringArray;
-    44→void strarray_push(StringArray *arr, char *s);
-    45→char *format(char *fmt, ...) __attribute__((format(printf, 1, 2)));
+      38→typedef struct {
+      39→  char **data;
+      40→  int capacity;
+      41→  int len;
+      42→} StringArray;
+      44→void strarray_push(StringArray *arr, char *s);
+      45→char *format(char *fmt, ...) __attribute__((format(printf, 1, 2)));
     …
-    51→// Token
-    52→typedef enum {
-    53→  TK_IDENT,   // Identifiers
-    54→  TK_PUNCT,   // Punctuators
-    55→  TK_KEYWORD, // Keywords
-    56→  TK_STR,     // String literals
-    57→  TK_NUM,     // Numeric literals
-    58→  TK_PP_NUM,  // Preprocessing numbers
-    59→  TK_EOF,     // End-of-file markers
-    60→} TokenKind;
-    62→typedef struct {
-    63→  char *name;
-    64→  int file_no;
-    65→  char *contents;
-    66→
-    67→  // For #line directive
-    68→  char *display_name;
-    69→  int line_delta;
-    70→} File;
-    72→// Token type
-    73→typedef struct Token Token;
-    74→struct Token {
+      51→// Token
+      52→typedef enum {
+      53→  TK_IDENT,   // Identifiers
+      54→  TK_PUNCT,   // Punctuators
+      55→  TK_KEYWORD, // Keywords
+      56→  TK_STR,     // String literals
+      57→  TK_NUM,     // Numeric literals
+      58→  TK_PP_NUM,  // Preprocessing numbers
+      59→  TK_EOF,     // End-of-file markers
+      60→} TokenKind;
+      62→typedef struct {
+      63→  char *name;
+      64→  int file_no;
+      65→  char *contents;
+      66→
+      67→  // For #line directive
+      68→  char *display_name;
+      69→  int line_delta;
+      70→} File;
+      72→// Token type
+      73→typedef struct Token Token;
+      74→struct Token {
     …
-    94→noreturn void error(char *fmt, ...) __attribute__((format(printf, 1, 2)));
-    95→noreturn void error_at(char *loc, char *fmt, ...) __attribute__((format(printf, 2, 3)));
-    96→noreturn void error_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
-    97→void warn_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
-    98→bool equal(Token *tok, char *op);
-    99→Token *skip(Token *tok, char *op);
-    100→bool consume(Token **rest, Token *tok, char *str);
-    101→void convert_pp_tokens(Token *tok);
-    102→File **get_input_files(void);
-    103→File *new_file(char *name, int file_no, char *contents);
-    104→Token *tokenize_string_literal(Token *tok, Type *basety);
-    105→Token *tokenize(File *file);
-    106→Token *tokenize_file(char *filename);
-    107→
-    108→#define unreachable() \
-    109→  error("internal error at %s:%d", __FILE__, __LINE__)
+      94→noreturn void error(char *fmt, ...) __attribute__((format(printf, 1, 2)));
+      95→noreturn void error_at(char *loc, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+      96→noreturn void error_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+      97→void warn_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+      98→bool equal(Token *tok, char *op);
+      99→Token *skip(Token *tok, char *op);
+     100→bool consume(Token **rest, Token *tok, char *str);
+     101→void convert_pp_tokens(Token *tok);
+     102→File **get_input_files(void);
+     103→File *new_file(char *name, int file_no, char *contents);
+     104→Token *tokenize_string_literal(Token *tok, Type *basety);
+     105→Token *tokenize(File *file);
+     106→Token *tokenize_file(char *filename);
+     107→
+     108→#define unreachable() \
+     109→  error("internal error at %s:%d", __FILE__, __LINE__)
     …
-    115→char *search_include_paths(char *filename);
-    116→void init_macros(void);
-    117→void define_macro(char *name, char *buf);
-    118→void undef_macro(char *name);
-    119→Token *preprocess(Token *tok);
+     115→char *search_include_paths(char *filename);
+     116→void init_macros(void);
+     117→void define_macro(char *name, char *buf);
+     118→void undef_macro(char *name);
+     119→Token *preprocess(Token *tok);
     …
-    125→// Variable or function
-    126→typedef struct Obj Obj;
-    127→struct Obj {
-    128→  Obj *next;
-    129→  char *name;    // Variable name
-    130→  Type *ty;      // Type
-    131→  Token *tok;    // representative token
-    132→  bool is_local; // local or global/function
-    133→  int align;     // alignment
+     125→// Variable or function
+     126→typedef struct Obj Obj;
+     127→struct Obj {
+     128→  Obj *next;
+     129→  char *name;    // Variable name
+     130→  Type *ty;      // Type
+     131→  Token *tok;    // representative token
+     132→  bool is_local; // local or global/function
+     133→  int align;     // alignment
     …
-    136→  int offset;
+     136→  int offset;
     …
-    139→  bool is_function;
-    140→  bool is_definition;
-    141→  bool is_static;
+     139→  bool is_function;
+     140→  bool is_definition;
+     141→  bool is_static;
     …
-    144→  bool is_tentative;
-    145→  bool is_tls;
-    146→  char *init_data;
-    147→  Relocation *rel;
+     144→  bool is_tentative;
+     145→  bool is_tls;
+     146→  char *init_data;
+     147→  Relocation *rel;
     …
-    150→  bool is_inline;
-    151→  Obj *params;
-    152→  Node *body;
-    153→  Obj *locals;
-    154→  Obj *va_area;
-    155→  Obj *alloca_bottom;
-    156→  int stack_size;
+     150→  bool is_inline;
+     151→  Obj *params;
+     152→  Node *body;
+     153→  Obj *locals;
+     154→  Obj *va_area;
+     155→  Obj *alloca_bottom;
+     156→  int stack_size;
     …
-    159→  bool is_live;
-    160→  bool is_root;
-    161→  StringArray refs;
-    162→};
-    164→// Global variable can be initialized either by a constant expression
-    165→// or a pointer to another global variable. This struct represents the
-    166→// latter.
-    167→typedef struct Relocation Relocation;
-    168→struct Relocation {
-    169→  Relocation *next;
-    170→  int offset;
-    171→  char **label;
-    172→  long addend;
-    173→};
-    175→// AST node
-    176→typedef enum {
+     159→  bool is_live;
+     160→  bool is_root;
+     161→  StringArray refs;
+     162→};
+     164→// Global variable can be initialized either by a constant expression
+     165→// or a pointer to another global variable. This struct represents the
+     166→// latter.
+     167→typedef struct Relocation Relocation;
+     168→struct Relocation {
+     169→  Relocation *next;
+     170→  int offset;
+     171→  char **label;
+     172→  long addend;
+     173→};
+     175→// AST node
+     176→typedef enum {
     …
-    225→} NodeKind;
-    227→// AST node type
-    228→struct Node {
-    229→  NodeKind kind; // Node kind
-    230→  Node *next;    // Next node
-    231→  Type *ty;      // Type, e.g. int or pointer to int
-    232→  Token *tok;    // Representative token
-    234→  Node *lhs;     // Left-hand side
-    235→  Node *rhs;     // Right-hand side
+     225→} NodeKind;
+     227→// AST node type
+     228→struct Node {
+     229→  NodeKind kind; // Node kind
+     230→  Node *next;    // Next node
+     231→  Type *ty;      // Type, e.g. int or pointer to int
+     232→  Token *tok;    // Representative token
+     234→  Node *lhs;     // Left-hand side
+     235→  Node *rhs;     // Right-hand side
     …
-    238→  Node *cond;
-    239→  Node *then;
-    240→  Node *els;
-    241→  Node *init;
-    242→  Node *inc;
+     238→  Node *cond;
+     239→  Node *then;
+     240→  Node *els;
+     241→  Node *init;
+     242→  Node *inc;
     …
-    245→  char *brk_label;
-    246→  char *cont_label;
+     245→  char *brk_label;
+     246→  char *cont_label;
     …
-    249→  Node *body;
+     249→  Node *body;
     …
-    252→  Member *member;
+     252→  Member *member;
     …
-    255→  Type *func_ty;
-    256→  Node *args;
-    257→  bool pass_by_stack;
-    258→  Obj *ret_buffer;
+     255→  Type *func_ty;
+     256→  Node *args;
+     257→  bool pass_by_stack;
+     258→  Obj *ret_buffer;
     …
-    261→  char *label;
-    262→  char *unique_label;
-    263→  Node *goto_next;
+     261→  char *label;
+     262→  char *unique_label;
+     263→  Node *goto_next;
     …
-    266→  Node *case_next;
-    267→  Node *default_case;
+     266→  Node *case_next;
+     267→  Node *default_case;
     …
-    270→  long begin;
-    271→  long end;
+     270→  long begin;
+     271→  long end;
     …
-    274→  char *asm_str;
+     274→  char *asm_str;
     …
-    277→  Node *cas_addr;
-    278→  Node *cas_old;
-    279→  Node *cas_new;
+     277→  Node *cas_addr;
+     278→  Node *cas_old;
+     279→  Node *cas_new;
     …
-    282→  Obj *atomic_addr;
-    283→  Node *atomic_expr;
+     282→  Obj *atomic_addr;
+     283→  Node *atomic_expr;
     …
-    286→  Obj *var;
+     286→  Obj *var;
     …
-    289→  int64_t val;
-    290→  long double fval;
-    291→};
-    293→Node *new_cast(Node *expr, Type *ty);
-    294→int64_t const_expr(Token **rest, Token *tok);
-    295→Obj *parse(Token *tok);
+     289→  int64_t val;
+     290→  long double fval;
+     291→};
+     293→Node *new_cast(Node *expr, Type *ty);
+     294→int64_t const_expr(Token **rest, Token *tok);
+     295→Obj *parse(Token *tok);
     …
-    301→typedef enum {
-    302→  TY_VOID,
-    303→  TY_BOOL,
-    304→  TY_CHAR,
-    305→  TY_SHORT,
-    306→  TY_INT,
-    307→  TY_LONG,
-    308→  TY_FLOAT,
-    309→  TY_DOUBLE,
-    310→  TY_LDOUBLE,
-    311→  TY_ENUM,
-    312→  TY_PTR,
-    313→  TY_FUNC,
-    314→  TY_ARRAY,
-    315→  TY_VLA, // variable-length array
-    316→  TY_STRUCT,
-    317→  TY_UNION,
-    318→} TypeKind;
-    320→struct Type {
-    321→  TypeKind kind;
-    322→  int size;           // sizeof() value
-    323→  int align;          // alignment
-    324→  bool is_unsigned;   // unsigned or signed
-    325→  bool is_atomic;     // true if _Atomic
-    326→  Type *origin;       // for type compatibility check
+     301→typedef enum {
+     302→  TY_VOID,
+     303→  TY_BOOL,
+     304→  TY_CHAR,
+     305→  TY_SHORT,
+     306→  TY_INT,
+     307→  TY_LONG,
+     308→  TY_FLOAT,
+     309→  TY_DOUBLE,
+     310→  TY_LDOUBLE,
+     311→  TY_ENUM,
+     312→  TY_PTR,
+     313→  TY_FUNC,
+     314→  TY_ARRAY,
+     315→  TY_VLA, // variable-length array
+     316→  TY_STRUCT,
+     317→  TY_UNION,
+     318→} TypeKind;
+     320→struct Type {
+     321→  TypeKind kind;
+     322→  int size;           // sizeof() value
+     323→  int align;          // alignment
+     324→  bool is_unsigned;   // unsigned or signed
+     325→  bool is_atomic;     // true if _Atomic
+     326→  Type *origin;       // for type compatibility check
     …
-    336→  Type *base;
+     336→  Type *base;
     …
-    339→  Token *name;
-    340→  Token *name_pos;
+     339→  Token *name;
+     340→  Token *name_pos;
     …
-    343→  int array_len;
+     343→  int array_len;
     …
-    346→  Node *vla_len; // # of elements
-    347→  Obj *vla_size; // sizeof() value
+     346→  Node *vla_len; // # of elements
+     347→  Obj *vla_size; // sizeof() value
     …
-    350→  Member *members;
-    351→  bool is_flexible;
-    352→  bool is_packed;
+     350→  Member *members;
+     351→  bool is_flexible;
+     352→  bool is_packed;
     …
-    355→  Type *return_ty;
-    356→  Type *params;
-    357→  bool is_variadic;
-    358→  Type *next;
-    359→};
-    361→// Struct member
-    362→struct Member {
-    363→  Member *next;
-    364→  Type *ty;
-    365→  Token *tok; // for error message
-    366→  Token *name;
-    367→  int idx;
-    368→  int align;
-    369→  int offset;
-    370→
-    371→  // Bitfield
-    372→  bool is_bitfield;
-    373→  int bit_offset;
-    374→  int bit_width;
-    375→};
-    377→extern Type *ty_void;
-    378→extern Type *ty_bool;
+     355→  Type *return_ty;
+     356→  Type *params;
+     357→  bool is_variadic;
+     358→  Type *next;
+     359→};
+     361→// Struct member
+     362→struct Member {
+     363→  Member *next;
+     364→  Type *ty;
+     365→  Token *tok; // for error message
+     366→  Token *name;
+     367→  int idx;
+     368→  int align;
+     369→  int offset;
+     370→
+     371→  // Bitfield
+     372→  bool is_bitfield;
+     373→  int bit_offset;
+     374→  int bit_width;
+     375→};
+     377→extern Type *ty_void;
+     378→extern Type *ty_bool;
     …
 codegen.c
 hashmap.c
@@ -300,11 +300,11 @@ test/
     generic.c
     include1.h
     include2.h
-        1→int include2 = 7;
+           1→int include2 = 7;
     include3.h
-        1→#define foo 3
+           1→#define foo 3
     include4.h
-        1→#define foo 4
+           1→#define foo 4
     initializer.c
     line.c
     literal.c

@@ -40,31 +40,31 @@ README.ja.md
 README.kr.md
 README.md
     …
-    30→Rich is a Python library for _rich_ text and beautiful formatting in the terminal.
-    31→
-    32→The [Rich API](https://rich.readthedocs.io/en/latest/) makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more — out of the box.
+      30→Rich is a Python library for _rich_ text and beautiful formatting in the terminal.
+      31→
+      32→The [Rich API](https://rich.readthedocs.io/en/latest/) makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more — out of the box.
     …
-    40→## Compatibility
-    41→
-    42→Rich works with Linux, macOS and Windows. True color / emoji works with new Windows Terminal, classic terminal is limited to 16 colors. Rich requires Python 3.8 or later.
-    44→Rich works with [Jupyter notebooks](https://jupyter.org/) with no additional configuration required.
-    46→## Installing
+      40→## Compatibility
+      41→
+      42→Rich works with Linux, macOS and Windows. True color / emoji works with new Windows Terminal, classic terminal is limited to 16 colors. Rich requires Python 3.8 or later.
+      44→Rich works with [Jupyter notebooks](https://jupyter.org/) with no additional configuration required.
+      46→## Installing
     …
-    60→## Rich Print
+      60→## Rich Print
     …
-    72→## Rich REPL
+      72→## Rich REPL
     …
-    83→## Using the Console
+      83→## Using the Console
     …
-    121→## Rich Inspect
+     121→## Rich Inspect
     …
-    135→# Rich Library
+     135→# Rich Library
     …
-    427→# Rich CLI
+     427→# Rich CLI
     …
-    435→# Textual
+     435→# Textual
     …
-    441→# Toad
+     441→# Toad
     …
 README.pl.md
 README.pt-br.md
@@ -119,28 +119,28 @@ imgs/
 make.bat
 poetry.lock
 pyproject.toml
-    1→[tool.poetry]
-    2→name = "rich"
+       1→[tool.poetry]
+       2→name = "rich"
     …
-    5→version = "15.0.0"
-    6→description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
+       5→version = "15.0.0"
+       6→description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
     …
-    8→license = "MIT"
-    9→readme = "README.md"
+       8→license = "MIT"
+       9→readme = "README.md"
     …
-    29→[tool.poetry.dependencies]
-    30→python = ">=3.9.0"
-    31→pygments = "^2.13.0"
-    32→ipywidgets = { version = ">=7.5.1,<9", optional = true }
-    33→markdown-it-py = ">=2.2.0"
+      29→[tool.poetry.dependencies]
+      30→python = ">=3.9.0"
+      31→pygments = "^2.13.0"
+      32→ipywidgets = { version = ">=7.5.1,<9", optional = true }
+      33→markdown-it-py = ">=2.2.0"
     …
 questions/
     README.md
-        2→# Questions
-        3→
-        4→Your questions should go in this directory.
-        5→
-        6→Question files should be named with the extension ".question.md".
+           2→# Questions
+           3→
+           4→Your questions should go in this directory.
+           5→
+           6→Question files should be named with the extension ".question.md".
     ansi_escapes.question.md
     emoji_broken.question.md
     highlight_incorrect.question.md
@@ -153,118 +153,118 @@ questions/
     tracebacks_installed.question.md
 rich/
     __init__.py
-        1→"""Rich text and beautiful formatting in the terminal."""
-        2→
-        3→import os
-        4→from typing import IO, TYPE_CHECKING, Any, Callable, Optional, Union
-        5→
-        6→from ._extension import load_ipython_extension  # noqa: F401
-        7→
-        8→__all__ = ["get_console", "reconfigure", "print", "inspect", "print_json"]
+           1→"""Rich text and beautiful formatting in the terminal."""
+           2→
+           3→import os
+           4→from typing import IO, TYPE_CHECKING, Any, Callable, Optional, Union
+           5→
+           6→from ._extension import load_ipython_extension  # noqa: F401
+           7→
+           8→__all__ = ["get_console", "reconfigure", "print", "inspect", "print_json"]
         …
-        14→_console: Optional["Console"] = None
+          14→_console: Optional["Console"] = None
         …
-        23→def get_console() -> "Console":
+          23→def get_console() -> "Console":
         …
-        39→def reconfigure(*args: Any, **kwargs: Any) -> None:
+          39→def reconfigure(*args: Any, **kwargs: Any) -> None:
         …
-        53→def print(
-        54→    *objects: Any,
-        55→    sep: str = " ",
-        56→    end: str = "\n",
-        57→    file: Optional[IO[str]] = None,
-        58→    flush: bool = False,
-        59→) -> None:
+          53→def print(
+          54→    *objects: Any,
+          55→    sep: str = " ",
+          56→    end: str = "\n",
+          57→    file: Optional[IO[str]] = None,
+          58→    flush: bool = False,
+          59→) -> None:
         …
-        77→def print_json(
+          77→def print_json(
         …
-        120→def inspect(
+         120→def inspect(
         …
     __main__.py
         …
-        18→class ColorBox:
-        19→    def __rich_console__(
-        20→        self, console: Console, options: ConsoleOptions
-        21→    ) -> RenderResult:
+          18→class ColorBox:
+          19→    def __rich_console__(
+          20→        self, console: Console, options: ConsoleOptions
+          21→    ) -> RenderResult:
         …
-        33→    def __rich_measure__(
-        34→        self, console: "Console", options: ConsoleOptions
-        35→    ) -> Measurement:
-        36→        return Measurement(1, options.max_width)
-        39→def make_test_card() -> Table:
-        40→    """Get a renderable that demonstrates a number of features."""
+          33→    def __rich_measure__(
+          34→        self, console: "Console", options: ConsoleOptions
+          35→    ) -> Measurement:
+          36→        return Measurement(1, options.max_width)
+          39→def make_test_card() -> Table:
+          40→    """Get a renderable that demonstrates a number of features."""
         …
     _emoji_codes.py
-        1→EMOJI = {
+           1→EMOJI = {
         …
     _emoji_replace.py
     _export_format.py
     _extension.py
-        1→from typing import Any
-        4→def load_ipython_extension(ip: Any) -> None:  # pragma: no cover
-        5→    # prevent circular import
+           1→from typing import Any
+           4→def load_ipython_extension(ip: Any) -> None:  # pragma: no cover
+           5→    # prevent circular import
         …
     _fileno.py
         …
-        6→def get_fileno(file_like: IO[str]) -> int | None:
+           6→def get_fileno(file_like: IO[str]) -> int | None:
         …
     _inspect.py
     _log_render.py
     _loop.py
     _null_file.py
         …
-        5→class NullFile(IO[str]):
+           5→class NullFile(IO[str]):
         …
-        69→NULL_FILE = NullFile()
+          69→NULL_FILE = NullFile()
     _palettes.py
     _pick.py
-        1→from typing import Optional
-        4→def pick_bool(*values: Optional[bool]) -> bool:
+           1→from typing import Optional
+           4→def pick_bool(*values: Optional[bool]) -> bool:
         …
     _ratio.py
     _spinners.py
         …
-        22→SPINNERS = {
+          22→SPINNERS = {
         …
     _stack.py
-        1→from typing import List, TypeVar
-        3→T = TypeVar("T")
-        4→
-        5→
-        6→class Stack(List[T]):
-        7→    """A small shim over builtin list."""
-        9→    @property
-        10→    def top(self) -> T:
-        11→        """Get top of stack."""
-        12→        return self[-1]
-        14→    def push(self, item: T) -> None:
+           1→from typing import List, TypeVar
+           3→T = TypeVar("T")
+           4→
+           5→
+           6→class Stack(List[T]):
+           7→    """A small shim over builtin list."""
+           9→    @property
+          10→    def top(self) -> T:
+          11→        """Get top of stack."""
+          12→        return self[-1]
+          14→    def push(self, item: T) -> None:
         …
-        16→        self.append(item)
+          16→        self.append(item)
     _timer.py
         …
-        12→@contextlib.contextmanager
-        13→def timer(subject: str = "time") -> Generator[None, None, None]:
-        14→    """print the elapsed time. (only used in debugging)"""
+          12→@contextlib.contextmanager
+          13→def timer(subject: str = "time") -> Generator[None, None, None]:
+          14→    """print the elapsed time. (only used in debugging)"""
         …
     _unicode_data/
     _win32_console.py
     _windows.py
         …
-        5→@dataclass
-        6→class WindowsConsoleFeatures:
-        7→    """Windows features available."""
+           5→@dataclass
+           6→class WindowsConsoleFeatures:
+           7→    """Windows features available."""
         …
     _windows_renderer.py
         …
-        7→def legacy_windows_render(buffer: Iterable[Segment], term: LegacyWindowsTerm) -> None:
+           7→def legacy_windows_render(buffer: Iterable[Segment], term: LegacyWindowsTerm) -> None:
         …
     _wrap.py
     abc.py
-        1→from abc import ABC
-        4→class RichRenderable(ABC):
+           1→from abc import ABC
+           4→class RichRenderable(ABC):
         …
-        15→    @classmethod
-        16→    def __subclasshook__(cls, other: type) -> bool:
+          15→    @classmethod
+          16→    def __subclasshook__(cls, other: type) -> bool:
         …
     align.py
     ansi.py
@@ -273,112 +273,112 @@ rich/
     cells.py
     color.py
     color_triplet.py
-        1→from typing import NamedTuple, Tuple
-        4→class ColorTriplet(NamedTuple):
-        5→    """The red, green, and blue components of a color."""
+           1→from typing import NamedTuple, Tuple
+           4→class ColorTriplet(NamedTuple):
+           5→    """The red, green, and blue components of a color."""
         …
-        14→    @property
-        15→    def hex(self) -> str:
+          14→    @property
+          15→    def hex(self) -> str:
         …
-        20→    @property
-        21→    def rgb(self) -> str:
+          20→    @property
+          21→    def rgb(self) -> str:
         …
-        30→    @property
-        31→    def normalized(self) -> Tuple[float, float, float]:
+          30→    @property
+          31→    def normalized(self) -> Tuple[float, float, float]:
         …
     columns.py
         …
-        16→class Columns(JupyterMixin):
+          16→class Columns(JupyterMixin):
         …
-        31→    def __init__(
+          31→    def __init__(
         …
-        54→    def add_renderable(self, renderable: RenderableType) -> None:
+          54→    def add_renderable(self, renderable: RenderableType) -> None:
         …
-        62→    def __rich_console__(
-        63→        self, console: Console, options: ConsoleOptions
-        64→    ) -> RenderResult:
+          62→    def __rich_console__(
+          63→        self, console: Console, options: ConsoleOptions
+          64→    ) -> RenderResult:
         …
     console.py
     constrain.py
         …
-        10→class Constrain(JupyterMixin):
+          10→class Constrain(JupyterMixin):
         …
     containers.py
     control.py
     default_styles.py
         …
-        5→DEFAULT_STYLES: Dict[str, Style] = {
+           5→DEFAULT_STYLES: Dict[str, Style] = {
         …
     diagnose.py
         …
-        10→def report() -> None:  # pragma: no cover
-        11→    """Print a report to the terminal with debugging information"""
+          10→def report() -> None:  # pragma: no cover
+          11→    """Print a report to the terminal with debugging information"""
         …
     emoji.py
     errors.py
     file_proxy.py
         …
-        11→class FileProxy(io.TextIOBase):
-        12→    """Wraps a file (e.g. sys.stdout) and redirects writes to a console."""
+          11→class FileProxy(io.TextIOBase):
+          12→    """Wraps a file (e.g. sys.stdout) and redirects writes to a console."""
         …
     filesize.py
     highlighter.py
     json.py
         …
-        9→class JSON:
+           9→class JSON:
         …
-        25→    def __init__(
+          25→    def __init__(
         …
-        53→    @classmethod
+          53→    @classmethod
         …
-        101→    def __rich__(self) -> Text:
-        102→        return self.text
+         101→    def __rich__(self) -> Text:
+         102→        return self.text
         …
     jupyter.py
     layout.py
     live.py
         …
-        22→class _RefreshThread(Thread):
+          22→class _RefreshThread(Thread):
         …
-        41→class Live(JupyterMixin, RenderHook):
+          41→class Live(JupyterMixin, RenderHook):
         …
     live_render.py
     logging.py
         …
-        24→class RichHandler(Handler):
+          24→class RichHandler(Handler):
         …
     markdown.py
     markup.py
     measure.py
         …
-        11→class Measurement(NamedTuple):
-        12→    """Stores the minimum and maximum widths (in characters) required to render an object."""
+          11→class Measurement(NamedTuple):
+          12→    """Stores the minimum and maximum widths (in characters) required to render an object."""
         …
-        125→def measure_renderables(
-        126→    console: "Console",
-        127→    options: "ConsoleOptions",
-        128→    renderables: Sequence["RenderableType"],
-        129→) -> "Measurement":
+         125→def measure_renderables(
+         126→    console: "Console",
+         127→    options: "ConsoleOptions",
+         128→    renderables: Sequence["RenderableType"],
+         129→) -> "Measurement":
         …
     padding.py
     pager.py
         …
-        5→class Pager(ABC):
-        6→    """Base class for a pager."""
+           5→class Pager(ABC):
+           6→    """Base class for a pager."""
         …
-        17→class SystemPager(Pager):
-        18→    """Uses the pager installed on the system."""
+          17→class SystemPager(Pager):
+          18→    """Uses the pager installed on the system."""
         …
     palette.py
         …
-        11→class Palette:
-        12→    """A palette of available colors."""
+          11→class Palette:
+          12→    """A palette of available colors."""
         …
-        43→    # This is somewhat inefficient and needs caching
+          43→    # This is somewhat inefficient and needs caching
         …
     panel.py
         …
-        17→class Panel(JupyterMixin):
+          17→class Panel(JupyterMixin):
         …
     pretty.py
     progress.py
@@ -387,46 +387,46 @@ rich/
     protocol.py
     py.typed
     region.py
-        1→from typing import NamedTuple
-        4→class Region(NamedTuple):
-        5→    """Defines a rectangular region of the screen."""
-        7→    x: int
-        8→    y: int
-        9→    width: int
-        10→    height: int
+           1→from typing import NamedTuple
+           4→class Region(NamedTuple):
+           5→    """Defines a rectangular region of the screen."""
+           7→    x: int
+           8→    y: int
+           9→    width: int
+          10→    height: int
     repr.py
     rule.py
         …
-        12→class Rule(JupyterMixin):
+          12→class Rule(JupyterMixin):
         …
     scope.py
         …
-        14→def render_scope(
+          14→def render_scope(
         …
     screen.py
         …
-        18→class Screen:
+          18→class Screen:
         …
-        26→    renderable: "RenderableType"
-        28→    def __init__(
+          26→    renderable: "RenderableType"
+          28→    def __init__(
         …
-        40→    def __rich_console__(
-        41→        self, console: "Console", options: "ConsoleOptions"
-        42→    ) -> "RenderResult":
+          40→    def __rich_console__(
+          41→        self, console: "Console", options: "ConsoleOptions"
+          42→    ) -> "RenderResult":
         …
     segment.py
     spinner.py
         …
-        13→class Spinner:
+          13→class Spinner:
         …
     status.py
         …
-        11→class Status(JupyterMixin):
+          11→class Status(JupyterMixin):
         …
     style.py
     styled.py
         …
-        11→class Styled:
+          11→class Styled:
         …
     syntax.py
     table.py
@@ -434,17 +434,17 @@ rich/
     text.py
     theme.py
         …
-        7→class Theme:
+           7→class Theme:
         …
-        15→    styles: Dict[str, Style]
+          15→    styles: Dict[str, Style]
         …
-        77→class ThemeStackError(Exception):
-        78→    """Base exception for errors related to the theme stack."""
-        81→class ThemeStack:
+          77→class ThemeStackError(Exception):
+          78→    """Base exception for errors related to the theme stack."""
+          81→class ThemeStack:
         …
     themes.py
         …
-        5→DEFAULT = Theme(DEFAULT_STYLES)
+           5→DEFAULT = Theme(DEFAULT_STYLES)
     traceback.py
     tree.py
 setup.py

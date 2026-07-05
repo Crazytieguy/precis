@@ -7,23 +7,23 @@ expression: rendered
 .golangci.yml
 .mailmap
 CONDUCT.md
-    1→## Cobra User Contract
-    2→
-    3→### Versioning
+       1→## Cobra User Contract
+       2→
+       3→### Versioning
     …
-    6→### Backward Compatibility
+       6→### Backward Compatibility
     …
-    9→### Deprecation
+       9→### Deprecation
     …
-    12→### CVE
+      12→### CVE
     …
-    15→### Communication
+      15→### Communication
     …
-    18→### Breaking Changes
+      18→### Breaking Changes
     …
-    32→### CI Testing
+      32→### CI Testing
     …
-    35→### Disclaimer
+      35→### Disclaimer
     …
 CONTRIBUTING.md
 LICENSE.txt
@@ -31,29 +31,29 @@ MAINTAINERS
 Makefile
 README.md
     …
-    7→Cobra is a library for creating powerful modern CLI applications.
-    8→
-    9→<a href="https://cobra.dev">Visit Cobra.dev for extensive documentation</a> 
+       7→Cobra is a library for creating powerful modern CLI applications.
+       8→
+       9→<a href="https://cobra.dev">Visit Cobra.dev for extensive documentation</a> 
     …
-    29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
-    30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
-    32→</div>
-    33→<hr>
-    35→# Overview
+      29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
+      30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
+      32→</div>
+      33→<hr>
+      35→# Overview
     …
-    55→# Concepts
+      55→# Concepts
     …
-    79→## Commands
+      79→## Commands
     …
-    89→## Flags
+      89→## Flags
     …
-    102→# Installing
+     102→# Installing
     …
-    116→# Usage
+     116→# Usage
     …
-    131→# License
-    132→
-    133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
+     131→# License
+     132→
+     133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
 active_help_test.go
@@ -64,17 +64,17 @@ assets/
 bash_completions.go
 bash_completionsV2.go
     …
-    24→func (c *Command) genBashCompletion(w io.Writer, includeDesc bool) error {
+      24→func (c *Command) genBashCompletion(w io.Writer, includeDesc bool) error {
     …
-    31→func genBashComp(buf io.StringWriter, name string, includeDesc bool) {
+      31→func genBashComp(buf io.StringWriter, name string, includeDesc bool) {
     …
-    469→// GenBashCompletionFileV2 generates Bash completion version 2.
-    470→func (c *Command) GenBashCompletionFileV2(filename string, includeDesc bool) error {
+     469→// GenBashCompletionFileV2 generates Bash completion version 2.
+     470→func (c *Command) GenBashCompletionFileV2(filename string, includeDesc bool) error {
     …
-    480→// GenBashCompletionV2 generates Bash completion file version 2
-    481→// and writes it to the passed writer.
-    482→func (c *Command) GenBashCompletionV2(w io.Writer, includeDesc bool) error {
-    483→	return c.genBashCompletion(w, includeDesc)
+     480→// GenBashCompletionV2 generates Bash completion file version 2
+     481→// and writes it to the passed writer.
+     482→func (c *Command) GenBashCompletionV2(w io.Writer, includeDesc bool) error {
+     483→	return c.genBashCompletion(w, includeDesc)
     …
 bash_completionsV2_test.go
 bash_completions_test.go
@@ -82,152 +82,152 @@ cobra.go
 cobra_test.go
 command.go
     …
-    15→// Package cobra is a commander providing a simple interface to create powerful modern CLI interfaces.
-    16→// In addition to providing an interface, Cobra simultaneously provides a controller to organize your application code.
+      15→// Package cobra is a commander providing a simple interface to create powerful modern CLI interfaces.
+      16→// In addition to providing an interface, Cobra simultaneously provides a controller to organize your application code.
     …
-    33→const (
-    34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
-    35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
-    36→
-    37→	helpFlagName    = "help"
-    38→	helpCommandName = "help"
-    39→)
-    41→// FParseErrWhitelist configures Flag parse errors to be ignored
-    42→type FParseErrWhitelist flag.ParseErrorsAllowlist
-    44→// Group Structure to manage groups for commands
-    45→type Group struct {
-    46→	ID    string
-    47→	Title string
-    48→}
-    50→// Command is just that, a command for your application.
-    51→// E.g.  'go run ...' - 'run' is the command. Cobra requires
-    52→// you to define the usage and description as part of your command
-    53→// definition to ensure usability.
-    54→type Command struct {
+      33→const (
+      34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
+      35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
+      36→
+      37→	helpFlagName    = "help"
+      38→	helpCommandName = "help"
+      39→)
+      41→// FParseErrWhitelist configures Flag parse errors to be ignored
+      42→type FParseErrWhitelist flag.ParseErrorsAllowlist
+      44→// Group Structure to manage groups for commands
+      45→type Group struct {
+      46→	ID    string
+      47→	Title string
+      48→}
+      50→// Command is just that, a command for your application.
+      51→// E.g.  'go run ...' - 'run' is the command. Cobra requires
+      52→// you to define the usage and description as part of your command
+      53→// definition to ensure usability.
+      54→type Command struct {
     …
-    66→	// Aliases is an array of aliases that can be used instead of the first word in Use.
-    67→	Aliases []string
-    69→	// SuggestFor is an array of command names for which this command will be suggested -
-    70→	// similar to aliases but only suggests.
-    71→	SuggestFor []string
-    73→	// Short is the short description shown in the 'help' output.
-    74→	Short string
-    76→	// The group id under which this subcommand is grouped in the 'help' output of its parent.
-    77→	GroupID string
-    79→	// Long is the long message shown in the 'help <this-command>' output.
-    80→	Long string
-    82→	// Example is examples of how to use the command.
-    83→	Example string
-    85→	// ValidArgs is list of all valid non-flag arguments that are accepted in shell completions
-    86→	ValidArgs []Completion
-    87→	// ValidArgsFunction is an optional function that provides valid non-flag arguments for shell completion.
-    88→	// It is a dynamic version of using ValidArgs.
-    89→	// Only one of ValidArgs and ValidArgsFunction can be used for a command.
-    90→	ValidArgsFunction CompletionFunc
-    92→	// Expected arguments
-    93→	Args PositionalArgs
-    95→	// ArgAliases is List of aliases for ValidArgs.
-    96→	// These are not suggested to the user in the shell completion,
-    97→	// but accepted if entered manually.
-    98→	ArgAliases []string
-    100→	// BashCompletionFunction is custom bash functions used by the legacy bash autocompletion generator.
-    101→	// For portability with other shells, it is recommended to instead use ValidArgsFunction
-    102→	BashCompletionFunction string
-    104→	// Deprecated defines, if this command is deprecated and should print this string when used.
-    105→	Deprecated string
-    107→	// Annotations are key/value pairs that can be used by applications to identify or
-    108→	// group commands or set special options.
-    109→	Annotations map[string]string
-    111→	// Version defines the version for this command. If this value is non-empty and the command does not
-    112→	// define a "version" flag, a "version" boolean flag will be added to the command and, if specified,
-    113→	// will print content of the "Version" variable. A shorthand "v" flag will also be added if the
-    114→	// command does not define one.
-    115→	Version string
+      66→	// Aliases is an array of aliases that can be used instead of the first word in Use.
+      67→	Aliases []string
+      69→	// SuggestFor is an array of command names for which this command will be suggested -
+      70→	// similar to aliases but only suggests.
+      71→	SuggestFor []string
+      73→	// Short is the short description shown in the 'help' output.
+      74→	Short string
+      76→	// The group id under which this subcommand is grouped in the 'help' output of its parent.
+      77→	GroupID string
+      79→	// Long is the long message shown in the 'help <this-command>' output.
+      80→	Long string
+      82→	// Example is examples of how to use the command.
+      83→	Example string
+      85→	// ValidArgs is list of all valid non-flag arguments that are accepted in shell completions
+      86→	ValidArgs []Completion
+      87→	// ValidArgsFunction is an optional function that provides valid non-flag arguments for shell completion.
+      88→	// It is a dynamic version of using ValidArgs.
+      89→	// Only one of ValidArgs and ValidArgsFunction can be used for a command.
+      90→	ValidArgsFunction CompletionFunc
+      92→	// Expected arguments
+      93→	Args PositionalArgs
+      95→	// ArgAliases is List of aliases for ValidArgs.
+      96→	// These are not suggested to the user in the shell completion,
+      97→	// but accepted if entered manually.
+      98→	ArgAliases []string
+     100→	// BashCompletionFunction is custom bash functions used by the legacy bash autocompletion generator.
+     101→	// For portability with other shells, it is recommended to instead use ValidArgsFunction
+     102→	BashCompletionFunction string
+     104→	// Deprecated defines, if this command is deprecated and should print this string when used.
+     105→	Deprecated string
+     107→	// Annotations are key/value pairs that can be used by applications to identify or
+     108→	// group commands or set special options.
+     109→	Annotations map[string]string
+     111→	// Version defines the version for this command. If this value is non-empty and the command does not
+     112→	// define a "version" flag, a "version" boolean flag will be added to the command and, if specified,
+     113→	// will print content of the "Version" variable. A shorthand "v" flag will also be added if the
+     114→	// command does not define one.
+     115→	Version string
     …
-    148→	// groups for subcommands
-    149→	commandgroups []*Group
+     148→	// groups for subcommands
+     149→	commandgroups []*Group
     …
-    188→	// completionCommandGroupID is the group id for the completion command
-    189→	completionCommandGroupID string
-    191→	// versionTemplate is the version template defined by user.
-    192→	versionTemplate *tmplFunc
-    194→	// errPrefix is the error message prefix defined by user.
-    195→	errPrefix string
-    197→	// inReader is a reader defined by the user that replaces stdin
-    198→	inReader io.Reader
-    199→	// outWriter is a writer defined by the user that replaces stdout
-    200→	outWriter io.Writer
-    201→	// errWriter is a writer defined by the user that replaces stderr
-    202→	errWriter io.Writer
-    204→	// FParseErrWhitelist flag parse errors to be ignored
-    205→	FParseErrWhitelist FParseErrWhitelist
-    207→	// CompletionOptions is a set of options to control the handling of shell completion
-    208→	CompletionOptions CompletionOptions
-    210→	// commandsAreSorted defines, if command slice are sorted or not.
-    211→	commandsAreSorted bool
-    212→	// commandCalledAs is the name or alias value used to call this command.
-    213→	commandCalledAs struct {
-    214→		name   string
-    215→		called bool
-    216→	}
-    218→	ctx context.Context
-    220→	// commands is the list of commands supported by this program.
-    221→	commands []*Command
-    222→	// parent is a parent command for this command.
-    223→	parent *Command
-    224→	// Max lengths of commands' string lengths for use in padding.
-    225→	commandsMaxUseLen         int
-    226→	commandsMaxCommandPathLen int
-    227→	commandsMaxNameLen        int
-    229→	// TraverseChildren parses flags on all parents before executing child command.
-    230→	TraverseChildren bool
-    232→	// Hidden defines, if this command is hidden and should NOT show up in the list of available commands.
-    233→	Hidden bool
-    235→	// SilenceErrors is an option to quiet errors down stream.
-    236→	SilenceErrors bool
-    238→	// SilenceUsage is an option to silence usage when an error occurs.
-    239→	SilenceUsage bool
-    241→	// DisableFlagParsing disables the flag parsing.
-    242→	// If this is true all flags will be passed to the command as arguments.
-    243→	DisableFlagParsing bool
-    245→	// DisableAutoGenTag defines, if gen tag ("Auto generated by spf13/cobra...")
-    246→	// will be printed by generating docs for this command.
-    247→	DisableAutoGenTag bool
-    249→	// DisableFlagsInUseLine will disable the addition of [flags] to the usage
-    250→	// line of a command when printing help or generating docs
-    251→	DisableFlagsInUseLine bool
-    253→	// DisableSuggestions disables the suggestions based on Levenshtein distance
-    254→	// that go along with 'unknown command' messages.
-    255→	DisableSuggestions bool
-    257→	// SuggestionsMinimumDistance defines minimum levenshtein distance to display suggestions.
-    258→	// Must be > 0.
-    259→	SuggestionsMinimumDistance int
-    260→}
+     188→	// completionCommandGroupID is the group id for the completion command
+     189→	completionCommandGroupID string
+     191→	// versionTemplate is the version template defined by user.
+     192→	versionTemplate *tmplFunc
+     194→	// errPrefix is the error message prefix defined by user.
+     195→	errPrefix string
+     197→	// inReader is a reader defined by the user that replaces stdin
+     198→	inReader io.Reader
+     199→	// outWriter is a writer defined by the user that replaces stdout
+     200→	outWriter io.Writer
+     201→	// errWriter is a writer defined by the user that replaces stderr
+     202→	errWriter io.Writer
+     204→	// FParseErrWhitelist flag parse errors to be ignored
+     205→	FParseErrWhitelist FParseErrWhitelist
+     207→	// CompletionOptions is a set of options to control the handling of shell completion
+     208→	CompletionOptions CompletionOptions
+     210→	// commandsAreSorted defines, if command slice are sorted or not.
+     211→	commandsAreSorted bool
+     212→	// commandCalledAs is the name or alias value used to call this command.
+     213→	commandCalledAs struct {
+     214→		name   string
+     215→		called bool
+     216→	}
+     218→	ctx context.Context
+     220→	// commands is the list of commands supported by this program.
+     221→	commands []*Command
+     222→	// parent is a parent command for this command.
+     223→	parent *Command
+     224→	// Max lengths of commands' string lengths for use in padding.
+     225→	commandsMaxUseLen         int
+     226→	commandsMaxCommandPathLen int
+     227→	commandsMaxNameLen        int
+     229→	// TraverseChildren parses flags on all parents before executing child command.
+     230→	TraverseChildren bool
+     232→	// Hidden defines, if this command is hidden and should NOT show up in the list of available commands.
+     233→	Hidden bool
+     235→	// SilenceErrors is an option to quiet errors down stream.
+     236→	SilenceErrors bool
+     238→	// SilenceUsage is an option to silence usage when an error occurs.
+     239→	SilenceUsage bool
+     241→	// DisableFlagParsing disables the flag parsing.
+     242→	// If this is true all flags will be passed to the command as arguments.
+     243→	DisableFlagParsing bool
+     245→	// DisableAutoGenTag defines, if gen tag ("Auto generated by spf13/cobra...")
+     246→	// will be printed by generating docs for this command.
+     247→	DisableAutoGenTag bool
+     249→	// DisableFlagsInUseLine will disable the addition of [flags] to the usage
+     250→	// line of a command when printing help or generating docs
+     251→	DisableFlagsInUseLine bool
+     253→	// DisableSuggestions disables the suggestions based on Levenshtein distance
+     254→	// that go along with 'unknown command' messages.
+     255→	DisableSuggestions bool
+     257→	// SuggestionsMinimumDistance defines minimum levenshtein distance to display suggestions.
+     258→	// Must be > 0.
+     259→	SuggestionsMinimumDistance int
+     260→}
     …
-    269→func (c *Command) Context() context.Context {
-    270→	return c.ctx
+     269→func (c *Command) Context() context.Context {
+     270→	return c.ctx
     …
-    273→// SetContext sets context for the command. This context will be overwritten by
-    274→// Command.ExecuteContext or Command.ExecuteContextC.
-    275→func (c *Command) SetContext(ctx context.Context) {
-    276→	c.ctx = ctx
+     273→// SetContext sets context for the command. This context will be overwritten by
+     274→// Command.ExecuteContext or Command.ExecuteContextC.
+     275→func (c *Command) SetContext(ctx context.Context) {
+     276→	c.ctx = ctx
     …
-    279→// SetArgs sets arguments for the command. It is set to os.Args[1:] by default, if desired, can be overridden
-    280→// particularly useful when testing.
-    281→func (c *Command) SetArgs(a []string) {
-    282→	c.args = a
+     279→// SetArgs sets arguments for the command. It is set to os.Args[1:] by default, if desired, can be overridden
+     280→// particularly useful when testing.
+     281→func (c *Command) SetArgs(a []string) {
+     282→	c.args = a
     …
-    285→// SetOutput sets the destination for usage and error messages.
-    286→// If output is nil, os.Stderr is used.
-    287→//
-    288→// Deprecated: Use SetOut and/or SetErr instead
-    289→func (c *Command) SetOutput(output io.Writer) {
-    290→	c.outWriter = output
-    291→	c.errWriter = output
+     285→// SetOutput sets the destination for usage and error messages.
+     286→// If output is nil, os.Stderr is used.
+     287→//
+     288→// Deprecated: Use SetOut and/or SetErr instead
+     289→func (c *Command) SetOutput(output io.Writer) {
+     290→	c.outWriter = output
+     291→	c.errWriter = output
     …
 command_notwin.go
     …
-    20→var preExecHookFn func(*Command)
+      20→var preExecHookFn func(*Command)
 command_test.go
 command_win.go
 completions.go
@@ -246,28 +246,28 @@ doc/
     yaml_docs_test.go
 fish_completions.go
     …
-    25→func genFishComp(buf io.StringWriter, name string, includeDesc bool) {
+      25→func genFishComp(buf io.StringWriter, name string, includeDesc bool) {
     …
-    275→// GenFishCompletion generates fish completion file and writes to the passed writer.
-    276→func (c *Command) GenFishCompletion(w io.Writer, includeDesc bool) error {
+     275→// GenFishCompletion generates fish completion file and writes to the passed writer.
+     276→func (c *Command) GenFishCompletion(w io.Writer, includeDesc bool) error {
     …
-    283→// GenFishCompletionFile generates fish completion file.
-    284→func (c *Command) GenFishCompletionFile(filename string, includeDesc bool) error {
+     283→// GenFishCompletionFile generates fish completion file.
+     284→func (c *Command) GenFishCompletionFile(filename string, includeDesc bool) error {
     …
 fish_completions_test.go
 flag_groups.go
 flag_groups_test.go
 go.mod
-    1→module github.com/spf13/cobra
-    2→
-    3→go 1.15
-    4→
-    5→require (
-    6→	github.com/cpuguy83/go-md2man/v2 v2.0.6
-    7→	github.com/inconshreveable/mousetrap v1.1.0
-    8→	github.com/spf13/pflag v1.0.9
-    9→	go.yaml.in/yaml/v3 v3.0.4
-    10→)
+       1→module github.com/spf13/cobra
+       2→
+       3→go 1.15
+       4→
+       5→require (
+       6→	github.com/cpuguy83/go-md2man/v2 v2.0.6
+       7→	github.com/inconshreveable/mousetrap v1.1.0
+       8→	github.com/spf13/pflag v1.0.9
+       9→	go.yaml.in/yaml/v3 v3.0.4
+      10→)
 go.sum
 powershell_completions.go
 powershell_completions_test.go

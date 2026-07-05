@@ -11,36 +11,36 @@ LICENSE
 Makefile
 README.md
     …
-    3→Sokol + Lua = Soluna
+       3→Sokol + Lua = Soluna
     …
-    7→# Soluna
-    8→
-    9→[中文](./README.zh-CN.md)
-    10→
-    11→[Live Examples](https://cloudwu.github.io/soluna/)
-    13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
-    14→
-    15→It is built on top of [sokol](https://github.com/floooh/sokol) and leverages the power of ltask for multithreading.
-    16→
-    17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
-    19→## Documentation
-    20→
-    21→- [API Reference](./docs)
-    22→- [Examples](./test)
-    23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
-    25→## Precompiled Binaries
-    26→
-    27→You can download precompiled binaries for Windows, Linux, macOS and WebAssembly from the [Nightly Releases](/../../releases/tag/nightly) page.
-    29→## Building from Source
+       7→# Soluna
+       8→
+       9→[中文](./README.zh-CN.md)
+      10→
+      11→[Live Examples](https://cloudwu.github.io/soluna/)
+      13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
+      14→
+      15→It is built on top of [sokol](https://github.com/floooh/sokol) and leverages the power of ltask for multithreading.
+      16→
+      17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
+      19→## Documentation
+      20→
+      21→- [API Reference](./docs)
+      22→- [Examples](./test)
+      23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
+      25→## Precompiled Binaries
+      26→
+      27→You can download precompiled binaries for Windows, Linux, macOS and WebAssembly from the [Nightly Releases](/../../releases/tag/nightly) page.
+      29→## Building from Source
     …
-    33→### Integration with the Actions of your projects
+      33→### Integration with the Actions of your projects
     …
-    53→## Projects made with Soluna
-    54→
-    55→- [Deep Future](https://github.com/cloudwu/deepfuture), a digital version of boardgame Deep Future.
-    57→## License
-    58→
-    59→Soluna is licensed under the MIT License. See [LICENSE](./LICENSE) for details.
+      53→## Projects made with Soluna
+      54→
+      55→- [Deep Future](https://github.com/cloudwu/deepfuture), a digital version of boardgame Deep Future.
+      57→## License
+      58→
+      59→Soluna is licensed under the MIT License. See [LICENSE](./LICENSE) for details.
 README.zh-CN.md
 asset/
     avatar.png
@@ -60,15 +60,15 @@ clibs/
     soluna/
         compile_lua.lua
             …
-            4→local function compile_lua_code(script, src, name)
+               4→local function compile_lua_code(script, src, name)
             …
         compile_shader.lua
             …
-            5→local function shdc_plat()
+               5→local function shdc_plat()
             …
-            27→local function compile_shader(src, name, lang)
+              27→local function compile_shader(src, name, lang)
             …
-            44→local function shader_lang()
+              44→local function shader_lang()
             …
         make.lua
         runlua.lua
@@ -81,246 +81,246 @@ docs/
     app.lua
     args.lua
         …
-        18→function batch:add(sprite, x, y) end
+          18→function batch:add(sprite, x, y) end
         …
-        41→function batch:layer(scale, rotation, x, y) end
+          41→function batch:layer(scale, rotation, x, y) end
         …
     callback.lua
     coroutine.lua
     crypt.lua
-        1→---@meta soluna.crypt
-        2→
-        3→---
-        4→--- Soluna crypt module
-        5→---
-        6→
-        7→---@class soluna.crypt
-        8→local crypt = {}
-        9→
-        10→---
-        11→--- Encodes binary data to hexadecimal string
-        12→---
-        13→--- Converts binary data to a hexadecimal string representation (lowercase).
-        14→---
-        15→---@param data string Binary data to encode
-        16→---@return string hex Hexadecimal string (lowercase)
-        17→function crypt.hexencode(data) end
-        18→
-        19→---
-        20→--- Computes SHA-1 hash of input data
-        21→---
-        22→--- Returns the SHA-1 hash as binary data (20 bytes).
-        23→---
-        24→---@param data string Input data to hash
-        25→---@return string hash Binary SHA-1 hash (20 bytes)
-        26→function crypt.sha1(data) end
-        27→
-        28→return crypt
+           1→---@meta soluna.crypt
+           2→
+           3→---
+           4→--- Soluna crypt module
+           5→---
+           6→
+           7→---@class soluna.crypt
+           8→local crypt = {}
+           9→
+          10→---
+          11→--- Encodes binary data to hexadecimal string
+          12→---
+          13→--- Converts binary data to a hexadecimal string representation (lowercase).
+          14→---
+          15→---@param data string Binary data to encode
+          16→---@return string hex Hexadecimal string (lowercase)
+          17→function crypt.hexencode(data) end
+          18→
+          19→---
+          20→--- Computes SHA-1 hash of input data
+          21→---
+          22→--- Returns the SHA-1 hash as binary data (20 bytes).
+          23→---
+          24→---@param data string Input data to hash
+          25→---@return string hash Binary SHA-1 hash (20 bytes)
+          26→function crypt.sha1(data) end
+          27→
+          28→return crypt
     datalist.lua
-        1→---@meta soluna.datalist
-        2→
-        3→---
-        4→--- Soluna datalist module
-        5→---
-        6→
-        7→---@class soluna.datalist
-        8→local datalist = {}
-        9→
-        10→---
-        11→--- Parses datalist format data
-        12→---
-        13→---@param data string Datalist format text
-        14→---@return table parsed Parsed data structure
-        15→function datalist.parse(data) end
-        16→
-        17→---
-        18→--- Quotes a string for datalist format
-        19→---
-        20→---@param str string String to quote
-        21→---@return string quoted Quoted string
-        22→function datalist.quote(str) end
-        23→
-        24→return datalist
+           1→---@meta soluna.datalist
+           2→
+           3→---
+           4→--- Soluna datalist module
+           5→---
+           6→
+           7→---@class soluna.datalist
+           8→local datalist = {}
+           9→
+          10→---
+          11→--- Parses datalist format data
+          12→---
+          13→---@param data string Datalist format text
+          14→---@return table parsed Parsed data structure
+          15→function datalist.parse(data) end
+          16→
+          17→---
+          18→--- Quotes a string for datalist format
+          19→---
+          20→---@param str string String to quote
+          21→---@return string quoted Quoted string
+          22→function datalist.quote(str) end
+          23→
+          24→return datalist
     file.lua
     font.lua
-        1→---@meta soluna.font
-        2→
-        3→---
-        4→--- Soluna font module
-        5→---
-        6→
-        7→---@class soluna.font
-        8→local font = {}
-        9→
-        10→---
-        11→--- Imports a TrueType font
-        12→---
-        13→---@param data string Raw TTF font data
-        14→function font.import(data) end
-        15→
-        16→---
-        17→--- Gets font ID by name
-        18→---
-        19→---@param name string Font name (empty string for last imported font)
-        20→---@return integer? fontid Font ID, or nil if font not found
-        21→function font.name(name) end
-        22→
-        23→---
-        24→--- Gets the font system C object
-        25→---
-        26→---@return userdata fontcobj Font system object
-        27→function font.cobj() end
-        28→
-        29→return font
+           1→---@meta soluna.font
+           2→
+           3→---
+           4→--- Soluna font module
+           5→---
+           6→
+           7→---@class soluna.font
+           8→local font = {}
+           9→
+          10→---
+          11→--- Imports a TrueType font
+          12→---
+          13→---@param data string Raw TTF font data
+          14→function font.import(data) end
+          15→
+          16→---
+          17→--- Gets font ID by name
+          18→---
+          19→---@param name string Font name (empty string for last imported font)
+          20→---@return integer? fontid Font ID, or nil if font not found
+          21→function font.name(name) end
+          22→
+          23→---
+          24→--- Gets the font system C object
+          25→---
+          26→---@return userdata fontcobj Font system object
+          27→function font.cobj() end
+          28→
+          29→return font
     font_system.lua
-        1→---@meta soluna.font.system
-        2→
-        3→---
-        4→--- Soluna font system module
-        5→---
-        6→
-        7→---@class soluna.font.system
-        8→local font_system = {}
-        9→
-        10→---
-        11→--- Loads system font data by name
-        12→---
-        13→---@param name string Font name (e.g., "Arial", "微软雅黑")
-        14→---@return string? data TTF font data or nil if not found
-        15→function font_system.ttfdata(name) end
-        16→
-        17→return font_system
+           1→---@meta soluna.font.system
+           2→
+           3→---
+           4→--- Soluna font system module
+           5→---
+           6→
+           7→---@class soluna.font.system
+           8→local font_system = {}
+           9→
+          10→---
+          11→--- Loads system font data by name
+          12→---
+          13→---@param name string Font name (e.g., "Arial", "微软雅黑")
+          14→---@return string? data TTF font data or nil if not found
+          15→function font_system.ttfdata(name) end
+          16→
+          17→return font_system
     image.lua
     layout.lua
     lfs.lua
-        1→---@meta soluna.lfs
-        2→
-        3→---
-        4→--- Soluna lfs module
-        5→---
-        6→
-        7→---@class soluna.lfs
-        8→local lfs = {}
-        9→
-        10→---
-        11→--- Gets file attributes
-        12→---
-        13→---@param filename string File path
-        14→---@return table? attributes File attributes or nil
-        15→function lfs.attributes(filename) end
-        16→
-        17→---
-        18→--- Iterates over directory entries
-        19→---
-        20→---@param path string Directory path
-        21→---@return function iterator Iterator function
-        22→function lfs.dir(path) end
-        23→
-        24→return lfs
+           1→---@meta soluna.lfs
+           2→
+           3→---
+           4→--- Soluna lfs module
+           5→---
+           6→
+           7→---@class soluna.lfs
+           8→local lfs = {}
+           9→
+          10→---
+          11→--- Gets file attributes
+          12→---
+          13→---@param filename string File path
+          14→---@return table? attributes File attributes or nil
+          15→function lfs.attributes(filename) end
+          16→
+          17→---
+          18→--- Iterates over directory entries
+          19→---
+          20→---@param path string Directory path
+          21→---@return function iterator Iterator function
+          22→function lfs.dir(path) end
+          23→
+          24→return lfs
     material_mask.lua
-        1→---@meta soluna.material.mask
-        2→
-        3→---
-        4→--- Soluna material mask module
-        5→---
-        6→
-        7→---@class soluna.material.mask
-        8→local matmask = {}
-        9→
-        10→
-        11→--- Creates a colored mask sprite.
-        12→---
-        13→--- Color format: ARGB as 32-bit integer 0xAARRGGBB.
-        14→--- If the alpha byte is 00 it is forced to 0xFF (fully opaque).
-        15→---
-        16→---@param sprite integer 1-based sprite index (will be stored as 0-based internally)
-        17→---@param color  integer Color in ARGB format (0xAARRGGBB, e.g. 0xFF00FF00 for opaque green)
-        18→---@return userdata mask Binary blob containing the packed mask_primitive; push it as a Lua string
-        19→function matmask.mask(sprite, color) end
-        20→
-        21→return matmask
+           1→---@meta soluna.material.mask
+           2→
+           3→---
+           4→--- Soluna material mask module
+           5→---
+           6→
+           7→---@class soluna.material.mask
+           8→local matmask = {}
+           9→
+          10→
+          11→--- Creates a colored mask sprite.
+          12→---
+          13→--- Color format: ARGB as 32-bit integer 0xAARRGGBB.
+          14→--- If the alpha byte is 00 it is forced to 0xFF (fully opaque).
+          15→---
+          16→---@param sprite integer 1-based sprite index (will be stored as 0-based internally)
+          17→---@param color  integer Color in ARGB format (0xAARRGGBB, e.g. 0xFF00FF00 for opaque green)
+          18→---@return userdata mask Binary blob containing the packed mask_primitive; push it as a Lua string
+          19→function matmask.mask(sprite, color) end
+          20→
+          21→return matmask
     material_perspective_quad.lua
     material_quad.lua
-        1→---@meta soluna.material.quad
-        2→
-        3→---
-        4→--- Soluna material quad module
-        5→---
-        6→
-        7→---@class soluna.material.quad
-        8→local matquad = {}
-        9→
-        10→---
-        11→--- Creates a colored rectangle sprite
-        12→---
-        13→--- Color format: ARGB as 32-bit integer 0xAARRGGBB.
-        14→--- If alpha channel (high byte) is 0, it defaults to 0xFF (opaque).
-        15→---
-        16→---@param width integer Rectangle width in pixels
-        17→---@param height integer Rectangle height in pixels
-        18→---@param color integer Color in ARGB format (0xAARRGGBB, e.g., 0xFFFF0000 for opaque red)
-        19→---@return userdata sprite Sprite object for rendering with batch:add()
-        20→function matquad.quad(width, height, color) end
-        21→
-        22→return matquad
+           1→---@meta soluna.material.quad
+           2→
+           3→---
+           4→--- Soluna material quad module
+           5→---
+           6→
+           7→---@class soluna.material.quad
+           8→local matquad = {}
+           9→
+          10→---
+          11→--- Creates a colored rectangle sprite
+          12→---
+          13→--- Color format: ARGB as 32-bit integer 0xAARRGGBB.
+          14→--- If alpha channel (high byte) is 0, it defaults to 0xFF (opaque).
+          15→---
+          16→---@param width integer Rectangle width in pixels
+          17→---@param height integer Rectangle height in pixels
+          18→---@param color integer Color in ARGB format (0xAARRGGBB, e.g., 0xFFFF0000 for opaque red)
+          19→---@return userdata sprite Sprite object for rendering with batch:add()
+          20→function matquad.quad(width, height, color) end
+          21→
+          22→return matquad
     material_text.lua
     soluna.lua
     text.lua
     url.lua
-        1→---@meta soluna.url
-        2→
-        3→---
-        4→--- Soluna url module
-        5→---
-        6→
-        7→---@class soluna.url
-        8→local url = {}
-        9→
-        10→---
-        11→--- Opens a URL in the system's default web browser
-        12→---
-        13→---@param link string The URL to open
-        14→function url.open(link) end
-        15→
-        16→return url
+           1→---@meta soluna.url
+           2→
+           3→---
+           4→--- Soluna url module
+           5→---
+           6→
+           7→---@class soluna.url
+           8→local url = {}
+           9→
+          10→---
+          11→--- Opens a URL in the system's default web browser
+          12→---
+          13→---@param link string The URL to open
+          14→function url.open(link) end
+          15→
+          16→return url
     zip.lua
-        1→---@meta soluna.zip
-        2→
-        3→---
-        4→--- Soluna zip module
-        5→---
-        6→
-        7→---@class soluna.zip
-        8→local zip = {}
-        9→
-        10→---
-        11→--- Opens a ZIP file for reading or writing
-        12→---
-        13→--- Opens a ZIP archive. Mode "r" opens for reading, "w" creates a new archive.
-        14→--- Returns a file handle or nil on error.
-        15→---
-        16→---@param filename string Path to ZIP file
-        17→---@param mode "r"|"w" Open mode: "r" for read, "w" for write
-        18→---@return userdata? zipfile ZIP file handle or nil on error
-        19→function zip.open(filename, mode) end
-        20→
-        21→return zip
+           1→---@meta soluna.zip
+           2→
+           3→---
+           4→--- Soluna zip module
+           5→---
+           6→
+           7→---@class soluna.zip
+           8→local zip = {}
+           9→
+          10→---
+          11→--- Opens a ZIP file for reading or writing
+          12→---
+          13→--- Opens a ZIP archive. Mode "r" opens for reading, "w" creates a new archive.
+          14→--- Returns a file handle or nil on error.
+          15→---
+          16→---@param filename string Path to ZIP file
+          17→---@param mode "r"|"w" Open mode: "r" for read, "w" for write
+          18→---@return userdata? zipfile ZIP file handle or nil on error
+          19→function zip.open(filename, mode) end
+          20→
+          21→return zip
 make.lua
     …
-    4→local function detect_emcc()
+       4→local function detect_emcc()
     …
 script/
     build_web.lua
     datalist2c.lua
         …
-        14→local function tohex(c)
+          14→local function tohex(c)
         …
     hashversion.lua
-        1→local function get_rev()
+           1→local function get_rev()
         …
     lua2c.lua
         …
-        13→local function tohex(c)
+          13→local function tohex(c)
         …
 src/
 test/

@@ -14,34 +14,34 @@ KEYS
 Makefile.am
 NEWS.md
 README.md
-    1→# jq
-    2→
-    3→`jq` is a lightweight and flexible command-line JSON processor akin to `sed`,`awk`,`grep`, and friends for JSON data. It's written in portable C and has zero runtime dependencies, allowing you to easily slice, filter, map, and transform structured data.
-    5→## Documentation
-    6→
-    7→- **Official Documentation**: [jqlang.org](https://jqlang.org)
-    8→- **Try jq Online**: [play.jqlang.org](https://play.jqlang.org)
-    10→## Installation
-    11→
-    12→### Prebuilt Binaries
-    13→
-    14→Download the latest releases from the [GitHub release page](https://github.com/jqlang/jq/releases).
-    16→### Docker Image
-    18→Pull the [jq image](https://github.com/jqlang/jq/pkgs/container/jq) to start quickly with Docker.
+       1→# jq
+       2→
+       3→`jq` is a lightweight and flexible command-line JSON processor akin to `sed`,`awk`,`grep`, and friends for JSON data. It's written in portable C and has zero runtime dependencies, allowing you to easily slice, filter, map, and transform structured data.
+       5→## Documentation
+       6→
+       7→- **Official Documentation**: [jqlang.org](https://jqlang.org)
+       8→- **Try jq Online**: [play.jqlang.org](https://play.jqlang.org)
+      10→## Installation
+      11→
+      12→### Prebuilt Binaries
+      13→
+      14→Download the latest releases from the [GitHub release page](https://github.com/jqlang/jq/releases).
+      16→### Docker Image
+      18→Pull the [jq image](https://github.com/jqlang/jq/pkgs/container/jq) to start quickly with Docker.
     …
-    34→### Building from source
+      34→### Building from source
     …
-    67→## Community & Support
-    68→
-    69→- Questions & Help: [Stack Overflow (jq tag)](https://stackoverflow.com/questions/tagged/jq)
-    70→- Chat & Community: [Join us on Discord](https://discord.gg/yg6yjNmgAC)
-    71→- Wiki & Advanced Topics: [Explore the Wiki](https://github.com/jqlang/jq/wiki)
-    73→## License
-    74→
-    75→`jq` is released under the [MIT License](COPYING). `jq`'s documentation is
-    76→licensed under the [Creative Commons CC BY 3.0](COPYING).
-    77→`jq` uses parts of the open source C library "decNumber", which is distributed
-    78→under [ICU License](COPYING)
+      67→## Community & Support
+      68→
+      69→- Questions & Help: [Stack Overflow (jq tag)](https://stackoverflow.com/questions/tagged/jq)
+      70→- Chat & Community: [Join us on Discord](https://discord.gg/yg6yjNmgAC)
+      71→- Wiki & Advanced Topics: [Explore the Wiki](https://github.com/jqlang/jq/wiki)
+      73→## License
+      74→
+      75→`jq` is released under the [MIT License](COPYING). `jq`'s documentation is
+      76→licensed under the [Creative Commons CC BY 3.0](COPYING).
+      77→`jq` uses parts of the open source C library "decNumber", which is distributed
+      78→under [ICU License](COPYING)
 SECURITY.md
 build/
 compile-ios.sh
@@ -59,11 +59,11 @@ docs/
     Pipfile
     Pipfile.lock
     README.md
-        1→Documentation
-        2→=============
-        3→
-        4→The jq website, manpages and some of the tests are generated from this
-        5→directory. The manual is a YAML file in `content/manual`.
+           1→Documentation
+           2→=============
+           3→
+           4→The jq website, manpages and some of the tests are generated from this
+           5→directory. The manual is a YAML file in `content/manual`.
         …
     build_manpage.py
     build_mantests.py
@@ -126,108 +126,108 @@ src/
     inject_errors.c
     jq.h
         …
-        4→#include <stdio.h>
-        5→#include "jv.h"
+           4→#include <stdio.h>
+           5→#include "jv.h"
         …
-        11→enum {
-        12→  JQ_DEBUG_TRACE = 1,
-        13→  JQ_DEBUG_TRACE_DETAIL = 2,
-        14→  JQ_DEBUG_TRACE_ALL = JQ_DEBUG_TRACE | JQ_DEBUG_TRACE_DETAIL,
-        15→};
-        17→typedef struct jq_state jq_state;
-        18→typedef void (*jq_msg_cb)(void *, jv);
-        19→
-        20→jq_state *jq_init(void);
-        21→void jq_set_error_cb(jq_state *, jq_msg_cb, void *);
-        22→void jq_get_error_cb(jq_state *, jq_msg_cb *, void **);
-        23→void jq_set_nomem_handler(jq_state *, void (*)(void *), void *);
-        24→jv jq_format_error(jv msg);
-        25→void jq_report_error(jq_state *, jv);
-        26→int jq_compile(jq_state *, const char*);
-        27→int jq_compile_args(jq_state *, const char*, jv);
-        28→void jq_dump_disassembly(jq_state *, int);
-        29→void jq_start(jq_state *, jv value, int);
-        30→jv jq_next(jq_state *);
-        31→void jq_teardown(jq_state **);
-        32→
-        33→void jq_halt(jq_state *, jv, jv);
-        34→int jq_halted(jq_state *);
-        35→jv jq_get_exit_code(jq_state *);
-        36→jv jq_get_error_message(jq_state *);
-        37→
-        38→typedef jv (*jq_input_cb)(jq_state *, void *);
-        39→void jq_set_input_cb(jq_state *, jq_input_cb, void *);
-        40→void jq_get_input_cb(jq_state *, jq_input_cb *, void **);
-        41→void jq_set_debug_cb(jq_state *, jq_msg_cb, void *);
-        42→void jq_get_debug_cb(jq_state *, jq_msg_cb *, void **);
+          11→enum {
+          12→  JQ_DEBUG_TRACE = 1,
+          13→  JQ_DEBUG_TRACE_DETAIL = 2,
+          14→  JQ_DEBUG_TRACE_ALL = JQ_DEBUG_TRACE | JQ_DEBUG_TRACE_DETAIL,
+          15→};
+          17→typedef struct jq_state jq_state;
+          18→typedef void (*jq_msg_cb)(void *, jv);
+          19→
+          20→jq_state *jq_init(void);
+          21→void jq_set_error_cb(jq_state *, jq_msg_cb, void *);
+          22→void jq_get_error_cb(jq_state *, jq_msg_cb *, void **);
+          23→void jq_set_nomem_handler(jq_state *, void (*)(void *), void *);
+          24→jv jq_format_error(jv msg);
+          25→void jq_report_error(jq_state *, jv);
+          26→int jq_compile(jq_state *, const char*);
+          27→int jq_compile_args(jq_state *, const char*, jv);
+          28→void jq_dump_disassembly(jq_state *, int);
+          29→void jq_start(jq_state *, jv value, int);
+          30→jv jq_next(jq_state *);
+          31→void jq_teardown(jq_state **);
+          32→
+          33→void jq_halt(jq_state *, jv, jv);
+          34→int jq_halted(jq_state *);
+          35→jv jq_get_exit_code(jq_state *);
+          36→jv jq_get_error_message(jq_state *);
+          37→
+          38→typedef jv (*jq_input_cb)(jq_state *, void *);
+          39→void jq_set_input_cb(jq_state *, jq_input_cb, void *);
+          40→void jq_get_input_cb(jq_state *, jq_input_cb *, void **);
+          41→void jq_set_debug_cb(jq_state *, jq_msg_cb, void *);
+          42→void jq_get_debug_cb(jq_state *, jq_msg_cb *, void **);
         …
     jq_parser.h
     jq_test.c
         …
-        21→int jq_testsuite(jv libdirs, int verbose, int argc, char* argv[]) {
+          21→int jq_testsuite(jv libdirs, int verbose, int argc, char* argv[]) {
         …
-        78→struct err_data {
-        79→  char buf[4096];
-        80→};
+          78→struct err_data {
+          79→  char buf[4096];
+          80→};
         …
     jv.c
     jv.h
         …
-        4→#include <stdarg.h>
-        5→#include <stdint.h>
-        6→#include <stdio.h>
+           4→#include <stdarg.h>
+           5→#include <stdint.h>
+           6→#include <stdio.h>
         …
-        19→typedef enum {
-        20→  JV_KIND_INVALID,
-        21→  JV_KIND_NULL,
-        22→  JV_KIND_FALSE,
-        23→  JV_KIND_TRUE,
-        24→  JV_KIND_NUMBER,
-        25→  JV_KIND_STRING,
-        26→  JV_KIND_ARRAY,
-        27→  JV_KIND_OBJECT
-        28→} jv_kind;
-        30→struct jv_refcnt;
-        32→/* All of the fields of this struct are private.
-        33→   Really. Do not play with them. */
-        34→typedef struct {
-        35→  unsigned char kind_flags;
-        36→  unsigned char pad_;
-        37→  unsigned short offset;  /* array offsets */
-        38→  int size;
-        39→  union {
-        40→    struct jv_refcnt* ptr;
-        41→    double number;
-        42→  } u;
-        43→} jv;
+          19→typedef enum {
+          20→  JV_KIND_INVALID,
+          21→  JV_KIND_NULL,
+          22→  JV_KIND_FALSE,
+          23→  JV_KIND_TRUE,
+          24→  JV_KIND_NUMBER,
+          25→  JV_KIND_STRING,
+          26→  JV_KIND_ARRAY,
+          27→  JV_KIND_OBJECT
+          28→} jv_kind;
+          30→struct jv_refcnt;
+          32→/* All of the fields of this struct are private.
+          33→   Really. Do not play with them. */
+          34→typedef struct {
+          35→  unsigned char kind_flags;
+          36→  unsigned char pad_;
+          37→  unsigned short offset;  /* array offsets */
+          38→  int size;
+          39→  union {
+          40→    struct jv_refcnt* ptr;
+          41→    double number;
+          42→  } u;
+          43→} jv;
         …
-        50→jv_kind jv_get_kind(jv);
-        51→const char* jv_kind_name(jv_kind);
+          50→jv_kind jv_get_kind(jv);
+          51→const char* jv_kind_name(jv_kind);
         …
-        54→jv jv_copy(jv);
-        55→void jv_free(jv);
-        56→
-        57→int jv_get_refcnt(jv);
-        58→
-        59→int jv_equal(jv, jv);
-        60→int jv_identical(jv, jv);
-        61→int jv_contains(jv, jv);
-        62→
-        63→jv jv_invalid(void);
-        64→jv jv_invalid_with_msg(jv);
-        65→jv jv_invalid_get_msg(jv);
-        66→int jv_invalid_has_msg(jv);
-        67→
-        68→jv jv_null(void);
-        69→jv jv_true(void);
-        70→jv jv_false(void);
-        71→jv jv_bool(int);
-        72→
-        73→jv jv_number(double);
-        74→jv jv_number_with_literal(const char*);
-        75→double jv_number_value(jv);
-        76→int jv_is_integer(jv);
-        77→jv jv_number_abs(jv);
+          54→jv jv_copy(jv);
+          55→void jv_free(jv);
+          56→
+          57→int jv_get_refcnt(jv);
+          58→
+          59→int jv_equal(jv, jv);
+          60→int jv_identical(jv, jv);
+          61→int jv_contains(jv, jv);
+          62→
+          63→jv jv_invalid(void);
+          64→jv jv_invalid_with_msg(jv);
+          65→jv jv_invalid_get_msg(jv);
+          66→int jv_invalid_has_msg(jv);
+          67→
+          68→jv jv_null(void);
+          69→jv jv_true(void);
+          70→jv jv_false(void);
+          71→jv jv_bool(int);
+          72→
+          73→jv jv_number(double);
+          74→jv jv_number_with_literal(const char*);
+          75→double jv_number_value(jv);
+          76→int jv_is_integer(jv);
+          77→jv jv_number_abs(jv);
         …
     jv_alloc.c
     jv_alloc.h
@@ -236,48 +236,48 @@ src/
     jv_dtoa.h
     jv_dtoa_tsd.c
         …
-        22→void jv_tsd_dtoa_ctx_fini(void) {
+          22→void jv_tsd_dtoa_ctx_fini(void) {
         …
-        31→void jv_tsd_dtoa_ctx_init(void) {
+          31→void jv_tsd_dtoa_ctx_init(void) {
         …
-        39→inline struct dtoa_context *tsd_dtoa_context_get(void) {
+          39→inline struct dtoa_context *tsd_dtoa_context_get(void) {
         …
     jv_dtoa_tsd.h
-        1→#ifndef JV_DTOA_TSD_H
-        2→#define JV_DTOA_TSD_H
-        3→struct dtoa_context *tsd_dtoa_context_get(void);
-        4→#endif
+           1→#ifndef JV_DTOA_TSD_H
+           2→#define JV_DTOA_TSD_H
+           3→struct dtoa_context *tsd_dtoa_context_get(void);
+           4→#endif
     jv_file.c
         …
-        12→jv jv_load_file(const char* filename, int raw) {
+          12→jv jv_load_file(const char* filename, int raw) {
         …
     jv_parse.c
     jv_print.c
         …
-        24→#define ESC "\033"
-        25→#define COL(c) (ESC "[" c "m")
-        26→#define COLRESET (ESC "[0m")
+          24→#define ESC "\033"
+          25→#define COL(c) (ESC "[" c "m")
+          26→#define COLRESET (ESC "[0m")
         …
-        31→#define DEFAULT_COLORS \
+          31→#define DEFAULT_COLORS \
         …
-        36→#define COLORS_LEN (sizeof(colors) / sizeof(colors[0]))
-        37→#define FIELD_COLOR (colors[7])
+          36→#define COLORS_LEN (sizeof(colors) / sizeof(colors[0]))
+          37→#define FIELD_COLOR (colors[7])
         …
-        40→int jq_set_colors(const char *code_str) {
+          40→int jq_set_colors(const char *code_str) {
         …
     jv_private.h
-        1→#ifndef JV_PRIVATE
-        2→#define JV_PRIVATE
-        3→
-        4→int jvp_number_cmp(jv, jv);
-        5→int jvp_number_is_nan(jv);
-        6→
-        7→#endif //JV_PRIVATE
+           1→#ifndef JV_PRIVATE
+           2→#define JV_PRIVATE
+           3→
+           4→int jvp_number_cmp(jv, jv);
+           5→int jvp_number_is_nan(jv);
+           6→
+           7→#endif //JV_PRIVATE
     jv_thread.h
     jv_unicode.c
     jv_unicode.h
     jv_utf8_tables.h
-        1→#define UTF8_CONTINUATION_BYTE ((unsigned char)255)
+           1→#define UTF8_CONTINUATION_BYTE ((unsigned char)255)
         …
     lexer.c
     lexer.h
@@ -285,40 +285,40 @@ src/
     libm.h
     linker.c
         …
-        23→struct lib_entry {
-        24→  char *name;
-        25→  block def;
-        26→  int loading;
-        27→};
-        28→struct lib_loading_state {
-        29→  struct lib_entry *entries;
-        30→  uint64_t ct;
-        31→};
+          23→struct lib_entry {
+          24→  char *name;
+          25→  block def;
+          26→  int loading;
+          27→};
+          28→struct lib_loading_state {
+          29→  struct lib_entry *entries;
+          30→  uint64_t ct;
+          31→};
         …
-        409→jv load_module_meta(jq_state *jq, jv mod_relpath) {
+         409→jv load_module_meta(jq_state *jq, jv mod_relpath) {
         …
-        435→int load_program(jq_state *jq, struct locfile* src, block *out_block) {
+         435→int load_program(jq_state *jq, struct locfile* src, block *out_block) {
         …
     linker.h
-        1→#ifndef LINKER_H
-        2→#define LINKER_H
-        3→
-        4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
-        5→jv load_module_meta(jq_state *jq, jv modname);
-        6→
-        7→#endif
+           1→#ifndef LINKER_H
+           2→#define LINKER_H
+           3→
+           4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
+           5→jv load_module_meta(jq_state *jq, jv modname);
+           6→
+           7→#endif
     locfile.c
     locfile.h
     main.c
         …
-        43→int jq_testsuite(jv lib_dirs, int verbose, int argc, char* argv[]);
+          43→int jq_testsuite(jv lib_dirs, int verbose, int argc, char* argv[]);
         …
-        145→enum {
+         145→enum {
         …
-        164→enum {
+         164→enum {
         …
-        172→#define jq_exit_with_status(r)  exit(abs(r))
-        173→#define jq_exit(r)              exit( r > 0 ? r : 0 )
+         172→#define jq_exit_with_status(r)  exit(abs(r))
+         173→#define jq_exit(r)              exit( r > 0 ? r : 0 )
         …
     opcode_list.h
     parser.c

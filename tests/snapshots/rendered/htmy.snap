@@ -8,76 +8,76 @@ expression: rendered
 LICENSE
 README.md
     …
-    6→**Source code**: [https://github.com/volfpeter/htmy](https://github.com/volfpeter/htmy)
-    7→
-    8→**Documentation and examples**: [https://volfpeter.github.io/htmy](https://volfpeter.github.io/htmy/)
-    9→
-    10→# `htmy`
-    11→
-    12→**Async**, **pure-Python** server-side rendering engine.
-    13→
-    14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
-    16→## Key features
-    18→- **Async**-first, to let you make the best use of modern async tools.
-    19→- **Powerful**, React-like **context support**, so you can avoid prop-drilling.
-    20→- Sync and async **function components** with **decorator syntax**.
-    21→- All baseline **HTML** tags built-in.
-    22→- **Async HTML streaming** support for optimal TTFB (time to first byte).
-    23→- Support for **native HTML/XML** documents with dynamic formatting and **slot rendering**, **without custom syntax**.
-    24→- **Markdown** support with tools for customization.
-    25→- Async, JSON based **internationalization**.
-    26→- Built-in, easy to use `ErrorBoundary` component for graceful error handling.
-    27→- **Unopinionated**: use the backend, CSS, and JS frameworks of your choice, the way you want to use them.
-    28→- Everything is **easily customizable**, from the rendering engine to components, formatting and context management.
-    29→- Automatic and customizable **property-name conversion** from snake case to kebab case.
-    30→- **Compatible** with any other templating library through wrappers.
-    31→- **Fully-typed**.
-    33→## Testimonials
+       6→**Source code**: [https://github.com/volfpeter/htmy](https://github.com/volfpeter/htmy)
+       7→
+       8→**Documentation and examples**: [https://volfpeter.github.io/htmy](https://volfpeter.github.io/htmy/)
+       9→
+      10→# `htmy`
+      11→
+      12→**Async**, **pure-Python** server-side rendering engine.
+      13→
+      14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
+      16→## Key features
+      18→- **Async**-first, to let you make the best use of modern async tools.
+      19→- **Powerful**, React-like **context support**, so you can avoid prop-drilling.
+      20→- Sync and async **function components** with **decorator syntax**.
+      21→- All baseline **HTML** tags built-in.
+      22→- **Async HTML streaming** support for optimal TTFB (time to first byte).
+      23→- Support for **native HTML/XML** documents with dynamic formatting and **slot rendering**, **without custom syntax**.
+      24→- **Markdown** support with tools for customization.
+      25→- Async, JSON based **internationalization**.
+      26→- Built-in, easy to use `ErrorBoundary` component for graceful error handling.
+      27→- **Unopinionated**: use the backend, CSS, and JS frameworks of your choice, the way you want to use them.
+      28→- Everything is **easily customizable**, from the rendering engine to components, formatting and context management.
+      29→- Automatic and customizable **property-name conversion** from snake case to kebab case.
+      30→- **Compatible** with any other templating library through wrappers.
+      31→- **Fully-typed**.
+      33→## Testimonials
     …
-    47→## Support
-    48→
-    49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
-    51→## Installation
+      47→## Support
+      48→
+      49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
+      51→## Installation
     …
-    63→## Concepts
+      63→## Concepts
     …
-    69→### Components
+      69→### Components
     …
-    167→### Built-in components
+     167→### Built-in components
     …
-    179→### Rendering
+     179→### Rendering
     …
-    211→### Context
+     211→### Context
     …
-    279→### Formatter
+     279→### Formatter
     …
-    291→### Error boundary
+     291→### Error boundary
     …
-    299→### Sync or async?
+     299→### Sync or async?
     …
-    305→In all other cases, it's best to use sync components.
-    307→## XSS prevention
+     305→In all other cases, it's best to use sync components.
+     307→## XSS prevention
     …
-    316→## AI assistance
+     316→## AI assistance
     …
-    324→## Compatibility and performance
+     324→## Compatibility and performance
     …
-    330→## Framework integrations
+     330→## Framework integrations
     …
-    337→## External examples
-    338→
-    339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
-    341→## Why
+     337→## External examples
+     338→
+     339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
+     341→## Why
     …
-    353→## Dependencies
+     353→## Dependencies
     …
-    361→## Development
+     361→## Development
     …
-    367→## Contributing
+     367→## Contributing
     …
-    377→## License - MIT
-    378→
-    379→The package is open-sourced under the conditions of the [MIT license](https://choosealicense.com/licenses/mit/).
+     377→## License - MIT
+     378→
+     379→The package is open-sourced under the conditions of the [MIT license](https://choosealicense.com/licenses/mit/).
 docs/
     api/
         core.md
@@ -86,11 +86,11 @@ docs/
         html.md
         i18n.md
         md.md
-            1→# ::: htmy.md.core
-            2→
-            3→    options:
-            4→        show_root_heading: true
-            6→# ::: htmy.md.typing
+               1→# ::: htmy.md.core
+               2→
+               3→    options:
+               4→        show_root_heading: true
+               6→# ::: htmy.md.typing
             …
         renderer/
             baseline.md
@@ -100,27 +100,27 @@ docs/
         typing.md
         utils.md
     components-guide.md
-        1→# Components guide
-        2→
-        3→## What is a component?
+           1→# Components guide
+           2→
+           3→## What is a component?
         …
-        142→## What is a component factory?
+         142→## What is a component factory?
         …
-        184→## When to use components, when to use component factories?
+         184→## When to use components, when to use component factories?
         …
     examples/
     function-components.md
-        1→# Function components
+           1→# Function components
         …
-        9→## Function component types
+           9→## Function component types
         …
-        26→## Creating function components
+          26→## Creating function components
         …
-        41→## Examples
+          41→## Examples
         …
-        80→### Functions
+          80→### Functions
         …
-        150→### Methods
+         150→### Methods
         …
     index.md
 examples/
@@ -139,197 +139,197 @@ examples/
     snippet-slots-fastapi/
 htmy/
     __init__.py
-        1→__version__ = "0.10.2"
-        3→from .core import ContextAware as ContextAware
-        4→from .core import Formatter as Formatter
-        5→from .core import Fragment as Fragment
-        6→from .core import SafeStr as SafeStr
-        7→from .core import SkipProperty as SkipProperty
-        8→from .core import Text as Text
-        9→from .core import WithContext as WithContext
-        10→from .core import XBool as XBool
-        11→from .core import xml_format_string as xml_format_string
-        12→from .error_boundary import ErrorBoundary as ErrorBoundary
-        13→from .function_component import component as component
-        14→from .renderer import Renderer as Renderer
-        15→from .renderer import StreamingRenderer as StreamingRenderer
-        16→from .renderer.typing import RendererType as RendererType
-        17→from .snippet import Slots as Slots
-        18→from .snippet import Snippet as Snippet
-        19→from .tag import Tag as Tag
-        20→from .tag import TagWithProps as TagWithProps
-        21→from .tag import wildcard_tag as wildcard_tag
-        22→from .typing import AsyncComponent as AsyncComponent
-        23→from .typing import AsyncContextProvider as AsyncContextProvider
-        24→from .typing import Component as Component
-        25→from .typing import ComponentSequence as ComponentSequence
-        26→from .typing import ComponentType as ComponentType
-        27→from .typing import Context as Context
-        28→from .typing import ContextKey as ContextKey
-        29→from .typing import ContextProvider as ContextProvider
-        30→from .typing import ContextValue as ContextValue
-        31→from .typing import HTMYComponentType as HTMYComponentType
-        32→from .typing import MutableContext as MutableContext
-        33→from .typing import Properties as Properties
-        34→from .typing import PropertyValue as PropertyValue
-        35→from .typing import StrictComponentType as StrictComponentType
-        36→from .typing import SyncComponent as SyncComponent
-        37→from .typing import SyncContextProvider as SyncContextProvider
-        38→from .utils import as_component_sequence as as_component_sequence
-        39→from .utils import as_component_type as as_component_type
-        40→from .utils import is_component_sequence as is_component_sequence
-        41→from .utils import is_component_type as is_component_type
-        42→from .utils import is_htmy_component_type as is_htmy_component_type
-        43→from .utils import join
-        44→from .utils import join_components as join_components
-        46→join_classes = join
-        47→
-        48→HTMY = Renderer
+           1→__version__ = "0.10.2"
+           3→from .core import ContextAware as ContextAware
+           4→from .core import Formatter as Formatter
+           5→from .core import Fragment as Fragment
+           6→from .core import SafeStr as SafeStr
+           7→from .core import SkipProperty as SkipProperty
+           8→from .core import Text as Text
+           9→from .core import WithContext as WithContext
+          10→from .core import XBool as XBool
+          11→from .core import xml_format_string as xml_format_string
+          12→from .error_boundary import ErrorBoundary as ErrorBoundary
+          13→from .function_component import component as component
+          14→from .renderer import Renderer as Renderer
+          15→from .renderer import StreamingRenderer as StreamingRenderer
+          16→from .renderer.typing import RendererType as RendererType
+          17→from .snippet import Slots as Slots
+          18→from .snippet import Snippet as Snippet
+          19→from .tag import Tag as Tag
+          20→from .tag import TagWithProps as TagWithProps
+          21→from .tag import wildcard_tag as wildcard_tag
+          22→from .typing import AsyncComponent as AsyncComponent
+          23→from .typing import AsyncContextProvider as AsyncContextProvider
+          24→from .typing import Component as Component
+          25→from .typing import ComponentSequence as ComponentSequence
+          26→from .typing import ComponentType as ComponentType
+          27→from .typing import Context as Context
+          28→from .typing import ContextKey as ContextKey
+          29→from .typing import ContextProvider as ContextProvider
+          30→from .typing import ContextValue as ContextValue
+          31→from .typing import HTMYComponentType as HTMYComponentType
+          32→from .typing import MutableContext as MutableContext
+          33→from .typing import Properties as Properties
+          34→from .typing import PropertyValue as PropertyValue
+          35→from .typing import StrictComponentType as StrictComponentType
+          36→from .typing import SyncComponent as SyncComponent
+          37→from .typing import SyncContextProvider as SyncContextProvider
+          38→from .utils import as_component_sequence as as_component_sequence
+          39→from .utils import as_component_type as as_component_type
+          40→from .utils import is_component_sequence as is_component_sequence
+          41→from .utils import is_component_type as is_component_type
+          42→from .utils import is_htmy_component_type as is_htmy_component_type
+          43→from .utils import join
+          44→from .utils import join_components as join_components
+          46→join_classes = join
+          47→
+          48→HTMY = Renderer
         …
     core.py
         …
-        19→class Fragment:
-        20→    """Fragment utility component that simply wraps some children components."""
-        22→    __slots__ = ("_children",)
+          19→class Fragment:
+          20→    """Fragment utility component that simply wraps some children components."""
+          22→    __slots__ = ("_children",)
         …
-        38→class WithContext(Fragment):
-        39→    """
-        40→    A simple, static context provider component.
-        41→    """
-        43→    __slots__ = ("_context",)
+          38→class WithContext(Fragment):
+          39→    """
+          40→    A simple, static context provider component.
+          41→    """
+          43→    __slots__ = ("_context",)
         …
-        64→class ContextAware:
-        65→    """
-        66→    Base class with utilities for safe context use.
+          64→class ContextAware:
+          65→    """
+          66→    Base class with utilities for safe context use.
         …
-        146→class SkipProperty(Exception):
-        147→    """Exception raised by property formatters if the property should be skipped."""
-        149→    ...
+         146→class SkipProperty(Exception):
+         147→    """Exception raised by property formatters if the property should be skipped."""
+         149→    ...
         …
-        157→class Text(str):
-        158→    """Marker class for differentiating text content from other strings."""
-        160→    ...
-        163→class SafeStr(Text):
+         157→class Text(str):
+         158→    """Marker class for differentiating text content from other strings."""
+         160→    ...
+         163→class SafeStr(Text):
         …
-        172→    ...
-        175→class XBool(enum.Enum):
+         172→    ...
+         175→class XBool(enum.Enum):
         …
-        183→    true = True
-        184→    false = False
+         183→    true = True
+         184→    false = False
         …
-        196→def xml_format_string(value: str) -> str:
+         196→def xml_format_string(value: str) -> str:
         …
-        198→    return value if isinstance(value, SafeStr) else xml_escape(value)
-        201→class Formatter(ContextAware):
+         198→    return value if isinstance(value, SafeStr) else xml_escape(value)
+         201→class Formatter(ContextAware):
         …
-        220→    __slots__ = ("_default_formatter", "_name_formatter", "_value_formatters")
+         220→    __slots__ = ("_default_formatter", "_name_formatter", "_value_formatters")
         …
     error_boundary.py
         …
-        15→class ErrorBoundary:
-        16→    """
-        17→    Error boundary component for graceful error handling.
-        18→
-        19→    If an error occurs during the rendering of the error boundary's subtree,
-        20→    the fallback component will be rendered instead.
-        21→    """
-        23→    __slots__ = ("_children", "_errors", "_fallback")
-        25→    def __init__(
+          15→class ErrorBoundary:
+          16→    """
+          17→    Error boundary component for graceful error handling.
+          18→
+          19→    If an error occurs during the rendering of the error boundary's subtree,
+          20→    the fallback component will be rendered instead.
+          21→    """
+          23→    __slots__ = ("_children", "_errors", "_fallback")
+          25→    def __init__(
         …
-        45→    async def htmy(self, context: Context) -> Component:
+          45→    async def htmy(self, context: Context) -> Component:
         …
-        56→    def _fallback_component(self, error: Exception) -> ComponentType:
+          56→    def _fallback_component(self, error: Exception) -> ComponentType:
         …
     etree.py
         …
-        23→class ETreeConverter:
+          23→class ETreeConverter:
         …
     function_component.py
     html.py
     i18n.py
     io.py
         …
-        11→async def load_text_file(path: str | Path) -> str:
-        12→    """Loads the text content from the given path."""
-        13→    async with await open_file(path, "r") as f:
-        14→        return await f.read()
+          11→async def load_text_file(path: str | Path) -> str:
+          12→    """Loads the text content from the given path."""
+          13→    async with await open_file(path, "r") as f:
+          14→        return await f.read()
     md/
         __init__.py
-            1→from .core import MD as MD
-            2→from .core import MarkdownParser as MarkdownParser
-            3→from .typing import MarkdownMetadataDict as MarkdownMetadataDict
-            4→from .typing import MarkdownParserFunction as MarkdownParserFunction
-            5→from .typing import MarkdownRenderFunction as MarkdownRenderFunction
-            6→from .typing import ParsedMarkdown as ParsedMarkdown
+               1→from .core import MD as MD
+               2→from .core import MarkdownParser as MarkdownParser
+               3→from .typing import MarkdownMetadataDict as MarkdownMetadataDict
+               4→from .typing import MarkdownParserFunction as MarkdownParserFunction
+               5→from .typing import MarkdownRenderFunction as MarkdownRenderFunction
+               6→from .typing import ParsedMarkdown as ParsedMarkdown
         core.py
             …
-            20→class MarkdownParser(ContextAware):
+              20→class MarkdownParser(ContextAware):
             …
-            81→class MD(Snippet):
+              81→class MD(Snippet):
             …
-            98→    __slots__ = (
-            99→        "_converter",
-            100→        "_renderer",
-            101→    )
+              98→    __slots__ = (
+              99→        "_converter",
+             100→        "_renderer",
+             101→    )
             …
         typing.py
     py.typed
     renderer/
         __init__.py
-            1→from .baseline import Renderer as _BaselineRenderer
-            2→from .default import Renderer as _DefaultRenderer
-            3→from .typing import is_renderer as is_renderer
-            4→from .typing import is_streaming_renderer as is_streaming_renderer
-            6→Renderer = _DefaultRenderer
+               1→from .baseline import Renderer as _BaselineRenderer
+               2→from .default import Renderer as _DefaultRenderer
+               3→from .typing import is_renderer as is_renderer
+               4→from .typing import is_streaming_renderer as is_streaming_renderer
+               6→Renderer = _DefaultRenderer
             …
-            9→StreamingRenderer = _BaselineRenderer
+               9→StreamingRenderer = _BaselineRenderer
             …
-            12→BaselineRenderer = _BaselineRenderer
+              12→BaselineRenderer = _BaselineRenderer
             …
         baseline.py
             …
-            18→class Renderer:
+              18→class Renderer:
             …
-            28→    __slots__ = ("_default_context", "_string_formatter")
+              28→    __slots__ = ("_default_context", "_string_formatter")
             …
         context.py
             …
-            6→class RendererContext:
-            7→    """
-            8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
-            9→    """
-            11→    @classmethod
-            12→    def from_context(cls, context: Context) -> RendererType:
+               6→class RendererContext:
+               7→    """
+               8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
+               9→    """
+              11→    @classmethod
+              12→    def from_context(cls, context: Context) -> RendererType:
             …
         default.py
         typing.py
     snippet.py
         …
-        27→class Slots:
+          27→class Slots:
         …
-        158→class Snippet:
-        159→    """
-        160→    Component that renders text, which may be asynchronously loaded from a file.
+         158→class Snippet:
+         159→    """
+         160→    Component that renders text, which may be asynchronously loaded from a file.
         …
-        216→    __slots__ = ("_path_or_text", "_text_processor", "_text_resolver")
+         216→    __slots__ = ("_path_or_text", "_text_processor", "_text_resolver")
         …
     tag.py
     typing.py
     utils.py
 mkdocs.yaml
 pyproject.toml
-    1→[project]
-    2→name = "htmy"
+       1→[project]
+       2→name = "htmy"
     …
-    4→description = "Async, pure-Python server-side rendering engine."
+       4→description = "Async, pure-Python server-side rendering engine."
     …
-    6→license = "MIT"
-    7→readme = "README.md"
-    8→requires-python = ">=3.10"
-    9→dependencies = [
-    10→    "anyio>=4.7.0,<5",
-    11→    "async-lru>=2.0.5,<3",
-    12→    "markdown>=3.8,<4",
-    13→]
+       6→license = "MIT"
+       7→readme = "README.md"
+       8→requires-python = ">=3.10"
+       9→dependencies = [
+      10→    "anyio>=4.7.0,<5",
+      11→    "async-lru>=2.0.5,<3",
+      12→    "markdown>=3.8,<4",
+      13→]
     …
 tests/

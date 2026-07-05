@@ -12,43 +12,43 @@ LICENSE
 Makefile
 NOTICE
 README.md
-    1→# Posting
-    2→
-    3→**A powerful HTTP client that lives in your terminal.**
-    4→
-    5→Posting is an HTTP client, not unlike Postman and Insomnia. As a TUI application, it can be used over SSH and enables efficient keyboard-centric workflows. Your requests are stored locally in simple YAML files, so they're easy to read and version control.
-    7→<img width="968" alt="image" src="https://github.com/user-attachments/assets/78359ab0-5e0c-4c0b-a60b-dce06b11bbf5" />
-    8→
-    9→Some notable features include:
-    10→
-    11→- "jump mode" navigation
-    12→- environments/variables
-    13→- autocompletion
-    14→- syntax highlighting using tree-sitter
-    15→- Vim keys
-    16→- customizable keybindings
-    17→- user-defined themes
-    18→- run Python code before and after requests
-    19→- extensive configuration
-    20→- open in $EDITOR/$PAGER
-    21→- import curl commands by pasting them into the URL bar
-    22→- export requests as cURL commands
-    23→- import from Postman and OpenAPI specs
-    24→- a command palette for quickly accessing functionality
-    25→
-    26→Visit the [website](https://posting.sh) for more information, the roadmap, and the user guide.
-    28→## Installation
+       1→# Posting
+       2→
+       3→**A powerful HTTP client that lives in your terminal.**
+       4→
+       5→Posting is an HTTP client, not unlike Postman and Insomnia. As a TUI application, it can be used over SSH and enables efficient keyboard-centric workflows. Your requests are stored locally in simple YAML files, so they're easy to read and version control.
+       7→<img width="968" alt="image" src="https://github.com/user-attachments/assets/78359ab0-5e0c-4c0b-a60b-dce06b11bbf5" />
+       8→
+       9→Some notable features include:
+      10→
+      11→- "jump mode" navigation
+      12→- environments/variables
+      13→- autocompletion
+      14→- syntax highlighting using tree-sitter
+      15→- Vim keys
+      16→- customizable keybindings
+      17→- user-defined themes
+      18→- run Python code before and after requests
+      19→- extensive configuration
+      20→- open in $EDITOR/$PAGER
+      21→- import curl commands by pasting them into the URL bar
+      22→- export requests as cURL commands
+      23→- import from Postman and OpenAPI specs
+      24→- a command palette for quickly accessing functionality
+      25→
+      26→Visit the [website](https://posting.sh) for more information, the roadmap, and the user guide.
+      28→## Installation
     …
-    48→### Prefer `pipx`?
+      48→### Prefer `pipx`?
     …
-    52→## Contributing
-    53→
-    54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
-    56→## Learn More
-    57→
-    58→Learn more about Posting at [https://posting.sh](https://posting.sh).
-    59→
-    60→Posting was built with [Textual](https://github.com/textualize/textual).
+      52→## Contributing
+      53→
+      54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
+      56→## Learn More
+      57→
+      58→Learn more about Posting at [https://posting.sh](https://posting.sh).
+      59→
+      60→Posting was built with [Textual](https://github.com/textualize/textual).
 docs/
     CHANGELOG.md
     CNAME
@@ -57,17 +57,17 @@ docs/
     guide/
         collections.md
         command_palette.md
-            1→## Overview
+               1→## Overview
             …
-            9→### Using the command palette
+               9→### Using the command palette
             …
         configuration.md
         environments.md
         external_tools.md
         help_system.md
-            1→## Overview
+               1→## Overview
             …
-            5→### Getting help for the focused widget
+               5→### Getting help for the focused widget
             …
         importing.md
         index.md
@@ -76,244 +76,244 @@ docs/
         requests.md
         scripting.md
         themes.md
-            1→## Overview
+               1→## Overview
             …
-            7→### Creating a theme
+               7→### Creating a theme
             …
-            89→### X resources themes
+              89→### X resources themes
             …
     home-image.afdesign
     index.md
     overrides/
         home.html
     roadmap.md
-        1→## About this document
+           1→## About this document
         …
-        47→## Next planned features 🚀
+          47→## Next planned features 🚀
         …
-        57→## Longer Term 🔮
+          57→## Longer Term 🔮
         …
-        89→## Completed ✓
+          89→## Completed ✓
         …
-        117→## Legend
+         117→## Legend
         …
     stylesheets/
         extra.css
 mkdocs.yml
 pyproject.toml
-    1→[project]
-    2→name = "posting"
-    3→version = "2.10.0"
-    4→description = "The modern API client that lives in your terminal."
+       1→[project]
+       2→name = "posting"
+       3→version = "2.10.0"
+       4→description = "The modern API client that lives in your terminal."
     …
-    8→dependencies = [
-    9→    "click>=8.1.7,<9.0.0",
-    10→    "xdg-base-dirs>=6.0.1,<7.0.0",
-    11→    "click-default-group>=1.2.4,<2.0.0",
-    12→    "httpx[brotli]==0.28.1",
-    13→    # pinned httpx automatically since we monkeypatch _main.py
-    14→    "openapi-pydantic>=0.5.0",
-    15→    "pyperclip>=1.9.0,<2.0.0",
-    16→    "pydantic>=2.9.2,<3.0.0",
-    17→    "pyyaml>=6.0.2,<7.0.0",
-    18→    "pydantic-settings>=2.4.0,<3.0.0",
-    19→    "python-dotenv>=1.0.1,<2.0.0",
-    20→    # pinned intentionally
-    21→    "watchfiles>=0.24.0",
-    22→    "textual[syntax]==6.1.0",
-    23→    "textual-autocomplete==4.0.6",
-    24→]
-    25→readme = "README.md"
-    26→requires-python = ">= 3.11"
+       8→dependencies = [
+       9→    "click>=8.1.7,<9.0.0",
+      10→    "xdg-base-dirs>=6.0.1,<7.0.0",
+      11→    "click-default-group>=1.2.4,<2.0.0",
+      12→    "httpx[brotli]==0.28.1",
+      13→    # pinned httpx automatically since we monkeypatch _main.py
+      14→    "openapi-pydantic>=0.5.0",
+      15→    "pyperclip>=1.9.0,<2.0.0",
+      16→    "pydantic>=2.9.2,<3.0.0",
+      17→    "pyyaml>=6.0.2,<7.0.0",
+      18→    "pydantic-settings>=2.4.0,<3.0.0",
+      19→    "python-dotenv>=1.0.1,<2.0.0",
+      20→    # pinned intentionally
+      21→    "watchfiles>=0.24.0",
+      22→    "textual[syntax]==6.1.0",
+      23→    "textual-autocomplete==4.0.6",
+      24→]
+      25→readme = "README.md"
+      26→requires-python = ">= 3.11"
     …
-    49→[project.scripts]
-    50→posting = "posting.__main__:cli"
+      49→[project.scripts]
+      50→posting = "posting.__main__:cli"
     …
 src/
     posting/
         __init__.py
-            1→# This import should be the first thing to run, to ensure that
-            2→# the START_TIME is set as early as possible.
-            3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
+               1→# This import should be the first thing to run, to ensure that
+               2→# the START_TIME is set as early as possible.
+               3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
             …
-            7→import sys
+               7→import sys
             …
-            10→from .collection import (
-            11→    Auth,
-            12→    Cookie,
-            13→    Header,
-            14→    QueryParam,
-            15→    RequestBody,
-            16→    RequestModel,
-            17→    FormItem,
-            18→    Options,
-            19→    Scripts,
-            20→)
-            21→from .scripts import Posting
-            22→
-            23→
-            24→__all__ = [
-            25→    "Auth",
-            26→    "Cookie",
-            27→    "Header",
-            28→    "QueryParam",
-            29→    "RequestBody",
-            30→    "RequestModel",
-            31→    "FormItem",
-            32→    "Options",
-            33→    "Scripts",
-            34→    "Posting",
-            35→]
+              10→from .collection import (
+              11→    Auth,
+              12→    Cookie,
+              13→    Header,
+              14→    QueryParam,
+              15→    RequestBody,
+              16→    RequestModel,
+              17→    FormItem,
+              18→    Options,
+              19→    Scripts,
+              20→)
+              21→from .scripts import Posting
+              22→
+              23→
+              24→__all__ = [
+              25→    "Auth",
+              26→    "Cookie",
+              27→    "Header",
+              28→    "QueryParam",
+              29→    "RequestBody",
+              30→    "RequestModel",
+              31→    "FormItem",
+              32→    "Options",
+              33→    "Scripts",
+              34→    "Posting",
+              35→]
         __main__.py
             …
-            21→def create_config_file() -> None:
-            22→    f = config_file()
-            23→    if f.exists():
-            24→        return
-            25→
-            26→    try:
-            27→        f.touch()
-            28→    except OSError:
-            29→        pass
-            32→def create_default_collection() -> Path:
+              21→def create_config_file() -> None:
+              22→    f = config_file()
+              23→    if f.exists():
+              24→        return
+              25→
+              26→    try:
+              27→        f.touch()
+              28→    except OSError:
+              29→        pass
+              32→def create_default_collection() -> Path:
             …
-            45→@click.group(cls=DefaultGroup, default="default", default_if_no_args=True)
-            46→def cli() -> None:
-            47→    """A TUI for testing HTTP APIs."""
-            50→@cli.command()
+              45→@click.group(cls=DefaultGroup, default="default", default_if_no_args=True)
+              46→def cli() -> None:
+              47→    """A TUI for testing HTTP APIs."""
+              50→@cli.command()
             …
-            76→@cli.command()
-            77→@click.argument(
-            78→    "thing_to_locate",
-            79→)
-            80→def locate(thing_to_locate: str) -> None:
+              76→@cli.command()
+              77→@click.argument(
+              78→    "thing_to_locate",
+              79→)
+              80→def locate(thing_to_locate: str) -> None:
             …
-            96→@cli.command(name="import")
-            97→@click.argument("spec_path", type=click.Path(exists=True))
-            98→@click.option(
-            99→    "--output",
-            100→    "-o",
-            101→    type=click.Path(),
-            102→    help="Path to save the imported collection",
-            103→    default=None,
-            104→)
-            105→@click.option(
-            106→    "--type", "-t", default="openapi", help="Specify spec type [openapi, postman]"
-            107→)
-            108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
-            109→    """Import an OpenAPI specification into a Posting collection."""
+              96→@cli.command(name="import")
+              97→@click.argument("spec_path", type=click.Path(exists=True))
+              98→@click.option(
+              99→    "--output",
+             100→    "-o",
+             101→    type=click.Path(),
+             102→    help="Path to save the imported collection",
+             103→    default=None,
+             104→)
+             105→@click.option(
+             106→    "--type", "-t", default="openapi", help="Specify spec type [openapi, postman]"
+             107→)
+             108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
+             109→    """Import an OpenAPI specification into a Posting collection."""
             …
-            177→@cli.command(name="sponsors")
-            178→def sponsors() -> None:
-            179→    """Show the list of sponsors."""
+             177→@cli.command(name="sponsors")
+             178→def sponsors() -> None:
+             179→    """Show the list of sponsors."""
             …
-            194→def make_posting(
-            195→    collection: Path,
-            196→    env: tuple[str, ...] = (),
-            197→    using_default_collection: bool = False,
-            198→) -> Posting:
-            199→    """Return a Posting instance with the given collection and environment."""
+             194→def make_posting(
+             195→    collection: Path,
+             196→    env: tuple[str, ...] = (),
+             197→    using_default_collection: bool = False,
+             198→) -> Posting:
+             199→    """Return a Posting instance with the given collection and environment."""
             …
         _start_time.py
-            1→import time
-            4→START_TIME = time.perf_counter_ns()
+               1→import time
+               4→START_TIME = time.perf_counter_ns()
         app.py
         auth.py
             …
-            6→class HttpxBearerTokenAuth(httpx.Auth):
-            7→    def __init__(self, token: str):
-            8→        self.token = token
-            10→    def auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
+               6→class HttpxBearerTokenAuth(httpx.Auth):
+               7→    def __init__(self, token: str):
+               8→        self.token = token
+              10→    def auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
             …
         collection.py
         commands.py
         config.py
         exit_codes.py
-            1→GENERAL_ERROR = 1
+               1→GENERAL_ERROR = 1
         files.py
         help_data.py
-            1→from dataclasses import dataclass, field
-            4→@dataclass
-            5→class HelpData:
-            6→    """Data relating to the widget to be displayed in the HelpScreen"""
-            8→    title: str = field(default="")
-            9→    """Title of the widget"""
-            10→    description: str = field(default="")
-            11→    """Markdown description to be displayed in the HelpScreen"""
+               1→from dataclasses import dataclass, field
+               4→@dataclass
+               5→class HelpData:
+               6→    """Data relating to the widget to be displayed in the HelpScreen"""
+               8→    title: str = field(default="")
+               9→    """Title of the widget"""
+              10→    description: str = field(default="")
+              11→    """Markdown description to be displayed in the HelpScreen"""
         help_screen.py
         highlight_url.py
         highlighters.py
         importing/
             curl.py
                 …
-                22→class CurlImport:
+                  22→class CurlImport:
                 …
             open_api.py
             postman.py
         jump_overlay.py
             …
-            16→class JumpOverlay(ModalScreen[str | Widget | None]):
+              16→class JumpOverlay(ModalScreen[str | Widget | None]):
             …
         jumper.py
         locations.py
         messages.py
             …
-            6→@dataclass
-            7→class HttpResponseReceived(Message):
-            8→    response: Response
+               6→@dataclass
+               7→class HttpResponseReceived(Message):
+               8→    response: Response
         posting.scss
         request_headers.py
-            1→from typing import TypedDict
-            4→class RequestHeader(TypedDict):
-            5→    section: str
-            6→    name: str
-            7→    description: str
-            8→    experimental: bool
-            9→    url: str
-            12→REQUEST_HEADERS: list[RequestHeader] = [
+               1→from typing import TypedDict
+               4→class RequestHeader(TypedDict):
+               5→    section: str
+               6→    name: str
+               7→    description: str
+               8→    experimental: bool
+               9→    url: str
+              12→REQUEST_HEADERS: list[RequestHeader] = [
             …
         save_request.py
         scripts.py
         suggesters.py
             …
-            2→HEADER_SUGGESTION_LISTS = {
+               2→HEADER_SUGGESTION_LISTS = {
             …
         themes.py
         tuple_to_multidict.py
         types.py
-            1→from typing import Literal, Optional, Tuple, Union
-            3→PostingLayout = Literal["horizontal", "vertical"]
+               1→from typing import Literal, Optional, Tuple, Union
+               3→PostingLayout = Literal["horizontal", "vertical"]
             …
-            6→CertTypes = Union[
+               6→CertTypes = Union[
             …
         urls.py
         user_host.py
             …
-            9→def get_user_host_string() -> Text:
+               9→def get_user_host_string() -> Text:
             …
         variables.py
         version.py
-            1→from importlib.metadata import version
-            3→VERSION = version("posting")
+               1→from importlib.metadata import version
+               3→VERSION = version("posting")
         widgets/
             __init__.py
             center_middle.py
-                1→from textual.widget import Widget
-                4→class CenterMiddle(Widget, inherit_bindings=False):
-                5→    """A container which aligns children on both axes."""
+                   1→from textual.widget import Widget
+                   4→class CenterMiddle(Widget, inherit_bindings=False):
+                   5→    """A container which aligns children on both axes."""
                 …
             collection/
             confirmation.py
                 …
-                12→class ConfirmationModal(ModalScreen[bool]):
+                  12→class ConfirmationModal(ModalScreen[bool]):
                 …
             datatable.py
                 …
-                27→class PostingDataTable(DataTable[str | Text]):
+                  27→class PostingDataTable(DataTable[str | Text]):
                 …
             input.py
                 …
-                9→class PostingInput(Input):
+                   9→class PostingInput(Input):
                 …
             key_value.py
             key_value_copy_modal.py
@@ -343,26 +343,26 @@ src/
             select.py
             tabbed_content.py
                 …
-                5→class PostingTabbedContent(TabbedContent):
+                   5→class PostingTabbedContent(TabbedContent):
                 …
-                13→    def action_next_tab(self) -> None:
+                  13→    def action_next_tab(self) -> None:
                 …
-                18→    def action_previous_tab(self) -> None:
+                  18→    def action_previous_tab(self) -> None:
                 …
             text_area.py
             tree.py
             variable_autocomplete.py
                 …
-                18→class VariableAutoComplete(AutoComplete):
+                  18→class VariableAutoComplete(AutoComplete):
                 …
             variable_input.py
                 …
-                12→class VariableInput(PostingInput):
+                  12→class VariableInput(PostingInput):
                 …
         xresources.py
         yaml.py
             …
-            10→def str_presenter(dumper: Dumper, data: str) -> yaml.ScalarNode:
+              10→def str_presenter(dumper: Dumper, data: str) -> yaml.ScalarNode:
             …
 tests/
 uv.lock

@@ -14,113 +14,113 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 LICENSE
 README.md
-    1→semver(1) -- The semantic versioner for npm
-    2→===========================================
-    4→## Install
-    5→
-    6→```bash
-    7→npm install semver
-    8→````
-    10→## Usage
-    11→
-    12→As a node module:
-    13→
-    14→```js
-    15→const semver = require('semver')
-    16→
-    17→semver.valid('1.2.3') // '1.2.3'
-    18→semver.valid('a.b.c') // null
-    19→semver.clean('  =v1.2.3   ') // '1.2.3'
-    20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
-    21→semver.gt('1.2.3', '9.8.7') // false
-    22→semver.lt('1.2.3', '9.8.7') // true
-    23→semver.minVersion('>=1.0.0') // '1.0.0'
-    24→semver.valid(semver.coerce('v2')) // '2.0.0'
-    25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
-    26→```
+       1→semver(1) -- The semantic versioner for npm
+       2→===========================================
+       4→## Install
+       5→
+       6→```bash
+       7→npm install semver
+       8→````
+      10→## Usage
+      11→
+      12→As a node module:
+      13→
+      14→```js
+      15→const semver = require('semver')
+      16→
+      17→semver.valid('1.2.3') // '1.2.3'
+      18→semver.valid('a.b.c') // null
+      19→semver.clean('  =v1.2.3   ') // '1.2.3'
+      20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
+      21→semver.gt('1.2.3', '9.8.7') // false
+      22→semver.lt('1.2.3', '9.8.7') // true
+      23→semver.minVersion('>=1.0.0') // '1.0.0'
+      24→semver.valid(semver.coerce('v2')) // '2.0.0'
+      25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
+      26→```
     …
-    139→## Versions
-    140→
-    141→A "version" is described by the `v2.0.0` specification found at
-    142→<https://semver.org/>.
-    143→
-    144→A leading `"="` or `"v"` character is stripped off and ignored.
-    145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
-    146→specification but should not be used anymore.
-    148→## Ranges
+     139→## Versions
+     140→
+     141→A "version" is described by the `v2.0.0` specification found at
+     142→<https://semver.org/>.
+     143→
+     144→A leading `"="` or `"v"` character is stripped off and ignored.
+     145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
+     146→specification but should not be used anymore.
+     148→## Ranges
     …
-    184→### Prerelease Tags
+     184→### Prerelease Tags
     …
-    279→### Advanced Range Syntax
-    281→Advanced range syntax desugars to primitive comparators in
-    282→deterministic ways.
-    284→Advanced ranges may be combined in the same way as primitive
-    285→comparators using white space or `||`.
+     279→### Advanced Range Syntax
+     281→Advanced range syntax desugars to primitive comparators in
+     282→deterministic ways.
+     284→Advanced ranges may be combined in the same way as primitive
+     285→comparators using white space or `||`.
     …
-    384→### Range Grammar
+     384→### Range Grammar
     …
-    408→## Functions
+     408→## Functions
     …
-    453→### Comparison
-    455→* `gt(v1, v2)`: `v1 > v2`
-    456→* `gte(v1, v2)`: `v1 >= v2`
-    457→* `lt(v1, v2)`: `v1 < v2`
-    458→* `lte(v1, v2)`: `v1 <= v2`
-    459→* `eq(v1, v2)`: `v1 == v2` This is true if they're logically equivalent,
-    460→  even if they're not the same string.  You already know how to
-    461→  compare strings.
-    462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
+     453→### Comparison
+     455→* `gt(v1, v2)`: `v1 > v2`
+     456→* `gte(v1, v2)`: `v1 >= v2`
+     457→* `lt(v1, v2)`: `v1 < v2`
+     458→* `lte(v1, v2)`: `v1 <= v2`
+     459→* `eq(v1, v2)`: `v1 == v2` This is true if they're logically equivalent,
+     460→  even if they're not the same string.  You already know how to
+     461→  compare strings.
+     462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
     …
-    469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
-    470→  in descending order when passed to `Array.sort()`.
-    471→* `compareBuild(v1, v2)`: The same as `compare` but considers `build` when two versions
-    472→  are equal.  Sorts in ascending order if passed to `Array.sort()`.
-    473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
+     469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
+     470→  in descending order when passed to `Array.sort()`.
+     471→* `compareBuild(v1, v2)`: The same as `compare` but considers `build` when two versions
+     472→  are equal.  Sorts in ascending order if passed to `Array.sort()`.
+     473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
     …
-    478→### Sorting
+     478→### Sorting
     …
-    485→### Comparators
-    486→
-    487→* `intersects(comparator)`: Return true if the comparators intersect
-    489→### Ranges
-    491→* `validRange(range)`: Return the valid range or null if it's not valid.
-    492→* `satisfies(version, range)`: Return true if the version satisfies the
-    493→  range.
-    494→* `maxSatisfying(versions, range)`: Return the highest version in the list
-    495→  that satisfies the range, or `null` if none of them do.
-    496→* `minSatisfying(versions, range)`: Return the lowest version in the list
-    497→  that satisfies the range, or `null` if none of them do.
-    498→* `minVersion(range)`: Return the lowest version that can match
-    499→  the given range.
-    500→* `gtr(version, range)`: Return `true` if the version is greater than all the
-    501→  versions possible in the range.
-    502→* `ltr(version, range)`: Return `true` if the version is less than all the
-    503→  versions possible in the range.
+     485→### Comparators
+     486→
+     487→* `intersects(comparator)`: Return true if the comparators intersect
+     489→### Ranges
+     491→* `validRange(range)`: Return the valid range or null if it's not valid.
+     492→* `satisfies(version, range)`: Return true if the version satisfies the
+     493→  range.
+     494→* `maxSatisfying(versions, range)`: Return the highest version in the list
+     495→  that satisfies the range, or `null` if none of them do.
+     496→* `minSatisfying(versions, range)`: Return the lowest version in the list
+     497→  that satisfies the range, or `null` if none of them do.
+     498→* `minVersion(range)`: Return the lowest version that can match
+     499→  the given range.
+     500→* `gtr(version, range)`: Return `true` if the version is greater than all the
+     501→  versions possible in the range.
+     502→* `ltr(version, range)`: Return `true` if the version is less than all the
+     503→  versions possible in the range.
     …
-    508→* `intersects(range)`: Return true if any of the range comparators intersect.
+     508→* `intersects(range)`: Return true if any of the range comparators intersect.
     …
-    517→* `subset(subRange, superRange)`: Return `true` if the `subRange` range is
-    518→  entirely contained by the `superRange` range.
+     517→* `subset(subRange, superRange)`: Return `true` if the `subRange` range is
+     518→  entirely contained by the `superRange` range.
     …
-    528→If you want to know if a version satisfies or does not satisfy a
-    529→range, use the `satisfies(version, range)` function.
-    531→### Coercion
-    533→* `coerce(version, options)`: Coerces a string to semver if possible
+     528→If you want to know if a version satisfies or does not satisfy a
+     529→range, use the `satisfies(version, range)` function.
+     531→### Coercion
+     533→* `coerce(version, options)`: Coerces a string to semver if possible
     …
-    558→### Clean
-    560→* `clean(version)`: Clean a string to be a valid semver if possible
-    562→This will return a cleaned and trimmed semver version. If the provided
-    563→version is not valid a null will be returned. This does not work for
-    564→ranges.
+     558→### Clean
+     560→* `clean(version)`: Clean a string to be a valid semver if possible
+     562→This will return a cleaned and trimmed semver version. If the provided
+     563→version is not valid a null will be returned. This does not work for
+     564→ranges.
     …
-    576→## Constants
-    577→
-    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
-    580→### `RELEASE_TYPES`
+     576→## Constants
+     577→
+     578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
+     580→### `RELEASE_TYPES`
     …
-    600→### `SEMVER_SPEC_VERSION`
+     600→### `SEMVER_SPEC_VERSION`
     …
-    610→## Exported Modules
+     610→## Exported Modules
     …
 SECURITY.md
 benchmarks/
@@ -164,53 +164,53 @@ functions/
     valid.js
 index.js
     …
-    45→module.exports = {
-    46→  parse,
-    47→  valid,
-    48→  clean,
-    49→  inc,
-    50→  diff,
-    51→  major,
-    52→  minor,
-    53→  patch,
-    54→  prerelease,
-    55→  compare,
-    56→  rcompare,
-    57→  compareLoose,
-    58→  compareBuild,
-    59→  sort,
-    60→  rsort,
-    61→  gt,
-    62→  lt,
-    63→  eq,
-    64→  neq,
-    65→  gte,
-    66→  lte,
-    67→  cmp,
-    68→  coerce,
-    69→  Comparator,
-    70→  Range,
-    71→  satisfies,
-    72→  toComparators,
-    73→  maxSatisfying,
-    74→  minSatisfying,
-    75→  minVersion,
-    76→  validRange,
-    77→  outside,
-    78→  gtr,
-    79→  ltr,
-    80→  intersects,
-    81→  simplifyRange,
-    82→  subset,
-    83→  SemVer,
-    84→  re: internalRe.re,
-    85→  src: internalRe.src,
-    86→  tokens: internalRe.t,
-    87→  SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION,
-    88→  RELEASE_TYPES: constants.RELEASE_TYPES,
-    89→  compareIdentifiers: identifiers.compareIdentifiers,
-    90→  rcompareIdentifiers: identifiers.rcompareIdentifiers,
-    91→}
+      45→module.exports = {
+      46→  parse,
+      47→  valid,
+      48→  clean,
+      49→  inc,
+      50→  diff,
+      51→  major,
+      52→  minor,
+      53→  patch,
+      54→  prerelease,
+      55→  compare,
+      56→  rcompare,
+      57→  compareLoose,
+      58→  compareBuild,
+      59→  sort,
+      60→  rsort,
+      61→  gt,
+      62→  lt,
+      63→  eq,
+      64→  neq,
+      65→  gte,
+      66→  lte,
+      67→  cmp,
+      68→  coerce,
+      69→  Comparator,
+      70→  Range,
+      71→  satisfies,
+      72→  toComparators,
+      73→  maxSatisfying,
+      74→  minSatisfying,
+      75→  minVersion,
+      76→  validRange,
+      77→  outside,
+      78→  gtr,
+      79→  ltr,
+      80→  intersects,
+      81→  simplifyRange,
+      82→  subset,
+      83→  SemVer,
+      84→  re: internalRe.re,
+      85→  src: internalRe.src,
+      86→  tokens: internalRe.t,
+      87→  SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION,
+      88→  RELEASE_TYPES: constants.RELEASE_TYPES,
+      89→  compareIdentifiers: identifiers.compareIdentifiers,
+      90→  rcompareIdentifiers: identifiers.rcompareIdentifiers,
+      91→}
 internal/
     constants.js
     debug.js
@@ -221,50 +221,50 @@ internal/
 map.js
 package.json
     …
-    2→  "name": "semver",
-    3→  "version": "7.7.4",
-    4→  "description": "The semantic version parser used by npm.",
-    5→  "main": "index.js",
-    6→  "scripts": {
-    7→    "test": "tap",
-    8→    "snap": "tap",
-    9→    "lint": "npm run eslint",
-    10→    "postlint": "template-oss-check",
-    11→    "lintfix": "npm run eslint -- --fix",
-    12→    "posttest": "npm run lint",
-    13→    "template-oss-apply": "template-oss-apply --force",
-    14→    "eslint": "eslint \"**/*.{js,cjs,ts,mjs,jsx,tsx}\""
-    15→  },
-    16→  "devDependencies": {
-    17→    "@npmcli/eslint-config": "^6.0.0",
-    18→    "@npmcli/template-oss": "4.29.0",
-    19→    "benchmark": "^2.1.4",
-    20→    "tap": "^16.0.0"
-    21→  },
-    22→  "license": "ISC",
-    23→  "repository": {
-    24→    "type": "git",
-    25→    "url": "git+https://github.com/npm/node-semver.git"
-    26→  },
-    27→  "bin": {
-    28→    "semver": "bin/semver.js"
-    29→  },
-    30→  "files": [
-    31→    "bin/",
-    32→    "lib/",
-    33→    "classes/",
-    34→    "functions/",
-    35→    "internal/",
-    36→    "ranges/",
-    37→    "index.js",
-    38→    "preload.js",
-    39→    "range.bnf"
-    40→  ],
+       2→  "name": "semver",
+       3→  "version": "7.7.4",
+       4→  "description": "The semantic version parser used by npm.",
+       5→  "main": "index.js",
+       6→  "scripts": {
+       7→    "test": "tap",
+       8→    "snap": "tap",
+       9→    "lint": "npm run eslint",
+      10→    "postlint": "template-oss-check",
+      11→    "lintfix": "npm run eslint -- --fix",
+      12→    "posttest": "npm run lint",
+      13→    "template-oss-apply": "template-oss-apply --force",
+      14→    "eslint": "eslint \"**/*.{js,cjs,ts,mjs,jsx,tsx}\""
+      15→  },
+      16→  "devDependencies": {
+      17→    "@npmcli/eslint-config": "^6.0.0",
+      18→    "@npmcli/template-oss": "4.29.0",
+      19→    "benchmark": "^2.1.4",
+      20→    "tap": "^16.0.0"
+      21→  },
+      22→  "license": "ISC",
+      23→  "repository": {
+      24→    "type": "git",
+      25→    "url": "git+https://github.com/npm/node-semver.git"
+      26→  },
+      27→  "bin": {
+      28→    "semver": "bin/semver.js"
+      29→  },
+      30→  "files": [
+      31→    "bin/",
+      32→    "lib/",
+      33→    "classes/",
+      34→    "functions/",
+      35→    "internal/",
+      36→    "ranges/",
+      37→    "index.js",
+      38→    "preload.js",
+      39→    "range.bnf"
+      40→  ],
     …
-    49→  "engines": {
-    50→    "node": ">=10"
-    51→  },
-    52→  "author": "GitHub Inc.",
+      49→  "engines": {
+      50→    "node": ">=10"
+      51→  },
+      52→  "author": "GitHub Inc.",
     …
 preload.js
 range.bnf

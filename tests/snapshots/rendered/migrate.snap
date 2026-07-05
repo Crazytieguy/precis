@@ -15,89 +15,89 @@ Dockerfile.circleci
 Dockerfile.github-actions
 FAQ.md
 GETTING_STARTED.md
-    1→# Getting started
+       1→# Getting started
     …
-    6→## Create migrations
+       6→## Create migrations
     …
-    22→## Run migrations
+      22→## Run migrations
     …
-    37→## Forcing your database version
+      37→## Forcing your database version
     …
-    47→## Further reading:
+      47→## Further reading:
     …
 LICENSE
 MIGRATIONS.md
 Makefile
 README.md
     …
-    10→# migrate
-    11→
-    12→__Database migrations written in Go. Use as [CLI](#cli-usage) or import as [library](#use-in-your-go-project).__
-    14→* Migrate reads migrations from [sources](#migration-sources)
-    15→   and applies them in correct order to a [database](#databases).
-    16→* Drivers are "dumb", migrate glues everything together and makes sure the logic is bulletproof.
-    17→   (Keeps the drivers lightweight, too.)
-    18→* Database drivers don't assume things or try to correct user input. When in doubt, fail.
-    19→
-    20→Forked from [mattes/migrate](https://github.com/mattes/migrate)
-    22→## Databases
+      10→# migrate
+      11→
+      12→__Database migrations written in Go. Use as [CLI](#cli-usage) or import as [library](#use-in-your-go-project).__
+      14→* Migrate reads migrations from [sources](#migration-sources)
+      15→   and applies them in correct order to a [database](#databases).
+      16→* Drivers are "dumb", migrate glues everything together and makes sure the logic is bulletproof.
+      17→   (Keeps the drivers lightweight, too.)
+      18→* Database drivers don't assume things or try to correct user input. When in doubt, fail.
+      19→
+      20→Forked from [mattes/migrate](https://github.com/mattes/migrate)
+      22→## Databases
     …
-    48→### Database URLs
+      48→### Database URLs
     …
-    69→## Migration Sources
+      69→## Migration Sources
     …
-    84→## CLI usage
+      84→## CLI usage
     …
-    92→### Basic usage
+      92→### Basic usage
     …
-    98→### Docker usage
+      98→### Docker usage
     …
-    105→## Use in your Go project
+     105→## Use in your Go project
     …
-    152→## Getting started
-    153→
-    154→Go to [getting started](GETTING_STARTED.md)
-    156→## Tutorials
+     152→## Getting started
+     153→
+     154→Go to [getting started](GETTING_STARTED.md)
+     156→## Tutorials
     …
-    163→## Migration files
+     163→## Migration files
     …
-    174→## Coming from another db migration tool?
+     174→## Coming from another db migration tool?
     …
-    179→## Versions
+     179→## Versions
     …
-    187→## Development and Contributing
+     187→## Development and Contributing
     …
 SECURITY.md
 cli/
     README.md
-        1→# Deprecated
-        2→
-        3→Use [cmd/migrate](../cmd/migrate) instead
+           1→# Deprecated
+           2→
+           3→Use [cmd/migrate](../cmd/migrate) instead
     main.go
         …
-        5→// Deprecated, please use cmd/migrate
-        6→func main() {
-        7→	cli.Main(Version)
+           5→// Deprecated, please use cmd/migrate
+           6→func main() {
+           7→	cli.Main(Version)
         …
     version.go
-        1→package main
-        3→// Version is set in Makefile with build flags
-        4→var Version = "dev"
+           1→package main
+           3→// Version is set in Makefile with build flags
+           4→var Version = "dev"
 cmd/
     migrate/
         README.md
-            1→# migrate CLI
+               1→# migrate CLI
             …
         examples/
         main.go
             …
-            5→func main() {
-            6→	cli.Main(Version)
+               5→func main() {
+               6→	cli.Main(Version)
             …
         version.go
-            1→package main
+               1→package main
             …
-            4→var Version = "dev"
+               4→var Version = "dev"
 database/
     cassandra/
         README.md
@@ -106,9 +106,9 @@ database/
         examples/
     clickhouse/
         README.md
-            1→# ClickHouse
-            2→
-            3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
+               1→# ClickHouse
+               2→
+               3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
             …
         clickhouse.go
         clickhouse_test.go
@@ -119,9 +119,9 @@ database/
     driver_test.go
     error.go
         …
-        8→type Error struct {
+           8→type Error struct {
         …
-        22→func (e Error) Error() string {
+          22→func (e Error) Error() string {
         …
     firebird/
     mongodb/
@@ -161,150 +161,150 @@ database/
 dktesting/
     dktesting.go
         …
-        13→// ContainerSpec holds Docker testing setup specifications
-        14→type ContainerSpec struct {
-        15→	ImageName string
-        16→	Options   dktest.Options
-        17→}
-        19→// Cleanup cleanups the ContainerSpec after a test run by removing the ContainerSpec's image
-        20→func (s *ContainerSpec) Cleanup() (retErr error) {
+          13→// ContainerSpec holds Docker testing setup specifications
+          14→type ContainerSpec struct {
+          15→	ImageName string
+          16→	Options   dktest.Options
+          17→}
+          19→// Cleanup cleanups the ContainerSpec after a test run by removing the ContainerSpec's image
+          20→func (s *ContainerSpec) Cleanup() (retErr error) {
         …
-        43→// ParallelTest runs Docker tests in parallel
-        44→func ParallelTest(t *testing.T, specs []ContainerSpec,
-        45→	testFunc func(*testing.T, dktest.ContainerInfo)) {
+          43→// ParallelTest runs Docker tests in parallel
+          44→func ParallelTest(t *testing.T, specs []ContainerSpec,
+          45→	testFunc func(*testing.T, dktest.ContainerInfo)) {
         …
     example_test.go
 docker-deploy.sh
 go.mod
-    1→module github.com/golang-migrate/migrate/v4
-    2→
-    3→go 1.24.0
+       1→module github.com/golang-migrate/migrate/v4
+       2→
+       3→go 1.24.0
     …
 go.sum
 internal/
     cli/
     url/
 log.go
-    1→package migrate
-    3→// Logger is an interface so you can pass in your own
-    4→// logging implementation.
-    5→type Logger interface {
-    6→
-    7→	// Printf is like fmt.Printf
-    8→	Printf(format string, v ...interface{})
-    9→
-    10→	// Verbose should return true when verbose logging output is wanted
-    11→	Verbose() bool
-    12→}
+       1→package migrate
+       3→// Logger is an interface so you can pass in your own
+       4→// logging implementation.
+       5→type Logger interface {
+       6→
+       7→	// Printf is like fmt.Printf
+       8→	Printf(format string, v ...interface{})
+       9→
+      10→	// Verbose should return true when verbose logging output is wanted
+      11→	Verbose() bool
+      12→}
 migrate.go
-    1→// Package migrate reads migrations from sources and runs them against databases.
-    2→// Sources are defined by the `source.Driver` and databases by the `database.Driver`
-    3→// interface. The driver interfaces are kept "dumb", all migration logic is kept
-    4→// in this package.
+       1→// Package migrate reads migrations from sources and runs them against databases.
+       2→// Sources are defined by the `source.Driver` and databases by the `database.Driver`
+       3→// interface. The driver interfaces are kept "dumb", all migration logic is kept
+       4→// in this package.
     …
-    19→// DefaultPrefetchMigrations sets the number of migrations to pre-read
-    20→// from the source. This is helpful if the source is remote, but has little
-    21→// effect for a local source (i.e. file system).
-    22→// Please note that this setting has a major impact on the memory usage,
-    23→// since each pre-read migration is buffered in memory. See DefaultBufferSize.
-    24→var DefaultPrefetchMigrations = uint(10)
-    26→// DefaultLockTimeout sets the max time a database driver has to acquire a lock.
-    27→var DefaultLockTimeout = 15 * time.Second
-    29→var (
-    30→	ErrNoChange       = errors.New("no change")
-    31→	ErrNilVersion     = errors.New("no migration")
-    32→	ErrInvalidVersion = errors.New("version must be >= -1")
-    33→	ErrLocked         = errors.New("database locked")
-    34→	ErrLockTimeout    = errors.New("timeout: can't acquire database lock")
-    35→)
-    37→// ErrShortLimit is an error returned when not enough migrations
-    38→// can be returned by a source for a given limit.
-    39→type ErrShortLimit struct {
-    40→	Short uint
-    41→}
-    43→// Error implements the error interface.
-    44→func (e ErrShortLimit) Error() string {
-    45→	return fmt.Sprintf("limit %v short", e.Short)
+      19→// DefaultPrefetchMigrations sets the number of migrations to pre-read
+      20→// from the source. This is helpful if the source is remote, but has little
+      21→// effect for a local source (i.e. file system).
+      22→// Please note that this setting has a major impact on the memory usage,
+      23→// since each pre-read migration is buffered in memory. See DefaultBufferSize.
+      24→var DefaultPrefetchMigrations = uint(10)
+      26→// DefaultLockTimeout sets the max time a database driver has to acquire a lock.
+      27→var DefaultLockTimeout = 15 * time.Second
+      29→var (
+      30→	ErrNoChange       = errors.New("no change")
+      31→	ErrNilVersion     = errors.New("no migration")
+      32→	ErrInvalidVersion = errors.New("version must be >= -1")
+      33→	ErrLocked         = errors.New("database locked")
+      34→	ErrLockTimeout    = errors.New("timeout: can't acquire database lock")
+      35→)
+      37→// ErrShortLimit is an error returned when not enough migrations
+      38→// can be returned by a source for a given limit.
+      39→type ErrShortLimit struct {
+      40→	Short uint
+      41→}
+      43→// Error implements the error interface.
+      44→func (e ErrShortLimit) Error() string {
+      45→	return fmt.Sprintf("limit %v short", e.Short)
     …
-    48→type ErrDirty struct {
-    49→	Version int
-    50→}
-    52→func (e ErrDirty) Error() string {
-    53→	return fmt.Sprintf("Dirty database version %v. Fix and force version.", e.Version)
+      48→type ErrDirty struct {
+      49→	Version int
+      50→}
+      52→func (e ErrDirty) Error() string {
+      53→	return fmt.Sprintf("Dirty database version %v. Fix and force version.", e.Version)
     …
-    56→type Migrate struct {
+      56→type Migrate struct {
     …
 migrate_test.go
 migration.go
     …
-    11→// DefaultBufferSize sets the in memory buffer size (in Bytes) for every
-    12→// pre-read migration (see DefaultPrefetchMigrations).
-    13→var DefaultBufferSize = uint(100000)
+      11→// DefaultBufferSize sets the in memory buffer size (in Bytes) for every
+      12→// pre-read migration (see DefaultPrefetchMigrations).
+      13→var DefaultBufferSize = uint(100000)
     …
-    18→type Migration struct {
+      18→type Migration struct {
     …
-    77→func NewMigration(body io.ReadCloser, identifier string,
-    78→	version uint, targetVersion int) (*Migration, error) {
+      77→func NewMigration(body io.ReadCloser, identifier string,
+      78→	version uint, targetVersion int) (*Migration, error) {
     …
-    106→// String implements string.Stringer and is used in tests.
-    107→func (m *Migration) String() string {
-    108→	return fmt.Sprintf("%v [%v=>%v]", m.Identifier, m.Version, m.TargetVersion)
+     106→// String implements string.Stringer and is used in tests.
+     107→func (m *Migration) String() string {
+     108→	return fmt.Sprintf("%v [%v=>%v]", m.Identifier, m.Version, m.TargetVersion)
     …
-    111→// LogString returns a string describing this migration to humans.
-    112→func (m *Migration) LogString() string {
+     111→// LogString returns a string describing this migration to humans.
+     112→func (m *Migration) LogString() string {
     …
-    120→// Buffer buffers Body up to BufferSize.
-    121→// Calling this function blocks. Call with goroutine.
-    122→func (m *Migration) Buffer() (berr error) {
+     120→// Buffer buffers Body up to BufferSize.
+     121→// Calling this function blocks. Call with goroutine.
+     122→func (m *Migration) Buffer() (berr error) {
     …
 migration_test.go
 source/
     aws_s3/
         README.md
-            1→# aws_s3
-            2→
-            3→`s3://<bucket>/<prefix>`
+               1→# aws_s3
+               2→
+               3→`s3://<bucket>/<prefix>`
         s3.go
         s3_test.go
     bitbucket/
         .gitignore
         README.md
-            1→# bitbucket
-            2→
-            3→This driver is catered for those that want to source migrations from bitbucket cloud(https://bitbucket.com).
+               1→# bitbucket
+               2→
+               3→This driver is catered for those that want to source migrations from bitbucket cloud(https://bitbucket.com).
             …
         bitbucket.go
         bitbucket_test.go
     driver.go
     driver_test.go
     errors.go
-        1→package source
-        2→
-        3→import "os"
-        5→// ErrDuplicateMigration is an error type for reporting duplicate migration
-        6→// files.
-        7→type ErrDuplicateMigration struct {
-        8→	Migration
-        9→	os.FileInfo
-        10→}
-        12→// Error implements error interface.
-        13→func (e ErrDuplicateMigration) Error() string {
-        14→	return "duplicate migration file: " + e.Name()
+           1→package source
+           2→
+           3→import "os"
+           5→// ErrDuplicateMigration is an error type for reporting duplicate migration
+           6→// files.
+           7→type ErrDuplicateMigration struct {
+           8→	Migration
+           9→	os.FileInfo
+          10→}
+          12→// Error implements error interface.
+          13→func (e ErrDuplicateMigration) Error() string {
+          14→	return "duplicate migration file: " + e.Name()
         …
     file/
         README.md
-            1→# file
-            2→
-            3→`file:///absolute/path`  
-            4→`file://relative/path`
+               1→# file
+               2→
+               3→`file:///absolute/path`  
+               4→`file://relative/path`
         file.go
         file_test.go
     github/
         .gitignore
         README.md
-            1→# github
-            2→
-            3→This driver is catered for those that want to source migrations from [github.com](https://github.com). The URL scheme doesn't require a hostname, as it just simply defaults to `github.com`.
+               1→# github
+               2→
+               3→This driver is catered for those that want to source migrations from [github.com](https://github.com). The URL scheme doesn't require a hostname, as it just simply defaults to `github.com`.
             …
         examples/
         github.go
@@ -312,7 +312,7 @@ source/
     github_ee/
         .gitignore
         README.md
-            1→# github ee
+               1→# github ee
             …
         github_ee.go
         github_ee_test.go
@@ -324,7 +324,7 @@ source/
         gitlab_test.go
     go_bindata/
         README.md
-            1→# go_bindata
+               1→# go_bindata
             …
         examples/
         go-bindata.go
@@ -336,17 +336,17 @@ source/
         vfs_test.go
     google_cloud_storage/
         README.md
-            1→# Google Cloud Storage
-            4→## Import
+               1→# Google Cloud Storage
+               4→## Import
             …
-            12→## Connection String
-            13→
-            14→`gcs://<bucket>/<prefix>`
+              12→## Connection String
+              13→
+              14→`gcs://<bucket>/<prefix>`
         storage.go
         storage_test.go
     httpfs/
         README.md
-            1→# httpfs
+               1→# httpfs
             …
         driver.go
         driver_test.go
@@ -355,14 +355,14 @@ source/
         testdata/
     iofs/
         README.md
-            1→# iofs
-            2→
-            3→https://pkg.go.dev/github.com/golang-migrate/migrate/v4/source/iofs
+               1→# iofs
+               2→
+               3→https://pkg.go.dev/github.com/golang-migrate/migrate/v4/source/iofs
         doc.go
-            1→/*
-            2→Package iofs provides the Go 1.16+ io/fs#FS driver.
+               1→/*
+               2→Package iofs provides the Go 1.16+ io/fs#FS driver.
             …
-            10→package iofs
+              10→package iofs
         example_test.go
         iofs.go
         iofs_test.go
@@ -383,25 +383,25 @@ testing/
     testing_test.go
 util.go
     …
-    9→// MultiError holds multiple errors.
-    10→//
-    11→// Deprecated: Use stdlib's [errors.Join] et al. instead
-    12→// This will be removed in the v5 release.
-    13→type MultiError struct {
-    14→	Errs []error
-    15→}
-    17→// NewMultiError returns an error type holding multiple errors.
-    18→//
-    19→// Deprecated: Use stdlib's [errors.Join] et al. instead
-    20→// This will be removed in the v5 release.
-    21→func NewMultiError(errs ...error) MultiError {
+       9→// MultiError holds multiple errors.
+      10→//
+      11→// Deprecated: Use stdlib's [errors.Join] et al. instead
+      12→// This will be removed in the v5 release.
+      13→type MultiError struct {
+      14→	Errs []error
+      15→}
+      17→// NewMultiError returns an error type holding multiple errors.
+      18→//
+      19→// Deprecated: Use stdlib's [errors.Join] et al. instead
+      20→// This will be removed in the v5 release.
+      21→func NewMultiError(errs ...error) MultiError {
     …
-    31→// Error implements error. Multiple errors are concatenated with 'and's.
-    32→func (m MultiError) Error() string {
+      31→// Error implements error. Multiple errors are concatenated with 'and's.
+      32→func (m MultiError) Error() string {
     …
-    45→func suint(n int) uint {
+      45→func suint(n int) uint {
     …
-    52→// FilterCustomQuery filters all query values starting with `x-`
-    53→func FilterCustomQuery(u *nurl.URL) *nurl.URL {
+      52→// FilterCustomQuery filters all query values starting with `x-`
+      53→func FilterCustomQuery(u *nurl.URL) *nurl.URL {
     …
 util_test.go

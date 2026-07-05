@@ -7,26 +7,26 @@ expression: rendered
 .prettierrc
 LICENSE
 README.md
-    1→<h1 align="center">TS-Pattern</h1>
-    2→
-    3→<p align="center">
-    4→The exhaustive Pattern Matching library for <a href="https://github.com/microsoft/TypeScript">TypeScript</a>
-    5→with smart type inference.
-    6→</p>
+       1→<h1 align="center">TS-Pattern</h1>
+       2→
+       3→<p align="center">
+       4→The exhaustive Pattern Matching library for <a href="https://github.com/microsoft/TypeScript">TypeScript</a>
+       5→with smart type inference.
+       6→</p>
     …
-    40→## About
-    41→
-    42→Write **better** and **safer conditions**. Pattern matching lets you express complex conditions in a single, compact expression. Your code becomes **shorter** and **more readable**. Exhaustiveness checking ensures you haven’t forgotten **any possible case**.
-    44→![ts-pattern](https://user-images.githubusercontent.com/9265418/231688650-7cd957a9-8edc-4db8-a5fe-61e1c2179d91.gif)
-    45→
-    46→<p align="center"><i>Animation by <a target="_blank" href="https://twitter.com/nicoespeon/status/1644342570389061634?s=20">@nicoespeon</a></i></p>
+      40→## About
+      41→
+      42→Write **better** and **safer conditions**. Pattern matching lets you express complex conditions in a single, compact expression. Your code becomes **shorter** and **more readable**. Exhaustiveness checking ensures you haven’t forgotten **any possible case**.
+      44→![ts-pattern](https://user-images.githubusercontent.com/9265418/231688650-7cd957a9-8edc-4db8-a5fe-61e1c2179d91.gif)
+      45→
+      46→<p align="center"><i>Animation by <a target="_blank" href="https://twitter.com/nicoespeon/status/1644342570389061634?s=20">@nicoespeon</a></i></p>
     …
-    51→- **Typesafe**, with helpful [type inference](#type-inference).
-    52→- **Exhaustiveness checking** support, enforcing that you are matching every possible case with [`.exhaustive()`](#exhaustive).
-    53→- Use [patterns](#patterns) to **validate** the shape of your data with [`isMatching`](#ismatching).
+      51→- **Typesafe**, with helpful [type inference](#type-inference).
+      52→- **Exhaustiveness checking** support, enforcing that you are matching every possible case with [`.exhaustive()`](#exhaustive).
+      53→- Use [patterns](#patterns) to **validate** the shape of your data with [`isMatching`](#ismatching).
     …
-    56→- Supports properties selection, via the [`P.select(name?)`](#pselect-patterns) function.
-    57→- Tiny bundle footprint ([**only ~2kB**](https://bundlephobia.com/package/ts-pattern)).
+      56→- Supports properties selection, via the [`P.select(name?)`](#pselect-patterns) function.
+      57→- Tiny bundle footprint ([**only ~2kB**](https://bundlephobia.com/package/ts-pattern)).
     …
 benchmarks/
     always-last-digit.ts
@@ -50,205 +50,205 @@ jsr.json
 package-lock.json
 package.json
     …
-    2→  "name": "ts-pattern",
-    3→  "version": "5.9.0",
-    4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
-    5→  "type": "module",
-    6→  "sideEffects": false,
-    7→  "source": "src/index.ts",
-    8→  "exports": {
-    9→    ".": {
-    10→      "require": {
-    11→        "types": "./dist/index.d.cts",
-    12→        "default": "./dist/index.cjs"
-    13→      },
-    14→      "import": {
-    15→        "types": "./dist/index.d.ts",
-    16→        "default": "./dist/index.js"
-    17→      },
-    18→      "types": "./dist/index.d.ts",
-    19→      "default": "./dist/index.js"
-    20→    },
-    21→    "./types": {
-    22→      "require": {
-    23→        "types": "./dist/types/index.d.cts"
-    24→      },
-    25→      "import": {
-    26→        "types": "./dist/types/index.d.ts"
-    27→      },
-    28→      "types": "./dist/types/index.d.ts"
-    29→    },
-    30→    "./package.json": "./package.json"
-    31→  },
-    32→  "types": "dist/index.d.ts",
-    33→  "main": "dist/index.cjs",
-    34→  "module": "dist/index.js",
-    35→  "unpkg": "dist/index.umd.js",
+       2→  "name": "ts-pattern",
+       3→  "version": "5.9.0",
+       4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
+       5→  "type": "module",
+       6→  "sideEffects": false,
+       7→  "source": "src/index.ts",
+       8→  "exports": {
+       9→    ".": {
+      10→      "require": {
+      11→        "types": "./dist/index.d.cts",
+      12→        "default": "./dist/index.cjs"
+      13→      },
+      14→      "import": {
+      15→        "types": "./dist/index.d.ts",
+      16→        "default": "./dist/index.js"
+      17→      },
+      18→      "types": "./dist/index.d.ts",
+      19→      "default": "./dist/index.js"
+      20→    },
+      21→    "./types": {
+      22→      "require": {
+      23→        "types": "./dist/types/index.d.cts"
+      24→      },
+      25→      "import": {
+      26→        "types": "./dist/types/index.d.ts"
+      27→      },
+      28→      "types": "./dist/types/index.d.ts"
+      29→    },
+      30→    "./package.json": "./package.json"
+      31→  },
+      32→  "types": "dist/index.d.ts",
+      33→  "main": "dist/index.cjs",
+      34→  "module": "dist/index.js",
+      35→  "unpkg": "dist/index.umd.js",
     …
-    50→  "files": [
-    51→    "dist/**/*",
-    52→    "package.json"
-    53→  ],
-    54→  "repository": {
-    55→    "type": "git",
-    56→    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
-    57→  },
-    58→  "keywords": [
-    59→    "pattern",
-    60→    "matching",
-    61→    "pattern-matching",
-    62→    "typescript",
-    63→    "match-with",
-    64→    "match",
-    65→    "switch",
-    66→    "adt"
-    67→  ],
-    68→  "author": "Gabriel Vergnaud",
-    69→  "license": "MIT",
-    70→  "bugs": {
-    71→    "url": "https://github.com/gvergnaud/ts-pattern/issues"
-    72→  },
-    73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
+      50→  "files": [
+      51→    "dist/**/*",
+      52→    "package.json"
+      53→  ],
+      54→  "repository": {
+      55→    "type": "git",
+      56→    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
+      57→  },
+      58→  "keywords": [
+      59→    "pattern",
+      60→    "matching",
+      61→    "pattern-matching",
+      62→    "typescript",
+      63→    "match-with",
+      64→    "match",
+      65→    "switch",
+      66→    "adt"
+      67→  ],
+      68→  "author": "Gabriel Vergnaud",
+      69→  "license": "MIT",
+      70→  "bugs": {
+      71→    "url": "https://github.com/gvergnaud/ts-pattern/issues"
+      72→  },
+      73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
     …
 scripts/
 src/
     errors.ts
-        1→/**
-        2→ * Error when the given input value does not match any included pattern
-        3→ * and .exhaustive() was specified
-        4→ */
-        5→export class NonExhaustiveError extends Error {
-        6→  constructor(public input: unknown) {
-        7→    let displayedValue;
-        8→    try {
-        9→      displayedValue = JSON.stringify(input);
-        10→    } catch (e) {
-        11→      displayedValue = input;
-        12→    }
-        13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
+           1→/**
+           2→ * Error when the given input value does not match any included pattern
+           3→ * and .exhaustive() was specified
+           4→ */
+           5→export class NonExhaustiveError extends Error {
+           6→  constructor(public input: unknown) {
+           7→    let displayedValue;
+           8→    try {
+           9→      displayedValue = JSON.stringify(input);
+          10→    } catch (e) {
+          11→      displayedValue = input;
+          12→    }
+          13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
         …
     index.ts
-        1→import * as Pattern from './patterns';
-        2→
-        3→export { match } from './match';
-        4→export { isMatching } from './is-matching';
-        5→export { Pattern, Pattern as P };
+           1→import * as Pattern from './patterns';
+           2→
+           3→export { match } from './match';
+           4→export { isMatching } from './is-matching';
+           5→export { Pattern, Pattern as P };
         …
     internals/
         helpers.ts
         symbols.ts
     is-matching.ts
         …
-        32→export function isMatching<const p extends Pattern<unknown>>(
-        33→  pattern: p
-        34→): (value: unknown) => value is P.infer<p>;
+          32→export function isMatching<const p extends Pattern<unknown>>(
+          33→  pattern: p
+          34→): (value: unknown) => value is P.infer<p>;
         …
-        48→export function isMatching<const T, const P extends PatternConstraint<T>>(
-        49→  pattern: P,
-        50→  value: T
-        51→): value is T & WithDefault<P.narrow<T, P>, P.infer<P>>;
-        53→export function isMatching<const p extends Pattern<any>>(
-        54→  ...args: [pattern: p, value?: any]
-        55→): boolean | ((vale: any) => boolean) {
-        56→  if (args.length === 1) {
-        57→    const [pattern] = args;
-        58→    return (value: any): value is MatchedValue<any, P.infer<p>> =>
-        59→      matchPattern(pattern, value, () => {});
-        60→  }
-        61→  if (args.length === 2) {
-        62→    const [pattern, value] = args;
-        63→    return matchPattern(pattern, value, () => {});
-        64→  }
-        65→
-        66→  throw new Error(
-        67→    `isMatching wasn't given the right number of arguments: expected 1 or 2, received ${args.length}.`
-        68→  );
+          48→export function isMatching<const T, const P extends PatternConstraint<T>>(
+          49→  pattern: P,
+          50→  value: T
+          51→): value is T & WithDefault<P.narrow<T, P>, P.infer<P>>;
+          53→export function isMatching<const p extends Pattern<any>>(
+          54→  ...args: [pattern: p, value?: any]
+          55→): boolean | ((vale: any) => boolean) {
+          56→  if (args.length === 1) {
+          57→    const [pattern] = args;
+          58→    return (value: any): value is MatchedValue<any, P.infer<p>> =>
+          59→      matchPattern(pattern, value, () => {});
+          60→  }
+          61→  if (args.length === 2) {
+          62→    const [pattern, value] = args;
+          63→    return matchPattern(pattern, value, () => {});
+          64→  }
+          65→
+          66→  throw new Error(
+          67→    `isMatching wasn't given the right number of arguments: expected 1 or 2, received ${args.length}.`
+          68→  );
         …
     match.ts
         …
-        32→export function match<const input, output = symbols.unset>(
-        33→  value: input
-        34→): Match<input, output> {
-        35→  return new MatchExpression(value, unmatched) as any;
+          32→export function match<const input, output = symbols.unset>(
+          33→  value: input
+          34→): Match<input, output> {
+          35→  return new MatchExpression(value, unmatched) as any;
         …
-        38→/**
-        39→ * This class represents a match expression. It follows the
-        40→ * builder pattern, we chain methods to add features to the expression
-        41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
-        42→ * method to execute it.
-        43→ *
-        44→ * The types of this class aren't public, the public type definition
-        45→ * can be found in src/types/Match.ts.
-        46→ */
-        47→class MatchExpression<input, output> {
-        48→  constructor(private input: input, private state: MatchState<output>) {}
-        49→
-        50→  with(...args: any[]): MatchExpression<input, output> {
-        51→    if (this.state.matched) return this;
-        53→    const handler: (selection: unknown, value: input) => output =
-        54→      args[args.length - 1];
-        56→    const patterns: Pattern<input>[] = [args[0]];
-        57→    let predicate: ((value: input) => unknown) | undefined = undefined;
-        59→    if (args.length === 3 && typeof args[1] === 'function') {
-        60→      // case with guard as second argument
-        61→      predicate = args[1];
-        62→    } else if (args.length > 2) {
-        63→      // case with several patterns
-        64→      patterns.push(...args.slice(1, args.length - 1));
-        65→    }
-        67→    let hasSelections = false;
-        68→    let selected: Record<string, unknown> = {};
-        69→    const select = (key: string, value: unknown) => {
-        70→      hasSelections = true;
-        71→      selected[key] = value;
-        72→    };
-        74→    const matched =
-        75→      patterns.some((pattern) => matchPattern(pattern, this.input, select)) &&
-        76→      (predicate ? Boolean(predicate(this.input)) : true);
-        78→    const selections = hasSelections
-        79→      ? symbols.anonymousSelectKey in selected
-        80→        ? selected[symbols.anonymousSelectKey]
-        81→        : selected
-        82→      : this.input;
-        84→    const state = matched
-        85→      ? {
-        86→          matched: true as const,
-        87→          value: handler(selections, this.input),
-        88→        }
-        89→      : unmatched;
-        91→    return new MatchExpression(this.input, state);
+          38→/**
+          39→ * This class represents a match expression. It follows the
+          40→ * builder pattern, we chain methods to add features to the expression
+          41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
+          42→ * method to execute it.
+          43→ *
+          44→ * The types of this class aren't public, the public type definition
+          45→ * can be found in src/types/Match.ts.
+          46→ */
+          47→class MatchExpression<input, output> {
+          48→  constructor(private input: input, private state: MatchState<output>) {}
+          49→
+          50→  with(...args: any[]): MatchExpression<input, output> {
+          51→    if (this.state.matched) return this;
+          53→    const handler: (selection: unknown, value: input) => output =
+          54→      args[args.length - 1];
+          56→    const patterns: Pattern<input>[] = [args[0]];
+          57→    let predicate: ((value: input) => unknown) | undefined = undefined;
+          59→    if (args.length === 3 && typeof args[1] === 'function') {
+          60→      // case with guard as second argument
+          61→      predicate = args[1];
+          62→    } else if (args.length > 2) {
+          63→      // case with several patterns
+          64→      patterns.push(...args.slice(1, args.length - 1));
+          65→    }
+          67→    let hasSelections = false;
+          68→    let selected: Record<string, unknown> = {};
+          69→    const select = (key: string, value: unknown) => {
+          70→      hasSelections = true;
+          71→      selected[key] = value;
+          72→    };
+          74→    const matched =
+          75→      patterns.some((pattern) => matchPattern(pattern, this.input, select)) &&
+          76→      (predicate ? Boolean(predicate(this.input)) : true);
+          78→    const selections = hasSelections
+          79→      ? symbols.anonymousSelectKey in selected
+          80→        ? selected[symbols.anonymousSelectKey]
+          81→        : selected
+          82→      : this.input;
+          84→    const state = matched
+          85→      ? {
+          86→          matched: true as const,
+          87→          value: handler(selections, this.input),
+          88→        }
+          89→      : unmatched;
+          91→    return new MatchExpression(this.input, state);
         …
-        94→  when(
-        95→    predicate: (value: input) => unknown,
-        96→    handler: (selection: input, value: input) => output
-        97→  ): MatchExpression<input, output> {
-        98→    if (this.state.matched) return this;
-        99→
-        100→    const matched = Boolean(predicate(this.input));
-        101→
-        102→    return new MatchExpression<input, output>(
-        103→      this.input,
-        104→      matched
-        105→        ? { matched: true, value: handler(this.input, this.input) }
-        106→        : unmatched
-        107→    );
+          94→  when(
+          95→    predicate: (value: input) => unknown,
+          96→    handler: (selection: input, value: input) => output
+          97→  ): MatchExpression<input, output> {
+          98→    if (this.state.matched) return this;
+          99→
+         100→    const matched = Boolean(predicate(this.input));
+         101→
+         102→    return new MatchExpression<input, output>(
+         103→      this.input,
+         104→      matched
+         105→        ? { matched: true, value: handler(this.input, this.input) }
+         106→        : unmatched
+         107→    );
         …
-        110→  otherwise(handler: (value: input) => output): output {
-        111→    if (this.state.matched) return this.state.value;
-        112→    return handler(this.input);
+         110→  otherwise(handler: (value: input) => output): output {
+         111→    if (this.state.matched) return this.state.value;
+         112→    return handler(this.input);
         …
-        115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
-        116→    if (this.state.matched) return this.state.value;
-        117→    return unexpectedValueHandler(this.input);
+         115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
+         116→    if (this.state.matched) return this.state.value;
+         117→    return unexpectedValueHandler(this.input);
         …
-        120→  run(): output {
-        121→    return this.exhaustive();
+         120→  run(): output {
+         121→    return this.exhaustive();
         …
-        124→  returnType() {
-        125→    return this;
+         124→  returnType() {
+         125→    return this;
         …
-        128→  narrow() {
-        129→    return this;
+         128→  narrow() {
+         129→    return this;
         …
     patterns.ts
     types/
@@ -263,6 +263,6 @@ src/
         Pattern.ts
         helpers.ts
         index.ts
-            1→export * from './Pattern';
+               1→export * from './Pattern';
 tests/
 tsconfig.json

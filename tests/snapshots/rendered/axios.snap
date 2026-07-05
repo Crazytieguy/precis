@@ -16,31 +16,31 @@ CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
 CONTRIBUTORS.md
-    1→# Contributors
-    2→
-    3→Thank you to all the wonderful people who have contributed to axios!
-    5→## Core Team
+       1→# Contributors
+       2→
+       3→Thank you to all the wonderful people who have contributed to axios!
+       5→## Core Team
     …
-    11→## Notable Contributors
-    12→
-    13→<!-- Add contributors here in alphabetical order by GitHub username -->
-    15→## How to Contribute
+      11→## Notable Contributors
+      12→
+      13→<!-- Add contributors here in alphabetical order by GitHub username -->
+      15→## How to Contribute
     …
 ECOSYSTEM.md
-    1→# Ecosystem
-    2→
-    3→This is a list of axios related libraries and resources. If you have a suggestion on what to add, please don't hesitate to submit a PR.
-    5→## Libraries
-    6→
-    7→### General
+       1→# Ecosystem
+       2→
+       3→This is a list of axios related libraries and resources. If you have a suggestion on what to add, please don't hesitate to submit a PR.
+       5→## Libraries
+       6→
+       7→### General
     …
-    23→### API clients
+      23→### API clients
     …
-    29→### Logging and debugging
+      29→### Logging and debugging
     …
-    35→### React and redux
+      35→### React and redux
     …
-    43→### Unit testing
+      43→### Unit testing
     …
 LICENSE
 MIGRATION_GUIDE.md
@@ -52,192 +52,192 @@ eslint.config.js
 examples/
 gulpfile.js
     …
-    79→export { env, clear, version, packageJSON };
+      79→export { env, clear, version, packageJSON };
 index.d.cts
 index.d.ts
     …
-    4→export type AxiosHeaderValue = AxiosHeaders | string | string[] | number | boolean | null;
-    5→
-    6→export interface RawAxiosHeaders {
-    7→  [key: string]: AxiosHeaderValue;
-    8→}
+       4→export type AxiosHeaderValue = AxiosHeaders | string | string[] | number | boolean | null;
+       5→
+       6→export interface RawAxiosHeaders {
+       7→  [key: string]: AxiosHeaderValue;
+       8→}
     …
-    23→export class AxiosHeaders {
+      23→export class AxiosHeaders {
     …
-    112→export type RawAxiosRequestHeaders = Partial<
+     112→export type RawAxiosRequestHeaders = Partial<
     …
-    120→export type AxiosRequestHeaders = RawAxiosRequestHeaders & AxiosHeaders;
+     120→export type AxiosRequestHeaders = RawAxiosRequestHeaders & AxiosHeaders;
     …
-    137→export type RawAxiosResponseHeaders = Partial<RawAxiosHeaders & RawCommonResponseHeaders>;
-    138→
-    139→export type AxiosResponseHeaders = RawAxiosResponseHeaders & AxiosHeaders;
-    140→
-    141→export interface AxiosRequestTransformer {
+     137→export type RawAxiosResponseHeaders = Partial<RawAxiosHeaders & RawCommonResponseHeaders>;
+     138→
+     139→export type AxiosResponseHeaders = RawAxiosResponseHeaders & AxiosHeaders;
+     140→
+     141→export interface AxiosRequestTransformer {
     …
-    145→export interface AxiosResponseTransformer {
+     145→export interface AxiosResponseTransformer {
     …
-    154→export interface AxiosAdapter {
-    155→  (config: InternalAxiosRequestConfig): AxiosPromise;
-    156→}
-    158→export interface AxiosBasicCredentials {
+     154→export interface AxiosAdapter {
+     155→  (config: InternalAxiosRequestConfig): AxiosPromise;
+     156→}
+     158→export interface AxiosBasicCredentials {
     …
-    163→export interface AxiosProxyConfig {
+     163→export interface AxiosProxyConfig {
     …
-    170→export enum HttpStatusCode {
+     170→export enum HttpStatusCode {
     …
-    249→export type Method = (UppercaseMethod | Lowercase<UppercaseMethod>) & {};
-    250→
-    251→export type ResponseType =
+     249→export type Method = (UppercaseMethod | Lowercase<UppercaseMethod>) & {};
+     250→
+     251→export type ResponseType =
     …
-    274→export type responseEncoding = (
+     274→export type responseEncoding = (
     …
-    279→export interface TransitionalOptions {
+     279→export interface TransitionalOptions {
     …
-    286→export interface GenericAbortSignal {
+     286→export interface GenericAbortSignal {
     …
-    293→export interface FormDataVisitorHelpers {
+     293→export interface FormDataVisitorHelpers {
     …
-    299→export interface SerializerVisitor {
+     299→export interface SerializerVisitor {
     …
-    309→export interface SerializerOptions {
+     309→export interface SerializerOptions {
     …
-    317→export interface FormSerializerOptions extends SerializerOptions {}
-    318→
-    319→export interface ParamEncoder {
+     317→export interface FormSerializerOptions extends SerializerOptions {}
+     318→
+     319→export interface ParamEncoder {
     …
-    323→export interface CustomParamsSerializer {
+     323→export interface CustomParamsSerializer {
     …
-    327→export interface ParamsSerializerOptions extends SerializerOptions {
+     327→export interface ParamsSerializerOptions extends SerializerOptions {
     …
-    338→export interface AxiosProgressEvent {
+     338→export interface AxiosProgressEvent {
     …
-    357→export type AddressFamily = 4 | 6 | undefined;
-    358→
-    359→export interface LookupAddressEntry {
+     357→export type AddressFamily = 4 | 6 | undefined;
+     358→
+     359→export interface LookupAddressEntry {
     …
-    364→export type LookupAddress = string | LookupAddressEntry;
-    365→
-    366→export interface AxiosRequestConfig<D = any> {
-    367→  url?: string;
-    368→  method?: StringLiteralsOrString<Method>;
-    369→  baseURL?: string;
-    370→  allowAbsoluteUrls?: boolean;
-    371→  transformRequest?: AxiosRequestTransformer | AxiosRequestTransformer[];
-    372→  transformResponse?: AxiosResponseTransformer | AxiosResponseTransformer[];
-    373→  headers?: (RawAxiosRequestHeaders & MethodsHeaders) | AxiosHeaders;
-    374→  params?: any;
-    375→  paramsSerializer?: ParamsSerializerOptions | CustomParamsSerializer;
-    376→  data?: D;
-    377→  timeout?: Milliseconds;
-    378→  timeoutErrorMessage?: string;
-    379→  withCredentials?: boolean;
-    380→  adapter?: AxiosAdapterConfig | AxiosAdapterConfig[];
-    381→  auth?: AxiosBasicCredentials;
-    382→  responseType?: ResponseType;
-    383→  responseEncoding?: StringLiteralsOrString<responseEncoding>;
-    384→  xsrfCookieName?: string;
-    385→  xsrfHeaderName?: string;
-    386→  onUploadProgress?: (progressEvent: AxiosProgressEvent) => void;
-    387→  onDownloadProgress?: (progressEvent: AxiosProgressEvent) => void;
-    388→  maxContentLength?: number;
-    389→  validateStatus?: ((status: number) => boolean) | null;
-    390→  maxBodyLength?: number;
-    391→  maxRedirects?: number;
-    392→  maxRate?: number | [MaxUploadRate, MaxDownloadRate];
-    393→  beforeRedirect?: (
+     364→export type LookupAddress = string | LookupAddressEntry;
+     365→
+     366→export interface AxiosRequestConfig<D = any> {
+     367→  url?: string;
+     368→  method?: StringLiteralsOrString<Method>;
+     369→  baseURL?: string;
+     370→  allowAbsoluteUrls?: boolean;
+     371→  transformRequest?: AxiosRequestTransformer | AxiosRequestTransformer[];
+     372→  transformResponse?: AxiosResponseTransformer | AxiosResponseTransformer[];
+     373→  headers?: (RawAxiosRequestHeaders & MethodsHeaders) | AxiosHeaders;
+     374→  params?: any;
+     375→  paramsSerializer?: ParamsSerializerOptions | CustomParamsSerializer;
+     376→  data?: D;
+     377→  timeout?: Milliseconds;
+     378→  timeoutErrorMessage?: string;
+     379→  withCredentials?: boolean;
+     380→  adapter?: AxiosAdapterConfig | AxiosAdapterConfig[];
+     381→  auth?: AxiosBasicCredentials;
+     382→  responseType?: ResponseType;
+     383→  responseEncoding?: StringLiteralsOrString<responseEncoding>;
+     384→  xsrfCookieName?: string;
+     385→  xsrfHeaderName?: string;
+     386→  onUploadProgress?: (progressEvent: AxiosProgressEvent) => void;
+     387→  onDownloadProgress?: (progressEvent: AxiosProgressEvent) => void;
+     388→  maxContentLength?: number;
+     389→  validateStatus?: ((status: number) => boolean) | null;
+     390→  maxBodyLength?: number;
+     391→  maxRedirects?: number;
+     392→  maxRate?: number | [MaxUploadRate, MaxDownloadRate];
+     393→  beforeRedirect?: (
     …
-    405→  socketPath?: string | null;
-    406→  allowedSocketPaths?: string | string[] | null;
-    407→  transport?: any;
-    408→  httpAgent?: any;
-    409→  httpsAgent?: any;
-    410→  proxy?: AxiosProxyConfig | false;
-    411→  cancelToken?: CancelToken | undefined;
-    412→  decompress?: boolean;
-    413→  transitional?: TransitionalOptions;
+     405→  socketPath?: string | null;
+     406→  allowedSocketPaths?: string | string[] | null;
+     407→  transport?: any;
+     408→  httpAgent?: any;
+     409→  httpsAgent?: any;
+     410→  proxy?: AxiosProxyConfig | false;
+     411→  cancelToken?: CancelToken | undefined;
+     412→  decompress?: boolean;
+     413→  transitional?: TransitionalOptions;
     …
-    455→export type RawAxiosRequestConfig<D = any> = AxiosRequestConfig<D>;
-    456→
-    457→export interface InternalAxiosRequestConfig<D = any> extends AxiosRequestConfig<D> {
-    458→  headers: AxiosRequestHeaders;
-    459→}
-    461→export interface HeadersDefaults {
-    462→  common: RawAxiosRequestHeaders;
-    463→  delete: RawAxiosRequestHeaders;
-    464→  get: RawAxiosRequestHeaders;
-    465→  head: RawAxiosRequestHeaders;
-    466→  post: RawAxiosRequestHeaders;
-    467→  put: RawAxiosRequestHeaders;
-    468→  patch: RawAxiosRequestHeaders;
-    469→  options?: RawAxiosRequestHeaders;
-    470→  purge?: RawAxiosRequestHeaders;
-    471→  link?: RawAxiosRequestHeaders;
-    472→  unlink?: RawAxiosRequestHeaders;
-    473→  query?: RawAxiosRequestHeaders;
+     455→export type RawAxiosRequestConfig<D = any> = AxiosRequestConfig<D>;
+     456→
+     457→export interface InternalAxiosRequestConfig<D = any> extends AxiosRequestConfig<D> {
+     458→  headers: AxiosRequestHeaders;
+     459→}
+     461→export interface HeadersDefaults {
+     462→  common: RawAxiosRequestHeaders;
+     463→  delete: RawAxiosRequestHeaders;
+     464→  get: RawAxiosRequestHeaders;
+     465→  head: RawAxiosRequestHeaders;
+     466→  post: RawAxiosRequestHeaders;
+     467→  put: RawAxiosRequestHeaders;
+     468→  patch: RawAxiosRequestHeaders;
+     469→  options?: RawAxiosRequestHeaders;
+     470→  purge?: RawAxiosRequestHeaders;
+     471→  link?: RawAxiosRequestHeaders;
+     472→  unlink?: RawAxiosRequestHeaders;
+     473→  query?: RawAxiosRequestHeaders;
     …
-    476→export interface AxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
-    477→  headers: HeadersDefaults;
-    478→}
-    480→export interface CreateAxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
+     476→export interface AxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
+     477→  headers: HeadersDefaults;
+     478→}
+     480→export interface CreateAxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
     …
-    484→export interface AxiosResponse<T = any, D = any, H = {}> {
+     484→export interface AxiosResponse<T = any, D = any, H = {}> {
     …
-    493→export class AxiosError<T = unknown, D = any> extends Error {
+     493→export class AxiosError<T = unknown, D = any> extends Error {
     …
-    535→export class CanceledError<T> extends AxiosError<T> {
-    536→  readonly name: 'CanceledError';
+     535→export class CanceledError<T> extends AxiosError<T> {
+     536→  readonly name: 'CanceledError';
     …
-    539→export type AxiosPromise<T = any> = Promise<AxiosResponse<T>>;
-    540→
-    541→export interface CancelStatic {
-    542→  new (message?: string): Cancel;
-    543→}
-    545→export interface Cancel {
-    546→  message: string | undefined;
-    547→}
-    549→export interface Canceler {
+     539→export type AxiosPromise<T = any> = Promise<AxiosResponse<T>>;
+     540→
+     541→export interface CancelStatic {
+     542→  new (message?: string): Cancel;
+     543→}
+     545→export interface Cancel {
+     546→  message: string | undefined;
+     547→}
+     549→export interface Canceler {
     …
-    553→export interface CancelTokenStatic {
+     553→export interface CancelTokenStatic {
     …
-    558→export interface CancelToken {
+     558→export interface CancelToken {
     …
-    564→export interface CancelTokenSource {
+     564→export interface CancelTokenSource {
     …
-    569→export interface AxiosInterceptorOptions {
+     569→export interface AxiosInterceptorOptions {
     …
-    595→export interface AxiosInterceptorManager<V> {
+     595→export interface AxiosInterceptorManager<V> {
     …
-    602→export class Axios {
+     602→export class Axios {
     …
 index.js
-    1→import axios from './lib/axios.js';
+       1→import axios from './lib/axios.js';
     …
-    26→export {
-    27→  axios as default,
-    28→  create,
-    29→  Axios,
-    30→  AxiosError,
-    31→  CanceledError,
-    32→  isCancel,
-    33→  CancelToken,
-    34→  VERSION,
-    35→  all,
-    36→  Cancel,
-    37→  isAxiosError,
-    38→  spread,
-    39→  toFormData,
-    40→  AxiosHeaders,
-    41→  HttpStatusCode,
-    42→  formToJSON,
-    43→  getAdapter,
-    44→  mergeConfig,
-    45→};
+      26→export {
+      27→  axios as default,
+      28→  create,
+      29→  Axios,
+      30→  AxiosError,
+      31→  CanceledError,
+      32→  isCancel,
+      33→  CancelToken,
+      34→  VERSION,
+      35→  all,
+      36→  Cancel,
+      37→  isAxiosError,
+      38→  spread,
+      39→  toFormData,
+      40→  AxiosHeaders,
+      41→  HttpStatusCode,
+      42→  formToJSON,
+      43→  getAdapter,
+      44→  mergeConfig,
+      45→};
 lib/
     adapters/
         README.md
-            1→# axios // adapters
-            2→
-            3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
+               1→# axios // adapters
+               2→
+               3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
             …
         adapters.js
         fetch.js
@@ -245,7 +245,7 @@ lib/
         xhr.js
     axios.js
         …
-        89→export default axios;
+          89→export default axios;
     cancel/
         CancelToken.js
         CanceledError.js
@@ -256,13 +256,13 @@ lib/
         AxiosHeaders.js
         InterceptorManager.js
         README.md
-            1→# axios // core
-            2→
-            3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
-            5→- Dispatching requests
-            6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
-            7→- Managing interceptors
-            8→- Handling config
+               1→# axios // core
+               2→
+               3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
+               5→- Dispatching requests
+               6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
+               7→- Managing interceptors
+               8→- Handling config
         buildFullPath.js
         dispatchRequest.js
         mergeConfig.js
@@ -271,13 +271,13 @@ lib/
     defaults/
         index.js
             …
-            177→export default defaults;
+             177→export default defaults;
         transitional.js
     env/
         README.md
-            1→# axios // env
-            2→
-            3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
+               1→# axios // env
+               2→
+               3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
         classes/
         data.js
     helpers/
@@ -285,12 +285,12 @@ lib/
         AxiosURLSearchParams.js
         HttpStatusCode.js
         README.md
-            1→# axios // helpers
-            2→
-            3→The modules found in `helpers/` should be generic modules that are _not_ specific to the domain logic of axios. These modules could theoretically be published to npm on their own and consumed by other modules or apps. Some examples of generic modules are things like:
-            5→- Browser polyfills
-            6→- Managing cookies
-            7→- Parsing HTTP headers
+               1→# axios // helpers
+               2→
+               3→The modules found in `helpers/` should be generic modules that are _not_ specific to the domain logic of axios. These modules could theoretically be published to npm on their own and consumed by other modules or apps. Some examples of generic modules are things like:
+               5→- Browser polyfills
+               6→- Managing cookies
+               7→- Parsing HTTP headers
         ZlibHeaderTransformStream.js
         bind.js
         buildURL.js
@@ -329,32 +329,32 @@ lib/
                 URLSearchParams.js
             index.js
                 …
-                5→export default {
+                   5→export default {
                 …
         common/
         index.js
             …
-            4→export default {
-            5→  ...utils,
-            6→  ...platform,
-            7→};
+               4→export default {
+               5→  ...utils,
+               6→  ...platform,
+               7→};
         node/
             classes/
             index.js
                 …
-                27→export default {
+                  27→export default {
                 …
     utils.js
 package-lock.json
 package.json
     …
-    2→  "name": "axios",
-    3→  "version": "1.16.1",
-    4→  "description": "Promise based HTTP client for the browser and node.js",
+       2→  "name": "axios",
+       3→  "version": "1.16.1",
+       4→  "description": "Promise based HTTP client for the browser and node.js",
     …
-    7→  "type": "module",
+       7→  "type": "module",
     …
-    95→  "license": "MIT",
+      95→  "license": "MIT",
     …
 rollup.config.js
 sandbox/

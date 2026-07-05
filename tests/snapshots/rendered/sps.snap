@@ -7,44 +7,44 @@ expression: rendered
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
-    1→[workspace]
-    2→resolver = "3"
-    3→members = [
-    4→    "sps",          # was "sps-cli"
-    5→    "sps-common",
-    6→    "sps-core",
-    7→    "sps-net",
-    8→]
+       1→[workspace]
+       2→resolver = "3"
+       3→members = [
+       4→    "sps",          # was "sps-cli"
+       5→    "sps-common",
+       6→    "sps-core",
+       7→    "sps-net",
+       8→]
     …
 LICENSE.md
 NOTICE.md
 README.md
-    1→# sps
+       1→# sps
     …
-    25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
-    27→- **Formulae:** command‑line tools, libraries, and languages
-    28→- **Casks:** desktop applications and related artifacts on macOS
-    29→
-    30→> _ARM only for now, might add x86 support eventually_
-    31→
-    32→---
-    34→## ⚙️ Project Structure
+      25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
+      27→- **Formulae:** command‑line tools, libraries, and languages
+      28→- **Casks:** desktop applications and related artifacts on macOS
+      29→
+      30→> _ARM only for now, might add x86 support eventually_
+      31→
+      32→---
+      34→## ⚙️ Project Structure
     …
-    42→## 🚧 Current Status
+      42→## 🚧 Current Status
     …
-    54→## 🚀 Roadmap
+      54→## 🚀 Roadmap
     …
-    63→## Trying it out:
+      63→## Trying it out:
     …
-    77→## 📦 Usage
+      77→## 📦 Usage
     …
-    123→## 🏗️ Building from Source
+     123→## 🏗️ Building from Source
     …
-    138→## 📥 Using the Latest Nightly Build
+     138→## 📥 Using the Latest Nightly Build
     …
-    151→## 🤝 Contributing
+     151→## 🤝 Contributing
     …
-    164→## 📄 License
+     164→## 📄 License
     …
 rustfmt.toml
 sps/
@@ -59,112 +59,112 @@ sps/
             search.rs
             status.rs
                 …
-                399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
+                 399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
                 …
             uninstall.rs
             update.rs
                 …
-                10→#[derive(clap::Args, Debug)]
-                11→pub struct Update;
+                  10→#[derive(clap::Args, Debug)]
+                  11→pub struct Update;
                 …
             upgrade.rs
         cli.rs
             …
-            32→#[derive(Parser, Debug)]
+              32→#[derive(Parser, Debug)]
             …
-            35→pub struct CliArgs {
-            36→    #[arg(short, long, action = ArgAction::Count, global = true)]
-            37→    pub verbose: u8,
-            38→
-            39→    #[command(subcommand)]
-            40→    pub command: Command,
-            41→}
+              35→pub struct CliArgs {
+              36→    #[arg(short, long, action = ArgAction::Count, global = true)]
+              37→    pub verbose: u8,
+              38→
+              39→    #[command(subcommand)]
+              40→    pub command: Command,
+              41→}
             …
-            44→pub enum Command {
+              44→pub enum Command {
             …
         main.rs
             …
-            57→async fn main() -> spResult<()> {
-            58→    let cli_args = CliArgs::parse();
-            60→    if let Command::Init(ref init_args_ref) = cli_args.command {
-            61→        match run_init_command(init_args_ref, cli_args.verbose).await {
-            62→            Ok(_) => {
-            63→                return Ok(());
-            64→            }
-            65→            Err(e) => {
-            66→                eprintln!("{}: Init command failed: {:#}", "Error".red().bold(), e);
-            67→                process::exit(1);
-            68→            }
-            69→        }
-            70→    }
-            72→    let config = Config::load().map_err(|e| {
-            73→        SpsError::Config(format!(
-            74→            "Could not load config (have you run 'sps init'?): {e}"
-            75→        ))
-            76→    })?;
-            78→    let level_filter = match cli_args.verbose {
-            79→        0 => LevelFilter::INFO,
-            80→        1 => LevelFilter::DEBUG,
-            81→        _ => LevelFilter::TRACE,
-            82→    };
-            83→    let max_log_level = level_filter.into_level().unwrap_or(tracing::Level::INFO);
-            85→    let env_filter = EnvFilter::builder()
-            86→        .with_default_directive(level_filter.into())
-            87→        .with_env_var("SPS_LOG")
-            88→        .from_env_lossy();
-            90→    let log_dir = config.logs_dir();
+              57→async fn main() -> spResult<()> {
+              58→    let cli_args = CliArgs::parse();
+              60→    if let Command::Init(ref init_args_ref) = cli_args.command {
+              61→        match run_init_command(init_args_ref, cli_args.verbose).await {
+              62→            Ok(_) => {
+              63→                return Ok(());
+              64→            }
+              65→            Err(e) => {
+              66→                eprintln!("{}: Init command failed: {:#}", "Error".red().bold(), e);
+              67→                process::exit(1);
+              68→            }
+              69→        }
+              70→    }
+              72→    let config = Config::load().map_err(|e| {
+              73→        SpsError::Config(format!(
+              74→            "Could not load config (have you run 'sps init'?): {e}"
+              75→        ))
+              76→    })?;
+              78→    let level_filter = match cli_args.verbose {
+              79→        0 => LevelFilter::INFO,
+              80→        1 => LevelFilter::DEBUG,
+              81→        _ => LevelFilter::TRACE,
+              82→    };
+              83→    let max_log_level = level_filter.into_level().unwrap_or(tracing::Level::INFO);
+              85→    let env_filter = EnvFilter::builder()
+              86→        .with_default_directive(level_filter.into())
+              87→        .with_env_var("SPS_LOG")
+              88→        .from_env_lossy();
+              90→    let log_dir = config.logs_dir();
             …
-            135→    let cache = Arc::new(Cache::new(&config).map_err(|e| {
-            136→        SpsError::Cache(format!(
-            137→            "Could not initialize cache (ensure 'sps init' was successful): {e}"
-            138→        ))
-            139→    })?);
-            141→    let needs_update_check = matches!(
-            142→        cli_args.command,
-            143→        Command::Install(_) | Command::Search { .. } | Command::Info { .. } | Command::Upgrade(_)
-            144→    );
-            146→    if needs_update_check {
-            147→        if let Err(e) = check_and_run_auto_update(&config, Arc::clone(&cache)).await {
-            148→            error!("Error during auto-update check: {}", e); // Use `error!` macro
-            149→        }
-            150→    } else {
-            151→        debug!(
-            152→            // Use `debug!` macro
-            153→            "Skipping auto-update check for command: {:?}",
-            154→            cli_args.command
-            155→        );
-            156→    }
-            158→    // Pass config and cache to the command's run method
-            159→    let command_execution_result = match &cli_args.command {
-            160→        Command::Init(_) => {
-            161→            /* This case is handled above and main exits */
-            162→            unreachable!()
-            163→        }
-            164→        _ => cli_args.command.run(&config, cache).await,
-            165→    };
-            167→    if let Err(e) = command_execution_result {
-            168→        // For pipeline commands (Install, Reinstall, Upgrade), errors are already
-            169→        // displayed via the status system, so only log in verbose mode
-            170→        let is_pipeline_command = matches!(
-            171→            cli_args.command,
-            172→            Command::Install(_) | Command::Reinstall(_) | Command::Upgrade(_)
-            173→        );
-            174→
-            175→        if is_pipeline_command {
-            176→            // Only show error details in verbose mode
-            177→            if cli_args.verbose > 0 {
-            178→                error!("Command failed: {:#}", e);
-            179→                eprintln!("{}: {:#}", "Error".red().bold(), e);
-            180→            }
-            181→        } else {
-            182→            // For non-pipeline commands, show errors normally
-            183→            error!("Command failed: {:#}", e);
-            184→            eprintln!("{}: {:#}", "Error".red().bold(), e);
-            185→        }
-            186→        process::exit(1);
-            187→    }
-            189→    debug!("Command completed successfully."); // Use `debug!` macro
-            190→    Ok(())
+             135→    let cache = Arc::new(Cache::new(&config).map_err(|e| {
+             136→        SpsError::Cache(format!(
+             137→            "Could not initialize cache (ensure 'sps init' was successful): {e}"
+             138→        ))
+             139→    })?);
+             141→    let needs_update_check = matches!(
+             142→        cli_args.command,
+             143→        Command::Install(_) | Command::Search { .. } | Command::Info { .. } | Command::Upgrade(_)
+             144→    );
+             146→    if needs_update_check {
+             147→        if let Err(e) = check_and_run_auto_update(&config, Arc::clone(&cache)).await {
+             148→            error!("Error during auto-update check: {}", e); // Use `error!` macro
+             149→        }
+             150→    } else {
+             151→        debug!(
+             152→            // Use `debug!` macro
+             153→            "Skipping auto-update check for command: {:?}",
+             154→            cli_args.command
+             155→        );
+             156→    }
+             158→    // Pass config and cache to the command's run method
+             159→    let command_execution_result = match &cli_args.command {
+             160→        Command::Init(_) => {
+             161→            /* This case is handled above and main exits */
+             162→            unreachable!()
+             163→        }
+             164→        _ => cli_args.command.run(&config, cache).await,
+             165→    };
+             167→    if let Err(e) = command_execution_result {
+             168→        // For pipeline commands (Install, Reinstall, Upgrade), errors are already
+             169→        // displayed via the status system, so only log in verbose mode
+             170→        let is_pipeline_command = matches!(
+             171→            cli_args.command,
+             172→            Command::Install(_) | Command::Reinstall(_) | Command::Upgrade(_)
+             173→        );
+             174→
+             175→        if is_pipeline_command {
+             176→            // Only show error details in verbose mode
+             177→            if cli_args.verbose > 0 {
+             178→                error!("Command failed: {:#}", e);
+             179→                eprintln!("{}: {:#}", "Error".red().bold(), e);
+             180→            }
+             181→        } else {
+             182→            // For non-pipeline commands, show errors normally
+             183→            error!("Command failed: {:#}", e);
+             184→            eprintln!("{}: {:#}", "Error".red().bold(), e);
+             185→        }
+             186→        process::exit(1);
+             187→    }
+             189→    debug!("Command completed successfully."); // Use `debug!` macro
+             190→    Ok(())
             …
         pipeline/
             downloader.rs
@@ -179,15 +179,15 @@ sps-common/
         dependency/
             definition.rs
             mod.rs
-                1→pub mod definition; // Renamed from 'dependency'
-                2→pub mod requirement;
-                3→pub mod resolver;
+                   1→pub mod definition; // Renamed from 'dependency'
+                   2→pub mod requirement;
+                   3→pub mod resolver;
                 …
-                6→pub use definition::{Dependency, DependencyExt, DependencyTag}; // Updated source module
-                7→pub use requirement::Requirement;
-                8→pub use resolver::{
-                9→    DependencyResolver, ResolutionContext, ResolutionStatus, ResolvedDependency, ResolvedGraph,
-                10→};
+                   6→pub use definition::{Dependency, DependencyExt, DependencyTag}; // Updated source module
+                   7→pub use requirement::Requirement;
+                   8→pub use resolver::{
+                   9→    DependencyResolver, ResolutionContext, ResolutionStatus, ResolvedDependency, ResolvedGraph,
+                  10→};
             requirement.rs
             resolver.rs
         error.rs
@@ -195,19 +195,19 @@ sps-common/
         keg.rs
         lib.rs
             …
-            2→pub mod cache;
-            3→pub mod config;
-            4→pub mod dependency;
-            5→pub mod error;
-            6→pub mod formulary;
-            7→pub mod keg;
-            8→pub mod model;
-            9→pub mod pipeline;
+               2→pub mod cache;
+               3→pub mod config;
+               4→pub mod dependency;
+               5→pub mod error;
+               6→pub mod formulary;
+               7→pub mod keg;
+               8→pub mod model;
+               9→pub mod pipeline;
             …
-            13→pub use cache::Cache;
-            14→pub use config::Config;
-            15→pub use error::{Result, SpsError};
-            16→pub use model::{Cask, Formula, InstalledArtifact}; // etc.
+              13→pub use cache::Cache;
+              14→pub use config::Config;
+              15→pub use error::{Result, SpsError};
+              16→pub use model::{Cask, Formula, InstalledArtifact}; // etc.
             …
         model/
             artifact.rs
@@ -215,22 +215,22 @@ sps-common/
             formula.rs
             mod.rs
                 …
-                3→use std::sync::Arc;
-                4→
-                5→pub mod artifact;
-                6→pub mod cask;
-                7→pub mod formula;
-                8→pub mod tap;
-                9→pub mod version;
+                   3→use std::sync::Arc;
+                   4→
+                   5→pub mod artifact;
+                   6→pub mod cask;
+                   7→pub mod formula;
+                   8→pub mod tap;
+                   9→pub mod version;
                 …
-                12→pub use artifact::InstalledArtifact;
-                13→pub use cask::Cask;
-                14→pub use formula::Formula;
-                16→#[derive(Debug, Clone)]
-                17→pub enum InstallTargetIdentifier {
-                18→    Formula(Arc<Formula>),
-                19→    Cask(Arc<Cask>),
-                20→}
+                  12→pub use artifact::InstalledArtifact;
+                  13→pub use cask::Cask;
+                  14→pub use formula::Formula;
+                  16→#[derive(Debug, Clone)]
+                  17→pub enum InstallTargetIdentifier {
+                  18→    Formula(Arc<Formula>),
+                  19→    Cask(Arc<Cask>),
+                  20→}
             tap.rs
             version.rs
         pipeline.rs
@@ -241,11 +241,11 @@ sps-core/
         check/
             installed.rs
             mod.rs
-                1→pub mod installed;
-                2→pub mod update;
-                3→
-                4→pub use installed::{InstalledPackageInfo, PackageType};
-                5→pub use update::UpdateInfo;
+                   1→pub mod installed;
+                   2→pub mod update;
+                   3→
+                   4→pub use installed::{InstalledPackageInfo, PackageType};
+                   5→pub use update::UpdateInfo;
             update.rs
         install/
             bottle/
@@ -254,38 +254,38 @@ sps-core/
             extract.rs
             mod.rs
                 …
-                5→use std::path::PathBuf;
-                6→
-                7→use sps_common::config::Config;
-                8→use sps_common::model::formula::Formula;
+                   5→use std::path::PathBuf;
+                   6→
+                   7→use sps_common::config::Config;
+                   8→use sps_common::model::formula::Formula;
                 …
-                11→pub mod bottle;
-                12→pub mod cask;
-                13→pub mod devtools;
-                14→pub mod extract;
+                  11→pub mod bottle;
+                  12→pub mod cask;
+                  13→pub mod devtools;
+                  14→pub mod extract;
                 …
-                17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
-                18→    // Use new Config method
-                19→    config.formula_opt_path(formula.name())
+                  17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
+                  18→    // Use new Config method
+                  19→    config.formula_opt_path(formula.name())
                 …
         lib.rs
             …
-            4→pub mod build;
-            5→pub mod check;
-            6→pub mod install;
-            7→pub mod pipeline;
-            8→pub mod uninstall;
-            9→pub mod upgrade; // New
+               4→pub mod build;
+               5→pub mod check;
+               6→pub mod install;
+               7→pub mod pipeline;
+               8→pub mod uninstall;
+               9→pub mod upgrade; // New
             …
-            11→pub mod utils; // New
+              11→pub mod utils; // New
             …
-            19→pub use uninstall::UninstallOptions; // New
+              19→pub use uninstall::UninstallOptions; // New
             …
         pipeline/
             engine.rs
             mod.rs
-                1→pub mod engine;
-                2→pub mod worker;
+                   1→pub mod engine;
+                   2→pub mod worker;
             worker.rs
         uninstall/
             cask.rs
@@ -293,33 +293,33 @@ sps-core/
             formula.rs
             mod.rs
                 …
-                3→pub mod cask;
-                4→pub mod common;
-                5→pub mod formula;
+                   3→pub mod cask;
+                   4→pub mod common;
+                   5→pub mod formula;
                 …
-                8→pub use cask::{uninstall_cask_artifacts, zap_cask_artifacts};
-                9→pub use common::UninstallOptions;
-                10→pub use formula::uninstall_formula_artifacts;
+                   8→pub use cask::{uninstall_cask_artifacts, zap_cask_artifacts};
+                   9→pub use common::UninstallOptions;
+                  10→pub use formula::uninstall_formula_artifacts;
         upgrade/
             bottle.rs
             cask.rs
             mod.rs
                 …
-                3→pub mod bottle;
-                4→pub mod cask;
-                5→pub mod source;
+                   3→pub mod bottle;
+                   4→pub mod cask;
+                   5→pub mod source;
                 …
-                8→pub use self::bottle::upgrade_bottle_formula;
-                9→pub use self::cask::upgrade_cask_package;
-                10→pub use self::source::upgrade_source_formula;
+                   8→pub use self::bottle::upgrade_bottle_formula;
+                   9→pub use self::cask::upgrade_cask_package;
+                  10→pub use self::source::upgrade_source_formula;
             source.rs
         utils/
             applescript.rs
             mod.rs
                 …
-                2→pub mod applescript;
+                   2→pub mod applescript;
                 …
-                4→pub mod xattr;
+                   4→pub mod xattr;
             xattr.rs
 sps-net/
     Cargo.toml
@@ -328,30 +328,30 @@ sps-net/
         http.rs
         lib.rs
             …
-            2→pub mod api;
-            3→pub mod http;
-            4→pub mod oci;
-            5→pub mod validation;
+               2→pub mod api;
+               3→pub mod http;
+               4→pub mod oci;
+               5→pub mod validation;
             …
-            10→pub use api::{
-            11→    fetch_all_casks, fetch_all_formulas, fetch_cask, fetch_formula, get_cask, /* ... */
-            12→    get_formula,
-            13→};
-            14→pub use http::{fetch_formula_source_or_bottle, fetch_resource /* ... */};
-            15→pub use oci::{build_oci_client /* ... */, download_oci_blob, fetch_oci_manifest_index};
-            16→pub use sps_common::{
-            17→    model::{
-            18→        cask::{Sha256Field, UrlField},
-            19→        formula::ResourceSpec,
-            20→        Cask, Formula,
-            21→    }, // Example types needed
-            22→    {
-            23→        cache::Cache,
-            24→        error::{Result, SpsError},
-            25→        Config,
-            26→    }, // Need Config, Result, SpsError, Cache
-            27→};
-            28→
-            29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
+              10→pub use api::{
+              11→    fetch_all_casks, fetch_all_formulas, fetch_cask, fetch_formula, get_cask, /* ... */
+              12→    get_formula,
+              13→};
+              14→pub use http::{fetch_formula_source_or_bottle, fetch_resource /* ... */};
+              15→pub use oci::{build_oci_client /* ... */, download_oci_blob, fetch_oci_manifest_index};
+              16→pub use sps_common::{
+              17→    model::{
+              18→        cask::{Sha256Field, UrlField},
+              19→        formula::ResourceSpec,
+              20→        Cask, Formula,
+              21→    }, // Example types needed
+              22→    {
+              23→        cache::Cache,
+              24→        error::{Result, SpsError},
+              25→        Config,
+              26→    }, // Need Config, Result, SpsError, Cache
+              27→};
+              28→
+              29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
         oci.rs
         validation.rs

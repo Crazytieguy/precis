@@ -12,62 +12,62 @@ LICENSE
 NOTICE
 README.md
     …
-    3→# Chronos: Pretrained Models for Time Series Forecasting
-    5→[![preprint](https://img.shields.io/static/v1?label=Chronos-Paper&message=2403.07815&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2403.07815)
-    6→[![preprint](https://img.shields.io/static/v1?label=Chronos-2-Report&message=2510.15821&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2510.15821)
-    7→[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HF-Datasets-FFD21E)](https://huggingface.co/datasets/autogluon/chronos_datasets)
-    8→[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HF-Models-FFD21E)](https://huggingface.co/collections/amazon/chronos-models-65f1791d630a8d57cb718444)
-    9→[![fev](https://img.shields.io/static/v1?label=fev&message=Benchmark&color=B31B1B&logo=github)](https://github.com/autogluon/fev)
-    10→[![aws](https://img.shields.io/static/v1?label=SageMaker&message=Deploy&color=FF9900&logo=amazon-web-services)](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb)
-    11→[![faq](https://img.shields.io/badge/FAQ-Questions%3F-blue)](https://github.com/amazon-science/chronos-forecasting/issues?q=is%3Aissue+label%3AFAQ)
-    12→[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
-    13→
-    14→</div>
-    17→## 🚀 News
+       3→# Chronos: Pretrained Models for Time Series Forecasting
+       5→[![preprint](https://img.shields.io/static/v1?label=Chronos-Paper&message=2403.07815&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2403.07815)
+       6→[![preprint](https://img.shields.io/static/v1?label=Chronos-2-Report&message=2510.15821&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2510.15821)
+       7→[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HF-Datasets-FFD21E)](https://huggingface.co/datasets/autogluon/chronos_datasets)
+       8→[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HF-Models-FFD21E)](https://huggingface.co/collections/amazon/chronos-models-65f1791d630a8d57cb718444)
+       9→[![fev](https://img.shields.io/static/v1?label=fev&message=Benchmark&color=B31B1B&logo=github)](https://github.com/autogluon/fev)
+      10→[![aws](https://img.shields.io/static/v1?label=SageMaker&message=Deploy&color=FF9900&logo=amazon-web-services)](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb)
+      11→[![faq](https://img.shields.io/badge/FAQ-Questions%3F-blue)](https://github.com/amazon-science/chronos-forecasting/issues?q=is%3Aissue+label%3AFAQ)
+      12→[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
+      13→
+      14→</div>
+      17→## 🚀 News
     …
-    20→- **12 Dec 2024**: 📊 We released [`fev`](https://github.com/autogluon/fev), a lightweight package for benchmarking time series forecasting models based on the [Hugging Face `datasets`](https://huggingface.co/docs/datasets/en/index) library.
+      20→- **12 Dec 2024**: 📊 We released [`fev`](https://github.com/autogluon/fev), a lightweight package for benchmarking time series forecasting models based on the [Hugging Face `datasets`](https://huggingface.co/docs/datasets/en/index) library.
     …
-    22→- **13 Mar 2024**: 🚀 Chronos [paper](https://arxiv.org/abs/2403.07815) and inference code released.
-    24→## ✨ Introduction
+      22→- **13 Mar 2024**: 🚀 Chronos [paper](https://arxiv.org/abs/2403.07815) and inference code released.
+      24→## ✨ Introduction
     …
-    32→### Available Models
+      32→### Available Models
     …
-    53→## 📈 Usage
+      53→## 📈 Usage
     …
-    65→### Forecasting
+      65→### Forecasting
     …
-    117→## Example Notebooks
+     117→## Example Notebooks
     …
-    128→- [Deploy Chronos-2 on Amazon SageMaker](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb)
-    130→## 📝 Citation
+     128→- [Deploy Chronos-2 on Amazon SageMaker](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb)
+     130→## 📝 Citation
     …
-    153→## 🛡️ Security
-    154→
-    155→See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
-    157→## 📃 License
-    158→
-    159→This project is licensed under the Apache-2.0 License.
+     153→## 🛡️ Security
+     154→
+     155→See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+     157→## 📃 License
+     158→
+     159→This project is licensed under the Apache-2.0 License.
 ci/
     evaluate/
 notebooks/
     chronos-2-quickstart.ipynb
     deploy-chronos-to-amazon-sagemaker.ipynb
 pyproject.toml
-    1→[project]
-    2→name = "chronos-forecasting"
+       1→[project]
+       2→name = "chronos-forecasting"
     …
-    12→description = "Chronos: Pretrained models for time series forecasting"
-    13→readme = "README.md"
+      12→description = "Chronos: Pretrained models for time series forecasting"
+      13→readme = "README.md"
     …
-    15→requires-python = ">=3.10"
-    16→dependencies = [
-    17→  "torch>=2.2,<3",
-    18→  "transformers>=4.41,<5",
-    19→  "accelerate>=0.34,<2",
-    20→  "numpy>=1.21,<3",
-    21→  "einops>=0.7.0,<1",
-    22→  "scikit-learn>=1.6.0,<2",
-    23→]
+      15→requires-python = ">=3.10"
+      16→dependencies = [
+      17→  "torch>=2.2,<3",
+      18→  "transformers>=4.41,<5",
+      19→  "accelerate>=0.34,<2",
+      20→  "numpy>=1.21,<3",
+      21→  "einops>=0.7.0,<1",
+      22→  "scikit-learn>=1.6.0,<2",
+      23→]
     …
 scripts/
     README.md
@@ -77,150 +77,150 @@ scripts/
 src/
     chronos/
         __about__.py
-            1→__version__ = "2.2.2"
+               1→__version__ = "2.2.2"
         __init__.py
-            1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-            2→# SPDX-License-Identifier: Apache-2.0
-            3→
-            4→from .__about__ import __version__
-            5→from .base import BaseChronosPipeline, ForecastType
-            6→from .chronos import (
-            7→    ChronosConfig,
-            8→    ChronosModel,
-            9→    ChronosPipeline,
-            10→    ChronosTokenizer,
-            11→    MeanScaleUniformBins,
-            12→)
-            13→from .chronos2 import Chronos2ForecastingConfig, Chronos2Model, Chronos2Pipeline
-            14→from .chronos_bolt import ChronosBoltConfig, ChronosBoltPipeline
-            15→
-            16→__all__ = [
-            17→    "__version__",
-            18→    "BaseChronosPipeline",
-            19→    "ForecastType",
-            20→    "ChronosConfig",
-            21→    "ChronosModel",
-            22→    "ChronosPipeline",
-            23→    "ChronosTokenizer",
-            24→    "MeanScaleUniformBins",
-            25→    "ChronosBoltConfig",
-            26→    "ChronosBoltPipeline",
-            27→    "Chronos2ForecastingConfig",
-            28→    "Chronos2Model",
-            29→    "Chronos2Pipeline",
-            30→]
+               1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+               2→# SPDX-License-Identifier: Apache-2.0
+               3→
+               4→from .__about__ import __version__
+               5→from .base import BaseChronosPipeline, ForecastType
+               6→from .chronos import (
+               7→    ChronosConfig,
+               8→    ChronosModel,
+               9→    ChronosPipeline,
+              10→    ChronosTokenizer,
+              11→    MeanScaleUniformBins,
+              12→)
+              13→from .chronos2 import Chronos2ForecastingConfig, Chronos2Model, Chronos2Pipeline
+              14→from .chronos_bolt import ChronosBoltConfig, ChronosBoltPipeline
+              15→
+              16→__all__ = [
+              17→    "__version__",
+              18→    "BaseChronosPipeline",
+              19→    "ForecastType",
+              20→    "ChronosConfig",
+              21→    "ChronosModel",
+              22→    "ChronosPipeline",
+              23→    "ChronosTokenizer",
+              24→    "MeanScaleUniformBins",
+              25→    "ChronosBoltConfig",
+              26→    "ChronosBoltPipeline",
+              27→    "Chronos2ForecastingConfig",
+              28→    "Chronos2Model",
+              29→    "Chronos2Pipeline",
+              30→]
         base.py
             …
-            27→class ForecastType(Enum):
-            28→    SAMPLES = "samples"
-            29→    QUANTILES = "quantiles"
-            32→class PipelineRegistry(type):
-            33→    REGISTRY: Dict[str, "PipelineRegistry"] = {}
-            35→    def __new__(cls, name, bases, attrs):
-            36→        """See, https://github.com/faif/python-patterns."""
+              27→class ForecastType(Enum):
+              28→    SAMPLES = "samples"
+              29→    QUANTILES = "quantiles"
+              32→class PipelineRegistry(type):
+              33→    REGISTRY: Dict[str, "PipelineRegistry"] = {}
+              35→    def __new__(cls, name, bases, attrs):
+              36→        """See, https://github.com/faif/python-patterns."""
             …
-            44→class BaseChronosPipeline(metaclass=PipelineRegistry):
-            45→    forecast_type: ForecastType
-            46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
-            48→    def __init__(self, inner_model: "PreTrainedModel"):
-            49→        """
-            50→        Parameters
-            51→        ----------
-            52→        inner_model : PreTrainedModel
-            53→            A hugging-face transformers PreTrainedModel, e.g., T5ForConditionalGeneration
-            54→        """
+              44→class BaseChronosPipeline(metaclass=PipelineRegistry):
+              45→    forecast_type: ForecastType
+              46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
+              48→    def __init__(self, inner_model: "PreTrainedModel"):
+              49→        """
+              50→        Parameters
+              51→        ----------
+              52→        inner_model : PreTrainedModel
+              53→            A hugging-face transformers PreTrainedModel, e.g., T5ForConditionalGeneration
+              54→        """
             …
-            58→    @property
-            59→    def model_context_length(self) -> int:
-            60→        raise NotImplementedError()
-            62→    @property
-            63→    def model_prediction_length(self) -> int:
-            64→        raise NotImplementedError()
-            66→    def _prepare_and_validate_context(self, context: Union[torch.Tensor, List[torch.Tensor]]):
+              58→    @property
+              59→    def model_context_length(self) -> int:
+              60→        raise NotImplementedError()
+              62→    @property
+              63→    def model_prediction_length(self) -> int:
+              64→        raise NotImplementedError()
+              66→    def _prepare_and_validate_context(self, context: Union[torch.Tensor, List[torch.Tensor]]):
             …
-            76→    def predict(self, inputs: Union[torch.Tensor, List[torch.Tensor]], prediction_length: Optional[int] = None):
+              76→    def predict(self, inputs: Union[torch.Tensor, List[torch.Tensor]], prediction_length: Optional[int] = None):
             …
-            98→        raise NotImplementedError()
-            100→    def predict_quantiles(
-            101→        self,
-            102→        inputs: Union[torch.Tensor, List[torch.Tensor]],
-            103→        prediction_length: Optional[int] = None,
-            104→        quantile_levels: List[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
-            105→        **kwargs,
-            106→    ) -> Tuple[torch.Tensor, torch.Tensor]:
+              98→        raise NotImplementedError()
+             100→    def predict_quantiles(
+             101→        self,
+             102→        inputs: Union[torch.Tensor, List[torch.Tensor]],
+             103→        prediction_length: Optional[int] = None,
+             104→        quantile_levels: List[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+             105→        **kwargs,
+             106→    ) -> Tuple[torch.Tensor, torch.Tensor]:
             …
-            133→        raise NotImplementedError()
-            135→    def predict_df(
-            136→        self,
-            137→        df: "pd.DataFrame",
-            138→        *,
-            139→        id_column: str = "item_id",
-            140→        timestamp_column: str = "timestamp",
-            141→        target: str = "target",
-            142→        prediction_length: int | None = None,
-            143→        quantile_levels: list[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
-            144→        validate_inputs: bool = True,
-            145→        freq: str | None = None,
-            146→        **predict_kwargs,
-            147→    ) -> "pd.DataFrame":
+             133→        raise NotImplementedError()
+             135→    def predict_df(
+             136→        self,
+             137→        df: "pd.DataFrame",
+             138→        *,
+             139→        id_column: str = "item_id",
+             140→        timestamp_column: str = "timestamp",
+             141→        target: str = "target",
+             142→        prediction_length: int | None = None,
+             143→        quantile_levels: list[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+             144→        validate_inputs: bool = True,
+             145→        freq: str | None = None,
+             146→        **predict_kwargs,
+             147→    ) -> "pd.DataFrame":
             …
-            252→    def predict_fev(
-            253→        self, task: "fev.Task", batch_size: int = 32, **kwargs
-            254→    ) -> tuple[list["datasets.DatasetDict"], float]:
+             252→    def predict_fev(
+             253→        self, task: "fev.Task", batch_size: int = 32, **kwargs
+             254→    ) -> tuple[list["datasets.DatasetDict"], float]:
             …
-            336→    @classmethod
-            337→    def from_pretrained(
-            338→        cls,
-            339→        pretrained_model_name_or_path: Union[str, Path],
-            340→        *model_args,
-            341→        force_s3_download=False,
-            342→        **kwargs,
-            343→    ):
-            344→        """
-            345→        Load the model, either from a local path, S3 prefix, or from the HuggingFace Hub.
-            346→        Supports the same arguments as ``AutoConfig`` and ``AutoModel`` from ``transformers``.
-            347→        """
+             336→    @classmethod
+             337→    def from_pretrained(
+             338→        cls,
+             339→        pretrained_model_name_or_path: Union[str, Path],
+             340→        *model_args,
+             341→        force_s3_download=False,
+             342→        **kwargs,
+             343→    ):
+             344→        """
+             345→        Load the model, either from a local path, S3 prefix, or from the HuggingFace Hub.
+             346→        Supports the same arguments as ``AutoConfig`` and ``AutoModel`` from ``transformers``.
+             347→        """
             …
         boto_utils.py
         chronos.py
         chronos2/
             __init__.py
-                1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-                2→# SPDX-License-Identifier: Apache-2.0
-                3→
-                4→# Authors: Abdul Fatir Ansari <ansarnd@amazon.com>
-                5→
-                6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
-                7→from .model import Chronos2Model
-                8→from .pipeline import Chronos2Pipeline
-                9→from .dataset import Chronos2Dataset
-                10→
-                11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
+                   1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+                   2→# SPDX-License-Identifier: Apache-2.0
+                   3→
+                   4→# Authors: Abdul Fatir Ansari <ansarnd@amazon.com>
+                   5→
+                   6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
+                   7→from .model import Chronos2Model
+                   8→from .pipeline import Chronos2Pipeline
+                   9→from .dataset import Chronos2Dataset
+                  10→
+                  11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
             config.py
                 …
-                12→class Chronos2CoreConfig(PretrainedConfig):
-                13→    """
-                14→    HF transformers-style pretrained model config for Chronos-2.0, based on T5Config.
+                  12→class Chronos2CoreConfig(PretrainedConfig):
+                  13→    """
+                  14→    HF transformers-style pretrained model config for Chronos-2.0, based on T5Config.
                 …
-                54→    def __init__(
+                  54→    def __init__(
                 …
-                102→@dataclass
-                103→class Chronos2ForecastingConfig:
+                 102→@dataclass
+                 103→class Chronos2ForecastingConfig:
                 …
-                114→    @classmethod
-                115→    def editable_fields(cls) -> list[str]:
+                 114→    @classmethod
+                 115→    def editable_fields(cls) -> list[str]:
                 …
             dataset.py
             layers.py
             model.py
             pipeline.py
                 …
-                36→logger = logging.getLogger(__name__)
-                37→
-                38→
-                39→class Chronos2Pipeline(BaseChronosPipeline):
-                40→    forecast_type: ForecastType = ForecastType.QUANTILES
-                41→    default_context_length: int = 2048
+                  36→logger = logging.getLogger(__name__)
+                  37→
+                  38→
+                  39→class Chronos2Pipeline(BaseChronosPipeline):
+                  40→    forecast_type: ForecastType = ForecastType.QUANTILES
+                  41→    default_context_length: int = 2048
                 …
             trainer.py
         chronos_bolt.py

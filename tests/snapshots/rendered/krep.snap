@@ -7,208 +7,208 @@ expression: rendered
 LICENSE
 Makefile
 README.md
-    1→# k(r)ep - A high-performance string search utility
+       1→# k(r)ep - A high-performance string search utility
     …
-    6→`krep` is an optimized string search utility designed for maximum throughput and efficiency when processing large files and directories. It is built with performance in mind, offering multiple search algorithms and SIMD acceleration when available.
-    8→> **Note:**  
-    9→> Krep is not intended to be a full replacement or direct competitor to feature-rich tools like `grep` or `ripgrep`. Instead, it aims to be a minimal, efficient, and pragmatic tool focused on speed and simplicity.
-    10→>
-    11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
-    13→## The Story Behind the Name
-    14→
-    15→The name "krep" has an interesting origin. It is inspired by the Icelandic word "kreppan," which means "to grasp quickly" or "to catch firmly." I came across this word while researching efficient techniques for pattern recognition.
-    16→
-    17→Just as skilled fishers identify patterns in the water to locate fish quickly, I designed "krep" to find patterns in text with maximum efficiency. The name is also short and easy to remember—perfect for a command-line utility that users might type hundreds of times per day.
-    19→## Key Features
-    21→- **Multiple search algorithms**: Boyer-Moore-Horspool, KMP, Aho-Corasick for optimal performance across different pattern types
-    22→- **Algorithm selection**: Automatic smart selection with optional `--algo` override for fine-tuning
-    23→- **SIMD acceleration**: Uses SSE4.2, AVX2, or NEON instructions when available for blazing-fast searches
-    24→- **Memory-mapped I/O**: Maximizes throughput when processing large files
-    25→- **Multi-threaded search**: Automatically parallelizes searches across available CPU cores
-    26→- **Regex support**: POSIX Extended Regular Expression searching
-    27→- **Multiple pattern search**: Efficiently search for multiple patterns simultaneously using Aho-Corasick
-    28→- **Recursive directory search**: Skip binary files and common non-code directories
-    29→- **Gitignore support**: Respect `.gitignore` files during recursive search with `--gitignore`
-    30→- **Stdin pattern input**: Read patterns from stdin with `-f -` for seamless pipeline integration
-    31→- **Colored output**: Highlights matches for better readability
-    32→- **UI/UX refresh (v2.2)**: New terminal color palette, clearer `-o` line index styling, and a redesigned help screen
-    33→- **Specialized algorithms**: Optimized handling for single-character and short patterns
-    34→- **Match Limiting**: Stop searching a file after a specific number of matching lines are found.
-    36→## What's New in v2.2.0
-    37→
-    38→- Refined terminal-first UI with a cleaner, more legible color theme
-    39→- Better visual hierarchy in `-o` mode (filename, line index, match highlight)
-    40→- Improved `--help` layout with grouped sections and clearer scanning
-    42→## Installation
-    43→
-    44→### Using Homebrew (macOS)
+       6→`krep` is an optimized string search utility designed for maximum throughput and efficiency when processing large files and directories. It is built with performance in mind, offering multiple search algorithms and SIMD acceleration when available.
+       8→> **Note:**  
+       9→> Krep is not intended to be a full replacement or direct competitor to feature-rich tools like `grep` or `ripgrep`. Instead, it aims to be a minimal, efficient, and pragmatic tool focused on speed and simplicity.
+      10→>
+      11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
+      13→## The Story Behind the Name
+      14→
+      15→The name "krep" has an interesting origin. It is inspired by the Icelandic word "kreppan," which means "to grasp quickly" or "to catch firmly." I came across this word while researching efficient techniques for pattern recognition.
+      16→
+      17→Just as skilled fishers identify patterns in the water to locate fish quickly, I designed "krep" to find patterns in text with maximum efficiency. The name is also short and easy to remember—perfect for a command-line utility that users might type hundreds of times per day.
+      19→## Key Features
+      21→- **Multiple search algorithms**: Boyer-Moore-Horspool, KMP, Aho-Corasick for optimal performance across different pattern types
+      22→- **Algorithm selection**: Automatic smart selection with optional `--algo` override for fine-tuning
+      23→- **SIMD acceleration**: Uses SSE4.2, AVX2, or NEON instructions when available for blazing-fast searches
+      24→- **Memory-mapped I/O**: Maximizes throughput when processing large files
+      25→- **Multi-threaded search**: Automatically parallelizes searches across available CPU cores
+      26→- **Regex support**: POSIX Extended Regular Expression searching
+      27→- **Multiple pattern search**: Efficiently search for multiple patterns simultaneously using Aho-Corasick
+      28→- **Recursive directory search**: Skip binary files and common non-code directories
+      29→- **Gitignore support**: Respect `.gitignore` files during recursive search with `--gitignore`
+      30→- **Stdin pattern input**: Read patterns from stdin with `-f -` for seamless pipeline integration
+      31→- **Colored output**: Highlights matches for better readability
+      32→- **UI/UX refresh (v2.2)**: New terminal color palette, clearer `-o` line index styling, and a redesigned help screen
+      33→- **Specialized algorithms**: Optimized handling for single-character and short patterns
+      34→- **Match Limiting**: Stop searching a file after a specific number of matching lines are found.
+      36→## What's New in v2.2.0
+      37→
+      38→- Refined terminal-first UI with a cleaner, more legible color theme
+      39→- Better visual hierarchy in `-o` mode (filename, line index, match highlight)
+      40→- Improved `--help` layout with grouped sections and clearer scanning
+      42→## Installation
+      43→
+      44→### Using Homebrew (macOS)
     …
-    52→### Building from Source
+      52→### Building from Source
     …
-    69→### Requirements
+      69→### Requirements
     …
-    75→### Build Options
+      75→### Build Options
     …
-    84→## Usage
-    85→
-    86→```bash
-    87→krep [OPTIONS] PATTERN [FILE | DIRECTORY]
-    88→krep [OPTIONS] -e PATTERN [FILE | DIRECTORY]
-    89→krep [OPTIONS] -f FILE [FILE | DIRECTORY]
-    90→krep [OPTIONS] -s PATTERN STRING_TO_SEARCH
-    91→krep [OPTIONS] PATTERN < FILE
-    92→cat FILE | krep [OPTIONS] PATTERN
-    93→echo 'pattern' | krep -f - [FILE | DIRECTORY]
-    94→```
-    96→## Usage Examples
+      84→## Usage
+      85→
+      86→```bash
+      87→krep [OPTIONS] PATTERN [FILE | DIRECTORY]
+      88→krep [OPTIONS] -e PATTERN [FILE | DIRECTORY]
+      89→krep [OPTIONS] -f FILE [FILE | DIRECTORY]
+      90→krep [OPTIONS] -s PATTERN STRING_TO_SEARCH
+      91→krep [OPTIONS] PATTERN < FILE
+      92→cat FILE | krep [OPTIONS] PATTERN
+      93→echo 'pattern' | krep -f - [FILE | DIRECTORY]
+      94→```
+      96→## Usage Examples
     …
-    134→## Command Line Options
-    136→- `-i, --ignore-case` Case-insensitive search
-    137→- `-c, --count` Count matching lines only
-    138→- `-o, --only-matching` Print only the matched parts of lines
+     134→## Command Line Options
+     136→- `-i, --ignore-case` Case-insensitive search
+     137→- `-c, --count` Count matching lines only
+     138→- `-o, --only-matching` Print only the matched parts of lines
     …
-    141→- `-m NUM, --max-count=NUM` Stop searching each file after finding NUM matching lines.
-    142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
+     141→- `-m NUM, --max-count=NUM` Stop searching each file after finding NUM matching lines.
+     142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
     …
-    144→- `-r, --recursive` Recursively search directories
-    145→- `--gitignore` Respect `.gitignore` files during recursive search
+     144→- `-r, --recursive` Recursively search directories
+     145→- `--gitignore` Respect `.gitignore` files during recursive search
     …
-    148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
-    149→- `-w, --word-regexp` Match only whole words
-    150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')
-    151→- `--no-simd` Explicitly disable SIMD acceleration
-    152→- `-v, --version` Show version information
-    153→- `-h, --help` Show help message
-    155→## Performance Benchmarks
+     148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
+     149→- `-w, --word-regexp` Match only whole words
+     150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')
+     151→- `--no-simd` Explicitly disable SIMD acceleration
+     152→- `-v, --version` Show version information
+     153→- `-h, --help` Show help message
+     155→## Performance Benchmarks
     …
-    171→### krep v2.1.0 vs ripgrep (warm cache, 7 runs average baseline)
+     171→### krep v2.1.0 vs ripgrep (warm cache, 7 runs average baseline)
     …
-    180→## How Krep Works
-    181→
-    182→Krep achieves its high performance through several key techniques:
-    184→### 1. Smart Algorithm Selection
+     180→## How Krep Works
+     181→
+     182→Krep achieves its high performance through several key techniques:
+     184→### 1. Smart Algorithm Selection
     …
-    197→### 2. Multi-threading Architecture
+     197→### 2. Multi-threading Architecture
     …
-    207→### 3. Memory-Mapped I/O
+     207→### 3. Memory-Mapped I/O
     …
-    216→### 4. Optimized Data Structures
+     216→### 4. Optimized Data Structures
     …
-    222→### 5. Skipping Non-Relevant Content
+     222→### 5. Skipping Non-Relevant Content
     …
-    231→## Contributing
-    232→
-    233→Contributions are welcome! Please feel free to submit a Pull Request.
-    235→## Author
-    236→
-    237→- **Davide Santangelo** - [GitHub](https://github.com/davidesantangelo)
-    239→## License
-    240→
-    241→This project is licensed under the BSD-2 License - see the LICENSE file for details.
-    242→
-    243→Copyright © 2025 Davide Santangelo
+     231→## Contributing
+     232→
+     233→Contributions are welcome! Please feel free to submit a Pull Request.
+     235→## Author
+     236→
+     237→- **Davide Santangelo** - [GitHub](https://github.com/davidesantangelo)
+     239→## License
+     240→
+     241→This project is licensed under the BSD-2 License - see the LICENSE file for details.
+     242→
+     243→Copyright © 2025 Davide Santangelo
 aho_corasick.c
 aho_corasick.h
 krep.c
 krep.h
-    1→/* krep.h - Header file for krep utility
-    2→ *
-    3→ * Author: Davide Santangelo
-    4→ * Year: 2025
-    5→ */
+       1→/* krep.h - Header file for krep utility
+       2→ *
+       3→ * Author: Davide Santangelo
+       4→ * Year: 2025
+       5→ */
     …
-    10→#include <stdbool.h>
-    11→#include <stdint.h>
-    12→#include <stdio.h>     // For size_t definition
-    13→#include <regex.h>     // For regex_t type
-    14→#include <pthread.h>   // For mutex types (though no longer used for counting)
-    15→#include <stdatomic.h> // For atomic types used in structs
-    16→#include <ctype.h>     // For isalnum function
-    18→// --- Global Variables (declared extern) ---
-    19→extern unsigned char lower_table[256];
-    21→// Forward declaration for Aho-Corasick trie structure
-    22→struct ac_trie;
-    23→typedef struct ac_trie ac_trie_t;
+      10→#include <stdbool.h>
+      11→#include <stdint.h>
+      12→#include <stdio.h>     // For size_t definition
+      13→#include <regex.h>     // For regex_t type
+      14→#include <pthread.h>   // For mutex types (though no longer used for counting)
+      15→#include <stdatomic.h> // For atomic types used in structs
+      16→#include <ctype.h>     // For isalnum function
+      18→// --- Global Variables (declared extern) ---
+      19→extern unsigned char lower_table[256];
+      21→// Forward declaration for Aho-Corasick trie structure
+      22→struct ac_trie;
+      23→typedef struct ac_trie ac_trie_t;
     …
-    32→/* --- ANSI Color Codes --- */
-    33→// Define colors consistently
-    34→#define KREP_COLOR_RESET "\033[0m"
-    35→#define KREP_COLOR_FILENAME "\033[1;38;5;81m"   // Bright cyan
-    36→#define KREP_COLOR_SEPARATOR "\033[38;5;244m"   // Muted gray
-    37→#define KREP_COLOR_LINE_NUMBER "\033[1;38;5;111m" // Soft mint
-    38→#define KREP_COLOR_MATCH "\033[1;38;5;222m"     // Warm amber
-    39→#define KREP_COLOR_TEXT "\033[38;5;252m"        // Soft white
-    41→/* --- Help UI Colors --- */
-    42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
-    43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
-    44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
-    45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
-    47→/* --- Match tracking structure --- */
-    48→// Define match_position_t BEFORE match_result_t
-    49→typedef struct
-    50→{
-    51→   size_t start_offset; // Starting position of the match
-    52→   size_t end_offset;   // Ending position of the match (exclusive)
-    53→} match_position_t;
-    55→typedef struct match_result_t // Add the struct tag here
-    56→{
-    57→   match_position_t *positions; // Dynamically resizing array of match positions
-    58→   uint64_t count;              // Number of matches found and stored
-    59→   uint64_t capacity;           // Current allocated capacity of the positions array
-    60→} match_result_t;               // Typedef remains the same
+      32→/* --- ANSI Color Codes --- */
+      33→// Define colors consistently
+      34→#define KREP_COLOR_RESET "\033[0m"
+      35→#define KREP_COLOR_FILENAME "\033[1;38;5;81m"   // Bright cyan
+      36→#define KREP_COLOR_SEPARATOR "\033[38;5;244m"   // Muted gray
+      37→#define KREP_COLOR_LINE_NUMBER "\033[1;38;5;111m" // Soft mint
+      38→#define KREP_COLOR_MATCH "\033[1;38;5;222m"     // Warm amber
+      39→#define KREP_COLOR_TEXT "\033[38;5;252m"        // Soft white
+      41→/* --- Help UI Colors --- */
+      42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
+      43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
+      44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
+      45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
+      47→/* --- Match tracking structure --- */
+      48→// Define match_position_t BEFORE match_result_t
+      49→typedef struct
+      50→{
+      51→   size_t start_offset; // Starting position of the match
+      52→   size_t end_offset;   // Ending position of the match (exclusive)
+      53→} match_position_t;
+      55→typedef struct match_result_t // Add the struct tag here
+      56→{
+      57→   match_position_t *positions; // Dynamically resizing array of match positions
+      58→   uint64_t count;              // Number of matches found and stored
+      59→   uint64_t capacity;           // Current allocated capacity of the positions array
+      60→} match_result_t;               // Typedef remains the same
     …
-    65→typedef struct search_params
+      65→typedef struct search_params
     …
-    96→/* --- Function Pointer Type for Search Algorithms --- */
-    97→// Returns count (lines or matches depending on mode). result can be NULL unless track_positions is true.
-    98→typedef uint64_t (*search_func_t)(const search_params_t *params,
-    99→                                  const char *text_start,
-    100→                                  size_t text_len,
-    101→                                  match_result_t *result);
-    103→// Data passed to each search thread
-    104→typedef struct
-    105→{
-    106→   int thread_id;
-    107→   const search_params_t *params; // Pointer to shared search parameters
-    108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
-    109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
-    110→   search_func_t search_algo;     // Pre-selected search algorithm for this chunk
-    111→
-    112→   // Thread-specific results
-    113→   match_result_t *local_result; // For position tracking (default/-o)
-    114→   uint64_t count_result;        // For line counting (-c) or match counting (-co)
-    115→
-    116→   // Status flags
-    117→   bool error_flag; // Flag to indicate an error occurred in the thread
-    118→
-    119→   // Padding to prevent false sharing (ensure struct size is multiple of 64 bytes)
-    120→   // Current size approx 56 bytes. Adding sufficient padding.
-    121→   char padding[64]; 
-    122→} thread_data_t;
-    124→/* --- Thread Pool Implementation --- */
-    125→typedef struct task
-    126→{
-    127→   void *(*func)(void *); // Task function
-    128→   void *arg;             // Function argument
-    129→   struct task *next;     // Next task in queue
-    130→} task_t;
-    132→typedef struct
-    133→{
-    134→   pthread_t *threads;           // Array of worker threads
-    135→   int num_threads;              // Number of worker threads
-    136→   task_t *task_queue;           // Task queue head
-    137→   task_t *task_queue_tail;      // Task queue tail for faster enqueue
-    138→   pthread_mutex_t queue_mutex;  // Mutex for task queue access
-    139→   pthread_cond_t queue_cond;    // Condition variable for task availability
-    140→   pthread_cond_t complete_cond; // Condition variable for task completion
-    141→   size_t working_threads;       // Counter for busy threads
-    142→   atomic_bool shutdown;         // Shutdown flag
-    143→} thread_pool_t;
-    145→/* --- Thread Pool API --- */
-    146→thread_pool_t *thread_pool_init(int num_threads);
-    147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
-    148→void thread_pool_wait_all(thread_pool_t *pool);
-    149→void thread_pool_destroy(thread_pool_t *pool);
+      96→/* --- Function Pointer Type for Search Algorithms --- */
+      97→// Returns count (lines or matches depending on mode). result can be NULL unless track_positions is true.
+      98→typedef uint64_t (*search_func_t)(const search_params_t *params,
+      99→                                  const char *text_start,
+     100→                                  size_t text_len,
+     101→                                  match_result_t *result);
+     103→// Data passed to each search thread
+     104→typedef struct
+     105→{
+     106→   int thread_id;
+     107→   const search_params_t *params; // Pointer to shared search parameters
+     108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
+     109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
+     110→   search_func_t search_algo;     // Pre-selected search algorithm for this chunk
+     111→
+     112→   // Thread-specific results
+     113→   match_result_t *local_result; // For position tracking (default/-o)
+     114→   uint64_t count_result;        // For line counting (-c) or match counting (-co)
+     115→
+     116→   // Status flags
+     117→   bool error_flag; // Flag to indicate an error occurred in the thread
+     118→
+     119→   // Padding to prevent false sharing (ensure struct size is multiple of 64 bytes)
+     120→   // Current size approx 56 bytes. Adding sufficient padding.
+     121→   char padding[64]; 
+     122→} thread_data_t;
+     124→/* --- Thread Pool Implementation --- */
+     125→typedef struct task
+     126→{
+     127→   void *(*func)(void *); // Task function
+     128→   void *arg;             // Function argument
+     129→   struct task *next;     // Next task in queue
+     130→} task_t;
+     132→typedef struct
+     133→{
+     134→   pthread_t *threads;           // Array of worker threads
+     135→   int num_threads;              // Number of worker threads
+     136→   task_t *task_queue;           // Task queue head
+     137→   task_t *task_queue_tail;      // Task queue tail for faster enqueue
+     138→   pthread_mutex_t queue_mutex;  // Mutex for task queue access
+     139→   pthread_cond_t queue_cond;    // Condition variable for task availability
+     140→   pthread_cond_t complete_cond; // Condition variable for task completion
+     141→   size_t working_threads;       // Counter for busy threads
+     142→   atomic_bool shutdown;         // Shutdown flag
+     143→} thread_pool_t;
+     145→/* --- Thread Pool API --- */
+     146→thread_pool_t *thread_pool_init(int num_threads);
+     147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
+     148→void thread_pool_wait_all(thread_pool_t *pool);
+     149→void thread_pool_destroy(thread_pool_t *pool);
     …
 test/
     benchmark_krep_vs_rg.sh

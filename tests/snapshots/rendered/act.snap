@@ -20,72 +20,72 @@ expression: rendered
 CLAUDE.md
 CONTRIBUTING.md
 IMAGES.md
-    1→# List of Docker images for `act`
-    2→
-    3→**Warning:** Below badges with size for each image are displaying size of **compressed image size in registry. After pulling the image, size can be drastically different due to Docker uncompressing the image layers.**
-    5→## Images based on [`buildpack-deps`][hub/_/buildpack-deps]
+       1→# List of Docker images for `act`
+       2→
+       3→**Warning:** Below badges with size for each image are displaying size of **compressed image size in registry. After pulling the image, size can be drastically different due to Docker uncompressing the image layers.**
+       5→## Images based on [`buildpack-deps`][hub/_/buildpack-deps]
     …
-    27→## Images based on [`actions/virtual-environments`][gh/actions/virtual-environments]
+      27→## Images based on [`actions/virtual-environments`][gh/actions/virtual-environments]
     …
 LICENSE
 Makefile
 README.md
     …
-    3→# Overview…
-    5→> "Think globally, `act` locally"
-    6→
-    7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
+       3→# Overview…
+       5→> "Think globally, `act` locally"
+       6→
+       7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
     …
-    16→# How Does It Work?
+      16→# How Does It Work?
     …
-    24→# Act User Guide
-    25→
-    26→Please look at the [act user guide](https://nektosact.com) for more documentation.
-    28→# Support
-    29→
-    30→Need help? Ask in [discussions](https://github.com/nektos/act/discussions)!
-    32→# Contributing
+      24→# Act User Guide
+      25→
+      26→Please look at the [act user guide](https://nektosact.com) for more documentation.
+      28→# Support
+      29→
+      30→Need help? Ask in [discussions](https://github.com/nektos/act/discussions)!
+      32→# Contributing
     …
-    36→## Manually building from source
+      36→## Manually building from source
     …
 VERIFICATION
 VERSION
-    1→0.2.88
+       1→0.2.88
 act-cli.nuspec
 cmd/
     dir.go
         …
-        10→var (
-        11→	UserHomeDir  string
-        12→	CacheHomeDir string
-        13→)
-        15→func init() {
+          10→var (
+          11→	UserHomeDir  string
+          12→	CacheHomeDir string
+          13→)
+          15→func init() {
         …
     execute_test.go
     graph.go
         …
-        10→func drawGraph(plan *model.Plan) error {
+          10→func drawGraph(plan *model.Plan) error {
         …
     input.go
     list.go
         …
-        11→func printList(plan *model.Plan) error {
+          11→func printList(plan *model.Plan) error {
         …
     notices.go
     platforms.go
         …
-        7→func (i *Input) newPlatforms() map[string]string {
+           7→func (i *Input) newPlatforms() map[string]string {
         …
     root.go
     root_test.go
     secrets.go
         …
-        12→type secrets map[string]string
-        13→
-        14→func newSecrets(secretList []string) secrets {
+          12→type secrets map[string]string
+          13→
+          14→func newSecrets(secretList []string) secrets {
         …
-        40→func (s secrets) AsMap() map[string]string {
-        41→	return s
+          40→func (s secrets) AsMap() map[string]string {
+          41→	return s
         …
     testdata/
         env.actrc
@@ -94,49 +94,49 @@ cmd/
         split.actrc
 codecov.yml
 go.mod
-    1→module github.com/nektos/act
-    2→
-    3→go 1.25.0
+       1→module github.com/nektos/act
+       2→
+       3→go 1.25.0
     …
 go.sum
 install.sh
 main.go
-    1→package main
-    2→
-    3→import (
-    4→	_ "embed"
-    5→
-    6→	"github.com/nektos/act/cmd"
-    7→	"github.com/nektos/act/pkg/common"
-    8→)
-    10→//go:embed VERSION
-    11→var version string
-    12→
-    13→func main() {
-    14→	ctx, cancel := common.CreateGracefulJobCancellationContext()
-    15→	defer cancel()
-    16→
-    17→	// run the command
-    18→	cmd.Execute(ctx, version)
+       1→package main
+       2→
+       3→import (
+       4→	_ "embed"
+       5→
+       6→	"github.com/nektos/act/cmd"
+       7→	"github.com/nektos/act/pkg/common"
+       8→)
+      10→//go:embed VERSION
+      11→var version string
+      12→
+      13→func main() {
+      14→	ctx, cancel := common.CreateGracefulJobCancellationContext()
+      15→	defer cancel()
+      16→
+      17→	// run the command
+      18→	cmd.Execute(ctx, version)
     …
 main_test.go
 pkg/
     artifactcache/
         doc.go
             …
-            7→package artifactcache
+               7→package artifactcache
         handler.go
         handler_test.go
         model.go
-            1→package artifactcache
-            3→type Request struct {
-            4→	Key     string `json:"key" `
-            5→	Version string `json:"version"`
-            6→	Size    int64  `json:"cacheSize"`
-            7→}
-            9→func (c *Request) ToCache() *Cache {
+               1→package artifactcache
+               3→type Request struct {
+               4→	Key     string `json:"key" `
+               5→	Version string `json:"version"`
+               6→	Size    int64  `json:"cacheSize"`
+               7→}
+               9→func (c *Request) ToCache() *Cache {
             …
-            26→type Cache struct {
+              26→type Cache struct {
             …
         storage.go
         testdata/
@@ -150,18 +150,18 @@ pkg/
         auth.go
         auth_test.go
         cartesian.go
-            1→package common
-            3→// CartesianProduct takes map of lists and returns list of unique tuples
-            4→func CartesianProduct(mapOfLists map[string][]interface{}) []map[string]interface{} {
+               1→package common
+               3→// CartesianProduct takes map of lists and returns list of unique tuples
+               4→func CartesianProduct(mapOfLists map[string][]interface{}) []map[string]interface{} {
             …
-            25→func cartN(a ...[]interface{}) [][]interface{} {
+              25→func cartN(a ...[]interface{}) [][]interface{} {
             …
         cartesian_test.go
         context.go
             …
-            10→func createGracefulJobCancellationContext() (context.Context, func(), chan os.Signal) {
+              10→func createGracefulJobCancellationContext() (context.Context, func(), chan os.Signal) {
             …
-            42→func CreateGracefulJobCancellationContext() (context.Context, func()) {
+              42→func CreateGracefulJobCancellationContext() (context.Context, func()) {
             …
         context_test.go
         draw.go
@@ -170,11 +170,11 @@ pkg/
         executor_test.go
         file.go
             …
-            9→// CopyFile copy file
-            10→func CopyFile(source string, dest string) (err error) {
+               9→// CopyFile copy file
+              10→func CopyFile(source string, dest string) (err error) {
             …
-            36→// CopyDir recursive copy of directory
-            37→func CopyDir(source string, dest string) (err error) {
+              36→// CopyDir recursive copy of directory
+              37→func CopyDir(source string, dest string) (err error) {
             …
         git/
         job_error.go
@@ -183,23 +183,23 @@ pkg/
         logger.go
         outbound_ip.go
             …
-            13→func GetOutboundIP() net.IP {
+              13→func GetOutboundIP() net.IP {
             …
     container/
         DOCKER_LICENSE
         container_types.go
         docker_auth.go
             …
-            15→func LoadDockerAuthConfig(ctx context.Context, image string) (registry.AuthConfig, error) {
+              15→func LoadDockerAuthConfig(ctx context.Context, image string) (registry.AuthConfig, error) {
             …
-            42→func LoadDockerAuthConfigs(ctx context.Context) map[string]registry.AuthConfig {
+              42→func LoadDockerAuthConfigs(ctx context.Context) map[string]registry.AuthConfig {
             …
         docker_build.go
             …
-            22→// NewDockerBuildExecutor function to create a run executor for the container
-            23→func NewDockerBuildExecutor(input NewDockerBuildExecutorInput) common.Executor {
+              22→// NewDockerBuildExecutor function to create a run executor for the container
+              23→func NewDockerBuildExecutor(input NewDockerBuildExecutorInput) common.Executor {
             …
-            78→func createBuildContext(ctx context.Context, contextDir string, relDockerfile string) (io.ReadCloser, error) {
+              78→func createBuildContext(ctx context.Context, contextDir string, relDockerfile string) (io.ReadCloser, error) {
             …
         docker_cli.go
         docker_cli_test.go
@@ -208,9 +208,9 @@ pkg/
         docker_logger.go
         docker_network.go
             …
-            12→func NewDockerNetworkCreateExecutor(name string) common.Executor {
+              12→func NewDockerNetworkCreateExecutor(name string) common.Executor {
             …
-            45→func NewDockerNetworkRemoveExecutor(name string) common.Executor {
+              45→func NewDockerNetworkRemoveExecutor(name string) common.Executor {
             …
         docker_pull.go
         docker_pull_test.go
@@ -221,13 +221,13 @@ pkg/
         docker_stub.go
         docker_volume.go
             …
-            12→func NewDockerVolumeRemoveExecutor(volumeName string, force bool) common.Executor {
+              12→func NewDockerVolumeRemoveExecutor(volumeName string, force bool) common.Executor {
             …
-            36→func removeExecutor(volume string, force bool) common.Executor {
+              36→func removeExecutor(volume string, force bool) common.Executor {
             …
         executions_environment.go
             …
-            5→type ExecutionsEnvironment interface {
+               5→type ExecutionsEnvironment interface {
             …
         host_environment.go
         host_environment_test.go
@@ -235,20 +235,20 @@ pkg/
         linux_container_environment_extensions_test.go
         parse_env_file.go
             …
-            14→func parseEnvFile(e Container, srcPath string, env *map[string]string) common.Executor {
+              14→func parseEnvFile(e Container, srcPath string, env *map[string]string) common.Executor {
             …
         testdata/
         util.go
             …
-            12→func getSysProcAttr(_ string, tty bool) *syscall.SysProcAttr {
+              12→func getSysProcAttr(_ string, tty bool) *syscall.SysProcAttr {
             …
-            24→func openPty() (*os.File, *os.File, error) {
+              24→func openPty() (*os.File, *os.File, error) {
             …
         util_openbsd_mips64.go
             …
-            9→func getSysProcAttr(cmdLine string, tty bool) *syscall.SysProcAttr {
+               9→func getSysProcAttr(cmdLine string, tty bool) *syscall.SysProcAttr {
             …
-            15→func openPty() (*os.File, *os.File, error) {
+              15→func openPty() (*os.File, *os.File, error) {
             …
         util_plan9.go
         util_windows.go
@@ -264,13 +264,13 @@ pkg/
         LICENSE
         env.go
         error.go
-            1→package lookpath
-            3→type Error struct {
-            4→	Name string
-            5→	Err  error
-            6→}
-            8→func (e *Error) Error() string {
-            9→	return e.Err.Error()
+               1→package lookpath
+               3→type Error struct {
+               4→	Name string
+               5→	Err  error
+               6→}
+               8→func (e *Error) Error() string {
+               9→	return e.Err.Error()
             …
         lp_js.go
         lp_plan9.go
@@ -280,16 +280,16 @@ pkg/
         action.go
         anchors.go
             …
-            9→func resolveAliasesExt(node *yaml.Node, path map[*yaml.Node]bool, skipCheck bool) error {
+               9→func resolveAliasesExt(node *yaml.Node, path map[*yaml.Node]bool, skipCheck bool) error {
             …
-            36→func resolveAliases(node *yaml.Node) error {
+              36→func resolveAliases(node *yaml.Node) error {
             …
         anchors_test.go
         github_context.go
         github_context_test.go
         job_context.go
-            1→package model
-            3→type JobContext struct {
+               1→package model
+               3→type JobContext struct {
             …
         planner.go
         planner_test.go

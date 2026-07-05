@@ -9,16 +9,16 @@ expression: rendered
 .goreleaser.yml
 LICENSE
 README.md
-    1→# Bubble Tea
+       1→# Bubble Tea
     …
-    10→The fun, functional and stateful way to build terminal apps. A Go framework
-    11→based on [The Elm Architecture][elm]. Bubble Tea is well-suited for simple and
-    12→complex terminal applications, either inline, full-window, or a mix of both.
+      10→The fun, functional and stateful way to build terminal apps. A Go framework
+      11→based on [The Elm Architecture][elm]. Bubble Tea is well-suited for simple and
+      12→complex terminal applications, either inline, full-window, or a mix of both.
     …
 Taskfile.yaml
 UPGRADE_GUIDE_V2.md
 clipboard.go
-    1→package tea
+       1→package tea
     …
 color.go
 commands.go
@@ -26,77 +26,77 @@ commands_test.go
 cursed_renderer.go
 cursed_renderer_test.go
 cursor.go
-    1→package tea
-    3→// Position represents a position in the terminal.
-    4→type Position struct{ X, Y int }
-    6→// CursorPositionMsg is a message that represents the terminal cursor position.
-    7→type CursorPositionMsg struct {
-    8→	X, Y int
-    9→}
-    11→// CursorShape represents a terminal cursor shape.
-    12→type CursorShape int
-    14→// Cursor shapes.
-    15→const (
-    16→	CursorBlock CursorShape = iota
-    17→	CursorUnderline
-    18→	CursorBar
-    19→)
-    21→// requestCursorPosMsg is a message that requests the cursor position.
-    22→type requestCursorPosMsg struct{}
-    24→// RequestCursorPosition is a command that requests the cursor position.
-    25→// The cursor position will be sent as a [CursorPositionMsg] message.
-    26→func RequestCursorPosition() Msg {
-    27→	return requestCursorPosMsg{}
+       1→package tea
+       3→// Position represents a position in the terminal.
+       4→type Position struct{ X, Y int }
+       6→// CursorPositionMsg is a message that represents the terminal cursor position.
+       7→type CursorPositionMsg struct {
+       8→	X, Y int
+       9→}
+      11→// CursorShape represents a terminal cursor shape.
+      12→type CursorShape int
+      14→// Cursor shapes.
+      15→const (
+      16→	CursorBlock CursorShape = iota
+      17→	CursorUnderline
+      18→	CursorBar
+      19→)
+      21→// requestCursorPosMsg is a message that requests the cursor position.
+      22→type requestCursorPosMsg struct{}
+      24→// RequestCursorPosition is a command that requests the cursor position.
+      25→// The cursor position will be sent as a [CursorPositionMsg] message.
+      26→func RequestCursorPosition() Msg {
+      27→	return requestCursorPosMsg{}
     …
 environ.go
-    1→package tea
-    2→
-    3→import uv "github.com/charmbracelet/ultraviolet"
+       1→package tea
+       2→
+       3→import uv "github.com/charmbracelet/ultraviolet"
     …
-    19→type EnvMsg uv.Environ
+      19→type EnvMsg uv.Environ
     …
-    24→func (msg EnvMsg) Getenv(key string) (v string) {
-    25→	return uv.Environ(msg).Getenv(key)
+      24→func (msg EnvMsg) Getenv(key string) (v string) {
+      25→	return uv.Environ(msg).Getenv(key)
     …
-    32→func (msg EnvMsg) LookupEnv(key string) (s string, v bool) {
-    33→	return uv.Environ(msg).LookupEnv(key)
+      32→func (msg EnvMsg) LookupEnv(key string) (s string, v bool) {
+      33→	return uv.Environ(msg).LookupEnv(key)
     …
 examples/
 exec.go
 exec_test.go
 focus.go
-    1→package tea
-    3→// FocusMsg represents a terminal focus message.
-    4→// This occurs when the terminal gains focus.
-    5→type FocusMsg struct{}
-    7→// BlurMsg represents a terminal blur message.
-    8→// This occurs when the terminal loses focus.
-    9→type BlurMsg struct{}
+       1→package tea
+       3→// FocusMsg represents a terminal focus message.
+       4→// This occurs when the terminal gains focus.
+       5→type FocusMsg struct{}
+       7→// BlurMsg represents a terminal blur message.
+       8→// This occurs when the terminal loses focus.
+       9→type BlurMsg struct{}
 go.mod
-    1→module charm.land/bubbletea/v2
+       1→module charm.land/bubbletea/v2
     …
-    5→go 1.25.0
+       5→go 1.25.0
     …
 go.sum
 input.go
     …
-    8→func (p *Program) translateInputEvent(e uv.Event) Msg {
+       8→func (p *Program) translateInputEvent(e uv.Event) Msg {
     …
 key.go
 keyboard.go
 logging.go
     …
-    23→func LogToFile(path string, prefix string) (*os.File, error) {
-    24→	return LogToFileWith(path, prefix, log.Default())
+      23→func LogToFile(path string, prefix string) (*os.File, error) {
+      24→	return LogToFileWith(path, prefix, log.Default())
     …
-    27→// LogOptionsSetter is an interface implemented by stdlib's log and charm's log
-    28→// libraries.
-    29→type LogOptionsSetter interface {
-    30→	SetOutput(io.Writer)
-    31→	SetPrefix(string)
-    32→}
-    34→// LogToFileWith does allows to call LogToFile with a custom LogOptionsSetter.
-    35→func LogToFileWith(path string, prefix string, log LogOptionsSetter) (*os.File, error) {
+      27→// LogOptionsSetter is an interface implemented by stdlib's log and charm's log
+      28→// libraries.
+      29→type LogOptionsSetter interface {
+      30→	SetOutput(io.Writer)
+      31→	SetPrefix(string)
+      32→}
+      34→// LogToFileWith does allows to call LogToFile with a custom LogOptionsSetter.
+      35→func LogToFileWith(path string, prefix string, log LogOptionsSetter) (*os.File, error) {
     …
 logging_test.go
 mod.go
@@ -105,182 +105,182 @@ nil_renderer.go
 options.go
 options_test.go
 paste.go
-    1→package tea
-    3→// PasteMsg is an message that is emitted when a terminal receives pasted text
-    4→// using bracketed-paste.
-    5→type PasteMsg struct {
-    6→	Content string
-    7→}
-    9→// String returns the pasted content as a string.
-    10→func (p PasteMsg) String() string {
-    11→	return p.Content
+       1→package tea
+       3→// PasteMsg is an message that is emitted when a terminal receives pasted text
+       4→// using bracketed-paste.
+       5→type PasteMsg struct {
+       6→	Content string
+       7→}
+       9→// String returns the pasted content as a string.
+      10→func (p PasteMsg) String() string {
+      11→	return p.Content
     …
-    14→// PasteStartMsg is an message that is emitted when the terminal starts the
-    15→// bracketed-paste text.
-    16→type PasteStartMsg struct{}
-    18→// PasteEndMsg is an message that is emitted when the terminal ends the
-    19→// bracketed-paste text.
-    20→type PasteEndMsg struct{}
+      14→// PasteStartMsg is an message that is emitted when the terminal starts the
+      15→// bracketed-paste text.
+      16→type PasteStartMsg struct{}
+      18→// PasteEndMsg is an message that is emitted when the terminal ends the
+      19→// bracketed-paste text.
+      20→type PasteEndMsg struct{}
 profile.go
-    1→package tea
-    2→
-    3→import "github.com/charmbracelet/colorprofile"
+       1→package tea
+       2→
+       3→import "github.com/charmbracelet/colorprofile"
     …
-    13→type ColorProfileMsg struct {
-    14→	colorprofile.Profile
-    15→}
+      13→type ColorProfileMsg struct {
+      14→	colorprofile.Profile
+      15→}
 raw.go
-    1→package tea
-    3→// RawMsg is a message that contains a string to be printed to the terminal
-    4→// without any intermediate processing.
-    5→type RawMsg struct {
-    6→	Msg any
-    7→}
+       1→package tea
+       3→// RawMsg is a message that contains a string to be printed to the terminal
+       4→// without any intermediate processing.
+       5→type RawMsg struct {
+       6→	Msg any
+       7→}
     …
-    33→func Raw(r any) Cmd {
-    34→	return func() Msg {
-    35→		return RawMsg{r}
-    36→	}
+      33→func Raw(r any) Cmd {
+      34→	return func() Msg {
+      35→		return RawMsg{r}
+      36→	}
     …
 renderer.go
     …
-    13→	defaultFPS = 60
-    14→	maxFPS     = 120
+      13→	defaultFPS = 60
+      14→	maxFPS     = 120
     …
-    18→type renderer interface {
+      18→type renderer interface {
     …
-    59→type printLineMessage struct {
-    60→	messageBody string
-    61→}
+      59→type printLineMessage struct {
+      60→	messageBody string
+      61→}
     …
-    70→func Println(args ...any) Cmd {
+      70→func Println(args ...any) Cmd {
     …
-    86→func Printf(template string, args ...any) Cmd {
+      86→func Printf(template string, args ...any) Cmd {
     …
-    96→func encodeCursorStyle(style CursorShape, blink bool) int {
+      96→func encodeCursorStyle(style CursorShape, blink bool) int {
     …
 screen.go
-    1→package tea
-    2→
-    3→import "github.com/charmbracelet/x/ansi"
+       1→package tea
+       2→
+       3→import "github.com/charmbracelet/x/ansi"
     …
-    9→type WindowSizeMsg struct {
-    10→	Width  int
-    11→	Height int
-    12→}
+       9→type WindowSizeMsg struct {
+      10→	Width  int
+      11→	Height int
+      12→}
     …
-    20→func ClearScreen() Msg {
-    21→	return clearScreenMsg{}
+      20→func ClearScreen() Msg {
+      21→	return clearScreenMsg{}
     …
-    26→type clearScreenMsg struct{}
+      26→type clearScreenMsg struct{}
     …
-    62→type ModeReportMsg struct {
-    63→	// Mode is the mode number.
-    64→	Mode ansi.Mode
-    65→
-    66→	// Value is the mode value.
-    67→	Value ansi.ModeSetting
-    68→}
+      62→type ModeReportMsg struct {
+      63→	// Mode is the mode number.
+      64→	Mode ansi.Mode
+      65→
+      66→	// Value is the mode value.
+      67→	Value ansi.ModeSetting
+      68→}
 screen_test.go
 signals_unix.go
 signals_windows.go
 tea.go
-    1→// Package tea provides a framework for building rich terminal user interfaces
-    2→// based on the paradigms of The Elm Architecture. It's well-suited for simple
-    3→// and complex terminal applications, either inline, full-window, or a mix of
-    4→// both. It's been battle-tested in several large projects and is
-    5→// production-ready.
-    6→//
-    7→// A tutorial is available at https://github.com/charmbracelet/bubbletea/tree/master/tutorials
-    8→//
-    9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
+       1→// Package tea provides a framework for building rich terminal user interfaces
+       2→// based on the paradigms of The Elm Architecture. It's well-suited for simple
+       3→// and complex terminal applications, either inline, full-window, or a mix of
+       4→// both. It's been battle-tested in several large projects and is
+       5→// production-ready.
+       6→//
+       7→// A tutorial is available at https://github.com/charmbracelet/bubbletea/tree/master/tutorials
+       8→//
+       9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
     …
-    38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
-    39→var ErrProgramPanic = errors.New("program experienced a panic")
-    41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
-    42→var ErrProgramKilled = errors.New("program was killed")
-    44→// ErrInterrupted is returned by [Program.Run] when the program get a SIGINT
-    45→// signal, or when it receives a [InterruptMsg].
-    46→var ErrInterrupted = errors.New("program was interrupted")
-    48→// Msg contain data from the result of a IO operation. Msgs trigger the update
-    49→// function and, henceforth, the UI.
-    50→type Msg = uv.Event
-    52→// Model contains the program's state as well as its core functions.
-    53→type Model interface {
-    54→	// Init is the first function that will be called. It returns an optional
-    55→	// initial command. To not perform an initial command return nil.
-    56→	Init() Cmd
-    57→
-    58→	// Update is called when a message is received. Use it to inspect messages
-    59→	// and, in response, update the model and/or send a command.
-    60→	Update(Msg) (Model, Cmd)
-    61→
-    62→	// View renders the program's UI, which can be a string or a [Layer]. The
-    63→	// view is rendered after every Update.
-    64→	View() View
-    65→}
-    67→// NewView is a helper function to create a new [View] with the given styled
-    68→// string. A styled string represents text with styles and hyperlinks encoded
-    69→// as ANSI escape codes.
-    70→//
-    71→// Example:
-    72→//
-    73→//	```go
-    74→//	v := tea.NewView("Hello, World!")
-    75→//	```
-    76→func NewView(s string) View {
-    77→	var view View
-    78→	view.SetContent(s)
-    79→	return view
+      38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
+      39→var ErrProgramPanic = errors.New("program experienced a panic")
+      41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
+      42→var ErrProgramKilled = errors.New("program was killed")
+      44→// ErrInterrupted is returned by [Program.Run] when the program get a SIGINT
+      45→// signal, or when it receives a [InterruptMsg].
+      46→var ErrInterrupted = errors.New("program was interrupted")
+      48→// Msg contain data from the result of a IO operation. Msgs trigger the update
+      49→// function and, henceforth, the UI.
+      50→type Msg = uv.Event
+      52→// Model contains the program's state as well as its core functions.
+      53→type Model interface {
+      54→	// Init is the first function that will be called. It returns an optional
+      55→	// initial command. To not perform an initial command return nil.
+      56→	Init() Cmd
+      57→
+      58→	// Update is called when a message is received. Use it to inspect messages
+      59→	// and, in response, update the model and/or send a command.
+      60→	Update(Msg) (Model, Cmd)
+      61→
+      62→	// View renders the program's UI, which can be a string or a [Layer]. The
+      63→	// view is rendered after every Update.
+      64→	View() View
+      65→}
+      67→// NewView is a helper function to create a new [View] with the given styled
+      68→// string. A styled string represents text with styles and hyperlinks encoded
+      69→// as ANSI escape codes.
+      70→//
+      71→// Example:
+      72→//
+      73→//	```go
+      74→//	v := tea.NewView("Hello, World!")
+      75→//	```
+      76→func NewView(s string) View {
+      77→	var view View
+      78→	view.SetContent(s)
+      79→	return view
     …
-    82→// View represents a terminal view that can be composed of multiple layers.
-    83→// It can also contain a cursor that will be rendered on top of the layers.
-    84→type View struct {
+      82→// View represents a terminal view that can be composed of multiple layers.
+      83→// It can also contain a cursor that will be rendered on top of the layers.
+      84→type View struct {
     …
-    128→	// Cursor represents the cursor position, style, and visibility on the
-    129→	// screen. When not nil, the cursor will be shown at the specified
-    130→	// position.
-    131→	Cursor *Cursor
-    133→	// BackgroundColor when not nil, sets the terminal background color. Use
-    134→	// nil to reset to the terminal's default background color.
-    135→	BackgroundColor color.Color
-    137→	// ForegroundColor when not nil, sets the terminal foreground color. Use
-    138→	// nil to reset to the terminal's default foreground color.
-    139→	ForegroundColor color.Color
-    141→	// WindowTitle sets the terminal window title. Support depends on the
-    142→	// terminal.
-    143→	WindowTitle string
-    145→	// ProgressBar when not nil, shows a progress bar in the terminal's
-    146→	// progress bar section. Support depends on the terminal.
-    147→	ProgressBar *ProgressBar
+     128→	// Cursor represents the cursor position, style, and visibility on the
+     129→	// screen. When not nil, the cursor will be shown at the specified
+     130→	// position.
+     131→	Cursor *Cursor
+     133→	// BackgroundColor when not nil, sets the terminal background color. Use
+     134→	// nil to reset to the terminal's default background color.
+     135→	BackgroundColor color.Color
+     137→	// ForegroundColor when not nil, sets the terminal foreground color. Use
+     138→	// nil to reset to the terminal's default foreground color.
+     139→	ForegroundColor color.Color
+     141→	// WindowTitle sets the terminal window title. Support depends on the
+     142→	// terminal.
+     143→	WindowTitle string
+     145→	// ProgressBar when not nil, shows a progress bar in the terminal's
+     146→	// progress bar section. Support depends on the terminal.
+     147→	ProgressBar *ProgressBar
     …
-    172→	// DisableBracketedPasteMode disables bracketed paste mode for this view.
-    173→	DisableBracketedPasteMode bool
-    175→	// MouseMode sets the mouse mode for this view. It can be one of
-    176→	// [MouseModeNone], [MouseModeCellMotion], or [MouseModeAllMotion].
-    177→	MouseMode MouseMode
+     172→	// DisableBracketedPasteMode disables bracketed paste mode for this view.
+     173→	DisableBracketedPasteMode bool
+     175→	// MouseMode sets the mouse mode for this view. It can be one of
+     176→	// [MouseModeNone], [MouseModeCellMotion], or [MouseModeAllMotion].
+     177→	MouseMode MouseMode
     …
-    190→}
+     190→}
     …
-    241→type KeyboardEnhancements struct {
+     241→type KeyboardEnhancements struct {
     …
 tea_test.go
 termcap.go
-    1→package tea
+       1→package tea
     …
-    5→type requestCapabilityMsg string
+       5→type requestCapabilityMsg string
     …
-    30→func RequestCapability(s string) Cmd {
-    31→	return func() Msg {
-    32→		return requestCapabilityMsg(s)
-    33→	}
+      30→func RequestCapability(s string) Cmd {
+      31→	return func() Msg {
+      32→		return requestCapabilityMsg(s)
+      33→	}
     …
-    41→type CapabilityMsg struct {
-    42→	Content string
-    43→}
-    45→// String returns the capability content as a string.
-    46→func (c CapabilityMsg) String() string {
-    47→	return c.Content
+      41→type CapabilityMsg struct {
+      42→	Content string
+      43→}
+      45→// String returns the capability content as a string.
+      46→func (c CapabilityMsg) String() string {
+      47→	return c.Content
     …
 termios_bsd.go
 termios_other.go
@@ -296,32 +296,32 @@ tutorials/
     basics/
     commands/
     go.mod
-        1→module tutorial
-        2→
-        3→go 1.24.2
-        4→
-        5→toolchain go1.24.10
-        6→
-        7→require charm.land/bubbletea/v2 v2.0.0-00010101000000-000000000000
-        8→
-        9→require (
+           1→module tutorial
+           2→
+           3→go 1.24.2
+           4→
+           5→toolchain go1.24.10
+           6→
+           7→require charm.land/bubbletea/v2 v2.0.0-00010101000000-000000000000
+           8→
+           9→require (
         …
-        27→)
-        28→
-        29→replace charm.land/bubbletea/v2 => ../
+          27→)
+          28→
+          29→replace charm.land/bubbletea/v2 => ../
     go.sum
 xterm.go
-    1→package tea
-    3→// TerminalVersionMsg is a message that represents the terminal version.
-    4→type TerminalVersionMsg struct {
-    5→	Name string
-    6→}
-    8→// String returns the terminal name as a string.
-    9→func (t TerminalVersionMsg) String() string {
-    10→	return t.Name
+       1→package tea
+       3→// TerminalVersionMsg is a message that represents the terminal version.
+       4→type TerminalVersionMsg struct {
+       5→	Name string
+       6→}
+       8→// String returns the terminal name as a string.
+       9→func (t TerminalVersionMsg) String() string {
+      10→	return t.Name
     …
-    15→type terminalVersion struct{}
+      15→type terminalVersion struct{}
     …
-    20→func RequestTerminalVersion() Msg {
-    21→	return terminalVersion{}
+      20→func RequestTerminalVersion() Msg {
+      21→	return terminalVersion{}
     …

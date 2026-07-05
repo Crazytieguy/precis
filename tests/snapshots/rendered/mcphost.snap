@@ -8,62 +8,62 @@ expression: rendered
 AGENTS.md
 LICENSE
 README.md
-    1→# MCPHost 🤖
-    2→
-    3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
-    5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
+       1→# MCPHost 🤖
+       2→
+       3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
+       5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
     …
-    9→- [Overview](#overview-)
-    10→- [Features](#features-)
-    11→- [Requirements](#requirements-)
-    12→- [Environment Setup](#environment-setup-)
-    13→- [Installation](#installation-)
-    14→- [SDK Usage](#sdk-usage-)
+       9→- [Overview](#overview-)
+      10→- [Features](#features-)
+      11→- [Requirements](#requirements-)
+      12→- [Environment Setup](#environment-setup-)
+      13→- [Installation](#installation-)
+      14→- [SDK Usage](#sdk-usage-)
     …
-    35→- [Automation & Scripting](#automation--scripting-)
-    36→- [MCP Server Compatibility](#mcp-server-compatibility-)
-    37→- [Contributing](#contributing-)
-    38→- [License](#license-)
-    39→- [Acknowledgments](#acknowledgments-)
+      35→- [Automation & Scripting](#automation--scripting-)
+      36→- [MCP Server Compatibility](#mcp-server-compatibility-)
+      37→- [Contributing](#contributing-)
+      38→- [License](#license-)
+      39→- [Acknowledgments](#acknowledgments-)
     …
-    62→- Interactive conversations with multiple AI models
-    63→- **Non-interactive mode** for scripting and automation
-    64→- **Script mode** for executable YAML-based automation scripts
-    65→- Support for multiple concurrent MCP servers
-    66→- **Tool filtering** with `allowedTools` and `excludedTools` per server
-    67→- Dynamic tool discovery and integration
-    68→- Tool calling capabilities across all supported models
-    69→- Configurable MCP server locations and arguments
-    70→- Consistent command interface across model types
-    71→- Configurable message history window for context management
-    72→- **OAuth authentication** support for Anthropic (alternative to API keys)
-    73→- **Hooks system** for custom integrations and security policies
-    74→- **Environment variable substitution** in configs and scripts
-    75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
+      62→- Interactive conversations with multiple AI models
+      63→- **Non-interactive mode** for scripting and automation
+      64→- **Script mode** for executable YAML-based automation scripts
+      65→- Support for multiple concurrent MCP servers
+      66→- **Tool filtering** with `allowedTools` and `excludedTools` per server
+      67→- Dynamic tool discovery and integration
+      68→- Tool calling capabilities across all supported models
+      69→- Configurable MCP server locations and arguments
+      70→- Consistent command interface across model types
+      71→- Configurable message history window for context management
+      72→- **OAuth authentication** support for Anthropic (alternative to API keys)
+      73→- **Hooks system** for custom integrations and security policies
+      74→- **Environment variable substitution** in configs and scripts
+      75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
     …
-    124→## Installation 📦
-    125→
-    126→```bash
-    127→go install github.com/mark3labs/mcphost@latest
-    128→```
+     124→## Installation 📦
+     125→
+     126→```bash
+     127→go install github.com/mark3labs/mcphost@latest
+     128→```
     …
-    981→## License 📄
-    982→
-    983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+     981→## License 📄
+     982→
+     983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
     …
 cmd/
     auth.go
     hooks.go
         …
-        16→var hooksCmd = &cobra.Command{
+          16→var hooksCmd = &cobra.Command{
         …
-        25→var hooksListCmd = &cobra.Command{
+          25→var hooksListCmd = &cobra.Command{
         …
-        57→var hooksValidateCmd = &cobra.Command{
+          57→var hooksValidateCmd = &cobra.Command{
         …
-        79→var hooksInitCmd = &cobra.Command{
+          79→var hooksInitCmd = &cobra.Command{
         …
-        176→func init() {
+         176→func init() {
         …
     root.go
     script.go
@@ -75,55 +75,55 @@ contribute/
     build.sh
     conf/
     contribute.md
-        1→# Contribute README
-        2→Thanks for your contribution, you can follow these step to run this repo and debug it.
-        3→## Run demo
+           1→# Contribute README
+           2→Thanks for your contribution, you can follow these step to run this repo and debug it.
+           3→## Run demo
         …
-        30→## Contribute your code
-        31→just write your code and push it.
+          30→## Contribute your code
+          31→just write your code and push it.
 examples/
     hooks/
     scripts/
 go.mod
-    1→module github.com/mark3labs/mcphost
-    2→
-    3→go 1.24.0
-    4→
-    5→toolchain go1.24.5
-    6→
-    7→require (
-    8→	github.com/JohannesKaufmann/html-to-markdown v1.6.0
-    9→	github.com/PuerkitoBio/goquery v1.10.3
-    10→	github.com/bytedance/sonic v1.15.0
-    11→	github.com/charmbracelet/fang v0.4.0
-    12→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
-    13→	github.com/cloudwego/eino v0.7.13
-    14→	github.com/cloudwego/eino-ext/components/model/claude v0.1.12
-    15→	github.com/cloudwego/eino-ext/components/model/ollama v0.1.8
-    16→	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250903035842-96774a3ec845
-    17→	github.com/eino-contrib/jsonschema v1.0.3
-    18→	github.com/getkin/kin-openapi v0.131.0
-    19→	github.com/mark3labs/mcp-filesystem-server v0.11.1
-    20→	github.com/mark3labs/mcp-go v0.44.0-beta.2
-    21→	github.com/spf13/cobra v1.10.1
-    22→	github.com/spf13/viper v1.20.1
-    23→	github.com/tidwall/gjson v1.18.0
-    24→	golang.org/x/term v0.37.0
-    25→	google.golang.org/genai v1.22.0
-    26→	gopkg.in/yaml.v3 v3.0.1
-    27→)
-    28→
-    29→require (
+       1→module github.com/mark3labs/mcphost
+       2→
+       3→go 1.24.0
+       4→
+       5→toolchain go1.24.5
+       6→
+       7→require (
+       8→	github.com/JohannesKaufmann/html-to-markdown v1.6.0
+       9→	github.com/PuerkitoBio/goquery v1.10.3
+      10→	github.com/bytedance/sonic v1.15.0
+      11→	github.com/charmbracelet/fang v0.4.0
+      12→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
+      13→	github.com/cloudwego/eino v0.7.13
+      14→	github.com/cloudwego/eino-ext/components/model/claude v0.1.12
+      15→	github.com/cloudwego/eino-ext/components/model/ollama v0.1.8
+      16→	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250903035842-96774a3ec845
+      17→	github.com/eino-contrib/jsonschema v1.0.3
+      18→	github.com/getkin/kin-openapi v0.131.0
+      19→	github.com/mark3labs/mcp-filesystem-server v0.11.1
+      20→	github.com/mark3labs/mcp-go v0.44.0-beta.2
+      21→	github.com/spf13/cobra v1.10.1
+      22→	github.com/spf13/viper v1.20.1
+      23→	github.com/tidwall/gjson v1.18.0
+      24→	golang.org/x/term v0.37.0
+      25→	google.golang.org/genai v1.22.0
+      26→	gopkg.in/yaml.v3 v3.0.1
+      27→)
+      28→
+      29→require (
     …
-    141→)
-    142→
-    143→require (
+     141→)
+     142→
+     143→require (
     …
-    145→	github.com/charmbracelet/bubbles v0.21.0
-    146→	github.com/charmbracelet/bubbletea v1.3.10
-    147→	github.com/charmbracelet/glamour v0.10.0
+     145→	github.com/charmbracelet/bubbles v0.21.0
+     146→	github.com/charmbracelet/bubbletea v1.3.10
+     147→	github.com/charmbracelet/glamour v0.10.0
     …
-    165→)
+     165→)
 go.sum
 internal/
     agent/
@@ -131,14 +131,14 @@ internal/
         factory.go
         streaming.go
             …
-            19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
+              19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
             …
     auth/
         browser.go
             …
-            14→func OpenBrowser(url string) error {
+              14→func OpenBrowser(url string) error {
             …
-            34→func TryOpenBrowser(url string) {
+              34→func TryOpenBrowser(url string) {
             …
         credentials.go
         credentials_test.go
@@ -161,11 +161,11 @@ internal/
         integration_test.go
         merger.go
             …
-            13→func MergeConfigs(baseConfig *Config, scriptConfig *Config) *Config {
+              13→func MergeConfigs(baseConfig *Config, scriptConfig *Config) *Config {
             …
-            28→func LoadAndValidateConfig() (*Config, error) {
+              28→func LoadAndValidateConfig() (*Config, error) {
             …
-            48→func fixEnvironmentCase(config *Config) {
+              48→func fixEnvironmentCase(config *Config) {
             …
         substitution.go
         substitution_test.go
@@ -174,30 +174,30 @@ internal/
         config.go
         config_test.go
         events.go
-            1→package hooks
+               1→package hooks
             …
         executor.go
         executor_test.go
         schemas.go
             …
-            10→type CommonInput struct {
+              10→type CommonInput struct {
             …
-            23→type PreToolUseInput struct {
-            24→	CommonInput
-            25→	ToolName  string          `json:"tool_name"`
-            26→	ToolInput json.RawMessage `json:"tool_input"`
-            27→}
+              23→type PreToolUseInput struct {
+              24→	CommonInput
+              25→	ToolName  string          `json:"tool_name"`
+              26→	ToolInput json.RawMessage `json:"tool_input"`
+              27→}
             …
-            32→type PostToolUseInput struct {
+              32→type PostToolUseInput struct {
             …
-            42→type UserPromptSubmitInput struct {
-            43→	CommonInput
-            44→	Prompt string `json:"prompt"`
-            45→}
+              42→type UserPromptSubmitInput struct {
+              43→	CommonInput
+              44→	Prompt string `json:"prompt"`
+              45→}
             …
-            50→type StopInput struct {
+              50→type StopInput struct {
             …
-            62→type HookOutput struct {
+              62→type HookOutput struct {
             …
         testdata/
         validator.go
@@ -207,53 +207,53 @@ internal/
         gemini/
         generate_models.go
             …
-            18→type ModelInfo struct {
+              18→type ModelInfo struct {
             …
-            37→type Cost struct {
+              37→type Cost struct {
             …
-            48→// Limit represents the context and output limits for a model.
-            49→// Used during code generation to parse token limit data from models.dev.
-            50→type Limit struct {
-            51→	// Context is the maximum number of input tokens
-            52→	Context int `json:"context"`
-            53→	// Output is the maximum number of output tokens
-            54→	Output int `json:"output"`
-            55→}
+              48→// Limit represents the context and output limits for a model.
+              49→// Used during code generation to parse token limit data from models.dev.
+              50→type Limit struct {
+              51→	// Context is the maximum number of input tokens
+              52→	Context int `json:"context"`
+              53→	// Output is the maximum number of output tokens
+              54→	Output int `json:"output"`
+              55→}
             …
-            60→type ProviderInfo struct {
+              60→type ProviderInfo struct {
             …
-            73→const codeTemplate = `// Code generated by go generate; DO NOT EDIT.
+              73→const codeTemplate = `// Code generated by go generate; DO NOT EDIT.
             …
-            156→func main() {
+             156→func main() {
             …
         models_data.go
             …
-            4→package models
+               4→package models
             …
-            7→type ModelInfo struct {
+               7→type ModelInfo struct {
             …
-            17→// Cost represents the pricing information for a model
-            18→type Cost struct {
-            19→	Input      float64
-            20→	Output     float64
-            21→	CacheRead  *float64
-            22→	CacheWrite *float64
-            23→}
-            25→// Limit represents the context and output limits for a model
-            26→type Limit struct {
-            27→	Context int
-            28→	Output  int
-            29→}
-            31→// ProviderInfo represents information about a model provider
-            32→type ProviderInfo struct {
-            33→	ID     string
-            34→	Env    []string
-            35→	NPM    string
-            36→	Name   string
-            37→	Models map[string]ModelInfo
-            38→}
-            40→// GetModelsData returns the static models data from models.dev
-            41→func GetModelsData() map[string]ProviderInfo {
+              17→// Cost represents the pricing information for a model
+              18→type Cost struct {
+              19→	Input      float64
+              20→	Output     float64
+              21→	CacheRead  *float64
+              22→	CacheWrite *float64
+              23→}
+              25→// Limit represents the context and output limits for a model
+              26→type Limit struct {
+              27→	Context int
+              28→	Output  int
+              29→}
+              31→// ProviderInfo represents information about a model provider
+              32→type ProviderInfo struct {
+              33→	ID     string
+              34→	Env    []string
+              35→	NPM    string
+              36→	Name   string
+              37→	Models map[string]ModelInfo
+              38→}
+              40→// GetModelsData returns the static models data from models.dev
+              41→func GetModelsData() map[string]ProviderInfo {
             …
         openai/
         providers.go
@@ -263,89 +263,89 @@ internal/
     tokens/
         anthropic.go
             …
-            16→package tokens
+              16→package tokens
         counter.go
-            1→package tokens
+               1→package tokens
             …
-            21→func EstimateTokens(text string) int {
+              21→func EstimateTokens(text string) int {
             …
         init.go
-            1→package tokens
+               1→package tokens
             …
-            21→func InitializeTokenCounters() {
-            22→	// Future provider-specific counters can be registered here
+              21→func InitializeTokenCounters() {
+              22→	// Future provider-specific counters can be registered here
             …
-            50→func InitializeTokenCountersWithKeys() {
-            51→	// Future provider-specific counters can be registered here
+              50→func InitializeTokenCountersWithKeys() {
+              51→	// Future provider-specific counters can be registered here
             …
     tools/
     ui/
 main.go
-    1→package main
-    2→
-    3→import (
-    4→	"context"
-    5→	"fmt"
-    6→	"os"
-    7→
-    8→	"github.com/charmbracelet/fang"
-    9→	"github.com/mark3labs/mcphost/cmd"
-    10→)
-    12→var version = "dev"
-    13→
-    14→func main() {
+       1→package main
+       2→
+       3→import (
+       4→	"context"
+       5→	"fmt"
+       6→	"os"
+       7→
+       8→	"github.com/charmbracelet/fang"
+       9→	"github.com/mark3labs/mcphost/cmd"
+      10→)
+      12→var version = "dev"
+      13→
+      14→func main() {
     …
 sdk/
     README.md
-        1→# MCPHost SDK
-        2→
-        3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
-        5→## Installation
-        6→
-        7→```bash
-        8→go get github.com/mark3labs/mcphost
-        9→```
-        11→## Basic Usage
+           1→# MCPHost SDK
+           2→
+           3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
+           5→## Installation
+           6→
+           7→```bash
+           8→go get github.com/mark3labs/mcphost
+           9→```
+          11→## Basic Usage
         …
-        44→## Configuration
+          44→## Configuration
         …
-        52→### Options
+          52→### Options
         …
-        67→## Advanced Usage
-        68→
-        69→### With Tool Callbacks
+          67→## Advanced Usage
+          68→
+          69→### With Tool Callbacks
         …
-        93→### Session Management
+          93→### Session Management
         …
-        115→## API Reference
-        116→
-        117→### Types
+         115→## API Reference
+         116→
+         117→### Types
         …
-        124→### Methods
+         124→### Methods
         …
-        136→## Environment Variables
+         136→## Environment Variables
         …
-        146→## License
-        147→
-        148→Same as MCPHost CLI
+         146→## License
+         147→
+         148→Same as MCPHost CLI
     examples/
     mcphost.go
     mcphost_test.go
     types.go
         …
-        8→// Message is an alias for session.Message providing SDK users with access
-        9→// to message structures for conversation history and tool interactions.
-        10→type Message = session.Message
-        12→// ToolCall is an alias for session.ToolCall representing a tool invocation
-        13→// with its name, arguments, and result within a conversation.
-        14→type ToolCall = session.ToolCall
-        16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
-        17→// format used by the agent for LLM interactions.
-        18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
-        19→	return msg.ConvertToSchemaMessage()
+           8→// Message is an alias for session.Message providing SDK users with access
+           9→// to message structures for conversation history and tool interactions.
+          10→type Message = session.Message
+          12→// ToolCall is an alias for session.ToolCall representing a tool invocation
+          13→// with its name, arguments, and result within a conversation.
+          14→type ToolCall = session.ToolCall
+          16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
+          17→// format used by the agent for LLM interactions.
+          18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
+          19→	return msg.ConvertToSchemaMessage()
         …
-        22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
-        23→// message format for use in the SDK API.
-        24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
-        25→	return session.ConvertFromSchemaMessage(msg)
+          22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
+          23→// message format for use in the SDK API.
+          24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
+          25→	return session.ConvertFromSchemaMessage(msg)
         …
