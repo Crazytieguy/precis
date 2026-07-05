@@ -266,11 +266,11 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
     if !is_source_inventory_dir(parent, ctx) {
         return false;
     }
-    child_dir_count(parent) >= CATALOG_PARENT_MIN_CHILD_DIRS
+    ctx.fs_state().child_dir_count(parent) >= CATALOG_PARENT_MIN_CHILD_DIRS
 }
 
 /// Count of immediate subdirectories of `dir`.
-fn child_dir_count(dir: &Path) -> usize {
+fn child_dir_count_uncached(dir: &Path) -> usize {
     list_dir(dir)
         .values()
         .filter(|kind| matches!(kind, EntryKind::Directory))
@@ -421,6 +421,7 @@ fn module_sibling_child_dir_count(
 #[derive(Default)]
 pub(in crate::walker) struct FsState {
     source_inventory_counts: RefCell<HashMap<PathBuf, usize>>,
+    child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
 }
 
 impl FsState {
@@ -430,6 +431,20 @@ impl FsState {
         }
         let count = source_inventory_count_uncached(self, dir, target);
         self.source_inventory_counts
+            .borrow_mut()
+            .insert(dir.to_path_buf(), count);
+        count
+    }
+
+    /// Count of immediate subdirectories of `dir`, cached per parent.
+    /// `parent_is_high_fanout_catalog` queries the same parent once per
+    /// child, so without this each child re-`read_dir`s the parent (O(N²)).
+    pub(in crate::walker) fn child_dir_count(&self, dir: &Path) -> usize {
+        if let Some(count) = self.child_dir_counts.borrow().get(dir).copied() {
+            return count;
+        }
+        let count = child_dir_count_uncached(dir);
+        self.child_dir_counts
             .borrow_mut()
             .insert(dir.to_path_buf(), count);
         count

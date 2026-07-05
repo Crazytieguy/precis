@@ -551,24 +551,41 @@ fn object_has_subpath_key(object: Node, source: &str) -> bool {
     })
 }
 
-/// Push every string leaf of a JSON value, descending objects up to
-/// `depth` levels (conditional-export nesting is shallow).
+/// Push every string leaf of a JSON value, descending objects and
+/// arrays up to `depth` levels (conditional-export nesting is shallow).
+/// Arrays are descended too so the fallback-array export form
+/// (`"exports": {".": ["./a.js", "./b.js"]}` or a top-level array)
+/// yields its targets.
 fn collect_string_leaves(value: Node, source: &str, depth: usize, out: &mut Vec<String>) {
     if value.kind() == "string" {
         out.push(unquote_string(value, source));
         return;
     }
-    if depth == 0 || value.kind() != "object" {
+    if depth == 0 {
         return;
     }
-    let mut cur = value.walk();
-    for child in value.children(&mut cur) {
-        if child.kind() != "pair" {
-            continue;
+    match value.kind() {
+        "object" => {
+            let mut cur = value.walk();
+            for child in value.children(&mut cur) {
+                if child.kind() != "pair" {
+                    continue;
+                }
+                if let Some(inner) = child.child_by_field_name("value") {
+                    collect_string_leaves(inner, source, depth - 1, out);
+                }
+            }
         }
-        if let Some(inner) = child.child_by_field_name("value") {
-            collect_string_leaves(inner, source, depth - 1, out);
+        "array" => {
+            let mut cur = value.walk();
+            for child in value.children(&mut cur) {
+                // Skip array punctuation; recurse on element values.
+                if child.is_named() {
+                    collect_string_leaves(child, source, depth - 1, out);
+                }
+            }
         }
+        _ => {}
     }
 }
 

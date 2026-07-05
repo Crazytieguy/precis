@@ -1734,8 +1734,16 @@ fn is_pinned_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
         .nearest_subpackage_dir(path, ctx.root())
         .map(|dir| ctx.depth_from_root(&dir))
         .unwrap_or(0);
-    let relative_depth = ctx.depth_from_root(path).saturating_sub(package_dir_depth);
-    let hit = relative_depth <= 2 || is_api_spine_entrypoint(path, ctx);
+    // When `path` isn't under the root, `depth_from_root` fails open to
+    // 0, which reads as relative_depth 0 and would re-pin every deep
+    // entrypoint. Fail closed: with depth unknown, only the export-spine
+    // check can grant the pin.
+    let hit = if path.starts_with(ctx.root()) {
+        let relative_depth = ctx.depth_from_root(path).saturating_sub(package_dir_depth);
+        relative_depth <= 2 || is_api_spine_entrypoint(path, ctx)
+    } else {
+        is_api_spine_entrypoint(path, ctx)
+    };
     state
         .pinned_entrypoint_lookup
         .borrow_mut()
@@ -1905,7 +1913,8 @@ fn is_api_spine_entrypoint(file: &Path, ctx: &WalkCtx) -> bool {
 
 /// Generated-output prefixes a manifest entry path may carry; stripped
 /// when mapping the entry back to its source twin.
-const GENERATED_ENTRY_DIR_PREFIXES: &[&str] = &["dist", "build", "out", "output", "lib", "esm"];
+const GENERATED_ENTRY_DIR_PREFIXES: &[&str] =
+    &["dist", "build", "out", "output", "lib", "esm", "cjs"];
 /// Source-tree prefixes tried when re-rooting a generated entry path.
 const SOURCE_ENTRY_DIR_PREFIXES: &[&str] = &["", "src", "source"];
 const ENTRY_SOURCE_EXTS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
@@ -1937,10 +1946,15 @@ fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
         }
         let stem = Path::new(rel).with_extension("");
         let mut variants = vec![stem.clone()];
-        for prefix in GENERATED_ENTRY_DIR_PREFIXES {
-            if let Ok(stripped) = stem.strip_prefix(prefix) {
-                variants.push(stripped.to_path_buf());
-            }
+        // Strip nested generated dirs level by level (`dist/esm/index`,
+        // `dist/cjs/index`) until no leading generated prefix remains.
+        let mut current = stem.clone();
+        while let Some(stripped) = GENERATED_ENTRY_DIR_PREFIXES
+            .iter()
+            .find_map(|prefix| current.strip_prefix(prefix).ok())
+        {
+            current = stripped.to_path_buf();
+            variants.push(current.clone());
         }
         for variant in &variants {
             for source_prefix in SOURCE_ENTRY_DIR_PREFIXES {
@@ -1950,7 +1964,10 @@ fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
                     pkg_dir.join(source_prefix).join(variant)
                 };
                 for ext in ENTRY_SOURCE_EXTS {
-                    if base.with_extension(ext).canonicalize().ok().as_ref()
+                    // `append_extension`, not `with_extension`: a dotted
+                    // stem like `foo.config` would have its `.config`
+                    // treated as an extension and replaced (→ `foo.ts`).
+                    if append_extension(&base, ext).canonicalize().ok().as_ref()
                         == Some(&canonical_file)
                     {
                         return true;

@@ -585,6 +585,16 @@ impl<W: Walker> Scheduler<W> {
                         self.approx_cost_cache.remove(other);
                     }
                 }
+                // Prune the now-scheduled id from this path's list so
+                // future invalidations stop iterating dead ids. Done
+                // after the cache-drop above so the current schedule's
+                // own invalidation still sees every sibling on the path.
+                if let Some(ids) = self.batches_by_path.get_mut(&span.path) {
+                    ids.retain(|&other| other != id);
+                    if ids.is_empty() {
+                        self.batches_by_path.remove(&span.path);
+                    }
+                }
             }
         }
 
