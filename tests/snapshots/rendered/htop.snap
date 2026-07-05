@@ -108,17 +108,23 @@ Object.h
     …
     18→struct Object_;
     19→typedef struct Object_ Object;
+    20→
     21→typedef void(*Object_Display)(const Object*, RichString*);
     22→typedef int(*Object_Compare)(const void*, const void*);
     23→typedef void(*Object_Delete)(Object*);
+    24→
     25→#define Object_getClass(obj_)         ((const Object*)(obj_))->klass
     26→#define Object_setClass(obj_, class_) (((Object*)(obj_))->klass = (const ObjectClass*) (class_))
+    27→
     28→#define Object_delete(obj_)           (assert(Object_getClass(obj_)->delete), Object_getClass(obj_)->delete((Object*)(obj_)))
     29→#define Object_displayFn(obj_)        Object_getClass(obj_)->display
     30→#define Object_display(obj_, str_)    (assert(Object_getClass(obj_)->display), Object_getClass(obj_)->display((const Object*)(obj_), str_))
     31→#define Object_compare(obj_, other_)  (assert(Object_getClass(obj_)->compare), Object_getClass(obj_)->compare((const void*)(obj_), other_))
+    32→
     33→#define Class(class_)                 ((const ObjectClass*)(&(class_ ## _class)))
+    34→
     35→#define AllocThis(class_) (class_*)   xMalloc(sizeof(class_)); Object_setClass(this, Class(class_))
+    36→
     37→typedef struct ObjectClass_ {
     38→   const void* const extends;
     39→   const Object_Display display;
@@ -133,6 +139,7 @@ Object.h
     50→   void* v;
     51→} Arg;
     53→extern const ObjectClass Object_class;
+    54→
     55→bool Object_isA(const Object* o, const ObjectClass* klass);
     …
 OpenFilesScreen.c
@@ -149,9 +156,11 @@ Process.h
     22→#define PROCESS_FLAG_IO              0x00000001
     23→#define PROCESS_FLAG_CWD             0x00000002
     24→#define PROCESS_FLAG_SCHEDPOL        0x00000004
+    25→
     26→#define DEFAULT_HIGHLIGHT_SECS 5
     …
     29→#define PROCESS_NICE_UNKNOWN (-INT_MAX)
+    30→
     31→typedef enum Tristate_ {
     32→   TRI_INITIAL = 0,
     33→   TRI_OFF = -1,
@@ -255,14 +264,19 @@ Process.h
     237→extern const ProcessFieldData Process_fields[LAST_PROCESSFIELD];
     238→#define Process_pidDigits Row_pidDigits
     239→#define Process_uidDigits Row_uidDigits
+    240→
     241→typedef Process* (*Process_New)(const struct Machine_*);
     242→typedef int (*Process_CompareByKey)(const Process*, const Process*, ProcessField);
+    243→
     244→typedef struct ProcessClass_ {
     245→   const RowClass super;
     246→   const Process_CompareByKey compareByKey;
     247→} ProcessClass;
     249→#define As_Process(this_)   ((const ProcessClass*)((this_)->super.super.klass))
+    250→
     251→#define Process_compareByKey(p1_, p2_, key_)   (As_Process(p1_)->compareByKey ? (As_Process(p1_)->compareByKey(p1_, p2_, key_)) : Process_compareByKey_Base(p1_, p2_, key_))
+    252→
+    253→
     254→static inline void Process_setPid(Process* this, pid_t pid) {
     255→   this->super.id = pid;
     …
@@ -298,10 +312,15 @@ Process.h
     296→#define CMDLINE_HIGHLIGHT_FLAG_COMM       0x00000004
     297→#define CMDLINE_HIGHLIGHT_FLAG_DELETED    0x00000008
     298→#define CMDLINE_HIGHLIGHT_FLAG_PREFIXDIR  0x00000010
+    299→
     300→void Process_fillStarttimeBuffer(Process* this);
+    301→
     302→void Process_done(Process* this);
+    303→
     304→extern const ProcessClass Process_class;
+    305→
     306→void Process_init(Process* this, const struct Machine_* host);
+    307→
     308→const char* Process_rowGetSortKey(Row* super);
     …
 ProcessLocksScreen.c
@@ -312,11 +331,6 @@ ProvideCurses.h
 ProvideTerm.h
 README
 README.md
-    1→# [![htop logo](htop-logo.png)](https://htop.dev)
-    …
-    13→## Introduction
-    15→`htop` is a cross-platform interactive process viewer.
-    …
 RichString.c
 RichString.h
 Row.c

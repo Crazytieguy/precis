@@ -16,7 +16,9 @@ MANIFEST.in
 README.md
     …
     5→# Tomli
+    6→
     7→> A lil' TOML parser
+    8→
     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
     …
     13→- [Intro](#intro)
@@ -39,21 +41,16 @@ README.md
     32→## Intro<a name="intro"></a>
     …
     50→## Installation<a name="installation"></a>
+    51→
     52→```bash
     53→pip install tomli
     54→```
     56→## Usage<a name="usage"></a>
+    57→
     58→### Parse a TOML string<a name="parse-a-toml-string"></a>
     …
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
-    81→```python
-    82→import tomli
-    84→with open("path_to_file/conf.toml", "rb") as f:
-    85→    toml_dict = tomli.load(f)
-    86→```
-    88→The file must be opened in binary mode (with the `"rb"` flag).
-    89→Binary mode will enforce decoding the file as UTF-8 with universal newlines disabled,
-    90→both of which are required to correctly parse TOML.
+    …
     92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
     …
     106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
@@ -63,6 +60,7 @@ README.md
     123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
     …
     152→## FAQ<a name="faq"></a>
+    153→
     154→### Why this parser?<a name="why-this-parser"></a>
     156→- it's lil'
     157→- pure Python with zero dependencies
@@ -82,7 +80,9 @@ README.md
     183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
     …
     201→## Performance<a name="performance"></a>
+    202→
     203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
+    204→
     205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
     207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
     …
@@ -106,6 +106,7 @@ pyproject.toml
 scripts/
 setup.py
     1→import os
+    2→
     3→from setuptools import setup  # type: ignore[import-untyped]
     …
 src/
@@ -114,8 +115,10 @@ src/
             1→# SPDX-License-Identifier: MIT
             2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
             3→# Licensed to PSF under a Contributor Agreement.
+            4→
             5→__all__ = ("loads", "load", "TOMLDecodeError")
             6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+            7→
             8→from ._parser import TOMLDecodeError, load, loads
         _parser.py
             …
@@ -124,6 +127,7 @@ src/
             73→    period of TOMLDecodeError's free-form arguments."""
             76→class TOMLDecodeError(ValueError):
             77→    """An error raised if a document is not valid TOML.
+            78→
             79→    Adds the following attributes to ValueError:
             80→    msg: The unformatted error message
             81→    doc: The TOML document being parsed
@@ -227,14 +231,18 @@ tests/
     test_misc.py
 tomllib.md
     1→# `tomllib` – Tomli in the standard library
+    2→
     3→Tomli was added to the Python standard library in Python 3.11.
+    4→
     5→Relevant links:
+    6→
     7→- Python Issue Tracker: https://bugs.python.org/issue40059
     8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
     9→- Discussion on PyPA "blessing" a TOML parser and/or including one in the standard library: https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068
     10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
     11→- CPython pull request: https://github.com/python/cpython/pull/31498
     13→## Converting Tomli to tomllib
+    14→
     15→### Sync status
     …
     20→### Steps to convert

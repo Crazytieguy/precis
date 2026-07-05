@@ -170,6 +170,7 @@ tests/
 xlstm/
     __init__.py
         1→__version__ = "2.0.5"
+        2→
         3→from .blocks.mlstm.block import mLSTMBlock, mLSTMBlockConfig
         4→from .blocks.mlstm.layer import mLSTMLayer, mLSTMLayerConfig
         5→from .blocks.slstm.block import sLSTMBlock, sLSTMBlockConfig
@@ -199,8 +200,10 @@ xlstm/
                     __init__.py
                         1→# Copyright (c) NXAI GmbH and its affiliates 2023
                         2→# Korbininan Pöppel
+                        3→
                         4→from typing import Callable
                         5→import torch
+                        6→
                         7→from .slstm import slstm_forward_pointwise as slstm_forward_pointwise_slstm
                         8→from .lstm import slstm_forward_pointwise as slstm_forward_pointwise_lstm
                         11→slstm_pointwise_function_registry: dict[str, Callable] = {
@@ -251,6 +254,7 @@ xlstm/
         13→    proj_factor: float = None  # will be overridden by subclasses
         14→    round_proj_up_dim_up: bool = True
         15→    round_proj_up_to_multiple_of: int = 64
+        16→
         17→    # internal
         18→    _proj_up_dim: int = None  # will be computed from embedding_dim and proj_factor
         …
@@ -294,6 +298,9 @@ xlstm/
         generate.py
         model.py
         utils.py
+            1→import torch
+            2→import re
+            …
     xlstm_lm_model.py
         …
         14→@dataclass
@@ -311,6 +318,8 @@ xlstm/
         49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
         …
         56→    def step(
+        57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
+        58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
         …
         65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
         …

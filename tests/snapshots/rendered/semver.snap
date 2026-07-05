@@ -17,13 +17,17 @@ README.md
     1→semver(1) -- The semantic versioner for npm
     2→===========================================
     4→## Install
+    5→
     6→```bash
     7→npm install semver
     8→````
     10→## Usage
+    11→
     12→As a node module:
+    13→
     14→```js
     15→const semver = require('semver')
+    16→
     17→semver.valid('1.2.3') // '1.2.3'
     18→semver.valid('a.b.c') // null
     19→semver.clean('  =v1.2.3   ') // '1.2.3'
@@ -36,8 +40,10 @@ README.md
     26→```
     …
     139→## Versions
+    140→
     141→A "version" is described by the `v2.0.0` specification found at
     142→<https://semver.org/>.
+    143→
     144→A leading `"="` or `"v"` character is stripped off and ignored.
     145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
     146→specification but should not be used anymore.
@@ -74,6 +80,7 @@ README.md
     478→### Sorting
     …
     485→### Comparators
+    486→
     487→* `intersects(comparator)`: Return true if the comparators intersect
     489→### Ranges
     491→* `validRange(range)`: Return the valid range or null if it's not valid.
@@ -107,6 +114,7 @@ README.md
     564→ranges.
     …
     576→## Constants
+    577→
     578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
     580→### `RELEASE_TYPES`
     …
@@ -283,20 +291,6 @@ test/
         range.js
         semver.js
     fixtures/
-        comparator-intersection.js
-        comparisons.js
-        equality.js
-        increments.js
-        invalid-versions.js
-        range-exclude.js
-        range-include.js
-        range-intersection.js
-        range-parse.js
-        valid-versions.js
-        version-gt-range.js
-        version-lt-range.js
-        version-not-gt-range.js
-        version-not-lt-range.js
     functions/
         clean.js
         cmp.js

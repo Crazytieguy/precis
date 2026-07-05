@@ -10,6 +10,7 @@ README.md
     12→<b>microbootstrap</b> assists you in creating applications with all the necessary instruments already set up.
     …
     55→## Table of Contents
+    56→
     57→- [Installation](#installation)
     58→- [Quickstart](#quickstart)
     59→- [Settings](#settings)
@@ -58,7 +59,9 @@ README.md
     563→### Health checks
     …
     586→## Configuration
+    587→
     588→While settings provide a convenient mechanism, it's not always feasible to store everything within them.
+    589→
     590→There may be cases where you need to configure a tool directly. Here's how it can be done.
     592→### Instruments configuration
     …
@@ -128,6 +131,8 @@ microbootstrap/
             18→    __dataclass_fields__: typing.ClassVar[dict[str, typing.Any]]
             21→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
             22→DataclassT = typing.TypeVar("DataclassT", bound=DataclassInstance)
+            23→
+            24→
             25→class ApplicationBootstrapper(abc.ABC, typing.Generic[SettingsT, ApplicationT, DataclassT]):
             26→    application_type: type[ApplicationT]
             27→    application_config: DataclassT
@@ -151,23 +156,17 @@ microbootstrap/
             56→    ) -> typing_extensions.Self:
             …
             61→    @classmethod
-            62→    def use_instrument(
-            63→        cls,
-            64→    ) -> typing.Callable[
-            65→        [type[Instrument[InstrumentConfigT]]],
-            66→        type[Instrument[InstrumentConfigT]],
-            67→    ]:
             …
             72→    def bootstrap(self) -> ApplicationT:
             …
             99→    def bootstrap_before(self) -> dict[str, typing.Any]:
-            100→        """Add some framework-related parameters to final bootstrap result before application creation."""
+            …
             101→        return {}
             103→    def bootstrap_before_instruments_after_app_created(self, application: ApplicationT) -> ApplicationT:
             …
             105→        return application
             107→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
-            108→        """Add some framework-related parameters to final bootstrap result after application creation."""
+            …
             109→        return application
             111→    def teardown(self) -> None:
             …
@@ -233,6 +232,8 @@ microbootstrap/
             …
             15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
             16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
+            17→
+            18→
             19→class BaseInstrumentConfig(pydantic.BaseModel):
             20→    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
             23→@dataclasses.dataclass
@@ -248,7 +249,7 @@ microbootstrap/
             35→    def write_status(self, console_writer: ConsoleWriter) -> None:
             …
             42→    @abc.abstractmethod
-            …
+            43→    def is_ready(self) -> bool: ...
             45→    @classmethod
             46→    @abc.abstractmethod
             47→    def get_config_type(cls) -> type[InstrumentConfigT]:
@@ -282,6 +283,9 @@ microbootstrap/
         28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
         …
         32→    def configure_instruments(
+        33→        self,
+        34→        *instrument_configs: InstrumentConfigT,
+        35→    ) -> typing_extensions.Self:
         …
         40→    @classmethod
         …

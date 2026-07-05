@@ -14,12 +14,17 @@ README.rst
     …
     13→beets
     14→=====
+    15→
     16→Beets is the media library management system for obsessive music geeks.
+    17→
     18→The purpose of beets is to get your music collection right once and for all. It
     19→catalogs your collection, automatically improving its metadata as it goes. It
     20→then provides a suite of tools for manipulating and accessing your music.
+    21→
     22→Here's an example of beets' brainy tag corrector doing its thing:
+    23→
     24→::
+    25→
     26→    $ beet import ~/music/ladytron
     27→    Tagging:
     28→        Ladytron - Witching Hour
@@ -28,8 +33,10 @@ README.rst
     31→     * Beauty                 -> Beauty*2
     32→     * White Light Generation -> Whitelightgenerator
     33→     * All the Way            -> All the Way...
+    34→
     35→Because beets is designed as a library, it can do almost anything you can
     36→imagine for your music collection. Via plugins_, beets becomes a panacea:
+    37→
     38→- Fetch or calculate all the metadata you could possibly need: `album art`_,
     39→  lyrics_, genres_, tempos_, ReplayGain_ levels, or `acoustic fingerprints`_.
     40→- Get metadata from MusicBrainz_, Discogs_, and Beatport_. Or guess metadata
@@ -44,6 +51,7 @@ README.rst
     49→- Analyze music files' metadata from the command line.
     50→- Listen to your library with a music player that speaks the MPD_ protocol and
     51→  works with a staggering variety of interfaces.
+    52→
     53→If beets doesn't do what you want yet, `writing your own plugin`_ is shockingly
     54→simple if you know a little Python.
     …
@@ -64,9 +72,14 @@ beets/
         11→#
         12→# The above copyright notice and this permission notice shall be
         13→# included in all copies or substantial portions of the Software.
+        14→
+        15→
         16→from sys import stderr
+        17→
         18→import confuse
+        19→
         20→from .util.deprecation import deprecate_imports
+        21→
         22→__version__ = "2.11.0"
         23→__author__ = "Adrian Sampson <adrian@radbox.org>"
         26→def __getattr__(name: str):
@@ -82,38 +95,9 @@ beets/
     __main__.py
     autotag/
         __init__.py
-            1→# This file is part of beets.
-            2→# Copyright 2016, Adrian Sampson.
-            3→#
-            4→# Permission is hereby granted, free of charge, to any person obtaining
-            5→# a copy of this software and associated documentation files (the
-            6→# "Software"), to deal in the Software without restriction, including
-            7→# without limitation the rights to use, copy, modify, merge, publish,
-            8→# distribute, sublicense, and/or sell copies of the Software, and to
-            9→# permit persons to whom the Software is furnished to do so, subject to
-            10→# the following conditions:
-            11→#
-            12→# The above copyright notice and this permission notice shall be
-            13→# included in all copies or substantial portions of the Software.
-            15→"""Facilities for automatically determining files' correct metadata."""
-            17→from __future__ import annotations
-            19→from importlib import import_module
             …
-            22→from beets.util.deprecation import deprecate_for_maintainers, deprecate_imports
-            24→from .hooks import AlbumInfo, AlbumMatch, TrackInfo, TrackMatch
-            25→from .match import Proposal, Recommendation, tag_album, tag_item
             28→def __getattr__(name: str):
             …
-            40→__all__ = [
-            41→    "AlbumInfo",
-            42→    "AlbumMatch",
-            43→    "Proposal",
-            44→    "Recommendation",
-            45→    "TrackInfo",
-            46→    "TrackMatch",
-            47→    "tag_album",
-            48→    "tag_item",
-            49→]
         distance.py
         hooks.py
         match.py
@@ -135,6 +119,7 @@ beets/
     library/
         __init__.py
             1→from beets.util.deprecation import deprecate_imports
+            2→
             3→from .exceptions import FileOperationError, ReadError, WriteError
             4→from .library import Library
             5→from .models import Album, Item, LibModel
@@ -197,12 +182,17 @@ beets/
             import_/
                 __init__.py
                     1→"""The `import` command: import new music into the library."""
+                    2→
                     3→import os
+                    4→
                     5→from beets import config, logging, plugins, ui
                     6→from beets.util import displayable_path, normpath, syspath
+                    7→
                     8→from .session import TerminalImportSession
                     …
                     11→log = logging.getLogger("beets")
+                    12→
+                    13→
                     14→def paths_from_logfile(path):
                     15→    """Parse the logfile and yield skipped paths to pass to the `import`
                     16→    command.

@@ -74,6 +74,7 @@ src/
             53→pub struct Tree {
             54→    #[serde(default = "Config::disable")]
             55→    pub disable_selected_highlight: bool,
+            56→
             57→    #[serde(default = "String::new")]
             58→    pub selected_symbol: String,
             59→}
@@ -81,8 +82,10 @@ src/
             62→pub struct Editor {
             63→    #[serde(default = "Editor::default_program")]
             64→    pub program: String,
+            65→
             66→    #[serde(default = "Editor::default_args")]
             67→    pub args: Vec<String>,
+            68→
             69→    #[serde(default = "Editor::default_dir")]
             70→    pub dir: String,
             71→}
@@ -90,6 +93,7 @@ src/
             74→pub struct Layout {
             75→    #[serde(default = "Layout::default_direction")]
             76→    pub direction: LayoutDirection,
+            77→
             78→    #[serde(default = "Layout::default_tree_size")]
             79→    pub tree_size: u16,
             80→}
@@ -104,6 +108,7 @@ src/
             91→pub struct Header {
             92→    #[serde(default = "Config::disable")]
             93→    pub disable: bool,
+            94→
             95→    #[serde(default = "Header::default_format")]
             96→    pub format: String,
             97→}
@@ -116,8 +121,10 @@ src/
             106→pub struct Filter {
             107→    #[serde(default = "Config::disable")]
             108→    pub disable: bool,
+            109→
             110→    #[serde(default = "Filter::default_ignore_case")]
             111→    pub ignore_case: bool,
+            112→
             113→    #[serde(default = "Filter::default_exclude_mode")]
             114→    pub exclude_mode: bool,
             115→}
@@ -150,15 +157,6 @@ src/
         14→}
         …
     live_reload.rs
-        …
-        16→pub struct FileWatcher {
-        17→    path: PathBuf,
-        19→    cfg: Rc<Config>,
-        20→    content_type: ContentType,
-        22→    max_data_size: usize,
-        24→    data: Arc<Mutex<Data>>,
-        25→}
-        …
     main.rs
         …
         27→fn run() -> Result<()> {
@@ -193,9 +191,11 @@ src/
         82→        }
         83→        let parser = content_type.new_parser();
         84→        let target_parser = target_type.new_parser();
+        85→
         86→        let value = parser.parse_root(Some(target_parser.as_ref()), &data)?;
         87→        let tokens = target_parser.syntax_highlight("", &value);
         88→        let text = SyntaxToken::pure_text(&tokens);
+        89→
         90→        print!("{text}");
         91→        return Ok(());
         92→    }
@@ -235,12 +235,15 @@ src/
             20→    Yaml,
             21→    Toml,
             22→    Xml,
+            23→
             24→    /// See: <https://github.com/hashicorp/hcl>
             25→    Hcl,
+            26→
             27→    /// Useful for some logs file: <https://jsonlines.org/>
             28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
             29→    // basically jsonl but every json object is prefixed with 0x1e
             30→    Jsonl,
+            31→
             32→    #[clap(skip)]
             33→    Any,
             34→}
@@ -257,17 +260,14 @@ src/
     tree.rs
         …
         14→pub struct Tree {
-        15→    pub parser: Rc<Box<dyn Parser>>,
-        17→    pub items: Vec<TreeItem<'static, String>>,
-        18→    pub values: HashMap<String, ItemValue>,
-        20→    pub identifies: Vec<String>,
-        22→    cfg: Rc<Config>,
-        23→}
+        …
         25→pub struct ItemValue {
         26→    pub name: String,
         27→    pub value: Value,
+        28→
         29→    pub field_type: FieldType,
         30→    pub description: Cow<'static, str>,
+        31→
         32→    pub tokens: Vec<SyntaxToken>,
         33→}
         35→#[derive(Debug, Clone, Copy)]
@@ -288,8 +288,11 @@ src/
     ui/
         app.rs
             …
+            47→#[derive(Debug, Clone, Copy)]
             48→pub enum ScrollDirection {
-            …
+            49→    Up,
+            50→    Down,
+            51→}
             53→pub struct App {
             …
             86→pub enum ShowResult {
@@ -330,10 +333,6 @@ src/
             15→    pub text: Text<'static>,
             16→}
             18→pub struct Popup {
-            19→    data: Option<PopupData>,
-            21→    cfg: Rc<Config>,
-            23→    scroll: usize,
-            24→}
             …
         tree_overview.rs
 typos.toml

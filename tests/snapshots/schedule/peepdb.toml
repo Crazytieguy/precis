@@ -1,7 +1,7 @@
 fixture = "peepdb"
 budget = 10000
-cumulative_tokens = 9939
-batch_count = 251
+cumulative_tokens = 9969
+batch_count = 246
 
 [[batches]]
 position = 1
@@ -39,8 +39,8 @@ kind = "full"
 position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
-cost_tokens = 92
-cum_tokens = 159
+cost_tokens = 97
+cum_tokens = 164
 
 [batches.content]
 kind = "lines"
@@ -48,14 +48,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "README.md"
 start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 3
 end = 3
 
 [batches.content.spans.render]
@@ -66,7 +58,7 @@ position = 4
 key = 'Fs(DirListing { dir: "peepdb" })'
 descriptor = "listing of 'peepdb'"
 cost_tokens = 34
-cum_tokens = 193
+cum_tokens = 198
 
 [batches.content]
 kind = "fs"
@@ -80,7 +72,7 @@ position = 5
 key = 'Fs(DirListing { dir: "peepdb/db" })'
 descriptor = "listing of 'peepdb/db'"
 cost_tokens = 45
-cum_tokens = 238
+cum_tokens = 243
 
 [batches.content]
 kind = "fs"
@@ -94,7 +86,7 @@ position = 6
 key = 'Python(DeclNames { file: "peepdb/exceptions.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/exceptions.py"
 cost_tokens = 11
-cum_tokens = 249
+cum_tokens = 254
 
 [batches.content]
 kind = "lines"
@@ -120,7 +112,7 @@ position = 7
 key = 'Python(Decl { file: "peepdb/exceptions.py", start_line: 1 })'
 descriptor = "python decl at peepdb/exceptions.py:1"
 cost_tokens = 0
-cum_tokens = 249
+cum_tokens = 254
 
 [batches.content]
 kind = "lines"
@@ -138,7 +130,7 @@ position = 8
 key = 'Python(ClassBody { file: "peepdb/exceptions.py", start_line: 1 })'
 descriptor = "python class body at peepdb/exceptions.py:1"
 cost_tokens = 5
-cum_tokens = 254
+cum_tokens = 259
 
 [batches.content]
 kind = "lines"
@@ -156,7 +148,7 @@ position = 9
 key = 'Python(DeclNames { file: "peepdb/db/base.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/base.py"
 cost_tokens = 14
-cum_tokens = 268
+cum_tokens = 273
 
 [batches.content]
 kind = "lines"
@@ -182,7 +174,7 @@ position = 10
 key = 'Python(Decl { file: "peepdb/db/base.py", start_line: 5 })'
 descriptor = "python decl at peepdb/db/base.py:5"
 cost_tokens = 0
-cum_tokens = 268
+cum_tokens = 273
 
 [batches.content]
 kind = "lines"
@@ -200,7 +192,7 @@ position = 11
 key = 'Fs(DirListing { dir: "images" })'
 descriptor = "listing of 'images'"
 cost_tokens = 28
-cum_tokens = 296
+cum_tokens = 301
 
 [batches.content]
 kind = "fs"
@@ -214,7 +206,7 @@ position = 12
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 193
-cum_tokens = 489
+cum_tokens = 494
 
 [batches.content]
 kind = "lines"
@@ -463,8 +455,8 @@ kind = "ellipsis"
 position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
-cost_tokens = 25
-cum_tokens = 514
+cost_tokens = 35
+cum_tokens = 529
 
 [batches.content]
 kind = "lines"
@@ -472,22 +464,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "README.md"
 start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
 end = 19
 
 [batches.content.spans.render]
@@ -498,7 +474,7 @@ position = 14
 key = 'Python(Imports { file: "peepdb/__main__.py" })'
 descriptor = "python imports in peepdb/__main__.py"
 cost_tokens = 12
-cum_tokens = 526
+cum_tokens = 541
 
 [batches.content]
 kind = "lines"
@@ -516,7 +492,7 @@ position = 15
 key = 'Python(Imports { file: "setup.py" })'
 descriptor = "python imports in setup.py"
 cost_tokens = 14
-cum_tokens = 540
+cum_tokens = 555
 
 [batches.content]
 kind = "lines"
@@ -534,7 +510,7 @@ position = 16
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 41
-cum_tokens = 581
+cum_tokens = 596
 
 [batches.content]
 kind = "fs"
@@ -547,8 +523,8 @@ entries = ["CNAME", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "_config.
 position = 17
 key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
 descriptor = "README headline in docs/README.md"
-cost_tokens = 86
-cum_tokens = 667
+cost_tokens = 96
+cum_tokens = 692
 
 [batches.content]
 kind = "lines"
@@ -556,22 +532,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "docs/README.md"
 start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 5
 end = 7
 
 [batches.content.spans.render]
@@ -579,32 +539,6 @@ kind = "full"
 
 [[batches]]
 position = 18
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
-descriptor = "README.md section #11"
-cost_tokens = 25
-cum_tokens = 692
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
 key = 'Markdown(HeadingsOutline { file: "docs/installation.md" })'
 descriptor = "headings outline in docs/installation.md"
 cost_tokens = 54
@@ -694,7 +628,7 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Markdown(HeadingsOutline { file: "docs/index.md" })'
 descriptor = "headings outline in docs/index.md"
 cost_tokens = 56
@@ -784,63 +718,29 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
+position = 20
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
+descriptor = "README.md section #11"
+cost_tokens = 30
+cum_tokens = 832
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 35
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 21
-key = 'Markdown(Section { file: "README.md", section_index: 30, reference_shaped: false })'
-descriptor = "README.md section #30"
-cost_tokens = 23
-cum_tokens = 825
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 170
-end = 170
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 172
-end = 172
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Markdown(Section { file: "README.md", section_index: 29, reference_shaped: false })'
-descriptor = "README.md section #29"
-cost_tokens = 25
-cum_tokens = 850
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 166
-end = 166
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 168
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
 key = 'Python(Imports { file: "peepdb/db/__init__.py" })'
 descriptor = "python imports in peepdb/db/__init__.py"
-cost_tokens = 210
-cum_tokens = 1060
+cost_tokens = 215
+cum_tokens = 1047
 
 [batches.content]
 kind = "lines"
@@ -848,85 +748,35 @@ kind = "lines"
 [[batches.content.spans]]
 path = "peepdb/db/__init__.py"
 start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/db/__init__.py"
-start = 11
 end = 21
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 24
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
-descriptor = "README.md section #10"
-cost_tokens = 36
-cum_tokens = 1096
+position = 22
+key = 'Markdown(Section { file: "README.md", section_index: 30, reference_shaped: false })'
+descriptor = "README.md section #30"
+cost_tokens = 28
+cum_tokens = 1075
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "README.md"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 31
-end = 33
+start = 170
+end = 172
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 25
-key = 'Markdown(Section { file: "README.md", section_index: 28, reference_shaped: false })'
-descriptor = "README.md section #28"
-cost_tokens = 30
-cum_tokens = 1126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 162
-end = 162
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
+position = 23
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 19
-cum_tokens = 1145
+cum_tokens = 1094
 
 [batches.content]
 kind = "lines"
@@ -940,11 +790,29 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 27
+position = 24
+key = 'Markdown(Section { file: "README.md", section_index: 29, reference_shaped: false })'
+descriptor = "README.md section #29"
+cost_tokens = 30
+cum_tokens = 1124
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 166
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 21
-cum_tokens = 1166
+cum_tokens = 1145
 
 [batches.content]
 kind = "lines"
@@ -958,11 +826,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 28
+position = 26
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
 descriptor = "README.md section #6"
 cost_tokens = 20
-cum_tokens = 1186
+cum_tokens = 1165
 
 [batches.content]
 kind = "lines"
@@ -976,45 +844,29 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 29
-key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
-descriptor = "README.md section #9"
-cost_tokens = 46
-cum_tokens = 1232
+position = 27
+key = 'Markdown(Section { file: "README.md", section_index: 28, reference_shaped: false })'
+descriptor = "README.md section #28"
+cost_tokens = 35
+cum_tokens = 1200
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "README.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 25
-end = 25
+start = 162
+end = 164
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 30
+position = 28
 key = 'Markdown(HeadingsOutline { file: "docs/usage.md" })'
 descriptor = "headings outline in docs/usage.md"
 cost_tokens = 97
-cum_tokens = 1329
+cum_tokens = 1297
 
 [batches.content]
 kind = "lines"
@@ -1164,11 +1016,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 29
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
 cost_tokens = 23
-cum_tokens = 1352
+cum_tokens = 1320
 
 [batches.content]
 kind = "lines"
@@ -1182,11 +1034,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 32
+position = 30
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 22
-cum_tokens = 1374
+cum_tokens = 1342
 
 [batches.content]
 kind = "lines"
@@ -1200,11 +1052,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 33
+position = 31
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
 cost_tokens = 23
-cum_tokens = 1397
+cum_tokens = 1365
 
 [batches.content]
 kind = "lines"
@@ -1218,11 +1070,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 34
+position = 32
 key = 'Python(MethodSigs { file: "peepdb/db/base.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/base.py"
 cost_tokens = 115
-cum_tokens = 1512
+cum_tokens = 1480
 
 [batches.content]
 kind = "lines"
@@ -1340,11 +1192,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 33
 key = 'Python(Method { file: "peepdb/db/base.py", start_line: 6 })'
 descriptor = "python method at peepdb/db/base.py:6"
 cost_tokens = 0
-cum_tokens = 1512
+cum_tokens = 1480
 
 [batches.content]
 kind = "lines"
@@ -1358,11 +1210,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 36
+position = 34
 key = 'Python(Method { file: "peepdb/db/base.py", start_line: 33 })'
 descriptor = "python method at peepdb/db/base.py:33"
 cost_tokens = 0
-cum_tokens = 1512
+cum_tokens = 1480
 
 [batches.content]
 kind = "lines"
@@ -1376,11 +1228,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 37
+position = 35
 key = 'Python(Method { file: "peepdb/db/base.py", start_line: 37 })'
 descriptor = "python method at peepdb/db/base.py:37"
 cost_tokens = 0
-cum_tokens = 1512
+cum_tokens = 1480
 
 [batches.content]
 kind = "lines"
@@ -1394,11 +1246,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 38
+position = 36
 key = 'Python(Method { file: "peepdb/db/base.py", start_line: 17 })'
 descriptor = "python method at peepdb/db/base.py:17"
 cost_tokens = 12
-cum_tokens = 1524
+cum_tokens = 1492
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1264,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 39
+position = 37
 key = 'Python(Method { file: "peepdb/db/base.py", start_line: 21 })'
 descriptor = "python method at peepdb/db/base.py:21"
 cost_tokens = 12
-cum_tokens = 1536
+cum_tokens = 1504
 
 [batches.content]
 kind = "lines"
@@ -1430,11 +1282,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 40
+position = 38
 key = 'Python(Method { file: "peepdb/db/base.py", start_line: 25 })'
 descriptor = "python method at peepdb/db/base.py:25"
 cost_tokens = 14
-cum_tokens = 1550
+cum_tokens = 1518
 
 [batches.content]
 kind = "lines"
@@ -1448,11 +1300,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 41
+position = 39
 key = 'Python(Method { file: "peepdb/db/base.py", start_line: 29 })'
 descriptor = "python method at peepdb/db/base.py:29"
 cost_tokens = 35
-cum_tokens = 1585
+cum_tokens = 1553
 
 [batches.content]
 kind = "lines"
@@ -1466,11 +1318,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 42
+position = 40
 key = 'Python(MethodBody { file: "peepdb/db/base.py", start_line: 17, body_start_line: 19 })'
 descriptor = "python method body at peepdb/db/base.py:17 body 19"
 cost_tokens = 5
-cum_tokens = 1590
+cum_tokens = 1558
 
 [batches.content]
 kind = "lines"
@@ -1484,11 +1336,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 43
+position = 41
 key = 'Python(MethodBody { file: "peepdb/db/base.py", start_line: 21, body_start_line: 23 })'
 descriptor = "python method body at peepdb/db/base.py:21 body 23"
 cost_tokens = 5
-cum_tokens = 1595
+cum_tokens = 1563
 
 [batches.content]
 kind = "lines"
@@ -1502,11 +1354,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 44
+position = 42
 key = 'Python(MethodBody { file: "peepdb/db/base.py", start_line: 25, body_start_line: 27 })'
 descriptor = "python method body at peepdb/db/base.py:25 body 27"
 cost_tokens = 5
-cum_tokens = 1600
+cum_tokens = 1568
 
 [batches.content]
 kind = "lines"
@@ -1520,11 +1372,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 45
+position = 43
 key = 'Python(MethodBody { file: "peepdb/db/base.py", start_line: 29, body_start_line: 31 })'
 descriptor = "python method body at peepdb/db/base.py:29 body 31"
 cost_tokens = 5
-cum_tokens = 1605
+cum_tokens = 1573
 
 [batches.content]
 kind = "lines"
@@ -1538,11 +1390,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 46
+position = 44
 key = 'Python(MethodBody { file: "peepdb/db/base.py", start_line: 37, body_start_line: 38 })'
 descriptor = "python method body at peepdb/db/base.py:37 body 38"
 cost_tokens = 6
-cum_tokens = 1611
+cum_tokens = 1579
 
 [batches.content]
 kind = "lines"
@@ -1556,11 +1408,47 @@ end = 38
 kind = "full"
 
 [[batches]]
+position = 45
+key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
+descriptor = "README.md section #10"
+cost_tokens = 46
+cum_tokens = 1625
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 27
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
+descriptor = "README.md section #9"
+cost_tokens = 56
+cum_tokens = 1681
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 21
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 47
 key = 'Markdown(Section { file: "docs/usage.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/usage.md section #0"
-cost_tokens = 27
-cum_tokens = 1638
+cost_tokens = 32
+cum_tokens = 1713
 
 [batches.content]
 kind = "lines"
@@ -1568,14 +1456,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "docs/usage.md"
 start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 8
 end = 8
 
 [batches.content.spans.render]
@@ -1586,7 +1466,7 @@ position = 48
 key = 'Markdown(HeadingsOutline { file: "docs/README.md" })'
 descriptor = "headings outline in docs/README.md"
 cost_tokens = 154
-cum_tokens = 1792
+cum_tokens = 1867
 
 [batches.content]
 kind = "lines"
@@ -1771,8 +1651,8 @@ kind = "ellipsis"
 position = 49
 key = 'Markdown(Section { file: "docs/README.md", section_index: 2, reference_shaped: false })'
 descriptor = "docs/README.md section #2"
-cost_tokens = 15
-cum_tokens = 1807
+cost_tokens = 20
+cum_tokens = 1887
 
 [batches.content]
 kind = "lines"
@@ -1780,14 +1660,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "docs/README.md"
 start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 32
 end = 32
 
 [batches.content.spans.render]
@@ -1797,8 +1669,8 @@ kind = "full"
 position = 50
 key = 'Markdown(Section { file: "docs/README.md", section_index: 8, reference_shaped: false })'
 descriptor = "docs/README.md section #8"
-cost_tokens = 13
-cum_tokens = 1820
+cost_tokens = 18
+cum_tokens = 1905
 
 [batches.content]
 kind = "lines"
@@ -1806,14 +1678,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "docs/README.md"
 start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 90
 end = 90
 
 [batches.content.spans.render]
@@ -1821,44 +1685,10 @@ kind = "full"
 
 [[batches]]
 position = 51
-key = 'Markdown(Section { file: "docs/README.md", section_index: 1, reference_shaped: false })'
-descriptor = "docs/README.md section #1"
-cost_tokens = 48
-cum_tokens = 1868
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 27
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 52
 key = 'Python(DeclNames { file: "peepdb/cli.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/cli.py"
 cost_tokens = 84
-cum_tokens = 1952
+cum_tokens = 1989
 
 [batches.content]
 kind = "lines"
@@ -1992,11 +1822,11 @@ end = 182
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 52
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 16 })'
 descriptor = "python decl at peepdb/cli.py:16"
 cost_tokens = 0
-cum_tokens = 1952
+cum_tokens = 1989
 
 [batches.content]
 kind = "lines"
@@ -2010,11 +1840,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 54
+position = 53
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 181 })'
 descriptor = "python decl at peepdb/cli.py:181"
 cost_tokens = 0
-cum_tokens = 1952
+cum_tokens = 1989
 
 [batches.content]
 kind = "lines"
@@ -2028,11 +1858,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 55
+position = 54
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 86 })'
 descriptor = "python decl at peepdb/cli.py:86"
 cost_tokens = 7
-cum_tokens = 1959
+cum_tokens = 1996
 
 [batches.content]
 kind = "lines"
@@ -2046,11 +1876,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 56
+position = 55
 key = 'Python(MethodSigs { file: "peepdb/cli.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/cli.py"
 cost_tokens = 11
-cum_tokens = 1970
+cum_tokens = 2007
 
 [batches.content]
 kind = "lines"
@@ -2072,11 +1902,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 56
 key = 'Python(Method { file: "peepdb/cli.py", start_line: 17 })'
 descriptor = "python method at peepdb/cli.py:17"
 cost_tokens = 0
-cum_tokens = 1970
+cum_tokens = 2007
 
 [batches.content]
 kind = "lines"
@@ -2090,11 +1920,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 58
+position = 57
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 25 })'
 descriptor = "python decl at peepdb/cli.py:25"
 cost_tokens = 16
-cum_tokens = 1986
+cum_tokens = 2023
 
 [batches.content]
 kind = "lines"
@@ -2108,11 +1938,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 59
+position = 58
 key = 'Python(DeclBody { file: "peepdb/cli.py", start_line: 25, body_start_line: 50 })'
 descriptor = "python decl body at peepdb/cli.py:25 body 50"
 cost_tokens = 7
-cum_tokens = 1993
+cum_tokens = 2030
 
 [batches.content]
 kind = "lines"
@@ -2126,11 +1956,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 60
+position = 59
 key = 'Python(DeclBody { file: "peepdb/cli.py", start_line: 181, body_start_line: 182 })'
 descriptor = "python decl body at peepdb/cli.py:181 body 182"
 cost_tokens = 7
-cum_tokens = 2000
+cum_tokens = 2037
 
 [batches.content]
 kind = "lines"
@@ -2144,11 +1974,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 61
+position = 60
 key = 'Python(DeclBody { file: "peepdb/cli.py", start_line: 86, body_start_line: 94 })'
 descriptor = "python decl body at peepdb/cli.py:86 body 94"
 cost_tokens = 8
-cum_tokens = 2008
+cum_tokens = 2045
 
 [batches.content]
 kind = "lines"
@@ -2162,11 +1992,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 62
+position = 61
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 113 })'
 descriptor = "python decl at peepdb/cli.py:113"
 cost_tokens = 31
-cum_tokens = 2039
+cum_tokens = 2076
 
 [batches.content]
 kind = "lines"
@@ -2180,11 +2010,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 63
+position = 62
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 97 })'
 descriptor = "python decl at peepdb/cli.py:97"
 cost_tokens = 42
-cum_tokens = 2081
+cum_tokens = 2118
 
 [batches.content]
 kind = "lines"
@@ -2198,11 +2028,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 64
+position = 63
 key = 'Python(DeclDoc { file: "peepdb/cli.py", start_line: 86 })'
 descriptor = "python decl doc at peepdb/cli.py:86"
-cost_tokens = 36
-cum_tokens = 2117
+cost_tokens = 41
+cum_tokens = 2159
 
 [batches.content]
 kind = "lines"
@@ -2210,25 +2040,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "peepdb/cli.py"
 start = 88
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 91
 end = 93
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 65
+position = 64
 key = 'Python(DeclDoc { file: "peepdb/cli.py", start_line: 113 })'
 descriptor = "python decl doc at peepdb/cli.py:113"
-cost_tokens = 40
-cum_tokens = 2157
+cost_tokens = 45
+cum_tokens = 2204
 
 [batches.content]
 kind = "lines"
@@ -2236,25 +2058,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "peepdb/cli.py"
 start = 116
-end = 117
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 119
 end = 121
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 66
+position = 65
 key = 'Python(DeclDoc { file: "peepdb/cli.py", start_line: 97 })'
 descriptor = "python decl doc at peepdb/cli.py:97"
-cost_tokens = 42
-cum_tokens = 2199
+cost_tokens = 47
+cum_tokens = 2251
 
 [batches.content]
 kind = "lines"
@@ -2262,83 +2076,35 @@ kind = "lines"
 [[batches.content.spans]]
 path = "peepdb/cli.py"
 start = 101
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 104
 end = 106
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 67
-key = 'Markdown(Section { file: "docs/README.md", section_index: 0, reference_shaped: false })'
-descriptor = "docs/README.md section #0"
-cost_tokens = 190
-cum_tokens = 2389
+position = 66
+key = 'Markdown(Section { file: "docs/README.md", section_index: 1, reference_shaped: false })'
+descriptor = "docs/README.md section #1"
+cost_tokens = 58
+cum_tokens = 2309
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "docs/README.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 16
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 21
-end = 21
+start = 23
+end = 28
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 68
+position = 67
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 35
-cum_tokens = 2424
+cum_tokens = 2344
 
 [batches.content]
 kind = "lines"
@@ -2352,37 +2118,29 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Markdown(Section { file: "docs/installation.md", section_index: 1, reference_shaped: false })'
-descriptor = "docs/installation.md section #1"
-cost_tokens = 22
-cum_tokens = 2446
+position = 68
+key = 'Markdown(Section { file: "docs/README.md", section_index: 0, reference_shaped: false })'
+descriptor = "docs/README.md section #0"
+cost_tokens = 215
+cum_tokens = 2559
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/installation.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 18
-end = 19
+path = "docs/README.md"
+start = 9
+end = 21
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 70
+position = 69
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false })'
 descriptor = "README.md section #16"
 cost_tokens = 23
-cum_tokens = 2469
+cum_tokens = 2582
 
 [batches.content]
 kind = "lines"
@@ -2396,53 +2154,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 71
-key = 'Markdown(Section { file: "docs/installation.md", section_index: 0, reference_shaped: false })'
-descriptor = "docs/installation.md section #0"
-cost_tokens = 58
-cum_tokens = 2527
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 10
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
+position = 70
 key = 'Python(MethodBody { file: "peepdb/db/base.py", start_line: 33, body_start_line: 34 })'
 descriptor = "python method body at peepdb/db/base.py:33 body 34"
 cost_tokens = 14
-cum_tokens = 2541
+cum_tokens = 2596
 
 [batches.content]
 kind = "lines"
@@ -2456,45 +2172,29 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 73
-key = 'Markdown(Section { file: "docs/README.md", section_index: 9, reference_shaped: false })'
-descriptor = "docs/README.md section #9"
-cost_tokens = 41
-cum_tokens = 2582
+position = 71
+key = 'Markdown(Section { file: "docs/installation.md", section_index: 1, reference_shaped: false })'
+descriptor = "docs/installation.md section #1"
+cost_tokens = 27
+cum_tokens = 2623
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/README.md"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 96
-end = 96
+path = "docs/installation.md"
+start = 16
+end = 19
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 74
+position = 72
 key = 'Markdown(Section { file: "docs/index.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/index.md section #0"
-cost_tokens = 67
-cum_tokens = 2649
+cost_tokens = 72
+cum_tokens = 2695
 
 [batches.content]
 kind = "lines"
@@ -2502,25 +2202,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "docs/index.md"
 start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 8
 end = 8
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 75
+position = 73
 key = 'Fs(DirListing { dir: "peepdb/tests" })'
 descriptor = "listing of 'peepdb/tests'"
 cost_tokens = 42
-cum_tokens = 2691
+cum_tokens = 2737
 
 [batches.content]
 kind = "fs"
@@ -2530,11 +2222,29 @@ parent = "peepdb/tests"
 entries = ["__init__.py", "test_cli.py", "test_connection.py", "test_data_types.py", "test_mongodb_uri.py", "test_peepdb.py", "test_sqlite.py"]
 
 [[batches]]
-position = 76
+position = 74
+key = 'Markdown(Section { file: "docs/installation.md", section_index: 0, reference_shaped: false })'
+descriptor = "docs/installation.md section #0"
+cost_tokens = 73
+cum_tokens = 2810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 6
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
 key = 'Python(DeclBody { file: "peepdb/cli.py", start_line: 97, body_start_line: 107 })'
 descriptor = "python decl body at peepdb/cli.py:97 body 107"
 cost_tokens = 51
-cum_tokens = 2742
+cum_tokens = 2861
 
 [batches.content]
 kind = "lines"
@@ -2548,11 +2258,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 77
+position = 76
 key = 'Python(DeclNames { file: "peepdb/core.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/core.py"
 cost_tokens = 118
-cum_tokens = 2860
+cum_tokens = 2979
 
 [batches.content]
 kind = "lines"
@@ -2638,11 +2348,11 @@ end = 119
 kind = "ellipsis"
 
 [[batches]]
-position = 78
+position = 77
 key = 'Python(Decl { file: "peepdb/core.py", start_line: 27 })'
 descriptor = "python decl at peepdb/core.py:27"
 cost_tokens = 0
-cum_tokens = 2860
+cum_tokens = 2979
 
 [batches.content]
 kind = "lines"
@@ -2656,11 +2366,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 79
+position = 78
 key = 'Python(Decl { file: "peepdb/core.py", start_line: 101 })'
 descriptor = "python decl at peepdb/core.py:101"
 cost_tokens = 0
-cum_tokens = 2860
+cum_tokens = 2979
 
 [batches.content]
 kind = "lines"
@@ -2674,11 +2384,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 80
+position = 79
 key = 'Python(Decl { file: "peepdb/core.py", start_line: 118 })'
 descriptor = "python decl at peepdb/core.py:118"
 cost_tokens = 0
-cum_tokens = 2860
+cum_tokens = 2979
 
 [batches.content]
 kind = "lines"
@@ -2692,11 +2402,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 81
+position = 80
 key = 'Python(Decl { file: "peepdb/core.py", start_line: 56 })'
 descriptor = "python decl at peepdb/core.py:56"
 cost_tokens = 109
-cum_tokens = 2969
+cum_tokens = 3088
 
 [batches.content]
 kind = "lines"
@@ -2710,11 +2420,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'Python(DeclBody { file: "peepdb/cli.py", start_line: 113, body_start_line: 122 })'
 descriptor = "python decl body at peepdb/cli.py:113 body 122"
 cost_tokens = 11
-cum_tokens = 2980
+cum_tokens = 3099
 
 [batches.content]
 kind = "lines"
@@ -2728,11 +2438,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Python(DeclNames { file: "peepdb/config.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/config.py"
 cost_tokens = 177
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -2930,11 +2640,11 @@ end = 179
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 83
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 49 })'
 descriptor = "python decl at peepdb/config.py:49"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2658,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 60 })'
 descriptor = "python decl at peepdb/config.py:60"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +2676,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 70 })'
 descriptor = "python decl at peepdb/config.py:70"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +2694,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 73 })'
 descriptor = "python decl at peepdb/config.py:73"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +2712,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 76 })'
 descriptor = "python decl at peepdb/config.py:76"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -3020,11 +2730,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 89
+position = 88
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 112 })'
 descriptor = "python decl at peepdb/config.py:112"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -3038,11 +2748,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 90
+position = 89
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 144 })'
 descriptor = "python decl at peepdb/config.py:144"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +2766,11 @@ end = 144
 kind = "full"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 161 })'
 descriptor = "python decl at peepdb/config.py:161"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +2784,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 92
+position = 91
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 178 })'
 descriptor = "python decl at peepdb/config.py:178"
 cost_tokens = 0
-cum_tokens = 3157
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +2802,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 15 })'
 descriptor = "python decl at peepdb/config.py:15"
 cost_tokens = 8
-cum_tokens = 3165
+cum_tokens = 3284
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +2820,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 94
+position = 93
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 41 })'
 descriptor = "python decl at peepdb/config.py:41"
 cost_tokens = 11
-cum_tokens = 3176
+cum_tokens = 3295
 
 [batches.content]
 kind = "lines"
@@ -3128,11 +2838,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 95
+position = 94
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 29 })'
 descriptor = "python decl at peepdb/config.py:29"
 cost_tokens = 12
-cum_tokens = 3188
+cum_tokens = 3307
 
 [batches.content]
 kind = "lines"
@@ -3146,11 +2856,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 96
+position = 95
 key = 'Python(ClassBody { file: "peepdb/config.py", start_line: 15 })'
 descriptor = "python class body at peepdb/config.py:15"
 cost_tokens = 24
-cum_tokens = 3212
+cum_tokens = 3331
 
 [batches.content]
 kind = "lines"
@@ -3164,11 +2874,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 70, body_start_line: 71 })'
 descriptor = "python decl body at peepdb/config.py:70 body 71"
 cost_tokens = 15
-cum_tokens = 3227
+cum_tokens = 3346
 
 [batches.content]
 kind = "lines"
@@ -3182,11 +2892,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 98
+position = 97
 key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 73, body_start_line: 74 })'
 descriptor = "python decl body at peepdb/config.py:73 body 74"
 cost_tokens = 15
-cum_tokens = 3242
+cum_tokens = 3361
 
 [batches.content]
 kind = "lines"
@@ -3200,71 +2910,29 @@ end = 74
 kind = "full"
 
 [[batches]]
+position = 98
+key = 'Markdown(Section { file: "docs/README.md", section_index: 9, reference_shaped: false })'
+descriptor = "docs/README.md section #9"
+cost_tokens = 51
+cum_tokens = 3412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 92
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 99
-key = 'Markdown(Section { file: "docs/installation.md", section_index: 4, reference_shaped: false })'
-descriptor = "docs/installation.md section #4"
-cost_tokens = 31
-cum_tokens = 3273
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Markdown(Section { file: "docs/usage.md", section_index: 2, reference_shaped: false })'
-descriptor = "docs/usage.md section #2"
-cost_tokens = 31
-cum_tokens = 3304
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 24
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
 key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false })'
 descriptor = "README.md section #18"
 cost_tokens = 33
-cum_tokens = 3337
+cum_tokens = 3445
 
 [batches.content]
 kind = "lines"
@@ -3278,11 +2946,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 102
+position = 100
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 3340
+cum_tokens = 3448
 
 [batches.content]
 kind = "fs"
@@ -3292,11 +2960,11 @@ parent = ".github"
 entries = ["workflows"]
 
 [[batches]]
-position = 103
+position = 101
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 3348
+cum_tokens = 3456
 
 [batches.content]
 kind = "fs"
@@ -3306,11 +2974,11 @@ parent = ".github/workflows"
 entries = ["pages.yml", "test.yml"]
 
 [[batches]]
-position = 104
+position = 102
 key = 'Python(DeclNames { file: "peepdb/db/oracle.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/oracle.py"
 cost_tokens = 14
-cum_tokens = 3362
+cum_tokens = 3470
 
 [batches.content]
 kind = "lines"
@@ -3332,11 +3000,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 103
 key = 'Python(Decl { file: "peepdb/db/oracle.py", start_line: 7 })'
 descriptor = "python decl at peepdb/db/oracle.py:7"
 cost_tokens = 0
-cum_tokens = 3362
+cum_tokens = 3470
 
 [batches.content]
 kind = "lines"
@@ -3350,11 +3018,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 106
+position = 104
 key = 'Python(DeclNames { file: "peepdb/db/sqlite.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/sqlite.py"
 cost_tokens = 14
-cum_tokens = 3376
+cum_tokens = 3484
 
 [batches.content]
 kind = "lines"
@@ -3376,11 +3044,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 105
 key = 'Python(Decl { file: "peepdb/db/sqlite.py", start_line: 6 })'
 descriptor = "python decl at peepdb/db/sqlite.py:6"
 cost_tokens = 0
-cum_tokens = 3376
+cum_tokens = 3484
 
 [batches.content]
 kind = "lines"
@@ -3394,11 +3062,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 108
+position = 106
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false })'
 descriptor = "README.md section #20"
 cost_tokens = 36
-cum_tokens = 3412
+cum_tokens = 3520
 
 [batches.content]
 kind = "lines"
@@ -3412,11 +3080,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 109
+position = 107
 key = 'Python(DeclNames { file: "peepdb/db/mariadb.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/mariadb.py"
 cost_tokens = 15
-cum_tokens = 3427
+cum_tokens = 3535
 
 [batches.content]
 kind = "lines"
@@ -3438,11 +3106,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 108
 key = 'Python(Decl { file: "peepdb/db/mariadb.py", start_line: 5 })'
 descriptor = "python decl at peepdb/db/mariadb.py:5"
 cost_tokens = 0
-cum_tokens = 3427
+cum_tokens = 3535
 
 [batches.content]
 kind = "lines"
@@ -3456,11 +3124,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 111
+position = 109
 key = 'Python(DeclNames { file: "peepdb/db/mongodb.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/mongodb.py"
 cost_tokens = 15
-cum_tokens = 3442
+cum_tokens = 3550
 
 [batches.content]
 kind = "lines"
@@ -3482,11 +3150,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 110
 key = 'Python(Decl { file: "peepdb/db/mongodb.py", start_line: 8 })'
 descriptor = "python decl at peepdb/db/mongodb.py:8"
 cost_tokens = 0
-cum_tokens = 3442
+cum_tokens = 3550
 
 [batches.content]
 kind = "lines"
@@ -3500,11 +3168,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 113
+position = 111
 key = 'Python(DeclNames { file: "peepdb/db/mssql.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/mssql.py"
 cost_tokens = 15
-cum_tokens = 3457
+cum_tokens = 3565
 
 [batches.content]
 kind = "lines"
@@ -3521,78 +3189,78 @@ kind = "full"
 path = "peepdb/db/mssql.py"
 start = 7
 end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'Python(Decl { file: "peepdb/db/mssql.py", start_line: 6 })'
+descriptor = "python decl at peepdb/db/mssql.py:6"
+cost_tokens = 0
+cum_tokens = 3565
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "peepdb/db/mssql.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Python(DeclNames { file: "peepdb/db/mysql.py", chunk_index: 0 })'
+descriptor = "python decl names surface in peepdb/db/mysql.py"
+cost_tokens = 15
+cum_tokens = 3580
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "peepdb/db/mysql.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "peepdb/db/mysql.py"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 114
-key = 'Python(Decl { file: "peepdb/db/mssql.py", start_line: 6 })'
-descriptor = "python decl at peepdb/db/mssql.py:6"
+key = 'Python(Decl { file: "peepdb/db/mysql.py", start_line: 5 })'
+descriptor = "python decl at peepdb/db/mysql.py:5"
 cost_tokens = 0
-cum_tokens = 3457
+cum_tokens = 3580
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "peepdb/db/mssql.py"
-start = 6
-end = 6
+path = "peepdb/db/mysql.py"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 115
-key = 'Python(DeclNames { file: "peepdb/db/mysql.py", chunk_index: 0 })'
-descriptor = "python decl names surface in peepdb/db/mysql.py"
-cost_tokens = 15
-cum_tokens = 3472
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/db/mysql.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/db/mysql.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 116
-key = 'Python(Decl { file: "peepdb/db/mysql.py", start_line: 5 })'
-descriptor = "python decl at peepdb/db/mysql.py:5"
-cost_tokens = 0
-cum_tokens = 3472
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/db/mysql.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
 key = 'Python(DeclNames { file: "peepdb/db/postgresql.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/postgresql.py"
 cost_tokens = 15
-cum_tokens = 3487
+cum_tokens = 3595
 
 [batches.content]
 kind = "lines"
@@ -3614,11 +3282,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 116
 key = 'Python(Decl { file: "peepdb/db/postgresql.py", start_line: 6 })'
 descriptor = "python decl at peepdb/db/postgresql.py:6"
 cost_tokens = 0
-cum_tokens = 3487
+cum_tokens = 3595
 
 [batches.content]
 kind = "lines"
@@ -3632,11 +3300,29 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 119
+position = 117
+key = 'Markdown(Section { file: "docs/installation.md", section_index: 4, reference_shaped: false })'
+descriptor = "docs/installation.md section #4"
+cost_tokens = 36
+cum_tokens = 3631
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 42
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false })'
 descriptor = "README.md section #19"
 cost_tokens = 38
-cum_tokens = 3525
+cum_tokens = 3669
 
 [batches.content]
 kind = "lines"
@@ -3650,11 +3336,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 120
+position = 119
 key = 'Python(Imports { file: "peepdb/db/base.py" })'
 descriptor = "python imports in peepdb/db/base.py"
 cost_tokens = 30
-cum_tokens = 3555
+cum_tokens = 3699
 
 [batches.content]
 kind = "lines"
@@ -3668,11 +3354,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Python(Imports { file: "peepdb/db/mariadb.py" })'
 descriptor = "python imports in peepdb/db/mariadb.py"
 cost_tokens = 30
-cum_tokens = 3585
+cum_tokens = 3729
 
 [batches.content]
 kind = "lines"
@@ -3686,11 +3372,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'Python(Imports { file: "peepdb/db/mysql.py" })'
 descriptor = "python imports in peepdb/db/mysql.py"
 cost_tokens = 30
-cum_tokens = 3615
+cum_tokens = 3759
 
 [batches.content]
 kind = "lines"
@@ -3704,11 +3390,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Markdown(Section { file: "docs/README.md", section_index: 5, reference_shaped: false })'
 descriptor = "docs/README.md section #5"
 cost_tokens = 23
-cum_tokens = 3638
+cum_tokens = 3782
 
 [batches.content]
 kind = "lines"
@@ -3722,11 +3408,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 126 })'
 descriptor = "python decl at peepdb/cli.py:126"
 cost_tokens = 154
-cum_tokens = 3792
+cum_tokens = 3936
 
 [batches.content]
 kind = "lines"
@@ -3740,11 +3426,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Python(DeclDoc { file: "peepdb/cli.py", start_line: 126 })'
 descriptor = "python decl doc at peepdb/cli.py:126"
-cost_tokens = 47
-cum_tokens = 3839
+cost_tokens = 52
+cum_tokens = 3988
 
 [batches.content]
 kind = "lines"
@@ -3752,59 +3438,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "peepdb/cli.py"
 start = 134
-end = 135
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 137
 end = 139
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 126
-key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false })'
-descriptor = "README.md section #27"
-cost_tokens = 114
-cum_tokens = 3953
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 156
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 158
-end = 160
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
+position = 125
 key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false })'
 descriptor = "README.md section #23"
 cost_tokens = 39
-cum_tokens = 3992
+cum_tokens = 4027
 
 [batches.content]
 kind = "lines"
@@ -3818,11 +3462,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 128
+position = 126
 key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false })'
 descriptor = "README.md section #24"
 cost_tokens = 37
-cum_tokens = 4029
+cum_tokens = 4064
 
 [batches.content]
 kind = "lines"
@@ -3836,11 +3480,47 @@ end = 125
 kind = "full"
 
 [[batches]]
+position = 127
+key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false })'
+descriptor = "README.md section #27"
+cost_tokens = 124
+cum_tokens = 4188
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 154
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Markdown(Section { file: "docs/usage.md", section_index: 2, reference_shaped: false })'
+descriptor = "docs/usage.md section #2"
+cost_tokens = 41
+cum_tokens = 4229
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/usage.md"
+start = 20
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 129
 key = 'Python(Imports { file: "peepdb/db/sqlite.py" })'
 descriptor = "python imports in peepdb/db/sqlite.py"
 cost_tokens = 37
-cum_tokens = 4066
+cum_tokens = 4266
 
 [batches.content]
 kind = "lines"
@@ -3858,7 +3538,7 @@ position = 130
 key = 'Python(DeclBody { file: "peepdb/cli.py", start_line: 113, body_start_line: 123 })'
 descriptor = "python decl body at peepdb/cli.py:113 body 123"
 cost_tokens = 16
-cum_tokens = 4082
+cum_tokens = 4282
 
 [batches.content]
 kind = "lines"
@@ -3876,7 +3556,7 @@ position = 131
 key = 'Python(Imports { file: "peepdb/db/mssql.py" })'
 descriptor = "python imports in peepdb/db/mssql.py"
 cost_tokens = 38
-cum_tokens = 4120
+cum_tokens = 4320
 
 [batches.content]
 kind = "lines"
@@ -3894,7 +3574,7 @@ position = 132
 key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 41, body_start_line: 43 })'
 descriptor = "python decl body at peepdb/config.py:41 body 43"
 cost_tokens = 77
-cum_tokens = 4197
+cum_tokens = 4397
 
 [batches.content]
 kind = "lines"
@@ -3909,70 +3589,10 @@ kind = "full"
 
 [[batches]]
 position = 133
-key = 'Markdown(Section { file: "docs/index.md", section_index: 10, reference_shaped: false })'
-descriptor = "docs/index.md section #10"
-cost_tokens = 45
-cum_tokens = 4242
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
-key = 'Markdown(Section { file: "docs/usage.md", section_index: 7, reference_shaped: false })'
-descriptor = "docs/usage.md section #7"
-cost_tokens = 45
-cum_tokens = 4287
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 78
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 135
 key = 'Python(Imports { file: "peepdb/db/oracle.py" })'
 descriptor = "python imports in peepdb/db/oracle.py"
 cost_tokens = 39
-cum_tokens = 4326
+cum_tokens = 4436
 
 [batches.content]
 kind = "lines"
@@ -3986,11 +3606,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 136
+position = 134
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
 cost_tokens = 47
-cum_tokens = 4373
+cum_tokens = 4483
 
 [batches.content]
 kind = "lines"
@@ -4004,11 +3624,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 137
+position = 135
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false })'
 descriptor = "README.md section #15"
 cost_tokens = 50
-cum_tokens = 4423
+cum_tokens = 4533
 
 [batches.content]
 kind = "lines"
@@ -4022,11 +3642,29 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 138
+position = 136
+key = 'Markdown(Section { file: "docs/index.md", section_index: 10, reference_shaped: false })'
+descriptor = "docs/index.md section #10"
+cost_tokens = 50
+cum_tokens = 4583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/index.md"
+start = 40
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
 key = 'Python(DeclNames { file: "peepdb/config.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in peepdb/config.py"
 cost_tokens = 108
-cum_tokens = 4531
+cum_tokens = 4691
 
 [batches.content]
 kind = "lines"
@@ -4064,11 +3702,11 @@ end = 197
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 138
 key = 'Python(Decl { file: "peepdb/config.py", start_line: 196 })'
 descriptor = "python decl at peepdb/config.py:196"
 cost_tokens = 0
-cum_tokens = 4531
+cum_tokens = 4691
 
 [batches.content]
 kind = "lines"
@@ -4082,11 +3720,11 @@ end = 196
 kind = "full"
 
 [[batches]]
-position = 140
+position = 139
 key = 'Python(Imports { file: "peepdb/db/mongodb.py" })'
 descriptor = "python imports in peepdb/db/mongodb.py"
 cost_tokens = 46
-cum_tokens = 4577
+cum_tokens = 4737
 
 [batches.content]
 kind = "lines"
@@ -4100,11 +3738,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 141
+position = 140
 key = 'Python(Imports { file: "peepdb/db/postgresql.py" })'
 descriptor = "python imports in peepdb/db/postgresql.py"
 cost_tokens = 48
-cum_tokens = 4625
+cum_tokens = 4785
 
 [batches.content]
 kind = "lines"
@@ -4118,137 +3756,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 142
-key = 'Markdown(Section { file: "docs/README.md", section_index: 7, reference_shaped: false })'
-descriptor = "docs/README.md section #7"
-cost_tokens = 97
-cum_tokens = 4722
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 143
-key = 'Markdown(Section { file: "docs/usage.md", section_index: 4, reference_shaped: false })'
-descriptor = "docs/usage.md section #4"
-cost_tokens = 54
-cum_tokens = 4776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 46
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 144
-key = 'Markdown(Section { file: "docs/usage.md", section_index: 5, reference_shaped: false })'
-descriptor = "docs/usage.md section #5"
-cost_tokens = 54
-cum_tokens = 4830
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 54
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 145
+position = 141
 key = 'Markdown(Section { file: "docs/README.md", section_index: 12, reference_shaped: false })'
 descriptor = "docs/README.md section #12"
 cost_tokens = 27
-cum_tokens = 4857
+cum_tokens = 4812
 
 [batches.content]
 kind = "lines"
@@ -4262,11 +3774,47 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 146
+position = 142
+key = 'Markdown(Section { file: "docs/usage.md", section_index: 7, reference_shaped: false })'
+descriptor = "docs/usage.md section #7"
+cost_tokens = 55
+cum_tokens = 4867
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/usage.md"
+start = 74
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Python(Imports { file: "peepdb/db/firebase.py" })'
+descriptor = "python imports in peepdb/db/firebase.py"
+cost_tokens = 53
+cum_tokens = 4920
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "peepdb/db/firebase.py"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
 key = 'Python(DeclNames { file: "peepdb/db/firebase.py", chunk_index: 0 })'
 descriptor = "python decl names surface in peepdb/db/firebase.py"
-cost_tokens = 26
-cum_tokens = 4883
+cost_tokens = 27
+cum_tokens = 4947
 
 [batches.content]
 kind = "lines"
@@ -4274,14 +3822,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "peepdb/db/firebase.py"
 start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/db/firebase.py"
-start = 9
 end = 9
 
 [batches.content.spans.render]
@@ -4296,11 +3836,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 145
 key = 'Python(Decl { file: "peepdb/db/firebase.py", start_line: 9 })'
 descriptor = "python decl at peepdb/db/firebase.py:9"
 cost_tokens = 0
-cum_tokens = 4883
+cum_tokens = 4947
 
 [batches.content]
 kind = "lines"
@@ -4314,97 +3854,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 148
-key = 'Python(Imports { file: "peepdb/db/firebase.py" })'
-descriptor = "python imports in peepdb/db/firebase.py"
-cost_tokens = 49
-cum_tokens = 4932
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/db/firebase.py"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 149
-key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 49, body_start_line: 50 })'
-descriptor = "python decl body at peepdb/config.py:49 body 50"
-cost_tokens = 98
-cum_tokens = 5030
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 50
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 55
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 150
-key = 'Markdown(Section { file: "docs/installation.md", section_index: 2, reference_shaped: false })'
-descriptor = "docs/installation.md section #2"
-cost_tokens = 57
-cum_tokens = 5087
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 25
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 151
+position = 146
 key = 'Python(MethodBody { file: "peepdb/cli.py", start_line: 17, body_start_line: 18 })'
 descriptor = "python method body at peepdb/cli.py:17 body 18"
 cost_tokens = 54
-cum_tokens = 5141
+cum_tokens = 5001
 
 [batches.content]
 kind = "lines"
@@ -4418,11 +3872,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 152
+position = 147
 key = 'Markdown(Section { file: "docs/index.md", section_index: 5, reference_shaped: false })'
 descriptor = "docs/index.md section #5"
 cost_tokens = 19
-cum_tokens = 5160
+cum_tokens = 5020
 
 [batches.content]
 kind = "lines"
@@ -4436,11 +3890,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 153
+position = 148
 key = 'Python(Decl { file: "peepdb/cli.py", start_line: 53 })'
 descriptor = "python decl at peepdb/cli.py:53"
 cost_tokens = 248
-cum_tokens = 5408
+cum_tokens = 5268
 
 [batches.content]
 kind = "lines"
@@ -4454,11 +3908,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 154
+position = 149
 key = 'Python(DeclDoc { file: "peepdb/cli.py", start_line: 53 })'
 descriptor = "python decl doc at peepdb/cli.py:53"
-cost_tokens = 61
-cum_tokens = 5469
+cost_tokens = 66
+cum_tokens = 5334
 
 [batches.content]
 kind = "lines"
@@ -4466,25 +3920,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "peepdb/cli.py"
 start = 66
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 69
 end = 71
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 155
+position = 150
 key = 'Python(DeclBody { file: "peepdb/core.py", start_line: 101, body_start_line: 102 })'
 descriptor = "python decl body at peepdb/core.py:101 body 102"
 cost_tokens = 9
-cum_tokens = 5478
+cum_tokens = 5343
 
 [batches.content]
 kind = "lines"
@@ -4498,37 +3944,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 156
-key = 'Markdown(Section { file: "docs/README.md", section_index: 10, reference_shaped: false })'
-descriptor = "docs/README.md section #10"
-cost_tokens = 94
-cum_tokens = 5572
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
+position = 151
 key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 60, body_start_line: 61 })'
 descriptor = "python decl body at peepdb/config.py:60 body 61"
 cost_tokens = 105
-cum_tokens = 5677
+cum_tokens = 5448
 
 [batches.content]
 kind = "lines"
@@ -4542,11 +3962,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 158
+position = 152
 key = 'Python(MethodSigs { file: "peepdb/db/oracle.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/oracle.py"
 cost_tokens = 53
-cum_tokens = 5730
+cum_tokens = 5501
 
 [batches.content]
 kind = "lines"
@@ -4616,11 +4036,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 153
 key = 'Python(Method { file: "peepdb/db/oracle.py", start_line: 8 })'
 descriptor = "python method at peepdb/db/oracle.py:8"
 cost_tokens = 0
-cum_tokens = 5730
+cum_tokens = 5501
 
 [batches.content]
 kind = "lines"
@@ -4634,11 +4054,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 160
+position = 154
 key = 'Python(Method { file: "peepdb/db/oracle.py", start_line: 25 })'
 descriptor = "python method at peepdb/db/oracle.py:25"
 cost_tokens = 0
-cum_tokens = 5730
+cum_tokens = 5501
 
 [batches.content]
 kind = "lines"
@@ -4652,11 +4072,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 161
+position = 155
 key = 'Python(Method { file: "peepdb/db/oracle.py", start_line: 32 })'
 descriptor = "python method at peepdb/db/oracle.py:32"
 cost_tokens = 0
-cum_tokens = 5730
+cum_tokens = 5501
 
 [batches.content]
 kind = "lines"
@@ -4670,11 +4090,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 162
+position = 156
 key = 'Python(MethodBody { file: "peepdb/db/oracle.py", start_line: 32, body_start_line: 33 })'
 descriptor = "python method body at peepdb/db/oracle.py:32 body 33"
 cost_tokens = 32
-cum_tokens = 5762
+cum_tokens = 5533
 
 [batches.content]
 kind = "lines"
@@ -4688,11 +4108,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 163
+position = 157
 key = 'Python(MethodSigs { file: "peepdb/db/mongodb.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/mongodb.py"
 cost_tokens = 54
-cum_tokens = 5816
+cum_tokens = 5587
 
 [batches.content]
 kind = "lines"
@@ -4762,11 +4182,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 164
+position = 158
 key = 'Python(Method { file: "peepdb/db/mongodb.py", start_line: 9 })'
 descriptor = "python method at peepdb/db/mongodb.py:9"
 cost_tokens = 0
-cum_tokens = 5816
+cum_tokens = 5587
 
 [batches.content]
 kind = "lines"
@@ -4780,11 +4200,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 165
+position = 159
 key = 'Python(Method { file: "peepdb/db/mongodb.py", start_line: 32 })'
 descriptor = "python method at peepdb/db/mongodb.py:32"
 cost_tokens = 0
-cum_tokens = 5816
+cum_tokens = 5587
 
 [batches.content]
 kind = "lines"
@@ -4798,11 +4218,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 166
+position = 160
 key = 'Python(Method { file: "peepdb/db/mongodb.py", start_line: 39 })'
 descriptor = "python method at peepdb/db/mongodb.py:39"
 cost_tokens = 0
-cum_tokens = 5816
+cum_tokens = 5587
 
 [batches.content]
 kind = "lines"
@@ -4816,11 +4236,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 167
+position = 161
 key = 'Python(MethodBody { file: "peepdb/db/mongodb.py", start_line: 39, body_start_line: 40 })'
 descriptor = "python method body at peepdb/db/mongodb.py:39 body 40"
 cost_tokens = 10
-cum_tokens = 5826
+cum_tokens = 5597
 
 [batches.content]
 kind = "lines"
@@ -4834,69 +4254,29 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 168
-key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 161, body_start_line: 162 })'
-descriptor = "python decl body at peepdb/config.py:161 body 162"
-cost_tokens = 109
-cum_tokens = 5935
+position = 162
+key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 49, body_start_line: 50 })'
+descriptor = "python decl body at peepdb/config.py:49 body 50"
+cost_tokens = 108
+cum_tokens = 5705
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "peepdb/config.py"
-start = 162
-end = 163
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 165
-end = 166
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 168
-end = 169
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 171
-end = 171
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 173
-end = 174
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 176
-end = 176
+start = 50
+end = 58
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 169
+position = 163
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false })'
 descriptor = "README.md section #14"
 cost_tokens = 66
-cum_tokens = 6001
+cum_tokens = 5771
 
 [batches.content]
 kind = "lines"
@@ -4910,11 +4290,65 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 170
+position = 164
+key = 'Markdown(Section { file: "docs/usage.md", section_index: 4, reference_shaped: false })'
+descriptor = "docs/usage.md section #4"
+cost_tokens = 64
+cum_tokens = 5835
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/usage.md"
+start = 42
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Markdown(Section { file: "docs/usage.md", section_index: 5, reference_shaped: false })'
+descriptor = "docs/usage.md section #5"
+cost_tokens = 64
+cum_tokens = 5899
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/usage.md"
+start = 50
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Markdown(Section { file: "docs/README.md", section_index: 10, reference_shaped: false })'
+descriptor = "docs/README.md section #10"
+cost_tokens = 99
+cum_tokens = 5998
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 98
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
 descriptor = "README.md section #13"
 cost_tokens = 67
-cum_tokens = 6068
+cum_tokens = 6065
 
 [batches.content]
 kind = "lines"
@@ -4928,85 +4362,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 171
-key = 'Python(DeclDoc { file: "peepdb/cli.py", start_line: 25 })'
-descriptor = "python decl doc at peepdb/cli.py:25"
-cost_tokens = 242
-cum_tokens = 6310
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 28
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 31
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 36
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 39
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 42
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 45
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/cli.py"
-start = 48
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
+position = 168
 key = 'Markdown(Section { file: "docs/index.md", section_index: 7, reference_shaped: false })'
 descriptor = "docs/index.md section #7"
 cost_tokens = 21
-cum_tokens = 6331
+cum_tokens = 6086
 
 [batches.content]
 kind = "lines"
@@ -5020,11 +4380,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 173
+position = 169
 key = 'Markdown(Section { file: "docs/index.md", section_index: 6, reference_shaped: false })'
 descriptor = "docs/index.md section #6"
 cost_tokens = 20
-cum_tokens = 6351
+cum_tokens = 6106
 
 [batches.content]
 kind = "lines"
@@ -5038,11 +4398,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 174
+position = 170
 key = 'Python(Imports { file: "peepdb/cli.py" })'
 descriptor = "python imports in peepdb/cli.py"
 cost_tokens = 115
-cum_tokens = 6466
+cum_tokens = 6221
 
 [batches.content]
 kind = "lines"
@@ -5056,11 +4416,47 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 175
+position = 171
+key = 'Markdown(Section { file: "docs/installation.md", section_index: 2, reference_shaped: false })'
+descriptor = "docs/installation.md section #2"
+cost_tokens = 67
+cum_tokens = 6288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/installation.md"
+start = 21
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Markdown(Section { file: "docs/README.md", section_index: 7, reference_shaped: false })'
+descriptor = "docs/README.md section #7"
+cost_tokens = 122
+cum_tokens = 6410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 76
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
 key = 'Python(Method { file: "peepdb/db/oracle.py", start_line: 36 })'
 descriptor = "python method at peepdb/db/oracle.py:36"
 cost_tokens = 38
-cum_tokens = 6504
+cum_tokens = 6448
 
 [batches.content]
 kind = "lines"
@@ -5074,11 +4470,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 176
+position = 174
 key = 'Markdown(Section { file: "docs/index.md", section_index: 3, reference_shaped: false })'
 descriptor = "docs/index.md section #3"
 cost_tokens = 23
-cum_tokens = 6527
+cum_tokens = 6471
 
 [batches.content]
 kind = "lines"
@@ -5092,11 +4488,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 177
+position = 175
 key = 'Markdown(Section { file: "docs/index.md", section_index: 4, reference_shaped: false })'
 descriptor = "docs/index.md section #4"
 cost_tokens = 22
-cum_tokens = 6549
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -5110,11 +4506,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 178
+position = 176
 key = 'Markdown(Section { file: "docs/index.md", section_index: 2, reference_shaped: false })'
 descriptor = "docs/index.md section #2"
 cost_tokens = 23
-cum_tokens = 6572
+cum_tokens = 6516
 
 [batches.content]
 kind = "lines"
@@ -5128,37 +4524,29 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 179
-key = 'Python(Imports { file: "peepdb/core.py" })'
-descriptor = "python imports in peepdb/core.py"
-cost_tokens = 132
-cum_tokens = 6704
+position = 177
+key = 'Python(DeclDoc { file: "peepdb/cli.py", start_line: 25 })'
+descriptor = "python decl doc at peepdb/cli.py:25"
+cost_tokens = 277
+cum_tokens = 6793
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "peepdb/core.py"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/core.py"
-start = 7
-end = 16
+path = "peepdb/cli.py"
+start = 28
+end = 49
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 180
+position = 178
 key = 'Python(DeclBody { file: "peepdb/core.py", start_line: 118, body_start_line: 119 })'
 descriptor = "python decl body at peepdb/core.py:118 body 119"
 cost_tokens = 11
-cum_tokens = 6715
+cum_tokens = 6804
 
 [batches.content]
 kind = "lines"
@@ -5172,71 +4560,29 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 181
-key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false })'
-descriptor = "README.md section #26"
-cost_tokens = 63
-cum_tokens = 6778
+position = 179
+key = 'Python(Imports { file: "peepdb/core.py" })'
+descriptor = "python imports in peepdb/core.py"
+cost_tokens = 137
+cum_tokens = 6941
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 142
-end = 142
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 144
-end = 147
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 149
-end = 152
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'Python(Imports { file: "peepdb/config.py" })'
-descriptor = "python imports in peepdb/config.py"
-cost_tokens = 135
-cum_tokens = 6913
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
+path = "peepdb/core.py"
 start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 7
-end = 13
+end = 16
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 183
+position = 180
 key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 29, body_start_line: 31 })'
 descriptor = "python decl body at peepdb/config.py:29 body 31"
 cost_tokens = 130
-cum_tokens = 7043
+cum_tokens = 7071
 
 [batches.content]
 kind = "lines"
@@ -5250,171 +4596,47 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 184
-key = 'Markdown(Section { file: "docs/usage.md", section_index: 3, reference_shaped: false })'
-descriptor = "docs/usage.md section #3"
-cost_tokens = 76
-cum_tokens = 7119
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 32
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 38
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
-key = 'Markdown(Section { file: "docs/index.md", section_index: 8, reference_shaped: false })'
-descriptor = "docs/index.md section #8"
-cost_tokens = 78
-cum_tokens = 7197
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/index.md"
-start = 24
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
-key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false })'
-descriptor = "README.md section #17"
-cost_tokens = 67
-cum_tokens = 7264
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 63
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 67
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
-key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 144, body_start_line: 145 })'
-descriptor = "python decl body at peepdb/config.py:144 body 145"
-cost_tokens = 139
-cum_tokens = 7403
+position = 181
+key = 'Python(Imports { file: "peepdb/config.py" })'
+descriptor = "python imports in peepdb/config.py"
+cost_tokens = 140
+cum_tokens = 7211
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "peepdb/config.py"
-start = 145
-end = 147
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 149
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 152
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 156
-end = 159
+start = 1
+end = 13
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 188
+position = 182
+key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 161, body_start_line: 162 })'
+descriptor = "python decl body at peepdb/config.py:161 body 162"
+cost_tokens = 134
+cum_tokens = 7345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "peepdb/config.py"
+start = 162
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
 key = 'Python(MethodBody { file: "peepdb/db/mongodb.py", start_line: 32, body_start_line: 33 })'
 descriptor = "python method body at peepdb/db/mongodb.py:32 body 33"
 cost_tokens = 48
-cum_tokens = 7451
+cum_tokens = 7393
 
 [batches.content]
 kind = "lines"
@@ -5428,11 +4650,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 189
+position = 184
 key = 'Python(MethodSigs { file: "peepdb/db/mariadb.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/mariadb.py"
 cost_tokens = 79
-cum_tokens = 7530
+cum_tokens = 7472
 
 [batches.content]
 kind = "lines"
@@ -5502,11 +4724,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 185
 key = 'Python(Method { file: "peepdb/db/mariadb.py", start_line: 6 })'
 descriptor = "python method at peepdb/db/mariadb.py:6"
 cost_tokens = 0
-cum_tokens = 7530
+cum_tokens = 7472
 
 [batches.content]
 kind = "lines"
@@ -5520,11 +4742,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 191
+position = 186
 key = 'Python(Method { file: "peepdb/db/mariadb.py", start_line: 23 })'
 descriptor = "python method at peepdb/db/mariadb.py:23"
 cost_tokens = 0
-cum_tokens = 7530
+cum_tokens = 7472
 
 [batches.content]
 kind = "lines"
@@ -5538,11 +4760,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 192
+position = 187
 key = 'Python(Method { file: "peepdb/db/mariadb.py", start_line: 30 })'
 descriptor = "python method at peepdb/db/mariadb.py:30"
 cost_tokens = 0
-cum_tokens = 7530
+cum_tokens = 7472
 
 [batches.content]
 kind = "lines"
@@ -5556,11 +4778,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 193
+position = 188
 key = 'Python(Method { file: "peepdb/db/mariadb.py", start_line: 34 })'
 descriptor = "python method at peepdb/db/mariadb.py:34"
 cost_tokens = 0
-cum_tokens = 7530
+cum_tokens = 7472
 
 [batches.content]
 kind = "lines"
@@ -5574,11 +4796,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 194
+position = 189
 key = 'Python(MethodBody { file: "peepdb/db/mariadb.py", start_line: 30, body_start_line: 31 })'
 descriptor = "python method body at peepdb/db/mariadb.py:30 body 31"
 cost_tokens = 31
-cum_tokens = 7561
+cum_tokens = 7503
 
 [batches.content]
 kind = "lines"
@@ -5592,11 +4814,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 195
+position = 190
 key = 'Python(MethodSigs { file: "peepdb/db/mysql.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/mysql.py"
 cost_tokens = 79
-cum_tokens = 7640
+cum_tokens = 7582
 
 [batches.content]
 kind = "lines"
@@ -5666,11 +4888,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 196
+position = 191
 key = 'Python(Method { file: "peepdb/db/mysql.py", start_line: 6 })'
 descriptor = "python method at peepdb/db/mysql.py:6"
 cost_tokens = 0
-cum_tokens = 7640
+cum_tokens = 7582
 
 [batches.content]
 kind = "lines"
@@ -5684,11 +4906,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 197
+position = 192
 key = 'Python(Method { file: "peepdb/db/mysql.py", start_line: 22 })'
 descriptor = "python method at peepdb/db/mysql.py:22"
 cost_tokens = 0
-cum_tokens = 7640
+cum_tokens = 7582
 
 [batches.content]
 kind = "lines"
@@ -5702,11 +4924,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 198
+position = 193
 key = 'Python(Method { file: "peepdb/db/mysql.py", start_line: 29 })'
 descriptor = "python method at peepdb/db/mysql.py:29"
 cost_tokens = 0
-cum_tokens = 7640
+cum_tokens = 7582
 
 [batches.content]
 kind = "lines"
@@ -5720,11 +4942,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 199
+position = 194
 key = 'Python(Method { file: "peepdb/db/mysql.py", start_line: 33 })'
 descriptor = "python method at peepdb/db/mysql.py:33"
 cost_tokens = 0
-cum_tokens = 7640
+cum_tokens = 7582
 
 [batches.content]
 kind = "lines"
@@ -5738,11 +4960,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 200
+position = 195
 key = 'Python(MethodBody { file: "peepdb/db/mysql.py", start_line: 29, body_start_line: 30 })'
 descriptor = "python method body at peepdb/db/mysql.py:29 body 30"
 cost_tokens = 34
-cum_tokens = 7674
+cum_tokens = 7616
 
 [batches.content]
 kind = "lines"
@@ -5756,11 +4978,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 201
+position = 196
 key = 'Python(MethodSigs { file: "peepdb/db/postgresql.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/postgresql.py"
 cost_tokens = 79
-cum_tokens = 7753
+cum_tokens = 7695
 
 [batches.content]
 kind = "lines"
@@ -5830,11 +5052,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 202
+position = 197
 key = 'Python(Method { file: "peepdb/db/postgresql.py", start_line: 7 })'
 descriptor = "python method at peepdb/db/postgresql.py:7"
 cost_tokens = 0
-cum_tokens = 7753
+cum_tokens = 7695
 
 [batches.content]
 kind = "lines"
@@ -5848,11 +5070,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 203
+position = 198
 key = 'Python(Method { file: "peepdb/db/postgresql.py", start_line: 23 })'
 descriptor = "python method at peepdb/db/postgresql.py:23"
 cost_tokens = 0
-cum_tokens = 7753
+cum_tokens = 7695
 
 [batches.content]
 kind = "lines"
@@ -5866,11 +5088,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 204
+position = 199
 key = 'Python(Method { file: "peepdb/db/postgresql.py", start_line: 30 })'
 descriptor = "python method at peepdb/db/postgresql.py:30"
 cost_tokens = 0
-cum_tokens = 7753
+cum_tokens = 7695
 
 [batches.content]
 kind = "lines"
@@ -5884,11 +5106,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 205
+position = 200
 key = 'Python(Method { file: "peepdb/db/postgresql.py", start_line: 34 })'
 descriptor = "python method at peepdb/db/postgresql.py:34"
 cost_tokens = 0
-cum_tokens = 7753
+cum_tokens = 7695
 
 [batches.content]
 kind = "lines"
@@ -5902,11 +5124,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 206
+position = 201
 key = 'Python(MethodBody { file: "peepdb/db/postgresql.py", start_line: 30, body_start_line: 31 })'
 descriptor = "python method body at peepdb/db/postgresql.py:30 body 31"
 cost_tokens = 40
-cum_tokens = 7793
+cum_tokens = 7735
 
 [batches.content]
 kind = "lines"
@@ -5920,11 +5142,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 207
+position = 202
 key = 'Python(MethodSigs { file: "peepdb/db/sqlite.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/sqlite.py"
 cost_tokens = 79
-cum_tokens = 7872
+cum_tokens = 7814
 
 [batches.content]
 kind = "lines"
@@ -5994,11 +5216,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 208
+position = 203
 key = 'Python(Method { file: "peepdb/db/sqlite.py", start_line: 7 })'
 descriptor = "python method at peepdb/db/sqlite.py:7"
 cost_tokens = 0
-cum_tokens = 7872
+cum_tokens = 7814
 
 [batches.content]
 kind = "lines"
@@ -6012,11 +5234,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 209
+position = 204
 key = 'Python(Method { file: "peepdb/db/sqlite.py", start_line: 22 })'
 descriptor = "python method at peepdb/db/sqlite.py:22"
 cost_tokens = 0
-cum_tokens = 7872
+cum_tokens = 7814
 
 [batches.content]
 kind = "lines"
@@ -6030,11 +5252,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 210
+position = 205
 key = 'Python(Method { file: "peepdb/db/sqlite.py", start_line: 29 })'
 descriptor = "python method at peepdb/db/sqlite.py:29"
 cost_tokens = 0
-cum_tokens = 7872
+cum_tokens = 7814
 
 [batches.content]
 kind = "lines"
@@ -6048,11 +5270,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 211
+position = 206
 key = 'Python(Method { file: "peepdb/db/sqlite.py", start_line: 43 })'
 descriptor = "python method at peepdb/db/sqlite.py:43"
 cost_tokens = 0
-cum_tokens = 7872
+cum_tokens = 7814
 
 [batches.content]
 kind = "lines"
@@ -6066,185 +5288,83 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 212
-key = 'Markdown(Section { file: "docs/usage.md", section_index: 1, reference_shaped: false })'
-descriptor = "docs/usage.md section #1"
-cost_tokens = 85
-cum_tokens = 7957
+position = 207
+key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false })'
+descriptor = "README.md section #26"
+cost_tokens = 73
+cum_tokens = 7887
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/usage.md"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 14
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 18
-end = 18
+path = "README.md"
+start = 142
+end = 152
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 213
-key = 'Markdown(Section { file: "docs/README.md", section_index: 3, reference_shaped: false })'
-descriptor = "docs/README.md section #3"
-cost_tokens = 188
-cum_tokens = 8145
+position = 208
+key = 'Markdown(Section { file: "docs/index.md", section_index: 8, reference_shaped: false })'
+descriptor = "docs/index.md section #8"
+cost_tokens = 88
+cum_tokens = 7975
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/README.md"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 42
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 48
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 53
-end = 53
+path = "docs/index.md"
+start = 20
+end = 26
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 214
-key = 'Markdown(Section { file: "docs/usage.md", section_index: 6, reference_shaped: false })'
-descriptor = "docs/usage.md section #6"
-cost_tokens = 89
-cum_tokens = 8234
+position = 209
+key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 144, body_start_line: 145 })'
+descriptor = "python decl body at peepdb/config.py:144 body 145"
+cost_tokens = 154
+cum_tokens = 8129
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/usage.md"
-start = 58
-end = 58
+path = "peepdb/config.py"
+start = 145
+end = 159
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 60
-end = 60
+[[batches]]
+position = 210
+key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false })'
+descriptor = "README.md section #17"
+cost_tokens = 77
+cum_tokens = 8206
 
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 62
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/usage.md"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 68
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/usage.md"
-start = 72
+path = "README.md"
+start = 61
 end = 72
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 215
+position = 211
 key = 'Python(MethodBody { file: "peepdb/db/sqlite.py", start_line: 22, body_start_line: 23 })'
 descriptor = "python method body at peepdb/db/sqlite.py:22 body 23"
 cost_tokens = 52
-cum_tokens = 8286
+cum_tokens = 8258
 
 [batches.content]
 kind = "lines"
@@ -6258,11 +5378,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 216
+position = 212
 key = 'Python(MethodBody { file: "peepdb/db/oracle.py", start_line: 25, body_start_line: 26 })'
 descriptor = "python method body at peepdb/db/oracle.py:25 body 26"
 cost_tokens = 53
-cum_tokens = 8339
+cum_tokens = 8311
 
 [batches.content]
 kind = "lines"
@@ -6276,11 +5396,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 217
+position = 213
 key = 'Markdown(Section { file: "docs/README.md", section_index: 11, reference_shaped: false })'
 descriptor = "docs/README.md section #11"
 cost_tokens = 46
-cum_tokens = 8385
+cum_tokens = 8357
 
 [batches.content]
 kind = "lines"
@@ -6294,11 +5414,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 218
+position = 214
 key = 'Python(MethodBody { file: "peepdb/db/mariadb.py", start_line: 23, body_start_line: 24 })'
 descriptor = "python method body at peepdb/db/mariadb.py:23 body 24"
 cost_tokens = 54
-cum_tokens = 8439
+cum_tokens = 8411
 
 [batches.content]
 kind = "lines"
@@ -6312,11 +5432,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 219
+position = 215
 key = 'Python(MethodBody { file: "peepdb/db/mysql.py", start_line: 22, body_start_line: 23 })'
 descriptor = "python method body at peepdb/db/mysql.py:22 body 23"
 cost_tokens = 54
-cum_tokens = 8493
+cum_tokens = 8465
 
 [batches.content]
 kind = "lines"
@@ -6330,11 +5450,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 220
+position = 216
 key = 'Python(MethodBody { file: "peepdb/db/postgresql.py", start_line: 23, body_start_line: 24 })'
 descriptor = "python method body at peepdb/db/postgresql.py:23 body 24"
 cost_tokens = 54
-cum_tokens = 8547
+cum_tokens = 8519
 
 [batches.content]
 kind = "lines"
@@ -6348,11 +5468,29 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 221
+position = 217
+key = 'Markdown(Section { file: "docs/usage.md", section_index: 3, reference_shaped: false })'
+descriptor = "docs/usage.md section #3"
+cost_tokens = 96
+cum_tokens = 8615
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/usage.md"
+start = 28
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 218
 key = 'Python(MethodSigs { file: "peepdb/db/firebase.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/firebase.py"
 cost_tokens = 96
-cum_tokens = 8643
+cum_tokens = 8711
 
 [batches.content]
 kind = "lines"
@@ -6438,11 +5576,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 222
+position = 219
 key = 'Python(Method { file: "peepdb/db/firebase.py", start_line: 10 })'
 descriptor = "python method at peepdb/db/firebase.py:10"
 cost_tokens = 0
-cum_tokens = 8643
+cum_tokens = 8711
 
 [batches.content]
 kind = "lines"
@@ -6456,11 +5594,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 223
+position = 220
 key = 'Python(Method { file: "peepdb/db/firebase.py", start_line: 15 })'
 descriptor = "python method at peepdb/db/firebase.py:15"
 cost_tokens = 0
-cum_tokens = 8643
+cum_tokens = 8711
 
 [batches.content]
 kind = "lines"
@@ -6474,11 +5612,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 224
+position = 221
 key = 'Python(Method { file: "peepdb/db/firebase.py", start_line: 30 })'
 descriptor = "python method at peepdb/db/firebase.py:30"
 cost_tokens = 0
-cum_tokens = 8643
+cum_tokens = 8711
 
 [batches.content]
 kind = "lines"
@@ -6492,11 +5630,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 225
+position = 222
 key = 'Python(Method { file: "peepdb/db/firebase.py", start_line: 39 })'
 descriptor = "python method at peepdb/db/firebase.py:39"
 cost_tokens = 0
-cum_tokens = 8643
+cum_tokens = 8711
 
 [batches.content]
 kind = "lines"
@@ -6510,11 +5648,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 226
+position = 223
 key = 'Python(Method { file: "peepdb/db/firebase.py", start_line: 26 })'
 descriptor = "python method at peepdb/db/firebase.py:26"
 cost_tokens = 16
-cum_tokens = 8659
+cum_tokens = 8727
 
 [batches.content]
 kind = "lines"
@@ -6528,11 +5666,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 227
+position = 224
 key = 'Python(MethodBody { file: "peepdb/db/firebase.py", start_line: 26, body_start_line: 28 })'
 descriptor = "python method body at peepdb/db/firebase.py:26 body 28"
 cost_tokens = 5
-cum_tokens = 8664
+cum_tokens = 8732
 
 [batches.content]
 kind = "lines"
@@ -6546,11 +5684,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 228
+position = 225
 key = 'Python(MethodBody { file: "peepdb/db/firebase.py", start_line: 10, body_start_line: 11 })'
 descriptor = "python method body at peepdb/db/firebase.py:10 body 11"
 cost_tokens = 33
-cum_tokens = 8697
+cum_tokens = 8765
 
 [batches.content]
 kind = "lines"
@@ -6564,11 +5702,29 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 229
+position = 226
+key = 'Markdown(Section { file: "docs/usage.md", section_index: 1, reference_shaped: false })'
+descriptor = "docs/usage.md section #1"
+cost_tokens = 100
+cum_tokens = 8865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/usage.md"
+start = 10
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
 key = 'Python(Method { file: "peepdb/db/mongodb.py", start_line: 42 })'
 descriptor = "python method at peepdb/db/mongodb.py:42"
 cost_tokens = 55
-cum_tokens = 8752
+cum_tokens = 8920
 
 [batches.content]
 kind = "lines"
@@ -6582,11 +5738,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 230
+position = 228
 key = 'Python(MethodDoc { file: "peepdb/db/mongodb.py", start_line: 42 })'
 descriptor = "python method doc at peepdb/db/mongodb.py:42"
 cost_tokens = 26
-cum_tokens = 8778
+cum_tokens = 8946
 
 [batches.content]
 kind = "lines"
@@ -6600,11 +5756,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 231
+position = 229
 key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 178, body_start_line: 194 })'
 descriptor = "python decl body at peepdb/config.py:178 body 194"
 cost_tokens = 8
-cum_tokens = 8786
+cum_tokens = 8954
 
 [batches.content]
 kind = "lines"
@@ -6618,11 +5774,29 @@ end = 194
 kind = "full"
 
 [[batches]]
-position = 232
+position = 230
+key = 'Markdown(Section { file: "docs/README.md", section_index: 3, reference_shaped: false })'
+descriptor = "docs/README.md section #3"
+cost_tokens = 223
+cum_tokens = 9177
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 34
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 231
 key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 196, body_start_line: 197 })'
 descriptor = "python decl body at peepdb/config.py:196 body 197"
 cost_tokens = 181
-cum_tokens = 8967
+cum_tokens = 9358
 
 [batches.content]
 kind = "lines"
@@ -6636,11 +5810,11 @@ end = 208
 kind = "full"
 
 [[batches]]
-position = 233
+position = 232
 key = 'Python(DeclBody { file: "peepdb/core.py", start_line: 101, body_start_line: 115 })'
 descriptor = "python decl body at peepdb/core.py:101 body 115"
 cost_tokens = 16
-cum_tokens = 8983
+cum_tokens = 9374
 
 [batches.content]
 kind = "lines"
@@ -6654,61 +5828,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 234
-key = 'Markdown(Section { file: "docs/installation.md", section_index: 3, reference_shaped: false })'
-descriptor = "docs/installation.md section #3"
-cost_tokens = 108
-cum_tokens = 9091
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 34
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/installation.md"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 235
+position = 233
 key = 'Markdown(Section { file: "docs/index.md", section_index: 1, reference_shaped: false })'
 descriptor = "docs/index.md section #1"
 cost_tokens = 35
-cum_tokens = 9126
+cum_tokens = 9409
 
 [batches.content]
 kind = "lines"
@@ -6722,45 +5846,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 236
-key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false })'
-descriptor = "README.md section #22"
-cost_tokens = 97
-cum_tokens = 9223
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 105
-end = 108
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 110
-end = 113
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 237
+position = 234
 key = 'Python(DeclBody { file: "peepdb/cli.py", start_line: 53, body_start_line: 83 })'
 descriptor = "python decl body at peepdb/cli.py:53 body 83"
 cost_tokens = 17
-cum_tokens = 9240
+cum_tokens = 9426
 
 [batches.content]
 kind = "lines"
@@ -6774,11 +5864,29 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 238
+position = 235
+key = 'Markdown(Section { file: "docs/usage.md", section_index: 6, reference_shaped: false })'
+descriptor = "docs/usage.md section #6"
+cost_tokens = 114
+cum_tokens = 9540
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/usage.md"
+start = 58
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
 key = 'Python(MethodSigs { file: "peepdb/db/mssql.py", chunk_index: 0 })'
 descriptor = "python method sigs in peepdb/db/mssql.py"
 cost_tokens = 125
-cum_tokens = 9365
+cum_tokens = 9665
 
 [batches.content]
 kind = "lines"
@@ -6864,11 +5972,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 239
+position = 237
 key = 'Python(Method { file: "peepdb/db/mssql.py", start_line: 7 })'
 descriptor = "python method at peepdb/db/mssql.py:7"
 cost_tokens = 0
-cum_tokens = 9365
+cum_tokens = 9665
 
 [batches.content]
 kind = "lines"
@@ -6882,11 +5990,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 240
+position = 238
 key = 'Python(Method { file: "peepdb/db/mssql.py", start_line: 12 })'
 descriptor = "python method at peepdb/db/mssql.py:12"
 cost_tokens = 0
-cum_tokens = 9365
+cum_tokens = 9665
 
 [batches.content]
 kind = "lines"
@@ -6900,11 +6008,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 241
+position = 239
 key = 'Python(Method { file: "peepdb/db/mssql.py", start_line: 28 })'
 descriptor = "python method at peepdb/db/mssql.py:28"
 cost_tokens = 0
-cum_tokens = 9365
+cum_tokens = 9665
 
 [batches.content]
 kind = "lines"
@@ -6918,11 +6026,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 242
+position = 240
 key = 'Python(Method { file: "peepdb/db/mssql.py", start_line: 45 })'
 descriptor = "python method at peepdb/db/mssql.py:45"
 cost_tokens = 0
-cum_tokens = 9365
+cum_tokens = 9665
 
 [batches.content]
 kind = "lines"
@@ -6936,11 +6044,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 243
+position = 241
 key = 'Python(Method { file: "peepdb/db/mssql.py", start_line: 35 })'
 descriptor = "python method at peepdb/db/mssql.py:35"
 cost_tokens = 13
-cum_tokens = 9378
+cum_tokens = 9678
 
 [batches.content]
 kind = "lines"
@@ -6954,11 +6062,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 244
+position = 242
 key = 'Python(MethodBody { file: "peepdb/db/mssql.py", start_line: 7, body_start_line: 8 })'
 descriptor = "python method body at peepdb/db/mssql.py:7 body 8"
 cost_tokens = 45
-cum_tokens = 9423
+cum_tokens = 9723
 
 [batches.content]
 kind = "lines"
@@ -6972,11 +6080,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 245
+position = 243
 key = 'Python(MethodBody { file: "peepdb/db/mssql.py", start_line: 28, body_start_line: 29 })'
 descriptor = "python method body at peepdb/db/mssql.py:28 body 29"
 cost_tokens = 54
-cum_tokens = 9477
+cum_tokens = 9777
 
 [batches.content]
 kind = "lines"
@@ -6990,11 +6098,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 246
+position = 244
 key = 'Markdown(Section { file: "docs/README.md", section_index: 6, reference_shaped: false })'
 descriptor = "docs/README.md section #6"
 cost_tokens = 75
-cum_tokens = 9552
+cum_tokens = 9852
 
 [batches.content]
 kind = "lines"
@@ -7008,11 +6116,29 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 247
+position = 245
+key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false })'
+descriptor = "README.md section #22"
+cost_tokens = 107
+cum_tokens = 9959
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 103
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
 key = 'Python(DeclBody { file: "peepdb/core.py", start_line: 56, body_start_line: 69 })'
 descriptor = "python decl body at peepdb/core.py:56 body 69"
 cost_tokens = 10
-cum_tokens = 9562
+cum_tokens = 9969
 
 [batches.content]
 kind = "lines"
@@ -7021,78 +6147,6 @@ kind = "lines"
 path = "peepdb/core.py"
 start = 69
 end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 248
-key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false })'
-descriptor = "README.md section #21"
-cost_tokens = 132
-cum_tokens = 9694
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 91
-end = 101
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 249
-key = 'Python(MethodBody { file: "peepdb/db/firebase.py", start_line: 30, body_start_line: 31 })'
-descriptor = "python method body at peepdb/db/firebase.py:30 body 31"
-cost_tokens = 81
-cum_tokens = 9775
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/db/firebase.py"
-start = 31
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 250
-key = 'Markdown(Section { file: "README.md", section_index: 25, reference_shaped: false })'
-descriptor = "README.md section #25"
-cost_tokens = 152
-cum_tokens = 9927
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 127
-end = 140
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 251
-key = 'Python(DeclBody { file: "peepdb/config.py", start_line: 178, body_start_line: 182 })'
-descriptor = "python decl body at peepdb/config.py:178 body 182"
-cost_tokens = 12
-cum_tokens = 9939
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "peepdb/config.py"
-start = 182
-end = 182
 
 [batches.content.spans.render]
 kind = "full"

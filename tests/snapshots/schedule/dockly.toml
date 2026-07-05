@@ -1,7 +1,7 @@
 fixture = "dockly"
 budget = 10000
-cumulative_tokens = 9750
-batch_count = 198
+cumulative_tokens = 9817
+batch_count = 190
 
 [[batches]]
 position = 1
@@ -215,10 +215,28 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
+key = 'Typescript(ModuleItem { file: "index.js", start_line: 17 })'
+descriptor = "module item at index.js:17"
+cost_tokens = 14
+cum_tokens = 363
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
-cost_tokens = 98
-cum_tokens = 447
+cost_tokens = 103
+cum_tokens = 466
 
 [batches.content]
 kind = "lines"
@@ -250,14 +268,6 @@ kind = "full"
 [[batches.content.spans]]
 path = "README.md"
 start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 65
 end = 65
 
 [batches.content.spans.render]
@@ -329,14 +339,6 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "README.md"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "README.md"
 start = 66
 end = 66
 
@@ -384,11 +386,11 @@ end = 138
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 22
-cum_tokens = 469
+cum_tokens = 488
 
 [batches.content]
 kind = "lines"
@@ -402,29 +404,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 12
-key = 'Typescript(ModuleItem { file: "index.js", start_line: 17 })'
-descriptor = "module item at index.js:17"
-cost_tokens = 14
-cum_tokens = 483
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 13
 key = 'Typescript(Export { file: "lib/node.version.js", start_line: 1 })'
 descriptor = "export at lib/node.version.js:1"
 cost_tokens = 17
-cum_tokens = 500
+cum_tokens = 505
 
 [batches.content]
 kind = "lines"
@@ -442,7 +426,7 @@ position = 14
 key = 'Fs(DirListing { dir: "hooks" })'
 descriptor = "listing of 'hooks'"
 cost_tokens = 24
-cum_tokens = 524
+cum_tokens = 529
 
 [batches.content]
 kind = "fs"
@@ -456,7 +440,7 @@ position = 15
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 39
-cum_tokens = 563
+cum_tokens = 568
 
 [batches.content]
 kind = "fs"
@@ -470,7 +454,7 @@ position = 16
 key = 'Typescript(ExportNames { file: "src/cli.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/cli.js"
 cost_tokens = 12
-cum_tokens = 575
+cum_tokens = 580
 
 [batches.content]
 kind = "lines"
@@ -488,7 +472,7 @@ position = 17
 key = 'Typescript(ExportNames { file: "src/dockerUtil.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/dockerUtil.js"
 cost_tokens = 20
-cum_tokens = 595
+cum_tokens = 600
 
 [batches.content]
 kind = "lines"
@@ -522,7 +506,7 @@ position = 18
 key = 'Typescript(Export { file: "src/dockerUtil.js", start_line: 5 })'
 descriptor = "export at src/dockerUtil.js:5"
 cost_tokens = 0
-cum_tokens = 595
+cum_tokens = 600
 
 [batches.content]
 kind = "lines"
@@ -548,7 +532,7 @@ position = 19
 key = 'Typescript(ExportNames { file: "src/screen.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/screen.js"
 cost_tokens = 20
-cum_tokens = 615
+cum_tokens = 620
 
 [batches.content]
 kind = "lines"
@@ -582,7 +566,7 @@ position = 20
 key = 'Typescript(Export { file: "src/screen.js", start_line: 18 })'
 descriptor = "export at src/screen.js:18"
 cost_tokens = 0
-cum_tokens = 615
+cum_tokens = 620
 
 [batches.content]
 kind = "lines"
@@ -608,7 +592,7 @@ position = 21
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 6 })'
 descriptor = "export member at src/dockerUtil.js:5 member 6"
 cost_tokens = 10
-cum_tokens = 625
+cum_tokens = 630
 
 [batches.content]
 kind = "lines"
@@ -634,7 +618,7 @@ position = 22
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 48 })'
 descriptor = "export member at src/screen.js:18 member 48"
 cost_tokens = 10
-cum_tokens = 635
+cum_tokens = 640
 
 [batches.content]
 kind = "lines"
@@ -660,7 +644,7 @@ position = 23
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 180 })'
 descriptor = "export member at src/screen.js:18 member 180"
 cost_tokens = 10
-cum_tokens = 645
+cum_tokens = 650
 
 [batches.content]
 kind = "lines"
@@ -686,7 +670,7 @@ position = 24
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 192 })'
 descriptor = "export member at src/screen.js:18 member 192"
 cost_tokens = 10
-cum_tokens = 655
+cum_tokens = 660
 
 [batches.content]
 kind = "lines"
@@ -712,7 +696,7 @@ position = 25
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 193 })'
 descriptor = "export body at src/screen.js:18 body 193"
 cost_tokens = 9
-cum_tokens = 664
+cum_tokens = 669
 
 [batches.content]
 kind = "lines"
@@ -730,7 +714,7 @@ position = 26
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 35 })'
 descriptor = "export member at src/screen.js:18 member 35"
 cost_tokens = 11
-cum_tokens = 675
+cum_tokens = 680
 
 [batches.content]
 kind = "lines"
@@ -756,7 +740,7 @@ position = 27
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 71 })'
 descriptor = "export member at src/screen.js:18 member 71"
 cost_tokens = 11
-cum_tokens = 686
+cum_tokens = 691
 
 [batches.content]
 kind = "lines"
@@ -782,7 +766,7 @@ position = 28
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 79 })'
 descriptor = "export member at src/screen.js:18 member 79"
 cost_tokens = 11
-cum_tokens = 697
+cum_tokens = 702
 
 [batches.content]
 kind = "lines"
@@ -808,7 +792,7 @@ position = 29
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 86 })'
 descriptor = "export member at src/screen.js:18 member 86"
 cost_tokens = 11
-cum_tokens = 708
+cum_tokens = 713
 
 [batches.content]
 kind = "lines"
@@ -834,7 +818,7 @@ position = 30
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 107 })'
 descriptor = "export member at src/screen.js:18 member 107"
 cost_tokens = 11
-cum_tokens = 719
+cum_tokens = 724
 
 [batches.content]
 kind = "lines"
@@ -860,7 +844,7 @@ position = 31
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 132 })'
 descriptor = "export member at src/screen.js:18 member 132"
 cost_tokens = 11
-cum_tokens = 730
+cum_tokens = 735
 
 [batches.content]
 kind = "lines"
@@ -886,7 +870,7 @@ position = 32
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 138 })'
 descriptor = "export member at src/screen.js:18 member 138"
 cost_tokens = 11
-cum_tokens = 741
+cum_tokens = 746
 
 [batches.content]
 kind = "lines"
@@ -912,7 +896,7 @@ position = 33
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 152 })'
 descriptor = "export member at src/screen.js:18 member 152"
 cost_tokens = 11
-cum_tokens = 752
+cum_tokens = 757
 
 [batches.content]
 kind = "lines"
@@ -938,7 +922,7 @@ position = 34
 key = 'Fs(DirListing { dir: "src/widgetsTemplates" })'
 descriptor = "listing of 'src/widgetsTemplates'"
 cost_tokens = 31
-cum_tokens = 783
+cum_tokens = 788
 
 [batches.content]
 kind = "fs"
@@ -952,7 +936,7 @@ position = 35
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 33 })'
 descriptor = "export member at src/dockerUtil.js:5 member 33"
 cost_tokens = 12
-cum_tokens = 795
+cum_tokens = 800
 
 [batches.content]
 kind = "lines"
@@ -978,7 +962,7 @@ position = 36
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 114 })'
 descriptor = "export member at src/screen.js:18 member 114"
 cost_tokens = 12
-cum_tokens = 807
+cum_tokens = 812
 
 [batches.content]
 kind = "lines"
@@ -1004,7 +988,7 @@ position = 37
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 120 })'
 descriptor = "export member at src/screen.js:18 member 120"
 cost_tokens = 12
-cum_tokens = 819
+cum_tokens = 824
 
 [batches.content]
 kind = "lines"
@@ -1030,7 +1014,7 @@ position = 38
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 126 })'
 descriptor = "export member at src/screen.js:18 member 126"
 cost_tokens = 12
-cum_tokens = 831
+cum_tokens = 836
 
 [batches.content]
 kind = "lines"
@@ -1056,7 +1040,7 @@ position = 39
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 43 })'
 descriptor = "export member at src/dockerUtil.js:5 member 43"
 cost_tokens = 13
-cum_tokens = 844
+cum_tokens = 849
 
 [batches.content]
 kind = "lines"
@@ -1082,7 +1066,7 @@ position = 40
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 55 })'
 descriptor = "export member at src/dockerUtil.js:5 member 55"
 cost_tokens = 13
-cum_tokens = 857
+cum_tokens = 862
 
 [batches.content]
 kind = "lines"
@@ -1108,7 +1092,7 @@ position = 41
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 65 })'
 descriptor = "export member at src/dockerUtil.js:5 member 65"
 cost_tokens = 13
-cum_tokens = 870
+cum_tokens = 875
 
 [batches.content]
 kind = "lines"
@@ -1134,7 +1118,7 @@ position = 42
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 78 })'
 descriptor = "export member at src/dockerUtil.js:5 member 78"
 cost_tokens = 13
-cum_tokens = 883
+cum_tokens = 888
 
 [batches.content]
 kind = "lines"
@@ -1160,7 +1144,7 @@ position = 43
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 124 })'
 descriptor = "export member at src/dockerUtil.js:5 member 124"
 cost_tokens = 13
-cum_tokens = 896
+cum_tokens = 901
 
 [batches.content]
 kind = "lines"
@@ -1186,7 +1170,7 @@ position = 44
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 19 })'
 descriptor = "export member at src/screen.js:18 member 19"
 cost_tokens = 13
-cum_tokens = 909
+cum_tokens = 914
 
 [batches.content]
 kind = "lines"
@@ -1212,7 +1196,7 @@ position = 45
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 88 })'
 descriptor = "export member at src/dockerUtil.js:5 member 88"
 cost_tokens = 14
-cum_tokens = 923
+cum_tokens = 928
 
 [batches.content]
 kind = "lines"
@@ -1238,7 +1222,7 @@ position = 46
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 100 })'
 descriptor = "export member at src/dockerUtil.js:5 member 100"
 cost_tokens = 14
-cum_tokens = 937
+cum_tokens = 942
 
 [batches.content]
 kind = "lines"
@@ -1264,7 +1248,7 @@ position = 47
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 112 })'
 descriptor = "export member at src/dockerUtil.js:5 member 112"
 cost_tokens = 14
-cum_tokens = 951
+cum_tokens = 956
 
 [batches.content]
 kind = "lines"
@@ -1290,7 +1274,7 @@ position = 48
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 155 })'
 descriptor = "export member at src/dockerUtil.js:5 member 155"
 cost_tokens = 16
-cum_tokens = 967
+cum_tokens = 972
 
 [batches.content]
 kind = "lines"
@@ -1316,7 +1300,7 @@ position = 49
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 160 })'
 descriptor = "export member at src/dockerUtil.js:5 member 160"
 cost_tokens = 16
-cum_tokens = 983
+cum_tokens = 988
 
 [batches.content]
 kind = "lines"
@@ -1342,7 +1326,7 @@ position = 50
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 165 })'
 descriptor = "export member at src/dockerUtil.js:5 member 165"
 cost_tokens = 16
-cum_tokens = 999
+cum_tokens = 1004
 
 [batches.content]
 kind = "lines"
@@ -1368,7 +1352,7 @@ position = 51
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 170 })'
 descriptor = "export member at src/dockerUtil.js:5 member 170"
 cost_tokens = 16
-cum_tokens = 1015
+cum_tokens = 1020
 
 [batches.content]
 kind = "lines"
@@ -1394,7 +1378,7 @@ position = 52
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 175 })'
 descriptor = "export member at src/dockerUtil.js:5 member 175"
 cost_tokens = 16
-cum_tokens = 1031
+cum_tokens = 1036
 
 [batches.content]
 kind = "lines"
@@ -1420,7 +1404,7 @@ position = 53
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 180 })'
 descriptor = "export member at src/dockerUtil.js:5 member 180"
 cost_tokens = 16
-cum_tokens = 1047
+cum_tokens = 1052
 
 [batches.content]
 kind = "lines"
@@ -1446,7 +1430,7 @@ position = 54
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 187 })'
 descriptor = "export member at src/dockerUtil.js:5 member 187"
 cost_tokens = 16
-cum_tokens = 1063
+cum_tokens = 1068
 
 [batches.content]
 kind = "lines"
@@ -1472,7 +1456,7 @@ position = 55
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 166 })'
 descriptor = "export body at src/dockerUtil.js:5 body 166"
 cost_tokens = 26
-cum_tokens = 1089
+cum_tokens = 1094
 
 [batches.content]
 kind = "lines"
@@ -1490,7 +1474,7 @@ position = 56
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 171 })'
 descriptor = "export body at src/dockerUtil.js:5 body 171"
 cost_tokens = 26
-cum_tokens = 1115
+cum_tokens = 1120
 
 [batches.content]
 kind = "lines"
@@ -1508,7 +1492,7 @@ position = 57
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 176 })'
 descriptor = "export body at src/dockerUtil.js:5 body 176"
 cost_tokens = 26
-cum_tokens = 1141
+cum_tokens = 1146
 
 [batches.content]
 kind = "lines"
@@ -1526,7 +1510,7 @@ position = 58
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 156 })'
 descriptor = "export body at src/dockerUtil.js:5 body 156"
 cost_tokens = 27
-cum_tokens = 1168
+cum_tokens = 1173
 
 [batches.content]
 kind = "lines"
@@ -1544,7 +1528,7 @@ position = 59
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 161 })'
 descriptor = "export body at src/dockerUtil.js:5 body 161"
 cost_tokens = 27
-cum_tokens = 1195
+cum_tokens = 1200
 
 [batches.content]
 kind = "lines"
@@ -1562,7 +1546,7 @@ position = 60
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 194 })'
 descriptor = "export member at src/dockerUtil.js:5 member 194"
 cost_tokens = 17
-cum_tokens = 1212
+cum_tokens = 1217
 
 [batches.content]
 kind = "lines"
@@ -1588,7 +1572,7 @@ position = 61
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 208 })'
 descriptor = "export member at src/dockerUtil.js:5 member 208"
 cost_tokens = 17
-cum_tokens = 1229
+cum_tokens = 1234
 
 [batches.content]
 kind = "lines"
@@ -1614,7 +1598,7 @@ position = 62
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 220 })'
 descriptor = "export member at src/dockerUtil.js:5 member 220"
 cost_tokens = 17
-cum_tokens = 1246
+cum_tokens = 1251
 
 [batches.content]
 kind = "lines"
@@ -1640,7 +1624,7 @@ position = 63
 key = 'Fs(DirListing { dir: "widgets" })'
 descriptor = "listing of 'widgets'"
 cost_tokens = 37
-cum_tokens = 1283
+cum_tokens = 1288
 
 [batches.content]
 kind = "fs"
@@ -1654,7 +1638,7 @@ position = 64
 key = 'Typescript(Imports { file: "lib/modes.js" })'
 descriptor = "imports in lib/modes.js"
 cost_tokens = 6
-cum_tokens = 1289
+cum_tokens = 1294
 
 [batches.content]
 kind = "lines"
@@ -1672,7 +1656,7 @@ position = 65
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 127 })'
 descriptor = "export body at src/screen.js:18 body 127"
 cost_tokens = 32
-cum_tokens = 1321
+cum_tokens = 1326
 
 [batches.content]
 kind = "lines"
@@ -1690,7 +1674,7 @@ position = 66
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 133 })'
 descriptor = "export body at src/screen.js:18 body 133"
 cost_tokens = 32
-cum_tokens = 1353
+cum_tokens = 1358
 
 [batches.content]
 kind = "lines"
@@ -1708,7 +1692,7 @@ position = 67
 key = 'Typescript(Export { file: "lib/modes.js", start_line: 3 })'
 descriptor = "export at lib/modes.js:3"
 cost_tokens = 33
-cum_tokens = 1386
+cum_tokens = 1391
 
 [batches.content]
 kind = "lines"
@@ -1726,7 +1710,7 @@ position = 68
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 121 })'
 descriptor = "export body at src/screen.js:18 body 121"
 cost_tokens = 36
-cum_tokens = 1422
+cum_tokens = 1427
 
 [batches.content]
 kind = "lines"
@@ -1744,7 +1728,7 @@ position = 69
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 115 })'
 descriptor = "export body at src/screen.js:18 body 115"
 cost_tokens = 37
-cum_tokens = 1459
+cum_tokens = 1464
 
 [batches.content]
 kind = "lines"
@@ -1762,7 +1746,7 @@ position = 70
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 181 })'
 descriptor = "export body at src/dockerUtil.js:5 body 181"
 cost_tokens = 42
-cum_tokens = 1501
+cum_tokens = 1506
 
 [batches.content]
 kind = "lines"
@@ -1780,7 +1764,7 @@ position = 71
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 188 })'
 descriptor = "export body at src/dockerUtil.js:5 body 188"
 cost_tokens = 42
-cum_tokens = 1543
+cum_tokens = 1548
 
 [batches.content]
 kind = "lines"
@@ -1798,7 +1782,7 @@ position = 72
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 108 })'
 descriptor = "export body at src/screen.js:18 body 108"
 cost_tokens = 51
-cum_tokens = 1594
+cum_tokens = 1599
 
 [batches.content]
 kind = "lines"
@@ -1816,7 +1800,7 @@ position = 73
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 80 })'
 descriptor = "export body at src/screen.js:18 body 80"
 cost_tokens = 54
-cum_tokens = 1648
+cum_tokens = 1653
 
 [batches.content]
 kind = "lines"
@@ -1834,7 +1818,7 @@ position = 74
 key = 'Fs(DirListing { dir: "widgets/services" })'
 descriptor = "listing of 'widgets/services'"
 cost_tokens = 31
-cum_tokens = 1679
+cum_tokens = 1684
 
 [batches.content]
 kind = "fs"
@@ -1847,8 +1831,8 @@ entries = ["servicesInfo.widget.js", "servicesList.widget.js", "servicesLogs.wid
 position = 75
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 56 })'
 descriptor = "export body at src/dockerUtil.js:5 body 56"
-cost_tokens = 58
-cum_tokens = 1737
+cost_tokens = 63
+cum_tokens = 1747
 
 [batches.content]
 kind = "lines"
@@ -1856,14 +1840,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/dockerUtil.js"
 start = 56
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 61
 end = 62
 
 [batches.content.spans.render]
@@ -1871,36 +1847,10 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 34 })'
-descriptor = "export body at src/dockerUtil.js:5 body 34"
-cost_tokens = 61
-cum_tokens = 1798
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 34
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 39
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
 key = 'Typescript(ExportNames { file: "src/enum.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/enum.js"
 cost_tokens = 10
-cum_tokens = 1808
+cum_tokens = 1757
 
 [batches.content]
 kind = "lines"
@@ -1922,11 +1872,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 78
+position = 77
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 125 })'
 descriptor = "export body at src/dockerUtil.js:5 body 125"
 cost_tokens = 9
-cum_tokens = 1817
+cum_tokens = 1766
 
 [batches.content]
 kind = "lines"
@@ -1940,11 +1890,29 @@ end = 125
 kind = "full"
 
 [[batches]]
+position = 78
+key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 34 })'
+descriptor = "export body at src/dockerUtil.js:5 body 34"
+cost_tokens = 66
+cum_tokens = 1832
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/dockerUtil.js"
+start = 34
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 79
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 79 })'
 descriptor = "export body at src/dockerUtil.js:5 body 79"
-cost_tokens = 67
-cum_tokens = 1884
+cost_tokens = 72
+cum_tokens = 1904
 
 [batches.content]
 kind = "lines"
@@ -1952,14 +1920,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/dockerUtil.js"
 start = 79
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 84
 end = 85
 
 [batches.content.spans.render]
@@ -1967,36 +1927,10 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Typescript(ModuleItemBody { file: "index.js", start_line: 72, body_start_line: 73 })'
-descriptor = "module item body at index.js:72 body 73"
-cost_tokens = 90
-cum_tokens = 1974
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 73
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 82
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 81
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 72 })'
 descriptor = "export body at src/screen.js:18 body 72"
 cost_tokens = 73
-cum_tokens = 2047
+cum_tokens = 1977
 
 [batches.content]
 kind = "lines"
@@ -2010,37 +1944,29 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 82
-key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 44 })'
-descriptor = "export body at src/dockerUtil.js:5 body 44"
-cost_tokens = 77
-cum_tokens = 2124
+position = 81
+key = 'Typescript(ModuleItemBody { file: "index.js", start_line: 72, body_start_line: 73 })'
+descriptor = "module item body at index.js:72 body 73"
+cost_tokens = 95
+cum_tokens = 2072
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 44
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 49
-end = 52
+path = "index.js"
+start = 73
+end = 83
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Fs(DirListing { dir: "widgets/containers" })'
 descriptor = "listing of 'widgets/containers'"
 cost_tokens = 45
-cum_tokens = 2169
+cum_tokens = 2117
 
 [batches.content]
 kind = "fs"
@@ -2050,11 +1976,29 @@ parent = "widgets/containers"
 entries = ["containerInfo.widget.js", "containerList.widget.js", "containerLogs.widget.js", "containerSortList.widget.js", "containerStatus.widget.js", "containerUtilization.widget.js", "containerVsImages.widget.js"]
 
 [[batches]]
+position = 83
+key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 44 })'
+descriptor = "export body at src/dockerUtil.js:5 body 44"
+cost_tokens = 82
+cum_tokens = 2199
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/dockerUtil.js"
+start = 44
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 84
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 89 })'
 descriptor = "export body at src/dockerUtil.js:5 body 89"
-cost_tokens = 81
-cum_tokens = 2250
+cost_tokens = 86
+cum_tokens = 2285
 
 [batches.content]
 kind = "lines"
@@ -2062,14 +2006,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/dockerUtil.js"
 start = 89
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 94
 end = 97
 
 [batches.content.spans.render]
@@ -2079,8 +2015,8 @@ kind = "full"
 position = 85
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 101 })'
 descriptor = "export body at src/dockerUtil.js:5 body 101"
-cost_tokens = 81
-cum_tokens = 2331
+cost_tokens = 86
+cum_tokens = 2371
 
 [batches.content]
 kind = "lines"
@@ -2088,14 +2024,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/dockerUtil.js"
 start = 101
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 106
 end = 109
 
 [batches.content.spans.render]
@@ -2105,8 +2033,8 @@ kind = "full"
 position = 86
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 113 })'
 descriptor = "export body at src/dockerUtil.js:5 body 113"
-cost_tokens = 81
-cum_tokens = 2412
+cost_tokens = 86
+cum_tokens = 2457
 
 [batches.content]
 kind = "lines"
@@ -2114,14 +2042,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/dockerUtil.js"
 start = 113
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 118
 end = 121
 
 [batches.content.spans.render]
@@ -2132,7 +2052,7 @@ position = 87
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 209 })'
 descriptor = "export body at src/dockerUtil.js:5 body 209"
 cost_tokens = 89
-cum_tokens = 2501
+cum_tokens = 2546
 
 [batches.content]
 kind = "lines"
@@ -2150,7 +2070,7 @@ position = 88
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 221 })'
 descriptor = "export body at src/dockerUtil.js:5 body 221"
 cost_tokens = 89
-cum_tokens = 2590
+cum_tokens = 2635
 
 [batches.content]
 kind = "lines"
@@ -2165,36 +2085,10 @@ kind = "full"
 
 [[batches]]
 position = 89
-key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 66 })'
-descriptor = "export body at src/dockerUtil.js:5 body 66"
-cost_tokens = 90
-cum_tokens = 2680
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 66
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 74
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 90
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 87 })'
 descriptor = "export body at src/screen.js:18 body 87"
 cost_tokens = 13
-cum_tokens = 2693
+cum_tokens = 2648
 
 [batches.content]
 kind = "lines"
@@ -2208,11 +2102,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Fs(DirListing { dir: "widgets/images" })'
 descriptor = "listing of 'widgets/images'"
 cost_tokens = 19
-cum_tokens = 2712
+cum_tokens = 2667
 
 [batches.content]
 kind = "fs"
@@ -2222,79 +2116,29 @@ parent = "widgets/images"
 entries = ["imageInfo.widget.js", "imageList.widget.js", "imageUtilization.widget.js"]
 
 [[batches]]
+position = 91
+key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 66 })'
+descriptor = "export body at src/dockerUtil.js:5 body 66"
+cost_tokens = 95
+cum_tokens = 2762
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/dockerUtil.js"
+start = 66
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 92
-key = 'Typescript(ModuleItemBody { file: "index.js", start_line: 86, body_start_line: 87 })'
-descriptor = "module item body at index.js:86 body 87"
-cost_tokens = 124
-cum_tokens = 2836
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 89
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 93
-end = 97
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 99
-end = 99
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 93
-key = 'Typescript(Imports { file: "src/dockerUtil.js" })'
-descriptor = "imports in src/dockerUtil.js"
-cost_tokens = 19
-cum_tokens = 2855
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
 key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 195 })'
 descriptor = "export body at src/dockerUtil.js:5 body 195"
-cost_tokens = 102
-cum_tokens = 2957
+cost_tokens = 107
+cum_tokens = 2869
 
 [batches.content]
 kind = "lines"
@@ -2302,67 +2146,87 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/dockerUtil.js"
 start = 195
-end = 197
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 199
 end = 205
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 95
-key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 20 })'
-descriptor = "export body at src/screen.js:18 body 20"
-cost_tokens = 111
-cum_tokens = 3068
+position = 93
+key = 'Typescript(ModuleItemBody { file: "index.js", start_line: 86, body_start_line: 87 })'
+descriptor = "module item body at index.js:86 body 87"
+cost_tokens = 139
+cum_tokens = 3008
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/screen.js"
-start = 20
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 27
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 30
-end = 32
+path = "index.js"
+start = 87
+end = 99
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
+position = 94
+key = 'Typescript(ExportNames { file: "src/baseWidget.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in src/baseWidget.js"
+cost_tokens = 19
+cum_tokens = 3027
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/baseWidget.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/baseWidget.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 95
+key = 'Typescript(Export { file: "src/baseWidget.js", start_line: 4 })'
+descriptor = "export at src/baseWidget.js:4"
+cost_tokens = 0
+cum_tokens = 3027
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/baseWidget.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/baseWidget.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 96
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 36 })'
 descriptor = "export body at src/screen.js:18 body 36"
-cost_tokens = 115
-cum_tokens = 3183
+cost_tokens = 120
+cum_tokens = 3147
 
 [batches.content]
 kind = "lines"
@@ -2370,14 +2234,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/screen.js"
 start = 36
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 43
 end = 45
 
 [batches.content.spans.render]
@@ -2385,112 +2241,46 @@ kind = "full"
 
 [[batches]]
 position = 97
-key = 'Typescript(ExportNames { file: "src/baseWidget.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in src/baseWidget.js"
-cost_tokens = 19
-cum_tokens = 3202
+key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 20 })'
+descriptor = "export body at src/screen.js:18 body 20"
+cost_tokens = 126
+cum_tokens = 3273
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 4
-end = 4
+path = "src/screen.js"
+start = 20
+end = 32
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 98
-key = 'Typescript(Export { file: "src/baseWidget.js", start_line: 4 })'
-descriptor = "export at src/baseWidget.js:4"
-cost_tokens = 0
-cum_tokens = 3202
+key = 'Typescript(Imports { file: "src/dockerUtil.js" })'
+descriptor = "imports in src/dockerUtil.js"
+cost_tokens = 24
+cum_tokens = 3297
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 99
-key = 'Typescript(ModuleItemBody { file: "index.js", start_line: 47, body_start_line: 48 })'
-descriptor = "module item body at index.js:47 body 48"
-cost_tokens = 164
-cum_tokens = 3366
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 48
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 52
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 58
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 63
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 67
-end = 69
+path = "src/dockerUtil.js"
+start = 1
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 100
+position = 99
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 139 })'
 descriptor = "export body at src/screen.js:18 body 139"
 cost_tokens = 133
-cum_tokens = 3499
+cum_tokens = 3430
 
 [batches.content]
 kind = "lines"
@@ -2504,11 +2294,11 @@ end = 149
 kind = "full"
 
 [[batches]]
-position = 101
+position = 100
 key = 'Typescript(ExportNames { file: "src/assetsLoader.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/assetsLoader.js"
 cost_tokens = 22
-cum_tokens = 3521
+cum_tokens = 3452
 
 [batches.content]
 kind = "lines"
@@ -2538,11 +2328,29 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
+position = 101
+key = 'Typescript(ModuleItemBody { file: "index.js", start_line: 47, body_start_line: 48 })'
+descriptor = "module item body at index.js:47 body 48"
+cost_tokens = 184
+cum_tokens = 3636
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 48
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 102
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 181 })'
 descriptor = "export body at src/screen.js:18 body 181"
-cost_tokens = 143
-cum_tokens = 3664
+cost_tokens = 158
+cum_tokens = 3794
 
 [batches.content]
 kind = "lines"
@@ -2550,30 +2358,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/screen.js"
 start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 183
-end = 185
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 187
-end = 187
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 189
 end = 189
 
 [batches.content.spans.render]
@@ -2581,44 +2365,10 @@ kind = "full"
 
 [[batches]]
 position = 103
-key = 'Typescript(Imports { file: "index.js" })'
-descriptor = "imports in index.js"
-cost_tokens = 102
-cum_tokens = 3766
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 10
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
 key = 'Fs(DirListing { dir: "src/themes" })'
 descriptor = "listing of 'src/themes'"
 cost_tokens = 9
-cum_tokens = 3775
+cum_tokens = 3803
 
 [batches.content]
 kind = "fs"
@@ -2628,11 +2378,11 @@ parent = "src/themes"
 entries = ["styles.js", "theme.selector.js"]
 
 [[batches]]
-position = 105
+position = 104
 key = 'Typescript(ExportNames { file: "src/themes/styles.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/themes/styles.js"
 cost_tokens = 12
-cum_tokens = 3787
+cum_tokens = 3815
 
 [batches.content]
 kind = "lines"
@@ -2654,11 +2404,37 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
+position = 105
+key = 'Typescript(Imports { file: "index.js" })'
+descriptor = "imports in index.js"
+cost_tokens = 107
+cum_tokens = 3922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 10
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 106
 key = 'Typescript(ExportNames { file: "src/themes/theme.selector.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/themes/theme.selector.js"
 cost_tokens = 14
-cum_tokens = 3801
+cum_tokens = 3936
 
 [batches.content]
 kind = "lines"
@@ -2684,7 +2460,7 @@ position = 107
 key = 'Typescript(Export { file: "src/themes/theme.selector.js", start_line: 13 })'
 descriptor = "export at src/themes/theme.selector.js:13"
 cost_tokens = 0
-cum_tokens = 3801
+cum_tokens = 3936
 
 [batches.content]
 kind = "lines"
@@ -2710,7 +2486,7 @@ position = 108
 key = 'Typescript(Export { file: "src/assetsLoader.js", start_line: 10 })'
 descriptor = "export at src/assetsLoader.js:10"
 cost_tokens = 37
-cum_tokens = 3838
+cum_tokens = 3973
 
 [batches.content]
 kind = "lines"
@@ -2768,7 +2544,7 @@ position = 109
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 52
-cum_tokens = 3890
+cum_tokens = 4025
 
 [batches.content]
 kind = "fs"
@@ -2782,7 +2558,7 @@ position = 110
 key = 'Fs(DirListing { dir: "docs/src" })'
 descriptor = "listing of 'docs/src'"
 cost_tokens = 9
-cum_tokens = 3899
+cum_tokens = 4034
 
 [batches.content]
 kind = "fs"
@@ -2796,7 +2572,7 @@ position = 111
 key = 'Fs(DirListing { dir: "docs/src/pages" })'
 descriptor = "listing of 'docs/src/pages'"
 cost_tokens = 13
-cum_tokens = 3912
+cum_tokens = 4047
 
 [batches.content]
 kind = "fs"
@@ -2810,7 +2586,7 @@ position = 112
 key = 'Fs(DirListing { dir: "docs/src/components" })'
 descriptor = "listing of 'docs/src/components'"
 cost_tokens = 25
-cum_tokens = 3937
+cum_tokens = 4072
 
 [batches.content]
 kind = "fs"
@@ -2824,7 +2600,7 @@ position = 113
 key = 'Typescript(ExportNames { file: "src/widgetsTemplates/list.widget.template.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/widgetsTemplates/list.widget.template.js"
 cost_tokens = 28
-cum_tokens = 3965
+cum_tokens = 4100
 
 [batches.content]
 kind = "lines"
@@ -2858,7 +2634,7 @@ position = 114
 key = 'Typescript(Export { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8 })'
 descriptor = "export at src/widgetsTemplates/list.widget.template.js:8"
 cost_tokens = 0
-cum_tokens = 3965
+cum_tokens = 4100
 
 [batches.content]
 kind = "lines"
@@ -2884,7 +2660,7 @@ position = 115
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 21 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 21"
 cost_tokens = 10
-cum_tokens = 3975
+cum_tokens = 4110
 
 [batches.content]
 kind = "lines"
@@ -2910,7 +2686,7 @@ position = 116
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 88 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 88"
 cost_tokens = 11
-cum_tokens = 3986
+cum_tokens = 4121
 
 [batches.content]
 kind = "lines"
@@ -2936,7 +2712,7 @@ position = 117
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 107 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 107"
 cost_tokens = 11
-cum_tokens = 3997
+cum_tokens = 4132
 
 [batches.content]
 kind = "lines"
@@ -2962,7 +2738,7 @@ position = 118
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 127 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 127"
 cost_tokens = 11
-cum_tokens = 4008
+cum_tokens = 4143
 
 [batches.content]
 kind = "lines"
@@ -2988,7 +2764,7 @@ position = 119
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 128 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 128"
 cost_tokens = 15
-cum_tokens = 4023
+cum_tokens = 4158
 
 [batches.content]
 kind = "lines"
@@ -3006,7 +2782,7 @@ position = 120
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 155 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 155"
 cost_tokens = 12
-cum_tokens = 4035
+cum_tokens = 4170
 
 [batches.content]
 kind = "lines"
@@ -3029,84 +2805,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 121
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
-descriptor = "README.md section #2"
-cost_tokens = 125
-cum_tokens = 4160
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 69
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 78
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 81
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
 key = 'Typescript(Export { file: "src/themes/styles.js", start_line: 55 })'
 descriptor = "export at src/themes/styles.js:55"
 cost_tokens = 19
-cum_tokens = 4179
+cum_tokens = 4189
 
 [batches.content]
 kind = "lines"
@@ -3120,11 +2822,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 147 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 147"
 cost_tokens = 13
-cum_tokens = 4192
+cum_tokens = 4202
 
 [batches.content]
 kind = "lines"
@@ -3146,11 +2848,11 @@ end = 148
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 148 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 148"
 cost_tokens = 15
-cum_tokens = 4207
+cum_tokens = 4217
 
 [batches.content]
 kind = "lines"
@@ -3164,11 +2866,11 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 151 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 151"
 cost_tokens = 13
-cum_tokens = 4220
+cum_tokens = 4230
 
 [batches.content]
 kind = "lines"
@@ -3190,11 +2892,11 @@ end = 152
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 125
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 152 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 152"
 cost_tokens = 15
-cum_tokens = 4235
+cum_tokens = 4245
 
 [batches.content]
 kind = "lines"
@@ -3208,45 +2910,11 @@ end = 152
 kind = "full"
 
 [[batches]]
-position = 127
-key = 'Typescript(Imports { file: "src/cli.js" })'
-descriptor = "imports in src/cli.js"
-cost_tokens = 52
-cum_tokens = 4287
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/cli.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cli.js"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/cli.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 128
+position = 126
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 119 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 119"
 cost_tokens = 14
-cum_tokens = 4301
+cum_tokens = 4259
 
 [batches.content]
 kind = "lines"
@@ -3268,11 +2936,11 @@ end = 120
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 127
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 131 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 131"
 cost_tokens = 14
-cum_tokens = 4315
+cum_tokens = 4273
 
 [batches.content]
 kind = "lines"
@@ -3294,11 +2962,11 @@ end = 132
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 128
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 132 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 132"
 cost_tokens = 16
-cum_tokens = 4331
+cum_tokens = 4289
 
 [batches.content]
 kind = "lines"
@@ -3312,11 +2980,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 131
+position = 129
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 135 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 135"
 cost_tokens = 14
-cum_tokens = 4345
+cum_tokens = 4303
 
 [batches.content]
 kind = "lines"
@@ -3338,11 +3006,11 @@ end = 136
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 130
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 136 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 136"
 cost_tokens = 16
-cum_tokens = 4361
+cum_tokens = 4319
 
 [batches.content]
 kind = "lines"
@@ -3356,11 +3024,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 133
+position = 131
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 139 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 139"
 cost_tokens = 14
-cum_tokens = 4375
+cum_tokens = 4333
 
 [batches.content]
 kind = "lines"
@@ -3382,11 +3050,11 @@ end = 140
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 132
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 140 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 140"
 cost_tokens = 16
-cum_tokens = 4391
+cum_tokens = 4349
 
 [batches.content]
 kind = "lines"
@@ -3400,11 +3068,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 135
+position = 133
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 143 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 143"
 cost_tokens = 14
-cum_tokens = 4405
+cum_tokens = 4363
 
 [batches.content]
 kind = "lines"
@@ -3426,11 +3094,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 134
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 144 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 144"
 cost_tokens = 16
-cum_tokens = 4421
+cum_tokens = 4379
 
 [batches.content]
 kind = "lines"
@@ -3444,11 +3112,11 @@ end = 144
 kind = "full"
 
 [[batches]]
-position = 137
+position = 135
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 156 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 156"
 cost_tokens = 22
-cum_tokens = 4443
+cum_tokens = 4401
 
 [batches.content]
 kind = "lines"
@@ -3462,11 +3130,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 138
+position = 136
 key = 'Typescript(ExportNames { file: "src/widgetsTemplates/help.widget.template.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/widgetsTemplates/help.widget.template.js"
 cost_tokens = 26
-cum_tokens = 4469
+cum_tokens = 4427
 
 [batches.content]
 kind = "lines"
@@ -3496,11 +3164,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 137
 key = 'Typescript(ExportNames { file: "src/widgetsTemplates/info.widget.template.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/widgetsTemplates/info.widget.template.js"
 cost_tokens = 26
-cum_tokens = 4495
+cum_tokens = 4453
 
 [batches.content]
 kind = "lines"
@@ -3530,11 +3198,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 138
 key = 'Typescript(ExportNames { file: "src/widgetsTemplates/logs.widget.template.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/widgetsTemplates/logs.widget.template.js"
 cost_tokens = 26
-cum_tokens = 4521
+cum_tokens = 4479
 
 [batches.content]
 kind = "lines"
@@ -3564,11 +3232,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 139
 key = 'Typescript(ExportNames { file: "src/widgetsTemplates/base.hook.template.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/widgetsTemplates/base.hook.template.js"
 cost_tokens = 28
-cum_tokens = 4549
+cum_tokens = 4507
 
 [batches.content]
 kind = "lines"
@@ -3598,11 +3266,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 140
 key = 'Typescript(Export { file: "src/widgetsTemplates/base.hook.template.js", start_line: 6 })'
 descriptor = "export at src/widgetsTemplates/base.hook.template.js:6"
 cost_tokens = 24
-cum_tokens = 4573
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
@@ -3640,11 +3308,47 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
+position = 141
+key = 'Typescript(Imports { file: "src/cli.js" })'
+descriptor = "imports in src/cli.js"
+cost_tokens = 62
+cum_tokens = 4593
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cli.js"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
+descriptor = "README.md section #2"
+cost_tokens = 160
+cum_tokens = 4753
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 63
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 143
 key = 'Fs(DirListing { dir: ".vscode" })'
 descriptor = "listing of '.vscode'"
 cost_tokens = 4
-cum_tokens = 4577
+cum_tokens = 4757
 
 [batches.content]
 kind = "fs"
@@ -3657,8 +3361,8 @@ entries = ["launch.json"]
 position = 144
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
-cost_tokens = 140
-cum_tokens = 4717
+cost_tokens = 145
+cum_tokens = 4902
 
 [batches.content]
 kind = "lines"
@@ -3666,14 +3370,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "README.md"
 start = 129
-end = 129
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 131
 end = 135
 
 [batches.content.spans.render]
@@ -3684,7 +3380,7 @@ position = 145
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 471
-cum_tokens = 5188
+cum_tokens = 5373
 
 [batches.content]
 kind = "lines"
@@ -3718,7 +3414,7 @@ position = 146
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 109
-cum_tokens = 5297
+cum_tokens = 5482
 
 [batches.content]
 kind = "lines"
@@ -3752,7 +3448,7 @@ position = 147
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 30
-cum_tokens = 5327
+cum_tokens = 5512
 
 [batches.content]
 kind = "lines"
@@ -3770,7 +3466,7 @@ position = 148
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 120
-cum_tokens = 5447
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -3788,7 +3484,7 @@ position = 149
 key = 'Fs(DirListing { dir: ".devcontainer" })'
 descriptor = "listing of '.devcontainer'"
 cost_tokens = 5
-cum_tokens = 5452
+cum_tokens = 5637
 
 [batches.content]
 kind = "fs"
@@ -3802,7 +3498,7 @@ position = 150
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 9 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 9"
 cost_tokens = 21
-cum_tokens = 5473
+cum_tokens = 5658
 
 [batches.content]
 kind = "lines"
@@ -3828,7 +3524,7 @@ position = 151
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 224
-cum_tokens = 5697
+cum_tokens = 5882
 
 [batches.content]
 kind = "lines"
@@ -3845,8 +3541,8 @@ kind = "full"
 position = 152
 key = 'Typescript(Imports { file: "src/screen.js" })'
 descriptor = "imports in src/screen.js"
-cost_tokens = 104
-cum_tokens = 5801
+cost_tokens = 109
+cum_tokens = 5991
 
 [batches.content]
 kind = "lines"
@@ -3854,14 +3550,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/screen.js"
 start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 3
 end = 8
 
 [batches.content.spans.render]
@@ -3871,8 +3559,8 @@ kind = "full"
 position = 153
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 120 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 120"
-cost_tokens = 44
-cum_tokens = 5845
+cost_tokens = 49
+cum_tokens = 6040
 
 [batches.content]
 kind = "lines"
@@ -3880,14 +3568,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/widgetsTemplates/list.widget.template.js"
 start = 120
-end = 122
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 124
 end = 124
 
 [batches.content.spans.render]
@@ -3898,7 +3578,7 @@ position = 154
 key = 'Typescript(Export { file: "src/enum.js", start_line: 1 })'
 descriptor = "export at src/enum.js:1"
 cost_tokens = 91
-cum_tokens = 5936
+cum_tokens = 6131
 
 [batches.content]
 kind = "lines"
@@ -3916,7 +3596,7 @@ position = 155
 key = 'Typescript(Export { file: "src/widgetsTemplates/logs.widget.template.js", start_line: 7 })'
 descriptor = "export at src/widgetsTemplates/logs.widget.template.js:7"
 cost_tokens = 86
-cum_tokens = 6022
+cum_tokens = 6217
 
 [batches.content]
 kind = "lines"
@@ -4035,92 +3715,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 156
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
-descriptor = "README.md section #1"
-cost_tokens = 339
-cum_tokens = 6361
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 38
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 46
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 58
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
 key = 'Typescript(Imports { file: "src/baseWidget.js" })'
 descriptor = "imports in src/baseWidget.js"
 cost_tokens = 20
-cum_tokens = 6381
+cum_tokens = 6237
 
 [batches.content]
 kind = "lines"
@@ -4134,69 +3732,29 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 158
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
-descriptor = "README.md section #5"
-cost_tokens = 265
-cum_tokens = 6646
+position = 157
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
+descriptor = "README.md section #1"
+cost_tokens = 379
+cum_tokens = 6616
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "README.md"
-start = 137
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 140
-end = 140
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 142
-end = 147
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 151
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 156
-end = 156
+start = 34
+end = 61
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 159
+position = 158
 key = 'Typescript(Export { file: "src/widgetsTemplates/info.widget.template.js", start_line: 6 })'
 descriptor = "export at src/widgetsTemplates/info.widget.template.js:6"
 cost_tokens = 107
-cum_tokens = 6753
+cum_tokens = 6723
 
 [batches.content]
 kind = "lines"
@@ -4330,11 +3888,29 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
+position = 159
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
+descriptor = "README.md section #5"
+cost_tokens = 290
+cum_tokens = 7013
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 137
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 160
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 165 })'
 descriptor = "export body at src/screen.js:18 body 165"
 cost_tokens = 42
-cum_tokens = 6795
+cum_tokens = 7055
 
 [batches.content]
 kind = "lines"
@@ -4352,7 +3928,7 @@ position = 161
 key = 'Typescript(Export { file: "src/widgetsTemplates/help.widget.template.js", start_line: 5 })'
 descriptor = "export at src/widgetsTemplates/help.widget.template.js:5"
 cost_tokens = 119
-cum_tokens = 6914
+cum_tokens = 7174
 
 [batches.content]
 kind = "lines"
@@ -4503,10 +4079,82 @@ kind = "ellipsis"
 
 [[batches]]
 position = 162
+key = 'Typescript(ExportBody { file: "src/themes/theme.selector.js", start_line: 13, body_start_line: 14 })'
+descriptor = "export body at src/themes/theme.selector.js:13 body 14"
+cost_tokens = 69
+cum_tokens = 7243
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/themes/theme.selector.js"
+start = 14
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 108 })'
+descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 108"
+cost_tokens = 91
+cum_tokens = 7334
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/list.widget.template.js"
+start = 108
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 10 })'
+descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 10"
+cost_tokens = 92
+cum_tokens = 7426
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/list.widget.template.js"
+start = 10
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 88 })'
+descriptor = "export body at src/screen.js:18 body 88"
+cost_tokens = 172
+cum_tokens = 7598
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/screen.js"
+start = 88
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
 key = 'Markdown(HeadingsOutline { file: "SECURITY.md" })'
 descriptor = "headings outline in SECURITY.md"
-cost_tokens = 32
-cum_tokens = 6946
+cost_tokens = 37
+cum_tokens = 7635
 
 [batches.content]
 kind = "lines"
@@ -4514,14 +4162,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "SECURITY.md"
 start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "SECURITY.md"
-start = 3
 end = 3
 
 [batches.content.spans.render]
@@ -4534,14 +4174,6 @@ end = 11
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "SECURITY.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "SECURITY.md"
@@ -4560,11 +4192,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 163
+position = 167
 key = 'Markdown(Section { file: "SECURITY.md", section_index: 0, reference_shaped: false })'
 descriptor = "SECURITY.md section #0"
 cost_tokens = 0
-cum_tokens = 6946
+cum_tokens = 7635
 
 [batches.content]
 kind = "lines"
@@ -4578,55 +4210,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 164
-key = 'Typescript(ExportBody { file: "src/themes/theme.selector.js", start_line: 13, body_start_line: 14 })'
-descriptor = "export body at src/themes/theme.selector.js:13 body 14"
-cost_tokens = 69
-cum_tokens = 7015
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/themes/theme.selector.js"
-start = 14
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 165
-key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 10 })'
-descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 10"
-cost_tokens = 87
-cum_tokens = 7102
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 10
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 17
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 166
+position = 168
 key = 'Typescript(Imports { file: "src/assetsLoader.js" })'
 descriptor = "imports in src/assetsLoader.js"
-cost_tokens = 30
-cum_tokens = 7132
+cost_tokens = 35
+cum_tokens = 7670
 
 [batches.content]
 kind = "lines"
@@ -4634,245 +4222,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/assetsLoader.js"
 start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 3
 end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 167
-key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 108 })'
-descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 108"
-cost_tokens = 91
-cum_tokens = 7223
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 108
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 168
-key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 88 })'
-descriptor = "export body at src/screen.js:18 body 88"
-cost_tokens = 167
-cum_tokens = 7390
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 88
-end = 99
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 101
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 169
-key = 'Typescript(Imports { file: "src/widgetsTemplates/help.widget.template.js" })'
-descriptor = "imports in src/widgetsTemplates/help.widget.template.js"
-cost_tokens = 20
-cum_tokens = 7410
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/help.widget.template.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 170
-key = 'Typescript(ExportBody { file: "src/baseWidget.js", start_line: 4, body_start_line: 5 })'
-descriptor = "export body at src/baseWidget.js:4 body 5"
-cost_tokens = 166
-cum_tokens = 7576
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 5
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 10
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 14
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 18
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/baseWidget.js"
-start = 22
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 171
-key = 'Typescript(Imports { file: "src/widgetsTemplates/logs.widget.template.js" })'
-descriptor = "imports in src/widgetsTemplates/logs.widget.template.js"
-cost_tokens = 22
-cum_tokens = 7598
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/logs.widget.template.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
-key = 'Typescript(ExportBody { file: "src/assetsLoader.js", start_line: 10, body_start_line: 12 })'
-descriptor = "export body at src/assetsLoader.js:10 body 12"
-cost_tokens = 210
-cum_tokens = 7808
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 12
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 17
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 22
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 25
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 29
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 33
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/assetsLoader.js"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 173
 key = 'Json(Identity { file: "docs/package.json" })'
 descriptor = "package identity in docs/package.json"
 cost_tokens = 66
-cum_tokens = 7874
+cum_tokens = 7736
 
 [batches.content]
 kind = "lines"
@@ -4894,11 +4254,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 174
+position = 170
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 19
-cum_tokens = 7893
+cum_tokens = 7755
 
 [batches.content]
 kind = "fs"
@@ -4908,11 +4268,11 @@ parent = ".github"
 entries = ["ISSUE_TEMPLATE", "PULL_REQUEST_TEMPLATE.md", "mergify.yml", "workflows"]
 
 [[batches]]
-position = 175
+position = 171
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 20
-cum_tokens = 7913
+cum_tokens = 7775
 
 [batches.content]
 kind = "fs"
@@ -4922,11 +4282,11 @@ parent = ".github/workflows"
 entries = ["docker-publish-to-dockerhub.yml", "docker-publish.yml", "main.yml"]
 
 [[batches]]
-position = 176
+position = 172
 key = 'Plaintext(Whole { file: ".nvmrc" })'
 descriptor = "plaintext config .nvmrc"
 cost_tokens = 7
-cum_tokens = 7920
+cum_tokens = 7782
 
 [batches.content]
 kind = "lines"
@@ -4940,11 +4300,81 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 177
+position = 173
+key = 'Typescript(ExportBody { file: "src/baseWidget.js", start_line: 4, body_start_line: 5 })'
+descriptor = "export body at src/baseWidget.js:4 body 5"
+cost_tokens = 186
+cum_tokens = 7968
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/baseWidget.js"
+start = 5
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Typescript(ExportBody { file: "src/assetsLoader.js", start_line: 10, body_start_line: 12 })'
+descriptor = "export body at src/assetsLoader.js:10 body 12"
+cost_tokens = 235
+cum_tokens = 8203
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/assetsLoader.js"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/assetsLoader.js"
+start = 17
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/assetsLoader.js"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'Typescript(Imports { file: "src/widgetsTemplates/help.widget.template.js" })'
+descriptor = "imports in src/widgetsTemplates/help.widget.template.js"
+cost_tokens = 25
+cum_tokens = 8228
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/help.widget.template.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
 key = 'Markdown(HeadingsOutline { file: "CONTRIBUTING.md" })'
 descriptor = "headings outline in CONTRIBUTING.md"
-cost_tokens = 49
-cum_tokens = 7969
+cost_tokens = 54
+cum_tokens = 8282
 
 [batches.content]
 kind = "lines"
@@ -4968,14 +4398,6 @@ kind = "full"
 [[batches.content.spans]]
 path = "CONTRIBUTING.md"
 start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "CONTRIBUTING.md"
-start = 14
 end = 14
 
 [batches.content.spans.render]
@@ -5007,14 +4429,6 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "CONTRIBUTING.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "CONTRIBUTING.md"
 start = 15
 end = 15
 
@@ -5030,11 +4444,65 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
+position = 177
+key = 'Typescript(Imports { file: "src/widgetsTemplates/logs.widget.template.js" })'
+descriptor = "imports in src/widgetsTemplates/logs.widget.template.js"
+cost_tokens = 27
+cum_tokens = 8309
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/logs.widget.template.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 178
+key = 'Typescript(Imports { file: "src/themes/theme.selector.js" })'
+descriptor = "imports in src/themes/theme.selector.js"
+cost_tokens = 28
+cum_tokens = 8337
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/themes/theme.selector.js"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
+descriptor = "README.md section #3"
+cost_tokens = 582
+cum_tokens = 8919
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 84
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
 key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
 descriptor = "README headline in docs/README.md"
-cost_tokens = 53
-cum_tokens = 8022
+cost_tokens = 63
+cum_tokens = 8982
 
 [batches.content]
 kind = "lines"
@@ -5042,33 +4510,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "docs/README.md"
 start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 5
 end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 179
+position = 181
 key = 'Markdown(HeadingsOutline { file: "docs/README.md" })'
 descriptor = "headings outline in docs/README.md"
 cost_tokens = 18
-cum_tokens = 8040
+cum_tokens = 9000
 
 [batches.content]
 kind = "lines"
@@ -5106,295 +4558,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 180
-key = 'Markdown(Section { file: "docs/README.md", section_index: 1, reference_shaped: false })'
-descriptor = "docs/README.md section #1"
-cost_tokens = 11
-cum_tokens = 8051
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 181
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
-descriptor = "README.md section #3"
-cost_tokens = 527
-cum_tokens = 8578
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 88
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 95
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 100
-end = 107
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 109
-end = 110
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 116
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 118
-end = 123
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 125
-end = 125
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 182
-key = 'Markdown(HeadingsOutline { file: ".github/PULL_REQUEST_TEMPLATE.md" })'
-descriptor = "headings outline in .github/PULL_REQUEST_TEMPLATE.md"
-cost_tokens = 26
-cum_tokens = 8604
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 183
-key = 'Markdown(Section { file: ".github/PULL_REQUEST_TEMPLATE.md", section_index: 0, reference_shaped: false })'
-descriptor = ".github/PULL_REQUEST_TEMPLATE.md section #0"
-cost_tokens = 0
-cum_tokens = 8604
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 184
-key = 'Typescript(Imports { file: "src/themes/theme.selector.js" })'
-descriptor = "imports in src/themes/theme.selector.js"
-cost_tokens = 28
-cum_tokens = 8632
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/themes/theme.selector.js"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
-key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 126 })'
-descriptor = "export body at src/dockerUtil.js:5 body 126"
-cost_tokens = 274
-cum_tokens = 8906
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 126
-end = 129
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 131
-end = 133
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 135
-end = 139
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 141
-end = 145
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 147
-end = 148
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 150
-end = 152
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 170 })'
 descriptor = "export body at src/screen.js:18 body 170"
 cost_tokens = 87
-cum_tokens = 8993
+cum_tokens = 9087
 
 [batches.content]
 kind = "lines"
@@ -5408,11 +4576,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 187
+position = 183
 key = 'Typescript(ExportBody { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 89 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 89"
 cost_tokens = 161
-cum_tokens = 9154
+cum_tokens = 9248
 
 [batches.content]
 kind = "lines"
@@ -5426,11 +4594,65 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 188
+position = 184
+key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 126 })'
+descriptor = "export body at src/dockerUtil.js:5 body 126"
+cost_tokens = 299
+cum_tokens = 9547
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/dockerUtil.js"
+start = 126
+end = 152
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Markdown(Section { file: "docs/README.md", section_index: 1, reference_shaped: false })'
+descriptor = "docs/README.md section #1"
+cost_tokens = 16
+cum_tokens = 9563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Typescript(Imports { file: "src/widgetsTemplates/base.hook.template.js" })'
+descriptor = "imports in src/widgetsTemplates/base.hook.template.js"
+cost_tokens = 36
+cum_tokens = 9599
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/widgetsTemplates/base.hook.template.js"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
 key = 'Typescript(Imports { file: "src/widgetsTemplates/info.widget.template.js" })'
 descriptor = "imports in src/widgetsTemplates/info.widget.template.js"
-cost_tokens = 31
-cum_tokens = 9185
+cost_tokens = 36
+cum_tokens = 9635
 
 [batches.content]
 kind = "lines"
@@ -5438,25 +4660,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/widgetsTemplates/info.widget.template.js"
 start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/info.widget.template.js"
-start = 3
 end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 189
+position = 188
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 153 })'
 descriptor = "export body at src/screen.js:18 body 153"
-cost_tokens = 98
-cum_tokens = 9283
+cost_tokens = 108
+cum_tokens = 9743
 
 [batches.content]
 kind = "lines"
@@ -5464,33 +4678,17 @@ kind = "lines"
 [[batches.content.spans]]
 path = "src/screen.js"
 start = 153
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 158
-end = 160
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/screen.js"
-start = 162
 end = 163
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 190
+position = 189
 key = 'Markdown(HeadingsOutline { file: "CODE_OF_CONDUCT.md" })'
 descriptor = "headings outline in CODE_OF_CONDUCT.md"
-cost_tokens = 69
-cum_tokens = 9352
+cost_tokens = 74
+cum_tokens = 9817
 
 [batches.content]
 kind = "lines"
@@ -5498,14 +4696,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "CODE_OF_CONDUCT.md"
 start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "CODE_OF_CONDUCT.md"
-start = 3
 end = 3
 
 [batches.content.spans.render]
@@ -5550,14 +4740,6 @@ end = 68
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "CODE_OF_CONDUCT.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "CODE_OF_CONDUCT.md"
@@ -5608,11 +4790,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 191
+position = 190
 key = 'Markdown(Section { file: "CODE_OF_CONDUCT.md", section_index: 0, reference_shaped: false })'
 descriptor = "CODE_OF_CONDUCT.md section #0"
 cost_tokens = 0
-cum_tokens = 9352
+cum_tokens = 9817
 
 [batches.content]
 kind = "lines"
@@ -5621,192 +4803,6 @@ kind = "lines"
 path = "CODE_OF_CONDUCT.md"
 start = 1
 end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 192
-key = 'Typescript(ExportBody { file: "src/widgetsTemplates/base.hook.template.js", start_line: 6, body_start_line: 8 })'
-descriptor = "export body at src/widgetsTemplates/base.hook.template.js:6 body 8"
-cost_tokens = 179
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/base.hook.template.js"
-start = 8
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/base.hook.template.js"
-start = 13
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/base.hook.template.js"
-start = 17
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/base.hook.template.js"
-start = 23
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/base.hook.template.js"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 193
-key = 'Typescript(Imports { file: "src/widgetsTemplates/base.hook.template.js" })'
-descriptor = "imports in src/widgetsTemplates/base.hook.template.js"
-cost_tokens = 36
-cum_tokens = 9567
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/base.hook.template.js"
-start = 2
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 194
-key = 'Markdown(Section { file: "docs/README.md", section_index: 0, reference_shaped: false })'
-descriptor = "docs/README.md section #0"
-cost_tokens = 41
-cum_tokens = 9608
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 195
-key = 'Typescript(Imports { file: "src/widgetsTemplates/list.widget.template.js" })'
-descriptor = "imports in src/widgetsTemplates/list.widget.template.js"
-cost_tokens = 42
-cum_tokens = 9650
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/widgetsTemplates/list.widget.template.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 196
-key = 'Fs(DirListing { dir: "docs/src/assets" })'
-descriptor = "listing of 'docs/src/assets'"
-cost_tokens = 13
-cum_tokens = 9663
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/src/assets"
-entries = ["css", "fonts", "images", "scss"]
-
-[[batches]]
-position = 197
-key = 'Markdown(Section { file: "CONTRIBUTING.md", section_index: 0, reference_shaped: false })'
-descriptor = "CONTRIBUTING.md section #0"
-cost_tokens = 74
-cum_tokens = 9737
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "CONTRIBUTING.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "CONTRIBUTING.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "CONTRIBUTING.md"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 198
-key = 'Typescript(ExportBody { file: "src/dockerUtil.js", start_line: 5, body_start_line: 12 })'
-descriptor = "export body at src/dockerUtil.js:5 body 12"
-cost_tokens = 13
-cum_tokens = 9750
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/dockerUtil.js"
-start = 12
-end = 12
 
 [batches.content.spans.render]
 kind = "full"

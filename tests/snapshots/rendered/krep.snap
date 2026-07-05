@@ -15,7 +15,9 @@ README.md
     10→>
     11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
     13→## The Story Behind the Name
+    14→
     15→The name "krep" has an interesting origin. It is inspired by the Icelandic word "kreppan," which means "to grasp quickly" or "to catch firmly." I came across this word while researching efficient techniques for pattern recognition.
+    16→
     17→Just as skilled fishers identify patterns in the water to locate fish quickly, I designed "krep" to find patterns in text with maximum efficiency. The name is also short and easy to remember—perfect for a command-line utility that users might type hundreds of times per day.
     19→## Key Features
     21→- **Multiple search algorithms**: Boyer-Moore-Horspool, KMP, Aho-Corasick for optimal performance across different pattern types
@@ -33,10 +35,12 @@ README.md
     33→- **Specialized algorithms**: Optimized handling for single-character and short patterns
     34→- **Match Limiting**: Stop searching a file after a specific number of matching lines are found.
     36→## What's New in v2.2.0
+    37→
     38→- Refined terminal-first UI with a cleaner, more legible color theme
     39→- Better visual hierarchy in `-o` mode (filename, line index, match highlight)
     40→- Improved `--help` layout with grouped sections and clearer scanning
     42→## Installation
+    43→
     44→### Using Homebrew (macOS)
     …
     52→### Building from Source
@@ -46,6 +50,7 @@ README.md
     75→### Build Options
     …
     84→## Usage
+    85→
     86→```bash
     87→krep [OPTIONS] PATTERN [FILE | DIRECTORY]
     88→krep [OPTIONS] -e PATTERN [FILE | DIRECTORY]
@@ -61,7 +66,6 @@ README.md
     136→- `-i, --ignore-case` Case-insensitive search
     137→- `-c, --count` Count matching lines only
     138→- `-o, --only-matching` Print only the matched parts of lines
-    139→- `-e PATTERN, --pattern=PATTERN` Specify pattern(s). Can be used multiple times.
     …
     141→- `-m NUM, --max-count=NUM` Stop searching each file after finding NUM matching lines.
     142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
@@ -69,7 +73,6 @@ README.md
     144→- `-r, --recursive` Recursively search directories
     145→- `--gitignore` Respect `.gitignore` files during recursive search
     …
-    147→- `-t NUM, --threads=NUM` Use NUM threads for file search (default: auto)
     148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
     149→- `-w, --word-regexp` Match only whole words
     150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')
@@ -81,6 +84,7 @@ README.md
     171→### krep v2.1.0 vs ripgrep (warm cache, 7 runs average baseline)
     …
     180→## How Krep Works
+    181→
     182→Krep achieves its high performance through several key techniques:
     184→### 1. Smart Algorithm Selection
     …
@@ -93,11 +97,15 @@ README.md
     222→### 5. Skipping Non-Relevant Content
     …
     231→## Contributing
+    232→
     233→Contributions are welcome! Please feel free to submit a Pull Request.
     235→## Author
+    236→
     237→- **Davide Santangelo** - [GitHub](https://github.com/davidesantangelo)
     239→## License
+    240→
     241→This project is licensed under the BSD-2 License - see the LICENSE file for details.
+    242→
     243→Copyright © 2025 Davide Santangelo
 aho_corasick.c
 aho_corasick.h
@@ -165,11 +173,14 @@ krep.h
     108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
     109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
     110→   search_func_t search_algo;     // Pre-selected search algorithm for this chunk
+    111→
     112→   // Thread-specific results
     113→   match_result_t *local_result; // For position tracking (default/-o)
     114→   uint64_t count_result;        // For line counting (-c) or match counting (-co)
+    115→
     116→   // Status flags
     117→   bool error_flag; // Flag to indicate an error occurred in the thread
+    118→
     119→   // Padding to prevent false sharing (ensure struct size is multiple of 64 bytes)
     120→   // Current size approx 56 bytes. Adding sufficient padding.
     121→   char padding[64]; 

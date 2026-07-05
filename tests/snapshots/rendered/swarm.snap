@@ -12,42 +12,59 @@ README.md
     6→> Swarm is now replaced by the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), which is a production-ready evolution of Swarm. The Agents SDK features key improvements and will be actively maintained by the OpenAI team.
     7→>
     8→> We recommend migrating to the Agents SDK for all production use cases.
+    9→
     10→## Install
+    11→
     12→Requires Python 3.10+
+    13→
     14→```shell
     15→pip install git+ssh://git@github.com/openai/swarm.git
     16→```
+    17→
     18→or
+    19→
     20→```shell
     21→pip install git+https://github.com/openai/swarm.git
     22→```
+    23→
     24→## Usage
+    25→
     26→```python
     27→from swarm import Swarm, Agent
+    28→
     29→client = Swarm()
+    30→
     31→def transfer_to_agent_b():
     32→    return agent_b
+    33→
+    34→
     35→agent_a = Agent(
     36→    name="Agent A",
     37→    instructions="You are a helpful agent.",
     38→    functions=[transfer_to_agent_b],
     39→)
+    40→
     41→agent_b = Agent(
     42→    name="Agent B",
     43→    instructions="Only speak in Haikus.",
     44→)
+    45→
     46→response = client.run(
     47→    agent=agent_a,
     48→    messages=[{"role": "user", "content": "I want to talk to agent B."}],
     49→)
+    50→
     51→print(response.messages[-1]["content"])
     52→```
+    53→
     54→```
     55→Hope glimmers brightly,
     56→New paths converge gracefully,
     57→What can I assist?
     58→```
+    59→
     60→## Table of Contents
+    61→
     62→- [Overview](#overview)
     63→- [Examples](#examples)
     64→- [Documentation](#documentation)
@@ -84,9 +101,12 @@ README.md
     321→## Streaming
     …
     336→# Evaluations
+    337→
     338→Evaluations are crucial to any project, and we encourage developers to bring their own eval suites to test the performance of their swarms. For reference, we have some examples for how to eval swarm in the `airline`, `weather_agent` and `triage_agent` quickstart examples. See the READMEs for more details.
     340→# Utils
+    341→
     342→Use the `run_demo_loop` to test out your swarm! This will run a REPL on your command line. Supports streaming.
+    343→
     344→```python
     345→from swarm.repl import run_demo_loop
     346→...
@@ -223,6 +243,7 @@ swarm/
     __init__.py
         1→from .core import Swarm
         2→from .types import Agent, Response
+        3→
         4→__all__ = ["Swarm", "Agent", "Response"]
     core.py
         …
@@ -279,6 +300,7 @@ swarm/
             1→from .repl import run_demo_loop
         repl.py
             1→import json
+            2→
             3→from swarm import Swarm
             6→def process_and_print_streaming_response(response):
             …
@@ -289,15 +311,10 @@ swarm/
             62→) -> None:
             …
     types.py
-        1→from openai.types.chat import ChatCompletionMessage
-        2→from openai.types.chat.chat_completion_message_tool_call import (
-        3→    ChatCompletionMessageToolCall,
-        4→    Function,
-        5→)
-        6→from typing import List, Callable, Union, Optional
         …
-        9→from pydantic import BaseModel
         11→AgentFunction = Callable[[], Union[str, "Agent", dict]]
+        12→
+        13→
         14→class Agent(BaseModel):
         15→    name: str = "Agent"
         16→    model: str = "gpt-4o"
@@ -312,6 +329,7 @@ swarm/
         29→class Result(BaseModel):
         30→    """
         31→    Encapsulates the possible return values for an agent function.
+        32→
         33→    Attributes:
         34→        value (str): The result value as a string.
         35→        agent (Agent): The agent instance, if applicable.
@@ -338,8 +356,10 @@ swarm/
         33→    Converts a Python function into a JSON-serializable dictionary
         34→    that describes the function's signature, including its name,
         35→    description, and parameters.
+        36→
         37→    Args:
         38→        func: The function to be converted.
+        39→
         40→    Returns:
         41→        A dictionary representing the function's signature in JSON format.
         42→    """

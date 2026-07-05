@@ -24,6 +24,7 @@ Readme.md
     36→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
     …
     42→### Usage
+    43→
     44→Superstruct allows you to define the shape of data you want to validate:
     …
     145→### Why?
@@ -37,11 +38,13 @@ Readme.md
     205→### Documentation
     …
     231→### License
+    232→
     233→This package is [MIT-licensed](./License.md).
 docs/
     guides/
         01-getting-started.md
             1→# Getting Started
+            2→
             3→## Installing Superstruct
             …
             41→## Defining Structs
@@ -98,6 +101,7 @@ docs/
         1→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [TypeScript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
         …
         7→### Usage
+        8→
         9→Superstruct allows you to define the shape of data you want to validate:
         …
     reference/
@@ -112,6 +116,7 @@ docs/
             …
         core.md
             1→# Core
+            2→
             3→### `assert`
             …
             15→### `create`
@@ -151,15 +156,17 @@ docs/
         types.md
         typescript.md
             1→# TypeScript
+            2→
             3→Superstruct is designed with TypeScript in mind, so that you don't need to duplicate type definitions.
             5→## Utilities
+            6→
             7→### `Describe`
             …
             25→### `Infer`
             …
         utilities.md
             1→# Utilities
-            3→Superstruct also ships with a handful of utility type factories, which allow you to easily manipulate and transforms existing structs.
+            …
             5→### `assign`
             …
             20→### `deprecated`
@@ -178,19 +185,24 @@ docs/
         faq.md
         links.md
             1→# Resources
+            2→
             3→A few resources that are helpful for building with Superstruct.
             5→## Libraries
             …
     summary.md
         1→- [Introduction](./readme.md)
+        2→
         3→## Guides
+        4→
         5→- [Getting Started](./guides/01-getting-started.md)
         6→- [Validating Data](./guides/02-validating-data.md)
         7→- [Coercing Data](./guides/03-coercing-data.md)
         8→- [Refining Validation](./guides/04-refining-validation.md)
         9→- [Handling Errors](./guides/05-handling-errors.md)
         10→- [Using TypeScript](./guides/06-using-typescript.md)
+        11→
         12→## API Reference
+        13→
         14→- [Core](./reference/core.md)
         15→- [Types](./reference/types.md)
         16→- [Refinements](./reference/refinements.md)
@@ -198,7 +210,9 @@ docs/
         18→- [Utilities](./reference/utilities.md)
         19→- [Errors](./reference/errors.md)
         20→- [TypeScript](./reference/typescript.md)
+        21→
         22→## Resources
+        23→
         24→- [FAQ](./resources/faq.md)
         25→- [Links](./resources/links.md)
 examples/
@@ -323,12 +337,6 @@ src/
             39→): Struct<T, S> {
             …
             55→export function min<T extends number | Date, S extends any>(
-            56→  struct: Struct<T, S>,
-            57→  threshold: T,
-            58→  options: {
-            59→    exclusive?: boolean
-            60→  } = {}
-            61→): Struct<T, S> {
             …
             77→export function nonempty<
             78→  T extends string | any[] | Map<any, any> | Set<any>,

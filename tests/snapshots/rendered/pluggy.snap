@@ -17,42 +17,63 @@ README.rst
     1→====================================================
     2→pluggy - A minimalist production ready plugin system
     3→====================================================
+    4→
     5→|pypi| |conda-forge| |versions| |github-actions| |gitter| |black| |codecov|
+    6→
     7→This is the core framework used by the `pytest`_, `tox`_, and `devpi`_ projects.
+    8→
     9→Please `read the docs`_ to learn more!
     11→A definitive example
     12→====================
     13→.. code-block:: python
+    14→
     15→    import pluggy
+    16→
     17→    hookspec = pluggy.HookspecMarker("myproject")
     18→    hookimpl = pluggy.HookimplMarker("myproject")
+    19→
+    20→
     21→    class MySpec:
     22→        """A hook specification namespace."""
+    23→
     24→        @hookspec
     25→        def myhook(self, arg1, arg2):
     26→            """My special little hook that you can customize."""
+    27→
+    28→
     29→    class Plugin_1:
     30→        """A hook implementation namespace."""
+    31→
     32→        @hookimpl
     33→        def myhook(self, arg1, arg2):
     34→            print("inside Plugin_1.myhook()")
     35→            return arg1 + arg2
+    36→
+    37→
     38→    class Plugin_2:
     39→        """A 2nd hook implementation namespace."""
+    40→
     41→        @hookimpl
     42→        def myhook(self, arg1, arg2):
     43→            print("inside Plugin_2.myhook()")
     44→            return arg1 - arg2
+    45→
+    46→
     47→    # create a manager and add the spec
     48→    pm = pluggy.PluginManager("myproject")
     49→    pm.add_hookspecs(MySpec)
+    50→
     51→    # register plugins
     52→    pm.register(Plugin_1())
     53→    pm.register(Plugin_2())
+    54→
     55→    # call our ``myhook`` hook
     56→    results = pm.hook.myhook(arg1=1, arg2=2)
     57→    print(results)
+    58→
+    59→
     60→Running this directly gets us::
+    61→
     62→    $ python docs/examples/toy-example.py
     63→    inside Plugin_2.myhook()
     64→    inside Plugin_1.myhook()
@@ -131,7 +152,9 @@ src/
             32→def __getattr__(name: str) -> str:
             33→    if name == "__version__":
             34→        from importlib.metadata import version
+            35→
             36→        return version("pluggy")
+            37→
             38→    raise AttributeError(f"module {__name__} has no attribute {name!r}")
         _callers.py
         _hooks.py
@@ -140,17 +163,7 @@ src/
             …
             40→class HookspecOpts(TypedDict):
             41→    """Options for a hook specification."""
-            43→    #: Whether the hook is :ref:`first result only <firstresult>`.
-            44→    firstresult: bool
-            45→    #: Whether the hook is :ref:`historic <historic>`.
-            46→    historic: bool
-            47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
-            48→    warn_on_impl: Warning | None
-            49→    #: Whether the hook warns when :ref:`certain arguments are requested
-            50→    #: <warn_on_impl>`.
-            51→    #:
-            52→    #: .. versionadded:: 1.5
-            53→    warn_on_impl_args: Mapping[str, Warning] | None
+            …
             56→class HookimplOpts(TypedDict):
             57→    """Options for a hook implementation."""
             59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
@@ -190,6 +203,7 @@ src/
             363→    __slots__ = ("__dict__",)
             …
             368→    if TYPE_CHECKING:
+            369→
             370→        def __getattr__(self, name: str) -> HookCaller: ...
             …
             382→class HookCaller:
@@ -248,6 +262,7 @@ src/
             …
             52→class PluginValidationError(Exception):
             53→    """Plugin failed validation.
+            54→
             55→    :param plugin: The plugin which failed validation.
             56→    :param message: Error message.
             57→    """
@@ -263,6 +278,8 @@ src/
             …
             16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
             17→ResultType = TypeVar("ResultType")
+            18→
+            19→
             20→class HookCallError(Exception):
             21→    """Hook was called incorrectly."""
             24→@final

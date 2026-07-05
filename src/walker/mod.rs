@@ -463,30 +463,34 @@ pub(crate) fn build_per_file_content(
     single_file_lines_content(file, &source, lines)
 }
 
-/// `FileLines` → contiguous [`Span`] ranges. Blank source lines and
-/// ellipses superseded by `Full` are dropped.
+/// `FileLines` → contiguous [`Span`] ranges. Blank source lines are
+/// dropped at span edges but **preserved when interior**: a gap between
+/// two kept rows that consists solely of blank source rows is bridged
+/// into one span, so the emitted region mirrors the source's shape (NS
+/// spans are contiguous ranges that include interior blanks). Leading/
+/// trailing blanks never render — `full` holds only non-blank rows, so
+/// every span starts and ends on content. Ellipses superseded by `Full`
+/// coverage are dropped.
 pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> Vec<Span> {
     let src_lines: Vec<&str> = source.lines().collect();
+    let blank = |n: usize| src_lines.get(n - 1).is_some_and(|t| t.trim().is_empty());
     let full: BTreeSet<usize> = lines
         .full
         .into_iter()
         .filter(|n| src_lines.get(*n - 1).is_some_and(|t| !t.trim().is_empty()))
         .collect();
     let line_count = src_lines.len();
-    let ellipses: BTreeSet<usize> = lines
-        .ellipses
-        .into_iter()
-        .filter(|n| !full.contains(n) && *n >= 1 && *n <= line_count)
-        .collect();
 
     let mut spans = Vec::new();
-    // Merge contiguous runs of Full line numbers into single-range spans.
+    // Merge runs of Full line numbers into single-range spans. An
+    // all-blank gap is an empty or bridgeable range, so one condition
+    // covers both adjacency and interior-blank bridging.
     let full_vec: Vec<usize> = full.iter().copied().collect();
     let mut i = 0;
     while i < full_vec.len() {
         let start = full_vec[i];
         let mut end = start;
-        while i + 1 < full_vec.len() && full_vec[i + 1] == end + 1 {
+        while i + 1 < full_vec.len() && (end + 1..full_vec[i + 1]).all(blank) {
             end = full_vec[i + 1];
             i += 1;
         }
@@ -498,6 +502,12 @@ pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> V
         });
         i += 1;
     }
+    let covered = |n: usize| spans.iter().any(|s| s.start <= n && n <= s.end);
+    let ellipses: BTreeSet<usize> = lines
+        .ellipses
+        .into_iter()
+        .filter(|n| *n >= 1 && *n <= line_count && !covered(*n))
+        .collect();
     for n in ellipses {
         spans.push(Span {
             path: path.to_path_buf(),
@@ -811,4 +821,44 @@ pub(crate) fn collect_blank_line_groups(body: Node, source: &str) -> Vec<(usize,
         groups.push((start, current));
     }
     groups
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn span_shapes(source: &str, lines: FileLines) -> Vec<(usize, usize, Render)> {
+        build_file_spans(Path::new("f.txt"), source, lines)
+            .into_iter()
+            .map(|s| (s.start, s.end, s.render))
+            .collect()
+    }
+
+    #[test]
+    fn walker_mod_build_file_spans_bridges_interior_blank_gaps() {
+        // Rows 2 and 4 are blank; collecting 1/3/5 must yield one span
+        // covering the whole region, blanks included.
+        let source = "a\n\nb\n\nc\n";
+        let shapes = span_shapes(source, FileLines::new(vec![1, 3, 5]));
+        assert_eq!(shapes, vec![(1, 5, Render::Full)]);
+    }
+
+    #[test]
+    fn walker_mod_build_file_spans_drops_edge_blanks_and_content_gaps() {
+        // Blank rows at the edges of the collected set never render, and
+        // a gap containing an uncollected *content* row is not bridged.
+        let source = "\na\nskipped\nb\n\n";
+        let shapes = span_shapes(source, FileLines::new(vec![1, 2, 4, 5]));
+        assert_eq!(shapes, vec![(2, 2, Render::Full), (4, 4, Render::Full)]);
+    }
+
+    #[test]
+    fn walker_mod_build_file_spans_drops_ellipsis_covered_by_bridge() {
+        // The ellipsis at blank row 2 is superseded by the bridged Full
+        // span; the one past the region survives.
+        let source = "a\n\nb\nc\n";
+        let lines = FileLines::new(vec![1, 3]).with_ellipses(vec![2, 4]);
+        let shapes = span_shapes(source, lines);
+        assert_eq!(shapes, vec![(1, 3, Render::Full), (4, 4, Render::Ellipsis)]);
+    }
 }

@@ -17,17 +17,21 @@ COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
 CONTRIBUTORS.md
     1→# Contributors
+    2→
     3→Thank you to all the wonderful people who have contributed to axios!
     5→## Core Team
     …
     11→## Notable Contributors
+    12→
     13→<!-- Add contributors here in alphabetical order by GitHub username -->
     15→## How to Contribute
     …
 ECOSYSTEM.md
     1→# Ecosystem
+    2→
     3→This is a list of axios related libraries and resources. If you have a suggestion on what to add, please don't hesitate to submit a PR.
     5→## Libraries
+    6→
     7→### General
     …
     23→### API clients
@@ -53,6 +57,7 @@ index.d.cts
 index.d.ts
     …
     4→export type AxiosHeaderValue = AxiosHeaders | string | string[] | number | boolean | null;
+    5→
     6→export interface RawAxiosHeaders {
     7→  [key: string]: AxiosHeaderValue;
     8→}
@@ -64,7 +69,9 @@ index.d.ts
     120→export type AxiosRequestHeaders = RawAxiosRequestHeaders & AxiosHeaders;
     …
     137→export type RawAxiosResponseHeaders = Partial<RawAxiosHeaders & RawCommonResponseHeaders>;
+    138→
     139→export type AxiosResponseHeaders = RawAxiosResponseHeaders & AxiosHeaders;
+    140→
     141→export interface AxiosRequestTransformer {
     …
     145→export interface AxiosResponseTransformer {
@@ -73,14 +80,13 @@ index.d.ts
     155→  (config: InternalAxiosRequestConfig): AxiosPromise;
     156→}
     158→export interface AxiosBasicCredentials {
-    159→  username: string;
-    160→  password: string;
-    161→}
+    …
     163→export interface AxiosProxyConfig {
     …
     170→export enum HttpStatusCode {
     …
     249→export type Method = (UppercaseMethod | Lowercase<UppercaseMethod>) & {};
+    250→
     251→export type ResponseType =
     …
     274→export type responseEncoding = (
@@ -96,6 +102,7 @@ index.d.ts
     309→export interface SerializerOptions {
     …
     317→export interface FormSerializerOptions extends SerializerOptions {}
+    318→
     319→export interface ParamEncoder {
     …
     323→export interface CustomParamsSerializer {
@@ -105,9 +112,11 @@ index.d.ts
     338→export interface AxiosProgressEvent {
     …
     357→export type AddressFamily = 4 | 6 | undefined;
+    358→
     359→export interface LookupAddressEntry {
     …
     364→export type LookupAddress = string | LookupAddressEntry;
+    365→
     366→export interface AxiosRequestConfig<D = any> {
     367→  url?: string;
     368→  method?: StringLiteralsOrString<Method>;
@@ -146,24 +155,9 @@ index.d.ts
     411→  cancelToken?: CancelToken | undefined;
     412→  decompress?: boolean;
     413→  transitional?: TransitionalOptions;
-    414→  signal?: GenericAbortSignal;
-    415→  insecureHTTPParser?: boolean;
-    416→  env?: {
-    …
-    425→  formSerializer?: FormSerializerOptions;
-    426→  family?: AddressFamily;
-    427→  lookup?:
-    …
-    443→  withXSRFToken?: boolean | ((config: InternalAxiosRequestConfig) => boolean | undefined);
-    444→  parseReviver?: (this: any, key: string, value: any, context?: { source?: string }) => any;
-    445→  fetchOptions?: Omit<RequestInit, 'body' | 'headers' | 'method' | 'signal'> | Record<string, any>;
-    446→  httpVersion?: 1 | 2;
-    447→  http2Options?: Record<string, any> & {
-    …
-    450→  formDataHeaderPolicy?: 'legacy' | 'content-only';
-    451→  redact?: string[];
     …
     455→export type RawAxiosRequestConfig<D = any> = AxiosRequestConfig<D>;
+    456→
     457→export interface InternalAxiosRequestConfig<D = any> extends AxiosRequestConfig<D> {
     458→  headers: AxiosRequestHeaders;
     459→}
@@ -194,6 +188,7 @@ index.d.ts
     536→  readonly name: 'CanceledError';
     …
     539→export type AxiosPromise<T = any> = Promise<AxiosResponse<T>>;
+    540→
     541→export interface CancelStatic {
     542→  new (message?: string): Cancel;
     543→}
@@ -241,6 +236,7 @@ lib/
     adapters/
         README.md
             1→# axios // adapters
+            2→
             3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
             …
         adapters.js
@@ -261,6 +257,7 @@ lib/
         InterceptorManager.js
         README.md
             1→# axios // core
+            2→
             3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
             5→- Dispatching requests
             6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
@@ -279,6 +276,7 @@ lib/
     env/
         README.md
             1→# axios // env
+            2→
             3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
         classes/
         data.js
@@ -288,6 +286,7 @@ lib/
         HttpStatusCode.js
         README.md
             1→# axios // helpers
+            2→
             3→The modules found in `helpers/` should be generic modules that are _not_ specific to the domain logic of axios. These modules could theoretically be published to npm on their own and consumed by other modules or apps. Some examples of generic modules are things like:
             5→- Browser polyfills
             6→- Managing cookies
@@ -346,9 +345,6 @@ lib/
                 27→export default {
                 …
     utils.js
-        …
-        872→export default {
-        …
 package-lock.json
 package.json
     …

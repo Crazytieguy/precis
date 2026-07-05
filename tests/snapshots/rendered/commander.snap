@@ -15,9 +15,11 @@ Readme.md
     1→# Commander.js
     …
     8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
+    9→
     10→Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
     …
     61→## Installation
+    62→
     63→```sh
     64→npm install commander
     65→```
@@ -76,6 +78,7 @@ index.js
     4→const { Help } = require('./lib/help.js');
     5→const { Option } = require('./lib/option.js');
     7→exports.program = new Command();
+    8→
     9→exports.createCommand = (name) => new Command(name);
     10→exports.createOption = (flags, description) => new Option(flags, description);
     11→exports.createArgument = (name, description) => new Argument(name, description);
@@ -86,6 +89,7 @@ index.js
     18→exports.Option = Option;
     19→exports.Argument = Argument;
     20→exports.Help = Help;
+    21→
     22→exports.CommanderError = CommanderError;
     23→exports.InvalidArgumentError = InvalidArgumentError;
     24→exports.InvalidOptionArgumentError = InvalidArgumentError; // Deprecated
@@ -113,6 +117,7 @@ lib/
         …
         143→function humanReadableArgName(arg) {
         144→  const nameOutput = arg.name() + (arg.variadic === true ? '...' : '');
+        145→
         146→  return arg.required ? '<' + nameOutput + '>' : '[' + nameOutput + ']';
         …
         149→exports.Argument = Argument;
@@ -356,6 +361,7 @@ lib/
         166→    if (previous === this.defaultValue || !Array.isArray(previous)) {
         167→      return [value];
         168→    }
+        169→
         170→    previous.push(value);
         171→    return previous;
         …

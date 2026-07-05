@@ -40,20 +40,10 @@ binding/
     multipart_form_mapping_test.go
     plain.go
     protobuf.go
-        …
-        15→type protobufBinding struct{}
-        17→func (protobufBinding) Name() string {
-        18→	return "protobuf"
-        …
-        21→func (b protobufBinding) Bind(req *http.Request, obj any) error {
-        …
-        29→func (protobufBinding) BindBody(body []byte, obj any) error {
-        …
     query.go
         …
-        5→package binding
-        7→import "net/http"
         9→type queryBinding struct{}
+        10→
         11→func (queryBinding) Name() string {
         12→	return "query"
         …
@@ -65,6 +55,7 @@ binding/
         …
         5→package binding
         7→type uriBinding struct{}
+        8→
         9→func (uriBinding) Name() string {
         10→	return "uri"
         …
@@ -103,9 +94,13 @@ doc.go
     1→/*
     2→Package gin implements a HTTP web framework called gin.
     4→See https://gin-gonic.com/ for more information about gin.
+    5→
     6→Example:
+    7→
     8→	package main
+    9→
     10→	import "github.com/gin-gonic/gin"
+    11→
     12→	func main() {
     13→		r := gin.Default()
     14→		r.GET("/ping", func(c *gin.Context) {
@@ -127,6 +122,7 @@ examples/
 fs.go
     …
     5→package gin
+    6→
     7→import (
     8→	"net/http"
     9→	"os"
@@ -161,6 +157,7 @@ gin.go
     34→	default405Body = []byte("405 method not allowed")
     35→)
     37→var defaultPlatform string
+    38→
     39→var defaultTrustedCIDRs = []*net.IPNet{
     …
     50→// HandlerFunc defines the handler used by gin middleware as return value.
@@ -196,6 +193,9 @@ gin.go
     91→// Create an instance of Engine, by using New() or Default()
     92→type Engine struct {
     93→	RouterGroup
+    95→	// routeTreesUpdated ensures that the initialization or update of the route trees
+    96→	// (used for routing HTTP requests) happens only once, even if called multiple times concurrently.
+    97→	routeTreesUpdated sync.Once
     …
     142→	// UseEscapedPath if enable, the url.EscapedPath() will be used to find parameters
     143→	// It overrides UseRawPath
@@ -231,13 +231,17 @@ gin.go
 ginS/
     README.md
         1→# Gin Default Server
+        2→
         3→This is API experiment for Gin.
+        4→
         5→```go
         6→package main
+        7→
         8→import (
         9→	"github.com/gin-gonic/gin"
         10→	"github.com/gin-gonic/gin/ginS"
         11→)
+        12→
         13→func main() {
         14→	ginS.GET("/", func(c *gin.Context) { c.String(200, "Hello World") })
         15→	ginS.Run()
@@ -250,6 +254,7 @@ gin_test.go
 githubapi_test.go
 go.mod
     1→module github.com/gin-gonic/gin
+    2→
     3→go 1.25.0
     …
 go.sum
@@ -309,8 +314,6 @@ render/
     msgpack.go
     pdf.go
         …
-        5→package render
-        7→import "net/http"
         9→// PDF contains the given PDF binary data.
         10→type PDF struct {
         11→	Data []byte

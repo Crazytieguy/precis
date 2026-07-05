@@ -33,10 +33,13 @@ README.md
     3→[![Version info](https://img.shields.io/crates/v/hyperfine.svg)](https://crates.io/crates/hyperfine)
     4→[中文](https://github.com/chinanf-boy/hyperfine-zh)
     6→A command-line benchmarking tool.
+    7→
     8→**Demo**: Benchmarking [`fd`](https://github.com/sharkdp/fd) and
     9→[`find`](https://www.gnu.org/software/findutils/):
+    10→
     11→![hyperfine](https://i.imgur.com/z19OYxE.gif)
     13→## Features
+    14→
     15→* Statistical analysis across multiple runs.
     16→* Support for arbitrary shell commands.
     17→* Constant feedback about the benchmark progress and current estimates.
@@ -63,6 +66,7 @@ src/
             …
             31→/// Threshold for warning about fast execution time
             32→pub const MIN_EXECUTION_TIME: Second = 5e-3;
+            33→
             34→pub struct Benchmark<'a> {
             35→    number: usize,
             36→    command: &'a Command<'a>,
@@ -132,12 +136,16 @@ src/
             28→pub enum ExportType {
             29→    /// Asciidoc Table
             30→    Asciidoc,
+            31→
             32→    /// CSV (comma separated values) format
             33→    Csv,
+            34→
             35→    /// JSON format
             36→    Json,
+            37→
             38→    /// Markdown table
             39→    Markdown,
+            40→
             41→    /// Emacs org-mode tables
             42→    Orgmode,
             43→}
@@ -163,13 +171,16 @@ src/
     main.rs
         …
         6→use std::env;
+        7→
         8→use benchmark::scheduler::Scheduler;
         9→use cli::get_cli_arguments;
         10→use command::Commands;
         11→use export::ExportManager;
         12→use options::Options;
+        13→
         14→use anyhow::Result;
         15→use colored::*;
+        16→
         17→pub mod benchmark;
         18→pub mod cli;
         19→pub mod command;
@@ -246,6 +257,7 @@ src/
         mod.rs
             1→use crate::util::number::Number;
             2→use std::fmt::Display;
+            3→
             4→pub mod range_step;
             5→pub mod tokenize;
             7→#[derive(Debug, Clone, PartialEq, Eq)]

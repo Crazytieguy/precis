@@ -9,9 +9,13 @@ LICENSE
 README.md
     …
     6→**Source code**: [https://github.com/volfpeter/htmy](https://github.com/volfpeter/htmy)
+    7→
     8→**Documentation and examples**: [https://volfpeter.github.io/htmy](https://volfpeter.github.io/htmy/)
+    9→
     10→# `htmy`
+    11→
     12→**Async**, **pure-Python** server-side rendering engine.
+    13→
     14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
     16→## Key features
     18→- **Async**-first, to let you make the best use of modern async tools.
@@ -31,6 +35,7 @@ README.md
     33→## Testimonials
     …
     47→## Support
+    48→
     49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
     51→## Installation
     …
@@ -60,17 +65,18 @@ README.md
     330→## Framework integrations
     …
     337→## External examples
+    338→
     339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
     341→## Why
     …
     353→## Dependencies
     …
     361→## Development
-    363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
-    365→The documentation is built with `zensical` and `mkdocstrings`.
+    …
     367→## Contributing
     …
     377→## License - MIT
+    378→
     379→The package is open-sourced under the conditions of the [MIT license](https://choosealicense.com/licenses/mit/).
 docs/
     api/
@@ -81,6 +87,7 @@ docs/
         i18n.md
         md.md
             1→# ::: htmy.md.core
+            2→
             3→    options:
             4→        show_root_heading: true
             6→# ::: htmy.md.typing
@@ -94,6 +101,7 @@ docs/
         utils.md
     components-guide.md
         1→# Components guide
+        2→
         3→## What is a component?
         …
         142→## What is a component factory?
@@ -175,14 +183,53 @@ htmy/
         43→from .utils import join
         44→from .utils import join_components as join_components
         46→join_classes = join
+        47→
         48→HTMY = Renderer
         …
     core.py
+        …
+        19→class Fragment:
+        20→    """Fragment utility component that simply wraps some children components."""
+        22→    __slots__ = ("_children",)
+        …
+        38→class WithContext(Fragment):
+        39→    """
+        40→    A simple, static context provider component.
+        41→    """
+        43→    __slots__ = ("_context",)
+        …
+        64→class ContextAware:
+        65→    """
+        66→    Base class with utilities for safe context use.
+        …
+        146→class SkipProperty(Exception):
+        147→    """Exception raised by property formatters if the property should be skipped."""
+        149→    ...
+        …
+        157→class Text(str):
+        158→    """Marker class for differentiating text content from other strings."""
+        160→    ...
+        163→class SafeStr(Text):
+        …
+        172→    ...
+        175→class XBool(enum.Enum):
+        …
+        183→    true = True
+        184→    false = False
+        …
+        196→def xml_format_string(value: str) -> str:
+        …
+        198→    return value if isinstance(value, SafeStr) else xml_escape(value)
+        201→class Formatter(ContextAware):
+        …
+        220→    __slots__ = ("_default_formatter", "_name_formatter", "_value_formatters")
+        …
     error_boundary.py
         …
         15→class ErrorBoundary:
         16→    """
         17→    Error boundary component for graceful error handling.
+        18→
         19→    If an error occurs during the rendering of the error boundary's subtree,
         20→    the fallback component will be rendered instead.
         21→    """
@@ -267,33 +314,6 @@ htmy/
         216→    __slots__ = ("_path_or_text", "_text_processor", "_text_resolver")
         …
     tag.py
-        …
-        12→class _TagWithPropsImpl:
-        13→    __slots__ = ("name", "props")
-        …
-        24→class _TagImpl:
-        25→    __slots__ = ("child_separator", "children", "name", "props")
-        …
-        53→_default_formatter = Formatter()
-        56→class TagWithProps:
-        57→    """
-        58→    Creates a tag type that can have properties, but not children.
-        60→    Arguments:
-        61→        **props: Tag properties.
-        62→    """
-        64→    __slots__ = ("name",)
-        …
-        73→class Tag:
-        74→    __slots__ = ("child_separator", "name")
-        …
-        84→def wildcard_tag(
-        85→    *children: ComponentType,
-        86→    htmy_name: str,
-        87→    htmy_child_separator: ComponentType = None,
-        88→    **props: PropertyValue,
-        89→) -> ComponentType:
-        …
-        100→    return _TagImpl(htmy_name, props, children, htmy_child_separator)
     typing.py
     utils.py
 mkdocs.yaml

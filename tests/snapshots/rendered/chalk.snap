@@ -13,6 +13,7 @@ benchmark.js
     …
 code-of-conduct.md
     1→# Contributor Covenant Code of Conduct
+    2→
     3→## Our Pledge
     …
     12→## Our Standards
@@ -91,9 +92,11 @@ readme.md
     10→> Terminal string styling done right
     …
     18→## Info
+    19→
     20→- [Why not switch to a smaller coloring package?](https://github.com/chalk/chalk?tab=readme-ov-file#why-not-switch-to-a-smaller-coloring-package)
     21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
     23→## Highlights
+    24→
     25→- Expressive API
     26→- Highly performant
     27→- No dependencies
@@ -105,13 +108,16 @@ readme.md
     33→- Actively maintained
     34→- [Used by ~115,000 packages](https://www.npmjs.com/browse/depended/chalk) as of July 4, 2024
     36→## Install
+    37→
     38→```sh
     39→npm install chalk
     40→```
+    41→
     42→**IMPORTANT:** Chalk 5 is ESM. If you want to use Chalk with TypeScript or a build tool, you will probably want to use Chalk 4 for now. [Read more.](https://github.com/chalk/chalk/releases/tag/v5.0.0)
     44→## Usage
     …
     112→## API
+    113→
     114→### chalk.`<style>[.<style>...](string, [string...])`
     116→Example: `chalk.red.bold.underline('Hello', 'world');`
     …
@@ -126,9 +132,9 @@ readme.md
     151→### chalkStderr and supportsColorStderr
     …
     155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
-    157→All supported style strings are exposed as an array of strings for convenience. `colorNames` is the combination of `foregroundColorNames` and `backgroundColorNames`.
     …
     171→## Styles
+    172→
     173→### Modifiers
     175→- `reset` - Reset the current style.
     176→- `bold` - Make the text bold.
@@ -141,6 +147,7 @@ readme.md
     183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
     184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
     186→### Colors
+    187→
     188→- `black`
     189→- `red`
     190→- `green`
@@ -158,6 +165,7 @@ readme.md
     202→- `cyanBright`
     203→- `whiteBright`
     205→### Background colors
+    206→
     207→- `bgBlack`
     208→- `bgRed`
     209→- `bgGreen`
@@ -177,10 +185,13 @@ readme.md
     224→## 256 and Truecolor color support
     …
     246→## Browser support
+    247→
     248→Since Chrome 69, ANSI escape codes are natively supported in the developer console.
     250→## Windows
+    251→
     252→If you're on Windows, do yourself a favor and use [Windows Terminal](https://github.com/microsoft/terminal) instead of `cmd.exe`.
     254→## FAQ
+    255→
     256→### Why not switch to a smaller coloring package?
     …
     268→*\- [Sindre](https://github.com/sindresorhus)*
@@ -189,6 +200,7 @@ readme.md
     274→## Related
     …
     294→## Maintainers
+    295→
     296→- [Sindre Sorhus](https://github.com/sindresorhus)
     297→- [Josh Junon](https://github.com/qix-)
 source/
@@ -216,6 +228,7 @@ source/
         25→	if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
         26→		throw new Error('The `level` option should be an integer from 0 to 3');
         27→	}
+        28→
         29→	// Detect level if not set manually
         30→	const colorLevel = stdoutColor ? stdoutColor.level : 0;
         31→	object.level = options.level === undefined ? colorLevel : options.level;
@@ -228,7 +241,9 @@ source/
         41→const chalkFactory = options => {
         42→	const chalk = (...strings) => strings.join(' ');
         43→	applyOptions(chalk, options);
+        44→
         45→	Object.setPrototypeOf(chalk, createChalk.prototype);
+        46→
         47→	return chalk;
         …
         50→function createChalk(options) {
@@ -258,14 +273,6 @@ source/
     utilities.js
     vendor/
         ansi-styles/
-            index.d.ts
-            index.js
-                1→const ANSI_BACKGROUND_OFFSET = 10;
-                …
-                73→function assembleStyles() {
-                …
-                221→const ansiStyles = assembleStyles();
-                …
         supports-color/
             browser.d.ts
             browser.js
@@ -288,6 +295,7 @@ source/
                 178→		streamIsTTY: stream && stream.isTTY,
                 179→		...options,
                 180→	});
+                181→
                 182→	return translateLevel(level);
                 …
                 190→export default supportsColor;

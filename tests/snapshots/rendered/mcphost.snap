@@ -9,6 +9,7 @@ AGENTS.md
 LICENSE
 README.md
     1→# MCPHost 🤖
+    2→
     3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
     5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
     …
@@ -41,11 +42,13 @@ README.md
     75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
     …
     124→## Installation 📦
+    125→
     126→```bash
     127→go install github.com/mark3labs/mcphost@latest
     128→```
     …
     981→## License 📄
+    982→
     983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
     …
 cmd/
@@ -83,8 +86,11 @@ examples/
     scripts/
 go.mod
     1→module github.com/mark3labs/mcphost
+    2→
     3→go 1.24.0
+    4→
     5→toolchain go1.24.5
+    6→
     7→require (
     8→	github.com/JohannesKaufmann/html-to-markdown v1.6.0
     9→	github.com/PuerkitoBio/goquery v1.10.3
@@ -106,9 +112,11 @@ go.mod
     25→	google.golang.org/genai v1.22.0
     26→	gopkg.in/yaml.v3 v3.0.1
     27→)
+    28→
     29→require (
     …
     141→)
+    142→
     143→require (
     …
     145→	github.com/charmbracelet/bubbles v0.21.0
@@ -274,31 +282,26 @@ internal/
     ui/
 main.go
     1→package main
+    2→
     3→import (
     4→	"context"
     5→	"fmt"
     6→	"os"
+    7→
     8→	"github.com/charmbracelet/fang"
     9→	"github.com/mark3labs/mcphost/cmd"
     10→)
     12→var version = "dev"
+    13→
     14→func main() {
-    15→	for _, arg := range os.Args[1:] {
-    16→		if arg == "--version" || arg == "-v" {
-    17→			fmt.Printf("mcphost version %s\n", version)
-    18→			os.Exit(0)
-    19→		}
-    20→	}
-    22→	rootCmd := cmd.GetRootCommand(version)
-    23→	if err := fang.Execute(context.Background(), rootCmd); err != nil {
-    24→		os.Exit(1)
-    25→	}
     …
 sdk/
     README.md
         1→# MCPHost SDK
+        2→
         3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
         5→## Installation
+        6→
         7→```bash
         8→go get github.com/mark3labs/mcphost
         9→```
@@ -309,11 +312,13 @@ sdk/
         52→### Options
         …
         67→## Advanced Usage
+        68→
         69→### With Tool Callbacks
         …
         93→### Session Management
         …
         115→## API Reference
+        116→
         117→### Types
         …
         124→### Methods
@@ -321,6 +326,7 @@ sdk/
         136→## Environment Variables
         …
         146→## License
+        147→
         148→Same as MCPHost CLI
     examples/
     mcphost.go

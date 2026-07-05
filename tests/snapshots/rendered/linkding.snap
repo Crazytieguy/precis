@@ -15,12 +15,14 @@ Makefile
 README.md
     …
     9→##  Introduction
+    10→
     11→linkding is a bookmark manager that you can host yourself.
     12→It's designed be to be minimal, fast, and easy to set up using Docker.
     14→The name comes from:
     15→- *link* which is often used as a synonym for URLs and bookmarks in common language
     16→- *Ding* which is German for thing
     17→- ...so basically something for managing your links
+    18→
     19→**Feature Overview:**
     20→- Clean UI optimized for readability
     21→- Organize bookmarks with tags
@@ -34,17 +36,22 @@ README.md
     29→- SSO support via OIDC or authentication proxies
     30→- REST API for developing 3rd party apps
     31→- Admin panel for user self-service and raw data access
+    32→
+    33→
     34→**Demo:** https://demo.linkding.link/
+    35→
     36→**Screenshot:**
+    37→
     38→![Screenshot](/docs/public/linkding-screenshot.png?raw=true "Screenshot")
     40→## Getting Started
     …
     47→## Documentation
     …
     55→## Contributing
+    56→
     57→Small improvements, bugfixes and documentation improvements are always welcome. If you want to contribute a larger feature, consider opening an issue first to discuss it. I may choose to ignore PRs for features that don't align with the project's goals or that I don't want to maintain.
     59→## Development
-    61→The application is built using the Django web framework. You can get started by checking out the excellent [Django docs](https://docs.djangoproject.com/en/4.1/). The `bookmarks` folder contains the actual bookmark application. Other than that the code should be self-explanatory / standard Django stuff 🙂.
+    …
     63→### Prerequisites
     …
     68→### Setup
@@ -135,6 +142,7 @@ bookmarks/
         7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
         8→    header = settings.LD_AUTH_PROXY_USERNAME_HEADER
         11→default_global_settings = GlobalSettings()
+        12→
         13→standard_profile = UserProfile()
         …
         17→class LinkdingMiddleware:
@@ -169,8 +177,7 @@ bookmarks/
         tags.py
         tasks.py
         wayback.py
-            1→import datetime
-            3→from django.utils import timezone
+            …
             6→def generate_fallback_webarchive_url(
             7→    url: str, timestamp: datetime.datetime
             8→) -> str | None:
@@ -250,13 +257,6 @@ bookmarks/
     templatetags/
         __init__.py
         bookmarks.py
-            …
-            6→register = template.Library()
-            9→@register.inclusion_tag(
-            10→    "bookmarks/search.html", name="bookmark_search", takes_context=True
-            11→)
-            12→def bookmark_search(context, search: BookmarkSearch, mode: str = ""):
-            …
         pagination.py
         shared.py
     tests/
@@ -294,8 +294,6 @@ bookmarks/
         contexts.py
         custom_css.py
             1→from django.http import HttpResponse
-            3→custom_css_cache_max_age = 2592000  # 30 days
-            6→def custom_css(request):
             …
         health.py
             …
@@ -324,6 +322,21 @@ bookmarks/
             …
         turbo.py
     widgets.py
+        …
+        7→class FormErrorList(ErrorList):
+        8→    template_name = "shared/error_list.html"
+        11→class FormInput(forms.TextInput):
+        …
+        19→class FormNumberInput(forms.NumberInput):
+        …
+        27→class FormSelect(forms.Select):
+        …
+        35→class FormTextarea(forms.Textarea):
+        …
+        43→class FormCheckbox(forms.CheckboxInput):
+        …
+        63→class TagAutocomplete(forms.TextInput):
+        …
     wsgi.py
         …
         13→application = get_wsgi_application()

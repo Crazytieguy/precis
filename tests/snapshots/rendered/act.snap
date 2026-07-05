@@ -21,6 +21,7 @@ CLAUDE.md
 CONTRIBUTING.md
 IMAGES.md
     1→# List of Docker images for `act`
+    2→
     3→**Warning:** Below badges with size for each image are displaying size of **compressed image size in registry. After pulling the image, size can be drastically different due to Docker uncompressing the image layers.**
     5→## Images based on [`buildpack-deps`][hub/_/buildpack-deps]
     …
@@ -32,13 +33,16 @@ README.md
     …
     3→# Overview…
     5→> "Think globally, `act` locally"
+    6→
     7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
     …
     16→# How Does It Work?
     …
     24→# Act User Guide
+    25→
     26→Please look at the [act user guide](https://nektosact.com) for more documentation.
     28→# Support
+    29→
     30→Need help? Ask in [discussions](https://github.com/nektos/act/discussions)!
     32→# Contributing
     …
@@ -69,10 +73,7 @@ cmd/
         …
     notices.go
     platforms.go
-        1→package cmd
-        3→import (
-        4→	"strings"
-        5→)
+        …
         7→func (i *Input) newPlatforms() map[string]string {
         …
     root.go
@@ -80,6 +81,7 @@ cmd/
     secrets.go
         …
         12→type secrets map[string]string
+        13→
         14→func newSecrets(secretList []string) secrets {
         …
         40→func (s secrets) AsMap() map[string]string {
@@ -93,22 +95,27 @@ cmd/
 codecov.yml
 go.mod
     1→module github.com/nektos/act
+    2→
     3→go 1.25.0
     …
 go.sum
 install.sh
 main.go
     1→package main
+    2→
     3→import (
     4→	_ "embed"
+    5→
     6→	"github.com/nektos/act/cmd"
     7→	"github.com/nektos/act/pkg/common"
     8→)
     10→//go:embed VERSION
     11→var version string
+    12→
     13→func main() {
     14→	ctx, cancel := common.CreateGracefulJobCancellationContext()
     15→	defer cancel()
+    16→
     17→	// run the command
     18→	cmd.Execute(ctx, version)
     …
@@ -219,8 +226,7 @@ pkg/
             36→func removeExecutor(volume string, force bool) common.Executor {
             …
         executions_environment.go
-            1→package container
-            3→import "context"
+            …
             5→type ExecutionsEnvironment interface {
             …
         host_environment.go

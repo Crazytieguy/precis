@@ -29,9 +29,11 @@ README.md
     32→- `requests` for synchronous API
     33→- `httpx` for asynchronous API
     34→- `pydantic` for models
+    35→
     36→Supported Python versions:
     37→- 3.11
     38→- 3.12
+    39→
     40→Since the 3x-ui app is under development, the SDK may not be compatible with all versions of the app. The developer of SDK is not related to the 3x-ui app, therefore the latest versions of the software are not guaranteed to be compatible with the SDK. <br>
     41→The SDK does not support versions of the 3x-ui older than `2.3.7`.
     43→## Quick Start
@@ -82,7 +84,9 @@ py3xui/
     api/
         README.md
             1→<a id="api.api_database"></a>
+            2→
             3→# api.api\_database
+            4→
             5→This module contains the DatabaseApi class, which is responsible handling database operations
             6→in the XUI API.
             …
@@ -97,6 +101,23 @@ py3xui/
             13→class Api:
             14→    """This class provides a high-level interface to interact with the XUI API.
             15→    Access to the client, inbound, and database APIs is provided through this class.
+            …
+            67→    def __init__(
+            …
+            93→    @property
+            94→    def session(self) -> str | None:
+            …
+            102→    @session.setter
+            103→    def session(self, value: str) -> None:
+            …
+            115→    @property
+            116→    def cookie_name(self) -> str | None:
+            …
+            124→    @cookie_name.setter
+            …
+            139→    @classmethod
+            …
+            189→    def login(self, two_factor_code: str | int | None = None) -> None:
             …
         api_base.py
             …
@@ -131,7 +152,9 @@ py3xui/
     async_api/
         README.md
             1→<a id="async_api.async_api_inbound"></a>
+            2→
             3→# async\_api.async\_api\_inbound
+            4→
             5→This module contains the InboundApi class which provides methods to interact with the
             6→clients in the XUI API asynchronously.
             …
@@ -178,8 +201,11 @@ py3xui/
     client/
         README.md
             1→<a id="client.client"></a>
+            2→
             3→# client.client
+            4→
             5→This module contains the Client class which represents a client in the XUI API.
+            6→
             7→<a id="client.client.ClientFields"></a>
             9→## ClientFields Objects
             …
@@ -192,30 +218,15 @@ py3xui/
             …
             7→class ClientFields:
             8→    """Stores the fields returned by the XUI API for parsing."""
-            10→    EMAIL = "email"
-            11→    ENABLE = "enable"
-            12→    PASSWORD = "password"
-            14→    ID = "id"
-            15→    INBOUND_ID = "inboundId"
-            17→    UP = "up"
-            18→    DOWN = "down"
-            20→    EXPIRY_TIME = "expiryTime"
-            22→    TOTAL = "total"
-            23→    RESET = "reset"
-            25→    FLOW = "flow"
-            26→    METHOD = "method"
-            27→    LIMIT_IP = "limitIp"
-            28→    SUB_ID = "subId"
-            29→    COMMENT = "comment"
-            30→    TG_ID = "tgId"
-            31→    TOTAL_GB = "totalGB"
-            33→    UUID = "uuid"
+            …
             36→class Client(BaseModel):
             …
     inbound/
         README.md
             1→<a id="inbound.settings"></a>
+            2→
             3→# inbound.settings
+            4→
             5→This module contains the Settings class, which is used to parse the JSON response
             6→from the XUI API.
             …
@@ -248,8 +259,11 @@ py3xui/
     server/
         README.md
             1→<a id="server.server"></a>
+            2→
             3→# server.server
+            4→
             5→This module contains the Server class which represents server information in XUI API.
+            6→
             7→<a id="server.server.ServerFields"></a>
             …
         __init__.py
@@ -259,8 +273,11 @@ py3xui/
     utils/
         README.md
             1→<a id="utils.env"></a>
+            2→
             3→# utils.env
+            4→
             5→This module contains utility functions for parsing environment variables.
+            6→
             7→<a id="utils.env.parse_env"></a>
             …
         __init__.py

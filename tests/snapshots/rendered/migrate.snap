@@ -16,8 +16,7 @@ Dockerfile.github-actions
 FAQ.md
 GETTING_STARTED.md
     1→# Getting started
-    2→Before you start, you should understand the concept of forward/up and reverse/down database migrations.
-    4→Configure a database for your application. Make sure that your database driver is supported [here](README.md#databases).
+    …
     6→## Create migrations
     …
     22→## Run migrations
@@ -32,12 +31,14 @@ Makefile
 README.md
     …
     10→# migrate
+    11→
     12→__Database migrations written in Go. Use as [CLI](#cli-usage) or import as [library](#use-in-your-go-project).__
     14→* Migrate reads migrations from [sources](#migration-sources)
     15→   and applies them in correct order to a [database](#databases).
     16→* Drivers are "dumb", migrate glues everything together and makes sure the logic is bulletproof.
     17→   (Keeps the drivers lightweight, too.)
     18→* Database drivers don't assume things or try to correct user input. When in doubt, fail.
+    19→
     20→Forked from [mattes/migrate](https://github.com/mattes/migrate)
     22→## Databases
     …
@@ -54,6 +55,7 @@ README.md
     105→## Use in your Go project
     …
     152→## Getting started
+    153→
     154→Go to [getting started](GETTING_STARTED.md)
     156→## Tutorials
     …
@@ -69,6 +71,7 @@ SECURITY.md
 cli/
     README.md
         1→# Deprecated
+        2→
         3→Use [cmd/migrate](../cmd/migrate) instead
     main.go
         …
@@ -97,16 +100,41 @@ cmd/
             4→var Version = "dev"
 database/
     cassandra/
+        README.md
+        cassandra.go
+        cassandra_test.go
+        examples/
     clickhouse/
+        README.md
+            1→# ClickHouse
+            2→
+            3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
+            …
+        clickhouse.go
+        clickhouse_test.go
+        examples/
     cockroachdb/
     crate/
     driver.go
     driver_test.go
     error.go
+        …
+        8→type Error struct {
+        …
+        22→func (e Error) Error() string {
+        …
     firebird/
     mongodb/
+        README.md
+        examples/
+        mongodb.go
+        mongodb_test.go
     multistmt/
     mysql/
+        README.md
+        examples/
+        mysql.go
+        mysql_test.go
     neo4j/
     parse_test.go
     pgx/
@@ -119,6 +147,10 @@ database/
     spanner/
     sqlcipher/
     sqlite/
+        README.md
+        examples/
+        sqlite.go
+        sqlite_test.go
     sqlite3/
     sqlserver/
     stub/
@@ -145,6 +177,7 @@ dktesting/
 docker-deploy.sh
 go.mod
     1→module github.com/golang-migrate/migrate/v4
+    2→
     3→go 1.24.0
     …
 go.sum
@@ -156,8 +189,10 @@ log.go
     3→// Logger is an interface so you can pass in your own
     4→// logging implementation.
     5→type Logger interface {
+    6→
     7→	// Printf is like fmt.Printf
     8→	Printf(format string, v ...interface{})
+    9→
     10→	// Verbose should return true when verbose logging output is wanted
     11→	Verbose() bool
     12→}
@@ -166,17 +201,7 @@ migrate.go
     2→// Sources are defined by the `source.Driver` and databases by the `database.Driver`
     3→// interface. The driver interfaces are kept "dumb", all migration logic is kept
     4→// in this package.
-    5→package migrate
-    7→import (
-    8→	"errors"
-    9→	"fmt"
-    10→	"os"
-    11→	"sync"
-    12→	"time"
-    14→	"github.com/golang-migrate/migrate/v4/database"
-    15→	iurl "github.com/golang-migrate/migrate/v4/internal/url"
-    16→	"github.com/golang-migrate/migrate/v4/source"
-    17→)
+    …
     19→// DefaultPrefetchMigrations sets the number of migrations to pre-read
     20→// from the source. This is helpful if the source is remote, but has little
     21→// effect for a local source (i.e. file system).
@@ -237,6 +262,7 @@ source/
     aws_s3/
         README.md
             1→# aws_s3
+            2→
             3→`s3://<bucket>/<prefix>`
         s3.go
         s3_test.go
@@ -244,6 +270,7 @@ source/
         .gitignore
         README.md
             1→# bitbucket
+            2→
             3→This driver is catered for those that want to source migrations from bitbucket cloud(https://bitbucket.com).
             …
         bitbucket.go
@@ -252,6 +279,7 @@ source/
     driver_test.go
     errors.go
         1→package source
+        2→
         3→import "os"
         5→// ErrDuplicateMigration is an error type for reporting duplicate migration
         6→// files.
@@ -266,6 +294,7 @@ source/
     file/
         README.md
             1→# file
+            2→
             3→`file:///absolute/path`  
             4→`file://relative/path`
         file.go
@@ -274,6 +303,7 @@ source/
         .gitignore
         README.md
             1→# github
+            2→
             3→This driver is catered for those that want to source migrations from [github.com](https://github.com). The URL scheme doesn't require a hostname, as it just simply defaults to `github.com`.
             …
         examples/
@@ -295,10 +325,6 @@ source/
     go_bindata/
         README.md
             1→# go_bindata
-            3→## Usage
-            7→### Read bindata with NewWithSourceInstance
-            …
-            34→### Read bindata with URL (todo)
             …
         examples/
         go-bindata.go
@@ -314,6 +340,7 @@ source/
             4→## Import
             …
             12→## Connection String
+            13→
             14→`gcs://<bucket>/<prefix>`
         storage.go
         storage_test.go
@@ -329,6 +356,7 @@ source/
     iofs/
         README.md
             1→# iofs
+            2→
             3→https://pkg.go.dev/github.com/golang-migrate/migrate/v4/source/iofs
         doc.go
             1→/*
@@ -354,12 +382,7 @@ testing/
     testing.go
     testing_test.go
 util.go
-    1→package migrate
-    3→import (
-    4→	"fmt"
-    5→	nurl "net/url"
-    6→	"strings"
-    7→)
+    …
     9→// MultiError holds multiple errors.
     10→//
     11→// Deprecated: Use stdlib's [errors.Join] et al. instead

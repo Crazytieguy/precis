@@ -12,6 +12,7 @@ README.md
     7→A tiny JavaScript debugging utility modelled after Node.js core's debugging
     8→technique. Works in Node.js and web browsers.
     10→## Installation
+    11→
     12→```bash
     13→$ npm install debug
     14→```
@@ -20,11 +21,9 @@ README.md
     110→## Namespace Colors
     …
     134→## Millisecond diff
-    136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
-    138→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
-    140→When stdout is not a TTY, `Date#toISOString()` is used, making it more useful for logging the debug information as shown below:
-    142→<img width="647" src="https://user-images.githubusercontent.com/71256/29091956-6bd78372-7c39-11e7-8c55-c948396d6edd.png">
+    …
     145→## Conventions
+    146→
     147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
     149→## Wildcards
     …
@@ -47,6 +46,7 @@ README.md
     357→## Usage in child processes
     …
     379→## Authors
+    380→
     381→ - TJ Holowaychuk
     382→ - Nathan Rajlich
     383→ - Andrew Rhyne
@@ -123,6 +123,9 @@ package.json
 src/
     browser.js
         …
+        3→/**
+        4→ * This is the web browser implementation of `debug()`.
+        5→ */
         7→exports.formatArgs = formatArgs;
         8→exports.save = save;
         9→exports.load = load;
@@ -130,6 +133,7 @@ src/
         11→exports.storage = localstorage();
         12→exports.destroy = (() => {
         13→	let warned = false;
+        14→
         15→	return () => {
         16→		if (!warned) {
         17→			warned = true;
@@ -147,6 +151,16 @@ src/
         192→exports.log = console.debug || console.log || (() => {});
         …
         200→function save(namespaces) {
+        201→	try {
+        202→		if (namespaces) {
+        203→			exports.storage.setItem('debug', namespaces);
+        204→		} else {
+        205→			exports.storage.removeItem('debug');
+        206→		}
+        207→	} catch (error) {
+        208→		// Swallow
+        209→		// XXX (@Qix-) should we be logging these?
+        210→	}
         …
         219→function load() {
         …
@@ -166,10 +180,12 @@ src/
         …
         41→	function selectColor(namespace) {
         42→		let hash = 0;
+        43→
         44→		for (let i = 0; i < namespace.length; i++) {
         45→			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
         46→			hash |= 0; // Convert to 32bit integer
         47→		}
+        48→
         49→		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
         …
         60→	function createDebug(namespace) {
@@ -239,11 +255,13 @@ src/
         252→				return false;
         253→			}
         254→		}
+        255→
         256→		for (const ns of createDebug.names) {
         257→			if (matchesTemplate(name, ns)) {
         258→				return true;
         259→			}
         260→		}
+        261→
         262→		return false;
         …
         272→	function coerce(val) {

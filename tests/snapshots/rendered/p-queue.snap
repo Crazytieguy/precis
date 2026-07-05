@@ -61,11 +61,16 @@ package.json
     …
 readme.md
     1→# p-queue
+    2→
     3→> Promise queue with concurrency control
+    4→
     5→Useful for rate-limiting async (or sync) operations. For example, when interacting with a REST API or when doing CPU/memory intensive tasks.
     7→For servers, you probably want a Redis-backed [job queue](https://github.com/sindresorhus/awesome-nodejs#job-queues) instead.
+    8→
     9→Note that the project is feature complete. We are happy to review pull requests, but we don't plan any further development. We are also not answering email support questions.
+    10→
     11→---
+    12→
     13→<br>
     14→<div align="center">
     15→	<p>
@@ -89,28 +94,37 @@ readme.md
     33→	<br>
     34→	<br>
     35→</div>
+    36→
     37→---
     39→## Install
+    40→
     41→```sh
     42→npm install p-queue
     43→```
+    44→
     45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
     47→## Usage
+    48→
     49→Here we run only one promise at a time. For example, set `concurrency` to 4 to run four promises at the same time.
+    50→
     51→```js
     52→import PQueue from 'p-queue';
     53→import got from 'got';
+    54→
     55→const queue = new PQueue({concurrency: 1});
+    56→
     57→(async () => {
     58→	await queue.add(() => got('https://sindresorhus.com'));
     59→	console.log('Done: sindresorhus.com');
     60→})();
+    61→
     62→(async () => {
     63→	await queue.add(() => got('https://avajs.dev'));
     64→	console.log('Done: avajs.dev');
     65→})();
     66→```
     68→## API
+    69→
     70→### PQueue(options?)
     72→Returns a new `queue` instance, which is an [`EventEmitter3`](https://github.com/primus/eventemitter3) subclass.
     …
@@ -118,23 +132,26 @@ readme.md
     164→`PQueue` instance.
     …
     236→#### .addAll(fns, options?)
+    237→
     238→Same as `.add()`, but accepts an array of sync or async functions and returns a promise that resolves when all functions are resolved.
     240→#### .pause()
+    241→
     242→Put queue execution on hold.
-    244→#### .start()
-    246→Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
-    248→Returns `this` (the instance).
     …
     355→#### .size
+    356→
     357→Size of the queue, the number of queued items waiting to run.
     …
     419→#### .pending
+    420→
     421→Number of running items (no longer in the queue).
     …
     440→#### [.concurrency](#concurrency)
     442→#### .isPaused
+    443→
     444→Whether the queue is currently paused.
     446→#### .isRateLimited
+    447→
     448→Whether the queue is currently rate-limited due to `intervalCap`. Returns `true` when the number of tasks executed in the current interval has reached the `intervalCap` and there are still tasks waiting to be processed.
     …
     512→## Events
@@ -148,6 +165,7 @@ readme.md
     847→## FAQ
     …
     1066→## Maintainers
+    1067→
     1068→- [Sindre Sorhus](https://github.com/sindresorhus)
     1069→- [Richie Bendall](https://github.com/Richienb)
     1071→## Related
@@ -166,6 +184,7 @@ source/
         16→export default class PQueue<QueueType extends Queue<RunFunction, EnqueueOptionsType> = PriorityQueue, EnqueueOptionsType extends QueueAddOptions = QueueAddOptions> extends EventEmitter<EventName> { // eslint-disable-line @typescript-eslint/naming-convention
         …
         83→	timeout?: number;
+        84→
         85→	constructor(options?: Options<QueueType, EnqueueOptionsType>) {
         …
         382→	get concurrency(): number {
@@ -258,6 +277,7 @@ source/
         …
     queue.ts
         1→export type RunFunction = () => Promise<unknown>;
+        2→
         3→export type Queue<Element, Options> = {
         …
 test/

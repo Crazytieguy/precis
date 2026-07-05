@@ -54,6 +54,7 @@ README.md
     1→# mdBook
     …
     7→mdBook is a utility to create modern online books from Markdown files.
+    8→
     9→Check out the **[User Guide]** for a list of features and installation and usage information.
     10→The User Guide also serves as a demonstration to showcase what a book looks like.
     12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
@@ -67,7 +68,9 @@ crates/
             …
         README.md
             1→# mdbook-compare
+            2→
             3→This is a simple utility to compare the output of two different versions of mdbook.
+            4→
             5→To use this:
             …
         src/
@@ -101,23 +104,25 @@ crates/
                 html.rs
                 mod.rs
                     1→//! Various helpers and utilities.
-                    3→use anyhow::Error;
-                    4→use std::fmt::Write;
-                    5→use tracing::error;
-                    7→pub mod fs;
-                    8→mod html;
-                    9→mod toml_ext;
-                    11→pub(crate) use self::toml_ext::TomlExt;
-                    13→pub use self::html::{escape_html, escape_html_attribute};
                     …
                     17→macro_rules! static_regex {
-                    …
+                    18→    ($name:ident, $regex:literal) => {
+                    19→        static $name: std::sync::LazyLock<regex::Regex> =
+                    20→            std::sync::LazyLock::new(|| regex::Regex::new($regex).unwrap());
+                    21→    };
+                    22→    ($name:ident, bytes, $regex:literal) => {
+                    23→        static $name: std::sync::LazyLock<regex::bytes::Regex> =
+                    24→            std::sync::LazyLock::new(|| regex::bytes::Regex::new($regex).unwrap());
+                    25→    };
+                    26→}
                     28→/// Prints a "backtrace" of some `Error`.
                     29→pub fn log_backtrace(e: &Error) {
                     30→    let mut message = format!("{e}");
+                    31→
                     32→    for cause in e.chain().skip(1) {
                     33→        write!(message, "\n\tCaused by: {cause}").unwrap();
                     34→    }
+                    35→
                     36→    error!("{message}");
                     …
                 toml_ext.rs
@@ -170,6 +175,7 @@ crates/
                     …
                     4→mod search;
                     5→mod static_files;
+                    6→
                     7→pub use self::hbs_renderer::HtmlHandlebars;
                 search.rs
                 static_files.rs
@@ -179,6 +185,7 @@ crates/
                 4→mod html_handlebars;
                 5→pub mod theme;
                 6→pub(crate) mod utils;
+                7→
                 8→pub use html_handlebars::HtmlHandlebars;
             theme/
                 fonts.rs
@@ -242,11 +249,6 @@ guide/
         format/
         guide/
             README.md
-                1→# User guide
-                3→This user guide provides an introduction to basic concepts of using mdBook.
-                5→- [Installation](installation.md)
-                6→- [Reading Books](reading.md)
-                7→- [Creating a Book](creating.md)
             creating.md
             installation.md
             reading.md
@@ -329,6 +331,7 @@ src/
         10→use std::ffi::OsStr;
         11→use std::path::PathBuf;
         12→use tracing::{error, info};
+        13→
         14→mod cmd;
         …
         18→fn main() {
@@ -338,6 +341,7 @@ src/
         …
         50→    if let Err(e) = res {
         51→        utils::log_backtrace(&e);
+        52→
         53→        std::process::exit(101);
         54→    }
         …

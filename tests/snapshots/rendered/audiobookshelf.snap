@@ -153,15 +153,17 @@ docker-template.xml
 docs/
     README.md
         1→# OpenAPI specification
+        2→
         3→This directory includes the OpenAPI spec for the ABS server. The spec is made up of a number of individual `yaml` files located here and in the subfolders, with `root.yaml` being the file that references all of the others. The files are organized to have the same hierarchy as the server source files. The full spec is bundled into one file in `openapi.json`.
         5→The spec is linted and bundled using [`redocly-cli`](https://redocly.com/docs/cli/). This tool also generates HTML docs for the spec.
+        6→
         7→The tools created by [`pb33f`](https://pb33f.io/), specifically `vacuum` and `wiretap`, are also useful for linting and verification. These tools check for some other things, such as validating requests to and responses from the server.
         9→### Bundling the spec
         …
         15→### Linting the spec
         …
         21→### Generating documentation
-        23→Redocly allows for creating a static HTML page to document the API. This is done by using `redocly build-docs [file]` and supports exploded specs.
+        …
         25→### Putting it all together
         …
     controllers/
@@ -256,7 +258,9 @@ readme.md
     11→    <a href="https://audiobookshelf.org/support">Support</a>
     12→  </p>
     13→</div>
+    14→
     15→# About
+    16→
     17→Audiobookshelf is a self-hosted audiobook and podcast server.
     19→### Features
     …
@@ -280,17 +284,22 @@ readme.md
     44→### Demo
     …
     50→### Android App (beta)
-    52→Try it out on the [Google Play Store](https://play.google.com/store/apps/details?id=com.audiobookshelf.app)
+    …
     54→### iOS App (beta)
     …
     60→### Build your own tools & clients
     …
     70→# Organizing your audiobooks
+    71→
     72→#### Directory structure and folder names are important to Audiobookshelf!
+    73→
     74→See [documentation](https://audiobookshelf.org/docs#book-directory-structure) for supported directory structure, folder naming conventions, and audio file metadata usage.
+    75→
     76→<br />
     78→# Installation
+    79→
     80→See [install docs](https://www.audiobookshelf.org/docs)
+    81→
     82→<br />
     84→# Reverse Proxy Set Up
     …
@@ -316,7 +325,9 @@ readme.md
     312→For pfSense the inputs are graphical, and `Health checking` is enabled.
     …
     350→# Run from source
+    351→
     352→# Contributing
+    353→
     354→This application is built using [NodeJs](https://nodejs.org/).
     356→### Localization
     …
@@ -328,6 +339,7 @@ readme.md
     436→### Development Commands
     …
     450→# How to Support
+    451→
     452→[See the incomplete "How to Support" page](https://www.audiobookshelf.org/support)
 server/
     Auth.js

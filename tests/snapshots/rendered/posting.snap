@@ -13,10 +13,14 @@ Makefile
 NOTICE
 README.md
     1→# Posting
+    2→
     3→**A powerful HTTP client that lives in your terminal.**
+    4→
     5→Posting is an HTTP client, not unlike Postman and Insomnia. As a TUI application, it can be used over SSH and enables efficient keyboard-centric workflows. Your requests are stored locally in simple YAML files, so they're easy to read and version control.
     7→<img width="968" alt="image" src="https://github.com/user-attachments/assets/78359ab0-5e0c-4c0b-a60b-dce06b11bbf5" />
+    8→
     9→Some notable features include:
+    10→
     11→- "jump mode" navigation
     12→- environments/variables
     13→- autocompletion
@@ -31,15 +35,19 @@ README.md
     22→- export requests as cURL commands
     23→- import from Postman and OpenAPI specs
     24→- a command palette for quickly accessing functionality
+    25→
     26→Visit the [website](https://posting.sh) for more information, the roadmap, and the user guide.
     28→## Installation
     …
     48→### Prefer `pipx`?
     …
     52→## Contributing
+    53→
     54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
     56→## Learn More
+    57→
     58→Learn more about Posting at [https://posting.sh](https://posting.sh).
+    59→
     60→Posting was built with [Textual](https://github.com/textualize/textual).
 docs/
     CHANGELOG.md
@@ -142,6 +150,8 @@ src/
             19→    Scripts,
             20→)
             21→from .scripts import Posting
+            22→
+            23→
             24→__all__ = [
             25→    "Auth",
             26→    "Cookie",
@@ -160,6 +170,7 @@ src/
             22→    f = config_file()
             23→    if f.exists():
             24→        return
+            25→
             26→    try:
             27→        f.touch()
             28→    except OSError:
@@ -170,20 +181,6 @@ src/
             46→def cli() -> None:
             47→    """A TUI for testing HTTP APIs."""
             50→@cli.command()
-            51→@click.option(
-            52→    "--collection",
-            53→    "-c",
-            54→    type=click.Path(exists=True),
-            55→    help="Path to the collection directory",
-            56→)
-            57→@click.option(
-            58→    "--env",
-            59→    "-e",
-            60→    type=click.Path(exists=True),
-            61→    help="Path to the .env environment file(s)",
-            62→    multiple=True,
-            63→)
-            64→def default(collection: str | None = None, env: tuple[str, ...] = ()) -> None:
             …
             76→@cli.command()
             77→@click.argument(

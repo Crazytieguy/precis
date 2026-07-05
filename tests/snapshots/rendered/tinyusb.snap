@@ -23,6 +23,7 @@ LICENSE
 README.rst
     1→TinyUSB
     2→=======
+    3→
     4→|Build Status| |CircleCI Status| |Documentation Status| |Static Analysis| |Fuzzing Status| |Membrowse| |License|
     …
     31→TinyUSB is an open-source cross-platform USB Host/Device stack for embedded systems. It’s designed for memory safety
@@ -31,12 +32,14 @@ README.rst
     …
     102→Host Stack
     103→----------
+    104→
     105→- Communication Device Class: CDC-ACM
     106→- Vendor serial over USB: FTDI, CP210x, CH34x, PL2303
     107→- Human Interface Device (HID): Keyboard, Mouse, Generic
     108→- Mass Storage Class (MSC)
     109→- Musical Instrument Digital Interface (MIDI)
     110→- Hub with multiple-level support
+    111→
     112→Similar to the Device Stack, if you have a special requirement, ``usbh_app_driver_get_cb()`` can be used to write your own class driver without modifying the stack.
     …
 SConscript
@@ -56,7 +59,9 @@ lib/
         README.md
             1→RTT
             2→===
+            3→
             4→SEGGER RTT Sources
+            5→
             6→https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer
             7→https://wiki.segger.com/RTT
             …
@@ -154,8 +159,10 @@ src/
             189→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte2(uint32_t ui32) { return TU_U32_BYTE2(ui32); }
             190→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte1(uint32_t ui32) { return TU_U32_BYTE1(ui32); }
             191→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte0(uint32_t ui32) { return TU_U32_BYTE0(ui32); }
+            192→
             193→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u32_high16(uint32_t ui32) { return (uint16_t) (ui32 >> 16); }
             194→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u32_low16 (uint32_t ui32) { return (uint16_t) (ui32 & 0x0000ffffu); }
+            195→
             196→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u16_high(uint16_t ui16) { return TU_U16_HIGH(ui16); }
             197→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u16_low (uint16_t ui16) { return TU_U16_LOW(ui16); }
             …
@@ -212,6 +219,7 @@ src/
             …
             39→TU_ATTR_PACKED_BEGIN
             40→TU_ATTR_BIT_FIELD_ORDER_BEGIN
+            41→
             42→//--------------------------------------------------------------------+
             43→// TYPE-C
             44→//--------------------------------------------------------------------+

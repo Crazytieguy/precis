@@ -13,8 +13,11 @@ LICENSE
 Readme.md
     …
     3→**Fast, unopinionated, minimalist web framework for [Node.js](https://nodejs.org).**
+    4→
     5→**This project has a [Code of Conduct].**
+    6→
     7→## Table of contents
+    8→
     9→- [Table of contents](#table-of-contents)
     10→- [Installation](#installation)
     11→- [Features](#features)
@@ -34,10 +37,13 @@ Readme.md
     …
     34→```js
     35→import express from 'express'
+    36→
     37→const app = express()
+    38→
     39→app.get('/', (req, res) => {
     40→  res.send('Hello World')
     41→})
+    42→
     43→app.listen(3000, () => {
     44→  console.log('Server is running on http://localhost:3000')
     45→})
@@ -45,6 +51,7 @@ Readme.md
     48→## Installation
     …
     69→## Features
+    70→
     71→  * Robust routing
     72→  * Focus on high performance
     73→  * Super-high test coverage
@@ -61,9 +68,11 @@ Readme.md
     127→## Examples
     …
     147→## Contributing
+    148→
     149→The Express.js project welcomes all constructive contributions. Contributions take many forms,
     150→from code for bug fixes and enhancements, to additions and fixes to documentation, additional
     151→tests, triaging incoming pull requests and issues, and more!
+    152→
     153→See the [Contributing Guide] for more technical details on contributing.
     155→### Security Issues
     …
@@ -89,6 +98,9 @@ Readme.md
     209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
     210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
     …
+    213→* [Phillip9587](https://github.com/Phillip9587) - **Phillip Barta**
+    214→* [efekrskl](https://github.com/efekrskl) - **Efe Karasakal**
+    215→* [rxmarbles](https://github.com/rxmarbles) - **Rick Markins** (he/him)
     216→* [krzysdz](https://github.com/krzysdz)
     …
     219→<details>
@@ -135,25 +147,6 @@ lib/
         16→var finalhandler = require('finalhandler');
         …
         59→app.init = function init() {
-        60→  var router = null;
-        62→  this.cache = Object.create(null);
-        63→  this.engines = Object.create(null);
-        64→  this.settings = Object.create(null);
-        66→  this.defaultConfiguration();
-        68→  // Setup getting to lazily add base router
-        69→  Object.defineProperty(this, 'router', {
-        70→    configurable: true,
-        71→    enumerable: true,
-        72→    get: function getrouter() {
-        73→      if (router === null) {
-        74→        router = new Router({
-        75→          caseSensitive: this.enabled('case sensitive routing'),
-        76→          strict: this.enabled('strict routing')
-        77→        });
-        78→      }
-        80→      return router;
-        81→    }
-        82→  });
         …
         85→/**
         86→ * Initialize application configuration.
@@ -257,10 +250,13 @@ lib/
         65→  if (!name) {
         66→    throw new TypeError('name argument is required to req.get');
         67→  }
+        68→
         69→  if (typeof name !== 'string') {
         70→    throw new TypeError('name must be a string to req.get');
         71→  }
+        72→
         73→  var lc = name.toLowerCase();
+        74→
         75→  switch (lc) {
         76→    case 'referer':
         77→    case 'referrer':
@@ -274,6 +270,13 @@ lib/
         128→  var accept = accepts(this);
         129→  return accept.types.apply(accept, arguments);
         …
+        132→/**
+        133→ * Check if the given `encoding`s are accepted.
+        134→ *
+        135→ * @param {String} ...encoding
+        136→ * @return {String|Array}
+        137→ * @public
+        138→ */
         140→req.acceptsEncodings = function(){
         141→  var accept = accepts(this);
         142→  return accept.encodings.apply(accept, arguments);

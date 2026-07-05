@@ -11,9 +11,11 @@ LICENSE
 README.md
     1→# bareiron
     2→Minimalist Minecraft server for memory-restrictive embedded systems.
+    3→
     4→The goal of this project is to enable hosting Minecraft servers on very weak devices, such as the ESP32. The project's priorities are, in order: **memory usage**, **performance**, and **features**. Because of this, compliance with vanilla Minecraft is not guaranteed, nor is it a goal of the project.
     6→- Minecraft version: `1.21.8`
     7→- Protocol version: `772`
+    8→
     9→> [!WARNING]
     10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
     12→## Quick start
@@ -33,9 +35,12 @@ include/
     crafting.h
         1→#ifndef CRAFTING_H
         2→#define CRAFTING_H
+        3→
         4→#include "globals.h"
+        5→
         6→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item);
         7→void getSmeltingOutput (PlayerData *player);
+        8→
         9→#endif
     globals.h
         …
@@ -91,39 +96,13 @@ include/
         93→#define DISK_SYNC_INTERVAL 15000000
         …
     packets.h
-        …
-        4→// Serverbound packets
-        5→int cs_handshake (int client_fd);
-        6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
-        7→int cs_clientInformation (int client_fd);
-        8→int cs_pluginMessage (int client_fd);
-        9→int cs_playerAction (int client_fd);
-        10→int cs_useItemOn (int client_fd);
-        11→int cs_useItem (int client_fd);
-        12→int cs_setPlayerPositionAndRotation (int client_fd, double *x, double *y, double *z, float *yaw, float *pitch, uint8_t *on_ground);
-        13→int cs_setPlayerPosition (int client_fd, double *x, double *y, double *z, uint8_t *on_ground);
-        14→int cs_setPlayerRotation (int client_fd, float *yaw, float *pitch, uint8_t *on_ground);
-        15→int cs_setPlayerMovementFlags (int client_fd, uint8_t *on_ground);
-        16→int cs_setHeldItem (int client_fd);
-        17→int cs_swingArm (int client_fd);
-        18→int cs_clickContainer (int client_fd);
-        19→int cs_closeContainer (int client_fd);
-        20→int cs_clientStatus (int client_fd);
-        21→int cs_chat (int client_fd);
-        22→int cs_interact (int client_fd);
-        23→int cs_playerInput (int client_fd);
-        24→int cs_playerCommand (int client_fd);
-        25→int cs_playerLoaded (int client_fd);
-        27→// Clientbound packets
-        28→int sc_statusResponse (int client_fd);
-        29→int sc_loginSuccess (int client_fd, uint8_t *uuid, char *name);
-        30→int sc_knownPacks (int client_fd);
-        …
     procedures.h
     serialize.h
         1→#ifndef SERIALIZE_H
         2→#define SERIALIZE_H
+        3→
         4→#include "globals.h"
+        5→
         6→#ifdef SYNC_WORLD_TO_DISK
         7→  int initSerializer ();
         8→  void writeBlockChangesToDisk (int from, int to);
@@ -138,15 +117,19 @@ include/
         17→  #define writeDataToDiskOnInterval()
         18→  #define initSerializer() 0
         19→#endif
+        20→
         21→#endif
     structures.h
         1→#ifndef H_STRUCTURES
         2→#define H_STRUCTURES
+        3→
         4→void placeTreeStructure (short x, uint8_t y, short z);
+        5→
         6→#endif
     tools.h
         …
         4→#include <unistd.h>
+        5→
         6→#include "globals.h"
         8→static inline int mod_abs (int a, int b) {
         9→  return ((a % b) + b) % b;
@@ -158,12 +141,14 @@ include/
         16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
         17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
         18→void discard_all (int client_fd, size_t remaining, uint8_t require_first);
+        19→
         20→ssize_t writeByte (int client_fd, uint8_t byte);
         21→ssize_t writeUint16 (int client_fd, uint16_t num);
         22→ssize_t writeUint32 (int client_fd, uint32_t num);
         23→ssize_t writeUint64 (int client_fd, uint64_t num);
         24→ssize_t writeFloat (int client_fd, float num);
         25→ssize_t writeDouble (int client_fd, double num);
+        26→
         27→uint8_t readByte (int client_fd);
         28→uint16_t readUint16 (int client_fd);
         29→int16_t readInt16 (int client_fd);
@@ -172,9 +157,11 @@ include/
         32→int64_t readInt64 (int client_fd);
         33→float readFloat (int client_fd);
         34→double readDouble (int client_fd);
+        35→
         36→ssize_t readLengthPrefixedData (int client_fd);
         37→void readString (int client_fd);
         38→void readStringN (int client_fd, uint32_t max_length);
+        39→
         40→uint32_t fast_rand ();
         41→uint64_t splitmix64 (uint64_t state);
         …
@@ -185,38 +172,48 @@ include/
     varnum.h
         1→#ifndef H_VARNUM
         2→#define H_VARNUM
+        3→
         4→#include <stdint.h>
+        5→
         6→#define SEGMENT_BITS 0x7F
         7→#define CONTINUE_BIT 0x80
         8→#define VARNUM_ERROR 0xFFFFFFFF
+        9→
         10→int32_t readVarInt (int client_fd);
         11→int sizeVarInt (uint32_t value);
         12→void writeVarInt (int client_fd, uint32_t value);
+        13→
         14→#endif
     worldgen.h
         1→#ifndef H_WORLDGEN
         2→#define H_WORLDGEN
+        3→
         4→#include <stdint.h>
+        5→
         6→typedef struct {
         7→  short x;
         8→  short z;
         9→  uint32_t hash;
         10→  uint8_t biome;
         11→} ChunkAnchor;
+        12→
         13→typedef struct {
         14→  short x;
         15→  uint8_t y;
         16→  short z;
         17→  uint8_t variant;
         18→} ChunkFeature;
+        19→
         20→uint32_t getChunkHash (short x, short z);
         21→uint8_t getChunkBiome (short x, short z);
         22→uint8_t getHeightAtFromHash (int rx, int rz, int _x, int _z, uint32_t chunk_hash, uint8_t biome);
         23→uint8_t getHeightAt (int x, int z);
         24→uint8_t getTerrainAt (int x, int y, int z, ChunkAnchor anchor);
         25→uint8_t getBlockAt (int x, int y, int z);
+        26→
         27→extern uint8_t chunk_section[4096];
         28→uint8_t buildChunkSection (int cx, int cy, int cz);
+        29→
         30→#endif
 src/
     CMakeLists.txt
@@ -247,6 +244,7 @@ src/
     tools.c
         …
         42→uint64_t total_bytes_received = 0;
+        43→
         44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
         …
     varnum.c

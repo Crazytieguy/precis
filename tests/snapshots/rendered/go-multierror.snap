@@ -13,6 +13,7 @@ README.md
     …
     7→[circleci]: https://app.circleci.com/pipelines/github/hashicorp/go-multierror
     8→[godocs]: https://pkg.go.dev/github.com/hashicorp/go-multierror
+    9→
     10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
     12→## Migrating to `errors.Join`
     …
@@ -46,6 +47,7 @@ flatten.go
     10→	if _, ok := err.(*Error); !ok {
     11→		return err
     12→	}
+    13→
     14→	// Otherwise, make the result and flatten away!
     15→	flatErr := new(Error)
     16→	flatten(err, flatErr)
@@ -65,6 +67,7 @@ flatten_test.go
 format.go
     …
     4→package multierror
+    5→
     6→import (
     7→	"fmt"
     8→	"strings"
@@ -78,10 +81,12 @@ format.go
     18→	if len(es) == 1 {
     19→		return fmt.Sprintf("1 error occurred:\n\t* %s\n\n", es[0])
     20→	}
+    21→
     22→	points := make([]string, len(es))
     23→	for i, err := range es {
     24→		points[i] = fmt.Sprintf("* %s", err)
     25→	}
+    26→
     27→	return fmt.Sprintf(
     28→		"%d errors occurred:\n\t%s\n\n",
     29→		len(es), strings.Join(points, "\n\t"))
@@ -89,11 +94,13 @@ format.go
 format_test.go
 go.mod
     1→module github.com/hashicorp/go-multierror
+    2→
     3→go 1.13
 go.sum
 group.go
     …
     4→package multierror
+    5→
     6→import "sync"
     8→// Group is a collection of goroutines which return errors that need to be
     9→// coalesced.
@@ -108,8 +115,10 @@ group.go
     19→// is returned by Wait.
     20→func (g *Group) Go(f func() error) {
     21→	g.wg.Add(1)
+    22→
     23→	go func() {
     24→		defer g.wg.Done()
+    25→
     26→		if err := f(); err != nil {
     27→			g.mutex.Lock()
     28→			g.err = Append(g.err, err)
@@ -129,6 +138,7 @@ group_test.go
 multierror.go
     …
     4→package multierror
+    5→
     6→import (
     7→	"errors"
     8→	"fmt"
@@ -144,6 +154,7 @@ multierror.go
     20→	if fn == nil {
     21→		fn = ListFormatFunc
     22→	}
+    23→
     24→	return fn(e.Errors)
     …
     27→// ErrorOrNil returns an error interface if this Error represents
@@ -157,6 +168,7 @@ multierror.go
     35→	if len(e.Errors) == 0 {
     36→		return nil
     37→	}
+    38→
     39→	return e
     …
     42→func (e *Error) GoString() string {
@@ -191,10 +203,12 @@ multierror.go
     73→	if e == nil || len(e.Errors) == 0 {
     74→		return nil
     75→	}
+    76→
     77→	// If we have exactly one error, we can just return that directly.
     78→	if len(e.Errors) == 1 {
     79→		return e.Errors[0]
     80→	}
+    81→
     82→	// Shallow copy the slice
     83→	errs := make([]error, len(e.Errors))
     84→	copy(errs, e.Errors)
@@ -222,6 +236,7 @@ multierror.go
     109→	if len(e) == 1 {
     110→		return nil
     111→	}
+    112→
     113→	return e[1:]
     …
     116→// As implements errors.As by attempting to map to the current value.
@@ -236,6 +251,7 @@ multierror_test.go
 prefix.go
     …
     4→package multierror
+    5→
     6→import (
     7→	"fmt"
     8→)
@@ -256,6 +272,7 @@ sort.go
     8→	if err == nil {
     9→		return 0
     10→	}
+    11→
     12→	return len(err.Errors)
     …
     15→// Swap implements sort.Interface function for swapping elements
