@@ -189,9 +189,30 @@ boundaries are a judgment call per fixture.
      is a signal to split or demote, even when envelope-clean).
    - Only then move to the next tier.
 
-5. **End-of-draft read-through.** Read the file end-to-end. Apply the
-   threshold test: for a spread of imaginary cut points, check the
-   top-K slice is coherent. Iterate if any slice looks off.
+5. **End-of-draft read-through.** Read the **emitted TOML in its final
+   array order** end-to-end (position = rank; the array order IS the
+   ranking). Apply the threshold test: for a spread of imaginary cut
+   points, check the top-K slice is coherent. Iterate if any slice
+   looks off.
+
+### Ordering is hand-owned — no mechanical reordering
+
+The batch array's order is the ranking and must be authored, not
+computed. A past draft "fixed" growth-envelope violations with a
+greedy reordering pass; the result ranked Makefile lint targets above
+the repo's identity and left justifications claiming positions their
+batches no longer held. Rules:
+
+- Fix envelope violations only by **splitting or demoting** batches —
+  never by a reordering pass. After any move, re-read the affected
+  justifications against the new positions.
+- Scripts/generators are allowed only for **closure assertions**
+  (verifying a roster matches the directory/symbol set) and mechanical
+  TOML emission of hand-decided content — never for choosing batch
+  order or membership.
+- Keep ids positionally sorted (1.x before 2.x, minor ascending); a
+  draft whose array order disagrees with its id order will be rejected
+  mechanically.
 
 ### Authorial constraints (not validator-enforced)
 
