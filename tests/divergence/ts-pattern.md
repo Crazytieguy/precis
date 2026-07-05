@@ -13,26 +13,26 @@ Score(3000)=0.648 I=0.765 C=0.548 ns_rows≤3K=19/45 (reached=7 partial=6 missin
 | ns | 364 |  | 93 | src/ + src/types/ + src/internals/ listings | 1.5 |  | 0.518 |
 | walker |  | 384 | 29 | listing of 'src' |  |  | 0.551 |
 | walker |  | 398 | 14 | export names surface in src/index.ts |  |  | 0.554 |
-| walker |  | 414 | 16 | export names surface in src/errors.ts |  |  | 0.554 |
-| walker |  | 426 | 12 | export at src/errors.ts:5 |  |  | 0.554 |
 | ns | 434 |  | 70 | README features — data structures + typesafety | 1.6 |  | 0.536 |
-| walker |  | 444 | 18 | export names surface in src/match.ts |  |  | 0.537 |
-| walker |  | 464 | 20 | export at src/match.ts:32 |  |  | 0.539 |
-| walker |  | 478 | 14 | export body at src/match.ts:32 body 35 |  |  | 0.542 |
-| walker |  | 504 | 26 | listing of 'docs' |  |  | 0.542 |
-| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.514 |
-| walker |  | 560 | 56 | listing of 'src/types' |  |  | 0.672 |
-| walker |  | 570 | 10 | imports in src/types/index.ts |  |  | 0.672 |
-| ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.672 |
-| walker |  | 609 | 39 | imports in src/index.ts |  |  | 0.715 |
-| walker |  | 619 | 10 | listing of 'examples' |  |  | 0.715 |
-| walker |  | 675 | 56 | export names surface in src/is-matching.ts |  |  | 0.717 |
-| walker |  | 700 | 25 | export at src/is-matching.ts:32 |  |  | 0.720 |
+| walker |  | 437 | 39 | imports in src/index.ts |  |  | 0.585 |
+| walker |  | 453 | 16 | export names surface in src/errors.ts |  |  | 0.585 |
+| walker |  | 465 | 12 | export at src/errors.ts:5 |  |  | 0.585 |
+| walker |  | 483 | 18 | export names surface in src/match.ts |  |  | 0.586 |
+| walker |  | 503 | 20 | export at src/match.ts:32 |  |  | 0.588 |
+| walker |  | 517 | 14 | export body at src/match.ts:32 body 35 |  |  | 0.591 |
+| walker |  | 543 | 26 | listing of 'docs' |  |  | 0.591 |
+| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.561 |
+| walker |  | 599 | 56 | listing of 'src/types' |  |  | 0.717 |
+| ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.715 |
+| walker |  | 609 | 10 | listing of 'examples' |  |  | 0.715 |
+| walker |  | 665 | 56 | export names surface in src/is-matching.ts |  |  | 0.717 |
+| walker |  | 690 | 25 | export at src/is-matching.ts:32 |  |  | 0.720 |
 | ns | 706 |  | 103 | isMatching() — both overload signatures | 2.2 |  | 0.698 |
-| walker |  | 733 | 33 | export at src/is-matching.ts:53 |  |  | 0.698 |
-| walker |  | 772 | 39 | export at src/is-matching.ts:48 |  |  | 0.688 |
+| walker |  | 723 | 33 | export at src/is-matching.ts:53 |  |  | 0.698 |
+| walker |  | 762 | 39 | export at src/is-matching.ts:48 |  |  | 0.733 |
 | ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.688 |
-| walker |  | 845 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.691 |
+| walker |  | 835 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.691 |
+| walker |  | 845 | 10 | imports in src/types/index.ts |  |  | 0.691 |
 | walker |  | 865 | 20 | README.md section #2 |  |  | 0.693 |
 | walker |  | 907 | 42 | export doc at src/errors.ts:5 |  |  | 0.695 |
 | walker |  | 933 | 26 | listing of 'benchmarks' |  |  | 0.695 |

@@ -84,9 +84,21 @@ const JS_PROTOTYPE_METHOD_MIN: usize = 3;
 /// items in non-surface files can be damped as internal.
 #[derive(Default)]
 pub struct TypescriptState {
-    public_surface: OnceCell<HashSet<PathBuf>>,
+    public_surface: OnceCell<PublicSurface>,
     in_surface_lookup: RefCell<HashMap<PathBuf, bool>>,
     nearest_subpackage_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
+    declared_api_contract: OnceCell<Option<PathBuf>>,
+    pinned_entrypoint_lookup: RefCell<HashMap<PathBuf, bool>>,
+}
+
+/// Reachability results over the TS/JS import graph, canonicalized.
+#[derive(Default)]
+struct PublicSurface {
+    /// Entrypoints plus everything transitively reachable from them.
+    files: HashSet<PathBuf>,
+    /// Files reached via a genuine re-export edge — excludes the
+    /// entrypoint self-seeding and the app-fallback import chain.
+    reexport_targets: HashSet<PathBuf>,
 }
 
 impl TypescriptState {
@@ -103,11 +115,40 @@ impl TypescriptState {
             .public_surface
             .get_or_init(|| compute_public_surface(ctx));
         let canonical = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
-        let hit = surface.contains(&canonical);
+        let hit = surface.files.contains(&canonical);
         self.in_surface_lookup
             .borrow_mut()
             .insert(file.to_path_buf(), hit);
         hit
+    }
+
+    /// `true` iff `file` is re-exported by another file in the public
+    /// surface (a genuine re-export edge, not entrypoint self-seeding).
+    fn is_reexport_target(&self, file: &Path, ctx: &WalkCtx) -> bool {
+        let surface = self
+            .public_surface
+            .get_or_init(|| compute_public_surface(ctx));
+        let canonical = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
+        surface.reexport_targets.contains(&canonical)
+    }
+
+    /// The package's declared API contract — the root `package.json`'s
+    /// `types` / `typings` target, when it is a root-level declaration
+    /// file that exists in the repo. Canonicalized. Root-level only:
+    /// nested targets (`source/index.d.ts`, `typings/index.d.ts`,
+    /// generated `dist/…`) are type plumbing next to real source, and
+    /// promoting them measured as a regression (see design-notes
+    /// "Entrypoint-named `.d.ts` promotion").
+    pub(in crate::walker) fn declared_api_contract(&self, root: &Path) -> Option<&PathBuf> {
+        self.declared_api_contract
+            .get_or_init(|| {
+                let target = super::json::declared_types_target(root)?;
+                if !is_declaration_file(&target) || target.parent() != Some(root) {
+                    return None;
+                }
+                target.canonicalize().ok()
+            })
+            .as_ref()
     }
 
     /// Walk up from `file` to the nearest dir under `root` that contains
@@ -186,12 +227,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // an overlap would be a scheduler conflict.
         let mut import_owned_lines: HashSet<usize> = HashSet::new();
         if let Some((source, tree)) = parse_ts(ctx, file) {
+            let api_spine = ep && is_api_spine_entrypoint(file, ctx);
             if let Some(chunks) = collect_reexport_import_chunks(file, &tree, &source) {
                 let chunk_count = chunks.len();
-                for (chunk_index, lines) in chunks.into_iter().enumerate() {
+                for (chunk_index, (lines, is_reexport_wall)) in chunks.into_iter().enumerate() {
                     import_owned_lines.extend(lines.full.iter().copied());
                     let Some(content) = single_file_lines_content(file, &source, lines) else {
                         continue;
+                    };
+                    let base_value = if is_reexport_wall && api_spine {
+                        reexport_wall_value(file, ctx, js_factor)
+                    } else {
+                        imports_value(file, ctx, js_factor)
                     };
                     out.push(Batch {
                         key: TsKey::ImportChunk {
@@ -201,18 +248,25 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         .into(),
                         predecessor: module_predecessor.clone(),
                         content,
-                        value: imports_chunk_value(file, ctx, chunk_index, chunk_count, js_factor),
+                        value: base_value * reexport_import_chunk_factor(chunk_index, chunk_count),
                     });
                 }
             } else {
                 let lines = collect_imports(&tree, &source);
                 import_owned_lines.extend(lines.full.iter().copied());
+                let is_reexport_wall = is_entrypoint_file(file)
+                    && api_spine
+                    && is_mostly_reexport(&lines, &collect_bare_reexport_lines(&tree, &source));
                 if let Some(content) = single_file_lines_content(file, &source, lines) {
                     out.push(Batch {
                         key: TsKey::Imports { file: file.clone() }.into(),
                         predecessor: module_predecessor.clone(),
                         content,
-                        value: imports_value(file, ctx, js_factor),
+                        value: if is_reexport_wall {
+                            reexport_wall_value(file, ctx, js_factor)
+                        } else {
+                            imports_value(file, ctx, js_factor)
+                        },
                     });
                 }
             }
@@ -223,7 +277,23 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         };
         let src_lines: Vec<&str> = source.lines().collect();
         let exports = find_export_starts(file, &tree, &source, &src_lines);
+        // The declared API contract's roster shapes (names surface,
+        // member-chunked decls and their catalogs) are exempt from the
+        // machinery damp: a root-level `.d.ts` the manifest's `types`
+        // field names is the package's public API surface, and its big
+        // member catalogs are what NS authors anchor on. Small
+        // non-roster exports keep the damp — exempting them measured as
+        // a cost-ascending flood of type aliases that displaces
+        // NS-credited orientation without earning catalog credit.
+        let is_api_contract = is_declared_api_contract(file, ctx);
         let per_export_factor = type_machinery_factor(file, &exports);
+        let contract_roster_factor = |has_member_chunks: bool| {
+            if is_api_contract && has_member_chunks {
+                1.0
+            } else {
+                per_export_factor
+            }
+        };
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
         let mut body_segment_index = 0usize;
         if !exports.is_empty() {
@@ -281,7 +351,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         chunk_count,
                         js_factor,
                         has_split_js_class_export,
-                    ) * per_export_factor,
+                    ) * contract_roster_factor(true),
                 });
             }
             for (item_index, item) in exports.iter().enumerate() {
@@ -329,7 +399,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         key: export_key.clone().into(),
                         predecessor: Some(names_predecessor.clone()),
                         content,
-                        value: export_value(file, item.kind, ctx, js_factor) * per_export_factor,
+                        value: export_value(file, item.kind, ctx, js_factor)
+                            * contract_roster_factor(member_names_chunks.is_some()),
                     });
                 }
                 let export_predecessor = BatchKey::Typescript(export_key);
@@ -372,7 +443,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                                 chunk_index,
                                 chunk_count,
                                 member_count,
-                            ) * per_export_factor,
+                            ) * contract_roster_factor(true),
                         });
                         chunk_predecessor = BatchKey::Typescript(key);
                     }
@@ -936,6 +1007,8 @@ pub(crate) fn is_declaration_file(path: &Path) -> bool {
 /// `TYPE_MACHINERY_FILE_FACTOR` when the file emits no runtime code —
 /// `.d.ts` or every top-level export is type-only. `ExportNames` is
 /// intentionally NOT damped so the names surface stays visible.
+/// Callers exempt the declared API contract (see
+/// [`is_declared_api_contract`]) before applying this factor.
 fn type_machinery_factor(file: &Path, exports: &[ExportInfo<'_>]) -> f64 {
     if is_declaration_file(file) || (!exports.is_empty() && exports.iter().all(|e| e.is_type_only))
     {
@@ -943,6 +1016,15 @@ fn type_machinery_factor(file: &Path, exports: &[ExportInfo<'_>]) -> f64 {
     } else {
         1.0
     }
+}
+
+/// True iff `file` is the package's declared API contract (see
+/// [`TypescriptState::declared_api_contract`]).
+fn is_declared_api_contract(file: &Path, ctx: &WalkCtx) -> bool {
+    let Some(contract) = ctx.typescript_state().declared_api_contract(ctx.root()) else {
+        return false;
+    };
+    file.canonicalize().is_ok_and(|c| &c == contract)
 }
 
 const TYPE_MACHINERY_FILE_FACTOR: f64 = 0.35;
@@ -1401,12 +1483,32 @@ fn commonjs_assignment_sides<'a>(node: Node<'a>, source: &str) -> Option<(Node<'
     if node.kind() != "expression_statement" {
         return None;
     }
-    let expr = node.named_child(0)?;
-    if expr.kind() != "assignment_expression" {
-        return None;
+    let mut expr = node.named_child(0)?;
+    // Chained export assignments (`exports = module.exports = X`,
+    // `module.exports = exports = X`) export X through whichever link
+    // is the module.exports target: descend past bare-`exports` alias
+    // links on the left, and unwrap assignment links on the right down
+    // to the exported value.
+    loop {
+        if expr.kind() != "assignment_expression" {
+            return None;
+        }
+        let (left, right) = assignment_sides(expr)?;
+        if commonjs_export_target(left, source).is_some() {
+            let mut value = right;
+            while value.kind() == "assignment_expression" {
+                let Some((_, inner)) = assignment_sides(value) else {
+                    break;
+                };
+                value = inner;
+            }
+            return Some((left, value));
+        }
+        if !identifier_eq(left, source, "exports") {
+            return None;
+        }
+        expr = right;
     }
-    let (left, right) = assignment_sides(expr)?;
-    commonjs_export_target(left, source).map(|_| (left, right))
 }
 
 fn assignment_sides<'a>(assignment: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
@@ -1594,12 +1696,46 @@ fn is_js_file(path: &Path) -> bool {
     })
 }
 
-fn entrypoint_boost(path: &Path) -> f64 {
-    if is_entrypoint_file(path) { 1.4 } else { 1.0 }
+fn entrypoint_boost(path: &Path, ctx: &WalkCtx) -> f64 {
+    if is_pinned_entrypoint(path, ctx) {
+        1.4
+    } else {
+        1.0
+    }
 }
 
 fn ts_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(path, ctx, is_entrypoint_file(path))
+    file_depth_factor(path, ctx, is_pinned_entrypoint(path, ctx))
+}
+
+/// Entrypoint-named files get the depth pin + 1.4 boost only when they
+/// plausibly speak for their package: within two components of the
+/// package root (`index.ts`, `src/index.ts`) or on the export spine
+/// (re-exported by another surface file / the declared entry's source
+/// twin). A deep `index.ts` that is merely an exports-map subpath
+/// (d2ts `electric/`, vite `module-runner/`) otherwise prices as the
+/// package root and its NS-mid-rank content floods the early budget
+/// ahead of the package's core modules. Memoized — this sits on every
+/// per-batch value path.
+fn is_pinned_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
+    if !is_entrypoint_file(path) {
+        return false;
+    }
+    let state = ctx.typescript_state();
+    if let Some(&hit) = state.pinned_entrypoint_lookup.borrow().get(path) {
+        return hit;
+    }
+    let package_dir_depth = state
+        .nearest_subpackage_dir(path, ctx.root())
+        .map(|dir| ctx.depth_from_root(&dir))
+        .unwrap_or(0);
+    let relative_depth = ctx.depth_from_root(path).saturating_sub(package_dir_depth);
+    let hit = relative_depth <= 2 || is_api_spine_entrypoint(path, ctx);
+    state
+        .pinned_entrypoint_lookup
+        .borrow_mut()
+        .insert(path.to_path_buf(), hit);
+    hit
 }
 
 const JS_CONFIG_VALUE_FACTOR: f64 = 0.001;
@@ -1684,12 +1820,12 @@ fn ends_with_ignore_ascii_case(value: &str, suffix: &str) -> bool {
 }
 
 fn module_doc_lede_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
-    let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    let cat = (0.8 * entrypoint_boost(file, ctx)).min(1.0);
     mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
-    let cat = (0.3 * entrypoint_boost(file)).min(1.0);
+    let cat = (0.3 * entrypoint_boost(file, ctx)).min(1.0);
     mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx)) * js_factor
 }
 
@@ -1733,14 +1869,79 @@ fn secondary_ts_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-fn imports_chunk_value(
-    file: &Path,
-    ctx: &WalkCtx,
-    chunk_index: usize,
-    chunk_count: usize,
-    js_factor: f64,
-) -> f64 {
-    imports_value(file, ctx, js_factor) * reexport_import_chunk_factor(chunk_index, chunk_count)
+/// An entrypoint's bare `export … from` wall is the package's public
+/// API roster — the NS anchors on it as "the API in one screen" — not
+/// plumbing imports. Priced on the names-surface axes instead of the
+/// imports axes; the per-chunk falloff stays with the caller.
+fn reexport_wall_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
+    let cat = (0.8 * entrypoint_boost(file, ctx)).min(1.0);
+    mix_signals(cat, 0.6, 0.35, ts_depth_factor(file, ctx)) * js_factor
+}
+
+/// Roster pricing applies only to walls on the package's export spine:
+/// the file is re-exported by another surface file, or it is the
+/// source twin of its package's declared entry. Subpath adapters
+/// (`electric/`, `sqlite/` export paths) and secondary workspace
+/// members keep imports pricing — boosting their walls measured
+/// d2ts −0.023 / linkwarden −0.028 while the spine walls won.
+fn is_api_spine_entrypoint(file: &Path, ctx: &WalkCtx) -> bool {
+    if secondary_ts_workspace_member_factor(file, ctx) < 1.0 {
+        return false;
+    }
+    ctx.typescript_state().is_reexport_target(file, ctx)
+        || is_declared_package_entry_source(file, ctx)
+}
+
+/// Generated-output prefixes a manifest entry path may carry; stripped
+/// when mapping the entry back to its source twin.
+const GENERATED_ENTRY_DIR_PREFIXES: &[&str] = &["dist", "build", "out", "output", "lib", "esm"];
+/// Source-tree prefixes tried when re-rooting a generated entry path.
+const SOURCE_ENTRY_DIR_PREFIXES: &[&str] = &["", "src", "source"];
+const ENTRY_SOURCE_EXTS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
+
+/// True when `file` is the source file behind its package's declared
+/// entry (`main` / `module` / `exports["."]`) — either named directly,
+/// or via the conventional generated-dir mapping (`./dist/node/index.js`
+/// → `src/node/index.ts`).
+fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
+    let root = ctx.root();
+    let pkg_dir = ctx
+        .typescript_state()
+        .nearest_subpackage_dir(file, root)
+        .unwrap_or_else(|| root.to_path_buf());
+    let Ok(canonical_file) = file.canonicalize() else {
+        return false;
+    };
+    for target in super::json::package_entry_targets(&pkg_dir) {
+        let rel = target.trim_start_matches("./");
+        if rel.is_empty() {
+            continue;
+        }
+        let stem = Path::new(rel).with_extension("");
+        let mut variants = vec![stem.clone()];
+        for prefix in GENERATED_ENTRY_DIR_PREFIXES {
+            if let Ok(stripped) = stem.strip_prefix(prefix) {
+                variants.push(stripped.to_path_buf());
+            }
+        }
+        for variant in &variants {
+            for source_prefix in SOURCE_ENTRY_DIR_PREFIXES {
+                let base = if source_prefix.is_empty() {
+                    pkg_dir.join(variant)
+                } else {
+                    pkg_dir.join(source_prefix).join(variant)
+                };
+                for ext in ENTRY_SOURCE_EXTS {
+                    if base.with_extension(ext).canonicalize().ok().as_ref()
+                        == Some(&canonical_file)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    false
 }
 
 fn export_names_value(
@@ -1751,7 +1952,7 @@ fn export_names_value(
     js_factor: f64,
     has_split_js_class_export: bool,
 ) -> f64 {
-    let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    let cat = (0.8 * entrypoint_boost(file, ctx)).min(1.0);
     let class_split_factor = if has_split_js_class_export { 1.12 } else { 1.0 };
     mix_signals(cat, 0.6, 0.35, ts_depth_factor(file, ctx))
         * names_surface_chunk_factor(chunk_index, chunk_count)
@@ -1761,21 +1962,21 @@ fn export_names_value(
 
 fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.70 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.70 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.85 * k).min(1.0);
     mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.20 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.20 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.6 * k).min(1.0);
     mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.62 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.62 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.95 * k).min(1.0);
     mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
@@ -1811,14 +2012,14 @@ fn module_item_class_boost(kind: ItemKind) -> f64 {
 
 fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight() * module_item_class_boost(kind);
-    let cat = (0.38 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.38 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.7 * k).min(1.0);
     mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight() * module_item_class_boost(kind);
-    let cat = (0.30 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.30 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.82 * k).min(1.0);
     mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
@@ -1828,7 +2029,7 @@ fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor:
 // `Export.follow_up` (0.85) — body is the prime "don't go grep" signal.
 fn export_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.45 * k * entrypoint_boost(file)).min(1.0);
+    let cat = (0.45 * k * entrypoint_boost(file, ctx)).min(1.0);
     let fu = (0.9 * k).min(1.0);
     mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
 }
@@ -1912,7 +2113,7 @@ fn collect_reexport_import_chunks(
     file: &Path,
     tree: &Tree,
     source: &str,
-) -> Option<Vec<FileLines>> {
+) -> Option<Vec<(FileLines, bool)>> {
     if !is_entrypoint_file(file) {
         return None;
     }
@@ -1920,7 +2121,43 @@ fn collect_reexport_import_chunks(
     if !should_chunk_import_groups(&groups) {
         return None;
     }
-    Some(groups_to_file_lines(groups))
+    let reexport_lines = collect_bare_reexport_lines(tree, source);
+    Some(
+        groups_to_file_lines(groups)
+            .into_iter()
+            .map(|lines| {
+                let is_wall = is_mostly_reexport(&lines, &reexport_lines);
+                (lines, is_wall)
+            })
+            .collect(),
+    )
+}
+
+/// 1-based lines of top-level bare `export … from` statements.
+fn collect_bare_reexport_lines(tree: &Tree, source: &str) -> HashSet<usize> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut lines = Vec::new();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "export_statement" && is_bare_reexport(child) {
+            extend_span(&mut lines, child, source);
+        }
+    }
+    lines.into_iter().collect()
+}
+
+/// True when at least half of `lines` belong to bare re-export
+/// statements — the batch is publishing the API roster, not importing.
+fn is_mostly_reexport(lines: &FileLines, reexport_lines: &HashSet<usize>) -> bool {
+    if lines.full.is_empty() {
+        return false;
+    }
+    let hits = lines
+        .full
+        .iter()
+        .filter(|line| reexport_lines.contains(line))
+        .count();
+    hits * 2 >= lines.full.len()
 }
 
 fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> {
@@ -2806,14 +3043,21 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
 
 /// Project's public surface — every TS/JS file transitively reachable
 /// from an entrypoint via re-export chains. Canonicalized.
-fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
-    let entrypoints = find_all_entrypoints(ctx.root());
-    let mut surface: HashSet<PathBuf> = HashSet::new();
+fn compute_public_surface(ctx: &WalkCtx) -> PublicSurface {
+    let mut entrypoints = find_all_entrypoints(ctx.root());
+    // The declared API contract is entrypoint-named-adjacent (`types`
+    // field) but its `.d.ts` extension escapes the stem match above.
+    entrypoints.extend(
+        ctx.typescript_state()
+            .declared_api_contract(ctx.root())
+            .cloned(),
+    );
+    let mut surface = PublicSurface::default();
     let mut frontier: VecDeque<PathBuf> = VecDeque::new();
     let mut from_app_entrypoint: HashSet<PathBuf> = HashSet::new();
     for ep in entrypoints {
         let canonical = ep.canonicalize().unwrap_or_else(|_| ep.clone());
-        if surface.insert(canonical) {
+        if surface.files.insert(canonical) {
             frontier.push_back(ep);
         }
     }
@@ -2850,8 +3094,10 @@ fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
             let canonical = target.canonicalize().unwrap_or_else(|_| target.clone());
             if used_app_fallback {
                 from_app_entrypoint.insert(canonical.clone());
+            } else {
+                surface.reexport_targets.insert(canonical.clone());
             }
-            if surface.insert(canonical) {
+            if surface.files.insert(canonical) {
                 frontier.push_back(target);
             }
         }
