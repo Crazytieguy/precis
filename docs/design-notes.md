@@ -286,6 +286,19 @@ captures it.
 
 ## Divergence open items
 
+- **Ellipsis atoms are credited on schedule content, not rendered
+  output (codex adversarial finding, 2026-07-04).** Since the renderer
+  invariant landed (markers synthesized from the anchor set; author
+  Ellipsis records render no row of their own), an NS Ellipsis atom can
+  earn its 1-byte credit while the renderer emits one shared gap marker
+  — or nothing, for a blank-only gap. Deliberately NOT changed:
+  aligning atomization with rendered deltas would re-price every frozen
+  NS's ellipsis rows (goalpost move mid-calibration), and the credit
+  quantum is 1 byte per atom. The walker delivering an Ellipsis record
+  at the NS's (path, line) does satisfy the NS's semantic want
+  ("elision is signaled here"). Revisit as a deliberate metric revision
+  at the next NS re-freeze.
+
 - **`Schedule.candidates` is `#[serde(skip)]`.** The candidate pool
   doesn't survive TOML serialization. The current schedule-centric
   divergence report doesn't read `candidates` at all (NS predecessor
